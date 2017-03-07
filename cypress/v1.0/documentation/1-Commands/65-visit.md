@@ -30,6 +30,7 @@ Option | Default | Notes
 --- | --- | ---
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad`       | `function` | Called once your page has fired its load event.
+`resolveOn`    | "load"     | Which event to resolve the visit on. Can be "load" or "DOMContentLoaded"
 `timeout`      | [pageLoadTimeout](https://on.cypress.io/guides/configuration#section-timeouts) | Total time to wait until `cy.visit` resolves
 `log` | `true` | whether to display command in command log
 
@@ -141,6 +142,22 @@ cy.visit("http://localhost:3000/#/users", {
       // do something
     }
   }
+})
+```
+
+***
+
+## Resolve the visit on "DOMContentLoaded"
+
+By default, `cy.visit()` resolves on the window's ["load" event](https://developer.mozilla.org/en-US/docs/Web/Events/load), meaning all resources (images, stylesheets, etc) will fully load before the visit is finished and subsequent commands run. If you know that subsequent commands don't rely on such resources, you can resolve the visit on the document's ["DOMContentLoaded" event](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded), which only waits until the DOM has been loaded and parsed. This can speed up your tests, though the difference may be negligible if the page does not load many resources.
+
+```javascript
+cy.visit("http://localhost:3000", {
+  resolveOn: "DOMContentLoaded"
+})
+.then(() => {
+  // this will run faster than with the default "load" event if the page
+  // loads a lot of resources
 })
 ```
 
