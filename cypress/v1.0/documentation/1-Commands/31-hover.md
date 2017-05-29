@@ -19,7 +19,7 @@ cy.get(".content").invoke("show").click()
 [block:callout]
 {
   "type": "info",
-  "body": "[Check out our example recipe on testing hover and working with hidden elements](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/hover_hidden_elements.js)",
+  "body": "[Check out our example recipe on testing hover and working with hidden elements](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/hover_hidden_elements_spec.js)",
   "title": "Dealing with hover and hidden elements"
 }
 [/block]
@@ -40,6 +40,6 @@ cy.get(".checkbox").check({force: true})
 
 # Related
 
-- [Recipe: Dealing with Hover and Hidden Elements](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/hover_hidden_elements.js)
+- [Recipe: Dealing with Hover and Hidden Elements](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/hover_hidden_elements_spec.js)
 - [invoke](https://on.cypress.io/api/invoke)
 - [wrap](https://on.cypress.io/api/wrap)
