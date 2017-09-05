@@ -1,0 +1,91 @@
+version: 2
+
+defaults: &defaults
+  parallelism: 1
+  working_directory: ~/cypress-documentation
+  docker:
+    # the Docker image with Cypress dependencies and Chrome browser
+    - image: cypress/internal:chrome58
+      environment:
+        ## this enables colors + fixes failing unit tests
+        TERM: xterm
+
+        npm_config_loglevel: warn
+        # even when running as non-root user
+        # need to set unsafe perm to be able to do `npm postinstall`
+        npm_config_unsafe-perm: true
+
+jobs:
+  ## code checkout and NPM installs
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+
+      ## make sure the TERM is set to 'xterm' in node
+      ## else colors (and tests) will fail
+      ## See the following information
+      ##   * http://andykdocs.de/development/Docker/Fixing+the+Docker+TERM+variable+issue
+      ##   * https://unix.stackexchange.com/questions/43945/whats-the-difference-between-various-term-variables
+      - run:
+          name: Checking TERM is set
+          command: |
+            echo 'term env var is:' $TERM
+            node -e 'assert.equal(process.env.TERM, "xterm", "need TERM to be set for Docker to work")'
+            node -e 'console.log("TERM %s stdout.isTTY?", process.env.TERM, process.stdout.isTTY)'
+
+      # need to restore a separate cache for each package.json
+      - restore_cache:
+          key: v1-{{ .Branch }}-deps
+
+      - run: npm install
+
+      # save each node_modules folder per package
+      - save_cache:
+          key: v1-{{ .Branch }}-deps-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      ## save entire folder as artifact for other jobs to continue
+      ## hmm, do not see a good way to cache it, since all code
+      ## might change
+      - save_cache:
+          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /home/person/cypress-documentation
+
+  "docs-tests":
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: npm run deps
+      - run: npm run build
+      - run: npm run test-e2e
+
+  "deploy-docs":
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: cd docs && NODE_ENV=production npm run build
+      # because we already built docs for production
+      # use script that just deploys without rebuilding the production docs
+      - run: cd docs && npm run deploy-prebuilt -- --environment production --scrape
+      - run: cd docs && cat public/build.json
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      # test and deploy documentation site
+      - docs-tests:
+          requires:
+            - build
+      # - deploy-docs:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - docs-tests
