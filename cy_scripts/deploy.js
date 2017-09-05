@@ -276,5 +276,6 @@ deploy()
   .catch((err) => {
     console.error('🔥  deploy failed')
     console.error(err)
+    console.error(err.stack)
     process.exit(-1)
   })
