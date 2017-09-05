@@ -53,7 +53,7 @@ Value to assert against chainer.
 
 A method to be called on the chainer.
 
-**{% fa fa-angle-right %} callback function** ***(Function)***
+**{% fa fa-angle-right %} callbackFn** ***(Function)***
 
 Pass a function that can have any number of explicit assertions within it. Whatever was passed to the function is what is yielded.
 
@@ -62,14 +62,16 @@ Pass a function that can have any number of explicit assertions within it. Whate
 {% yields assertion_indeterminate .should %}
 
 ```javascript
-cy.get('nav')                       // yields <nav>
+cy
+  .get('nav')                       // yields <nav>
   .should('be.visible')             // yields <nav>
 ```
 
 However, some chainers change the subject. In the example below, the second `.should()` yields the string `sans-serif` because the chainer `have.css, 'font-family'` changes the subject.
 
 ```javascript
-cy.get('nav')                       // yields <nav>
+cy
+  .get('nav')                       // yields <nav>
   .should('be.visible')             // yields <nav>
   .and('have.css', 'font-family')   // yields 'sans-serif'
   .and('match', /serif/)            // yields 'sans-serif'
@@ -124,11 +126,13 @@ cy.get('button').should('have.id', 'new-user').then(($button) =>{
 cy.get('#header a').should('have.attr', 'href', '/users')
 ```
 
-## Callback function
+## Function
 
 ***Verify length, content, and classes from multiple `<p>`***
 
-Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on. The callback function will be retried over and over again until no assertions within it throw. You should use explicit assertions inside the `should()` callback function.
+Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
+
+Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
 
 ```html
 <div>
@@ -139,7 +143,8 @@ Passing a function to `.should()` enables you to make multiple assertions on the
 ```
 
 ```javascript
-cy.get('p')
+cy
+  .get('p')
   .should(($p) =>{
     // should have found 3 elements
     expect($p).to.have.length(3)
@@ -162,16 +167,25 @@ cy.get('p')
   })
 ```
 
-***Any thrown error will cause `should()` to wait and retry***
+***Assert explicitly within `.should()`***
 
-Any errors raised inside the callback function will bubble up after `timeout` and cause the test to fail. For example, the test below has an invalid variable reference, but will fail only after `timeout` period has passed.
+Any errors raised by failed assertions will immediately bubble up and cause the test to fail.
+
+```html
+<div id="todos">
+  <li>Walk the dog</li>
+  <li>Feed the cat</li>
+  <li>Write JavaScript</li>
+</div>
+```
 
 ```javascript
-cy.get('body')
-  .should(function($body){
-    foo // ReferenceError on purpose
-  })
-// CypressError: Timed out retrying: foo is not defined
+cy.get('#todos li').should(($lis) => {
+  expect($lis).to.have.length(3)
+  expect($lis.eq(0)).to.contain('Walk the dog')
+  expect($lis.eq(1)).to.contain('Feed the cat')
+  expect($lis.eq(2)).to.contain('Write JavaScript')
+})
 ```
 
 ## Multiple Assertions
@@ -222,8 +236,8 @@ The chainers that come from {% url 'Chai' bundled-tools#Chai %} or {% url 'Chai-
 Whatever is returned in the function is ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
 
 ```javascript
-cy.get('button')
-  .should(($button) =>{
+cy
+  .get('button').should(($button) =>{
     expect({foo: 'bar'}).to.deep.eq({foo: 'bar'})
     return {foo: 'bar'} // return is ignored, .should() yields <button>
   })
@@ -235,29 +249,6 @@ cy.get('button')
 ## Differences
 
 {% partial then_should_difference %}
-
-## Antipattern
-
-Be sure *not* to include any code that has side effects in your callback function, because the callback function can be called multiple times before it passes without exceptions.
-
-Make sure to throw errors to keep waiting and *not* return `false` value. For example see the difference in the code below:
-
-```html
-<div id="todos">
-  <li>Walk the dog</li>
-  <li>Feed the cat</li>
-  <li>Write JavaScript</li>
-</div>
-```
-
-```javascript
-// BAD, the test passes despite list having only 3 items
-cy.get('#todos li').should(($lis) => $lis.length === 10)
-// GOOD, the test fails because we have 3 items and not 10
-cy.get('#todos li').should(($lis) => {
-  expect($lis.length).to.equal(10)
-})
-```
 
 # Rules
 
