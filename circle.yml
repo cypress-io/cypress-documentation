@@ -39,6 +39,7 @@ jobs:
           key: v1-{{ .Branch }}-deps
 
       - run: npm install
+      - run: npm prune
 
       # save each node_modules folder per package
       - save_cache:
