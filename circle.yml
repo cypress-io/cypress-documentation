@@ -64,7 +64,23 @@ jobs:
       - run: npm run build
       - run: npm run test-e2e
 
-  "deploy-docs":
+  "deploy-docs-staging":
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: NODE_ENV=staging npm run build
+      - run: ls public
+      - run: npm run save-build-json
+      - run: npm run deploy-prebuilt -- --environment staging
+      - run:
+          name: Print deployed version
+          command: cat public/build.json
+      - run:
+          name: Test deployed docs
+          command: CYPRESS_baseUrl=https://docs-staging.cypress.io npm run cypress
+
+  "deploy-docs-production":
     <<: *defaults
     steps:
       - restore_cache:
@@ -80,11 +96,20 @@ workflows:
   build_and_test:
     jobs:
       - build
-      # test and deploy documentation site
       - docs-tests:
           requires:
             - build
-      # - deploy-docs:
+      - deploy-docs-staging:
+          filters:
+            branches:
+              only:
+                # allow deploying to staging from "develop"
+                # and branches starting with special prefix
+                - develop
+                - /docs-.*/
+          requires:
+            - docs-tests
+      # - deploy-docs-production:
       #     filters:
       #       branches:
       #         only: master
