@@ -248,7 +248,10 @@ function deployEnvironmentBranch (env, branch) {
 function doDeploy (env) {
   la(isValidEnvironment(env), 'invalid deploy environment', env)
   return getCurrentBranch()
-    .then((branch) => deployEnvironmentBranch(env, branch))
+    .then((branch) => {
+      console.log('deploying branch %s to %s', branch, env)
+      return deployEnvironmentBranch(env, branch)
+    })
 }
 
 function deploy () {
