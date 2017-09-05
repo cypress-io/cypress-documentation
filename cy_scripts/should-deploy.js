@@ -88,6 +88,7 @@ function lastDeployedCommit (env) {
 
 const changedFilesSince = (branchName) => (sha) => {
   la(is.unemptyString(branchName), 'missing branch name', branchName)
+  debug('finding files changed in branch %s since commit %s', branchName, sha)
   return git.changedFilesAfter(sha, branchName)
     .then(tap((list) => {
       debug('%s changed since last docs deploy in branch %s',
@@ -95,6 +96,9 @@ const changedFilesSince = (branchName) => (sha) => {
       debug(list.join('\n'))
     }))
 }
+
+// if something fails, then assume there are changes to deploy
+const assumeChangesOnProblem = T
 
 function docsFilesChangedSinceLastDeploy (env, branchName) {
   return lastDeployedCommit(env)
@@ -108,6 +112,7 @@ function docsFilesChangedSinceLastDeploy (env, branchName) {
       console.log('in branch %s against environment %s', branchName, env)
     }))
     .then(docsChanged)
+    .catch(assumeChangesOnProblem)
     .then(tap((hasDocumentChanges) => {
       console.log('has document changes?', hasDocumentChanges)
     }))
