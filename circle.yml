@@ -60,6 +60,7 @@ jobs:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
       - run: npm run deps
+      - run: npm run lint
       - run: npm run build
       - run: npm run test-e2e
 
@@ -68,11 +69,11 @@ jobs:
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
-      - run: cd docs && NODE_ENV=production npm run build
+      - run: NODE_ENV=production npm run build
       # because we already built docs for production
       # use script that just deploys without rebuilding the production docs
-      - run: cd docs && npm run deploy-prebuilt -- --environment production --scrape
-      - run: cd docs && cat public/build.json
+      - run: npm run deploy-prebuilt -- --environment production --scrape
+      - run: cat public/build.json
 
 workflows:
   version: 2
