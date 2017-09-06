@@ -49,7 +49,7 @@
     "/"
   ],
   "_resolved": "git://github.com/cypress-io/fira.git#fb63362742eea8cdce0d90825ab9264d77719e3d",
-  "_shasum": "e5559bca8b06337c5689cfbda5e16782cce517b3",
+  "_shasum": "1d4573aadc0879790580f7272f8b9022aa19ae84",
   "_shrinkwrap": null,
   "_spec": "fira@github:cypress-io/fira#fb63362742eea8cdce0d90825ab9264d77719e3d",
   "_where": "/Users/irinakous/git/cypress-documentation",
