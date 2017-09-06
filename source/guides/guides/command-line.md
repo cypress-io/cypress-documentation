@@ -60,6 +60,15 @@ Option | Description
 cypress run --browser chrome
 ```
 
+**note:** Cypress will attempt to accurately find all browsers available on your system. If a 
+browser with matching name is not found, Cypress will attempt launching it as a command. 
+If the browser is still not found, you can run Cypress with debug messages related to 
+launching the browser turned on.
+
+```shell
+DEBUG=cypress:launcher cypress run --browser <name or path>
+```
+
 ***Run tests specifying configuration***
 
 Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
