@@ -65,6 +65,7 @@ comments: false
 - [x] Using chai's `assert` interface now works correctly in your specs. <OPEN AN ISSUE>
 - [x] Screenshots are now taken during each runnable that fails. Errors in tests will happen there. Errors in hooks will also happen there. Previously a screenshot would only happen after everything (including hooks) ran. Fixes {% issue 394 %}
 - [x] `cy.screenshot()` now synchronizes its state with the reporter. This means you should see error messages (on the left side) on automatic screenshot errors.
+- [x] You can now programmatically receive events on `alert` and `confirm` and even control whether the `confirm` dialog should be accepted or declined. Fixes {% issue 621 %} and {% issue 33 %} and {% issue 376 %}.
 
 **Dependencies:**
 
