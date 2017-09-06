@@ -60,6 +60,15 @@ Option | Description
 cypress run --browser chrome
 ```
 
+**note:** Cypress will attempt to accurately find all browsers available on your system. If a 
+browser with matching name is not found, Cypress will attempt launching it as a command. 
+If the browser is still not found, you can run Cypress with debug messages related to 
+launching the browser turned on.
+
+```shell
+DEBUG=cypress:launcher cypress run --browser <name or path>
+```
+
 ***Run tests specifying configuration***
 
 Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
@@ -194,7 +203,11 @@ Cypress application is valid and should be okay to run: /Applications/Cypress.ap
 
 ## `cypress version`
 
-Output both the version of the the installed Cypress application.
+Equivalent: `cypress --version`, `cypress -v`
+
+Output both the versions of the the installed Cypress binary application and NPM module.
+In most cases they will be the same, but could be different if you have installed a different
+version of NPM package and for some reason could not install the matching binary.
 
 ```shell
 cypress version
@@ -203,5 +216,6 @@ cypress version
 ***Example Output***
 
 ```shell
-Cypress App: 0.20.0
+Cypress package version: 0.20.0
+Cypress binary version: 0.20.0
 ```

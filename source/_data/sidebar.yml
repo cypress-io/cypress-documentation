@@ -22,6 +22,7 @@ guides:
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     web-security: web-security.html
     reporters: reporters.html
+    cypress-module-api: cypress-module-api.html
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
     # coming-from-selenium: coming-from-selenium.html
