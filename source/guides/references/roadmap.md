@@ -59,7 +59,7 @@ comments: false
 - [x] You can now overwrite existing commands with `Cypress.Commands.overwrite`. <OPEN A NEW ISSUE>
 - [x] We removed an artificial delay that was being set in between commands. This means test commands now run faster.
 - [x] You can now disable Cypress global exception handler for your application. Fixes {% issue 254 %}
-- [x] Uncaught errors appearing in your spec files or support files are now properly caught, have the right exit code, and display correctly. Fixes {% issue 345 %}
+- [x] Uncaught errors appearing in your spec files or support files are now properly caught, have the right exit code, and display correctly. Fixes {% issue 345 %} and {% issue 476 %}.
 - [x] Cypress will now scroll past multiple elements that cover up an element to be interacted with. It also now factors in elements with `position: sticky`. Fixes {% issue 571 %} and {% issue 565 %}.
 - [x] Cypress now scrolls all parent containers (not just `window`) when attempting to {% url "check an element's actionability" interacting-with-elements#Actionability %}. Fixes {% issue 569 %}.
 - [x] Using chai's `assert` interface now works correctly in your specs. <OPEN AN ISSUE>
@@ -106,6 +106,8 @@ comments: false
 - [x] Fixed issue where server routes were lost after page load if not initiated by a {% url `cy.visit()` visit %} command. Fixes {% issue 177 %}
 - [x] Using mocha's `done` callback now works correctly. We've improved mocha's handling of uncaught exceptions and properly associate them to test failures. <OPEN AN ISSUE>
 - [x] `cy.viewport()` is now synchronized with the UI so that it does not resolve until the DOM has re-rendered using the dimensions.
+- [x] We won't accidentally seed the `example_spec.js` file from Kitchen Sink when issuing `cypress run ` from the CLI. Fixes {% issue 617 %}.
+- [x] Attempting to use `cypress run` on a project that has never been set up will now error. Internally we look for `cypress.json` to be present. Previously this would scaffold out all of the files, but it no longer does this. Fixes {% issue 618 %}.
 
 **Misc:**
 
