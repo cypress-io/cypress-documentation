@@ -9,9 +9,11 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 
 {% fa fa-github %} {% url http://chaijs.com/ %}
 
-These chainers are available for assertions.
+## BDD Assertions
 
-| Assertion | Example |
+These chainers are available for BDD assertions.
+
+| Chainer | Example |
 | --- | --- |
 | not | `expect(foo).to.not.equal('bar')` |
 | deep | `expect(foo).to.deep.equal({ bar: 'baz' })` |
@@ -74,11 +76,29 @@ These chainers are available for assertions.
 | decrease( *function* )  | `expect(fn).to.decrease(obj, 'val')` |
 | decreases( *function* ) | `expect(fn).decreases(obj, 'val')` |
 
-These getters are also available. They don't actually do anything, but they enable you to write simple, english sentences.
+These getters are also available for BDD assertions. They don't actually do anything, but they enable you to write simple, english sentences.
 
 | Chainable getters |
 | --- |
 | `to`, `be`, `been`, `is`, `that`, `which`, `and`, `has`, `have`, `with`, `at`, `of`, `same` |
+
+## TDD Assertions
+
+These assertions are available for TDD assertions. You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
+
+| Assertion | Example |
+| --- | --- |
+| .isOk(*object*, *[message]*) | `assert.isOk('everything', 'everything is ok')` |
+| .isNotOk(*object*, *[message]*) | `assert.isNotOk(false, 'this will pass')` |
+| .equal(*actual*, *expected*, *[message]*) | `assert.equal(3, 3, 'values are equal')` |
+| .notEqual(*actual*, *expected*, *[message]*) | `assert.notEqual(3, 4, 'values are not equal')` |
+| .strictEqual(*actual*, *expected*, *[message]*) | `assert.strictEqual(true, true, 'bools are strictly equal')` |
+| .notStrictEqual(*actual*, *expected*, *[message]*) | `assert.notStrictEqual(5, '5', 'not strictly equal')` |
+| .deepEqual(*actual*, *expected*, *[message]*) | `assert.deepEqual({ name: 'Jane' }, { name: 'Jane' })` |
+| .notDeepEqual(*actual*, *expected*, *[message]*) | `assert.notDeepEqual({ name: 'Jane' }, { name: 'June' })` |
+| .isAbove(*valueToCheck*, *valueToBeAbove*, *[message]*) | `assert.isAbove(6, 1, '6 is greater than 1')` |
+| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
+| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
 
 # Chai-jQuery
 
