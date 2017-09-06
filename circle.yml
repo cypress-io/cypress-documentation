@@ -113,6 +113,8 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
+          requires:
+            - docs-test
       # - deploy-docs-production:
       #     filters:
       #       branches:
