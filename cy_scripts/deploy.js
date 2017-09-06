@@ -11,6 +11,7 @@ const inquirer   = require('inquirer')
 const awspublish = require('gulp-awspublish')
 const parallelize = require('concurrent-transform')
 const minimist   = require('minimist')
+const debug = require('debug')('deploy')
 const questionsRemain = require('@cypress/questions-remain')
 const scrape     = require('./scrape')
 const shouldDeploy = require('./should-deploy')
@@ -18,6 +19,7 @@ const { configFromEnvOrJsonFile } = require('@cypress/env-or-json-file')
 const R = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
+const git = require('ggit')
 
 const distDir = path.resolve('public')
 const isValidEnvironment = is.oneOf(['production', 'staging'])
@@ -38,8 +40,7 @@ function getS3Credentials () {
 }
 
 function getCurrentBranch () {
-  return repo.branchAsync()
-  .get('name')
+  return git.branchName()
 }
 
 function promptForDeployEnvironment () {
@@ -247,8 +248,13 @@ function deployEnvironmentBranch (env, branch) {
 
 function doDeploy (env) {
   la(isValidEnvironment(env), 'invalid deploy environment', env)
+  debug('getting current branch')
   return getCurrentBranch()
-    .then((branch) => deployEnvironmentBranch(env, branch))
+    .then((branch) => {
+      console.log('deploying branch %s to %s', branch, env)
+      la(is.unemptyString(branch), 'invalid branch name', branch)
+      return deployEnvironmentBranch(env, branch)
+    })
 }
 
 function deploy () {
@@ -273,5 +279,6 @@ deploy()
   .catch((err) => {
     console.error('🔥  deploy failed')
     console.error(err)
+    console.error(err.stack)
     process.exit(-1)
   })
