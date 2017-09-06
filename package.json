@@ -23,7 +23,7 @@
     "precypress": "npm install cypress-cli && cypress install",
     "cypress": "cypress run --record --key $DOCS_RECORD_KEY",
     "test-e2e": "run-p --race start cypress",
-    "test": "mocha --compilers coffee:@packages/coffee/register --recursive",
+    "test": "mocha --compilers coffee:coffee-script/register --recursive",
     "test-watch": "npm run test --silent -- --watch",
     "lint": "echo 'linting scripts'",
     "postlint": "eslint --fix *.js cy_scripts/*.js scripts/*.js"
@@ -36,6 +36,7 @@
     "chai": "^4.0.2",
     "chalk": "^2.0.1",
     "cheerio": "^1.0.0-rc.1",
+    "coffee-script": "^1.12.7",
     "colors": "^1.1.2",
     "common-tags": "^1.4.0",
     "concurrent-transform": "^1.0.0",
