@@ -133,8 +133,7 @@ describe "lib/url_generator", ->
 
       render = (str) ->
         expect(str).to.eq(markdown)
-
-        return Promise.resolve("<html><div id='notes'>notes</div></html>")
+        "<html><div id='notes'>notes</div></html>"
 
       @sandbox.stub(fs, "readFile").returns(Promise.resolve(markdown))
 
@@ -181,8 +180,7 @@ describe "lib/url_generator", ->
           expect(err.message).to.include(msg)
 
     it "fails when hash is not present in local file", ->
-      render = (str) ->
-        return Promise.resolve("<html></html>")
+      render = (str) -> "<html></html>"
 
       @sandbox.stub(fs, "readFile").returns(Promise.resolve(""))
 
