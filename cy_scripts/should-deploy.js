@@ -97,9 +97,6 @@ const changedFilesSince = (branchName) => (sha) => {
     }))
 }
 
-// if something fails, then assume there are changes to deploy
-const assumeChangesOnProblem = T
-
 function docsFilesChangedSinceLastDeploy (env, branchName) {
   return lastDeployedCommit(env)
     .then(changedFilesSince(branchName))
@@ -112,7 +109,6 @@ function docsFilesChangedSinceLastDeploy (env, branchName) {
       console.log('in branch %s against environment %s', branchName, env)
     }))
     .then(docsChanged)
-    .catch(assumeChangesOnProblem)
     .then(tap((hasDocumentChanges) => {
       console.log('has document changes?', hasDocumentChanges)
     }))

@@ -74,6 +74,7 @@
   },
   "dependencies": {
     "bluebird": "3.5.0",
+    "check-more-types": "^2.24.0",
     "docsearch.js": "2.3.3",
     "fira": "github:cypress-io/fira#fb63362742eea8cdce0d90825ab9264d77719e3d",
     "font-awesome": "4.7.0",
@@ -87,6 +88,7 @@
     "hexo-renderer-marked": "0.3.0",
     "hexo-renderer-scss": "1.0.2",
     "hexo-server": "0.2.0",
+    "lazy-ass": "^1.6.0",
     "lodash": "4.17.4",
     "lunr": "2.0.1",
     "menuspy": "github:cypress-io/menuspy#afb7cbfc5fb7d032cabba2a4608710605848f874",
