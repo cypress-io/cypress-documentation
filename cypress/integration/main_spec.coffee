@@ -97,3 +97,15 @@ describe "Documentation", ->
       cy.get("#search-input").type("g")
       cy.wait("@postAlgolia")
       cy.get(".ds-dropdown-menu").should("be.visible")
+
+  describe "Intro to Cypress", ->
+    beforeEach ->
+      cy.visit("/guides/core-concepts/introduction-to-cypress.html")
+
+    # check if rendering messed up and removed the sidebar
+    it "has navigation sidebar", ->
+      cy.get("aside#sidebar")
+        .should("be.visible")
+
+    it "displays algolia dropdown on search", ->
+      testSearchDropDown()
