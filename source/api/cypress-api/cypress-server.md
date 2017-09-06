@@ -33,7 +33,7 @@ cy.Server.defaults({})  // Errors, cannot be chained off 'cy'
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
-Pass in an options object to change the default behavior of `.filter()`.
+Pass in an options object to change the default behavior of `Cypress.Server`.
 
 # Examples
 
