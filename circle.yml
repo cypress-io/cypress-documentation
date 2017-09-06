@@ -1,5 +1,14 @@
 version: 2
 
+env_defaults: &env_defaults
+  ## this enables colors + fixes failing unit tests
+  TERM: xterm
+
+  npm_config_loglevel: warn
+  # even when running as non-root user
+  # need to set unsafe perm to be able to do `npm postinstall`
+  npm_config_unsafe-perm: true
+
 defaults: &defaults
   parallelism: 1
   working_directory: ~/cypress-documentation
@@ -7,13 +16,7 @@ defaults: &defaults
     # the Docker image with Cypress dependencies and Chrome browser
     - image: cypress/internal:chrome58
       environment:
-        ## this enables colors + fixes failing unit tests
-        TERM: xterm
-
-        npm_config_loglevel: warn
-        # even when running as non-root user
-        # need to set unsafe perm to be able to do `npm postinstall`
-        npm_config_unsafe-perm: true
+        <<: *env_defaults
 
 jobs:
   ## code checkout and NPM installs
@@ -100,6 +103,8 @@ workflows:
       - docs-tests:
           requires:
             - build
+      # we can deploy development docs in parallel with
+      # unit testining them.
       - deploy-docs-staging:
           filters:
             branches:
@@ -108,8 +113,6 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
-          requires:
-            - docs-tests
       # - deploy-docs-production:
       #     filters:
       #       branches:
