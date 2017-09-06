@@ -115,9 +115,9 @@ workflows:
                 - /docs-.*/
           requires:
             - docs-tests
-      # - deploy-docs-production:
-      #     filters:
-      #       branches:
-      #         only: master
-      #     requires:
-      #       - docs-tests
+      - deploy-docs-production:
+          filters:
+            branches:
+              only: master
+          requires:
+            - docs-tests
