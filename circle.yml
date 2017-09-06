@@ -76,7 +76,7 @@ jobs:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
       - run: NODE_ENV=staging npm run build
       - run: ls public
-      - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging
+      - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
           name: Print deployed version
           command: cat public/build.json
