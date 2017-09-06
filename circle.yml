@@ -64,7 +64,22 @@ jobs:
       - run: npm run build
       - run: npm run test-e2e
 
-  "deploy-docs":
+  "deploy-docs-staging":
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: NODE_ENV=staging npm run build
+      - run: ls public
+      - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
+      - run:
+          name: Print deployed version
+          command: cat public/build.json
+      - run:
+          name: Test deployed docs
+          command: CYPRESS_baseUrl=https://docs-staging.cypress.io npm run cypress
+
+  "deploy-docs-production":
     <<: *defaults
     steps:
       - restore_cache:

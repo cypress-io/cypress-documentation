@@ -2,11 +2,10 @@ const got = require('got')
 const git = require('ggit')
 const pluralize = require('pluralize')
 const debug = require('debug')('deploy')
-const { isEmpty, complement, filter, test, tap, path, all, equals, T } = require('ramda')
+const { isEmpty, complement, tap, path, all, equals, T } = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
 
-const justDocs = filter(test(/^docs\//))
 const docsChanged = complement(isEmpty)
 
 const isForced = process.argv.some(equals('--force'))
@@ -61,7 +60,6 @@ function changedFilesSince (sha) {
 function docsFilesChangedSinceLastDeploy (env) {
   return lastDeployedCommit(env)
     .then(changedFilesSince)
-    .then(justDocs)
     .then(tap((list) => {
       console.log('%d documentation %s changed since last doc deploy',
         list.length, pluralize('file', list.length))
