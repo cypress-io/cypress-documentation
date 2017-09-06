@@ -99,9 +99,22 @@ workflows:
       - docs-tests:
           requires:
             - build
-      # - deploy-docs:
-      #     filters:
-      #       branches:
-      #         only: master
-      #     requires:
-      #       - docs-tests
+
+      # we can deploy development docs in parallel with
+      # unit testining them.
+      - deploy-docs-staging:
+          filters:
+            branches:
+              only:
+                # allow deploying to staging from "develop"
+                # and branches starting with special prefix
+                - develop
+                - /docs-.*/
+          requires:
+            - docs-tests
+      - deploy-docs-production:
+          filters:
+            branches:
+              only: master
+          requires:
+            - docs-tests
