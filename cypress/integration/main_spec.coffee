@@ -110,6 +110,11 @@ describe "Documentation", ->
     it "has table of contents", ->
       cy.get("aside#article-toc")
         .should("be.visible")
+        .wait(2000) # allows menuspy to load and set the menu links
+        .contains("0.18.0")
+        .click()
+      cy.url()
+        .should('include', '#0-18-0')
 
   describe "Intro to Cypress", ->
     beforeEach ->
