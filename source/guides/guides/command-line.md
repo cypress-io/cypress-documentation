@@ -13,10 +13,24 @@ comments: false
 
 # Installation
 
-This makes the `cypress` commands available and {% url "installs the Cypress Desktop Application" installing-cypress %} matching your package's version.
+This {% url "installs the Cypress Desktop Application" installing-cypress %} to your `./node_modules` directory and makes the `cypress` commands accessible from `./node_modules/.bin`.
 
 ```shell
 npm install cypress
+```
+
+This means we can call the available commands below from our project root either of the following ways:
+
+**The long way with the full path -**
+
+```shell
+./node_modules/.bin/cypress open
+```
+
+**Same with shortcut using `npm bin` -**
+
+```shell
+$(npm bin)/cypress open
 ```
 
 # Available Commands
@@ -161,21 +175,6 @@ cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ```shell
 cypress open --env host=api.dev.local
-```
-
-## `cypress get:path`
-
-Get the path Cypress will be installed to. Additionally checks to see if Cypress already exists at that path.
-
-```shell
-cypress get:path
-```
-
-***Example Output***
-
-```shell
-Path to Cypress: /Applications/Cypress.app
-Cypress was found at this path.
 ```
 
 ## `cypress verify`
