@@ -2,7 +2,7 @@ const got = require('got')
 const git = require('ggit')
 const pluralize = require('pluralize')
 const debug = require('debug')('deploy')
-const { isEmpty, complement, tap, path, all, equals, T, values } = require('ramda')
+const { isEmpty, complement, tap, path, all, equals, T } = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
 
@@ -59,7 +59,7 @@ function changedFilesSince (sha) {
 
 function docsFilesChangedSinceLastDeploy (env) {
   return lastDeployedCommit(env)
-    .then(changedFilesSince(branchName))
+    .then(changedFilesSince)
     .then(tap((list) => {
       console.log('%d documentation %s changed since last doc deploy',
         list.length, pluralize('file', list.length))
