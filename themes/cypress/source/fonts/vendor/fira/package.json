@@ -19,12 +19,13 @@
           "directUrl": "https://raw.githubusercontent.com/cypress-io/fira/fb63362742eea8cdce0d90825ab9264d77719e3d/package.json"
         }
       },
-      "/Users/irinakous/git/cypress-documentation"
+      "/Users/jennifer/Dev/Projects/cypress-documentation"
     ]
   ],
   "_from": "cypress-io/fira#fb63362742eea8cdce0d90825ab9264d77719e3d",
   "_id": "fira@1.0.0",
   "_inCache": true,
+  "_installable": true,
   "_location": "/fira",
   "_phantomChildren": {},
   "_requested": {
@@ -49,10 +50,10 @@
     "/"
   ],
   "_resolved": "git://github.com/cypress-io/fira.git#fb63362742eea8cdce0d90825ab9264d77719e3d",
-  "_shasum": "e5559bca8b06337c5689cfbda5e16782cce517b3",
+  "_shasum": "d31e32991fcb098a791f010e91fbba528756a138",
   "_shrinkwrap": null,
   "_spec": "fira@github:cypress-io/fira#fb63362742eea8cdce0d90825ab9264d77719e3d",
-  "_where": "/Users/irinakous/git/cypress-documentation",
+  "_where": "/Users/jennifer/Dev/Projects/cypress-documentation",
   "author": {
     "name": "Brian Mann"
   },
