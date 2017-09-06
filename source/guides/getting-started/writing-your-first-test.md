@@ -31,7 +31,9 @@ Great! Now let's add this folder to Cypress by dragging the folder into the Desk
 
 {% img no-border /img/guides/add-your-first-project-in-guid.png "Adding an empty folder to Cypress Desktop" %}
 
-Once you've added this folder, you should see a message explaining that we've seeded your empty project with a few folders and an `example_spec.js` file.
+Once you've added this folder, you should see a message explaining that we've seeded your empty project with a few folders and an `example_spec.js` file. These files live in the new `./cypress` directory (also generated for you), and are very user friendly so don't be afraid have a look through them!
+
+![Cypress First Run Experience](/img/guides/generated-files.png)
 
 {% note info %}
 This `example_spec.js` file is just for reference - it tests our {% url 'Kitchen Sink' kitchen-sink %} application and provides you with a preview of all the commands you can run with Cypress.
