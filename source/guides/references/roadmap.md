@@ -35,7 +35,7 @@ comments: false
 - [x] {% url `.select()` select %} should now look for the trimmed value inside of an `<option></option>`. This may change the content argument required to select the option you intended in your {% url `.select()` select %} command. Fixes {% issue 175 %}.
 - [x] When passing the option `{ force: true }` to {% url `.click()` click %} and {% url `.type()` type %}, we no longer attempt to scroll the element into view. We've also disabled the check that the element is in view before clicking or typing. Fixes {% issue 553 %} and {% issue 537 %}.
 - [x] `Cypress.Dom` has been renamed to `Cypress.dom`.
-- [x] `Cypress.Log.command` has been renamed to `Cypress.log`.
+- [x] `Cypress.Log.command` has been renamed to `Cypress.log`. Fixes {% issue 622 %}.
 - [x] `chai-jQuery` assertions no longer change the subject when using `prop`, `attr`, and `css` with the **3rd** argument which acts as equality check. Fixes {% issue 605 %}.
 - [x] We now throw when a value other than `cy` is returned from a test or command function. Fixes {% issue 463 %}.
 - [x] Returning a promise in a custom command while also invoking cy commands now throws. Fixes {% issue 435 %}.
