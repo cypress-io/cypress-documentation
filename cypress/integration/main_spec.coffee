@@ -98,6 +98,19 @@ describe "Documentation", ->
       cy.wait("@postAlgolia")
       cy.get(".ds-dropdown-menu").should("be.visible")
 
+  describe "Changelog", ->
+    beforeEach ->
+      cy.visit("/guides/references/changelog.html")
+
+    # check if rendering messed up and removed the sidebar
+    it "has navigation sidebar", ->
+      cy.get("aside#sidebar")
+        .should("be.visible")
+
+    it "has table of contents", ->
+      cy.get("aside#article-toc")
+        .should("be.visible")
+
   describe "Intro to Cypress", ->
     beforeEach ->
       cy.visit("/guides/core-concepts/introduction-to-cypress.html")
