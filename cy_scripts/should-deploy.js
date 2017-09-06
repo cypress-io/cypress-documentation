@@ -8,7 +8,6 @@ const { isEmpty, complement, filter, test, tap, path, all, equals, T, values } =
 const la = require('lazy-ass')
 const is = require('check-more-types')
 
-const justDocs = filter(test(/^docs\//))
 const docsChanged = complement(isEmpty)
 
 const isForced = process.argv.some(equals('--force'))
@@ -100,7 +99,6 @@ const changedFilesSince = (branchName) => (sha) => {
 function docsFilesChangedSinceLastDeploy (env, branchName) {
   return lastDeployedCommit(env)
     .then(changedFilesSince(branchName))
-    .then(justDocs)
     .then(tap((list) => {
       console.log('changed files')
       console.log(list.join('\n'))
