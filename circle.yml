@@ -75,8 +75,9 @@ jobs:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
       - run: NODE_ENV=staging npm run build
-      - run: ls public
       - run: ls -R themes/cypress/source/js
+      - run: ls public
+      - run: ls -R public/js
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
           name: Print deployed version
