@@ -44,8 +44,8 @@ This will install Cypress locally for this project, which is ideal for a few rea
 - Multiple versions of Cypress can co-exist on the same machine on a per-project basis.
 - It simplifies {% url 'Continuous Integration' continuous-integration %} setup.
 
-{% note info What is `npm`? %}
-If you've never set up a Node.js project before, this is all probably a bit confusing! When you download Node.js, you automatically get `npm` installed on your computer. We recommend heading over to the {% url "Node.js website" https://nodejs.org/ %} and digging in.
+{% note info Which Project To Install To? %}
+Does your application have multiple project repositories? Many modern applications do! Cypress should be installed with your *front-end project*, wherever you serve the front-end files for development.
 {% endnote %}
 
 ## {% fa fa-download %} Direct Download
