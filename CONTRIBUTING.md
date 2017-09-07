@@ -17,12 +17,19 @@ All contributors are expecting to abide by our [Code of Conduct](https://github.
 
 ## Getting Started
 
-If you need to work on documentation, ensure you are in the `docs` directory within the main cypress repository.
-
 The documentation in this repo are generated using [Hexo](https://hexo.io/). You should
-be able to install tools, build and start local `hexo` site.
+be able to install tools, build and start the local `hexo` site. 
 
-From the `docs` directory:
+**Fork this repository**
+
+Using GitHub interface, create a copy (a fork) of this repository under your personal account.
+
+**Clone your forked repository**
+
+```bash
+git clone git@github.com:<your username>/cypress-documentation.git
+cd cypress-documentation
+```
 
 **Install dependencies:**
 
@@ -69,11 +76,20 @@ Add an associating image with the example within the [`source/img/examples`](/so
 
 ## Commiting Code
 
+### Push code to your repository
+
+You should push your local changes to your forked GitHub repository and then
+open a pull request from your repo to `cypress-io/cypress-documentation` repo.
+
 ### Pull Requests
 
+- The pull request should be from your repository to branch `develop` in `cypress-io/cypress-documentation`
 - When opening a PR for a specific issue already open, please use the `address #[issue number]` or `closes #[issue number]` syntax in the pull request description.
 
 ## Deployment
 
 We will try to review and merge pull requests quickly. After merging we
-will try releasing the documentation. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md)
+will try releasing the documentation. First we will deploy it to staging environment,
+run E2E tests (using Cypress itself of course), and then we will merge it into
+`master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io)
+website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md)
