@@ -3,8 +3,6 @@ title: scrollTo
 comments: false
 ---
 
-THIS DOCUMENT NEEDS ITS USAGE, REQUIREMENTS, ASSERTIONS, AND TIMEOUTS FIXED
-
 Scroll to a specific position.
 
 # Syntax
