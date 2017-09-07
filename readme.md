@@ -7,11 +7,11 @@ The code for Cypress Documentation including Guides, API, Examples, Dashboard & 
 ## Getting Started
 
 You should be able to get the documentation site running locally very quickly,
-please see our [Contributing Guideline](/CONTRIBUTING.md)
+please see our [Contributing Guideline](/CONTRIBUTING.md).
 
 ## Deploying
 
-See our [Deploy Guideline](DEPLOY.md)
+See our [Deploy Guideline](DEPLOY.md).
 
 ## License
 
