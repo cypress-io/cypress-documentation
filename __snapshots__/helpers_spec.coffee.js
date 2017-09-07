@@ -6,3 +6,5 @@ exports['lib/helpers addPageAnchors is noop if no headings found 1'] = `<p>foo</
 
 exports['lib/helpers addPageAnchors does not wrap with <html> 1'] = `<h1 id="bar" class="article-heading">foo<a class="article-anchor" href="#bar" aria-hidden="true"></a></h1>`
 
+exports['lib/helpers addPageAnchors does not wrap fragment in html tag 1'] = `<p>foo</p>`
+
