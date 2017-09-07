@@ -149,6 +149,7 @@ api:
     cookies: cookies.html
     dom: dom.html
     env: env.html
+    cypress-log: cypress-log.html
     cypress-server: cypress-server.html
 
 examples:

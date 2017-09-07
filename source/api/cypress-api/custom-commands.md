@@ -3,10 +3,10 @@ title: Custom Commands
 comments: false
 ---
 
-Cypress comes with its own API for creating custom commands. In fact, the same public methods *you* have access to from our API is used to build every command in our API.
+Cypress comes with its own API for creating custom commands and even overwriting existing commands. In fact, the same public methods *you* have access to from our API is used to build every command in our API.
 
 {% note info  %}
-A great place to define these commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated.
+A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated.
 {% endnote %}
 
 # Syntax
@@ -14,6 +14,8 @@ A great place to define these commands is in your `cypress/support/commands.js` 
 ```javascript
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
+Cypress.Commands.overwrite(name, callbackFn)
+Cypress.Commands.overwrite(name, options, callbackFn)
 ```
 
 ## Usage
@@ -22,13 +24,14 @@ Cypress.Commands.add(name, options, callbackFn)
 
 ```javascript
 Cypress.Commands.add('login', (email, pw) => {})
+Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
 Cypress.add('login', (email, pw) => {})  // Errors, cannot be chained off 'Cypress'
-cy.add('login', (email, pw) => {})  // Errors, cannot be chained off 'cy'
+cy.overwrite('visit', (orig, url, options) => {})  // Errors, cannot be chained off 'cy'
 ```
 
 ## Arguments
@@ -54,7 +57,7 @@ The `prevSubject` accepts the following values:
 
 # Examples
 
-## Child Command
+## Add Child Command
 
 Child commands are always chained off of a **parent** command, or another **child** command.
 
@@ -67,7 +70,7 @@ Cypress.Commands.add('rightclick', {prevSubject: 'dom'}, function(subject, arg1,
 })
 ```
 
-## Parent Command
+## Add Parent Command
 
 Parent commands always **begin** a new chain of commands. Even if you've chained it off of a previous command, parent commands will always start a new chain, and ignore previously yielded subjects.
 
@@ -198,8 +201,7 @@ Cypress.Commands.add('visitAuthed', function(path) {
 })
 ```
 
-
-## Dual Command
+## Add Dual Command
 
 While parent commands always start a new chain of commands and child commands require being chained off a parent command, dual commands can behave as parent or child command. That is, they can **start** a new chain, or be chained off of an **existing** chain.
 
@@ -208,6 +210,17 @@ Cypress.Commands.add('swipe', {prevSubject: 'optional'}, function(subject, arg1,
   // subject may or may not be undefined giving you the option to change the behavior
   // the most common dual command is cy.contains() which operates differently whether
   // there is an existing subject or not
+})
+```
+
+## Overwrite Existing Command
+
+You can modify the logic of existing Cypress commands or previously defined custom commands.
+
+```javascript
+Cypress.Commands.overwrite('visit', function(orig, url, options){
+  // modify url or options here...
+  return orig(url, options)
 })
 ```
 

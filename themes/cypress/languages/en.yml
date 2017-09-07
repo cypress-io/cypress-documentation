@@ -167,6 +167,7 @@ sidebar:
     custom-commands: Commands
     cookies: Cookies
     dom: dom
+    cypress-log: Log
     cypress-server: Server
   examples:
     recipes: Recipes

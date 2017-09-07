@@ -14,14 +14,17 @@ comments: false
 
 We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let's integrate it into your *real* app!
 
-# {% fa fa-plus %} Step 1: Add Your Project
+# {% fa fa-plus %} Step 1: Add Cypress to your Project
 
-Follow the {% url 'previous steps' writing-your-first-test#Setup-Add-a-New-Project %} except this time add your **real project folder**.
+Follow the {% url 'previous steps' writing-your-first-test#Setup-Add-a-New-Project %} or add Cypress to your project as we did before with `npm` except this time use your **real project folder**.
 
-You should choose either:
+```shell
+$ npm install cypress --save-dev
+```
 
-- The root folder of your project
-- ...or if its super large - a folder with all of your frontend assets in it
+{% note info Which Project To Install To? %}
+Does your application have multiple project repositories? Many modern applications do! Cypress should be installed with your *front-end project*, wherever you serve the front-end files for development.
+{% endnote %}
 
 # {% fa fa-terminal %} Step 2: Start Your Server
 
