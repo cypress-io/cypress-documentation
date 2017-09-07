@@ -1,5 +1,6 @@
 YAML = require('yamljs')
 _ = require('lodash')
+{improveUrl} = require('./repo.coffee')
 
 GUIDES_PATH = '/guides/getting-started/why-cypress.html'
 
@@ -27,7 +28,7 @@ describe "Guides", ->
       # cy.get("@editLink").should("have.attr", "href")
       #     .and("include", GUIDES_PATH + ".md")
       cy.get("@editLink").should("have.attr", "href")
-          .and("include", "https://github.com/cypress-io/cypress/issues/new")
+          .and("include", improveUrl)
 
   context "Sidebar", ->
     beforeEach ->
