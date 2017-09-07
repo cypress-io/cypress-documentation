@@ -64,7 +64,6 @@ sidebar:
     roadmap: Roadmap
     cypress-api-design: API Design
     all-videos: Videos
-    cypress-module-api: Cypress Module API
   api:
     introduction: Introduction
     api: API
