@@ -106,7 +106,7 @@ gulp.task('clean:public', () => {
 gulp.task('pre:build', ['copy:static:assets'])
 
 gulp.task('post:build', (cb) => {
-  runSequence('clean:js', 'clean:js:folders', 'clean:css', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
+  runSequence('clean:js', 'clean:css', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
 })
 
 gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:search:css', 'move:fira:fonts', 'move:font:awesome:fonts'])
