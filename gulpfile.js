@@ -81,8 +81,14 @@ gulp.task('copy:tmp:to:public', () => {
   .pipe(gulp.dest('public'))
 })
 
-gulp.task('clean:js', () => {
+gulp.task('clean:js', ['clean:js:folders', 'clean:non:application:js'])
+
+gulp.task('clean:non:application:js', () => {
   return remove('public/js/!(application).js')
+})
+
+gulp.task('clean:js:folders', () => {
+  return remove('public/js/vendor')
 })
 
 gulp.task('clean:css', () => {
