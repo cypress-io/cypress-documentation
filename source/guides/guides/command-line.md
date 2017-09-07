@@ -282,7 +282,7 @@ The promise is only rejected if Cypress cannot run for some reason; for example 
 
 ### Options
 
-You have already seen the first useful option `run` takes: `{spec: "<spec path>"}`. Without it Cypress will try to run all files in the default `cypress/integration` folder. This and other options all are the same as Cypress {% url "run options" #cypress-run %}, except they have to the full words and not single letter aliases.
+You have already seen the first useful option `run` takes: `{spec: "<spec path>"}`. Without it Cypress will try to run all files in the default `cypress/integration` folder. This and other options all are the same as Cypress {% url "run options" command-line#cypress-run %}, except they have to the full words and not single letter aliases.
 
 **{% fa fa-check-circle green %} Correct Usage**
 
