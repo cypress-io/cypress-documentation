@@ -4,6 +4,7 @@ fs = require("hexo-fs")
 path = require("path")
 Promise = require("bluebird")
 urlGenerator = require("../../lib/url_generator")
+snapshot = require("snap-shot-it")
 
 data = {
   guides: {
@@ -88,11 +89,14 @@ describe "lib/url_generator", ->
         expect(str).to.be.a("string")
 
     it "throws when cannot find file", ->
-      urlGenerator.getLocalFile(data, "foo")
+      source = "my-file.md"
+      href = "foo"
+      fullUrl = href
+      urlGenerator.getLocalFile(data, href, source, fullUrl)
       .then ->
         throw new Error("should have caught error")
       .catch (err) ->
-        expect(err.message).to.include("Could not find a valid doc file in the sidebar.yml for: foo")
+        snapshot(err.message)
 
   context ".validateAndGetUrl", ->
     it "fails when given undefined href", ->
