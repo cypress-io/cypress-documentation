@@ -74,3 +74,27 @@ Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your
 Though Cypress has built out {% url "an excellent GUI application" overview-of-the-gui %} to help you understand what is happening in your app and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
 <!-- TODO: show how clicking commands populates the dev tools, demonstrate a few commands -->
+
+# Debugging in the Command line
+
+All commands in the Command Line can be run in debug mode using the `npm` [`debug`](https://www.npmjs.com/package/debug) module.
+
+**To see all Cypress modules debug output**
+
+```shell
+DEBUG=cypress:* cypress open
+```
+
+```shell
+DEBUG=cypress:* cypress run
+```
+
+**To filter debug output to a specific module**
+
+```shell
+DEBUG=cypress:server cypress run
+```
+
+```shell
+DEBUG=cypress:cli cypress run
+```

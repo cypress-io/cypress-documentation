@@ -1,17 +1,17 @@
 require("../spec_helper")
 snapshot = require("snap-shot-it")
 helpers = require("../../lib/helpers")
+cheerio = require("cheerio")
 
 describe "lib/helpers", ->
-  context "cheerio", ->
-    cheerio = require("cheerio")
-    process = (str, isDocument) ->
-      $ = cheerio.load(str, {
-        useHtmlParser2: true
-        decodeEntities: false
-      }, isDocument)
-      $.html()
+  process = (str, isDocument) ->
+    $ = cheerio.load(str, {
+      useHtmlParser2: true
+      decodeEntities: false
+    }, isDocument)
+    $.html()
 
+  context "cheerio", ->
     it "wraps document in html tag", ->
       snapshot(process("<p>foo</p>", true))
 
@@ -19,10 +19,6 @@ describe "lib/helpers", ->
       snapshot(process("<p>foo</p>", false))
 
   context "addPageAnchors", ->
-
-    expects = (str, expected) ->
-      expect(helpers.addPageAnchors(str)).to.eq(expected)
-
     it "does not wrap fragment in html tag", ->
       snapshot(process("<p>foo</p>", false))
 
