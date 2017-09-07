@@ -11,7 +11,7 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 
 ## BDD Assertions
 
-These chainers are available for BDD assertions.
+These chainers are available for BDD assertions (`expect`/`should`).
 
 | Chainer | Example |
 | --- | --- |
@@ -84,7 +84,7 @@ These getters are also available for BDD assertions. They don't actually do anyt
 
 ## TDD Assertions
 
-These assertions are available for TDD assertions. You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
+These assertions are available for TDD assertions (`assert`). You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
 
 | Assertion | Example |
 | --- | --- |
@@ -99,6 +99,17 @@ These assertions are available for TDD assertions. You can see the entire list o
 | .isAbove(*valueToCheck*, *valueToBeAbove*, *[message]*) | `assert.isAbove(6, 1, '6 is greater than 1')` |
 | .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
 | .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
+| .isBelow(*valueToCheck*, *valueToBeBelow*, *[message]*) | `assert.isBelow(3, 6, '3 is strictly less than 6')` |
+| .isAtMost(*valueToCheck*, *valueToBeAtMost*, *[message]*) | `assert.isAtMost(4, 4, '4 is less than or equal to 4')` |
+| .isTrue(*value*, *[message]*) | `assert.isTrue(true, 'this val is true')` |
+| .isNotTrue(*value*, *[message]*) | `assert.isNotTrue('tests are no fun', 'this val is not true')` |
+| .isFalse(*value*, *[message]*) | `assert.isFalse(false, 'this val is false')` |
+| .isNotFalse(*value*, *[message]*) | `assert.isNotFalse('tests are fun', 'this val is not false')` |
+| .isNull(*value*, *[message]*) | `assert.isNull(err, 'there was no error')` |
+| .isNotNull(*value*, *[message]*) | `assert.isNotNull('hello', 'is not null')` |
+| .isNaN(*value*, *[message]*) | `assert.isNaN(NaN, 'NaN is NaN')` |
+| .isNotNaN(*value*, *[message]*) | `assert.isNotNaN(5, '5 is not NaN')` |
+| .exists(*value*, *[message]*) | `assert.exists(5, '5 is not null or undefined')` |
 
 # Chai-jQuery
 
