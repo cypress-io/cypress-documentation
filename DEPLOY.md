@@ -9,35 +9,33 @@
 ## Automatic Deployment
 
 Any commits landed in `develop` branch of this repository will be deployed
-to `staging` environment if end to end tests pass.
+to `staging` environment if end to end tests pass and can be previewed at [https://docs-staging.cypress.io](https://docs-staging.cypress.io).
 
 Any commits landed in `master` branch will be deployed to the `production`
-environment and will be visible at [https://docs.cypress.io](https://docs.cypress.io)
+environment and can be previewed at [https://docs.cypress.io](https://docs.cypress.io).
 
-See [circle.yml](circle.yml) job definition file for up-to-date information.
+Refer to the [circle.yml](circle.yml) job definition file for up-to-date information.
 
 ## Manual Deployment
 
-You can only deploy the Cypress documentation manually if
-you are a member of the Cypress organization and have necessary credentials files.
+You can only deploy the Cypress documentation manually if you are a member of the Cypress organization and have the necessary credentials files.
 
 ```shell
 npm run deploy
 ```
 
-You can specify all options for deploying via command line arguments.
-For example to deploy to production and scrape the docs
+You can specify all options for deploying via command line arguments. For example to deploy to production and scrape the docs:
 
 ```shell
 npm run deploy -- --environment production --scrape
 ```
 
-By default, only deploying from `master` branch is set, but you can force
+By default, only deploying from `master` branch is allowed, but you can force
 deployment by using `--force` option.
 
 To debug deployment actions, run with `DEBUG=deploy ...` environment variable.
 
-**note**
+**Note**
 
 on CI, the deployment and scraping configuration are passed via environment
 variables `support__aws_credentials_json` and `support__circle_credentials_json`
@@ -49,5 +47,9 @@ cat support/.circle-credentials.json | pbcopy
 
 ## Check Latest Deployed Version
 
-You can see the latest deployed version, including deployment date at
-[https://docs.cypress.io/build.json](https://docs.cypress.io/build.json)
+You can see the latest deployed version, including deployment date at:
+
+| Env | Site |
+| --- | ---- |
+| Master | [https://docs.cypress.io/build.json](https://docs.cypress.io/build.json) |
+| Staging | [https://docs-staging.cypress.io/build.json](https://docs-staging.cypress.io/build.json) |

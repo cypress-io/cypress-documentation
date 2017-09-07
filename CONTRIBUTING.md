@@ -7,31 +7,25 @@ Thanks for taking the time to contribute! :smile:
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
 - [Writing Documentation](#writing-documentation)
+  - [Links](#links)
+  - [Adding Examples](#adding-examples)
 - [Committing Code](#committing-code)
+  - [Linting](#linting)
   - [Pull Requests](#pull-requests)
+  - [Contributor License Agreement](#contributor-license-agreement)
 - [Deployment](#deployment)
 
 ## Code of Conduct
 
 All contributors are expecting to abide by our [Code of Conduct](https://github.com/cypress-io/cypress/wiki/code-of-conduct).
 
-## Contributor License Agreement
-
-We use `cla-assistant.io` web hook to make sure every contributor
-assigns the rights to the contribution to Cypress.io. If you want to read the CLA agreement,
-its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
-
-Once you make a pull request, the CLA assistant will add a review comment. Just click on
-the link and accept the CLA. That's it!
-
 ## Getting Started
 
-The documentation in this repo are generated using [Hexo](https://hexo.io/). You should
-be able to install tools, build and start the local `hexo` site. 
+The documentation in this repo is generated using [Hexo](https://hexo.io/).
 
 **Fork this repository**
 
-Using GitHub interface, create a copy (a fork) of this repository under your personal account.
+Using GitHub, create a copy (a fork) of this repository under your personal account.
 
 **Clone your forked repository**
 
@@ -55,23 +49,9 @@ npm run build
 npm start
 ```
 
-Visit [http://localhost:2222/](http://localhost:2222/)
+Visit [http://localhost:2222/](http://localhost:2222/).
 
 ## Writing Documentation
-
-### Links
-
-Links are all handled through our [cypress.on](https://github.com/cypress-io/cypress-on) api.
-
-Link all pages but their name (property key) in `source/_data/sidebar.yml`
-
-- https://on.cypress.io/NAME_OF_PAGE
-- https://on.cypress.io/and
-- https://on.cypress.io/visit
-- https://on.cypress.io/unit-testing-recipe
-- https://on.cypress.io/introduction-to-cypress
-- https://on.cypress.io/writing-your-first-test
-- https://on.cypress.io/general-questions-faq
 
 ### Adding Examples
 
@@ -87,24 +67,23 @@ Add an associating image with the example within the [`source/img/examples`](/so
 
 ### Linting
 
-Danger 📛: because we are minifying client side code using Hexo plugin which in turn calls
-`uglify`, the code should be strictly ES5. Thus everything inside the `theme` should
-be linted with ES5 settings and not upgraded to ES6.
-
-### Push code to your repository
-
-You should push your local changes to your forked GitHub repository and then
-open a pull request from your repo to `cypress-io/cypress-documentation` repo.
+Danger 📛: because we are minifying client side code using a [Hexo plugin](https://github.com/mamboer/hexo-filter-cleanup) which in turn calls
+`uglify`, the code should be strictly ES5. Thus everything inside the `theme` should be linted with ES5 settings and not upgraded to ES6.
 
 ### Pull Requests
 
-- The pull request should be from your repository to branch `develop` in `cypress-io/cypress-documentation`
+You should push your local changes to your forked GitHub repository and then
+open a pull request from your repo to the `cypress-io/cypress-documentation` repo.
+
+- The pull request should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
 - When opening a PR for a specific issue already open, please use the `address #[issue number]` or `closes #[issue number]` syntax in the pull request description.
+
+### Contributor License Agreement
+
+We use a [`cla-assistant.io`](https://cla-assistant.io/) web hook to make sure every contributor assigns the rights of their contribution to Cypress.io. If you want to read the CLA agreement, its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
+
+After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Just click on the link and accept the CLA. That's it!
 
 ## Deployment
 
-We will try to review and merge pull requests quickly. After merging we
-will try releasing the documentation. First we will deploy it to staging environment,
-run E2E tests (using Cypress itself of course), and then we will merge it into
-`master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io)
-website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md)
+We will try to review and merge pull requests as fast as possible. After merging, we will deploy it to staging environment, run E2E tests (using Cypress itself of course), and then merge it into `master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io) website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md).

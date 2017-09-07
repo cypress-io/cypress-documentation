@@ -23,6 +23,10 @@ describe "lib/helpers", ->
     expects = (str, expected) ->
       expect(helpers.addPageAnchors(str)).to.eq(expected)
 
+    it "does not wrap fragment in html tag", ->
+      snapshot(process("<p>foo</p>", false))
+
+  context "addPageAnchors", ->
     it "is noop if no headings found", ->
       str = "<p>foo</p>"
       snapshot(helpers.addPageAnchors(str))

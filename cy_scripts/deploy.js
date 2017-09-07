@@ -70,6 +70,12 @@ const getDeployEnvironment = R.partial(cliOrAsk,
 
 function ensureCleanWorkingDirectory () {
   return repo.statusAsync()
+  .catch((e) => {
+    console.error('Could not get Git status')
+    console.error(e)
+    console.error('assuming clean status')
+    return { clean: true }
+  })
   .then((status) => {
     if (!status.clean) {
       console.log(chalk.red('\nUncommited files:'))
