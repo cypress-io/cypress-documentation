@@ -17,10 +17,12 @@ All contributors are expecting to abide by our [Code of Conduct](https://github.
 
 ## Contributor License Agreement
 
-We use [cla-assistant.io](https://cla-assistant.io/) to make sure every contributor
-assigns the rights to the contribution to Cypress.io. You can find the full license agreement
-in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae). 
-Pull requests without signed agreement will NOT be accepted.
+We use `cla-assistant.io` web hook to make sure every contributor
+assigns the rights to the contribution to Cypress.io. If you want to read the CLA agreement,
+its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
+
+Once you make a pull request, the CLA assistant will add a review comment. Just click on
+the link and accept the CLA. That's it!
 
 ## Getting Started
 
@@ -82,6 +84,12 @@ Add an associating image with the example within the [`source/img/examples`](/so
 ```
 
 ## Commiting Code
+
+### Linting
+
+Danger 📛: because we are minifying client side code using Hexo plugin which in turn calls
+`uglify`, the code should be strictly ES5. Thus everything inside the `theme` should
+be linted with ES5 settings and not upgraded to ES6.
 
 ### Push code to your repository
 
