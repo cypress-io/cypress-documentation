@@ -1,12 +1,12 @@
 ---
-title: Cypress.Log
+title: Cypress.log
 comments: false
 ---
 
 # Syntax
 
 ```javascript
-Cypress.Log(options)
+Cypress.log(options)
 ```
 
 ## Usage
@@ -14,20 +14,20 @@ Cypress.Log(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-Cypress.Log({}) // Set server defaults
+Cypress.log({}) // Set server defaults
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.Log({})  // Errors, cannot be chained off 'cy'
+cy.log({})  // Errors, cannot be chained off 'cy'
 ```
 
 ## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
-Pass in an options object to `Cypress.Log`.
+Pass in an options object to `Cypress.log`.
 
 # Examples
 
