@@ -87,6 +87,6 @@ Cypress comes fully baked, batteries included.
 - **Continuous Integration.** Cypress supports {% url "TravisCI" https://travis-ci.org/ %}, {% url "Jenkins" https://jenkins.io/ %}, {% url "CircleCI" https://circleci.com/ %}, {% url "Codeship" https://codeship.com/ %}, or any service running {% url 'Docker' docker-images %}.
 - **Screenshots & Videos:** Cypress automatically takes {% url 'screenshots' screenshots-and-videos %} on failed tests and records a {% url 'video' screenshots-and-videos %} of headless runs.
 - **Understand Failures:** Our {% url 'Dashboard Service' features-dashboard %} can record all of your tests and help you pinpoint and understand failures.
-- **Excellent Support.** Get stuck? We're here to help you. {% open_an_issue "Open an issue" %}, join us in {% url "our Gitter chat" https://gitter.im/cypress-io/cypress %}, [email us](mailto:support@cypress.io), or {% url "ask a question on Stackoverflow" https://stackoverflow.com/search?q=cypress.io %}.
+- **Excellent Support.** Get stuck? We're here to help you. {% open_an_issue "Open an issue" %}, join us in {% url "our Gitter chat" https://gitter.im/cypress-io/cypress %}, [email us](mailto:support@cypress.io), or {% url "ask a question on Stackoverflow" https://on.cypress.io/stack-overflow %}.
 
 {% img /img/guides/maintain-tests.gif %}
