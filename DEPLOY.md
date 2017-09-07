@@ -8,15 +8,18 @@
 
 ## Automatic Deployment
 
-Any commits or PR requests merged that touch any file in the `docs` directory
-will trigger a deployment, once the commit lands in the `master` branch.
-But this deployment will only happen if the job `docs-tests` succeeds.
+Any commits landed in `develop` branch of this repository will be deployed
+to `staging` environment if end to end tests pass.
+
+Any commits landed in `master` branch will be deployed to the `production`
+environment and will be visible at [https://docs.cypress.io](https://docs.cypress.io)
+
 See [circle.yml](circle.yml) job definition file for up-to-date information.
 
 ## Manual Deployment
 
 You can only deploy the Cypress documentation manually if
-you are a member of the Cypress organization.
+you are a member of the Cypress organization and have necessary credentials files.
 
 ```shell
 npm run deploy
