@@ -57,7 +57,6 @@ sidebar:
     creating-fixtures: Creating Fixtures
     best-practices: Best Practices
     anti-patterns: Anti-patterns
-    userland-extensions: Userland Extensions
     known-issues: Known Issues
     contributing: Contributing
     changelog: Changelog
@@ -189,6 +188,8 @@ sidebar:
     talks-media: Talks
     podcasts-media: Podcasts
     blogs-media: Blogs
+    userland: Userland
+    extensions: Extensions
   dashboard:
     overview: Dashboard
     features-dashboard: Features
