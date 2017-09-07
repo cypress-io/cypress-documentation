@@ -15,6 +15,13 @@ Thanks for taking the time to contribute! :smile:
 
 All contributors are expecting to abide by our [Code of Conduct](https://github.com/cypress-io/cypress/wiki/code-of-conduct).
 
+## Contributor License Agreement
+
+We use [cla-assistant.io](https://cla-assistant.io/) to make sure every contributor
+assigns the rights to the contribution to Cypress.io. You can find the full license agreement
+in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae). 
+Pull requests without signed agreement will NOT be accepted.
+
 ## Getting Started
 
 The documentation in this repo are generated using [Hexo](https://hexo.io/). You should
