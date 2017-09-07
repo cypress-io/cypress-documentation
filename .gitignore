@@ -3,3 +3,12 @@ db.json
 public/
 *.log
 .DS_Store
+.deploy*/
+support
+
+themes/cypress/source/css/vendor
+themes/cypress/source/js/vendor
+themes/cypress/source/fonts/vendor
+
+cypress/screenshots
+cypress/videos
