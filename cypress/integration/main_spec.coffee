@@ -107,14 +107,14 @@ describe "Documentation", ->
       cy.get("aside#sidebar")
         .should("be.visible")
 
-    it "has table of contents", ->
+    it "has table of contents and goes to 0.19.0", ->
       cy.get("aside#article-toc")
         .should("be.visible")
         .wait(2000) # allows menuspy to load and set the menu links
-        .contains("0.18.0")
+        .contains("0.19.0")
         .click()
       cy.url()
-        .should('include', '#0-18-0')
+        .should('include', '#0-19-0')
 
   describe "Intro to Cypress", ->
     beforeEach ->
