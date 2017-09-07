@@ -118,7 +118,8 @@ hexo.extend.helper.register('url_for_lang', function (path) {
 })
 
 hexo.extend.helper.register('raw_link', function (path) {
-  return `https://github.com/cypress-io/cypress-documentation/edit/master/source/${path}`
+  const branch = 'develop'
+  return `https://github.com/cypress-io/cypress-documentation/edit/${branch}/source/${path}`
 })
 
 hexo.extend.helper.register('add_page_anchors', helpers.addPageAnchors)
