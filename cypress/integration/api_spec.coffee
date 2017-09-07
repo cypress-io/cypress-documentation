@@ -1,5 +1,6 @@
 YAML = require('yamljs')
 _ = require('lodash')
+{improveUrl} = require('./repo.coffee')
 
 API_PATH = "/api/introduction/api"
 API_HTML = API_PATH + '.html'
@@ -29,7 +30,7 @@ describe "API", ->
       #     .and("include", API_PATH + ".md")
       cy.get("@editLink")
         .should("have.attr", "href")
-        .and("include", "https://github.com/cypress-io/cypress/issues/new")
+        .and("include", improveUrl)
 
   context "Sidebar", ->
     beforeEach ->

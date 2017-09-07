@@ -1,5 +1,6 @@
 YAML = require('yamljs')
 _ = require('lodash')
+{improveUrl} = require('./repo.coffee')
 
 DASHBOARD_PATH = "/dashboard/overview/features-dashboard"
 
@@ -25,7 +26,7 @@ describe "Dashboard", ->
       # cy.get("@editLink").should("have.attr", "href")
       #     .and("include", GUIDES_PATH + ".md")
       cy.get("@editLink").should("have.attr", "href")
-        .and("include", "https://github.com/cypress-io/cypress/issues/new")
+        .and("include", improveUrl)
 
   context "Sidebar", ->
     beforeEach ->
