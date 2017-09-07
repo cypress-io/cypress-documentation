@@ -5,6 +5,14 @@
   "hexo": {
     "version": "3.3.8"
   },
+  "license": "MIT",
+  "bugs": "https://github.com/cypress-io/cypress-documentation/issues",
+  "author": "Cypress.io team and contributors",
+  "homepage": "https://docs.cypress.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cypress-io/cypress-documentation.git"
+  },
   "scripts": {
     "postinstall": "echo 'This project needs: npm run build'",
     "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",
