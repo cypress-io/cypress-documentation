@@ -75,7 +75,7 @@ jobs:
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
-      - run: NODE_ENV=staging npm run build
+      - run: NODE_ENV=development npm run build
       - run: ls -Rl themes/cypress/source/js
       - run: ls public
       - run: ls -Rl public/js
