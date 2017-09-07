@@ -79,9 +79,6 @@ jobs:
       - run: NODE_ENV=staging npm run build
       - run: ls -Rl themes/cypress/source/js
       - run: ls public
-      - run: ls -Rl public/js
-      - store_artifacts:
-          path: public/js/application*.js
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
           name: Print deployed version
