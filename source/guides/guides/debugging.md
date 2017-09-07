@@ -75,9 +75,9 @@ Though Cypress has built out {% url "an excellent GUI application" overview-of-t
 
 <!-- TODO: show how clicking commands populates the dev tools, demonstrate a few commands -->
 
-# Debugging in the Command line
+# Debug the Command Line
 
-All commands in the Command Line can be run in debug mode using the `npm` [`debug`](https://www.npmjs.com/package/debug) module.
+All commands in Cypress {% url "Command Line" command-line %} can be run in debug mode using the `npm` [`debug`](https://www.npmjs.com/package/debug) module.
 
 **To see all Cypress modules debug output**
 

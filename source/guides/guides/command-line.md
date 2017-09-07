@@ -234,12 +234,13 @@ cypress.run({
 }).then(console.log, console.error)
 ```
 
-## `run()` method
+## `.run()`
 
 A Promise-returning method that resolves with an object with test results. A typical run with 2 passing tests could return something like this
 
 ```js
 const cypress = require('cypress')
+
 cypress.run({
   spec: './cypress/integration/passing-spec.js'
 }).then(console.log)
@@ -257,10 +258,11 @@ cypress.run({
 }
 ```
 
-If a test is failing, the promise still resolves, but with different counters
+If a test is failing, the promise still resolves, but with different counters:
 
 ```js
 const cypress = require('cypress')
+
 cypress.run({
   spec: './cypress/integration/failing-spec.js'
 }).then(console.log)
@@ -278,16 +280,17 @@ cypress.run({
 }
 ```
 
-The promise is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed. In that case, the promise will be rejected with detailed error.
+The promise is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed. In that case, the promise will be rejected with a detailed error.
 
-### Options
+***Options***
 
-You have already seen the first useful option `run` takes: `{spec: "<spec path>"}`. Without it Cypress will try to run all files in the default `cypress/integration` folder. This and other options all are the same as Cypress {% urlHash "run options" cypress-run %}, except they have to the full words and not single letter aliases.
+You have already seen the first useful option `run` accepts: `{spec: "<spec path>"}`. Without it, Cypress will try to run all files in the default `cypress/integration` folder. This and other options are all the same as {% urlHash "`cypress run` command options" cypress-run %}, except they need to be the full words and not the single letter aliases.
 
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
 const cypress = require('cypress')
+
 cypress.run({
   spec: './cypress/integration/spec.js',
   port: 8220,
@@ -299,9 +302,34 @@ cypress.run({
 
 ```javascript
 const cypress = require('cypress')
+
 cypress.run({
   s: './cypress/integration/spec.js',
   p: 8220,
   b: 'chrome'
 })
+```
+
+# Debugging Commands
+
+All commands in Cypress {% url "Command Line" command-line %} can be run in debug mode using the `npm` [`debug`](https://www.npmjs.com/package/debug) module.
+
+**To see all Cypress modules debug output**
+
+```shell
+DEBUG=cypress:* cypress open
+```
+
+```shell
+DEBUG=cypress:* cypress run
+```
+
+**To filter debug output to a specific module**
+
+```shell
+DEBUG=cypress:server cypress run
+```
+
+```shell
+DEBUG=cypress:cli cypress run
 ```
