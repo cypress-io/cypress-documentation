@@ -81,8 +81,14 @@ gulp.task('copy:tmp:to:public', () => {
   .pipe(gulp.dest('public'))
 })
 
-gulp.task('clean:js', () => {
+gulp.task('clean:js', ['clean:js:folders', 'clean:non:application:js'])
+
+gulp.task('clean:non:application:js', () => {
   return remove('public/js/!(application).js')
+})
+
+gulp.task('clean:js:folders', () => {
+  return remove('public/js/vendor')
 })
 
 gulp.task('clean:css', () => {
@@ -97,8 +103,10 @@ gulp.task('clean:public', () => {
   return remove('public')
 })
 
+gulp.task('pre:build', ['copy:static:assets'])
+
 gulp.task('post:build', (cb) => {
-  runSequence('copy:static:assets', 'clean:js', 'clean:css', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
+  runSequence('clean:js', 'clean:css', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
 })
 
 gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:search:css', 'move:fira:fonts', 'move:font:awesome:fonts'])

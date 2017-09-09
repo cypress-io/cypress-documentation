@@ -67,6 +67,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      - run: ls -Rl themes/cypress/source/js
       - run: npm run test-e2e
 
   "deploy-docs-staging":
@@ -74,7 +75,9 @@ jobs:
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: npm ls || true
       - run: NODE_ENV=staging npm run build
+      - run: ls -Rl themes/cypress/source/js
       - run: ls public
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
