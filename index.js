@@ -11,8 +11,10 @@ const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
 
+// these are the args like --port
 const args = minimist(process.argv.slice(2))
 
+// this is the command passed in such as 'server' or 'generate'
 const cmd = args._.shift()
 
 const hexo = new Hexo(process.cwd(), {})
@@ -87,6 +89,8 @@ function initHexo () {
 
 }
 
+// remove these files they are causing errors
+// https://github.com/cypress-io/cypress-documentation/issues/54
 const pathToBustedDjango = path.resolve('node_modules', 'prismjs', 'components', 'prism-django.js')
 
 const pathToBustedDjangoMin = path.resolve('node_modules', 'prismjs', 'components', 'prism-django.min.js')
