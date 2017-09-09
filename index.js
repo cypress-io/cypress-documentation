@@ -17,7 +17,7 @@ const args = minimist(process.argv.slice(2))
 // this is the command passed in such as 'server' or 'generate'
 const cmd = args._.shift()
 
-const hexo = new Hexo(process.cwd(), {})
+const hexo = new Hexo(process.cwd(), args)
 
 function initHexo () {
   // defaults outside of _config.yml
