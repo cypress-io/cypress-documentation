@@ -68,11 +68,8 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: ls -Rl themes/cypress/source/js
-      - run:
-          command: npm start
-          background: true
-      - run: sleep 40
-      - run: npm run cypress
+      - run: npm start
+      - run: npm run test-e2e
 
   "deploy-docs-staging":
     <<: *defaults
