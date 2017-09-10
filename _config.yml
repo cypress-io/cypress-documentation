@@ -11,7 +11,6 @@ language: en
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://docs.cypress.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -163,40 +162,3 @@ marked:
   autolink: false
 ## https://github.com/hexojs/hexo-renderer-markdown-it
 # markdown: 'default'
-
-## https://github.com/mamboer/hexo-filter-cleanup
-hfc_useref:
-  enable: true
-  concat: true
-  exclude:
-hfc_html:
-  enable: false
-  exclude:
-hfc_css:
-  enable: true
-  exclude:
-    - '*.min.css'
-hfc_js:
-  enable: true
-  mangle: true
-  output:
-  compress:
-  exclude:
-    - '*.min.js'
-hfc_img:
-  enable: true
-  interlaced: false
-  multipass: false
-  optimizationLevel: 2
-  pngquant: false
-  progressive: false
-  webp: true
-  webpQuality: 75
-  gifslice: true
-  jpegtran: true
-  jpegrecompress: false
-  jpegrecompressQuality: 'medium'
-  optipng: true
-  svgo: false
-hfc_favicons:
-  enable: false
