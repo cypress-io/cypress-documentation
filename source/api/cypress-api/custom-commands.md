@@ -76,19 +76,46 @@ Examples of parent commands:
 ***Custom `login` command***
 
 ```javascript
-Cypress.Commands.add('login', function(user, options = {}) {
+Cypress.Commands.add('login', function(userType, options = {}) {
   // this is an example of skipping your UI and logging in programmatically
+
+  // setup some basic types
+  // and user properties
+  const types = {
+    admin: {
+      name: 'Jane Lane',
+      admin: true,
+    }
+    user: {
+      name: 'Jim Bob',
+      admin: false,
+    }
+  }
+
+  // grab the user
+  const user = types[userType]
 
   // create the user first in the DB
   cy.request({
-
+    url: '/seed/users', // assuming you've exposed a seeds route
+    method: 'POST',
+    body: user,
   })
-
-  // login as this user
-
-  // TODO: below let's show how you can use Cypress.log()
-  // to output useful information about what happened
-  // in the case where you silence the requests
+  .its('body')
+  .then((body) => {
+    // assuming the server sends back the user details
+    // including a randomly generated password
+    //
+    // we can now login as this newly created user
+    cy.request({
+      url: '/login',
+      method: 'POST',
+      body: {
+        email: body.email,
+        password: body.password,
+      }
+    })
+  })
 })
 ```
 
@@ -101,6 +128,10 @@ cy
   .get('button')
   .login('user') // can also be chained but will not receive the previous subject
 ```
+
+{% note info 'Command Log' %}
+Did you know that you can control how your custom commands appear in the Command Log? Read more about {% urlHash 'Command Logging' Command-Logging %}.
+{% endnote %}
 
 ## Child Commands
 
@@ -160,7 +191,9 @@ cy.console() // detailed error about how you can't call console without a subjec
 
 ## Dual Commands
 
-dual command usage
+A dual command can either start a chain of commands or be chained off of an existing one. It's basically the hybrid between both a parent and a child command. You will likely rarely use this, and only a handful of our internal commands use this.
+
+Nevertheless, it is useful if your command can work in multiple ways - either with an existing subject or without one.
 
 Examples of dual commands:
 
@@ -168,17 +201,63 @@ Examples of dual commands:
 - {% url `cy.scrollTo()` scrollto %}
 - {% url `cy.wait()` wait %}
 
-## Overwrite Existing Command
-
-You can modify the logic of existing Cypress commands or previously defined custom commands.
+***Custom Dual Command***
 
 ```javascript
-Cypress.Commands.overwrite('visit', function(orig, url, options){
-  // modify url or options here...
-  // showing to use Cypress.env() or something like auth: {...}
-  return orig(url, options)
+// not a great example (WIP) :-)
+Cypress.Commands.add('dismiss', {
+  prevSubject: 'optional'
+}, (subject, arg1, arg2) => {
+  // subject may be defined or undefined
+  // so you likely want to branch the logic
+  // based off of that
+
+  if (subject) {
+    ...
+  } else {
+    ...
+  }
 })
 ```
+
+***Usage***
+
+```javascript
+cy.dismiss() // no subject
+cy.get('#dialog').dismiss() // with subject
+```
+
+## Overwrite Existing Commands
+
+You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up just using the original.
+
+***Overwrite `visit` command***
+
+```javascript
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+  const domain = Cypress.env("BASE_DOMAIN") // assuming you care about this env var
+
+  if (domain === '...') {
+    url = '...'
+  }
+
+  if (options.something === 'else') {
+    url = '...'
+  }
+
+  // originalFn is the existing `visit` command that need to call
+  // and it will receive whatever you pass in here
+  originalFn(url, options)
+})
+```
+
+{% note info %}
+We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
+
+This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Just set the `baseUrl` config property in `cypress.json` and override it with environment variable `CYPRESS_BASE_URL`.
+
+For more complex use cases feel free to overwrite existing commands.
+{% endnote %}
 
 # Validations
 
@@ -261,7 +340,7 @@ You can also mix optional commands **with** validations.
 ```javascript
 // this is how .contains() is implemented
 Cypress.Commands.add('contains', {
-  prevSubject: ["optional", "element"]
+  prevSubject: ['optional', 'element']
 }, (subject, options) => {
   // subject could be undefined
   // since its optional.
@@ -293,7 +372,11 @@ cy.wrap(null).contains() // has subject, but not `element`, will error
 
 ## Retryability
 
+WIP
+
 ## Composability
+
+WIP
 
 ## Command Logging
 
@@ -358,8 +441,8 @@ it('displays a list of search results', function(){
         //   url: 'http://app.com/search?cypress.io'
         //   method: 'GET',
         //   duration: 123,
-        //   request: {...}
-        //   response: {...}
+        //   request: {...},
+        //   response: {...},
         // }
         */
       })
@@ -435,4 +518,5 @@ Having custom commands repeat the same UI actions over and over again is slow, a
 
 # See also
 
+- {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' logging-in-recipe %}
