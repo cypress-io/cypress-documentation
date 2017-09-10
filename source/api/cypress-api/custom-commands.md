@@ -41,9 +41,9 @@ Pass a function that receives the arguments passed to the command.
 
 Pass in an options object to define the implicit behavior of the custom command.
 
-Option | Default | Description
---- | --- | ---
-`prevSubject` | `false` | how to handle the previously yielded subject.
+Option | Accepts | Default | Description
+--- | --- | --- | ---
+`prevSubject` | `String` or `Array` | `false` | how to handle the previously yielded subject.
 
 The `prevSubject` accepts the following values:
 
@@ -73,7 +73,7 @@ Examples of parent commands:
 - {% url `cy.exec()` exec %}
 - {% url `cy.route()` route %}
 
-***Custom Parent Command***
+***Custom `login` command***
 
 ```javascript
 Cypress.Commands.add('login', function(user, options = {}) {
@@ -92,21 +92,81 @@ Cypress.Commands.add('login', function(user, options = {}) {
 })
 ```
 
-## Add Child Command
+***Usage***
+
+```javascript
+cy.login('admin') // can start a chain off of cy
+
+cy
+  .get('button')
+  .login('user') // can also be chained but will not receive the previous subject
+```
+
+## Child Commands
 
 Child commands are always chained off of a **parent** command, or another **child** command.
 
-***Custom command to right click on DOM element***
+The previous subject will automatically be yielded to the callback function.
+
+Examples of child commands:
+
+- {% url `.click()` click %}
+- {% url `.trigger()` trigger %}
+- {% url `.find()` find %}
+- {% url `.should()` should %}
+- {% url `.as()` as %}
+
+***Custom `console` command***
 
 ```javascript
-Cypress.Commands.add('rightclick', {prevSubject: 'dom'}, function(subject, arg1, arg2){
-  // enforces that the previous subject is DOM and the subject is yielded here
-  // blows up and provides a great error when improperly chained
+// not a super useful custom command
+// but demonstrates how subject is passed
+// and how the arguments are shifted
+Cypress.Commands.add('console', {
+  prevSubject: true
+}, (subject, method) => {
+  // the previous subject is automatically received
+  // and the commands arguments are shifted
 
-  // show example error of chaining cy.rightclick()
-  // show example error of cy.wrap({}).rightclick()
+  // allow us to change the console method used
+  method = method || 'log'
+
+  // log the subject to the console
+  console[method]('The subject is', subject)
+
+  // whatever we return becomes the new subject
+  //
+  // we don't want to change the subject so
+  // we return whatever was passed in
+  return subject
 })
 ```
+
+***Usage***
+
+```javascript
+cy.get('button').console('info').then($button) => {
+  // subject is still $button
+})
+```
+
+By setting the `{ prevSubject: true }`, our new `.console()` command will require a subject.
+
+Invoking it like this would error:
+
+```javascript
+cy.console() // detailed error about how you can't call console without a subject
+```
+
+## Dual Commands
+
+dual command usage
+
+Examples of dual commands:
+
+- {% url `cy.contains()` contains %}
+- {% url `cy.scrollTo()` scrollto %}
+- {% url `cy.wait()` wait %}
 
 ## Overwrite Existing Command
 
@@ -120,11 +180,126 @@ Cypress.Commands.overwrite('visit', function(orig, url, options){
 })
 ```
 
+# Validations
+
+As noted in the {% urlHash 'Arguments' 'Arguments' %} above, you can also set `prevSubject` to one of:
+
+- `element`
+- `document`
+- `window`
+
+When doing so Cypress will automatically validate your subject to ensure it conforms to one of those types.
+
+{% note info  %}
+Adding validations is optional. Simply passing `{ prevSubject: true }` will require a subject, but not validate its type.
+{% endnote %}
+
+## Require Element
+
+Require subject, and of type: `element`.
+
+```javascript
+// this is how .click() is implemented
+Cypress.Commands.add('click', {
+  prevSubject: 'element'
+}, (subject, options) => {
+  // receives the previous subject and its
+  // guaranteed to be an element
+})
+```
+
+**{% fa fa-check-circle green %} Valid Usage**
+
+```javascript
+cy.get('button').click() // has subject, and is `element`
+```
+
+**{% fa fa-exclamation-triangle red %} Invalid Usage**
+
+```javascript
+cy.click() // no subject, will error
+cy.wrap([]).click() // has subject, but not `element`, will error
+```
+
+## Allow Multiple Types
+
+***Example 2: `.trigger()`***
+
+Require subject, and of type either: `element`, `document` or `window`
+
+```javascript
+// this is how .trigger() is implemented
+Cypress.Commands.add('trigger', {
+  prevSubject: ['element', 'document', 'window']
+}, (subject, eventName, options) => {
+  // receives the previous subject and its
+  // guaranteed to be an element, document, or window
+})
+```
+
+**{% fa fa-check-circle green %} Valid Usage**
+
+```javascript
+cy.get('button').trigger() // has subject, and is `element`
+cy.document().trigger() // has subject, and is `document`
+cy.window().trigger() // has subject, and is `window`
+```
+
+**{% fa fa-exclamation-triangle red %} Invalid Usage**
+
+```javascript
+cy.trigger() // no subject, will error
+cy.wrap(true).trigger() // has subject, but not `element`, will error
+```
+
+Validations always work as "or" not "and".
+
+## Optional with Types
+
+You can also mix optional commands **with** validations.
+
+```javascript
+// this is how .contains() is implemented
+Cypress.Commands.add('contains', {
+  prevSubject: ["optional", "element"]
+}, (subject, options) => {
+  // subject could be undefined
+  // since its optional.
+  //
+  // if its present
+  // then its an element
+  if (subject) {
+    // ...
+  } else {
+    // ...
+  }
+})
+```
+
+**{% fa fa-check-circle green %} Valid Usage**
+
+```javascript
+cy.contains() // no subject, but valid because its optional
+cy.get('#main').contains() // has subject, and is `element`
+```
+
+**{% fa fa-exclamation-triangle red %} Invalid Usage**
+
+```javascript
+cy.wrap(null).contains() // has subject, but not `element`, will error
+```
+
 # Notes
 
 ## Retryability
 
 ## Composability
+
+## Command Logging
+
+When creating your own custom command, you can control how it appears and behaves in the Command Log.
+
+Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're issuing many internal Cypress commands, consider passing `{ log: false }` to those commands, and programmatically controlling your custom command. This will cleanup the Command Log and be much more visually appealing and understandable.
 
 ## Best Practices
 
@@ -134,7 +309,11 @@ Custom commands work well when you're needing to describe behavior that's desira
 
 However, this pattern can be used and abused. Let's not forget - writing Cypress tests is just **JavaScript**, and its often much easier just to write a simple function for repeatable behavior that's specific to only **a single spec file**.
 
-If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself: can this just be written as a simple function?
+If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself:
+
+> Can this just be written as a simple function?
+
+The answer is usually **yes**. Here's an example:
 
 ```javascript
 // There's no reason to create something like a cy.search() custom
@@ -231,29 +410,28 @@ There's no reason to add this level of complexity when you're only wrapping a co
 
 Don't do things like:
 
-**{% fa fa-exclamation-triangle red %}** `cy.clickButton(selector)`
+- **{% fa fa-exclamation-triangle red %}** `cy.clickButton(selector)`
+- **{% fa fa-exclamation-triangle red %}** `.shouldBeVisible()`
 
-This custom command is really just wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions.
+This first custom command is really just wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
 
-Cypress tests are all about **readability** and **simplicity**. You don't have to do that much actual programming to get a lot done.
+The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when it's already as simple as typing: `.should('be.visible')`
 
-Try not to overcomplicate things and create too many abstractions. When in doubt, just use a regular function local to an individual spec file.
+Testing in Cypress is all about **readability** and **simplicity**. You don't have to do that much actual programming to get a lot done. You also don't need to worry about keeping your code as DRY as possible. Test code serves a different purpose than app code. Understandability and debuggability should be prioritized above all else.
+
+Try not to overcomplicate things and create too many abstractions. When in doubt, just use a regular function for individual spec files.
 
 ***3. Don't do too much in a single command***
 
 Make your custom commands composable and as unopinionated as possible. Cramming too much into them makes them inflexible and requires more and more options passing to control their behavior.
 
-Try to add either zero or as few assertions as possible in your custom command. Those tend to shape your command into a much more rigid structure. Sometimes this is unavoidable, but a best practice is to let the calling code when and how to use assertions.
+Try to add either zero or as few assertions as possible in your custom command. Those tend to shape your command into a much more rigid structure. Sometimes this is unavoidable, but a best practice is to let the calling code choose when and how to use assertions.
 
-***4. Use the Cypress.log API***
-
-Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're issuing many internal Cypress commands, consider passing `{ log: false }` to those commands, and programmatically controlling your custom command. This will cleanup the Command Log and be much more visually appealing and understandable.
-
-***5. Skip your UI as much as possible***
+***4. Skip your UI as much as possible***
 
 Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use {% url `cy.request()` request %} to login, set cookies or local storage directly, stub and mock your applications functions, and / or trigger events programmatically.
 
-Having custom commands repeat the same UI actions over and over again is slow, so try to skip as much as possible.
+Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
 # See also
 
