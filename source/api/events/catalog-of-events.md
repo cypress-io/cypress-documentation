@@ -7,6 +7,8 @@ Here's the complete list of Cypress events emitted.
 
 You can use the accompanying {% url "`on`" on %}, {% url "`once`" once %}, {% url "`removeListener`" removelistener %} and {% url "`removeAllListeners`" removealllisteners %} methods on either the `Cypress` or `cy` (automatically unbound between tests) object to work with these events.
 
+## Events
+
 Event | Args | Description
 ----- | ---- | ----------
 `"app:scrolled"` | subject, subject type | When app under test is scrolled
