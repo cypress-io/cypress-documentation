@@ -189,6 +189,10 @@ Invoking it like this would error:
 cy.console() // detailed error about how you can't call console without a subject
 ```
 
+{% note info %}
+Whenever you're using a child command you likely want to use `cy.wrap()` on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.
+{% endnote %}
+
 ## Dual Commands
 
 A dual command can either start a chain of commands or be chained off of an existing one. It's basically the hybrid between both a parent and a child command. You will likely rarely use this, and only a handful of our internal commands use this.
@@ -213,6 +217,9 @@ Cypress.Commands.add('dismiss', {
   // based off of that
 
   if (subject) {
+    // wrap the existing subject
+    // and do something with it
+    cy.wrap(subject)
     ...
   } else {
     ...
@@ -246,8 +253,10 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
   }
 
   // originalFn is the existing `visit` command that need to call
-  // and it will receive whatever you pass in here
-  originalFn(url, options)
+  // and it will receive whatever you pass in here.
+  //
+  // make sure to add a return here!
+  return originalFn(url, options)
 })
 ```
 
@@ -340,13 +349,15 @@ You can also mix optional commands **with** validations.
 ```javascript
 // this is how .contains() is implemented
 Cypress.Commands.add('contains', {
-  prevSubject: ['optional', 'element']
+  prevSubject: ['optional', 'window', 'document', 'element']
 }, (subject, options) => {
   // subject could be undefined
   // since its optional.
   //
   // if its present
-  // then its an element
+  // then its window, document, or element.
+  // - when window or document we'll query the entire DOM.
+  // - when element we'll query only inside of its children.
   if (subject) {
     // ...
   } else {
@@ -360,6 +371,9 @@ Cypress.Commands.add('contains', {
 ```javascript
 cy.contains() // no subject, but valid because its optional
 cy.get('#main').contains() // has subject, and is `element`
+cy.window().contains() // has subject, and is `window`
+cy.document().contains() // has subject, and is `document`
+cy.visit().contains() // has subject, and since visit yields `window` it's ok
 ```
 
 **{% fa fa-exclamation-triangle red %} Invalid Usage**
@@ -371,10 +385,6 @@ cy.wrap(null).contains() // has subject, but not `element`, will error
 # Notes
 
 ## Retryability
-
-WIP
-
-## Composability
 
 WIP
 
