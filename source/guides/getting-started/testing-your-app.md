@@ -14,21 +14,9 @@ comments: false
 
 We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let's integrate it into your *real* app!
 
-# {% fa fa-plus %} Step 1: Add Cypress to your Project
+# {% fa fa-terminal %} Step 1: Start Your Server
 
-Follow the {% url 'previous steps' writing-your-first-test#Setup-Add-a-New-Project %} or add Cypress to your project as we did before with `npm` except this time use your **real project folder**.
-
-```shell
-$ npm install cypress --save-dev
-```
-
-{% note info Which Project To Install To? %}
-Does your application have multiple project repositories? Many modern applications do! Cypress should be installed with your *front-end project*, wherever you serve the front-end files for development.
-{% endnote %}
-
-# {% fa fa-terminal %} Step 2: Start Your Server
-
-Now to test your own application the first thing you'll want to do is start your local development server that hosts the application.
+Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
 
 It should look something like **http://localhost:8080**.
 
@@ -65,7 +53,7 @@ With that said - you still have the option to have it **both ways**.
 Many of our users run the *majority* of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
 {% endnote %}
 
-# {% fa fa-globe %} Step 3: Visit Your Server
+# {% fa fa-globe %} Step 2: Visit Your Server
 
 Once your server is running, it's time to visit it.
 
@@ -103,7 +91,7 @@ If you forgot to start your server you'll see the error below:
 
 If you've started your server, then you should see your application loaded and working.
 
-# {% fa fa-cogs %} Step 4: Configure Cypress
+# {% fa fa-cogs %} Step 3: Configure Cypress
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 

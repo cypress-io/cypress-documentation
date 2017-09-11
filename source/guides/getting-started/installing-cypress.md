@@ -8,31 +8,23 @@ comments: false
 
 - How to install Cypress via `npm`.
 - How to install Cypress via direct download.
-- How to version and automate Cypress via `package.json`
+- How to version and run Cypress via `package.json`
 
 {% endnote %}
 
 # System Requirements
 
-Cypress is a desktop application that is locally installed on your computer.
+Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
-{% note info %}
-The desktop application manages your local projects. The actual testing will be done in a **browser**, not the desktop application.
-{% endnote %}
+- Mac
+- Linux
+- {% issue 74 'Windows is not currently supported' %}
 
-The desktop application can be installed in the following operating systems:
+# Installing
 
-OS | Path
-:--- | :---
-Mac  | `/Applications/Cypress.app`
-Linux  | `/home/<user>/.cypress/Cypress`
-Windows  | {% issue 74 'not currently supported' %}
+## {% fa fa-terminal %} `npm install`
 
-There are no dependencies to install the Desktop Application, although if you want to {% url "use Cypress from the command line" https://www.npmjs.com/package/cypress %} you will need to have {% url "`node`" https://nodejs.org %} installed.
-
-# {% fa fa-terminal %} Installing
-
-Installing Cypress is easy:
+Installing Cypress via `npm` is easy:
 
 ```shell
 cd /your/project/path
@@ -42,33 +34,32 @@ cd /your/project/path
 npm install cypress --save-dev
 ```
 
-This will install Cypress locally for this project, which is ideal for a few reasons:
+This will install Cypress locally as a dev dependency for your project. We recommend this approach because:
 
-- Cypress is a versioned dependency like any other dependency.
-- Multiple versions of Cypress can co-exist on the same machine on a per-project basis.
-- It simplifies Continuous Integration setup.
+- Cypress is versioned like any other dependency.
+- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
 
-{% fa fa-download %} You can also {% url "download Cypress directly here" http://download.cypress.io/desktop %}.
+## {% fa fa-download %} Direct Download
 
-{% note info What is `npm`? %}
-If you've never set up a NodeJS project before, this is all probably a bit confusing! We recommend heading over to the {% url "NodeJS website" https://nodejs.org/ %} and digging in.
-{% endnote %}
+If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly here" http://download.cypress.io/desktop %}.
 
-{% note info What about installing in CI? %}
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %}.
-{% endnote %}
+Just manually unzip and double click. Cypress will run without needing to install any dependencies.
 
-# {% fa fa-terminal %} Opening Cypress
+## {% fa fa-refresh %} Continuous Integration
 
-Cypress has now been installed to our `./node_modules` directory, with its binary executable accessible from `./node_modules/.bin`. This means we can call it from our project root either of the following ways:
+Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker-images %} which have everything you need prebuilt.
 
-**The long way with the full path -**
+# Opening Cypress
+
+If you used `npm` to install, Cypress has now been installed to your `./node_modules` directory, with its binary executable accessible from `./node_modules/.bin`. This means you can call it from your project root either of the following ways:
+
+**The long way with the full path**
 
 ```shell
 ./node_modules/.bin/cypress open
 ```
 
-**Same with shortcut using `npm bin` -**
+**Or with the shortcut using `npm bin`**
 
 ```shell
 $(npm bin)/cypress open
@@ -76,43 +67,14 @@ $(npm bin)/cypress open
 
 After a moment, the Cypress Desktop application will launch.
 
-{% note info %}
-The {% url "cypress npm package" https://www.npmjs.com/package/cypress %} contains many commands such as `cypress run` and `cypress verify` that you may find useful. See the {% url "Command Line Docs" command-line %}.
-{% endnote %}
+## Adding npm scripts
 
-# {% fa fa-sign-in %} Logging In
+While there's nothing wrong with writing out the full path to the Cypress executable each time, it's much easier and clearer to add Cypress commands to the `scripts` field in your `package.json` file.
 
-After launching the Desktop Application, you will need to log in to Cypress. Logging in currently requires a {% url "Github" https://github.com/ %} account, if you do not have an account, you will have to {% url "create one" https://github.com/join %} to use Cypress.
-
-***To Login:***
-
-- Click **Log In with GitHub**.
-- Authorize GitHub access to your account.
-
-{% img no-border /img/guides/log-in-to-cypress-screen.png Log In to Cypress %}
-
-# Managing Cypress with `package.json`
-
-Take a look at your `package.json` file, which is where `npm` is configured for your project.
-
-## Versioning Cypress
-
-You should see that Cypress has been added as a development dependency versioned to the latest available version. If you need to install a specific version of Cypress, you can do so by modifying this version string and running `npm install`.
-
-```json
+```javascript
 {
-  "devDependencies": {
-    "cypress": "^0.20.0"
-  }
-}
-```
+  // package.json
 
-## Automate Opening Cypress
-
-In order to run Cypress easily, we recommend having `npm` execute a simple script for you. Do this by adding a `scripts` key to `package.json` with a nested key for the name of the script. For starters, name this script `cypress:open`, and have it simply call `cypress open`:
-
-```json
-{
   "scripts": {
     "cypress:open": "cypress open"
   }
@@ -125,4 +87,12 @@ Now you can invoke the command like so:
 npm run cypress:open
 ```
 
-...and Cypress will open right up for you!
+...and Cypress will open right up for you.
+
+# CLI Tools
+
+By installing Cypress through `npm` you also get access to many other CLI commands.
+
+As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
+
+You can {% url 'read more about the CLI here' command-line %}.

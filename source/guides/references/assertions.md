@@ -11,7 +11,7 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 
 ## BDD Assertions
 
-These chainers are available for BDD assertions.
+These chainers are available for BDD assertions (`expect`/`should`).
 
 | Chainer | Example |
 | --- | --- |
@@ -53,7 +53,7 @@ These chainers are available for BDD assertions.
 | instanceof( *constructor* )| `expect([ 1, 2, 3 ]).to.be.instanceof(Array)` |
 | instanceOf( *constructor* ) | `expect([ 1, 2, 3 ]).to.be.instanceOf(Array)` |
 | property( *name*, *[value]* ) | `expect(obj).to.have.property('foo')` |
-| deep.property( *name*, *[value]* ) | `expect(deepObj).to.have.deep.property('teas[1]', 'matcha')` |
+| deep.property( *name*, *[value]* ) | `expect(deepObj).to.have.deep.property('tests[1]', 'e2e')` |
 | ownProperty( *name* )  | `expect('test').to.have.ownProperty('length')` |
 | haveOwnProperty( *name* ) | `expect('test').to.haveOwnProperty('length')` |
 | length( *value* )  | `expect('foo').to.have.length.above(2)` |
@@ -84,21 +84,133 @@ These getters are also available for BDD assertions. They don't actually do anyt
 
 ## TDD Assertions
 
-These assertions are available for TDD assertions. You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
+These assertions are available for TDD assertions (`assert`). You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
 
 | Assertion | Example |
 | --- | --- |
 | .isOk(*object*, *[message]*) | `assert.isOk('everything', 'everything is ok')` |
 | .isNotOk(*object*, *[message]*) | `assert.isNotOk(false, 'this will pass')` |
-| .equal(*actual*, *expected*, *[message]*) | `assert.equal(3, 3, 'values are equal')` |
-| .notEqual(*actual*, *expected*, *[message]*) | `assert.notEqual(3, 4, 'values are not equal')` |
-| .strictEqual(*actual*, *expected*, *[message]*) | `assert.strictEqual(true, true, 'bools are strictly equal')` |
+| .equal(*actual*, *expected*, *[message]*) | `assert.equal(3, 3, 'values equal')` |
+| .notEqual(*actual*, *expected*, *[message]*) | `assert.notEqual(3, 4, 'values not equal')` |
+| .strictEqual(*actual*, *expected*, *[message]*) | `assert.strictEqual(true, true, 'bools strictly equal')` |
 | .notStrictEqual(*actual*, *expected*, *[message]*) | `assert.notStrictEqual(5, '5', 'not strictly equal')` |
 | .deepEqual(*actual*, *expected*, *[message]*) | `assert.deepEqual({ name: 'Jane' }, { name: 'Jane' })` |
 | .notDeepEqual(*actual*, *expected*, *[message]*) | `assert.notDeepEqual({ name: 'Jane' }, { name: 'June' })` |
 | .isAbove(*valueToCheck*, *valueToBeAbove*, *[message]*) | `assert.isAbove(6, 1, '6 is greater than 1')` |
-| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
-| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
+| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is gt or eq to 2')` |
+| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is gt or eq to 2')` |
+| .isBelow(*valueToCheck*, *valueToBeBelow*, *[message]*) | `assert.isBelow(3, 6, '3 is strictly less than 6')` |
+| .isAtMost(*valueToCheck*, *valueToBeAtMost*, *[message]*) | `assert.isAtMost(4, 4, '4 is lt or eq to 4')` |
+| .isTrue(*value*, *[message]*) | `assert.isTrue(true, 'this val is true')` |
+| .isNotTrue(*value*, *[message]*) | `assert.isNotTrue('tests are no fun', 'this val is not true')` |
+| .isFalse(*value*, *[message]*) | `assert.isFalse(false, 'this val is false')` |
+| .isNotFalse(*value*, *[message]*) | `assert.isNotFalse('tests are fun', 'this val is not false')` |
+| .isNull(*value*, *[message]*) | `assert.isNull(err, 'there was no error')` |
+| .isNotNull(*value*, *[message]*) | `assert.isNotNull('hello', 'is not null')` |
+| .isNaN(*value*, *[message]*) | `assert.isNaN(NaN, 'NaN is NaN')` |
+| .isNotNaN(*value*, *[message]*) | `assert.isNotNaN(5, '5 is not NaN')` |
+| .exists(*value*, *[message]*) | `assert.exists(5, '5 is not null or undefined')` |
+| .notExists(*value*, *[message]*) | `assert.notExists(null, 'value is null or undefined')` |
+| .isUndefined(*value*, *[message]*) | `assert.isUndefined(undefined, 'value is undefined')` |
+| .isDefined(*value*, *[message]*) | `assert.isDefined('hello', 'value has been defined')` |
+| .isFunction(*value*, *[message]*) | `assert.isFunction(function test() { return 'pass'; }, 'value is function')` |
+| .isNotFunction(*value*, *[message]*) | `assert.isNotFunction(5, 'value is not a function')` |
+| .isObject(*value*, *[message]*) | `assert.isObject({num: 5}, 'value is object')` |
+| .isNotObject(*value*, *[message]*) | `assert.isNotObject(3, 'value is not object')` |
+| .isArray(*value*, *[message]*) | `assert.isArray(['unit', 'e2e'], 'value is array')` |
+| .isNotArray(*value*, *[message]*) | `assert.isNotArray('e2e', 'value is not array')` |
+| .isString(*value*, *[message]*) | `assert.isString('e2e', 'value is string')` |
+| .isNotString(*value*, *[message]*) | `assert.isNotString(2, 'value is not string')` |
+| .isNumber(*value*, *[message]*) | `assert.isNumber(2, 'value is number')` |
+| .isNotNumber(*value*, *[message]*) | `assert.isNotNumber('e2e', 'value is not number')` |
+| .isFinite(*value*, *[message]*) | `assert.isFinite('e2e', 'value is finite')` |
+| .isBoolean(*value*, *[message]*) | `assert.isBoolean(true, 'value is boolean')` |
+| .isNotBoolean(*value*, *[message]*) | `assert.isNotBoolean('true', 'value is not boolean')` |
+| .typeOf(*value*, *name*, *[message]*) | `assert.typeOf('e2e', 'string', 'value is string')` |
+| .notTypeOf(*value*, *name*, *[message]*) | `assert.notTypeOf('e2e', 'number', 'value is not number')` |
+| .instanceOf(*object*, *constructor*, *[message]*) | `assert.instanceOf(log, Cypress, 'value is instance')` |
+| .notInstanceOf(*object*, *constructor*, *[message]*) | `assert.notInstanceOf(foo, Cypress, 'value is not instance')` |
+| .include(*haystack*, *needle*, *[message]*) | `assert.include('cypress', 'cy', 'string contains substring')` |
+| .notInclude(*haystack*, *needle*, *[message]*) | `assert.notInclude('foobar', 'baz', 'string does not contain substring')` |
+| .deepInclude(*haystack*, *needle*, *[message]*) | `assert.deepInclude([obj1, obj2], {a: 1})` |
+| .notDeepInclude(*haystack*, *needle*, *[message]*) | `assert.notDeepInclude([obj1, obj2], {a: 9})` |
+| .nestedInclude(*haystack*, *needle*, *[message]*) | `assert.nestedInclude({'.a': {'b': 'x'}}, {'\\.a.[b]': 'x'})` |
+| .notNestedInclude(*haystack*, *needle*, *[message]*) | `assert.notNestedInclude({'.a': {'b': 'x'}}, {'\\.a.b': 'y'})` |
+| .deepNestedInclude(*haystack*, *needle*, *[message]*) | `assert.deepNestedInclude({a: {b: [{x: 1}]}}, {'a.b[0]': {x: 1}})` |
+| .notDeepNestedInclude(*haystack*, *needle*, *[message]*) | `assert.notDeepNestedInclude({a: {b: [{x: 1}]}}, {'a.b[0]': {y: 1}})` |
+| .ownInclude(*haystack*, *needle*, *[message]*) | `assert.ownInclude({ a: 1 }, { a: 1 })` |
+| .notOwnInclude(*haystack*, *needle*, *[message]*) | `assert.notOwnInclude({ a: 1 }, { a: 1 })` |
+| .deepOwnInclude(*haystack*, *needle*, *[message]*) | `assert.deepOwnInclude({a: {b: 2}}, {a: {b: 2}})` |
+| .notDeepOwnInclude(*haystack*, *needle*, *[message]*) | `assert.notDeepOwnInclude({a: {b: 2}}, {a: {c: 3}})` |
+| .match(*value*, *regexp*, *[message]*) | `assert.match('cypress', /^cy/, 'regexp matches')` |
+| .notMatch(*value*, *regexp*, *[message]*) | `assert.notMatch('foobar', /^foo$/, 'regexp does not match')` |
+| .property(*object*, *property*, *[message]*) | `assert.property({ e2e: { green: 'pass' }}, 'e2e')` |
+| .notProperty(*object*, *property*, *[message]*) | `assert.notProperty({ e2e: { green: 'pass' }}, 'unit')` |
+| .propertyVal(*object*, *property*, *value*,  *[message]*) | `assert.propertyVal({ testing: 'is good' }, 'testing', 'is good')` |
+| .notPropertyVal(*object*, *property*, *value*,  *[message]*) | `assert.notPropertyVal({ testing: 'is good' }, 'testing', 'is bad')` |
+| .deepPropertyVal(*object*, *property*, *value*,  *[message]*) | `assert.deepPropertyVal({ e2e: { green: 'pass' } }, 'e2e', { green: 'pass' })` |
+| .notDeepPropertyVal(*object*, *property*, *value*,  *[message]*) | `assert.notDeepPropertyVal({ e2e: { green: 'pass' } }, 'e2e', { red: 'fail' })` |
+| .nestedProperty(*object*, *property*,  *[message]*) | `assert.nestedProperty({ e2e: { green: 'pass' }}, 'e2e.green')` |
+| .notNestedProperty(*object*, *property*,  *[message]*) | `assert.notNestedProperty({ e2e: { green: 'pass' }}, 'e2e.red')` |
+| .nestedPropertyVal(*object*, *property*, *value*, *[message]*) | `assert.nestedPropertyVal({ e2e: { green: 'pass' }}, 'e2e.green', 'pass')` |
+| .notNestedPropertyVal(*object*, *property*, *value*, *[message]*) | `assert.notNestedPropertyVal({ e2e: { green: 'pass' }}, 'e2e.green', 'fail')` |
+| .deepNestedPropertyVal(*object*, *property*, *value*, *[message]*) | `assert.deepNestedPropertyVal({ e2e: { green: { pass: 'yay' } } }, 'e2e.green', { pass: 'yay' })` |
+| .notDeepNestedPropertyVal(*object*, *property*, *value*, *[message]*) | `assert.notDeepNestedPropertyVal({ e2e: { green: { pass: 'yay' } } }, 'e2e.green', { pass: 'boo' })` |
+| .lengthOf(*object*, *length*, *[message]*) | `assert.lengthOf([1,2,3], 3, 'array has length of 3')` |
+| .hasAnyKeys(*object*, *[keys]*, *[message]*) | `assert.hasAnyKeys({foo: 1, bar: 2, baz: 3}, ['foo', 'iDontExist', 'baz'])` |
+| .hasAllKeys(*object*, *[keys]*, *[message]*) | `assert.hasAllKeys({foo: 1, bar: 2, baz: 3}, ['foo', 'bar', 'baz'])` |
+| .containsAllKeys(*object*, *[keys]*, *[message]*) | `assert.containsAllKeys({foo: 1, bar: 2, baz: 3}, ['foo', 'baz'])` |
+| .doesNotHaveAnyKeys(*object*, *[keys]*, *[message]*) | `assert.doesNotHaveAnyKeys({foo: 1, bar: 2, baz: 3}, ['one', 'two', 'example'])` |
+| .doesNotHaveAllKeys(*object*, *[keys]*, *[message]*) | `assert.doesNotHaveAllKeys({foo: 1, bar: 2, baz: 3}, ['one', 'two', 'example'])` |
+| .hasAnyDeepKeys(*object*, *[keys]*, *[message]*) | `assert.hasAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {one: 'one'})` |
+| .hasAllDeepKeys(*object*, *[keys]*, *[message]*) | `assert.hasAllDeepKeys(new Map([[{one: 'one'}, 'valueOne']]), {one: 'one'})` |
+| .containsAllDeepKeys(*object*, *[keys]*, *[message]*) | `assert.containsAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {one: 'one'})` |
+| .doesNotHaveAnyDeepKeys(*object*, *[keys]*, *[message]*) | `assert.doesNotHaveAnyDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {thisDoesNot: 'exist'})` |
+| .doesNotHaveAllDeepKeys(*object*, *[keys]*, *[message]*) | `assert.doesNotHaveAllDeepKeys(new Map([[{one: 'one'}, 'valueOne'], [1, 2]]), {thisDoesNot: 'exist'})` |
+| .throws(*fn*, *[errorLike/string/regexp]*, *[string/regexp]*, *[message]*) | `assert.throws(fn, 'function throws a reference error')` |
+| .doesNotThrow(*fn*, *[errorLike/string/regexp]*, *[string/regexp]*, *[message]*) | `assert.doesNotThrow(fn, 'Any Error thrown must not have this message')` |
+| .operator(*val1*, *operator*, *val2*, *[message]*) | `assert.operator(1, '<', 2, 'everything is ok')` |
+| .closeTo(*actual*, *expected*, *delta*, *[message]*) | `assert.closeTo(1.5, 1, 0.5, 'numbers are close')` |
+| .approximately(*actual*, *expected*, *delta*, *[message]*) | `assert.approximately(1.5, 1, 0.5, 'numbers are close')` |
+| .sameMembers(*set1*, *set2*, *[message]*) | `assert.sameMembers([ 1, 2, 3 ], [ 2, 1, 3 ], 'same members')` |
+| .notSameMembers(*set1*, *set2*, *[message]*) | `assert.notSameMembers([ 1, 2, 3 ], [ 5, 1, 3 ], 'not same members')` |
+| .sameDeepMembers(*set1*, *set2*, *[message]*) | `assert.sameDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [{ b: 2 }, { a: 1 }, { c: 3 }], 'same deep members')` |
+| .notSameDeepMembers(*set1*, *set2*, *[message]*) | `assert.notSameDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [{ b: 2 }, { a: 1 }, { f: 5 }], 'not same deep members')` |
+| .sameOrderedMembers(*set1*, *set2*, *[message]*) | `assert.sameOrderedMembers([ 1, 2, 3 ], [ 1, 2, 3 ], 'same ordered members')` |
+| .notSameOrderedMembers(*set1*, *set2*, *[message]*) | `assert.notSameOrderedMembers([ 1, 2, 3 ], [ 2, 1, 3 ], 'not same ordered members')` |
+| .sameDeepOrderedMembers(*set1*, *set2*, *[message]*) | `assert.sameDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { b: 2 }, { c: 3 } ], ‘same deep ordered members’)` |
+| .notSameDeepOrderedMembers(*set1*, *set2*, *[message]*) | `assert.notSameDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { b: 2 }, { z: 5 } ], ‘not same deep ordered members’)` |
+| .includeMembers(*superset*, *subset*, *[message]*) | `assert.includeMembers([ 1, 2, 3 ], [ 2, 1, 2 ], 'include members')’)` |
+| .notIncludeMembers(*superset*, *subset*, *[message]*) | `assert.notIncludeMembers([ 1, 2, 3 ], [ 5, 1 ], 'not include members')` |
+| .includeDeepMembers(*superset*, *subset*, *[message]*) | `assert.includeDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { a: 1 }, { b: 2 } ], 'include deep members')` |
+| .notIncludeDeepMembers(*superset*, *subset*, *[message]*) | `assert.notIncludeDeepMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { b: 2 }, { f: 5 } ], 'not include deep members')` |
+| .includeOrderedMembers(*superset*, *subset*, *[message]*) | `assert.includeOrderedMembers([ 1, 2, 3 ], [ 1, 2 ], 'include ordered members')` |
+| .notIncludeOrderedMembers(*superset*, *subset*, *[message]*) | `assert.notIncludeOrderedMembers([ 1, 2, 3 ], [ 2, 1 ], 'not include ordered members')` |
+| .includeDeepOrderedMembers(*superset*, *subset*, *[message]*) | `assert.includeDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { b: 2 } ], 'include deep ordered members')` |
+| .notIncludeDeepOrderedMembers(*superset*, *subset*, *[message]*) | `assert.notIncludeDeepOrderedMembers([ { a: 1 }, { b: 2 }, { c: 3 } ], [ { a: 1 }, { f: 5 } ], 'not include deep ordered members')` |
+| .oneOf(*inList*, *list*, *[message]*) | `assert.oneOf(1, [ 2, 1 ], 'Not found in list')` |
+| .changes(*function*, *object*, *property*, *[message]*) | `assert.changes(fn, obj, 'val')` |
+| .changesBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.changesBy(fn, obj, 'val', 2)` |
+| .doesNotChange(*function*, *object*, *property*, *[message]*) | `assert.doesNotChange(fn, obj, 'val')` |
+| .changesButNotBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.changesButNotBy(fn, obj, 'val', 5)` |
+| .increases(*function*, *object*, *property*, *[message]*) | `assert.increases(fn, obj, 'val')` |
+| .increasesBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.increasesBy(fn, obj, 'val', 10)` |
+| .doesNotIncrease(*function*, *object*, *property*, *[message]*) | `assert.doesNotIncrease(fn, obj, 10)` |
+| .increasesButNotBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.increasesButNotBy(fn, obj, 'val', 10)` |
+| .decreases(*function*, *object*, *property*, *[message]*) | `assert.decreases(fn, obj, 'val')` |
+| .decreasesBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.decreasesBy(fn, obj, 'val', 5)` |
+| .doesNotDecrease(*function*, *object*, *property*, *[message]*) | `assert.doesNotDecrease(fn, obj, 'val')` |
+| .doesNotDecreaseBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.doesNotDecreaseBy(fn, obj, 'val', 5)` |
+| .decreasesButNotBy(*function*, *object*, *property*, *delta*, *[message]*) | `assert.decreasesButNotBy(fn, obj, 'val', 1)` |
+| .ifError(*object*) | `assert.ifError(new Error('I am a custom error'))` |
+| .isExtensible(*object*) | `aassert.isExtensible({})` |
+| .isNotExtensible(*object*) | `aassert.isNotExtensible(nonExtensibleObject)` |
+| .isSealed(*object*) | `aassert.isSealed(sealedObject)` |
+| .isNotSealed(*object*) | `aassert.isNotSealed({})` |
+| .isFrozen(*object*) | `aassert.isFrozen(frozenObject)` |
+| .isNotFrozen(*object*) | `aassert.isNotFrozen({})` |
+| .isEmpty(*object*) | `aassert.isEmpty([])` |
+| .isNotEmpty(*object*) | `aassert.isNotEmpty([1, 2])` |
 
 # Chai-jQuery
 
