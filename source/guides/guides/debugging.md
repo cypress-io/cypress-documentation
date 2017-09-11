@@ -29,7 +29,7 @@ it('let me debug like a fiend', function() {
 })
 ```
 
-...alas, this will not work. As you may remember from {% url "Introduction to Cypress" introduction-to-cypress %}, `cy.*` commands simply enqueue and action to be taken later. Can you see what this test will do given that perspective? {% url "`cy.visit()`" visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before anything has happened... which will result in an error!
+...alas, this will not work. As you may remember from {% url "Introduction to Cypress" introduction-to-cypress %}, `cy.*` commands simply enqueue and action to be taken later. Can you see what this test will do given that perspective? {% url "`cy.visit()`" visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before anything has happened.
 
 Let's use {% url `.then()` then %} to tap into the Cypress command flow and execute `debugger` at the appropriate time:
 
@@ -77,24 +77,16 @@ Though Cypress has built out {% url "an excellent GUI application" overview-of-t
 
 # Debug the Command Line
 
-All commands in Cypress {% url "Command Line" command-line %} can be run in debug mode using the `npm` [`debug`](https://www.npmjs.com/package/debug) module.
-
-**To see all Cypress modules debug output**
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
 
 ```shell
 DEBUG=cypress:* cypress open
 ```
 
-```shell
-DEBUG=cypress:* cypress run
-```
+{% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.
 
-**To filter debug output to a specific module**
+# Debug the Browser Driver
 
-```shell
-DEBUG=cypress:server cypress run
-```
+When Cypress is running in your browser, you can have every event it fires logged out to the console.
 
-```shell
-DEBUG=cypress:cli cypress run
-```
+{% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
