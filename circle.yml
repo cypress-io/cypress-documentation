@@ -71,8 +71,9 @@ jobs:
       - run:
           command: npm start
           background: true
-      # need a better way to know when site is up and running
-      - run: sleep 60
+      - run:
+          name: Waiting for local server to start
+          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 60000
       - run: npm run cypress
 
   "deploy-docs-staging":

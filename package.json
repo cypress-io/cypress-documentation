@@ -78,6 +78,7 @@
     "sinon-chai": "^2.10.0",
     "snap-shot-it": "^3.3.0",
     "underscore.string": "^3.3.4",
+    "wait-on": "^2.0.2",
     "yamljs": "^0.2.10"
   },
   "dependencies": {
