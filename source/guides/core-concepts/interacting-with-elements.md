@@ -23,6 +23,8 @@ Some commands in Cypress are for interacting with the DOM such as:
 - {% url `.check()` check %}
 - {% url `.uncheck()` uncheck %}
 - {% url `.select()` select %}
+- {% url `.scrollTo()` scrollto %}
+- {% url `.scrollIntoView()` scrollintoview %}
 
 These commands simulate a user interacting with your application. Under the hood Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
 
@@ -54,11 +56,17 @@ Cypress checks a lot of things to determine an element's visibility.
 
 ***Additionally an element is considered hidden if:***
 
-- Any of its ancestors have a CSS property `overflow: hidden`
-  - AND have an `offsetWidth` or `offsetHeight` of `0`
-  - AND an element between that ancestor and the element has `position: fixed` or `position: absolute`
-- Any of its ancestors have `overflow: hidden`, `overflow: scroll`, or `overflow: auto`
+- Any of its ancestors *hides overflow* \*
+  - AND that ancestor has `offsetWidth` or `offsetHeight` of `0`
+  - AND an element between that ancestor and the element is `position: fixed` or `position: absolute`
+- Any of its ancestors *hides overflow* \*
+  - AND that ancestor or an ancestor between it and that ancestor is its offset parent
   - AND it is positioned outside that ancestor's bounds
+- Any of its ancestors *hides overflow* \*
+  - AND the element is `position: relative`
+  - AND it is positioned outside that ancestor's bounds
+
+\* *hides overflow* means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
 
 ## Disability
 

@@ -50,6 +50,6 @@ cat support/.circle-credentials.json | pbcopy
 You can see the latest deployed version, including deployment date at:
 
 | Env | Site |
-| --- | ---- | 
+| --- | ---- |
 | Master | [https://docs.cypress.io/build.json](https://docs.cypress.io/build.json) |
 | Staging | [https://docs-staging.cypress.io/build.json](https://docs-staging.cypress.io/build.json) |

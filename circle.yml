@@ -1,5 +1,14 @@
 version: 2
 
+env_defaults: &env_defaults
+  ## this enables colors + fixes failing unit tests
+  TERM: xterm
+
+  npm_config_loglevel: warn
+  # even when running as non-root user
+  # need to set unsafe perm to be able to do `npm postinstall`
+  npm_config_unsafe-perm: true
+
 defaults: &defaults
   parallelism: 1
   working_directory: ~/cypress-documentation
@@ -7,13 +16,7 @@ defaults: &defaults
     # the Docker image with Cypress dependencies and Chrome browser
     - image: cypress/internal:chrome58
       environment:
-        ## this enables colors + fixes failing unit tests
-        TERM: xterm
-
-        npm_config_loglevel: warn
-        # even when running as non-root user
-        # need to set unsafe perm to be able to do `npm postinstall`
-        npm_config_unsafe-perm: true
+        <<: *env_defaults
 
 jobs:
   ## code checkout and NPM installs
@@ -39,6 +42,7 @@ jobs:
           key: v1-{{ .Branch }}-deps
 
       - run: npm install
+      - run: npm prune
 
       # save each node_modules folder per package
       - save_cache:
@@ -61,15 +65,23 @@ jobs:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
       - run: npm run deps
       - run: npm run lint
+      - run: npm test
       - run: npm run build
-      - run: npm run test-e2e
+      - run: ls -Rl themes/cypress/source/js
+      - run:
+          command: npm start
+          background: true
+      - run: sleep 40
+      - run: npm run cypress
 
   "deploy-docs-staging":
     <<: *defaults
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: npm ls || true
       - run: NODE_ENV=staging npm run build
+      - run: ls -Rl themes/cypress/source/js
       - run: ls public
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
@@ -95,11 +107,9 @@ workflows:
   build_and_test:
     jobs:
       - build
-      # test and deploy documentation site
       - docs-tests:
           requires:
             - build
-
       # we can deploy development docs in parallel with
       # unit testining them.
       - deploy-docs-staging:

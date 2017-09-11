@@ -6,54 +6,28 @@ comments: false
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- How to start testing on a new project in Cypress.
+- How to start testing a new project in Cypress.
 - What passing and failing tests look like.
 - Testing web navigation, DOM querying, and writing assertions.
 {% endnote %}
 
-# Setup: Add a New Project
+# Add a Test File
 
-To get started, let's do a few simple steps together. We're going to:
-
-1. Open up Cypress.
-2. Create an empty folder.
-3. Add this folder to Cypress.
-
-Assuming you've successfully {% url "installed the Desktop Application" installing-cypress %} let's go ahead and open up the app by double clicking on it or running `cypress open` from your terminal.
-
-Once Cypress is open, let's create a folder:
-
-```shell
-mkdir playground
-```
-
-Great! Now let's add this folder to Cypress by clicking: `{% fa fa-plus %} Add Project`
-
-Once you've added this folder, you should see a message explaining that we've seeded your empty project with a few folders and an `example_spec.js` file.
-
-{% note info %}
-This `example_spec.js` file is just for reference - it tests our {% url 'Kitchen Sink' kitchen-sink %} application and provides you with a preview of all the commands you can run with Cypress.
-{% endnote %}
-
-{% img /img/guides/empty-folder-15fps.gif "Adding an empty folder to Cypress Desktop" %}
-
-# Setup: Add a New Test File
-
-Now it's time to write our first test. We're going to:
+Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 
 1. Create a `simple_spec.js` file.
 2. Watch Cypress update our list of specs.
 3. Launch our browser into the Cypress GUI.
 
-Let's create a new file in the `integration` folder that was created for us:
+Let's create a new file in the `cypress/integration` folder that was created for us:
 
 ```shell
-touch playground/cypress/integration/simple_spec.js
+touch {your_project}/cypress/integration/simple_spec.js
 ```
 
-Once we've created that file, you should see the Cypress Desktop Application immediately display it in the list of spec files. Cypress monitors your spec files for any changes and automatically displays any changes.
+Once we've created that file, we should see the Cypress Desktop Application immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
 
-Even though we haven't written any tests yet - that's okay - let's click on the `simple_spec.js` and watch Cypress launch your browser.
+Even though we haven't written any tests yet - that's okay - let's click on `simple_spec.js` and watch Cypress launch your browser.
 
 {% note info %}
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
@@ -61,13 +35,13 @@ Cypress opens the test in a browser installed on your system. You can read more 
 
 {% img /img/guides/empty-file-30fps.gif %}
 
-We are now officially in the {% url 'Cypress GUI' overview-of-the-gui %}. This is where we'll spend the majority of our time testing.
+We are now officially in the {% url 'Cypress GUI' overview-of-the-gui %}. This is where we'll spend the majority of your time testing.
 
 {% note warning %}
-Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't yet written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Chrome Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
+Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
 {% endnote %}
 
-# A Simple Test
+# Write a Simple Test
 
 Now it's time to write our first test. We're going to:
 
@@ -75,7 +49,7 @@ Now it's time to write our first test. We're going to:
 2. Write our first failing test.
 3. Watch Cypress reload in real time.
 
-As we continue to save our new test file you'll see the browser auto reloading in real time.
+As we continue to save our new test file we'll see the browser auto reloading in real time.
 
 Open up your favorite IDE and add the code below to our `simple_spec.js` test file.
 
@@ -87,11 +61,11 @@ describe('My First Test', function() {
 })
 ```
 
-Once you saved that file you should have seen the browser reload.
+Once you save this file you should see the browser reload.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
 
-Over in the {% url 'Command Log' overview-of-the-gui#Command-Log %} you'll see Cypress display the suite, the test and your first assertion which should be passing in green.
+Over in the {% url 'Command Log' overview-of-the-gui#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
 
 {% img /img/guides/first-test.png %}
 
@@ -113,7 +87,7 @@ Once you save again, you'll see Cypress display the failing test in red since `t
 
 {% img /img/guides/failing-test.png "Failing test" %}
 
-Cypress provides a nice GUI that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, and network requests.
+Cypress provides a nice {% url 'GUI' overview-of-the-gui %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
 
 {% img /img/guides/first-test-30fps.gif "Writing a passing and failing test in Cypress" %}
 
@@ -126,7 +100,7 @@ All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cy
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
 
-# A *Real* Test
+# Write a *Real* Test
 
 **A solid test generally covers 3 phases:**
 
@@ -140,7 +114,7 @@ Today, we'll take a narrow view of these steps and map them cleanly to Cypress c
 
 1. Visit a web page.
 2. Query for an element.
-4. Interact that element.
+4. Interact with that element.
 3. Assert about the content on the page.
 
 ## {% fa fa-globe %} Step 1: Visit a Page

@@ -77,15 +77,13 @@ You would typically use them with the {% url `cy.fixture()` fixture %} command a
 
 # How to Write Tests
 
-Cypress is built on top of {% url 'Mocha' bundled-tools#Mocha %} and uses its `bdd` interface. Tests you write in Cypress will mostly adhere to this style.
+Cypress is built on top of {% url 'Mocha' bundled-tools#Mocha %} and {% url 'Chai' bundled-tools#Chai %}. We support both Chai's `BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere to this style.
 
 If you're familiar with writing tests in JavaScript, then writing tests in Cypress will be a breeze.
 
-We're still working on introductory docs and videos. If you want to see Cypress in action, {% url 'check out some examples' kitchen-sink %} of applications using Cypress tests and {% url "check out some example recipes we've written" unit-testing-recipe %} for special use cases.
+## Test Structure
 
-## BDD Interface
-
-The BDD interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
+The test interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`, so choose whatever terminology works best for you.
 
@@ -129,7 +127,6 @@ describe('Unit test our math functions', function() {
   })
 })
 // -- End: Our Cypress Tests --
-
 ```
 
 ## Hooks
@@ -141,19 +138,19 @@ These are helpful to set conditions that you want run before a set of tests or b
 ```javascript
 describe('Hooks', function() {
   before(function() {
-    // runs before all tests in this block
+    // runs once before all tests in the block
   })
 
   after(function() {
-    // runs after all tests in this block
+    // runs once after all tests in the block
   })
 
   beforeEach(function() {
-    // runs before each test in this block
+    // runs before each test in the block
   })
 
   afterEach(function() {
-    // runs after each test in this block
+    // runs after each test in the block
   })
 })
 ```
@@ -246,4 +243,18 @@ The code above will produce a suite with 4 tests:
   > triggers event: 'mouseout'
   > triggers event: 'mouseenter'
   > triggers event: 'mouseleave'
+```
+
+## Assertion Styles
+
+Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertions. {% url "Read more about assertions." assertions %}
+
+```javascript
+it('can add numbers', function() {
+  expect(add(1, 2)).to.eq(3)
+})
+
+it('can subtract numbers', function() {
+  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
+})
 ```

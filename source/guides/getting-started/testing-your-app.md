@@ -14,18 +14,9 @@ comments: false
 
 We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let's integrate it into your *real* app!
 
-# {% fa fa-plus %} Step 1: Add Your Project
+# {% fa fa-terminal %} Step 1: Start Your Server
 
-Follow the {% url 'previous steps' writing-your-first-test#Setup-Add-a-New-Project %} except this time add your **real project folder**.
-
-You should choose either:
-
-- The root folder of your project
-- ...or if its super large - a folder with all of your frontend assets in it
-
-# {% fa fa-terminal %} Step 2: Start Your Server
-
-Now to test your own application the first thing you'll want to do is start your local development server that hosts the application.
+Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
 
 It should look something like **http://localhost:8080**.
 
@@ -62,7 +53,7 @@ With that said - you still have the option to have it **both ways**.
 Many of our users run the *majority* of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
 {% endnote %}
 
-# {% fa fa-globe %} Step 3: Visit Your Server
+# {% fa fa-globe %} Step 2: Visit Your Server
 
 Once your server is running, it's time to visit it.
 
@@ -100,7 +91,7 @@ If you forgot to start your server you'll see the error below:
 
 If you've started your server, then you should see your application loaded and working.
 
-# {% fa fa-cogs %} Step 4: Configure Cypress
+# {% fa fa-cogs %} Step 3: Configure Cypress
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 
@@ -334,7 +325,7 @@ No. You shouldn't do that.
 {% note warning 'Anti-Pattern' %}
 Don't use your UI to build up state! It's enormously slow, cumbersome, and unnecessary.
 
-Read about {% url 'best practices' best-practices#Using-your-UI-to-Build-Up-State %} here.
+Read about {% url 'best practices' best-practices %} here.
 {% endnote %}
 
 Using your UI to **log in** is the *exact same scenario* as what we just described above. Logging in is just a prerequisite of state that comes before all of your other tests.
@@ -353,8 +344,7 @@ describe('The Dashboard Page', function(){
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy
-      .request('POST', '/test/seed/user', { username: 'jane.lane' })
+    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
       .its('body')
       .as('currentUser')
   })

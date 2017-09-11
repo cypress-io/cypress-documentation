@@ -29,7 +29,7 @@ it('let me debug like a fiend', function() {
 })
 ```
 
-...alas, this will not work. As you may remember from {% url "Introduction to Cypress" introduction-to-cypress %}, `cy.*` commands simply enqueue and action to be taken later. Can you see what this test will do given that perspective? {% url "`cy.visit()`" visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before anything has happened... which will result in an error!
+...alas, this will not work. As you may remember from {% url "Introduction to Cypress" introduction-to-cypress %}, `cy.*` commands simply enqueue and action to be taken later. Can you see what this test will do given that perspective? {% url "`cy.visit()`" visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before anything has happened.
 
 Let's use {% url `.then()` then %} to tap into the Cypress command flow and execute `debugger` at the appropriate time:
 
@@ -74,3 +74,19 @@ Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your
 Though Cypress has built out {% url "an excellent GUI application" overview-of-the-gui %} to help you understand what is happening in your app and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
 <!-- TODO: show how clicking commands populates the dev tools, demonstrate a few commands -->
+
+# Debug the Command Line
+
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
+
+```shell
+DEBUG=cypress:* cypress open
+```
+
+{% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.
+
+# Debug the Browser Driver
+
+When Cypress is running in your browser, you can have every event it fires logged out to the console.
+
+{% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.

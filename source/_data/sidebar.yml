@@ -36,8 +36,6 @@ guides:
     best-practices: best-practices.html
     bundled-tools: bundled-tools.html
     # creating-fixtures: creating-fixtures.html
-    # best-practices: best-practices.html
-    # anti-patterns: anti-patterns.html
     # cypress-api-design: cypress-api-design.html
     userland-extensions: userland-extensions.html
     known-issues: known-issues.html
@@ -49,6 +47,8 @@ guides:
 api:
   introduction:
     api: api.html
+  events:
+    catalog-of-events: catalog-of-events.html
   commands:
     and: and.html
     as: as.html
@@ -104,8 +104,8 @@ api:
     root: root.html
     route: route.html
     screenshot: screenshot.html
-    # scrollintoview: scrollintoview.html
-    # scrollto: scrollto.html
+    scrollintoview: scrollintoview.html
+    scrollto: scrollto.html
     select: select.html
     server: server.html
     setcookie: setcookie.html
@@ -118,7 +118,7 @@ api:
     then: then.html
     tick: tick.html
     title: title.html
-    # trigger: trigger.html
+    trigger: trigger.html
     type: type.html
     uncheck: uncheck.html
     url: url.html
@@ -142,6 +142,7 @@ api:
     cookies: cookies.html
     dom: dom.html
     env: env.html
+    cypress-log: cypress-log.html
     cypress-server: cypress-server.html
 
 examples:

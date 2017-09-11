@@ -15,6 +15,8 @@ You need to have your Developer Tools open for `.debug()` to hit the breakpoint.
 .debug()
 .debug(options)
 
+// ---or---
+
 cy.debug()
 cy.debug(options)
 ```
