@@ -3,7 +3,13 @@ title: Cypress.log
 comments: false
 ---
 
-Print relevant information to the Command Log and Console for {% url "custom commands" custom-commands %}.
+This is the internal API for controlling what get's printed to the Command Log.
+
+Useful when writing your own {% url "custom commands" custom-commands %}.
+
+{% note info WIP %}
+This page is currently a work in progress and is not fully documented.
+{% endnote %}
 
 # Syntax
 
@@ -16,53 +22,35 @@ Cypress.log(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-Cypress.log({}) // Set server defaults
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.log({})  // Errors, cannot be chained off 'cy'
+const log = Cypress.log({...}) // returns a log instance
 ```
 
 ## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
-Pass in an options object to `Cypress.log`.
+Pass in an options object to `Cypress.log()`.
 
 Option | Default | Description
 --- | --- | ---
-`$el` |  |
-`alias` | `undefined` |
-`aliasType` | `undefined` |
-`autoEnd` |  |
+`$el` | `undefined` |
+`name` | `name of the command` |
+`displayName` | `name of the command` | Overrides `name` only for display purposes.
+`message` | `command args` |
 `consoleProps` | `function() {}` |
-`displayName` |  |
-`end` |  |
-`error` |  |
-`event` | `false` |
-`message` | custom command args |
-`name` |  |
-`passed` |  |
-`renderProps` | `function() {}` |
-`selector` |  |
-`snapshot` |  |
-`type` |  |
 
 # Examples
 
 ```javascript
-Cypress.Commands.add('myCustomCommand', (el) => {
-
-  Cypress.log({
-    name:
-    $el: el.get(0),
-    message: 'Your custom command happened',
+Cypress.Commands.add('myCustomCommand', (arg1, arg2) => {
+  const log = Cypress.log({
     consoleProps: function() {
+      // return an object literal which will
+      // be printed to the dev tools console
+      // on click
       return {
-        'Command': 'myCustomCommand'
-        'Applied To': el.get(0)
+        'Some': 'values',
+        'For': 'debugging'
       }
     }
   })
