@@ -15,4 +15,15 @@ containerClass: examples
 ## [Dealing with Hover and Hidden Elements](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/hover_hidden_elements_spec.js)
 
 - Interact with elements that are hidden by CSS.
+- Use {% url "`.invoke()`" invoke %} and {% url "`.trigger()`" trigger %} to simulate hovering.
 - Trigger `mouseover`, `mouseout`, `mouseenter`, `mouseleave` events.
+Get around the lack of a `.hover()` command.
+
+## [Form Interaction](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/form_interactions_spec.js)
+
+- Use {% url "`.invoke()`" invoke %} and {% url "`.trigger()`" trigger %} to test a range input (slider).
+
+## [Drag and Drop](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/drag_n_drop_spec.js)
+
+- Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses mouse events.
+- Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses drag events.
