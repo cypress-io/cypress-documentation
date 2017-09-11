@@ -71,7 +71,8 @@ jobs:
       - run:
           command: npm start
           background: true
-      - run: sleep 40
+      # need a better way to know when site is up and running
+      - run: sleep 60
       - run: npm run cypress
 
   "deploy-docs-staging":
