@@ -96,3 +96,7 @@ By installing Cypress through `npm` you also get access to many other CLI comman
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
+
+# Logging In
+
+After opening Cypress, you will need to log in. Logging in currently requires a {% url "Github" https://github.com/ %} account, if you do not have an account, you will have to {% url "create one" https://github.com/join %} to use Cypress.
