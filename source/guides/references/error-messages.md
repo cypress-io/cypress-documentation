@@ -312,9 +312,43 @@ See our {% url "Web Security" web-security#Limitations %} documentation.
 
 In version {% url "`0.20.0`" changelog %}, we removed the commands for adding custom commands and replaced them with, what we believe to be, a simpler interface.
 
-Now you can create parent, dual, and child commands using the same {% url "`Cypress.Commands.add()`" custom-commands %} command. 
+Now you can create parent, dual, and child commands using the same {% url "`Cypress.Commands.add()`" custom-commands %} command.
 
 Please read our {% url "new documentation on writing custom commands" custom-commands %}.
+
+## {% fa fa-exclamation-triangle red %} Cypress detected that you invoked one or more `cy` commands in a custom command but returned a different value.
+
+Because `cy` commands are asynchronous and are queued to be run later, it doesn't make sense to return anything else.
+
+For convenience, you can also simply omit any return value or return `undefined` and Cypress will not error.
+
+In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically detected this and forced the `cy` commands to be returned. To make things less magical and clearer, we are now throwing an error.
+
+## {% fa fa-exclamation-triangle red %} Cypress detected that you invoked one or more `cy` commands but returned a different value.
+
+Because cy commands are asynchronous and are queued to be run later, it doesn't make sense to return anything else.
+
+For convenience, you can also simply omit any return value or return `undefined` and Cypress will not error.
+
+In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically detected this and forced the `cy` commands to be returned. To make things less magical and clearer, we are now throwing an error.
+
+## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise from a command while also invoking one or more cy commands in that promise.
+
+Because Cypress commands are already promise-like, you don't need to wrap them or return your own promise.
+
+Cypress will resolve your command with whatever the final Cypress command yields.
+
+The reason this is an error instead of a warning is because Cypress internally queues commands serially whereas Promises execute as soon as they are invoked. Attempting to reconcile this would prevent Cypress from ever resolving.
+
+## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked one or more `cy` commands inside of that promise.
+
+While this works in practice, it's often indicative of an anti-pattern. You almost never need to return both a promise and also invoke `cy` commands.
+
+`cy` commands themselves are already promise like, and you can likely avoid the use of the separate Promise.
+
+## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
+
+You can safely remove: `{stub: false}`.
 
 # CLI Errors
 
@@ -400,6 +434,12 @@ If you find yourself stuck and can't work around these issues you can just set t
   "chromeWebSecurity": false
 }
 ```
+
+## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross origin script.
+
+Check your Developer Tools Console for the actual error - it should be printed there.
+
+It's possible to enable debugging these scripts by adding the `crossorigin` attribute and setting a `CORS` header.
 
 # Browser Errors
 
