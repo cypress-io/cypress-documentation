@@ -74,7 +74,14 @@ jobs:
       - run:
           name: Waiting for local server to start
           command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 90000
-      - run: npm run cypress
+      - run:
+          name: Running Cypress tests
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              $(npm bin)/cypress cypress run --record --key $DOCS_RECORD_KEY
+            else
+              $(npm bin)/cypress cypress run
+            fi
 
   "deploy-docs-staging":
     <<: *defaults
@@ -91,7 +98,13 @@ jobs:
           command: cat public/build.json
       - run:
           name: Test deployed docs
-          command: CYPRESS_baseUrl=https://docs-staging.cypress.io npm run cypress
+          command: |
+            CYPRESS_baseUrl=https://docs-staging.cypress.io
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              $(npm bin)/cypress cypress run --record --key $DOCS_RECORD_KEY
+            else
+              $(npm bin)/cypress cypress run
+            fi
 
   "deploy-docs-production":
     <<: *defaults
