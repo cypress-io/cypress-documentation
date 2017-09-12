@@ -65,7 +65,9 @@ If you used `npm` to install, Cypress has now been installed to your `./node_mod
 $(npm bin)/cypress open
 ```
 
-**Or if your npm version is at least 5.2.0 you can use `npx`**
+**Or by using `npx`**
+
+**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2` or can be installed separately.
 
 ```shell
 npx cypress open
