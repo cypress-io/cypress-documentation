@@ -65,6 +65,12 @@ If you used `npm` to install, Cypress has now been installed to your `./node_mod
 $(npm bin)/cypress open
 ```
 
+**Or if your npm version is at least 5.2.0 you can use `npx`**
+
+```shell
+npx cypress open
+```
+
 After a moment, the Cypress Desktop application will launch.
 
 ## Adding npm scripts
