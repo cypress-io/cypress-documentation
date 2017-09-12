@@ -31,7 +31,6 @@
     "deploy-prebuilt": "node ./cy_scripts/deploy.js",
     "scrape": "node ./cy_scripts/scrape.js",
     "start": "node --stack-size=8192 ./index.js server --port 2222",
-    "cypress": "cypress run --record --key $DOCS_RECORD_KEY",
     "test-e2e": "run-p --race start cypress",
     "test": "mocha --compilers coffee:coffee-script/register --recursive",
     "test-watch": "npm run test --silent -- --watch",
