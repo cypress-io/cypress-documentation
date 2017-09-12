@@ -11,6 +11,39 @@ describe "Documentation", ->
   beforeEach ->
     cy.server()
 
+  context "CSS", ->
+    beforeEach ->
+      cy.visit("/")
+      # wait for the page redirect and load
+      cy.url().should('contain', 'why-cypress')
+
+    # only works in development environment where each CSS
+    # file is separate
+    if Cypress.config('baseUrl').includes('localhost')
+      it "loads fira", ->
+        cy.request("fonts/vendor/fira/fira.css")
+
+    it "has limited container height", ->
+      cy.get('#container')
+      .then (el) ->
+        elHeight = getComputedStyle(el[0]).height
+        viewportHeight = Cypress.config('viewportHeight')
+        expect(elHeight).to.equal(viewportHeight + 'px')
+
+    it "has app CSS style rules", ->
+      isAppStyle = (ruleList) ->
+        ruleList.href.includes('/cypress.css') || # local separate CSS files
+        ruleList.href.includes('/style')          # single bundle in production
+
+      cy.document()
+        .then (doc) ->
+          appRules = Cypress._.find(doc.styleSheets, isAppStyle)
+          expect(appRules, 'app rules are loaded').to.not.be.undefined
+          cy.log('found App style rules')
+          containerRules = Cypress._.find(appRules.rules, {selectorText: '#container'})
+          expect(containerRules, 'has #container CSS').to.not.be.undefined
+          cy.log('found CSS rules for', containerRules.selectorText)
+
   context "Pages", ->
     describe "404", ->
       it "displays", ->
