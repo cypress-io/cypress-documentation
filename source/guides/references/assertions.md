@@ -11,7 +11,7 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 
 ## BDD Assertions
 
-These chainers are available for BDD assertions.
+These chainers are available for BDD assertions (`expect`/`should`).
 
 | Chainer | Example |
 | --- | --- |
@@ -53,7 +53,7 @@ These chainers are available for BDD assertions.
 | instanceof( *constructor* )| `expect([ 1, 2, 3 ]).to.be.instanceof(Array)` |
 | instanceOf( *constructor* ) | `expect([ 1, 2, 3 ]).to.be.instanceOf(Array)` |
 | property( *name*, *[value]* ) | `expect(obj).to.have.property('foo')` |
-| deep.property( *name*, *[value]* ) | `expect(deepObj).to.have.deep.property('teas[1]', 'matcha')` |
+| deep.property( *name*, *[value]* ) | `expect(deepObj).to.have.deep.property('tests[1]', 'e2e')` |
 | ownProperty( *name* )  | `expect('test').to.have.ownProperty('length')` |
 | haveOwnProperty( *name* ) | `expect('test').to.haveOwnProperty('length')` |
 | length( *value* )  | `expect('foo').to.have.length.above(2)` |
@@ -84,21 +84,50 @@ These getters are also available for BDD assertions. They don't actually do anyt
 
 ## TDD Assertions
 
-These assertions are available for TDD assertions. You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
+These assertions are available for TDD assertions (`assert`). You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
 
 | Assertion | Example |
 | --- | --- |
 | .isOk(*object*, *[message]*) | `assert.isOk('everything', 'everything is ok')` |
 | .isNotOk(*object*, *[message]*) | `assert.isNotOk(false, 'this will pass')` |
-| .equal(*actual*, *expected*, *[message]*) | `assert.equal(3, 3, 'values are equal')` |
-| .notEqual(*actual*, *expected*, *[message]*) | `assert.notEqual(3, 4, 'values are not equal')` |
-| .strictEqual(*actual*, *expected*, *[message]*) | `assert.strictEqual(true, true, 'bools are strictly equal')` |
+| .equal(*actual*, *expected*, *[message]*) | `assert.equal(3, 3, 'values equal')` |
+| .notEqual(*actual*, *expected*, *[message]*) | `assert.notEqual(3, 4, 'values not equal')` |
+| .strictEqual(*actual*, *expected*, *[message]*) | `assert.strictEqual(true, true, 'bools strictly equal')` |
 | .notStrictEqual(*actual*, *expected*, *[message]*) | `assert.notStrictEqual(5, '5', 'not strictly equal')` |
 | .deepEqual(*actual*, *expected*, *[message]*) | `assert.deepEqual({ name: 'Jane' }, { name: 'Jane' })` |
 | .notDeepEqual(*actual*, *expected*, *[message]*) | `assert.notDeepEqual({ name: 'Jane' }, { name: 'June' })` |
 | .isAbove(*valueToCheck*, *valueToBeAbove*, *[message]*) | `assert.isAbove(6, 1, '6 is greater than 1')` |
-| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
-| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is greater or equal to 2')` |
+| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is gt or eq to 2')` |
+| .isAtLeast(*valueToCheck*, *valueToBeAtLeast*, *[message]*) | `assert.isAtLeast(5, 2, '5 is gt or eq to 2')` |
+| .isBelow(*valueToCheck*, *valueToBeBelow*, *[message]*) | `assert.isBelow(3, 6, '3 is strictly less than 6')` |
+| .isAtMost(*valueToCheck*, *valueToBeAtMost*, *[message]*) | `assert.isAtMost(4, 4, '4 is lt or eq to 4')` |
+| .isTrue(*value*, *[message]*) | `assert.isTrue(true, 'this val is true')` |
+| .isNotTrue(*value*, *[message]*) | `assert.isNotTrue('tests are no fun', 'this val is not true')` |
+| .isFalse(*value*, *[message]*) | `assert.isFalse(false, 'this val is false')` |
+| .isNotFalse(*value*, *[message]*) | `assert.isNotFalse('tests are fun', 'this val is not false')` |
+| .isNull(*value*, *[message]*) | `assert.isNull(err, 'there was no error')` |
+| .isNotNull(*value*, *[message]*) | `assert.isNotNull('hello', 'is not null')` |
+| .isNaN(*value*, *[message]*) | `assert.isNaN(NaN, 'NaN is NaN')` |
+| .isNotNaN(*value*, *[message]*) | `assert.isNotNaN(5, '5 is not NaN')` |
+| .exists(*value*, *[message]*) | `assert.exists(5, '5 is not null or undefined')` |
+| .notExists(*value*, *[message]*) | `assert.notExists(null, 'value is null or undefined')` |
+| .isUndefined(*value*, *[message]*) | `assert.isUndefined(undefined, 'value is undefined')` |
+| .isDefined(*value*, *[message]*) | `assert.isDefined('hello', 'value has been defined')` |
+| .isFunction(*value*, *[message]*) | `assert.isFunction(function test() { return 'pass'; }, 'value is function')` |
+| .isNotFunction(*value*, *[message]*) | `assert.isNotFunction(5, 'value is not a function')` |
+| .isObject(*value*, *[message]*) | `assert.isObject({num: 5}, 'value is object')` |
+| .isNotObject(*value*, *[message]*) | `assert.isNotObject(3, 'value is not object')` |
+| .isArray(*value*, *[message]*) | `assert.isArray(['unit', 'e2e'], 'value is array')` |
+| .isNotArray(*value*, *[message]*) | `assert.isNotArray('e2e', 'value is not array')` |
+| .isString(*value*, *[message]*) | `assert.isString('e2e', 'value is string')` |
+| .isNotString(*value*, *[message]*) | `assert.isNotString(2, 'value is not string')` |
+| .isNumber(*value*, *[message]*) | `assert.isNumber(2, 'value is number')` |
+| .isNotNumber(*value*, *[message]*) | `assert.isNotNumber('e2e', 'value is not number')` |
+| .isFinite(*value*, *[message]*) | `assert.isFinite('e2e', 'value is finite')` |
+| .isBoolean(*value*, *[message]*) | `assert.isBoolean(true, 'value is boolean')` |
+| .isNotBoolean(*value*, *[message]*) | `assert.isNotBoolean('true', 'value is not boolean')` |
+| .typeOf(*value*, *name*, *[message]*) | `assert.typeOf('e2e', 'string', 'value is string')` |
+| .notTypeOf(*value*, *name*, *[message]*) | `assert.notTypeOf('e2e', 'number', 'value is not number')` |
 
 # Chai-jQuery
 

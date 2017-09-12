@@ -36,6 +36,9 @@ cd cypress-documentation
 
 **Install dependencies:**
 
+**note:** at least Node 6 is required, but Node 8 with NPM v5 is preferred to take advantage of
+the package lock file.
+
 ```bash
 npm install
 ```

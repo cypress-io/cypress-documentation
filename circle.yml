@@ -13,8 +13,8 @@ defaults: &defaults
   parallelism: 1
   working_directory: ~/cypress-documentation
   docker:
-    # the Docker image with Cypress dependencies and Chrome browser
-    - image: cypress/internal:chrome58
+    # the Docker image with Cypress dependencies
+    - image: cypress/base:8
       environment:
         <<: *env_defaults
 
@@ -67,14 +67,23 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
-      - run: npm run test-e2e
+      - run: ls -Rl themes/cypress/source/js
+      - run:
+          command: npm start
+          background: true
+      - run:
+          name: Waiting for local server to start
+          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 90000
+      - run: npm run cypress
 
   "deploy-docs-staging":
     <<: *defaults
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: npm ls || true
       - run: NODE_ENV=staging npm run build
+      - run: ls -Rl themes/cypress/source/js
       - run: ls public
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:

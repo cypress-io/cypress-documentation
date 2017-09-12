@@ -36,8 +36,6 @@ guides:
     best-practices: best-practices.html
     bundled-tools: bundled-tools.html
     # creating-fixtures: creating-fixtures.html
-    # best-practices: best-practices.html
-    # anti-patterns: anti-patterns.html
     # cypress-api-design: cypress-api-design.html
     known-issues: known-issues.html
     # contributing: contributing.html
@@ -48,6 +46,8 @@ guides:
 api:
   introduction:
     api: api.html
+  events:
+    catalog-of-events: catalog-of-events.html
   commands:
     and: and.html
     as: as.html
@@ -128,12 +128,6 @@ api:
     within: within.html
     wrap: wrap.html
     writefile: writefile.html
-  events:
-    catalog-of-events: catalog-of-events.html
-    on: on.html
-    once: once.html
-    removelistener: removelistener.html
-    removealllisteners: removealllisteners.html
   utilities:
     _: _.html
     $: $.html
