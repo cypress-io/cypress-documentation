@@ -78,9 +78,9 @@ jobs:
           name: Running Cypress tests
           command: |
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress cypress run --record --key $DOCS_RECORD_KEY
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
             else
-              $(npm bin)/cypress cypress run
+              $(npm bin)/cypress run
             fi
 
   "deploy-docs-staging":
@@ -101,9 +101,9 @@ jobs:
           command: |
             CYPRESS_baseUrl=https://docs-staging.cypress.io
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress cypress run --record --key $DOCS_RECORD_KEY
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
             else
-              $(npm bin)/cypress cypress run
+              $(npm bin)/cypress run
             fi
 
   "deploy-docs-production":
