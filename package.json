@@ -5,6 +5,9 @@
   "hexo": {
     "version": "3.3.8"
   },
+  "engines": {
+    "node": "^8.4.0"
+  },
   "license": "MIT",
   "bugs": "https://github.com/cypress-io/cypress-documentation/issues",
   "author": "Cypress.io team and contributors",
