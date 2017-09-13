@@ -65,6 +65,14 @@ If you used `npm` to install, Cypress has now been installed to your `./node_mod
 $(npm bin)/cypress open
 ```
 
+**Or by using `npx`**
+
+**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2` or can be installed separately.
+
+```shell
+npx cypress open
+```
+
 After a moment, the Cypress Desktop application will launch.
 
 ## Adding npm scripts
@@ -96,3 +104,7 @@ By installing Cypress through `npm` you also get access to many other CLI comman
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
+
+# Logging In
+
+After opening Cypress, you will need to log in. Logging in currently requires a {% url "Github" https://github.com/ %} account, if you do not have an account, you will have to {% url "create one" https://github.com/join %} to use Cypress.

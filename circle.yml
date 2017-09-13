@@ -13,8 +13,8 @@ defaults: &defaults
   parallelism: 1
   working_directory: ~/cypress-documentation
   docker:
-    # the Docker image with Cypress dependencies and Chrome browser
-    - image: cypress/internal:chrome58
+    # the Docker image with Cypress dependencies
+    - image: cypress/base:8
       environment:
         <<: *env_defaults
 
@@ -71,8 +71,17 @@ jobs:
       - run:
           command: npm start
           background: true
-      - run: sleep 40
-      - run: npm run cypress
+      - run:
+          name: Waiting for local server to start
+          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 90000
+      - run:
+          name: Running Cypress tests
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
+            else
+              $(npm bin)/cypress run
+            fi
 
   "deploy-docs-staging":
     <<: *defaults
@@ -89,7 +98,13 @@ jobs:
           command: cat public/build.json
       - run:
           name: Test deployed docs
-          command: CYPRESS_baseUrl=https://docs-staging.cypress.io npm run cypress
+          command: |
+            export CYPRESS_baseUrl=https://docs-staging.cypress.io
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
+            else
+              $(npm bin)/cypress run
+            fi
 
   "deploy-docs-production":
     <<: *defaults

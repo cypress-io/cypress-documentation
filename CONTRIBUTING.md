@@ -36,6 +36,9 @@ cd cypress-documentation
 
 **Install dependencies:**
 
+**note:** at least Node 6 is required, but Node 8 with NPM v5 is preferred to take advantage of
+the package lock file.
+
 ```bash
 npm install
 ```
@@ -50,6 +53,9 @@ npm start
 ```
 
 Visit [http://localhost:2222/](http://localhost:2222/).
+
+**note** If you need to debug documentation build step run with environment
+variable set `DEBUG=docs npm run build` 
 
 ## Writing Documentation
 
