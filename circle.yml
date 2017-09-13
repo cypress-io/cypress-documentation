@@ -99,7 +99,7 @@ jobs:
       - run:
           name: Test deployed docs
           command: |
-            CYPRESS_baseUrl=https://docs-staging.cypress.io
+            export CYPRESS_baseUrl=https://docs-staging.cypress.io
             if [ -n "$DOCS_RECORD_KEY" ]; then
               $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
             else

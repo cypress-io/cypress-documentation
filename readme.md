@@ -1,4 +1,4 @@
-# Cypress Documentation [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation.svg?style=svg&circle-token=8a0253363287ab85d52953467603a4099a360c0c)](https://circleci.com/gh/cypress-io/cypress-documentation) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only)
+# Cypress Documentation [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation.svg?style=svg&circle-token=8a0253363287ab85d52953467603a4099a360c0c)](https://circleci.com/gh/cypress-io/cypress-documentation) [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/ma3dkn/runs) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only)
 
 The code for Cypress Documentation including Guides, API, Examples, Dashboard & FAQ found at https://docs.cypress.io.
 
