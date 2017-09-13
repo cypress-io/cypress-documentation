@@ -54,6 +54,9 @@ npm start
 
 Visit [http://localhost:2222/](http://localhost:2222/).
 
+**note** If you need to debug documentation build step run with environment
+variable set `DEBUG=docs npm run build` 
+
 ## Writing Documentation
 
 ### Adding Examples
