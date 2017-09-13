@@ -158,7 +158,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | exist | `expect($('#nonexistent')).not.to.exist` |
 | match( *selector* ) | `expect($('#empty')).to.match(':empty')` |
 | contain( *text* ) | `expect($('#content')).to.contain('text')` |
-| descendents( *selector* ) | `expect($('#content')).to.have.descendants('div')` |
+| descendants( *selector* ) | `expect($('#content')).to.have.descendants('div')` |
 
 # Sinon-Chai
 
