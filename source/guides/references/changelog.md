@@ -169,12 +169,14 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - {% url 'New ".trigger()"' trigger %}
 - {% url 'New "cy.scrollTo()"' scrollto %}
 - {% url 'New ".scrollIntoView()"' scrollintoview %}
+- {% url 'Updated "Cypress.dom"' dom %}
 - {% url 'Updated "Installing Cypress"' installing-cypress %}
 - {% url 'Updated "Writing Your First Test"' writing-your-first-test %}
 - {% url 'Updated "Testing Your App"' testing-your-app %}
 - {% url 'Updated "Command Line"' command-line %}
 - {% url 'Updated "Debugging"' debugging %}
 - {% url 'Updated "Assertions"' assertions %}
+- {% url 'Updated "Interacting with Elements"' interacting-with-elements %}
 
 # 0.19.4
 
