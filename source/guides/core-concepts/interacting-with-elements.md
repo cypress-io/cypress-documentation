@@ -156,7 +156,7 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as its working with your element. Using a debugger with these events will give you much lower level view into how Cypress works.
+As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as its working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command
@@ -195,7 +195,7 @@ We will NOT perform these:
 - Ensure it is visible
 - Ensure it is not readonly
 - Ensure it is not disabled
-- Ensure it is not disabled
+- Ensure it is not animation
 - Ensure it is not covered
 - Fire the event at a descendent
 
