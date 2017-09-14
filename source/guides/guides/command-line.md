@@ -51,6 +51,7 @@ Option | Description
 `-h`, `--help`  | Output usage information
 `-k`, `--key`  | Specify your secret record key
 `-p`, `--port`  | Override default port
+`-P`, `--project` | Path to the project
 `--record`  | Whether to record the test run
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
@@ -153,6 +154,7 @@ Option | Description
 `-e`, `--env`  | Specify environment variables
 `-h`, `--help`  | Output usage information
 `-p`, `--port`  | Override default port
+`-P`, `--project` | Path to the project
 
 
 ***Open Cypress projects specifying port***
