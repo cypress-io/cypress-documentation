@@ -2,7 +2,6 @@
 title: Interacting with Elements
 comments: false
 ---
-
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
@@ -47,26 +46,28 @@ Whenever Cypress cannot interact with an element, it could fail at any of the ab
 
 Cypress checks a lot of things to determine an element's visibility.
 
+The following calculations factor in CSS translations and transforms.
+
 ***An element is considered hidden if:***
 
-- Its `offsetWidth` or `offsetHeight` is `0`.
+- Its `width` or `height` is `0`.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and its offscreen or covered up.
 
 ***Additionally an element is considered hidden if:***
 
-- Any of its ancestors *hides overflow* \*
-  - AND that ancestor has `offsetWidth` or `offsetHeight` of `0`
+- Any of its ancestors **hides overflow**\*
+  - AND that ancestor has `width` or `height` of `0`
   - AND an element between that ancestor and the element is `position: absolute`
-- Any of its ancestors *hides overflow* \*
+- Any of its ancestors **hides overflow**\*
   - AND that ancestor or an ancestor between it and that ancestor is its offset parent
   - AND it is positioned outside that ancestor's bounds
-- Any of its ancestors *hides overflow* \*
+- Any of its ancestors **hides overflow**\*
   - AND the element is `position: relative`
   - AND it is positioned outside that ancestor's bounds
 
-\* *hides overflow* means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
+\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
 
 ## Disability
 
@@ -198,8 +199,6 @@ We will NOT perform these:
 - Ensure it is not covered
 - Fire the event at a descendent
 
+{% endnote %}
+
 In summary, `{ force: true }` skips the checks, and it will always fire the event at the desired element.
-
-<!-- # Firing Events
-
-- Talk about change events, focus, blur, input, mousedown, mouseup, keyboard, etc -->
