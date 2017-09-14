@@ -23,8 +23,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 - {% url `.check()` check %}
 - {% url `.uncheck()` uncheck %}
 - {% url `.select()` select %}
-- {% url `.scrollTo()` scrollto %}
-- {% url `.scrollIntoView()` scrollintoview %}
+- {% url `.trigger()` trigger %}
 
 These commands simulate a user interacting with your application. Under the hood Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
 
@@ -40,7 +39,7 @@ Cypress will wait for the element to pass all of these checks for the duration o
 - {% urlHash 'Ensure the element is not animating.' Animations %}
 - {% urlHash 'Ensure the element is not covered.' Covering %}
 - {% urlHash 'Scroll the page if still covered by an element with fixed position.' Scrolling %}
-- {% urlHash 'Fire the event at a specific coordinate.'  Coordinates %}
+- {% urlHash 'Fire the event at the desired coordinates.'  Coordinates %}
 
 Whenever Cypress cannot interact with an element, it could fail at any of the above steps. You will usually get an error explaining why the element was not found to be actionable.
 
@@ -51,14 +50,15 @@ Cypress checks a lot of things to determine an element's visibility.
 ***An element is considered hidden if:***
 
 - Its `offsetWidth` or `offsetHeight` is `0`.
-- Its CSS property is `visibility: hidden`.
-- Its CSS property is `display: none`.
+- Its CSS property (or ancestors) is `visibility: hidden`.
+- Its CSS property (or ancestors) is `display: none`.
+- Its CSS property is `position: fixed` and its offscreen or covered up.
 
 ***Additionally an element is considered hidden if:***
 
 - Any of its ancestors *hides overflow* \*
   - AND that ancestor has `offsetWidth` or `offsetHeight` of `0`
-  - AND an element between that ancestor and the element is `position: fixed` or `position: absolute`
+  - AND an element between that ancestor and the element is `position: absolute`
 - Any of its ancestors *hides overflow* \*
   - AND that ancestor or an ancestor between it and that ancestor is its offset parent
   - AND it is positioned outside that ancestor's bounds
@@ -115,9 +115,9 @@ This scrolling logic only applies to {% urlHash "commands that are actionable ab
 
 The scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of it's scrollable container.
 
-However, this scrolling behavior can sometimes create other issues. For instance, when Cypress calculates that the element to interact with is being covered by a parent element, then we "nudge" it's container by scrolling it a tiny bit.
+After scrolling the element, if we determine that it is still being covered up, we will continue to scroll and "nudge" the page until it becomes visible. This most frequently happens when you have `position: fixed` or `position: sticky` navigation elements which are fixed to the top of the page.
 
-This most often happens when you have a "sticky nav" that is fixed to the top of the page. By Cypress scrolling the element to the top, it can sometimes end up "underneath" this nav. Our algorithm *should* detect this and scroll until the element is no longer covered.
+Our algorithm *should* always be able to scroll until the element is not covered.
 
 ## Coordinates
 
@@ -155,6 +155,8 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
+As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as its working with your element. Using a debugger with these events will give you much lower level view into how Cypress works.
+
 ```js
 // break on a debugger before the action command
 cy.get('button').debug().click()
@@ -172,7 +174,7 @@ Is this worth trying to replicate when you're testing?
 
 Maybe not! For these scenarios  we give you a simple escape hatch to bypass all of the checks above and just force events to happen!
 
-You can simply pass `{force: true}` to most action commands.
+You can simply pass `{ force: true }` to most action commands.
 
 ```js
 // force the click and all subsequent events
@@ -181,14 +183,22 @@ cy.get('button').click({ force: true })
 ```
 
 {% note info "What's the difference?" %}
-When you force an event to happen we still
+When you force an event to happen we will:
 
-- Attempt to scroll the element into view
-- Issue all applicable events
-- Fire them at the right coordinates
+- Continue to perform all default actions
+- Forcibly fire the event at the element
 
-All `{force: true}` does is bypass the other checks for ensuring an element is in an actionable state. Therefore you still get a high degree of confidence your application is responding to events correctly.
-{% endnote %}
+We will NOT perform these:
+
+- Scroll the element into view
+- Ensure it is visible
+- Ensure it is not readonly
+- Ensure it is not disabled
+- Ensure it is not disabled
+- Ensure it is not covered
+- Fire the event at a descendent
+
+In summary, `{ force: true }` skips the checks, and it will always fire the event at the desired element.
 
 <!-- # Firing Events
 
