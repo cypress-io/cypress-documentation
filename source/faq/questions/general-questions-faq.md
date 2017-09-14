@@ -55,7 +55,7 @@ Cypress desktop app and CLI are free to use. The Cypress Dashboard is a premium 
 
 ## {% fa fa-angle-right %} What operating systems do you support?
 
-The desktop application can be {% url "installed" installing-cypress %} in OSX and Linux. {% issue 74 'Windows is not yet supported' %}, although you can use Cypress if you install a Linux VM using something like {% url "VirtualBox" https://www.virtualbox.org/ %} or using a {% url "Docker image" userland-extensions#Docker %}.
+The desktop application can be {% url "installed" installing-cypress %} in OSX and Linux. {% issue 74 'Windows is not yet supported' %}, although you can use Cypress if you install a Linux VM using something like {% url "VirtualBox" https://www.virtualbox.org/ %} or using a {% url "Docker image" docker-images %}.
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
