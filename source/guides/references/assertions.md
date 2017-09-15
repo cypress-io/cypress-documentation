@@ -15,29 +15,29 @@ These chainers are available for BDD assertions (`expect`/`should`).
 
 | Chainer | Example |
 | --- | --- |
-| not | `expect(foo).to.not.equal('bar')` |
-| deep | `expect(foo).to.deep.equal({ bar: 'baz' })` |
-| any | `expect(foo).to.have.any.keys('bar', 'baz')` |
-| all | `expect(foo).to.have.all.keys('bar', 'baz')` |
+| not | `expect(name).to.not.equal('Jane')` |
+| deep | `expect(obj).to.deep.equal({ name: 'Jane' })` |
+| any | `expect(arr).to.have.any.keys('name', 'age')` |
+| all | `expect(arr).to.have.all.keys('name', 'age')` |
 | a( *type* ) | `expect('test').to.be.a('string')` |
 | an( *type* ) | `expect(undefined).to.be.an('undefined')` |
 | include( *value* )  | `expect([1,2,3]).to.include(2)` |
-| contain( *value* )  | `expect('foobar').to.contain('foo')` |
+| contain( *value* )  | `expect('testing').to.contain('test')` |
 | includes( *value* )  | `expect([1,2,3]).includes(2)` |
-| contains( *value* ) | `expect('foobar').contains('foo')` |
+| contains( *value* ) | `expect('testing').contains('test')` |
 | ok | `expect(undefined).to.not.be.ok` |
 | true | `expect(true).to.be.true` |
 | false | `expect(false).to.be.false` |
 | null | `expect(null).to.be.null` |
 | undefined | `expect(undefined).to.be.undefined` |
-| exist | `expect(foo).to.exist` |
+| exist | `expect(myVar).to.exist` |
 | empty | `expect([]).to.be.empty` |
 | arguments | `expect(arguments).to.be.arguments` |
 | equal( *value* )  | `expect(42).to.equal(42)` |
 | equals( *value* )  | `expect(42).equals(42)` |
 | eq( *value* )  | `expect(42).to.eq(42)` |
-| deep.equal( *value* ) | `expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' })` |
-| eql( *value* )  | `expect({ foo: 'bar' }).to.eql({ foo: 'bar' })` |
+| deep.equal( *value* ) | `expect({ name: 'Jane' }).to.deep.equal({ name: 'Jane' })` |
+| eql( *value* )  | `expect({ name: 'Jane' }).to.eql({ name: 'Jane' })` |
 | eqls( *value* )  | `expect([ 1, 2, 3 ]).eqls([ 1, 2, 3 ])` |
 | above( *value* )  | `expect(10).to.be.above(5)` |
 | gt( *value* )  | `expect(10).to.be.gt(5)` |
@@ -47,24 +47,24 @@ These chainers are available for BDD assertions (`expect`/`should`).
 | below( *value* ) | `expect('foo').to.have.length.below(4)` |
 | lt( *value* )  | `expect(3).to.be.ls(4)` |
 | lessThan( *value* ) | `expect(5).to.be.lessThan(10)` |
-| most( *value* ) | `expect('foo').to.have.length.of.at.most(4)` |
+| most( *value* ) | `expect('test').to.have.length.of.at.most(4)` |
 | lte( *value* ) | `expect(5).to.be.lte(5)` |
 | within( *start*, *finish* ) | `expect(7).to.be.within(5,10)` |
-| instanceof( *constructor* )| `expect([ 1, 2, 3 ]).to.be.instanceof(Array)` |
-| instanceOf( *constructor* ) | `expect([ 1, 2, 3 ]).to.be.instanceOf(Array)` |
-| property( *name*, *[value]* ) | `expect(obj).to.have.property('foo')` |
+| instanceof( *constructor* )| `expect([1, 2, 3]).to.be.instanceof(Array)` |
+| instanceOf( *constructor* ) | `expect([1, 2, 3]).to.be.instanceOf(Array)` |
+| property( *name*, *[value]* ) | `expect(obj).to.have.property('name')` |
 | deep.property( *name*, *[value]* ) | `expect(deepObj).to.have.deep.property('tests[1]', 'e2e')` |
 | ownProperty( *name* )  | `expect('test').to.have.ownProperty('length')` |
 | haveOwnProperty( *name* ) | `expect('test').to.haveOwnProperty('length')` |
-| length( *value* )  | `expect('foo').to.have.length.above(2)` |
-| lengthOf( *value* ) | `expect('foo').to.have.lengthOf(3)` |
-| match( *regexp* ) | `expect('foobar').to.match(/^foo/)` |
-| string( *string* ) | `expect('foobar').to.have.string('bar')` |
-| keys( *key1*, *[key2]*, *[...]* ) | `expect({ foo: 1, bar: 2 }).to.have.key('foo')` |
-| key( *key1*, *[key2]*, *[...]* ) | `expect({ foo: 1, bar: 2 }).to.have.any.keys('foo')` |
+| length( *value* )  | `expect('test').to.have.length.above(2)` |
+| lengthOf( *value* ) | `expect('test').to.have.lengthOf(3)` |
+| match( *regexp* ) | `expect('testing').to.match(/^test/)` |
+| string( *string* ) | `expect('testing').to.have.string('test')` |
+| keys( *key1*, *[key2]*, *[...]* ) | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
+| key( *key1*, *[key2]*, *[...]* ) | `expect({ pass: 1, fail: 2 }).to.have.any.keys('pass')` |
 | throw( *constructor* ) | `expect(fn).to.throw(Error)` |
 | throws( *constructor* ) | `expect(fn).throws(ReferenceError, /bad function/)` |
-| respondTo( *method* ) | `expect(obj).to.respondTo('bar')` |
+| respondTo( *method* ) | `expect(obj).to.respondTo('getName')` |
 | itself | `expect(Foo).itself.to.respondTo('bar')` |
 | satisfy( *method* ) | `expect(1).to.satisfy(function(num) { return num > 0; })` |
 | closeTo( *expected*, *delta*) | `expect(1.5).to.be.closeTo(1, 0.5)` |
@@ -139,6 +139,28 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 
 | Chainers | Assertion |
 | --- | --- |
+<<<<<<< HEAD
+| attr( *name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
+| prop( *name*, *[value]*) | `expect($el).to.have.prop('disabled', false)` |
+| css( *name*, *[value]*) | `expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')` |
+| data( *name*, *[value]*) | `expect($el).to.have.data('foo', 'bar')` |
+| class( *className* ) | `expect($el).to.have.class('foo')` |
+| id( *id* ) | `expect($el).to.have.id('foo')` |
+| html( *html*)  | `expect($el).to.have.html('I love testing')` |
+| text( *text* ) | `expect($el).to.have.text('I love testing')` |
+| value( *value* ) | `expect($el).to.have.value('test@dev.com')` |
+| visible | `expect($el).to.be.visible` |
+| hidden | `expect($el).to.be.hidden` |
+| selected | `expect($option).not.to.be.selected` |
+| checked | `expect($input).not.to.be.checked` |
+| enabled | `expect($input).to.be.enabled` |
+| disabled | `expect($input).not.to.be.disabled` |
+| empty | `expect($el).not.to.be.empty` |
+| exist | `expect($nonexistent).not.to.exist` |
+| match( *selector* ) | `expect($emptyEl).to.match(':empty')` |
+| contain( *text* ) | `expect($el).to.contain('text')` |
+| descendents( *selector* ) | `expect($el).to.have.descendants('div')` |
+=======
 | attr( *name*, *[value]*) | `expect($('body')).to.have.attr('foo', 'bar')` |
 | prop( *name*, *[value]*) | `expect($('body')).to.have.prop('disabled', false)` |
 | css( *name*, *[value]*) | `expect($('body')).to.have.css('background-color', 'rgb(0, 0, 0)')` |
@@ -158,7 +180,8 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | exist | `expect($('#nonexistent')).not.to.exist` |
 | match( *selector* ) | `expect($('#empty')).to.match(':empty')` |
 | contain( *text* ) | `expect($('#content')).to.contain('text')` |
-| descendents( *selector* ) | `expect($('#content')).to.have.descendants('div')` |
+| descendants( *selector* ) | `expect($('#content')).to.have.descendants('div')` |
+>>>>>>> develop
 
 # Sinon-Chai
 
@@ -211,47 +234,47 @@ Notice how we use these assertions (listed above) with {% url `.should()` should
 
 ```javascript
 // retry until we find 3 matching <li.selected>
-cy.get("li.selected").should("have.length", 3)
+cy.get('li.selected').should('have.length', 3)
 ```
 
 ## Class
 
 ```javascript
 // retry until this input does not have class disabled
-cy.get("form").find("input").should("not.have.class", "disabled")
+cy.get('form').find('input').should('not.have.class', 'disabled')
 ```
 
 ## Value
 
 ```javascript
 // retry until this textarea has the correct value
-cy.get("textarea").should("have.value", "foo bar baz")
+cy.get('textarea').should('have.value', 'foo bar baz')
 ```
 
 ## Text Content
 
 ```javascript
 // retry until this span does not contain 'click me'
-cy.get("a").parent("span.help").should("not.contain", "click me")
+cy.get('a').parent('span.help').should('not.contain', 'click me')
 ```
 
 ## Visibility
 
 ```javascript
 // retry until this button is visible
-cy.get("button").should("be.visible")
+cy.get('button').should('be.visible')
 ```
 
 ## Existence
 
 ```javascript
 // retry until loading spinner no longer exists
-cy.get("#loading").should("not.exist")
+cy.get('#loading').should('not.exist')
 ```
 
 ## State
 
 ```javascript
 // retry until our radio is checked
-cy.get(":radio").should("be.checked")
+cy.get(':radio').should('be.checked')
 ```
