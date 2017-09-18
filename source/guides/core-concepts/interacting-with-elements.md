@@ -93,6 +93,10 @@ We also ensure that the element we're attempting to interact with isn't covered 
 
 For instance, an element could pass all of the previous checks, but a giant dialog could be covering the entire screen making interacting with the element impossible for any real user.
 
+{% note info %}
+When checking to see if the element is covered we always check its center coordinates.
+{% endnote %}
+
 If a *child* of the element is covering it - that's okay. In fact we'll automatically issue the events we fire to that child.
 
 Imagine you have a button:
