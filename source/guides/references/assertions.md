@@ -139,7 +139,6 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 
 | Chainers | Assertion |
 | --- | --- |
-<<<<<<< HEAD
 | attr( *name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
 | prop( *name*, *[value]*) | `expect($el).to.have.prop('disabled', false)` |
 | css( *name*, *[value]*) | `expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')` |
@@ -159,29 +158,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | exist | `expect($nonexistent).not.to.exist` |
 | match( *selector* ) | `expect($emptyEl).to.match(':empty')` |
 | contain( *text* ) | `expect($el).to.contain('text')` |
-| descendents( *selector* ) | `expect($el).to.have.descendants('div')` |
-=======
-| attr( *name*, *[value]*) | `expect($('body')).to.have.attr('foo', 'bar')` |
-| prop( *name*, *[value]*) | `expect($('body')).to.have.prop('disabled', false)` |
-| css( *name*, *[value]*) | `expect($('body')).to.have.css('background-color', 'rgb(0, 0, 0)')` |
-| data( *name*, *[value]*) | `expect($('body')).to.have.data('foo', 'bar')` |
-| class( *className* ) | `expect($('body')).to.have.class('foo')` |
-| id( *id* ) | `expect($('body')).to.have.id('foo')` |
-| html( *html*)  | `expect($('#title')).to.have.html('Chai Tea')` |
-| text( *text* ) | `expect($('#title')).to.have.text('Chai Tea')` |
-| value( *value* ) | `expect($('.year')).to.have.value('2012')` |
-| visible | `expect($('.year')).to.be.visible` |
-| hidden | `expect($('.year')).to.be.hidden` |
-| selected | `expect($('option')).not.to.be.selected` |
-| checked | `expect($('input')).not.to.be.checked` |
-| enabled | `expect($('enabled')).to.be.enabled` |
-| disabled | `expect($('input')).not.to.be.disabled` |
-| empty | `expect($('body')).not.to.be.empty` |
-| exist | `expect($('#nonexistent')).not.to.exist` |
-| match( *selector* ) | `expect($('#empty')).to.match(':empty')` |
-| contain( *text* ) | `expect($('#content')).to.contain('text')` |
-| descendants( *selector* ) | `expect($('#content')).to.have.descendants('div')` |
->>>>>>> develop
+| descendants( *selector* ) | `expect($el).to.have.descendants('div')` |
 
 # Sinon-Chai
 
