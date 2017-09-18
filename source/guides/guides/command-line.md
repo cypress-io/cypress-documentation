@@ -299,6 +299,10 @@ const cypress = require('cypress')
 cypress.run({
   reporter: 'junit',
   browser: 'chrome',
+  config: {
+    baseUrl: 'http://localhost:8080',
+    chromeWebSecurity: false,
+  },
   env: {
     foo: 'bar',
     baz: 'quux',
