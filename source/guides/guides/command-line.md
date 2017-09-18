@@ -51,11 +51,12 @@ Option | Description
 `-h`, `--help`  | Output usage information
 `-k`, `--key`  | Specify your secret record key
 `-p`, `--port`  | Override default port
-`-P`, `--project` | Path to the project
-`--record`  | Whether to record the test run
+`-P`, `--project` | Path to a project not in default location
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
 `-s`, `--spec`  | A single test file to run instead of all tests
+`--record`  | Whether to record the test run
+`--headed`  | Display the electron browser instead of running headlessly
 
 ***Run tests specifying browser***
 
@@ -69,6 +70,16 @@ Cypress will attempt to find all supported browsers available on your system. If
 
 ```shell
 DEBUG=cypress:launcher cypress run --browser chrome
+```
+
+***Run tests in Electron in headed mode***
+
+By default Cypress will run tests in Electron headlessly.
+
+Passing `--headed` will force Electron to be shown. This matches how you run Electron in the GUI.
+
+```shell
+cypress run --headed
 ```
 
 ***Run tests specifying configuration***
@@ -107,6 +118,18 @@ cypress run --reporter-options mochaFile=result.xml,toConsole=true
 
 ```shell
 cypress run --spec cypress/integration/app_spec.js
+```
+
+***Run tests specifying a project***
+
+By default Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run on a different location.
+
+This enables you to install Cypress in a top level `node_modules` folder but run Cypress on a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
+
+To see this in action we've set up an {% url 'example repo to demonstrate this here' https://github.com/cypress-io/cypress-test-nested-projects %}.
+
+```shell
+cypress run --project ./some/nested/folder
 ```
 
 ***Run and record video of tests***
@@ -154,7 +177,7 @@ Option | Description
 `-e`, `--env`  | Specify environment variables
 `-h`, `--help`  | Output usage information
 `-p`, `--port`  | Override default port
-`-P`, `--project` | Path to the project
+`-P`, `--project` | Path to a project not in default location
 
 
 ***Open Cypress projects specifying port***
