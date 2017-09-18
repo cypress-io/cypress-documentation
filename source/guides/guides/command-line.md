@@ -177,8 +177,6 @@ Option | Description
 `-e`, `--env`  | Specify environment variables
 `-h`, `--help`  | Output usage information
 `-p`, `--port`  | Override default port
-`-P`, `--project` | Path to a project not in default location
-
 
 ***Open Cypress projects specifying port***
 
