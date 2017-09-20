@@ -24,7 +24,6 @@
     "postbuild": "gulp post:build && git-last -f public/build.json",
     "clean": "hexo clean",
     "clean-deps": "rm -rf node_modules",
-    "convert": "node ./cy_scripts/convert.js",
     "predeploy": "NODE_ENV=production npm run build",
     "deploy": "echo Deploying built docs",
     "postdeploy": "npm run deploy-prebuilt",
