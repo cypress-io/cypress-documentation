@@ -14,14 +14,14 @@ Projects can *only* be added to Cypress through our Desktop Application.
 {% img no-border /img/guides/add-your-first-project-in-guid.png "Adding an empty folder to Cypress Desktop" %}
 
 {% note info  %}
-Projects added in our Desktop Application are strictly local to your computer. They are not tracked in any way by Cypress servers and do not communicate with us until they are {% urlHash "setup to be recorded" Set-up-a-Project-to-Record %}.
+Projects added in our Desktop Application are strictly local to your computer. They are not tracked in any way by Cypress servers and do not communicate with us until they are {% urlHash "set up to be recorded" Set-up-a-Project-to-Record %}.
 {% endnote %}
 
 # Set up a Project to Record
 
 During a run we record all failing tests, logs, screenshots, and videos and make these available in our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 
-***To setup a project to record:***
+***To set up a project to record:***
 
 **1. Click on the "Runs" tab of your project, then click "Setup Project to Record".**
 
@@ -81,7 +81,7 @@ Now as soon as tests finish running, you'll see them in the {% url 'Dashboard' h
 
 ## Project ID
 
-Once you setup your project to record, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
+Once you set up your project to record, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
 
 ***The `projectId` is a 6 character string in your `cypress.json`:***
 
@@ -95,7 +95,7 @@ This is helps us uniquely identify your project. If you manually alter this, **C
 
 ## Record Key {% fa fa-key %}
 
-Once you're setup to record test runs, we automatically generate a *Record Key* for the project.
+Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
 ***A record key is a GUID that looks like this:***
 

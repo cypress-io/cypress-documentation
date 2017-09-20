@@ -150,7 +150,7 @@ Typically these days servers communicate with frontend apps via JSON, but you co
 
 Generally the server is responsible for sending responses that reflect some kind of **state** it holds - generally in a database.
 
-Traditionally when writing `e2e` tests using Selenium, before you automate the browser you do some kind of **setup and teardown** on the server.
+Traditionally when writing `e2e` tests using Selenium, before you automate the browser you do some kind of **set up and tear down** on the server.
 
 Perhaps you'll need to generate a user, and seed them with associations and records. You may be familiar with using things such as fixtures or factories.
 
@@ -207,7 +207,7 @@ describe('The Home Page', function(){
 })
 ```
 
-While there's nothing really *wrong* with this approach, it does add a lot of complexity. You will be battling synchronizing the state between your server and your browser - and you'll always need to setup / teardown this state before tests (which is slow).
+While there's nothing really *wrong* with this approach, it does add a lot of complexity. You will be battling synchronizing the state between your server and your browser - and you'll always need to set up / tear down this state before tests (which is slow).
 
 The good news is that we aren't Selenium, nor are we a traditional e2e testing tool. That means we're not bound to the same restrictions.
 
@@ -314,7 +314,7 @@ Let's investigate and tease apart why.
 
 When you're writing tests for a very **specific feature**, you *should* use your UI to test it.
 
-But when you're testing *another area of the system* that relies on a state from a previous feature: **do not use your UI to setup this state**.
+But when you're testing *another area of the system* that relies on a state from a previous feature: **do not use your UI to set up this state**.
 
 Here's a more robust example:
 
@@ -376,7 +376,7 @@ Do you see the difference? We were able to login without needing to actually use
 
 Because we previously tested the login system end to end without using any short cuts we have already have 100% confidence it's working correctly.
 
-Use this methodology above when working with any area of your system that requires state to be set up elsewhere. Just remember - don't use your UI!
+Use this methodology above when working with any area of your system that requires the state to be set up elsewhere. Just remember - don't use your UI!
 
 {% note info 'Authentication Recipes' %}
 Logging in can be more complex than what we've just covered.

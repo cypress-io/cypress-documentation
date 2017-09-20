@@ -17,7 +17,7 @@ Cypress is a next generation front end testing tool built for the modern web. We
 
 We make it simple to:
 
-- {% urlHash 'Setup tests' Setup-Tests %}
+- {% urlHash 'Set up tests' Setup-Tests %}
 - {% urlHash 'Write tests' Write-Tests %}
 - {% urlHash 'Maintain tests' Maintain-Tests %}
 
@@ -41,7 +41,7 @@ Cypress can test anything that runs in a browser.
 
 Cypress is a free, {% url "open source" https://www.cypress.io/blog/2017/05/04/cypress-is-going-open-source/ %}, {% url "locally installed" installing-cypress %} testing tool **and** a service for {% url 'recording your tests' features-dashboard %}.
 
-- ***First:*** Cypress makes it easy to setup and start writing tests every day while you build your application locally. *TDD at its best!*
+- ***First:*** Cypress makes it easy to set up and start writing tests every day while you build your application locally. *TDD at its best!*
 - ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard' features-dashboard %} can record your test runs. You'll never have to wonder: *Why did this fail?*
 
 # Our Mission

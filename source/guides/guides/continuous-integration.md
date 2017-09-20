@@ -93,7 +93,7 @@ Cypress can record your tests running and make them available in our {% url 'Das
 
 ***To record tests running:***
 
-1. {% url 'Setup your project to record' projects-dashboard#Set-up-a-Project-to-Record %}
+1. {% url 'Set up your project to record' projects-dashboard#Set-up-a-Project-to-Record %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
 
 You can {% url 'read more about the Dashboard here' features-dashboard %}.
