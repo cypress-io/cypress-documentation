@@ -49,7 +49,7 @@ it('uses modules', function () {
 
 ***Use supportFile to load scripts before your test code***
 
-It's still useful to load a setup files before your test code. If you are setting Cypress defaults or utilizing custom Cypress commands, instead of needing to import/require those defaults/commands in every test file, you can use the {% url `supportFile` configuration#Folders %} configuration option.
+It's still useful to load a setup file before your test code. If you are setting Cypress defaults or utilizing custom Cypress commands, instead of needing to import/require those defaults/commands in every test file, you can use the {% url `supportFile` configuration#Folders %} configuration option.
 
 To include code before your test files, set the {% url `supportFile` configuration#Folders %} path. By default, {% url `supportFile` configuration#Folders %} is set to look for one of the following files:
 
