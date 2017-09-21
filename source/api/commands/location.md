@@ -73,7 +73,7 @@ cy.location().should(function(location) {
   expect(location.hostname).to.eq('localhost')
   expect(location.href).to.eq('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
   expect(location.origin).to.eq('http://localhost:8000')
-  expect(location.pathname).to.eq('/app.index.html')
+  expect(location.pathname).to.eq('/app/index.html')
   expect(location.port).to.eq('8000')
   expect(location.protocol).to.eq('http:')
   expect(location.search).to.eq('?q=dan')
