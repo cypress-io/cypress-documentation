@@ -25,7 +25,7 @@ Option | Default | Description
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used when running headlessly or in CI
-`reporterOptions` | `null` | The {% url 'reporter options' reporters#Options %} used. Supported options depend on the reporter.
+`reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
 `screenshotOnHeadlessFailure` | `true` | Whether to take a screenshot on test failure when running headlessly or in CI
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
