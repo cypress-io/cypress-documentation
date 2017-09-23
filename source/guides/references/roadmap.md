@@ -23,6 +23,7 @@ Feature | Status
 {% issue 687 'Full Network Layer Stubbing - #687' %} | No proposal yet
 {% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
 {% issue 310 'Cross Browser Support - #310' %} | No proposal yet
+{% issue 311 'Native Events - #311' %} | No proposal yet
 
 ***Dashboard***
 
