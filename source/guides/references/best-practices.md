@@ -37,6 +37,10 @@ WIP.
 
 WIP.
 
+## Running code in `after` or `afterEach` hooks
+
+WIP.
+
 ## Overusing `.then()`
 
 WIP.
@@ -173,6 +177,74 @@ describe('my form', function () {
 This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
 
 We're also paving the way to make it easy to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
+
+## Creating "tiny" tests with a single assertion
+
+{% note danger %}
+{% fa fa-warning %} **Anti-Pattern:** Acting like you're writing unit tests.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle %} **Best Practice:** Add multiple assertions and don't worry about it
+{% endnote %}
+
+We've seen many users writing this kind of code:
+
+```javascript
+describe('my form', function () {
+  before(function () {
+    cy.visit('/users/new')
+    cy.get('#first').type('johnny')
+  })
+
+  it('has validation attr', function () {
+    cy.get('#first').should('have.attr', 'data-validation', 'required')
+  })
+
+  it('has active class', function () {
+    cy.get('#first').should('have.class', 'active')
+  })
+
+  it('has formatted first name', function () {
+    cy.get('#first').should('have.value', 'Johnny') // capitalized first letter
+  })
+})
+```
+
+While technically this runs fine - this is really excessive, and not performant.
+
+Why you did this pattern in unit tests:
+
+- When assertions failed you relied on the test's title to know what failed
+- You were told that adding multiple assertions was bad and accepted this as truth
+- There was no performance penalty splitting up multiple tests because they run really fast
+
+Why you shouldn't do this in Cypress:
+
+- Writing integration tests is not the same as unit tests
+- You will always know (and can visually see) which assertion failed in a large test
+- Cypress runs a series of async lifecycle events that reset state between tests
+- Resetting tests is much slower than simply adding more assertions
+
+It is common for tests in Cypress to issue 30+ commands. Because nearly every command has a default assertion (and can therefore fail), even by limiting your assertions you're not saving yourself anything because **any single command could implicitly fail**.
+
+How you should rewrite those tests:
+
+```javascript
+describe('my form', function () {
+  before(function () {
+    cy.visit('/users/new')
+  })
+
+  it('validates and formats first name', function () {
+    cy.get('#first')
+      .type('johnny')
+      .should('have.attr', 'data-validation', 'required')
+      .and('have.class', 'active')
+      .and('have.value', 'Johnny')
+  })
+})
+```
 
 ## Unnecessary Waiting
 
