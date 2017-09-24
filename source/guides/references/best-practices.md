@@ -73,6 +73,107 @@ WIP.
 
 WIP. -->
 
+## Having tests rely on the state of previous tests
+
+{% note danger %}
+{% fa fa-warning %} **Anti-Pattern:** Coupling multiple tests together.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle %} **Best Practice:** Tests should always be able to be run independently from one another **and still pass**.
+{% endnote %}
+
+You only need to do one thing to know whether you've coupled your tests incorrectly,  or if one test is relying on the state of a previous one.
+
+Simply put an `.only` on the test and refresh the browser.
+
+If this test can run **by itself** and pass - congratulations you have written a good test.
+
+If this is not the case, then you should refactor and change your approach.
+
+How to solve this:
+
+- Move repeated code in previous tests to `before` or `beforeEach` hooks.
+- Combine multiple tests into one larger test.
+
+Let's imagine the following test that is filling out the form.
+
+
+```javascript
+// an example of what NOT TO DO
+describe('my form', function () {
+  it('visits the form', function () {
+    cy.visit('/users/new')
+  })
+
+  it('requires first name', function () {
+    cy.get('#first').type('Johnny')
+  })
+
+  it('requires last name', function () {
+    cy.get('#last').type('Appleseed')
+  })
+
+  it('can submit a valid form', function () {
+    cy.get('form').submit()
+  })
+})
+```
+
+What's wrong with the above tests? They are all coupled together!
+
+If you were to put an `.only` on any of the last three tests, they would fail. Each test requires the previous to run in a specific order in order to pass.
+
+Here's 2 ways we can fix this:
+
+***1. Combine into one test***
+
+```javascript
+// a bit better
+describe('my form', function () {
+  it('can submit a valid form', function () {
+    cy.visit('/users/new')
+
+    cy.log('filling out first name') // if you really need this
+    cy.get('#first').type('Johnny')
+
+    cy.log('filling out last name') // if you really need this
+    cy.get('#last').type('Appleseed')
+
+    cy.log('submitting form') // if you really need this
+    cy.get('form').submit()
+  })
+})
+```
+
+Now we can put an `.only` on this test and it will run successfully irrespective of any other test. The ideal Cypress workflow is writing and iterating on a single test at a time.
+
+***2. Run shared code before each test***
+
+```javascript
+describe('my form', function () {
+  beforeEach(function () {
+    cy.visit('/users/new')
+    cy.get('#first').type('Johnny')
+    cy.get('#last').type('Appleseed')
+  })
+
+  it('displays form validation', function () {
+    cy.get('#first').clear() // clear out first name
+    cy.get('form').submit()
+    cy.get('#errors').should('contain', 'First name is required')
+  })
+
+  it('can submit a valid form', function () {
+    cy.get('form').submit()
+  })
+})
+```
+
+This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
+
+We're also paving the way to make it easy to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
+
 ## Unnecessary Waiting
 
 {% note danger %}
