@@ -19,8 +19,8 @@ Feature | Status
 {% issue 685 'Iframe Switching APIs - #685' %} | Partially complete
 {% issue 681 'Running Multiple Specs - #681' %} | Proposal complete
 {% issue 681 'Spec Parallelism #681' %} | Proposal complete
-{% issue 686 'Lifecycle Events - #686' %} | No proposal yet
-{% issue 687 'Full Network Layer Stubbing - #687' %} | No proposal yet
+{% issue 686 'Lifecycle Events - #686' %} | Proposal complete
+{% issue 687 'Full Network Layer Stubbing - #687' %} | Proposal complete
 {% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
 {% issue 310 'Cross Browser Support - #310' %} | No proposal yet
 {% issue 311 'Native Events - #311' %} | No proposal yet
