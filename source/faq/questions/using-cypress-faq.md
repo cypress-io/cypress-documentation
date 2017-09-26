@@ -5,6 +5,94 @@ comments: false
 containerClass: faq
 ---
 
+## {% fa fa-angle-right %} How do I get an element's text contents?
+
+Cypress yields you jQuery objects, so you can simply call methods on them.
+
+If you're just trying to assert on an element's text content:
+
+```javascript
+cy.get('div').should('have.text', 'foobarbaz')
+```
+
+If you'd like to massage or work with the text prior to an assertion:
+
+```javascript
+cy.get('div').should(($div) => {
+  const text = $div.text()
+
+  expect(text).to.match(/foo/)
+  expect(text).to.include('foo')
+  expect(text).not.to.include('bar')
+})
+```
+
+If you need to hold a reference reference or compare values of text:
+
+```javascript
+cy.get('div').invoke('text').then((text1) => {
+  // do more work here
+
+  // click the button which changes the div's text
+  cy.get('button').click()
+
+  // grab the div again and compare its previous text
+  // to the current text
+  cy.get('div').invoke('text').should((text2) => {
+    expect(text1).not.to.eq(text2)
+  })
+})
+```
+
+jQuery's `.text()` method automatically calls `elem.textContent` under the hood. If you'd like to instead use `innerText` you can do the following:
+
+```javascript
+cy.get('div').should(($div) => {
+  // access the native DOM element
+  expect($div.get(0).innerText).to.eq('foobarbaz')
+})
+```
+
+## {% fa fa-angle-right %} How do I get an input's value?
+
+Cypress yields you jQuery objects, so you can simply call methods on them.
+
+If you're just trying to assert on an input's value:
+
+```javascript
+// make an assertion on the value
+cy.get('input').should('have.value', 'abc')
+```
+
+If you'd like to massage or work with the text prior to an assertion:
+
+```javascript
+cy.get('input').should(($input) => {
+  const val = $input.val()
+
+  expect(val).to.match(/foo/)
+  expect(val).to.include('foo')
+  expect(val).not.to.include('bar')
+})
+```
+
+If you need to hold a reference reference or compare values of text:
+
+```javascript
+cy.get('input').invoke('val').then((val1) => {
+  // do more work here
+
+  // click the button which changes the input's value
+  cy.get('button').click()
+
+  // grab the input again and compare its previous value
+  // to the current value
+  cy.get('input').invoke('val').should((val2) => {
+    expect(val1).not.to.eq(val2)
+  })
+})
+```
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% issue 64 'here' %}.
@@ -83,9 +171,11 @@ You can use either {% url `cy.request()` request %} or {% url `cy.exec()` exec %
 
 You could also just stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
 
-## {% fa fa-angle-right %} How do I test content inside an iframe?
+## {% fa fa-angle-right %} How do I test elements inside an iframe?
 
-Currently Cypress does not support selecting or accessing elements from within an iframe. You can read more about this {% issue 136 'here' %}.
+As of {% issue 136#issuecomment-328100955 `0.20.0` %} you can now wrap the elements of an iframe and work with them.
+
+We have an {% issue 685 'open proposal' %} to expand the API's to support "switching into" an iframe and then back out of them.
 
 ## {% fa fa-angle-right %} How do I preserve cookies / localStorage in between my tests?
 
@@ -101,7 +191,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You can **not** currently preserve localStorage across tests and can read more {% issue 461 'here' %}.
+You can **not** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
 
 ## {% fa fa-angle-right %} Some of my elements animate in, how do I work around that?
 
@@ -116,7 +206,7 @@ If the animation is especially long, you could extend the time Cypress waits for
 
 ```javascript
 cy.get('button', { timeout: 10000 }) // wait up to 10 seconds for this 'button' to exist
-    .should('be.visible')            // and to be visible
+  .should('be.visible')              // and to be visible
 
 cy.get('.element').click({ timeout: 10000 }).should('not.have.class', 'animating')
 // wait up to 10 seconds for the .element to not have 'animating' class
@@ -131,29 +221,15 @@ Luckily there are lots of easy and safe workarounds that enable you to test this
 {% url 'Read through this recipe to see how to test anchor links.' testing-the-dom-recipe %}
 
 
-## {% fa fa-angle-right %} How do I get an input's value in Cypress?
-
-DOM elements yielded in Cypress are just jQuery elements so you can use any method available in jQuery. Below are some examples of working with an input's value.
-
- ```javascript
-cy.get('input').invoke('val').then((val) => {
-  // do something with value here
-})
-
-cy.get('input').then(($input) => {
-  // do something with value here
-  $input.val()
-})
-
-// make an assertion on the value
-cy.get('input').should('have.value', 'abc')
-```
-
-## {% fa fa-angle-right %} How do I require X node module in Cypress?
+## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-Cypress doesn't have direct access to node or your file system. We recommend utilizing {% url `cy.exec()` exec %} to execute a shell command or a node script that will do what you need.
+You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
+
+Cypress doesn't have direct access to node or your file system. We recommend utilizing {% url `cy.exec()` exec %} or {% url `cy.readFile()` readfile %} to execute a shell command or a node script that will do what you need.
+
+{% url 'Check out this example recipe.' extending-cypress-recipe %}
 
 ## {% fa fa-angle-right %} Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 
@@ -161,17 +237,27 @@ No, Cypress modifies network traffic in real time and therefore must sit between
 
 ## {% fa fa-angle-right %} Can I use the Page Object pattern?
 
-As far as page objects are concerned, you should be able to use regular JavaScript functions and aliasing with {% url `.as()` as %} to essentially recreate what page objects give you.
+Yes.
+
+The page object pattern isn't actually anything "special". If you're coming from Selenium you may be accustomed to creating instances of classes, but this is completely unnecessary and irrelevant.
+
+The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
+
+If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' javascript functions without any of the ceremony typical with "Page Objects".
 
 ## {% fa fa-angle-right %} Is there any way to detect if my app is running under Cypress?
 
-You can check for the existence of `window.Cypress`, for example:
+You can check for the existence of `window.Cypress`, in your **application code**.
+
+Here's a simple example:
 
 ```javascript
 if (window.Cypress) {
+  // we are running in Cypress
+  // so do something different here
   window.env = 'test'
 } else {
-  window.env = '{{env.NODE_ENV}}'
+  // we are running in a regular ol' browser
 }
 ```
 
