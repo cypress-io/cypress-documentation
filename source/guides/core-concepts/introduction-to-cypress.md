@@ -914,7 +914,7 @@ For instance:
 
 That leaves most other commands including all DOM based commands to time out by default after 4000ms.
 
-***Why only 4 seconds? That sounds low!***
+<!-- ***Why only 4 seconds? That sounds low!***
 
 If you've used other testing frameworks, you might wonder why this value is so low. In fact we regularly see our some users initially increasing it sometimes up to 25x!
 
@@ -926,4 +926,4 @@ The most common scenario is that DOM elements render *after* a series of network
 
 One of the typical anti-patterns we see is not properly
 
-One of the typical hurdles you will need to overcome is *slow tests*.
+One of the typical hurdles you will need to overcome is *slow tests*. -->
