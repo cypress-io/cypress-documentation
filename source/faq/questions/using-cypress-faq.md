@@ -7,7 +7,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} How do I get an element's text contents?
 
-Cypress yields you jQuery objects, so you can simply call methods on them.
+Cypress commands yield jQuery objects, so you can simply call methods on them.
 
 If you're just trying to assert on an element's text content:
 
@@ -15,7 +15,7 @@ If you're just trying to assert on an element's text content:
 cy.get('div').should('have.text', 'foobarbaz')
 ```
 
-If you'd like to massage or work with the text prior to an assertion:
+If you'd like to work with the text prior to an assertion:
 
 ```javascript
 cy.get('div').should(($div) => {
@@ -27,7 +27,7 @@ cy.get('div').should(($div) => {
 })
 ```
 
-If you need to hold a reference reference or compare values of text:
+If you need to hold a reference or compare values of text:
 
 ```javascript
 cy.get('div').invoke('text').then((text1) => {
@@ -243,7 +243,7 @@ The page object pattern isn't actually anything "special". If you're coming from
 
 The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
 
-If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' javascript functions without any of the ceremony typical with "Page Objects".
+If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
 
 ## {% fa fa-angle-right %} Is there any way to detect if my app is running under Cypress?
 
