@@ -122,8 +122,6 @@ disqus_shortname: cypress-documentation
 
 # Google Plugins
 google:
-  analytics_id: UA-59606812-3
-  optimize_id: GTM-MVNP9PH
   tag_manager_id: GTM-KNKBWLD
 
 # Crash reporting
