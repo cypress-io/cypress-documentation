@@ -114,8 +114,8 @@ Today, we'll take a narrow view of these steps and map them cleanly to Cypress c
 
 1. Visit a web page.
 2. Query for an element.
-4. Interact with that element.
-3. Assert about the content on the page.
+3. Interact with that element.
+4. Assert about the content on the page.
 
 ## {% fa fa-globe %} Step 1: Visit a Page
 
@@ -157,7 +157,7 @@ Cypress is not a **general purpose** web automation tool. It is poorly suited fo
 
 ## {% fa fa-search %} Step 2: Query for an Element
 
-Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `root`?
+Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
 
 To find this element by its contents, we'll use {% url `cy.contains()` contains %}.
 
@@ -165,10 +165,10 @@ Let's add it to our test and see what happens:
 
 ```js
 describe('My First Test', function() {
-  it('finds the content "root"', function() {
+  it('finds the content "type"', function() {
     cy.visit('https://example.cypress.io')
 
-    cy.contains('root')
+    cy.contains('type')
   })
 })
 ```
@@ -177,17 +177,17 @@ Our test should now display `CONTAINS` in the {% url 'Command Log' overview-of-t
 
 Even without adding an assertion, we know that everything is okay! This is because many of Cypress' commands are built to fail if they don't find what they're expecting to find. This is known as a {% url 'Default Assertion' introduction-to-cypress#Default-Assertions %}.
 
-To verify this, replace `root` with something not on the page, like `boot`. You'll notice the test goes red, but only after about 4 seconds!
+To verify this, replace `type` with something not on the page, like `hype`. You'll notice the test goes red, but only after about 4 seconds!
 
 Can you see what Cypress is doing under the hood? It's automatically waiting and retrying because it expects the content to **eventually** be found in the DOM. It doesn't immediately fail!
 
 {% img /img/guides/first-test-failing-contains.png %}
 
 {% note warning 'Error Messages' %}
-We've taken care at Cypress to write hundreds of custom error messages that attempt to explain in simple terms what went wrong. In this case Cypress **timed out retrying** to find the content: `boot` within the entire page.
+We've taken care at Cypress to write hundreds of custom error messages that attempt to explain in simple terms what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
 {% endnote %}
 
-Before we add another command - let's get this test back to passing. Replace `boot` with `root`.
+Before we add another command - let's get this test back to passing. Replace `hype` with `type`.
 
 {% img /img/guides/first-test-contains-30fps.gif %}
 
@@ -197,10 +197,10 @@ Ok, now we want to click on the link we found. How do we do that? You could almo
 
 ```js
 describe('My First Test', function() {
-  it('clicks the link "root"', function() {
+  it('clicks the link "type"', function() {
     cy.visit('https://example.cypress.io')
 
-    cy.contains('root').click()
+    cy.contains('type').click()
   })
 })
 ```
@@ -215,47 +215,67 @@ Now we can assert something about this new page!
 
 ## {% fa fa-check-square-o %} Step 4: Make an Assertion
 
-Finally, let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the proper headings are present. We can do that by looking up the appropriate tags and chaining assertions to them with {% url "`.should()`" should %}.
+Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL chaining an assertion to it with {% url "`.should()`" should %}.
 
 Here's what that looks like:
 
 ```js
 describe('My First Test', function() {
-  it("clicking 'root' shows the right headings", function() {
+  it("clicking 'type' navigates to a new url", function() {
     cy.visit('https://example.cypress.io')
 
-    cy.contains('root').click()
+    cy.contains('type').click()
 
-    // Should be on a new URL which includes '/commands/querying'
-    cy.url().should('include', '/commands/querying')
-
-    // Should find the main header "Querying"
-    cy.get('h1').should('contain', 'Querying')
-
-    // Should also find a sub-header about the contains command
-    cy.get('h4').should('contain', 'cy.contains()')
+    // Should be on a new URL which includes '/commands/actions'
+    cy.url().should('include', '/commands/actions')
   })
 })
 ```
 
-And there you have it: a simple test in Cypress that visits a page, finds and clicks a link, then verifies the URL and resulting contents of the new page. If we read it out loud, it might sound like:
+### Adding More Commands and Assertions
+
+We are not limited to a single interaction and assertion in a given test. In fact, many interactions in an application may require multiple steps and are likely to change your application state in more than one way.
+
+We can continue the interactions and assertions in this test by adding another chain to interact with and verify the behavior of elements on this new page.
+
+We can use {% url "`cy.get()`" get %} to select an element based on a CSS class. Then we can use the {% url "`.type()`" type %} command to enter text into the selected input. Finally, we can verify that the value of the input reflects the text that was typed with another {% url "`.should()`" should %}.
+
+```js
+describe('My First Test', function() {
+  it("Gets, types and asserts", function() {
+    cy.visit('https://example.cypress.io')
+
+    cy.contains('type').click()
+
+    // Should be on a new URL which includes '/commands/actions'
+    cy.url().should('include', '/commands/actions')
+
+    // Get an input, type into it and verify that the value has been updated
+    cy.get('.action-email')
+      .type('fake@email.com')
+      .should('have.value', 'fake@email.com')
+  })
+})
+```
+
+And there you have it: a simple test in Cypress that visits a page, finds and clicks a link, verifies the URL and then verifies the behavior of an element on the new page. If we read it out loud, it might sound like:
 
 > 1. Visit: `https://example.cypress.io`
-> 2. Find the element with content: `root`
+> 2. Find the element with content: `type`
 > 3. Click on it
 > 4. Get the URL
-> 5. Assert it includes: `/commands/querying`
-> 6. Then find: `<h1>`
-> 7. Assert it has the content: `Querying`
-> 8. Then find an: `<h4>`
-> 9. Assert it has the content: `cy.contains()`
+> 5. Assert it includes: `/commands/actions`
+> 6. Get the input with the `.actions-email` class
+> 7. Type `fake@email.com` into the input
+> 8. Assert the input reflects the new value
 
 Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
-> 2. When they click the link labeled `root`
-> 3. Then URL should include `/commands/querying`
-> 4. And they should see a heading of `Querying` and a subheading of `cy.contains()`
+> 2. When they click the link labeled `type`
+> 3. And they type "fake@email.com" into the `.actions-email` input
+> 3. Then the URL should include `/commands/actions`
+> 4. And the `.actions-email` input has "fake@email.com" as its value
 
 Even your non-technical collaborators can appreciate the way this reads!
 
@@ -309,7 +329,7 @@ Cypress automatically traveled back in time to a snapshot of when that command r
 
 Now if you remember at the end of the test we ended up on a different URL:
 
-> https://example.cypress.io/commands/querying
+> https://example.cypress.io/commands/actions
 
 But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was present when our snapshot was taken.
 
@@ -334,9 +354,11 @@ There is also a new menu panel. Some commands (like action commands) will take m
 
 The **before** snapshot is taken prior to the click event firing. The **after** snapshot is taken immediately after the click event. Although this click event caused our browser to load a new page, it's not an instantaneous transition. Depending on how fast your page loaded, you may see still see the same page, or a blank screen as the page is unloading and in transition.
 
+When a command causes an immediate visual change in our application, Cycling between before and after will update our snapshot. We can see this in action by clicking the `TYPE` command in the Command Log. Now, clicking **before** will show us the input in a default state, showing the placeholder text. Click **after** will show us what the input looks like when the `TYPE` command has completed.
+
 ## Page Events
 
-Notice there is also a funny looking Log called: `(PAGE LOAD)`. This wasn't a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
+Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
 
 {% img /img/guides/first-test-page-load.png %}
 
@@ -351,7 +373,7 @@ Notice there is also a funny looking Log called: `(PAGE LOAD)`. This wasn't a co
 
 Besides Commands being interactive, they also output additional debugging information to your console.
 
-Open up your Dev Tools and click on the `GET` for the `h4`.
+Open up your Dev Tools and click on the `GET` for the `.action-email` class selector.
 
 {% img /img/guides/first-test-console-output.png %}
 
@@ -377,21 +399,20 @@ Let's add a {% url `cy.pause()` pause %} to our test code and see what happens.
 
 ```js
 describe('My First Test', function() {
-  it("clicking 'root' shows the right headings", function() {
+  it("clicking 'type' shows the right headings", function() {
     cy.visit('https://example.cypress.io')
 
     cy.pause()
 
-    cy.contains('root').click()
+    cy.contains('type').click()
 
-    // Should be on a new URL which includes '/commands/querying'
-    cy.url().should('include', '/commands/querying')
+     // Should be on a new URL which includes '/commands/actions'
+    cy.url().should('include', '/commands/actions')
 
-    // Should find the main header "Querying"
-    cy.get('h1').should('contain', 'Querying')
-
-    // Should also find a sub-header about the contains command
-    cy.get('h4').should('contain', 'cy.contains()')
+    // Get an input, type into it and verify that the value has been updated
+    cy.get('.action-email')
+      .type('fake@email.com')
+      .should('have.value', 'fake@email.com')
   })
 })
 ```
