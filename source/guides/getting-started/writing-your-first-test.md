@@ -11,6 +11,8 @@ comments: false
 - Testing web navigation, DOM querying, and writing assertions.
 {% endnote %}
 
+{% iframe "https://player.vimeo.com/video/237115455" 640 360 %}
+
 # Add a Test File
 
 Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
