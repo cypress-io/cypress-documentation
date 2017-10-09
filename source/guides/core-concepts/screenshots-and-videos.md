@@ -28,7 +28,7 @@ By default, Cypress clears any existing screenshots before a headless run. If do
 
 # Videos
 
-Cypress also records videos when running headlessly.
+Cypress also records videos when running headlessly from the CLI.
 
 This behavior can be turned off by setting {% url `videoRecording` configuration#Videos %} to `false`.
 
