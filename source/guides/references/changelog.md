@@ -9,8 +9,8 @@ comments: false
 
 **Features:**
 
-- Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the MIT license.
-- We have a Contributing Guideline to help contributors get started as well as issues labeled `first-timers-only` for those wanting to contribute right away.
+- Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the {% url "MIT license" https://github.com/cypress-io/cypress/blob/develop/LICENSE.md %}.
+- We have a {% url "Contributing Guideline" https://on.cypress.io/contributing %} to help contributors get started as well as {% "issues labeled `first-timers-only`" https://github.com/cypress-io/cypress/labels/first-timers-only %} for those wanting to contribute right away.
 - You can now use the Desktop GUI application without logging in. Some areas of the application still require logging in through GitHub, like the 'Runs' tab and viewing the project's 'Record Key'.
 - We've removed the requirement of filling out an early adopter form and approval for logging in with GitHub to Cypress.
 - {% url "www.cypress.io" https://www.cypress.io %} has an all new design to help new visitors get started quickly and understand our future pricing more clearly.
