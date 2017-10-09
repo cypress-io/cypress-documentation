@@ -11,7 +11,7 @@ comments: false
 - Testing web navigation, DOM querying, and writing assertions.
 {% endnote %}
 
-{% iframe "https://player.vimeo.com/video/237115455" 640 360 %}
+{% video 237115455 %}
 
 # Add a Test File
 
