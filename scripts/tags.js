@@ -14,6 +14,7 @@ const usageOptions = require('../lib/tags/usage')
 const { issue, openAnIssue } = require('../lib/tags/issues')
 const { url, urlHash } = require('../lib/tags/url')
 const { fa, helperIcon } = require('../lib/tags/icons')
+const video = require('../lib/tags/video')
 
 const tags = {
   // partials
@@ -45,6 +46,9 @@ const tags = {
 
   // timeouts
   timeouts: timeouts,
+
+  // video
+  video: video
 }
 
 // tags which require ending
