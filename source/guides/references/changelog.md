@@ -28,18 +28,18 @@ comments: false
 
 **Possibly Breaking Changes:**
 
-- `cy.exec` now trims output by default. That means if you were using an `eq` assertion the output will no longer have a trailing newline character `\n`. It's unlikely you are doing this, but it's possible you may need to update your assertions to remove this character. Fixes {% issue 697 %}.
+- {% url "`cy.exec()`" exec %} now trims output by default. That means if you were using an `eq` assertion the output will no longer have a trailing newline character `\n`. It's unlikely you are doing this, but it is possible you may need to update your assertions to remove this character. Fixes {% issue 697 %}.
 
 **Bugfixes:**
 
 - Handle errors gracefully when Electron window has been closed before paint events happen. Fixes {% issue 705 %}.
 - Basic auth now works *again*. Fixes {% issue 573 %}.
-- `cy.exec` now properly sources each time it's invoked instead of only once. Fixes {% issue 694 %}.
+- {% url "`cy.exec()`" exec %} now properly sources each time it is invoked instead of only once. Fixes {% issue 694 %}.
 
 **Misc:**
 
 - `cypress open` now accepts the `--project` flag which enables you to use a root level Cypress installation and point to multiple sub projects. Fixes {% issue 661 %}.
-- Prevent newer versions of Chrome for prompting you to save passwords and suppressed other extension related popups for Windows. Fixes {% issue 704 %}.
+- Prevent newer versions of Chrome from prompting you to save passwords and suppressed other extension related popups for Windows. Fixes {% issue 704 %}.
 
 # 0.20.1
 
