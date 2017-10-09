@@ -107,4 +107,4 @@ You can {% url 'read more about the CLI here' command-line %}.
 
 # Logging In
 
-After opening Cypress, you will need to log in. Logging in currently requires a {% url "Github" https://github.com/ %} account, if you do not have an account, you will have to {% url "create one" https://github.com/join %} to use Cypress.
+Some areas of the Desktop application require logging in through GitHub, like when clicking on the 'Runs' tab or viewing a project's 'Record Key'. **You do not need to log in to run tests.**
