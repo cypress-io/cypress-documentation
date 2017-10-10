@@ -17,9 +17,9 @@ comments: false
 
 **Summary:**
 
-- `1.0.0` marks our transition out of a **private** beta and into a **public** beta. We've lifted all the restrictions for using Cypress. It is now accessible to everyone. Until we are out of beta, the Dashboard service will continue to be free.
+- `1.0.0` marks our transition out of a **private** beta and into a **public** beta. We've lifted all the restrictions for using Cypress. It is now accessible to everyone. Until we are out of beta, the {% url "Dashboard Service" features-dashboard %} will continue to be free.
 - We will continue to follow `semver` from this point on (and also a bit more rigorously).
-- Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the MIT License.
+- Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the {% url "MIT License" https://github.com/cypress-io/cypress/blob/develop/LICENSE.md %}.
 - We have a {% url "Contributing Guideline" https://on.cypress.io/contributing %} to help contributors get started as well as {% url "issues labeled `first-timers-only`" https://github.com/cypress-io/cypress/labels/first-timers-only %} for those wanting to contribute right away.
 - You can now use the Desktop GUI application without logging in. Some areas of the application still require logging in through GitHub, like the 'Runs' tab and viewing the project's 'Record Key'. The only places where login is required is when it interacts with our external servers. Naturally these places are optional and will not affect the local test writing + running experience.
 - We've removed the requirement of filling out an early adopter form and approval for logging in with GitHub to Cypress.
