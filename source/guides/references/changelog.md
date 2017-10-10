@@ -20,7 +20,7 @@ comments: false
 
 **Features:**
 
-- Windows is now supported. It is still super beta (we're aware of a couple issues already) and we're still updating our own infrastructure to manage and test it as comprehensively as we do OSX and Linux. We are only building a 32bit version of Windows, but will soon be building a 64bit as well. As of today the Windows binary is about 2x the size of what it will be. Unzipping takes a long time, we are sorry. Fixes {% issue 74 %} and {% issue 444 %}.
+- Windows is now supported. We have been running it successfully on EC2 and all of our example projects are also running in CI with Appveyor. It is still super beta (we're aware of a couple issues already) and we're still updating our own infrastructure to manage and test it as comprehensively as we do OSX and Linux. We are only building a 32bit version of Windows, but will soon be building a 64bit as well. As of today the Windows binary is about 2x the size of what it will be. Unzipping takes a long time, we are sorry. Fixes {% issue 74 %} and {% issue 444 %}.
 
 **Misc:**
 
