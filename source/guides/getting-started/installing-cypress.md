@@ -108,7 +108,3 @@ By installing Cypress through `npm` you also get access to many other CLI comman
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
-
-# Logging In
-
-Some areas of the Desktop application require logging in through GitHub, like when clicking on the 'Runs' tab or viewing a project's 'Record Key'. **You do not need to log in to run tests.**

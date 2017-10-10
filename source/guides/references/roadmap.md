@@ -42,4 +42,5 @@ Feature | Status
 
 **Features:**
 
-- [ ] Improve the process around utilizing preprocessors. Addresses {% issue 580 %}
+- [ ] Improve the process around utilizing preprocessors. Addresses {% issue 580 %}.
+- [ ] Enable Plugins / Extensions. Fixes {% issue 684 %}.
