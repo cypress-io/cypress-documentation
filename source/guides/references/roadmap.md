@@ -13,7 +13,6 @@ Here is where Cypress is headed:
 
 Feature | Status
 --- | ---
-{% issue 74 'Windows Support - #74' %} | In development now
 {% issue 684 'Plugins / Extensions - #684' %} | In development now
 {% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features
 {% issue 685 'Iframe Switching APIs - #685' %} | Partially complete
