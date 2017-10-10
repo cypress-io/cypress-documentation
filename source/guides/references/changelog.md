@@ -2,6 +2,38 @@
 title: Changelog
 comments: false
 ---
+
+## 1.0.0
+
+*Released 10/09/2017*
+
+**Summary:**
+
+- `1.0.0` marks our transition out of a **private** beta and into a **public** beta. We've lifted all the restrictions for using Cypress. It is now accessible to everyone. Until we are out of beta, the Dashboard service will continue to be free.
+- We will continue to follow `semver` from this point on (and also a bit more rigorously).
+- Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the MIT License.
+- We have a {% url "Contributing Guideline" https://on.cypress.io/contributing %} to help contributors get started as well as {% url "issues labeled `first-timers-only`" https://github.com/cypress-io/cypress/labels/first-timers-only %} for those wanting to contribute right away.
+- You can now use the Desktop GUI application without logging in. Some areas of the application still require logging in through GitHub, like the 'Runs' tab and viewing the project's 'Record Key'. The only places where login is required is when it interacts with our external servers. Naturally these places are optional and will not affect the local test writing + running experience.
+- We've removed the requirement of filling out an early adopter form and approval for logging in with GitHub to Cypress.
+- {% url "www.cypress.io" https://www.cypress.io %} has an all new design to help new visitors get started quickly and understand our future pricing more clearly.
+- We are still updating the docs to reflect the `1.0.0` release.
+
+**Features:**
+
+- Windows is now supported. It is still super beta (we're aware of a couple issues already) and we're still updating our own infrastructure to manage and test it as comprehensively as we do OSX and Linux. We are only building a 32bit version of Windows, but will soon be building a 64bit as well. As of today the Windows binary is about 2x the size of what it will be. Unzipping takes a long time, we are sorry. Fixes {% issue 74 %} and {% issue 444 %}.
+
+**Misc:**
+
+- Added the `Beta` flag everywhere (since we are still technically in beta).
+- Reduced the frequency the app checked for updates. Fixes {% issue 713 %}.
+- The CLI now sends `arch` parameter to the download server so we can build and serve multiple binaries for Windows + Linux.
+
+**Documentation Changes:**
+
+- {% url 'Updated "Installing Cypress"' installing-cypress %}
+- {% url 'Updated "Writing your First Test"' writing-your-first-test %}
+- Added a 10 minute Getting Started video that {% url 'Andrew Van Slaars' https://github.com/avanslaars %} created.
+
 # 0.20.3
 
 *Released 10/06/2017*
@@ -14,18 +46,18 @@ comments: false
 
 **Possibly Breaking Changes:**
 
-- `cy.exec` now trims output by default. That means if you were using an `eq` assertion the output will no longer have a trailing newline character `\n`. It's unlikely you are doing this, but it's possible you may need to update your assertions to remove this character. Fixes {% issue 697 %}.
+- {% url "`cy.exec()`" exec %} now trims output by default. That means if you were using an `eq` assertion the output will no longer have a trailing newline character `\n`. It's unlikely you are doing this, but it is possible you may need to update your assertions to remove this character. Fixes {% issue 697 %}.
 
 **Bugfixes:**
 
 - Handle errors gracefully when Electron window has been closed before paint events happen. Fixes {% issue 705 %}.
 - Basic auth now works *again*. Fixes {% issue 573 %}.
-- `cy.exec` now properly sources each time it's invoked instead of only once. Fixes {% issue 694 %}.
+- {% url "`cy.exec()`" exec %} now properly sources each time it is invoked instead of only once. Fixes {% issue 694 %}.
 
 **Misc:**
 
 - `cypress open` now accepts the `--project` flag which enables you to use a root level Cypress installation and point to multiple sub projects. Fixes {% issue 661 %}.
-- Prevent newer versions of Chrome for prompting you to save passwords and suppressed other extension related popups for Windows. Fixes {% issue 704 %}.
+- Prevent newer versions of Chrome from prompting you to save passwords and suppressed other extension related popups for Windows. Fixes {% issue 704 %}.
 
 # 0.20.1
 

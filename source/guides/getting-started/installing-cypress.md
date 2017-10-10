@@ -39,11 +39,15 @@ This will install Cypress locally as a dev dependency for your project. We recom
 - Cypress is versioned like any other dependency.
 - It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
 
+{% img /img/guides/installing-cli.gif %}
+
 ## {% fa fa-download %} Direct Download
 
 If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly here" http://download.cypress.io/desktop %}.
 
 Just manually unzip and double click. Cypress will run without needing to install any dependencies.
+
+{% img /img/guides/installing-global.gif %}
 
 ## {% fa fa-refresh %} Continuous Integration
 
@@ -104,7 +108,3 @@ By installing Cypress through `npm` you also get access to many other CLI comman
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
-
-# Logging In
-
-After opening Cypress, you will need to log in. Logging in currently requires a {% url "Github" https://github.com/ %} account, if you do not have an account, you will have to {% url "create one" https://github.com/join %} to use Cypress.

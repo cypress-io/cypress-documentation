@@ -452,3 +452,15 @@ Browsers are enormously complex pieces of software, and from time to time they w
 At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
 
 If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
+
+
+# Desktop GUI errors
+
+## {% fa fa-exclamation-triangle red %} Cannot connect to API server
+
+Logging in, viewing runs, and setting up new projects to record requires connecting to an external API server. This error displays when we failed to connect to the API server.
+
+This error likely appeared because:
+
+1. You do not have internet. Please ensure you have connectivity then try again.
+2. You are a developer that has forked our codebase and do not have access to run our API locally. Please read more about this in our {% url "contributing doc" https://on.cypress.io/contributing %}.
