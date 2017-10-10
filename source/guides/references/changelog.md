@@ -5,11 +5,11 @@ comments: false
 
 ## 1.0.1
 
-*Released 10/10/2017**
+*Released 10/10/2017*
 
 **Bugfixes:**
 
-- Prevent error during verification in the CLI on Linux / OSX. Also makes terminal colors work again. Fixes {% issue 717 %}.
+- Prevent error during verification in the CLI on Linux / OSX. Also makes terminal colors work again. Fixes {% issue 717 %} and {% issue 718 %}.
 
 ## 1.0.0
 
