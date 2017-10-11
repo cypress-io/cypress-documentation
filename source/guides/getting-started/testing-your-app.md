@@ -215,7 +215,7 @@ The good news is that we aren't Selenium, nor are we a traditional e2e testing t
 
 ## Stubbing the Server
 
-Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Must simpler!
+Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
 
 While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
 
