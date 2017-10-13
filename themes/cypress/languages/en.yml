@@ -167,6 +167,9 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
+    plugins: Plugins
+    top-level-api: Top Level API
+    preprocessors: Preprocessors
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing

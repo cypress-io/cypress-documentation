@@ -143,6 +143,9 @@ api:
     env: env.html
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
+  plugins:
+    top-level-api: top-level-api.html
+    preprocessors: preprocessors.html
 
 examples:
   recipes:
