@@ -16,7 +16,7 @@ comments: false
 
 - `cy.scrollTo` now logs its coordinates when options are used. Fixes {% issue 725 %}.
 - You can now use environment variables that have a `=` character as values. Fixes {% issue 620 %}.
-- There is now a new `videoUploadOnPasses` configuration option in `cypress.json` that enables you to turn off video compression and uploads when all tests pass. Useful if you only want to upload videos on failures. Fixes {% issue 460 %}.
+- There is now a new `videoUploadOnPasses` configuration option in `cypress.json`. Turning this off will only compress and upload videos on failures. This only affects projects which are setup to record to the Dashboard. Fixes {% issue 460 %}.
 
 ## 1.0.1
 
