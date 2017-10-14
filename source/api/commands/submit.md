@@ -73,7 +73,7 @@ cy.get('#contact').submit()
 
 `.submit()` is just a helpful command which is a simple shortcut. Normally a user has to perform a different "action" to submit a form. It could be clicking a submit `<button>`, or pressing `enter` on a keyboard.
 
-Oftentimes its must simpler and conveys what you're trying to test by just using `.submit()` directly.
+Oftentimes its much simpler and conveys what you're trying to test by just using `.submit()` directly.
 
 If you want the other guarantees of waiting for an element to become actionable, you should use a different command like {% url `.click()` click %} or {% url `.type()` type %}.
 
