@@ -3,6 +3,21 @@ title: Changelog
 comments: false
 ---
 
+## 1.0.2
+
+*Released 10/13/2017*
+
+**Bugfixes:**
+
+- `cy.type` now correctly fires change events on React 16. Fixes {% issue 647 %}.
+- Fixed some problems serializing objects during domain change caused by circular references. In this case `zone.js` was the culprit. Fixes {% issue 741 %}.
+
+**Misc:**
+
+- `cy.scrollTo` now logs its coordinates when options are used. Fixes {% issue 725 %}.
+- You can now use environment variables that have a `=` character as values. Fixes {% issue 620 %}.
+- There is now a new `videoUploadOnPasses` configuration option in `cypress.json` that enables you to turn off video compression and uploads when all tests pass. Useful if you only want to upload videos on failures. Fixes {% issue 460 %}.
+
 ## 1.0.1
 
 *Released 10/10/2017*
