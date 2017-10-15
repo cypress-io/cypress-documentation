@@ -10,13 +10,13 @@ comments: false
 **Bugfixes:**
 
 - `cy.type` now correctly fires change events on React 16. Fixes {% issue 647 %}.
-- Fixed some problems serializing objects during domain change caused by circular references. In this case `zone.js` was the culprit. Fixes {% issue 741 %}.
+- Fixed some problems serializing objects during domain change caused by circular references. In this case `zone.js` was the culprit. Fixes {% issue 741 %}. Contributed by {% user MariMax %}.
 
 **Misc:**
 
-- `cy.scrollTo` now logs its coordinates when options are used. Fixes {% issue 725 %}.
-- You can now use environment variables that have a `=` character as values. Fixes {% issue 620 %}.
-- There is now a new `videoUploadOnPasses` configuration option in `cypress.json`. Turning this off will only compress and upload videos on failures. This only affects projects which are setup to record to the Dashboard. Fixes {% issue 460 %}.
+- `cy.scrollTo` now logs its coordinates when options are used. Fixes {% issue 725 %}. Contributed by {% user sirugh %}.
+- You can now use environment variables that have a `=` character as values. Fixes {% issue 620 %}. Contributed by {% user HugoGiraudel %}.
+- There is now a new `videoUploadOnPasses` configuration option in `cypress.json`. Turning this off will only compress and upload videos on failures. This only affects projects which are setup to record to the Dashboard. Fixes {% issue 460 %}. Contributed by {% user carlos-granados %}.
 
 ## 1.0.1
 
