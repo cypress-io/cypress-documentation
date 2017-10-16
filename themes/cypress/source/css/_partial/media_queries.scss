@@ -129,10 +129,6 @@
     padding-top: 0;
   }
 
-  // #content-inner {
-  //   margin-left: $sidebar-width;
-  // }
-
   .article {
     padding: 0 30px !important;
   }
@@ -149,10 +145,6 @@
     &.fixed {
       right: auto;
     }
-
-    // #article-toc-inner {
-    //   width: 100% !important;
-    // }
   }
 
   #footer-social {
@@ -231,5 +223,13 @@
         padding-left: 20px;
       }
     }
+  }
+}
+
+@media screen and(max-width: 620px) {
+
+  .media {
+    width: 100%;
+    padding-right: 0;
   }
 }

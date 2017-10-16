@@ -55,19 +55,21 @@ npm start
 Visit [http://localhost:2222/](http://localhost:2222/).
 
 **note** If you need to debug documentation build step run with environment
-variable set `DEBUG=docs npm run build` 
+variable set `DEBUG=docs npm run build`
 
 ## Writing Documentation
 
 ### Adding Examples
 
-The documents outlining examples are within the [`source/examples`](/source/examples) directory. Each document is written in markdown with a little bit of [Hexo flair](https://hexo.io/docs/tag-plugins.html). To add an example to a document, just try to follow the formatting of any previous examples in the markdown file.
+ To add an blog, talk, or podcast to our docs, just add your data to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
 
 Add an associating image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should be resolution **715w x 480h**. Reference the image in the markdown document as follows:
 
 ```md
 {% img /img/examples/name-of-file.jpg "alt text describing img" %}
 ```
+
+To add anything else to an example page, the documents outlining examples are within the [`source/examples`](/source/examples) directory. Each document is written in markdown with a little bit of [Hexo flair](https://hexo.io/docs/tag-plugins.html). To add an example to a document, just try to follow the formatting of any previous examples in the markdown file.
 
 ## Commiting Code
 
