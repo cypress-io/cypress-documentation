@@ -369,13 +369,13 @@ As of version {% url `0.19.0` changelog#0-19-0 %} and CLI versions `0.13.0`, the
 Previously to record runs you had the environment variable: `CYPRESS_CI_KEY` or you wrote:
 
 ```shell
-cypress ci <key>
+cypress ci abc-key-123
 ```
 
 You need to rewrite this as:
 
 ```shell
-cypress run --record --key <record_key>
+cypress run --record --key abc-key-123
 ```
 
 If you were using the environment variable `CYPRESS_CI_KEY`, rename it to`CYPRESS_RECORD_KEY`.
