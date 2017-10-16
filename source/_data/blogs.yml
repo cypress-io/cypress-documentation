@@ -1,0 +1,140 @@
+- title: "End-to-end testing on a React-Redux app"
+  url: https://medium.com/@darioghilardi/end-to-end-testing-on-a-react-redux-app-10f5a26f2f61
+  sourceName: Medium
+  sourceUrl: https://medium.com
+  date: Oct 11, 2017
+  author: Dario Ghilardi
+  img: /img/examples/test-blackboard.jpg
+
+- title: "Ferramentas de testes de aceitação: uma odisséia."
+  url: https://medium.com/@darioghilardi/end-to-end-testing-on-a-react-redux-app-10f5a26f2f61
+  sourceName: Medium
+  sourceUrl: https://medium.com
+  date: Oct 9, 2017
+  author: Otávio Machado
+  img: /img/examples/testing-pyramid.jpg
+
+- title: "Cypress.io vs Protractor: e2e testing battle"
+  url: https://medium.com/@kobvel/cypress-io-vs-protractor-e2e-testing-battle-d124ece91dc7
+  sourceName: Medium
+  sourceUrl: https://medium.com
+  date: Sep 30, 2017
+  author: Mikki Kobvel
+  img: /img/examples/cypress-vs-protractor.jpg
+
+- title: "Can't Wait for Windows: Cypress"
+  url: https://dev.to/antonfrattaroli/cant-wait-for-windows-cypress
+  sourceName: dev.to
+  sourceUrl: https://dev.to
+  date: Aug 23, 2017
+  author: Anton Frattaroli
+  img: /img/examples/cant-wait-for-windows-cypress.png
+
+- title: "Integration testing with Cypress 101"
+  url: https://medium.com/wehkamp-techblog/integration-testing-with-cypress-101-2524d3244bb4
+  sourceName: Wehkamp-techblog
+  sourceUrl: https://medium.com/wehkamp-techblog
+  date: Aug 17, 2017
+  author: Berry de Witte
+  img: /img/examples/cypress-integration-testing.jpg
+
+- title: 'Cypress.io & Docker: the Ultimate E2E Stack (part1)'
+  url: https://dashbouquet.com/blog/frontend-development/cypressio-and-docker-the-ultimate-e2e-stack-part-1
+  sourceName: dashbouquet blog
+  sourceUrl: https://dashbouquet.com/blog
+  date: Aug 7, 2017
+  author: Dziamid Zayankouski
+  img: /img/examples/cypdock-post.jpg
+
+- title: Javascript tools for end-to-end testing web applications
+  url: https://mo.github.io/2017/07/20/javascript-e2e-integration-testing.html
+  sourceName: molsson's blog
+  sourceUrl: https://mo.github.io/
+  date: Jul 20, 2017
+  img: /img/examples/javascript-e2e-integration-testing-active-devs.jpg
+
+- title: Cypress.io – ersetzt diese neue Automations-Engine Selenium?
+  url: http://www.testplus.at/2017/07/cypress-io-ersetzt-diese-neue-automations-engine-selenium/
+  sourceName: TestPlus
+  sourceUrl: http://www.testplus.at/
+  date: Jul 12, 2017
+  img: /img/examples/test-runner-automation-engine-cypress-testplus-bericht.jpg
+
+- title: Cypress - a genuine alternative to Selenium at last?
+  url: https://red-badger.com/blog/2017/6/16/cypress-a-genuine-alternative-to-selenium-at-last
+  sourceName: Red Badger
+  sourceUrl: https://red-badger.com/blog
+  date: Jun 6, 2017
+  author: Greg Dorward
+  img: /img/examples/robot-fights.png
+
+- title: "X-periment: Integration Testing"
+  url: https://x-team.com/blog/integration-testing-selenium-phantomjs-and-cypress/
+  sourceName: X-Team
+  sourceUrl: https://x-team.com
+  date: Apr 10, 2017
+  img: /img/examples/x-team-integration-testing-selenium-phantomjs-and-cypress.jpg
+
+- title: Integration tests can be fun!
+  url: http://corgibytes.com/blog/2017/02/21/integration-tests-fun/
+  sourceName: Corgibytes
+  sourceUrl: http://corgibytes.com/blog
+  date: Feb 21, 2017
+  author: Kamil Ogórek
+  img: /img/examples/corgibytes-cypress-browser-tests-graph.jpg
+
+- title: Cypress will change the way you develop
+  url: https://hackernoon.com/cypress-will-change-the-way-you-develop-47a194d2a33f
+  sourceName: Hackernoon
+  sourceUrl: https://hackernoon.com
+  date: Jan 1, 2017
+  author: Paul Falgout
+  img: /img/examples/cypress-tool-change-workflow-git.jpg
+
+- title: Connecting crash reporting with end to end tests
+  url: https://glebbahmutov.com/blog/connecting-crash-reporting-with-end-to-end-tests/
+  sourceName: GlebBahmutov.com
+  sourceUrl: https://glebbahmutov.com/blog
+  date: Dec 14, 2016
+  author: Gleb Bahmutov
+  img: /img/examples/error-exception-includes-spec-filename-and-full-test-title-in-the-extra-and-tags-objects.jpg
+
+- title: Cypress - Dealing With Flaky Tests
+  url: http://blog.xebia.com/cypress-dealing-with-flaky-tests/
+  sourceName: Xebia Blog
+  sourceUrl: http://blog.xebia.com
+  date: Dec 2, 2016
+  author: Nick van Giessel
+  img: /img/examples/cypress-assertion-after-api-call-xebia-blog.jpg
+
+- title: Parallel end to end testing with Cypress, Docker and GitLab
+  url: https://glebbahmutov.com/blog/parallel-end-to-end-testing/
+  sourceName: GlebBahmutov.com
+  sourceUrl: https://glebbahmutov.com/blog
+  date: Jun 26, 2016
+  author: Gleb Bahmutov
+  img: /img/examples/gleb-bahmutov-blog-parellel-testing-cypress-docker-container-gitlab.jpg
+
+- title: Web testing nirvana with Cypress
+  url: https://glebbahmutov.com/blog/web-testing-nirvana-with-cypress/
+  sourceName: GlebBahmutov.com
+  sourceUrl: https://glebbahmutov.com/blog
+  date: May 2, 2016
+  author: Gleb Bahmutov
+  img: /img/examples/cypress-assertion-error-hover-gleb-bahmutov-blog.jpg
+
+- title: Cypress.io Ditches Frisco Dough to Keep its Web Testing Engine South-Bound
+  url: http://hypepotamus.com/companies/cypress-io/
+  sourceName: Hypepotamus
+  sourceUrl: http://hypepotamus.com
+  date: Jan 27, 2016
+  author: Kiki Roeder
+  img: /img/examples/hypepotamus-guy-testing-website.jpg
+
+- title: "Front-end testing with Cypress"
+  url: http://blog.clevertech.biz/post/front-end-testing-with-cypress
+  sourceName: clevertech Blog
+  sourceUrl: http://blog.clevertech.biz
+  date: Jun 30, 2015
+  author: Bruno Bernardino
+  img: /img/examples/cypress-code-clevertech-blog.jpg
