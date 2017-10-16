@@ -1,5 +1,5 @@
 ---
-title: Plugins Top-Level API
+title: Plugins API
 comments: false
 ---
 
@@ -13,7 +13,7 @@ The *plugins file* should export a function with the following signature:
 
 ```javascript
 module.exports = (register, config) => {
-
+  // configure plugins here
 }
 ```
 

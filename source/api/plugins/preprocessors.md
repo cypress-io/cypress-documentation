@@ -13,6 +13,9 @@ See the following preprocessors as examples. The code contains comments that exp
 
 * [Browserify Preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
 * [Webpack Preprocessor](https://github.com/cypress-io/cypress-webpack-preprocessor)
+* [Watch Preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
+
+Preprocessors should be published to [npm](https://www.npmjs.com/) with the name being `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor). Use the following npm keywords: `cypress`, `cypress-plugin`, `cypress-preprocessor`.
 
 Setting a preprocessor involves registering the `on:spec:file:preprocessor` event in the *plugins file* (`cypress/plugins/index.js` by default), like so:
 
