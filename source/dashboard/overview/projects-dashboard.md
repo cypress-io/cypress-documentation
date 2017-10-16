@@ -60,7 +60,7 @@ In order to record your test runs, you'll also need to provide a {% urlHash "Rec
 ***Provide record key in {% url '`cypress run`' command-line#cypress-run %}:***
 
 ```shell
-cypress run --record --key <record_key>
+cypress run --record --key abc-key-123
 ```
 
 ***Or set record key as environment variable***

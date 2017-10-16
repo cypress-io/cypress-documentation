@@ -109,7 +109,7 @@ If you are {% url 'recording your runs' continuous-integration#Recording-Tests-i
 Instead of hard coding it into your run command like this:
 
 ```shell
-cypress run --record --key <record_key>
+cypress run --record --key abc-key-123
 ```
 
 You can set the record key as the environment variable, `CYPRESS_RECORD_KEY`, and we'll automatically use that value. You can now omit the `--key` flag when recording.
