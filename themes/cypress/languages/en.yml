@@ -63,6 +63,7 @@ sidebar:
     roadmap: Roadmap
     cypress-api-design: API Design
     all-videos: Videos
+    plugins: Plugins
   api:
     introduction: Introduction
     api: API
