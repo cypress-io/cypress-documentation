@@ -1,3 +1,11 @@
+- title: "Javascript Testing Frameworks: The Best to Test JS Code"
+  url: http://www.designyourway.net/blog/resources/javascript-testing-frameworks/
+  sourceName: Design your way
+  sourceUrl: http://www.designyourway.net/blog/
+  date: Oct 13, 2017
+  author: Bogdan Sandu
+  img: /img/examples/cypress-test-runner.jpg
+
 - title: "End-to-end testing on a React-Redux app"
   url: https://medium.com/@darioghilardi/end-to-end-testing-on-a-react-redux-app-10f5a26f2f61
   sourceName: Medium
