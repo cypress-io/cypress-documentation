@@ -83,6 +83,19 @@ describe "API", ->
           sidebarLink  = @sidebarLinks[i]
           expect(displayedLink.attr('href')).to.include(sidebarLink)
 
+    context "mobile sidebar menu", ->
+      beforeEach ->
+        cy.viewport('iphone-6')
+
+      it "displays sidebar in mobile menu on click", ->
+        cy.get("#mobile-nav-toggle").click()
+        cy.get("#mobile-nav-inner").should("be.visible")
+          .find(".sidebar-li")
+          .first(1).each (displayedLink, i) ->
+            englishLink  = @english.sidebar.api[@sidebarLinkNames[i]]
+            expect(displayedLink.text().trim()).to.eq(englishLink)
+
+
   ## This is running too slow to include for now
   ## Issue #431 Needs to be fixed first
   ## https://github.com/cypress-io/cypress/issues/431
