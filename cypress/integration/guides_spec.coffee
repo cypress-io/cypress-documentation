@@ -71,7 +71,7 @@ describe "Guides", ->
           sidebarLink  = @sidebarLinks[i]
           expect(displayedLink.attr('href')).to.include(sidebarLink)
 
-    context.only "mobile sidebar menu", ->
+    context "mobile sidebar menu", ->
       beforeEach ->
         cy.viewport('iphone-6')
 

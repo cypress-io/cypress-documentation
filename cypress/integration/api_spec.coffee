@@ -87,7 +87,7 @@ describe "API", ->
       beforeEach ->
         cy.viewport('iphone-6')
 
-      it.only "displays sidebar in mobile menu on click", ->
+      it "displays sidebar in mobile menu on click", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
           .find(".sidebar-li")
