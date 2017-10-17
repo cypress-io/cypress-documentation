@@ -93,6 +93,39 @@ cy.get('input').invoke('val').then((val1) => {
 })
 ```
 
+## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
+
+Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
+
+```javascript
+cy.get('button').then(($el) => {
+  $el.get(0)
+})
+```
+
+## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
+
+Yes.
+
+By default Cypress will automatically fail tests whenever an uncaught exception bubbles up out of your app.
+
+Cypress exposes an event for this (amongst many others) that you can listen for to either:
+
+- Debug the error instance itself
+- Prevent Cypress from failing the test
+
+This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
+
+## {% fa fa-angle-right %} Can I use the Page Object pattern?
+
+Yes.
+
+The page object pattern isn't actually anything "special". If you're coming from Selenium you may be accustomed to creating instances of classes, but this is completely unnecessary and irrelevant.
+
+The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
+
+If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% issue 64 'here' %}.
@@ -140,16 +173,6 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 You can also find your Record Key inside of the *Settings* tab in our Desktop Application.
 
 ![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
-
-## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
-
-Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
-
-```javascript
-cy.get('button').then(($el) => {
-  $el.get(0)
-})
-```
 
 ## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
 
@@ -210,7 +233,10 @@ cy.get('button', { timeout: 10000 }) // wait up to 10 seconds for this 'button' 
 
 cy.get('.element').click({ timeout: 10000 }).should('not.have.class', 'animating')
 // wait up to 10 seconds for the .element to not have 'animating' class
+
 ```
+
+However, most of the time you don't even have to worry about animations. Why not?  Cypress will {% url "automatically wait" interacting-with-elements %} for elements to stop animating prior to interacting with them via action commands like `.click()` or `.type()`.
 
 ## {% fa fa-angle-right %} Can I test anchor links that open in a new tab?
 
@@ -234,16 +260,6 @@ Cypress doesn't have direct access to node or your file system. We recommend uti
 ## {% fa fa-angle-right %} Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 
 No, Cypress modifies network traffic in real time and therefore must sit between your server and the browser. There is no other way for us to achieve that.
-
-## {% fa fa-angle-right %} Can I use the Page Object pattern?
-
-Yes.
-
-The page object pattern isn't actually anything "special". If you're coming from Selenium you may be accustomed to creating instances of classes, but this is completely unnecessary and irrelevant.
-
-The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
-
-If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
 
 ## {% fa fa-angle-right %} Is there any way to detect if my app is running under Cypress?
 
@@ -299,7 +315,7 @@ There are a few ways.
 
 - The easiest way is probably to check our {% url "changelog" changelog %}.
 - You can also check the latest version {% url "here" https://download.cypress.io/desktop.json %}.
-- Once we're open source (soon!), we'll have it tagged in the {% url "repo" https://github.com/cypress-io/cypress %}.
+- It's also always in our {% url "repo" https://github.com/cypress-io/cypress %}.
 
 ## {% fa fa-angle-right %} Is there an ESLint plugin for Cypress or a list of globals?
 

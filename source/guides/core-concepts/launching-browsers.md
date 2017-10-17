@@ -3,7 +3,7 @@ title: Launching Browsers
 comments: false
 ---
 
-When you run tests in Cypress, we launches a browser for you. Cypress launches a real browser for two main reasons:
+When you run tests in Cypress, we launch a browser for you. Cypress launches a real browser for two main reasons:
 
 1. To create a clean, pristine testing environment.
 2. To access the exclusive browser API's for automation.

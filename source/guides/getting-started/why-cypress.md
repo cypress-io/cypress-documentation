@@ -6,7 +6,7 @@ comments: false
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- What Cypress is and who you should use it
+- What Cypress is and why you should use it
 - Our mission, and what we believe in
 - Key Cypress features
 {% endnote %}

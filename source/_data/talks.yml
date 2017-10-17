@@ -1,0 +1,48 @@
+- title: Modern Integration Testing for JavaScript Applications
+  url: https://www.youtube.com/watch?v=D20nX2zAypk&feature=youtu.be
+  sourceName: BostonJS
+  sourceUrl: https://www.meetup.com/boston_JS/
+  date: Oct 3, 2017
+  author: Gleb Bahmutov
+  img: /img/examples/cypress-star-wars-intro.jpg
+
+
+- title: Testing JavaScript Applications (feat. React and Redux)
+  url: https://frontendmasters.com/courses/testing-javascript/
+  sourceName: Frontend Masters
+  sourceUrl: https://frontendmasters.com
+  date: Jun 21, 2017
+  author: Kent C. Dodds
+  img: /img/examples/frontend-masters-kent-c-dodds-javascript-testing.jpg
+
+- title: "Testing Made Easy: Better, Faster, Stronger Unit Tests and Integration Tests"
+  url: https://pusher.com/sessions/meetup/js-monthly-london/testing-made-easy-better-faster-stronger-unit-tests-and-integration-tests
+  sourceName: JS Monthly London
+  sourceUrl: https://www.meetup.com/js-monthly/
+  date: Apr 25, 2017
+  author: Norbert de Langen
+  img: /img/examples/js-monthly-london-norbert-de-langen-testing-made-easy-cypress.jpg
+
+- title: "Testing, the way it should be"
+  url: https://youtu.be/N9RbcP4iY90?t=48m14s
+  sourceName: ReactiveConf
+  sourceUrl: https://reactiveconf.com/
+  date: Oct 27, 2016
+  author: Brian Mann
+  img: /img/examples/reactiveconf-what-is-cypressio-brian-mann-talk.jpg
+
+- title: "Enter Cypress - Integration Testing Done Right"
+  url: https://www.youtube.com/watch?v=JWOjQrGIokw&feature=youtu.be
+  sourceName: TestWorksConf
+  sourceUrl: https://twc.amsterdam/
+  date: Oct 7, 2016
+  author: Brian Mann
+  img: /img/examples/test-works-conf-brian-mann-cypress.jpg
+
+- title: "Testing, the way it should be"
+  url: https://youtu.be/yq99BvSe1AQ
+  sourceName: Nodevember
+  sourceUrl: https://twc.amsterdam/
+  date: Nov 15, 2015
+  author: Brian Mann
+  img: /img/examples/nodevember-talk-testing-the-way-it-should-be-cypress.jpg
