@@ -18,6 +18,11 @@ comments: false
 - You can now use environment variables that have a `=` character as values. Fixes {% issue 620 %}. Contributed by {% user HugoGiraudel %}.
 - There is now a new `videoUploadOnPasses` configuration option in `cypress.json`. Turning this off will only compress and upload videos on failures. This only affects projects which are setup to record to the Dashboard. Fixes {% issue 460 %}. Contributed by {% user carlos-granados %}.
 
+**Documentation Changes:**
+
+- {% url 'Added examples for "Catalog of Events"' catalog-of-events %}
+- {% url 'Added / Updated FAQ for "Using Cypress"' using-cypress-faq %}
+
 ## 1.0.1
 
 *Released 10/10/2017*

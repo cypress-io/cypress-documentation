@@ -26,9 +26,7 @@ Everything is free while we are in Beta.
 
 In the future, we will charge per month for private projects.
 
-Public projects will be free but will likely have a monthly usage cap on them.
-
-We will offer similar pricing models of other Developer Tools you are familiar with using.
+Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
