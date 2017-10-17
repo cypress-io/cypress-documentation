@@ -5,7 +5,7 @@ comments: false
 containerClass: faq
 ---
 
-## {% fa fa-angle-right %} Is Cypress free and opens source?
+## {% fa fa-angle-right %} Is Cypress free and open source?
 
 Yes. The Cypress Test Runner is free and open source (MIT license).
 
