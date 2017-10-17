@@ -270,7 +270,7 @@ describe('The Login Page', function(){
 
   it('sets auth cookie when logging in via form submission', function(){
     // destructuring assignment of the this.currentUser object
-    { username, password } = this.currentUser
+    const { username, password } = this.currentUser
 
     cy.visit('/login')
 
@@ -351,7 +351,7 @@ describe('The Dashboard Page', function(){
 
   it('logs in programmatically without using the UI', function(){
     // destructuring assignment of the this.currentUser object
-    { username, password } = this.currentUser
+    const { username, password } = this.currentUser
 
     // programmatically log us in without needing the UI
     cy.request('POST', '/login', {
