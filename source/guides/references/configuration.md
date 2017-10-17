@@ -50,6 +50,7 @@ Option | Default | Description
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
+`pluginsFile` | `cypress/plugins` | Path to plugins file. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a headless or CI run's test failure
 `supportFile` | `cypress/support` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
 `videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved after a headless or CI run
