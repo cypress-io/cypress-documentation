@@ -55,7 +55,7 @@ The Cypress Test Runner is free and open source (MIT). The Cypress Dashboard is 
 
 ## {% fa fa-angle-right %} What operating systems do you support?
 
-The desktop application can be {% url "installed" installing-cypress %} in OSX and Linux. {% issue 74 'Windows is not yet supported' %}, although you can use Cypress if you install a Linux VM using something like {% url "VirtualBox" https://www.virtualbox.org/ %} or using a {% url "Docker image" docker-images %}.
+The desktop application can be {% url "installed" installing-cypress %} on Mac, Linux, and Windows. For additional information, please see our {% url "System Requirements"  installing-cypress#System-Requirements %}.
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
