@@ -51,7 +51,7 @@ Cypress on the other hand **helps** you write your tests. You would use Cypress 
 
 ## {% fa fa-angle-right %} Is Cypress free?
 
-Cypress desktop app and CLI are free to use. The Cypress Dashboard is a premium feature for non-open source projects and offers recording videos, screenshots and logs in a web interface.
+The Cypress Test Runner is free and open source (MIT). The Cypress Dashboard is a premium feature for non-open source projects and offers recording videos, screenshots and logs in a web interface.
 
 ## {% fa fa-angle-right %} What operating systems do you support?
 
