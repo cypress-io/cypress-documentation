@@ -18,8 +18,8 @@ npm install <plugin name> --save-dev
 ## Usage
 
 ```javascript
-module.exports = (register, config) => {
-  register('<event>', (arg1, arg2) => {
+module.exports = (on, config) => {
+  on('<event>', (arg1, arg2) => {
     // plugin stuff here
   })
 }
@@ -32,8 +32,8 @@ For example, here's how to use the [webpack preprocessor](https://github.com/cyp
 ```javascript
 const webpack = require('@cypress/webpack-preprocessor')
 
-module.exports = (register, config) => {
-  register('on:spec:file:preprocessor', webpack(config))
+module.exports = (on, config) => {
+  on('file:preprocessor', webpack(config))
 }
 ```
 
@@ -43,15 +43,15 @@ module.exports = (register, config) => {
 
 Preprocessors are plugins that can process your support file and spec files before they're served to the browser. They are also responsible for watching files for changes and notifying Cypress to re-run tests.
 
-* Event: `on:spec:file:preprocessor`
+* Event: `file:preprocessor`
 * Examples: [browserify](https://github.com/cypress-io/cypress-browserify-preprocessor),[webpack](https://github.com/cypress-io/cypress-webpack-preprocessor), [watch](https://github.com/cypress-io/cypress-watch-preprocessor)
 
 ```javascript
 // the plugins file
 const webpack = require('@cypress/webpack-preprocessor')
 
-module.exports = (register, config) => {
+module.exports = (on, config) => {
   // register the webpack plugin, using its default options
-  register('on:spec:file:preprocessor', webpack(config))
+  on('file:preprocessor', webpack(config))
 }
 ```

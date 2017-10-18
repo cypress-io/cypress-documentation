@@ -17,12 +17,12 @@ See the following preprocessors as examples. The code contains comments that exp
 
 Preprocessors should be published to [npm](https://www.npmjs.com/) with the name being `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor). Use the following npm keywords: `cypress`, `cypress-plugin`, `cypress-preprocessor`.
 
-Setting a preprocessor involves registering the `on:spec:file:preprocessor` event in the *plugins file* (`cypress/plugins/index.js` by default), like so:
+Setting a preprocessor involves listening to the `file:preprocessor` event in the *plugins file* (`cypress/plugins/index.js` by default), like so:
 
 ```javascript
 // plugins file
-module.exports = (register, config) => {
-  register('on:spec:file:preprocessor', (filePath, util) => {
+module.exports = (on, config) => {
+  on('file:preprocessor', (filePath, util) => {
     // ...
   })
 }
