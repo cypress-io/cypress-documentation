@@ -8,16 +8,7 @@
   font-size: 14px;
   clear: both;
 
-  &:before {
-    content: "";
-    display: table;
-  }
-
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  @include clearfix;
 
   a {
     color: inherit;
