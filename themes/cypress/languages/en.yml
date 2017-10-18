@@ -1,6 +1,7 @@
 menu:
   guides: Guides
   api: API
+  plugins: Plugins
   faq: FAQ
   examples: Examples
   dashboard: Dashboard
