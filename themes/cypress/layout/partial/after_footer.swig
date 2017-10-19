@@ -7,6 +7,7 @@
 {{ js('js/toc') }}
 {{ js('js/mobile_nav') }}
 {{ js('js/ac_tracking') }}
+{{ js('js/form_ac') }}
 {% if config.algolia[page.lang] %}
   <!-- Algolia -->
   {{ js('js/vendor/docsearch') }}
