@@ -15,7 +15,7 @@
 }
 #logo-wrap {
   box-flex: 1;
-  flex: 0 120px;
+  max-width: 120px;
 }
 #logo {
   width: 120px;
@@ -27,20 +27,19 @@
   }
 }
 #main-nav {
-  display: none;
   box-flex: 1;
   flex: 1 auto;
   padding-left: 20px;
 }
 
 .main-nav-link {
+  display: none;
   font-size: 14px;
   color: $white-60;
   text-decoration: none;
   line-height: 50px;
   transition: 0.2s;
   font-family: $font-title;
-  display: inline-block;
   padding: 5px 15px;
   font-weight: 400;
 
