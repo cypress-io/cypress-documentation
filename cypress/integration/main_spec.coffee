@@ -131,6 +131,16 @@ describe "Documentation", ->
       cy.wait("@postAlgolia")
       cy.get(".ds-dropdown-menu").should("be.visible")
 
+    describe "displays in mobile view", ->
+      beforeEach ->
+        cy.viewport('iphone-6')
+
+      it "displays dropdown on search", ->
+        cy.get(".ds-dropdown-menu").should("not.be.visible")
+        cy.get("#search-input").type("g")
+        cy.wait("@postAlgolia")
+        cy.get(".ds-dropdown-menu").should("be.visible")
+
   describe "Changelog", ->
     beforeEach ->
       cy.visit("/guides/references/changelog.html")
