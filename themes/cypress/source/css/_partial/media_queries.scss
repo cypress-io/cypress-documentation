@@ -224,6 +224,18 @@
       }
     }
   }
+
+  footer.wrapper .top {
+    flex-direction: column;
+    padding: 30px;
+
+    .footer-form {
+      text-align: center;
+      margin: 0 auto;
+    }
+
+
+  }
 }
 
 @media screen and(max-width: 620px) {
