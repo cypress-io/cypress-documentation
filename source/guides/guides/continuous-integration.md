@@ -44,7 +44,8 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ```yaml
 script:
-  - cypress run --record
+  - npm install
+  - $(npm bin)/cypress run --record
 ```
 
 ## CircleCI
@@ -54,16 +55,23 @@ script:
 ```yaml
 test:
   override:
-    - cypress run --record
+    - npm install
+    - $(npm bin)/cypress run --record
 ```
 
 ## Docker
 
-We have {% url 'created' https://github.com/cypress-io/docker %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! As an experiment we have also created a complete {% url 'cypress/internal:cy' 'https://hub.docker.com/r/cypress/internal/tags/' %} image with pre-installed Cypress; just call {% url '`cypress run`' command-line#cypress-run %}.
+We have {% url 'created' https://github.com/cypress-io/docker %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
 
-If you don't use this image you must install all of the {% url 'linux dependencies' continuous-integration#Dependencies %}. See {% issue 165 'this issue' %} for more information.
+```
+FROM cypress/base
+RUN npm install
+RUN $(npm bin)/cypress run
+```
 
 ***Docker CI examples***
+
+Here are a few CI example repositories using our Docker images
 
 * {% url "GitLab" https://gitlab.com/cypress-io/cypress-example-docker-gitlab %}
 * {% url "Codeship" https://github.com/cypress-io/cypress-example-docker-codeship %}
