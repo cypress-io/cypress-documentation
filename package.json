@@ -37,7 +37,7 @@
     "postlint": "eslint --fix *.js cy_scripts/*.js scripts/*.js"
   },
   "devDependencies": {
-    "@cypress/deploy-bits": "1.5.1",
+    "@cypress/deploy-bits": "1.6.0",
     "@cypress/env-or-json-file": "^1.0.0",
     "@cypress/questions-remain": "^1.0.1",
     "beeper": "^1.1.1",
