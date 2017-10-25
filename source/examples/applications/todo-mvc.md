@@ -15,7 +15,7 @@ This repo compares {% url "Cypress Tests" https://github.com/cypress-io/cypress-
 - Create a custom `cy.createTodo()` command to run multiple cy commands.
 - Click and double click elements using {% url "`cy.click()`" click %} and {% url "`cy.dblclick()`" dblclick %}.
 
-![todomvc-gif](/img/examples/todomvc-tests-running.gif)
+![todomvc-gif](/img/examples/public-project-todomvc.png)
 
 ## Stack
 

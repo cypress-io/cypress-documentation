@@ -6,9 +6,10 @@ comments: false
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- How to run Cypress headlessly from the command line
-- How to record your tests running from the command line
-- How to launch other browsers from the command line
+- How to run Cypress from the command line
+- How to run headlessly
+- How to launch other browsers
+- How to record your tests
 {% endnote %}
 
 # Installation
@@ -33,7 +34,7 @@ Or just add cypress commands to the `scripts` field in your `package.json` file.
 
 ## `cypress run`
 
-Run Cypress headlessly. By default will run all tests headlessly in the `Electron` browser.
+Runs Cypress to completion. By default will run all tests headlessly in the `Electron` browser.
 
 ***Run tests***
 
