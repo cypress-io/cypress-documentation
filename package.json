@@ -21,7 +21,7 @@
     "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",
     "prebuild": "npm run clean && npm run deps && gulp pre:build",
     "build": "node --stack-size=8192 ./index.js generate",
-    "postbuild": "gulp post:build && git-last -f public/build.json",
+    "postbuild": "gulp post:build && git-last -m -f public/build.json",
     "clean": "hexo clean",
     "clean-deps": "rm -rf node_modules",
     "predeploy": "NODE_ENV=production npm run build",
@@ -37,6 +37,7 @@
     "postlint": "eslint --fix *.js cy_scripts/*.js scripts/*.js"
   },
   "devDependencies": {
+    "@cypress/deploy-bits": "1.6.0",
     "@cypress/env-or-json-file": "^1.0.0",
     "@cypress/questions-remain": "^1.0.1",
     "beeper": "^1.1.1",
