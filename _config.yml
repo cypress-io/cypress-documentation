@@ -65,8 +65,8 @@ alias:
   v1.0/docs/first/: /api/commands/first.html
   docs/cli/: guides/guides/command-line.html
   docs/wait/: api/commands/wait.html
-  why-cypress/: guides/getting-started/why-cypress.html
-  guides.html/: guides/getting-started/why-cypress.html
+  why-cypress/: guides/overview/why-cypress.html
+  guides.html/: guides/overview/why-cypress.html
   guides/references/type/: api/commands/type.html
   docs/launching-browsers/: guides/core-concepts/launching-browsers.html
   guides/integrating-cypress/features.html/: guides/guides/continuous-integration.html
