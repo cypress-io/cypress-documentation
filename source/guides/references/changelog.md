@@ -452,7 +452,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - We now validate that `baseUrl` is accessible **prior** to running tests. This prevents a common situation where you may forget to boot your web server and have instantly failing tests. Fixes {% issue 383 '#383' %}.
 - We now show the entire scaffolded tree of files when adding a brand new project. Fixes {% issue 401 '#401' %}.
 - We display errors coming from `babel` with more helpful information now.
-- Changed the [Desktop GUI](https://github.com/cypress-io/cypress-core-desktop-gui) to use `JWT` for authorization. **You will have to log in again**.
+- Changed the [Desktop GUI](https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui) to use `JWT` for authorization. **You will have to log in again**.
 
 # 0.18.5
 
@@ -1071,7 +1071,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Misc:**
 
-- Open sourced another core repo: [Cypress Core Desktop GUI](https://github.com/cypress-io/cypress-core-desktop-gui) which makes up the Cypress Desktop Application.
+- Open sourced another core repo: [Cypress Core Desktop GUI](https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui) which makes up the Cypress Desktop Application.
 - Improved the {% issue 74#issuecomment-208422453 'error message' %} displayed to users on Windows attempting to download the Cypress Desktop app.
 
 # 0.15.2
