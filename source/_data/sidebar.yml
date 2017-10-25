@@ -1,6 +1,8 @@
 guides:
-  getting-started:
+  overview:
     why-cypress: why-cypress.html
+    key-differences: key-differences.html
+  getting-started:
     installing-cypress: installing-cypress.html
     writing-your-first-test: writing-your-first-test.html
     testing-your-app: testing-your-app.html

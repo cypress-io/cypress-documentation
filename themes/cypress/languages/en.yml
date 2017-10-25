@@ -20,8 +20,10 @@ page:
 
 sidebar:
   guides:
-    getting-started: Getting Started
+    overview: Overview
     why-cypress: Why Cypress?
+    getting-started: Getting Started
+    key-differences: Key Differences
     installing-cypress: Installing Cypress
     writing-your-first-test: Writing Your First Test
     testing-your-app: Testing Your App
@@ -44,7 +46,7 @@ sidebar:
     launching-browsers: Launching Browsers
     advanced-cypress: Advanced
     the-cypress-workflow: The Cypress Workflow
-    coming-from-selenium: Coming from Selenium?
+    coming-from-selenium: Cypress vs Selenium
     custom-commands: Custom Commands
     web-security: Web Security
     how-cypress-really-works: How Cypress Really Works

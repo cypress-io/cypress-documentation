@@ -2,14 +2,14 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-GUIDES_PATH = '/guides/getting-started/why-cypress.html'
+GUIDES_PATH = '/guides/overview/why-cypress.html'
 
 FIRST_PAGE = "why-cypress.html"
-NEXT_PAGE = "installing-cypress.html"
+NEXT_PAGE = "key-differences.html"
 
 describe "Guides", ->
   context "Main Menu", ->
-    it "Menu goes straight to 'Why Cypress?'", ->
+    it "goes straight to 'Why Cypress?'", ->
       cy.visit('/')
 
       cy.contains('Guides')
@@ -51,7 +51,7 @@ describe "Guides", ->
 
     it "displays current page as highlighted", ->
       cy.get("#sidebar").find(".current")
-        .should("have.attr", "href").and("include", "why-cypress.html")
+        .should("have.attr", "href").and("include", FIRST_PAGE)
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
