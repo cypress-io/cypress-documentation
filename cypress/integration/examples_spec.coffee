@@ -10,7 +10,7 @@ describe "Examples", ->
     cy.visit(EXAMPLES_PATH + ".html")
 
   context "Main Menu", ->
-    it "Menu goes straight to 'Unit Testing'", ->
+    it "goes straight to 'Unit Testing'", ->
       cy.visit('/')
 
       cy.contains('Examples')

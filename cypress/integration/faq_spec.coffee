@@ -9,7 +9,7 @@ describe "FAQ", ->
     cy.visit(FAQ_PATH + ".html")
 
   context "Main Menu", ->
-    it "Menu goes straight to 'General'", ->
+    it "goes straight to 'General'", ->
       cy.visit('/')
 
       cy.contains('FAQ')
