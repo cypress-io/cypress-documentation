@@ -135,7 +135,6 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
-                - use-deploy-bits
           requires:
             - docs-tests
       - deploy-docs-production:
