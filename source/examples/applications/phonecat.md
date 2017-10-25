@@ -13,7 +13,7 @@ This tests the {% url "original Angular Phonecat example app" https://github.com
 - Test redirect behavior of application using {% url "`.hash()`" hash %}.
 - Test loading behavior of app.
 
-![phonecat-angular-tutorial-app-tested-in-cypress 2d78065e](/img/examples/phonecat-angular-app.jpg)
+![phonecat-angular-tutorial-app-tested-in-cypress 2d78065e](/img/examples/public-project-phone-cat.jpg)
 
 
 ## Stack
