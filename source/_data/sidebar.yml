@@ -148,7 +148,8 @@ api:
 
 tutorials:
   build-and-test-todo:
-    setup: setup.html
+    project-setup: project-setup.html
+    testing-inputs: testing-inputs.html
 
 examples:
   recipes:
