@@ -144,6 +144,10 @@ api:
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
 
+tutorials:
+  build-and-test-todo:
+    setup: setup.html
+
 examples:
   recipes:
     unit-testing-recipe: unit-testing-recipe.html

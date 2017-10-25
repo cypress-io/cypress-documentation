@@ -1,5 +1,6 @@
 guides: /guides/getting-started/why-cypress.html
 api: /api/introduction/api.html
+tutorials: /tutorials/build-and-test-todo/setup.html
 examples: /examples/recipes/unit-testing-recipe.html
 dashboard: /dashboard/overview/features-dashboard.html
 faq: /faq/questions/general-questions-faq.html

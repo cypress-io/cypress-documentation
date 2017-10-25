@@ -1,6 +1,7 @@
 menu:
   guides: Guides
   api: API
+  tutorials: Tutorials
   faq: FAQ
   examples: Examples
   dashboard: Dashboard
@@ -167,6 +168,9 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
+  tutorials:
+    build-and-test-todo: Build and Test Todo MVC
+    setup: Setup
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
