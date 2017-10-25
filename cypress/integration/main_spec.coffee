@@ -1,7 +1,7 @@
 YAML = require('yamljs')
 _ = require('lodash')
 
-GUIDES_PATH = "/guides/getting-started/why-cypress"
+GUIDES_PATH = "/guides/overview/why-cypress"
 API_PATH = "/api/introduction/api"
 EXAMPLES_PATH = "/examples/recipes/unit-testing-recipe"
 DASHBOARD_PATH = "/dashboard/overview/features-dashboard"

@@ -10,7 +10,7 @@ describe "Dashboard", ->
     cy.visit(DASHBOARD_PATH + ".html")
 
   context "Main Menu", ->
-    it "Menu goes straight to 'The Cypress Dashboard'", ->
+    it "goes straight to 'The Cypress Dashboard'", ->
       cy.visit('/')
 
       cy.contains('Dashboard')
