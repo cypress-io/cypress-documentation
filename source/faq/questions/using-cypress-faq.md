@@ -116,6 +116,10 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 
 This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
 
+## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
+
+Yes. You do it the {% url 'same way as any other recursive loop' request#Request-Polling %}.
+
 ## {% fa fa-angle-right %} Can I use the Page Object pattern?
 
 Yes.

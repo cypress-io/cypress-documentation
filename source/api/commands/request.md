@@ -182,6 +182,40 @@ cy.getCookie('cypress-session-cookie').should('exist')
 {% url "Check out our example recipe using `cy.request()` for HTML form submissions" logging-in-recipe %}
 {% endnote %}
 
+## Request Polling
+
+***Call `cy.request()` over and over again:***
+
+This is useful when you're polling a server for a response that may take awhile to complete.
+
+All we're really doing here is creating a recursive function. Nothing more complicated than that.
+
+```js
+// just a regular ol' function folks
+function req () {
+  cy
+    .request(...)
+    .then((resp) => {
+      // if we got what we wanted
+
+      if (resp.status === 200 && resp.body.ok === true)
+        // break out of the recursive loop
+        return
+
+      // else recurse
+      req()
+    })  
+}
+
+cy
+  // do the thing causing the side effect
+  .get('button').click()
+
+  // now start the requests
+  .then(req)
+
+```
+
 # Notes
 
 ## Debugging
