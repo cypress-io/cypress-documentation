@@ -32,7 +32,7 @@ Start by cloning the [starter project from github](https://github.com/cypress-io
 git clone https://github.com/cypress-io/build-app-cypress-tutorial-starter
 ```
 
-SCREENSHOT
+{% img /img/tutorials/build-todo-github-clone-starter.png "Clone the starter project" %}
 
 ## Install dependencies
 
@@ -67,6 +67,7 @@ Cypress tests anything that runs in a browser. You don't need to be using any of
 
 ### Dev dependencies
 
+Aside from Cypress, all of the dev dependencies for this project are here to build our application. Webpack and babel will handle building our JavaScript and JSX and putting the required output in the `build` directory.
 ## Build and serve the application
 
 Now it's time to fire up this application and see what we'll be working with. In a terminal, we can run
@@ -82,7 +83,7 @@ This will run the webpack build process as well as the server that will host our
 
 With the server running, we can open this in a browser by visiting `http://localhost:3030`, and we'll be presented with a simple todoMVC application.
 
-SCREENSHOT
+{% img /img/tutorials/build-todo-todo-mvc-first-run.png "Running the starter version of todoMVC" %}
 
 The styling and markup are in place, but none of the functionality has been implemented yet.
 
@@ -111,9 +112,9 @@ npm run cypress
 
 Since this is our first run for this project, Cypress will seed the project with some sample files.
 
-SCREENSHOT
+{% img /img/tutorials/build-todo-seed-dialog.png "Cypress seeding the project" %}
 
-We will be creating our own spec files, so we can safely remove the seeded spec and fixture files:
+We will be creating our own spec files, so we can safely remove the seeded spec and fixture files listed:
 
 - `cypress/integration/example_spec.js`
 - `cypress/fixtures/example.json`
@@ -123,13 +124,15 @@ We will be creating our own spec files, so we can safely remove the seeded spec 
 
 In your favorite editor, create a file under `cypress/integration` called `input-form.spec.js`.
 
+{% img /img/tutorials/build-todo-create-file.png "Creating a new spec file" %}
+
 In this file, we'll add a `describe` block and inside that, we'll start to define our first test with an `it`. 
 
 ```js
 describe('Input form', () => {
   it('focuses input on load', () => {
-
-  })
+    
+    })
 })
 ```
 
@@ -147,11 +150,11 @@ describe('Input form', () => {
 
 Once you save this file, you will see it show up in the spec list in Cypress
 
-SCREENSHOT
+{% img /img/tutorials/build-todo-spec-list.png "Spec list in Cypress" %}
 
 Clicking the spec will run our new test and you will see the Cypress runner open and our todo application should be displayed in the application preview.
 
-SCREENSHOT
+{% img /img/tutorials/build-todo-first-test-run.png "Todo MVC in the App Preview of the Cypress runner" %}
 
 
 
