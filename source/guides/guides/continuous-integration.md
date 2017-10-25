@@ -3,9 +3,9 @@ title: Continuous Integration
 comments: false
 ---
 
-Running Cypress tests in Continuous Integration is as easy as running tests locally. You generally only need to do two things:
+Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
 
-  1. **Include Cypress package**
+  1. **Install Cypress**
 
   ```shell
   npm install cypress --save-dev
@@ -17,11 +17,11 @@ Running Cypress tests in Continuous Integration is as easy as running tests loca
   cypress run
   ```
 
-That's it! This will go out and {% url 'install Cypress' installing-cypress %}, and then run all your tests.
+That's it!
 
-For a comprehensive list of all the options you can pass to {% url '`cypress run`' command-line#cypress-run %}, {% url 'refer to the command line documentation' command-line %}.
+For more examples please read the {% url 'Command Line' command-line#cypress-run %} documentation.
 
-{% img /img/guides/travis-ci-logs-running-cypress.gif "travis-logs" %}
+{% img /img/guides/running-in-ci.gif "Running in Circle CI" %}
 
 # What's Supported?
 
@@ -32,11 +32,13 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "CircleCI" https://circleci.com %}
 - {% url "CodeShip" https://codeship.com/ %}
 - {% url "GitLab" https://gitlab.com %}
+- {% url "BuildKite" https://buildkite.com %}
+- {% url "AppVeyor" https://appveyor.com %}
 - {% url "Docker" https://www.docker.com/ %}
 
 # Setting Up CI
 
-Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" unit-testing-recipe %}.
+Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" kitchen-sink %}.
 
 ## Travis
 
@@ -44,8 +46,7 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ```yaml
 script:
-  - npm install
-  - $(npm bin)/cypress run --record
+  - cypress run --record
 ```
 
 ## CircleCI
@@ -55,15 +56,14 @@ script:
 ```yaml
 test:
   override:
-    - npm install
-    - $(npm bin)/cypress run --record
+    - cypress run --record
 ```
 
 ## Docker
 
 We have {% url 'created' https://github.com/cypress-io/docker %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
 
-```
+```text
 FROM cypress/base
 RUN npm install
 RUN $(npm bin)/cypress run
@@ -85,8 +85,6 @@ If you are not using one of the above CI providers then make sure your system ha
 ```shell
 apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound
 ```
-
-If you run {% url '`cypress run`' command-line#cypress-run %} and see no output {% url 'see this section for troubleshooting this known issue' continuous-integration#Troubleshooting %}.
 
 # Recording Tests in CI
 
@@ -175,69 +173,8 @@ cy.request({
 Refer to the dedicated {% url 'Environment Variables Guide' environment-variables %} for more examples.
 {% endnote %}
 
-# Optimizing CI with Caching
-
-Most CI providers allow caching of directories or dependencies between builds. This allows you to cache the state of Cypress and make the builds run faster.
-
-## Travis CI
-
-***.travis.yml***
-
-```yaml
-cache:
-  directories:
-    - /home/travis/.cypress/Cypress
-```
-
-## CircleCI
-
-***circle.yml***
-
-```yaml
-## make sure you set the correct node version based on what you've installed!
-dependencies:
-  cache_directories:
-    - /home/ubuntu/nvm/versions/node/v6.2.2/bin/cypress
-    - /home/ubuntu/nvm/versions/node/v6.2.2/lib/node_modules/cypress-cli
-    - /home/ubuntu/.cypress/Cypress
-```
-
 # Known Issues
-
-## CircleCI
-
-You need to select their {% url "`Ubuntu 12.04` image" https://circleci.com/docs/build-image-precise/ %}. The `Ubuntu 14.04` image does not have all of the required dependencies installed by default. You can likely install them yourself. {% issue 315 'There is an open issue for this here.' %}
-
-![Ubuntu build environment in circle](/img/guides/ubuntu-build-environment-in-circle-ci.png)
-
-## Jenkins
-
-You need to install all of the {% url 'linux dependencies' continuous-integration#Dependencies %}.
 
 ## Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
-
-# Troubleshooting
-
-## No Output
-
-***Symptom***
-
-After executing {% url '`cypress run`' command-line#cypress-run %} you don't see any output. In other words: nothing happens.
-
-***Problem***
-
-You are missing  {% url 'a dependency' continuous-integration#Dependencies %} above. *Please install all of the dependencies.*
-
-The reason you're not seeing any output is a longstanding issue with Cypress which {% issue 317 'there is an open issue for' %}. We are working on improving this experience!
-
-***Seeing Errors***
-
-Although running {% url '`cypress run`' command-line#cypress-run %} will yield no output - you can see the actual dependency failure by invoking the Cypress binary directly.
-
-***Invoke the Cypress binary directly***
-
-```shell
-/home/YOUR_USER/.cypress/Cypress/Cypress
-```
