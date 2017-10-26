@@ -178,6 +178,12 @@ You can also find your Record Key inside of the *Settings* tab in our Desktop Ap
 
 ![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
 
+## {% fa fa-angle-right %} How do I check that an email was sent out?
+
+{% note warning 'Anti-Pattern' %}
+Don't try to use your UI to check email. Instead opt to programmatically use 3rd party API's or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-External-Sites %} here.
+{% endnote %}
+
 ## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
 
 You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.route()` route %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching XHR requests there are.
