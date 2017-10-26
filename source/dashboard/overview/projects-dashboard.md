@@ -7,13 +7,13 @@ With Cypress, you have the ability to record the tests for each project you work
 
 You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration %}, but you can also record your tests when running locally.
 
+# Setup
+
 {% note info %}
 To set up your project to record, you must use the Test Runner.
 
 Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
-
-# Setup
 
 ***To set up a project to record:***
 
@@ -100,7 +100,7 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Private** means that only {% url 'users' organizations-dashboard#Inviting-Users %} you invite to your {% url 'organization' organizations-dashboard %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
-# Transfer Ownership
+# Transfer ownership
 
 You can transfer projects that you own to another organization you are a part of or to another user in the organization. Projects can only be transferred from our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 
