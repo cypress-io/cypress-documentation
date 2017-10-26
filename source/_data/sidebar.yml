@@ -10,11 +10,9 @@ guides:
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
-    overview-of-the-gui: overview-of-the-gui.html
     interacting-with-elements: interacting-with-elements.html
+    overview-of-the-gui: overview-of-the-gui.html
     aliases-and-references: aliases-and-references.html
-    screenshots-and-videos: screenshots-and-videos.html
-    launching-browsers: launching-browsers.html
     conditional-testing: conditional-testing.html
   guides:
     command-line: command-line.html
@@ -23,6 +21,8 @@ guides:
     continuous-integration: continuous-integration.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
+    screenshots-and-videos: screenshots-and-videos.html
+    launching-browsers: launching-browsers.html
     web-security: web-security.html
     reporters: reporters.html
   # advanced-cypress:
