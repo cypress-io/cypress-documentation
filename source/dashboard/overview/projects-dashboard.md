@@ -3,19 +3,17 @@ title: Projects
 comments: false
 ---
 
-A Cypress project represents the directory of files and folders that make up your tests. This is often the same repository as your code, but can also be a subfolder or a separate repository altogether.
+With Cypress, you have the ability to record the tests for each project you work in.
 
-{% note info  %}
-Projects added in our Test Runner are strictly local to your computer. They are not tracked in any way by Cypress servers and do not communicate with us until they are {% urlHash "set up to be recorded" Set-up-a-project-to-record %}.
+You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration %}, but you can also record your tests when running locally.
+
+{% note info %}
+To set up your project to record, you must use the Test Runner.
+
+Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
 
-# Set up a project to record
-
-In Cypress, you have the ability to record your running tests. You would typically want to record when running tests in {% url 'Continuous Integration' continuous-integration %} or when running headlessly (when you can't see the Test Runner).
-
-Cypress records all failing tests, logs, screenshots, and videos and make these available in our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
-
-Projects can *only* be set up to record through our Test Runner. You will need to {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} our Test Runner first.
+# Setup
 
 ***To set up a project to record:***
 
@@ -31,7 +29,7 @@ Projects can *only* be set up to record through our Test Runner. You will need t
   - **A private project** restricts its access to *{% url "only users you invite" organizations-dashboard#Inviting-Users %}*.
 7. Click "Setup Project".
 8. Now you should see a view explaining how to record your first run.
-9. After {% urlHash "setting up your project" Set-up-a-project-to-record %}, Cypress inserted a unique {% urlHash "projectId" Project-ID %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
+9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Project-ID %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Record-Key %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
@@ -96,13 +94,13 @@ Think of your record key as the key that enables you to *write and create* runs.
 If your Record Key is accidentally exposed, you should remove it and generate a new one from our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 {% endnote %}
 
-# Public vs Private Projects
+# Public vs Private
 
 - **Public** means that anyone can see the recorded test runs for it. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
 - **Private** means that only {% url 'users' organizations-dashboard#Inviting-Users %} you invite to your {% url 'organization' organizations-dashboard %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
-# Transfer ownership of project
+# Transfer Ownership
 
 You can transfer projects that you own to another organization you are a part of or to another user in the organization. Projects can only be transferred from our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 
