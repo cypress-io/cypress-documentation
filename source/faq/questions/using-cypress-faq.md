@@ -116,6 +116,10 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 
 This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
 
+## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
+
+Yes. You do it the {% url 'same way as any other recursive loop' request#Request-Polling %}.
+
 ## {% fa fa-angle-right %} Can I use the Page Object pattern?
 
 Yes.
@@ -173,6 +177,12 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 You can also find your Record Key inside of the *Settings* tab in our Desktop Application.
 
 ![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
+
+## {% fa fa-angle-right %} How do I check that an email was sent out?
+
+{% note warning 'Anti-Pattern' %}
+Don't try to use your UI to check email. Instead opt to programmatically use 3rd party API's or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-External-Sites %} here.
+{% endnote %}
 
 ## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
 
