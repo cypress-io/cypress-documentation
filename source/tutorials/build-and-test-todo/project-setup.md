@@ -156,9 +156,4 @@ Clicking the spec will run our new test and you will see the Cypress runner open
 
 {% img /img/tutorials/build-todo-first-test-run.png "Todo MVC in the App Preview of the Cypress runner" %}
 
-
-
-
-
-
-
+Now we know our application builds and can be served in a browser. We also have Cypress configured to run some tests. In the next section, we'll expand on our tests and start interacting with page elements and making assertions about the application's behavior and state.

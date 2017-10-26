@@ -34,6 +34,7 @@ alias:
   index.html: guides/overview/why-cypress.html
   guides/index.html: guides/overview/why-cypress.html
   api/index.html: api/introduction/api.html
+  tutorials/index.html: tutorials/build-and-test-todo/introduction.html
   examples/index.html: examples/recipes/unit-testing-recipe.html
   dashboard/index.html: dashboard/overview/features-dashboard.html
   faq/index.html: faq/questions/general-questions-faq.html

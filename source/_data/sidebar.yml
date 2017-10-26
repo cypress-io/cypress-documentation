@@ -148,6 +148,7 @@ api:
 
 tutorials:
   build-and-test-todo:
+    introduction: introduction.html
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
 

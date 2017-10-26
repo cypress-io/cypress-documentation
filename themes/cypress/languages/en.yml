@@ -172,6 +172,7 @@ sidebar:
     cypress-server: Server
   tutorials:
     build-and-test-todo: Build and Test Todo MVC
+    introduction: Introduction
     project-setup: Project Setup
     testing-inputs: Testing Inputs
   examples:
