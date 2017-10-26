@@ -6,7 +6,7 @@ comments: false
 Recorded runs capture the results from your test runs.
 
 {% note info %}
-If you haven't set up your project to record {% url "read here" projects-dashboard#Set-up-a-project-to-record %}.
+If you haven't set up your project to record {% url "read here" projects-dashboard#Setup %}.
 {% endnote %}
 
 # What is recorded?
