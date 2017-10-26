@@ -31,7 +31,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "TravisCI" https://travis-ci.org/ %}
 - {% url "CircleCI" https://circleci.com %}
 - {% url "CodeShip" https://codeship.com/ %}
-- {% url "GitLab" https://gitlab.com %}
+- {% url "GitLab" https://gitlab.com/ %}
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
 - {% url "Docker" https://www.docker.com/ %}
@@ -99,7 +99,7 @@ Cypress can record your tests running and make them available in our {% url 'Das
 
 ***To record tests running:***
 
-1. {% url 'Set up your project to record' projects-dashboard#Set-up-a-Project-to-Record %}
+1. {% url 'Set up your project to record' projects-dashboard#Set-up-a-project-to-record %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
 
 You can {% url 'read more about the Dashboard here' features-dashboard %}.
