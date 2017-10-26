@@ -13,5 +13,3 @@ comments: false
 {% endnote %}
 
 VIDEO HERE
-
-In the [previous section](./project-setup.html) we got our application up and running and used Cypress to visit the local copy of the application.
