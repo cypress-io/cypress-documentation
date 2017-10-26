@@ -15,6 +15,7 @@ guides:
     aliases-and-references: aliases-and-references.html
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
+    conditional-testing: conditional-testing.html
   guides:
     command-line: command-line.html
     debugging: debugging.html
