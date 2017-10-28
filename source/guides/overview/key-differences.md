@@ -22,7 +22,7 @@ Cypress also operates at the network layer by reading and altering web traffic o
 
 Cypress ultimately controls the entire automation process from top to bottom, which puts it in the unique position of being able to understand everything happening in and outside of the browser. This means Cypress is capable of delivering more consistent results than any other testing tool.
 
-Because Cypress is {% url "installed locally" installing-cypress %} on your machine, it can additionally tap into the operating system for automation tasks. This makes performing tasks such as {% url "taking screenshots,  recording videos" screenshots-and-videos %}, general {% url "file system operations" exec %} and {% url "network operations" request %}¡ possible.
+Because Cypress is {% url "installed locally" installing-cypress %} on your machine, it can additionally tap into the operating system for automation tasks. This makes performing tasks such as {% url "taking screenshots,  recording videos" screenshots-and-videos %}, general {% url "file system operations" exec %} and {% url "network operations" request %} possible.
 
 # Native access
 

@@ -542,17 +542,15 @@ In Cypress there is no built in error recovery from a failed command. A command 
 
 You might be wondering:
 
-> How do I create control flow, using if/else? So that if an element does (or doesn't) exist, I choose what to do?
+> How do I create conditional control flow, using if/else? So that if an element does (or doesn't) exist, I choose what to do?
 
-The problem with this question is that this type of control flow ends up being non-deterministic. This means its impossible for a script (or robot), to follow it 100% consistently.
+The problem with this question is that this type of conditional control flow ends up being non-deterministic. This means its impossible for a script (or robot), to follow it 100% consistently.
 
 In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually just asking for another `if/else` control flow.
 
 With that said, as long as you are aware of the potential pit falls with control flow, it is possible to do this in Cypress!
 
-{% note info %}
-We're working on a new guide for showing you how to manage and create "control flow" in your tests.
-{% endnote %}
+You can read all about how to do {% url 'conditional testing' conditional-testing %} here.
 
 # Assertions
 

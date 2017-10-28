@@ -103,6 +103,12 @@ cy.get('button').then(($el) => {
 })
 ```
 
+## {% fa fa-angle-right %} How do I do something different if an element doesn't exist?
+
+What you're asking about is conditional testing and control flow.
+
+Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
 Yes.
@@ -129,6 +135,8 @@ The page object pattern isn't actually anything "special". If you're coming from
 The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
 
 If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
+
+For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
 
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
