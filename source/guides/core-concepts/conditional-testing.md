@@ -119,7 +119,7 @@ You could:
 - Embed data into other places (cookies / local storage) you could read off
 - Add data to the DOM that you can read off to know how to proceed
 
-Let's explore some examples to do conditional testing without involving the DOM:
+Let's explore some examples of conditional testing that will pass or fail 100% of the time.
 
 ## A/B Campaign
 
@@ -180,7 +180,7 @@ cy
 
 ***Embed Data in the DOM:***
 
-Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present. This enables you to query into it. It would have to be present 100% of the time, else this would not work.
+Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present and queryable. It would have to be present 100% of the time, else this would not work.
 
 ```js
 cy.get('html').should('have.attr', 'data-campaign').then((campaign) => {
@@ -239,8 +239,6 @@ cy
 
 If you store and/or persist whether to show the wizard on the server, then just ask it.
 
-Alternatively, if you're creating users it might just be easier to create the user and simply set whether you want the wizard shown ahead of time then. That would avoid this check later.
-
 ```js
 cy
   .visit('https://app.com')
@@ -259,9 +257,11 @@ cy
 
 ```
 
+Alternatively, if you're creating users it might just be easier to create the user and simply set whether you want the wizard shown ahead of time then. That would avoid this check later.
+
 ***Embed data in the DOM:***
 
-Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present. This enables you to query into it. It would have to be present 100% of the time, else this would not work.
+Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present and queryable. It would have to be present 100% of the time, else this would not work.
 
 ```js
 cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
@@ -402,7 +402,7 @@ You should think of failed commands in Cypress akin to uncaught exceptions in se
 
 But... for the sake of the argument, let's imagine for a moment you did have error handling in Cypress.
 
-Enabling this would mean that for every single command, it would error recovery, but only after each applicable command timeout was reached. Since timeouts start at 4 seconds (and exceed from there), this means that it would only fail after a long, long time.
+Enabling this would mean that for every single command, it would recover from errors, but only after each applicable command timeout was reached. Since timeouts start at 4 seconds (and exceed from there), this means that it would only fail after a long, long time.
 
 Let's reimagine our "Welcome Wizard" example from before.
 
@@ -443,4 +443,4 @@ Even then, not enough, its possible a setTimeout could trigger... 60 minutes.
 
 Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that's only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
-You, the test writer must know ahead of time what your application is programmed to do - or have an 100% confidence the state is stable in order to write conditional tests that are deterministic.
+You, the test writer must know ahead of time what your application is programmed to do - or have an 100% confidence the state of a mutable object (like the DOM) has stabilized stable in order to write accurate conditional tests.
