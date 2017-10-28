@@ -26,7 +26,7 @@ Let's investigate why and how you can overcome these problems...
 
 These days modern JS applications are highly dynamic and mutable. Their state, and the DOM are continuously changing over a period of time.
 
-The problem with **conditional testing** is that you cannot accurately determine or even know **when** the state is stable.
+The problem with **conditional testing** is that it can only be used when the state has stabilized. In modern day applications, knowing when state is stable is oftentimes impossible.
 
 To a human - if something changes 10ms, or 100ms from now, we may not even notice this change and assume the state was always the same.
 
@@ -89,91 +89,358 @@ Let's explore a few examples.
 
 ## Server side rendering
 
-If your application is server side rendered with no JavaScript that asynchronously modifies the DOM - congratulations, you can easily do conditional testing on the DOM!
+If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can easily do conditional testing on the DOM!
 
-Why? It's simple. If by the time your `cy.visit()` completes and is no possibility of the DOM changing, then the state has settled.
+Why? Because if the DOM is not going to change after the `load` event occurs, then it can accurate represent a stable state of truth.
 
-Skip the next section and go look at some examples.
+You can safely skip down to the bottom where we provide examples of conditional testing.
 
 ## Client side rendering
 
-In most modern applications these days - when a `cy.visit()` completes, usually nothing is even rendered on the screen. It's usually at that moment your scripts begin to load dynamic content, or begin to render asynchronously.
+However, in most modern applications these days - when the `load` event occurs, usually nothing has rendered on the screen. It's usually at this moment your scripts begin to load dynamic content, and then begin to render asynchronously.
 
-Unfortunately it is not possible for you to use the DOM to do conditional testing. The only way for you to come close to doing this is to ensure you've waited for all async rendering to complete.
+Unfortunately it is not possible for you to use the DOM to do conditional testing. To do this would require you to know with 100% guarantee that your application has finished all asynchronous rendering, and there are no pending network requests, setTimeouts, intervals, or async/await code.
 
-This is difficult to do, and oftentimes requires changes to your application. Perhaps it sets some value somewhere to indicate it's done. Sometimes if content renders after an XHR completes - so you wait on the XHR.
+This is difficult to do (if not impossible) without making changes to your application. You could use a library like `zone.js`, but even that does not capture every async possibility.
 
-Even then however - if your application renders asynchronously, even if you wait for the thing that causes the rendering - there's no guarantee your app *has* rendered yet.
+In other words, you cannot do conditionally testing safely if you want your tests to run 100% consistently.
 
-In other words, you're basically out of luck trying to do conditional testing with the DOM.
+But do not fret - there are better workarounds to still achieve conditional testing **without** relying on the DOM. You just have to *anchor* yourself to another piece of truth which is not mutable.
 
-Luckily there are oftentimes easier ways to do conditional testing that don't rely on the DOM!
+# The Strategies
 
-The good news is - you most often **don't** need the DOM to do conditional testing. In fact, it's much easier if you *anchor* yourself to some other piece of truth which is not mutable.
+If you're unable to guarantee that the DOM is stable - don't worry, there are other ways you can do conditional testing or work around the problems inherent with it.
 
-#
+You could:
 
-Now let's look at an example of conditional testing for elements that may or may not exist.
+- Remove the need to ever do conditional testing
+- Force your application to behave deterministically
+- Check other sources of truth (like your server or database)
+- Embed data into other places (cookies / local storage) you could read off
+- Add data to the DOM that you can read off to know how to proceed
 
-You must anchor yourself to things which are more deterministic than the DOM. Here are some possibilities:
+Let's explore some examples to do conditional testing without involving the DOM:
 
-- cookies
-- local storage
-- the URL / query params
-- bootstrapped data in the DOM
-- asking your server for the truth
+## A/B Campaign
 
-Let's imagine an example where we display on onboarding wizard to new users.
+In this example let's assume you visit your website and the content will be different based on which A/B campaign your server decides to send. Perhaps it's based on geo-location, IP Address, time of day, locale, or other factors that are difficult to control. How can you write tests in this manner?
 
-You **have** to know ahead of time what the condition is that causes this onboarding wizard to be shown. You cannot rely on the DOM to determine this.
+Easily: control which campaign gets sent, or provide a reliable means to know which one it is.
 
-Easy with traditional server side rendered apps.
+***Use URL query params:***
 
-To demonstrate how simple of a problem this is.
+```js
+// tell your backend server which campaign you want sent
+// so you can deterministically know what it is ahead of time
+cy.visit('https://app.com?campaign=A')
 
-- add class async
-- attach DOM node async
-- check a checkbox async
+...
 
-Strategies
+cy.visit('https://app.com?campaign=B')
 
-- ensure you've waited for anything asynchronous to be done
-- use a then and query synchronously
-- repeat the test dozens of times if you want to see what happens
+...
 
-Why we don't offer a `.catch` - ways you could potentially implement this yourself.
+cy.visit('https://app.com?campaign=C')
+```
 
-If we set the defaultCommandTimeout really high this would be a terrible idea.
+Now there's not even a need to conditional testing since you're able to know ahead of time what the campaign is. Yes, this may require server side updates, but you have to make an untestable app testable if you want to test it!
 
-What if the thing causing the side effect never occurs? In most given situations, if the state of what you're expecting isn't there - there is no capacity to retry, or recover. It's just like the way uncaught exceptions work in server side languages. When an error does occur the best thing to do is exit instead of try to recover - because there is no guarantee that the state is correct.
+***Use the server:***
 
-# The Solutions
-
-# Examples
-
-## DOM
-
-Here are some examples of using the DOM for conditional testing:
-
-***Conditionally check whether an element exists:***
+Alternatively, if your server saves the campaign with a session - you could just ask your server to tell you which campaign you're on.
 
 ```js
 cy
-  .get('body').then(($body) => {
-    // synchronously query to avoid cy commands
-    // which require the element to either exist
-    // or not exist
-    if ($body.find('h3:contains(Welcome)').length) {
-      // this exists, execute more cy commands
-      cy.foo().bar()
-    } else {
-      // nope, not found, do something else
-      cy.baz().quux()
+  // this sends us the session cookies
+  .visit('https://app.com')
+
+  // assuming this sends us back
+  // the campaign information
+  .request('https://app.com/me')
+  .its('body.campaign')
+  .then((campaign) => {
+    // runs different cypress test code
+    // based on the type of campaign
+    return campaigns.test(campaign)
+  })
+```
+
+***Use Session Cookies:***
+
+Perhaps an even easier way to test this is if your server sent the campaign in a session cookie that you could read off.
+
+```js
+cy
+  .visit('https://app.com')
+  .getCookie('campaign')
+  .then((campaign) => {
+    return campaigns.test(campaign)
+  })
+```
+
+***Embed Data in the DOM:***
+
+Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present. This enables you to query into it. It would have to be present 100% of the time, else this would not work.
+
+```js
+cy.get('html').should('have.attr', 'data-campaign').then((campaign) => {
+  return campaigns.test(campaign)
+})
+```
+
+## Welcome Wizard
+
+In this example, let's imagine you're running a bunch of tests, and each time you load your application, it may show a "Welcome Wizard" modal.
+
+In this situation, you want to close the Wizard when it's present, and ignore it if it's not.
+
+The problem with this - is that if the Wizard renders asynchronously (because it likely does) you cannot use the DOM to conditionally dismiss it.
+
+Once again - we'll need another reliable way to achieve this without involving the DOM.
+
+These patterns are pretty much the same as before:
+
+***Use the URL to control it:****
+
+```js
+// dont show the wizard
+cy.visit('https://app.com?wizard=0')
+```
+
+```js
+// show the wizard
+cy.visit('https://app.com?wizard=1')
+```
+
+We'd likely just need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
+
+***Use Cookies to know ahead of time:***
+
+In the case where you cannot control it, you can still conditionally dismiss it **if** you know whether it's going to be shown.
+
+```js
+cy
+  .visit('https://app.com')
+  .getCookie('showWizard')
+  .then((val) => {
+    if (val) {
+      // dismiss the wizard conditionally by enqueuing these
+      // three additional commands
+      cy.get('#wizard').contains('Close').click()
     }
   })
+  .foo() // more commands here
+  .bar() // more commands here
+  .baz() // more commands here
 
 ```
 
-## Server
+***Use your server or database:***
 
-## URL
+If you store and/or persist whether to show the wizard on the server, then just ask it.
+
+Alternatively, if you're creating users it might just be easier to create the user and simply set whether you want the wizard shown ahead of time then. That would avoid this check later.
+
+```js
+cy
+  .visit('https://app.com')
+  .request('https://app.com/me')
+  .its('body.showWizard')
+  .then((val) => {
+    if (val) {
+      // dismiss the wizard conditionally by enqueuing these
+      // three additional commands
+      cy.get('#wizard').contains('Close').click()
+    }
+  })
+  .foo() // more commands here
+  .bar() // more commands here
+  .baz() // more commands here
+
+```
+
+***Embed data in the DOM:***
+
+Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present. This enables you to query into it. It would have to be present 100% of the time, else this would not work.
+
+```js
+cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
+  if (wizard) {
+    // dismiss the wizard conditionally by enqueuing these
+    // three additional commands
+    cy.get('#wizard').contains('Close').click()
+  }
+})
+.foo() // more commands here
+.bar() // more commands here
+.baz() // more commands here
+```
+
+## Element Existence
+
+In the case where you **are** trying to use the DOM to do conditional testing, you can utilize the ability to synchronously query for elements in Cypress to create control flow.
+
+{% note warning %}
+In the event you did not read a word above and skipped down here we'll reiterate it one more time:
+
+You cannot do conditional testing on the DOM unless you are either:
+
+- Server side rendering with no asynchronous JavaScript
+- Using client side JavaScrip that **only** ever does synchronous rendering
+
+It's crucial you understand how your application works else you will write flaky tests.
+{% endnote %}
+
+Let's imagine we have a scenario where our application may do two separate things that we're unable to control. In other words you tried every strategy above and for whatever reason you are unable to know ahead of time what you application will do.
+
+Testing this in Cypress is possible.
+
+```js
+// app code
+
+$('button').on('click', function(e) {
+  // do something synchronously randomly
+  if (Math.random() < .5) {
+    // append an input
+    $('<input />').appendTo($('body'))
+  } else {
+    // or append a textarea
+    $('<textarea />').appendTo($('body'))
+  }
+})
+```
+
+```js
+cy
+  // click the button causing the new
+  // elements to appear
+  .get('button').click()
+  .get('body').then(($body) => {
+    // synchronously query from body
+    // to find which element was created
+    if ($body.find('input')) {
+      // input was found, do something else here
+      return 'input'
+    }
+
+    // else assume it was textarea
+    return 'textarea'
+  })
+  .then((selector) => {
+    // selector is a string that represents
+    // the selector we could use to find it
+    cy.get(selector).type(`found the element by selector ${selector}`)
+  })
+```
+
+We'll reiterate one more time. Had the `<input>` or the `<textarea>` been rendered asynchronously, you could not use the pattern above. You would have to involve arbitrary delays which will not work in every situation, slow down your tests, still leave chances that your tests are flaky, and are an all around anti pattern.
+
+Cypress is built around creating **reliable tests**. The secret to writing good tests is to provide as much "state" and "facts" to Cypress and to "guard it" from issuing new commands until your application has reached the desired state it needs to proceed.
+
+Doing conditional testing adds a huge problem - that the test writer themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
+
+If you are not sure if you've written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Dev Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
+
+```js
+Cypress._.times(100, (i) => {
+  it(`num ${i+1} - test the thing conditionally`, function () {
+    // do the conditional bits 100 times
+  })
+})
+```
+
+## Dynamic Text
+
+The pattern of doing something conditionally based on whether or not certain text is present is identical to element existence above.
+
+***Conditionally check whether an element has certain text:***
+
+```js
+cy
+  // this only works if there's 100% guarantee
+  // body has fully rendered without any pending changes
+  // to its state
+  .get('body').then(($body) => {
+    // synchronously ask for the body's text
+    // and do something based on whether it includes
+    // another string
+    if ($body.text().includes('some string')) {
+      // yup found it
+      cy.foo().bar()
+    } else {
+      // nope not here
+      cy.baz().quux()
+    }
+  })
+```
+
+# Error Recovery
+
+Many of our users ask how they can recover from failed commands.
+
+> If I had error handling, I could just try to find X and if X fails go find Y
+
+Because error handling is a common idiom in most programming languages, and especially in Node.js - it seems reasonable to expect to do that in Cypress.
+
+However, this is really the same question as asking to do conditional testing just wrapped up in a slightly different implementation detail.
+
+For instance you may want to do this:
+
+```js
+cy
+  .get('button').contains('hello')
+  .catch((err) => {
+    // oh no the button wasn't found
+    // (or something else failed)
+    cy.get('somethingElse').click()
+  })
+```
+
+If you've been reading along, then you should already have a grasp on why trying to implement conditional code with asynchronous rendering is impossible. If the test writer cannot accurately predict the given state of the system, then neither can Cypress. Error handling offers no additional proof this can be done deterministically.
+
+You should think of failed commands in Cypress akin to uncaught exceptions in server side code. It's not possible to try to recover in those scenarios because the system has transitioned to an unreliable state. Instead you generally always opt to crash and log. When Cypress fails the test - that's exactly what it's doing. Bailing out, skipping any remaining commands in the test, and logging out the failure.
+
+But... for the sake of the argument, let's imagine for a moment you did have error handling in Cypress.
+
+Enabling this would mean that for every single command, it would error recovery, but only after each applicable command timeout was reached. Since timeouts start at 4 seconds (and exceed from there), this means that it would only fail after a long, long time.
+
+Let's reimagine our "Welcome Wizard" example from before.
+
+```js
+// great error recovery code
+function keepCalmAndCarryOn () {
+  cy.foo().bar().baz()
+}
+
+cy
+  .get('#wizard').contains('Close').click()
+  .catch((err) => {
+    // no problem, i guess the wizard didn't exist
+    // or something... no worries
+    keepCalmAndCarryOn()
+  })
+  .then(keepCalmAndCarryOn)
+
+```
+
+In the **best** case scenario, we've wasted at LEAST 4 seconds waiting on the `<#wizard>` element to possibly exist before we errored and continued on.
+
+But in the **worst** case scenario we have a situation where the `<#wizard>` **was** going to be rendered, but it didn't render within our given timeout. Let's assume this was due to a pending network request or websocket message or a queued timer, or anything else.
+
+In this situation, not only did we wait a long period of time, but when the `<#wizard>` element was eventually shown it's likely caused an error downstream on other commands.
+
+If you cannot accurately know the state of your application then no matter what programming idioms you have available - **you cannot write 100% deterministic tests**.
+
+Still not convinced?
+
+Not only is this an anti pattern, but its an actual logical fallacy.
+
+You may think to yourself... okay fine, but 4 seconds - man that's not enough. Network requests could be slow, let's bump it up to 1 minute!
+
+Even then, it's still possible a websocket message could come in... so 5 minutes!
+
+Even then, not enough, its possible a setTimeout could trigger... 60 minutes.
+
+Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that's only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
+
+You, the test writer must know ahead of time what your application is programmed to do - or have an 100% confidence the state is stable in order to write conditional tests that are deterministic.
