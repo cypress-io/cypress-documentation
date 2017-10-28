@@ -103,6 +103,12 @@ cy.get('button').then(($el) => {
 })
 ```
 
+## {% fa fa-angle-right %} How do I do something different if an element doesn't exist?
+
+What you're asking about is conditional testing and control flow.
+
+Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
 Yes.
