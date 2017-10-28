@@ -130,6 +130,8 @@ The "Page Object Pattern" should really be renamed to: "Using functions and crea
 
 If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
 
+For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% issue 64 'here' %}.
