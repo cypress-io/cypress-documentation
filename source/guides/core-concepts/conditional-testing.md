@@ -91,7 +91,7 @@ Let's explore a few examples.
 
 If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can easily do conditional testing on the DOM!
 
-Why? Because if the DOM is not going to change after the `load` event occurs, then it can accurate represent a stable state of truth.
+Why? Because if the DOM is not going to change after the `load` event occurs, then it can accurately represent a stable state of truth.
 
 You can safely skip down to the bottom where we provide examples of conditional testing.
 
@@ -99,7 +99,7 @@ You can safely skip down to the bottom where we provide examples of conditional 
 
 However, in most modern applications these days - when the `load` event occurs, usually nothing has rendered on the screen. It's usually at this moment your scripts begin to load dynamic content, and then begin to render asynchronously.
 
-Unfortunately it is not possible for you to use the DOM to do conditional testing. To do this would require you to know with 100% guarantee that your application has finished all asynchronous rendering, and there are no pending network requests, setTimeouts, intervals, or async/await code.
+Unfortunately it is not possible for you to use the DOM to do conditional testing. To do this would require you to know with 100% guarantee that your application has finished all asynchronous rendering, and there are no pending network requests, setTimeouts, intervals, postMessage, or async/await code.
 
 This is difficult to do (if not impossible) without making changes to your application. You could use a library like `zone.js`, but even that does not capture every async possibility.
 
@@ -443,4 +443,4 @@ Even then, not enough, its possible a setTimeout could trigger... 60 minutes.
 
 Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that's only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
-You, the test writer must know ahead of time what your application is programmed to do - or have an 100% confidence the state of a mutable object (like the DOM) has stabilized stable in order to write accurate conditional tests.
+You, the test writer must know ahead of time what your application is programmed to do - or have an 100% confidence the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.
