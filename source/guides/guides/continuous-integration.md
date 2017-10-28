@@ -173,6 +173,83 @@ cy.request({
 Refer to the dedicated {% url 'Environment Variables Guide' environment-variables %} for more examples.
 {% endnote %}
 
+# Booting Your Server
+
+Typically you'll need to boot a local server prior to running Cypress. Here are some typical recipes for users who are new to CI.
+
+## Command Line
+
+Booting your web server means that it is a **long running process** that will never exit. Because of this, you'll need to **background it** - else your CI provider will never move onto the next command.
+
+Backgrounding your server process means that your CI provider will simply "skip" over it and immediately execute the next command.
+
+The problem is - what happens if your server takes seconds to boot? There is no guarantee that when Cypress starts running your webserver is available.
+
+This is a naive scenario assuming your webserver boots fast:
+
+{% note danger %}
+Don't write the following - it will fail on slow booting servers.
+{% endnote %}
+
+```shell
+## background your server
+npm start &
+
+## oops... cypress runs before your server is ready
+cypress run
+```
+
+There are easy solutions to this. Instead of introducing arbitrary waits like `sleep 20` you can use a much better option like the {% url 'wait-on module' https://github.com/jeffbski/wait-on %}.
+
+Now, we can simply block the `cypress run` command from executing until your server has booted.
+
+```shell
+## background your server
+npm start &
+
+## poll the server over and over again
+## until its been booted
+wait-on http://localhost:8080
+
+## and now run cypress
+cypress run
+```
+
+{% note info %}
+Most CI providers will automatically kill background processes so you don't have to worry about cleaning up your server process once Cypress finishes.
+
+However, if you're running this script locally you'll have to do a bit more work to collect the backgrounded PID and then kill it after `cypress run`.
+{% endnote %}
+
+## Module API
+
+Oftentimes it can be much easier to simply programmatically control and boot your servers with a node script.
+
+If you're using our {% url 'Module API' command-line#Cypress-Module-API %} then it would be trivial to write a script which boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
+
+```js
+// scripts/run-cypress-tests.js
+
+const cypress = require('cypress')
+const server = require('./lib/my-server')
+
+// start your server
+return server.start()
+.then(() => {
+  // kick off a cypress run
+  return cypress.run()
+  .then((results) => {
+    // stop your server when its complete
+    return server.stop()
+  })
+})
+```
+
+```shell
+## kick off the script
+node scripts/run-cypress-tests.js
+```
+
 # Known Issues
 
 ## Docker

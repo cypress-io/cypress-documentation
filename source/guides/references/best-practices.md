@@ -497,4 +497,8 @@ While working in the Cypress GUI you can always restart / refresh while in the m
 
 **What should I do then?**
 
-Simple. Start your web server before running Cypress. That's it!
+Simple. Start your web server before running Cypress and kill it after it completes.
+
+Are you trying to run in CI?
+
+We have {% url 'examples showing you how to start and stop your webserver' continuous-integration#Booting-Your-Server %}.
