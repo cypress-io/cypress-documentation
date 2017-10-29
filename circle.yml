@@ -135,6 +135,7 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
+                - get-branch
           requires:
             - docs-tests
       - deploy-docs-production:
