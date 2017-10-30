@@ -83,7 +83,7 @@ Here are a few CI example repositories using our Docker images
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound
+apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 # Recording Tests in CI
