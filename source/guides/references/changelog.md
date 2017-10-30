@@ -17,6 +17,7 @@ comments: false
 - Fixed error when recording and failing to parse the git commit message. Fixes {% issue 847 %} and {% issue 841 %}.
 - Using a single space on: `cy.type(' ')` now works. Fixes {% issue 807 %}. Contributed by {% user tejasbubane %}.
 - `cy.spread()` can now be used on a collection of DOM elements. Fixes {% issue 735 %}. Contributed by {% user verheyenkoen %}.
+- CLI shows help message when it is invoked with an unknown command like `$(npm bin)/cypress foo`. Fixes {% issue 641 %}.
 
 **Misc:**
 
