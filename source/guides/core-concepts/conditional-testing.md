@@ -227,7 +227,9 @@ cy.getCookie('showWizard')
       cy.get('#wizard').contains('Close').click()
     }
   })
-  // more commands here
+  .get(...)    // more commands here
+  .should(...) // more commands here
+  .click()     // more commands here
 ```
 
 ***Use your server or database:***
@@ -245,7 +247,9 @@ cy.request('https://app.com/me')
       cy.get('#wizard').contains('Close').click()
     }
   })
-  // more commands here
+  .get(...)    // more commands here
+  .should(...) // more commands here
+  .click()     // more commands here
 ```
 
 Alternatively, if you are creating users it might just be easier to create the user and simply set whether you want the wizard shown ahead of time then. That would avoid this check later.
@@ -262,7 +266,9 @@ cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
     cy.get('#wizard').contains('Close').click()
   }
 })
-// more commands here
+.get(...)    // more commands here
+.should(...) // more commands here
+.click()     // more commands here
 ```
 
 ## Element Existence
@@ -352,10 +358,10 @@ cy.get('body').then(($body) => {
     // another string
     if ($body.text().includes('some string')) {
       // yup found it
-      cy.get('.list')
+      cy.get(...).should(...)
     } else {
       // nope not here
-      cy.get('.panel')
+      cy.get(...).should(...)
     }
   })
 ```
