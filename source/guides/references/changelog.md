@@ -26,6 +26,13 @@ comments: false
 - The Desktop GUI displays the scrollbar correctly when the update banner is displayed. Fixes {% issue 803 %}.
 - The branch name is now properly collected when recording in Buildkite CI. Fixes {% issue 777 %}.
 
+**Documentation Changes:**
+
+- {% url 'Created "Conditional Testing" core concept' conditional-testing %}
+- {% url 'Created "Key Differences" core concept' key-differences %}
+- {% url 'Updated "Best Practices"' best-practices %}
+- {% url 'Updated "FAQ Usage"' using-cypress-faq %}
+
 ## 1.0.2
 
 *Released 10/13/2017*
