@@ -334,7 +334,7 @@ Any modifiers activated for the event are also listed in a `modifiers` column.
 
 ***Typing `tab` key does not work***
 
-Tabbing will be implemented as a separate command as `.tab()` and support things like multiple tabs, tabbing in reverse, or tabbing to a specific element. If you need this to be fixed, please thumbs up [this issue](https://github.com/cypress-io/cypress/issues/299).
+Tabbing will be implemented as a separate command as `.tab()` and support things like multiple tabs, tabbing in reverse, or tabbing to a specific element. If you need this to be fixed, please thumbs up {% issue 299 "this issue" %}.
 
 ## Modifiers
 
