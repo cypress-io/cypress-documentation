@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 const path       = require('path')
-const gift       = require('gift')
 const chalk      = require('chalk')
 const Promise    = require('bluebird')
 const inquirer   = require('inquirer')
@@ -13,23 +12,16 @@ const shouldDeploy = require('./should-deploy')
 const R = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
-const git = require('ggit')
 const {
   warnIfNotCI,
   getDeployEnvironment,
   checkBranchEnvFolder,
   uploadToS3,
+  getBranch,
 } = require('@cypress/deploy-bits')
 
 const distDir = path.resolve('public')
 const isValidEnvironment = is.oneOf(['production', 'staging'])
-
-// initialize on existing repo
-const repo = Promise.promisifyAll(gift(path.resolve('..')))
-
-function getCurrentBranch () {
-  return git.branchName()
-}
 
 function cliOrAsk (property, ask, minimistOptions) {
   // for now isolate the CLI/question logic
@@ -42,27 +34,6 @@ function cliOrAsk (property, ask, minimistOptions) {
 
 function prompt (questions) {
   return Promise.resolve(inquirer.prompt(questions))
-}
-
-function commitMessage (env, branch) {
-  const msg = `docs: deployed to ${env} [skip ci]`
-
-  console.log(
-    '\n',
-    'Committing and pushing to remote origin:',
-    '\n',
-    chalk.green(`(${branch})`),
-    chalk.cyan(msg)
-  )
-
-  // commit empty message that we deployed
-  return repo.commitAsync(msg, {
-    'allow-empty': true,
-  })
-  .then(function () {
-    // and push it to the origin with the current branch
-    return repo.remote_pushAsync('origin', branch)
-  })
 }
 
 function prompToScrape () {
@@ -111,18 +82,9 @@ function deployEnvironmentBranch (env, branch) {
   la(is.unemptyString(branch), 'missing branch to deploy', branch)
   la(isValidEnvironment(env), 'invalid deploy environment', env)
 
-  const maybeCommit = () =>
-    commitMessage(env, branch)
-    .catch((err) => {
-      // ignore commit error - do we really need it?
-      console.error('could not make a doc commit')
-      console.error(err.message)
-    })
-
   checkBranchEnvFolder(branch)(env)
 
   uploadToS3(distDir, env)
-  .then(maybeCommit)
   .then(() => scrapeDocs(env, branch))
   .then(() => {
     console.log(chalk.yellow('\n==============================\n'))
@@ -134,7 +96,7 @@ function deployEnvironmentBranch (env, branch) {
 function doDeploy (env) {
   la(isValidEnvironment(env), 'invalid deploy environment', env)
   debug('getting current branch')
-  return getCurrentBranch()
+  return getBranch()
     .then((branch) => {
       console.log('deploying branch %s to environment %s',
         chalk.green(branch), chalk.blue(env))
