@@ -311,7 +311,7 @@ cy.get('button').click()
 cy.get('body').then(($body) => {
     // synchronously query from body
     // to find which element was created
-    if ($body.find('input')) {
+    if ($body.find('input').length) {
       // input was found, do something else here
       return 'input'
     }
