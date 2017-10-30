@@ -3,6 +3,28 @@ title: Changelog
 comments: false
 ---
 
+## 1.0.3
+
+*Released 10/29/2017*
+
+**Features:**
+
+- The Desktop GUI now enables you to collapse folders when displaying a list of specs. Fixes {% issue 760 %}. Contributed by {% user metcorne %}.
+
+**Bugfixes**
+
+- The `onChange` event callback for React now works (again) on `input` type `number` or `email`. Fixes {% issue 816 %} and {% issue 770 %}.
+- Fixed error when recording and failing to parse the git commit message. Fixes {% issue 847 %} and {% issue 841 %}.
+- Using a single space on: `cy.type(' ')` now works. Fixes {% issue 807 %}. Contributed by {% user tejasbubane %}.
+- `cy.spread()` can now be used on a collection of DOM elements. Fixes {% issue 735 %}. Contributed by {% user verheyenkoen %}.
+
+**Misc:**
+
+- Enable passing `CYPRESS_RECORD_KEY` without using the CLI by invoking the binary directly. Fixes {% issue 820 %}.
+- Cypress binaries can now be pointed to a staging environment with `CYPRESS_ENV=staging`. Fixes {% issue 813 %}.
+- The Desktop GUI displays the scrollbar correctly when the update banner is displayed. Fixes {% issue 803 %}.
+- The branch name is now properly collected when recording in Buildkite CI. Fixes {% issue 777 %}.
+
 ## 1.0.2
 
 *Released 10/13/2017*
