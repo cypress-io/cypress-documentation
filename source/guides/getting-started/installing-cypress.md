@@ -108,3 +108,28 @@ By installing Cypress through `npm` you also get access to many other CLI comman
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
+
+# Advanced Installation
+
+If the normal `npm install cypress` command does not work for some reason (like a corporate proxy not allowing downloading Cypress binary from the `https://cdn.cypress.io` server), you still have a workaround. The installer can override version and/or path of the binary to download via `CYPRESS_BINARY_VERSION` environment variable. You have three choices:
+
+1. Install a different binary version from the `cypres` NPM package version. For example, to install NPM `cypress` package version 1.0.3 with binary 1.0.1 use this command:
+
+    ```shell
+    CYPRESS_BINARY_VERSION=1.0.1 npm install cypress@1.0.3
+    ```
+
+2. Install Cypress binary from the given URL. For example, you can download Cypress binary from our CDN server `https://download.cypress.io/desktop` and place it on our company's server. Then use the following command:
+
+    ```shell
+    CYPRESS_BINARY_VERSION=https://company.domain.com/cypress.zip npm install cypress
+    ```
+
+3. Download Cypress binary Zip file and install from a local file. In the example below, I am downloading the version 1.0.2 of binary for Mac platform and save it as local file `cypress.zip`. Then I am installing the latest `cypress` NPM package and the downloaded zip file.
+
+    ```shell
+    curl -O https://cdn.cypress.io/desktop/1.0.2/osx64/cypress.zip
+    CYPRESS_BINARY_VERSION=cypress.zip npm install cypress
+    ```
+
+In all cases, the fact that the binary was installed from a custom location *is not saved* in your `package.json` file. Every repeated installation would have to use the same environment variable to install the same binary.
