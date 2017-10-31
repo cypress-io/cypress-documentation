@@ -33,6 +33,7 @@ sidebar:
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
     overview-of-the-gui: Overview of the GUI
+    conditional-testing: Conditional Testing
     debugging: Debugging
     aliases-and-references: Aliases and References
     stubs-spies-and-clocks: Stubs, Spies, and Clocks

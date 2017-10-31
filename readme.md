@@ -9,7 +9,7 @@ The code for Cypress Documentation including Guides, API, Examples, Dashboard & 
 You should be able to get the documentation site running locally very quickly,
 please see our [Contributing Guideline](/CONTRIBUTING.md).
 
-Cypress is [first time OSS contributor friendly](http://www.firsttimersonly.com/). See [these issues](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) to contribute in meaningful way.
+Cypress is [first time OSS contributor friendly](http://www.firsttimersonly.com/). See [these issues](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) to contribute in a meaningful way.
 
 ## Deploying
 

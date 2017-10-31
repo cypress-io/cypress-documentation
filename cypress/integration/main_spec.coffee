@@ -86,27 +86,27 @@ describe "Documentation", ->
       cy.contains("select", "English").find("option").contains("English")
 
     describe "active nav", ->
-      it "higlights guides when on a guides page", ->
+      it "highlights guides when on a guides page", ->
         cy.visit(GUIDES_PATH + ".html")
         cy.contains(".main-nav-link", "Guides")
           .should("have.class", "active")
 
-      it "higlights api when on a api page", ->
+      it "highlights api when on a api page", ->
         cy.visit(API_PATH + ".html")
         cy.contains(".main-nav-link", "API")
           .should("have.class", "active")
 
-      it "higlights examples when on a examples page", ->
+      it "highlights examples when on a examples page", ->
         cy.visit(EXAMPLES_PATH + ".html")
         cy.contains(".main-nav-link", "Examples")
           .should("have.class", "active")
 
-      it "higlights dashboard when on a dashboard page", ->
+      it "highlights dashboard when on a dashboard page", ->
         cy.visit(DASHBOARD_PATH + ".html")
         cy.contains(".main-nav-link", "Dashboard")
           .should("have.class", "active")
 
-      it "higlights FAQ when on a FAQ page", ->
+      it "highlights FAQ when on a FAQ page", ->
         cy.visit(FAQ_PATH + ".html")
         cy.contains(".main-nav-link", "FAQ")
           .should("have.class", "active")

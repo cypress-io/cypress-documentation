@@ -77,6 +77,69 @@ WIP.
 
 WIP. -->
 
+## Visiting External Sites
+
+{% note danger %}
+{% fa fa-warning %} **Anti-Pattern:** Trying to visit or otherwise interact with sites or servers you don't control.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle %} **Best Practice:** Only test what you control. Try to avoid ever requiring a 3rd party server. When necessary, always use {% url `cy.request()` request %} to talk to 3rd party servers via their API's.
+{% endnote %}
+
+One of the first things we see many of our users do wrong is involve 3rd party servers in their tests.
+
+You may need to access 3rd party servers in several situations:
+
+1. When logging in, you use another provider via `OAuth`
+2. Your server updates a 3rd party server that you want to verify
+3. You want to "check you email" to see if your server sent the "forgot password"
+
+Initially you may be tempted to use {% url `cy.visit()` visit %} or use your UI for a 3rd party login window. However, you should **never** use your UI or visit a 3rd party.
+
+You should not because:
+
+- It's incredibly time consuming and slows down your tests
+- The 3rd party may have changed or updated its content
+- The 3rd party may be having issues outside of your control
+- The 3rd party may detect you're a script and block you
+- The 3rd party may be running A/B campaigns
+
+Let's look at a few strategies for dealing with these situations.
+
+***When Logging In:***
+
+Many OAuth providers run A/B experiments which means that their login screen is changing dynamically which makes automation difficult. Many OAuth providers will throttle the number of web requests you can make to them. For instance, Google will **automatically** detect that you're not a human, and instead of giving you an OAuth login screen, they will instead make you fill out a captcha. Additionally, going through an OAuth provider is mutable - you'll first need a real user on their service, and then modifying anything on that user might affect other tests downstream.
+
+Here are potential solutions to alleviate these problems:
+
+1. Stub out the OAuth provider and simply bypass them altogether. You could just trick your application into believing the OAuth provider has passed its token to your application.
+2. If you **must** receive a real token you could just use {% url `cy.request()` request %} and use the **programmatic** API's that your OAuth provider provides. These API's likely change **very** infrequently, and you avoid problems like throttling, and A/B campaigns.
+3. Instead of letting your test code try to bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that's the case, just use {% url `cy.request()` request %} to receive the session directly from your server and bypass the provider altogether.
+
+{% note info Recipes %}
+{% url "We have several examples of doing this." logging-in-recipe %}
+{% endnote %}
+
+***3rd Party Servers:***
+
+Sometimes actions that you take in your application **may** affect another 3rd party application. These situations aren't all that common, but it's possible. Imagine your application integrates into Github, and by using your UI you can change data inside of Github.
+
+After running your test, instead of trying to {% url `cy.visit()` visit %} Github, you can simply use {% url `cy.request()` request %} to programmatically interact with Github's API's directly.
+
+This avoids ever needing to touch the UI of another application.
+
+***Verifying Sent Emails:***
+
+Typically when going through scenarios like registration or forgotten passwords your server may schedule an email to be delivered.
+
+The easiest way to check that this happened is likely with a unit or integration test at the server level and not at the UI level. You generally don't need to test side effects and services only your server interacts with.
+
+Nevertheless, if you **did** want to write a test around this in Cypress you already have the tools to do this without involving the UI.
+
+1. You could simply `cy.request()` an endpoint on your server that tells you what email has been queued or delivered. That would give you a simple programmatic way to know without involving the UI. Your server would have to expose this.
+2. You could also use `cy.request()` to a 3rd party server that exposes an API to read off emails, etc. You'll then need the proper authentication credentials which your server could provide or you could use environment variables for.
+
 ## Having tests rely on the state of previous tests
 
 {% note danger %}
@@ -246,6 +309,108 @@ describe('my form', function () {
 })
 ```
 
+## Using after or afterEach hooks
+
+{% note danger %}
+{% fa fa-warning %} **Anti-Pattern:** Using `after` or `afterEach` hooks to clean up state
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle %} **Best Practice:** Clean up state **before** tests run.
+{% endnote %}
+
+We've seen many of our users adding code to their `after` or `afterEach` hooks to clean up the state generated by the current test(s).
+
+We most often see test code that does something like this:
+
+```js
+describe('logged in user', function () {
+  beforeEach(function () {
+    cy.login()
+  })
+
+  afterEach(function () {
+    cy.logout()
+  })
+
+  it('foo', ...)
+  it('bar', ...)
+  it('baz', ...)
+})
+```
+
+Let's look at why this is not a good idea.
+
+***Dangling State is your friend:***
+
+One of the **best** parts of Cypress is the emphasis on debuggability. Unlike every other testing tool - when your test ends - you are left with a perfectly working application that is left exactly where the test finished.
+
+This is an **excellent** opportunity for you to then **use** your application in this state! This enables you to write **partial tests** which drive your application bit-by-bit, incrementally building up a test script and then writing your application code at the same time.
+
+We've literally built the Cypress API's to specifically support this use case. In fact Cypress **does not** cleanup its own internal state when the test ends. We **want** you to have dangling state at the end of the test! Things like `stubs`, `spies`, even `routes` are **not** removed at the end of the test. This means your application will behave identically when it's running Cypress commands or when you manually work with it after a test ends.
+
+If you remove your application's state after each test, then you instantly lose the ability to use your application in this pristine mode. Logging out at the end would always leave you with the same login page at the end of the test. In order to debug your application, or write a partial test, you would always be left commenting out the `cy.logout()` command.
+
+***Its all downside with no upside:***
+
+For the moment, let's assume that for some reason your application desperately **needs** that last bit of `after` or `afterEach` code to run. Let's assume that if that code is not run - all is lost.
+
+That is fine - but even if this is the case, it shouldn't go in an `after` or `afterEach`.
+
+Why?
+
+So far we've been talking about logging out, but let's use a different example. Let's use the pattern of needing to reset your database.
+
+The idea goes like this:
+
+> After each test I want to ensure the database is reset back down to 0 records so when the next test runs, it's run with a pristine state.
+
+With that in mind you write something like this:
+
+```js
+afterEach(function () {
+  cy.resetDb()
+})
+```
+
+Here's the problem: **there is no guarantee that this code will run.**
+
+If hypothetically you've written this command because it **has** to run before the next test does, then the absolute **worst place** to put it is in an `after` or `afterEach` hook.
+
+Why? Because if you refresh Cypress in the middle of the test - you'll have built up partial state in the database, and the `cy.resetDb()` function **will never get called**.
+
+If this state cleanup is **truly** required, then the next test will instantly fail. Why? Because resetting the state never happened.
+
+***State reset should go before each test:***
+
+The simplest solution here is to always move your reset code to **before** the test runs.
+
+Code put in a `before` or `beforeEach` hook will **always** run prior to the test - even if you refreshed in the middle of an existing one!
+
+This is also a great opportunity to use {%url 'root level hooks in mocha' https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks %}. A perfect place to put these is in the `cypress/support/index.js` file because it is always evaluated before any test code from your spec files.
+
+Hooks you add to the root will always run on all suites!
+
+```js
+// cypress/support/index.js
+
+beforeEach(function () {
+  // now this runs prior to all tests
+  // across all files no matter what
+  cy.resetDb()
+})
+```
+
+That's it! It couldn't be simpler!
+
+***Is resetting the state necessary?***
+
+One final question you should ask yourself is - is resetting the state actually necessary? Remember Cypress already automatically clears local storage, cookies, sessions, etc before each test. Make sure you're not trying to clean up state which is already naturally cleaned up by Cypress.
+
+If the state you're trying to wipe lives on the server - by all means, that makes sense. You'll need to run those types of routines! But if the state is related to your application currently under test - you likely don't ever even need to clear it.
+
+The only times you **ever** need to clean up state, is if the operations that one test runs affects another test downstream. In only those cases do you need state cleanup.
+
 ## Unnecessary Waiting
 
 {% note danger %}
@@ -332,4 +497,8 @@ While working in the Cypress GUI you can always restart / refresh while in the m
 
 **What should I do then?**
 
-Simple. Start your web server before running Cypress. That's it!
+Simple. Start your web server before running Cypress and kill it after it completes.
+
+Are you trying to run in CI?
+
+We have {% url 'examples showing you how to start and stop your webserver' continuous-integration#Booting-Your-Server %}.

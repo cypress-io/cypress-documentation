@@ -443,7 +443,6 @@ it('displays a list of search results', function(){
         fixture: 'list',
       })
       .then((reqRes) => {
-        /*
         // do something with the '@getSearchResults'
         // request such as make assertions on the
         // request body or url params
@@ -454,7 +453,6 @@ it('displays a list of search results', function(){
         //   request: {...},
         //   response: {...},
         // }
-        */
       })
     })
     .get('#results li').should('have.length', 5)

@@ -3,14 +3,13 @@ title: Recorded Runs
 comments: false
 ---
 
-Recorded runs are the results and artifacts captured from your test runs.
+Recorded runs capture the results from your test runs.
 
-***To record your tests:***
+{% note info %}
+If you haven't set up your project to record {% url "read here" projects-dashboard#Setup %}.
+{% endnote %}
 
-1. First {% url 'set up the project to record' projects-dashboard#Set-up-a-Project-to-Record %}.
-2. Then {% url 'record your runs' runs-dashboard %}.
-
-# What is recorded during a test run?
+# What is recorded?
 
 We capture the following:
 
