@@ -1,5 +1,5 @@
 ---
-title: Testing the input field
+title: Testing text inputs
 comments: false
 ---
 
@@ -9,7 +9,8 @@ comments: false
 - How to use the Cypress UI to assist in building your tests.
 - Interacting with elements
 - Making assertions
-- Using beforeEach and Cypress configuration to remove duplicated code
+- Using beforeEach to remove duplicated code
+- Defining your application's base url through Cypress configuration
 {% endnote %}
 
-VIDEO HERE
+{% video 240554808 %}

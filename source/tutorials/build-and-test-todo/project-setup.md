@@ -1,14 +1,15 @@
 ---
-title: Project Setup
+title: Project setup
 comments: false
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- Setting up the project from a starter repository
+- Cloning the starter repository
+- Installing project dependencies with `npm`
 - How to run Cypress from an `npm` script.
-- How to visit a page with Cypress
+- Visiting a page with Cypress
 {% endnote %}
 
-VIDEO HERE
+{% video 240554515 %}
