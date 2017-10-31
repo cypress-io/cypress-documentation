@@ -43,6 +43,9 @@ jobs:
 
       - run: npm install
       - run: npm prune
+      # see if package-lock.json file has changed
+      # if yes, this means it is out of date
+      - run: git status
 
       # save each node_modules folder per package
       - save_cache:
@@ -135,6 +138,7 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
+                - get-branch
           requires:
             - docs-tests
       - deploy-docs-production:

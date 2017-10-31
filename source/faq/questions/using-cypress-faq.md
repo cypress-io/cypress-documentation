@@ -103,6 +103,12 @@ cy.get('button').then(($el) => {
 })
 ```
 
+## {% fa fa-angle-right %} How do I do something different if an element doesn't exist?
+
+What you're asking about is conditional testing and control flow.
+
+Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
 Yes.
@@ -116,6 +122,10 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 
 This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
 
+## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
+
+Yes. You do it the {% url 'same way as any other recursive loop' request#Request-Polling %}.
+
 ## {% fa fa-angle-right %} Can I use the Page Object pattern?
 
 Yes.
@@ -125,6 +135,8 @@ The page object pattern isn't actually anything "special". If you're coming from
 The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
 
 If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
+
+For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
 
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
@@ -173,6 +185,12 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 You can also find your Record Key inside of the *Settings* tab in our Desktop Application.
 
 ![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
+
+## {% fa fa-angle-right %} How do I check that an email was sent out?
+
+{% note warning 'Anti-Pattern' %}
+Don't try to use your UI to check email. Instead opt to programmatically use 3rd party API's or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-External-Sites %} here.
+{% endnote %}
 
 ## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
 
