@@ -247,7 +247,7 @@
 **Features:**
 
 - There is now an `example_spec.js` file that is scaffolded on new projects. This allows new users to instantly see Cypress successfully running on an example project and will answer many questions on writing your first tests. This `example_spec.js` file contains every single Cypress command and has approximately 70 tests.
-- Added a welcome dialog for new projects that explains how Cypress scaffolds out it's folder structure. This dialog will only display if Cypress detects that you haven't written any tests or changed the initial `example_spec.js` file. The welcome dialog will no longer display after you've changed or added any tests.
+- Added a welcome dialog for new projects that explains how Cypress scaffolds out its folder structure. This dialog will only display if Cypress detects that you haven't written any tests or changed the initial `example_spec.js` file. The welcome dialog will no longer display after you've changed or added any tests.
 - Added the ability to click on file/folder links from within the Cypress webapp that will spawn your OS file/folder finder and show you where the files are located in your project.
 - There is now a default `cypress` folder that contains your test files, a `fixtures` folder with an example fixture, and a `support` folder with example support files. Inside `cypress` there is an `integration` folder that will contain your integration tests.
 - You can now turn off `supportFolder` and `fixturesFolder` by passing `false` in `cypress.json`. This will automatically remove the folders the next time you open your project in Cypress. Fixes {% issue 102 '#102' %}.
@@ -539,7 +539,7 @@ Known Issues:
 
 **Summary:**
 
-- Though it may not look like much, this upgrade was a long time in the making. There were limitations in the way we were currently handling headless / CI builds which restricted our ability to make updates or fix bugs. Additionally CI runs would randomly crash for no good reason. We decided to split out the headless / CI process into it's own independent Chromium application which is now independently controlled, and is much more reliable. This upgrade enables us to handle CI features coming down the pipe and was necessary for moving forward.
+- Though it may not look like much, this upgrade was a long time in the making. There were limitations in the way we were currently handling headless / CI builds which restricted our ability to make updates or fix bugs. Additionally CI runs would randomly crash for no good reason. We decided to split out the headless / CI process into its own independent Chromium application which is now independently controlled, and is much more reliable. This upgrade enables us to handle CI features coming down the pipe and was necessary for moving forward.
 
 **Features:**
 
@@ -709,7 +709,7 @@ Deprecations:
 - The default XHR configuration can now be overwritten in a single area.
 - Many new configuration options are available for controlling how XHR's are stubbed.
 - XHR's now include an `Initiator` stack regardless of whether they're stubbed. The `Initiator` stack includes the stack which caused the XHR to be created and sent.
-- The `onConsole` information related to an XHR has been updated to make it easier to understand why a route was or was not stubbed, and it's associated request and response headers.
+- The `onConsole` information related to an XHR has been updated to make it easier to understand why a route was or was not stubbed, and its associated request and response headers.
 - Response headers on XHR stubs will now automatically set their `Content-Type` based on the stub response. Previously this would always set to the `Content-Type` to `application/json`. Now if you force a response to be text or html, the `Content-Type` response header will be set appropriately.
 - You can now force other additional response headers to be sent on stubbed XHRs.
 - XHR's now snapshot twice - when the request is made and when the response is returned.
@@ -1106,7 +1106,7 @@ Deprecations:
 **Bugfixes:**
 
 - Several security problems with projects have been closed in preparation for running in CI.
-- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply ny of its debugging tools, so CI will be unaffected.
+- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply any of its debugging tools, so CI will be unaffected.
 - Several instances of memory leaks were plugged up.
 
 **Misc:**
@@ -1432,7 +1432,7 @@ Deprecations:
 
 **Misc:**
 
-- {% url `.submit()` submit %} now errors if its been called on >1 form element. Fixes {% issue 41 '#41' %}.
+- {% url `.submit()` submit %} now errors if it's been called on >1 form element. Fixes {% issue 41 '#41' %}.
 - Coordinates and hitboxes are now logged and displayed on {% url `.clear()` clear %} and {% url `.type()` type %}.
 
 # 0.6.10
@@ -1522,7 +1522,7 @@ Deprecations:
 
 **Bugfixes:**
 
-- {% url `.submit()` submit %} will actually submit the form for real now, instead of just firing the submit event. Now its been upgraded to be able to be cancelled or have its returnValue set to false and will not submit the form. Don't ask how I missed this one. I as once a young naive programmer who trusted the DOM not to be the abomination it actually is.
+- {% url `.submit()` submit %} will actually submit the form for real now, instead of just firing the submit event. Now it's been upgraded to be able to be cancelled or have its returnValue set to false and will not submit the form. Don't ask how I missed this one. I as once a young naive programmer who trusted the DOM not to be the abomination it actually is.
 
 **Misc:**
 
@@ -1720,7 +1720,7 @@ Deprecations:
 - {% url `.as()` as %} automatically assigns this alias to `runnable.ctx` which makes it available synchronously.
 - {% url `.as()` as %} blacklists several reserved words and will throw if you attempt to alias as one of them.
 - {% url `cy.get()` get %} can now accept all alias types and will display the labels in the UI differently based on the alias type.
-- Cypress now displays a message when the Desktop App update is actually being applied instead of doing nothing and looking like its crashed.
+- Cypress now displays a message when the Desktop App update is actually being applied instead of doing nothing and looking like it's crashed.
 
 **Bugfixes:**
 
@@ -1935,7 +1935,7 @@ Misc
 **Bugfixes:**
 
 - Fixed hook failure associated to wrong failed current test when `grep` was set.
-- Async tests which used a `cy` command and had a `done` callback was always undefined.  Now its back to real mocha `function done(err)`.
+- Async tests which used a `cy` command and had a `done` callback was always undefined.  Now it's back to real mocha `function done(err)`.
 - Fixed bug in mocha where it incorrectly associates `hook.ctx.currentTest` to the wrong `test`. {% url "Mocha Issue" https://github.com/mochajs/mocha/issues/1638 %}.
 - {% url `cy.title()` title %} no longer logs twice on a failure.
 - Fixed putting an `.only` on a large list of tests that would sometimes not clear the previous runnables in the UI.

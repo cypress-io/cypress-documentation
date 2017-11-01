@@ -16,11 +16,11 @@ cy.scrollTo(x, y, options)
 
 ## Usage
 
-`cy.scrollTo()` can be chained off of `cy` to scroll to a position in the window or chained off another cy command that *yields* a DOM element - limiting scrolling to it's yielded element.
+`cy.scrollTo()` can be chained off of `cy` to scroll to a position in the window or chained off another cy command that *yields* a DOM element - limiting scrolling to its yielded element.
 
 ```javascript
 cy.scrollTo(0, 500)                     // Scroll the window 500px down
-cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to it's bottom
+cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to its bottom
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**

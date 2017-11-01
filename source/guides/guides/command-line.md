@@ -236,7 +236,7 @@ Cypress binary version: 0.20.0
 You can use also require Cypress as a node module.
 
 {% note warning %}
-The Cypress module is brand new and we are still adding more functionality to it. It's API may change in the future.
+The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.
 {% endnote %}
 
 Here's an example of programmatically running a spec spec file:

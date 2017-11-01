@@ -245,7 +245,7 @@ cy.route('/users/*', 'fixture:users/all.json').as('getUsers')
 cy.route('/admin/*', 'fx:users/admin.json').as('getAdmin')
 ```
 
-You may want to define the `cy.route()` after receiving the fixture and working with it's data.
+You may want to define the `cy.route()` after receiving the fixture and working with its data.
 
 ```javascript
 cy.fixture('user').then((user) => {
@@ -387,7 +387,7 @@ cy.route(() => {
 
 ***Understanding Stubbed vs Regular XHR's***
 
-Cypress indicates whether an XHR sent back a stubbed response or actually went out to a server in it's Command Log
+Cypress indicates whether an XHR sent back a stubbed response or actually went out to a server in its Command Log
 
 XHR's that display `(XHR STUB)` in the Command Log have been stubbed and their response, status, headers, and delay have been controlled by your matching `cy.route()`.
 
