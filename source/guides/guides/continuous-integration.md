@@ -143,6 +143,8 @@ You can set any configuration value as an environment variable. This overrides v
 - `CYPRESS_BASE_URL`
 - `CYPRESS_VIDEO_COMPRESSION`
 - `CYPRESS_REPORTER`
+- `CYPRESS_VERSION`
+- `CYPRESS_BINARY_VERSION`
 
 {% note info %}
 Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
