@@ -172,10 +172,10 @@ sidebar:
     cypress-log: log
     cypress-server: Server
   tutorials:
-    build-and-test-todo: Build and test TodoMVC
+    test-a-react-todo-app: Test a React Todo App
     introduction: Introduction
-    project-setup: Project Setup
-    testing-inputs: Testing Inputs
+    project-setup: Project setup
+    testing-inputs: Testing text inputs
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing

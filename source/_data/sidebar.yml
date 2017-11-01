@@ -148,7 +148,7 @@ api:
     cypress-server: cypress-server.html
 
 tutorials:
-  build-and-test-todo:
+  test-a-react-todo-app:
     introduction: introduction.html
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
