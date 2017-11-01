@@ -115,7 +115,7 @@ Yes. Cypress works on anything rendered to a browser.
 
 ## {% fa fa-angle-right %} Can I use Cypress to script user-actions on an external site like `gmail.com`?
 
-No. There are already lots of tools to do that. Using Cypress to test against a 3rd party application is not it's intended use. It *may* work but will defeat the purpose of why it was created. You use Cypress *while* you develop your application, it helps you write your tests.
+No. There are already lots of tools to do that. Using Cypress to test against a 3rd party application is not its intended use. It *may* work but will defeat the purpose of why it was created. You use Cypress *while* you develop your application, it helps you write your tests.
 
 ## {% fa fa-angle-right %} Is there code coverage?
 
