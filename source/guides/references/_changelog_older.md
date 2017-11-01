@@ -1106,7 +1106,7 @@ Deprecations:
 **Bugfixes:**
 
 - Several security problems with projects have been closed in preparation for running in CI.
-- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply ny of its debugging tools, so CI will be unaffected.
+- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply any of its debugging tools, so CI will be unaffected.
 - Several instances of memory leaks were plugged up.
 
 **Misc:**
@@ -1432,7 +1432,7 @@ Deprecations:
 
 **Misc:**
 
-- {% url `.submit()` submit %} now errors if its been called on >1 form element. Fixes {% issue 41 '#41' %}.
+- {% url `.submit()` submit %} now errors if it's been called on >1 form element. Fixes {% issue 41 '#41' %}.
 - Coordinates and hitboxes are now logged and displayed on {% url `.clear()` clear %} and {% url `.type()` type %}.
 
 # 0.6.10
@@ -1522,7 +1522,7 @@ Deprecations:
 
 **Bugfixes:**
 
-- {% url `.submit()` submit %} will actually submit the form for real now, instead of just firing the submit event. Now its been upgraded to be able to be cancelled or have its returnValue set to false and will not submit the form. Don't ask how I missed this one. I as once a young naive programmer who trusted the DOM not to be the abomination it actually is.
+- {% url `.submit()` submit %} will actually submit the form for real now, instead of just firing the submit event. Now it's been upgraded to be able to be cancelled or have its returnValue set to false and will not submit the form. Don't ask how I missed this one. I as once a young naive programmer who trusted the DOM not to be the abomination it actually is.
 
 **Misc:**
 
@@ -1720,7 +1720,7 @@ Deprecations:
 - {% url `.as()` as %} automatically assigns this alias to `runnable.ctx` which makes it available synchronously.
 - {% url `.as()` as %} blacklists several reserved words and will throw if you attempt to alias as one of them.
 - {% url `cy.get()` get %} can now accept all alias types and will display the labels in the UI differently based on the alias type.
-- Cypress now displays a message when the Desktop App update is actually being applied instead of doing nothing and looking like its crashed.
+- Cypress now displays a message when the Desktop App update is actually being applied instead of doing nothing and looking like it's crashed.
 
 **Bugfixes:**
 
@@ -1935,7 +1935,7 @@ Misc
 **Bugfixes:**
 
 - Fixed hook failure associated to wrong failed current test when `grep` was set.
-- Async tests which used a `cy` command and had a `done` callback was always undefined.  Now its back to real mocha `function done(err)`.
+- Async tests which used a `cy` command and had a `done` callback was always undefined.  Now it's back to real mocha `function done(err)`.
 - Fixed bug in mocha where it incorrectly associates `hook.ctx.currentTest` to the wrong `test`. {% url "Mocha Issue" https://github.com/mochajs/mocha/issues/1638 %}.
 - {% url `cy.title()` title %} no longer logs twice on a failure.
 - Fixed putting an `.only` on a large list of tests that would sometimes not clear the previous runnables in the UI.

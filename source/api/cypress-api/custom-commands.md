@@ -352,9 +352,9 @@ Cypress.Commands.add('contains', {
   prevSubject: ['optional', 'window', 'document', 'element']
 }, (subject, options) => {
   // subject could be undefined
-  // since its optional.
+  // since it's optional.
   //
-  // if its present
+  // if it's present
   // then its window, document, or element.
   // - when window or document we'll query the entire DOM.
   // - when element we'll query only inside of its children.
@@ -369,7 +369,7 @@ Cypress.Commands.add('contains', {
 **{% fa fa-check-circle green %} Valid Usage**
 
 ```javascript
-cy.contains() // no subject, but valid because its optional
+cy.contains() // no subject, but valid because it's optional
 cy.get('#main').contains() // has subject, and is `element`
 cy.window().contains() // has subject, and is `window`
 cy.document().contains() // has subject, and is `document`
@@ -400,7 +400,7 @@ Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're iss
 
 Custom commands work well when you're needing to describe behavior that's desirable across **all of your tests**. Examples would be a `cy.setup()` or `cy.login()` or extending your application's behavior like `cy.get('.dropdown').dropdown('Apples')`. These are specific to your application and can be used everywhere.
 
-However, this pattern can be used and abused. Let's not forget - writing Cypress tests is just **JavaScript**, and its often much easier just to write a simple function for repeatable behavior that's specific to only **a single spec file**.
+However, this pattern can be used and abused. Let's not forget - writing Cypress tests is just **JavaScript**, and it's often much easier just to write a simple function for repeatable behavior that's specific to only **a single spec file**.
 
 If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself:
 

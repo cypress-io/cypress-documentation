@@ -262,7 +262,7 @@ cy.get('form').should('have.class', 'form-horizontal')
 cy.get('input').should('not.have.value', 'US')
 ```
 
-In each of these examples, its important to note that Cypress will automatically *wait* until these assertions pass. This prevents you from having to know or care about the precise moment your elements eventually do reach this state.
+In each of these examples, it's important to note that Cypress will automatically *wait* until these assertions pass. This prevents you from having to know or care about the precise moment your elements eventually do reach this state.
 
 We'll learn more about {% urlHash 'assertions' Assertions %} later in this guide.
 
@@ -530,7 +530,7 @@ return fs.readFile('/foo.txt', 'utf8')
 
 The reason this is even possible to do in the Promise world is because you have the power to execute multiple asynchronous actions in parallel. Under the hood, each promise 'chain' returns a promise instance that tracks the relationship between linked parent and child instances.
 
-Because Cypress enforces commands to run *only* serially, you do not need to be concerned with this in Cypress. We enqueue all commands onto a *global* singleton. Because there is only ever a single command queue instance, its impossible for commands to ever be *'lost'*.
+Because Cypress enforces commands to run *only* serially, you do not need to be concerned with this in Cypress. We enqueue all commands onto a *global* singleton. Because there is only ever a single command queue instance, it's impossible for commands to ever be *'lost'*.
 
 You can think of Cypress as "queueing" every command. Eventually they'll get run and in the exact order they were used, 100% of the time.
 
@@ -544,7 +544,7 @@ You might be wondering:
 
 > How do I create conditional control flow, using if/else? So that if an element does (or doesn't) exist, I choose what to do?
 
-The problem with this question is that this type of conditional control flow ends up being non-deterministic. This means its impossible for a script (or robot), to follow it 100% consistently.
+The problem with this question is that this type of conditional control flow ends up being non-deterministic. This means it's impossible for a script (or robot), to follow it 100% consistently.
 
 In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually just asking for another `if/else` control flow.
 
