@@ -59,7 +59,7 @@ jobs:
       - save_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
           paths:
-            - /home/person/cypress-documentation
+            - /root/cypress-documentation
 
   "docs-tests":
     <<: *defaults
