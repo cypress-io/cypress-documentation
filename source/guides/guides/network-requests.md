@@ -72,7 +72,7 @@ Stubbing responses enables you to control every aspect of the response, includin
 
 > Stubbing responses is a great way to control the data that is returned to your client.
 
-You don't have to do any work on the server. Your application will have no idea it's requests are being stubbed, so there are *no code changes* needed.
+You don't have to do any work on the server. Your application will have no idea its requests are being stubbed, so there are *no code changes* needed.
 
 {% note success Benefits %}
 - Easy control of response bodies, status, and headers

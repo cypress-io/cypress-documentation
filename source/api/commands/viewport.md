@@ -162,7 +162,7 @@ You can {% url 'change these default dimensions' configuration#Viewport %} by ad
 }
 ```
 
-Additionally, Cypress automatically sets the viewport to it's default size between each test.
+Additionally, Cypress automatically sets the viewport to its default size between each test.
 
 ## Scaling
 
