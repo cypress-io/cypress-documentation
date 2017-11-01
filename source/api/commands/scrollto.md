@@ -27,7 +27,7 @@ cy.scrollTo(x, y, options)
 
 ```javascript
 cy.scrollTo(0, 500)                     // Scroll the window 500px down
-cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to it's bottom
+cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to its bottom
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**

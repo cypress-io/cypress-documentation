@@ -103,7 +103,7 @@ Let's look at why this is...
 
 ## Cypress is _Not_ Like jQuery
 
-**Question:** What happens when jQuery can't find any matching DOM elements from it's selector?
+**Question:** What happens when jQuery can't find any matching DOM elements from its selector?
 
 **Answer:** *Oops!* It returns an empty jQuery collection. We've got a real object to work with, but it doesn't contain the element we wanted. So we start adding conditional checks and retrying our queries manually.
 
@@ -118,7 +118,7 @@ if ($myElement.length) {
 }
 ```
 
-**Question:** What happens when Cypress can't find any matching DOM elements from it's selector?
+**Question:** What happens when Cypress can't find any matching DOM elements from its selector?
 
 **Answer:** *No big deal!* Cypress automatically retries the query until either:
 
@@ -166,7 +166,7 @@ Cypress wraps all DOM queries with robust retry-and-timeout logic that better su
 {% endnote %}
 
 {% note info %}
-In Cypress, when you want to interact with a DOM element directly, call {% url `.then()` then %} with a callback function that receives the element as it's first argument. When you want to skip the retry-and-timeout functionality entirely and perform traditional synchronous work, use {% url `Cypress.$` $ %}.
+In Cypress, when you want to interact with a DOM element directly, call {% url `.then()` then %} with a callback function that receives the element as its first argument. When you want to skip the retry-and-timeout functionality entirely and perform traditional synchronous work, use {% url `Cypress.$` $ %}.
 {% endnote %}
 
 ## Querying by Text Content
@@ -572,7 +572,7 @@ Each API Command documents its behavior with assertions - such as how it retries
 
 Let's look at how you'd describe an assertion in english:
 
-> After clicking on this `<button>`, I expect it's class to eventually be `active`.
+> After clicking on this `<button>`, I expect its class to eventually be `active`.
 
 To express this in Cypress you'd write:
 
@@ -796,7 +796,7 @@ Explicit assertions are great when you want to:
 - Perform custom logic prior to making the assertion.
 - Make multiple assertions against the same subject.
 
-The {% url `.should()` should %} command allows us to pass a callback function that takes the yielded subject as it's first argument. This works just like {% url `.then()` then %}, except Cypress automatically **waits and retries** for everything inside of the callback function to pass.
+The {% url `.should()` should %} command allows us to pass a callback function that takes the yielded subject as its first argument. This works just like {% url `.then()` then %}, except Cypress automatically **waits and retries** for everything inside of the callback function to pass.
 
 {% note info 'Complex Assertions' %}
 The example below is a use case where we are asserting across multiple elements. Using a {% url `.should()` should %} callback function is a great way to query from a **parent** into multiple children elements and assert something about their state.
@@ -842,7 +842,7 @@ All assertions, whether they're the default ones or whether they've been added b
 
 ## Applying Timeouts
 
-You can modify a command's timeout. This timeout affects both it's default assertions (if any) and any specific assertions you've added.
+You can modify a command's timeout. This timeout affects both its default assertions (if any) and any specific assertions you've added.
 
 Remember because assertions are used to describe a condition of the previous commands - the `timeout` modification goes on the previous commands *not the assertions*.
 
@@ -906,8 +906,8 @@ Cypress offers several different timeout values based on the type of command.
 We've set their default timeout durations based on how long we expect certain actions to take.
 
 For instance:
-- {% url `cy.visit()` visit %} loads a remote page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so it's default timeout is set to `60000ms`.
-- {% url `cy.exec()` exec %} runs a system command such as *seeding a database*. We expect this to potentially take a long time, and it's default timeout is set to `60000ms`.
+- {% url `cy.visit()` visit %} loads a remote page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
+- {% url `cy.exec()` exec %} runs a system command such as *seeding a database*. We expect this to potentially take a long time, and its default timeout is set to `60000ms`.
 - {% url `cy.wait()` wait %} actually uses 2 different timeouts. When waiting for a {% url 'routing alias' aliases-and-references#Aliasing-Routes %}, we wait for a matching request for `5000ms`, and then additionally for the server's response for `30000ms`. We expect your application to make a matching request quickly, but we expect the server's response to potentially take much longer.
 
 That leaves most other commands including all DOM based commands to time out by default after 4000ms.
