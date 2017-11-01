@@ -351,7 +351,7 @@ We've literally built the Cypress API's to specifically support this use case. I
 
 If you remove your application's state after each test, then you instantly lose the ability to use your application in this pristine mode. Logging out at the end would always leave you with the same login page at the end of the test. In order to debug your application, or write a partial test, you would always be left commenting out the `cy.logout()` command.
 
-***Its all downside with no upside:***
+***It's all downside with no upside:***
 
 For the moment, let's assume that for some reason your application desperately **needs** that last bit of `after` or `afterEach` code to run. Let's assume that if that code is not run - all is lost.
 
