@@ -1,16 +1,12 @@
 ---
 title: Testing text inputs
 comments: false
+layout: video
+containerClass: tutorial
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
-
-- How to use the Cypress UI to assist in building your tests.
-- Interacting with elements
-- Making assertions
-- Using beforeEach to remove duplicated code
-- Defining your application's base url through Cypress configuration
-{% endnote %}
-
 {% video 240554808 %}
+
+## What you'll learn
+
+We will work through creating our first real test and implementing the feature under test as we go. We will see how to find and interact with elements on the page and how to make assertions about their behavior. We will also look into some best practices like using `beforeEach` and defining our application's `baseUrl` to remove duplicated code.
