@@ -189,7 +189,7 @@ You can also find your Record Key inside of the *Settings* tab in our Desktop Ap
 ## {% fa fa-angle-right %} How do I check that an email was sent out?
 
 {% note warning 'Anti-Pattern' %}
-Don't try to use your UI to check email. Instead opt to programmatically use 3rd party API's or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-External-Sites %} here.
+Don't try to use your UI to check email. Instead opt to programmatically use 3rd party API's or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-external-sites %} here.
 {% endnote %}
 
 ## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?

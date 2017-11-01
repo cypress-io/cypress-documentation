@@ -63,7 +63,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-`cy.fixture()` yields the contents of the file. Formatting is determined by it's file extension.
+`cy.fixture()` yields the contents of the file. Formatting is determined by its file extension.
 
 # Examples
 
