@@ -1,6 +1,7 @@
 menu:
   guides: Guides
   api: API
+  tutorials: Tutorials
   faq: FAQ
   examples: Examples
   dashboard: Dashboard
@@ -170,6 +171,11 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
+  tutorials:
+    test-a-react-todo-app: Test a React Todo App
+    introduction: Introduction
+    project-setup: Project setup
+    testing-inputs: Testing text inputs
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
