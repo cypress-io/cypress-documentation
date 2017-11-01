@@ -1,15 +1,12 @@
 ---
 title: Project setup
 comments: false
+layout: video
+containerClass: tutorial
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
-
-- Cloning the starter repository
-- Installing project dependencies with `npm`
-- How to run Cypress from an `npm` script.
-- Visiting a page with Cypress
-{% endnote %}
-
 {% video 240554515 %}
+
+## What you'll learn
+
+We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's [`npm`](https://www.npmjs.com/) dependencies and scripts, then jump right into getting Cypress up and running.

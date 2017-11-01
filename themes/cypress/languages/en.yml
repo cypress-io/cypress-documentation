@@ -172,7 +172,7 @@ sidebar:
     cypress-log: log
     cypress-server: Server
   tutorials:
-    build-and-test-todo: Build and Test Todo MVC
+    build-and-test-todo: Build and test TodoMVC
     introduction: Introduction
     project-setup: Project Setup
     testing-inputs: Testing Inputs

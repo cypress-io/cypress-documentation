@@ -571,6 +571,9 @@
   height: 0;
   max-width: 100%;
   height: auto;
+  margin: 2em 0;
+  border: 1px solid #ddd;
+  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
 }
 
 .embed-container iframe {
@@ -579,4 +582,9 @@
   left: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
+}
+
+.tutorial .article-inner {
+  margin-right: 0; 
 }
