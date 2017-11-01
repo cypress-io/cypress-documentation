@@ -66,6 +66,7 @@ jobs:
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      - run: ls -la
       - run: npm run deps
       - run: npm run lint
       - run: npm test
