@@ -208,7 +208,7 @@ Now, we can simply block the `cypress run` command from executing until your ser
 npm start &
 
 ## poll the server over and over again
-## until its been booted
+## until it's been booted
 wait-on http://localhost:8080
 
 ## and now run cypress
@@ -239,7 +239,7 @@ return server.start()
   // kick off a cypress run
   return cypress.run()
   .then((results) => {
-    // stop your server when its complete
+    // stop your server when it's complete
     return server.stop()
   })
 })

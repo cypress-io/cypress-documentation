@@ -28,7 +28,7 @@ You will also see a summary at the bottom indicating the files we've created dur
 
 ## {% fa fa-exclamation-triangle fa-fw %} Test Failures
 
-Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under it's test title.
+Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 
 ***Each failure displays:***
 

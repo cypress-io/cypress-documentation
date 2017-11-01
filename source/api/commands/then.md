@@ -25,7 +25,7 @@ cy.location().then((loc) => {})   // Yields location object as first arg
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
-Pass a function that takes the previously yielded subject as it's first argument.
+Pass a function that takes the previously yielded subject as its first argument.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 

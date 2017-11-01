@@ -43,7 +43,7 @@ Get the DOM element containing the content.
 
 **{% fa fa-angle-right %} selector** ***(String selector)***
 
-Specify a selector to filter DOM elements containing the text. Cypress will *ignore* it's {% urlHash 'default preference order' Notes %} for the specified selector. Using a selector allows you to return more *shallow* elements (higher in the tree) that contain the specific text.
+Specify a selector to filter DOM elements containing the text. Cypress will *ignore* its {% urlHash 'default preference order' Notes %} for the specified selector. Using a selector allows you to return more *shallow* elements (higher in the tree) that contain the specific text.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -167,7 +167,7 @@ cy.contains('ul', 'apples')
 
 ## Scopes
 
-`.contains()` acts differently whether its starting a series of commands or being chained off of an existing.
+`.contains()` acts differently whether it's starting a series of commands or being chained off of an existing.
 
 ***When starting a series of commands:***
 
