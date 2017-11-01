@@ -179,7 +179,7 @@ When you begin writing your tests in Cypress the first thing you'll notice is th
 
 When you `cy.visit` your application, this is literally "pulled" into Cypress and gives us several significant advantages.
 
-When Cypress is running, its coordinating your test commands, the automation layers, and the state of your application in real time.
+When Cypress is running, it's coordinating your test commands, the automation layers, and the state of your application in real time.
 
 Because Cypress runs in the same run loop as your application, this gives us significant advantages.
 
@@ -187,7 +187,7 @@ For instance we can:
 
 - listen to events coming from your application and immediately respond to them
 - automatically know when elements are animating and wait for them to spot
-- always generate events at the right coordinates - its impossible for us to "miss"
+- always generate events at the right coordinates - it's impossible for us to "miss"
 - intelligently handle disabled or readonly elements
 - know the moment a page unload has started, pause command execution, and continue again
 - automatically know the moment your application reaches the desired state of your assertions
@@ -199,7 +199,7 @@ For instance we can:
 
 While we do much of the automation work in JavaScript itself - we can choose to go outside of the JavaScript sandbox to access automation commands which are restricted to a higher priviledge. We can even invoke native OS commands if we wanted to.
 
-This means we have the best of both worlds. We can do work entirely in the browser, and then choose when its most appropriate to go outside of them. It's possible we will even yield you this choice and flexibility.
+This means we have the best of both worlds. We can do work entirely in the browser, and then choose when it's most appropriate to go outside of them. It's possible we will even yield you this choice and flexibility.
 
 ## Debuggability
 

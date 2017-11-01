@@ -53,7 +53,7 @@ The following calculations factor in CSS translations and transforms.
 - Its `width` or `height` is `0`.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
-- Its CSS property is `position: fixed` and its offscreen or covered up.
+- Its CSS property is `position: fixed` and it's offscreen or covered up.
 
 ***Additionally an element is considered hidden if:***
 
@@ -118,7 +118,7 @@ Before interacting with an element we will *always* scroll it into view (includi
 This scrolling logic only applies to {% urlHash "commands that are actionable above" Actionability %}. **We do not scroll elements** into view when using DOM commands such as {% url "`cy.get()`" get %} or {% url "`.find()`" find %}.
 {% endnote %}
 
-The scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of it's scrollable container.
+The scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of its scrollable container.
 
 After scrolling the element, if we determine that it is still being covered up, we will continue to scroll and "nudge" the page until it becomes visible. This most frequently happens when you have `position: fixed` or `position: sticky` navigation elements which are fixed to the top of the page.
 
@@ -160,7 +160,7 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as its working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
+As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command

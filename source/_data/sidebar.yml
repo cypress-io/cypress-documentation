@@ -147,6 +147,12 @@ api:
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
 
+tutorials:
+  test-a-react-todo-app:
+    introduction: introduction.html
+    project-setup: project-setup.html
+    testing-inputs: testing-inputs.html
+
 examples:
   recipes:
     unit-testing-recipe: unit-testing-recipe.html

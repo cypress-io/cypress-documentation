@@ -27,7 +27,7 @@ cy.scrollTo(x, y, options)
 
 ```javascript
 cy.scrollTo(0, 500)                     // Scroll the window 500px down
-cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to it's bottom
+cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to its bottom
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -125,7 +125,7 @@ cy.get('#slider').scrollTo('right', { duration: 2000} )
 
 ## Scopes
 
-`cy.scrollTo()` acts differently whether its starting a series of commands or being chained off of an existing.
+`cy.scrollTo()` acts differently whether it's starting a series of commands or being chained off of an existing.
 
 ***When starting a series of commands:***
 

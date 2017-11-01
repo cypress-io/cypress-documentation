@@ -423,13 +423,13 @@ If you cannot accurately know the state of your application then no matter what 
 
 Still not convinced?
 
-Not only is this an anti pattern, but its an actual logical fallacy.
+Not only is this an anti pattern, but it's an actual logical fallacy.
 
 You may think to yourself... okay fine, but 4 seconds - man that's not enough. Network requests could be slow, let's bump it up to 1 minute!
 
 Even then, it's still possible a WebSocket message could come in... so 5 minutes!
 
-Even then, not enough, its possible a setTimeout could trigger... 60 minutes.
+Even then, not enough, it's possible a setTimeout could trigger... 60 minutes.
 
 Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
