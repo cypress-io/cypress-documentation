@@ -178,7 +178,7 @@ The idea is that we never want to interfere with static assets that are fetched 
 ```javascript
 var whitelist = function(xhr){
   // this function receives the xhr object in question and
-  // will whitelist if its a GET that appears to be a static resource
+  // will whitelist if it's a GET that appears to be a static resource
   xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
 }
 ```

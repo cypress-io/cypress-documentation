@@ -125,7 +125,7 @@ cy.get('#slider').scrollTo('right', { duration: 2000} )
 
 ## Scopes
 
-`cy.scrollTo()` acts differently whether its starting a series of commands or being chained off of an existing.
+`cy.scrollTo()` acts differently whether it's starting a series of commands or being chained off of an existing.
 
 ***When starting a series of commands:***
 

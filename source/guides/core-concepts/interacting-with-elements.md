@@ -53,7 +53,7 @@ The following calculations factor in CSS translations and transforms.
 - Its `width` or `height` is `0`.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
-- Its CSS property is `position: fixed` and its offscreen or covered up.
+- Its CSS property is `position: fixed` and it's offscreen or covered up.
 
 ***Additionally an element is considered hidden if:***
 
@@ -160,7 +160,7 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as its working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
+As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command

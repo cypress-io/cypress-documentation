@@ -167,7 +167,7 @@ cy.contains('ul', 'apples')
 
 ## Scopes
 
-`.contains()` acts differently whether its starting a series of commands or being chained off of an existing.
+`.contains()` acts differently whether it's starting a series of commands or being chained off of an existing.
 
 ***When starting a series of commands:***
 

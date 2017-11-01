@@ -76,7 +76,7 @@ Event | Details
 --- | ---
 **Name:** | `fail`
 **Yields:** | the error **(Object)**, mocha runnable **(Object)**
-**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because its extremely useful for debugging purposes.
+**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
 
 Event | Details
 --- | ---
@@ -171,7 +171,7 @@ The `cy` object is bound to each individual test. Events bound to `cy` will **au
 
 ```javascript
 // likely want to do this in a support file
-// so its applied to all spec files
+// so it's applied to all spec files
 // cypress/support/index.js
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -187,7 +187,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 ```javascript
 it('is doing something very important', function(done) {
   // this event will automatically be unbound when this
-  // test ends because its attached to 'cy'
+  // test ends because it's attached to 'cy'
   cy.on('uncaught:exception', (err, runnable) => {
     expect(err.message).to.include('something about the error')
 
@@ -244,7 +244,7 @@ $('button').on('click', (e) => {
 // test code
 it('redirects to another page on click', function (done) {
   // this event will automatically be unbound when this
-  // test ends because its attached to 'cy'
+  // test ends because it's attached to 'cy'
   cy.on('window:before:unload', (e) => {
     // no return value on the event
     expect(e.returnValue).to.be.undefined
@@ -332,7 +332,7 @@ it('can control application confirms', function (done) {
   // confirm method is called in your application
   //
   // this event will automatically be unbound when this
-  // test ends because its attached to 'cy'
+  // test ends because it's attached to 'cy'
   cy.on('window:confirm', (str) => {
     count += 1
 
