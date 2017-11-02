@@ -46,7 +46,11 @@ alias:
   api/commands/cypress-blob.html: api/utilities/blob.html
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
-  tutorials/index.html: tutorials/test-a-react-todo-app/introduction.html
+  tutorials/index.html: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
+  tutorials/test-a-react-todo-app/introduction/: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
+  tutorials/test-a-react-todo-app/introduction.html: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
+  tutorials/test-a-react-todo-app/: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
+  tutorials/: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
 
   examples/index.html: examples/recipes/unit-testing-recipe.html
 
