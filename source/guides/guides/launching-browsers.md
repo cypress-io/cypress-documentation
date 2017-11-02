@@ -10,7 +10,7 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 # Browsers
 
-When Cypress is initially run from the Desktop application, you can choose to run Cypress in a select number of browsers including:
+When Cypress is initially run from the Test Runner, you can choose to run Cypress in a select number of browsers including:
 
 - {% url "Canary" https://www.google.com/chrome/browser/canary.html %}
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
