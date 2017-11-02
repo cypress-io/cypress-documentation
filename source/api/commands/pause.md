@@ -83,7 +83,7 @@ cy.get('#action-canvas')
   .click(170, 165)
 ```
 
-The commands above will display in the GUI as:
+The commands above will display in the Command Log as:
 
 ![Pause command on intial pause](/img/api/pause/initial-pause-in-gui-highlights-the-pause-command.png)
 

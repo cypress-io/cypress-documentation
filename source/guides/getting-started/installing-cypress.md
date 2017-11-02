@@ -77,7 +77,7 @@ $(npm bin)/cypress open
 npx cypress open
 ```
 
-After a moment, the Cypress Desktop application will launch.
+After a moment, the Cypress Test Runner will launch.
 
 ## Adding npm scripts
 
