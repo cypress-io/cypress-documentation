@@ -17,4 +17,4 @@ We have a lot of ground to cover, so let's get started!
 | -- | -- |
 | {% url "Project setup" project-setup %} | {% fa fa-video-camera %} 3:52 |
 | {% url "Testing inputs" testing-inputs %} | {% fa fa-video-camera %} 7:17 |
-| More tutorials to come! | {% fa fa-video-camera %} -:--|
+| More tutorials to come! | |
