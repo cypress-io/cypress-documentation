@@ -302,7 +302,7 @@ Cypress commands do not **return** their subjects, they **yield** them. Remember
 {% endnote %}
 
 {% note info %}
-To work around the need to reference elements, Cypress has a feature {% url 'known as aliasing' aliases-and-references %}. Aliasing  helps you to **store** and **save** element references for future use.
+To work around the need to reference elements, Cypress has a feature {% url 'known as aliasing' variables-and-aliases %}. Aliasing  helps you to **store** and **save** element references for future use.
 {% endnote %}
 
 ***Using {% url `.then()` then %} To Act On A Subject***
@@ -335,7 +335,7 @@ cy
 
 ***Using Aliases to Refer to Previous Subjects***
 
-Cypress has some added functionality for quickly referring back to past subjects called {% url 'Aliases' aliases-and-references %}. It looks something like this:
+Cypress has some added functionality for quickly referring back to past subjects called {% url 'Aliases' variables-and-aliases %}. It looks something like this:
 
 ```js
 cy
@@ -908,7 +908,7 @@ We've set their default timeout durations based on how long we expect certain ac
 For instance:
 - {% url `cy.visit()` visit %} loads a remote page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
 - {% url `cy.exec()` exec %} runs a system command such as *seeding a database*. We expect this to potentially take a long time, and its default timeout is set to `60000ms`.
-- {% url `cy.wait()` wait %} actually uses 2 different timeouts. When waiting for a {% url 'routing alias' aliases-and-references#Aliasing-Routes %}, we wait for a matching request for `5000ms`, and then additionally for the server's response for `30000ms`. We expect your application to make a matching request quickly, but we expect the server's response to potentially take much longer.
+- {% url `cy.wait()` wait %} actually uses 2 different timeouts. When waiting for a {% url 'routing alias' variables-and-aliases#Aliasing-Routes %}, we wait for a matching request for `5000ms`, and then additionally for the server's response for `30000ms`. We expect your application to make a matching request quickly, but we expect the server's response to potentially take much longer.
 
 That leaves most other commands including all DOM based commands to time out by default after 4000ms.
 

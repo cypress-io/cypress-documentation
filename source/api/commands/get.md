@@ -3,7 +3,7 @@ title: get
 comments: false
 ---
 
-Get one or more DOM elements by selector or {% url 'alias' aliases-and-references %}.
+Get one or more DOM elements by selector or {% url 'alias' variables-and-aliases %}.
 
 {% note info %}
 The querying behavior of this command matches exactly how {% url `$(...)` http://api.jquery.com/jQuery/ %} works in jQuery.
@@ -39,7 +39,7 @@ An alias as defined using the {% url `.as()` as %} command and referenced with t
 Internally, Cypress keeps a cache of all aliased elements.  If the element currently exists in the DOM, it is immediately returned.  If the element no longer exists, Cypress will re-query the element based on the previous selector path defined before {% url `.as()` as %} to find it again.
 
 {% note info %}
-{% url 'Read more about aliases here' aliases-and-references %}
+{% url 'Read more about aliases here' variables-and-aliases %}
 {% endnote %}
 
 **{% fa fa-angle-right %} options** ***(Object)***
@@ -92,7 +92,7 @@ cy.get('form').within(function(){
 
 ## Alias
 
-For a detailed explanation of aliasing, {% url 'read more about aliasing here' aliases-and-references %}.
+For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases %}.
 
 ***Get the aliased 'todos' elements***
 
