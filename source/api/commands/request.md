@@ -109,7 +109,7 @@ beforeEach(function(){
 
 ***Issue a simple HTTP request***
 
-Sometimes it is quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of it's resource to load.
+Sometimes it is quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resource to load.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')

@@ -3,7 +3,7 @@ title: closest
 comments: false
 ---
 
-Get the first DOM element that matches the selector (whether it be itself or one of it's ancestors).
+Get the first DOM element that matches the selector (whether it be itself or one of its ancestors).
 
 {% note info %}
 The querying behavior of this command matches exactly how {% url `.closest()` http://api.jquery.com/closest %} works in jQuery.

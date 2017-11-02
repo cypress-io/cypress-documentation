@@ -3,7 +3,7 @@ title: getCookie
 comments: false
 ---
 
-Get a browser cookie by it's name.
+Get a browser cookie by its name.
 
 # Syntax
 

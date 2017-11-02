@@ -135,7 +135,7 @@ cypress run --project ./some/nested/folder
 
 ***Run and record video of tests***
 
-Record video of tests running after {% url 'setting up your project to record' projects-dashboard#Set-up-a-Project-to-Record %}. After setting up your project you will be given a **Record Key**.
+Record video of tests running after {% url 'setting up your project to record' projects-dashboard#Setup %}. After setting up your project you will be given a **Record Key**.
 
 ```shell
 cypress run --record --key <record_key>
@@ -155,7 +155,7 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can {% url 'read more about recording runs here' projects-dashboard#Set-up-a-Project-to-Record %}.
+You can {% url 'read more about recording runs here' projects-dashboard#Setup %}.
 
 ## `cypress open`
 
@@ -236,7 +236,7 @@ Cypress binary version: 0.20.0
 You can use also require Cypress as a node module.
 
 {% note warning %}
-The Cypress module is brand new and we are still adding more functionality to it. It's API may change in the future.
+The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.
 {% endnote %}
 
 Here's an example of programmatically running a spec spec file:

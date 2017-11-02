@@ -120,11 +120,19 @@
   #article-toc {
     display: block;
   }
+
+  #lang-select-wrap {
+    display: none;
+  }
 }
 
 @media screen and(min-width: 1001px) {
   #content-inner {
     margin-left: $sidebar-width;
+  }
+
+  #lang-select-wrap {
+    display: inline-block;
   }
 }
 
@@ -160,7 +168,6 @@
   }
 }
 @media screen and(max-width: 769px) {
-
   #content-wrap {
     padding-top: 0;
   }
@@ -270,13 +277,10 @@
       text-align: center;
       margin: 0 auto;
     }
-
-
   }
 }
 
 @media screen and(max-width: 620px) {
-
   .media {
     width: 100%;
     padding-right: 0;

@@ -3,6 +3,37 @@ title: Changelog
 comments: false
 ---
 
+## 1.0.3
+
+*Released 10/29/2017*
+
+**Features:**
+
+- The Desktop GUI now enables you to collapse folders when displaying a list of specs. Fixes {% issue 760 %}. Contributed by {% user metcorne %}.
+
+**Bugfixes**
+
+- The `onChange` event callback for React now works (again) on `input` type `number` or `email`. Fixes {% issue 816 %} and {% issue 770 %}.
+- Fixed error when recording and failing to parse the git commit message. Fixes {% issue 847 %} and {% issue 841 %}.
+- Using a single space on: `cy.type(' ')` now works. Fixes {% issue 807 %}. Contributed by {% user tejasbubane %}.
+- `cy.spread()` can now be used on a collection of DOM elements. Fixes {% issue 735 %}. Contributed by {% user verheyenkoen %}.
+- CLI shows help message when it is invoked with an unknown command like `$(npm bin)/cypress foo`. Fixes {% issue 641 %}.
+
+**Misc:**
+
+- Enable passing `CYPRESS_RECORD_KEY` without using the CLI by invoking the binary directly. Fixes {% issue 820 %}.
+- Cypress binaries can now be pointed to a staging environment with `CYPRESS_ENV=staging`. Fixes {% issue 813 %}.
+- The Desktop GUI displays the scrollbar correctly when the update banner is displayed. Fixes {% issue 803 %}.
+- The branch name is now properly collected when recording in Buildkite CI. Fixes {% issue 777 %}.
+- You can install the Cypress binary from any URL or file path using the {% url "`CYPRESS_BINARY_VERSION` environment variable" installing-cypress#Advanced %}. Closes {% issue 701 %}.
+
+**Documentation Changes:**
+
+- {% url 'Created "Conditional Testing" core concept' conditional-testing %}
+- {% url 'Created "Key Differences" core concept' key-differences %}
+- {% url 'Updated "Best Practices"' best-practices %}
+- {% url 'Updated "FAQ Usage"' using-cypress-faq %}
+
 ## 1.0.2
 
 *Released 10/13/2017*
@@ -354,7 +385,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Misc:**
 
-- We now preserve the Desktop GUI's position and sizing after its closed + reopened. Fixes {% issue 443 '#443' %}.
+- We now preserve the Desktop GUI's position and sizing after it's closed + reopened. Fixes {% issue 443 '#443' %}.
 - We now ignore watching `node_modules`, `bower_components` and a few other folders to reduce the number of watched files. Fixes {% issue 437 '#437' %}.
 
 # 0.19.0
@@ -389,7 +420,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - We've changed the "Config" tab to now be called "Settings". We added two new sections to the "Settings" tab which displays your `projectId` and your Record Key. These sections do a much better job explaining what these are and how you use them.
 - You no longer have to use `cypress get:key` to get your Record Key. We now display this in your "Settings" tab and also in the {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 - Projects will no longer automatically acquire a `projectId` when being added. There is now a very explicit **opt-in** process where you setup your project to record. This should make it much clearer what's going on behind the scenes.
-- {% url '`cypress run`' command-line#cypress-run %} now behaves likes `cypress ci` previously did and downloads + installs Cypress if its not already installed.
+- {% url '`cypress run`' command-line#cypress-run %} now behaves likes `cypress ci` previously did and downloads + installs Cypress if it's not already installed.
 - `cypress ci` now works in OSX, and also works in Linux in Desktop flavors (like Ubuntu).
 
 **Misc:**
@@ -809,7 +840,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - {% url `defaultCommandTimeout` configuration#Timeouts %} now works correctly. The driver was still referencing the old `commandTimeout` value.
 - The `__cypress.initial` cookie should now be removed during any {% url `cy.visit()` visit %}, which should fix some edge cases with the proxy accidentally injecting content when it shouldn't. We also added a ton more e2e tests covering these edge cases and other behavior.
-- The proxy now restricts it's injection to only `Content-Type: text/html` headers so it will not accidentally inject into the wrong responses.
+- The proxy now restricts its injection to only `Content-Type: text/html` headers so it will not accidentally inject into the wrong responses.
 
 **Misc:**
 
@@ -823,7 +854,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Overview:**
 
-- The desktop application has been completely redesigned. We have moved from a tray application to a standard dock application. The list of projects is now in the same window as the list of tests in a project. As each test runs, the application highlights the currently running spec and displays the browser version running. The configuration of a project is now displayed in it's own tab. There is now a Desktop Menu where you can logout, check for updates, or view help links.
+- The desktop application has been completely redesigned. We have moved from a tray application to a standard dock application. The list of projects is now in the same window as the list of tests in a project. As each test runs, the application highlights the currently running spec and displays the browser version running. The configuration of a project is now displayed in its own tab. There is now a Desktop Menu where you can logout, check for updates, or view help links.
 - The test {% url "runner" https://github.com/cypress-io/cypress-core-runner %} has been rebuilt from the ground up in {% url "React.js" https://facebook.github.io/react/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress-core-reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
 - We have rewritten the entire proxy layer of the Cypress server to finally fix all the problems with CORS.
 
@@ -1122,7 +1153,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Features:**
 
 - There is now an `example_spec.js` file that is scaffolded on new projects. This allows new users to instantly see Cypress successfully running on an example project and will answer many questions on writing your first tests. This `example_spec.js` file contains every single Cypress command and has approximately 70 tests.
-- Added a welcome dialog for new projects that explains how Cypress scaffolds out it's folder structure. This dialog will only display if Cypress detects that you haven't written any tests or changed the initial `example_spec.js` file. The welcome dialog will no longer display after you've changed or added any tests.
+- Added a welcome dialog for new projects that explains how Cypress scaffolds out its folder structure. This dialog will only display if Cypress detects that you haven't written any tests or changed the initial `example_spec.js` file. The welcome dialog will no longer display after you've changed or added any tests.
 - Added the ability to click on file/folder links from within the Cypress webapp that will spawn your OS file/folder finder and show you where the files are located in your project.
 - There is now a default `cypress` folder that contains your test files, a `fixtures` folder with an example fixture, and a `support` folder with example support files. Inside `cypress` there is an `integration` folder that will contain your integration tests.
 - You can now turn off `supportFolder` and `fixturesFolder` by passing `false` in `cypress.json`. This will automatically remove the folders the next time you open your project in Cypress. Fixes {% issue 102 '#102' %}.
@@ -1414,7 +1445,7 @@ Known Issues:
 
 **Summary:**
 
-- Though it may not look like much, this upgrade was a long time in the making. There were limitations in the way we were currently handling headless / CI builds which restricted our ability to make updates or fix bugs. Additionally CI runs would randomly crash for no good reason. We decided to split out the headless / CI process into it's own independent Chromium application which is now independently controlled, and is much more reliable. This upgrade enables us to handle CI features coming down the pipe and was necessary for moving forward.
+- Though it may not look like much, this upgrade was a long time in the making. There were limitations in the way we were currently handling headless / CI builds which restricted our ability to make updates or fix bugs. Additionally CI runs would randomly crash for no good reason. We decided to split out the headless / CI process into its own independent Chromium application which is now independently controlled, and is much more reliable. This upgrade enables us to handle CI features coming down the pipe and was necessary for moving forward.
 
 **Features:**
 
@@ -1584,7 +1615,7 @@ Deprecations:
 - The default XHR configuration can now be overwritten in a single area.
 - Many new configuration options are available for controlling how XHR's are stubbed.
 - XHR's now include an `Initiator` stack regardless of whether they're stubbed. The `Initiator` stack includes the stack which caused the XHR to be created and sent.
-- The `onConsole` information related to an XHR has been updated to make it easier to understand why a route was or was not stubbed, and it's associated request and response headers.
+- The `onConsole` information related to an XHR has been updated to make it easier to understand why a route was or was not stubbed, and its associated request and response headers.
 - Response headers on XHR stubs will now automatically set their `Content-Type` based on the stub response. Previously this would always set to the `Content-Type` to `application/json`. Now if you force a response to be text or html, the `Content-Type` response header will be set appropriately.
 - You can now force other additional response headers to be sent on stubbed XHRs.
 - XHR's now snapshot twice - when the request is made and when the response is returned.
@@ -1981,7 +2012,7 @@ Deprecations:
 **Bugfixes:**
 
 - Several security problems with projects have been closed in preparation for running in CI.
-- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply ny of its debugging tools, so CI will be unaffected.
+- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply any of its debugging tools, so CI will be unaffected.
 - Several instances of memory leaks were plugged up.
 
 **Misc:**
@@ -2307,7 +2338,7 @@ Deprecations:
 
 **Misc:**
 
-- {% url `.submit()` submit %} now errors if its been called on >1 form element. Fixes {% issue 41 '#41' %}.
+- {% url `.submit()` submit %} now errors if it's been called on >1 form element. Fixes {% issue 41 '#41' %}.
 - Coordinates and hitboxes are now logged and displayed on {% url `.clear()` clear %} and {% url `.type()` type %}.
 
 # 0.6.10
@@ -2397,7 +2428,7 @@ Deprecations:
 
 **Bugfixes:**
 
-- {% url `.submit()` submit %} will actually submit the form for real now, instead of just firing the submit event. Now its been upgraded to be able to be cancelled or have its returnValue set to false and will not submit the form. Don't ask how I missed this one. I as once a young naive programmer who trusted the DOM not to be the abomination it actually is.
+- {% url `.submit()` submit %} will actually submit the form for real now, instead of just firing the submit event. Now it's been upgraded to be able to be cancelled or have its returnValue set to false and will not submit the form. Don't ask how I missed this one. I as once a young naive programmer who trusted the DOM not to be the abomination it actually is.
 
 **Misc:**
 
@@ -2595,7 +2626,7 @@ Deprecations:
 - {% url `.as()` as %} automatically assigns this alias to `runnable.ctx` which makes it available synchronously.
 - {% url `.as()` as %} blacklists several reserved words and will throw if you attempt to alias as one of them.
 - {% url `cy.get()` get %} can now accept all alias types and will display the labels in the UI differently based on the alias type.
-- Cypress now displays a message when the Desktop App update is actually being applied instead of doing nothing and looking like its crashed.
+- Cypress now displays a message when the Desktop App update is actually being applied instead of doing nothing and looking like it's crashed.
 
 **Bugfixes:**
 
@@ -2810,7 +2841,7 @@ Misc
 **Bugfixes:**
 
 - Fixed hook failure associated to wrong failed current test when `grep` was set.
-- Async tests which used a `cy` command and had a `done` callback was always undefined.  Now its back to real mocha `function done(err)`.
+- Async tests which used a `cy` command and had a `done` callback was always undefined.  Now it's back to real mocha `function done(err)`.
 - Fixed bug in mocha where it incorrectly associates `hook.ctx.currentTest` to the wrong `test`. {% url "Mocha Issue" https://github.com/mochajs/mocha/issues/1638 %}.
 - {% url `cy.title()` title %} no longer logs twice on a failure.
 - Fixed putting an `.only` on a large list of tests that would sometimes not clear the previous runnables in the UI.

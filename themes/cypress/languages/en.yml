@@ -1,6 +1,7 @@
 menu:
   guides: Guides
   api: API
+  tutorials: Tutorials
   faq: FAQ
   examples: Examples
   dashboard: Dashboard
@@ -32,6 +33,7 @@ sidebar:
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
     overview-of-the-gui: Overview of the GUI
+    conditional-testing: Conditional Testing
     debugging: Debugging
     aliases-and-references: Aliases and References
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -169,6 +171,11 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
+  tutorials:
+    test-a-react-todo-app: Test a React Todo App
+    introduction-to-tutorials: Introduction
+    project-setup: Project setup
+    testing-inputs: Testing text inputs
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing

@@ -66,7 +66,7 @@ Option | Default | Description
 
 ***Write some text to a `txt` file***
 
-If the path to the file does not exist, the file and it's path will be created. If the file already exists, it will be over-written.
+If the path to the file does not exist, the file and its path will be created. If the file already exists, it will be over-written.
 
 ```javascript
 cy

@@ -30,7 +30,7 @@ cy.getCookies().within(function() {}) // Errors, 'getCookies' does not yield DOM
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
-Pass a function that takes the current yielded subject as it's first argument.
+Pass a function that takes the current yielded subject as its first argument.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
