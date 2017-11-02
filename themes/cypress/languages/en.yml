@@ -35,7 +35,7 @@ sidebar:
     overview-of-the-gui: Overview of the GUI
     conditional-testing: Conditional Testing
     debugging: Debugging
-    aliases-and-references: Aliases and References
+    variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
     network-requests: Network Requests
     screenshots-and-videos: Screenshots and Videos
