@@ -159,7 +159,7 @@ You can {% url 'read more about recording runs here' projects-dashboard#Setup %}
 
 ## `cypress open`
 
-Opens the Cypress desktop application in interactive mode.
+Opens the Cypress Test Runner in interactive mode.
 
 ***Open Cypress***
 

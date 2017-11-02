@@ -358,7 +358,7 @@ You may receive this error when trying to run Cypress tests in {% url 'Continuou
 
 Since no record key was passed, Cypress checks for any environment variable with the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
-You can get your project's record key by locating it in your settings tab in the Desktop or in the {% url 'Dashboard' https://on.cypress.io/dashboard %}.
+You can get your project's record key by locating it in your settings tab in the Test Runner or in the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
 You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-Key %}.
 
@@ -435,7 +435,7 @@ At the moment, we haven't implemented an automatic way to recover from them, but
 If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
 
 
-# Desktop GUI errors
+# Test Runner errors
 
 ## {% fa fa-exclamation-triangle red %} Cannot connect to API server
 

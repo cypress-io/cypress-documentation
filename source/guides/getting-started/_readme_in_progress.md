@@ -237,7 +237,7 @@ We've done this by:
 - Enabling Dev Tools access while tests run
 - Adding support for `debugger` in either test code **and** app code
 - Snapshotting and time-traveling through all commands
-- Providing a GUI that indicates the state of commands, like the number of elements found for a selector
+- Providing a Test Runner that indicates the state of commands, like the number of elements found for a selector
 - Displaying additional command information on click
 - Logging page events such as XHRs, form submissions, page loads, and URL changes
 
@@ -275,7 +275,7 @@ But a friendly error is not enough (it's still just a string of text trying to s
 
 ***
 
-### GUI Indicators
+### Test Runner Indicators
 
 **Page Events:**
 
@@ -329,7 +329,7 @@ We automatically intelligently retry everything until it passes.
 
 ## Network Stubbing
 
-Because Cypress is a proxy that sits between your application and your webserver - this gives us the ability to modify any of your traffic.
+Because Cypress is a proxy that sits between your application and your web server - this gives us the ability to modify any of your traffic.
 
 While we currently only allow you to to stub XHR requests, everything is architecturally built to be able to modify or change **any type of HTTP request** - even websocket frames.
 

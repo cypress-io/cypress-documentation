@@ -11,7 +11,7 @@ guides:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
     interacting-with-elements: interacting-with-elements.html
-    overview-of-the-gui: overview-of-the-gui.html
+    overview-of-test-runner: overview-of-test-runner.html
     aliases-and-references: aliases-and-references.html
     conditional-testing: conditional-testing.html
   guides:

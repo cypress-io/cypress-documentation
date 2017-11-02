@@ -184,7 +184,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
+![Settings Tab of Test Runner](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
 
 ## {% fa fa-angle-right %} How do I check that an email was sent out?
 
