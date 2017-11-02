@@ -25,7 +25,7 @@ comments: false
 - Cypress binaries can now be pointed to a staging environment with `CYPRESS_ENV=staging`. Fixes {% issue 813 %}.
 - The Desktop GUI displays the scrollbar correctly when the update banner is displayed. Fixes {% issue 803 %}.
 - The branch name is now properly collected when recording in Buildkite CI. Fixes {% issue 777 %}.
-- You can install the Cypress binary from any URL or file path using the {% url "`CYPRESS_BINARY_VERSION` environment variable" installing-cypress#Advanced-installation %}. Closes {% issue 701 %}.
+- You can install the Cypress binary from any URL or file path using the {% url "`CYPRESS_BINARY_VERSION` environment variable" installing-cypress#Advanced %}. Closes {% issue 701 %}.
 
 **Documentation Changes:**
 
