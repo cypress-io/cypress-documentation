@@ -173,7 +173,7 @@ sidebar:
     cypress-server: Server
   tutorials:
     test-a-react-todo-app: Test a React Todo App
-    introduction: Introduction
+    introduction-to-tutorials: Introduction
     project-setup: Project setup
     testing-inputs: Testing text inputs
   examples:

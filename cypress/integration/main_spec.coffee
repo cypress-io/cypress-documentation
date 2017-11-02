@@ -3,7 +3,7 @@ _ = require('lodash')
 
 GUIDES_PATH = "/guides/overview/why-cypress"
 API_PATH = "/api/introduction/api"
-TUTORIALS_PATH = "/tutorials/test-a-react-todo-app/introduction"
+TUTORIALS_PATH = "/tutorials/test-a-react-todo-app/introduction-to-tutorials"
 EXAMPLES_PATH = "/examples/recipes/unit-testing-recipe"
 DASHBOARD_PATH = "/dashboard/overview/features-dashboard"
 FAQ_PATH = "/faq/questions/general-questions-faq"

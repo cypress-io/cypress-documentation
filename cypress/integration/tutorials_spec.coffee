@@ -2,7 +2,7 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-TUTORIALS_PATH = "/tutorials/test-a-react-todo-app/introduction"
+TUTORIALS_PATH = "/tutorials/test-a-react-todo-app/introduction-to-tutorials"
 
 describe "Tutorials", ->
   beforeEach ->
