@@ -92,7 +92,7 @@ No. In fact Cypress' architecture is very different from Selenium in a few criti
 
 Yes, technically; it's sandboxed and has to follow the same rules as every other browser. That's actually a good thing because it doesn't require a browser extension, and it naturally will work across all browsers (which enables cross-browser testing).
 
-But Cypress is actually way beyond just a basic JavaScript application running in the browser. It's also a Desktop Application and communicates with backend web services.
+But Cypress is actually way beyond just a basic JavaScript application running in the browser. It us also a desktop application and communicates with backend web services.
 
 All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work just fine, and already *does* work.
 

@@ -171,10 +171,10 @@ f4466038-70c2-4688-9ed9-106bf013cd73
 ```
 
 {% note info  %}
-You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
+You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 {% endnote %}
 
-You can also find your Record Key inside of the *Settings* tab in our Desktop Application.
+You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
 ![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
 

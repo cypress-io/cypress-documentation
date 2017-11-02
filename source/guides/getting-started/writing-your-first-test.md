@@ -15,7 +15,7 @@ comments: false
 
 # Add a Test File
 
-Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
+Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 
 1. Create a `simple_spec.js` file.
 2. Watch Cypress update our list of specs.
@@ -27,7 +27,7 @@ Let's create a new file in the `cypress/integration` folder that was created for
 touch {your_project}/cypress/integration/simple_spec.js
 ```
 
-Once we've created that file, we should see the Cypress Desktop Application immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
+Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
 
 Even though we haven't written any tests yet - that's okay - let's click on `simple_spec.js` and watch Cypress launch your browser.
 

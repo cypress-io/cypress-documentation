@@ -222,7 +222,7 @@ cy
 
 ***Request is not displayed in the Network Tab of Developer Tools***
 
-Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress desktop application (in Node.js). So, you won't see the request inside of your Developer Tools.
+Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress Test Runner (in Node.js). So, you won't see the request inside of your Developer Tools.
 
 ## Cors
 

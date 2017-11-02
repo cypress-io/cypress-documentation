@@ -169,7 +169,7 @@ cypress open [options]
 
 **Options**
 
-Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Desktop Application. These options will also override values in `cypress.json`
+Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`
 
 Option | Description
 ------ | ---------
