@@ -149,7 +149,7 @@ api:
 
 tutorials:
   test-a-react-todo-app:
-    introduction: introduction.html
+    introduction-to-tutorials: introduction-to-tutorials.html
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
 
