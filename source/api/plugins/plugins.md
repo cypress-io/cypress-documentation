@@ -43,4 +43,4 @@ Occurs when a spec or spec-related file is needed. Read the [Preprocessor API do
 
 ## config
 
-`config` is the resolved Cypress configuration, a combination of the default config and what the user has configured in their `cypress.json`. Some plugins may require this to be passed into them, so they can take certain actions based on the configuration.
+`config` is the resolved [Cypress configuration](https://on.cypress.io/guides/configuration), a combination of the default config and what the user has configured via `cypress.json`, `cypress.env.json`, command line options, and/or environment variables. Some plugins may require this to be passed along to them, so they can take certain actions based on the configuration.
