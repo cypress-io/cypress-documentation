@@ -15,14 +15,14 @@ See the following preprocessors as examples. The code contains comments that exp
 * [Webpack Preprocessor](https://github.com/cypress-io/cypress-webpack-preprocessor)
 * [Watch Preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
 
-Preprocessors should be published to [npm](https://www.npmjs.com/) with the name being `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor). Use the following npm keywords: `cypress`, `cypress-plugin`, `cypress-preprocessor`.
+Publish preprocessors to [npm](https://www.npmjs.com/) with the naming convention `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor). Use the following npm keywords: `cypress`, `cypress-plugin`, `cypress-preprocessor`.
 
-Setting a preprocessor involves listening to the `file:preprocessor` event in the *plugins file* (`cypress/plugins/index.js` by default), like so:
+A user will configure a preprocessor by listening to the `file:preprocessor` event in the *plugins file* (`cypress/plugins/index.js` by default), like so:
 
 ```javascript
 // plugins file
-module.exports = (on, config) => {
-  on('file:preprocessor', (filePath, util) => {
+module.exports = (on) => {
+  on('file:preprocessor', (config) => {
     // ...
   })
 }
@@ -42,46 +42,46 @@ The callback function should return one of the following:
 This function can and will be called multiple times with the same filePath, because it is called any time the file is requested by the browser (i.e. on each run of the tests). Make sure not to start a new watcher each time it is called. Instead, cache the watcher and, on subsequent calls, return a promise that resolves when the latest version of the file has been processed.
 {% endnote %}
 
-The callback function is called with the following arguments:
+## Config object properties
 
-## filePath
+The `config` object passed to the callback function has the following properties:
+
+### filePath
 
 The full path to the source file.
 
-## util
+### outputPath
 
-An object of the following utility functions:
+A path unique to the source file for saving the preprocessed file to disk. A preprocessor can choose to write the file elsewhere, but this provides a convenient default path for the file (alongside other Cypress app data).
 
-### util.getOutputPath(filePath)
+### shouldWatch
 
-Takes the `filePath` passed into the preprocessor function and returns a path for saving the preprocessed file to disk. A preprocessor can choose to write the file elsewhere, but this provides a convenient place to put the file (alongside other Cypress app data).
+A boolean indicating whether the preprocessor should watch for file changes or not.
 
-```javascript
-// example
-util.getOutputPath(filePath)
-// => /Users/jane-lane/Library/Application Support/Cypress/cy/production/projects/sample-project-fc17bd175cded40c4feec4861b699fc2/bundles/cypress/integration/example_spec.js
-```
+## Config object events
 
-### util.fileUpdated(filePath)
+The `config` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
-If watching for file changes, this function should be called (with the source `filePath`) after a file has finished being processed to let Cypress know to re-run the tests.
+### Receiving 'close' event
 
-```javascript
-// example
-fs.watch(filePath, () => {
-  util.fileUpdated(filePath)
-})
-```
-
-### util.onClose(function)
-
-This registers a function that will be called if the spec being run is closed or the project is closed. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
+When the spec being run is closed or the project is closed, the 'close' event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript
 // example
 const watcher = fs.watch(filePath, /* ... */)
 
-util.onClose(() => {
+config.on('close', () => {
   watcher.close()
+})
+```
+
+### Sending 'rerun' event
+
+If watching for file changes, emit 'rerun' after a file has finished being processed to let Cypress know to rerun the tests.
+
+```javascript
+// example
+fs.watch(filePath, () => {
+  config.emit('rerun')
 })
 ```
