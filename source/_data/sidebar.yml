@@ -152,7 +152,7 @@ tutorials:
     introduction-to-tutorials: introduction-to-tutorials.html
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
-    form-submission: form-submission.html
+    react-todo-form-submission: react-todo-form-submission.html
 
 examples:
   recipes:
