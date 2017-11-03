@@ -4,10 +4,11 @@
       <article class="article-container" itemscope itemtype="http://schema.org/Article">
         <div class="article-inner">
           <div class="article">
-            <div>
+            <header class="article-header">
               <h1 class="article-title" itemprop="name">{{ page.title }}</h1>
+              <a href="{{ raw_link(page.source) }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
               {{ toc(page.content, {list_number: false}) }}
-            </div>
+            </header>
             <div class="article-content" itemprop="articleBody">
               {{ add_page_anchors(page.content) }}
             </div>

@@ -5,6 +5,7 @@ public/
 .DS_Store
 .deploy*/
 support
+.idea/
 
 themes/cypress/source/css/vendor/
 themes/cypress/source/js/vendor/

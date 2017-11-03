@@ -1,6 +1,8 @@
 guides:
-  getting-started:
+  overview:
     why-cypress: why-cypress.html
+    key-differences: key-differences.html
+  getting-started:
     installing-cypress: installing-cypress.html
     writing-your-first-test: writing-your-first-test.html
     testing-your-app: testing-your-app.html
@@ -8,11 +10,10 @@ guides:
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
-    overview-of-the-gui: overview-of-the-gui.html
     interacting-with-elements: interacting-with-elements.html
+    overview-of-test-runner: overview-of-test-runner.html
     aliases-and-references: aliases-and-references.html
-    screenshots-and-videos: screenshots-and-videos.html
-    launching-browsers: launching-browsers.html
+    conditional-testing: conditional-testing.html
   guides:
     command-line: command-line.html
     debugging: debugging.html
@@ -20,6 +21,8 @@ guides:
     continuous-integration: continuous-integration.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
+    screenshots-and-videos: screenshots-and-videos.html
+    launching-browsers: launching-browsers.html
     web-security: web-security.html
     reporters: reporters.html
     plugins: plugins.html
@@ -147,6 +150,12 @@ api:
   plugins:
     plugins: plugins.html
     preprocessors: preprocessors.html
+
+tutorials:
+  test-a-react-todo-app:
+    introduction-to-tutorials: introduction-to-tutorials.html
+    project-setup: project-setup.html
+    testing-inputs: testing-inputs.html
 
 examples:
   recipes:

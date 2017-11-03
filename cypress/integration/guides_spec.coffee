@@ -2,14 +2,14 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-GUIDES_PATH = '/guides/getting-started/why-cypress.html'
+GUIDES_PATH = '/guides/overview/why-cypress.html'
 
 FIRST_PAGE = "why-cypress.html"
-NEXT_PAGE = "installing-cypress.html"
+NEXT_PAGE = "key-differences.html"
 
 describe "Guides", ->
   context "Main Menu", ->
-    it "Menu goes straight to 'Why Cypress?'", ->
+    it "goes straight to 'Why Cypress?'", ->
       cy.visit('/')
 
       cy.contains('Guides')
@@ -51,7 +51,7 @@ describe "Guides", ->
 
     it "displays current page as highlighted", ->
       cy.get("#sidebar").find(".current")
-        .should("have.attr", "href").and("include", "why-cypress.html")
+        .should("have.attr", "href").and("include", FIRST_PAGE)
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
@@ -70,6 +70,18 @@ describe "Guides", ->
         .find(".sidebar-link").each (displayedLink, i) ->
           sidebarLink  = @sidebarLinks[i]
           expect(displayedLink.attr('href')).to.include(sidebarLink)
+
+    context "mobile sidebar menu", ->
+      beforeEach ->
+        cy.viewport('iphone-6')
+
+      it "displays sidebar in mobile menu on click", ->
+        cy.get("#mobile-nav-toggle").click()
+        cy.get("#mobile-nav-inner").should("be.visible")
+          .find(".sidebar-li")
+          .first(1).each (displayedLink, i) ->
+            englishLink  = @english.sidebar.guides[@sidebarLinkNames[i]]
+            expect(displayedLink.text().trim()).to.eq(englishLink)
 
   ## This is running too slow to include for now
   ## Issue #431 Needs to be fixed first

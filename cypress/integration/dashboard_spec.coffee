@@ -10,7 +10,7 @@ describe "Dashboard", ->
     cy.visit(DASHBOARD_PATH + ".html")
 
   context "Main Menu", ->
-    it "Menu goes straight to 'The Cypress Dashboard'", ->
+    it "goes straight to 'The Cypress Dashboard'", ->
       cy.visit('/')
 
       cy.contains('Dashboard')
@@ -66,3 +66,15 @@ describe "Dashboard", ->
         .find(".sidebar-link").each (displayedLink, i) ->
           sidebarLink  = @sidebarLinks[i]
           expect(displayedLink.attr('href')).to.include(sidebarLink)
+
+    context "mobile sidebar menu", ->
+      beforeEach ->
+        cy.viewport('iphone-6')
+
+      it "displays sidebar in mobile menu on click", ->
+        cy.get("#mobile-nav-toggle").click()
+        cy.get("#mobile-nav-inner").should("be.visible")
+          .find(".sidebar-li")
+          .first(1).each (displayedLink, i) ->
+            englishLink  = @english.sidebar.dashboard[@sidebarLinkNames[i]]
+            expect(displayedLink.text().trim()).to.eq(englishLink)

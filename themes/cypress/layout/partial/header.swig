@@ -1,7 +1,7 @@
 <header id="header" class="wrapper">
   <div id="header-inner" class="inner">
     <h1 id="logo-wrap">
-      <a href="/" id="logo">
+      <a href="https://www.cypress.io" id="logo">
         <img src="/{{ config.logo }}" alt="Cypress"/>
       </a>
     </h1>

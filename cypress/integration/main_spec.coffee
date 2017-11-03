@@ -1,8 +1,9 @@
 YAML = require('yamljs')
 _ = require('lodash')
 
-GUIDES_PATH = "/guides/getting-started/why-cypress"
+GUIDES_PATH = "/guides/overview/why-cypress"
 API_PATH = "/api/introduction/api"
+TUTORIALS_PATH = "/tutorials/test-a-react-todo-app/introduction-to-tutorials"
 EXAMPLES_PATH = "/examples/recipes/unit-testing-recipe"
 DASHBOARD_PATH = "/dashboard/overview/features-dashboard"
 FAQ_PATH = "/faq/questions/general-questions-faq"
@@ -68,6 +69,9 @@ describe "Documentation", ->
       cy.contains(".main-nav-link", "API")
         .should("have.attr", "href").and("include", API_PATH)
 
+      cy.contains(".main-nav-link", "Tutorials")
+        .should("have.attr", "href").and("include", TUTORIALS_PATH)
+
       cy.contains(".main-nav-link", "Examples")
         .should("have.attr", "href").and("include", EXAMPLES_PATH)
 
@@ -86,27 +90,32 @@ describe "Documentation", ->
       cy.contains("select", "English").find("option").contains("English")
 
     describe "active nav", ->
-      it "higlights guides when on a guides page", ->
+      it "highlights guides when on a guides page", ->
         cy.visit(GUIDES_PATH + ".html")
         cy.contains(".main-nav-link", "Guides")
           .should("have.class", "active")
 
-      it "higlights api when on a api page", ->
+      it "highlights api when on a api page", ->
         cy.visit(API_PATH + ".html")
         cy.contains(".main-nav-link", "API")
           .should("have.class", "active")
 
-      it "higlights examples when on a examples page", ->
+      it "highlights tutorials when on a tutorials page", ->
+        cy.visit(TUTORIALS_PATH + ".html")
+        cy.contains(".main-nav-link", "Tutorials")
+          .should("have.class", "active")
+
+      it "highlights examples when on a examples page", ->
         cy.visit(EXAMPLES_PATH + ".html")
         cy.contains(".main-nav-link", "Examples")
           .should("have.class", "active")
 
-      it "higlights dashboard when on a dashboard page", ->
+      it "highlights dashboard when on a dashboard page", ->
         cy.visit(DASHBOARD_PATH + ".html")
         cy.contains(".main-nav-link", "Dashboard")
           .should("have.class", "active")
 
-      it "higlights FAQ when on a FAQ page", ->
+      it "highlights FAQ when on a FAQ page", ->
         cy.visit(FAQ_PATH + ".html")
         cy.contains(".main-nav-link", "FAQ")
           .should("have.class", "active")
@@ -130,6 +139,16 @@ describe "Documentation", ->
       cy.get("#search-input").type("g")
       cy.wait("@postAlgolia")
       cy.get(".ds-dropdown-menu").should("be.visible")
+
+    describe "displays in mobile view", ->
+      beforeEach ->
+        cy.viewport('iphone-6')
+
+      it "displays dropdown on search", ->
+        cy.get(".ds-dropdown-menu").should("not.be.visible")
+        cy.get("#search-input").type("g")
+        cy.wait("@postAlgolia")
+        cy.get(".ds-dropdown-menu").should("be.visible")
 
   describe "Changelog", ->
     beforeEach ->

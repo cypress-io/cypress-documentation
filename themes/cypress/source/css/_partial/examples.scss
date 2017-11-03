@@ -11,3 +11,47 @@
     font-weight: normal;
   }
 }
+
+.media {
+  width: 48%;
+  float: left;
+
+  &:nth-child(odd) {
+    clear: both;
+  }
+
+  &:nth-child(even) {
+    padding-right: 0;
+    float: right;
+  }
+
+  h2 {
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.3em;
+    border-bottom: 0;
+    margin-bottom: 5px;
+    margin-top: 2em;
+    height: 50px;
+    position: relative;
+
+    a {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+
+  img {
+    margin: 0;
+  }
+
+  p {
+    font-size: 0.9em;
+    line-height: 1.5em;
+    margin-top: 5px;
+  }
+
+  a.img-link, a.img-link:hover, a.img-link:focus, a.img-link:active {
+    border-bottom: 0;
+  }
+}

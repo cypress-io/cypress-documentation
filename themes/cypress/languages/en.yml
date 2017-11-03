@@ -1,6 +1,7 @@
 menu:
   guides: Guides
   api: API
+  tutorials: Tutorials
   plugins: Plugins
   faq: FAQ
   examples: Examples
@@ -20,8 +21,10 @@ page:
 
 sidebar:
   guides:
-    getting-started: Getting Started
+    overview: Overview
     why-cypress: Why Cypress?
+    getting-started: Getting Started
+    key-differences: Key Differences
     installing-cypress: Installing Cypress
     writing-your-first-test: Writing Your First Test
     testing-your-app: Testing Your App
@@ -30,7 +33,8 @@ sidebar:
     core-concepts: Core Concepts
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
-    overview-of-the-gui: Overview of the GUI
+    overview-of-test-runner: Overview of Test Runner
+    conditional-testing: Conditional Testing
     debugging: Debugging
     aliases-and-references: Aliases and References
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -44,7 +48,7 @@ sidebar:
     launching-browsers: Launching Browsers
     advanced-cypress: Advanced
     the-cypress-workflow: The Cypress Workflow
-    coming-from-selenium: Coming from Selenium?
+    coming-from-selenium: Cypress vs Selenium
     custom-commands: Custom Commands
     web-security: Web Security
     how-cypress-really-works: How Cypress Really Works
@@ -169,6 +173,11 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
+  tutorials:
+    test-a-react-todo-app: Test a React Todo App
+    introduction-to-tutorials: Introduction
+    project-setup: Project setup
+    testing-inputs: Testing text inputs
     plugins: Plugins
     preprocessors: Preprocessors
   examples:

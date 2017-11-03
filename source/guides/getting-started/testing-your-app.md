@@ -16,7 +16,7 @@ We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let'
 
 # {% fa fa-terminal %} Step 1: Start Your Server
 
-Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
+Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Test Runner" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
 
 It should look something like **http://localhost:8080**.
 
@@ -215,7 +215,7 @@ The good news is that we aren't Selenium, nor are we a traditional e2e testing t
 
 ## Stubbing the Server
 
-Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Must simpler!
+Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
 
 While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
 
@@ -270,7 +270,7 @@ describe('The Login Page', function(){
 
   it('sets auth cookie when logging in via form submission', function(){
     // destructuring assignment of the this.currentUser object
-    { username, password } = this.currentUser
+    const { username, password } = this.currentUser
 
     cy.visit('/login')
 
@@ -351,7 +351,7 @@ describe('The Dashboard Page', function(){
 
   it('logs in programmatically without using the UI', function(){
     // destructuring assignment of the this.currentUser object
-    { username, password } = this.currentUser
+    const { username, password } = this.currentUser
 
     // programmatically log us in without needing the UI
     cy.request('POST', '/login', {

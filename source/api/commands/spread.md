@@ -6,7 +6,7 @@ comments: false
 Expand an array into multiple arguments.
 
 {% note info %}
-Identical to {% url `.then()` then %}, but always expects an array-like structure as it's subject.
+Identical to {% url `.then()` then %}, but always expects an array-like structure as its subject.
 {% endnote %}
 
 # Syntax
@@ -35,7 +35,7 @@ cy.location().spread()   // Errors, 'location' does not yield an array
 
 **{% fa fa-angle-right %} fn** ***(Function)***
 
-Pass a function that expands the array into it's arguments.
+Pass a function that expands the array into its arguments.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 

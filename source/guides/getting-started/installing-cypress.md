@@ -77,7 +77,7 @@ $(npm bin)/cypress open
 npx cypress open
 ```
 
-After a moment, the Cypress Desktop application will launch.
+After a moment, the Cypress Test Runner will launch.
 
 ## Adding npm scripts
 
@@ -108,3 +108,37 @@ By installing Cypress through `npm` you also get access to many other CLI comman
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
+
+# Advanced
+
+Using an environment variable you can control how Cypress is installed.
+
+This is helpful if you want to:
+
+- Install a different version than the default npm package
+- Specify an external URL (to bypass a corporate firewall)
+- Specify a local file (to install locally instead of using the internet)
+
+To override what is installed, you simply set `CYPRESS_BINARY_VERSION` with the `npm install` command.
+
+***Examples:***
+
+1. Install the `cypress` npm package version `1.0.3` with the binary `1.0.1` version:
+
+    ```shell
+    CYPRESS_BINARY_VERSION=1.0.1 npm install cypress@1.0.3
+    ```
+
+2. Install the Cypress binary from a given URL:
+
+    ```shell
+    CYPRESS_BINARY_VERSION=https://company.domain.com/cypress.zip npm install cypress
+    ```
+
+3. Install the Cypress binary from a local file.
+
+    ```shell
+    CYPRESS_BINARY_VERSION=/local/path/to/cypress.zip npm install cypress
+    ```
+
+In all cases, the fact that the binary was installed from a custom location *is not saved* in your `package.json` file. Every repeated installation would have to use the same environment variable to install the same binary.

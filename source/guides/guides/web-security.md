@@ -112,7 +112,7 @@ However, the truth is, Cypress is exposing a *security vulnerability* in your ap
 
 `cookies` that do not have their `secure` flag set to `true` will be sent as clear text to the insecure URL. This leaves your application vulnerable to session hijacking.
 
-This security vulnerability exists **even if** your webserver forces a `301 redirect` back to the `HTTPS` site. The original `HTTP` request was still made once, exposing insecure session information.
+This security vulnerability exists **even if** your web server forces a `301 redirect` back to the `HTTPS` site. The original `HTTP` request was still made once, exposing insecure session information.
 
 ***The Solution***
 
@@ -139,7 +139,7 @@ The most common situation where you might encounter this error is when you click
 ***Test code***
 
 ```javascript
-cy.visit('http://localhost:8080') // where your webserver + HTML is hosted
+cy.visit('http://localhost:8080') // where your web server + HTML is hosted
 cy.get('a').click()               // browser attempts to load google.com, Cypress errors
 ```
 

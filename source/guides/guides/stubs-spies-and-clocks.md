@@ -72,7 +72,7 @@ You generally stub a function when it has side effects you are trying to control
 - You have a function that wraps `window.location` and don't want your application to be navigated.
 - You're trying to test your applications "failure path" by forcing things to fail.
 - You're trying to test your applications "happy path" by forcing things to pass.
-- You want to "trick" your application into thinking its logged in or logged out.
+- You want to "trick" your application into thinking it's logged in or logged out.
 - You're using `oauth` and want to stub login methods.
 
 {% note info cy.stub() %}

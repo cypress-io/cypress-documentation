@@ -11,14 +11,10 @@ Here are some examples you can do with these events:
 
 - Listen for `uncaught exceptions` and prevent Cypress from failing the test
 - Listen for `alert` or `confirm` calls and change the `confirm` behavior
-- Listen for `before:window:load` events and modify the `window` before any of your app code runs between page transitions
+- Listen for `window:before:load` events and modify the `window` before any of your app code runs between page transitions
 - Listen for `command:retry` events to understand why Cypress is internally retrying for debugging purposes
 
-{% note info WIP %}
-This page is currently a work in progress and is not fully documented.
-{% endnote %}
-
-# Events
+# Event Types
 
 ## App Events
 
@@ -80,7 +76,7 @@ Event | Details
 --- | ---
 **Name:** | `fail`
 **Yields:** | the error **(Object)**, mocha runnable **(Object)**
-**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because its extremely useful for debugging purposes.
+**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
 
 Event | Details
 --- | ---
@@ -169,7 +165,258 @@ The `cy` object is bound to each individual test. Events bound to `cy` will **au
 
 # Examples
 
-WIP.
+## Uncaught Exceptions
+
+***To turn off all uncaught exception handling***
+
+```javascript
+// likely want to do this in a support file
+// so it's applied to all spec files
+// cypress/support/index.js
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
+
+```
+
+***To catch a single uncaught exception***
+
+```javascript
+it('is doing something very important', function(done) {
+  // this event will automatically be unbound when this
+  // test ends because it's attached to 'cy'
+  cy.on('uncaught:exception', (err, runnable) => {
+    expect(err.message).to.include('something about the error')
+
+    // using mocha's async done callback to finish
+    // this test so we prove that an uncaught exception
+    // was thrown
+    done()
+
+    // return false to prevent the error from
+    // failing this test
+    return false
+  })
+
+  // assume this causes an error
+  cy.get('button').click()
+})
+
+```
+
+## Catching Test Failures
+
+***Debug the moment a test fails***
+
+```javascript
+// if you want to debug when any test fails
+// bind to Cypress, and you likely want to
+// put this in a support file, or at the top
+// of an individual spec file
+Cypress.on('fail', (err, runnable) => {
+  debugger
+
+  // we now have access to the err instance
+  // and the mocha runnable this failed on
+})
+
+it('calls the "fail" callback when this test fails', function () {
+  // when this cy.get() fails the callback is invoked
+  // with the error
+  cy.get('element-that-does-not-exist')
+})
+```
+
+## Page Navigation
+
+***Test that your application was redirected***
+
+```javascript
+// app code
+$('button').on('click', (e) => {
+  // change the page programmatically
+  window.location.href = '/some/new/link'
+})
+
+// test code
+it('redirects to another page on click', function (done) {
+  // this event will automatically be unbound when this
+  // test ends because it's attached to 'cy'
+  cy.on('window:before:unload', (e) => {
+    // no return value on the event
+    expect(e.returnValue).to.be.undefined
+  })
+
+  cy.on('window:unload', (e) => {
+    // using mocha's async done callback to finish
+    // this test so we are guaranteed the application
+    // was unloaded while navigating to the new page
+    done()
+  })
+
+  // click the button causing the page redirect
+  cy.get('button').click()
+})
+```
+
+## Window Before Load
+
+***Modify your Application before it loads after page transitions***
+
+```javascript
+it('can modify the window prior to page load on all pages', function () {
+  // this does the same thing as the onBeforeLoad callback for
+  // cy.visit()
+
+  // create the stub here
+  const stub = cy.stub()
+
+  // prevent google analytics from loading
+  // and replace it with a stub before every
+  // single page load including all new page
+  // navigations
+  cy.on('window:before:load', (win) => {
+    Object.defineProperty(win, 'ga', {
+      configurable: false,
+      writeable: false,
+      get: () => stub // always return the stub
+    })
+  })
+
+
+  cy
+    // window:before:load will be called here
+    .visit('/first/page')
+
+    .then((win) => {
+      // and here
+      win.location.href = '/second/page'
+    })
+
+    // and here
+    .get('a').click()
+
+})
+```
+
+## Window Confirm
+
+***Control whether you accept or reject confirmations***
+
+This enables you to test how your application reacts to accepted confirmations and rejected confirmations.
+
+```javascript
+// app code
+$('button').on('click', (e) => {
+  const one = confirm('first confirm')
+
+  if (one) {
+    const two = confirm('second confirm')
+
+    if (!two) {
+      const three = confirm('third confirm')
+
+      confirm('third confirm was ' + three)
+    }
+  }
+})
+
+// test code
+it('can control application confirms', function (done) {
+  const count = 0
+
+  // make sure you bind to this **before** the
+  // confirm method is called in your application
+  //
+  // this event will automatically be unbound when this
+  // test ends because it's attached to 'cy'
+  cy.on('window:confirm', (str) => {
+    count += 1
+
+    switch(count) {
+      case 1:
+        expect(str).to.eq('first confirm')
+        // returning nothing here automatically
+        // accepts the confirmation
+      case 2:
+        expect(str).to.eq('second confirm')
+
+        // reject the confirmation
+        return false
+
+      case 3:
+        expect(str).to.eq('third confirm')
+
+        // don't have to return true but it works
+        // as well
+        return true
+
+      case 4:
+        expect(str).to.eq('third confirm was true')
+
+        // using mocha's async done callback to finish
+        // this test so we are guaranteed everything
+        // got to this point okay without throwing an error
+        done()
+    }
+  })
+
+  // click the button causing the confirm to fire
+  cy.get('button').click()
+})
+
+it('could also use a stub instead of imperative code', function () {
+  const stub = cy.stub()
+
+  // not necessary but showing for clarity
+  stub.onFirstCall().returns(undefined)
+  stub.onSecondCall().returns(false)
+  stub.onThirdCall().returns(true)
+
+  cy.on('window:confirm', stub)
+
+  cy
+    .get('button').click()
+    .then(() => {
+      expect(stub.getCall(0)).to.be.calledWith('first confirm')
+      expect(stub.getCall(1)).to.be.calledWith('second confirm')
+      expect(stub.getCall(2)).to.be.calledWith('third confirm')
+      expect(stub.getCall(3)).to.be.calledWith('third confirm was true')
+    })
+})
+```
+
+## Window Alert
+
+**Assert on the alert text**
+
+Cypress automatically accepts alerts but you can still assert on the text content.
+
+```javascript
+// app code
+$('button').on('click', (e) => {
+  alert('hi')
+  alert('there')
+  alert('friend')
+})
+
+it('can assert on the alert text content', function () {
+  const stub = cy.stub()
+
+  cy.on('window:alert', stub)
+
+  cy
+    .get('button').click()
+    .then(() => {
+      expect(stub.getCall(0)).to.be.calledWith('hi')
+      expect(stub.getCall(1)).to.be.calledWith('there')
+      expect(stub.getCall(2)).to.be.calledWith('friend')
+    })
+})
+```
 
 # Notes
 

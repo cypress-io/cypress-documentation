@@ -9,7 +9,7 @@ describe "FAQ", ->
     cy.visit(FAQ_PATH + ".html")
 
   context "Main Menu", ->
-    it "Menu goes straight to 'General'", ->
+    it "goes straight to 'General'", ->
       cy.visit('/')
 
       cy.contains('FAQ')
@@ -57,6 +57,18 @@ describe "FAQ", ->
         .find(".sidebar-link").each (displayedLink, i) ->
           sidebarLink  = @sidebarLinks[i]
           expect(displayedLink.attr('href')).to.include(sidebarLink)
+
+    context "mobile sidebar menu", ->
+      beforeEach ->
+        cy.viewport('iphone-6')
+
+      it "displays sidebar in mobile menu on click", ->
+        cy.get("#mobile-nav-toggle").click()
+        cy.get("#mobile-nav-inner").should("be.visible")
+          .find(".sidebar-li")
+          .first(1).each (displayedLink, i) ->
+            englishLink  = @english.sidebar.faq[@sidebarLinkNames[i]]
+            expect(displayedLink.text().trim()).to.eq(englishLink)
 
   context "Table of Contents", ->
     it "displays toc links", ->

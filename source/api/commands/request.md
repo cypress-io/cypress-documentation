@@ -109,7 +109,7 @@ beforeEach(function(){
 
 ***Issue a simple HTTP request***
 
-Sometimes it is quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of it's resource to load.
+Sometimes it is quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resource to load.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
@@ -182,13 +182,47 @@ cy.getCookie('cypress-session-cookie').should('exist')
 {% url "Check out our example recipe using `cy.request()` for HTML form submissions" logging-in-recipe %}
 {% endnote %}
 
+## Request Polling
+
+***Call `cy.request()` over and over again:***
+
+This is useful when you're polling a server for a response that may take awhile to complete.
+
+All we're really doing here is creating a recursive function. Nothing more complicated than that.
+
+```js
+// just a regular ol' function folks
+function req () {
+  cy
+    .request(...)
+    .then((resp) => {
+      // if we got what we wanted
+
+      if (resp.status === 200 && resp.body.ok === true)
+        // break out of the recursive loop
+        return
+
+      // else recurse
+      req()
+    })  
+}
+
+cy
+  // do the thing causing the side effect
+  .get('button').click()
+
+  // now start the requests
+  .then(req)
+
+```
+
 # Notes
 
 ## Debugging
 
 ***Request is not displayed in the Network Tab of Developer Tools***
 
-Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress desktop application (in Node.js). So, you won't see the request inside of your Developer Tools.
+Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress Test Runner (in Node.js). So, you won't see the request inside of your Developer Tools.
 
 ## Cors
 

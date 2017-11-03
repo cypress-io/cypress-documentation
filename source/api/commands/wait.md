@@ -75,7 +75,7 @@ cy.wait(2000) // wait for 2 seconds
 {% note warning 'Anti-Pattern' %}
 You almost **never** need to wait for an arbitrary period of time. There are always better ways to express this in Cypress.
 
-Passing a number to `cy.wait()` exists because its sometimes helpful when debugging to isolate a test failure you're trying to temporarily understand.
+Passing a number to `cy.wait()` exists because it's sometimes helpful when debugging to isolate a test failure you're trying to temporarily understand.
 
 Read about {% url 'best practices' best-practices#Unnecessary-Waiting %} here.
 {% endnote %}

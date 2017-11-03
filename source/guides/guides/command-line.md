@@ -6,9 +6,10 @@ comments: false
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- How to run Cypress headlessly from the command line
-- How to record your tests running from the command line
-- How to launch other browsers from the command line
+- How to run Cypress from the command line
+- How to run headlessly
+- How to launch other browsers
+- How to record your tests
 {% endnote %}
 
 # Installation
@@ -33,7 +34,7 @@ Or just add cypress commands to the `scripts` field in your `package.json` file.
 
 ## `cypress run`
 
-Run Cypress headlessly. By default will run all tests headlessly in the `Electron` browser.
+Runs Cypress to completion. By default will run all tests headlessly in the `Electron` browser.
 
 ***Run tests***
 
@@ -134,7 +135,7 @@ cypress run --project ./some/nested/folder
 
 ***Run and record video of tests***
 
-Record video of tests running after {% url 'setting up your project to record' projects-dashboard#Set-up-a-Project-to-Record %}. After setting up your project you will be given a **Record Key**.
+Record video of tests running after {% url 'setting up your project to record' projects-dashboard#Setup %}. After setting up your project you will be given a **Record Key**.
 
 ```shell
 cypress run --record --key <record_key>
@@ -154,11 +155,11 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can {% url 'read more about recording runs here' projects-dashboard#Set-up-a-Project-to-Record %}.
+You can {% url 'read more about recording runs here' projects-dashboard#Setup %}.
 
 ## `cypress open`
 
-Opens the Cypress desktop application in interactive mode.
+Opens the Cypress Test Runner in interactive mode.
 
 ***Open Cypress***
 
@@ -168,7 +169,7 @@ cypress open [options]
 
 **Options**
 
-Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Desktop Application. These options will also override values in `cypress.json`
+Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`
 
 Option | Description
 ------ | ---------
@@ -235,7 +236,7 @@ Cypress binary version: 0.20.0
 You can use also require Cypress as a node module.
 
 {% note warning %}
-The Cypress module is brand new and we are still adding more functionality to it. It's API may change in the future.
+The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.
 {% endnote %}
 
 Here's an example of programmatically running a spec spec file:
