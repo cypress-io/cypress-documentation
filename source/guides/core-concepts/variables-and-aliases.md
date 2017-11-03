@@ -14,8 +14,24 @@ comments: false
 
 # Return Values
 
-{% note danger 'Not Useful' %}
-**You cannot assign or work with the return values** of any Cypress command because they are enqueued and run asynchronously.
+New users to Cypress may initially find it challenging to work with the asynchronous nature of our API's.
+
+{% note success 'Do not worry!' %}
+There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
+
+Once you get the hang of async code - you'll realize you can do everything you could do synchronously, without your code doing any backflips.
+
+This guide explores many common patterns for writing good Cypress code that can handle even the most complex situations.
+{% endnote %}
+
+Asynchronous API's are here to stay in JavaScript. They are found everywhere in modern code. In fact, most new browser API's are asynchronous and many core `Node.js` are asynchronous as well.
+
+The patterns we'll explore below are useful in and outside of Cypress.
+
+The first and most important concept you should recognize is...
+
+{% note danger 'Return Values' %}
+**You cannot assign or work with the return values** of any Cypress command. Commands are are enqueued and run asynchronously.
 {% endnote %}
 
 ```js
@@ -31,21 +47,13 @@ const form = cy.get('form')
 button.click()
 ```
 
-{% note success 'Do not worry!' %}
-There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
-
-Once you get the hang of async code - you'll realize you can do everything you could do synchronously, without your code doing any backflips.
-
-This guide explores many common patterns for writing good Cypress code that can handle even the most complex situations.
-{% endnote %}
-
 ## Closures
 
-Whenever you want access to what a Cypress command yields you - you simply use {% url `.then()` then %}.
+To access what each Cypress command yields you - you simply use {% url `.then()` then %}.
 
 ```js
 cy.get('button').then(($btn) => {
-  // $btn is the object that the previously
+  // $btn is the object that the previous
   // command yielded us  
 })
 ```
@@ -218,9 +226,9 @@ it('has access to text', function () {
 })
 ```
 
-Under the hood, aliasing basic objects and primitives like this utilizes mocha's shared `context` here.
+Under the hood, aliasing basic objects and primitives utilizes mocha's shared `context` object. That is - aliases are available as `this.*`.
 
-Contexts are shared across all applicable hooks for each test and are automatically cleaned up after each test.
+Mocha automatically shares contexts for us across all applicable hooks for each test. Additionally these aliases and properties are automatically cleaned up after each test.
 
 ```js
 describe('parent', function () {
@@ -247,6 +255,8 @@ describe('parent', function () {
   })
 })
 ```
+
+***Accessing Fixtures:***
 
 The most common use case for sharing context is when dealing with {% url `cy.fixture()` fixture %}.
 
@@ -287,7 +297,7 @@ it('is not using aliases correctly', function () {
 })
 ```
 
-The same principles we introduced many times before apply to this situation. If you want to what a command yields, you'll have to do it in a closure using a {% url `.then()` then %}.
+The same principles we introduced many times before apply to this situation. If you want to access what a command yields, you'll have to do it in a closure using a {% url `.then()` then %}.
 
 ```js
 // yup all good
@@ -301,12 +311,110 @@ cy.fixture('users.json').then((users) => {
 })
 ```
 
+***Avoiding the use of `this`***
+
+{% note warning 'Arrow Functions' %}
+Accessing aliases as properties with `this.*` will not work if you use "arrow functions" for your tests or hooks.
+
+This is why you'll notice all of our examples use the regular `function () {}` syntax as opposed to the lambda fat arrow syntax `() => {}`.
+{% endnote %}
+
+Instead of using the `this.*` syntax, there is another way to access aliases.
+
+The {% url `cy.get()` get %} command is capable of accessing aliases with a special syntax using the '@' character:
+
+```js
+beforeEach(function () {
+  // alias the users fixtures
+  cy.fixture('users.json').as('users')
+})
+
+it('utilize users in some way', function () {
+  // use the special '@' syntax to access aliases
+  // which avoids the use of 'this'
+  cy.get('@users').then((users) => {
+    // access the users property
+    const user = this.users[0]
+
+    // make sure the header contains the first
+    // users name
+    cy.get('header').should('contain', user.name)
+  })
+})
+```
+
+By using `cy.get()` we avoid the use of `this`.
+
+But just keep in mind - there are use cases for both approaches because they have different ergonomics.
+
+When using `this.users` we have access to it synchronously, whereas when using `cy.get('@users')` it becomes an asynchronous command.
+
+You can think of the `cy.get('@users')` as doing the same thing as `cy.wrap(this.users)`.
+
 ## Elements
+
+Aliases have other special characteristics when being used with DOM elements.
+
+After you alias DOM elements, you can then later access them for reuse.
+
+```javascript
+// alias all of the tr's found in the table as 'rows'
+cy.get('table').find('tr').as('rows')
+```
+
+Internally, Cypress has made a reference to the `<tr>` collection returned as the alias "rows". To reference these same "rows" later, you can use the {% url `cy.get()` get %} command.
+
+```javascript
+// Cypress returns the reference to the <tr>'s
+// which allows us to continue to chain commands
+// finding the 1st row.
+cy.get('@rows').first().click()
+```
+
+Because we've used the `@` character in {% url `cy.get()` get %}, instead of querying the DOM for elements, {% url `cy.get()` get %} looks for an existing alias called `rows` and returns the reference (if it finds it).
+
+***Stale Elements:***
+
+In many single-page JavaScript applications, the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call {% url `cy.get()` get %} with the alias, Cypress automatically re-queries the DOM to find these elements again.
+
+```html
+<ul id="todos">
+  <li>
+    Walk the dog
+    <button class="edit">edit</button>
+  </li>
+  <li>
+    Feed the cat
+    <button class="edit">edit</button>
+  </li>
+</ul>
+```
+
+Let's imagine when we click the `.edit` button that our `<li>` is re-rendered in the DOM. Instead of displaying the edit button, it instead displays an `<input />` text field allowing you to edit the todo. The previous `<li>` has been *completely* removed from the DOM, and a new `<li>` is rendered in its place.
+
+```javascript
+cy.get('#todos li').first().as('firstTodo')
+cy.get('@firstTodo').find('.edit').click()
+cy.get('@firstTodo').should('have.class', 'editing')
+  .find('input').type('Clean the kitchen')
+```
+
+When we reference `@firstTodo`, Cypress checks to see if all of the elements it is referencing are still in the DOM. If they are, it returns those existing elements. If they aren't, Cypress replays the commands leading up to the alias definition.
+
+In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything just works because the new `<li>` is found.
+
+{% note warning  %}
+*Usually*, replaying previous commands will return what you expect, but not always. It is recommended that you **alias elements as soon as possible** instead of further down a chain of commands.
+
+- `cy.get('#nav header .user').as('user')` (good) {% fa fa-check-circle %}
+- `cy.get('#nav').find('header').find('.user').as('user')` (bad) {% fa fa-warning %}
+
+When in doubt, you can *always* issue a regular {% url `cy.get()` get %} to query for the elements again.
+{% endnote %}
 
 ## Routes
 
 TODO
-- WHY DO WE USE 'FUNCTION' IN ALL OF OUR EXAMPLES?
 - WHAT DO WE SAY IN THE 'GET' DOCS ABOUT USING IT FOR PRIMITIVES?
 
 
