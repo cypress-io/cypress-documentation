@@ -5,7 +5,7 @@
       <a href="{{ raw_link(page.source) }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
     </header>
     <div class="article-content" itemprop="articleBody">
-      <p>To submit a plugin, submit a pull request updating <a href="https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml">plugins.yml</a> with the name, description, and a link to it on GitHub.
+      <p>To submit a plugin, submit a pull request updating <a href="https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml">plugins.yml</a> with the name, description, and a link to it on GitHub.
 
       {% for pluginType in site.data.plugins %}
         <h2>{{ pluginType.name }}</h2>
