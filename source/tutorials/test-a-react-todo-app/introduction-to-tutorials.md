@@ -17,4 +17,5 @@ We have a lot of ground to cover, so let's get started!
 | -- | -- |
 | 1. {% url "Project setup" project-setup %} | {% fa fa-video-camera %} 3:52 |
 | 2. {% url "Testing inputs" testing-inputs %} | {% fa fa-video-camera %} 7:17 |
-| More tutorials to come! | |
+| 3. {% url "Form submission and XHR stubbing" form-submission %} | {% fa fa-video-camera %} 10:21 |
+| More tutorials to come! | &nbsp; |
