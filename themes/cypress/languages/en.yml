@@ -176,6 +176,7 @@ sidebar:
     introduction-to-tutorials: Introduction
     project-setup: Project setup
     testing-inputs: Testing text inputs
+    react-todo-form-submission: Testing form submission
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
