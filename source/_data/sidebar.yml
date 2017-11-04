@@ -12,7 +12,7 @@ guides:
     writing-and-organizing-tests: writing-and-organizing-tests.html
     interacting-with-elements: interacting-with-elements.html
     overview-of-test-runner: overview-of-test-runner.html
-    aliases-and-references: aliases-and-references.html
+    variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
   guides:
     command-line: command-line.html
