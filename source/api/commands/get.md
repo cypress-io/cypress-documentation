@@ -36,10 +36,12 @@ A selector used to filter matching DOM elements.
 
 An alias as defined using the {% url `.as()` as %} command and referenced with the `@` character and the name of the alias.
 
-Internally, Cypress keeps a cache of all aliased elements.  If the element currently exists in the DOM, it is immediately returned.  If the element no longer exists, Cypress will re-query the element based on the previous selector path defined before {% url `.as()` as %} to find it again.
+You can use `cy.get()` for aliases of primitives, regular objects, or even DOM elements.
 
-{% note info %}
-{% url 'Read more about aliases here' variables-and-aliases %}
+When using aliases with DOM elements, Cypress will query the DOM again if the previously aliased DOM element has gone stale.
+
+{% note info 'Core Concept' %}
+{% url 'You can read more about aliasing objects and elements in our Core Concept Guide' variables-and-aliases#Aliases %}.
 {% endnote %}
 
 **{% fa fa-angle-right %} options** ***(Object)***
@@ -92,7 +94,7 @@ cy.get('form').within(function(){
 
 ## Alias
 
-For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases %}.
+For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases#Aliases %}.
 
 ***Get the aliased 'todos' elements***
 
@@ -114,6 +116,24 @@ beforeEach(function(){
 
 it('disables on click', function(){
   cy.get('@submitBtn').should('be.disabled')
+})
+```
+
+***Get the aliased 'users' fixture***
+
+```javascript
+beforeEach(function(){
+  cy.fixtures('users.json').as('users')
+})
+
+it('disables on click', function(){
+  // access the array of users 
+  cy.get('@users').then((users) => {
+    // get the first user
+    const user = users[0]
+
+    cy.get('header').contains(user.name)
+  })
 })
 ```
 
