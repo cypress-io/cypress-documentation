@@ -108,7 +108,7 @@ Imagine you have a button:
 </button>
 ```
 
-Oftentimes either the `<i>` or `<span>` element is covering the exact coordinate we're attempting to interact with. In those cases, the event fires on the child. We even note this for you in the {% url "Command Log" overview-of-the-gui#Command-Log %}.
+Oftentimes either the `<i>` or `<span>` element is covering the exact coordinate we're attempting to interact with. In those cases, the event fires on the child. We even note this for you in the {% url "Command Log" overview-of-test-runner#Command-Log %}.
 
 ## Scrolling
 
@@ -132,7 +132,7 @@ After we verify the element is actionable, Cypress will then fire all of the app
 cy.get('button').click({ position: 'topLeft' })
 ```
 
-The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' overview-of-the-gui %}.
+The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' overview-of-test-runner %}.
 
 ![event coordinates](/img/guides/coords.png)
 
@@ -146,7 +146,7 @@ It can be difficult to debug problems when elements are not considered actionabl
 
 Although you *should* see a nice error message, nothing beats visually inspecting and poking at the DOM yourself to understand the reason why.
 
-When you use the {% url "Command Log" overview-of-the-gui#Command-Log %} to hover over a command, you'll notice that we will always scroll the element the command was applied to into view. Please note that this is *NOT* using the same algorithms that we described above.
+When you use the {% url "Command Log" overview-of-test-runner#Command-Log %} to hover over a command, you'll notice that we will always scroll the element the command was applied to into view. Please note that this is *NOT* using the same algorithms that we described above.
 
 In fact we only ever scroll elements into view when actionable commands are running using the above algorithms. We *do not* scroll elements into view on regular DOM commands like {% url `cy.get()` get %} or {% url `.find()` find %}.
 

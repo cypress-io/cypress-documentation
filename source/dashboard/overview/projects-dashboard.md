@@ -74,7 +74,7 @@ Once you're set up to record test runs, we automatically generate a *Record Key*
 f4466038-70c2-4688-9ed9-106bf013cd73
 ```
 
-You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard' https://on.cypress.io/dashboard %}. You can also find your Record Key inside of the *Settings* tab on the Desktop App.
+You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard' https://on.cypress.io/dashboard %}. You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
 ![Record Key in Configuration Tab](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
 

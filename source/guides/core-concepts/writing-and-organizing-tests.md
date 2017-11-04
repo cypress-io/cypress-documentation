@@ -53,7 +53,7 @@ Check out our recipe using {% url 'ES2015 and CommonJS modules' extending-cypres
 
 To see an example of every command used in Cypress, open the {% url "`example_spec.js`" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/example_spec.js %} within your `cypress/integration` folder.
 
-To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress GUI and your new file should have appeared in the list.
+To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
 ## Support Files
 

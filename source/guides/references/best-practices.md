@@ -69,13 +69,52 @@ WIP.
 
 WIP.
 
-## Running all the Tests in GUI Mode
+## Running all the Tests in Test Runner
 
 WIP.
 
 ## Splitting up the "One Giant Test"
 
 WIP. -->
+
+## Assigning Return Values
+
+{% note danger %}
+{% fa fa-warning %} **Anti-Pattern:** Trying to assign the return value of Commands with `const`, `let`, or `var`.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle %} **Best Practice:** Use {% url 'closures to access and store' variables-and-aliases %} what Commands yield you.
+{% endnote %}
+
+Many first time users look at Cypress code and think it runs synchronously.
+
+We see new users commonly write code that looks like this:
+
+```js
+// DONT DO THIS. IT DOES NOT WORK
+// THE WAY YOU THINK IT DOES.
+
+const button = cy.get('button')
+
+const form = cy.get('form')
+
+// nope, fails
+button.click()
+```
+
+{% note info 'Did you know?' %}
+You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, it's usually a sign you're doing it wrong.
+{% endnote %}
+
+If you are new to Cypress and wanting to better understand how Commands work - {% url 'please read our Introduction to Cypress guide' introduction-to-cypress#Chains-of-Commands %}.
+
+If you're familiar with Cypress commands already, but find yourself using `const`, `let`, or `var` then you're typically trying to do one of two things:
+
+- You're trying to **store and compare** values such as **text**, **classes**, **attributes**.
+- You're trying to share **values** between tests and hooks like `before` and `beforeEach`.
+
+For working with either of these patterns, please read our {% url 'Variables and Aliases guide' variables-and-aliases %}.
 
 ## Visiting external sites
 
@@ -470,11 +509,11 @@ cy.get("table tr").should("have.length", 2)
 ## Web Servers
 
 {% note danger %}
-{% fa fa-warning %} **Anti-Pattern:** Trying to a start a webserver from within Cypress scripts with {% url `cy.exec()` exec %}.
+{% fa fa-warning %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %}.
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle %} **Best Practice:** Start a webserver prior to running Cypress in GUI mode or headless mode.
+{% fa fa-check-circle %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
 {% endnote %}
 
 We do NOT recommend trying to start your backend web server from within Cypress.
@@ -493,7 +532,7 @@ Trying to start a web server from `cy.exec()` causes all kinds of problems becau
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress GUI you can always restart / refresh while in the middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress Test Runner you can always restart / refresh while in the middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -501,4 +540,4 @@ Simple. Start your web server before running Cypress and kill it after it comple
 
 Are you trying to run in CI?
 
-We have {% url 'examples showing you how to start and stop your webserver' continuous-integration#Booting-Your-Server %}.
+We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Booting-Your-Server %}.

@@ -16,7 +16,7 @@ We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let'
 
 # {% fa fa-terminal %} Step 1: Start Your Server
 
-Assuming you've successfully {% url "installed the Desktop Application" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
+Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Test Runner" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
 
 It should look something like **http://localhost:8080**.
 
