@@ -6,7 +6,7 @@ comments: false
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- How Cypress enables you to isolate any or all of your front-end with {% url `cy.server()` server %} and {% url `cy.route()` route %}
+- How Cypress enables you stub out the backend with {% url `cy.route()` route %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
 - How to use Fixtures to reuse XHR responses
@@ -93,7 +93,7 @@ You don't have to do any work on the server. Your application will have no idea 
 - Perfect for JSON API's
 {% endnote %}
 
-# How to Stub Responses
+# Stubbing
 
 Cypress makes it easy to stub a response and control the `body`, `status`, `headers`, or even delay.
 
@@ -118,7 +118,7 @@ By default, Cypress is configured to *ignore* requests that are used to fetch st
 
 Cypress automatically collects the request `headers` and the request `body` and will make this available to you.
 
-# Server + Routing Table
+# Routing
 
 ```javascript
 cy.server()           // enable response stubbing
@@ -162,7 +162,7 @@ cy.fixture('activities.json').as('activitiesJSON')
 cy.route('GET', 'activities/*', '@activitiesJSON')
 ```
 
-## Organizing Fixtures
+## Organizing
 
 Cypress automatically scaffolds out a suggested folder structure for organizing your fixtures on every new project. By default it will create an `example.json` file when you add your project to Cypress.
 
@@ -188,6 +188,12 @@ cy.fixture("images/dogs.png") //returns dogs.png as Base64
 
 Whether or not you choose to stub responses, Cypress enables you to declaratively {% url `cy.wait()` wait %} for requests and their responses.
 
+{% note info %}
+This following section utilizes a concept known as {% url 'Aliasing' variables-and-aliases %}. If you're new to Cypress you might want to check that out first.
+{% endnote %}
+
+Here is an example of aliasing routes and then subsequently waiting on them:
+
 ```javascript
 cy.server()
 cy.route('activities/*', 'fixture:activities').as('getActivities')
@@ -206,7 +212,15 @@ cy.wait(['@getActivities', '@getMessages'])
 cy.get('h1').should('contain', 'Dashboard')
 ```
 
-## Removing Flake
+Waiting on an aliased route has big advantages:
+
+1. Tests are more robust with much less flake.
+2. Failure messages are much more precise.
+3. You can assert about the underlying XHR object.
+
+Let's investigate each benefit.
+
+## Flake
 
 One advantage of declaratively waiting for responses is that it decreases test flake. You can think of {% url `cy.wait()` wait %} as a guard that indicates to Cypress when you expect a request to be made that matches a specific routing alias. This prevents the next commands from running until responses come back and it guards against situations where your requests are initially delayed.
 
@@ -233,7 +247,7 @@ cy.get('#results')
   .and('contain', 'Book 2')
 ```
 
-## Clear Source of Failure
+## Failures
 
 In our example above, we added an assertion to the display of the search results.
 
@@ -251,7 +265,7 @@ With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoi
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
 
-## Asserting about the XHR Object
+## Assertions
 
 Another benefit of using {% url `cy.wait()` wait %} on requests is that it allows you to access the actual `XHR` object. This is useful when you want to make assertions about this object.
 
