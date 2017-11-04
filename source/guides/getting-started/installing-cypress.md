@@ -34,20 +34,42 @@ cd /your/project/path
 npm install cypress --save-dev
 ```
 
-This will install Cypress locally as a dev dependency for your project. We recommend this approach because:
-
-- Cypress is versioned like any other dependency.
-- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+This will install Cypress locally as a dev dependency for your project.
 
 {% img /img/guides/installing-cli.gif %}
 
+{% note info %}
+Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The binary downloaded by the `npm` package is the same as the binary downloaded directly as explained below.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle %} **Best Practice:** The recommended approach is to install Cypress with `npm` because :
+
+- Cypress is versioned like any other dependency.
+- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+{% endnote %}
+
 ## {% fa fa-download %} Direct Download
 
-If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly here" http://download.cypress.io/desktop %}.
+If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
+
+It will download the latest available version. Your platform will be detected automatically.
 
 Just manually unzip and double click. Cypress will run without needing to install any dependencies.
 
 {% img /img/guides/installing-global.gif %}
+
+## {% fa fa-cloud-download %} CDN Structure
+
+If you want to download a specific Cypress version for a given platform, you can get it from our CDN.
+
+The url pattern is `https://cdn.cypress.io/desktop/<version>/<platform>/cypress.zip` where :
+- `<version>` is the wanted Cypress version number.
+- `<plaform>` is the wanted platform string identifier which could be `osx64`, `win64` or `linux64`.
+
+Example : 
+
+`https://cdn.cypress.io/desktop/1.0.1/win64/cypress.zip` will download Cypress `1.0.1` for Windows plaftorm.
 
 ## {% fa fa-refresh %} Continuous Integration
 
@@ -142,3 +164,7 @@ To override what is installed, you simply set `CYPRESS_BINARY_VERSION` with the 
     ```
 
 In all cases, the fact that the binary was installed from a custom location *is not saved* in your `package.json` file. Every repeated installation would have to use the same environment variable to install the same binary.
+
+{% note warning %}
+If you have set an URL or a path to the `CYPRESS_BINARY_VERSION` environment variable, you will always get a warning message before tests execution. It is normal as the Cypress CLI cannot match the binary version with the `npm` package version. 
+{% endnote %}
