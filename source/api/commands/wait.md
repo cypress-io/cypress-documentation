@@ -35,8 +35,8 @@ The amount of time to wait in milliseconds.
 
 An aliased route as defined using the {% url `.as()` as %} command and referenced with the `@` character and the name of the alias.
 
-{% note info %}
-{% url 'Read about using aliases here.' aliases-and-references %}
+{% note info 'Core Concept' %}
+{% url 'You can read more about aliasing routes in our Core Concept Guide' network-requests#Waiting %}.
 {% endnote %}
 
 **{% fa fa-angle-right %} aliases** ***(Array)***
@@ -75,12 +75,14 @@ cy.wait(2000) // wait for 2 seconds
 {% note warning 'Anti-Pattern' %}
 You almost **never** need to wait for an arbitrary period of time. There are always better ways to express this in Cypress.
 
-Passing a number to `cy.wait()` exists because it's sometimes helpful when debugging to isolate a test failure you're trying to temporarily understand.
-
 Read about {% url 'best practices' best-practices#Unnecessary-Waiting %} here.
 {% endnote %}
 
+Additionally, its often much easier to use {% url `cy.debug()` debug %} or {% url `cy.pause()` pause %} when debugging your test code.
+
 ## Alias
+
+For a detailed explanation of aliasing, {% url 'read more about waiting on routes here' network-requests#Waiting %}.
 
 ***Wait for a specific XHR to respond***
 

@@ -35,7 +35,7 @@ sidebar:
     overview-of-test-runner: Overview of Test Runner
     conditional-testing: Conditional Testing
     debugging: Debugging
-    aliases-and-references: Aliases and References
+    variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
     network-requests: Network Requests
     screenshots-and-videos: Screenshots and Videos
