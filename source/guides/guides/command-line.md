@@ -159,7 +159,7 @@ You can {% url 'read more about recording runs here' projects-dashboard#Setup %}
 
 ## `cypress open`
 
-Opens the Cypress desktop application in interactive mode.
+Opens the Cypress Test Runner in interactive mode.
 
 ***Open Cypress***
 
@@ -169,7 +169,7 @@ cypress open [options]
 
 **Options**
 
-Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Desktop Application. These options will also override values in `cypress.json`
+Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`
 
 Option | Description
 ------ | ---------

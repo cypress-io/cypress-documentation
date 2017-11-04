@@ -11,7 +11,7 @@ guides:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
     interacting-with-elements: interacting-with-elements.html
-    overview-of-the-gui: overview-of-the-gui.html
+    overview-of-test-runner: overview-of-test-runner.html
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
   guides:
@@ -149,7 +149,7 @@ api:
 
 tutorials:
   test-a-react-todo-app:
-    introduction: introduction.html
+    introduction-to-tutorials: introduction-to-tutorials.html
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
 

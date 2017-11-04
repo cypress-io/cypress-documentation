@@ -185,9 +185,9 @@ Booting your web server means that it is a **long running process** that will ne
 
 Backgrounding your server process means that your CI provider will simply "skip" over it and immediately execute the next command.
 
-The problem is - what happens if your server takes seconds to boot? There is no guarantee that when Cypress starts running your webserver is available.
+The problem is - what happens if your server takes seconds to boot? There is no guarantee that when Cypress starts running your web server is available.
 
-This is a naive scenario assuming your webserver boots fast:
+This is a naive scenario assuming your web server boots fast:
 
 {% note danger %}
 Don't write the following - it will fail on slow booting servers.

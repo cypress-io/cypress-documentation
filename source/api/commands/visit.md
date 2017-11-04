@@ -109,7 +109,7 @@ cy.visit('http://localhost:3000/#/users', {
 ***Visit will automatically follow redirects***
 
 ```javascript
-// we aren't logged in, so our webserver
+// we aren't logged in, so our web server
 // redirected us to /login
 cy.visit('http://localhost3000/admin')
 cy.url().should('match', /login/)

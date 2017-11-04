@@ -1,12 +1,12 @@
 ---
-title: Overview of the GUI
+title: Overview of Test Runner
 comments: false
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- The names and purposes of the visual parts of the Cypress GUI tool
+- The names and purposes of the visual parts of the Cypress Test Runner
 - How the tool behaves under different situations and inputs
 - How the tool integrates the browser console experience
 {% endnote %}

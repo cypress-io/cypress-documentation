@@ -1,3 +1,19 @@
+- title: "Unblock Rails UI Testing with Cypress"
+  url: https://www.simplethread.com/unblock-rails-ui-testing-cypress/
+  sourceName: Simple Thread
+  sourceUrl: https://www.simplethread.com/
+  date: Nov 2, 2017
+  author: Don Denoncourt
+  img: /img/examples/kitchen-sink-debugger-rails.jpg
+
+- title: "Testing React Components using Storybook and Cypress"
+  url: https://medium.com/@mtiller/testing-react-components-using-storybook-and-cypress-1689a27f55aa
+  sourceName: Medium
+  sourceUrl: https://medium.com/@mtiller
+  date: Oct 18, 2017
+  author: Michael Tiller
+  img: /img/examples/storybook-cypress.jpg
+
 - title: "Javascript Testing Frameworks: The Best to Test JS Code"
   url: http://www.designyourway.net/blog/resources/javascript-testing-frameworks/
   sourceName: Design your way
@@ -9,15 +25,15 @@
 - title: "End-to-end testing on a React-Redux app"
   url: https://medium.com/@darioghilardi/end-to-end-testing-on-a-react-redux-app-10f5a26f2f61
   sourceName: Medium
-  sourceUrl: https://medium.com
+  sourceUrl: https://medium.com/@darioghilardi
   date: Oct 11, 2017
   author: Dario Ghilardi
   img: /img/examples/test-blackboard.jpg
 
 - title: "Ferramentas de testes de aceitação: uma odisséia."
-  url: https://medium.com/@darioghilardi/end-to-end-testing-on-a-react-redux-app-10f5a26f2f61
+  url: https://medium.com/@otavio/ferramentas-de-testes-de-aceita%C3%A7%C3%A3o-uma-odiss%C3%A9ia-8eff4c96da9e
   sourceName: Medium
-  sourceUrl: https://medium.com
+  sourceUrl: https://medium.com/@otavio
   date: Oct 9, 2017
   author: Otávio Machado
   img: /img/examples/testing-pyramid.jpg
@@ -25,7 +41,7 @@
 - title: "Cypress.io vs Protractor: e2e testing battle"
   url: https://medium.com/@kobvel/cypress-io-vs-protractor-e2e-testing-battle-d124ece91dc7
   sourceName: Medium
-  sourceUrl: https://medium.com
+  sourceUrl: https://medium.com/@kobvel
   date: Sep 30, 2017
   author: Mikki Kobvel
   img: /img/examples/cypress-vs-protractor.jpg

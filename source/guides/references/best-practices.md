@@ -69,7 +69,7 @@ WIP.
 
 WIP.
 
-## Running all the Tests in GUI Mode
+## Running all the Tests in Test Runner
 
 WIP.
 
@@ -509,11 +509,11 @@ cy.get("table tr").should("have.length", 2)
 ## Web Servers
 
 {% note danger %}
-{% fa fa-warning %} **Anti-Pattern:** Trying to a start a webserver from within Cypress scripts with {% url `cy.exec()` exec %}.
+{% fa fa-warning %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %}.
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle %} **Best Practice:** Start a webserver prior to running Cypress in GUI mode or headless mode.
+{% fa fa-check-circle %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
 {% endnote %}
 
 We do NOT recommend trying to start your backend web server from within Cypress.
@@ -532,7 +532,7 @@ Trying to start a web server from `cy.exec()` causes all kinds of problems becau
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress GUI you can always restart / refresh while in the middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress Test Runner you can always restart / refresh while in the middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -540,4 +540,4 @@ Simple. Start your web server before running Cypress and kill it after it comple
 
 Are you trying to run in CI?
 
-We have {% url 'examples showing you how to start and stop your webserver' continuous-integration#Booting-Your-Server %}.
+We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Booting-Your-Server %}.

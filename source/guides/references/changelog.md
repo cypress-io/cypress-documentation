@@ -9,7 +9,7 @@ comments: false
 
 **Features:**
 
-- The Desktop GUI now enables you to collapse folders when displaying a list of specs. Fixes {% issue 760 %}. Contributed by {% user metcorne %}.
+- The Test Runner now enables you to collapse folders when displaying a list of specs. Fixes {% issue 760 %}. Contributed by {% user metcorne %}.
 
 **Bugfixes**
 
@@ -23,7 +23,7 @@ comments: false
 
 - Enable passing `CYPRESS_RECORD_KEY` without using the CLI by invoking the binary directly. Fixes {% issue 820 %}.
 - Cypress binaries can now be pointed to a staging environment with `CYPRESS_ENV=staging`. Fixes {% issue 813 %}.
-- The Desktop GUI displays the scrollbar correctly when the update banner is displayed. Fixes {% issue 803 %}.
+- The Test Runner displays the scrollbar correctly when the update banner is displayed. Fixes {% issue 803 %}.
 - The branch name is now properly collected when recording in Buildkite CI. Fixes {% issue 777 %}.
 - You can install the Cypress binary from any URL or file path using the {% url "`CYPRESS_BINARY_VERSION` environment variable" installing-cypress#Advanced %}. Closes {% issue 701 %}.
 
@@ -72,7 +72,7 @@ comments: false
 - We will continue to follow `semver` from this point on (and also a bit more rigorously).
 - Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the {% url "MIT License" https://github.com/cypress-io/cypress/blob/develop/LICENSE.md %}.
 - We have a {% url "Contributing Guideline" https://on.cypress.io/contributing %} to help contributors get started as well as {% url "issues labeled `first-timers-only`" https://github.com/cypress-io/cypress/labels/first-timers-only %} for those wanting to contribute right away.
-- You can now use the Desktop GUI application without logging in. Some areas of the application still require logging in through GitHub, like the 'Runs' tab and viewing the project's 'Record Key'. The only places where login is required is when it interacts with our external servers. Naturally these places are optional and will not affect the local test writing + running experience.
+- You can now use the Test Runner application without logging in. Some areas of the application still require logging in through GitHub, like the 'Runs' tab and viewing the project's 'Record Key'. The only places where login is required is when it interacts with our external servers. Naturally these places are optional and will not affect the local test writing + running experience.
 - We've removed the requirement of filling out an early adopter form and approval for logging in with GitHub to Cypress.
 - {% url "www.cypress.io" https://www.cypress.io %} has an all new design to help new visitors get started quickly and understand our future pricing more clearly.
 - We are still updating the docs to reflect the `1.0.0` release.
@@ -254,7 +254,7 @@ comments: false
 - {% url "The checks used to determine an element's actionability" interacting-with-elements#Actionability %} are now run synchronously. This solves some circumstances where the element could have moved or otherwise change between the checks. Fixes {% issue 570 %}.
 - Fixed issue where clipped elements with `overflow-y: hidden` were falsely passing as "visible". Fixes {% issue 563 %}.
 - When using {% url `.select()` select %} on a select with multiple options with the same value, we now properly set `selectedIndex` and `selectedOptions` on the `select`. Fixes {% issue 554 %}.
-- Fixed issue where changing any spec file (renaming, adding, deleting) would remove the highlighted styling of the currently active spec file in the Desktop GUI. Fixes {% issue 547 %}.
+- Fixed issue where changing any spec file (renaming, adding, deleting) would remove the highlighted styling of the currently active spec file in the Test Runner. Fixes {% issue 547 %}.
 - We now get the absolute paths of styles to use when displaying snapshots. This will fix situations where some stylesheets were improperly referenced during the snapshot, so did not display styles correctly. Fixes {% issue 525 %}.
 - Fixed issue where commands would retry and potentially exceed their timeout values during page transitions. Fixes {% issue 594 %}
 - Fixed issue where server routes were lost after page load if not initiated by a {% url `cy.visit()` visit %} command. Fixes {% issue 177 %}
@@ -274,9 +274,9 @@ comments: false
 - {% url `cy.focused()` focused %} now automatically retries until the element exists in the DOM. This makes it behave the same as {% url "`cy.get()`" get %} Fixes {% issue 564 %} and {% issue 409 %}.
 - We now support per-project `state.json`. Fixes {% issue 512 %}.
 - We can now handle multiple projects per server. Fixes {% issue 512 %}.
-- The Desktop GUI can now have projects added by being 'dragged' in. Fixes <OPEN A NEW ISSUE>.
-- The Desktop GUI update window now has messaging about `package.json` versioning. Fixes {% issue 513 %}.
-- The Desktop GUI now accounts for cypress being installed per project as npm module. Fixes {% issue 500 %} and {% issue 514 %}.
+- The Test Runner can now have projects added by being 'dragged' in. Fixes <OPEN A NEW ISSUE>.
+- The Test Runner update window now has messaging about `package.json` versioning. Fixes {% issue 513 %}.
+- The Test Runner now accounts for cypress being installed per project as npm module. Fixes {% issue 500 %} and {% issue 514 %}.
 - {% url "`cypress install`" command-line %} `-d` option. Fixes {% issue 389 %}.
 - Exposing Cypress Binary should no longer be necessary when cypress is locally installed. Fixes {% issue 379 %}.
 - Added an 'App Data' option in the Desktop App that displays app data. Fixes {% issue 475 %}.
@@ -385,7 +385,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Misc:**
 
-- We now preserve the Desktop GUI's position and sizing after it's closed + reopened. Fixes {% issue 443 '#443' %}.
+- We now preserve the Test Runner's position and sizing after it's closed + reopened. Fixes {% issue 443 '#443' %}.
 - We now ignore watching `node_modules`, `bower_components` and a few other folders to reduce the number of watched files. Fixes {% issue 437 '#437' %}.
 
 # 0.19.0
@@ -415,8 +415,8 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - The {% url 'Dashboard' https://on.cypress.io/dashboard %} enables you to view your recorded runs, manage projects, create organizations, invite users and set permissions.
 - Projects are either **public** with their runs being publicly viewable by anyone, or **private** which restricts their access to only users you've invited. All **existing** projects were set to **private** by default.
 - When you invite users (from the Dashboard) we will **automatically** whitelist them. This means you can invite all of your teammates (or anyone else). They can start using Cypress without talking to us.
-- We now list all of the recorded runs directly in the Desktop GUI under a new `Runs` tab. Fixes {% issue 236 '#236' %}.
-- Your list of projects in the Desktop GUI now displays their last recorded run status - passing, failing, pending, running, etc.
+- We now list all of the recorded runs directly in the Test Runner under a new `Runs` tab. Fixes {% issue 236 '#236' %}.
+- Your list of projects in the Test Runner now displays their last recorded run status - passing, failing, pending, running, etc.
 - We've changed the "Config" tab to now be called "Settings". We added two new sections to the "Settings" tab which displays your `projectId` and your Record Key. These sections do a much better job explaining what these are and how you use them.
 - You no longer have to use `cypress get:key` to get your Record Key. We now display this in your "Settings" tab and also in the {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 - Projects will no longer automatically acquire a `projectId` when being added. There is now a very explicit **opt-in** process where you setup your project to record. This should make it much clearer what's going on behind the scenes.
@@ -473,7 +473,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Bugfixes:**
 
-- Uninstalling the last used browser no longer causes the Desktop GUI to error and hang. Fixes {% issue 371 '#371' %}.
+- Uninstalling the last used browser no longer causes the Test Runner to error and hang. Fixes {% issue 371 '#371' %}.
 - Fixed issue where `stdout` would not be displayed on a completed `cypress ci` run. Fixes {% issue 398 '#398' %}.
 - Fixed a longstanding issue in Cypress where logging in from another computer would kill the session on all other computers, and prevent you from accessing `cypress get:key` (amongst other things). Fixes {% issue 400 '#400' %}.
 
@@ -483,7 +483,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - We now validate that `baseUrl` is accessible **prior** to running tests. This prevents a common situation where you may forget to boot your web server and have instantly failing tests. Fixes {% issue 383 '#383' %}.
 - We now show the entire scaffolded tree of files when adding a brand new project. Fixes {% issue 401 '#401' %}.
 - We display errors coming from `babel` with more helpful information now.
-- Changed the [Desktop GUI](https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui) to use `JWT` for authorization. **You will have to log in again**.
+- Changed the [Test Runner](https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui) to use `JWT` for authorization. **You will have to log in again**.
 
 # 0.18.5
 
@@ -678,7 +678,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - Cypress now applies cookies to the browser which were cleared between redirects. Fixes {% issue 224 '#224' %}.
 - Snapshots now work even when `<html>` tag has invalid attributes. Fixes {% issue 271 '#271' %}.
-- Cypress no longer crashes on initial {% url `cy.visit()` visit %} when the 3rd party webserver never ends the response. Fixes {% issue 272 '#272' %}.
+- Cypress no longer crashes on initial {% url `cy.visit()` visit %} when the 3rd party web server never ends the response. Fixes {% issue 272 '#272' %}.
 
 **Misc:**
 
@@ -900,7 +900,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - We are cleaning up internal `__cypress` cookies more so they won't get in the way of testing your application.
 - We now opt into `gzip` handling instead of forcing requests to omit it.
 - The runner is now responsive. It will correctly scale down URLs on smaller screen sizes instead of looking completely broken in CSS. We also designed a much better loading indicator.
-- Added button to the reporter that focuses the Desktop GUI and shows the list of tests.
+- Added button to the reporter that focuses the Test Runner and shows the list of tests.
 - The reporter now updates the duration every `100ms` instead of only when a test changes.
 - In the reporter, suites that are pending or contain only pending tests have the blue "pending" indicator on the left instead of the white "processing" indicator.
 
@@ -1102,7 +1102,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Misc:**
 
-- Open sourced another core repo: [Cypress Core Desktop GUI](https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui) which makes up the Cypress Desktop Application.
+- Open sourced another core repo: [Cypress Core Test Runner](https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui) which makes up the Cypress Desktop Application.
 - Improved the {% issue 74#issuecomment-208422453 'error message' %} displayed to users on Windows attempting to download the Cypress Desktop app.
 
 # 0.15.2
@@ -1164,7 +1164,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - Cypress no longer looks at your `tests` directory for test files. Now, by default, it looks in the `cypress/integration` directory.
 - We've removed the configuration option `testFolder` and renamed it to {% url `integrationFolder` configuration#Folders %} inside of the `cypress.json`.
 - We've renamed the `cypress` npm package to be `cypress-cli`. You'll see a giant deprecation warning until your scripts have been updated to reference `cypress-cli`.. You can also uninstall the `cypress` npm package.
-- Added new {% url `fileServerFolder` configuration#Folders %} configuration option that can mount a directory other than your project root when using Cypress as a webserver.
+- Added new {% url `fileServerFolder` configuration#Folders %} configuration option that can mount a directory other than your project root when using Cypress as a web server.
 
 **Misc:**
 
@@ -1246,7 +1246,7 @@ More Info:
 **Summary:**
 
 - This update represents mostly a lot of internal structure changes. We swapped out the underlying Desktop architecture and refactored all of the backend code to prepare for an open-source release.
-- If you choose to install Cypress from the {% url 'CLI Tool' command-line %} you must update to the latest version `0.9.1`. Just run `npm install -g cypress` and then you can run {% url '`cypress install`' command-line %}. You don't need to do anything if you update from within the Desktop GUI itself.
+- If you choose to install Cypress from the {% url 'CLI Tool' command-line %} you must update to the latest version `0.9.1`. Just run `npm install -g cypress` and then you can run {% url '`cypress install`' command-line %}. You don't need to do anything if you update from within the Test Runner itself.
 
 **Features:**
 
@@ -1269,7 +1269,7 @@ More Info:
 - {% url `.click()` click %} will now properly click within an element's bounding box when a `position` option is passed and the calculated coordinates are a fraction. This previously forced the click to happen outside of the element. Fixes {% issue 99 '#99' %}.
 - `clientX` and `clientY` event properties are now correctly calculated for elements when the page is scrolled. Fixes {% issue 98 '#98' %}.
 - {% url `.check()` check %} and {% url `.uncheck()` uncheck %} now correctly filter down the subject when a value is passed as an option. Fixes {% issue 94 '#94' %}.
-- The desktop GUI will now display your email address when you have not set a name in GitHub.
+- The Test Runner will now display your email address when you have not set a name in GitHub.
 
 **Misc:**
 
