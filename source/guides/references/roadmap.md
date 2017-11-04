@@ -9,7 +9,7 @@ At any one time, our team is planning / working on really "big" upcoming feature
 
 Here is where Cypress is headed:
 
-***Desktop App***
+***Test Runner***
 
 Feature | Status
 --- | ---
@@ -24,7 +24,7 @@ Feature | Status
 {% issue 310 'Cross Browser Support - #310' %} | No proposal yet
 {% issue 311 'Native Events - #311' %} | No proposal yet
 
-***Dashboard***
+***Dashboard Service***
 
 Feature | Status
 --- | ---

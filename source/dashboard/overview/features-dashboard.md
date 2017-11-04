@@ -17,9 +17,9 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service w
 - Watch a video of your entire test run or a clip at the point of test failure.
 - Manage who has access to your recorded test data.
 
-***See Tests Runs in Desktop***
+***See Tests Runs in the Test Runner***
 
-Additionally we've integrated the test runs into the Cypress {% url 'Desktop Application' installing-cypress %}. This means you can see the test runs in the *Runs* tab from within every project.
+Additionally we've integrated the test runs into the Cypress {% url 'Test Runner' installing-cypress %}. This means you can see the test runs in the *Runs* tab from within every project.
 
 ![Runs List](/img/dashboard/runs-list-in-desktop-gui.png)
 

@@ -358,7 +358,7 @@ You may receive this error when trying to run Cypress tests in {% url 'Continuou
 
 Since no record key was passed, Cypress checks for any environment variable with the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
-You can get your project's record key by locating it in your settings tab in the Desktop or in the {% url 'Dashboard' https://on.cypress.io/dashboard %}.
+You can get your project's record key by locating it in your settings tab in the Test Runner or in the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
 You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-Key %}.
 
@@ -387,25 +387,6 @@ cypress run --record
 ```
 
 We will automatically apply the record key environment variable.
-
-## {% fa fa-exclamation-triangle red %}  Cypress Package Renamed
-
-<img width="638" alt="screen shot 2016-03-26 at 2 06 48 pm" src="https://cloud.githubusercontent.com/assets/1268976/14061658/0f675e30-f35c-11e5-9765-ab0049a2653d.png">
-
-In previous versions of Cypress (below `0.15.0`) we distributed our CLI Tools under the package: `cypress`.
-
-As of `0.15.0` the CLI Tools have now been renamed to the package `cypress-cli`.
-
-Please update your scripts to use: `npm install -g cypress-cli`
-
-This change was made for two reasons:
-
-- Users were confused thinking they were actually installing cypress when in fact they were installing the CLI tools.
-- Once we open source the Desktop Application it will be distributed under the `cypress` package
-
-Hopefully this change will lead to less confusion over the versioning of both the `CLI Tools` and the `Cypress Desktop Application`.
-
-Once `cypress` is open sourced you'll be able to set `cypress` as a `devDependency` and will not have to fuss with downloading or managing the Desktop Application.
 
 # Page Load Errors
 
@@ -454,7 +435,7 @@ At the moment, we haven't implemented an automatic way to recover from them, but
 If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
 
 
-# Desktop GUI errors
+# Test Runner errors
 
 ## {% fa fa-exclamation-triangle red %} Cannot connect to API server
 

@@ -93,6 +93,10 @@ cy.get('input').invoke('val').then((val1) => {
 })
 ```
 
+## {% fa fa-angle-right %} How do I compare the value or state of one thing to another?
+
+Our {% url 'Variables and Aliases guide' variables-and-aliases %} gives you examples of doing exactly that.
+
 ## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
 
 Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
@@ -108,6 +112,15 @@ cy.get('button').then(($el) => {
 What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
+## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
+
+No. The Command API is not designed in a way that makes this possible.
+
+If you're curious please read:
+
+- Our {% url 'Introduction to Cypress guide' introduction-to-cypress#Commands-Are-Asynchronous %} which explains how the Commands are designed
+- Our {% url 'Variables and Aliases guide' variables-and-aliases %} which talks about patterns dealing with async code
 
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
@@ -179,12 +192,12 @@ f4466038-70c2-4688-9ed9-106bf013cd73
 ```
 
 {% note info  %}
-You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
+You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 {% endnote %}
 
-You can also find your Record Key inside of the *Settings* tab in our Desktop Application.
+You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-![Settings Tab of Desktop](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
+![Settings Tab of Test Runner](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
 
 ## {% fa fa-angle-right %} How do I check that an email was sent out?
 
