@@ -93,6 +93,10 @@ cy.get('input').invoke('val').then((val1) => {
 })
 ```
 
+## {% fa fa-angle-right %} How do I compare the value or state of one thing to another?
+
+Our {% url 'Variables and Aliases guide' variables-and-aliases %} gives you examples of doing exactly that.
+
 ## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
 
 Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
@@ -108,6 +112,15 @@ cy.get('button').then(($el) => {
 What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
+## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
+
+No. The Command API is not designed in a way that makes this possible.
+
+If you're curious please read:
+
+- Our {% url 'Introduction to Cypress guide' introduction-to-cypress#Commands-Are-Asynchronous %} which explains how the Commands are designed
+- Our {% url 'Variables and Aliases guide' variables-and-aliases %} which talks about patterns dealing with async code
 
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
