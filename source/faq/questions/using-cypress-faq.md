@@ -135,6 +135,10 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 
 This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
 
+## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
+
+{% url "We've answered this question in detail here." trade-offs#Multiple-Browsers %}
+
 ## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the {% url 'same way as any other recursive loop' request#Request-Polling %}.
