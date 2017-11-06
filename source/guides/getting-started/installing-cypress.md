@@ -34,16 +34,27 @@ cd /your/project/path
 npm install cypress --save-dev
 ```
 
-This will install Cypress locally as a dev dependency for your project. We recommend this approach because:
-
-- Cypress is versioned like any other dependency.
-- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+This will install Cypress locally as a dev dependency for your project.
 
 {% img /img/guides/installing-cli.gif %}
 
+{% note info %}
+Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
+{% endnote %}
+
+{% note success Best Practice %}
+
+The recommended approach is to install Cypress with `npm` because :
+
+- Cypress is versioned like any other dependency.
+- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+{% endnote %}
+
 ## {% fa fa-download %} Direct Download
 
-If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly here" http://download.cypress.io/desktop %}.
+If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
+
+The direct download will always grab the latest available version. Your platform will be detected automatically.
 
 Just manually unzip and double click. Cypress will run without needing to install any dependencies.
 
@@ -111,6 +122,8 @@ You can {% url 'read more about the CLI here' command-line %}.
 
 # Advanced
 
+## Environment Variables
+
 Using an environment variable you can control how Cypress is installed.
 
 This is helpful if you want to:
@@ -142,3 +155,31 @@ To override what is installed, you simply set `CYPRESS_BINARY_VERSION` with the 
     ```
 
 In all cases, the fact that the binary was installed from a custom location *is not saved* in your `package.json` file. Every repeated installation would have to use the same environment variable to install the same binary.
+
+{% note warning Note %}
+Setting the `CYPRESS_BINARY_VERSION` to a URL or local path will always display a warning message when opening. This is normal as the Cypress CLI cannot match the binary version with the `npm` package version.
+{% endnote %}
+
+## Hosting
+
+If you want to download a specific Cypress version for a given platform, you can get it from our CDN.
+
+You may want to do this if you want to host Cypress yourself and serve it from a local network.
+
+The download server url is `https://download.cypress.io`.
+
+ Method | Url | Description
+ ------ | --- | -----------
+`GET` | `/desktop                 `  | Download latest desktop app
+`GET` | `/desktop?platform=p      `  | downloads latest desktop app for specific platform
+`GET` | `/desktop.json            `  | returns desktop manifest.json
+`GET` | `/desktop/:version`          | downloads desktop app by version
+`GET` | `/desktop/:version?platform=p`    | downloads desktop app by OS which could be `darwin`, `win32` or `linux64`
+
+{% note info "Example:" %}
+`https://download.cypress.io/desktop/1.0.1?platform=win32`
+
+This will download Cypress `1.0.1` for Windows platform.
+{% endnote %}
+
+If you don't provide a platform, it will be detected automatically.
