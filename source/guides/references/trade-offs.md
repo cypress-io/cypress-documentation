@@ -4,9 +4,9 @@ comments: false
 containerClass: faq
 ---
 
-Cypress automates the browser with its own unique architecture - apart from any other testing tool. While this unlocks the power to do things you won't find anywhere else, there are specific trade offs that are made. Remember - there is no free lunch!
+Cypress automates the browser with its own unique architecture - differently from any other testing tool. While this unlocks the power to do things you won't find anywhere else, there are specific trade offs that are made. There is no free lunch!
 
-In this reference we'll lay out what some of the tradeoffs are - and specifically how you can work around them.
+In this guide we'll lay out what some of the tradeoffs are - and specifically how you can work around them.
 
 While at first it may seem like these are some strict limitations in Cypress - we think you'll soon realize that many of these boundaries are actually **good** to have. In a sense they prevent you from writing really bad, slow, or flaky tests.
 
@@ -22,17 +22,19 @@ While at first it may seem like these are some strict limitations in Cypress - w
 
 While we of course have more {% url 'open issues' 'https://github.com/cypress-io/cypress/issues' %} than this, we believe these are some of the more important *temporary* restrictions that Cypress will eventually fix. PR's are welcome ;-)
 
-- There is no `cy.hover()` command
-- There is no `cy.tab()` command
-- You cannot visit a TLD domain
-- There are no native or mobile events
-- Testing file uploads is application specific
-- Testing file downloads requires a workaround
-- You can take screenshots, but diffing them needs work
-- Iframe support is somewhat limited, but does work
-- You cannot stub `window.fetch`, but there is a workaround
-- There is no cross browser support other than Chrome + Electron
-- Third party sites may implement security mechanisms which defeat Cypress
+Many of these issues are currently being worked on or are on our {% url "Roadmap" roadmap %}.
+
+- {% url "Workarounds for `cy.hover()` command" hover %}
+- {% url "There is no `cy.tab()` command" https://github.com/cypress-io/cypress/issues/299 %}
+- {% url "You cannot visit a TLD domain" https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20tld %}
+- {% url "There are no native or mobile events" https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191 %}
+- {% url "Testing file uploads is application specific" https://github.com/cypress-io/cypress/issues/170#issuecomment-340012621 %}
+- {% url "Testing file downloads is application specific" https://github.com/cypress-io/cypress/issues/433#issuecomment-280465552 %}
+- {% url "You can take screenshots, but diffing them needs work" https://github.com/cypress-io/cypress/issues/181 %}
+- {% url "Iframe support is somewhat limited, but does work" https://github.com/cypress-io/cypress/issues/685 %}
+- {% url "There is no cross browser support other than Chrome + Electron" https://github.com/cypress-io/cypress/issues/310 %}
+- {% url "Third party sites may implement security mechanisms which defeat Cypress" https://github.com/cypress-io/cypress/issues/392#issuecomment-274987217 %}
+- {% url "You cannot use `cy.route()` on `window.fetch` but there is a workaround" https://github.com/cypress-io/cypress/issues/95#issuecomment-281273126 %}, also a {% url "recipe here" https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/spy_stub_clock_spec.js %}
 
 # Permanent Trade Offs
 
@@ -95,55 +97,113 @@ In virtually every situation where someone asks about this functionality they'll
 
 Whether you're testing a chat application or anything else - what you're really asking about is testing collaboration. The thing is though - you don't need to recreate the entire environment in order to test collaboration with 100% coverage.
 
-collaboration of the road, the tires, and the load.
+Doing it this way will be faster, more accurate, and much more scalable.
 
-Let's disembark for a moment and talk about tires - the spinning rubber things underneath your car.
+Trying to spin up the entire environment is a race to the bottom. Imagine when you want to test the collaboration of 3 users, then 4 users, then 5 users. Perhaps you then want to test how your backend handles the load of dozens, hundreds, maybe thousands of users. Would you spin up a browser to simulate the environment for each one of them?
 
-Even though we work in the realm of intangible bits and bytes, many testing principles can be found in the physical world.
+No, of course you wouldn't - because you can still test all of these scenarios without involving more than 1 browser.
 
-If we were building a new tire - or potentially wanting to change the design of the tire - how would you go about testing it?
+While outside the scope of this article, you could test a chat application using the following principles. Each one will incrementally introduce more collaboration:
 
-I suppose you could either:
+***1. Use only the browser:***
 
-- Pop them on a car, a truck, and an SUV and then drive the cars each 100,000 miles in every conceivable environment
-- Recreate the environment, the load, and the conditions that a tire would naturally find itself under
+```text
+    &downarrow;
+&leftarrow; browser &rightarrow;
+    &uparrow;
+```
 
-The first scenario - while being a true "e2e" test would be utterly unscalable. It would take weeks to generate that much mileage, you'd have to have a ton of different car types (to test the stress load) and then you'd actually have to *drive* in every road condition.
+Avoid the server, invoke your JavaScript callbacks manually thereby simulating what happens when "notifications come in", or "users leave the chat" purely in the browser.
 
-The second scenario offers us the ability to iterate much more quickly. This is what a "test bed" is called. This isn't free of course - you do have to *build* the test bed in order to recreate the conditions of the real world. But once you do, you can test your tires in any inconceivable condition quickly and accurately.
+You can easily stub everything and simulate every single scenario. Chat messages, offline messages, connections, reconnections, disconnections, group chat, everything.  Everything that happens inside of the browser can be fully tested. Requests leaving the browser could also be stubbed and you could simply assert that the request bodies were correct.
 
-Let's now apply the same principles to testing a chat application.
+***2. Stub the other connection:***
 
-Imagine you spin up a 2nd browser to test "the 2nd user". What about when you want to test group chat? Do you spin up a 3rd browser? And then a 4th? And then a 5th?
+```text
+server &rightarrow; browser
+            &downarrow;
+server &leftarrow; browser
+  &downarrow;
+(other connections stubbed)
+  &downarrow;
+server &rightarrow; browser
+```
 
-What if you want to test that your system (under load) can handle thousands of users at a time chatting? Would you spin up literally *thousands* of browsers to recreate this exact environment?
+Use your server to receive messages from the browser, and simply simulate "the other participant" by sending messages as them. This is certainly application specific, but generally you could insert records into the database or do whatever it takes for your server to act as if a message of one client needs to be sent back to the browser.
 
-No. Of course not.
+Typically this pattern enables you to avoid making a secondary websocket connection and yet still fulfills the bidirectional browser and server contract. This means you could also test edge cases (disconnections, etc) without actually creating to handle real connections.
 
-You'd separate out all the important pieces and likely write specialized tests for each one individually.
+***3: Introduce another connection:***
 
-1. Scalability (group chat / 1000's a messages)
-do you think facebook tests messenger by spinning up 1,000,000 browsers to figure out the load? No they use network load testing.
+```text
+server &rightarrow; browser
+            &downarrow;
+server &leftarrow; browser
+  &downarrow;
+server &rightarrow; other connection
+            &downarrow;
+server &leftarrow; other connection
+  &downarrow;
+server &rightarrow; browser
+```
 
-Do you use a browser to test API calls? No, of course not. You just shoot network requests directly to your server.
+To do this - you'll need a background process outside of the browser to make the underlying websocket connection that you can then communicate with and control.
 
-If you needed to recreate the very conditions to test this, then you'll be killing yourself.
+You can do this in may ways and here's a simple example of using an HTTP server to act as the client and exposing a REST interface that enables us to control it.
 
-What about the chat experience when users are halfway across the world? Just imagine all the edge cases and scenarios you made need to account for. Do you think spinning up the browser is feasible?
+```js
+// cypress code
 
-Do you spin up the browser to seed the database? No. You just seed the database directly.
+// tell the http server at 8081 to connect to 8080
+cy.request('http://localhost:8081/connect?url=http://localhost:8080')
 
-Trying to coordinate an army of browsers would take enormous resources. It wouldn't be practical. The same principle applies whether its 2 browsers or 2 million browsers.
+// tell the http server at 8081 to send a message
+cy.request('http://localhost:8081/message?m=hello')
 
-2. Don't involve the server
-Stub it out. Easy. Done. All within a single browser. You could even use Cypress test scripts itself to connect to the websocket connection! Wow.
+// tell the http server at 8081 to disconnect
+cy.request('http://localhost:8081/disconnect')
+```
 
-3. Use the server as the other client
-You could actually connect another client and give it remote commands. Easy.
+And the HTTP server code would look something like this...
 
-4. Don't connect a client but force your server into thinking many are connected.
+```js
+const client = require('socket.io:client')
+const express = require('express')
 
-5. Don't test the collaboration at all. Likely you can just write server level (backend end) tests to cover the whole thing. Sure you might want 1-2 e2e tests making sure your message got sent and picked up by your server, but that cover most of the use case in one shot.
+const app = express()
+
+let socket
+
+app.get('/connect', (req, res) => {
+  const url = req.query.url
+
+  socket = client(url)
+
+  socket.on('connect', () => {
+    res.sendStatus(200)
+  })
+})
+
+app.get('/message', (req, res) => {
+  const msg = req.query.m
+
+  socket.send(msg, () => {
+    res.sendStatus(200)
+  })
+})
+
+app.get('/disconnect', (req, res) => {
+  socket.on('disconnect', () => {
+    res.sendStatus(200)
+  })
+
+  socket.disconnect()
+})
+
+app.listen(8081, () => {})
+```
+
+This avoids ever needing a 2nd browser, but still gives you an e2e test that provides 100% confidence that two clients can communicate with each other.
 
 ## Single Origin
 
@@ -155,17 +215,37 @@ What is a superdomain?
 // examples of superdomains
 // given these origins below
 
-http://google.com       // google.com
-https://google.com      // google.com
-https://www.google.com  // google.com
-https://mail.google.com // google.com
+http://google.com       // superdomain is google.com
+https://google.com      // superdomain is google.com
+https://www.google.com  // superdomain is google.com
+https://mail.google.com // superdomain is google.com
 ```
 
-You can navigate between **subdomains** in a single test - you just cannot navigate from `google.com` to `apple.com` in the same test.
+The rules are:
 
-This limitation exists due to the way Cypress is bound to a single superdomain origin per test. Fortunately, there is never a situation where it is actually useful to transition between domains. All browsers have a security model bound to origin; sites are completely isolated from one another. In the unusual situation where an action *does* affect another origin, you can simply use cy.request() to programmatically interact with the other site. Imagine submitting a form on your web application which ends up updating some value in Github. The thing is, you don't need to navigate to the other website to verify this. You could just programmatically interact with the other sites' APIs. So, while this restriction may initially seem counter-intuitive, it is actually a fundamentally good best practice. Testing or visiting applications you don't control is a recipe for flake and disaster.
+- {% fa fa-warning %} You **cannot** visit two different superdomains in the same test.
+- {% fa fa-check-circle %} But you **can** visit different subdomains in the same test.
 
-With that said, there are situations where you may need to navigation between two origins and you control both parts. This regularly occurs with Single Sign On (SSO). This is very easy to test in Cypress and we even have recipes showing you how. "
+```javascript
+cy.visit('https://www.cypress.io')
+cy.visit('https://docs.cypress.io') // yup all good
+```
 
+```javascript
+cy.visit('https://apple.com')
+cy.visit('https://google.com')      // this will immediately error
+```
 
-This is one of those situations where this restriction is actually good.
+This limitation exists because Cypress switches to the domain under each specific test when it runs.
+
+The good news here is that it is extremely rare to need to visit two different superdomains in a single test. Why? Because the browser has a natural security barrier called `origin policy` which means that state like `localStorage`, `cookies`, `service workers` and many other API's are not shared between them.
+
+Therefore what you do on one site could not possibly affect another.
+
+As a best practice, you should not visit or interact with a 3rd party service not under your control. However, there are exceptions! If your organization uses Single Sign On (SSO) or OAuth then you might involve a 3rd party service other than your superdomain.
+
+We've written several other guides specifically about handling this situation.
+
+- {% url 'Best Practices: Visiting external sites' best-practices#Visiting-external-sites %}
+- {% url 'Web Security: Common Workarounds' web-security#Common-Workarounds %}
+- {% url 'Recipes: Logging In (Single Sign On)' logging-in-recipe %}
