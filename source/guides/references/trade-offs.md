@@ -25,16 +25,16 @@ While we of course have more {% url 'open issues' 'https://github.com/cypress-io
 Many of these issues are currently being worked on or are on our {% url "Roadmap" roadmap %}.
 
 - {% url "Workarounds for `cy.hover()` command" hover %}
-- {% url "There is no `cy.tab()` command" https://github.com/cypress-io/cypress/issues/299 %}
+- {% issue 299 "There is no `cy.tab()` command" %}
 - {% url "You cannot visit a TLD domain" https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20tld %}
-- {% url "There are no native or mobile events" https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191 %}
-- {% url "Testing file uploads is application specific" https://github.com/cypress-io/cypress/issues/170#issuecomment-340012621 %}
-- {% url "Testing file downloads is application specific" https://github.com/cypress-io/cypress/issues/433#issuecomment-280465552 %}
-- {% url "You can take screenshots, but diffing them needs work" https://github.com/cypress-io/cypress/issues/181 %}
-- {% url "Iframe support is somewhat limited, but does work" https://github.com/cypress-io/cypress/issues/685 %}
-- {% url "There is no cross browser support other than Chrome + Electron" https://github.com/cypress-io/cypress/issues/310 %}
-- {% url "Third party sites may implement security mechanisms which defeat Cypress" https://github.com/cypress-io/cypress/issues/392#issuecomment-274987217 %}
-- {% url "You cannot use `cy.route()` on `window.fetch` but there is a workaround" https://github.com/cypress-io/cypress/issues/95#issuecomment-281273126 %}, also a {% url "recipe here" https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/spy_stub_clock_spec.js %}
+- {% issue 311#issuecomment-339824191 "There are no native or mobile events" %}
+- {% issue 170#issuecomment-340012621 "Testing file uploads is application specific" %}
+- {% issue 433#issuecomment-280465552 "Testing file downloads is application specific" %}
+- {% issue 181 "You can take screenshots, but diffing them needs work" %}
+- {% issue 685 "Iframe support is somewhat limited, but does work" %}
+- {% issue 310 "There is no cross browser support other than Chrome + Electron" %}
+- {% issue 392#issuecomment-274987217 "Third party sites may implement security mechanisms which defeat Cypress" %}
+- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround" %}, also a {% url "recipe here" https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/spy_stub_clock_spec.js %}
 
 # Permanent Trade Offs
 
