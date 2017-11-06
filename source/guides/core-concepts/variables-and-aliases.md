@@ -333,8 +333,8 @@ it('utilize users in some way', function () {
   // use the special '@' syntax to access aliases
   // which avoids the use of 'this'
   cy.get('@users').then((users) => {
-    // access the users property
-    const user = this.users[0]
+    // access the users argument
+    const user = users[0]
 
     // make sure the header contains the first
     // users name
