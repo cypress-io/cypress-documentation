@@ -85,6 +85,8 @@ open a pull request from your repo to the `cypress-io/cypress-documentation` rep
 
 - The pull request should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
 - When opening a PR for a specific issue already open, please use the `address #[issue number]` or `closes #[issue number]` syntax in the pull request description.
+- Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
+![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
 
 ### Contributor License Agreement
 
