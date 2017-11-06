@@ -97,6 +97,31 @@ Whether you're testing a chat application or anything else - what you're really 
 
 collaboration of the road, the tires, and the load.
 
+Let's disembark for a moment and talk about tires - the spinning rubber things underneath your car.
+
+Even though we work in the realm of intangible bits and bytes, many testing principles can be found in the physical world.
+
+If we were building a new tire - or potentially wanting to change the design of the tire - how would you go about testing it?
+
+I suppose you could either:
+
+- Pop them on a car, a truck, and an SUV and then drive the cars each 100,000 miles in every conceivable environment
+- Recreate the environment, the load, and the conditions that a tire would naturally find itself under
+
+The first scenario - while being a true "e2e" test would be utterly unscalable. It would take weeks to generate that much mileage, you'd have to have a ton of different car types (to test the stress load) and then you'd actually have to *drive* in every road condition.
+
+The second scenario offers us the ability to iterate much more quickly. This is what a "test bed" is called. This isn't free of course - you do have to *build* the test bed in order to recreate the conditions of the real world. But once you do, you can test your tires in any inconceivable condition quickly and accurately.
+
+Let's now apply the same principles to testing a chat application.
+
+Imagine you spin up a 2nd browser to test "the 2nd user". What about when you want to test group chat? Do you spin up a 3rd browser? And then a 4th? And then a 5th?
+
+What if you want to test that your system (under load) can handle thousands of users at a time chatting? Would you spin up literally *thousands* of browsers to recreate this exact environment?
+
+No. Of course not.
+
+You'd separate out all the important pieces and likely write specialized tests for each one individually.
+
 1. Scalability (group chat / 1000's a messages)
 do you think facebook tests messenger by spinning up 1,000,000 browsers to figure out the load? No they use network load testing.
 
