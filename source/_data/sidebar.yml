@@ -40,7 +40,7 @@ guides:
     bundled-tools: bundled-tools.html
     # creating-fixtures: creating-fixtures.html
     # cypress-api-design: cypress-api-design.html
-    known-issues: known-issues.html
+    trade-offs: trade-offs.html
     # contributing: contributing.html
     changelog: changelog.html
     roadmap: roadmap.html
