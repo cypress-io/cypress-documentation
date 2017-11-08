@@ -36,7 +36,7 @@ sidebar:
     overview-of-test-runner: Overview of Test Runner
     conditional-testing: Conditional Testing
     debugging: Debugging
-    aliases-and-references: Aliases and References
+    variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
     network-requests: Network Requests
     screenshots-and-videos: Screenshots and Videos
@@ -62,7 +62,7 @@ sidebar:
     creating-fixtures: Creating Fixtures
     best-practices: Best Practices
     anti-patterns: Anti-patterns
-    known-issues: Known Issues
+    trade-offs: Trade-offs
     contributing: Contributing
     changelog: Changelog
     roadmap: Roadmap
@@ -180,6 +180,7 @@ sidebar:
     introduction-to-tutorials: Introduction
     project-setup: Project setup
     testing-inputs: Testing text inputs
+    react-todo-form-submission: Testing form submission
     plugins: Plugins
     preprocessors: Preprocessors
   examples:
