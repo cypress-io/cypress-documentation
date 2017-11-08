@@ -137,7 +137,7 @@ This is documented in detail on the {% url "Catalog Of Events" catalog-of-events
 
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
-{% url "We've answered this question in detail here." trade-offs#Multiple-Browsers %}
+{% url "We've answered this question in detail here." trade-offs#Multiple-browsers %}
 
 ## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
 
