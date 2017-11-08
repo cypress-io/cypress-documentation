@@ -40,10 +40,10 @@ Cypress can test anything that runs in a browser.
 
 # Cypress Ecosystem
 
-Cypress is a free, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} testing tool **and** a service for {% url 'recording your tests' features-dashboard %}.
+Cypress is a free, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} testing tool **and** a service for {% url 'recording your tests' dashboard-service %}.
 
 - ***First:*** Cypress makes it easy to set up and start writing tests every day while you build your application locally. *TDD at its best!*
-- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard' features-dashboard %} can record your test runs. You'll never have to wonder: *Why did this fail?*
+- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard Service' dashboard-service %} can record your test runs. You'll never have to wonder: *Why did this fail?*
 
 # Our Mission
 
@@ -61,7 +61,7 @@ We believe testing needs a lot of {% fa fa-heart %} and we are here to build a t
 
 Cypress comes fully baked, batteries included. Here is a list of things it can do that no other testing framework can:
 
-- **Time Travel:** Cypress takes snapshots as your tests run. Simply hover over commands in the {% url 'Command Log' overview-of-test-runner#Command-Log %} to see exactly what happened at each step.
+- **Time Travel:** Cypress takes snapshots as your tests run. Simply hover over commands in the {% url 'Command Log' test-runner#Command-Log %} to see exactly what happened at each step.
 - **Debuggability:** Stop guessing why your tests are failing. {% url 'Debug directly' debugging %} from familiar tools like Chrome DevTools. Our readable errors and stack traces make debugging lightning fast.
 - **Automatic Waiting:** Never add waits or sleeps to your tests. Cypress {% url 'automatically waits' introduction-to-cypress#Cypress-is-Not-Like-jQuery %} for commands and assertions before moving on. No more async hell.
 - **Spies, Stubs, and Clocks:** Verify and {% url 'control the behavior' stubs-spies-and-clocks %} of functions, server responses, or timers. The same functionality you love from unit testing is right at your fingertips.

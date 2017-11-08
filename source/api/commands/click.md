@@ -118,7 +118,7 @@ cy.get('button').click(5, 60, { force: true })
 
 ***Click all buttons found on the page***
 
-By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the {% url 'Command Log' overview-of-test-runner#Command-Log %} multiple times.
+By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the {% url 'Command Log' test-runner#Command-Log %} multiple times.
 
 ```javascript
 cy.get('button').click({ multiple: true })

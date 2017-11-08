@@ -68,7 +68,7 @@ comments: false
 
 **Summary:**
 
-- `1.0.0` marks our transition out of a **private** beta and into a **public** beta. We've lifted all the restrictions for using Cypress. It is now accessible to everyone. Until we are out of beta, the {% url "Dashboard Service" features-dashboard %} will continue to be free.
+- `1.0.0` marks our transition out of a **private** beta and into a **public** beta. We've lifted all the restrictions for using Cypress. It is now accessible to everyone. Until we are out of beta, the {% url "Dashboard Service" dashboard-service %} will continue to be free.
 - We will continue to follow `semver` from this point on (and also a bit more rigorously).
 - Cypress is now {% url "open source" https://github.com/cypress-io/cypress %}! This project is licensed under the terms of the {% url "MIT License" https://github.com/cypress-io/cypress/blob/develop/LICENSE.md %}.
 - We have a {% url "Contributing Guideline" https://on.cypress.io/contributing %} to help contributors get started as well as {% url "issues labeled `first-timers-only`" https://github.com/cypress-io/cypress/labels/first-timers-only %} for those wanting to contribute right away.
@@ -395,7 +395,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Notes:**
 
 - We have updated all of the docs related to these changes. The {% url 'CI Docs' continuous-integration %} got a much needed facelift.
-- There is a new docs section related to the {% url 'Dashboard' features-dashboard %} and the new features.
+- There is a new docs section related to the {% url 'Dashboard' dashboard-service %} and the new features.
 
 **Overview:**
 

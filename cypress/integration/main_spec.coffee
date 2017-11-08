@@ -5,7 +5,6 @@ GUIDES_PATH = "/guides/overview/why-cypress"
 API_PATH = "/api/introduction/api"
 TUTORIALS_PATH = "/tutorials/test-a-react-todo-app/introduction-to-tutorials"
 EXAMPLES_PATH = "/examples/recipes/unit-testing-recipe"
-DASHBOARD_PATH = "/dashboard/overview/features-dashboard"
 FAQ_PATH = "/faq/questions/general-questions-faq"
 
 describe "Documentation", ->
@@ -75,9 +74,6 @@ describe "Documentation", ->
       cy.contains(".main-nav-link", "Examples")
         .should("have.attr", "href").and("include", EXAMPLES_PATH)
 
-      cy.contains(".main-nav-link", "Dashboard")
-        .should("have.attr", "href").and("include", DASHBOARD_PATH)
-
       cy.contains(".main-nav-link", "FAQ")
         .should("have.attr", "href").and("include", FAQ_PATH)
 
@@ -108,11 +104,6 @@ describe "Documentation", ->
       it "highlights examples when on a examples page", ->
         cy.visit(EXAMPLES_PATH + ".html")
         cy.contains(".main-nav-link", "Examples")
-          .should("have.class", "active")
-
-      it "highlights dashboard when on a dashboard page", ->
-        cy.visit(DASHBOARD_PATH + ".html")
-        cy.contains(".main-nav-link", "Dashboard")
           .should("have.class", "active")
 
       it "highlights FAQ when on a FAQ page", ->
