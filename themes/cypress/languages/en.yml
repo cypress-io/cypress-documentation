@@ -69,7 +69,7 @@ sidebar:
     roadmap: Roadmap
     cypress-api-design: API Design
     all-videos: Videos
-    plugins: Plugins
+    plugins-guide: Plugins
   api:
     introduction: Introduction
     api: API
@@ -175,7 +175,8 @@ sidebar:
     cypress-log: log
     cypress-server: Server
     plugins: Plugins
-    preprocessors: Preprocessors
+    plugins-api: Plugins
+    preprocessors-api: Preprocessors
   tutorials:
     test-a-react-todo-app: Test a React Todo App
     introduction-to-tutorials: Introduction

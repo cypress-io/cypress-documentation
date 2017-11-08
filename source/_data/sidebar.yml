@@ -26,7 +26,7 @@ guides:
     launching-browsers: launching-browsers.html
     web-security: web-security.html
     reporters: reporters.html
-    plugins: plugins.html
+    plugins-guide: plugins-guide.html
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
     # coming-from-selenium: coming-from-selenium.html
@@ -149,8 +149,8 @@ api:
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
   plugins:
-    plugins: plugins.html
-    preprocessors: preprocessors.html
+    plugins-api: plugins-api.html
+    preprocessors-api: preprocessors-api.html
 
 tutorials:
   test-a-react-todo-app:
