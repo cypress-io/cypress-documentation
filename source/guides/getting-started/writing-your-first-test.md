@@ -37,7 +37,7 @@ Cypress opens the test in a browser installed on your system. You can read more 
 
 {% img /img/guides/empty-file-30fps.gif %}
 
-We are now officially in the {% url 'Cypress GUI' overview-of-test-runner %}. This is where we'll spend the majority of your time testing.
+We are now officially in the {% url 'Cypress GUI' test-runner %}. This is where we'll spend the majority of your time testing.
 
 {% note warning %}
 Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
@@ -67,12 +67,12 @@ Once you save this file you should see the browser reload.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
 
-Over in the {% url 'Command Log' overview-of-test-runner#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
+Over in the {% url 'Command Log' test-runner#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
 
 {% img /img/guides/first-test.png %}
 
 {% note info %}
-Notice Cypress displays a message about this being the default page {% url "on the righthand side" overview-of-test-runner#Application-Under-Test %}. Cypress assumes you'll want to go out and {% url "visit" visit %} a URL on the internet - but it can also work just fine without that.
+Notice Cypress displays a message about this being the default page {% url "on the righthand side" test-runner#Application-Under-Test %}. Cypress assumes you'll want to go out and {% url "visit" visit %} a URL on the internet - but it can also work just fine without that.
 {% endnote %}
 
 Now let's write our first failing test.
@@ -89,7 +89,7 @@ Once you save again, you'll see Cypress display the failing test in red since `t
 
 {% img /img/guides/failing-test.png "Failing test" %}
 
-Cypress provides a nice {% url 'GUI' overview-of-test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
+Cypress provides a nice {% url 'GUI' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
 
 {% img /img/guides/first-test-30fps.gif "Writing a passing and failing test in Cypress" %}
 
@@ -135,8 +135,8 @@ describe('My First Test', function() {
 
 Save the file and switch back over to the Cypress GUI. You might notice a few things:
 
-1. The {% url 'Command Log' overview-of-test-runner#Command-Log %} now shows the new `VISIT` action.
-2. The Kitchen Sink application has been loaded into the {% url 'App Preview' overview-of-test-runner#Overview %} pane.
+1. The {% url 'Command Log' test-runner#Command-Log %} now shows the new `VISIT` action.
+2. The Kitchen Sink application has been loaded into the {% url 'App Preview' test-runner#Overview %} pane.
 3. The test is green, even though we made no assertions.
 4. The `VISIT` displays a **blue pending state** until the page finishes loading.
 
@@ -175,7 +175,7 @@ describe('My First Test', function() {
 })
 ```
 
-Our test should now display `CONTAINS` in the {% url 'Command Log' overview-of-test-runner#Command-Log %} and still be green.
+Our test should now display `CONTAINS` in the {% url 'Command Log' test-runner#Command-Log %} and still be green.
 
 Even without adding an assertion, we know that everything is okay! This is because many of Cypress' commands are built to fail if they don't find what they're expecting to find. This is known as a {% url 'Default Assertion' introduction-to-cypress#Default-Assertions %}.
 
@@ -209,7 +209,7 @@ describe('My First Test', function() {
 
 You can almost read it like a little story! Cypress calls this "chaining" and we chain together commands to build tests that really express what the app does in a declarative way.
 
-Also note that the {% url 'App Preview' overview-of-test-runner#Overview %} pane has updated further after the click, following the link and showing the destination page:
+Also note that the {% url 'App Preview' test-runner#Overview %} pane has updated further after the click, following the link and showing the destination page:
 
 Now we can assert something about this new page!
 
