@@ -99,10 +99,10 @@ Cypress can record your tests running and make them available in our {% url 'Das
 
 ***To record tests running:***
 
-1. {% url 'Set up your project to record' projects-dashboard#Setup %}
+1. {% url 'Set up your project to record' dashboard-service#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
 
-You can {% url 'read more about the Dashboard here' features-dashboard %}.
+You can {% url 'read more about the Dashboard Service here' dashboard-service %}.
 
 # Environment Variables
 
@@ -110,7 +110,7 @@ You can set various environment variables to modify how Cypress runs.
 
 ## Record Key
 
-If you are {% url 'recording your runs' continuous-integration#Recording-Tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' projects-dashboard#Authentication %}
+If you are {% url 'recording your runs' continuous-integration#Recording-Tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
 
 Instead of hard coding it into your run command like this:
 

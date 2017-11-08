@@ -32,8 +32,9 @@ sidebar:
     core-concepts: Core Concepts
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
-    overview-of-test-runner: Overview of Test Runner
     conditional-testing: Conditional Testing
+    test-runner: The Test Runner
+    dashboard-service: Dashboard Service
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -61,7 +62,7 @@ sidebar:
     creating-fixtures: Creating Fixtures
     best-practices: Best Practices
     anti-patterns: Anti-patterns
-    trade-offs: Trade Offs
+    trade-offs: Trade-offs
     contributing: Contributing
     changelog: Changelog
     roadmap: Roadmap
@@ -177,6 +178,7 @@ sidebar:
     project-setup: Project setup
     testing-inputs: Testing text inputs
     react-todo-form-submission: Testing form submission
+    react-todo-app-init: Testing data loading
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
@@ -200,12 +202,6 @@ sidebar:
     blogs-media: Blogs
     userland: Userland
     extensions: Extensions
-  dashboard:
-    overview: Dashboard
-    features-dashboard: Features
-    projects-dashboard: Projects
-    runs-dashboard: Recorded Runs
-    organizations-dashboard: Organizations
   faq:
     questions: FAQ
     general-questions-faq: General Questions
