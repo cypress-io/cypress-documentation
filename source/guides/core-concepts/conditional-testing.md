@@ -3,6 +3,16 @@ title: Conditional Testing
 comments: false
 ---
 
+{% note info %}
+# {% fa fa-graduation-cap %} What You'll Learn
+
+- When conditional testing is a good choice for your tests
+- Situations where conditional testing is impossible
+- Strategies to handle common scenarios of conditional testing
+{% endnote %}
+
+# Definition
+
 Conditional testing refers to the common programming pattern:
 
 > If X, then Y, else Z

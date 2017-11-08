@@ -768,7 +768,7 @@ Some assertions modify the current subject unexpectedly. For example,
 
 This is because Cypress honors the return value of the assertion, and `have.attr` is a {% url "`Chai-jQuery`" assertions#Chai-jQuery %} assertion that returns the matched string instead of the original subject. This can be surprising!
 
-Whenever you have failing assertions and don't understand why, click the command in the Cypress {% url "Command Log" overview-of-test-runner#Command-Log %}. Cypress will print details to the browser console to help you troubleshoot what is going on.
+Whenever you have failing assertions and don't understand why, click the command in the Cypress {% url "Command Log" test-runner#Command-Log %}. Cypress will print details to the browser console to help you troubleshoot what is going on.
 {% endnote %}
 
 If we wrote this assertion in the explicit form "the long way", it would look like this:

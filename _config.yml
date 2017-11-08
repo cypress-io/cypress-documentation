@@ -42,6 +42,9 @@ alias:
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
   guides/core-concepts/overview-of-the-gui/: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-the-gui.html: guides/core-concepts/overview-of-test-runner.html
+  guides/core-concepts/overview-of-test-runner.html: guides/core-concepts/test-runner.html
+  guides/core-concepts/overview-of-test-runner/: guides/core-concepts/test-runner.html
+  overview-of-test-runner/: guides/core-concepts/test-runner.html
   why-cypress/: guides/overview/why-cypress.html
 
   api/index.html: api/introduction/api.html
@@ -56,7 +59,13 @@ alias:
 
   examples/index.html: examples/recipes/unit-testing-recipe.html
 
-  dashboard/index.html: dashboard/overview/features-dashboard.html
+  dashboard/index.html: guides/core-concepts/dashboard-service.html
+  dashboard/: guides/core-concepts/dashboard-service.html
+  dashboard/overview/: guides/core-concepts/dashboard-service.html
+  dashboard/overview/features-dashboard/: guides/core-concepts/dashboard-service.html
+  dashboard/overview/features-dashboard.html: guides/core-concepts/dashboard-service.html
+  dashboard/overview/projects-dashboard.html: guides/core-concepts/dashboard-service.html
+  dashboard/overview/organizations-dashboard.html: guides/core-concepts/dashboard-service.html
 
   faq/index.html: faq/questions/general-questions-faq.html
 

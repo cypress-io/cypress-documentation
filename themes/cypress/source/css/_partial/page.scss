@@ -273,13 +273,6 @@
     margin: 1em 0;
     font-family: $font-title;
   }
-  //
-  // &>p>strong {
-  //   display: inline-block;
-  //   margin-top: 15px;
-  //   font-weight: bold;
-  //   font-size: 1.2em;
-  // }
 
   &>h2+p>strong, &>h1+p>strong {
     margin-top: 0;
@@ -324,6 +317,7 @@
 
   li {
     margin: 0;
+    line-height: 2.2em;
 
     p {
       margin: 0;
@@ -552,5 +546,5 @@
 }
 
 .tutorial .article-inner {
-  margin-right: 0; 
+  margin-right: 0;
 }

@@ -11,9 +11,10 @@ guides:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
     interacting-with-elements: interacting-with-elements.html
-    overview-of-test-runner: overview-of-test-runner.html
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
+    test-runner: test-runner.html
+    dashboard-service: dashboard-service.html
   guides:
     command-line: command-line.html
     debugging: debugging.html
@@ -157,6 +158,7 @@ tutorials:
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
     react-todo-form-submission: react-todo-form-submission.html
+    react-todo-app-init: react-todo-app-init.html
 
 examples:
   recipes:
@@ -181,13 +183,6 @@ examples:
     podcasts-media: podcasts-media.html
   userland:
     extensions: userland-extensions.html
-
-dashboard:
-  overview:
-    features-dashboard: features-dashboard.html
-    projects-dashboard: projects-dashboard.html
-    runs-dashboard: runs-dashboard.html
-    organizations-dashboard: organizations-dashboard.html
 
 faq:
   questions:

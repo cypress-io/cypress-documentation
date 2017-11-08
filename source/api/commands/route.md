@@ -401,6 +401,12 @@ Cypress also logs whether the XHR was stubbed or not to the console when you cli
 
 Even the `Initiator` is included, which is a stack trace to what caused the XHR to be sent.
 
+## `cy.route()` can not be debugged using {% url `cy.request()` request %}
+
+***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
+
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application. 
+
 ## Matches
 
 ***Matching origins and non origin URL's***
