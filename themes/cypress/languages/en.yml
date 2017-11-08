@@ -160,8 +160,6 @@ sidebar:
     removelistener: removeListener
     removealllisteners: removeAllListeners
     utilities: Utilities
-    plugins: Plugins
-    preprocessors: Preprocessors
     _: _
     $: $
     minimatch: minimatch
