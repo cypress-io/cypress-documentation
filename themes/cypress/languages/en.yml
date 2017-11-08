@@ -177,6 +177,7 @@ sidebar:
     project-setup: Project setup
     testing-inputs: Testing text inputs
     react-todo-form-submission: Testing form submission
+    react-todo-app-init: Testing data loading
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
