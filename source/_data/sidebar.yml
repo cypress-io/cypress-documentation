@@ -153,6 +153,7 @@ tutorials:
     project-setup: project-setup.html
     testing-inputs: testing-inputs.html
     react-todo-form-submission: react-todo-form-submission.html
+    react-todo-app-init: react-todo-app-init.html
 
 examples:
   recipes:
