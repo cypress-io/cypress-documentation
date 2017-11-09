@@ -1,5 +1,5 @@
 ---
-title: Testing text inputs
+title: 2. Testing text inputs
 comments: false
 layout: video
 containerClass: tutorial

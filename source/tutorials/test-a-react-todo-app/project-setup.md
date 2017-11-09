@@ -1,5 +1,5 @@
 ---
-title: Project setup
+title: 1. Project setup
 comments: false
 layout: video
 containerClass: tutorial
