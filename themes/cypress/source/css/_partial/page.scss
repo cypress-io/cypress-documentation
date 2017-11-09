@@ -30,6 +30,10 @@
   }
 }
 
+.article-content .article-heading + ul {
+  padding-left: 15px;
+}
+
 .article-heading:hover .article-anchor {
   display: inline-block;
   border: 0;
@@ -316,8 +320,8 @@
   }
 
   li {
-    margin: 0;
-    line-height: 2.2em;
+    margin: 10px;
+    line-height: 1.7em;
 
     p {
       margin: 0;
