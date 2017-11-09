@@ -160,6 +160,9 @@ tutorials:
     react-todo-form-submission: react-todo-form-submission.html
     react-todo-app-init: react-todo-app-init.html
 
+plugins:
+  plugins: index.html
+
 examples:
   recipes:
     unit-testing-recipe: unit-testing-recipe.html
