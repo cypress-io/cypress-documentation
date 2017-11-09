@@ -79,12 +79,12 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
-    cypress run --record --key abc-key-123
+    cypress run --record --key &lt;record key&gt;
     ```
 
   - Or set record key as environment variable
     ```shell
-    export CYPRESS_RECORD_KEY=abc-key-123
+    export CYPRESS_RECORD_KEY=&lt;record key&gt;
     ```
     ```shell
     cypress run --record
