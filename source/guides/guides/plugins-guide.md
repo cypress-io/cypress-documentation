@@ -3,16 +3,18 @@ title: Plugins
 comments: false
 ---
 
-Cypress provides a way for hooking into and extending its behavior via plugins. Plugins can be configured within the *plugins file*, which is `cypress/plugins/index.js` by default.
+Plugins provides a way for hooking into and extending the behavior of Cypress. Plugins can be configured within the plugins file, which will be searched for at `cypress/plugins/index.js` by default.
 
-You can configure a different location for the *plugins file* in your `cypress.json` via the `pluginsFile` option.
+{% note info %}
+You can configure a different location for the plugins file in your `cypress.json` via the {% url "`pluginsFile`" configuration#Folders-Files %} option.
+{% endnote %}
 
 ## Installation
 
-Installing a plugin requires [node.js](https://nodejs.org) (version 6.5.0 or greater).
+Installing a plugin requires [node.js](https://nodejs.org) (version 6.5.0+).
 
 ```shell
-npm install <plugin name> --save-dev
+npm install &lt;plugin name&gt; --save-dev
 ```
 
 ## Usage
