@@ -597,7 +597,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Breaking Changes:**
 
-- Previously, we auto-magically included all files within {% url '`cypress/support`' writing-and-organizing-tests#Folder-Structure %}. This has now {% url 'gone away' error-messages %} and we've simplified this to automatically including a single `cypress/support/index.js` file. That single file acts as the entry point meaning you should `import` or `require` the other support files you'd like to include. Although this is still "automatic" it's much less magical and we'll be updating all of our docs to reflect this. The purpose of `cypress/support` hasn't really changed, just the implementation of it has. We will automatically seed a `cypress/support/index.js` file for you (even on existing projects). The file location of `cypress/support/index.js` can be changed with the new {% url `supportFile` configuration#Folders %} option in your `cypress.json`. This feature can also be turned off by specifying `supportFile: false`.
+- Previously, we auto-magically included all files within {% url '`cypress/support`' writing-and-organizing-tests#Folder-Structure %}. This has now {% url 'gone away' error-messages %} and we've simplified this to automatically including a single `cypress/support/index.js` file. That single file acts as the entry point meaning you should `import` or `require` the other support files you'd like to include. Although this is still "automatic" it's much less magical and we'll be updating all of our docs to reflect this. The purpose of `cypress/support` hasn't really changed, just the implementation of it has. We will automatically seed a `cypress/support/index.js` file for you (even on existing projects). The file location of `cypress/support/index.js` can be changed with the new {% url `supportFile` configuration#Folders-Files %} option in your `cypress.json`. This feature can also be turned off by specifying `supportFile: false`.
 
 **Features:**
 
@@ -609,7 +609,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - We improved the logic around when and if we scaffold files on a new project. We're much smarter about this and not generating these forcibly every time. Fixes {% issue 285 '#285' %}.
 - Simplified handling of support files and made them less "magical". Fixes {% issue 286 '#286' %}.
-- Renamed `supportFolder` to {% url `supportFile` configuration#Folders %} in `cypress.json`. We will automatically rename your `cypress.json` if this property was present on update.
+- Renamed `supportFolder` to {% url `supportFile` configuration#Folders-Files %} in `cypress.json`. We will automatically rename your `cypress.json` if this property was present on update.
 
 # 0.17.12
 
@@ -1162,9 +1162,9 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Breaking Changes:**
 
 - Cypress no longer looks at your `tests` directory for test files. Now, by default, it looks in the `cypress/integration` directory.
-- We've removed the configuration option `testFolder` and renamed it to {% url `integrationFolder` configuration#Folders %} inside of the `cypress.json`.
+- We've removed the configuration option `testFolder` and renamed it to {% url `integrationFolder` configuration#Folders-Files %} inside of the `cypress.json`.
 - We've renamed the `cypress` npm package to be `cypress-cli`. You'll see a giant deprecation warning until your scripts have been updated to reference `cypress-cli`.. You can also uninstall the `cypress` npm package.
-- Added new {% url `fileServerFolder` configuration#Folders %} configuration option that can mount a directory other than your project root when using Cypress as a web server.
+- Added new {% url `fileServerFolder` configuration#Folders-Files %} configuration option that can mount a directory other than your project root when using Cypress as a web server.
 
 **Misc:**
 
