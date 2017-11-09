@@ -1,11 +1,16 @@
 - name: Preprocessors
   plugins:
     - name: Browserify
-      description: For bundling JavaScript via browserify
+      description: For bundling JavaScript via browserify.
       link: https://github.com/cypress-io/cypress-browserify-preprocessor
+      keywords: [browserify]
+
     - name: Webpack
-      description: For bundling JavaScript via webpack
+      description: For bundling JavaScript via webpack.
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
+      keywords: [webpack]
+
     - name: Watch
-      description: Simple preprocessor that only watches files
+      description: Simple preprocessor that only watches files.
       link: https://github.com/cypress-io/cypress-watch-preprocessor
+      keywords: [file-watcher]
