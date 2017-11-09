@@ -56,7 +56,7 @@ Cypress.Server.defaults({
 
 **Where to put server configuration**
 
-A great place to put this configuration is in your `cypress/support/defaults.js` file, since it is loaded before any test files are evaluated.
+A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
 
 # See also
 
