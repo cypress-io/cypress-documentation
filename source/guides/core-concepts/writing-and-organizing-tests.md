@@ -26,7 +26,6 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
 
   /support
     - commands.js
-    - defaults.js
     - index.js
 ```
 
