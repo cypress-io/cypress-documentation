@@ -13,7 +13,7 @@ We have a lot of ground to cover, so let's get started!
 
 ## Contents
 
-| Tutorial | Length | Release Date | Cypress version|
+| Tutorial | Length | Release date | Cypress version|
 | -- | -- | -- | -- |
 | 1. {% url "Project setup" project-setup %} | {% fa fa-video-camera %} 3:52 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
 | 2. {% url "Testing inputs" testing-inputs %} | {% fa fa-video-camera %} 7:17 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
