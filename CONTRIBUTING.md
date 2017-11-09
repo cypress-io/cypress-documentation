@@ -9,6 +9,7 @@ Thanks for taking the time to contribute! :smile:
 - [Writing Documentation](#writing-documentation)
   - [Links](#links)
   - [Adding Examples](#adding-examples)
+  - [Adding Plugins](#adding-plugins)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)
