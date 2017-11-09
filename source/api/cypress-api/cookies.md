@@ -146,7 +146,7 @@ You can modify the global defaults and whitelist a set of Cookies which will alw
 Any change you make here will take effect immediately for the remainder of every single test.
 
 {% note info  %}
-A great place to put this configuration is in your `cypress/support/defaults.js` file, since it is loaded before any test files are evaluated.
+A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
 {% endnote %}
 
 **Whitelist accepts:**
