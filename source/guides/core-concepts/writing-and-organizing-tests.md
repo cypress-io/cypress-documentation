@@ -44,7 +44,7 @@ Fixtures are used as external pieces of static data that can be used by your tes
 
 You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
 
-## Test Files
+## Test files
 
 Test files may be written as:
 
@@ -69,7 +69,7 @@ By default Cypress will automatically include the plugins file `cypress/plugins/
 
 {% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
 
-## Support Files
+## Support file
 
 By default Cypress will automatically include the support file `cypress/support/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 

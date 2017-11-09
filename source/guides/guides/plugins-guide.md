@@ -9,15 +9,17 @@ Plugins provides a way for hooking into and extending the behavior of Cypress. P
 You can configure a different location for the plugins file in your `cypress.json` via the {% url "`pluginsFile`" configuration#Folders-Files %} option.
 {% endnote %}
 
-## Installation
+# Installation
 
-Installing a plugin requires [node.js](https://nodejs.org) (version 6.5.0+).
+See the list of available {% url "plugins" plugins %} to install.
 
 ```shell
 npm install &lt;plugin name&gt; --save-dev
 ```
 
-## Usage
+Installing a plugin requires [node.js](https://nodejs.org) (version 6.5.0+).
+
+# Usage
 
 ```javascript
 module.exports = (on, config) => {
@@ -27,7 +29,7 @@ module.exports = (on, config) => {
 }
 ```
 
-The event depends on the type of plugin you would like to utilize. The exact usage depends on the plugin itself, so refer to any given plugin's documentation for details on that usage.
+The **event** depends on the {% urlHash "type of plugin" Plugin-types %} you are using. The exact usage depends on the plugin itself, so refer to any given plugin's documentation for details on its usage.
 
 For example, here's how to use the [webpack preprocessor](https://github.com/cypress-io/cypress-webpack-preprocessor):
 
@@ -39,14 +41,14 @@ module.exports = (on, config) => {
 }
 ```
 
-## Plugin Types
+# Plugin types
 
-### Preprocessors
+## Preprocessors
 
-Preprocessors are plugins that can process your support file and spec files before they're served to the browser. They are also responsible for watching files for changes and notifying Cypress to re-run tests.
+Preprocessors are plugins that can process your {% url "support file" writing-and-organizing-tests#Support-file %} and {% url "test files" writing-and-organizing-tests#Test-files %} before they are served to the browser. They are also responsible for watching files for changes and notifying Cypress to re-run tests.
 
-* Event: `file:preprocessor`
-* Examples: [browserify](https://github.com/cypress-io/cypress-browserify-preprocessor),[webpack](https://github.com/cypress-io/cypress-webpack-preprocessor), [watch](https://github.com/cypress-io/cypress-watch-preprocessor)
+* **Event:** `file:preprocessor`
+* **Examples:** {% url "browserify-preprocessor" https://github.com/cypress-io/cypress-browserify-preprocessor %}, {% url "webpack-preprocessor" https://github.com/cypress-io/cypress-webpack-preprocessor %}, {% url "watch-preprocessor" https://github.com/cypress-io/cypress-watch-preprocessor %}
 
 ```javascript
 // the plugins file
