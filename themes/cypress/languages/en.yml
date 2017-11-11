@@ -175,10 +175,10 @@ sidebar:
   tutorials:
     test-a-react-todo-app: Test a React Todo App
     introduction-to-tutorials: Introduction
-    project-setup: Project setup
-    testing-inputs: Testing text inputs
-    react-todo-form-submission: Testing form submission
-    react-todo-app-init: Testing data loading
+    project-setup: 1. Project setup
+    testing-inputs: 2. Testing text inputs
+    react-todo-form-submission: 3. Testing form submission
+    react-todo-app-init: 4. Testing data loading
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
