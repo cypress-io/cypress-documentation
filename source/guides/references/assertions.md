@@ -45,7 +45,7 @@ These chainers are available for BDD assertions (`expect`/`should`).
 | least( *value* ) | `expect(10).to.be.at.least(10)` |
 | gte( *value* ) | `expect(10).to.be.gte(10)` |
 | below( *value* ) | `expect('foo').to.have.length.below(4)` |
-| lt( *value* )  | `expect(3).to.be.ls(4)` |
+| lt( *value* )  | `expect(3).to.be.lt(4)` |
 | lessThan( *value* ) | `expect(5).to.be.lessThan(10)` |
 | most( *value* ) | `expect('test').to.have.length.of.at.most(4)` |
 | lte( *value* ) | `expect(5).to.be.lte(5)` |
