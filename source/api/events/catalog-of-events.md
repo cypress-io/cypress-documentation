@@ -5,7 +5,7 @@ comments: false
 
 Cypress emits a series of events as it runs in your browser.
 
-These are events are useful not only to control your application's behavior, but also for debugging purposes.
+These events are useful not only to control your application's behavior, but also for debugging purposes.
 
 Here are some examples you can do with these events:
 
