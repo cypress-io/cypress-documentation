@@ -35,6 +35,7 @@ Feature | Status
 {% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
 {% issue 688 'Improve Failure Workflow - #688' %} | No proposal yet
 {% issue 689 'Analytics - #689' %} | No proposal yet
+On-Prem | No proposal yet
 
 # Next Release
 
