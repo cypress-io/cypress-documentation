@@ -149,7 +149,7 @@ api:
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
   plugins:
-    plugins-api: plugins-api.html
+    writing-a-plugin: writing-a-plugin.html
     preprocessors-api: preprocessors-api.html
 
 tutorials:

@@ -3,7 +3,7 @@ title: Preprocessors API
 comments: false
 ---
 
-A preprocessor is a {% url "plugin" plugins-api %} that runs when the {% url "support file" writing-and-organizing-tests#Support-file %} or {% url "test files" writing-and-organizing-tests#Test-files %} is required by the Test Runner.
+A preprocessor is a {% url "plugin" writing-a-plugin %} that runs when the {% url "support file" writing-and-organizing-tests#Support-file %} or {% url "test files" writing-and-organizing-tests#Test-files %} is required by the Test Runner.
 
 It can compile or transpile that file from another language (e.g. CoffeeScript, ClojureScript) to JavaScript or from a newer version of JavaScript (e.g. ES2017) to a version that has more browser compatibility (ES5).
 

@@ -175,7 +175,7 @@ sidebar:
     cypress-log: log
     cypress-server: Server
     plugins: Plugins
-    plugins-api: Plugins
+    writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
   tutorials:
     test-a-react-todo-app: Test a React Todo App

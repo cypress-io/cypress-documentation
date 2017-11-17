@@ -1,5 +1,5 @@
 ---
-title: Plugins API
+title: Writing a Plugin
 comments: false
 ---
 
