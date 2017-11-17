@@ -88,6 +88,6 @@ This version of node has **nothing to do** with your locally installed versions.
 
 Currently the node version we use is `6.5.0`.
 
-This gets regularly updated (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
+This node version gets updated regularly (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
 
 {% endnote %}
