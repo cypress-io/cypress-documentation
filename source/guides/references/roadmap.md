@@ -30,10 +30,12 @@ Feature | Status
 --- | ---
 {% issue 681 'Spec Load Balancing - #681' %} | Done, unreleased, orthogonal to other features
 {% issue 681 'Spec Parallelism - #681' %} | Proposal complete
+{% issue 578 'Slack/Email Notifications - #578' %} | Proposal complete
 {% issue 448 'Capture Logs of Everything - #448' %} | Partially complete
 {% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
 {% issue 688 'Improve Failure Workflow - #688' %} | No proposal yet
 {% issue 689 'Analytics - #689' %} | No proposal yet
+On-Prem | No proposal yet
 
 # Next Release
 
