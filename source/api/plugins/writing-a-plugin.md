@@ -32,7 +32,7 @@ module.exports = (on, config) => {
 }
 ```
 
-The exported function is called whenever a project is opened either with `cypress open` or `cypress run`.
+The exported function is called whenever a project is opened either with {% url "`cypress open`" command-line#cypress-open %} or {% url "`cypress run`" command-line#cypress-run %}.
 
 Your function will receive 2 arguments: `on` and `config`.
 
@@ -50,7 +50,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to docs for each one' 'List-of-Events' %}.
+Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to docs for each one' 'List-of-events' %}.
 
 ## config
 
@@ -62,7 +62,7 @@ Some plugins may utilize or require these values, so they can take certain actio
 
 {% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
 
-## List of Events
+## List of events
 
 ***The following events are available:***
 
@@ -76,31 +76,31 @@ The Plugins API is brand new.
 We have many new plugin events {% issue 684 'we are adding' %}.
 {% endnote %}
 
-# Execution Context
+# Execution context
 
 Your `pluginsFile` is invoked when Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then `requires` in your `pluginsFile`. This is similar to the way Visual Studio Code or Atom works.
 
-You'll need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local node version, and not anything else you control.
+You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local node version, and not anything else under your control.
 
 Because of this, this global context and the version of node is controlled by Cypress.
 
 {% note warning %}
-Your code must be compatible with the version of node that comes with Cypress!
+Your code must be compatible with the {% url 'version of node' https://github.com/cypress-io/cypress/blob/master/.node-version %} that comes with Cypress!
 {% endnote %}
 
-Currently the node version we use is {% url `6.5.0` 'https://github.com/cypress-io/cypress/blob/master/.node-version' %}.
+You can find the current node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 
 This node version gets updated regularly (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
 
-## NPM Modules
+## NPM modules
 
-When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you'll be able to `require` **any node module** you have installed.
+When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any node module** you have installed.
 
-Additionally you can also `require` local files relative to your project.
+You can also `require` local files relative to your project.
 
-If your `package.json` looked like this:
+**For example, if your `package.json` looked like this:**
 
 ```js
 {
@@ -114,7 +114,7 @@ If your `package.json` looked like this:
 }
 ```
 
-Then you could do any of the following in your `pluginsFile`:
+**Then you could do any of the following in your `pluginsFile`:**
 
 ```js
 // cypress/plugins/index.js
@@ -124,23 +124,23 @@ const path = require('path') // yup, built in node modules
 const debug = require('debug') // yup, dependencies
 const User = require('../../lib/models/user') // yup, relative local modules
 
-console.log(__dirname) // /Users/bmann/Dev/my-project/cypress/plugins/index.js
+console.log(__dirname) // /Users/janelane/Dev/my-project/cypress/plugins/index.js
 
-console.log(process.cwd()) // /Users/bmann/Dev/my-project
+console.log(process.cwd()) // /Users/janelane/Dev/my-project
 ```
 
-# Error Handling
+# Error handling
 
-Cypress spawns your `pluginsFile` in its own child process so it's isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress's own execution in any way.
+Cypress spawns your `pluginsFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress' own execution in any way.
 
-If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we'll automatically catch those and display them to you inside of the console and even in the Cypress GUI itself.
+If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
 
-Errors from your plugins will not crash Cypress.
+Errors from your plugins *will not crash* Cypress.
 
-# File Changes
+# File changes
 
-Normally when writing node code, you typically have to restart the process after changing any files.
+Normally when writing code in Node, you typically have to restart the process after changing any files.
 
-With Cypress, we automatically watch your `pluginsFile` and any changes to it will take effect immediately. We'll read the file in and execute the exported function again.
+With Cypress, we automatically watch your `pluginsFile` and any changes made will take effect immediately. We will read the file in and execute the exported function again.
 
 This enables you to iterate on plugin code even with Cypress already running.
