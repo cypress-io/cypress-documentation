@@ -187,9 +187,9 @@ cy.route('GET', '/users/**', 'fx:users')      // this also works
 
 ## Validation
 
-***Validation and Formatting***
+***Automated File Validation***
 
-Cypress automatically validates and formats your fixtures. If your `.json`, `.js`, or `.coffee` files contain syntax errors, they will be shown in the Command Log.
+Cypress automatically validates your fixtures. If your `.json`, `.js`, or `.coffee` files contain syntax errors, they will be shown in the Command Log.
 
 ## Encoding
 
