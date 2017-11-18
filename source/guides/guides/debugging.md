@@ -29,7 +29,7 @@ it('let me debug like a fiend', function() {
 })
 ```
 
-...alas, this will not work. As you may remember from {% url "Introduction to Cypress" introduction-to-cypress %}, `cy.*` commands simply enqueue and action to be taken later. Can you see what this test will do given that perspective? {% url "`cy.visit()`" visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before anything has happened.
+...alas, this will not work. As you may remember from {% url "Introduction to Cypress" introduction-to-cypress %}, `cy.*` commands simply enqueue an action to be taken later. Can you see what this test will do given that perspective? {% url "`cy.visit()`" visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before anything has happened.
 
 Let's use {% url `.then()` then %} to tap into the Cypress command flow and execute `debugger` at the appropriate time:
 

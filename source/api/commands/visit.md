@@ -26,7 +26,7 @@ cy.visit('http://localhost:3000')    // Yields the window of the remote page
 
 The URL to visit.
 
-Cypress will be prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
+Cypress will prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
