@@ -36,12 +36,3 @@ Feature | Status
 {% issue 688 'Improve Failure Workflow - #688' %} | No proposal yet
 {% issue 689 'Analytics - #689' %} | No proposal yet
 On-Prem | No proposal yet
-
-# Next Release
-
-## 1.1.0
-
-**Features:**
-
-- [ ] Improve the process around utilizing preprocessors. Addresses {% issue 580 %}.
-- [ ] Enable Plugins / Extensions. Fixes {% issue 684 %}.

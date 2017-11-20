@@ -3,6 +3,7 @@ footer.wrapper {
   position: relative;
   background: $color-background;
   flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  @include clearfix;
 
   input.form-control {
     background-color: #fff;

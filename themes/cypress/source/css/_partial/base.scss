@@ -60,9 +60,7 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   border: 0;
 }
 
-.wrapper {
-  margin: 0 auto;
-
+@mixin clearfix {
   &:before {
     content: "";
     display: table;
@@ -75,16 +73,13 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   }
 }
 
+.wrapper {
+  margin: 0 auto;
+  @include clearfix;
+}
+
 .inner {
-  &:before {
-    content: "";
-    display: table;
-  }
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  @include clearfix;
 }
 
 #content-wrap {
@@ -139,28 +134,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   // border-left: 1px solid #eee;
   // margin-top: -50px;
   position: relative;
-
-  &:before {
-    content: "";
-    display: table;
-  }
-
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  @include clearfix;
 }
 #content-inner {
-  &:before {
-    content: "";
-    display: table;
-  }
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  @include clearfix;
 }
 
 #container {

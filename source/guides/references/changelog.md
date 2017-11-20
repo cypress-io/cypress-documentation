@@ -3,6 +3,35 @@ title: Changelog
 comments: false
 ---
 
+## 1.1.0
+
+*Release 11/19/2017*
+
+**Summary:**
+
+- We have officially launched the new **Plugins API** interface. This adds a new `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you'll be able to use `node` API's that are executed outside of the browser.
+- We've currently added only one event for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
+- We have extracted the default `browserify` preprocessor into its own package - {% url `@cypress/browserify-preprocessor` https://github.com/cypress-io/cypress-webpack-preprocessor %}. This is bundled with Cypress, but its extracted so it can be used / modified by you to change the default options we pass to `browserify`. Additionally, you can swap out this preprocessor for something else entirely.
+
+**Features:**
+- There is now a Plugins API interface. Partially address {% issue 684 %}.
+- We've added the first Plugin API event called: `file:preprocessor`. Fixes {% issue 580 %} and {% issue 581 %}.
+- You can now customize the default babel configuration options for the `browserify` preprocessor. Fixes {% issue 343 %} and {% issue 905 %}.
+- CoffeeScript 2 is supported via modifying the default options for the `browserify` preprocessor. Fixes {% issue 663 %}.
+- You can swap out or extend the default preprocessor to do exotic things like compile ClojureScript into JavaScript. Fixes {% issue 533 %}.
+- We've created a {% url `@cypress/webpack-preprocessor` https://github.com/cypress-io/cypress-webpack-preprocessor %} preprocessor NPM package for you webpack users (because we're nice). Fixes {% issue 676 %}.
+
+**Bugfixes:**
+
+- `cy.contains(selector, regexp)` now works as intended. Fixes {% issue 801 %}.
+- We no longer format fixtures in any capacity. This fixes a bug with improperly formatting fixtures in Windows. You should handle formatting fixtures yourself. Fixes {% issue 884 %} and {% issue 902 %}.
+- `cy.viewport()` resolves if only width or only height changes. Fixes {% issue 873 %}.
+
+**Misc:**
+
+- There's a new `--global` option useful with `cypress open` to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
+- The module API accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
+
 ## 1.0.3
 
 *Released 10/29/2017*
@@ -597,7 +626,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Breaking Changes:**
 
-- Previously, we auto-magically included all files within {% url '`cypress/support`' writing-and-organizing-tests#Folder-Structure %}. This has now {% url 'gone away' error-messages %} and we've simplified this to automatically including a single `cypress/support/index.js` file. That single file acts as the entry point meaning you should `import` or `require` the other support files you'd like to include. Although this is still "automatic" it's much less magical and we'll be updating all of our docs to reflect this. The purpose of `cypress/support` hasn't really changed, just the implementation of it has. We will automatically seed a `cypress/support/index.js` file for you (even on existing projects). The file location of `cypress/support/index.js` can be changed with the new {% url `supportFile` configuration#Folders %} option in your `cypress.json`. This feature can also be turned off by specifying `supportFile: false`.
+- Previously, we auto-magically included all files within {% url '`cypress/support`' writing-and-organizing-tests#Folder-Structure %}. This has now {% url 'gone away' error-messages %} and we've simplified this to automatically including a single `cypress/support/index.js` file. That single file acts as the entry point meaning you should `import` or `require` the other support files you'd like to include. Although this is still "automatic" it's much less magical and we'll be updating all of our docs to reflect this. The purpose of `cypress/support` hasn't really changed, just the implementation of it has. We will automatically seed a `cypress/support/index.js` file for you (even on existing projects). The file location of `cypress/support/index.js` can be changed with the new {% url `supportFile` configuration#Folders-Files %} option in your `cypress.json`. This feature can also be turned off by specifying `supportFile: false`.
 
 **Features:**
 
@@ -609,7 +638,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - We improved the logic around when and if we scaffold files on a new project. We're much smarter about this and not generating these forcibly every time. Fixes {% issue 285 '#285' %}.
 - Simplified handling of support files and made them less "magical". Fixes {% issue 286 '#286' %}.
-- Renamed `supportFolder` to {% url `supportFile` configuration#Folders %} in `cypress.json`. We will automatically rename your `cypress.json` if this property was present on update.
+- Renamed `supportFolder` to {% url `supportFile` configuration#Folders-Files %} in `cypress.json`. We will automatically rename your `cypress.json` if this property was present on update.
 
 # 0.17.12
 
@@ -1162,9 +1191,9 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Breaking Changes:**
 
 - Cypress no longer looks at your `tests` directory for test files. Now, by default, it looks in the `cypress/integration` directory.
-- We've removed the configuration option `testFolder` and renamed it to {% url `integrationFolder` configuration#Folders %} inside of the `cypress.json`.
+- We've removed the configuration option `testFolder` and renamed it to {% url `integrationFolder` configuration#Folders-Files %} inside of the `cypress.json`.
 - We've renamed the `cypress` npm package to be `cypress-cli`. You'll see a giant deprecation warning until your scripts have been updated to reference `cypress-cli`.. You can also uninstall the `cypress` npm package.
-- Added new {% url `fileServerFolder` configuration#Folders %} configuration option that can mount a directory other than your project root when using Cypress as a web server.
+- Added new {% url `fileServerFolder` configuration#Folders-Files %} configuration option that can mount a directory other than your project root when using Cypress as a web server.
 
 **Misc:**
 
