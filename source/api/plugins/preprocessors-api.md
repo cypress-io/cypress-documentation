@@ -3,28 +3,55 @@ title: Preprocessors API
 comments: false
 ---
 
-A preprocessor is a {% url "plugin" writing-a-plugin %} that runs when the {% url "support file" writing-and-organizing-tests#Support-file %} or {% url "test files" writing-and-organizing-tests#Test-files %} is required by the Test Runner.
+A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.
 
-It can compile or transpile that file from another language (e.g. CoffeeScript, ClojureScript) to JavaScript or from a newer version of JavaScript (e.g. ES2017) to a version that has more browser compatibility (ES5).
+A preprocessor could transpile your file from another language (CoffeeScript or ClojureScript) or from a newer version of JavaScript (ES2017).
 
-It can also watch the source file for changes, re-process it, and tell Cypress to re-run the tests.
+A preprocessor also typically watches the source files for changes, processes them again, and then notifies Cypress to re-run the tests.
 
 # Examples
 
-See the following preprocessors as examples. The code contains comments that explain how it utilizes the preprocessor API.
+We've created three preprocessors as examples for you to look at. These are fully functioning preprocessors.
 
-* [Browserify Preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
-* [Webpack Preprocessor](https://github.com/cypress-io/cypress-webpack-preprocessor)
-* [Watch Preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
+The code contains comments that explain how it utilizes the preprocessor API.
+
+* {% url 'Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
+* {% url 'Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+* {% url 'Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
+
+# Defaults
+
+By default, Cypress comes packaged with the **Browserify Preprocessor** already installed.
+
+The Browserify Preprocessor handles:
+
+- CoffeeScript `1.x.x`
+- ES2015 via Babel
+- JSX and CJSX
+- Watching and caching files
+
+The exact default configuration options {% url 'can be found here' https://github.com/cypress-io/cypress-browserify-preprocessor#browserifyoptions %}.
+
+{% note info %}
+Are you looking to change the **default options** for Browserify?
+{% endnote %}
+
+Changing the Browserify options lets you:
+
+- Add your own Babel plugins
+- Add support for Typescript
+- Add support for CoffeeScript `2.x.x`
+
+Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
 
 # Usage
 
-A user will configure a preprocessor by listening to the `file:preprocessor` event in their {% url "`plugins file`" configuration#Folders-Files %} (`cypress/plugins/index.js` by default), like so:
+The use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
 
 ```javascript
 // plugins file
-module.exports = (on) => {
-  on('file:preprocessor', (config) => {
+module.exports = (on, config) => {
+  on('file:preprocessor', (file) => {
     // ...
   })
 }
@@ -32,53 +59,63 @@ module.exports = (on) => {
 
 ***The callback function should return one of the following:***
 
-* The path to the **output file**\*.
-* A promise\*\* that resolves the path to the **output file**\*.
-* A promise\*\* that rejects with an error that occurred during processing.
+* A promise\* that eventually resolves the path to the **built file**\*\*.
+* A promise\* that eventually rejects with an error that occurred during processing.
 
-\* *The output file is the file that is created by the processing and will be served to the browser. If, for example, the source file is CoffeeScript (e.g. `spec.coffee`), the preprocessor should compile the CoffeeScript into JavaScript (e.g. `spec.js`), write that JavaScript file to disk, and return or resolve the full path to that file (e.g. `/Users/foo/tmp/spec.js`).*
+> \* The promise should resolve only after the file has completed writing to disk. The promise resolving is a signal that the file is ready to be served to the browser.
 
-\*\* *The promise should resolve only after the file has completed writing to disk. The promise resolving is a signal that the file is ready to be served to the browser.*
+---
+
+> \*\* The built file is the file that is created by the preprocessor that will eventually be served to the browser.
+
+> If, for example, the source file is `spec.coffee`, the preprocessor should:
+1. Compile the CoffeeScript into JavaScript `spec.js`
+2. Write that JavaScript file to disk (example: `/Users/foo/tmp/spec.js`)
+3. Resolve with the absolute path to that file: `/Users/foo/tmp/spec.js`
 
 {% note warning %}
-This function can and *will* be called multiple times with the same `filePath`, because it is called any time the file is requested by the browser (i.e. on each run of the tests). Make sure not to start a new watcher each time it is called. Instead, cache the watcher and, on subsequent calls, return a promise that resolves when the latest version of the file has been processed.
+This callback function can and *will* be called multiple times with the same `filePath`.
+
+The callback function is called any time a file is requested by the browser. This happens on each run of the tests.
+
+Make sure not to start a new watcher each time it is called. Instead, cache the watcher and, on subsequent calls, return a promise that resolves when the latest version of the file has been processed.
 {% endnote %}
 
-# Config object properties
+# Req object
 
-The `config` object passed to the callback function has the following properties:
+The `file` object passed to the callback function has the following properties:
 
 Property | Description
 --------- | ----------
 `filePath` | The full path to the source file.
-`outputPath` | A path unique to the source file for saving the preprocessed file to disk. A preprocessor can choose to write the file elsewhere, but this provides a convenient default path for the file (alongside other Cypress app data).
+`outputPath` | The suggested path for saving the preprocessed file to disk. This is unique to the source file. A preprocessor can choose to write the file elsewhere, but Cypress automatically provides you this value as a convenient default.
 `shouldWatch` | A boolean indicating whether the preprocessor should watch for file changes or not.
 
-# Config object events
+# Req events
 
-The `config` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
+The `file` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
 ***Receiving 'close' event***
 
-When the spec being run is closed or the project is closed, the 'close' event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
+When the spec being run is closed or the project is closed, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript
 // example
 const watcher = fs.watch(filePath, /* ... */)
 
-config.on('close', () => {
+file.on('close', () => {
   watcher.close()
 })
 ```
 
 ***Sending 'rerun' event***
 
-If watching for file changes, emit 'rerun' after a file has finished being processed to let Cypress know to rerun the tests.
+If watching for file changes, emit `rerun` after a file has finished being processed to let Cypress know to rerun the tests.
 
 ```javascript
 // example
 fs.watch(filePath, () => {
-  config.emit('rerun')
+  file.emit('rerun')
 })
 ```
 
