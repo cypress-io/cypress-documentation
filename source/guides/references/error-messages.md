@@ -29,7 +29,7 @@ When the error is fixed in your test file, your tests will automatically re-run.
 
 ## {% fa fa-exclamation-triangle red %} Support file missing or invalid
 
-The `supportFolder` option was removed from Cypress in version {% url `0.18.0` changelog#0-18-0 %} and was replaced by module support and the {% url `supportFile` configuration#Folders %} configuration option.
+The `supportFolder` option was removed from Cypress in version {% url `0.18.0` changelog#0-18-0 %} and was replaced by module support and the {% url `supportFile` configuration#Folders-Files %} configuration option.
 
 Cypress used to automatically include any scripts in the `supportFolder` before your test files. However, automatically including all the files in a certain directory is somewhat magical and unintuitive, and requires creating globals for the purpose of utility functions.
 
@@ -49,14 +49,14 @@ it('uses modules', function () {
 
 ***Use supportFile to load scripts before your test code***
 
-It's still useful to load a setup file before your test code. If you are setting Cypress defaults or utilizing custom Cypress commands, instead of needing to import/require those defaults/commands in every test file, you can use the {% url `supportFile` configuration#Folders %} configuration option.
+It's still useful to load a setup file before your test code. If you are setting Cypress defaults or utilizing custom Cypress commands, instead of needing to import/require those defaults/commands in every test file, you can use the {% url `supportFile` configuration#Folders-Files %} configuration option.
 
-To include code before your test files, set the {% url `supportFile` configuration#Folders %} path. By default, {% url `supportFile` configuration#Folders %} is set to look for one of the following files:
+To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
 * `cypress/support/index.js`
 * `cypress/support/index.coffee`
 
-Just like with your test files, the {% url `supportFile` configuration#Folders %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
+Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
 
 # Command Errors
 

@@ -34,16 +34,7 @@
     margin-top: 0;
   }
 
-  &:before {
-    content: "";
-    display: table;
-  }
-
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+  @include clearfix;
 }
 
 .toc-link {

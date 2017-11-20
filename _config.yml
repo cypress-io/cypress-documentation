@@ -57,6 +57,8 @@ alias:
   tutorials/test-a-react-todo-app/: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
   tutorials/: tutorials/test-a-react-todo-app/introduction-to-tutorials.html
 
+  plugins/: plugins/index.html
+
   examples/index.html: examples/recipes/unit-testing-recipe.html
 
   dashboard/index.html: guides/core-concepts/dashboard-service.html

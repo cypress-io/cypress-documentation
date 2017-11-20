@@ -26,6 +26,7 @@ guides:
     launching-browsers: launching-browsers.html
     web-security: web-security.html
     reporters: reporters.html
+    plugins-guide: plugins-guide.html
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
     # coming-from-selenium: coming-from-selenium.html
@@ -147,6 +148,9 @@ api:
     env: env.html
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
+  plugins:
+    writing-a-plugin: writing-a-plugin.html
+    preprocessors-api: preprocessors-api.html
 
 tutorials:
   test-a-react-todo-app:
@@ -155,6 +159,9 @@ tutorials:
     testing-inputs: testing-inputs.html
     react-todo-form-submission: react-todo-form-submission.html
     react-todo-app-init: react-todo-app-init.html
+
+plugins:
+  plugins: index.html
 
 examples:
   recipes:
