@@ -58,6 +58,10 @@ Visit [http://localhost:2222/](http://localhost:2222/).
 **note** If you need to debug documentation build step run with environment
 variable set `DEBUG=docs npm run build`
 
+### Testing
+
+We use Cypress itself to test the documentation. To start the server and run E2E tests execute the command `npm run test-e2e`.
+
 ## Writing Documentation
 
 ### Adding Examples
