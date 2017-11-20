@@ -1,7 +1,7 @@
 - name: Preprocessors
   plugins:
     - name: Browserify
-      description: For bundling JavaScript via browserify.
+      description: For bundling JavaScript via browserify. This is the default preprocessor that's built into Cypress.
       link: https://github.com/cypress-io/cypress-browserify-preprocessor
       keywords: [browserify]
 
@@ -11,6 +11,6 @@
       keywords: [webpack]
 
     - name: Watch
-      description: Simple preprocessor that only watches files.
+      description: Simple preprocessor that only watches files. Useful as an example reference.
       link: https://github.com/cypress-io/cypress-watch-preprocessor
       keywords: [file-watcher]
