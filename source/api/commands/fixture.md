@@ -29,7 +29,7 @@ cy.fixture('logo.png').then((logo) => {
 
 **{% fa fa-angle-right %} filePath**  ***(String)***
 
-A path to a file within the {% url `fixturesFolder` configuration#Folders %} , which defaults to `cypress/fixtures`.
+A path to a file within the {% url `fixturesFolder` configuration#Folders-Files %} , which defaults to `cypress/fixtures`.
 
 You can nest fixtures within folders and reference them by defining the path from the fixturesFolder:
 
@@ -77,7 +77,7 @@ cy.fixture('users.json').as('usersData')
 
 ***Omit the fixture file's extension***
 
-When no extension is passed to `cy.fixture()`, Cypress will search for files with the specified name within the {% url `fixturesFolder` configuration#Folders %} (which defaults to `cypress/fixtures`) and resolve the first one.
+When no extension is passed to `cy.fixture()`, Cypress will search for files with the specified name within the {% url `fixturesFolder` configuration#Folders-Files %} (which defaults to `cypress/fixtures`) and resolve the first one.
 
 ```javascript
 cy.fixture('admin').as('adminJSON')
@@ -187,9 +187,9 @@ cy.route('GET', '/users/**', 'fx:users')      // this also works
 
 ## Validation
 
-***Validation and Formatting***
+***Automated File Validation***
 
-Cypress automatically validates and formats your fixtures. If your `.json`, `.js`, or `.coffee` files contain syntax errors, they will be shown in the Command Log.
+Cypress automatically validates your fixtures. If your `.json`, `.js`, or `.coffee` files contain syntax errors, they will be shown in the Command Log.
 
 ## Encoding
 

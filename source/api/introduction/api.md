@@ -13,6 +13,8 @@ comments: false
 
 - **{% url 'Cypress API:' custom-commands %}** Configure the behavior of how Cypress works internally. You can do things like access Environment Variables, change configuration, create custom commands, and more.
 
+- **{% url 'Plugins:' writing-a-plugin %}** Write a plugin to modify and extend the behavior of Cypress.
+
 # Rules
 
 Each document attempts to cover the essentials of each method including:

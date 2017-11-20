@@ -179,6 +179,7 @@ Option | Description
 `-h`, `--help`  | Output usage information
 `-p`, `--port`  | Override default port
 `-P`, `--project` | Path to a specific project
+`--global` | Run in global mode
 
 ***Open Cypress projects specifying port***
 
@@ -196,6 +197,14 @@ cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ```shell
 cypress open --env host=api.dev.local
+```
+
+***Open Cypress in global mode***
+
+Opening Cypress in global mode is useful if you have multiple nested projects but want to share a single global installation of Cypress. In this case you can add each nested project to the Cypress in global mode, thus giving you a nice UI to switch between them.
+
+```shell
+cypress open --global
 ```
 
 ## `cypress verify`

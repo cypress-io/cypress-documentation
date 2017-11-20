@@ -45,7 +45,7 @@ Option | Default | Description
 
 The screenshot will be stored in the `cypress/screenshots` folder by default.
 
-You can change the directory where screenshots are saved in your {% url 'configuration' configuration#Folders %}.
+You can change the directory where screenshots are saved in your {% url 'configuration' configuration#Folders-Files %}.
 
 ## No Args
 

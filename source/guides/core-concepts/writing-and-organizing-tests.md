@@ -24,6 +24,9 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
   /integration
     - example_spec.js
 
+  /plugins
+    - index.js
+
   /support
     - commands.js
     - index.js
@@ -35,7 +38,13 @@ While Cypress allows to configure where your tests, fixtures, and support files 
 
 You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration %} for more detail.
 
-## Test Files
+## Fixture Files
+
+Fixtures are used as external pieces of static data that can be used by your tests.
+
+You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
+
+## Test files
 
 Test files may be written as:
 
@@ -54,7 +63,13 @@ To see an example of every command used in Cypress, open the {% url "`example_sp
 
 To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
-## Support Files
+## Plugin Files
+
+By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+
+{% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
+
+## Support file
 
 By default Cypress will automatically include the support file `cypress/support/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
@@ -68,11 +83,7 @@ We automatically seed you an example support file, which has several commented o
 Our {% url 'Extending Cypress recipes' extending-cypress-recipe %} show you how to modify the support file.
 {% endnote %}
 
-## Fixture Files
 
-Fixtures are used as external pieces of static data that can be used by your tests.
-
-You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
 
 # How to Write Tests
 

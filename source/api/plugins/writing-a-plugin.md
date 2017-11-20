@@ -1,0 +1,146 @@
+---
+title: Writing a Plugin
+comments: false
+---
+
+The Plugins API allows you to hook into and extend Cypress behavior.
+
+{% note info %}
+**Note:** This document assumes you have read the {% url 'Plugins Guide' plugins-guide %}.
+{% endnote %}
+
+# Plugins API
+
+To get started, open up this file:
+
+```text
+cypress/plugins/index.js
+```
+
+{% note info %}
+By default Cypress seeds this file for new projects, but if you have an existing project just create this file yourself.
+{% endnote %}
+
+The plugins file must export a function with the following signature:
+
+```javascript
+// cypress/plugins/index.js
+
+// export a function
+module.exports = (on, config) => {
+  // configure plugins here
+}
+```
+
+The exported function is called whenever a project is opened either with {% url "`cypress open`" command-line#cypress-open %} or {% url "`cypress run`" command-line#cypress-run %}.
+
+Your function will receive 2 arguments: `on` and `config`.
+
+## on
+
+`on` is a function that you will use to register to various **events** that Cypress exposes.
+
+Registering to an event looks like this:
+
+```javascript
+module.exports = (on, config) => {
+  on('<event>', (arg1, arg2) => {
+    // plugin stuff here
+  })
+}
+```
+
+Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to docs for each one' 'List-of-events' %}.
+
+## config
+
+`config` is the resolved [Cypress configuration](https://on.cypress.io/guides/configuration) of the opened project.
+
+This configuration contains all of the values that get passed into the browser for your project.
+
+Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
+
+{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+
+## List of events
+
+***The following events are available:***
+
+Event | Description
+--- | ---
+{% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
+
+{% note warning "More Coming Soon" %}
+The Plugins API is brand new.
+
+We have many new plugin events {% issue 684 'we are adding' %}.
+{% endnote %}
+
+# Execution context
+
+Your `pluginsFile` is invoked when Cypress opens a project.
+
+Cypress does this by spawning an independent `child_process` which then `requires` in your `pluginsFile`. This is similar to the way Visual Studio Code or Atom works.
+
+You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local node version, and not anything else under your control.
+
+Because of this, this global context and the version of node is controlled by Cypress.
+
+{% note warning %}
+Your code must be compatible with the {% url 'version of node' https://github.com/cypress-io/cypress/blob/master/.node-version %} that comes with Cypress!
+{% endnote %}
+
+You can find the current node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
+
+This node version gets updated regularly (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
+
+## NPM modules
+
+When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any node module** you have installed.
+
+You can also `require` local files relative to your project.
+
+**For example, if your `package.json` looked like this:**
+
+```js
+{
+  "name": "My Project",
+  "dependencies": {
+    "debug": "x.x.x"
+  },
+  "devDependencies": {
+    "lodash": "x.x.x"
+  }
+}
+```
+
+**Then you could do any of the following in your `pluginsFile`:**
+
+```js
+// cypress/plugins/index.js
+
+const _ = require('lodash') // yup, dev dependencies
+const path = require('path') // yup, built in node modules
+const debug = require('debug') // yup, dependencies
+const User = require('../../lib/models/user') // yup, relative local modules
+
+console.log(__dirname) // /Users/janelane/Dev/my-project/cypress/plugins/index.js
+
+console.log(process.cwd()) // /Users/janelane/Dev/my-project
+```
+
+# Error handling
+
+Cypress spawns your `pluginsFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress' own execution in any way.
+
+If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
+
+Errors from your plugins *will not crash* Cypress.
+
+# File changes
+
+Normally when writing code in Node, you typically have to restart the process after changing any files.
+
+With Cypress, we automatically watch your `pluginsFile` and any changes made will take effect immediately. We will read the file in and execute the exported function again.
+
+This enables you to iterate on plugin code even with Cypress already running.
