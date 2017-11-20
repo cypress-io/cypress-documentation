@@ -81,7 +81,7 @@ The callback function is called any time a file is requested by the browser. Thi
 Make sure not to start a new watcher each time it is called. Instead, cache the watcher and, on subsequent calls, return a promise that resolves when the latest version of the file has been processed.
 {% endnote %}
 
-# Req object
+# File object
 
 The `file` object passed to the callback function has the following properties:
 
@@ -91,7 +91,7 @@ Property | Description
 `outputPath` | The suggested path for saving the preprocessed file to disk. This is unique to the source file. A preprocessor can choose to write the file elsewhere, but Cypress automatically provides you this value as a convenient default.
 `shouldWatch` | A boolean indicating whether the preprocessor should watch for file changes or not.
 
-# Req events
+# File events
 
 The `file` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
