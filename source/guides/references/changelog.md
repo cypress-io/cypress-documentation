@@ -9,28 +9,28 @@ comments: false
 
 **Summary:**
 
-- We have officially launched the new **Plugins API** interface. This adds a new `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you'll be able to use `node` API's that are executed outside of the browser.
-- We've currently added only one event for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
-- We have extracted the default `browserify` preprocessor into its own package - {% url `@cypress/browserify-preprocessor` https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is bundled with Cypress, but its extracted so it can be used / modified by you to change the default options we pass to `browserify`. Additionally, you can swap out this preprocessor for something else entirely.
+- We have officially launched the new **Plugins API** interface. This adds a `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you will be able to use `node` API's that are executed outside of the browser.
+- We have currently added only {% url "one event" writing-a-plugin#List-of-events %} for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
+- We have extracted the default `browserify` preprocessor into its own package - {% url `@cypress/browserify-preprocessor` https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is bundled with Cypress, but it is extracted so it can be used / modified by you to change the default options we pass to `browserify`. Additionally, you can swap out this preprocessor for something else entirely.
 
 **Features:**
-- There is now a Plugins API interface. Partially address {% issue 684 %}.
-- We've added the first Plugin API event called: `file:preprocessor`. Fixes {% issue 580 %} and {% issue 581 %}.
+- There is now a {% url "Plugins API interface" plugins-guide %}. Partially addresses {% issue 684 %}.
+- We have added the first Plugin API event called: {% url "`file:preprocessor`" writing-a-plugin#List-of-events %}. Fixes {% issue 580 %} and {% issue 581 %}.
 - You can now customize the default babel configuration options for the `browserify` preprocessor. Fixes {% issue 343 %} and {% issue 905 %}.
 - CoffeeScript 2 is supported via modifying the default options for the `browserify` preprocessor. Fixes {% issue 663 %}.
 - You can swap out or extend the default preprocessor to do exotic things like compile ClojureScript into JavaScript. Fixes {% issue 533 %}.
-- We've created a {% url `@cypress/webpack-preprocessor` https://github.com/cypress-io/cypress-webpack-preprocessor %} preprocessor NPM package for you webpack users (because we're nice). Fixes {% issue 676 %}.
+- We have created a {% url `@cypress/webpack-preprocessor` https://github.com/cypress-io/cypress-webpack-preprocessor %} preprocessor NPM package for you webpack users (because we are nice 😉). Fixes {% issue 676 %}.
 
 **Bugfixes:**
 
-- `cy.contains(selector, regexp)` now works as intended. Fixes {% issue 801 %}.
+- {% url "`cy.contains(selector, regexp)`" contains %} now works as intended. Fixes {% issue 801 %}.
 - We no longer format fixtures in any capacity. This fixes a bug with improperly formatting fixtures in Windows. You should handle formatting fixtures yourself. Fixes {% issue 884 %} and {% issue 902 %}.
-- `cy.viewport()` resolves if only width or only height changes. Fixes {% issue 873 %}.
+- {% url "`cy.viewport()`" viewport %} resolves if only width or only height changes. Fixes {% issue 873 %}.
 
 **Misc:**
 
-- There's a new `--global` option useful with `cypress open` to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
-- The module API accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
+- There is a new `--global` option useful with {% url "`cypress open`" command-line#cypress-open %} to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
+- The {% url "module API" command-line#Cypress-Module-API %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
 
 ## 1.0.3
 
