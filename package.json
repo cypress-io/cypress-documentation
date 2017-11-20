@@ -30,7 +30,8 @@
     "deploy-prebuilt": "node ./cy_scripts/deploy.js",
     "scrape": "node ./cy_scripts/scrape.js",
     "start": "node --stack-size=8192 ./index.js server --port 2222",
-    "test-e2e": "run-p --race start cypress",
+    "cypress:run": "cypress run",
+    "test-e2e": "start-server-and-test start http://localhost:2222 cypress:run",
     "test": "mocha --compilers coffee:coffee-script/register --recursive",
     "test-watch": "npm run test --silent -- --watch",
     "lint": "echo 'linting scripts'",
@@ -77,6 +78,7 @@
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0",
     "snap-shot-it": "^3.3.0",
+    "start-server-and-test": "1.0.0",
     "underscore.string": "^3.3.4",
     "wait-on": "^2.0.2",
     "yamljs": "^0.2.10"
