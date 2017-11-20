@@ -159,6 +159,7 @@ tutorials:
     testing-inputs: testing-inputs.html
     react-todo-form-submission: react-todo-form-submission.html
     react-todo-app-init: react-todo-app-init.html
+    react-todo-item-testing: react-todo-item-testing.html
 
 plugins:
   plugins: index.html
