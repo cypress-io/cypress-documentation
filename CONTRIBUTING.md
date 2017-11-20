@@ -9,6 +9,7 @@ Thanks for taking the time to contribute! :smile:
 - [Writing Documentation](#writing-documentation)
   - [Links](#links)
   - [Adding Examples](#adding-examples)
+  - [Adding Plugins](#adding-plugins)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)
@@ -61,7 +62,7 @@ variable set `DEBUG=docs npm run build`
 
 ### Adding Examples
 
- To add an blog, talk, or podcast to our docs, just add your data to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
+ To add an blog, talk, or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
 
 Add an associating image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should be resolution **715w x 480h**. Reference the image in the markdown document as follows:
 
@@ -69,7 +70,9 @@ Add an associating image with the example within the [`source/img/examples`](/so
 {% img /img/examples/name-of-file.jpg "alt text describing img" %}
 ```
 
-To add anything else to an example page, the documents outlining examples are within the [`source/examples`](/source/examples) directory. Each document is written in markdown with a little bit of [Hexo flair](https://hexo.io/docs/tag-plugins.html). To add an example to a document, just try to follow the formatting of any previous examples in the markdown file.
+### Adding Plugins
+
+To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, and any keywords.
 
 ## Commiting Code
 
@@ -80,8 +83,7 @@ Danger 📛: because we are minifying client side code using a [Hexo plugin](htt
 
 ### Pull Requests
 
-You should push your local changes to your forked GitHub repository and then
-open a pull request from your repo to the `cypress-io/cypress-documentation` repo.
+You should push your local changes to your forked GitHub repository and then open a pull request from your repo to the `cypress-io/cypress-documentation` repo.
 
 - The pull request should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
 - When opening a PR for a specific issue already open, please use the `address #[issue number]` or `closes #[issue number]` syntax in the pull request description.

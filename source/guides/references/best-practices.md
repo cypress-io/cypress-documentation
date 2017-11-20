@@ -426,7 +426,7 @@ The simplest solution here is to move your reset code to **before** the test run
 
 Code put in a `before` or `beforeEach` hook will **always** run prior to the test - even if you refreshed Cypress in the middle of an existing one!
 
-This is also a great opportunity to use {%url 'root level hooks in mocha' https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks %}. A perfect place to put these is in the {% url "`cypress/support/index.js` file" writing-and-organizing-tests#Support-Files %} because it is always evaluated before any test code from your spec files.
+This is also a great opportunity to use {%url 'root level hooks in mocha' https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks %}. A perfect place to put these is in the {% url "`cypress/support/index.js` file" writing-and-organizing-tests#Support-file %} because it is always evaluated before any test code from your spec files.
 
 **Hooks you add to the root will always run on all suites!**
 

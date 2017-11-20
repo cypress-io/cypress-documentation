@@ -278,11 +278,21 @@
       margin: 0 auto;
     }
   }
+
+  ul.plugins-list li {
+    width: 50%;
+  }
 }
 
 @media screen and(max-width: 620px) {
   .media {
     width: 100%;
     padding-right: 0;
+  }
+}
+
+@media screen and(max-width: 500px) {
+  ul.plugins-list li {
+    width: 100%;
   }
 }
