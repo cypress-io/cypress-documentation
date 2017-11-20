@@ -185,6 +185,7 @@ sidebar:
     react-todo-form-submission: 3. Testing form submission
     react-todo-app-init: 4. Testing data loading
     react-todo-item-testing: 5. Testing todo item behavior
+    react-todo-toggle-debug: 6. Toggling and debugging
   examples:
     recipes: Recipes
     unit-testing-recipe: Unit Testing
