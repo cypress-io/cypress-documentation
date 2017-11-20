@@ -5,7 +5,7 @@ comments: false
 
 ## 1.1.0
 
-*Release 11/19/2017*
+*Released 11/19/2017*
 
 **Summary:**
 
