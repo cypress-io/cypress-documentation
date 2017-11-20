@@ -19,4 +19,5 @@ We have a lot of ground to cover, so let's get started!
 | 2. {% url "Testing inputs" testing-inputs %} | {% fa fa-video-camera %} 7:17 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
 | 3. {% url "Form submission and XHR stubbing" react-todo-form-submission %} | {% fa fa-video-camera %} 10:21 | <time datetime="2017-11-04T10:45:00.000Z">11-04-2017</time> | 1.0.2 |
 | 4. {% url "Loading data with fixtures and custom commands" react-todo-app-init %} | {% fa fa-video-camera %} 9:00 | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2 |
-| More tutorials to come! | &nbsp; | &nbsp; | &nbsp; |
+| 5. {% url "Testing todo item behavior" react-todo-item-testing %} | {% fa fa-video-camera %} 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
+| Up next: Toggling todos and debugging | &nbsp; | &nbsp; | &nbsp; |
