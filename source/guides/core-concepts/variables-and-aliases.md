@@ -292,7 +292,7 @@ it('is not using aliases correctly', function () {
   //
   // this.users is not defined
   // because the 'as' command has only
-  // been enqueued - it has not ran yet
+  // been enqueued - it has not run yet
   const user = this.users[0]
 })
 ```
