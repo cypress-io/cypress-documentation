@@ -42,6 +42,7 @@ comments: false
 
 **Documentation Changes:**
 
+- {% url 'Created "Testing React TodoMVC" tutorials' introduction-to-tutorials %}
 - {% url 'Created "Variables and Aliases" core concept' variables-and-aliases %}
 - {% url 'Created "Conditional Testing" core concept' conditional-testing %}
 - {% url 'Created "Plugins" guide' plugins-guide %}
