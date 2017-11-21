@@ -217,7 +217,7 @@ Now we can assert something about this new page!
 
 ## {% fa fa-check-square-o %} Step 4: Make an Assertion
 
-Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL chaining an assertion to it with {% url "`.should()`" should %}.
+Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with {% url "`.should()`" should %}.
 
 Here's what that looks like:
 
