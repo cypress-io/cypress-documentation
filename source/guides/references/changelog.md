@@ -3,6 +3,14 @@ title: Changelog
 comments: false
 ---
 
+## 1.1.1
+
+*Released 11/20/2017*
+
+**Bugfixes:**
+
+- Fixed a bug swallowing plugin errors due to undefined `reject` function. Fixes {% issue 936 %}.
+
 ## 1.1.0
 
 *Released 11/19/2017*
