@@ -9,7 +9,7 @@ comments: false
 
 **Bugfixes:**
 
-- Fixed a bug swallowing plugin errors due to undefined `reject` function. Fixes {% issue 936 %}.
+- Fixed a bug swallowing plugin errors due to undefined `reject` function. Fixes {% issue 934 %}.
 
 ## 1.1.0
 
@@ -39,6 +39,17 @@ comments: false
 
 - There is a new `--global` option useful with {% url "`cypress open`" command-line#cypress-open %} to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
 - The {% url "module API" command-line#Cypress-Module-API %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
+
+**Documentation Changes:**
+
+- {% url 'Created "Variables and Aliases" core concept' variables-and-aliases %}
+- {% url 'Created "Conditional Testing" core concept' conditional-testing %}
+- {% url 'Created "Plugins" guide' plugins-guide %}
+- {% url 'Created "List of Plugins"' plugins %}
+- {% url 'Created "Writing a Plugin" API' writing-a-plugin %}
+- {% url 'Created "Preprocessors API"' preprocessors-api %}
+- {% url 'Updated "Using Cypress FAQ"' using-cypress-faq %}
+- {% url 'Updated "Best Pratices"' best-practices %}
 
 ## 1.0.3
 
