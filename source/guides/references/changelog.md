@@ -10,7 +10,7 @@ comments: false
 **Bugfixes:**
 
 - Fixed a bug swallowing plugin errors due to undefined `reject` function. Fixes {% issue 934 %}.
-- `cy.type()` now respects the `maxlength` attribute and will not type beyond it. Fixtures {% issue 928 %}.
+- `cy.type()` now respects the `maxlength` attribute and will not type beyond it. Fixes {% issue 928 %}.
 
 ## 1.1.0
 
