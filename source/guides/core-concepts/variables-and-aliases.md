@@ -154,7 +154,7 @@ cy.get('#num').then(($span) => {
 })
 ```
 
-The reason for using `const` is because the the `$span` object is mutable. Whenever you have mutable objects and you're trying to compare them, you'll need to store their values. Using `const` is a perfect way to do that.
+The reason for using `const` is because the `$span` object is mutable. Whenever you have mutable objects and you're trying to compare them, you'll need to store their values. Using `const` is a perfect way to do that.
 
 # Aliases
 
@@ -292,7 +292,7 @@ it('is not using aliases correctly', function () {
   //
   // this.users is not defined
   // because the 'as' command has only
-  // been enqueued - it has not ran yet
+  // been enqueued - it has not run yet
   const user = this.users[0]
 })
 ```

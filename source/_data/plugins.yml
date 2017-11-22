@@ -14,3 +14,9 @@
       description: Simple preprocessor that only watches files. Useful as an example reference.
       link: https://github.com/cypress-io/cypress-watch-preprocessor
       keywords: [file-watcher]
+- name: Development
+  plugins:
+    - name: ESLint
+      description: ESLint plugin that sets globals for writing tests in Cypress
+      link: https://github.com/cypress-io/eslint-plugin-cypress
+      keywords: [eslint]

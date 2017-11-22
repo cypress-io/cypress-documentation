@@ -102,6 +102,10 @@ All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cy
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
 
+{% note success Using ESlint? %}
+Check out our [Cypress ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress).
+{% endnote %}
+
 # Write a *Real* Test
 
 **A solid test generally covers 3 phases:**
@@ -217,7 +221,7 @@ Now we can assert something about this new page!
 
 ## {% fa fa-check-square-o %} Step 4: Make an Assertion
 
-Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL chaining an assertion to it with {% url "`.should()`" should %}.
+Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with {% url "`.should()`" should %}.
 
 Here's what that looks like:
 
