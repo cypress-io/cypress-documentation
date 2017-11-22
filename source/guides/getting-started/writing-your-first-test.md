@@ -102,6 +102,10 @@ All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cy
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
 
+{% note success Using ESlint? %}
+Check out our [Cypress ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress).
+{% endnote %}
+
 # Write a *Real* Test
 
 **A solid test generally covers 3 phases:**
