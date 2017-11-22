@@ -48,8 +48,8 @@ gulp.task('move:doc:search:css', function () {
 // move font files
 gulp.task('move:fira:fonts', function () {
   return gulp
-   .src('./node_modules/fira/**')
-   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/fira'))
+  .src('./node_modules/fira/**')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/fira'))
 })
 
 gulp.task('move:font:awesome:fonts', (cb) => {
@@ -58,14 +58,14 @@ gulp.task('move:font:awesome:fonts', (cb) => {
 
 gulp.task('move:font:awesome:css', function () {
   return gulp
-   .src('./node_modules/font-awesome/css/font-awesome.css')
-   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/font-awesome/css'))
+  .src('./node_modules/font-awesome/css/font-awesome.css')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/font-awesome/css'))
 })
 
 gulp.task('move:font:awesome:fonts:folder', function () {
   return gulp
-   .src('./node_modules/font-awesome/fonts/*')
-   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/font-awesome/fonts'))
+  .src('./node_modules/font-awesome/fonts/*')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/font-awesome/fonts'))
 })
 
 gulp.task('revision', () => {

@@ -3,7 +3,7 @@ process.on('unhandledRejection', function (reason, p) {
   console.error('Unhandled Rejection at: Promise ', p)
   console.error('reason: ', reason)
   process.exit(-1)
-});
+})
 
 const fs = require('fs')
 const path = require('path')
