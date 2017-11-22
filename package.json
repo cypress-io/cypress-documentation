@@ -90,7 +90,7 @@
     "docsearch.js": "2.4.1",
     "fira": "github:cypress-io/fira#fb63362742eea8cdce0d90825ab9264d77719e3d",
     "font-awesome": "4.7.0",
-    "hexo": "3.4.1",
+    "hexo": "3.4.2",
     "hexo-algoliasearch": "0.2.1",
     "hexo-cli": "^1.0.3",
     "hexo-filter-cleanup": "1.0.7",
