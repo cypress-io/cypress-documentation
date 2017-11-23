@@ -187,15 +187,10 @@ sidebar:
     react-todo-item-testing: 5. Testing todo item behavior
     react-todo-toggle-debug: 6. Toggling and debugging
   examples:
+    examples: Examples
     recipes: Recipes
-    list-of-recipes: List of Recipes
     applications: Applications
-    kitchen-sink: Kitchen Sink
-    todo-mvc: TodoMVC
-    pie-chopper: PieChopper
-    phonecat: Phonecat
     docker: Docker
-    docker-examples: Examples
     media: Media
     talks-media: Talks
     podcasts-media: Podcasts

@@ -62,7 +62,7 @@ Just manually unzip and double click. Cypress will run without needing to instal
 
 ## {% fa fa-refresh %} Continuous Integration
 
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker-examples %} which have everything you need prebuilt.
+Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
 # Opening Cypress
 

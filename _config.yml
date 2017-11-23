@@ -59,7 +59,7 @@ alias:
 
   plugins/: plugins/index.html
 
-  examples/index.html: examples/recipes/list-of-recipes.html
+  examples/index.html: examples/examples/recipes.html
 
   dashboard/index.html: guides/core-concepts/dashboard-service.html
   dashboard/: guides/core-concepts/dashboard-service.html

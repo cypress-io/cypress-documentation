@@ -527,4 +527,4 @@ Having custom commands repeat the same UI actions over and over again is slow, a
 # See also
 
 - {% url 'Cypress.log()' cypress-log %}
-- {% url 'Recipe: Logging In' list-of-recipes %}
+- {% url 'Recipe: Logging In' recipes %}
