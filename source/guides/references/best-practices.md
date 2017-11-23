@@ -161,7 +161,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 3. Instead of having your test code bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that is the case, just use {% url `cy.request()` request %} to get the session directly from your server and bypass the provider altogether.
 
 {% note info Recipes %}
-{% url "We have several examples of doing this in our logging in recipe." logging-in-recipe %}
+{% url "We have several examples of doing this in our logging in recipes." list-of-recipes %}
 {% endnote %}
 
 ***3rd party servers:***

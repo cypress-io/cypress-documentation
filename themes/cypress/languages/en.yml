@@ -188,12 +188,7 @@ sidebar:
     react-todo-toggle-debug: 6. Toggling and debugging
   examples:
     recipes: Recipes
-    unit-testing-recipe: Unit Testing
-    logging-in-recipe: Logging In
-    testing-the-dom-recipe: Testing the DOM
-    working-with-the-backend-recipe: Working with the Backend
-    stubs-spies-and-clocks-recipe: Spies, Stubs, and Clocks
-    extending-cypress-recipe: Extending Cypress
+    list-of-recipes: List of Recipes
     applications: Applications
     kitchen-sink: Kitchen Sink
     todo-mvc: TodoMVC

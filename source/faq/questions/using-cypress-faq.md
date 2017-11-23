@@ -279,7 +279,7 @@ Cypress does not and may never have multi-tab support for various reasons.
 
 Luckily there are lots of easy and safe workarounds that enable you to test this behavior in your application.
 
-{% url 'Read through this recipe to see how to test anchor links.' testing-the-dom-recipe %}
+{% url 'Read through this recipe to see how to test anchor links.' list-of-recipes#Tab-Handling-and-Links %}
 
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
