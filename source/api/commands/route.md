@@ -97,7 +97,7 @@ cy.wait('@postUser')
 ***Setup route to `POST` to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to POST for login" logging-in-recipe %}
+{% url "Check out our example recipe using `cy.route()` to POST for login" list-of-recipes#HTML-Web-Forms %}
 {% endnote %}
 
 ***Wait on `url` matching glob***
@@ -313,7 +313,7 @@ cy.route({
 ***Setup route to error on POST to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" logging-in-recipe %}
+{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" list-of-recipes#HTML-Web-Forms %}
 {% endnote %}
 
 ***Change `headers`***
@@ -405,7 +405,7 @@ Even the `Initiator` is included, which is a stack trace to what caused the XHR 
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application. 
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
 
 ## Matches
 
@@ -488,4 +488,4 @@ When clicking on `XHR Stub` within the Command Log, the console outputs the foll
 - {% url `cy.server()` server %}
 - {% url `cy.wait()` wait %}
 - {% url 'Guide: Network Requests' network-requests %}
-- {% url 'Recipe: Logging in - XHR Web Form' logging-in-recipe %}
+- {% url 'Recipe: Logging in - XHR Web Form' list-of-recipes#XHR-Web-Forms %}

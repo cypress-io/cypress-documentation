@@ -248,8 +248,8 @@ comments: false
 - New {% url "`.trigger()`" trigger %} command. Useful for triggering arbitrary events. Fixes {% issue 406 %}.
 - New {% url "`cy.scrollTo()`" scrollto %} command. Useful for having a container scroll to a specific position. Fixes {% issue 497 %} & {% issue 313 %}.
 - New {% url "`.scrollIntoView()`" scrollintoview %} command. Useful for scrolling an element into view. Fixes {% issue 498 %} & {% issue 313 %} & {% issue 519 %}.
-- Input ranges are now more easily testable using the new {% url "`.trigger()`" trigger %} command. See our {% url "new recipe" testing-the-dom-recipe %} for details on how. Fixes {% issue 287 %}.
-- Testing drag and drop is now possible using the new {% url "`.trigger()`" trigger %} command. See our {% url "new recipe" testing-the-dom-recipe %} for details on how. Fixes {% issue 386 %}.
+- Input ranges are now more easily testable using the new {% url "`.trigger()`" trigger %} command. See our {% url "new recipe" list-of-recipes#Form-Interactions %} for details on how. Fixes {% issue 287 %}.
+- Testing drag and drop is now possible using the new {% url "`.trigger()`" trigger %} command. See our {% url "new recipe" list-of-recipes#Form-Interactions %} for details on how. Fixes {% issue 386 %}.
 - Updated {% url "`.click()`" click %} command to accept more position arguments. Fixes {% issue 499 %}.
 - Added support to {% url `.type()` type %} for inputs of type `date`, `time`, `month`, and `week`. Fixes {% issue 27 %}.
 - You can now pass a browser option to {% url "`cypress run`" command-line#cypress-run %} as `--browser <browser name>`. This enables you to run the same set of browsers when running from the CLI as when you're running from the GUI. Fixes {% issue 462 %} and {% issue 531 %}.

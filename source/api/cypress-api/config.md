@@ -106,12 +106,6 @@ Cypress.config("viewportWidth", 800)
 Cypress.config("viewportWidth") // => 800
 ```
 
-**Using config to set `baseUrl`**
-
-{% note info %}
-{% url "Check out our example recipe where we reset our `baseUrl` using `Cypress.config()`" logging-in-recipe %}
-{% endnote %}
-
 ## Object
 
 **You can set multiple values by passing an object literal.**
