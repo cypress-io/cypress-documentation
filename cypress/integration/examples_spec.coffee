@@ -10,12 +10,12 @@ describe "Examples", ->
     cy.visit(EXAMPLES_PATH + ".html")
 
   context "Main Menu", ->
-    it "goes straight to 'Unit Testing'", ->
+    it "goes straight to 'List of Recipes'", ->
       cy.visit('/')
 
       cy.contains('Examples')
         .click()
-      cy.contains('h1', "Unit Testing")
+      cy.contains('h1', "List of Recipes")
 
       cy.url()
         .should('include', EXAMPLES_PATH)
