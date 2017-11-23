@@ -290,6 +290,6 @@ When clicking on `request` within the command log, the console outputs the follo
 - {% url `cy.exec()` exec %}
 - {% url `cy.visit()` visit %}
 - {% url "Recipe: Logging In - Single Sign on" list-of-recipes#Single-Sign-On %}
-- {% url "Recipe: Logging In - HTML Web Form" list-of-recipes#Web-Forms %}
+- {% url "Recipe: Logging In - HTML Web Form" list-of-recipes#HTML-Web-Forms %}
 - {% url "Recipe: Logging In - XHR Web Form" list-of-recipes#XHR-Web-Forms %}
 - {% url "Recipe: Logging In - CSRF Tokens" list-of-recipes#CSRF-Tokens %}
