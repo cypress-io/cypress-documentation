@@ -112,7 +112,7 @@ cy
 ***Use `.its()` to test `window.fetch`***
 
 {% note info %}
-{% url "Check out our example recipe on testing `window.fetch` using `.its()`" stubs-spies-and-clocks-recipe %}
+{% url "Check out our example recipe on testing `window.fetch` using `.its()`" list-of-recipes#Stubbing-window-fetch %}
 {% endnote %}
 
 ## Nested Properties
