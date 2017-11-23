@@ -179,8 +179,6 @@ examples:
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html
-  userland:
-    extensions: userland-extensions.html
 
 faq:
   questions:
