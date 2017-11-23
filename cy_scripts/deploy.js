@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 
-const path       = require('path')
-const chalk      = require('chalk')
-const Promise    = require('bluebird')
-const inquirer   = require('inquirer')
-const minimist   = require('minimist')
+const path = require('path')
+const chalk = require('chalk')
+const Promise = require('bluebird')
+const inquirer = require('inquirer')
+const minimist = require('minimist')
 const debug = require('debug')('deploy')
 const questionsRemain = require('@cypress/questions-remain')
-const scrape     = require('./scrape')
+const scrape = require('./scrape')
 const shouldDeploy = require('./should-deploy')
 const R = require('ramda')
 const la = require('lazy-ass')
@@ -43,7 +43,7 @@ function prompToScrape () {
     message: 'Would you like to scrape the docs? (You only need to do this if they have changed on this deployment)',
     choices: [
       { name: 'Yes', value: true },
-      { name: 'No',  value: false },
+      { name: 'No', value: false },
     ],
   })
   .get('scrape')
@@ -97,12 +97,12 @@ function doDeploy (env) {
   la(isValidEnvironment(env), 'invalid deploy environment', env)
   debug('getting current branch')
   return getBranch()
-    .then((branch) => {
-      console.log('deploying branch %s to environment %s',
-        chalk.green(branch), chalk.blue(env))
-      la(is.unemptyString(branch), 'invalid branch name', branch)
-      return deployEnvironmentBranch(env, branch)
-    })
+  .then((branch) => {
+    console.log('deploying branch %s to environment %s',
+      chalk.green(branch), chalk.blue(env))
+    la(is.unemptyString(branch), 'invalid branch name', branch)
+    return deployEnvironmentBranch(env, branch)
+  })
 }
 
 function deploy () {
@@ -126,9 +126,9 @@ function deploy () {
 }
 
 deploy()
-  .catch((err) => {
-    console.error('🔥  deploy failed')
-    console.error(err)
-    console.error(err.stack)
-    process.exit(-1)
-  })
+.catch((err) => {
+  console.error('🔥  deploy failed')
+  console.error(err)
+  console.error(err.stack)
+  process.exit(-1)
+})

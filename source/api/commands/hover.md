@@ -16,7 +16,7 @@ Sometimes an element has specific logic on hover and you *do* need to "hover" in
 Oftentimes you can use {% url `.trigger()` trigger %}, {% url `.invoke()` invoke %} or {% url `cy.wrap()` wrap %} to show the element before you perform the action.
 
 {% note info %}
-{% url 'Check out our example recipe on testing hover and working with hidden elements' testing-the-dom-recipe %}
+{% url 'Check out our example recipe on testing hover and working with hidden elements' recipes#Hover-and-Hidden-Elements %}
 {% endnote %}
 
 ## Trigger
@@ -56,4 +56,4 @@ cy.get('.checkbox').check({ force: true })
 - {% url `.invoke()` invoke %}
 - {% url `.trigger()` trigger %}
 - {% url `cy.wrap()` wrap %}
-- {% url 'Recipe: Dealing with Hover and Hidden Elements' testing-the-dom-recipe %}
+- {% url 'Recipe: Dealing with Hover and Hidden Elements' recipes#Hover-and-Hidden-Elements %}

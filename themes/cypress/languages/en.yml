@@ -187,27 +187,14 @@ sidebar:
     react-todo-item-testing: 5. Testing todo item behavior
     react-todo-toggle-debug: 6. Toggling and debugging
   examples:
+    examples: Examples
     recipes: Recipes
-    unit-testing-recipe: Unit Testing
-    logging-in-recipe: Logging In
-    testing-the-dom-recipe: Testing the DOM
-    working-with-the-backend-recipe: Working with the Backend
-    stubs-spies-and-clocks-recipe: Spies, Stubs, and Clocks
-    extending-cypress-recipe: Extending Cypress
     applications: Applications
-    kitchen-sink: Kitchen Sink
-    todo-mvc: TodoMVC
-    pie-chopper: PieChopper
-    phonecat: Phonecat
     docker: Docker
-    docker-images: Images
-    circle-ci: CicleCI
-    codeship: Codeship
     media: Media
     talks-media: Talks
     podcasts-media: Podcasts
     blogs-media: Blogs
-    userland: Userland
     extensions: Extensions
   faq:
     questions: FAQ
