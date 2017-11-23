@@ -25,3 +25,7 @@
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
       link: https://github.com/cypress-io/cypress-docker-images
       keywords: [docker, continuous-integration]
+    - name: TypeScript
+      description: Unofficial 3rd party TypeScript definitions for Cypress API commands.
+      link: https://github.com/StackVista/typed-cypress
+      keywords: [typescript]
