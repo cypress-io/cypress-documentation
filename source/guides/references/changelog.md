@@ -254,7 +254,7 @@ comments: false
 - Added support to {% url `.type()` type %} for inputs of type `date`, `time`, `month`, and `week`. Fixes {% issue 27 %}.
 - You can now pass a browser option to {% url "`cypress run`" command-line#cypress-run %} as `--browser <browser name>`. This enables you to run the same set of browsers when running from the CLI as when you're running from the GUI. Fixes {% issue 462 %} and {% issue 531 %}.
 - {% url "`cypress open`" command-line#cypress-open %} no longer opens a detached process by default. Instead `cypress open` now accepts a new flag `--detached`, which replicates this behavior. Fixes {% issue 531 %}.
-- We have all new {% url "docker examples" docker-images %} you can check out.
+- We have all new {% url "docker examples" docker-examples %} you can check out.
 - The {% url "`cypress` npm package" https://www.npmjs.com/package/cypress %} now checks the currently installed version on `install` and {% url "`run`" command-line#cypress-run %} and does not re-install Cypress if it is already installed. Fixes {% issue 396 %}.
 - We've added a new {% url "`Cypress.Commands`" custom-commands %} interface to handle adding your own custom commands. Fixes {% issue 436 %}.
 - You can now overwrite existing commands with {% url "`Cypress.Commands.overwrite`" custom-commands %}. <OPEN A NEW ISSUE>

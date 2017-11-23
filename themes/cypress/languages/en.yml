@@ -200,9 +200,7 @@ sidebar:
     pie-chopper: PieChopper
     phonecat: Phonecat
     docker: Docker
-    docker-images: Images
-    circle-ci: CicleCI
-    codeship: Codeship
+    docker-examples: Examples
     media: Media
     talks-media: Talks
     podcasts-media: Podcasts
