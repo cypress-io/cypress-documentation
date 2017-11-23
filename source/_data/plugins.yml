@@ -15,7 +15,7 @@
       link: https://github.com/cypress-io/cypress-watch-preprocessor
       keywords: [file-watcher]
 
-- name: Development
+- name: Development Tools
   plugins:
     - name: ESLint
       description: ESLint plugin that sets globals for writing tests in Cypress.
