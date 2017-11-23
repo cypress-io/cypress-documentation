@@ -198,7 +198,7 @@ Because we are using `chai`, that means you can extend it however you'd like. Cy
 - ...or NPM install any existing `chai` library and import into your test file or support file.
 
 {% note info %}
-{% url 'Check out our example recipe extending chai with new assertions.' list-of-recipes#Adding-Chai-Assertions %}
+{% url 'Check out our example recipe extending chai with new assertions.' recipes#Adding-Chai-Assertions %}
 {% endnote %}
 
 # Common Assertions

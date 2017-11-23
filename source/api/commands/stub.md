@@ -100,7 +100,7 @@ expect(removeStub).to.be.called
 ***Using cy.stub***
 
 {% note info %}
-{% url "Check out our example recipe testing spying, stubbing and time" list-of-recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
 {% endnote %}
 
 ## Aliases
@@ -178,5 +178,5 @@ When clicking on the `(stub-1)` event within the command log, the console output
 - {% url `cy.clock()` clock %}
 - {% url `cy.spy()` spy %}
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
-- {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" list-of-recipes#Stubbing-window-fetch %}
-- {% url "Recipe: Unit Test - Stubbing Dependencies" list-of-recipes %}
+- {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" recipes#Stubbing-window-fetch %}
+- {% url "Recipe: Unit Test - Stubbing Dependencies" recipes %}

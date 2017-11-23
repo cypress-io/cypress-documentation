@@ -1,5 +1,5 @@
 ---
-title: Docker Examples
+title: Docker
 comments: false
 containerClass: examples
 ---

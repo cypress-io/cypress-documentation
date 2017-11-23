@@ -2,7 +2,7 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-EXAMPLES_PATH = "/examples/recipes/list-of-recipes"
+EXAMPLES_PATH = "/examples/examples/recipes"
 
 describe "Examples", ->
   beforeEach ->
@@ -10,12 +10,12 @@ describe "Examples", ->
     cy.visit(EXAMPLES_PATH + ".html")
 
   context "Main Menu", ->
-    it "goes straight to 'List of Recipes'", ->
+    it "goes straight to 'Recipes'", ->
       cy.visit('/')
 
       cy.contains('Examples')
         .click()
-      cy.contains('h1', "List of Recipes")
+      cy.contains('h1', "Recipes")
 
       cy.url()
         .should('include', EXAMPLES_PATH)
