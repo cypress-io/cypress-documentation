@@ -166,15 +166,10 @@ plugins:
   plugins: index.html
 
 examples:
-  recipes:
-    list-of-recipes: list-of-recipes.html
-  applications:
-    kitchen-sink: kitchen-sink.html
-    todo-mvc: todo-mvc.html
-    pie-chopper: pie-chopper.html
-    phonecat: phonecat.html
-  docker:
-    docker-examples: docker-examples.html
+  examples:
+    recipes: recipes.html
+    applications: applications.html
+    docker: docker.html
   media:
     blogs-media: blogs-media.html
     talks-media: talks-media.html

@@ -1,5 +1,5 @@
 ---
-title: List of Recipes
+title: Recipes
 comments: false
 containerClass: examples
 ---

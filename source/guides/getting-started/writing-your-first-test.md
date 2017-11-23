@@ -125,7 +125,7 @@ Today, we'll take a narrow view of these steps and map them cleanly to Cypress c
 
 ## {% fa fa-globe %} Step 1: Visit a Page
 
-First, let's visit a web page. We will visit our {% url 'Kitchen Sink' kitchen-sink %} application in this example so that you can try Cypress out without needing to worry about finding a page to test.
+First, let's visit a web page. We will visit our {% url 'Kitchen Sink' applications#Kitchen-Sink %} application in this example so that you can try Cypress out without needing to worry about finding a page to test.
 
 Using {% url `cy.visit()` visit %} is easy, we just pass it the URL we want to visit. Let's replace our previous test with the one below that actually visits a page:
 

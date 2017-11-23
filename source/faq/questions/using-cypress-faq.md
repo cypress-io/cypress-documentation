@@ -279,7 +279,7 @@ Cypress does not and may never have multi-tab support for various reasons.
 
 Luckily there are lots of easy and safe workarounds that enable you to test this behavior in your application.
 
-{% url 'Read through this recipe to see how to test anchor links.' list-of-recipes#Tab-Handling-and-Links %}
+{% url 'Read through this recipe to see how to test anchor links.' recipes#Tab-Handling-and-Links %}
 
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
@@ -290,7 +290,7 @@ You can simply `require` or `import` them as you're accustomed to. We preprocess
 
 Cypress doesn't have direct access to node or your file system. We recommend utilizing {% url `cy.exec()` exec %} or {% url `cy.readFile()` readfile %} to execute a shell command or a node script that will do what you need.
 
-{% url 'Check out this example recipe.' list-of-recipes#Node-Modules %}
+{% url 'Check out this example recipe.' recipes#Node-Modules %}
 
 ## {% fa fa-angle-right %} Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 

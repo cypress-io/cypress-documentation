@@ -97,7 +97,7 @@ cy.wait('@postUser')
 ***Setup route to `POST` to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to POST for login" list-of-recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe using `cy.route()` to POST for login" recipes#HTML-Web-Forms %}
 {% endnote %}
 
 ***Wait on `url` matching glob***
@@ -313,7 +313,7 @@ cy.route({
 ***Setup route to error on POST to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" list-of-recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#HTML-Web-Forms %}
 {% endnote %}
 
 ***Change `headers`***
@@ -488,4 +488,4 @@ When clicking on `XHR Stub` within the Command Log, the console outputs the foll
 - {% url `cy.server()` server %}
 - {% url `cy.wait()` wait %}
 - {% url 'Guide: Network Requests' network-requests %}
-- {% url 'Recipe: Logging in - XHR Web Form' list-of-recipes#XHR-Web-Forms %}
+- {% url 'Recipe: Logging in - XHR Web Form' recipes#XHR-Web-Forms %}

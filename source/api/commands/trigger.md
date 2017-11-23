@@ -84,7 +84,7 @@ cy.get('button').trigger('mouseover') // yields 'button'
 ***Drag and Drop***
 
 {% note info %}
-{% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' list-of-recipes#Drag-and-Drop %}
+{% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' recipes#Drag-and-Drop %}
 {% endnote %}
 
 ## Change Event
