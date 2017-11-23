@@ -179,9 +179,7 @@ examples:
     pie-chopper: pie-chopper.html
     phonecat: phonecat.html
   docker:
-    docker-images: docker-images.html
-    circle-ci: circle-ci.html
-    codeship: codeship.html
+    docker-examples: docker-examples.html
   media:
     blogs-media: blogs-media.html
     talks-media: talks-media.html
