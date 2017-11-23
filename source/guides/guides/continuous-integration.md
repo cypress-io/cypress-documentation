@@ -38,7 +38,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 
 # Setting Up CI
 
-Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" kitchen-sink %}.
+Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
 ## Travis
 

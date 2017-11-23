@@ -179,7 +179,7 @@ cy.getCookie('cypress-session-cookie').should('exist')
 ***Using cy.request for HTML Forms***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.request()` for HTML form submissions" logging-in-recipe %}
+{% url "Check out our example recipe using `cy.request()` for HTML form submissions" recipes#HTML-Web-Forms %}
 {% endnote %}
 
 ## Request Polling
@@ -248,7 +248,7 @@ In other words, `cy.request()` transparently performs all of the underlying func
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application. 
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
 
 # Rules
 
@@ -289,7 +289,7 @@ When clicking on `request` within the command log, the console outputs the follo
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.visit()` visit %}
-- {% url "Recipe: Logging In - CSRF Tokens" logging-in-recipe %}
-- {% url "Recipe: Logging In - HTML Web Form" logging-in-recipe %}
-- {% url "Recipe: Logging In - Single Sign on" logging-in-recipe %}
-- {% url "Recipe: Logging In - XHR Web Form" logging-in-recipe %}
+- {% url "Recipe: Logging In - Single Sign on" recipes#Single-Sign-On %}
+- {% url "Recipe: Logging In - HTML Web Form" recipes#HTML-Web-Forms %}
+- {% url "Recipe: Logging In - XHR Web Form" recipes#XHR-Web-Forms %}
+- {% url "Recipe: Logging In - CSRF Tokens" recipes#CSRF-Tokens %}
