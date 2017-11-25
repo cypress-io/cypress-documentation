@@ -2,7 +2,7 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-TUTORIALS_PATH = "/examples/examples/tutorials.html"
+TUTORIALS_PATH = "/examples/examples/tutorials"
 
 describe "Tutorials", ->
   beforeEach ->
