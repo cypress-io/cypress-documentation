@@ -18,7 +18,9 @@ Recipe | Category | Description
 {% urlHash 'Tab Handling and Links' Tab-Handling-and-Links %} | Testing the DOM | Links that open in a new tab
 {% urlHash 'Hover and Hidden Elements' Hover-and-Hidden-Elements %} | Testing the DOM | Test hidden elements requiring hover
 {% urlHash 'Form Interactions' Form-Interactions %} | Testing the DOM | Test form elements like input type `range`
-{% urlHash 'Drag \'n Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
+{% urlHash 'Drag and Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
+{% urlHash 'Typescript with Browserify' Typescript-with-Browserify %} | Preprocessors | Add typescript support with browserify
+{% urlHash 'Typescript with Webpack' Typescript-with-Webpack %} | Preprocessors | Add typescript support with webpack
 {% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
 {% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
@@ -93,6 +95,15 @@ Get around the lack of a `.hover()` command.
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses drag events.
 
 ## [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/unit_test_stubbing_dependencies_spec.js)
+## [Typescript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify)
+
+- Use [`@cypress/browserify-preprocessor`](https://github.com/cypress-io/cypress-browserify-preprocessor) to write Cypress tests in Typescript
+
+## [Typescript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
+
+- Use [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress-webpack-preprocessor) to write Cypress tests in Typescript
+
+## [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions)
 
 - Use {% url `cy.stub()` stub %} to stub dependencies in a unit test.
 - Handle promises returned by stubbed functions.
