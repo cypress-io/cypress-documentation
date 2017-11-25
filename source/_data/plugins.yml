@@ -26,6 +26,6 @@
       link: https://github.com/cypress-io/cypress-docker-images
       keywords: [docker, continuous-integration]
     - name: TypeScript
-      description: Unofficial 3rd party TypeScript definitions for Cypress API commands.
-      link: https://github.com/StackVista/typed-cypress
+      description: Unofficial TypeScript definitions for the Cypress API.
+      link: https://www.npmjs.com/package/@types/cypress
       keywords: [typescript]
