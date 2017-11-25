@@ -3,7 +3,6 @@ _ = require('lodash')
 
 GUIDES_PATH = "/guides/overview/why-cypress"
 API_PATH = "/api/introduction/api"
-TUTORIALS_PATH = "/examples/examples/tutorials"
 EXAMPLES_PATH = "/examples/examples/recipes"
 FAQ_PATH = "/faq/questions/general-questions-faq"
 
@@ -68,9 +67,6 @@ describe "Documentation", ->
       cy.contains(".main-nav-link", "API")
         .should("have.attr", "href").and("include", API_PATH)
 
-      cy.contains(".main-nav-link", "Tutorials")
-        .should("have.attr", "href").and("include", TUTORIALS_PATH)
-
       cy.contains(".main-nav-link", "Examples")
         .should("have.attr", "href").and("include", EXAMPLES_PATH)
 
@@ -94,11 +90,6 @@ describe "Documentation", ->
       it "highlights api when on a api page", ->
         cy.visit(API_PATH + ".html")
         cy.contains(".main-nav-link", "API")
-          .should("have.class", "active")
-
-      it "highlights tutorials when on a tutorials page", ->
-        cy.visit(TUTORIALS_PATH + ".html")
-        cy.contains(".main-nav-link", "Tutorials")
           .should("have.class", "active")
 
       it "highlights examples when on a examples page", ->
