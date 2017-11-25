@@ -1,7 +1,6 @@
 menu:
   guides: Guides
   api: API
-  tutorials: Tutorials
   plugins: Plugins
   faq: FAQ
   examples: Examples
@@ -177,18 +176,10 @@ sidebar:
     plugins: Plugins
     writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
-  tutorials:
-    test-a-react-todo-app: Test a React Todo App
-    introduction-to-tutorials: Introduction
-    project-setup: 1. Project setup
-    testing-inputs: 2. Testing text inputs
-    react-todo-form-submission: 3. Testing form submission
-    react-todo-app-init: 4. Testing data loading
-    react-todo-item-testing: 5. Testing todo item behavior
-    react-todo-toggle-debug: 6. Toggling and debugging
   examples:
     examples: Examples
     recipes: Recipes
+    tutorials: Tutorial Videos
     applications: Applications
     docker: Docker
     media: Media

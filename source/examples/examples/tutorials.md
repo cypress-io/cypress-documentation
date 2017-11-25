@@ -1,0 +1,87 @@
+---
+title: Tutorial Videos
+comments: false
+---
+
+# Test a React Todo App
+
+In this tutorial, we will walk through building a "Todo" application in {% url "React" https://reactjs.org/ %} while testing it with Cypress. We will look at ways we can use Cypress to not only create a test suite for our application, but help us write our tests and guide feature implementation.
+
+By the end of this tutorial, you will have a feel for what it is like to test your application with Cypress while implementing features. You will gain experience with many of the Cypress {% url "commands" api %} and see how Cypress can help you build your application while creating a great safety net of tests along the way.
+
+We have a lot of ground to cover, so let's get started!
+
+***Contents:***
+
+| Tutorial | Length | Release date | Cypress version|
+| -- | -- | -- | -- |
+| 1. {% urlHash "Project setup" 1-Project-setup %} | {% fa fa-video-camera %} 3:52 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
+| 2. {% urlHash "Testing inputs" 2-Text-inputs %} | {% fa fa-video-camera %} 7:17 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
+| 3. {% urlHash "Form submission and XHRs" 3-Form-submission-and-XHRs %} | {% fa fa-video-camera %} 10:21 | <time datetime="2017-11-04T10:45:00.000Z">11-04-2017</time> | 1.0.2 |
+| 4. {% urlHash "Loading data with fixtures" 4-Loading-data-with-fixtures %} | {% fa fa-video-camera %} 9:00 | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2 |
+| 5. {% urlHash "Todo item behavior" 5-Todo-item-behavior %} | {% fa fa-video-camera %} 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
+| 6. {% urlHash "Toggling and debugging" 6-Toggling-and-debugging %} | {% fa fa-video-camera %} 9:05 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
+| Up next: Testing filters with data-driven tests | &nbsp; | &nbsp; | &nbsp; |
+
+## 1. Project setup
+
+We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's [`npm`](https://www.npmjs.com/) dependencies and scripts, then jump right into getting Cypress up and running.
+
+{% video 240554515 %}
+
+## 2. Text inputs
+
+We will work through creating our first real test and implementing the feature under test as we go. We will see how to find and interact with elements on the page and how to make assertions about their behavior. We will also look into some best practices like using `beforeEach` and defining our application's {% url "`baseUrl`" configuration#Global %} to remove duplicated code.
+
+{% video 240554808 %}
+
+## 3. Form submission and XHRs
+
+We will implement form submission for our todo app, leveraging {% url `cy.server()` server %} and {% url `cy.route()` route %} to stub calls to our API. We will iterate on our test and implementation, focusing on the application's "happy path" first. Once our form is working, we'll use another stubbed XHR call to setup a failure scenario and implement the code to properly display an error message.
+
+{% video 241063147 %}
+
+## 4. Loading data with fixtures
+
+We will implement the initial data load for our todo app, leveraging {% url `cy.server()` server %} and {% url `cy.route()` route %} to stub the API call to load our data. We will use {% url 'fixture data' fixture#Shortcuts %} to seed our application state. As we iterate on our test and app code, we will create and use a {% url 'custom command' custom-commands %} to avoid unnecessary code duplication and keep our tests clean and readable.
+
+We will be using this list of todo objects to stub our XHR calls. For convenience, you can copy it from here and paste it in as you follow along.
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Buy Milk",
+    "isComplete": false
+  },
+  {
+    "id": 2,
+    "name": "Buy Eggs",
+    "isComplete": false
+  },
+  {
+    "id": 3,
+    "name": "Buy Bread",
+    "isComplete": false
+  },
+  {
+    "id": 4,
+    "name": "Make French Toast",
+    "isComplete": false
+  }
+]
+```
+
+{% video 241773142 %}
+
+## 5. Todo item behavior
+
+We will update our app to properly display todo items based on their `isComplete` property, adding tests to verify the proper behavior as we go. From there, we'll test and implement the item deletion functionality. We will cover interacting with an element that is hidden unless hovered over and look at different ways of handling this situation. We'll also look at the appropriate way to hold onto references to previously queried DOM elements using {% url `.as()` as %} to create aliases.
+
+{% video 242954792 %}
+
+## 6. Toggling and debugging
+
+We will create a test for todo item toggling. As we implement the toggle feature, we will encounter a problem with our code and look at how Cypress can help us debug our code. We will use the {% url "Cypress Command Log" test-runner#Command-Log %} to narrow down our problem. Then, we can use the {% url "Chrome DevTools right in the Cypress Test Runner" debugging#Using-the-DevTools %} to step through the code to dig into the issue. We'll even see how we can update application state while debugging and let our test confirm our theory about the cause of the bug. Once the debugging is complete, we will refactor our code to be less error prone, relying on the test to help us get it right.
+
+{% video 242961930 %}
