@@ -21,6 +21,8 @@ Recipe | Category | Description
 {% urlHash 'Drag and Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
 {% urlHash 'Typescript with Browserify' Typescript-with-Browserify %} | Preprocessors | Add typescript support with browserify
 {% urlHash 'Typescript with Webpack' Typescript-with-Webpack %} | Preprocessors | Add typescript support with webpack
+{% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
+{% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
 {% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
 {% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
@@ -101,6 +103,19 @@ Get around the lack of a `.hover()` command.
 ## [Typescript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
 
 - Use [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress-webpack-preprocessor) to write Cypress tests in Typescript
+
+## [Direct Control of AngularJS](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__direct-control-angular)
+
+- [Blog article written here](https://www.cypress.io/blog/2017/11/15/Control-Angular-Application-From-E2E-Tests)
+- Programmatically control AngularJS
+- Bypass the DOM, update scopes directly
+- Create custom command for controlling services
+
+## [E2E API Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__e2e-api-testing)
+
+- [Blog article written here](https://www.cypress.io/blog/2017/11/07/Add-GUI-to-Your-E2E-API-Tests)
+- Use {% url `cy.request()` request %} to perform API Testing
+- Use the Cypress GUI to help debug requests
 
 ## [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions)
 
