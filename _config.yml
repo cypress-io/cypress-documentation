@@ -62,12 +62,12 @@ alias:
 
   examples/index.html: examples/examples/recipes.html
   examples/recipes: examples/examples/recipes.html
-  examples/recipes/unit-testing-recipe.html: examples/examples/recipes.html
-  examples/recipes/logging-in-recipe.html: examples/examples/recipes.html
-  examples/recipes/testing-the-dom-recipe.html: examples/examples/recipes.html
-  examples/recipes/working-with-the-backend-recipe.html: examples/examples/recipes.html
-  examples/recipes/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
-  examples/recipes/extending-cypress-recipe.html: examples/examples/recipes.html
+  examples/unit-testing-recipe.html: examples/examples/recipes.html
+  examples/logging-in-recipe.html: examples/examples/recipes.html
+  examples/testing-the-dom-recipe.html: examples/examples/recipes.html
+  examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
+  examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
+  examples/extending-cypress-recipe.html: examples/examples/recipes.html
 
   dashboard/index.html: guides/core-concepts/dashboard-service.html
   dashboard/: guides/core-concepts/dashboard-service.html
