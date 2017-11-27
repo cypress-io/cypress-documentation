@@ -3,6 +3,25 @@ title: Changelog
 comments: false
 ---
 
+## 1.1.2
+
+*Released 11/26/2017*
+
+**Bugfixes:**
+
+- Fixed a regression caused by `cy.type()` adhering to `maxlength` incorrectly. Special character sequences were not respected. Now `cy.type()` works with special characters and implements a complete fix for `maxlength`. In addition to it working, it now fires all applicable browser events without modifying the actual input value. Fixes {% issue 955 %}.
+- Errors coming from plugins now display correctly in the Desktop GUI. Fixes {% issue 945 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added ESLint, Docker, and Typescript to Plugins' plugins %}
+- {% url 'Added recipe for Typescript with Browserify' recipes %}
+- {% url 'Added recipe for Typescript with Webpack' recipes %}
+- {% url 'Added recipe for Direct Controlling AngularJS' recipes %}
+- {% url 'Added recipe for E2E API Testing' recipes %}
+- {% url 'Added more video tutorials' tutorials %}
+- {% url 'Improved displaying list of Tutorials, Recipes, Applications, and Docker examples' recipes %}
+
 ## 1.1.1
 
 *Released 11/20/2017*
@@ -43,7 +62,7 @@ comments: false
 
 **Documentation Changes:**
 
-- {% url 'Created "Testing React TodoMVC" tutorials' introduction-to-tutorials %}
+- {% url 'Created "Testing React TodoMVC" tutorials' tutorials %}
 - {% url 'Created "Variables and Aliases" core concept' variables-and-aliases %}
 - {% url 'Created "Conditional Testing" core concept' conditional-testing %}
 - {% url 'Created "Plugins" guide' plugins-guide %}
@@ -51,7 +70,7 @@ comments: false
 - {% url 'Created "Writing a Plugin" API' writing-a-plugin %}
 - {% url 'Created "Preprocessors API"' preprocessors-api %}
 - {% url 'Updated "Using Cypress FAQ"' using-cypress-faq %}
-- {% url 'Updated "Best Pratices"' best-practices %}
+- {% url 'Updated "Best Practices"' best-practices %}
 
 ## 1.0.3
 
