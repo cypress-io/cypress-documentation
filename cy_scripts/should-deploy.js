@@ -50,15 +50,15 @@ function isRightBranch (env) {
 
   let branch
   return git.branchName()
-    .then(tap((name) => {
-      console.log('branch name', name)
-      branch = name
-    }))
-    .then(isBranchAllowedToDeploy)
-    .then(tap((rightBranch) => {
-      console.log('is branch %s allowed to deploy %s?',
-        branch, env, rightBranch)
-    }))
+  .then(tap((name) => {
+    console.log('branch name', name)
+    branch = name
+  }))
+  .then(isBranchAllowedToDeploy)
+  .then(tap((rightBranch) => {
+    console.log('is branch %s allowed to deploy %s?',
+      branch, env, rightBranch)
+  }))
 }
 
 function buildUrlForEnvironment (env) {
@@ -79,40 +79,40 @@ function lastDeployedCommit (env) {
 
   debug('checking last deploy info using url %s', url)
   return got(url, { json: true })
-    .then(path(['body', 'id']))
-    .then(tap((id) => {
-      console.log('docs last deployed for commit', id)
-    }))
+  .then(path(['body', 'id']))
+  .then(tap((id) => {
+    console.log('docs last deployed for commit', id)
+  }))
 }
 
 const changedFilesSince = (branchName) => (sha) => {
   la(is.unemptyString(branchName), 'missing branch name', branchName)
   debug('finding files changed in branch %s since commit %s', branchName, sha)
   return git.changedFilesAfter(sha, branchName)
-    .then(tap((list) => {
-      debug('%s changed since last docs deploy in branch %s',
-        pluralize('file', list.length, true), branchName)
-      debug(list.join('\n'))
-    }))
+  .then(tap((list) => {
+    debug('%s changed since last docs deploy in branch %s',
+      pluralize('file', list.length, true), branchName)
+    debug(list.join('\n'))
+  }))
 }
 
 function docsFilesChangedSinceLastDeploy (env, branchName) {
   return lastDeployedCommit(env)
-    .then(changedFilesSince(branchName))
-    .then(tap((list) => {
-      console.log('changed files')
-      console.log(list.join('\n'))
-      console.log('%d documentation %s changed since last doc deploy',
-        list.length, pluralize('file', list.length))
-      console.log('in branch %s against environment %s', branchName, env)
-    }))
-    .then(docsChanged)
-    .then(tap((hasDocumentChanges) => {
-      console.log('has document changes?', hasDocumentChanges)
-    }))
-    .catch(T)
-    // if cannot fetch last build, or some other exception
-    // then should deploy!
+  .then(changedFilesSince(branchName))
+  .then(tap((list) => {
+    console.log('changed files')
+    console.log(list.join('\n'))
+    console.log('%d documentation %s changed since last doc deploy',
+      list.length, pluralize('file', list.length))
+    console.log('in branch %s against environment %s', branchName, env)
+  }))
+  .then(docsChanged)
+  .then(tap((hasDocumentChanges) => {
+    console.log('has document changes?', hasDocumentChanges)
+  }))
+  .catch(T)
+  // if cannot fetch last build, or some other exception
+  // then should deploy!
 }
 
 // resolves with boolean true/false
@@ -124,22 +124,22 @@ function shouldDeploy (env = 'production') {
   }
 
   return git.branchName()
-    .then((branchName) => {
-      const questions = [
-        isRightBranch(env),
-        docsFilesChangedSinceLastDeploy(env, branchName),
-      ]
-      return Promise.all(questions)
-        .then(all(equals(true)))
-        .then(Boolean)
-        .then((result) => {
-          if (isForced) {
-            console.log('should deploy is forced!')
-            return isForced
-          }
-          return result
-        })
+  .then((branchName) => {
+    const questions = [
+      isRightBranch(env),
+      docsFilesChangedSinceLastDeploy(env, branchName),
+    ]
+    return Promise.all(questions)
+    .then(all(equals(true)))
+    .then(Boolean)
+    .then((result) => {
+      if (isForced) {
+        console.log('should deploy is forced!')
+        return isForced
+      }
+      return result
     })
+  })
 }
 
 module.exports = shouldDeploy
@@ -152,8 +152,8 @@ if (!module.parent) {
   //   .catch(console.error)
 
   shouldDeploy('staging')
-    .then((should) => {
-      console.log('should deploy?', should)
-    })
-    .catch(console.error)
+  .then((should) => {
+    console.log('should deploy?', should)
+  })
+  .catch(console.error)
 }

@@ -168,7 +168,7 @@ cy.clock(null, ['setTimeout', 'clearTimeout'])
 ***Using cy.clock() and cy.tick()***
 
 {% note info %}
-{% url 'Check out our example recipe testing spying, stubbing and time.' stubs-spies-and-clocks-recipe %}
+{% url 'Check out our example recipe testing spying, stubbing and time.' recipes#Stubbing-window-fetch %}
 {% endnote %}
 
 # Notes
@@ -222,4 +222,4 @@ When clicking on the `clock` command within the command log, the console outputs
 - {% url `cy.stub()` stub %}
 - {% url `cy.tick()` tick %}
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
-- {% url 'Recipe: Controlling Behavior with Spies, Stubs, and Clocks' stubs-spies-and-clocks-recipe %}
+- {% url 'Recipe: Controlling Behavior with Spies, Stubs, and Clocks' recipes#Stubbing-window-fetch %}
