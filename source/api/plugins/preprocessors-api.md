@@ -19,6 +19,15 @@ The code contains comments that explain how it utilizes the preprocessor API.
 * {% url 'Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
 * {% url 'Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 
+# Recipes
+
+We've also added some recipes showing how to utilize these preprocessors.
+
+Here are two recipes using both webpack and browserify to write your tests in TypeScript.
+
+- {% url 'TypeScript with Browserify Preprocessor' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
+- {% url 'TypeScript with Webpack Preprocessor' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
+
 # Defaults
 
 By default, Cypress comes packaged with the **Browserify Preprocessor** already installed.
