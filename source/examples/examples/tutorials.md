@@ -21,7 +21,7 @@ We have a lot of ground to cover, so let's get started!
 | 4. {% urlHash "Loading data with fixtures" 4-Loading-data-with-fixtures %} | {% fa fa-video-camera %} 9:00 | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2 |
 | 5. {% urlHash "Todo item behavior" 5-Todo-item-behavior %} | {% fa fa-video-camera %} 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
 | 6. {% urlHash "Toggling and debugging" 6-Toggling-and-debugging %} | {% fa fa-video-camera %} 9:05 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
-| 7. {% urlHash "Filters and data-driven tests" 7-Filters-and-data-driven-tests %} | {% fa fa-video-camera %} 11:29 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2 |
+| 7. {% urlHash "Filters and data-driven tests" 7-Filters-and-data-driven-tests %} | {% fa fa-video-camera %} 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2 |
 | Up next: Full end-to-end smoke tests | &nbsp; | &nbsp; | &nbsp; |
 
 ## 1. Project setup
