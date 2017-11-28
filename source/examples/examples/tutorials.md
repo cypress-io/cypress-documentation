@@ -89,6 +89,6 @@ We will create a test for todo item toggling. As we implement the toggle feature
 
 ## 7. Filters and data-driven tests
 
-We will test the application's footer behavior. First, we will ensure that our footer properly displays singular or plural text, based on the number of remaining todos. From there, we will test and implement the list filtering feature. We will create a test for one of the filters and see how to wire up React Router to make our filter links work. We will then look at how we can use standard JavaScript data structures to drive multiple assertions in our test, allowing us to test multiple variations of the filter behavior in a single test.
+We will test the application's footer behavior. First, we will ensure that our footer properly displays singular or plural text, based on the number of remaining todos. From there, we will test and implement the list filtering feature. We will create a test for one of the filters and see how to wire up {% url "React Router" https://github.com/ReactTraining/react-router %} to make our filter links work. We will then look at how we can use standard JavaScript data structures to drive multiple assertions in our test, allowing us to test multiple variations of the filter behavior in a single test.
 
 {% video 244696145 %}
