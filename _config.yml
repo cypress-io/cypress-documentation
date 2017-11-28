@@ -55,19 +55,11 @@ alias:
   tutorials/test-a-react-todo-app/introduction/: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/introduction.html: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/: examples/examples/tutorials.html
-  tutorials/test-a-react-todo-app/project-setup.html: examples/examples/tutorials.html
   tutorials/: examples/examples/tutorials.html
 
   plugins/: plugins/index.html
 
-  examples/index.html: examples/examples/recipes.html
-  examples/recipes: examples/examples/recipes.html
-  examples/unit-testing-recipe.html: examples/examples/recipes.html
-  examples/logging-in-recipe.html: examples/examples/recipes.html
-  examples/testing-the-dom-recipe.html: examples/examples/recipes.html
-  examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
-  examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
-  examples/extending-cypress-recipe.html: examples/examples/recipes.html
+  examples/index.html: examples/recipes/unit-testing-recipe.html
 
   dashboard/index.html: guides/core-concepts/dashboard-service.html
   dashboard/: guides/core-concepts/dashboard-service.html
