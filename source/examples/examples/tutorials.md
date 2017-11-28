@@ -21,7 +21,8 @@ We have a lot of ground to cover, so let's get started!
 | 4. {% urlHash "Loading data with fixtures" 4-Loading-data-with-fixtures %} | {% fa fa-video-camera %} 9:00 | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2 |
 | 5. {% urlHash "Todo item behavior" 5-Todo-item-behavior %} | {% fa fa-video-camera %} 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
 | 6. {% urlHash "Toggling and debugging" 6-Toggling-and-debugging %} | {% fa fa-video-camera %} 9:05 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
-| Up next: Testing filters with data-driven tests | &nbsp; | &nbsp; | &nbsp; |
+| 7. {% urlHash "Filters and data-driven tests" 7-Filters-and-data-driven-tests %} | {% fa fa-video-camera %} 11:29 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2 |
+| Up next: Full end-to-end smoke tests | &nbsp; | &nbsp; | &nbsp; |
 
 ## 1. Project setup
 
@@ -85,3 +86,9 @@ We will update our app to properly display todo items based on their `isComplete
 We will create a test for todo item toggling. As we implement the toggle feature, we will encounter a problem with our code and look at how Cypress can help us debug our code. We will use the {% url "Cypress Command Log" test-runner#Command-Log %} to narrow down our problem. Then, we can use the {% url "Chrome DevTools right in the Cypress Test Runner" debugging#Using-the-DevTools %} to step through the code to dig into the issue. We'll even see how we can update application state while debugging and let our test confirm our theory about the cause of the bug. Once the debugging is complete, we will refactor our code to be less error prone, relying on the test to help us get it right.
 
 {% video 242961930 %}
+
+## 7. Filters and data-driven tests
+
+We will test the application's footer behavior. First, we will ensure that our footer properly displays singular or plural text, based on the number of remaining todos. From there, we will test and implement the list filtering feature. We will create a test for one of the filters and see how to wire up React Router to make our filter links work. We will then look at how we can use standard JavaScript data structures to drive multiple assertions in our test, allowing us to test multiple variations of the filter behavior in a single test.
+
+{% video 244696145 %}
