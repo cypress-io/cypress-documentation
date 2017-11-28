@@ -354,7 +354,7 @@ There are a few ways.
 
 ## {% fa fa-angle-right %} Is there an ESLint plugin for Cypress or a list of globals?
 
-`describe/it/beforeEach`, etc globals come from {% url "Mocha" https://mochajs.org/ %}. So you can use ESLint plugins for Mocha like {% url "this one" https://www.npmjs.com/package/eslint-plugin-mocha %}.
+Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-plugin-cypress %}. It will set up all the globals you need for running Cypress, including browser globals and {% url "Mocha" https://mochajs.org/ %} globals.
 
 ## When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
