@@ -285,7 +285,7 @@ Some methods, such as {% url `cy.get()` get %} or {% url `cy.contains()` contain
 - The same subject they were originally yielded: {% url `.click()` click %}.
 - A new subject, as appropriate for the command {% url `.wait()` wait %}.
 
-This is actually much more intuitive than how it sounds.
+This is actually much more intuitive than it sounds.
 
 ***Examples:***
 
@@ -381,7 +381,7 @@ it('changes the URL when "awesome" is clicked', function() {
 Cypress doesn't kick off the browser automation magic until the test function exits.
 
 {% note success Core Concept %}
-Each Cypress command (and chain of commands) returns immediately, having only appended to a queue of commands to be executed at a later time.
+Each Cypress command (and chain of commands) returns immediately, having only been appended to a queue of commands to be executed at a later time.
 
 You purposefully **cannot** do anything useful with the return value from a command. Commands are enqueued and managed entirely behind the scenes.
 
@@ -511,7 +511,7 @@ A lot of Cypress commands *mutate* the state of the browser in some way.
 - {% url `cy.clearCookies()` clearcookies %} clears all of the browser cookies.
 - {% url `.click()` click %} causes your application to react to click events.
 
-None of the above commands are *idempotent*, they all cause side effects. Racing commands is not possible because commands must be run in a controlled, serial manner in order to create consistency. Because integration and e2e tests primarily mimic the actions of a real user, Cypress models its command execution model after a real user working step by step.
+None of the above commands are *idempotent*; they all cause side effects. Racing commands is not possible because commands must be run in a controlled, serial manner in order to create consistency. Because integration and e2e tests primarily mimic the actions of a real user, Cypress models its command execution model after a real user working step by step.
 
 ***You cannot accidentally forget to return or chain a command***
 
@@ -556,7 +556,7 @@ The problem with this question is that this type of conditional control flow end
 
 In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually just asking for another `if/else` control flow.
 
-With that said, as long as you are aware of the potential pit falls with control flow, it is possible to do this in Cypress!
+With that said, as long as you are aware of the potential pitfalls with control flow, it is possible to do this in Cypress!
 
 You can read all about how to do {% url 'conditional testing' conditional-testing %} here.
 
