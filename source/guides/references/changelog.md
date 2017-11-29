@@ -54,6 +54,7 @@ comments: false
 - {% url "`cy.contains(selector, regexp)`" contains %} now works as intended. Fixes {% issue 801 %}.
 - We no longer format fixtures in any capacity. This fixes a bug with improperly formatting fixtures in Windows. You should handle formatting fixtures yourself. Fixes {% issue 884 %} and {% issue 902 %}.
 - {% url "`cy.viewport()`" viewport %} resolves if only width or only height changes. Fixes {% issue 873 %}.
+- Cypress now auto reloads when spec files are modified in Windows. Fixes {% issue 712 %}.
 
 **Misc:**
 
