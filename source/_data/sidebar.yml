@@ -148,6 +148,9 @@ api:
     env: env.html
     cypress-log: cypress-log.html
     cypress-server: cypress-server.html
+    arch: arch.html
+    platform: platform.html
+    version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html
     preprocessors-api: preprocessors-api.html
