@@ -11,7 +11,7 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 
 ## BDD Assertions
 
-These chainers are available for BDD assertions (`expect`/`should`).
+These chainers are available for BDD assertions (`expect`/`should`). You can see the entire list of available BDD Chai assertions {% url "here" http://chaijs.com/api/bdd/ %}.
 
 | Chainer | Example |
 | --- | --- |
@@ -24,6 +24,7 @@ These chainers are available for BDD assertions (`expect`/`should`).
 | include( *value* )  | `expect([1,2,3]).to.include(2)` |
 | contain( *value* )  | `expect('testing').to.contain('test')` |
 | includes( *value* )  | `expect([1,2,3]).includes(2)` |
+| oneOf( *values* )  | `expect(2).to.be.oneOf([1,2,3])` |
 | contains( *value* ) | `expect('testing').contains('test')` |
 | ok | `expect(undefined).to.not.be.ok` |
 | true | `expect(true).to.be.true` |
@@ -84,7 +85,7 @@ These getters are also available for BDD assertions. They don't actually do anyt
 
 ## TDD Assertions
 
-These assertions are available for TDD assertions (`assert`). You can see the entire list of available assertions {% url "here" http://chaijs.com/api/assert/ %}
+These assertions are available for TDD assertions (`assert`). You can see the entire list of available Chai assertions {% url "here" http://chaijs.com/api/assert/ %}.
 
 | Assertion | Example |
 | --- | --- |
