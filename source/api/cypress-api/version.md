@@ -38,4 +38,4 @@ if (Cypress.version.startsWith('1.1.3')) {
 }
 ```
 
-**Hint** you can use [semver](https://github.com/npm/node-semver#readme) library to accurately compare versions.
+**Hint:** you can use [semver](https://github.com/npm/node-semver#readme) library to work with semantic versions.

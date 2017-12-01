@@ -3,7 +3,7 @@ title: Cypress.platform
 comments: false
 ---
 
-Constant `Cypress.platform` returns the current OS name, as returned from Node [`os.platform()`](https://nodejs.org/api/os.html#os_os_platform).
+Constant `Cypress.platform` has the current OS name, as returned from Node's [`os.platform()`](https://nodejs.org/api/os.html#os_os_platform).
 
 # Syntax
 

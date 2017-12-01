@@ -3,7 +3,7 @@ title: Cypress.arch
 comments: false
 ---
 
-Constant `Cypress.arch` returns the CPU architecture name, as returned from Node [`os.arch()`](https://nodejs.org/api/os.html#os_os_arch).
+Constant `Cypress.arch` has the CPU architecture name, as returned from Node's [`os.arch()`](https://nodejs.org/api/os.html#os_os_arch).
 
 # Syntax
 
