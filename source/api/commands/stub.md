@@ -97,6 +97,21 @@ App.stop()
 expect(removeStub).to.be.called
 ```
 
+***Replace built-in window methods like prompt***
+```javascript
+// assume App.start uses prompt to set the value of an element with class "name"
+cy.visit('http://localhost:3000', {
+    onBeforeLoad(win) {
+        cy.stub(win, 'prompt').returns('my custom message');
+    }
+});
+
+App.start();
+
+cy.window().its('prompt').should('be.called');
+cy.get('.name').should('have.value', 'my custom message');
+```
+
 ***Using cy.stub***
 
 {% note info %}
