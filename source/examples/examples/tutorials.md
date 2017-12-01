@@ -22,7 +22,8 @@ We have a lot of ground to cover, so let's get started!
 | 5. {% urlHash "Todo item behavior" 5-Todo-item-behavior %} | {% fa fa-video-camera %} 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
 | 6. {% urlHash "Toggling and debugging" 6-Toggling-and-debugging %} | {% fa fa-video-camera %} 9:05 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
 | 7. {% urlHash "Filters and data-driven tests" 7-Filters-and-data-driven-tests %} | {% fa fa-video-camera %} 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2 |
-| Up next: Full end-to-end smoke tests | &nbsp; | &nbsp; | &nbsp; |
+| 8. {% urlHash "Full end-to-end tests part 1" 8-Full-end-to-end-tests-part-1 %} | {% fa fa-video-camera %} 8:12 | <time datetime="2017-12-02T16:00:00.000Z">12-02-2017</time> | 1.0.2 |
+| 9. {% urlHash "Full end-to-end tests part 2" 9-Full-end-to-end-tests-part-2 %} | {% fa fa-video-camera %} 7:03 | <time datetime="2017-12-02T16:00:00.000Z">12-02-2017</time> | 1.0.2 |
 
 ## 1. Project setup
 
@@ -92,3 +93,15 @@ We will create a test for todo item toggling. As we implement the toggle feature
 We will test the application's footer behavior. First, we will ensure that our footer properly displays singular or plural text, based on the number of remaining todos. From there, we will test and implement the list filtering feature. We will create a test for one of the filters and see how to wire up {% url "React Router" https://github.com/ReactTraining/react-router %} to make our filter links work. We will then look at how we can use standard JavaScript data structures to drive multiple assertions in our test, allowing us to test multiple variations of the filter behavior in a single test.
 
 {% video 244696145 %}
+
+## 8. Full end-to-end tests part 1
+
+We will connect our back-end API to the front-end we've been building. Once we have the back-end API connected, then we will create our first true end-to-end test. Using the back-end API, we will ensure a consistent starting state by deleting any existing data from the database. Then we will test that our application can create and save new todos without a stubbed back-end. We will also see how we can listen to and {% url `.wait()` wait %} for XHR responses in our tests to avoid flake caused by unpredictable response times.
+
+{% video 245387683 %}
+
+## 9. Full end-to-end tests part 2
+
+We will continue building on our full end-to-end tests, this time seeding the database to test our application against a populated database. We will repeat the pattern of adding {% url `.wait()` wait %} commands to our tests to ensure our back-end has responded before moving on. Once we have tests for deleting and updating items against a real back-end, we will see how to run our Cypress tests in headless mode, giving us an ideal setup for running our tests in a CI environment.
+
+{% video 245388948 %}
