@@ -35,6 +35,7 @@ Pass in an options object to change the default behavior of `cy.visit()`.
 Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
+`failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.visit %}
