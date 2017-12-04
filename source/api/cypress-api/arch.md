@@ -3,29 +3,34 @@ title: Cypress.arch
 comments: false
 ---
 
-Constant `Cypress.arch` has the CPU architecture name, as returned from Node's [`os.arch()`](https://nodejs.org/api/os.html#os_os_arch).
+`Cypress.arch` returns you the CPU architecture name of the underlying OS, as returned from Node's [`os.arch()`](https://nodejs.org/api/os.html#os_os_arch).
+
+Even though Cypress runs in the browser, it automatically makes this property available for use in your tests.
 
 # Syntax
 
 ```javascript
-Cypress.arch
+Cypress.arch // 'x64'
 ```
 
 # Examples
 
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.arch  // returns undefined
-Cypress.arch() // Errors, not a function
-```
-
-# Examples
-
-## Confirming test machine architecture
+## CPU Architecture
 
 ```javascript
 it('has expected CPU architecture', function () {
     expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
+})
+```
+
+## Conditionals
+
+```javascript
+it('does something differently', function () {
+  if (Cypress.arch === 'x64') {
+    cy.exec('something')
+  } else {
+    cy.exec('something else')
+  }
 })
 ```

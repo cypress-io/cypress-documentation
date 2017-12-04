@@ -3,22 +3,22 @@ title: Cypress.version
 comments: false
 ---
 
-Constant `Cypress.version` returns the version string of the current Cypress NPM module, same as reading it from `node_modules/cypress/package.json`.
+`Cypress.version` returns you the current version of Cypress you are running.
 
 # Syntax
 
 ```javascript
-Cypress.version
-```
-
+Cypress.version // '1.1.0'
 ```
 
 # Examples
 
-## Using Cypress features only available in a particular version
+## Conditionals
 
 ```javascript
-if (Cypress.version.startsWith('1.1.3')) {
+const semver = require('semver')
+
+if (semver.gte(Cypress.version, '1.1.3')) {
     it('has Cypress.platform', () => {
         expect(Cypress.platform).to.be.a('string')
     })

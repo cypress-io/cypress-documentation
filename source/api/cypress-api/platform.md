@@ -3,43 +3,27 @@ title: Cypress.platform
 comments: false
 ---
 
-Constant `Cypress.platform` has the current OS name, as returned from Node's [`os.platform()`](https://nodejs.org/api/os.html#os_os_platform).
+`Cypress.platform` returns you the underlying OS name, as returned from Node's [`os.platform()`](https://nodejs.org/api/os.html#os_os_platform).
+
+Even though Cypress runs in the browser, it automatically makes this property available for use in your tests.
 
 # Syntax
 
 ```javascript
-Cypress.platform
-```
-
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.platform // "darwin"
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.platform  // returns undefined
-Cypress.platform() // Errors, not a function
+Cypress.platform // 'darwin'
 ```
 
 # Examples
 
-## Running OS-specific command
+## Conditionals
 
 ```javascript
 it('has JSON files', function () {
-    if (Cypress.platform === 'win32') {
-        cy.exec('dir *.json')
-          .its('stdout')
-          .should('include', 'package.json')
-    } else {
-        cy.exec('ls *.json')
-          .its('stdout')
-          .should('include', 'package.json')
-    }
+    // if windows do one thing, else do another
+    const cmd = Cypress.platform === 'win32' ? 'dir *.json' : 'ls *.json'
+
+    cy.exec(cmd)
+    .its('stdout')
+    .should('include', 'package.json')
 })
 ```
