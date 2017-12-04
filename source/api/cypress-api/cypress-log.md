@@ -17,14 +17,6 @@ This page is currently a work in progress and is not fully documented.
 Cypress.log(options)
 ```
 
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-const log = Cypress.log({...}) // returns a log instance
-```
-
 ## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
