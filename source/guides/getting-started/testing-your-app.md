@@ -390,7 +390,7 @@ Feel free to {% url 'explore these additional logging in' recipes %} recipes.
 
 Ok, we're done talking for now, dive in and get started testing your app!
 
-From here you may want to dive into some more of our guides:
+From here you may want to explore some more of our guides:
 
 - {% url "Cypress API" api %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
