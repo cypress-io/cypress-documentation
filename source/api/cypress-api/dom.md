@@ -3,26 +3,20 @@ title: Cypress.dom
 comments: false
 ---
 
-`Cypress.dom.isHidden()` allows you to work with logic that determines whether an element is hidden.
+`Cypress.dom.method()` is a collection of DOM related helper methods.
+
+{% note info 'WIP' %}
+There are actually dozens of methods attached to `Cypress.dom`.
+
+These methods are used internally by Cypress in nearly every single built in command.
+
+We suggest {% url 'reading through the source code here' https://github.com/cypress-io/cypress/blob/master/packages/driver/src/dom/index.coffee %} to see all of the methods and what they do.
+{% endnote %}
 
 # Syntax
 
 ```javascript
 Cypress.dom.isHidden(element)
-```
-
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.dom.isHidden('form')
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.dom.isHidden('form')  // Errors, cannot be chained off 'cy'
 ```
 
 # Examples
