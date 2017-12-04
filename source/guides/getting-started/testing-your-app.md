@@ -374,21 +374,21 @@ describe('The Dashboard Page', function(){
 
 Do you see the difference? We were able to login without needing to actually use our UI. This saves an enormous amount of time visiting the login page, filling out the username, password, and waiting for the server to redirect us *before every test*.
 
-Because we previously tested the login system end to end without using any short cuts we have already have 100% confidence it's working correctly.
+Because we previously tested the login system end-to-end without using any shortcuts, we already have 100% confidence it's working correctly.
 
-Use this methodology above when working with any area of your system that requires the state to be set up elsewhere. Just remember - don't use your UI!
+Use the methodology above when working with any area of your system that requires the state to be set up elsewhere. Just remember - don't use your UI!
 
 {% note info 'Authentication Recipes' %}
 Logging in can be more complex than what we've just covered.
 
-We've created several recipes covering additional scenarios like dealing with CSRF tokens, or testing XHR based login forms.
+We've created several recipes covering additional scenarios like dealing with CSRF tokens or testing XHR based login forms.
 
 Feel free to {% url 'explore these additional logging in' recipes %} recipes.
 {% endnote %}
 
 # Get Started
 
-Ok, we're done talking for now, dive in and get started testing your app!
+Ok, we're done talking.  Now dive in and get started testing your app!
 
 From here you may want to explore some more of our guides:
 
