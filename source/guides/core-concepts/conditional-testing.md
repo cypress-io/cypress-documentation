@@ -262,11 +262,11 @@ cy.request('https://app.com/me')
   .click()     // more commands here
 ```
 
-Alternatively, if you are creating users it might just be easier to create the user and simply set whether you want the wizard shown ahead of time then. That would avoid this check later.
+Alternatively, if you are creating users, it might just be easier to create the user and simply set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
 ***Embed data in the DOM:***
 
-Another valid strategy would be to embed data directly into the DOM, but do so in a way where this data is **always** present and query-able. It would have to be present 100% of the time, else this would not work.
+Another valid strategy would be to embed data directly into the DOM but to do so in a way that the data is **always** present and query-able. The data would have to be present 100% of the time, otherwise this strategy would not work.
 
 ```js
 cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
@@ -286,7 +286,7 @@ cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
 In the case where you **are** trying to use the DOM to do conditional testing, you can utilize the ability to synchronously query for elements in Cypress to create control flow.
 
 {% note warning %}
-In the event you did not read a word above and skipped down here we will reiterate it one more time:
+In the event you did not read a word above and skipped down here, we will reiterate it one more time:
 
 You cannot do conditional testing on the DOM unless you are either:
 
@@ -336,7 +336,7 @@ cy.get('body').then(($body) => {
   })
 ```
 
-We will reiterate one more time. Had the `<input>` or the `<textarea>` been rendered asynchronously, you could not use the pattern above. You would have to involve arbitrary delays which will not work in every situation, slow down your tests, still leave chances that your tests are flaky, and are an all around anti-pattern.
+We will reiterate one more time. Had the `<input>` or the `<textarea>` been rendered asynchronously, you could not use the pattern above. You would have to involve arbitrary delays which will not work in every situation, will slow down your tests, and will still leave chances that your tests are flaky (and are an all-around anti-pattern).
 
 Cypress is built around creating **reliable tests**. The secret to writing good tests is to provide as much "state" and "facts" to Cypress and to "guard it" from issuing new commands until your application has reached the desired state it needs to proceed.
 
@@ -433,7 +433,7 @@ If you cannot accurately know the state of your application then no matter what 
 
 Still not convinced?
 
-Not only is this an anti pattern, but it's an actual logical fallacy.
+Not only is this an anti-pattern, but it's an actual logical fallacy.
 
 You may think to yourself... okay fine, but 4 seconds - man that's not enough. Network requests could be slow, let's bump it up to 1 minute!
 
@@ -443,4 +443,4 @@ Even then, not enough, it's possible a setTimeout could trigger... 60 minutes.
 
 Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
-You, the test writer must know ahead of time what your application is programmed to do - or have an 100% confidence the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.
+You, the test writer must know ahead of time what your application is programmed to do - or have 100% confidence that the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.
