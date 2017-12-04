@@ -11,19 +11,6 @@ Constant `Cypress.version` returns the version string of the current Cypress NPM
 Cypress.version
 ```
 
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.version // "1.1.3"
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.version  // returns undefined
-Cypress.version() // Errors, not a function
 ```
 
 # Examples

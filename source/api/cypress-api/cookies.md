@@ -19,25 +19,6 @@ Cypress.Cookies.preserveOnce(names...)
 Cypress.Cookies.defaults(options)
 ```
 
-## Usage
-
-`Cookies.debug()`, `Cookies.preserveOnce()` and `Cookies.defaults()` require being chained off `Cypress`.
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.Cookies.debug()
-Cypress.Cookies.preserveOnce('appId')
-Cypress.Cookies.defaults()
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.Cookies.debug() // Errors, cannot be chained off 'cy'
-```
-
-
 ## Arguments
 
 **{% fa fa-angle-right %} enable**  ***(Boolean)***

@@ -11,13 +11,7 @@ Constant `Cypress.arch` has the CPU architecture name, as returned from Node's [
 Cypress.arch
 ```
 
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.arch // "darwin"
-```
+# Examples
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
