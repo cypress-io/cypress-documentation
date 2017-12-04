@@ -374,7 +374,7 @@ describe('The Dashboard Page', function(){
 
 Do you see the difference? We were able to login without needing to actually use our UI. This saves an enormous amount of time visiting the login page, filling out the username, password, and waiting for the server to redirect us *before every test*.
 
-Because we previously tested the login system end to end without using any shortcuts, we already have 100% confidence it's working correctly.
+Because we previously tested the login system end-to-end without using any shortcuts, we already have 100% confidence it's working correctly.
 
 Use the methodology above when working with any area of your system that requires the state to be set up elsewhere. Just remember - don't use your UI!
 
