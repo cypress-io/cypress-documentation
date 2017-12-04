@@ -3,13 +3,13 @@ title: Cypress.Cookies
 comments: false
 ---
 
-`Cookies.debug()`, `Cookies.preserveOnce()` and `Cookies.defaults()` allow you to do more than just get, set, or clear cookies.
+`Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress' cookie behavior.
 
-Typically you'd use `Cypress.Cookies` in hooks like `before`, `beforeEach`, `after`, and `afterEach`.
+`Cookies.debug()` enables you to log out whenever any cookies are modified.
 
 Cypress automatically clears all cookies **before** each test to prevent state from building up.
 
-You can take advantage of `Cypress.Cookies.preserveOnce` or even *whitelist* cookies by their name to preserve values across multiple tests. This enables you to preserve sessions through several tests.
+You can take advantage of `Cypress.Cookies.preserveOnce()` or even *whitelist* cookies by their name to preserve values across multiple tests. This enables you to preserve sessions through several tests.
 
 # Syntax
 
@@ -37,7 +37,7 @@ Set defaults for all cookies, such as whitelisting a set of cookies to bypass be
 
 ## Debug
 
-**Log out when cookie values set or clear**
+**Log out when cookie values are created, modified or deleted**
 
 By turning on debugging, Cypress will automatically log out to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
 
