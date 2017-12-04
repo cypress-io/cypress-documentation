@@ -61,7 +61,7 @@ test:
 
 ## Docker
 
-We have {% url 'created' https://github.com/cypress-io/docker %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
+We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
 
 ```text
 FROM cypress/base
@@ -69,14 +69,10 @@ RUN npm install
 RUN $(npm bin)/cypress run
 ```
 
-***Docker CI examples***
+***Docker Images & CI examples***
 
-Here are a few CI example repositories using our Docker images
+See our {% url 'examples' https://on.cypress.io/docker %} for additional information on our maintained images and configurations on several CI providers.
 
-* {% url "GitLab" https://gitlab.com/cypress-io/cypress-example-docker-gitlab %}
-* {% url "Codeship" https://github.com/cypress-io/cypress-example-docker-codeship %}
-* {% url "CircleCI" https://github.com/cypress-io/cypress-example-docker-circle %}
-* {% url "CircleCI with Workflows" https://github.com/cypress-io/cypress-example-docker-circle-workflows %}
 
 # Dependencies
 

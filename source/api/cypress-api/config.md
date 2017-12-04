@@ -18,20 +18,6 @@ Cypress.config(name, value)
 Cypress.config(object)
 ```
 
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.config() // Get configuration options
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.config()  // Errors, cannot be chained off 'cy'
-```
-
 ## Arguments
 
 **{% fa fa-angle-right %} name**  ***(String)***
