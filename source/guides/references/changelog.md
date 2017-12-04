@@ -3,6 +3,29 @@ title: Changelog
 comments: false
 ---
 
+## 1.1.3
+
+*Released 12/3/2017*
+
+**Bugfixes:**
+
+- JSON fixtures with unicode escape sequences are now parsed correctly. Fixes {% issue 964 %}.
+- The default `browserify` plugin no longer fires `watched:file:changed` twice leading to an uncaught exception that was popping up in the console. Also fixed a minor state bug in the `browserify` package. Fixes {% issue 968 %}.
+
+**Misc:**
+
+- We are now bundling our own `TypeScript` definitions with the `cypress` npm module. You no longer have to install `@types/cypress` anymore. We'll continue to keep these updated with API changes. Fixes {% issue 856 %}.
+- Uncaught exceptions originating from **your** application code and test code are now **distinctly** and **clearly** indicated in the error message. We included a link to our docs to educate you on how you can optionally disable Cypress from catching these. Fixes {% issue 825 %}.
+- `cy.visit()` now accepts a new `{ failOnStatusCode: false }` which enables you to visit pages that send a non `2xx` status code. This brings it into parity with `cy.request()`. Fixes {% issue 421 %} and {% issue 574 %}.
+- The contributing readme's have been updated and improved for each package. Fixes {% issue 995 %}.
+- Added utility methods `Cypress.platform` and `Cypress.arch` for returning you the underlying OS information. Uses node's `os` module under the hood. Fixes {% issue 824 %} and {% issue 675 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added `Cypress.version`' version %}
+- {% url 'Added `Cypress.arch`' arch %}
+- {% url 'Added `Cypress.platform`' platform %}
+
 ## 1.1.2
 
 *Released 11/26/2017*
@@ -47,7 +70,7 @@ comments: false
 - You can now customize the default babel configuration options for the `browserify` preprocessor. Fixes {% issue 343 %} and {% issue 905 %}.
 - CoffeeScript 2 is supported via modifying the default options for the `browserify` preprocessor. Fixes {% issue 663 %}.
 - You can swap out or extend the default preprocessor to do exotic things like compile ClojureScript into JavaScript. Fixes {% issue 533 %}.
-- We have created a {% url `@cypress/webpack-preprocessor` https://github.com/cypress-io/cypress-webpack-preprocessor %} preprocessor NPM package for you webpack users (because we are nice 😉). Fixes {% issue 676 %}.
+- We have created a {% url `@cypress/webpack-preprocessor` https://github.com/cypress-io/cypress-webpack-preprocessor %} preprocessor NPM package for you webpack users (because we are nice ￰ﾟﾘﾉ). Fixes {% issue 676 %}.
 
 **Bugfixes:**
 
@@ -704,7 +727,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Roadmap:**
 
-- The changes in version [`0.17.11`](#01711-11162016) below are in preparation for Cypress’ platform service: a portal where screenshots, videos, config, and logs of your builds are accessible.
+- The changes in version [`0.17.11`](#01711-11162016) below are in preparation for Cypress￢ﾀﾙ platform service: a portal where screenshots, videos, config, and logs of your builds are accessible.
 
 **Overview:**
 
