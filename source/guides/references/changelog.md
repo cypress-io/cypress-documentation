@@ -11,6 +11,7 @@ comments: false
 
 - JSON fixtures with unicode escape sequences are now parsed correctly. Fixes {% issue 964 %}.
 - The default `browserify` plugin no longer fires `watched:file:changed` twice leading to an uncaught exception that was popping up in the console. Also fixed a minor state bug in the `browserify` package. Fixes {% issue 968 %}.
+- Cypress no longer reports `Electron` as the browser that ran in the Dashboard when you really ran a different browser. Fixes {% issue 854 %}.
 
 **Misc:**
 
