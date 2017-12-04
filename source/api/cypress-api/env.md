@@ -18,20 +18,6 @@ Cypress.env(name, value)
 Cypress.env(object)
 ```
 
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-Cypress.env() // Get environment variables
-```
-
-**{% fa fa-exclamation-triangle red %} Incorrect Usage**
-
-```javascript
-cy.env()  // Errors, cannot be chained off 'cy'
-```
-
 ## Arguments
 
 **{% fa fa-angle-right %} name**  ***(String)***

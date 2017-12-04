@@ -51,15 +51,6 @@ alias:
   api/commands/cypress-blob.html: api/utilities/blob.html
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
-  tutorials/index.html: examples/examples/tutorials.html
-  tutorials/test-a-react-todo-app/introduction/: examples/examples/tutorials.html
-  tutorials/test-a-react-todo-app/introduction.html: examples/examples/tutorials.html
-  tutorials/test-a-react-todo-app/: examples/examples/tutorials.html
-  tutorials/test-a-react-todo-app/project-setup.html: examples/examples/tutorials.html
-  tutorials/: examples/examples/tutorials.html
-
-  plugins/: plugins/index.html
-
   examples/index.html: examples/examples/recipes.html
   examples/recipes: examples/examples/recipes.html
   examples/unit-testing-recipe.html: examples/examples/recipes.html
@@ -68,6 +59,14 @@ alias:
   examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
   examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
   examples/extending-cypress-recipe.html: examples/examples/recipes.html
+
+  tutorials/index.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/introduction/: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/introduction.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/: examples/examples/tutorials.html
+  tutorials/: examples/examples/tutorials.html
+
+  plugins/: plugins/index.html
 
   dashboard/index.html: guides/core-concepts/dashboard-service.html
   dashboard/: guides/core-concepts/dashboard-service.html
@@ -104,6 +103,8 @@ alias:
   docs/launching-browsers/: guides/core-concepts/launching-browsers.html
   docs/known-issues/: guides/references/known-issues.html
   docs/finding-elements/: guides/core-concepts/introduction-to-cypress.html#Querying-Elements
+
+  continuous-integration.html: guides/guides/continuous-integration.html
 
 
 # Include/Exclude Files/Folders

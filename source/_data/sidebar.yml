@@ -142,12 +142,15 @@ api:
     promise: promise.html
   cypress-api:
     custom-commands: custom-commands.html
-    config: config.html
     cookies: cookies.html
+    cypress-server: cypress-server.html
+    arch: arch.html
+    config: config.html
     dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
-    cypress-server: cypress-server.html
+    platform: platform.html
+    version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html
     preprocessors-api: preprocessors-api.html

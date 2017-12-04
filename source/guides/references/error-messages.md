@@ -445,3 +445,9 @@ This error likely appeared because:
 
 1. You do not have internet. Please ensure you have connectivity then try again.
 2. You are a developer that has forked our codebase and do not have access to run our API locally. Please read more about this in our {% url "contributing doc" https://on.cypress.io/contributing %}.
+
+## {% fa fa-exclamation-triangle red %} Uncaught exceptions from your application
+
+WIP. We'll be adding more here soon.
+
+For now, please visit the {% url 'Catalog of Events' catalog-of-events#Uncaught-Exceptions %} page for examples how to turn off catching uncaught exceptions.
