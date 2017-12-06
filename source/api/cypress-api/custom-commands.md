@@ -85,7 +85,7 @@ Cypress.Commands.add('login', function(userType, options = {}) {
     admin: {
       name: 'Jane Lane',
       admin: true,
-    }
+    },
     user: {
       name: 'Jim Bob',
       admin: false,
