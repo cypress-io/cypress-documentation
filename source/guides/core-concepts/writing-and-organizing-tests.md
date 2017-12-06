@@ -174,7 +174,7 @@ describe('Hooks', function() {
 - All `after()` hooks run (once)
 
 {% note danger %}
-{% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](https://docs.cypress.io/guides/references/best-practices.html#Using-after-or-afterEach-hooks).
+{% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our {% url "thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`" https://on.cypress.io/best-practices#Using-after-or-afterEach-hooks %}.
 {% endnote %}
 
 ## Excluding and Including Tests
