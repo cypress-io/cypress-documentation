@@ -22,8 +22,8 @@ We have a lot of ground to cover, so let's get started!
 | 5. {% urlHash "Todo item behavior" 5-Todo-item-behavior %} | {% fa fa-video-camera %} 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
 | 6. {% urlHash "Toggling and debugging" 6-Toggling-and-debugging %} | {% fa fa-video-camera %} 9:05 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
 | 7. {% urlHash "Filters and data-driven tests" 7-Filters-and-data-driven-tests %} | {% fa fa-video-camera %} 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2 |
-| 8. {% urlHash "Full end-to-end tests part 1" 8-Full-end-to-end-tests-part-1 %} | {% fa fa-video-camera %} 8:12 | <time datetime="2017-12-02T16:00:00.000Z">12-02-2017</time> | 1.0.2 |
-| 9. {% urlHash "Full end-to-end tests part 2" 9-Full-end-to-end-tests-part-2 %} | {% fa fa-video-camera %} 7:03 | <time datetime="2017-12-02T16:00:00.000Z">12-02-2017</time> | 1.0.2 |
+| 8. {% urlHash "Full end-to-end tests part 1" 8-Full-end-to-end-tests-part-1 %} | {% fa fa-video-camera %} 8:59 | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2 |
+| 9. {% urlHash "Full end-to-end tests part 2" 9-Full-end-to-end-tests-part-2 %} | {% fa fa-video-camera %} 7:04 | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2 |
 
 ## 1. Project setup
 
