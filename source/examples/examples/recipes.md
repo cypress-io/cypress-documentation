@@ -23,6 +23,9 @@ Recipe | Category | Description
 {% urlHash 'Typescript with Webpack' Typescript-with-Webpack %} | Preprocessors | Add typescript support with webpack
 {% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
 {% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
+{% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
+{% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central data store
+
 {% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
 {% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
@@ -103,6 +106,7 @@ Get around the lack of a `.hover()` command.
 ## [Typescript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
 
 - Use [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress-webpack-preprocessor) to write Cypress tests in Typescript
+- Lint TypeScript spec code against Cypress type definitions
 
 ## [Direct Control of AngularJS](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__direct-control-angular)
 
@@ -116,6 +120,19 @@ Get around the lack of a `.hover()` command.
 - [Blog article written here](https://www.cypress.io/blog/2017/11/07/Add-GUI-to-Your-E2E-API-Tests)
 - Use {% url `cy.request()` request %} to perform API Testing
 - Use the Cypress GUI to help debug requests
+
+## [Codepen Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__codepen-demo)
+
+- Load Codepen and get around iframe security restrictions.
+- Use [`cy.request()`](https://on.cypress.io/api/request) to load a document into test iframe.
+- Test [HyperApp.js](https://hyperapp.js.org/) application through the DOM and through actions.
+
+## [Vue + Vuex + REST Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__vue-vuex-rest)
+
+- Test a [Vue.js](https://vuejs.org/) web application that uses central data store
+- Mock REST calls to the server
+- Dispatch actions to the [Vuex](https://vuex.vuejs.org/en/) store
+- Test text file upload
 
 ## [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions)
 
