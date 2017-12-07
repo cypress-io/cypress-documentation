@@ -160,6 +160,18 @@ In all cases, the fact that the binary was installed from a custom location *is 
 Setting the `CYPRESS_BINARY_VERSION` to a URL or local path will always display a warning message when opening. This is normal as the Cypress CLI cannot match the binary version with the `npm` package version.
 {% endnote %}
 
+## Skipping Installation
+
+You can also force Cypress to skip the installation of the binary application. This could be useful if you want to install the `cypress` npm module by itself, without it additionally downloading and installing the binary. We've seen power users use this in CI when they've cached the binary elsewhere.
+
+Just set `CYPRESS_SKIP_BINARY_INSTALL` during `npm install`.
+
+```shell
+CYPRESS_SKIP_BINARY_INSTALL=1 npm install
+```
+
+Now Cypress will skip its install phase once the npm module is installed.
+
 ## Hosting
 
 If you want to download a specific Cypress version for a given platform, you can get it from our CDN.
