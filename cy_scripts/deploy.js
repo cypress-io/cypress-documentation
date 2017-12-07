@@ -36,7 +36,7 @@ function prompt (questions) {
   return Promise.resolve(inquirer.prompt(questions))
 }
 
-function prompToScrape () {
+function promptToScrape () {
   return prompt({
     type: 'list',
     name: 'scrape',
@@ -50,7 +50,7 @@ function prompToScrape () {
 }
 
 const getScrapeDocs = R.partial(cliOrAsk,
-  ['scrape', prompToScrape, { boolean: 'scrape' }])
+  ['scrape', promptToScrape, { boolean: 'scrape' }])
 
 function scrapeDocs (env, branch) {
   console.log('')
