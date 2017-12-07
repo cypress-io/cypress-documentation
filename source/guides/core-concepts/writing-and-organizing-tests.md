@@ -173,6 +173,10 @@ describe('Hooks', function() {
 - Any `afterEach()` hooks run
 - All `after()` hooks run (once)
 
+{% note danger %}
+{% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our {% url "thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`" best-practices#Using-after-or-afterEach-hooks %}.
+{% endnote %}
+
 ## Excluding and Including Tests
 
 To run a specified suite or test, simply append `.only()` to the function. All nested suites will also be executed.
