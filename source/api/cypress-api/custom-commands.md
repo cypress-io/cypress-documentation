@@ -85,7 +85,7 @@ Cypress.Commands.add('login', function(userType, options = {}) {
     admin: {
       name: 'Jane Lane',
       admin: true,
-    }
+    },
     user: {
       name: 'Jim Bob',
       admin: false,
@@ -284,7 +284,7 @@ Adding validations is optional. Simply passing `{ prevSubject: true }` will requ
 
 ## Require Element
 
-Require subject, and of type: `element`.
+Require subject be of type: `element`.
 
 ```javascript
 // this is how .click() is implemented
@@ -313,7 +313,7 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 ***Example 2: `.trigger()`***
 
-Require subject, and of type either: `element`, `document` or `window`
+Require subject be one of the following types: `element`, `document` or `window`
 
 ```javascript
 // this is how .trigger() is implemented

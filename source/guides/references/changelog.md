@@ -3,6 +3,23 @@ title: Changelog
 comments: false
 ---
 
+## 1.1.4
+
+*Release 12/6/2017*
+
+**Bugfixes:**
+
+- Fixed an issue causing `Chrome` to timeout when attempted to be run through our docker containers. Fixes {% issue 1031 %}.
+- Several TypeScript typings were added, updated and fixed. Fixes {% issue 1006 %}.
+- Using a regular `http://` URL now works when using the `CYPRESS_BINARY_VERSION` flag to point the binary at an external location. Fixes {% issue 1001 %}.
+- File watching is fixed (again) when changing between specs. Fixes {% issue 1018 %}.
+
+**Misc:**
+
+- There is now a new {% url `CYPRESS_SKIP_BINARY_INSTALL` installing-cypress#Skipping-Installation %} flag you can pass during `npm install` which skips the binary installation after the `cypress` npm module completes its installation. Fixes {% issue 1005 %}.
+- We now launch Chrome with `--no-sandbox` and `--disable-gpu` options in Linux. We will soon release a new plugin event that enables you to modify the browser arguments we use by default. This *shouldn't* cause issues with existing Linux users, and instead it should fix many CI setups that were using our Docker containers or your own home grown installed Chrome setup. Fixes {% issue 1021 %} and {% issue 1020 %}.
+- Removed several aliases from our browser detector. These were not implemented properly and not needed - and thus only caused indirection. Fixes {% issue 1023 %}.
+
 ## 1.1.3
 
 *Released 12/3/2017*
@@ -11,15 +28,15 @@ comments: false
 
 - JSON fixtures with unicode escape sequences are now parsed correctly. Fixes {% issue 964 %}.
 - The default `browserify` plugin no longer fires `watched:file:changed` twice leading to an uncaught exception that was popping up in the console. Also fixed a minor state bug in the `browserify` package. Fixes {% issue 968 %}.
-- Cypress no longer reports `Electron` as the browser that ran in the Dashboard when you really ran a different browser. Fixes {% issue 854 %}.
+- Cypress no longer reports `Electron` as the browser that ran in the Dashboard Service when a different browser was run. Fixes {% issue 854 %}.
 
 **Misc:**
 
 - We are now bundling our own `TypeScript` definitions with the `cypress` npm module. You no longer have to install `@types/cypress` anymore. We'll continue to keep these updated with API changes. Fixes {% issue 856 %}.
-- Uncaught exceptions originating from **your** application code and test code are now **distinctly** and **clearly** indicated in the error message. We included a link to our docs to educate you on how you can optionally disable Cypress from catching these. Fixes {% issue 825 %}.
-- `cy.visit()` now accepts a new `{ failOnStatusCode: false }` which enables you to visit pages that send a non `2xx` status code. This brings it into parity with `cy.request()`. Fixes {% issue 421 %} and {% issue 574 %}.
-- The contributing readme's have been updated and improved for each package. Fixes {% issue 995 %}.
-- Added utility methods `Cypress.platform` and `Cypress.arch` for returning you the underlying OS information. Uses node's `os` module under the hood. Fixes {% issue 824 %} and {% issue 675 %}.
+- Uncaught exceptions originating from **your** application code and/or test code are now **distinctly** and **clearly** indicated in the error message. We included a link to our docs to educate you on how you can optionally disable Cypress from catching these. Fixes {% issue 825 %}.
+- {% url "`cy.visit()`" visit %} now accepts `{ failOnStatusCode: false }` which enables you to visit pages that respond with a non `2xx` status code. This brings it into parity with {% url "`cy.request()`" request %}. Fixes {% issue 421 %} and {% issue 574 %}.
+- The contributing Readme's have been updated and improved for each package. Fixes {% issue 995 %}.
+- Added utility methods {% url "`Cypress.platform`" platform %} and {% url "`Cypress.arch`" arch %} for returning the underlying OS information. Uses node's `os` module under the hood. Fixes {% issue 824 %} and {% issue 675 %}.
 
 **Documentation Changes:**
 
@@ -33,8 +50,8 @@ comments: false
 
 **Bugfixes:**
 
-- Fixed a regression caused by `cy.type()` adhering to `maxlength` incorrectly. Special character sequences were not respected. Now `cy.type()` works with special characters and implements a complete fix for `maxlength`. In addition to it working, it now fires all applicable browser events without modifying the actual input value. Fixes {% issue 955 %}.
-- Errors coming from plugins now display correctly in the Desktop GUI. Fixes {% issue 945 %}.
+- Fixed a regression caused by {% url "`.type()`" type %} adhering to `maxlength` incorrectly. Special character sequences were not respected. Now {% url "`.type()`" type %} works with special characters and implements a complete fix for `maxlength`. In addition to it working, it now fires all applicable browser events without modifying the actual input value. Fixes {% issue 955 %}.
+- Errors coming from plugins now display correctly in the Test Runner. Fixes {% issue 945 %}.
 
 **Documentation Changes:**
 
@@ -53,7 +70,7 @@ comments: false
 **Bugfixes:**
 
 - Fixed a bug swallowing plugin errors due to undefined `reject` function. Fixes {% issue 934 %}.
-- `cy.type()` now respects the `maxlength` attribute and will not type beyond it. Fixes {% issue 928 %}.
+- {% url "`.type()`" type %} now respects the `maxlength` attribute and will not type beyond it. Fixes {% issue 928 %}.
 
 ## 1.1.0
 
