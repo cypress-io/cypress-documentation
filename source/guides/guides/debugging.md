@@ -73,6 +73,14 @@ Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your
 
 Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your app and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
+
+{% note info %}
+## {% fa fa-video-camera %} See it in action!
+
+You can see a walk-through of debugging some application code from Cypress {% url "in this segment from our React tutorial series" https://vimeo.com/242961930#t=264s %}.
+
+{% endnote %}
+
 <!-- TODO: show how clicking commands populates the dev tools, demonstrate a few commands -->
 
 # Debug the Command Line
