@@ -153,6 +153,7 @@ api:
     version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html
+    configuration-api: configuration-api.html
     preprocessors-api: preprocessors-api.html
 
 plugins:
