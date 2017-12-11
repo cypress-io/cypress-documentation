@@ -54,7 +54,7 @@
     "deps-ok": "^1.2.0",
     "eslint": "4.13.0",
     "eslint-plugin-cypress-dev": "1.1.2",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^5.0.0",
     "ggit": "2.4.2",
     "git-last": "^1.2.0",
     "glob": "^7.1.1",
