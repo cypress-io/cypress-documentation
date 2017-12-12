@@ -176,6 +176,7 @@ sidebar:
     plugins: Plugins
     writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
+    configuration-api: Configuration
     version: version
     arch: arch
     platform: platform
