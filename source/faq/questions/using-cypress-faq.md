@@ -135,6 +135,12 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 
 This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
 
+## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
+
+Yes, you use your `pluginsFile` to modify configuration values and environment variables.
+
+{% url "We have a whole API document showing you how to do just that." configuration-api %}
+
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
 {% url "We've answered this question in detail here." trade-offs#Multiple-browsers %}
