@@ -24,7 +24,7 @@ module.exports = (on, config) => {
 
   // modify config values
   config.defaultCommandTimeout = 10000
-  config.baseUrl = 'http://staging.acme.com'
+  config.baseUrl = 'https://staging.acme.com'
 
   // modify env var value
   config.env.ENVIRONMENT = 'staging'
@@ -37,6 +37,10 @@ module.exports = (on, config) => {
 Whenever you return an object from your `pluginFile`, Cypress will take this and "diff" it against the original configuration, and automatically set the resolved values to point to what you returned.
 
 If you don't return an object, then configuration will not be modified.
+
+Resolved values will show up in your Settings tab.
+
+{% img /img/guides/plugin-configuration.png %}
 
 ## Promises
 
@@ -96,7 +100,7 @@ This would enable you to do things like this:
 // cypress/config/qa.json
 
 {
-  baseUrl: 'http://qa.acme.com',
+  baseUrl: 'https://qa.acme.com',
   env: {
     something: 'qa'
   }
@@ -107,7 +111,7 @@ This would enable you to do things like this:
 // cypress/config/staging.json
 
 {
-  baseUrl: 'http://staging.acme.com',
+  baseUrl: 'https://staging.acme.com',
   env: {
     something: 'staging'
   }
@@ -118,7 +122,7 @@ This would enable you to do things like this:
 // cypress/config/production.json
 
 {
-  baseUrl: 'http://production.acme.com',
+  baseUrl: 'https://production.acme.com',
   env: {
     something: 'production'
   }
