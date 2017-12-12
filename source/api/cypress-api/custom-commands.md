@@ -6,7 +6,7 @@ comments: false
 Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.
 
 {% note info  %}
-A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated.
+A great place to define or overwrite commands is in your `cypress/support/commands.js` file.  An easy way to import commands.js for your tests is to un-comment the line that is provided for this purpose in index.js.
 {% endnote %}
 
 # Syntax
