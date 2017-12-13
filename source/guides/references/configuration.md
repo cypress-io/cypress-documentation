@@ -79,12 +79,7 @@ Option | Default | Description
 Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
-
-## UserAgent
-
-Option | Default | Description
------ | ---- | ----
-`userAgent` | `null` | Changes the User Agent string, that allows to identify the application type, operating system, software vendor or software version of the requesting. (See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent))
+`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 
 ## Viewport
 
