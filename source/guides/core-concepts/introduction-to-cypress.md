@@ -497,7 +497,7 @@ The Cypress API is not an exact 1:1 implementation of Promises. They have Promis
 
 There are *very* specific reasons these limitations are built into the Cypress API.
 
-The whole intention of Cypress (and what makes it very different from other testing tools) is to create consistent, non-flaky tests that perform identically from one run to the next. Making this happen isn't free - there are some trade-offs we make that may initially seem unfamiliar to developers accustom to working with Promises.
+The whole intention of Cypress (and what makes it very different from other testing tools) is to create consistent, non-flaky tests that perform identically from one run to the next. Making this happen isn't free - there are some trade-offs we make that may initially seem unfamiliar to developers accustomed to working with Promises.
 
 Let's take a look at each trade-off in depth:
 
