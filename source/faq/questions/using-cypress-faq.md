@@ -141,6 +141,10 @@ Yes, you use your `pluginsFile` to modify configuration values and environment v
 
 {% url "We have a whole API document showing you how to do just that." configuration-api %}
 
+## {% fa fa-angle-right %} Can I override or change the default user agent the browser uses?
+
+Yes. {% url "You can override this in `cypress.json`." configuration#Browser %}
+
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
 {% url "We've answered this question in detail here." trade-offs#Multiple-browsers %}
