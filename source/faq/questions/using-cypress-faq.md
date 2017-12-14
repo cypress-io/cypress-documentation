@@ -143,7 +143,19 @@ Yes, you use your `pluginsFile` to modify configuration values and environment v
 
 ## {% fa fa-angle-right %} Can I override or change the default user agent the browser uses?
 
-Yes. {% url "You can override this in `cypress.json`." configuration#Browser %}
+Yes. {% url "You can override this with `userAgent` in `cypress.json`." configuration#Browser %}
+
+## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
+
+Yes. {% url "You can set this with `blacklistHost` in `cypress.json`." configuration#Browser %}
+
+Also, check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+
+## {% fa fa-angle-right %} How can I verify that calls to analytics like Google Analytics are being made correct?
+
+Easy - you stub their functions and then ensure they're being called.
+
+Check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
 
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 

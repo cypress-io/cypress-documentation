@@ -27,6 +27,7 @@ Recipe | Category | Description
 {% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central data store
 {% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
 {% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
+{% urlHash 'Stubbing Google Analytics' Stubbing-Google-Analytics %} | Stubbing, Spying | Use `cy.stub()` to test Google Analytics calls
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
 {% urlHash 'React with Enzyme' React-with-Enzyme %} | Unit Testing | Test your react components in isolation
 {% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
@@ -145,6 +146,11 @@ Get around the lack of a `.hover()` command.
 - Use {% url `cy.stub()` stub %} to verify and control the behavior of a function.
 - Use {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} to control time.
 - Stub `window.fetch` to control server responses.
+
+## [Stubbing Google Analytics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics)
+
+- Use {% url `blacklistHosts` configuration#Browser %} to block Google Analytics from receiving requests.
+- Use {% url `cy.stub()` stub %} to verify that `window.ga(...)` was called with the correct arguments
 
 ## [Application Code](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__application-code)
 
