@@ -406,8 +406,8 @@ In our case it would re-issue the commands: `cy.get('#todos li').first()`. Every
 {% note warning  %}
 *Usually*, replaying previous commands will return what you expect, but not always. It is recommended that you **alias elements as soon as possible** instead of further down a chain of commands.
 
-- `cy.get('#nav header .user').as('user')` {% fa fa-check-circle %} (good)
-- `cy.get('#nav').find('header').find('.user').as('user')` {% fa fa-warning %} (bad)
+- `cy.get('#nav header .user').as('user')` {% fa fa-check-circle green %} (good)
+- `cy.get('#nav').find('header').find('.user').as('user')` {% fa fa-warning red %} (bad)
 
 When in doubt, you can *always* issue a regular {% url `cy.get()` get %} to query for the elements again.
 {% endnote %}
