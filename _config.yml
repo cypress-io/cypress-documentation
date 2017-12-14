@@ -54,7 +54,6 @@ alias:
   examples/index.html: examples/examples/recipes.html
   examples/recipes: examples/examples/recipes.html
   examples/unit-testing-recipe.html: examples/examples/recipes.html
-  examples/recipes/unit-testing-recipe.html: examples/examples/recipes.html
   examples/logging-in-recipe.html: examples/examples/recipes.html
   examples/testing-the-dom-recipe.html: examples/examples/recipes.html
   examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
