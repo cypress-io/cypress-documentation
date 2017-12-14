@@ -79,6 +79,7 @@ Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
+`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. Please {% urlHash 'read the notes' blacklistHosts %} for examples on using this.
 
 ## Viewport
 
@@ -158,3 +159,58 @@ Cypress.config("pageLoadTimeout") // => 100000
 When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
 
 ![resolve-configuration](https://user-images.githubusercontent.com/1271364/26941279-e7903108-4c4b-11e7-8731-be118e2c30eb.jpg)
+
+# Notes
+
+## blacklistHosts
+
+By passing a string or array of strings you can block requests made to one or more hosts.
+
+To see a working example of this please check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+
+To blacklist a host:
+
+- {% fa fa-check-circle green %} Pass only the host
+- {% fa fa-check-circle green %} Use wildcard `*` patterns
+- {% fa fa-check-circle green %} Include the port other than `80` and `443`
+- {% fa fa-exclamation-triangle red %} Do **NOT** include protocol: `http://` or `https://`
+
+{% note info %}
+Not sure what a part of the URL a host is? {% url 'Use this guide as a reference.' https://nodejs.org/api/url.html#url_url_strings_and_url_objects %}
+
+When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
+{% endnote %}
+
+Given the following urls:
+
+```text
+https://www.google-analytics.com/ga.js
+
+http://localhost:1234/some/user.json
+```
+
+This would match the following blacklisted hosts:
+
+```text
+www.google-analytics.com
+*.google-analytics.com
+*google-analytics.com
+
+localhost:1234
+```
+
+Because `localhost:1234` uses a port other than `80` and `443` it **must be included**.
+
+{% note warning "Subdomains" %}
+Be cautious for URL's which have no subdomain.
+
+For instance given a URL: `https://google.com/search?q=cypress`
+
+- {% fa fa-check-circle green %} Matches `google.com`
+- {% fa fa-check-circle green %} Matches `*google.com`
+- {% fa fa-exclamation-triangle red %} Does NOT match `*.google.com`
+{% endnote %}
+
+When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
+
+{% img /img/guides/blacklist-host.png %}
