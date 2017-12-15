@@ -90,7 +90,7 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 
 ***Provide an `onLoad` callback function***
 
-`onLoad` is called once your page has fires its `load` event. All of the scripts, stylesheets, html and other resources are guaranteed to be available at this point.
+`onLoad` is called once your page has fired its `load` event. All of the scripts, stylesheets, html and other resources are guaranteed to be available at this point.
 
 ```javascript
 cy.visit('http://localhost:3000/#/users', {
