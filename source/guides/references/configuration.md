@@ -79,7 +79,7 @@ Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
-`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. Please {% urlHash 'read the notes' blacklistHosts %} for examples on using this.
+`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %} 
 
 ## Viewport
 
@@ -99,7 +99,7 @@ Option | Default | Description
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
 
-This gives you the option to do things like override the `baseUrl` or environment variables. 
+This gives you the option to do things like override the `baseUrl` or environment variables.
 
 ## Command Line
 
