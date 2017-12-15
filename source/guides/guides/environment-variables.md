@@ -6,25 +6,40 @@ comments: false
 Environment variables are useful when:
 
 - Values are different across developer machines.
+- Values are different across multiple environments: *(dev, staging, qa, prod)*
 - Values change frequently and are highly dynamic.
 
-The most common use case is to access custom values you've written in your `hosts` file.
+Environment variables can be changed easily - especially when running in CI.
 
 ***Instead of hard coding this in your tests:***
 
 ```javascript
-cy.visit('http://server.dev.local') // this will break on other dev machines
+cy.request('https://api.acme.corp') // this will break on other environments
 ```
 
 ***We can move this into an environment variable.***
 
 ```javascript
-cy.visit(Cypress.env("host")) // points to a dynamic env var
+cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
 ```
 
-# Setting Environment Variables
+{% note info "Using 'baseUrl'" %}
+Environment variables are great at pointing to external services and servers, or storing password or other credentials.
 
-There are 4 different ways to set environment variables. Each has a slightly different use case.
+However, you **do not** need to use environment variables to point to the origin and domain under test. Use `baseUrl` instead of environment variables.
+
+{% url `cy.visit()` visit %} and {% url `cy.request()` request %} are automatically prefixed with this value - avoiding the need to specify them.
+
+`baseUrl` can be set in your `cypress.json` - and then you can use an environment variable to override it.
+
+```shell
+CYPRESS_baseUrl=https://staging.app.com cypress run
+```
+{% endnote %}
+
+# Setting
+
+There are 5 different ways to set environment variables. Each has a slightly different use case.
 
 ***To summarize you can:***
 
@@ -181,6 +196,14 @@ Cypress.env("api_server") // "http://localhost:8888/api/v1/"
 {% note danger Downsides %}
 - Pain to write the `--env` options everywhere you use Cypress.
 {% endnote %}
+
+## Option #5: Plugins
+
+Instead of setting environment variables in a file, you can use plugins to dynamically set them with `Node.js` code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+
+While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
+
+{% url "We've fully documented how to do this here." configuration-api %}
 
 # Overriding Configuration
 
