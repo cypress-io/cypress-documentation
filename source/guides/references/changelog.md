@@ -3,9 +3,41 @@ title: Changelog
 comments: false
 ---
 
+## 1.2.0
+
+*Released 12/11/2017*
+
+**Features:**
+
+- Plugins can now return a `Promise` and modify the yielded `config` to set new configuration values and environment variables. Fixes {% issue 1042 %} and {% issue 909 %} and {% issue 576 %}.
+- There is a new `userAgent` option in `cypress.json` that enables you to change the `userAgent` of the browser for the entire browsing session. Fixes {% issue 364 %}.
+- There is a new `blacklistHosts` option in `cypress.json` which allows you to block requests made to those hosts. Blocked requests will be responded with a `503` status code. Useful for blocking 3rd party domains like Google Analytics. We've added a new recipe demonstrating this. Fixes {% issue 442 %}.
+- Added chai assertions in TypeScript to generate autocompletion. Fixes {% issue 1073 %}.
+
+**Bugfixes:**
+
+- Updated TypeScript definitions to more accurately match the current Cypress API. Fixes {% issue 1050 %}. Also note that if you were extending Cypress in TypeScript the `Chainer` interface changed. Please read {% issue '1048#issuecomment-351891910' %} to understand what you'll need to update.
+
+**Misc:**
+
+- Renamed `environmentVariables` to `env` in the Desktop GUI. Fixes {% issue 1052 %}.
+- `Cypress.config()` now returns a complete set of configuration values. Fixes {% issue 509 %}.
+- Added TypeScript typings for bundled Cypress tools like `$`, `_`, etc. Fixes {% issue 1046 %}.
+- Some error messages were made more passive. Fixes {% issue 1025 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added `Configuration API`' configuration-api %}
+- {% url 'Added `Recipes`' recipes %}
+- {% url 'Updated `Configuration`' configuration %}
+- {% url 'Updated `Environment Variables`' environment-variables %}
+- {% url 'Updated `Using Cypress FAQ`' using-cypress-faq %}
+- {% url 'Updated `Plugins Guide`' plugins-guide %}
+- {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
+
 ## 1.1.4
 
-*Release 12/6/2017*
+*Released 12/6/2017*
 
 **Bugfixes:**
 
