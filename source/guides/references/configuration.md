@@ -97,7 +97,9 @@ Option | Default | Description
 
 # Overriding Options
 
-Besides modifying your `cypress.json` you can also change configuration options through the *command line* or from your system *{% url 'environment variables' environment-variables %}*.
+Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
+
+This gives you the option to do things like override the `baseUrl` or environment variables. 
 
 ## Command Line
 
@@ -116,6 +118,14 @@ cypress run --config integrationFolder=tests,fixturesFolder=false
 ```shell
 cypress run --record --config viewportWidth=1280,viewportHeight=720
 ```
+
+## Plugins
+
+As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using `Node.js` code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+
+While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
+
+{% url "We've fully documented how to do this here." configuration-api %}
 
 ## Environment Variables
 
