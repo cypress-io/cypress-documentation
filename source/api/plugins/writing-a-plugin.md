@@ -40,7 +40,7 @@ If you return or resolve with an object, Cypress will then merge this object int
 
 `on` is a function that you will use to register listeners on various **events** that Cypress exposes.
 
-Registering to an event looks like this:
+Registering to listen on an event looks like this:
 
 ```javascript
 module.exports = (on, config) => {
