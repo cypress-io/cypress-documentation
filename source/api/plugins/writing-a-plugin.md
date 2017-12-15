@@ -38,7 +38,7 @@ If you return or resolve with an object, Cypress will then merge this object int
 
 ## on
 
-`on` is a function that you will use to register to various **events** that Cypress exposes.
+`on` is a function that you will use to register listeners on various **events** that Cypress exposes.
 
 Registering to an event looks like this:
 
@@ -50,7 +50,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to docs for each one' 'List-of-events' %}.
+Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to the docs for each one' 'List-of-events' %}.
 
 ## config
 
