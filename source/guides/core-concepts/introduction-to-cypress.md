@@ -497,7 +497,7 @@ The Cypress API is not an exact 1:1 implementation of Promises. They have Promis
 
 There are *very* specific reasons these limitations are built into the Cypress API.
 
-The whole intention of Cypress (and what makes it very different from other testing tools) is to create consistent, non-flaky tests that perform identically from one run to the next. Making this happen isn't free - there are some trade-offs we make that may initially seem unfamiliar to developers accustom to working with Promises.
+The whole intention of Cypress (and what makes it very different from other testing tools) is to create consistent, non-flaky tests that perform identically from one run to the next. Making this happen isn't free - there are some trade-offs we make that may initially seem unfamiliar to developers accustomed to working with Promises.
 
 Let's take a look at each trade-off in depth:
 
@@ -656,7 +656,7 @@ Many commands have a default, built-in assertion, or rather have requirements th
 
 - {% url `cy.visit()` visit %} expects the page to send `text/html` content with a `200` status code.
 - {% url `cy.request()` request %} expects the remote server to exist and provide a response.
-- {% url `cy.contains()` get %} expects the element with content to eventually exist in the DOM.
+- {% url `cy.contains()` contains %} expects the element with content to eventually exist in the DOM.
 - {% url `cy.get()` get %} expects the element to eventually exist in the DOM.
 - {% url `.find()` find %} also expects the element to eventually exist in the DOM.
 - {% url `.type()` type %} expects the element to eventually be in a *typeable* state.

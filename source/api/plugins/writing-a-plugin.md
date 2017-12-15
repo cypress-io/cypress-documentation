@@ -17,10 +17,6 @@ To get started, open up this file:
 cypress/plugins/index.js
 ```
 
-{% note info %}
-By default Cypress seeds this file for new projects, but if you have an existing project just create this file yourself.
-{% endnote %}
-
 The plugins file must export a function with the following signature:
 
 ```javascript
@@ -35,6 +31,10 @@ module.exports = (on, config) => {
 The exported function is called whenever a project is opened either with {% url "`cypress open`" command-line#cypress-open %} or {% url "`cypress run`" command-line#cypress-run %}.
 
 Your function will receive 2 arguments: `on` and `config`.
+
+You can return a synchronous function, or you can also return a Promise, and it will be awaited until it resolves. This enables you to perform asynchronous actions in your exported function such as reading files in from the filesystem.
+
+If you return or resolve with an object, Cypress will then merge this object into the `config` which enables you to overwrite configuration or environment variables.
 
 ## on
 
@@ -54,13 +54,17 @@ Each event documents its own argument signature. To understand how to use them, 
 
 ## config
 
-`config` is the resolved [Cypress configuration](https://on.cypress.io/guides/configuration) of the opened project.
+`config` is the resolved {% url "Cypress configuration" configuration %} of the opened project.
 
 This configuration contains all of the values that get passed into the browser for your project.
 
+{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+
 Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
 
-{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+You can programmatically modify these values and Cypress will then respect these changes. This enables you to swap out configuration based on things like the environment you're running in.
+
+{% url "Please check out our API docs for modifying configuration here." configuration-api %}
 
 ## List of events
 
@@ -86,13 +90,17 @@ You will need to keep in mind it is **Cypress who is requiring your file** - not
 
 Because of this, this global context and the version of node is controlled by Cypress.
 
-{% note warning %}
-Your code must be compatible with the {% url 'version of node' https://github.com/cypress-io/cypress/blob/master/.node-version %} that comes with Cypress!
-{% endnote %}
+{% note warning "Node version" %}
+
+Keep in mind - code executed in plugins is executed **by the node version** that comes bundled in Cypress itself.
+
+This version of node has **nothing to do** with your locally installed versions. Therefore you have to write node code which is compatible with this version.
 
 You can find the current node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 
 This node version gets updated regularly (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
+
+{% endnote %}
 
 ## NPM modules
 
