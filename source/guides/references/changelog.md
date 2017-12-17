@@ -3,6 +3,19 @@ title: Changelog
 comments: false
 ---
 
+## 1.3.0
+
+*Released 12/17/2017*
+
+**Features:**
+
+- Plugins now emit a `before:browser:launch` event exposing you the browser that will be launched and its launch arguments. This enables you to modify the arguments prior to launching the browser. You can also use these arguments to modify how Chrome runs and to also test Chrome extensions. Fixes {% issue 691 %} and {% issue 298 %}.
+- We've created a "CSS Selector Playground" which is a new UI button in the Test Runner that enables you to highlight elements on your application and receive a unique selector. You can also find elements by their text content. These mimic what `cy.get()` and `cy.contains()` do. Additionally you can copy + output results. This feature is in beta.It only works in Chrome (not in Electron). We're aware of some bugs in it, but it's good enough for beta. Please check out the issue and watch an animated gif demonstration. Fixes {% issue 917 %}.
+
+Documentation Changes:
+
+- WIP
+
 ## 1.2.0
 
 *Released 12/14/2017*
