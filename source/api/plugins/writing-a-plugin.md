@@ -73,6 +73,7 @@ You can programmatically modify these values and Cypress will then respect these
 Event | Description
 --- | ---
 {% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
+{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
 
 {% note warning "More Coming Soon" %}
 The Plugins API is brand new.

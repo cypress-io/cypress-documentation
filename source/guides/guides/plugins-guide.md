@@ -46,6 +46,19 @@ You can use the `file:preprocessor` event to do things like:
 
 Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which describe how to use this event.
 
+## Browser Launching
+
+This event: `before:browser:launch` can be used to modify the launch arguments for each particular browser.
+
+You can use the `before:browser:launch` to do things like:
+
+- Load a Chrome extension
+- Change print media
+- Enable or disable experimental chrome features
+- Control which Chrome components are loaded
+
+Check out our {% url 'Browser Launch API docs' browser-launch-api %} which describe how to use this event.
+
 # List of plugins
 
 Cypress maintains an official list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
