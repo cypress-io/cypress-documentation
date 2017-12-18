@@ -38,9 +38,9 @@ If you return or resolve with an object, Cypress will then merge this object int
 
 ## on
 
-`on` is a function that you will use to register to various **events** that Cypress exposes.
+`on` is a function that you will use to register listeners on various **events** that Cypress exposes.
 
-Registering to an event looks like this:
+Registering to listen on an event looks like this:
 
 ```javascript
 module.exports = (on, config) => {
@@ -50,7 +50,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to docs for each one' 'List-of-events' %}.
+Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to the docs for each one' 'List-of-events' %}.
 
 ## config
 
@@ -73,6 +73,7 @@ You can programmatically modify these values and Cypress will then respect these
 Event | Description
 --- | ---
 {% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
+{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
 
 {% note warning "More Coming Soon" %}
 The Plugins API is brand new.
