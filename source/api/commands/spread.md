@@ -21,7 +21,7 @@ Identical to {% url `.then()` then %}, but always expects an array-like structur
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.getCookies.spread(function() {}) // Yield all cookies
+cy.getCookies().spread(function() {}) // Yield all cookies
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**

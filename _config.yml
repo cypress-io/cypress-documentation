@@ -52,13 +52,13 @@ alias:
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
   examples/index.html: examples/examples/recipes.html
-  examples/recipes: examples/examples/recipes.html
   examples/unit-testing-recipe.html: examples/examples/recipes.html
   examples/logging-in-recipe.html: examples/examples/recipes.html
   examples/testing-the-dom-recipe.html: examples/examples/recipes.html
   examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
   examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
   examples/extending-cypress-recipe.html: examples/examples/recipes.html
+  examples/recipes/unit-testing-recipe.html: examples/examples/recipes.html
 
   tutorials/index.html: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/introduction/: examples/examples/tutorials.html

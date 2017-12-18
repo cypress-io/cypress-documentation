@@ -77,7 +77,7 @@ Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to
 {% note info %}
 ## {% fa fa-video-camera %} See it in action!
 
-You can see a walk-through of debugging some application code from Cypress {% url "in this segment from our React tutorial series" https://vimeo.com/242961930#t=264s %}.
+You can see a walk-through of debugging some application code from Cypress [in this segment from our React tutorial series](https://vimeo.com/242961930#t=264s).
 
 {% endnote %}
 

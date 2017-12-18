@@ -223,7 +223,7 @@ describe('Unit Test FizzBuzz', function(){
 
 ```
 
-To skip a specified suite or test simply append `.skip()` to the function. All nested suites will also be skipped.
+To skip a specified suite or test, simply append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function(){
