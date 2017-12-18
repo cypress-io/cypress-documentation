@@ -14,7 +14,9 @@ comments: false
 
 Documentation Changes:
 
-- WIP
+- {% url 'Added `Browser Launch API`' browser-launch-api %}
+- {% url 'Updated `Plugins Guide`' plugins-guide %}
+- {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
 
 ## 1.2.0
 
