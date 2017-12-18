@@ -200,7 +200,7 @@ app.post('/submit', function(req, res) {
 })
 ```
 
-A commone use case for this is `Single sign-on (SSO)`. In that situation you may `POST` to a different server and are redirected elsewhere (typically with the session token in the URL).
+A common use case for this is `Single sign-on (SSO)`. In that situation you may `POST` to a different server and are redirected elsewhere (typically with the session token in the URL).
 
 If that's the case, don't worry - you can work around it with {% url `cy.request()` request %}. {% url `cy.request()` request %} is special because it is **NOT bound to CORS or same-origin policy**.
 
@@ -226,7 +226,7 @@ cy.request('POST', 'https://sso.corp.com/auth', {username: 'foo', password: 'bar
   })
 ```
 
-Not working for you? Don't know how to set your token? If you still need to be able to be redirected to your SSO server you can read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
+Not working for you? Don't know how to set your token? If you still need to be able to be redirected to your SSO server, you can read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
 
 ## JavaScript Redirects
 
@@ -238,7 +238,7 @@ window.location.href = 'http://some.superdomain.com'
 
 This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere? Perhaps you're using a `Single sign-on (SSO)` server and you just need to read the previous section about working around that?
 
-If you can't figure out why your JavaScript code is redirecting you to a different superdomain then you might want to just read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
+If you can't figure out why your JavaScript code is redirecting you to a different superdomain, then you might want to just read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
 
 # Disabling Web Security
 
