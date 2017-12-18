@@ -77,7 +77,7 @@ jobs:
           background: true
       - run:
           name: Waiting for local server to start
-          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 90000
+          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 120000
       - run:
           name: Running Cypress tests
           command: |

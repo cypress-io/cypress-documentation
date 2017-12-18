@@ -17,10 +17,6 @@ To get started, open up this file:
 cypress/plugins/index.js
 ```
 
-{% note info %}
-By default Cypress seeds this file for new projects, but if you have an existing project just create this file yourself.
-{% endnote %}
-
 The plugins file must export a function with the following signature:
 
 ```javascript
@@ -36,11 +32,15 @@ The exported function is called whenever a project is opened either with {% url 
 
 Your function will receive 2 arguments: `on` and `config`.
 
+You can return a synchronous function, or you can also return a Promise, and it will be awaited until it resolves. This enables you to perform asynchronous actions in your exported function such as reading files in from the filesystem.
+
+If you return or resolve with an object, Cypress will then merge this object into the `config` which enables you to overwrite configuration or environment variables.
+
 ## on
 
-`on` is a function that you will use to register to various **events** that Cypress exposes.
+`on` is a function that you will use to register listeners on various **events** that Cypress exposes.
 
-Registering to an event looks like this:
+Registering to listen on an event looks like this:
 
 ```javascript
 module.exports = (on, config) => {
@@ -50,17 +50,21 @@ module.exports = (on, config) => {
 }
 ```
 
-Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to docs for each one' 'List-of-events' %}.
+Each event documents its own argument signature. To understand how to use them, please {% urlHash 'refer to the docs for each one' 'List-of-events' %}.
 
 ## config
 
-`config` is the resolved [Cypress configuration](https://on.cypress.io/guides/configuration) of the opened project.
+`config` is the resolved {% url "Cypress configuration" configuration %} of the opened project.
 
 This configuration contains all of the values that get passed into the browser for your project.
 
+{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+
 Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
 
-{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+You can programmatically modify these values and Cypress will then respect these changes. This enables you to swap out configuration based on things like the environment you're running in.
+
+{% url "Please check out our API docs for modifying configuration here." configuration-api %}
 
 ## List of events
 
@@ -69,6 +73,7 @@ Some plugins may utilize or require these values, so they can take certain actio
 Event | Description
 --- | ---
 {% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
+{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
 
 {% note warning "More Coming Soon" %}
 The Plugins API is brand new.
@@ -86,13 +91,17 @@ You will need to keep in mind it is **Cypress who is requiring your file** - not
 
 Because of this, this global context and the version of node is controlled by Cypress.
 
-{% note warning %}
-Your code must be compatible with the {% url 'version of node' https://github.com/cypress-io/cypress/blob/master/.node-version %} that comes with Cypress!
-{% endnote %}
+{% note warning "Node version" %}
+
+Keep in mind - code executed in plugins is executed **by the node version** that comes bundled in Cypress itself.
+
+This version of node has **nothing to do** with your locally installed versions. Therefore you have to write node code which is compatible with this version.
 
 You can find the current node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 
 This node version gets updated regularly (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
+
+{% endnote %}
 
 ## NPM modules
 

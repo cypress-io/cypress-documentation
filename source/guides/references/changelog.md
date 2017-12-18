@@ -3,9 +3,56 @@ title: Changelog
 comments: false
 ---
 
+## 1.3.0
+
+*Released 12/17/2017*
+
+**Features:**
+
+- Plugins now emit a {% url "`before:browser:launch`" plugins-guide#Browser-Launching %} event exposing you the browser that will be launched and its launch arguments. This enables you to modify the arguments prior to launching the browser. You can also use these arguments to modify how Chrome runs and to also test Chrome extensions. Fixes {% issue 691 %} and {% issue 298 %}.
+- We have launched a "CSS Selector Playground", a new UI button in the Test Runner that enables you to highlight elements in your application and receive a unique selector. You can also find elements by their text content. These mimics {% url "`cy.get()`" get %} and {% url "`cy.contains()`" contains %} behavior. Additionally you can copy the generated Cypress command to your clipboard or output the generated selector to your console. This feature is in beta. It only works in Chrome (not in Electron). We are aware of some bugs in it, but it is good enough for use and feedback. Please check out issue {% issue 917 %}, watch an animated gif demonstration, and leave any feedback you have there. Fixes {% issue 917 %}.
+
+Documentation Changes:
+
+- {% url 'Added `Browser Launch API`' browser-launch-api %}
+- {% url 'Updated `Plugins Guide`' plugins-guide %}
+- {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
+
+## 1.2.0
+
+*Released 12/14/2017*
+
+**Features:**
+
+- Plugins can now return a `Promise` and modify the yielded `config` to set new configuration values and environment variables. Fixes {% issue 1042 %} and {% issue 909 %} and {% issue 576 %}.
+- There is a new {% url "`userAgent`" configuration#Browser %} option in `cypress.json`. This enables you to change the `userAgent` of the browser for the entire browsing session. Fixes {% issue 364 %}.
+- There is a new {% url "`blacklistHosts`" configuration#Browser %} option in `cypress.json` that allows you to block requests made to those hosts. Blocked requests will respond with a `503` status code. This is useful for blocking 3rd party domains like Google Analytics. We have added a {% url "new recipe" recipes#Stubbing-Google-Analytics %} demonstrating this. Fixes {% issue 442 %}.
+- Added chai assertions in TypeScript to generate autocompletion. Fixes {% issue 1073 %}.
+
+**Bugfixes:**
+
+- Updated TypeScript definitions to more accurately match the current Cypress API. Fixes {% issue 1050 %}. Also note that if you were extending Cypress in TypeScript the `Chainer` interface changed. Please read {% issue '1048#issuecomment-351891910' %} to understand what you will need to update.
+
+**Misc:**
+
+- Renamed `environmentVariables` to `env` in the Desktop GUI. Fixes {% issue 1052 %}.
+- {% url "`Cypress.config()`" configuration#Cypress-config %} now returns a complete set of configuration values. Fixes {% issue 509 %}.
+- Added TypeScript typings for bundled Cypress tools like `$`, `_`, etc. Fixes {% issue 1046 %}.
+- Some error messages were made more passive. Fixes {% issue 1025 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added `Configuration API`' configuration-api %}
+- {% url 'Added `Recipes`' recipes %}
+- {% url 'Updated `Configuration`' configuration %}
+- {% url 'Updated `Environment Variables`' environment-variables %}
+- {% url 'Updated `Using Cypress FAQ`' using-cypress-faq %}
+- {% url 'Updated `Plugins Guide`' plugins-guide %}
+- {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
+
 ## 1.1.4
 
-*Release 12/6/2017*
+*Released 12/6/2017*
 
 **Bugfixes:**
 
@@ -29,6 +76,7 @@ comments: false
 - JSON fixtures with unicode escape sequences are now parsed correctly. Fixes {% issue 964 %}.
 - The default `browserify` plugin no longer fires `watched:file:changed` twice leading to an uncaught exception that was popping up in the console. Also fixed a minor state bug in the `browserify` package. Fixes {% issue 968 %}.
 - Cypress no longer reports `Electron` as the browser that ran in the Dashboard Service when a different browser was run. Fixes {% issue 854 %}.
+- Invalid cookie values no longer crash Cypress. Fixes {% issue 962 %}.
 
 **Misc:**
 
