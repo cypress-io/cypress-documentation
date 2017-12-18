@@ -74,6 +74,10 @@ Add an associating image with the example within the [`source/img/examples`](/so
 {% img /img/examples/name-of-file.jpg "alt text describing img" %}
 ```
 
+### Tags
+
+In addition to built-in Hexo tags (like `{% img ... %}`) we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. Find the list of tags and examples in [TAGS.md](TAGS.md)
+
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, and any keywords.
