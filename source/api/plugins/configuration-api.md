@@ -18,7 +18,7 @@ How you choose to organize your configuration and environment variables is up to
 To modify configuration, you simply return an object from your plugins file exported function.
 
 ```javascript
-// plugins file
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   console.log(config) // see what all is in here!
 
