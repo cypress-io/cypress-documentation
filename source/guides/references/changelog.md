@@ -3,6 +3,21 @@ title: Changelog
 comments: false
 ---
 
+## 1.4.0
+
+*Released 12/19/2017*
+
+**Features:**
+
+- There is now a Search Bar in the Desktop GUI which enables you to filter the list of specs. Helpful for projects with a ton of spec files. Fixes {% issue 1098 %}.
+
+**Bugfixes:**
+
+- The seeded `example_spec.js` file no longer fails in Windows on the `cy.exec()` test. It now conditionally runs a command appropriate for Windows. Fixes {% issue 1097 %}.
+- Trying to login in Cypress no longer causes the app to crash. This area has had many more tests added. Fixes {% issue 1093 %}.
+- Some minor improvements to TypeScript definitions around `cy.then()`. Fixes {% issue 1084 %}.
+- The Selector Playground now works correctly in the Electron browser. Fixes {% issue 1086 %}.
+
 ## 1.3.0
 
 *Released 12/17/2017*
