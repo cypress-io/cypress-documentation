@@ -17,10 +17,7 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
 
-Cypress automatically detects available browsers on your system (based on your OS).
-
-- `Linux`: detects available browsers by their executable binary
-- `OSX`: detects available browsers - even outside the `/Applications` folder.
+Cypress automatically detects available browsers on your OS.
 
 ## Electron Browser
 
@@ -60,6 +57,17 @@ Many browsers are not currently supported, but are on our roadmap. You can read 
 # Browser Environment
 
 Cypress launches the browser in a way that's different from a regular browser environment. But it launches in a way that we believe makes testing *more reliable* and *accessible*.
+
+## Launching Browsers
+
+When Cypress goes to launch your browser it will give you an opportunity to modify the arguments used to launch the browser.
+
+This enables you to do things like:
+
+- Load your own chrome extension
+- Enable or disable experimental chrome features
+
+{% url 'This part of the API is documented here.' browser-launch-api %}
 
 ## Cypress Profile
 
