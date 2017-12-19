@@ -58,6 +58,8 @@ Visit [http://localhost:2222/](http://localhost:2222/).
 **note** If you need to debug documentation build step run with environment
 variable set `DEBUG=docs npm run build`
 
+**note** When Cypress generates the docs it has to validate hundreds (thousands?) of URL's. This is expensive and the docs take awhile to initially. You can turn off validating external URL's by passing `npm start -- --no-validate` flag.
+
 ### Testing
 
 We use Cypress itself to test the documentation. To start the server and run E2E tests execute the command `npm run test-e2e`.
