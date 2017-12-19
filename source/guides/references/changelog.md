@@ -3,14 +3,29 @@ title: Changelog
 comments: false
 ---
 
+## 1.4.0
+
+*Released 12/19/2017*
+
+**Features:**
+
+- There is now a Search Bar in the Desktop GUI which enables you to filter the list of specs. Helpful for projects with a ton of spec files. Fixes {% issue 1098 %}.
+
+**Bugfixes:**
+
+- The seeded `example_spec.js` file no longer fails in Windows on the `cy.exec()` test. It now conditionally runs a command appropriate for Windows. Fixes {% issue 1097 %}.
+- Trying to login in Cypress no longer causes the app to crash. This area has had many more tests added. Fixes {% issue 1093 %}.
+- Some minor improvements to TypeScript definitions around `cy.then()`. Fixes {% issue 1084 %}.
+- The Selector Playground now works correctly in the Electron browser. Fixes {% issue 1086 %}.
+
 ## 1.3.0
 
 *Released 12/17/2017*
 
 **Features:**
 
-- Plugins now emit a `before:browser:launch` event exposing you the browser that will be launched and its launch arguments. This enables you to modify the arguments prior to launching the browser. You can also use these arguments to modify how Chrome runs and to also test Chrome extensions. Fixes {% issue 691 %} and {% issue 298 %}.
-- We've created a "CSS Selector Playground" which is a new UI button in the Test Runner that enables you to highlight elements on your application and receive a unique selector. You can also find elements by their text content. These mimic what `cy.get()` and `cy.contains()` do. Additionally you can copy + output results. This feature is in beta.It only works in Chrome (not in Electron). We're aware of some bugs in it, but it's good enough for beta. Please check out the issue and watch an animated gif demonstration. Fixes {% issue 917 %}.
+- Plugins now emit a {% url "`before:browser:launch`" plugins-guide#Browser-Launching %} event exposing you the browser that will be launched and its launch arguments. This enables you to modify the arguments prior to launching the browser. You can also use these arguments to modify how Chrome runs and to also test Chrome extensions. Fixes {% issue 691 %} and {% issue 298 %}.
+- We have launched a "CSS Selector Playground", a new UI button in the Test Runner that enables you to highlight elements in your application and receive a unique selector. You can also find elements by their text content. These mimics {% url "`cy.get()`" get %} and {% url "`cy.contains()`" contains %} behavior. Additionally you can copy the generated Cypress command to your clipboard or output the generated selector to your console. This feature is in beta. It only works in Chrome (not in Electron). We are aware of some bugs in it, but it is good enough for use and feedback. Please check out issue {% issue 917 %}, watch an animated gif demonstration, and leave any feedback you have there. Fixes {% issue 917 %}.
 
 Documentation Changes:
 
@@ -25,18 +40,18 @@ Documentation Changes:
 **Features:**
 
 - Plugins can now return a `Promise` and modify the yielded `config` to set new configuration values and environment variables. Fixes {% issue 1042 %} and {% issue 909 %} and {% issue 576 %}.
-- There is a new `userAgent` option in `cypress.json` that enables you to change the `userAgent` of the browser for the entire browsing session. Fixes {% issue 364 %}.
-- There is a new `blacklistHosts` option in `cypress.json` which allows you to block requests made to those hosts. Blocked requests will be responded with a `503` status code. Useful for blocking 3rd party domains like Google Analytics. We've added a new recipe demonstrating this. Fixes {% issue 442 %}.
+- There is a new {% url "`userAgent`" configuration#Browser %} option in `cypress.json`. This enables you to change the `userAgent` of the browser for the entire browsing session. Fixes {% issue 364 %}.
+- There is a new {% url "`blacklistHosts`" configuration#Browser %} option in `cypress.json` that allows you to block requests made to those hosts. Blocked requests will respond with a `503` status code. This is useful for blocking 3rd party domains like Google Analytics. We have added a {% url "new recipe" recipes#Stubbing-Google-Analytics %} demonstrating this. Fixes {% issue 442 %}.
 - Added chai assertions in TypeScript to generate autocompletion. Fixes {% issue 1073 %}.
 
 **Bugfixes:**
 
-- Updated TypeScript definitions to more accurately match the current Cypress API. Fixes {% issue 1050 %}. Also note that if you were extending Cypress in TypeScript the `Chainer` interface changed. Please read {% issue '1048#issuecomment-351891910' %} to understand what you'll need to update.
+- Updated TypeScript definitions to more accurately match the current Cypress API. Fixes {% issue 1050 %}. Also note that if you were extending Cypress in TypeScript the `Chainer` interface changed. Please read {% issue '1048#issuecomment-351891910' %} to understand what you will need to update.
 
 **Misc:**
 
 - Renamed `environmentVariables` to `env` in the Desktop GUI. Fixes {% issue 1052 %}.
-- `Cypress.config()` now returns a complete set of configuration values. Fixes {% issue 509 %}.
+- {% url "`Cypress.config()`" configuration#Cypress-config %} now returns a complete set of configuration values. Fixes {% issue 509 %}.
 - Added TypeScript typings for bundled Cypress tools like `$`, `_`, etc. Fixes {% issue 1046 %}.
 - Some error messages were made more passive. Fixes {% issue 1025 %}.
 

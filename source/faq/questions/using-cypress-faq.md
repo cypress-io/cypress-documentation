@@ -161,6 +161,14 @@ Check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics
 
 {% url "We've answered this question in detail here." trade-offs#Multiple-browsers %}
 
+## {% fa fa-angle-right %} Can I test a chrome extension? How do I load my chrome extension?
+
+Yes. You can test your extensions by {% url 'loading them when we launch the browser.' browser-launch-api %}.
+
+## {% fa fa-angle-right %} How can I modify or pass arguments used to launch the browser?
+
+You use the {% url `before:browser:launch` browser-launch-api %} plugin event.
+
 ## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the {% url 'same way as any other recursive loop' request#Request-Polling %}.
