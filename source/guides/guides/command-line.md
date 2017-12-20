@@ -336,6 +336,12 @@ DEBUG=cypress:* cypress run
 ### On Windows
 ```
 set DEBUG=cypress:*
+cypress open
+```
+
+```
+set DEBUG=cypress:*
+cypress run
 ```
 
 Cypress is a rather large and complex project involving a dozen or more submodules, and the default output is overwhelming.
