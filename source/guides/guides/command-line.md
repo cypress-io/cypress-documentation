@@ -325,12 +325,17 @@ Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %
 
 **To see all Cypress modules debug output**
 
+### On macOS or Linux
 ```shell
 DEBUG=cypress:* cypress open
 ```
 
 ```shell
 DEBUG=cypress:* cypress run
+```
+### On Windows
+```
+set DEBUG=cypress:*
 ```
 
 Cypress is a rather large and complex project involving a dozen or more submodules, and the default output is overwhelming.
