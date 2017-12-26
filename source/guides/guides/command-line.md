@@ -323,9 +323,7 @@ cypress.run({
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
 
-**To see all Cypress modules debug output**
-
-### On macOS or Linux
+**On Mac or Linux:**
 ```shell
 DEBUG=cypress:* cypress open
 ```
@@ -333,18 +331,19 @@ DEBUG=cypress:* cypress open
 ```shell
 DEBUG=cypress:* cypress run
 ```
-### On Windows
-```
+**On Windows:**
+
+```shell
 set DEBUG=cypress:*
 cypress open
 ```
 
-```
+```shell
 set DEBUG=cypress:*
 cypress run
 ```
 
-Cypress is a rather large and complex project involving a dozen or more submodules, and the default output is overwhelming.
+Cypress is a rather large and complex project involving a dozen or more submodules, and the default output can be overwhelming.
 
 **To filter debug output to a specific module**
 
