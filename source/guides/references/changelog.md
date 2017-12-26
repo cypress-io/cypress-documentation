@@ -19,8 +19,8 @@ comments: false
 - We now handle `xvfb` exiting with a non zero status code and display that error to you. This should help with situations where `xvfb` is misconfigured on the system. Fixes {% issue 1113 %}.
 - We've added debug output for `xvfb` when `DEBUG=cypress:xvfb` is enabled. Helpful when diagnosing problems with `xvfb`. Fixes {% issue 1128 %}.
 - We've added more TypeScript documentation for `cy.*` methods. Fixes {% issue 1117 %}.
-- When developing on Cypress, we now fully starting the process through the CLI to bring it into parity with how it works when used in production. Fixes {% issue 838 %}.
-- Upgraded various CLI deps that were flagged as security warnings. There wasn't an actual security problem - just static analyzers complaining. Fixes {% issue 1103 %}.
+- When developing on Cypress, we now start the process through the CLI to bring it into parity with how it works when used in production. Fixes {% issue 838 %}.
+- Upgraded various CLI dependencies that were flagged for security warnings. There wasn't an actual security problem - just static analyzers complaining. Fixes {% issue 1103 %}.
 
 ## 1.4.0
 
