@@ -24,14 +24,14 @@ The querying behavior of this command matches exactly how {% url `.eq()` http://
 
 ```javascript
 cy.get('tbody>tr').eq(0)    // Yield first 'tr' in 'tbody'
-cy.get('ul>li').eq('4')     // Yield fifth 'li' in 'ul'
+cy.get('ul>li').eq(4)       // Yield fifth 'li' in 'ul'
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
 cy.eq(0)                  // Errors, cannot be chained off 'cy'
-cy.getCookies().eq('4')   // Errors, 'getCookies' does not yield DOM element
+cy.getCookies().eq(4)     // Errors, 'getCookies' does not yield DOM element
 ```
 
 ## Arguments
