@@ -3,19 +3,38 @@ title: Changelog
 comments: false
 ---
 
+## 1.4.1
+
+*Released 12/26/2017*
+
+**Bugfixes:**
+
+- Using `DEBUG=cypress:*` now correctly outputs all debugging information on OSX and Linux. Previously output other then `cypress:cli` was ignored due to the CLI ignoring `stderr` from the binary. Fixes {% issue 921 %}.
+- `stdout` is now captured correctly in Windows when recording to the Dashboard. Fixes {% issue 977 %} and issue {% issue 711 %}.
+- Windows now forcibly displays colors correctly to the terminal. Fixes {% issue 1127 %}.
+
+**Misc:**
+
+- `TTY` is now handled correctly for Linux and OSX. This means that CI providers which turned off colors due to `TTY` being false will now display colors again such as TravisCI. Fixes {% issue 1126 %}.
+- We now handle `xvfb` exiting with a non zero status code and display that error to you. This should help with situations where `xvfb` is misconfigured on the system. Fixes {% issue 1113 %}.
+- We've added debug output for `xvfb` when `DEBUG=cypress:xvfb` is enabled. Helpful when diagnosing problems with `xvfb`. Fixes {% issue 1128 %}.
+- We've added more TypeScript documentation for `cy.*` methods. Fixes {% issue 1117 %}.
+- When developing on Cypress, we now start the process through the CLI to bring it into parity with how it works when used in production. Fixes {% issue 838 %}.
+- Upgraded various CLI dependencies that were flagged for security warnings. There wasn't an actual security problem - just static analyzers complaining. Fixes {% issue 1103 %}.
+
 ## 1.4.0
 
 *Released 12/19/2017*
 
 **Features:**
 
-- There is now a Search Bar in the Desktop GUI which enables you to filter the list of specs. Helpful for projects with a ton of spec files. Fixes {% issue 1098 %}.
+- There is now a Search Bar in the Desktop GUI that enables you to filter the list of specs. Helpful for projects with a ton of spec files. Fixes {% issue 1098 %}.
 
 **Bugfixes:**
 
-- The seeded `example_spec.js` file no longer fails in Windows on the `cy.exec()` test. It now conditionally runs a command appropriate for Windows. Fixes {% issue 1097 %}.
-- Trying to login in Cypress no longer causes the app to crash. This area has had many more tests added. Fixes {% issue 1093 %}.
-- Some minor improvements to TypeScript definitions around `cy.then()`. Fixes {% issue 1084 %}.
+- The seeded `example_spec.js` file no longer fails in Windows on the {% url "`cy.exec()`" exec %} test. It now conditionally runs a command appropriate for Windows. Fixes {% issue 1097 %}.
+- Trying to log in to Cypress no longer causes the app to crash. This area has had many more tests added. Fixes {% issue 1093 %}.
+- Some minor improvements to TypeScript definitions around {% url "`.then()`" then %}. Fixes {% issue 1084 %}.
 - The Selector Playground now works correctly in the Electron browser. Fixes {% issue 1086 %}.
 
 ## 1.3.0
