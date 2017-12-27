@@ -30,6 +30,7 @@ Recipe | Category | Description
 {% urlHash 'Stubbing Google Analytics' Stubbing-Google-Analytics %} | Stubbing, Spying | Use `cy.stub()` to test Google Analytics calls
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
 {% urlHash 'React with Enzyme' React-with-Enzyme %} | Unit Testing | Test your react components in isolation
+{% urlHash 'File Upload in React' File-Upload-in-React %} | Unit Testing | Test file upload in React application
 {% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
 
@@ -164,6 +165,12 @@ Get around the lack of a `.hover()` command.
 - Unit test a React JSX Component using {% url "Enzyme" http://airbnb.io/enzyme/ %}.
 - Import `enzyme` from `node_modules`.
 - Extend chai assertions with {% url "`chai-enzyme`" https://github.com/producthunt/chai-enzyme %}.
+
+## [File Upload in React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react)
+
+- Passing synthetic test file to upload via an [`.trigger('change')`](https://on.cypress.io/trigger) event
+- Stub remote server using [`cy.route()`](https://on.cypress.io/route)
+- Alternatively stub `axios.post` method using [`cy.stub()`](https://on.cypress.io/stub)
 
 ## [Adding Chai Assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions)
 
