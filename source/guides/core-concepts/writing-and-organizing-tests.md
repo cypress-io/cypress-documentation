@@ -143,7 +143,7 @@ describe('Unit test our math functions', function() {
 
 Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}).
 
-These are helpful to set conditions that you want run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
+These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
 describe('Hooks', function() {
