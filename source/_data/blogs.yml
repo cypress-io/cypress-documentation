@@ -1,3 +1,59 @@
+- title: "Gearing up for Assert(js) - an interview with JavaScript testing experts"
+  url: https://www.okgrow.com/posts/assertjs-hashbang-panel
+  sourceName: OK GROW!
+  sourceUrl: https://www.okgrow.com/posts
+  date: Dev 14, 2017
+  author: Paul Dowman
+  img: /img/examples/hashbang-assert-js-cypress-team.jpg
+
+- title: "Up and Running with Cypress and Typescript"
+  url: https://medium.com/bratislava-angular/up-and-running-with-cypress-and-typescript-5b9065eedbd3
+  sourceName: Bratislava Angular
+  sourceUrl: https://medium.com/bratislava-angular
+  date: Dev 2, 2017
+  author: Martin Jakubík
+  img: /img/examples/cypress-typescript-blog.jpg
+
+- title: "Cypress.io Vs Selenium Test Automation"
+  url: https://www.joecolantonio.com/2017/11/16/cypress-io-vs-selenium-test-automation/
+  sourceName: JoeColantonio.com
+  sourceUrl: https://www.joecolantonio.com/
+  date: Nov 16, 2017
+  author: Joe Colantonio
+  img: /img/examples/selenium-versus-robot-boxing.jpg
+
+- title: "No-Brainer HTML, JS, CSS and cypress.io testing starter tutorial — Part 8"
+  url: https://medium.com/oke-software-poland/no-brainer-html-js-css-and-cypress-io-testing-starter-tutorial-part-7-e0434f4422d6
+  sourceName: OKE Software Poland
+  sourceUrl: https://medium.com/oke-software-poland
+  date: Nov 12, 2017
+  author: Wojciech Bilicki
+  img: /img/examples/no-brainer-html-css-javascript-testing-cypress.jpg
+
+- title: "No-Brainer HTML, JS, CSS and cypress.io testing starter tutorial — Part 7"
+  url: https://medium.com/oke-software-poland/no-brainer-html-js-css-and-cypress-io-testing-starter-tutorial-part-7-e19dbbcfb090
+  sourceName: OKE Software Poland
+  sourceUrl: https://medium.com/oke-software-poland
+  date: Nov 11, 2017
+  author: Wojciech Bilicki
+  img: /img/examples/no-brainer-html-css-javascript-testing-cypress.jpg
+
+- title: Visual Regression testing with Cypress.io
+  url: http://blog.xebia.com/visual-regression-testing-cypress/
+  sourceName: Xebia
+  sourceUrl: http://blog.xebia.com/
+  date: Nov 9, 2017
+  author: Erik Zeedijk
+  img: /img/examples/visual-regression-dashboard.jpg
+
+- title: Testing React app with Cypress
+  url: https://blog.callstack.io/testing-react-app-with-cypress-246a7732ee63
+  sourceName: Callstack Engineers
+  sourceUrl: https://blog.callstack.io/
+  date: Nov 6, 2017
+  author: Adam Trzciński
+  img: /img/examples/road-with-cypress-and-stars.jpg
+
 - title: "Unblock Rails UI Testing with Cypress"
   url: https://www.simplethread.com/unblock-rails-ui-testing-cypress/
   sourceName: Simple Thread
@@ -5,6 +61,14 @@
   date: Nov 2, 2017
   author: Don Denoncourt
   img: /img/examples/kitchen-sink-debugger-rails.jpg
+
+- title: "Cypress"
+  url: https://mabrique.lafamillebn.net/blog/2017/10/27/cypress/
+  sourceName: DevBieres
+  sourceUrl: https://mabrique.lafamillebn.net/blog/
+  date: Oct 27, 2017
+  author: thierry
+  img: /img/examples/CMD-selection-command-log.jpg
 
 - title: "Testing React Components using Storybook and Cypress"
   url: https://medium.com/@mtiller/testing-react-components-using-storybook-and-cypress-1689a27f55aa
