@@ -32,7 +32,7 @@ Pass in an options object to change the default behavior of `Cypress.Server`.
 Cypress.Server.defaults({
   delay: 500,
   force404: false,
-  whitelist: function(xhr){
+  whitelist: (xhr) => {
     // handle custom logic for whitelisting
   }
 })

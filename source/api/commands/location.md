@@ -67,17 +67,17 @@ Option | Default | Description
 ```javascript
 cy.visit('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
 
-cy.location().should(function(location) {
-  expect(location.hash).to.eq('#/users/123/edit')
-  expect(location.host).to.eq('localhost:8000')
-  expect(location.hostname).to.eq('localhost')
-  expect(location.href).to.eq('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
-  expect(location.origin).to.eq('http://localhost:8000')
-  expect(location.pathname).to.eq('/app/index.html')
-  expect(location.port).to.eq('8000')
-  expect(location.protocol).to.eq('http:')
-  expect(location.search).to.eq('?q=dan')
-  expect(location.toString()).to.eq('http://localhost:8000/app/index.html?q=brian#/users/123/edit')
+cy.location().should((loc) => {
+  expect(loc.hash).to.eq('#/users/123/edit')
+  expect(loc.host).to.eq('localhost:8000')
+  expect(loc.hostname).to.eq('localhost')
+  expect(loc.href).to.eq('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
+  expect(loc.origin).to.eq('http://localhost:8000')
+  expect(loc.pathname).to.eq('/app/index.html')
+  expect(loc.port).to.eq('8000')
+  expect(loc.protocol).to.eq('http:')
+  expect(loc.search).to.eq('?q=dan')
+  expect(loc.toString()).to.eq('http://localhost:8000/app/index.html?q=brian#/users/123/edit')
 })
 ```
 
@@ -87,9 +87,9 @@ We can yield the location object within a {% url `.should()` should %} command a
 
 ```javascript
 cy.get('#search').type('niklas{enter}')
-cy.location().should(function(location){
-  expect(location.search).to.eq('?search=niklas')
-  expect(location.pathname).to.eq('/users')
+cy.location().should((loc) => {
+  expect(loc.search).to.eq('?search=niklas')
+  expect(loc.pathname).to.eq('/users')
 })
 ```
 
@@ -117,8 +117,8 @@ When changing properties on the real `window.location` object, it forces the bro
 ***Console output of `window.location`***
 
 ```javascript
-cy.window().then(function(window){
-  console.log(window.location)
+cy.window().then((win) => {
+  console.log(win.location)
 })
 ```
 
@@ -127,8 +127,8 @@ cy.window().then(function(window){
 ***Console output of `.location()`***
 
 ```javascript
-cy.location().then(function(location){
-  console.log(location)
+cy.location().then((loc) => {
+  console.log(loc)
 })
 ```
 
@@ -153,8 +153,8 @@ cy.location().then(function(location){
 ***Assert on the location's href***
 
 ```javascript
-cy.location().should(function(location){
-  expect(location.href).to.include('commands/querying')
+cy.location().should((loc) => {
+  expect(loc.href).to.include('commands/querying')
 })
 ```
 

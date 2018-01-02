@@ -34,8 +34,8 @@ Use `Cypress.Promise` to create promises. Cypress is promise aware so if you ret
 ## Basic Promise
 
 ```javascript
-cy.get("button").then(function($button){
-  return new Cypress.Promise(function(resolve, reject){
+cy.get("button").then(($button) => {
+  return new Cypress.Promise((resolve, reject) => {
     // do something custom here
   })
 })
@@ -44,13 +44,13 @@ cy.get("button").then(function($button){
 ## Waiting for Promises
 
 ```javascript
-it("waits for promises to resolve", function(){
-  var waited = false
+it("waits for promises to resolve", function () {
+  let waited = false
 
   function waitOneSecond(){
     // return a promise that resolves after 1 second
-    return new Cypress.Promise(function(resolve, reject){
-      setTimeout(function(){
+    return new Cypress.Promise((resolve, reject) => {
+      setTimeout(() => {
         // set waited to true
         waited = true
 
@@ -60,10 +60,10 @@ it("waits for promises to resolve", function(){
     })
   }
 
-  cy.then(function(){
+  cy.wrap(null).then(() => {
     // return a promise to cy.then() that
     // is awaited until it resolves
-    return waitOneSecond().then(function(str){
+    return waitOneSecond().then((str) => {
       expect(str).to.eq('foo')
       expect(waited).to.be.true
     })

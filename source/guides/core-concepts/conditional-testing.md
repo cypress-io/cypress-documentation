@@ -302,7 +302,7 @@ Testing this in Cypress is possible.
 
 ```js
 // app code
-$('button').on('click', function(e) {
+$('button').on('click', (e) => {
   // do something synchronously randomly
   if (Math.random() < .5) {
     // append an input
@@ -346,7 +346,7 @@ If you are not sure if you have written a potentially flaky test, there is an ea
 
 ```js
 Cypress._.times(100, (i) => {
-  it(`num ${i+1} - test the thing conditionally`, function () {
+  it(`num ${i+1} - test the thing conditionally`, () => {
     // do the conditional bits 100 times
   })
 })

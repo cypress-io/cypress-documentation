@@ -92,7 +92,7 @@ For a detailed explanation of aliasing, {% url 'read more about waiting on route
 cy.server()
 cy.route('/accounts/*').as('getAccount')
 cy.visit('/accounts/123')
-cy.wait('@getAccount').then(function(xhr){
+cy.wait('@getAccount').then((xhr) => {
   // we can now access the low level xhr
   // that contains the request body,
   // response body, status, etc
@@ -140,7 +140,7 @@ cy.route('activities/*').as('getActivities')
 cy.route('comments/*').as('getComments')
 cy.visit('/dashboard')
 
-cy.wait(['@getUsers', '@getActivities', 'getComments']).then(function(xhrs){
+cy.wait(['@getUsers', '@getActivities', 'getComments']).then((xhrs) => {
   // xhrs will now be an array of matching XHR's
   // xhrs[0] <-- getUsers
   // xhrs[1] <-- getActivities
@@ -156,7 +156,7 @@ cy.route('users/*').as('getUsers')
 cy.route('activities/*').as('getActivities')
 cy.route('comments/*').as('getComments')
 cy.wait(['@getUsers', '@getActivities', 'getComments'])
-  .spread(function(getUsers, getActivities, getComments){
+  .spread((getUsers, getActivities, getComments) => {
     // each XHR is now an individual argument
   })
 ```
