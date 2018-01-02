@@ -15,6 +15,10 @@ When a project is added to Cypress, a `cypress.json` file is created in the proj
 
 The default behavior of Cypress can be modified by supplying any of the following configuration options. Below is a list of available options and their default values.
 
+{% note bolt Tip %}
+Configure your text editor to show IntelliSense when editing `cypress.json` file. {% url 'Learn how' general-questions-faq#fa-fa-angle-right-How-do-I-see-IntelliSense-when-editing-cypress-json-file %}
+{% endnote %}
+
 ## Global
 
 Option | Default | Description
@@ -79,7 +83,7 @@ Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
-`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %} 
+`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
 
 ## Viewport
 
