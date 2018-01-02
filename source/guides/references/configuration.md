@@ -15,10 +15,6 @@ When a project is added to Cypress, a `cypress.json` file is created in the proj
 
 The default behavior of Cypress can be modified by supplying any of the following configuration options. Below is a list of available options and their default values.
 
-{% note bolt Tip %}
-Configure your text editor to show IntelliSense when editing `cypress.json` file. {% url 'Learn how' general-questions-faq#fa-fa-angle-right-How-do-I-see-IntelliSense-when-editing-cypress-json-file %}
-{% endnote %}
-
 ## Global
 
 Option | Default | Description
@@ -228,3 +224,23 @@ For instance given a URL: `https://google.com/search?q=cypress`
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
 {% img /img/guides/blacklist-host.png %}
+
+## IntelliSense
+
+When editing the `cypress.json` file, you can tell your text editor to use our schema file that describes each valid property. If the text editor supports this feature, it will display IntelliSense for each property, helping you along the way. For example, in [VSCode](https://code.visualstudio.com/) you can open Preferences / Settings / User Settings and add the `json.schemas` property.
+
+```json
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "cypress.json"
+      ],
+      "url": "https://on.cypress.io/cypress.schema.json"
+    }
+  ]
+}
+```
+
+Open `cypress.json` and hover over a setting - you should see IntelliSense popup like this one.
+![cypress.json IntelliSense popup in VSCode](/img/faq/questions/cypress-json-intellisense.png)
