@@ -139,6 +139,26 @@ With that said - we actually believe the best form of testing in Cypress is a co
 - Update Cypress. Your issue may have {% url "already been fixed" changelog %}.
 - {% open_an_issue %}. Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
 
+## {% fa fa-angle-right %} How do I see IntelliSense when editing `cypress.json` file?
+
+When editing `cypress.json` file, you can tell the text editor to use our schema file that describes each valid property. If the text editor supports this feature, it will display IntelliSense for each property, helping you along the way. For example, in [VSCode](https://code.visualstudio.com/) open Preferences / Settings / User Settings and add `json.schemas` property.
+
+```json
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "cypress.json"
+      ],
+      "url": "https://on.cypress.io/cypress.schema.json"
+    }
+  ]
+}
+```
+
+Open `cypress.json` and hover over a setting - you should see IntelliSense popup like this one.
+![cypress.json IntelliSense popup in VSCode](/img/faq/questions/cypress-json-intellisense.png)
+
 <!-- ## What is Cypress? -->
 
 <!-- ## Hasn’t this been done before? -->
