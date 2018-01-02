@@ -71,7 +71,7 @@ If the path to the file does not exist, the file and its path will be created. I
 ```javascript
 cy
   .writeFile('path/to/message.txt', 'Hello World')
-  .then(function (text) {
+  .then((text) => {
     expect(text).to.equal('Hello World') // true
   })
 ```
@@ -90,7 +90,7 @@ JavaScript arrays and objects are stringified and formatted into text.
 
 ```javascript
 cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
-  .then(function (user) {
+  .then((user) => {
     expect(user.name).to.equal('Eliza')
   })
 ```
@@ -107,12 +107,12 @@ cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
 ***Write response data to a fixture file***
 
 ```javascript
-cy.request('https://jsonplaceholder.typicode.com/users').then(function(response){
+cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
   cy.writeFile('cypress/fixtures/users.json', response.body)
 })
 
 // our fixture file is now generated and can be used
-cy.fixture('users').then(function(users){
+cy.fixture('users').then((users) => {
   expect(users[0].name).to.exist
 })
 ```

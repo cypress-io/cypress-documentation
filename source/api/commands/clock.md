@@ -72,9 +72,9 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 ```javascript
 // your app code
-var seconds = 0
+const seconds = 0
 
-setInterval(function(){
+setInterval(() => {
   $('#seconds-elapsed').text(++seconds + ' seconds')
 }, 1000)
 ```
@@ -93,7 +93,7 @@ cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 In most cases, it's easier to use {% url `cy.tick()` tick %} to move time, but you can also use the `clock` object yielded by `cy.clock()`.
 
 ```javascript
-cy.clock().then(function (clock) {
+cy.clock().then((clock) => {
   clock.tick(1000)
 })
 ```
@@ -103,7 +103,7 @@ You can call `cy.clock()` again for this purpose later in a chain if necessary.
 ```javascript
 cy.clock()
 cy.get('input').type('Jane Lane')
-cy.clock().then(function (clock) {
+cy.clock().then((clock) => {
   clock.tick(1000)
 })
 ```
@@ -112,7 +112,7 @@ The clock object is also available via `this.clock` in any {% url `.then()` then
 
 ```javascript
 cy.clock()
-cy.get('form').then(function ($form) {
+cy.get('form').then(($form) => {
   this.clock.tick(1000)
   // do something with $form ...
 })
@@ -123,7 +123,7 @@ cy.get('form').then(function ($form) {
 In general, it should not be necessary to manually restore the native functions that `cy.clock()` overrides since this is done automatically between tests. But if you need to, the `clock` object yield has a `.restore()` method.
 
 ```javascript
-cy.clock().then(function (clock) {
+cy.clock().then((clock) => {
   clock.restore()
 })
 ```
@@ -132,7 +132,7 @@ Or via `this.clock`:
 
 ```javascript
 cy.clock()
-cy.get('.timer').then(function ($timer) {
+cy.get('.timer').then(($timer) => {
   this.clock.restore()
   // do something with $timer ...
 })

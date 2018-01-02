@@ -818,13 +818,13 @@ cy
   .should(($p) =>{
     // massage our subject from a DOM element
     // into an array of texts from all of the p's
-    var texts = $p.map((i, el) => {
+    let texts = $p.map((i, el) => {
       return Cypress.$(el).text()
     })
 
     // jquery map returns jquery object
     // and .get() converts this to a simple array
-    var texts = texts.get()
+    texts = texts.get()
 
     // array should have length of 3
     expect(texts).to.have.length(3)

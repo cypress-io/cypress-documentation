@@ -21,13 +21,13 @@ Identical to {% url `.then()` then %}, but always expects an array-like structur
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.getCookies().spread(function() {}) // Yield all cookies
+cy.getCookies().spread(() => {}) // Yield all cookies
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.spread(function() {}) // Errors, cannot be chained off 'cy'
+cy.spread(() => {}) // Errors, cannot be chained off 'cy'
 cy.location().spread()   // Errors, 'location' does not yield an array
 ```
 
@@ -61,7 +61,7 @@ cy.route('/users/').as('getUsers')
 cy.route('/activities/').as('getActivities')
 cy.route('/comments/').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments'])
-  .spread(function(getUsers, getActivities, getComments){
+  .spread((getUsers, getActivities, getComments) => {
     // each XHR is now an individual argument
   })
 ```
@@ -71,7 +71,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
 ***Expand the array of cookies***
 
 ```javascript
-cy.getCookies().spread(function(cookie1, cookie2, cookie3){
+cy.getCookies().spread((cookie1, cookie2, cookie3) => {
   // each cookie is now an individual argument
 })
 ```

@@ -32,7 +32,7 @@ cy.moment()  // Errors, cannot be chained off 'cy'
 **test that the span contains formatted text for today**
 
 ```javascript
-var todaysDate = Cypress.moment().format("MMM DD, YYYY")
+const todaysDate = Cypress.moment().format("MMM DD, YYYY")
 
 cy.get("span").should("contain", "Order shipped on: " + todaysDate)
 ```
