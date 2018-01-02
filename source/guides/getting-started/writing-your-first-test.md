@@ -148,7 +148,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`, 
 
 {% img /img/guides/first-test-visit-30fps.gif "A real test visiting a website" %}
 
-{% note danger Only Tests Apps You Control %}
+{% note danger Only Test Apps You Control %}
 Although in this guide we are testing our example application: {% url `https://example.cypress.io` https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
 
 - They are liable to change at any moment which will break tests.
