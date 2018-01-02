@@ -1,3 +1,11 @@
+- title: "End to End Testing: The Game Has Changed"
+  url: https://www.youtube.com/watch?v=rICGz5qrYJU&feature=youtu.be&t=1h14m46s
+  sourceName: ReactJS Denver
+  sourceUrl: https://www.meetup.com/ReactJS-Denver/
+  date: Nov 14, 2017
+  author: Will Klein
+  img: /img/examples/cypress-the-game-has-changed.jpg
+
 - title: Modern Integration Testing for JavaScript Applications
   url: https://www.youtube.com/watch?v=D20nX2zAypk&feature=youtu.be
   sourceName: BostonJS
@@ -6,6 +14,13 @@
   author: Gleb Bahmutov
   img: /img/examples/cypress-star-wars-intro.jpg
 
+- title: "Slaying Selenium with Cypress"
+  url: https://www.youtube.com/watch?v=bSpLEJ-CrGk
+  sourceName: MelbCSS
+  sourceUrl: https://www.meetup.com/MelbCSS/
+  date: Oct 3, 2017
+  author: Ray Hua
+  img: /img/examples/slaying-selenium-with-cypress.jpg
 
 - title: Testing JavaScript Applications (feat. React and Redux)
   url: https://frontendmasters.com/courses/testing-javascript/
