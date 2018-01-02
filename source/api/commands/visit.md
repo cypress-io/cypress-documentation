@@ -73,7 +73,7 @@ cy.visit('/index.html', { timeout: 30000 })
 
 ```javascript
 cy.visit('http://localhost:3000/#dashboard', {
-  onBeforeLoad: function(contentWindow){
+  onBeforeLoad: (contentWindow) => {
     // contentWindow is the remote page's window object
   }
 })
@@ -94,7 +94,7 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 
 ```javascript
 cy.visit('http://localhost:3000/#/users', {
-  onLoad: function(contentWindow){
+  onLoad: (contentWindow) => {
     // contentWindow is the remote page's window object
     if (contentWindow.angular) {
       // do something
@@ -161,7 +161,7 @@ cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 ***Visit will always yield the remote page's window object when it resolves***
 
 ```javascript
-cy.visit('index.html').then(function(contentWindow)){
+cy.visit('index.html').then((contentWindow) => {
   // contentWindow is the remote page's window object
 })
 ```
@@ -215,7 +215,7 @@ Cypress will automatically apply the server and routes to the very next `cy.visi
 ***Visit example application in a `beforeEach`***
 
 ```javascript
-beforeEach(function(){
+beforeEach(function () {
   cy.visit('https://example.cypress.io/commands/viewport')
 })
 ```

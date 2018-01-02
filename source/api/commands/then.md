@@ -59,7 +59,7 @@ We have several more examples in our {% url 'Core Concepts Guide' variables-and-
 
 ```javascript
 cy.get('button').then(($btn) => {
-  var cls = $btn.class()
+  const cls = $btn.class()
 
   cy.wrap($btn).click().should('not.have.class', cls)
 })
@@ -70,7 +70,7 @@ cy.get('button').then(($btn) => {
 ***The subject is changed by returning***
 
 ```javascript
-cy.then(() => {
+cy.wrap(null).then(() => {
     return {id: 123}
   })
   .then((obj) =>{
@@ -102,7 +102,7 @@ Cypress waits for Promises to resolve before continuing
 
 ```javascript
 cy.get('button').click().then(($button) => {
-  var p = Q.defer()
+  const p = Q.defer()
 
   setTimeout(() => {
     p.resolve()
@@ -124,7 +124,7 @@ cy.get('button').click().then(($button) => {
 
 ```javascript
 cy.get('button').click().then(($button) => {
-  var df = $.Deferred()
+  const df = $.Deferred()
 
   setTimeout(() => {
     df.resolve()
@@ -156,7 +156,7 @@ cy.get('button').click().then(($button) => {
 
 # Command Log
 
-- `cy.then()` does *not* log in the command log
+- `.then()` does *not* log in the command log
 
 # See also
 

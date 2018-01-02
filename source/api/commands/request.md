@@ -102,7 +102,7 @@ You can also set options for `cy.request`'s `baseUrl` and `responseTimeout` glob
 `cy.request()` is great for talking to an external endpoint before your tests to seed a database.
 
 ```javascript
-beforeEach(function(){
+beforeEach(function () {
   cy.request('http://localhost:8080/db/seed')
 })
 ```
@@ -129,7 +129,7 @@ cy.request('DELETE', 'http://localhost:8888/users/827')
 
 ```javascript
 cy.request('POST', 'http://localhost:8888/users/admin', {name: 'Jane'})
-  .then(function(response){
+  .then((response) => {
     // response.body is automatically serialized into JSON
     expect(response.body).to.have.property('name', 'Jane') // true
 })
@@ -269,7 +269,7 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 ***Request comments endpoint and test response***
 
 ```javascript
-cy.request('https://jsonplaceholder.typicode.com/comments').then(function(response){
+cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
   expect(response.status).to.eq(200)
   expect(response.body).to.have.length(500)
   expect(response).to.have.property('headers')

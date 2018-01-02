@@ -52,8 +52,8 @@ You can change the directory where screenshots are saved in your {% url 'configu
 ***Take a screenshot***
 
 ```javascript
-describe('my tests', function(){
-  it('takes a screenshot', function(){
+describe('my tests', function () {
+  it('takes a screenshot', function () {
     cy.screenshot() // saved as 'cypress/sreenshots/my tests -- takes a screenshot.png'
   })
 })

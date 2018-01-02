@@ -120,7 +120,7 @@ cy.route('/activities/**', 'fixture:activities.json')
 
 ```javascript
 // Application Code
-$(function(){
+$(function () {
   $.get('/activities')
 
   // this will be sent back 404 since it
@@ -153,12 +153,12 @@ cy.wait('@getUser').its('responseHeaders')
 // Application Code
 
 // lets use the native XHR object
-var xhr = new XMLHttpRequest
+const xhr = new XMLHttpRequest
 
 xhr.open('GET', '/users/1')
 
-xhr.onload = function(){
-  var token = this.getResponseHeader('x-token')
+xhr.onload = function () {
+  const token = this.getResponseHeader('x-token')
   console.log(token) // => abc-123-foo-bar
 }
 
@@ -176,10 +176,10 @@ The idea is that we never want to interfere with static assets that are fetched 
 **The default whitelist function in Cypress is:**
 
 ```javascript
-var whitelist = function(xhr){
+const whitelist = (xhr) => {
   // this function receives the xhr object in question and
   // will whitelist if it's a GET that appears to be a static resource
-  xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
 }
 ```
 
@@ -187,7 +187,7 @@ var whitelist = function(xhr){
 
 ```javascript
 cy.server({
-  whitelist: function(xhr){
+  whitelist: (xhr) => {
     // specify your own function that should return
     // truthy if you want this xhr to be ignored,
     // not logged, and not stubbed.

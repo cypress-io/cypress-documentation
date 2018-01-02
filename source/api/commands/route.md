@@ -178,7 +178,7 @@ You can also use a function as a response which enables you to add logic surroun
 Functions that return a `Promise` will automatically be awaited.
 
 ```javascript
-var commentsResponse = (routeData) => {
+const commentsResponse = (routeData) => {
   //routeData is a reference to the current route's information
   return {
     data: someOtherFunction(routeData)

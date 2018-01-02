@@ -143,7 +143,7 @@ The callback function will be retried over and over again until no assertions wi
 cy
   .get('p')
   .should('not.be.empty')
-  .and(function($p){
+  .and(($p) => {
     // should have found 3 elements
     expect($p).to.have.length(3)
 
@@ -152,7 +152,7 @@ cy
 
     // use jquery's map to grab all of their classes
     // jquery's map returns a new jquery object
-    var classes = $p.map(function(i, el){
+    const classes = $p.map((i, el) => {
       return Cypress.$(el).attr('class')
     })
 
