@@ -396,6 +396,10 @@ No. This is definitely the motivation behind {% issue 448 "this open issue" %}, 
 
 You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
 
+## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
+
+To start the server, run the tests and then shutdown the server we recommend {% url "these NPM tools" continuous-integration#Helpers %}.
+
 ## {% fa fa-angle-right %} I found a bug! What do I do?
 
 - Search existing {% url "open issues" https://github.com/cypress-io/cypress/issues %}, it may already be reported!
