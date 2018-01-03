@@ -133,7 +133,7 @@ you clicked button <span id='num'>0</span> times
 // app code
 let count = 0
 
-$('button').on('click', function(){
+$('button').on('click', function () {
   $('#num').text(count += 1)
 })
 ```

@@ -386,12 +386,18 @@ There are a few ways.
 
 Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-plugin-cypress %}. It will set up all the globals you need for running Cypress, including browser globals and {% url "Mocha" https://mochajs.org/ %} globals.
 
-## When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
+## {% fa fa-angle-right %} When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
 This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
 
-## Is there an option to run Cypress with DevTools open? We want to track network and console issues.
+## {% fa fa-angle-right %} Is there an option to run Cypress with DevTools open? We want to track network and console issues.
 
 No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress headlessly with DevTools open.
 
 You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
+
+## {% fa fa-angle-right %} I found a bug! What do I do?
+
+- Search existing {% url "open issues" https://github.com/cypress-io/cypress/issues %}, it may already be reported!
+- Update Cypress. Your issue may have {% url "already been fixed" changelog %}.
+- {% open_an_issue %}. Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.

@@ -42,7 +42,7 @@ Option | Default | Description
 ***Get document and do some work***
 
 ```javascript
-cy.document().then(function(document) {
+cy.document().then((doc) => {
   // work with document element
 })
 ```
