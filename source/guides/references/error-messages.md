@@ -69,16 +69,16 @@ This message means you tried to execute one or more Cypress commands outside of 
 Typically this happens accidentally, like in the following situation.
 
 ```javascript
-describe('Some Tests', function(){
-  it('is true', function(){
+describe('Some Tests', function () {
+  it('is true', function () {
     expect(true).to.be.true   // yup, fine
   })
 
-  it('is false', function(){
+  it('is false', function () {
     expect(false).to.be.false // yup, also fine
   })
 
-  context('some nested tests', function(){
+  context('some nested tests', function () {
     // oops you forgot to write an it(...) here!
     // these cypress commands below
     // are running outside of a test and cypress
@@ -116,7 +116,7 @@ Let's take a look at an example below.
 ***Application JavaScript***
 
 ```javascript
-$('button').click(function() {
+$('button').click(() => {
   // when the <button> is clicked
   // we remove the button from the DOM
   $(this).remove()
@@ -221,7 +221,7 @@ Even though we return a string in our test, Cypress automatically figures out th
 
 ```javascript
 // This test passes!
-it('Cypress is smart and this does not fail', function(){
+it('Cypress is smart and this does not fail', function () {
   cy.get('body').children().should('not.contain', 'foo') // <- no return here
   return 'foobarbaz'    // <- return here
 })
@@ -231,9 +231,9 @@ The example below will fail because you've forcibly terminated the test early wi
 
 ```javascript
 // This test errors!
-it('but you can forcibly end the test early which does fail', function(done){
+it('but you can forcibly end the test early which does fail', function (done) {
   cy.get('body')
-    .then(function(){
+    .then(() => {
       done() // forcibly end test even though there are commands below
     })
     .children()
@@ -249,7 +249,7 @@ What's happening in this example is that because we have *NOT* told mocha this i
 describe('a complex example with async code', function() {
   it('you can cause commands to bleed into the next test', function() {
     // This test passes...but...
-    setTimeout(function() {
+    setTimeout(() => {
       cy.get('body').children().should('not.contain', 'foo')
     }, 10)
   })
@@ -264,9 +264,9 @@ describe('a complex example with async code', function() {
 The correct way to write the above test code is using Mocha's `done` to signify it is asynchronous.
 
 ```javascript
-it('does not cause commands to bleed into the next test', function(done) {
-  setTimeout(function(){
-    cy.get('body').children().should('not.contain', 'foo').then(function() {
+it('does not cause commands to bleed into the next test', function (done) {
+  setTimeout(() => {
+    cy.get('body').children().should('not.contain', 'foo').then(() => {
       done()
     })
   }, 10)
@@ -279,15 +279,15 @@ In the example below, we forget to return the `Promise` in our test. This means 
 This also causes the commands to be queued on the wrong test. We will get the error in the next test that Cypress detected it had commands in its command queue.
 
 ```javascript
-describe('another complex example using a forgotten "return"', function(){
-  it('forgets to return a promise', function(){
+describe('another complex example using a forgotten "return"', function () {
+  it('forgets to return a promise', function () {
     // This test passes...but...
-    Cypress.Promise.delay(10).then(function(){
+    Cypress.Promise.delay(10).then(() => {
       cy.get('body').children().should('not.contain', 'foo')
     })
   })
 
-  it('this test will fail due to the previous poorly written test', function(){
+  it('this test will fail due to the previous poorly written test', function () {
     // This test errors!
     cy.wait(10)
   })
@@ -297,8 +297,8 @@ describe('another complex example using a forgotten "return"', function(){
 The correct way to write the above test code would be to return our `Promise`:
 
 ```javascript
-it('does not forget to return a promise', function(){
-  return Cypress.Promise.delay(10).then(function(){
+it('does not forget to return a promise', function () {
+  return Cypress.Promise.delay(10).then(() => {
     return cy.get('body').children().should('not.contain', 'foo')
   })
 })

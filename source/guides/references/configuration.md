@@ -79,7 +79,7 @@ Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
-`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %} 
+`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
 
 ## Viewport
 
@@ -224,3 +224,23 @@ For instance given a URL: `https://google.com/search?q=cypress`
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
 {% img /img/guides/blacklist-host.png %}
+
+## IntelliSense
+
+When editing the `cypress.json` file, you can tell your text editor to use our schema file that describes each valid property. If the text editor supports this feature, it will display IntelliSense for each property, helping you along the way. For example, in [VSCode](https://code.visualstudio.com/) you can open Preferences / Settings / User Settings and add the `json.schemas` property.
+
+```json
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "cypress.json"
+      ],
+      "url": "https://on.cypress.io/cypress.schema.json"
+    }
+  ]
+}
+```
+
+Open `cypress.json` and hover over a setting - you should see IntelliSense popup like this one.
+![cypress.json IntelliSense popup in VSCode](/img/faq/questions/cypress-json-intellisense.png)

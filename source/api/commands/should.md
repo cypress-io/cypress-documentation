@@ -154,7 +154,7 @@ cy
 
     // use jquery's map to grab all of their classes
     // jquery's map returns a new jquery object
-    var classes = $p.map(function(i, el){
+    const classes = $p.map((i, el) => {
       return Cypress.$(el).attr('class')
     })
 

@@ -55,7 +55,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-{% yields changes_dom_subject .eq %}
+{% yields changes_dom_subject_or_subjects .eq %}
 
 # Examples
 

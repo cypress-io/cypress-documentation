@@ -36,15 +36,15 @@ cy.Blob.method()  // Errors, cannot be chained off 'cy'
 ```javascript
 // programmatically upload the logo
 cy.fixture("images/logo.png").as("logo")
-cy.get("input[type=file]").then(function($input){
+cy.get("input[type=file]").then(($input) => {
 
   // convert the logo base64 string to a blob
-  return Cypress.Blob.base64StringToBlob(this.logo, "image/png").then(function(blob){
+  return Cypress.Blob.base64StringToBlob(this.logo, "image/png").then((blob) => {
 
     // pass the blob to the fileupload jQuery plugin
     // used in your application's code
     // which initiates a programmatic upload
-    $input.fileupload("add", {files: blob})
+    $input.fileupload("add", { files: blob })
   })
 })
 ```
@@ -54,10 +54,10 @@ cy.get("input[type=file]").then(function($input){
 **create an `img` element and set its `src` to the `dataUrl`**
 
 ```javascript
-return Cypress.Blob.imgSrcToDataURL("/assets/img/logo.png").then(function(dataUrl){
-  var img = Cypress.$("<img />", {src: dataUrl})
+return Cypress.Blob.imgSrcToDataURL("/assets/img/logo.png").then((dataUrl) => {
+  const img = Cypress.$("<img />", { src: dataUrl })
 
-  cy.get(".utility-blob").then(function($div){
+  cy.get(".utility-blob").then(($div) => {
     // append the image
     $div.append(img)
   })

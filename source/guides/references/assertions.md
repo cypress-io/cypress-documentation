@@ -67,7 +67,7 @@ These chainers are available for BDD assertions (`expect`/`should`). You can see
 | throws( *constructor* ) | `expect(fn).throws(ReferenceError, /bad function/)` |
 | respondTo( *method* ) | `expect(obj).to.respondTo('getName')` |
 | itself | `expect(Foo).itself.to.respondTo('bar')` |
-| satisfy( *method* ) | `expect(1).to.satisfy(function(num) { return num > 0; })` |
+| satisfy( *method* ) | `expect(1).to.satisfy((num) => { return num > 0 })` |
 | closeTo( *expected*, *delta*) | `expect(1.5).to.be.closeTo(1, 0.5)` |
 | members( *set* ) | `expect([1, 2, 3]).to.include.members([3, 2])` |
 | change( *function* )  | `expect(fn).to.change(obj, 'val')` |
@@ -114,7 +114,7 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 | .notExists(*value*, *[message]*) | `assert.notExists(null, 'value is null or undefined')` |
 | .isUndefined(*value*, *[message]*) | `assert.isUndefined(undefined, 'value is undefined')` |
 | .isDefined(*value*, *[message]*) | `assert.isDefined('hello', 'value has been defined')` |
-| .isFunction(*value*, *[message]*) | `assert.isFunction(function test() { return 'pass'; }, 'value is function')` |
+| .isFunction(*value*, *[message]*) | `assert.isFunction(function test() { return 'pass' }, 'value is function')` |
 | .isNotFunction(*value*, *[message]*) | `assert.isNotFunction(5, 'value is not a function')` |
 | .isObject(*value*, *[message]*) | `assert.isObject({num: 5}, 'value is object')` |
 | .isNotObject(*value*, *[message]*) | `assert.isNotObject(3, 'value is not object')` |

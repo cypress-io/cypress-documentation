@@ -57,7 +57,7 @@ cy.contains('Login').click()
 cy.url().should('include', 'profile')
 cy.getCookies()
   .should('have.length', 1)
-  .then(function(cookies) {
+  .then((cookies) => {
     expect(cookies[0]).to.have.property('name', 'session_id')
   })
 ```
@@ -79,7 +79,7 @@ cy.getCookies()
 # Command Log
 
 ```javascript
-cy.getCookies().should('have.length', 1).then(function(cookies) {
+cy.getCookies().should('have.length', 1).then((cookies) => {
   expect(cookies[0]).to.have.property('name', 'fakeCookie1')
   expect(cookies[0]).to.have.property('value', '123ABC')
   expect(cookies[0]).to.have.property('domain')

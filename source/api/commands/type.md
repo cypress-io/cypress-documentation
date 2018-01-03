@@ -305,7 +305,7 @@ Cypress respects all default browser behavior when events are cancelled.
 ```javascript
 // prevent the characters from being inserted
 // by canceling keydown, keypress, or textInput
-$('#username').on('keydown', function(e){
+$('#username').on('keydown', (e) => {
   e.preventDefault();
 })
 
@@ -346,7 +346,7 @@ Modifiers are simulated by setting their corresponding values to `true` for key 
 
 ```javascript
 // app code
-document.querySelector('input:first').addEventListener('keydown', function (e) {
+document.querySelector('input:first').addEventListener('keydown', (e) => {
   // e.shiftKey will be true
 })
 

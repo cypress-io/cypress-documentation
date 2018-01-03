@@ -43,7 +43,7 @@ Option | Default | Description
 
 ```javascript
 cy.visit('http://localhost:8080/app')
-cy.window().then(function(win){
+cy.window().then((win) => {
   // win is the remote window
   // of the page at: http://localhost:8080/app
 })

@@ -36,7 +36,7 @@ Option | Default | Description
 ```javascript
 Cypress.Commands.add('myCustomCommand', (arg1, arg2) => {
   const log = Cypress.log({
-    consoleProps: function() {
+    consoleProps: () => {
       // return an object literal which will
       // be printed to the dev tools console
       // on click

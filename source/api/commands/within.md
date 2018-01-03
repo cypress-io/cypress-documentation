@@ -16,14 +16,14 @@ Scopes all subsequent cy commands to within this element. Useful when working wi
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('.list').within(function(list) {}) // Yield the `.list` and scope all commands within it
+cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all commands within it
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.within(function() {})              // Errors, cannot be chained off 'cy'
-cy.getCookies().within(function() {}) // Errors, 'getCookies' does not yield DOM element
+cy.within(() => {})              // Errors, cannot be chained off 'cy'
+cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM element
 ```
 
 ## Arguments
