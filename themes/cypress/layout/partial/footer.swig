@@ -103,7 +103,10 @@
     </div>
     <div class="bottom">
       <p id="footer-copyright">
-        &copy; {{ moment(Date.now()).year() }} {{ config.author }}
+        <script type="text/javascript">
+        document.write("&copy " + new Date().getFullYear() + " Cypress.io");
+      </script>
+      <noscript>&copy; {{ moment(Date.now()).year() }} {{ config.author }}</noscript>
       </p>
     </div>
   </div>
