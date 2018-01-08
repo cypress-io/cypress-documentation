@@ -66,7 +66,7 @@
     "gulp-rev-all": "^0.9.7",
     "human-interval": "^0.1.6",
     "husky": "0.14.3",
-    "inquirer": "^4.0.0",
+    "inquirer": "^5.0.0",
     "minimist": "^1.2.0",
     "mocha": "^4.0.1",
     "nock": "^9.0.13",
