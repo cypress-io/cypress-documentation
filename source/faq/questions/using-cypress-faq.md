@@ -396,6 +396,12 @@ No. This is definitely the motivation behind {% issue 448 "this open issue" %}, 
 
 You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
 
+## {% fa fa-angle-right %} Can I test my Electron app?
+
+Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + node.
+
+That being said, we use Cypress to test our own Desktop app's front end - by stubbing events from Electron. These tests are open source so you can check them out {% url "here" https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui/cypress/integration %}.
+
 ## {% fa fa-angle-right %} I found a bug! What do I do?
 
 - Search existing {% url "open issues" https://github.com/cypress-io/cypress/issues %}, it may already be reported!
