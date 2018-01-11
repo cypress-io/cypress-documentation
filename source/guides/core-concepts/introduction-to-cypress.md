@@ -255,7 +255,7 @@ Cypress provides a simple but powerful algorithm when {% url " interacting with 
 Assertions let you do things like ensuring an element is visible or has a particular attribute, CSS class, or state. Assertions are just commands that enable you to describe the *desired* state of your application. Cypress will automatically wait until your elements reach this state, or fail the test if the assertions don't pass.  Here's a quick look at assertions in action:
 
 ```js
-cy.get(':checkbox').should('be.disabled')
+cy.get('input[type="checkbox"]').should('be.disabled')
 
 cy.get('form').should('have.class', 'form-horizontal')
 
