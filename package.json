@@ -61,7 +61,7 @@
     "got": "^8.0.0",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.0",
-    "gulp-clean": "^0.3.2",
+    "gulp-clean": "^0.4.0",
     "gulp-debug": "^3.1.0",
     "gulp-rev-all": "^0.9.7",
     "human-interval": "^0.1.6",
