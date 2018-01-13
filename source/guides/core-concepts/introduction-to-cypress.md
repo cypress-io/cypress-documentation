@@ -796,7 +796,7 @@ expect(true).to.be.true
 ```
 
 {% note info Did you know you can write Unit Tests in Cypress? %}
-Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes %}
+Check out our example recipes for {% url 'unit testing and unit testing React components' recipes %}.
 {% endnote %}
 
 Explicit assertions are great when you want to:
