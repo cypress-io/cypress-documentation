@@ -716,7 +716,7 @@ By adding {% url "`.should('not.exist')`" should %} to any DOM command, Cypress 
 
 Other commands have other default assertions not related to the DOM.
 
-For instance {% url `.its()` its %} requires that the property you're asking about exists on the object.
+For instance, {% url `.its()` its %} requires that the property you're asking about exists on the object.
 
 ```js
 // create an empty object
