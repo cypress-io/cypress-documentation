@@ -112,7 +112,7 @@ Oftentimes either the `<i>` or `<span>` element is covering the exact coordinate
 
 ## Scrolling
 
-Before interacting with an element we will *always* scroll it into view (including any of its parent containers). Even if the element was visible without scrolling, we perform the scrolling algorithm in order to reproduce the same behavior every time the command is run.
+Before interacting with an element, we will *always* scroll it into view (including any of its parent containers). Even if the element was visible without scrolling, we perform the scrolling algorithm in order to reproduce the same behavior every time the command is run.
 
 {% note info %}
 This scrolling logic only applies to {% urlHash "commands that are actionable above" Actionability %}. **We do not scroll elements** into view when using DOM commands such as {% url "`cy.get()`" get %} or {% url "`.find()`" find %}.
