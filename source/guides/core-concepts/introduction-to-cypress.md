@@ -473,7 +473,7 @@ it('changes the URL when "awesome" is clicked', function() {
 
 Big difference! In addition to reading much cleaner, Cypress does more than this, because **Promises themselves have no concepts of retry-ability**.
 
-Without **retry-ability**, assertions would randomly fail. This would lead to flaky inconsistent results. This is also why we cannot use new JS features like `async / await`.
+Without **retry-ability**, assertions would randomly fail. This would lead to flaky, inconsistent results. This is also why we cannot use new JS features like `async / await`.
 
 Cypress cannot yield you primitive values isolated away from other commands. That is because Cypress commands act internally like an asynchronous stream of data that only resolve after being affected and modified **by other commands**. This means we cannot yield you discrete values in chunks because we have to know everything about what you expect before handing off a value.
 
@@ -694,7 +694,7 @@ Cypress will automatically *wait* for elements to pass their default assertions.
 
 ***Example #2: Reversing the Default Assertion***
 
-Most of the time, when querying for elements you expect them to eventually exist. But sometimes you wish to wait until they *don't* exist.
+Most of the time, when querying for elements, you expect them to eventually exist. But sometimes you wish to wait until they *don't* exist.
 
 All you have to do is add that assertion and Cypress will **reverse** its rules waiting for elements to exist.
 
