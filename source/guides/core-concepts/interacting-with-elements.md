@@ -132,7 +132,7 @@ After we verify the element is actionable, Cypress will then fire all of the app
 cy.get('button').click({ position: 'topLeft' })
 ```
 
-The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner %}.
+The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner#Command-Log %}.
 
 ![event coordinates](/img/guides/coords.png)
 
