@@ -199,7 +199,7 @@ We will NOT perform these:
 - Ensure it is visible
 - Ensure it is not readonly
 - Ensure it is not disabled
-- Ensure it is not animation
+- Ensure it is not animating
 - Ensure it is not covered
 - Fire the event at a descendent
 
