@@ -88,7 +88,7 @@ Cypress.env("some") // "value"
 
 ## Option #2: `cypress.env.json`
 
-You can create your own `cypress.env.json` file that Cypress will automatically check. Values in here will overwrite conflicting values in `cypress.json`.
+You can create your own `cypress.env.json` file that Cypress will automatically check. Values in here will overwrite conflicting environment variables in `cypress.json`.
 
 This strategy is useful because if you add `cypress.env.json` to your `.gitignore` file, the values in here can be different for each developer machine.
 
