@@ -147,7 +147,7 @@ Yes. {% url "You can override this with `userAgent` in `cypress.json`." configur
 
 ## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
-Yes. {% url "You can set this with `blacklistHost` in `cypress.json`." configuration#Browser %}
+Yes. {% url "You can set this with `blacklistHosts` in `cypress.json`." configuration#Browser %}
 
 Also, check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
 
@@ -395,6 +395,10 @@ This is normal. Cypress modifies the traffic between your server and the browser
 No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress headlessly with DevTools open.
 
 You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
+
+## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
+
+To start the server, run the tests and then shutdown the server we recommend {% url "these NPM tools" continuous-integration#Helpers %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
