@@ -1,8 +1,24 @@
+- title: "Learn TDD in Vue"
+  url: http://learntdd.in/vue/
+  sourceName: Learn TDD
+  sourceUrl: http://learntdd.in
+  date: Jan 13, 2018
+  author: Josh Justice
+  img: /img/examples/learn-tdd-in-vue.png
+
+- title: "Learn TDD in React"
+  url: http://learntdd.in/react/
+  sourceName: Learn TDD
+  sourceUrl: http://learntdd.in
+  date: Jan 12, 2018
+  author: Josh Justice
+  img: /img/examples/learn-tdd-in-react.png
+
 - title: "Gearing up for Assert(js) - an interview with JavaScript testing experts"
   url: https://www.okgrow.com/posts/assertjs-hashbang-panel
   sourceName: OK GROW!
   sourceUrl: https://www.okgrow.com/posts
-  date: Dev 14, 2017
+  date: Dec 14, 2017
   author: Paul Dowman
   img: /img/examples/hashbang-assert-js-cypress-team.jpg
 
@@ -10,7 +26,7 @@
   url: https://medium.com/bratislava-angular/up-and-running-with-cypress-and-typescript-5b9065eedbd3
   sourceName: Bratislava Angular
   sourceUrl: https://medium.com/bratislava-angular
-  date: Dev 2, 2017
+  date: Dec 2, 2017
   author: Martin Jakubík
   img: /img/examples/cypress-typescript-blog.jpg
 

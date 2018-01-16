@@ -24,7 +24,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 - {% url `.select()` select %}
 - {% url `.trigger()` trigger %}
 
-These commands simulate a user interacting with your application. Under the hood Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
+These commands simulate a user interacting with your application. Under the hood, Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
 
 Prior to issuing any of the commands, we check the current state of the DOM and take some actions to ensure the DOM element is "ready" to receive the action.
 
@@ -112,7 +112,7 @@ Oftentimes either the `<i>` or `<span>` element is covering the exact coordinate
 
 ## Scrolling
 
-Before interacting with an element we will *always* scroll it into view (including any of its parent containers). Even if the element was visible without scrolling, we perform the scrolling algorithm in order to reproduce the same behavior every time the command is run.
+Before interacting with an element, we will *always* scroll it into view (including any of its parent containers). Even if the element was visible without scrolling, we perform the scrolling algorithm in order to reproduce the same behavior every time the command is run.
 
 {% note info %}
 This scrolling logic only applies to {% urlHash "commands that are actionable above" Actionability %}. **We do not scroll elements** into view when using DOM commands such as {% url "`cy.get()`" get %} or {% url "`.find()`" find %}.
@@ -132,7 +132,7 @@ After we verify the element is actionable, Cypress will then fire all of the app
 cy.get('button').click({ position: 'topLeft' })
 ```
 
-The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner %}.
+The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner#Command-Log %}.
 
 ![event coordinates](/img/guides/coords.png)
 
@@ -160,7 +160,7 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0` you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
+As of `0.20.0`, you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command
@@ -199,7 +199,7 @@ We will NOT perform these:
 - Ensure it is visible
 - Ensure it is not readonly
 - Ensure it is not disabled
-- Ensure it is not animation
+- Ensure it is not animating
 - Ensure it is not covered
 - Fire the event at a descendent
 

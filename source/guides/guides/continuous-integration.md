@@ -30,11 +30,13 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "Jenkins" https://jenkins.io/ %} (Linux)
 - {% url "TravisCI" https://travis-ci.org/ %}
 - {% url "CircleCI" https://circleci.com %}
-- {% url "CodeShip" https://codeship.com/ %}
+- {% url "CodeShip" https://codeship.com/ %} {% issue 328 "Issue with cy.exec()" %}
 - {% url "GitLab" https://gitlab.com/ %}
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
 - {% url "Semaphore" https://semaphoreci.com/ %}
+- {% url "Concourse" https://concourse.ci/ %}
+- {% url "Solano" https://www.solanolabs.com/ %}
 - {% url "Docker" https://www.docker.com/ %}
 
 # Setting Up CI

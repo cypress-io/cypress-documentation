@@ -209,7 +209,7 @@ At first, we'll use them to make it easy to share objects between your hooks and
 
 ## Sharing Context
 
-Sharing context is simplest way to use aliases.
+Sharing context is the simplest way to use aliases.
 
 To alias something you'd like to share - you use the command called: {% url `.as()` as %}.
 
