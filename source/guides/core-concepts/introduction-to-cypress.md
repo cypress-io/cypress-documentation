@@ -815,14 +815,14 @@ Doing so enables you to **block** and **guard** Cypress by ensuring the state of
 ```javascript
 cy
   .get("p")
-  .should(($p) =>{
+  .should(($p) => {
     // massage our subject from a DOM element
     // into an array of texts from all of the p's
     let texts = $p.map((i, el) => {
       return Cypress.$(el).text()
     })
 
-    // jquery map returns jquery object
+    // jQuery map returns jQuery object
     // and .get() converts this to a simple array
     texts = texts.get()
 
