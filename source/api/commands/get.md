@@ -23,7 +23,7 @@ cy.get(alias, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('.list>li')    // Yield the <li>'s in <.list>
+cy.get('.list > li')    // Yield the <li>'s in .list
 ```
 
 ## Arguments
