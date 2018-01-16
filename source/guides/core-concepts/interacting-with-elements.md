@@ -24,7 +24,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 - {% url `.select()` select %}
 - {% url `.trigger()` trigger %}
 
-These commands simulate a user interacting with your application. Under the hood Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
+These commands simulate a user interacting with your application. Under the hood, Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
 
 Prior to issuing any of the commands, we check the current state of the DOM and take some actions to ensure the DOM element is "ready" to receive the action.
 
