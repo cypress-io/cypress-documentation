@@ -136,7 +136,7 @@ Check them out in {% url "Configuration" configuration %}!
 
 # Testing Strategies
 
-You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advise to give you.
+You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advice to give you.
 
 **What to test, where the edge cases and seams are, what regressions you're likely to run into, etc. are entirely up to you, your application, and your team.**
 

@@ -30,11 +30,13 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "Jenkins" https://jenkins.io/ %} (Linux)
 - {% url "TravisCI" https://travis-ci.org/ %}
 - {% url "CircleCI" https://circleci.com %}
-- {% url "CodeShip" https://codeship.com/ %}
+- {% url "CodeShip" https://codeship.com/ %} {% issue 328 "Issue with cy.exec()" %}
 - {% url "GitLab" https://gitlab.com/ %}
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
 - {% url "Semaphore" https://semaphoreci.com/ %}
+- {% url "Concourse" https://concourse.ci/ %}
+- {% url "Solano" https://www.solanolabs.com/ %}
 - {% url "Docker" https://www.docker.com/ %}
 
 # Setting Up CI
@@ -218,6 +220,48 @@ Most CI providers will automatically kill background processes so you don't have
 
 However, if you're running this script locally you'll have to do a bit more work to collect the backgrounded PID and then kill it after `cypress run`.
 {% endnote %}
+
+### Helpers
+
+There are two little utilities we recommend to start the server, run the tests and then shutdown the server. The first is {% url npm-run-all https://github.com/mysticatea/npm-run-all %}.
+
+```shell
+npm install --save-dev npm-run-all
+```
+
+Set the test script command in your package file to use {% url run-p https://github.com/mysticatea/npm-run-all/blob/master/docs/run-p.md %} command.
+
+```json
+{
+  "scripts": {
+    "start": "my-server",
+    "cy:run": "cypress run",
+    "test": "run-p --race start cy:run"
+  }
+}
+```
+
+From your terminal and on CI now simply run `npm test` and the server will be closed after the tests finish.
+
+If the server takes a very long time to start and Cypress times out at first, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
+
+```shell
+npm install --save-dev start-server-and-test
+```
+
+Pass the boot server command, url to check when server is ready, and the Cypress test command.
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3030 cy:run"
+  }
+}
+```
+
+The `cy:run` command will only be executed when the URL `http://localhost:3030` responds with HTTP status code 200. The server will be shut down when the tests complete.
 
 ## Module API
 
