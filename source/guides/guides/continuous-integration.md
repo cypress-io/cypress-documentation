@@ -221,26 +221,6 @@ However, if you're running this script locally you'll have to do a bit more work
 
 ### Helpers
 
-There are two little utilities we recommend to start the server, run the tests and then shutdown the server. The first is {% url npm-run-all https://github.com/mysticatea/npm-run-all %}.
-
-```shell
-npm install --save-dev npm-run-all
-```
-
-Set the test script command in your package file to use {% url run-p https://github.com/mysticatea/npm-run-all/blob/master/docs/run-p.md %} command.
-
-```json
-{
-  "scripts": {
-    "start": "my-server",
-    "cy:run": "cypress run",
-    "test": "run-p --race start cy:run"
-  }
-}
-```
-
-From your terminal and on CI now simply run `npm test` and the server will be closed after the tests finish.
-
 If the server takes a very long time to start and Cypress times out at first, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
 
 ```shell
