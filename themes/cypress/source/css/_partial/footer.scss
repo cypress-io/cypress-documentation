@@ -8,7 +8,7 @@ footer.wrapper {
   input.form-control {
     background-color: #fff;
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 0 12px;
     height: 36px;
     font-size: 1em;
     margin-bottom: 10px;
@@ -53,7 +53,7 @@ footer.wrapper {
     color: #fff;
     display: flex;
     flex-direction: row;
-
+    width: 100%;
     .footer-nav {
       flex: 1 0 0;
 

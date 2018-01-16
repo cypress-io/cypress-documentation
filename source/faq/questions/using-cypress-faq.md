@@ -147,7 +147,7 @@ Yes. {% url "You can override this with `userAgent` in `cypress.json`." configur
 
 ## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
-Yes. {% url "You can set this with `blacklistHost` in `cypress.json`." configuration#Browser %}
+Yes. {% url "You can set this with `blacklistHosts` in `cypress.json`." configuration#Browser %}
 
 Also, check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
 
@@ -399,6 +399,12 @@ You may try running the tests locally and {% url "select the Electron browser" l
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
 To start the server, run the tests and then shutdown the server we recommend {% url "these NPM tools" continuous-integration#Helpers %}.
+
+## {% fa fa-angle-right %} Can I test my Electron app?
+
+Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + node.
+
+That being said, we use Cypress to test our own Desktop app's front end - by stubbing events from Electron. These tests are open source so you can check them out {% url "here" https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui/cypress/integration %}.
 
 ## {% fa fa-angle-right %} I found a bug! What do I do?
 
