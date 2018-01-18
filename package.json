@@ -68,7 +68,7 @@
     "husky": "0.14.3",
     "inquirer": "^5.0.0",
     "minimist": "^1.2.0",
-    "mocha": "^4.0.1",
+    "mocha": "^5.0.0",
     "nock": "^9.0.13",
     "npm-run-all": "^4.0.2",
     "pluralize": "^7.0.0",
