@@ -159,7 +159,7 @@ Check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics
 
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
-{% url "We've answered this question in detail here." trade-offs#Multiple-browsers %}
+{% url "We've answered this question in detail here." trade-offs#Multiple-browsers-open-at-the-same-time %}
 
 ## {% fa fa-angle-right %} Can I test a chrome extension? How do I load my chrome extension?
 
