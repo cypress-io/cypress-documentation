@@ -98,4 +98,5 @@ When clicking on `first` within the command log, the console outputs the followi
 
 # See also
 
+- {% url `.eq()` eq %}
 - {% url `.last()` last %}
