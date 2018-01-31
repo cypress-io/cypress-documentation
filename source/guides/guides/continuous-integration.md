@@ -82,6 +82,26 @@ test:
     - $(npm bin)/cypress run --record
 ```
 
+***Example `circle.yml` v2 config file***
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:6
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - run: npm install
+      - run: $(npm bin)/cypress run --record
+```
+
+Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
+
 ## Docker
 
 We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
