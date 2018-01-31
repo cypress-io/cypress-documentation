@@ -223,7 +223,7 @@ However, if you're running this script locally you'll have to do a bit more work
 
 ### Helpers
 
-If the server takes a very long time to start and Cypress times out at first, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
+If the server takes a very long time to start, and Cypress times out while loading the page, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
 
 ```shell
 npm install --save-dev start-server-and-test
