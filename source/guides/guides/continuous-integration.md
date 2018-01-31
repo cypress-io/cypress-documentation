@@ -48,18 +48,38 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 ***Example `.travis.yml` config file***
 
 ```yaml
+language: node_js
+node_js:
+  - 6
+cache:
+  directories:
+    - ~/.npm
+    - node_modules
+install:
+  - npm install
 script:
-  - cypress run --record
+  - $(npm bin)/cypress run --record
 ```
+
+Caching folders with NPM modules saves a lot of time after the first build.
 
 ## CircleCI
 
-***Example `circle.yml` config file***
+***Example `circle.yml` v1 config file***
 
 ```yaml
+machine:
+  node:
+    version: 6
+dependencies:
+  cache_directories:
+    - ~/.npm
+    - node_modules
+  pre:
+    - npm install
 test:
   override:
-    - cypress run --record
+    - $(npm bin)/cypress run --record
 ```
 
 ## Docker
