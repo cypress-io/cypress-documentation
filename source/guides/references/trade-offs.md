@@ -15,7 +15,7 @@ While at first it may seem like these are strict limitations in Cypress - we thi
 - Cypress is not a general purpose {% urlHash "automation tool" Automation-restrictions %}.
 - Cypress commands run {% urlHash "inside of a browser" Inside-the-browser %}.
 - There will never be support for {% urlHash "multiple browser tabs" Multiple-tabs %}.
-- You cannot use Cypress to drive {% urlHash "two browsers at the same time" Multiple-browsers %}.
+- You cannot use Cypress to drive {% urlHash "two browsers at the same time" Multiple-browsers-open-at-the-same-time %}.
 - Each test is bound to a {% urlHash "single origin" Same-origin %}.
 
 ***Temporary trade-offs:***
@@ -81,27 +81,21 @@ cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank') // so simple
 
 This principle applies to everything in Cypress. Do not test what does not need testing. It is slow, brittle, and adds zero value. Only test the underlying thing that causes the behavior you care about testing.
 
-## Multiple browsers
+## Multiple browsers open at the same time
 
-Just like with multiple tabs - Cypress will never support controlling more than 1 browser at a time.
+Just like with multiple tabs - Cypress does not support controlling more than 1 open browser at a time.
 
-However it **is possible** to use Cypress to synchronize it with another backend process - whether it is Selenium or Puppeteer to drive a 2nd browser. We have actually seen this work together quite nicely!
+However it **is possible** to synchronize Cypress with another backend process - whether it is Selenium or Puppeteer to drive a 2nd open browser. We have actually seen this work together quite nicely!
 
-With that said, except in the most unusual and rare circumstances, we do not believe in ever needing to use two browsers at the same time.
+With that said, except in the most unusual and rare circumstances, you can still test most application behavior without opening multiple browsers at the same time.
 
-Trying to do this is not scalable, it is slow, and completely unnecessary.
-
-In virtually every situation where someone asks about this functionality they will ask the question like this:
+You may ask about this functionality like this:
 
 > I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
 Whether you are testing a chat application or anything else - what you are really asking about is testing collaboration. But, **you don't need to recreate the entire environment in order to test collaboration with 100% coverage**.
 
-Doing it this way will be faster, more accurate, and much more scalable.
-
-Trying to spin up the entire environment is a race to the bottom. Imagine when you want to test the collaboration of 3 users, then 4 users, then 5 users. Perhaps you then want to test how your backend handles the load of dozens, hundreds, or maybe thousands of users. Would you spin up a browser to simulate the environment for each one of them?
-
-No - because you can still test all of these scenarios without involving more than 1 browser.
+Doing it this way can be faster, more accurate, and more scalable.
 
 While outside the scope of this article, you could test a chat application using the following principles. Each one will incrementally introduce more collaboration:
 
@@ -115,7 +109,7 @@ While outside the scope of this article, you could test a chat application using
 
 Avoid the server, invoke your JavaScript callbacks manually thereby simulating what happens when "notifications come in", or "users leave the chat" purely in the browser.
 
-You can easily {% url "stub" stub %} everything and simulate every single scenario. Chat messages, offline messages, connections, reconnections, disconnections, group chat, etc.  Everything that happens inside of the browser can be fully tested. Requests leaving the browser could also be stubbed and you could simply assert that the request bodies were correct.
+You can {% url "stub" stub %} everything and simulate every single scenario. Chat messages, offline messages, connections, reconnections, disconnections, group chat, etc.  Everything that happens inside of the browser can be fully tested. Requests leaving the browser could also be stubbed and you could assert that the request bodies were correct.
 
 ***2. Stub the other connection:***
 
@@ -129,7 +123,7 @@ server &leftarrow; browser
 server &rightarrow; browser
 ```
 
-Use your server to receive messages from the browser, and simply simulate "the other participant" by sending messages as that participant. This is certainly application specific, but generally you could insert records into the database or do whatever it takes for your server to act as if a message of one client needs to be sent back to the browser.
+Use your server to receive messages from the browser, and simulate "the other participant" by sending messages as that participant. This is certainly application specific, but generally you could insert records into the database or do whatever it takes for your server to act as if a message of one client needs to be sent back to the browser.
 
 Typically this pattern enables you to avoid making a secondary WebSocket connection and yet still fulfills the bidirectional browser and server contract. This means you could also test edge cases (disconnections, etc) without actually handling real connections.
 
@@ -147,7 +141,7 @@ server &leftarrow; other connection
 server &rightarrow; browser
 ```
 
-To do this - you  need a background process outside of the browser to make the underlying WebSocket connection that you can then communicate with and control.
+To do this - you would need a background process outside of the browser to make the underlying WebSocket connection that you can then communicate with and control.
 
 You can do this in many ways and here is a simple example of using an HTTP server to act as the client and exposing a REST interface that enables us to control it.
 
@@ -203,7 +197,7 @@ app.get('/disconnect', (req, res) => {
 app.listen(8081, () => {})
 ```
 
-This avoids ever needing a 2nd browser, but still gives you an e2e test that provides 100% confidence that two clients can communicate with each other.
+This avoids ever needing a second open browser, but still gives you an end-to-end test that provides 100% confidence that the two clients can communicate with each other.
 
 ## Same-origin
 
