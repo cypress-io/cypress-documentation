@@ -103,7 +103,7 @@
     "lazy-ass": "^1.6.0",
     "lodash": "4.17.4",
     "lunr": "2.1.5",
-    "menuspy": "1.2.1",
+    "menuspy": "1.3.0",
     "scrollingelement": "1.5.2"
   }
 }
