@@ -28,7 +28,7 @@ Cypress.dom.isHidden(element)
 Cypress internally uses this method *everywhere* to figure out whether an element is hidden, {% url "mostly for actionability" interacting-with-elements %}.
 
 ```javascript
-const $el = $("#modal")
-
-Cypress.dom.isHidden($el) // => false
+cy.get('p').then(($el) => {
+  Cypress.dom.isHidden($el) // false
+})
 ```
