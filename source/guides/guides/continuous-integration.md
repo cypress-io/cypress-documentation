@@ -48,19 +48,59 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 ***Example `.travis.yml` config file***
 
 ```yaml
+language: node_js
+node_js:
+  - 6
+cache:
+  directories:
+    - ~/.npm
+    - node_modules
+install:
+  - npm install
 script:
-  - cypress run --record
+  - $(npm bin)/cypress run --record
 ```
+
+Caching folders with NPM modules saves a lot of time after the first build.
 
 ## CircleCI
 
-***Example `circle.yml` config file***
+***Example `circle.yml` v1 config file***
 
 ```yaml
+machine:
+  node:
+    version: 6
+dependencies:
+  cache_directories:
+    - ~/.npm
+    - node_modules
+  pre:
+    - npm install
 test:
   override:
-    - cypress run --record
+    - $(npm bin)/cypress run --record
 ```
+
+***Example `circle.yml` v2 config file***
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:6
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - run: npm install
+      - run: $(npm bin)/cypress run --record
+```
+
+Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
 
 ## Docker
 
@@ -223,27 +263,7 @@ However, if you're running this script locally you'll have to do a bit more work
 
 ### Helpers
 
-There are two little utilities we recommend to start the server, run the tests and then shutdown the server. The first is {% url npm-run-all https://github.com/mysticatea/npm-run-all %}.
-
-```shell
-npm install --save-dev npm-run-all
-```
-
-Set the test script command in your package file to use {% url run-p https://github.com/mysticatea/npm-run-all/blob/master/docs/run-p.md %} command.
-
-```json
-{
-  "scripts": {
-    "start": "my-server",
-    "cy:run": "cypress run",
-    "test": "run-p --race start cy:run"
-  }
-}
-```
-
-From your terminal and on CI now simply run `npm test` and the server will be closed after the tests finish.
-
-If the server takes a very long time to start and Cypress times out at first, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
+If the server takes a very long time to start, and Cypress times out while loading the page, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
 
 ```shell
 npm install --save-dev start-server-and-test
