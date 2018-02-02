@@ -1,3 +1,11 @@
+- title: "Getting started with Cypress.io… to ditch Selenium once and for all"
+  url: https://gorrion.io/blog/getting-started-with-cypress-io/
+  sourceName: Gorrion
+  sourceUrl: https://gorrion.io/blog/
+  date: Jan 26, 2018
+  author: Łukasz Wroński
+  img: /img/examples/getting-started-with-cypress-gorrion.jpg
+
 - title: "Learn TDD in Vue"
   url: http://learntdd.in/vue/
   sourceName: Learn TDD
