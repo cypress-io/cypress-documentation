@@ -1,3 +1,11 @@
+- title: "A newbie’s toe dip into JS based Test automation using Cypress.io"
+  url: https://thereluctanttester.com/2018/02/05/a-newbies-toe-dip-into-js-based-test-automation-using-cypress-io/
+  sourceName: The_reluctant_tester
+  sourceUrl: https://thereluctanttester.com/
+  date: Feb 5, 2018
+  author: Sunjeet Khokhar
+  img: /img/examples/newbies-toes-in-cypress.jpg
+
 - title: "Getting started with Cypress.io… to ditch Selenium once and for all"
   url: https://gorrion.io/blog/getting-started-with-cypress-io/
   sourceName: Gorrion
@@ -5,6 +13,14 @@
   date: Jan 26, 2018
   author: Łukasz Wroński
   img: /img/examples/getting-started-with-cypress-gorrion.jpg
+
+- title: "Install cypress.io dependencies on Amazon Linux AMI ec2 instance"
+  url: https://medium.com/aubergine-solutions/install-cypress-io-front-end-testing-tool-dependencies-on-amazon-linux-ami-ec2-instance-f676da4abbdd
+  sourceName: Aubergine Solutions
+  sourceUrl: https://medium.com/aubergine-solutions
+  date: Jan 24, 2018
+  author: Sudip Raval
+  img: /img/examples/install-dependencies-build-machine.jpg
 
 - title: "Learn TDD in Vue"
   url: http://learntdd.in/vue/
