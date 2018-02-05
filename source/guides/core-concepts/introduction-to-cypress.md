@@ -208,7 +208,7 @@ To match the behavior of web applications, Cypress is asynchronous and relies on
 There is a performance tradeoff here: **tests that have longer timeout periods take longer to fail**. Commands always proceed as soon as their expected criteria is met, so working tests will be performed as fast as your application allows. A test that fails due to timeout will consume the entire timeout period, by design. This means that while you _may_ want to increase your timeout period to suit specific parts of your app, you _don't_ want to make it "extra long, just in case".
 {% endnote %}
 
-Later in this guide we'll go into much more detail about {% urlHash 'Default Assertions' Default-Assertions %} and {% urlHash 'Timeouts' Timeouts %}
+Later in this guide we'll go into much more detail about {% urlHash 'Default Assertions' Default-Assertions %} and {% urlHash 'Timeouts' Timeouts %}.
 
 # Chains of Commands
 
@@ -473,7 +473,7 @@ it('changes the URL when "awesome" is clicked', function() {
 
 Big difference! In addition to reading much cleaner, Cypress does more than this, because **Promises themselves have no concepts of retry-ability**.
 
-Without **retry-ability**, assertions would randomly fail. This would lead to flaky inconsistent results. This is also why we cannot use new JS features like `async / await`.
+Without **retry-ability**, assertions would randomly fail. This would lead to flaky, inconsistent results. This is also why we cannot use new JS features like `async / await`.
 
 Cypress cannot yield you primitive values isolated away from other commands. That is because Cypress commands act internally like an asynchronous stream of data that only resolve after being affected and modified **by other commands**. This means we cannot yield you discrete values in chunks because we have to know everything about what you expect before handing off a value.
 
@@ -694,7 +694,7 @@ Cypress will automatically *wait* for elements to pass their default assertions.
 
 ***Example #2: Reversing the Default Assertion***
 
-Most of the time, when querying for elements you expect them to eventually exist. But sometimes you wish to wait until they *don't* exist.
+Most of the time, when querying for elements, you expect them to eventually exist. But sometimes you wish to wait until they *don't* exist.
 
 All you have to do is add that assertion and Cypress will **reverse** its rules waiting for elements to exist.
 
@@ -716,7 +716,7 @@ By adding {% url "`.should('not.exist')`" should %} to any DOM command, Cypress 
 
 Other commands have other default assertions not related to the DOM.
 
-For instance {% url `.its()` its %} requires that the property you're asking about exists on the object.
+For instance, {% url `.its()` its %} requires that the property you're asking about exists on the object.
 
 ```js
 // create an empty object
@@ -796,7 +796,7 @@ expect(true).to.be.true
 ```
 
 {% note info Did you know you can write Unit Tests in Cypress? %}
-Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes %}
+Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#React-with-Enzyme %}.
 {% endnote %}
 
 Explicit assertions are great when you want to:
@@ -815,16 +815,16 @@ Doing so enables you to **block** and **guard** Cypress by ensuring the state of
 ```javascript
 cy
   .get("p")
-  .should(($p) =>{
+  .should(($p) => {
     // massage our subject from a DOM element
     // into an array of texts from all of the p's
-    var texts = $p.map((i, el) => {
+    let texts = $p.map((i, el) => {
       return Cypress.$(el).text()
     })
 
-    // jquery map returns jquery object
+    // jQuery map returns jQuery object
     // and .get() converts this to a simple array
-    var texts = texts.get()
+    texts = texts.get()
 
     // array should have length of 3
     expect(texts).to.have.length(3)

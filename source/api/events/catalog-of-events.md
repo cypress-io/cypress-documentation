@@ -185,7 +185,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 ***To catch a single uncaught exception***
 
 ```javascript
-it('is doing something very important', function(done) {
+it('is doing something very important', function (done) {
   // this event will automatically be unbound when this
   // test ends because it's attached to 'cy'
   cy.on('uncaught:exception', (err, runnable) => {

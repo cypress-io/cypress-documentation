@@ -148,7 +148,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`, 
 
 {% img /img/guides/first-test-visit-30fps.gif "A real test visiting a website" %}
 
-{% note danger Only Tests Apps You Control %}
+{% note danger Only Test Apps You Control %}
 Although in this guide we are testing our example application: {% url `https://example.cypress.io` https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
 
 - They are liable to change at any moment which will break tests.
@@ -353,7 +353,7 @@ Notice it highlights in purple. This did three things worth noting...
 We have now **pinned** this snapshot. Hovering over other commands will not revert to them. This gives us a chance to manually inspect the DOM of our application under test at the time the snapshot was taken.
 
 ***2. Event Hitbox***
-Since {% url `.click()` click %} is an action command, that means we also a red hitbox at the coordinates the event took place.
+Since {% url `.click()` click %} is an action command, that means we also see a red hitbox at the coordinates the event took place.
 
 ***3. Snapshot Menu Panel***
 There is also a new menu panel. Some commands (like action commands) will take multiple snapshots: **before** and **after**. We can now cycle through these.

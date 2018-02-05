@@ -75,7 +75,7 @@ expect(util.addListeners).to.be.called
 // assume App.start calls util.addListeners
 let listenersAdded = false
 
-cy.stub(util, 'addListeners', function () {
+cy.stub(util, 'addListeners', () => {
   listenersAdded = true
 })
 

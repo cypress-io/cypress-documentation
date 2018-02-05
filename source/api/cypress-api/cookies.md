@@ -85,8 +85,8 @@ You can use `Cypress.Cookies.preserveOnce()` to preserve cookies through multipl
 There are *likely* better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
 
 ```javascript
-describe("Dashboard", function(){
-  before(function(){
+describe("Dashboard", function () {
+  before(function () {
     // log in only once before any of the tests run.
     // your app will likely set some sort of session cookie.
     // you'll need to know the name of the cookie(s), which you can find
@@ -94,7 +94,7 @@ describe("Dashboard", function(){
     cy.login()
   })
 
-  beforeEach(function(){
+  beforeEach(function () {
     // before each test, we can automatically preserve the
     // 'session_id' and 'remember_token' cookies. this means they
     // will not be cleared before the NEXT test starts.
@@ -104,15 +104,15 @@ describe("Dashboard", function(){
     Cypress.Cookies.preserveOnce("session_id", "remember_token")
   })
 
-  it("displays stats", function(){
+  it("displays stats", function () {
     // ...
   })
 
-  it("can do something", function(){
+  it("can do something", function () {
     // ...
   })
 
-  it("opens a modal", function(){
+  it("opens a modal", function () {
     // ...
   })
 })

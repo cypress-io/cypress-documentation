@@ -48,7 +48,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-{% yields changes_dom_subject .closest %}
+{% yields changes_dom_subject_or_subjects .closest %}
 
 # Examples
 

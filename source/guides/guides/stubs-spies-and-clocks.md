@@ -125,15 +125,15 @@ Once you have a `stub` or a `spy` in hand, you can then create assertions about 
 
 ```javascript
 const user = {
-  getName: function(arg){
+  getName: (arg) => {
     return arg
   },
 
-  updateEmail: function(arg){
+  updateEmail: (arg) => {
     return arg
   },
 
-  fail: function(){
+  fail: () => {
     throw new Error("fail whale")
   }
 }

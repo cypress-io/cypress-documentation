@@ -83,3 +83,11 @@ The image below shows that our application is displaying at `1000px` width, `660
 *Note: The righthand side may also be used to display syntax errors in your test file that prevent the tests from running.*
 
 {% img /img/guides/errors.png Errors %}
+
+## Selector Playground
+
+In version 1.3.0, the Selector Playground was introduced. In this mode, you can hover over parts of your app and the element underneath the cursor will be highlighted (like "Select an element" mode from the DevTools).
+
+Cypress will calculate the best selector to using for getting that element. It displays the selector in a new UI panel overlaying the reporter and allowing refinements such as selecting by text via {% url "`cy.contains`" contains %} or selecting via attribute. It also has a copy-to-clipboard button for easy copying.
+
+{% img /img/guides/selector-playground.gif Selector Playground %}

@@ -42,7 +42,7 @@ Option | Default | Description
 ***Get the element that is focused***
 
 ```javascript
-cy.focused().then(function($el) {
+cy.focused().then(($el) => {
   // do something with $el
 })
 ```

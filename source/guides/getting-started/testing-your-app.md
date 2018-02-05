@@ -136,7 +136,7 @@ Check them out in {% url "Configuration" configuration %}!
 
 # Testing Strategies
 
-You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advise to give you.
+You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advice to give you.
 
 **What to test, where the edge cases and seams are, what regressions you're likely to run into, etc. are entirely up to you, your application, and your team.**
 
@@ -164,8 +164,8 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
 
 ```js
-describe('The Home Page', function(){
-  beforeEach(function(){
+describe('The Home Page', function () {
+  beforeEach(function () {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
   })
@@ -181,8 +181,8 @@ Instead of just executing a system command, you may want more flexibility and co
 **For instance, you could compose several requests together to tell your server exactly the state you want to create.**
 
 ```js
-describe('The Home Page', function(){
-  beforeEach(function(){
+describe('The Home Page', function () {
+  beforeEach(function () {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -256,8 +256,8 @@ As we just mentioned, logging in is one of those features that are **mission cri
 Here's an example alongside seeding your database:
 
 ```js
-describe('The Login Page', function(){
-  beforeEach(function(){
+describe('The Login Page', function () {
+  beforeEach(function () {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -268,7 +268,7 @@ describe('The Login Page', function(){
       .as('currentUser')
   })
 
-  it('sets auth cookie when logging in via form submission', function(){
+  it('sets auth cookie when logging in via form submission', function () {
     // destructuring assignment of the this.currentUser object
     const { username, password } = this.currentUser
 
@@ -337,8 +337,8 @@ Because {% url `cy.request()` request %} automatically gets and sets cookies und
 Let's revisit the example from above but assume we're testing some other part of the system.
 
 ```js
-describe('The Dashboard Page', function(){
-  beforeEach(function(){
+describe('The Dashboard Page', function () {
+  beforeEach(function () {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -349,7 +349,7 @@ describe('The Dashboard Page', function(){
       .as('currentUser')
   })
 
-  it('logs in programmatically without using the UI', function(){
+  it('logs in programmatically without using the UI', function () {
     // destructuring assignment of the this.currentUser object
     const { username, password } = this.currentUser
 

@@ -85,7 +85,7 @@ cy.clearLocalStorage(/app-/)
 # Command Log
 
 ```javascript
-cy.clearLocalStorage(/prop1|2/).then(function(ls){
+cy.clearLocalStorage(/prop1|2/).then((ls) => {
   expect(ls.getItem('prop1')).to.be.null
   expect(ls.getItem('prop2')).to.be.null
   expect(ls.getItem('prop3')).to.eq('magenta')

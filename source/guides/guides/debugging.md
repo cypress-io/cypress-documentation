@@ -38,7 +38,7 @@ it('let me debug like a fiend', function() {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
-    .then(function(selectedElement) {
+    .then(($selectedElement) => {
       debugger // Works like you think!
     })
 })
