@@ -157,9 +157,9 @@ Okay but let's say you're worried about `google.com` serving up the right HTML c
 
 ```javascript
 cy.visit('http://localhost:8080')
-cy.get('a').then(function($a) {
+cy.get('a').then(($a) => {
   // pull off the fully qualified href from the <a>
-  var url = $a.prop('href')
+  const url = $a.prop('href')
 
   // make a cy.request to it
   cy.request(url).its('body').should('include', '</html>')
@@ -194,7 +194,7 @@ If your backend server handling the `/submit` route does a `30x` redirect to a d
 // imagine this is some node / express code
 // on your localhost:8080 server
 
-app.post('/submit', function(req, res) {
+app.post('/submit', (req, res) => {
   // redirect the browser to google.com
   res.redirect('https://google.com')
 })
@@ -208,12 +208,12 @@ In fact we can likely bypass the initial visit altogether and just `POST` direct
 
 ```javascript
 cy.request('POST', 'https://sso.corp.com/auth', {username: 'foo', password: 'bar'})
-  .then(function(response) {
+  .then((response) => {
     // pull out the location redirect
-    var loc = response.headers['Location']
+    const loc = response.headers['Location']
 
     // parse out the token from the url (assuming its in there)
-    var token = parseOutMyToken(loc)
+    const token = parseOutMyToken(loc)
 
     // do something with the token that your web application expects
     // likely the same behavior as what your SSO does under the hood

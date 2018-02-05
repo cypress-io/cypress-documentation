@@ -50,7 +50,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-{% yields changes_dom_subject .children %}
+{% yields changes_dom_subject_or_subjects .children %}
 
 # Examples
 

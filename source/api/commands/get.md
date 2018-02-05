@@ -23,7 +23,7 @@ cy.get(alias, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('.list>li')    // Yield the <li>'s in <.list>
+cy.get('.list > li')    // Yield the <li>'s in .list
 ```
 
 ## Arguments
@@ -86,7 +86,7 @@ cy.get('.dropdown-menu').click()
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a [`.within()`]() command.
 
 ```javascript
-cy.get('form').within(function(){
+cy.get('form').within(() => {
   cy.get('input').type('Pamela')            // Only yield inputs within form
   cy.get('textarea').type('is a developer') // Only yield textareas within form
 })
@@ -110,11 +110,11 @@ cy.get('@todos')
 ***Get the aliased 'submitBtn' element***
 
 ```javascript
-beforeEach(function(){
+beforeEach(function () {
   cy.get('button[type=submit]').as('submitBtn')
 })
 
-it('disables on click', function(){
+it('disables on click', function () {
   cy.get('@submitBtn').should('be.disabled')
 })
 ```
@@ -122,12 +122,12 @@ it('disables on click', function(){
 ***Get the aliased 'users' fixture***
 
 ```javascript
-beforeEach(function(){
+beforeEach(function () {
   cy.fixtures('users.json').as('users')
 })
 
-it('disables on click', function(){
-  // access the array of users 
+it('disables on click', function () {
+  // access the array of users
   cy.get('@users').then((users) => {
     // get the first user
     const user = users[0]

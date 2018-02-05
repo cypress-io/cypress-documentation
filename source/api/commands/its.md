@@ -76,7 +76,7 @@ cy.title().its('length').should('eq', 24)
 ***Get function as property***
 
 ```javascript
-var fn = function(){
+const fn = () => {
   return 42
 }
 
@@ -90,11 +90,11 @@ You can access functions to then drill into their own properties instead of invo
 ```javascript
 // Your app code
 // a basic Factory constructor
-var Factory = function(arg){
+const Factory = (arg) => {
   // ...
 }
 
-Factory.create = function(arg){
+Factory.create = (arg) => {
   return new Factory(arg)
 }
 
@@ -120,7 +120,7 @@ cy
 You can drill into nested properties by using *dot notation*.
 
 ```javascript
-var user = {
+const user = {
   contacts: {
     work: {
       name: 'Kamil'

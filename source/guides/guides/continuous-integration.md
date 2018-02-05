@@ -30,11 +30,13 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "Jenkins" https://jenkins.io/ %} (Linux)
 - {% url "TravisCI" https://travis-ci.org/ %}
 - {% url "CircleCI" https://circleci.com %}
-- {% url "CodeShip" https://codeship.com/ %}
+- {% url "CodeShip" https://codeship.com/ %} {% issue 328 "Issue with cy.exec()" %}
 - {% url "GitLab" https://gitlab.com/ %}
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
 - {% url "Semaphore" https://semaphoreci.com/ %}
+- {% url "Concourse" https://concourse.ci/ %}
+- {% url "Solano" https://www.solanolabs.com/ %}
 - {% url "Docker" https://www.docker.com/ %}
 
 # Setting Up CI
@@ -46,19 +48,59 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 ***Example `.travis.yml` config file***
 
 ```yaml
+language: node_js
+node_js:
+  - 6
+cache:
+  directories:
+    - ~/.npm
+    - node_modules
+install:
+  - npm install
 script:
-  - cypress run --record
+  - $(npm bin)/cypress run --record
 ```
+
+Caching folders with NPM modules saves a lot of time after the first build.
 
 ## CircleCI
 
-***Example `circle.yml` config file***
+***Example `circle.yml` v1 config file***
 
 ```yaml
+machine:
+  node:
+    version: 6
+dependencies:
+  cache_directories:
+    - ~/.npm
+    - node_modules
+  pre:
+    - npm install
 test:
   override:
-    - cypress run --record
+    - $(npm bin)/cypress run --record
 ```
+
+***Example `circle.yml` v2 config file***
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:6
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - run: npm install
+      - run: $(npm bin)/cypress run --record
+```
+
+Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
 
 ## Docker
 
@@ -218,6 +260,28 @@ Most CI providers will automatically kill background processes so you don't have
 
 However, if you're running this script locally you'll have to do a bit more work to collect the backgrounded PID and then kill it after `cypress run`.
 {% endnote %}
+
+### Helpers
+
+If the server takes a very long time to start, and Cypress times out while loading the page, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
+
+```shell
+npm install --save-dev start-server-and-test
+```
+
+Pass the boot server command, url to check when server is ready, and the Cypress test command.
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3030 cy:run"
+  }
+}
+```
+
+The `cy:run` command will only be executed when the URL `http://localhost:3030` responds with HTTP status code 200. The server will be shut down when the tests complete.
 
 ## Module API
 

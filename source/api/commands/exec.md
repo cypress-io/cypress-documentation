@@ -64,7 +64,7 @@ Option | Default | Description
 ***Run a build command***
 
 ```javascript
-cy.exec('npm run build').then(function (result) {
+cy.exec('npm run build').then((result) => {
   // yields the 'result' object
   // {
   //   code: 0,
@@ -91,7 +91,7 @@ cy.exec('npm run my-script').its('stdout').should('contain', 'Done running the s
 cy.server()
 cy.route('POST', '/comments').as('postComment')
 cy.get('.add-comment').click()
-cy.wait('@postComment').then(function(xhr){
+cy.wait('@postComment').then((xhr) => {
   cy.exec(`echo ${JSON.stringify(xhr.responseBody)} >cypress/fixtures/comment.json`)
   cy.fixture('comment.json').should('deep.eq', xhr.responseBody)
 })

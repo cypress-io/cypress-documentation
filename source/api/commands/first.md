@@ -44,7 +44,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-{% yields changes_dom_subject .first %}
+{% yields changes_dom_subject_or_subjects .first %}
 
 # Examples
 
@@ -98,4 +98,5 @@ When clicking on `first` within the command log, the console outputs the followi
 
 # See also
 
+- {% url `.eq()` eq %}
 - {% url `.last()` last %}

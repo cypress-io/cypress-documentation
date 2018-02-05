@@ -49,7 +49,7 @@ Additional arguments to be given to the function call. There is no limit to the 
 ***Assert on a function's return value***
 
 ```javascript
-var fn = function(){
+const fn = () => {
   return 'bar'
 }
 
@@ -85,7 +85,7 @@ cy.get('div.container').should('be.hidden') // true
 ***Send specific arguments to the function***
 
 ```javascript
-var fn = function(a, b, c){
+const fn = (a, b, c) => {
   return a + b + c
 }
 
@@ -119,7 +119,7 @@ cy
 If you are using `jQuery` then the `jQuery` wrapped elements will automatically have your 3rd party plugins available to be called.
 
 ```javascript
-cy.get('input').invoke('getKendoDropDownList').then(function(dropDownList){
+cy.get('input').invoke('getKendoDropDownList').then((dropDownList) => {
   // yields the return of $input.getKendoDropDownList()
   return dropDownList.select('apples')
 })

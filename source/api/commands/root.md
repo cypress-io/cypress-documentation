@@ -18,7 +18,7 @@ cy.root(options)
 
 ```javascript
 cy.root()   // Yield root element <html>
-cy.get('nav').within(function(nav) {
+cy.get('nav').within(($nav) => {
   cy.root()  // Yield root element <nav>
 })
 ```
@@ -83,7 +83,7 @@ cy.get('form').within(($form) => {
 ```javascript
 cy.root().should('match', 'html')
 
-cy.get('.query-ul').within(function(){
+cy.get('.query-ul').within(() => {
   cy.root().should('have.class', 'query-ul')
 })
 ```

@@ -133,7 +133,7 @@ you clicked button <span id='num'>0</span> times
 // app code
 let count = 0
 
-$('button').on('click', function(){
+$('button').on('click', function () {
   $('#num').text(count += 1)
 })
 ```
@@ -209,7 +209,7 @@ At first, we'll use them to make it easy to share objects between your hooks and
 
 ## Sharing Context
 
-Sharing context is simplest way to use aliases.
+Sharing context is the simplest way to use aliases.
 
 To alias something you'd like to share - you use the command called: {% url `.as()` as %}.
 

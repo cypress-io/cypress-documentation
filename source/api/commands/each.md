@@ -16,16 +16,16 @@ Iterate through an array like structure (arrays or objects with a `length` prope
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('ul>li').each(function(){...}) // Iterate through each 'li'
-cy.getCookies().each(function(){...}) // Iterate through each cookie
+cy.get('ul>li').each(function () {...}) // Iterate through each 'li'
+cy.getCookies().each(function () {...}) // Iterate through each cookie
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
 
-cy.each(function(){...})            // Errors, cannot be chained off 'cy'
-cy.location().each(function(){...}) // Errors, 'location' doesn't yield an array
+cy.each(function () {...})            // Errors, cannot be chained off 'cy'
+cy.location().each(function () {...}) // Errors, 'location' doesn't yield an array
 ```
 
 ## Arguments
@@ -51,7 +51,7 @@ Pass a function that is invoked with the following arguments:
 ```javascript
 cy
   .get('ul>li')
-  .each(function($el, index, $list){
+  .each(($el, index, $list) => {
     // $el is a wrapped jQuery element
     if ($el.someMethod() === 'something') {
       // wrap this element so we can
@@ -70,10 +70,10 @@ No matter what is returned in the callback function, `.each()` will always yield
 ```javascript
 cy
   .get('li').should('have.length', 3)
-  .each(function($li, index, $lis){
+  .each(($li, index, $lis) => {
     return 'something else'
   })
-  .then(function($lis){
+  .then(($lis) => {
     expect($lis).to.have.length(3) // true
   })
 ```
@@ -85,9 +85,9 @@ cy
 If your callback function returns a `Promise`, it will be awaited before iterating over the next element in the collection.
 
 ```javascript
-cy.wrap([1,2,3]).each(function(num, i, array){
-  return new Cypress.Promise(function(resolve){
-    setTimeout(function(){
+cy.wrap([1,2,3]).each((num, i, array) => {
+  return new Cypress.Promise((resolve) => {
+    setTimeout(() => {
       resolve()
     }, num * 100)
   })

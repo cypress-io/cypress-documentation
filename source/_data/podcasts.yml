@@ -1,3 +1,28 @@
+- title: "Assert(js) panel: Kent C. Dodds, Justin Searls, Gleb Bahmutov and Brian Mann"
+  url: https://youtu.be/ltzNIOF_L3E
+  sourceName: "#!hashbang"
+  sourceUrl: https://www.youtube.com/playlist?list=PLZ66c9_z3umOuPSGsTu3mfzt6PGZeUyQZ
+  date: Dec 15, 2017
+  author: Kent C. Dodds, Justin Searls, Gleb Bahmutov and Brian Mann
+  img: /img/examples/hashbang-ok-grow-cypress-assert-js.jpg
+
+- title: Test Automation Using Cypress.io with Brian Mann & Gleb Bahmutov
+  url: https://joecolantonio.com/testtalks/177-cyrpress-io-brian-mann-gleb-bahmutov/
+  sourceName: TestTalks
+  sourceUrl: https://joecolantonio.com/testtalks/
+  date: Nov 5, 2017
+  author: Joe Colantonio, Brian Mann, & Gleb Bahmutov
+  img: /img/examples/test-talks-podcast-test-automation.jpg
+
+- title: Big Testing in JavaScript
+  url: https://frontsidethepodcast.simplecast.fm/20b2f6da
+  sourceName: The Frontside Podcast
+  sourceUrl: https://frontsidethepodcast.simplecast.fm/
+  date: Nov 30, 2017
+  author: Charles Lowell & Wil Wilsman
+  img: /img/examples/frontside-podcast.jpg
+
+
 - title: Cypress.io and End-to-End Testing with Gleb Bahmutov
   url: https://devchat.tv/adv-in-angular/aia-155-cypress-io-end-end-testing-gleb-bahmutov
   sourceName: Adventures in Angular

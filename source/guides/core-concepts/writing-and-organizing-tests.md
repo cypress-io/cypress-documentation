@@ -143,7 +143,7 @@ describe('Unit test our math functions', function() {
 
 Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}).
 
-These are helpful to set conditions that you want run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
+These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
 describe('Hooks', function() {
@@ -199,7 +199,7 @@ function fizzbuzz (num) {
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit Test FizzBuzz', function(){
+describe('Unit Test FizzBuzz', function () {
   function numsExpectedToEq (arr, expected) {
     // loop through the array of nums and make
     // sure they equal what is expected
@@ -208,15 +208,15 @@ describe('Unit Test FizzBuzz', function(){
     })
   }
 
-  it.only('returns "fizz" when number is multiple of 3', function(){
+  it.only('returns "fizz" when number is multiple of 3', function () {
     numsExpectedToEq([9, 12, 18], "fizz")
   })
 
-  it('returns "buzz" when number is multiple of 5', function(){
+  it('returns "buzz" when number is multiple of 5', function () {
     numsExpectedToEq([10, 20, 25], "buzz")
   })
 
-  it('returns "fizzbuzz" when number is multiple of both 3 and 5', function(){
+  it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
     numsExpectedToEq([15, 30, 60], "fizzbuzz")
   })
 })
@@ -226,7 +226,7 @@ describe('Unit Test FizzBuzz', function(){
 To skip a specified suite or test, simply append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
-it.skip('returns "fizz" when number is multiple of 3', function(){
+it.skip('returns "fizz" when number is multiple of 3', function () {
   numsExpectedToEq([9, 12, 18], "fizz")
 })
 ```
@@ -236,9 +236,9 @@ it.skip('returns "fizz" when number is multiple of 3', function(){
 You can dynamically generate tests using JavaScript.
 
 ```javascript
-describe('if your app uses jQuery', function(){
+describe('if your app uses jQuery', function () {
   ['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
-    it('triggers event: ' + event, function(){
+    it('triggers event: ' + event, function () {
       // if your app uses jQuery, then we can trigger a jQuery
       // event that causes the event callback to fire
       cy
