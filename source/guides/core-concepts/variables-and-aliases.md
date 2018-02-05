@@ -31,7 +31,7 @@ The patterns we'll explore below are useful in and outside of Cypress.
 The first and most important concept you should recognize is...
 
 {% note danger 'Return Values' %}
-**You cannot assign or work with the return values** of any Cypress command. Commands are are enqueued and run asynchronously.
+**You cannot assign or work with the return values** of any Cypress command. Commands are enqueued and run asynchronously.
 {% endnote %}
 
 ```js
