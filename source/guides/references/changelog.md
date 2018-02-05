@@ -11,18 +11,18 @@ comments: false
 
 - Fixed not being able to visit subdomains when using 2nd level sub domains. Fixes {% issue 1175 %} and {% issue 600 %}.
 - Fixed not being able to visit private TLD's from the public suffix such as `github.io`, `gitlab.io` or `herokuapp.com`. These now all work correctly. Fixes {% issue 380 %} and {% issue 402 %} and {% issue 802 %} and {% issue 493 %} and {% issue 1161 %}.
-- Fixed not being able to visit URL's that used `*localhost` such as `http://app.localhost:8080`. Fixes {% issue 451 %}.
-- Mochawesome now works correctly outputs files in all version. Fixes {% issue 551 %}.
+- Fixed not being able to visit URLs that used `*localhost` such as `http://app.localhost:8080`. Fixes {% issue 451 %}.
+- Mochawesome now works correctly and outputs files in all versions. Fixes {% issue 551 %}.
 - Mochawesome will exit correctly with code `1` when a hook fails. {% issue 1063 %}.
 - Fixed some incorrect typings with TypeScript. Fixes {% issue 1219 %} and {% issue 1219 %}.
 - Fixed bug with custom 3rd party mocha reporters relying on `test.titlePath` being a function. Fixes {% issue 1142 %}.
 - Fixed typo in `cypress.schema.json`. Fixes {% issue 1167 %}.
 - Fixed typo in CLI deps error about Docker. Fixes {% issue 1136 %}.
-- Prevent `NODE_ENV` from being set to undefined when parent process did not have it defined. Fixes {% issue 1223 %}.
+- Prevent `NODE_ENV` from being set to `undefined` when parent process did not have it defined. Fixes {% issue 1223 %}.
 
 **Misc:**
 
-- We've begun to aggregate failures and other stats ourselves instead of relying on Mocha reporters. Fixes {% issue 1141 %}.
+- We have begun to aggregate failures and other stats ourselves instead of relying on Mocha reporters. Fixes {% issue 1141 %}.
 - Added TypeScript `should/and` autocomplete and typings for Cypress events. Fixes {% issue 1187 %} and {% issue 1132 %}.
 - Upgrade deps. Fixes {% issue 1174 %}.
 
