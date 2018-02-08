@@ -1,3 +1,19 @@
+- title: "Cypress: The future of end-to-end testing for web applications"
+  url: https://medium.com/tech-quizlet/cypress-the-future-of-end-to-end-testing-for-web-applications-8ee108c5b255
+  sourceName: "Tech @ Quizlet"
+  sourceUrl: https://medium.com/tech-quizlet
+  date: Feb 8, 2018
+  author: Evelyn Chan
+  img: /img/examples/cypress-and-quizlet-tech-comparison.jpg
+
+- title: "A newbie’s toe dip into JS based Test automation using Cypress.io"
+  url: https://thereluctanttester.com/2018/02/05/a-newbies-toe-dip-into-js-based-test-automation-using-cypress-io/
+  sourceName: The_reluctant_tester
+  sourceUrl: https://thereluctanttester.com/
+  date: Feb 5, 2018
+  author: Sunjeet Khokhar
+  img: /img/examples/newbies-toes-in-cypress.jpg
+
 - title: "Getting started with Cypress.io… to ditch Selenium once and for all"
   url: https://gorrion.io/blog/getting-started-with-cypress-io/
   sourceName: Gorrion
@@ -5,6 +21,14 @@
   date: Jan 26, 2018
   author: Łukasz Wroński
   img: /img/examples/getting-started-with-cypress-gorrion.jpg
+
+- title: "Install cypress.io dependencies on Amazon Linux AMI ec2 instance"
+  url: https://medium.com/aubergine-solutions/install-cypress-io-front-end-testing-tool-dependencies-on-amazon-linux-ami-ec2-instance-f676da4abbdd
+  sourceName: Aubergine Solutions
+  sourceUrl: https://medium.com/aubergine-solutions
+  date: Jan 24, 2018
+  author: Sudip Raval
+  img: /img/examples/install-dependencies-build-machine.jpg
 
 - title: "Learn TDD in Vue"
   url: http://learntdd.in/vue/
@@ -157,6 +181,14 @@
   date: Aug 7, 2017
   author: Dziamid Zayankouski
   img: /img/examples/cypdock-post.jpg
+
+- title: Create a Heartbeat with Cypress, Buildkite, and Healthz
+  url: https://codeburst.io/create-a-heartbeat-c44aa346bc2d
+  sourceName: codeburst.io
+  sourceUrl: https://codeburst.io/
+  date: Jul 26, 2017
+  author: Amy Marco
+  img: /img/examples/cypress-buildkite-healthz-heartbeat.jpg
 
 - title: Javascript tools for end-to-end testing web applications
   url: https://mo.github.io/2017/07/20/javascript-e2e-integration-testing.html
