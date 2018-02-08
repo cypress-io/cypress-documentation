@@ -5,7 +5,7 @@ comments: false
 
 ## 1.4.2
 
-*Released 2/4/2017*
+*Released 2/4/2018*
 
 **Bugfixes:**
 
