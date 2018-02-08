@@ -182,6 +182,14 @@
   author: Dziamid Zayankouski
   img: /img/examples/cypdock-post.jpg
 
+- title: Create a Heartbeat with Cypress, Buildkite, and Healthz
+  url: https://codeburst.io/create-a-heartbeat-c44aa346bc2d
+  sourceName: codeburst.io
+  sourceUrl: https://codeburst.io/
+  date: Jul 26, 2017
+  author: Amy Marco
+  img: /img/examples/cypress-buildkite-healthz-heartbeat.jpg
+
 - title: Javascript tools for end-to-end testing web applications
   url: https://mo.github.io/2017/07/20/javascript-e2e-integration-testing.html
   sourceName: molsson's blog
