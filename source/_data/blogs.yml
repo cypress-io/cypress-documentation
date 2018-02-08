@@ -1,3 +1,11 @@
+- title: "Cypress: The future of end-to-end testing for web applications"
+  url: https://medium.com/tech-quizlet/cypress-the-future-of-end-to-end-testing-for-web-applications-8ee108c5b255
+  sourceName: "Tech @ Quizlet"
+  sourceUrl: https://medium.com/tech-quizlet
+  date: Feb 8, 2018
+  author: Evelyn Chan
+  img: /img/examples/cypress-and-quizlet-tech-comparison.jpg
+
 - title: "A newbie’s toe dip into JS based Test automation using Cypress.io"
   url: https://thereluctanttester.com/2018/02/05/a-newbies-toe-dip-into-js-based-test-automation-using-cypress-io/
   sourceName: The_reluctant_tester
