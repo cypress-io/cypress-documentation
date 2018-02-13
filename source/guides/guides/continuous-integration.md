@@ -79,7 +79,7 @@ dependencies:
     - npm install
 test:
   override:
-    - $(npm bin)/cypress run --record
+    - $(npm bin)/cypress run --record --key <record_key>
 ```
 
 ***Example `circle.yml` v2 config file***
@@ -97,7 +97,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: $(npm bin)/cypress run --record
+      - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
