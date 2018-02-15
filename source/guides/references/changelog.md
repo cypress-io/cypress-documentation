@@ -3,6 +3,33 @@ title: Changelog
 comments: false
 ---
 
+## 2.0.0
+
+*Released 2/15/2017*
+
+**Breaking Changes:**
+
+- The built in default `Electron` browser has been bumped from version `53` to `59`. This version represents the version of `Chromium` that it's using. In other words, running headlessly or via `Electron` will be like running your tests in `Chrome 59` now. Although its unlikely this would actually *break* any of your tests - it's technically possible they will behave differently. Fixes {% issue 895 %} and {% issue 891 %} and {% issue 823 %} and {% issue 860 %} and {% issue 1011 %} and {% issue 1252 %} and {% issue 1276 %}.
+- We are now detecting and automatically stripping code that obstructs Cypress from being able to test your application. Specifically, we're removing JS code that tries to prevent **clickjacking** and **framebusting**. We've written very conservative rules that do their best to **only** strip these specific JS snippets, but it is technically possible that it may unintentionally rewrite valid JS if they match the regexp patterns. There is a new configuration option called `modifyObstructiveCode` that is `true` by default. If you are experiencing problems after upgrading, you can turn this off and this will disable modifying your JS code. If you were using Cypress and upon visiting your website you would experience seemingly "random" redirects - these problems should now be eliminated. Fixes {% issue 886 %} and {% issue 1245 %} and {% issue 1064 %} and {% issue 992 %}.
+- We are now clearing the browser's disk cache each time it opens (before any tests run). This means that any files that have been cached from `Cache-Control` headers will be cleaned and removed. In the future, we will expose a new `cy.clearCache()` method and provide you finer grained level of control on a per test basis. But for now, this is an improvement. Fixes {% issue 1124 %}.
+
+**Bugfixes:**
+
+- `blacklistHosts` would occasionally not work if you were blacklisting a host that has previously cached a file. In this case, the browser would serve it from disk and not make an actual HTTP request. This issue has been solved by clearing the cache when the browser opens. Fixes {% issue 1154 %}.
+- `blacklistHosts` is now correctly accepted via the `--config` CLI flag.
+- Spies and Stubs created with `cy.stub()` and `cy.spy()` will now retry their assertions when utilized from an alias. Fixes {% issue 1156 %}.
+- Basic auth is working again in Chrome 63 and Chrome 64. We "for real" fixed it this time by adding auth headers automatically at the network proxy layer and bypassed the browser altogether. We automatically apply auth headers if you provide a username/password in the URL of a `cy.visit(url)`. We also added a new `auth` option to specify the `username/password` using `cy.visit(url, options)`. All of the requests that match the origin of the `url` will have the `Authorization: Basic <...>` headers added. Fixes {% issue 1288 %}.
+- Fixed domain parsing failures when `local` or `localhost` was not used as a `tld`. Fixes {% issue 1292 %} and {% issue 1278 %}.
+
+**Misc:**
+
+- We now properly display nested objects and arrays that come from `cypress.json` in the Settings tab in the Desktop Application.
+- There's now a proper "empty view" when you go to setup your project to record on our Dashboard and you have not created any Organizations. Fixes {% issue 1306 %}.
+- We moved the location of the browser's disk cache. That means that if you've been using Cypress for a really long time - you may have built up quite a large existing cache (in the hundreds of `mb`). Before upgrading, you should open the browser and then manually clear the Cache. Or - if you have already upgraded to `2.0.0` delete the following folders:
+  - OSX: `~/Library/Caches/Cypress`
+  - Linux: `~/.cache/Cypress`
+  - Windows: `%APPDATA%\Cypress\cy\production\browsers`
+
 ## 1.4.2
 
 *Released 2/4/2018*
