@@ -35,6 +35,7 @@ Pass in an options object to change the default behavior of `cy.visit()`.
 Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
+`auth` | `null` | Adds Basic Authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
@@ -66,6 +67,32 @@ cy.visit('http://localhost:8000')
 // Wait 30 seconds for page 'load' event
 cy.visit('/index.html', { timeout: 30000 })
 ```
+
+***Adding Basic Auth Headers***
+
+Cypress will automatically apply the right authorization headers if you're attempting to visit an application that requires {% url 'Basic Authentication' https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication %}.
+
+Simply provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
+
+```javascript
+cy.visit('https://www.acme.com/', {
+  auth: {
+    username: 'wile',
+    password: 'coyote'
+  }
+})
+```
+
+You can also provide the username and password directly in the URL.
+
+```javascript
+// this is the same thing as providing the auth object
+cy.visit('https://wile:coyote@www.acme.com')
+```
+
+{% note info %}
+Cypress will automatically attach this header at the network proxy level, outside of the browser. Therefore you **will not** see this header in the Dev Tools.
+{% endnote %}
 
 ***Provide an `onBeforeLoad` callback function***
 

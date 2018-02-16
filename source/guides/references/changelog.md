@@ -3,26 +3,55 @@ title: Changelog
 comments: false
 ---
 
+## 2.0.0
+
+*Released 2/15/2017*
+
+**Breaking Changes:**
+
+- The built in default `Electron` browser has been bumped from version `53` to `59`. This version represents the version of `Chromium` that it's using. In other words, running headlessly or via `Electron` will be like running your tests in `Chrome 59` now. Although its unlikely this would actually *break* any of your tests - it's technically possible they will behave differently. Fixes {% issue 895 %} and {% issue 891 %} and {% issue 823 %} and {% issue 860 %} and {% issue 1011 %} and {% issue 1252 %} and {% issue 1276 %}.
+- We are now detecting and automatically stripping code that obstructs Cypress from being able to test your application. Specifically, we're removing JS code that tries to prevent **clickjacking** and **framebusting**. We've written very conservative rules that do their best to **only** strip these specific JS snippets, but it is technically possible that it may unintentionally rewrite valid JS if they match the regexp patterns. There is a new configuration option called `modifyObstructiveCode` that is `true` by default. If you are experiencing problems after upgrading, you can turn this off and this will disable modifying your JS code. If you were using Cypress and upon visiting your website you would experience seemingly "random" redirects - these problems should now be eliminated. Fixes {% issue 886 %} and {% issue 1245 %} and {% issue 1064 %} and {% issue 992 %}.
+- We are now clearing the browser's disk cache each time it opens (before any tests run). This means that any files that have been cached from `Cache-Control` headers will be cleaned and removed. In the future, we will expose a new `cy.clearCache()` method and provide you finer grained level of control on a per test basis. But for now, this is an improvement. Fixes {% issue 1124 %}.
+- The `--spec` option is now normalized against the current working directory `cwd` instead of the project that you're running Cypress on. That means passing a path from the command line to a spec file will now work even when the project path is not `cwd`. Fixes {% issue 1159 %}.
+
+**Bugfixes:**
+
+- `blacklistHosts` would occasionally not work if you were blacklisting a host that has previously cached a file. In this case, the browser would serve it from disk and not make an actual HTTP request. This issue has been solved by clearing the cache when the browser opens. Fixes {% issue 1154 %}.
+- `blacklistHosts` is now correctly accepted via the `--config` CLI flag.
+- Spies and Stubs created with `cy.stub()` and `cy.spy()` will now retry their assertions when utilized from an alias. Fixes {% issue 1156 %}.
+- Basic auth is working again in Chrome 63 and Chrome 64. We "for real" fixed it this time by adding auth headers automatically at the network proxy layer and bypassed the browser altogether. We automatically apply auth headers if you provide a username/password in the URL of a `cy.visit(url)`. We also added a new `auth` option to specify the `username/password` using `cy.visit(url, options)`. All of the requests that match the origin of the `url` will have the `Authorization: Basic <...>` headers added. Fixes {% issue 1288 %}.
+- Fixed domain parsing failures when `local` or `localhost` was not used as a `tld`. Fixes {% issue 1292 %} and {% issue 1278 %}.
+- Removed the flag `--disable-background-networking` from the Chrome launch args to fix problems in CI that would throttle XHR callbacks by up to 20-30 seconds. Fixes {% issue 1320 %}.
+
+**Misc:**
+
+- We now properly display nested objects and arrays that come from `cypress.json` in the Settings tab in the Desktop Application.
+- There's now a proper "empty view" when you go to setup your project to record on our Dashboard and you have not created any Organizations. Fixes {% issue 1306 %}.
+- We moved the location of the browser's disk cache. That means that if you've been using Cypress for a really long time - you may have built up quite a large existing cache (in the hundreds of `mb`). Before upgrading, you should open the browser and then manually clear the Cache. Or - if you have already upgraded to `2.0.0` delete the following folders:
+  - OSX: `~/Library/Caches/Cypress`
+  - Linux: `~/.cache/Cypress`
+  - Windows: `%APPDATA%\Cypress\cy\production\browsers`
+
 ## 1.4.2
 
-*Released 2/4/2017*
+*Released 2/4/2018*
 
 **Bugfixes:**
 
 - Fixed not being able to visit subdomains when using 2nd level sub domains. Fixes {% issue 1175 %} and {% issue 600 %}.
 - Fixed not being able to visit private TLD's from the public suffix such as `github.io`, `gitlab.io` or `herokuapp.com`. These now all work correctly. Fixes {% issue 380 %} and {% issue 402 %} and {% issue 802 %} and {% issue 493 %} and {% issue 1161 %}.
-- Fixed not being able to visit URL's that used `*localhost` such as `http://app.localhost:8080`. Fixes {% issue 451 %}.
-- Mochawesome now works correctly outputs files in all version. Fixes {% issue 551 %}.
+- Fixed not being able to visit URLs that used `*localhost` such as `http://app.localhost:8080`. Fixes {% issue 451 %}.
+- Mochawesome now works correctly and outputs files in all versions. Fixes {% issue 551 %}.
 - Mochawesome will exit correctly with code `1` when a hook fails. {% issue 1063 %}.
 - Fixed some incorrect typings with TypeScript. Fixes {% issue 1219 %} and {% issue 1219 %}.
 - Fixed bug with custom 3rd party mocha reporters relying on `test.titlePath` being a function. Fixes {% issue 1142 %}.
 - Fixed typo in `cypress.schema.json`. Fixes {% issue 1167 %}.
 - Fixed typo in CLI deps error about Docker. Fixes {% issue 1136 %}.
-- Prevent `NODE_ENV` from being set to undefined when parent process did not have it defined. Fixes {% issue 1223 %}.
+- Prevent `NODE_ENV` from being set to `undefined` when parent process did not have it defined. Fixes {% issue 1223 %}.
 
 **Misc:**
 
-- We've begun to aggregate failures and other stats ourselves instead of relying on Mocha reporters. Fixes {% issue 1141 %}.
+- We have begun to aggregate failures and other stats ourselves instead of relying on Mocha reporters. Fixes {% issue 1141 %}.
 - Added TypeScript `should/and` autocomplete and typings for Cypress events. Fixes {% issue 1187 %} and {% issue 1132 %}.
 - Upgrade deps. Fixes {% issue 1174 %}.
 
