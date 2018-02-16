@@ -99,8 +99,6 @@ This version of node has **nothing to do** with your locally installed versions.
 
 You can find the current node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 
-This node version gets updated regularly (next version will be in the `8.x.x` range) so you'll likely be able to use all the latest ES7 features.
-
 {% endnote %}
 
 ## NPM modules
