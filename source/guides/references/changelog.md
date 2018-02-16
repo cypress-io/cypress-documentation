@@ -27,6 +27,7 @@ comments: false
 
 - We now properly display nested objects and arrays that come from `cypress.json` in the Settings tab in the Desktop Application.
 - There's now a proper "empty view" when you go to setup your project to record on our Dashboard and you have not created any Organizations. Fixes {% issue 1306 %}.
+- Removed the message about private projects requiring a paid account in the future. There will be a free tier including private projects. Fixes {% issue 827 %}.
 - We moved the location of the browser's disk cache. That means that if you've been using Cypress for a really long time - you may have built up quite a large existing cache (in the hundreds of `mb`). Before upgrading, you should open the browser and then manually clear the Cache. Or - if you have already upgraded to `2.0.0` delete the following folders:
   - OSX: `~/Library/Caches/Cypress`
   - Linux: `~/.cache/Cypress`
