@@ -72,7 +72,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `url` | `null` | The URL to make the request to
 `method` | `GET` | The HTTP method to use in the request
-`auth` | `null` | Any auth to send; Accepts object literal
+`auth` | `null` | Adds Authorization headers. {% url 'Accepts these options.' https://github.com/request/request#http-authentication %}
 `body` | `null` | Body to send along with the request
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `followRedirect` | `true` | Whether to automatically follow redirects
