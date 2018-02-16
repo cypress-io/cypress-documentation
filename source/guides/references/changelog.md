@@ -5,7 +5,7 @@ comments: false
 
 ## 2.0.0
 
-*Released 2/15/2017*
+*Released 2/15/2018*
 
 **Breaking Changes:**
 
