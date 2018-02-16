@@ -26,14 +26,12 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 
 - {% url "Workarounds for the lack of a `cy.hover()` command." hover %}
 - {% issue 299 "There is no `cy.tab()` command." %}
-- {% url "You cannot visit a TLD domain." https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20tld %}
 - {% issue 311#issuecomment-339824191 "There is not any native or mobile events support." %}
 - {% issue 170#issuecomment-340012621 "Testing file uploads is application specific." %}
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
 - {% issue 181 "You can take screenshots, but diffing them needs work." %}
 - {% issue 685 "Iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
-- {% issue 392#issuecomment-274987217 "Third party sites may implement security mechanisms that do not work with Cypress." %}
 - {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround" %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/spy_stub_clock_spec.js %}
 
 # Permanent trade-offs
