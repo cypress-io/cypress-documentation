@@ -80,6 +80,7 @@ Option | Default | Description
 `chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 `blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
+`modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
 
 ## Viewport
 
@@ -224,6 +225,18 @@ For instance given a URL: `https://google.com/search?q=cypress`
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
 {% img /img/guides/blacklist-host.png %}
+
+## modifyObstructiveCode
+
+With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that {% url 'matches the following patterns.' https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884 %}
+
+These script patterns are antiquated and deprecated security techniques to prevent clickjacking and framebusting. They are a relic of the past and are no longer necessary in modern browsers. However many sites and applications still implement them.
+
+These techniques prevent Cypress from working, and they can be safely removed without altering any of your application's behavior.
+
+Cypress modifies these scripts at the network level, and therefore there is a tiny performance cost to search the response streams for these patterns.
+
+You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
 
 ## IntelliSense
 
