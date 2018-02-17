@@ -3,9 +3,18 @@ title: Changelog
 comments: false
 ---
 
+## 2.0.1
+
+*Released 2/16/2018*
+
+**Bugfixes:**
+
+- Using `cy.contains()` with a regexp argument is now properly escaped. Fixes {% issue 1322 %}.
+- Fixed a runaway regexp causing large `.js` files to take dozens of seconds to process. This was a regression caused by `2.0.0` with the new `modifyObstructiveCode` option. We've optimized the regexp and the performance is back to being almost identical to transparently passing responses through. Fixes {% issue 1330 %}.
+
 ## 2.0.0
 
-*Released 2/15/2017*
+*Released 2/15/2018*
 
 **Breaking Changes:**
 
