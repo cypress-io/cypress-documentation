@@ -30,7 +30,7 @@ Because Cypress operates within your application, that means it has native acces
 
 # New kind of testing
 
-Having ultimate control over your application, the network traffic, and native access to every host object unlocks a new way of testing that has never been possible before. Instead of being 'locked out' of your application and not being able to easily control it - Cypress instead lets you alter any aspect of how your application works. Instead of slow and expensive tests, such as creating the state required for a given situation,  you can simply create these states artificially like you would in an unit test. For instance you can:
+Having ultimate control over your application, the network traffic, and native access to every host object unlocks a new way of testing that has never been possible before. Instead of being 'locked out' of your application and not being able to easily control it - Cypress instead lets you alter any aspect of how your application works. Instead of slow and expensive tests, such as creating the state required for a given situation, you can simply create these states artificially like you would in an unit test. For instance you can:
 
 - {% url "Stub" stub %} the browser or your application's functions and force them to behave as needed in your test case.
 - Expose data stores (like in Redux) so you can programmatically alter the state of your application directly from your test code.
