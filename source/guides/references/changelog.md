@@ -3,6 +3,16 @@ title: Changelog
 comments: false
 ---
 
+## 2.0.2
+
+*Released 2/17/2018*
+
+**Bugfixes:**
+
+- Fixed more edge cases where legitimate JS code was being modified unexpectedly by `modifyObstructiveCode`. We've tightened up the regexp again even more and added 40 popular JS libs to test against to ensure they are not modified. Fixes {% issue 1334 %}.
+- Fixed an edge case where if hooks such as `beforeEach` or `afterEach` threw an **identical** error message, Cypress would hang indefinitely and never finish running the tests. Fixes {% issue 674 %}.
+- Fixed a bug when `Errors` that threw with no arguments: `throw new Error()` and had their messages appended would duplicate the message over and over again. Fixes {% issue 1338 %}.
+
 ## 2.0.1
 
 *Released 2/16/2018*
