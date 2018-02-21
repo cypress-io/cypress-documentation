@@ -145,9 +145,12 @@ api:
     cookies: cookies.html
     cypress-server: cypress-server.html
     arch: arch.html
+    browser: browser.html
     config: config.html
     dom: dom.html
     env: env.html
+    is-browser: is-browser.html
+    is-browser-type: is-browser-type.html
     cypress-log: cypress-log.html
     platform: platform.html
     version: version.html

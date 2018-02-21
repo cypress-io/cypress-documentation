@@ -181,6 +181,9 @@ sidebar:
     version: version
     arch: arch
     platform: platform
+    browser: browser
+    is-browser: isBrowser
+    is-browser-type: isBrowserType
   examples:
     examples: Examples
     recipes: Recipes
