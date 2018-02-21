@@ -16,6 +16,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
+- {% url "Firefox" https://www.mozilla.org/firefox/ %}
+- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
+- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}
 
 Cypress automatically detects available browsers on your OS.
 
@@ -50,6 +53,18 @@ cypress run --browser chrome
 
 To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
 
+## Firefox Browsers
+
+All Firefox* flavored browsers will be detected and are supported.
+
+***You can launch Firefox browsers:***
+
+```bash
+cypress run --browser firefox
+```
+
+To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+
 ## Unsupported Browsers
 
 Many browsers are not currently supported, but are on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
@@ -64,8 +79,8 @@ When Cypress goes to launch your browser it will give you an opportunity to modi
 
 This enables you to do things like:
 
-- Load your own chrome extension
-- Enable or disable experimental chrome features
+- Load your own extension
+- Enable or disable experimental features
 
 {% url 'This part of the API is documented here.' browser-launch-api %}
 
@@ -101,10 +116,10 @@ You might notice that if you already have the browser open you will see two of t
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser and it'll be much easier to tell the difference. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+For this reason we recommend downloading {% url "Chromium" https://www.chromium.org/Home %}, {% url "Canary" https://www.google.com/chrome/browser/canary.html %}, {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}, or {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}. These browsers both have different icons from the standard Chrome or Firefox browsers and it'll be much easier to tell the difference. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
 
 ![switch canary](/img/guides/switching-cypress-browser-and-canary-browser.gif)
 
-Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
+Additionally, in Chrome-based browsers, we've made the browser spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
 ![Cypress Browser with darker chrome](/img/guides/cypress-browser-chrome.png)
