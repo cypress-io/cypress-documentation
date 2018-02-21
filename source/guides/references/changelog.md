@@ -3,6 +3,19 @@ title: Changelog
 comments: false
 ---
 
+## 2.0.3
+
+*Released 2/21/2018*
+
+**Bugfixes:**
+
+- The runner no longer appears to "hang" if a `before` hook fails in a test with siblings. Previously the test would never generate a `status` and look pending forever. This was a visual bug only. Fixes {% issue 1343 %}.
+- The Desktop GUI properly renders folders that contain specs in Windows now. Fixes {% issue 1335 %}.
+
+**Misc:**
+
+- The viewport dropdown helper in the Runner now displays string quoted JSON instead of an object literal. This better matches how you'd write those options in `cypress.json`. Fixes {% issue 1350 %}.
+
 ## 2.0.2
 
 *Released 2/17/2018*
