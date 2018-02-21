@@ -1,3 +1,11 @@
+- title: "Using Cypress for end-to-end testing with Gleb Bahmutov"
+  url: https://www.youtube.com/watch?v=zTHQqiu_y0Q&list=PLkp6BbeMCOm3TYAIPYkv1R8ESme8xlHVV&index=4
+  sourceName: "Developer small talk"
+  sourceUrl: https://www.youtube.com/playlist?list=PLkp6BbeMCOm3TYAIPYkv1R8ESme8xlHVV
+  date: Feb 11, 2018
+  author: Stefan Judis and Gleb Bahmutov
+  img: /img/examples/developer-small-talk-with-code.jpg
+
 - title: "Assert(js) panel: Kent C. Dodds, Justin Searls, Gleb Bahmutov and Brian Mann"
   url: https://youtu.be/ltzNIOF_L3E
   sourceName: "#!hashbang"
