@@ -1,3 +1,27 @@
+- title: "Lección sobre como testear una app simple con Cypress"
+  url: https://github.com/goncy/cypress-lesson
+  sourceName: "GitHub @goncy"
+  sourceUrl: https://github.com/goncy
+  date: Feb 19, 2018
+  author: Gonzalo Pozzo
+  img: /img/examples/cypress-lesson-in-espanol-with-emojis.jpg
+
+- title: "Cypress.io — Scaling E2E testing with custom commands"
+  url: https://medium.com/@NicholasBoll/cypress-io-scaling-e2e-testing-with-custom-commands-6b72b902aab
+  sourceName: Medium
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Feb 16, 2018
+  author: Nicholas Boll
+  img: /img/examples/creating-custom-commands-in-cypress.jpg
+
+- title: "An Overview of JavaScript Testing in 2018"
+  url: https://medium.com/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3
+  sourceName: "The welldone software chronicles"
+  sourceUrl: https://medium.com/welldone-software
+  date: Feb 9, 2018
+  author: Vitali Zaidman
+  img: /img/examples/javascript-testing-in-2018.jpg
+
 - title: "Cypress: The future of end-to-end testing for web applications"
   url: https://medium.com/tech-quizlet/cypress-the-future-of-end-to-end-testing-for-web-applications-8ee108c5b255
   sourceName: "Tech @ Quizlet"
