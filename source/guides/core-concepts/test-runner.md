@@ -86,8 +86,8 @@ The image below shows that our application is displaying at `1000px` width, `660
 
 ## Selector Playground
 
-In version 1.3.0, the Selector Playground was introduced. In this mode, you can hover over parts of your app and the element underneath the cursor will be highlighted (like "Select an element" mode from the DevTools).
+After engaging the {% url "Selector Playground" selector-playground-guide %} beside the url, you can hover over parts of your app and the element(s) found will be highlighted (like "Select an element" mode from the DevTools).
 
-Cypress will calculate the best selector to using for getting that element. It displays the selector in a new UI panel overlaying the reporter and allowing refinements such as selecting by text via {% url "`cy.contains`" contains %} or selecting via attribute. It also has a copy-to-clipboard button for easy copying.
+Cypress will calculate the best selector to use for getting that element. It displays the selector in a new UI panel overlaying the reporter and allows refinements such as selecting by text via {% url "`cy.contains`" contains %} or selecting via attributes. It also has a copy-to-clipboard button for easy copying. {% url "Learn more about the Selector Playground." selector-playground-guide %}
 
 {% img /img/guides/selector-playground.gif Selector Playground %}

@@ -3,11 +3,11 @@ title: Selector Playground
 comments: false
 ---
 
-The Selector Playground is a feature in the UI of the Cypress runner that helps you to do the following:
+The Selector Playground is a feature in the {% url "Test Runner" test-runner %} that helps you to do the following:
 
-* Determine a unique selector for an element that you can then use with {% url `cy.get()` get %} in your tests
-* See what elements match a given selector using {% url `cy.get()` get %}
-* See what element is selected for a given string of text using {% url `cy.contains()` contains %}
+* Determine a unique selector for an element that you can then use with {% url `cy.get()` get %} in your tests.
+* See what elements match a given selector using {% url `cy.get()` get %}.
+* See what element is selected for a given string of text using {% url `cy.contains()` contains %}.
 
 {% note warning %}
 The Selector Playground is currently only available in Chrome and Chrome-based browsers.
@@ -29,7 +29,7 @@ The box at the top that displays the selector is also a text input. When you edi
 
 ![Type a selector to see what elements it matches](https://user-images.githubusercontent.com/1157043/36675059-ec04b89a-1ad5-11e8-8fec-273600912ce8.gif)
 
-You can also experiment with what {% url `cy.contains()` contains %} would yield given a string of text. Click on `{% fa fa-terminal %} cy.get` and switch to `cy.contains`. Type in text to see which element it matches. (Note that {% url `cy.contains()` contains %} only yields the first element that matches the text, even if multiple elements on the page contain the text).
+You can also experiment with what {% url `cy.contains()` contains %} would yield given a string of text. Click on `{% fa fa-caret-down %} cy.get` and switch to `cy.contains`. Type in text to see which element it matches. (Note that {% url `cy.contains()` contains %} only yields the first element that matches the text, even if multiple elements on the page contain the text).
 
 ![Experiment with cy.contains](https://user-images.githubusercontent.com/1157043/36675344-b312762a-1ad6-11e8-89c0-f7aebbe5a985.gif)
 
