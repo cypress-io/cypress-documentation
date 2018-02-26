@@ -27,6 +27,7 @@ guides:
     web-security: web-security.html
     reporters: reporters.html
     plugins-guide: plugins-guide.html
+    selector-playground-guide: selector-playground-guide.html
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
     # coming-from-selenium: coming-from-selenium.html
@@ -150,6 +151,7 @@ api:
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
+    selector-playground: selector-playground.html
     version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html

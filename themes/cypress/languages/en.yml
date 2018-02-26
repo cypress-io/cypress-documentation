@@ -69,6 +69,7 @@ sidebar:
     cypress-api-design: API Design
     all-videos: Videos
     plugins-guide: Plugins
+    selector-playground-guide: Selector Playground
   api:
     introduction: Introduction
     api: API
@@ -181,6 +182,7 @@ sidebar:
     version: version
     arch: arch
     platform: platform
+    selector-playground: SelectorPlayground
   examples:
     examples: Examples
     recipes: Recipes
