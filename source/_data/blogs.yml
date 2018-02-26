@@ -1,3 +1,11 @@
+- title: "✅ AssertJS 2018 Passed the Test ✅"
+  url: https://medium.com/@michaelsholty/assertjs-2018-passed-the-test-f456bc20161
+  sourceName: "Medium @michaelsholty"
+  sourceUrl: https://medium.com/@michaelsholty
+  date: Feb 24, 2018
+  author: Michael Sholty
+  img: /img/examples/the-testing-trophy-assert-js.jpg
+
 - title: "Lección sobre como testear una app simple con Cypress"
   url: https://github.com/goncy/cypress-lesson
   sourceName: "GitHub @goncy"
