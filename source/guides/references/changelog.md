@@ -3,6 +3,14 @@ title: Changelog
 comments: false
 ---
 
+## 2.0.4
+
+*Released 2/25/2018*
+
+**Bugfixes:**
+
+- The `cypress` npm package now has the correct `engines` set in `package.json`. This was accidentally getting overwritten and caused errors when `engineStrict` was set in environments using `node` older than `8.2.1`. Fixes {% issue 1373 %}.
+
 ## 2.0.3
 
 *Released 2/21/2018*
