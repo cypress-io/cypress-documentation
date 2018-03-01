@@ -32,7 +32,7 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 181 "You can take screenshots, but diffing them needs work." %}
 - {% issue 685 "Iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
-- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround" %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/spy_stub_clock_spec.js %}
+- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %}
 
 # Permanent trade-offs
 
