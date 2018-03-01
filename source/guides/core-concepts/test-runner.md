@@ -109,7 +109,7 @@ By default Cypress will favor:
 {% note info "This is configurable" %}
 Cypress allows you to control how a selector is determined.
 
-Use the {% url "`Cypress.SelectorPlayground`" selector-playground %} API to control the selectors you want returned.
+Use the {% url "`Cypress.SelectorPlayground`" selector-playground-api %} API to control the selectors you want returned.
 {% endnote %}
 
 ## Best Practices
