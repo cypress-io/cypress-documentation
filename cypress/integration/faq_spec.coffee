@@ -9,12 +9,12 @@ describe "FAQ", ->
     cy.visit(FAQ_PATH + ".html")
 
   context "Main Menu", ->
-    it "goes straight to 'General'", ->
+    it "goes straight to 'Using Cypress'", ->
       cy.visit('/')
 
       cy.contains('FAQ')
         .click()
-      cy.contains('h1', "General Questions")
+      cy.contains('h1', "Using Cypress")
 
       cy.url()
         .should('include', FAQ_PATH)
