@@ -147,7 +147,7 @@ api:
     cypress-server: cypress-server.html
     arch: arch.html
     config: config.html
-    dom: dom.html
+    # dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
