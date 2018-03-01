@@ -181,6 +181,7 @@ sidebar:
     version: version
     arch: arch
     platform: platform
+    selector-playground-api: SelectorPlayground
   examples:
     examples: Examples
     recipes: Recipes

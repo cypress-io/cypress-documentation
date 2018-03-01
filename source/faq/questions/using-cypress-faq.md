@@ -115,12 +115,24 @@ Please read our extensive {% url 'Conditional Testing Guide' conditional-testing
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
-No. The Command API is not designed in a way that makes this possible.
+No. The Command API is not designed in a way that makes this possible. This is not a limitation of Cypress - it is a very conscious and important design decision.
+
+Async / await is sugar around promises and Cypress commands are a mixture of both promises and streams.
 
 If you're curious please read:
 
 - Our {% url 'Introduction to Cypress guide' introduction-to-cypress#Commands-Are-Asynchronous %} which explains how the Commands are designed
 - Our {% url 'Variables and Aliases guide' variables-and-aliases %} which talks about patterns dealing with async code
+
+## {% fa fa-angle-right %} How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
+
+Easy - you don't use classes or ID's. You add `data-*` attributes to your elements and target them that way.
+
+Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
+
+## {% fa fa-angle-right %} Is there a suggested way or best practice for how I should target elements or write element selectors?
+
+Yes. Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
 
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
@@ -372,7 +384,9 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 ## {% fa fa-angle-right %} Does Cypress support ES7?
 
-Not currently. It uses {% url "browserify" http://browserify.org/ %} and {% url "babelify" https://github.com/babel/babelify %} with the presets/plugins are hard-coded. {% issue 343 "There is an open issue for making this configurable." %}
+Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
+
+Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
 
 ## {% fa fa-angle-right %} How does one determine what the latest version of Cypress is?
 
@@ -390,7 +404,7 @@ Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-p
 
 This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
 
-## {% fa fa-angle-right %} Is there an option to run Cypress with DevTools open? We want to track network and console issues.
+## {% fa fa-angle-right %} Is there an option to run Cypress headlessly with DevTools open? We want to track network and console issues.
 
 No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress headlessly with DevTools open.
 
