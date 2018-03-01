@@ -69,7 +69,6 @@ sidebar:
     cypress-api-design: API Design
     all-videos: Videos
     plugins-guide: Plugins
-    selector-playground-guide: Selector Playground
   api:
     introduction: Introduction
     api: API
