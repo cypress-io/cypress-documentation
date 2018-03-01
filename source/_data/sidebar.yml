@@ -174,7 +174,7 @@ examples:
 
 faq:
   questions:
-    general-questions-faq: general-questions-faq.html
     using-cypress-faq: using-cypress-faq.html
+    general-questions-faq: general-questions-faq.html
     dashboard-faq: dashboard-faq.html
     company-faq: company-faq.html

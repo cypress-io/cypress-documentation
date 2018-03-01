@@ -4,7 +4,7 @@ _ = require('lodash')
 GUIDES_PATH = "/guides/overview/why-cypress"
 API_PATH = "/api/introduction/api"
 EXAMPLES_PATH = "/examples/examples/recipes"
-FAQ_PATH = "/faq/questions/general-questions-faq"
+FAQ_PATH = "/faq/questions/using-cypress-faq"
 
 describe "Documentation", ->
   beforeEach ->

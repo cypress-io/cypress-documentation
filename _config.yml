@@ -76,7 +76,7 @@ alias:
   dashboard/overview/projects-dashboard.html: guides/core-concepts/dashboard-service.html
   dashboard/overview/organizations-dashboard.html: guides/core-concepts/dashboard-service.html
 
-  faq/index.html: faq/questions/general-questions-faq.html
+  faq/index.html: faq/questions/using-cypress-faq.html
 
 #from Google Search Console/Webmaster Tools since 7/3/2017 - https://docs.google.com/spreadsheets/d/1SHhjytMEzIxtdzFNXJHn_Q6p3xFFv_lFw0x_JtNtxt0/edit#gid=1581503717
   v1.0/docs/promise/: api/utilities/promise.html
