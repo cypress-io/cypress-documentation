@@ -124,6 +124,16 @@ If you're curious please read:
 - Our {% url 'Introduction to Cypress guide' introduction-to-cypress#Commands-Are-Asynchronous %} which explains how the Commands are designed
 - Our {% url 'Variables and Aliases guide' variables-and-aliases %} which talks about patterns dealing with async code
 
+## {% fa fa-angle-right %} How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
+
+Easy - you don't use classes or ID's. You add `data-*` attributes to your elements and target them that way.
+
+Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
+
+## {% fa fa-angle-right %} Is there a suggested way or best practice for how I should target elements or write element selectors?
+
+Yes. Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
+
 ## {% fa fa-angle-right %} Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
 Yes.

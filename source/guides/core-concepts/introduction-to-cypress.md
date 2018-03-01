@@ -87,6 +87,8 @@ cy.get('#main-content')
 
 {% note success Core Concept %}
 Cypress leverages jQuery's powerful selector engine to help make tests familiar and readable for modern web developers.
+
+Interested in the best practices for selecting elements? {% url 'Read here' best-practices#Selecting-Elements %}.
 {% endnote %}
 
 Accessing the DOM elements returned from the query works differently, however:
