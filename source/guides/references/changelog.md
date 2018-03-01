@@ -13,7 +13,7 @@ comments: false
 
 **Features:**
 
-- The {% url 'Selector Playground' test-runner#Selector-Playground %} has been updated to automatically prefer `data-cy`, `data-test` or `data-testid` attributes when providing the unique selector for an element. Additionally it now exposes a {% url 'public API' selector-playground-api %} that you can use to control how it determines which selector to use.
+- The {% url 'Selector Playground' test-runner#Selector-Playground %} has been updated to automatically prefer `data-cy`, `data-test` or `data-testid` attributes when providing the unique selector for an element. Additionally it now exposes a {% url 'public API' selector-playground-api %} that you can use to control how it determines which selector to use. Fixes {% issue 1135 %}.
 
 **Documentation Changes:**
 
