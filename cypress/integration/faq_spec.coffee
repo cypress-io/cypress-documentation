@@ -1,7 +1,7 @@
 YAML = require('yamljs')
 _ = require('lodash')
 
-FAQ_PATH = "/faq/questions/general-questions-faq"
+FAQ_PATH = "/faq/questions/using-cypress-faq"
 
 describe "FAQ", ->
   beforeEach ->

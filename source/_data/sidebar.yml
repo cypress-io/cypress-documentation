@@ -143,10 +143,11 @@ api:
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html
+    selector-playground: selector-playground.html
     cypress-server: cypress-server.html
     arch: arch.html
     config: config.html
-    dom: dom.html
+    # dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
@@ -173,7 +174,7 @@ examples:
 
 faq:
   questions:
-    general-questions-faq: general-questions-faq.html
     using-cypress-faq: using-cypress-faq.html
+    general-questions-faq: general-questions-faq.html
     dashboard-faq: dashboard-faq.html
     company-faq: company-faq.html
