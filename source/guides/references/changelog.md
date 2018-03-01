@@ -3,6 +3,26 @@ title: Changelog
 comments: false
 ---
 
+## 2.1.0
+
+*Released 3/1/2018*
+
+**Bugfixes:**
+
+- Prevent a bug with `node-sass` on OSX + Windows when local `node` version does not match bundled `node` when importing components directly in spec files. The underlying issue was because we forgot to update `Buildkite` and `Appveyor` when we upgraded `Electron` in `2.0.0`. Fixes {% issue 1387 %} and {% issue 1390 %}.
+
+**Features:**
+
+- The {% url 'Selector Playground' test-runner#Selector-Playground %} has been updated to automatically prefer `data-cy`, `data-test` or `data-testid` attributes when providing the unique selector for an element. Additionally it now exposes a {% url 'public API' selector-playground-api %} that you can use to control how it determines which selector to use.
+
+**Documentation Changes:**
+
+- {% url 'Added `Selector Playground Guide`' test-runner#Selector-Playground %}
+- {% url 'Added `Selector Playground API`' selector-playground-api %}
+- {% url 'Updated `Best Practices`' best-practices %}
+- {% url 'Updated `FAQ`' using-cypress-faq %}
+- {% url 'Updated `Introduction to Cypress`' introduction-to-cypress %}
+
 ## 2.0.4
 
 *Released 2/25/2018*
@@ -1420,7 +1440,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Bugfixes:**
 
 - When an integration test file is unable to run and the `integrationFolder` is not the default path, the UI error now properly prints the integration test file's path by stripping off `integration` in the path. Fixes {% issue 117 '#117' %}.
-- {% url `Cypress.Dom.isHidden()` dom#Is-Hidden %} will now throw error when it isn't passed a DOM element.
+- `Cypress.Dom.isHidden()` will now throw error when it isn't passed a DOM element.
 
 **Misc:**
 
