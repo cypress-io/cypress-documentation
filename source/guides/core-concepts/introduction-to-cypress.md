@@ -760,16 +760,7 @@ cy.get('#header a')
   .and('have.attr', 'href', '/users')
 ```
 
-Because {% url "`.should('have.class', ...)`" should %} does not change the subject, the {% url "`.and('have.attr', ...)`" and %} is executed against the same element. This is handy when you need to assert multiple things against a single subject quickly, but there are pitfalls...
-
-{% note danger Beware: Assertions That Change The Subject %}
-Some assertions modify the current subject unexpectedly. For example,
-`cy.get('a').should('have.attr', 'href', '/users')` modifies the subject from the `<a>` element to the string `'/users'`.
-
-This is because Cypress honors the return value of the assertion, and `have.attr` is a {% url "`Chai-jQuery`" assertions#Chai-jQuery %} assertion that returns the matched string instead of the original subject. This can be surprising!
-
-Whenever you have failing assertions and don't understand why, click the command in the Cypress {% url "Command Log" test-runner#Command-Log %}. Cypress will print details to the browser console to help you troubleshoot what is going on.
-{% endnote %}
+Because {% url "`.should('have.class')`" should %} does not change the subject, {% url "`.and('have.attr')`" and %} is executed against the same element. This is handy when you need to assert multiple things against a single subject quickly.
 
 If we wrote this assertion in the explicit form "the long way", it would look like this:
 
