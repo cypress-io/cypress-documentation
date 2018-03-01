@@ -115,7 +115,9 @@ Please read our extensive {% url 'Conditional Testing Guide' conditional-testing
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
-No. The Command API is not designed in a way that makes this possible.
+No. The Command API is not designed in a way that makes this possible. This is not a limitation of Cypress - it is a very conscious and important design decision.
+
+Async / await is sugar around promises and Cypress commands are a mixture of both promises and streams.
 
 If you're curious please read:
 
