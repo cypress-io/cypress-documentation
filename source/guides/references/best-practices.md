@@ -77,6 +77,94 @@ WIP.
 
 WIP. -->
 
+## Selecting Elements
+
+{% note danger %}
+{% fa fa-warning red %} **Anti-Pattern:** Using highly brittle selectors that are subject to change.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Use `data-*` attributes to provide context to your selectors and insulate them from CSS or JS changes.
+{% endnote %}
+
+Every test you write will include selectors for elements. To save yourself a lot of headaches, you should write selectors that are resilient to changes.
+
+Oftentimes we see users run into problems targeting their elements because:
+
+- Your application may use dynamic classes or ID's that change
+- Your selectors break from development changes to CSS styles or JS behavior
+
+Luckily, it is very easy to avoid both of these problems.
+
+1. Don't target elements based on CSS attributes such as: `id`, `class`, `tag`
+2. Don't target elements that may change their `textContent`
+3. Add `data-*` attributes to make it easy to target elements
+
+***How It Works:***
+
+Given a button that we want to interact with:
+
+```html
+<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+```
+
+Let's investigate how we could target it:
+
+Selector | Recommended | Notes
+--- | --- | ---
+`cy.get('button').click()` | {% fa fa-warning red %} Never | Worst - too generic, no context.
+`cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} Never | Bad. Coupled to styling. Highly subject to change.
+`cy.get('#main').click()` | {% fa fa-warning orange %} Sparingly | Better. But still coupled to styling or JS event listeners.
+`cy.contains('Submit').click()` | {% fa fa-check-circle green %} Depends | Much better. But still coupled to text content that may change.
+`cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Insulated from all changes.
+
+Targeting the element above by `tag`, `class` or `id` is very volatile and highly subject to change. You may swap out the element, you may refactor CSS and update ID's, or you may add or remove classes that affect the style of the element.
+
+Instead, adding the `data-cy` attribute to the element gives us a targeted selector that's only used for testing.
+
+The `data-cy` attribute will not change from CSS style or JS behavioral changes, meaning it's not coupled to the **behavior** or **styling** of an element.
+
+Additionally, it makes it clear to everyone that this element is used directly by test code.
+
+{% note info "Did you know?" %}
+
+The {% url "Selector Playground" test-runner#Selector-Playground %} automatically follows these best practices.
+
+When determining an unique selector it will automatically prefer elements with:
+
+- `data-cy`
+- `data-test`
+- `data-testid`
+
+{% endnote %}
+
+***Text Content:***
+
+After reading the above rules you may be wondering:
+
+> if I should always use data attributes, then when should I use `cy.contains()`?
+
+A simple rule of thumb is to ask yourself this:
+
+If the content of the element **changed** would you want the test to fail?
+
+- If the answer is yes: then use {% url `cy.contains()` contains %}
+- If the answer is no: then use a data attribute.
+
+**Example:**
+
+If we looked at the `<html>` of our button again...
+
+```html
+<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+```
+
+The question is: how important is the `Submit` text content to your test? If the text changed from `Subject` to `Save` - would you want the test to fail?
+
+If the answer is **yes** because the word `Submit` is critical and should not be changed - then use {% url `cy.contains()` contains %} to target the element. This way, if it is changed, the test will fail.
+
+If the answer is **no** because the text could be changed - then use {% url `cy.get()` get %} with data attributes. Changing the text to `Save` would then not cause a test failure.
+
 ## Assigning Return Values
 
 {% note danger %}
