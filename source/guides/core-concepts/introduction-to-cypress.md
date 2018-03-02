@@ -214,7 +214,7 @@ Later in this guide we'll go into much more detail about {% urlHash 'Default Ass
 
 # Chains of Commands
 
-It's very important to understand the mechanism Cypress uses to chain commands together. It manages a Promise chain on your behalf, with each command yielding a subject to the next command, until the chain ends or an error is encountered. The developer should not need to use Promises directly, but understanding how they work is helpful!
+It's very important to understand the mechanism Cypress uses to chain commands together. It manages a Promise chain on your behalf, with each command yielding a 'subject' to the next command, until the chain ends or an error is encountered. The developer should not need to use Promises directly, but understanding how they work is helpful!
 
 ## Interacting With Elements
 
@@ -225,7 +225,7 @@ cy.get('textarea.post-body')
   .type('This is an excellent post.')
 ```
 
-We're chaining the {% url `.type()` type %} onto the {% url `cy.get()` get %}, telling it to type into the "subject" yielded from the {% url `cy.get()` get %} command, which will be a DOM element.
+We're chaining the {% url `.type()` type %} onto the {% url `cy.get()` get %}, telling it to type into the subject yielded from the {% url `cy.get()` get %} command, which will be a DOM element.
 
 Here are even more action commands Cypress provides to interact with your app:
 
