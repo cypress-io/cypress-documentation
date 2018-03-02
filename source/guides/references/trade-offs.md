@@ -32,7 +32,7 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 181 "You can take screenshots, but diffing them needs work." %}
 - {% issue 685 "Iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
-- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround" %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/cypress/integration/spy_stub_clock_spec.js %}
+- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/stubbing-spying__window-fetch/cypress/integration/spy-stub-clock-spec.js %}
 
 # Permanent trade-offs
 
@@ -57,7 +57,7 @@ But what this also means is that your test code **is being evaluated inside the 
 
 This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you will soon have the ability to use `Node.js` to import or talk directly to your backend scripts once {% issue 684 %} lands.
 
-To talk to your database or server you need to user the {% url `cy.exec()` exec %} or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than another testing tools written in your backend language.
+To talk to your database or server you need to use the {% url `cy.exec()` exec %} or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than another testing tools written in your backend language.
 
 The trade-off here is that doing everything in the browser (basically all of your tests) is a much better experience in Cypress. But doing things outside of the browser may take a little extra work.
 

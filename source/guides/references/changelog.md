@@ -3,6 +3,34 @@ title: Changelog
 comments: false
 ---
 
+## 2.1.0
+
+*Released 3/1/2018*
+
+**Bugfixes:**
+
+- Prevent a bug with `node-sass` on OSX + Windows when local `node` version does not match bundled `node` when importing components directly in spec files. The underlying issue was because we forgot to update `Buildkite` and `Appveyor` when we upgraded `Electron` in `2.0.0`. Fixes {% issue 1387 %} and {% issue 1390 %}.
+
+**Features:**
+
+- The {% url 'Selector Playground' test-runner#Selector-Playground %} has been updated to automatically prefer `data-cy`, `data-test` or `data-testid` attributes when providing the unique selector for an element. Additionally it now exposes a {% url 'public API' selector-playground-api %} that you can use to control how it determines which selector to use. Fixes {% issue 1135 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added `Selector Playground Guide`' test-runner#Selector-Playground %}
+- {% url 'Added `Selector Playground API`' selector-playground-api %}
+- {% url 'Updated `Best Practices`' best-practices %}
+- {% url 'Updated `FAQ`' using-cypress-faq %}
+- {% url 'Updated `Introduction to Cypress`' introduction-to-cypress %}
+
+## 2.0.4
+
+*Released 2/25/2018*
+
+**Bugfixes:**
+
+- The `cypress` npm package now has the correct `engines` set in `package.json`. This was accidentally getting overwritten and caused errors when `engineStrict` was set in environments using `node` older than `8.2.1`. Fixes {% issue 1373 %}.
+
 ## 2.0.3
 
 *Released 2/21/2018*
@@ -14,7 +42,7 @@ comments: false
 
 **Misc:**
 
-- The viewport dropdown helper in the Runner now displays string quoted JSON instead of an object literal. This better matches how you'd write those options in `cypress.json`. Fixes {% issue 1350 %}.
+- The viewport dropdown helper in the Runner now displays string quoted JSON instead of an object literal. This better matches how you should write those options in `cypress.json`. Fixes {% issue 1350 %}.
 
 ## 2.0.2
 
@@ -22,9 +50,9 @@ comments: false
 
 **Bugfixes:**
 
-- Fixed more edge cases where legitimate JS code was being modified unexpectedly by `modifyObstructiveCode`. We've tightened up the regexp again even more and added 40 popular JS libs to test against to ensure they are not modified. Fixes {% issue 1334 %}.
-- Fixed an edge case where if hooks such as `beforeEach` or `afterEach` threw an **identical** error message, Cypress would hang indefinitely and never finish running the tests. Fixes {% issue 674 %}.
-- Fixed a bug when `Errors` that threw with no arguments: `throw new Error()` and had their messages appended would duplicate the message over and over again. Fixes {% issue 1338 %}.
+- Fixed more edge cases where legitimate JavaScript code was being modified unexpectedly by the {% url "`modifyObstructiveCode`" configuration#Browser %} configuration. We've tightened up the regexp even more and added 40 popular JS libraries to test against to ensure they are not modified. Fixes {% issue 1334 %}.
+- Fixed an edge case when hooks such as `beforeEach` or `afterEach` threw an **identical** error message, Cypress would hang indefinitely and never finish running the tests. Fixes {% issue 674 %}.
+- Fixed bug when `Errors` that threw with no arguments: `throw new Error()` and had their messages appended would duplicate the message over and over again. Fixes {% issue 1338 %}.
 
 ## 2.0.1
 
@@ -32,8 +60,8 @@ comments: false
 
 **Bugfixes:**
 
-- Using `cy.contains()` with a regexp argument is now properly escaped. Fixes {% issue 1322 %}.
-- Fixed a runaway regexp causing large `.js` files to take dozens of seconds to process. This was a regression caused by `2.0.0` with the new `modifyObstructiveCode` option. We've optimized the regexp and the performance is back to being almost identical to transparently passing responses through. Fixes {% issue 1330 %}.
+- Using {% url "`cy.contains()`" contains %} with a regexp argument is now properly escaped. Fixes {% issue 1322 %}.
+- Fixed a runaway regexp causing large `.js` files to take dozens of seconds to process. This was a regression caused by `2.0.0` with the new {% url "`modifyObstructiveCode`" configuration#Browser %} option. We've optimized the regexp and the performance is back to being almost identical to transparently passing responses through. Fixes {% issue 1330 %}.
 
 ## 2.0.0
 
@@ -41,16 +69,16 @@ comments: false
 
 **Breaking Changes:**
 
-- The built in default `Electron` browser has been bumped from version `53` to `59`. This version represents the version of `Chromium` that it's using. In other words, running headlessly or via `Electron` will be like running your tests in `Chrome 59` now. Although its unlikely this would actually *break* any of your tests - it's technically possible they will behave differently. Fixes {% issue 895 %} and {% issue 891 %} and {% issue 823 %} and {% issue 860 %} and {% issue 1011 %} and {% issue 1252 %} and {% issue 1276 %}.
-- We are now detecting and automatically stripping code that obstructs Cypress from being able to test your application. Specifically, we're removing JS code that tries to prevent **clickjacking** and **framebusting**. We've written very conservative rules that do their best to **only** strip these specific JS snippets, but it is technically possible that it may unintentionally rewrite valid JS if they match the regexp patterns. There is a new configuration option called `modifyObstructiveCode` that is `true` by default. If you are experiencing problems after upgrading, you can turn this off and this will disable modifying your JS code. If you were using Cypress and upon visiting your website you would experience seemingly "random" redirects - these problems should now be eliminated. Fixes {% issue 886 %} and {% issue 1245 %} and {% issue 1064 %} and {% issue 992 %}.
-- We are now clearing the browser's disk cache each time it opens (before any tests run). This means that any files that have been cached from `Cache-Control` headers will be cleaned and removed. In the future, we will expose a new `cy.clearCache()` method and provide you finer grained level of control on a per test basis. But for now, this is an improvement. Fixes {% issue 1124 %}.
-- The `--spec` option is now normalized against the current working directory `cwd` instead of the project that you're running Cypress on. That means passing a path from the command line to a spec file will now work even when the project path is not `cwd`. Fixes {% issue 1159 %}.
+- The built in default `Electron` browser has been bumped from version `53` to `59`. This version represents the version of `Chromium` that Electron is using. In other words, running headlessly (or via `Electron`) will be like running your tests in `Chrome 59` now. Although it is unlikely this would actually *break* any of your tests - it is technically possible they could behave differently. Fixes {% issue 895 %} and {% issue 891 %} and {% issue 823 %} and {% issue 860 %} and {% issue 1011 %} and {% issue 1252 %} and {% issue 1276 %}.
+- We are now detecting and automatically stripping code that obstructs Cypress from being able to test your application. Specifically, we are removing JavaScript code that tries to prevent **clickjacking** and **framebusting**. We have written very conservative rules that do their best to **only** strip these specific JS snippets, but it is technically possible that it may unintentionally rewrite valid JS if they match the regexp patterns. There is a new configuration option called {% url "`modifyObstructiveCode`" configuration#Browser %} that is `true` by default. If you are experiencing problems after upgrading, you can turn this off and this will disable modifying your JS code. If you were using Cypress and upon visiting your website you would experience seemingly "random" redirects - these problems should now be eliminated. Fixes {% issue 886 %} and {% issue 1245 %} and {% issue 1064 %} and {% issue 992 %}.
+- We are now clearing the browser's disk cache each time it opens (before any tests run). This means that any files that have been cached from `Cache-Control` headers will be cleaned and removed. In the future, we will expose a new `cy.clearCache()` method to provide finer grained control of clearing the cache on a per test basis. But for now, this is an improvement. Fixes {% issue 1124 %}.
+- The `--spec` option is now normalized against the current working directory `cwd` instead of the project that you are running Cypress in. That means passing a path from the command line to a spec file will now work even when the project path is not `cwd`. Fixes {% issue 1159 %}.
 
 **Bugfixes:**
 
-- `blacklistHosts` would occasionally not work if you were blacklisting a host that has previously cached a file. In this case, the browser would serve it from disk and not make an actual HTTP request. This issue has been solved by clearing the cache when the browser opens. Fixes {% issue 1154 %}.
-- `blacklistHosts` is now correctly accepted via the `--config` CLI flag.
-- Spies and Stubs created with `cy.stub()` and `cy.spy()` will now retry their assertions when utilized from an alias. Fixes {% issue 1156 %}.
+- {% url "`blacklistHosts`" configuration#Browser %} would occasionally not work if you were blacklisting a host that had previously cached a file. In this case, the browser would serve it from disk and not make an actual HTTP request. This issue has been solved by clearing the cache when the browser opens. Fixes {% issue 1154 %}.
+- {% url "`blacklistHosts`" configuration#Browser %} is now correctly accepted via the `--config` CLI flag.
+- Spies and Stubs created with {% url "`cy.stub()`" stub %} and {% url "`cy.spy()`" spy %} will now retry their assertions when utilized from an {% url "alias" as %}. Fixes {% issue 1156 %}.
 - Basic auth is working again in Chrome 63 and Chrome 64. We "for real" fixed it this time by adding auth headers automatically at the network proxy layer and bypassed the browser altogether. We automatically apply auth headers if you provide a username/password in the URL of a `cy.visit(url)`. We also added a new `auth` option to specify the `username/password` using `cy.visit(url, options)`. All of the requests that match the origin of the `url` will have the `Authorization: Basic <...>` headers added. Fixes {% issue 1288 %}.
 - Fixed domain parsing failures when `local` or `localhost` was not used as a `tld`. Fixes {% issue 1292 %} and {% issue 1278 %}.
 - Removed the flag `--disable-background-networking` from the Chrome launch args to fix problems in CI that would throttle XHR callbacks by up to 20-30 seconds. Fixes {% issue 1320 %}.
@@ -460,7 +488,7 @@ Documentation Changes:
 - If any of an element's parent's overflow is 'hidden', we now calculate if the element is outside of the boundaries of that parent element and validate visibility assertions accordingly. This may cause some tests that were previously passing to now accurately fail. Fixes {% issue 410 %}.
 - {% url `.select()` select %} should now look for the trimmed value inside of an `<option></option>`. This may change the content argument required to select the option you intended in your {% url `.select()` select %} command. Fixes {% issue 175 %}.
 - When passing the option `{ force: true }` to {% url `.click()` click %} and {% url `.type()` type %}, we no longer attempt to scroll the element into view. We've also disabled the check that the element is in view before clicking or typing. Fixes {% issue 553 %} and {% issue 537 %}.
-- `Cypress.Dom` has been renamed to {% url "`Cypress.dom`" dom %}.
+- `Cypress.Dom` has been renamed to `Cypress.dom`.
 - `Cypress.Log.command` has been renamed to {% url "`Cypress.log`" cypress-log %}.
 - {% url "`chai-jQuery` assertions" assertions#Chai-jQuery %} no longer change the subject when using `prop`, `attr`, and `css` with the **3rd** argument (which acts as equality check). Fixes {% issue 605 %}.
 - We now throw when a value other than `cy` is returned from a test or command function. Fixes {% issue 463 %}.
@@ -593,7 +621,6 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - {% url 'New ".trigger()"' trigger %}
 - {% url 'New "cy.scrollTo()"' scrollto %}
 - {% url 'New ".scrollIntoView()"' scrollintoview %}
-- {% url 'Updated "Cypress.dom"' dom %}
 - {% url 'Updated "Installing Cypress"' installing-cypress %}
 - {% url 'Updated "Writing Your First Test"' writing-your-first-test %}
 - {% url 'Updated "Testing Your App"' testing-your-app %}
@@ -1413,7 +1440,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Bugfixes:**
 
 - When an integration test file is unable to run and the `integrationFolder` is not the default path, the UI error now properly prints the integration test file's path by stripping off `integration` in the path. Fixes {% issue 117 '#117' %}.
-- {% url `Cypress.Dom.isHidden()` dom#Is-Hidden %} will now throw error when it isn't passed a DOM element.
+- `Cypress.Dom.isHidden()` will now throw error when it isn't passed a DOM element.
 
 **Misc:**
 
@@ -1660,7 +1687,7 @@ Known Issues:
 - Overhauled the entire subsystem dealing with an element's visibility state. Previously we were simply using jQuery's `.is(":visible")` selector which was ineffective at truly determining when an element is "visible". Our changes now differ significantly from jQuery, but they match what a real user would consider visible, and the rules are fairly easy to explain. In other words these rules should just "make sense".
 - An element is considered visible if it can be "interactive" with a user. In other words, if the user is able to click, type, drag, or otherwise physically interact with the element it is considered visible.
 - Because of the additional complexities of how Cypress considers an element `visible`, we now have added the **exact** reason why an element is not visible when throwing an error. This means you'll see errors detailing whether an element or its parents have `display: none`, `visibility: hidden`, or whether an element is considered hidden because its effective `width` or `height` is zero. Whatever the reason, Cypress will indicate why your element is considered hidden.
-- Exposed {% url `Cypress.Dom.isHidden` dom %} which holds the logic for determining an element's visibility. Modify this to change the rules.
+- Exposed `Cypress.Dom.isHidden` which holds the logic for determining an element's visibility. Modify this to change the rules.
 - Upgraded {% url `.select()` select %} to automatically retry when the `<select>` is disabled, its matching `<option>` is disabled, or when Cypress cannot find a matching `<option>`. This more correctly aligns with the behavior of other actions like {% url `.click()` click %}, which automatically retry until the element is ready to receive the action.
 
 **Bugfixes:**

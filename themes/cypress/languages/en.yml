@@ -184,6 +184,7 @@ sidebar:
     browser: browser
     is-browser: isBrowser
     is-browser-type: isBrowserType
+    selector-playground-api: SelectorPlayground
   examples:
     examples: Examples
     recipes: Recipes

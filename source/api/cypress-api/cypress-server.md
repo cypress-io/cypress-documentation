@@ -5,10 +5,6 @@ comments: false
 
 Permanently change the default options for all {% url `cy.server()` server %} instances
 
-{% note info New to Cypress? %}
-Any configuration you pass to {% url `cy.server()` server %} will only persist until the end of the test.
-{% endnote %}
-
 # Syntax
 
 ```javascript
