@@ -143,6 +143,10 @@
     width: 100%;
     border: 1px solid #e8e8e8;
 
+    code {
+      white-space: nowrap;
+    }
+
     th {
       font-weight: 500;
       padding: 2px 15px;
@@ -406,11 +410,11 @@
     }
 
     &.warning {
-      border-left-color: #f0ad4e;
+      border-left-color: $color-orange;
       background-color: #fcf8f2;
 
       .note-title {
-        color: #f0ad4e;
+        color: $color-orange;
       }
     }
     &.info {
