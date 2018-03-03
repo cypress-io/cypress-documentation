@@ -29,7 +29,7 @@ Whether cookie debugging should be enabled.
 
 Names of cookies to be preserved. Pass an unlimited number of arguments.
 
-**{% fa fa-angle-right %} object**  ***(Object)***
+**{% fa fa-angle-right %} options**  ***(Object)***
 
 Set defaults for all cookies, such as whitelisting a set of cookies to bypass being cleared before each test.
 

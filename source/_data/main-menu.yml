@@ -2,4 +2,4 @@ guides: /guides/overview/why-cypress.html
 api: /api/introduction/api.html
 plugins: /plugins/
 examples: /examples/examples/recipes.html
-faq: /faq/questions/general-questions-faq.html
+faq: /faq/questions/using-cypress-faq.html

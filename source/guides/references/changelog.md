@@ -3,6 +3,26 @@ title: Changelog
 comments: false
 ---
 
+## 2.1.0
+
+*Released 3/1/2018*
+
+**Bugfixes:**
+
+- Prevent a bug with `node-sass` on OSX + Windows when local `node` version does not match bundled `node` when importing components directly in spec files. The underlying issue was because we forgot to update `Buildkite` and `Appveyor` when we upgraded `Electron` in `2.0.0`. Fixes {% issue 1387 %} and {% issue 1390 %}.
+
+**Features:**
+
+- The {% url 'Selector Playground' test-runner#Selector-Playground %} has been updated to automatically prefer `data-cy`, `data-test` or `data-testid` attributes when providing the unique selector for an element. Additionally it now exposes a {% url 'public API' selector-playground-api %} that you can use to control how it determines which selector to use. Fixes {% issue 1135 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added `Selector Playground Guide`' test-runner#Selector-Playground %}
+- {% url 'Added `Selector Playground API`' selector-playground-api %}
+- {% url 'Updated `Best Practices`' best-practices %}
+- {% url 'Updated `FAQ`' using-cypress-faq %}
+- {% url 'Updated `Introduction to Cypress`' introduction-to-cypress %}
+
 ## 2.0.4
 
 *Released 2/25/2018*
@@ -468,7 +488,7 @@ Documentation Changes:
 - If any of an element's parent's overflow is 'hidden', we now calculate if the element is outside of the boundaries of that parent element and validate visibility assertions accordingly. This may cause some tests that were previously passing to now accurately fail. Fixes {% issue 410 %}.
 - {% url `.select()` select %} should now look for the trimmed value inside of an `<option></option>`. This may change the content argument required to select the option you intended in your {% url `.select()` select %} command. Fixes {% issue 175 %}.
 - When passing the option `{ force: true }` to {% url `.click()` click %} and {% url `.type()` type %}, we no longer attempt to scroll the element into view. We've also disabled the check that the element is in view before clicking or typing. Fixes {% issue 553 %} and {% issue 537 %}.
-- `Cypress.Dom` has been renamed to {% url "`Cypress.dom`" dom %}.
+- `Cypress.Dom` has been renamed to `Cypress.dom`.
 - `Cypress.Log.command` has been renamed to {% url "`Cypress.log`" cypress-log %}.
 - {% url "`chai-jQuery` assertions" assertions#Chai-jQuery %} no longer change the subject when using `prop`, `attr`, and `css` with the **3rd** argument (which acts as equality check). Fixes {% issue 605 %}.
 - We now throw when a value other than `cy` is returned from a test or command function. Fixes {% issue 463 %}.
@@ -601,7 +621,6 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - {% url 'New ".trigger()"' trigger %}
 - {% url 'New "cy.scrollTo()"' scrollto %}
 - {% url 'New ".scrollIntoView()"' scrollintoview %}
-- {% url 'Updated "Cypress.dom"' dom %}
 - {% url 'Updated "Installing Cypress"' installing-cypress %}
 - {% url 'Updated "Writing Your First Test"' writing-your-first-test %}
 - {% url 'Updated "Testing Your App"' testing-your-app %}
@@ -1421,7 +1440,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Bugfixes:**
 
 - When an integration test file is unable to run and the `integrationFolder` is not the default path, the UI error now properly prints the integration test file's path by stripping off `integration` in the path. Fixes {% issue 117 '#117' %}.
-- {% url `Cypress.Dom.isHidden()` dom#Is-Hidden %} will now throw error when it isn't passed a DOM element.
+- `Cypress.Dom.isHidden()` will now throw error when it isn't passed a DOM element.
 
 **Misc:**
 
@@ -1668,7 +1687,7 @@ Known Issues:
 - Overhauled the entire subsystem dealing with an element's visibility state. Previously we were simply using jQuery's `.is(":visible")` selector which was ineffective at truly determining when an element is "visible". Our changes now differ significantly from jQuery, but they match what a real user would consider visible, and the rules are fairly easy to explain. In other words these rules should just "make sense".
 - An element is considered visible if it can be "interactive" with a user. In other words, if the user is able to click, type, drag, or otherwise physically interact with the element it is considered visible.
 - Because of the additional complexities of how Cypress considers an element `visible`, we now have added the **exact** reason why an element is not visible when throwing an error. This means you'll see errors detailing whether an element or its parents have `display: none`, `visibility: hidden`, or whether an element is considered hidden because its effective `width` or `height` is zero. Whatever the reason, Cypress will indicate why your element is considered hidden.
-- Exposed {% url `Cypress.Dom.isHidden` dom %} which holds the logic for determining an element's visibility. Modify this to change the rules.
+- Exposed `Cypress.Dom.isHidden` which holds the logic for determining an element's visibility. Modify this to change the rules.
 - Upgraded {% url `.select()` select %} to automatically retry when the `<select>` is disabled, its matching `<option>` is disabled, or when Cypress cannot find a matching `<option>`. This more correctly aligns with the behavior of other actions like {% url `.click()` click %}, which automatically retry until the element is ready to receive the action.
 
 **Bugfixes:**
