@@ -70,7 +70,7 @@ Option | Default | Description
 ```javascript
 // yields <option value="456">apples</option>
 cy.get('select')
-  .select('apples').should('have.value', '457')
+  .select('apples').should('have.value', '456')
 ```
 
 ## Value
