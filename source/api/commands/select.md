@@ -70,6 +70,7 @@ Option | Default | Description
 ```javascript
 // yields <option value="456">apples</option>
 cy.get('select').select('apples')
+  .should('have.value', '456')
 ```
 
 ## Value
@@ -87,6 +88,7 @@ cy.get('select').select('apples')
 ```javascript
 // yields <option value="456">apples</option>
 cy.get('select').select('456')
+  .should('have.value', '456')
 ```
 
 ## Select multiple options
@@ -102,7 +104,9 @@ cy.get('select').select('456')
 ```
 
 ```javascript
-cy.get('select').select(['apples', 'bananas'])
+cy.get('select')
+  .select(['apples', 'bananas']).invoke('val')
+  .should('deep.equal', ['456', '458'])
 ```
 
 ***Select the options with the values "456" and "457"***
@@ -116,7 +120,9 @@ cy.get('select').select(['apples', 'bananas'])
 ```
 
 ```javascript
-cy.get('select').select(['456', '457'])
+cy.get('select')
+  .select(['456', '457']).invoke('val')
+  .should('deep.equal', ['456', '457'])
 ```
 
 # Notes
