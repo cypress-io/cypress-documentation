@@ -209,7 +209,7 @@ Once again - we will need another reliable way to achieve this without involving
 
 These patterns are pretty much the same as before:
 
-***Use the URL to control it:****
+***Use the URL to control it:***
 
 ```js
 // dont show the wizard
