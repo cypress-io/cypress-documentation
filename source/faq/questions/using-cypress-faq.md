@@ -267,7 +267,7 @@ cy.get('#list>li').should('have.length', 20)
 
 ## {% fa fa-angle-right %} How do I seed / reset my database?
 
-You can use either {% url `cy.request()` request %} or {% url `cy.exec()` exec %} to talk to your backend to seed data.
+You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your backend to seed data.
 
 You could also just stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
 
@@ -330,7 +330,10 @@ The code you write in Cypress is executed in the browser, so you can import or r
 
 You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
-Cypress doesn't have direct access to node or your file system. We recommend utilizing {% url `cy.exec()` exec %} or {% url `cy.readFile()` readfile %} to execute a shell command or a node script that will do what you need.
+Cypress doesn't have direct access to node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
+
+- {% url `cy.task()` task %} to run code in node via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.exec()` exec %} to execute a shell command
 
 {% url 'Check out this example recipe.' recipes#Node-Modules %}
 
