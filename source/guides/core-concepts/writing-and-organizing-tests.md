@@ -12,6 +12,12 @@ comments: false
 - How to group your tests.
 {% endnote %}
 
+{% note success "Best Practices" %}
+We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach breaking down your application and organizing your tests.
+
+{% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
+{% endnote %}
+
 # Folder Structure
 
 After adding a new project, Cypress will automatically scaffold out a suggested folder structure. By default it will create:

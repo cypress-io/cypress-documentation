@@ -3,6 +3,18 @@ title: Tutorial Videos
 comments: false
 ---
 
+# Best Practices
+
+In this tutorial, we'll focus on writing and organizing tests for a real application.
+
+We'll demonstrate how to write your tests **in isolation** to prevent specs from being coupled together or having to share knowledge.
+
+First we'll test our "Login Page", refactor, and then create a {% url "Custom Command" custom-commands %}. From there we'll use {% url `cy.request()` request %} to programmatically log in. Finally, we'll discuss approaches for taking shortcuts by controlling your application's state directly.
+
+| Tutorial | Length | Release date | Cypress version|
+| -- | -- | -- | -- |
+| {% url "Organizing Tests, Logging In, Controlling State" https://www.youtube.com/watch?v=5XQOK0v_YRE %} | {% fa fa-video-camera %} 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0 |
+
 # Test a React Todo App
 
 In this tutorial, we will walk through building a "Todo" application in {% url "React" https://reactjs.org/ %} while testing it with Cypress. We will look at ways we can use Cypress to not only create a test suite for our application, but help us write our tests and guide feature implementation.
@@ -29,9 +41,9 @@ We have a lot of ground to cover, so let's get started!
 
 We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's [`npm`](https://www.npmjs.com/) dependencies and scripts, then jump right into getting Cypress up and running.
 
-{% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/01_setup %} 
+{% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/01_setup %}
 
-{% video 240554515 %}
+{% video vimeo 240554515 %}
 
 ## 2. Text inputs
 
@@ -39,7 +51,7 @@ We will work through creating our first real test and implementing the feature u
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/02_inputs %}
 
-{% video 240554808 %}
+{% video vimeo 240554808 %}
 
 ## 3. Form submission and XHRs
 
@@ -47,7 +59,7 @@ We will implement form submission for our todo app, leveraging {% url `cy.server
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/03_form_sub %}
 
-{% video 241063147 %}
+{% video vimeo 241063147 %}
 
 ## 4. Loading data with fixtures
 
@@ -82,7 +94,7 @@ We will be using this list of todo objects to stub our XHR calls. For convenienc
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/04_custom_cmd %}
 
-{% video 241773142 %}
+{% video vimeo 241773142 %}
 
 ## 5. Todo item behavior
 
@@ -90,7 +102,7 @@ We will update our app to properly display todo items based on their `isComplete
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/05_todo_items %}
 
-{% video 242954792 %}
+{% video vimeo 242954792 %}
 
 ## 6. Toggling and debugging
 
@@ -98,7 +110,7 @@ We will create a test for todo item toggling. As we implement the toggle feature
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/06_toggle_debug %}
 
-{% video 242961930 %}
+{% video vimeo 242961930 %}
 
 ## 7. Filters and data-driven tests
 
@@ -106,7 +118,7 @@ We will test the application's footer behavior. First, we will ensure that our f
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/07_data_driven %}
 
-{% video 244696145 %}
+{% video vimeo 244696145 %}
 
 ## 8. Full end-to-end tests part 1
 
@@ -114,7 +126,7 @@ We will connect our back-end API to the front-end we've been building. Once we h
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/08_smoke_1 %}
 
-{% video 245387683 %}
+{% video vimeo 245387683 %}
 
 ## 9. Full end-to-end tests part 2
 
@@ -122,4 +134,4 @@ We will continue building on our full end-to-end tests, this time seeding the da
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/09_smoke_2 %}
 
-{% video 245388948 %}
+{% video vimeo 245388948 %}
