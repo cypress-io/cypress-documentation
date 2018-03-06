@@ -77,6 +77,20 @@ WIP.
 
 WIP. -->
 
+## Organizing Tests, Logging In, Controlling State
+
+{% note danger %}
+{% fa fa-warning red %} **Anti-Pattern:** Sharing page objects, using your UI to log in, and not taking shortcuts.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Test specs in isolation, programmatically log into your application, and take control of your application's state.
+{% endnote %}
+
+We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach writing fast, scalable tests.
+
+{% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
+
 ## Selecting Elements
 
 {% note danger %}

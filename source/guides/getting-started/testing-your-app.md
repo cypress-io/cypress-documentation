@@ -12,7 +12,7 @@ comments: false
 - Effectively leveraging test data
 {% endnote %}
 
-We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let's integrate it into your *real* app!
+{% video youtube 5XQOK0v_YRE %}
 
 # {% fa fa-terminal %} Step 1: Start Your Server
 
