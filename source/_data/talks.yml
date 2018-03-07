@@ -7,9 +7,10 @@
   img: /img/examples/ui-state-time-travel-js-conf-iceland.jpg
 
 - title: "Moving Around the Testing Pyramid"
-  url: https://www.youtube.com/watch?v=5XQOK0v_YRE&t=0s&index=4&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
+  url: https://www.youtube.com/watch?v=5FnalKRjpZk&t=0s&index=5&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
   sourceName: "Assert(js)"
-  sourceUrl: https://www.youtube.com/watch?v=5FnalKRjpZk&t=0s&index=5&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
+  sourceUrl:
+    https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
   date: Feb 22, 2018
   author: Gleb Bahmutov
   img: /img/examples/moving-the-testing-pyramid.jpg
