@@ -4,79 +4,6 @@ comments: false
 layout: toc-top
 ---
 
-<!-- ## Using your UI to Build Up State
-
-- use cy.request
-- seed the database
-- use stubbing
-- modify cookies
-- modify local storage
-- mock / stub methods
-
-Mostly WIP.
-
-Began {% url 'discussing here' testing-your-app#Testing-Strategies %}. -->
-
-<!-- ## Acting Too Much like a User
-
-WIP.
-
-## Testing like you did with Selenium
-
-WIP.
-
-## Testing Across Domains
-
-WIP.
-
-## Creating too many Abstractions
-
-WIP.
-
-## Logging Out after each Test
-
-WIP.
-
-## Running code in `after` or `afterEach` hooks
-
-WIP.
-
-## Overusing `.then()`
-
-WIP.
-
-## Avoid 3rd Party Services
-
-WIP.
-
-## Adding Promises Unnecessarily
-
-WIP.
-
-## Mutating State Between Tests
-
-WIP.
-
-## Running too many Tests at Once
-
-WIP.
-
-## Putting up with Slow Tests
-
-WIP.
-
-## Writing E2E Tests only for Production
-
-WIP.
-
-## Running all the Tests in Test Runner
-
-WIP.
-
-## Splitting up the "One Giant Test"
-
-WIP. -->
-
 ## Organizing Tests, Logging In, Controlling State
 
 {% note danger %}
@@ -643,3 +570,39 @@ Simple. Start your web server before running Cypress and kill it after it comple
 Are you trying to run in CI?
 
 We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Booting-Your-Server %}.
+
+## Setting a global baseUrl
+
+{% note danger %}
+{% fa fa-warning red %} **Anti-Pattern:** Using {% url "`cy.visit()`" visit %} without setting a `baseUrl`.
+{% endnote %}
+
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your `cypress.json` file.
+{% endnote %}
+
+Adding a {% url "`baseUrl`" configuration#Global %} in your configuration can save some time on initial startup of your Cypress tests.
+
+When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
+
+***Without `baseUrl` set, Cypress loads main window in `localhost` + random port***
+{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png %}
+
+As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
+
+By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
+
+***cypress.json***
+```json
+{
+  "baseUrl": "http://localhost:8484"
+}
+```
+
+***With `baseUrl` set, Cypress loads main window in `baseUrl`***
+
+{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png %}
+
+Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
+
+{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png %}
