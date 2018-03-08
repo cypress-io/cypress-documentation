@@ -185,7 +185,7 @@ describe('Hooks', function() {
 
 ## Excluding and Including Tests
 
-To run a specified suite or test, simply append `.only()` to the function. All nested suites will also be executed.
+To run a specified suite or test, simply append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
 
 ```javascript
 // -- Start: Our Application Code --
