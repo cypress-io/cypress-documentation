@@ -25,7 +25,7 @@ cy.route(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.route('**/users/*')  
+cy.route('/users/**')  
 ```
 
 ## Arguments
