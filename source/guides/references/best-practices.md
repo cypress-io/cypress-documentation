@@ -581,7 +581,9 @@ We have {% url 'examples showing you how to start and stop your web server' cont
 {% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your `cypress.json` file.
 {% endnote %}
 
-Adding a {% url "`baseUrl`" configuration#Global %} in your configuration can save some time on initial startup of your Cypress tests.
+Adding a {% url "`baseUrl`" configuration#Global %} in your configuration allows you to omit passing the `baseUrl` to commands like {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %}. Cypress assumes this is the url you want to use.
+
+Adding a {% url "`baseUrl`" configuration#Global %} can also save some time during the initial startup of your Cypress tests.
 
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
