@@ -3,7 +3,7 @@ title: task
 comments: false
 ---
 
-Execute code in node.js via the `task:requested` plugin event.
+Execute code in node.js via the `task` plugin event.
 
 {% note warning 'Anti-Pattern' %}
 Don't try to start a web server from `cy.task()`.
@@ -28,11 +28,10 @@ cy.task(event, arg, options)
 cy.task('log', 'This will be output to the terminal')
 
 // in plugins file
-on('task:requested' (event, arg) => {
-  switch (event) {
-    case 'log':
-      console.log(arg)
-      return null
+on('task', {
+  log (message) {
+    console.log(message)
+    return null
   }
 })
 ```
@@ -41,7 +40,7 @@ on('task:requested' (event, arg) => {
 
 **{% fa fa-angle-right %} event** ***(String)***
 
-An event name (can be any arbitrary string) that you handle via the `task:requested` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+An event name (can be any arbitrary string) that you handle via the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
@@ -58,7 +57,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-`cy.task()` yields the value returned or resolved by the `task:requested` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+`cy.task()` yields the value returned or resolved by the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
 # Examples
 
@@ -71,7 +70,7 @@ Option | Default | Description
 - Performing parallel tasks (like making multiple http requests outside of Cypress)
 - Running an external process
 
-In the `task:requested` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. If you don't need to return a value, explicitly return `null` to signal that the given event has been handled.
+In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. If you don't need to return a value, explicitly return `null` to signal that the given event has been handled.
 
 ***Log a string to the terminal***
 
@@ -80,11 +79,10 @@ In the `task:requested` plugin event, the command will fail if `undefined` is re
 cy.task('log', 'This will be output to the terminal')
 
 // in plugins file
-on('task:requested' (event, arg) => {
-  switch (event) {
-    case 'log':
-      console.log(arg) // This will log to the terminal
-      return null // Signal that the 'log' event has been handled
+on('task', {
+  log (message) {
+    console.log(message) // This will log to the terminal
+    return null // Signal that the 'log' event has been handled
   }
 })
 ```
@@ -96,6 +94,7 @@ Note: this serves as a demonstration only. We recommend using fixtures or {% url
 ```javascript
 // in test
 cy.task('readJson', 'cypress.json').then((data) => {
+  // data equals:
   // {
   //   projectId: '12345',
   //   ...
@@ -103,11 +102,10 @@ cy.task('readJson', 'cypress.json').then((data) => {
 })
 
 // in plugins file
-on('task:requested' (event, arg) => {
-  switch (event) {
-    case 'readJson':
-      // reads the file relative to current working directory
-      return fsExtra.readJson(path.join(process.cwd(), arg)
+on('task', {
+  readJson () {
+    // reads the file relative to current working directory
+    return fsExtra.readJson(path.join(process.cwd(), arg)
   }
 })
 ```
