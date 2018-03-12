@@ -12,7 +12,7 @@ comments: false
 - Effectively leveraging test data
 {% endnote %}
 
-We {% url "covered Cypress in a simple app" writing-your-first-test %}, now let's integrate it into your *real* app!
+{% video youtube 5XQOK0v_YRE %}
 
 # {% fa fa-terminal %} Step 1: Start Your Server
 
@@ -393,6 +393,7 @@ Ok, we're done talking.  Now dive in and get started testing your app!
 
 From here you may want to explore some more of our guides:
 
+- {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
 - {% url "Cypress API" api %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
 - {% url 'Command Line' command-line %} for running all your tests headlessly
