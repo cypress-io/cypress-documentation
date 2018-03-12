@@ -74,6 +74,7 @@ Event | Description
 --- | ---
 {% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
 {% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
+{% url `task` task %} | Occurs in conjunction with the `cy.task` command.
 
 {% note warning "More Coming Soon" %}
 The Plugins API is brand new.
