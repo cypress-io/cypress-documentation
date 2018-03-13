@@ -14,6 +14,8 @@ comments: false
 
 {% note success Important! %}
 **This is the single most important guide** for understanding how to test with Cypress. Read it. Understand it. Ask questions about it so that we can improve it.
+
+After you're done, we suggest watching some of our {% fa fa-video-camera %} {% url "Tutorial Videos" tutorials %}.
 {% endnote %}
 
 # Cypress Is Simple

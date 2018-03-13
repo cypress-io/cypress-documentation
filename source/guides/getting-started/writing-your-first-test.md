@@ -11,7 +11,7 @@ comments: false
 - Testing web navigation, DOM querying, and writing assertions.
 {% endnote %}
 
-{% video 237115455 %}
+{% video vimeo 237115455 %}
 
 # Add a Test File
 
@@ -386,7 +386,7 @@ Open up your Dev Tools and click on the `GET` for the `.action-email` class sele
 **We can see Cypress output additional information in the console:**
 
 - Command (that was issued)
-- Returned (what was returned by this command)
+- Yielded (what was returned by this command)
 - Elements (the number of elements found)
 - Selector (the argument we used)
 
