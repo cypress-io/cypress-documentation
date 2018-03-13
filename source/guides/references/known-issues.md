@@ -70,3 +70,7 @@ While we currently provide things like the stack trace and initiator line for XH
 **Workaround**
 
 Sit tight, {% issue 95 'comment on the issue' %} so we know you care about this support, and be patient.
+
+## Docker
+
+If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
