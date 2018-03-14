@@ -55,7 +55,7 @@ Option | Description
 `-P`, `--project` | Path to a specific project
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
-`-s`, `--spec`  | A single test file to run instead of all tests
+`-s`, `--spec`  | Specify the specs to run
 `--record`  | Whether to record the test run
 `--headed`  | Display the electron browser instead of running headlessly
 
@@ -119,6 +119,12 @@ cypress run --reporter-options mochaFile=result.xml,toConsole=true
 
 ```shell
 cypress run --spec cypress/integration/app_spec.js
+```
+
+***Run tests specifying test files to run***
+
+```shell
+cypress run --spec cypress/integration/login/**/*
 ```
 
 ***Run tests specifying a project***
