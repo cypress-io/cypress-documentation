@@ -426,7 +426,7 @@ Here's an example of aliasing a route and waiting on it to complete.
 
 ```js
 cy.server()
-cy.route("POST", "/users/", { id: 123 }).as("postUser")
+cy.route('POST', '/users', { id: 123 }).as('postUser')
 
 cy.get('form').submit()
 
