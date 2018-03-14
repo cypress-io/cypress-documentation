@@ -109,6 +109,10 @@ Cypress.env("host")       // "veronica.dev.local"
 Cypress.env("api_server") // "http://localhost:8888/api/v1/"
 ```
 
+{% note warning %}
+Creating or changing contents of this file while Cypress is open won't notice the change. You have to restart whole Test runner to be able to use variables set in this file.
+{% endnote %}
+
 ***Overview***
 
 {% note success Benefits %}
