@@ -75,7 +75,7 @@ You can also set options for all {% url `cy.wait()` wait %}'s `requestTimeout` a
 
 If you do not pass a `response` to a route, Cypress will pass the request through without stubbing it. We can still wait for the request to resolve later.
 
-***Wait on XHR request matching `url`***
+***Wait on XHR `GET` request matching `url`***
 
 ```javascript
 cy.server()
