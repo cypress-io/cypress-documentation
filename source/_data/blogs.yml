@@ -1,3 +1,19 @@
+- title: "9 top open-source testing automation frameworks: How to choose"
+  url: https://techbeacon.com/9-top-open-source-testing-automation-frameworks-how-choose
+  sourceName: "TechBeacon"
+  sourceUrl: https://techbeacon.com/
+  date: Mar 6, 2018
+  author: Joe Colantonio
+  img: /img/examples/top-testing-automation-frameworks.png
+
+- title: "How to write tests and maintain your sanity"
+  url: https://blog.manifold.co/testing-sucks-here-is-how-to-make-it-better-7af1ff93cc9
+  sourceName: "Manifold"
+  sourceUrl: https://blog.manifold.co/
+  date: Feb 26, 2018
+  author: Daniel Enman
+  img: /img/examples/how-to-write-tests-and-maintina-sanity.png
+
 - title: "✅ AssertJS 2018 Passed the Test ✅"
   url: https://medium.com/@michaelsholty/assertjs-2018-passed-the-test-f456bc20161
   sourceName: "Medium @michaelsholty"
