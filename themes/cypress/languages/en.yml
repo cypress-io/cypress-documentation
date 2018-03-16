@@ -69,6 +69,8 @@ sidebar:
     cypress-api-design: API Design
     all-videos: Videos
     plugins-guide: Plugins
+    tooling: Tooling
+    typescript-support: TypeScript Support
   api:
     introduction: Introduction
     api: API
