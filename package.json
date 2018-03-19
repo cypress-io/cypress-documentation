@@ -52,7 +52,7 @@
     "cypress": "^2.1.0",
     "dependency-check": "^3.0.0",
     "deps-ok": "^1.2.0",
-    "eslint": "4.18.2",
+    "eslint": "4.19.0",
     "eslint-plugin-cypress-dev": "1.1.2",
     "fs-extra": "^5.0.0",
     "ggit": "2.4.2",
