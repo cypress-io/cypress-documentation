@@ -25,8 +25,11 @@ guides:
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
     web-security: web-security.html
-    reporters: reporters.html
+  tooling:
     plugins-guide: plugins-guide.html
+    reporters: reporters.html
+    typescript-support: typescript-support.html
+
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
     # coming-from-selenium: coming-from-selenium.html
