@@ -1,3 +1,11 @@
+- title: "JavaScript Testing Using Jest with Kent C. Dodds"
+  url: https://joecolantonio.com/testtalks/195-javascript-testing-using-jest-with-kent-c-dodds/
+  sourceName: TestTalks
+  sourceUrl: https://joecolantonio.com/testtalks/
+  date: Mar 18, 2018
+  author: Joe Colantonio and Kent C. Dodds
+  img: /img/examples/javascript-testing-using-jest-and-cypress.jpg
+
 - title: "Using Cypress for end-to-end testing with Gleb Bahmutov"
   url: https://www.youtube.com/watch?v=zTHQqiu_y0Q&list=PLkp6BbeMCOm3TYAIPYkv1R8ESme8xlHVV&index=4
   sourceName: "Developer small talk"

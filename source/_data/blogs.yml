@@ -1,3 +1,19 @@
+- title: "Cypress.io — Use the Log API with custom commands"
+  url: https://medium.com/@NicholasBoll/cypress-io-use-the-log-api-with-custom-commands-b4bffca0d4c5
+  sourceName: "Medium @NicholasBoll"
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Mar 18, 2018
+  author: Nicholas Boll
+  img: /img/examples/cy-log-api-commands.jpg
+
+- title: "Using Jest matchers in Cypress"
+  url: https://medium.com/@NicholasBoll/using-jest-matchers-in-cypress-5e8e7281f5dd
+  sourceName: "Medium @NicholasBoll"
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Mar 18, 2018
+  author: Nicholas Boll
+  img: /img/examples/jest-assertion-matcher-cypress.jpg
+
 - title: "9 top open-source testing automation frameworks: How to choose"
   url: https://techbeacon.com/9-top-open-source-testing-automation-frameworks-how-choose
   sourceName: "TechBeacon"
