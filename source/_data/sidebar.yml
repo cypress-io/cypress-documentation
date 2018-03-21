@@ -26,8 +26,8 @@ guides:
     launching-browsers: launching-browsers.html
     web-security: web-security.html
   tooling:
-    reporters: reporters.html
     plugins-guide: plugins-guide.html
+    reporters: reporters.html
     typescript-support: typescript-support.html
 
   # advanced-cypress:
