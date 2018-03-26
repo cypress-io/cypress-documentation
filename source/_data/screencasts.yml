@@ -1,0 +1,15 @@
+- title: "Tests fonctionnels avec Cypress"
+  url: https://www.youtube.com/watch?v=CC-1i0bMIoA&feature=youtu.be
+  sourceName: Grafikart
+  sourceUrl: https://www.grafikart.fr/formations/javascript-unit-test/cypress
+  date: Mar 21, 2018
+  author: Jonathan Boyer
+  youtubeId: CC-1i0bMIoA
+
+- title: "Testing hyperapp with Cypress"
+  url: https://www.youtube.com/watch?v=w8liCoPsDIU
+  sourceName: Hyperapp Cypress Demo
+  sourceUrl: https://github.com/LearnHyperapp/hyperapp-cypress-demo
+  date: Mar 17, 2018
+  author: Alex Barry
+  youtubeId: w8liCoPsDIU
