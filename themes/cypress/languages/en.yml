@@ -71,6 +71,7 @@ sidebar:
     plugins-guide: Plugins
     tooling: Tooling
     typescript-support: TypeScript Support
+    intelligent-code-completion: Intelligent Code Completion
   api:
     introduction: Introduction
     api: API

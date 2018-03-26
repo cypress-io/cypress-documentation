@@ -5,22 +5,11 @@ comments: false
 
 Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}.
 
-# IntelliSense
-
-IntelliSense is available for Cypress. It offers intelligent parameter information directly in your IDE while writing tests. While TypeScript is used to generate the data for intellisense, you can make use of intellisense even when writing your tests in plain JavaScript. 
-
-## Triple-Slash Directives
-
-Adding a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file should get intellisense working in most IDEs.
-
-```js
-/// <reference types="Cypress" />
-```
-{% img /img/guides/typescript-intellisense-with-reference.gif %}
+Intelligent Code Completion is also available for Cypress. {% url "Learn how to set up IntelliSense." intelligent-code-completion %}
 
 ## tsconfig.json
 
-If you want to write your tests in TypeScript, you may find it more convenient to add a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your `cypress` folder.
+If you want to write your tests in TypeScript, we recommend the following configuration in a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your `cypress` folder.
 
 ```json
 {
