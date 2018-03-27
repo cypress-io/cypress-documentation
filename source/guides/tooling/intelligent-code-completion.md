@@ -3,7 +3,7 @@ title: Intelligent Code Completion
 comments: false
 ---
 
-# In Test Files
+# Writing Tests
 
 IntelliSense is available for Cypress. It offers intelligent code suggestions directly in your IDE while writing tests in your IDE.
 
@@ -33,7 +33,7 @@ Adding a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/han
 {% img /img/guides/intellisense-setup.gif %}
 
 
-# In Configuration File
+# Configuration
 
 When editing the {% url "`cypress.json`" configuration %} file, you can use our schema file to get intelligent tooltips in your IDE for each configuration property, helping you along the way. 
 
