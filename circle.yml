@@ -41,7 +41,7 @@ jobs:
       - restore_cache:
           key: v1-{{ .Branch }}-deps
 
-      - run: npm install
+      - run: npm ci
       - run: npm prune
       # see if package-lock.json file has changed
       # if yes, this means it is out of date

@@ -1,4 +1,4 @@
-<div id="content-wrap"  class="{{ page.containerClass }}">
+<div id="content-wrap"  class="{{ page.containerClass }} tutorial">
   <div id="content" class="wrapper">
     <div id="content-inner">
       <article class="article-container" itemscope itemtype="http://schema.org/Article">
@@ -9,19 +9,25 @@
               <a href="https://github.com/cypress-io/cypress-documentation/edit/develop/source/_data/{{ page.dataType }}.yml" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
             </header>
             <div class="article-content" itemprop="articleBody">
-            {% for blog in site.data[page.dataType] %}
+            {% for media in site.data[page.dataType] %}
               <div class="media">
-                <h2><a href="{{ blog.url }}">{{ blog.title }}</a></h2>
-                <a href="{{ blog.url }}" class="img-link">
-                  <img src="{{ blog.img }}" alt="{{ blog.title }}"/>
-                </a>
+                <h2><a href="{{ media.url }}">{{ media.title }}</a></h2>
+                {% if media.youtubeId %}
+                  <div class="embed-container">
+                    <iframe src="https://www.youtube.com/embed/{{ media.youtubeId }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                {% else %}
+                  <a href="{{ media.url }}" class="img-link">
+                    <img src="{{ media.img }}" alt="{{ media.title }}"/>
+                  </a>
+                {% endif %}
                 <p>
                   Published on
-                  <a href="{{ blog.sourceUrl }}">{{ blog.sourceName }}</a>
-                  {% if blog.author %}
-                    by {{ blog.author }}
+                  <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
+                  {% if media.author %}
+                    by {{ media.author }}
                   {% endif %}
-                  <em>({{ blog.date }})</em>
+                  <em>({{ media.date }})</em>
                 </p>
               </div>
             {% endfor %}
