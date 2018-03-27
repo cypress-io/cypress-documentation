@@ -5,7 +5,9 @@ comments: false
 
 # Writing Tests
 
-IntelliSense is available for Cypress. It offers intelligent code suggestions directly in your IDE while writing tests in your IDE.
+## Features
+
+IntelliSense is available for Cypress. It offers intelligent code suggestions directly in your IDE while writing tests.
 
 ***Autocomplete while typing Cypress commands***
 
@@ -19,12 +21,34 @@ IntelliSense is available for Cypress. It offers intelligent code suggestions di
 
 {% img /img/guides/intellisense-assertion-chainers.gif "Assertion Chainers in VSCode" %}
 
-## Setup
+## Set up in your Dev Environment
 
+The TypeScript {% url "type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} are used to generate the data for intellisense and come packaged within Cypress. This document assumes you have {% url "installed Cypress" installing-cypress %}.
 
-The TypeScript type declarations are used to generate the data for intellisense and come packaged within Cypress. This doc assumes you have {% url "installed Cypress" installing-cypress %}.
+Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get {% url "TypeScript support" typescript-support %} and intelligent code completion configured in your developer environment first. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
-Adding a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file should get intellisense working in most IDEs.
+***Reference type declarations via `.tsconfig`***
+
+Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %} with the following configuration should get intelligent code completion working.
+
+```json
+{
+  "compilerOptions": {
+	"strict": true,
+    "baseUrl": "../node_modules",
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress"],
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}
+```
+
+***Triple slash directives***
+
+Adding a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file should get intellisense working on a per file basis.
 
 ```js
 /// <reference types="Cypress" />
@@ -35,7 +59,9 @@ Adding a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/han
 
 # Configuration
 
-When editing the {% url "`cypress.json`" configuration %} file, you can use our schema file to get intelligent tooltips in your IDE for each configuration property, helping you along the way. 
+## Features
+
+When editing the {% url "`cypress.json`" configuration %} file, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property. 
 
 ***Property help when writing and hovering on configuration keys***
 
@@ -46,9 +72,11 @@ When editing the {% url "`cypress.json`" configuration %} file, you can use our 
 {% img /img/guides/intellisense-config-defaults.gif "Default values prefill" %}
 
 
-## Setup
+## Set up in your Dev Environment
 
-In {% url "VSCode" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property.
+Intelligent code completion using JSON schemas is supported by default in {% url "Visual Studio Code" https://code.visualstudio.com/ %} and {% url "Visual Studio" https://www.visualstudio.com/ %}. All other editors will require extra configuration or plugins for JSON schema support. 
+
+To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property.
 
 ```json
 {
