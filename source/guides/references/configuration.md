@@ -26,7 +26,6 @@ Option | Default | Description
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used when running headlessly or in CI
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
-`screenshotOnHeadlessFailure` | `true` | Whether to take a screenshot on test failure when running headlessly or in CI
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
 ## Timeouts
@@ -59,9 +58,10 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
-`screenshotOnHeadlessFailure` | `true` | Whether Cypress will automatically take a screenshot when a test fails when running tests headlessly or in CI.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a headless run's test failure
 `trashAssetsBeforeHeadlessRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before headless test runs.
+
+For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
 
 ## Videos
 

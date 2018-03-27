@@ -32,10 +32,17 @@ A name for the image file. By default the filename will be the title of the test
 
 Pass in an options object to change the default behavior of `cy.screenshot()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | {% usage_options log %}
-`timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.screenshot %}
+Option | Accepts | Default | Description
+--- | --- | --- | ---
+`log` | `boolean` | `true` | {% usage_options log %}
+`timeout` | `number` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.screenshot %}
+`blackout` | `array of strings` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken.
+`capture` | `array of strings` | `['all']` | Which parts of the UI to capture. Options are `all` and `app`. When `all`, the Entire browser viewport, including the Cypress UI, is captured. When `app`, only your app is captured. Can be an array with both and 2 screenshots will be taken.
+`disableTimersAndAnimations` | `boolean` | `true`| When true, disables JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
+`scaleAppCaptures` | `boolean` | `false` | When true and capturing the `app`, will scale the app to fit into the browser viewport.
+`waitForCommandSynchronization` | `boolean` | `true` | When true, makes a best effort to sync the command log, showing the last run command.
+
+For more details on many of these options, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
 ## Yields {% helper_icon yields %}
 
@@ -75,7 +82,7 @@ cy.screenshot('clickingOnNav')
 
 ***Automatic screenshots on test failure***
 
-When running headlessly or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnHeadlessFailure` to `false` in your {% url 'configuration' configuration %}.
+When running headlessly or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` with {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 ## Viewing Screenshots
 
@@ -133,6 +140,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 
 # See also
 
+- {% url `Cypress.Screenshot` screenshot-api %}
 - {% url `cy.debug()` debug %}
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `.pause()` pause %}
