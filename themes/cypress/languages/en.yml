@@ -44,7 +44,6 @@ sidebar:
     command-line: Command Line
     continuous-integration: Continuous Integration
     environment-variables: Environment Variables
-    reporters: Reporters
     launching-browsers: Launching Browsers
     advanced-cypress: Advanced
     the-cypress-workflow: The Cypress Workflow
@@ -68,10 +67,11 @@ sidebar:
     roadmap: Roadmap
     cypress-api-design: API Design
     all-videos: Videos
-    plugins-guide: Plugins
     tooling: Tooling
-    typescript-support: TypeScript Support
     intelligent-code-completion: Intelligent Code Completion
+    plugins-guide: Plugins
+    reporters: Reporters
+    typescript-support: TypeScript
   api:
     introduction: Introduction
     api: API
