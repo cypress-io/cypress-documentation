@@ -123,7 +123,7 @@ cypress run --spec cypress/integration/app_spec.js
 
 ***Run tests specifying a project***
 
-By default Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
+By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
 
 This enables you to install Cypress in a top level `node_modules` folder but run Cypress in a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
 
