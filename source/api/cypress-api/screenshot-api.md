@@ -27,7 +27,7 @@ An object containing one or more of the following:
 Option | Accepts | Default | Description
 --- | --- | --- | ---
 `blackout` | `array of strings` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken.
-`capture` | `array of strings` | `['all']` | Which parts of the UI to capture. Options are `all` and `app`. When `all`, the Entire browser viewport, including the Cypress UI, is captured. When `app`, only your app is captured. Can be an array with both and 2 screenshots will be taken.
+`capture` | `array of strings` | `['runner']` | Which parts of the UI to capture. Valid values are `['runner']`, `['app']`, or `['runner', 'app']`. When `runner`, the entire browser viewport, including the Cypress UI, is captured. When `app`, only your app is captured. Can be an array with both and 2 screenshots will be taken.
 `disableTimersAndAnimations` | `boolean` | `true`| When true, disables JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `screenshotOnRunFailure` | `boolean` | `true` | When true, automatically takes a screenshot when there is a failure in Run mode
 `scaleAppCaptures` | `boolean` | `false` | When true and capturing the `app`, will scale the app to fit into the browser viewport.
@@ -51,7 +51,7 @@ The following will take two screenshots. The first will be just your app. The se
 
 ```javascript
 Cypress.SelectorPlayground.defaults({
-  capture: ['app', 'all']
+  capture: ['app', 'runner']
 })
 ```
 
