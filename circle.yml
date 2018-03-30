@@ -142,7 +142,8 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - lockfile
+      # disabled for now - needs GH_TOKEN with write permissions
+      # - lockfile
       - build:
           requires:
             - lockfile
