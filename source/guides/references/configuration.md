@@ -238,22 +238,6 @@ Cypress modifies these scripts at the network level, and therefore there is a ti
 
 You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
 
-## IntelliSense
+## Intelligent Code Completion
 
-When editing the `cypress.json` file, you can tell your text editor to use our schema file that describes each valid property. If the text editor supports this feature, it will display IntelliSense for each property, helping you along the way. For example, in [VSCode](https://code.visualstudio.com/) you can open Preferences / Settings / User Settings and add the `json.schemas` property.
-
-```json
-{
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "cypress.json"
-      ],
-      "url": "https://on.cypress.io/cypress.schema.json"
-    }
-  ]
-}
-```
-
-Open `cypress.json` and hover over a setting - you should see IntelliSense popup like this one.
-![cypress.json IntelliSense popup in VSCode](/img/faq/questions/cypress-json-intellisense.png)
+IntelliSense is available for Cypress while eidting your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}

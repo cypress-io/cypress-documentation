@@ -19,6 +19,15 @@ defaults: &defaults
         <<: *env_defaults
 
 jobs:
+  # job to update package-lock.json file using Greenkeeper
+  lockfile:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: npm install -g greenkeeper-lockfile@1
+      - run: greenkeeper-lockfile-update
+      - run: greenkeeper-lockfile-upload
+
   ## code checkout and NPM installs
   build:
     <<: *defaults
@@ -133,7 +142,11 @@ workflows:
   version: 2
   build_and_test:
     jobs:
+      # disabled for now - needs GH_TOKEN with write permissions
+      # - lockfile
       - build
+          # requires:
+          #   - lockfile
       - docs-tests:
           requires:
             - build
