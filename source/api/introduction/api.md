@@ -44,9 +44,9 @@ Each document attempts to cover the essentials of each method including:
 
 **See also:** Other related methods.
 
-# IntelliSense
+## Intelligent Code Completion
 
-IntelliSense is available for Cypress. It offers intelligent parameter information when writing Cypress commands directly in your IDE. {% url "Learn how to set up IntelliSense." typescript-support#IntelliSense %}
+IntelliSense is available for Cypress. It offers intelligent parameter information when writing Cypress commands directly in your IDE. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
 
 # Reporting a Problem
 
