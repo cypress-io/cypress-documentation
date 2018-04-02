@@ -9,7 +9,7 @@
 ## Automatic Deployment
 
 Any commits landed in `develop` branch of this repository will be deployed
-to `staging` environment if end to end tests pass and can be previewed at [https://docs-staging.cypress.io](https://docs-staging.cypress.io).
+to `staging` environment if end-to-end tests pass and can be previewed at [https://docs-staging.cypress.io](https://docs-staging.cypress.io).
 
 Any commits landed in `master` branch will be deployed to the `production`
 environment and can be previewed at [https://docs.cypress.io](https://docs.cypress.io).
@@ -37,8 +37,8 @@ To debug deployment actions, run with `DEBUG=deploy ...` environment variable.
 
 **Note**
 
-on CI, the deployment and scraping configuration are passed via environment
-variables `support__aws_credentials_json` and `support__circle_credentials_json`
+On CI, the deployment and scraping configuration are passed via environment
+variables `support__aws_credentials_json` and `support__circle_credentials_json`,
 which are just JSON files as strings.
 
 ```shell
