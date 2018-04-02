@@ -145,8 +145,8 @@ workflows:
       # disabled for now - needs GH_TOKEN with write permissions
       # - lockfile
       - build:
-          requires:
-            - lockfile
+          # requires:
+          #   - lockfile
       - docs-tests:
           requires:
             - build
