@@ -144,7 +144,7 @@ workflows:
     jobs:
       # disabled for now - needs GH_TOKEN with write permissions
       # - lockfile
-      - build:
+      - build
           # requires:
           #   - lockfile
       - docs-tests:
