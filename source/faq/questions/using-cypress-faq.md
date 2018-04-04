@@ -374,7 +374,7 @@ If it's just an anchor that initiates the download, you could just test that it 
 
 In the end, it's up to you to know your implementation and to test just enough to cover everything.
 
-## {% fa fa-angle-right %} Is is possible to catch the promise chain in Cypress?
+## {% fa fa-angle-right %} Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command. {% url "Read more about how the Cypress commands are not Promises" introduction-to-cypress#Commands-Are-Not-Promises %}
 
