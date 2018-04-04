@@ -34,14 +34,14 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 ```json
 {
   "compilerOptions": {
-	"strict": true,
+    "allowJs": true,
     "baseUrl": "../node_modules",
-    "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress"],
+    "types": [
+      "cypress"
+    ]
   },
   "include": [
-    "**/*.ts"
+    "**/*.*"
   ]
 }
 ```
