@@ -15,7 +15,7 @@ comments: false
 
 # Capabilities
 
-Cypress comes built in with the ability to {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your applications {% url `cy.clock()` clock %} - such as controlling `Date`, `setTimeout`, and `setInterval`.
+Cypress comes built in with the ability to stub and spy with {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your application's time with {% url `cy.clock()` clock %} - which lets you manipulate `Date`, `setTimeout`, `setInterval`, amongst others.
 
 These commands are useful when writing both **unit tests** and **integration tests**.
 
@@ -29,7 +29,7 @@ Cypress automatically bundles and wraps these libraries:
 | [`lolex`](https://github.com/sinonjs/lolex) | provides the {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} API's |
 | [`sinon-chai`](https://github.com/domenic/sinon-chai) | adds `chai` assertions for stubs and spies |
 
-You can refer to each of these libraries documentation for more examples and explanations.
+You can refer to each of these libraries' documentation for more examples and explanations.
 
 # Common Scenarios
 
@@ -39,9 +39,9 @@ You can refer to each of these libraries documentation for more examples and exp
 
 ## Stubs
 
-A stub is a way to modify a function and force its behavior to be controlled by you (the programmer).
+A stub is a way to modify a function and delegate control overs its behavior to you (the programmer).
 
-A stub is most commonly used in a unit test but is still useful during some integration / e2e tests.
+A stub is most commonly used in a unit test but is still useful during some integration/e2e tests.
 
 ```javascript
 // create a standalone stub (generally for use in unit test)
@@ -81,7 +81,7 @@ You generally stub a function when it has side effects you are trying to control
 
 ## Spies
 
-A spy gives you the ability to "spy" on a function, by being able to capture and then assert that the function was called with the right arguments, or that the function was called a certain number of times, or even what the return value was, or what context the function was called with.
+A spy gives you the ability to "spy" on a function, by letting you capture and then assert that the function was called with the right arguments, or that the function was called a certain number of times, or even what the return value was or what context the function was called with.
 
 A spy does **not** modify the behavior of the function - it is left perfectly intact. A spy is most useful when you are testing the contract between multiple functions and you don't care about the side effects the real function may create (if any).
 
@@ -95,7 +95,7 @@ cy.spy(obj, "method")
 
 ## Clock
 
-There are situations when it is useful to control your application's `date` and `time` in order to force its behavior or avoid slow tests.
+There are situations when it is useful to control your application's `date` and `time` in order to override its behavior or avoid slow tests.
 
 {% url `cy.clock()` clock %} gives you the ability to control:
 
@@ -108,7 +108,7 @@ There are situations when it is useful to control your application's `date` and 
 - You're polling something in your application with `setInterval` and want to control that.
 - You have **throttled** or **debounced** functions which you want to control.
 
-Once you've enabled {% url `cy.clock()` clock %} you can then control time by **ticking** it ahead by milliseconds.
+Once you've enabled {% url `cy.clock()` clock %} you can control time by **ticking** it ahead by milliseconds.
 
 ```javascript
 cy.clock()
@@ -176,14 +176,14 @@ expect(user.fail).to.have.thrown("Error")                  // true
 
 # Integration and Extensions
 
-Beyond just integrating these tools together we have also extended and improved the collaboration of these tools.
+Beyond just integrating these tools together we have also extended and improved collaboration between these tools.
 
 ***Some examples:***
 
 - We replaced Sinon's argument stringifier for a much less noisy, more performant, custom version.
-- We improved the `sinon-chai` assertion output by changing what displays during a passing vs failing test.
+- We improved the `sinon-chai` assertion output by changing what is displayed during a passing vs. failing test.
 - We added aliasing support to `stub` and `spy` API's.
-- We automatically restore and teardown `stub`, `spy`, and `clock` between tests.
+- We automatically restore and tear down `stub`, `spy`, and `clock` between tests.
 
 We also integrated all of these API's directly into the Command Log, so you can visually see what's happening in your application.
 
@@ -197,7 +197,7 @@ When you use aliasing with the {% url `.as()` as %} command, we also correlate t
 
 When stubs are created by calling the method `.withArgs(...)` we also visually link these together.
 
-When you click on a stub or spy, we also output **incredibly** helpful debugging information.
+When you click on a stub or spy, we also output **remarkably** helpful debugging information.
 
 ***For instance we automatically display:***
 
