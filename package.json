@@ -78,7 +78,7 @@
     "sinon": "^4.1.2",
     "sinon-chai": "^3.0.0",
     "snap-shot-it": "^4.0.1",
-    "start-server-and-test": "1.1.0",
+    "start-server-and-test": "1.1.1",
     "underscore.string": "^3.3.4",
     "wait-on": "^2.0.2",
     "yamljs": "^0.3.0"
