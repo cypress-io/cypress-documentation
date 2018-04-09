@@ -53,7 +53,7 @@ cy.get('div').should(($div) => {
 })
 ```
 
-This is the commonly reached for equivalent of Selenium's `getText()` method, which returns the innerText of a visible element. 
+This is the equivalent of Selenium's `getText()` method, which returns the innerText of a visible element. 
 
 ## {% fa fa-angle-right %} How do I get an input's value?
 
