@@ -10,6 +10,11 @@
       link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
       keywords: [file-watcher, cucumber]
 
+    - name: ESLint
+      description: Runs linting via ESLint on your spec files as they are loaded and display errors in the console
+      link: https://github.com/chinchiheather/cypress-eslint-preprocessor
+      keywords: [eslint]
+
     - name: Watch
       description: Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.
       link: https://github.com/cypress-io/cypress-watch-preprocessor
