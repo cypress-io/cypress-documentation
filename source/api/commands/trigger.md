@@ -22,6 +22,10 @@ Trigger an event on a DOM element.
 
 ```javascript
 cy.get('a').trigger('mousedown') // Trigger mousedown event on link
+
+cy.get(`selector`).trigger('mousedown')  // Longpress event, trigger mousedown
+cy.wait(1000) // Longpress event, wait 1000 ms (1 second)
+cy.get(`selector`).trigger('mouseleave') // Longpress event, trigger mouseleave
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
