@@ -22,10 +22,6 @@ Trigger an event on a DOM element.
 
 ```javascript
 cy.get('a').trigger('mousedown') // Trigger mousedown event on link
-
-cy.get(`selector`).trigger('mousedown')  // Longpress event, trigger mousedown
-cy.wait(1000) // Longpress event, wait 1000 ms (1 second)
-cy.get(`selector`).trigger('mouseleave') // Longpress event, trigger mouseleave
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -85,7 +81,13 @@ The DOM element must be in an "interactable" state prior to the triggered event 
 cy.get('button').trigger('mouseover') // yields 'button'
 ```
 
-***Drag and Drop***
+### Simulate a "long press" event
+
+```javascript
+cy.wait(1000)
+```
+
+### Drag and Drop
 
 {% note info %}
 {% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' recipes#Drag-and-Drop %}
