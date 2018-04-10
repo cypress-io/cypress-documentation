@@ -65,7 +65,7 @@
     "gulp-debug": "3.2.0",
     "gulp-rev-all": "0.9.7",
     "human-interval": "0.1.6",
-    "husky": "0.15.0-rc.2",
+    "husky": "0.15.0-rc.13",
     "inquirer": "5.2.0",
     "minimist": "1.2.0",
     "mocha": "5.0.5",
