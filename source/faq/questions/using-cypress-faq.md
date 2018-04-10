@@ -115,6 +115,12 @@ What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
 
+## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
+
+You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
+
+We do not currently offer any options to simulate this headlessly.
+
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
 No. The Command API is not designed in a way that makes this possible. This is not a limitation of Cypress - it is a very conscious and important design decision.
