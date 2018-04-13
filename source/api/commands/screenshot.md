@@ -19,7 +19,7 @@ cy.screenshot(fileName, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.screenshot()    
+cy.screenshot()
 ```
 
 ## Arguments
@@ -36,13 +36,13 @@ Option | Accepts | Default | Description
 --- | --- | --- | ---
 `log` | `boolean` | `true` | {% usage_options log %}
 `timeout` | `number` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.screenshot %}
-`blackout` | `array of strings` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken.
-`capture` | `array of strings` | `['all']` | Which parts of the UI to capture. Options are `all` and `app`. When `all`, the Entire browser viewport, including the Cypress UI, is captured. When `app`, only your app is captured. Can be an array with both and 2 screenshots will be taken.
+`blackout` | `array of strings` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken. Only applies to `app` captures.
+`capture` | `string` | `'app'` | Which parts of the UI to capture. Valid values are `'runner'`, `'app'`. When `runner`, the entire browser viewport, including the Cypress UI, is captured. When `app`, only your app is captured. For test failure screenshots, capture is always coerced to `'runner'`.
 `disableTimersAndAnimations` | `boolean` | `true`| When true, disables JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
-`scaleAppCaptures` | `boolean` | `false` | When true and capturing the `app`, will scale the app to fit into the browser viewport.
-`waitForCommandSynchronization` | `boolean` | `true` | When true, makes a best effort to sync the command log, showing the last run command.
+`scaleAppCaptures` | `boolean` | `false` | When true and capturing the `app`, will scale the app to fit into the browser viewport. Only applies to `app` captures.
+`waitForCommandSynchronization` | `boolean` | `true` | When true, makes a best effort to sync the command log, showing the last run command. Only applies to `runner` captures.
 
-For more details on many of these options, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
+For more details on many of these options and to set their defaults, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
 ## Yields {% helper_icon yields %}
 
