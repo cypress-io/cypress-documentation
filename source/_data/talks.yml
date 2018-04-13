@@ -1,3 +1,19 @@
+- title: "Speedy Testing with Cypress"
+  url: https://youtu.be/k-4pwQZRCN4
+  sourceName: DrupalCon
+  sourceUrl: https://events.drupal.org/nashville2018
+  date: Apr 12, 2018
+  author: Randall Kent
+  youtubeId: k-4pwQZRCN4
+
+- title: "Effective React Testing"
+  url: https://youtu.be/Eakp29J38YA
+  sourceName: Jeremy Fairbank's YouTube
+  sourceUrl: https://www.youtube.com/channel/UCIF0e4G6TQ7RNqauicoy10g
+  date: Apr 6, 2018
+  author: Jeremy Fairbank
+  youtubeId: Eakp29J38YA
+
 - title: "End to End Testing: The Game Has Changed"
   url: https://www.youtube.com/watch?v=D-h3bhzauKo&feature=youtu.be&t=11383
   sourceName: JSConf Iceland

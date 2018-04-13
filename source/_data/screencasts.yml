@@ -1,3 +1,11 @@
+- title: "Cypress.io React TodoMVC test"
+  url: https://youtu.be/nq_WRILIFTw
+  sourceName: Grafikart
+  sourceUrl: https://twitter.com/winkler1
+  date: Apr 5, 2018
+  author: Jeff Winkler
+  youtubeId: nq_WRILIFTw
+
 - title: "Tests fonctionnels avec Cypress"
   url: https://www.youtube.com/watch?v=CC-1i0bMIoA&feature=youtu.be
   sourceName: Grafikart
@@ -13,3 +21,11 @@
   date: Mar 17, 2018
   author: Alex Barry
   youtubeId: w8liCoPsDIU
+
+- title: "Cypress.io - five-minute introduction"
+  url: https://youtu.be/AddBNz1T08U
+  sourceName: Gorrion 
+  sourceUrl: https://gorrion.io/blog/getting-started-with-cypress-io/
+  date: Jan 31, 2018
+  author: Łukasz Wroński
+  youtubeId: AddBNz1T08U
