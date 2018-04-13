@@ -1,3 +1,11 @@
+- title: "WiD - Cypress e2e testing"
+  url: https://wetainment.com/wid-2018-04-11/
+  sourceName: "wetainment"
+  sourceUrl: https://wetainment.com/
+  date: Apr 11, 2018
+  author: Christoph Benjamin Weber
+  img: /img/examples/cloud-and-hand.jpg
+
 - title: "Cypress.io — Use the Log API with custom commands"
   url: https://medium.com/@NicholasBoll/cypress-io-use-the-log-api-with-custom-commands-b4bffca0d4c5
   sourceName: "Medium @NicholasBoll"
