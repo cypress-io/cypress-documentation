@@ -27,9 +27,9 @@
                   {% if media.author %}
                     by {{ media.author }}
                   {% endif %}
-                  <em>({{ media.date }})</em>
+                  <em>({{ media.date }}).</em>
                   {% if media.slides %}
-                  <a href="{{ media.slides }}" target="_blank">slides</a>
+                    <a href="{{ media.slides }}" target="_blank" rel="noopener noreferrer">Slides.</a>
                   {% endif %}
                 </p>
               </div>
