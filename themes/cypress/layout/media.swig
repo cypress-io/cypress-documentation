@@ -28,6 +28,9 @@
                     by {{ media.author }}
                   {% endif %}
                   <em>({{ media.date }})</em>
+                  {% if media.slides %}
+                  <a href="{{ media.slides }}">slides</a>
+                  {% endif %}
                 </p>
               </div>
             {% endfor %}
