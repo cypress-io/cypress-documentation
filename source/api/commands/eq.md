@@ -6,7 +6,7 @@ comments: false
 Get A DOM element at a specific index in an array of elements.
 
 {% note info %}
-The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery.
+The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery. Its behavior is also similar to that of the CSS pseudo-class {% url `:nth-child()` https://api.jquery.com/nth-child-selector/ %} selector. 
 {% endnote %}
 
 # Syntax
@@ -93,6 +93,33 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
 
 ```javascript
 cy.get('li').eq(-2).should('contain', 'sphynx') // true
+```
+## Table Data
+
+***Make an assertion on the 2nd row of a table***
+
+```html
+<table>
+  <tr>
+    <th>Breed</th>
+    <th>Origin</th>
+  </tr>
+  <tr>
+    <td>Siamese</td>
+    <td>Thailand</td>
+  </tr>
+  <tr>
+    <td>Sphynx</td>
+    <td>Canada</td>
+  </tr>
+  <tr>
+    <td>Persian</td>
+    <td>Iran</td>
+</table>
+```
+
+```js
+cy.get('tr').eq(2).should('contain', 'Canada')  //true
 ```
 
 # Rules
