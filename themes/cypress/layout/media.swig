@@ -29,7 +29,7 @@
                   {% endif %}
                   <em>({{ media.date }})</em>
                   {% if media.slides %}
-                  <a href="{{ media.slides }}">slides</a>
+                  <a href="{{ media.slides }}" target="_blank">slides</a>
                   {% endif %}
                 </p>
               </div>
