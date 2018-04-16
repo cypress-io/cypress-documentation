@@ -49,7 +49,7 @@
   date: Feb 22, 2018
   author: Brian Mann
   youtubeId: 5XQOK0v_YRE
-  slides: https://drive.google.com/open?id=1BLysxq0YbfVz-oyPGMkHKdepsSohrEiy
+  slides: https://speakerdeck.com/brianmann/cypress-best-practices
 
 - title: "End to End Testing: The Game Has Changed"
   url: https://www.youtube.com/watch?v=rICGz5qrYJU&feature=youtu.be&t=1h14m46s
@@ -99,6 +99,7 @@
   date: Oct 27, 2016
   author: Brian Mann
   youtubeId: N9RbcP4iY90
+  slides: https://speakerdeck.com/brianmann/enter-cypress-integration-testing-done-right
 
 - title: "Enter Cypress - Integration Testing Done Right"
   url: https://www.youtube.com/watch?v=JWOjQrGIokw&feature=youtu.be
