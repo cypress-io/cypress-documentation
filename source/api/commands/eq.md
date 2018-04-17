@@ -76,26 +76,6 @@ Option | Default | Description
 ```javascript
 cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
-
-## Index Form End
-
-***Find the 2nd from the last element within the elements***
-
-```html
-<ul>
-  <li>tabby</li>
-  <li>siamese</li>
-  <li>persian</li>
-  <li>sphynx</li>
-  <li>burmese</li>
-</ul>
-```
-
-```javascript
-cy.get('li').eq(-2).should('contain', 'sphynx') // true
-```
-## Table Data
-
 ***Make an assertion on the 2nd row of a table***
 
 ```html
@@ -118,8 +98,26 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 </table>
 ```
 
-```js
+```javascript
 cy.get('tr').eq(2).should('contain', 'Canada')  //true
+```
+
+## Index Form End
+
+***Find the 2nd from the last element within the elements***
+
+```html
+<ul>
+  <li>tabby</li>
+  <li>siamese</li>
+  <li>persian</li>
+  <li>sphynx</li>
+  <li>burmese</li>
+</ul>
+```
+
+```javascript
+cy.get('li').eq(-2).should('contain', 'sphynx') // true
 ```
 
 # Rules
