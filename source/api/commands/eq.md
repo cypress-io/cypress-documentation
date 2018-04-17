@@ -102,7 +102,7 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
 cy.get('tr').eq(2).should('contain', 'Canada')  //true
 ```
 
-## Index Form End
+## Index From End
 
 ***Find the 2nd from the last element within the elements***
 
