@@ -44,6 +44,8 @@ While Cypress allows to configure where your tests, fixtures, and support files 
 
 You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration %} for more detail.
 
+Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or `cypress.env.json`, these should also be ignored when you check into source control.   
+
 ## Fixture Files
 
 Fixtures are used as external pieces of static data that can be used by your tests.
