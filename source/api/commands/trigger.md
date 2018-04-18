@@ -88,6 +88,16 @@ cy.get('.target').trigger('mousedown')
 cy.wait(1000)
 cy.get('.target').trigger('mouseleave')
 ```
+### jQuery UI Sortable 
+
+To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
+
+```javascript
+cy.get('[data-cy=draggable]')
+  .trigger('mousedown', { which: 1, pageX: 600, pageY: 100 })
+  .trigger('mousemove', { which: 1, pageX: 600, pageY: 600 })
+  .trigger('mouseup')
+```
 
 ### Drag and Drop
 

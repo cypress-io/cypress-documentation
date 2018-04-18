@@ -1,3 +1,12 @@
+- title: "Painless testing for React applications"
+  url: https://youtu.be/lgurVvQsOTY
+  sourceName: ReactJS Boston
+  sourceUrl: https://www.meetup.com/ReactJS-Boston/events/248512859/
+  date: Apr 3, 2018
+  author: Gleb Bahmutov
+  youtubeId: lgurVvQsOTY
+  slides: https://slides.com/bahmutov/painless-react-testing
+
 - title: "Speedy Testing with Cypress"
   url: https://youtu.be/k-4pwQZRCN4
   sourceName: DrupalCon
@@ -5,6 +14,7 @@
   date: Apr 12, 2018
   author: Randall Kent
   youtubeId: k-4pwQZRCN4
+  slides: https://drive.google.com/drive/folders/0B_MmuZNiBFDUdXotYmtlczl1VWs
 
 - title: "Effective React Testing"
   url: https://youtu.be/Eakp29J38YA
@@ -30,6 +40,7 @@
   date: Feb 22, 2018
   author: Gleb Bahmutov
   youtubeId: 5FnalKRjpZk
+  slides: https://slides.com/bahmutov/assertjs
 
 - title: "Cypress Best Practices"
   url: https://www.youtube.com/watch?v=5XQOK0v_YRE&t=0s&index=4&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
@@ -38,6 +49,7 @@
   date: Feb 22, 2018
   author: Brian Mann
   youtubeId: 5XQOK0v_YRE
+  slides: https://speakerdeck.com/brianmann/cypress-best-practices
 
 - title: "End to End Testing: The Game Has Changed"
   url: https://www.youtube.com/watch?v=rICGz5qrYJU&feature=youtu.be&t=1h14m46s
@@ -54,6 +66,7 @@
   date: Oct 3, 2017
   author: Gleb Bahmutov
   youtubeId: D20nX2zAypk
+  slides: https://slides.com/bahmutov/boston-js-testing
 
 - title: "Slaying Selenium with Cypress"
   url: https://www.youtube.com/watch?v=bSpLEJ-CrGk
@@ -86,6 +99,7 @@
   date: Oct 27, 2016
   author: Brian Mann
   youtubeId: N9RbcP4iY90
+  slides: https://speakerdeck.com/brianmann/enter-cypress-integration-testing-done-right
 
 - title: "Enter Cypress - Integration Testing Done Right"
   url: https://www.youtube.com/watch?v=JWOjQrGIokw&feature=youtu.be
