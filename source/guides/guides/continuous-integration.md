@@ -121,8 +121,14 @@ See our {% url 'examples' https://on.cypress.io/docker %} for additional informa
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
+## Ubuntu / Debian
 ```shell
 apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+```
+
+## RHEL / CentOS
+```shell
+yum install xorg-x11-server-Xvfb gtk2 libnotify GConf2 nss libXScrnSaver alsa-lib
 ```
 
 # Recording Tests in CI
