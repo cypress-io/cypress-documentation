@@ -38,7 +38,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-***Configuring Folder Structure***
+### Configuring Folder Structure
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
@@ -175,7 +175,7 @@ describe('Hooks', function() {
 })
 ```
 
-***The order of hook and test execution is as follows:***
+### The order of hook and test execution is as follows:
 
 - All `before()` hooks run (once)
 - Any `beforeEach()` hooks run
