@@ -13,7 +13,7 @@
             {% for plugin in pluginType.plugins %}
               <li>
                 <h3>
-                  <a href="{{plugin.link}}" target="_blank">{{ plugin.name }}</a>
+                  <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a>
                 </h3>
                 <p>{{ plugin.description }}</p>
                 {% for keyword in plugin.keywords %}

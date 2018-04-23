@@ -24,7 +24,7 @@ This behavior can be turned off by setting {% url `screenshotOnHeadlessFailure` 
 
 Screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
 
-By default, Cypress clears any existing screenshots before a headless run. If don't want to clear your screenshots folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRun` configuration#Screenshots %} to `false`.
+By default, Cypress clears any existing screenshots before a headless run. If don't want to clear your screenshots folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRuns` configuration#Screenshots %} to `false`.
 
 # Videos
 
@@ -36,7 +36,7 @@ Videos are stored in the {% url `videosFolder` configuration#Videos %} which is 
 
 After a headless run completes, Cypress will automatically compress the video to save on file size. By default it compresses to a `32 CRF` but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
 
-By default, Cypress clears any existing videos before a headless run. If don't want to clear your videos folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRun` configuration#Videos %} to `false`.
+By default, Cypress clears any existing videos before a headless run. If don't want to clear your videos folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRuns` configuration#Videos %} to `false`.
 
 # Now What?
 

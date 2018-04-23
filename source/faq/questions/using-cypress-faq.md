@@ -53,6 +53,8 @@ cy.get('div').should(($div) => {
 })
 ```
 
+This is the equivalent of Selenium's `getText()` method, which returns the innerText of a visible element. 
+
 ## {% fa fa-angle-right %} How do I get an input's value?
 
 Cypress yields you jQuery objects, so you can simply call methods on them.
@@ -112,6 +114,12 @@ cy.get('button').then(($el) => {
 What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
+## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
+
+You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
+
+We do not currently offer any options to simulate this headlessly.
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
@@ -323,6 +331,31 @@ Luckily there are lots of easy and safe workarounds that enable you to test this
 
 {% url 'Read through this recipe to see how to test anchor links.' recipes#Tab-Handling-and-Links %}
 
+## {% fa fa-angle-right %} Can I dynamically test multiple viewports? 
+
+Yes, you can. We provide an {% url 'example here' viewport#Width-Height %}.
+
+## {% fa fa-angle-right %} Can I run the same tests on multiple subdomains?
+
+Yes. In this example, we loop through an array of urls and make assertions on the logo.
+
+```javascript
+
+const urls = ['https://docs.cypress.io', 'https://www.cypress.io']
+
+describe('Logo', () => {
+  urls.forEach((url) => {
+    it(`Should display logo on ${url}`, () => {
+      cy.visit(url)
+      cy.get('#logo img')
+        .should('have.attr', 'src')
+        .and('include', 'logo')
+    })
+  })
+})
+```
+
+![Command Log multiple urls](/img/faq/questions/command-log-of-dynamic-url-test.png)
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
 
@@ -374,7 +407,7 @@ If it's just an anchor that initiates the download, you could just test that it 
 
 In the end, it's up to you to know your implementation and to test just enough to cover everything.
 
-## {% fa fa-angle-right %} Is is possible to catch the promise chain in Cypress?
+## {% fa fa-angle-right %} Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command. {% url "Read more about how the Cypress commands are not Promises" introduction-to-cypress#Commands-Are-Not-Promises %}
 

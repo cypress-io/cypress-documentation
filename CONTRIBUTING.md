@@ -18,7 +18,7 @@ Thanks for taking the time to contribute! :smile:
 
 ## Code of Conduct
 
-All contributors are expecting to abide by our [Code of Conduct](https://github.com/cypress-io/cypress/wiki/code-of-conduct).
+All contributors are expected to abide by our [Code of Conduct](https://github.com/cypress-io/cypress/wiki/code-of-conduct).
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ cd cypress-documentation
 
 **Install dependencies:**
 
-**note:** at least Node 6 is required, but Node 8 with NPM v5 is preferred to take advantage of
+**Note:** at least Node 6 is required, but Node 8 with NPM v5 is preferred to take advantage of
 the package lock file.
 
 ```bash
@@ -55,22 +55,21 @@ npm start
 
 Visit [http://localhost:2222/](http://localhost:2222/).
 
-**note** If you need to debug documentation build step run with environment
-variable set `DEBUG=docs npm run build`
+**Note:** If you need to debug the documentation build step, run it this way: `DEBUG=docs npm run build`
 
-**note** When Cypress generates the docs it has to validate hundreds (thousands?) of URL's. This is expensive and the docs take awhile to initially. You can turn off validating external URL's by passing `npm start -- --no-validate` flag.
+**Note:** When Cypress generates the docs, it has to validate hundreds (thousands?) of URLs. This is expensive and the docs take a while to initialize. You can turn off validation of external URLs by passing a flag: `npm start -- --no-validate`.
 
 ### Testing
 
-We use Cypress itself to test the documentation. To start the server and run E2E tests execute the command `npm run test-e2e`.
+We use Cypress itself to test the documentation. To start the server and run E2E tests, execute the command `npm run test-e2e`.
 
 ## Writing Documentation
 
 ### Adding Examples
 
- To add an blog, talk, or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
+To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
 
-Add an associating image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should be resolution **715w x 480h**. Reference the image in the markdown document as follows:
+Add an associated image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should have a resolution of **715×480**. Reference the image in the markdown document as follows:
 
 ```md
 {% img /img/examples/name-of-file.jpg "alt text describing img" %}
@@ -78,17 +77,17 @@ Add an associating image with the example within the [`source/img/examples`](/so
 
 ### Tags
 
-In addition to built-in Hexo tags (like `{% img ... %}`) we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. Find the list of tags and examples in [TAGS.md](TAGS.md)
+In addition to built-in Hexo tags (like `{% img ... %}`), we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
 
 ### Adding Plugins
 
-To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, and any keywords.
+To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, as well as any keywords.
 
 ## Commiting Code
 
 ### Linting
 
-Danger 📛: because we are minifying client side code using a [Hexo plugin](https://github.com/mamboer/hexo-filter-cleanup) which in turn calls
+Danger 📛: because we are minifying client-side code using a [Hexo plugin](https://github.com/mamboer/hexo-filter-cleanup) which in turn calls
 `uglify`, the code should be strictly ES5. Thus everything inside the `theme` should be linted with ES5 settings and not upgraded to ES6.
 
 ### Pull Requests
@@ -108,4 +107,4 @@ After making a [pull request](#pull-requests), the CLA assistant will add a revi
 
 ## Deployment
 
-We will try to review and merge pull requests as fast as possible. After merging, we will deploy it to staging environment, run E2E tests (using Cypress itself of course), and then merge it into `master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io) website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md).
+We will try to review and merge pull requests as fast as possible. After merging, we will deploy it to the staging environment, run E2E tests (using Cypress itself of course!), and then merge it into `master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io) website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md).

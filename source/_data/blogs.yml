@@ -1,3 +1,43 @@
+- title: "WiD - Cypress e2e testing"
+  url: https://wetainment.com/wid-2018-04-11/
+  sourceName: "wetainment"
+  sourceUrl: https://wetainment.com/
+  date: Apr 11, 2018
+  author: Christoph Benjamin Weber
+  img: /img/examples/cloud-and-hand.jpg
+
+- title: "Cypress.io — Use the Log API with custom commands"
+  url: https://medium.com/@NicholasBoll/cypress-io-use-the-log-api-with-custom-commands-b4bffca0d4c5
+  sourceName: "Medium @NicholasBoll"
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Mar 18, 2018
+  author: Nicholas Boll
+  img: /img/examples/cy-log-api-commands.jpg
+
+- title: "Using Jest matchers in Cypress"
+  url: https://medium.com/@NicholasBoll/using-jest-matchers-in-cypress-5e8e7281f5dd
+  sourceName: "Medium @NicholasBoll"
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Mar 18, 2018
+  author: Nicholas Boll
+  img: /img/examples/jest-assertion-matcher-cypress.jpg
+
+- title: "9 top open-source testing automation frameworks: How to choose"
+  url: https://techbeacon.com/9-top-open-source-testing-automation-frameworks-how-choose
+  sourceName: "TechBeacon"
+  sourceUrl: https://techbeacon.com/
+  date: Mar 6, 2018
+  author: Joe Colantonio
+  img: /img/examples/top-testing-automation-frameworks.png
+
+- title: "How to write tests and maintain your sanity"
+  url: https://blog.manifold.co/testing-sucks-here-is-how-to-make-it-better-7af1ff93cc9
+  sourceName: "Manifold"
+  sourceUrl: https://blog.manifold.co/
+  date: Feb 26, 2018
+  author: Daniel Enman
+  img: /img/examples/how-to-write-tests-and-maintina-sanity.png
+
 - title: "✅ AssertJS 2018 Passed the Test ✅"
   url: https://medium.com/@michaelsholty/assertjs-2018-passed-the-test-f456bc20161
   sourceName: "Medium @michaelsholty"

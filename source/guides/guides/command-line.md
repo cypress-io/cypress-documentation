@@ -75,7 +75,7 @@ DEBUG=cypress:launcher cypress run --browser chrome
 
 ***Run tests in Electron in headed mode***
 
-By default Cypress will run tests in Electron headlessly.
+By default, Cypress will run tests in Electron headlessly.
 
 Passing `--headed` will force Electron to be shown. This matches how you run Electron in the GUI.
 
@@ -129,9 +129,9 @@ cypress run --spec cypress/integration/login/**/*
 
 ***Run tests specifying a project***
 
-By default Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run on a different location.
+By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
 
-This enables you to install Cypress in a top level `node_modules` folder but run Cypress on a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
+This enables you to install Cypress in a top level `node_modules` folder but run Cypress in a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
 
 To see this in action we've set up an {% url 'example repo to demonstrate this here' https://github.com/cypress-io/cypress-test-nested-projects %}.
 
@@ -215,7 +215,7 @@ cypress open --global
 
 ## `cypress verify`
 
-Verify that Cypress is installed correctly and executable.
+Verify that Cypress is installed correctly and is executable.
 
 ```shell
 cypress verify
@@ -231,9 +231,8 @@ Cypress application is valid and should be okay to run: /Applications/Cypress.ap
 
 Equivalent: `cypress --version`, `cypress -v`
 
-Output both the versions of the the installed Cypress binary application and NPM module.
-In most cases they will be the same, but could be different if you have installed a different
-version of NPM package and for some reason could not install the matching binary.
+Output both the versions of the installed Cypress binary application and NPM module.
+In most cases they will be the same, but could be different if you have installed a different version of the NPM package and for some reason could not install the matching binary.
 
 ```shell
 cypress version
@@ -254,7 +253,7 @@ You can use also require Cypress as a node module.
 The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.
 {% endnote %}
 
-Here's an example of programmatically running a spec spec file:
+Here's an example of programmatically running a spec file:
 
 ```js
 const cypress = require('cypress')

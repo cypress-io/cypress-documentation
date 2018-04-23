@@ -2,7 +2,7 @@
   <div id="mobile-nav-inner">
     <ul id="mobile-nav-list">
       {{ menu('main') }}
-      <a href="https://github.com/{{ config.github }}" class="main-nav-link" rel="external" target="_blank">GitHub</a>
+      <a href="https://github.com/{{ config.github }}" class="main-nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
     </ul>
     {% if page.layout == 'page' || page.layout == 'toc-top' %}
       {{ doc_sidebar('mobile-nav') }}

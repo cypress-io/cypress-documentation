@@ -73,7 +73,7 @@ You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 
 ## Mouse Events
 
-***Trigger a `mouseover` on the button***
+### Trigger a `mouseover` on the button
 
 The DOM element must be in an "interactable" state prior to the triggered event happening (it must be visible and not disabled).
 
@@ -81,7 +81,25 @@ The DOM element must be in an "interactable" state prior to the triggered event 
 cy.get('button').trigger('mouseover') // yields 'button'
 ```
 
-***Drag and Drop***
+### Simulate a "long press" event
+
+```javascript
+cy.get('.target').trigger('mousedown')
+cy.wait(1000)
+cy.get('.target').trigger('mouseleave')
+```
+### jQuery UI Sortable 
+
+To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
+
+```javascript
+cy.get('[data-cy=draggable]')
+  .trigger('mousedown', { which: 1, pageX: 600, pageY: 100 })
+  .trigger('mousemove', { which: 1, pageX: 600, pageY: 600 })
+  .trigger('mouseup')
+```
+
+### Drag and Drop
 
 {% note info %}
 {% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' recipes#Drag-and-Drop %}
@@ -89,7 +107,7 @@ cy.get('button').trigger('mouseover') // yields 'button'
 
 ## Change Event
 
-***Interact with a range input (slider)***
+### Interact with a range input (slider)
 
 To interact with a range input (slider), we need to set its value and
 then trigger the appropriate event to signal it has changed.
@@ -108,7 +126,7 @@ cy.get('@range').siblings('p').should('have.text', '25')
 
 ## Position
 
-***Trigger a `mousedown` on the top right of a button***
+### Trigger a `mousedown` on the top right of a button
 
 ```javascript
 cy.get('button').trigger('mousedown', 'topRight')
@@ -116,7 +134,7 @@ cy.get('button').trigger('mousedown', 'topRight')
 
 ## Coordinates
 
-***Specify explicit coordinates relative to the top left corner***
+### Specify explicit coordinates relative to the top left corner
 
 ```javascript
 cy.get('button').trigger('contextmenu', 15, 40)
@@ -124,7 +142,7 @@ cy.get('button').trigger('contextmenu', 15, 40)
 
 ## Options
 
-***Specify that the event should not bubble***
+### Specify that the event should not bubble
 
 By default, the event will bubble up the DOM tree. This will prevent the event from bubbling.
 
@@ -132,7 +150,7 @@ By default, the event will bubble up the DOM tree. This will prevent the event f
 cy.get('button').trigger('mouseover', { bubbles: false })
 ```
 
-***Specify the exact `clientX` and `clientY` the event should have***
+### Specify the exact `clientX` and `clientY` the event should have
 
 This overrides the default auto-positioning based on the element itself. Useful for events like `mousemove` where you need the position to be outside the element itself.
 
@@ -144,19 +162,19 @@ cy.get('button').trigger('mousemove', {clientX: 200, clientY: 300})
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.trigger()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
 ## Events
 
-***What event should I fire?***
+### What event should I fire?
 
 `cy.trigger()` is meant to be a low-level utility that makes triggering events easier than manually constructing and dispatching them. Since any arbitrary event can be triggered, Cypress tries not to make any assumptions about how it should be triggered. This means you'll need to know the implementation details (which may be in a 3rd party library) of the event handler(s) receiving the event and provide the necessary properties.
 
 ## Differences
 
-***What's the difference between triggering and event and calling the corresponding cypress command?***
+### What's the difference between triggering and event and calling the corresponding cypress command?
 
 In other words, what's the difference between:
 
@@ -192,7 +210,7 @@ That means that your event listener callbacks will be invoked, but don't expect 
 
 # Command Log
 
-***Trigger a `change` event on input type='range'***
+### Trigger a `change` event on input type='range'
 
 ```javascript
 cy.get('.trigger-input-range')
