@@ -3,6 +3,41 @@ title: Changelog
 comments: false
 ---
 
+## 3.0.0
+
+**Breaking Changes:**
+
+- We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This result should be better performance on longer test runs. Fixes {% issue 431 %} and {% issue 681 %}
+- Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Addresses {% issue 1592 %}.
+
+**Features:**
+
+- You can now run specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
+- The seeded `example_spec.js` file has been replaced by an `examples` folder with spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
+- The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
+- Cypress now watches all the `plugins` file's entire dependency tree to make iterating on plugins easier. Addresses {% issue 1407 %}
+- We now pass any reporter errors along and provide a stack if the module does not exist. Fixes {% issue 1192 %}
+- Videos will now be named after the associated `spec` file that it represents. Addresses {% issue 980 %}
+
+**Bugfixes:**
+
+- Asserting that an attribute equals a falsy value no longer fails when the value correctly equals the falsy value. Fixes {% issue 831 %} and {% issue 1491 %}
+- Snapshots now ignore stylesheets with `media="print"`. Fixes {% issue 1568 %}.
+- Fixed issue where the Cypress `window` was being returned instead of AUT's `window`. Fixes {% issue 1436 %}
+
+**Misc:**
+
+- Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
+- Cypress will error and exit with status 1 if no specs were found during `cypress run`. Addresses {% issue 1585 %}.
+- Added keywords to Cypress NPM package. Addresses {% issue 1508 %}.
+- We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
+- Internal changes to our API structure and communication. Addresses {% issue 1169 %},{% issue 1170 %}, {% issue 1248 %}, {% issue 1413 %}, {% issue 1415 %}.
+
+**Documentation Changes:**
+
+- {% url 'Updated `cypress run` spec args' command-line#cypress-run %}
+- {% url 'Updated `Dashboard Service`' dashboard-service %}
+
 ## 2.1.0
 
 *Released 3/1/2018*
