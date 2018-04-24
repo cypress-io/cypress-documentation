@@ -331,6 +331,31 @@ Luckily there are lots of easy and safe workarounds that enable you to test this
 
 {% url 'Read through this recipe to see how to test anchor links.' recipes#Tab-Handling-and-Links %}
 
+## {% fa fa-angle-right %} Can I dynamically test multiple viewports? 
+
+Yes, you can. We provide an {% url 'example here' viewport#Width-Height %}.
+
+## {% fa fa-angle-right %} Can I run the same tests on multiple subdomains?
+
+Yes. In this example, we loop through an array of urls and make assertions on the logo.
+
+```javascript
+
+const urls = ['https://docs.cypress.io', 'https://www.cypress.io']
+
+describe('Logo', () => {
+  urls.forEach((url) => {
+    it(`Should display logo on ${url}`, () => {
+      cy.visit(url)
+      cy.get('#logo img')
+        .should('have.attr', 'src')
+        .and('include', 'logo')
+    })
+  })
+})
+```
+
+![Command Log multiple urls](/img/faq/questions/command-log-of-dynamic-url-test.png)
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
 
