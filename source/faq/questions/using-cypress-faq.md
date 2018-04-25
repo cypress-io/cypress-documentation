@@ -78,7 +78,7 @@ cy.get('input').should(($input) => {
 })
 ```
 
-If you need to hold a reference reference or compare values of text:
+If you need to hold a reference or compare values of text:
 
 ```javascript
 cy.get('input').invoke('val').then((val1) => {
