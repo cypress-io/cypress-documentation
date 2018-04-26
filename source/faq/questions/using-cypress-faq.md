@@ -78,7 +78,7 @@ cy.get('input').should(($input) => {
 })
 ```
 
-If you need to hold a reference reference or compare values of text:
+If you need to hold a reference or compare values of text:
 
 ```javascript
 cy.get('input').invoke('val').then((val1) => {
@@ -98,6 +98,13 @@ cy.get('input').invoke('val').then((val1) => {
 ## {% fa fa-angle-right %} How do I compare the value or state of one thing to another?
 
 Our {% url 'Variables and Aliases guide' variables-and-aliases %} gives you examples of doing exactly that.
+
+## {% fa fa-angle-right %} Can I store an attribute's value in a constant or a variable for later use?
+
+Yes, and there are a couple of ways to do this. One way to hold a value or reference is with {% url '`closures`' variables-and-aliases#Closures %}.
+Commonly, users believe they have a need to store a value in a `const`, `var`, or `let`. Cypress recommends doing this only when dealing with mutable objects (that change state).  
+
+For examples how to do this, please read our {% url 'Variables and Aliases guide' variables-and-aliases %}.
 
 ## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
 
