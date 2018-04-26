@@ -31,6 +31,14 @@ cy.find('.progress')          // Errors, cannot be chained off 'cy'
 cy.exec('node start').find()  // Errors, 'exec' does not yield DOM element
 ```
 
+## Invalid Usage
+
+```javascript
+var article = cy.get('.article');
+article.find('header') // Yield 'header' within '.article'
+article.find('footer') // Yield 'footer' within '.article' (does not work)
+```
+
 ## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
