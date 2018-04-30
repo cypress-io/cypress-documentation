@@ -37,7 +37,7 @@ Cypress essentially replaces Karma because it does all of this already and much 
 
 ***Capybara***
 
-The a `Ruby` specific tool that allows you to write integration tests for your web application is {% url "Capybara" http://teamcapybara.github.io/capybara/ %}. In the Rails world, this is the *go-to* tool for testing your application. It uses {% url "Sauce Labs" https://SauceLabs.com/ %} (or another headless driver) to interact with browsers. Its API consists of commands that query for DOM elements, perform user actions, navigate around, etc.
+The `Ruby` specific tool that allows you to write integration tests for your web application is {% url "Capybara" http://teamcapybara.github.io/capybara/ %}. In the Rails world, this is the *go-to* tool for testing your application. It uses {% url "Sauce Labs" https://SauceLabs.com/ %} (or another headless driver) to interact with browsers. Its API consists of commands that query for DOM elements, perform user actions, navigate around, etc.
 
 Cypress essentially replaces Capybara because it does all of these things and much more. The difference is that instead of testing your application in a GUI-less console, you'd see your application at all times. You'd never have to take a screenshot to debug because all commands instantly provide you the state of your application while they run. Upon any command failing, you'll get a human-readable error explaining why it failed. There's no "guessing" when debugging.
 
@@ -57,11 +57,13 @@ Using {% url "Sauce Labs" https://SauceLabs.com/ %} enables Selenium-based tests
 
 Sauce Labs also has a `manual testing` mode, where you can remotely control browsers in the cloud as if they were installed on your machine.
 
-Cypress's API is written to be completely compatible with Sauce Labs, even though our API is not Selenium based at all. We will be offering better integration with Sauce Labs in the future.
-
 Ultimately Sauce Labs and Cypress offer very different value propositions. Sauce Labs doesn't help you write your tests, it takes your existing tests and runs them across different browsers and aggregates the results for you.
 
 Cypress on the other hand **helps** you write your tests. You would use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
+
+{% note info A note about Cypress and Sauce Labs %} 
+Cypress's API is written to be completely compatible with Sauce Labs, even though our API is not Selenium based at all. It is our goal to offer full integration with Sauce Labs in the future, however, complete integration is not yet available. 
+{% endnote %}
 
 ## {% fa fa-angle-right %} Do you support X language or X framework?
 
