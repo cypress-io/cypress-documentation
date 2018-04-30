@@ -35,7 +35,10 @@ npm install cypress --save-dev
 ```
 
 This will install Cypress locally as a dev dependency for your project. 
-Note: Make sure that you have a node_modules folder in your project path first, otherwise cypress will install globally.
+
+{% note info %}
+Make sure that you have already run `npm init` within your project first (or are already using `node_modules`), otherwise cypress will install globally.
+{% endnote %}
 
 {% img /img/guides/installing-cli.gif %}
 
