@@ -47,7 +47,7 @@
     "chalk": "2.4.1",
     "cheerio": "1.0.0-rc.2",
     "coffee-script": "1.12.7",
-    "colors": "1.2.2",
+    "colors": "1.2.3",
     "common-tags": "1.7.2",
     "concurrent-transform": "1.0.0",
     "cypress": "2.1.0",
