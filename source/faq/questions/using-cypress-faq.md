@@ -230,6 +230,10 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 
 You can read more about parallelization {% issue 64 'here' %}.
 
+## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
+
+The answer is *not yet*. Cypress’s API was written to be completely compatible with Sauce Labs, you can read more about that {% url 'here' general-questions-faq %}. Connectivity with BrowserStack is something that has been discussed {% issue 310 'here' %}. 
+
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} on a test suite or specific test.
