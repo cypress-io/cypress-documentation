@@ -232,7 +232,7 @@ You can read more about parallelization {% issue 64 'here' %}.
 
 ## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
 
-It is our goal to offer full integration with Sauce Labs and BrowserStack in the future, however, complete integration is not yet available. Cypress’s API was written to be compatible with Webdriver specific tasks that Sauce Labs and BrowserStack use. 
+It is our goal to offer full integration with Sauce Labs and BrowserStack in the future, however, complete integration is not yet available. Cypress’ API was written to be compatible with WebDriver specific tasks that Sauce Labs and BrowserStack use. 
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
