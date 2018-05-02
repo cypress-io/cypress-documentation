@@ -203,8 +203,8 @@ describe "lib/url_generator", ->
           expect(err.message).to.include(msg)
 
     it "resolves cached values in a promise", ->
-      urlGenerator.cache["foo"] = "bar"
-
-      urlGenerator.validateAndGetUrl(data, "foo")
-      .then (url) ->
-        expect(url).to.eq("bar")
+      urlGenerator.cache.set("foo", "bar")
+      .then ->
+        urlGenerator.validateAndGetUrl(data, "foo")
+        .then (url) ->
+          expect(url).to.eq("bar")
