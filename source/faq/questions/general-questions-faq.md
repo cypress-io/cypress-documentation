@@ -62,7 +62,7 @@ Ultimately Sauce Labs and Cypress offer very different value propositions. Sauce
 Cypress on the other hand **helps** you write your tests. You would use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
 
 {% note info A note about Cypress and Sauce Labs %} 
-Cypress's API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future, however, complete integration is not yet available. 
+Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future, however, complete integration is not yet available. 
 {% endnote %}
 
 ## {% fa fa-angle-right %} Do you support X language or X framework?
