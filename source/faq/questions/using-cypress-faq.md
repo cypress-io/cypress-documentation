@@ -122,6 +122,20 @@ What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
 
+## {% fa fa-angle-right %} How can I make Cypress wait until something is visible in the DOM?
+
+{% note info Remember %}
+ DOM based commands will automatically retry and wait for their corresponding elements to exist before failing.
+{% endnote %}
+
+Cypress offers you many robust ways to {% url 'query the DOM' introduction-to-cypress#Querying-Elements %}, all wrapped with retry-and-timeout logic.
+
+Other ways to wait for an element's presence in the DOM is through `timeouts`. Cypress commands have a default timeout of 4 seconds, however, most Cypress commands have {% url 'customizable timeout options' configuration#Timeouts %}. Timeouts can be configured globally or on a per-command basis.
+
+In {% url 'some cases' interacting-with-elements#Visibility %}, your DOM element will not be actionable. Cypress gives you a powerful {%url '`{force:true}`' interacting-with-elements#Forcing %} option you can pass to most action commands. 
+
+**Please read** our {% url 'Core Concepts Introduction to Cypress' introduction-to-cypress %}. This is the single most important guide for understanding how to test with Cypress. 
+
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
 You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
@@ -215,6 +229,10 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% issue 64 'here' %}.
+
+## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
+
+Cypress’ API is compatible with WebDriver specific tasks that Sauce Labs and BrowserStack use to launch browsers. Because Cypress currently only supports Chrome* based browsers, we have not yet added integration for these services. When cross browsers are added, Cypress will add full integration with Sauce Labs and BrowserStack.
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
