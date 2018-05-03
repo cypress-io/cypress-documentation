@@ -136,6 +136,22 @@ In {% url 'some cases' interacting-with-elements#Visibility %}, your DOM element
 
 **Please read** our {% url 'Core Concepts Introduction to Cypress' introduction-to-cypress %}. This is the single most important guide for understanding how to test with Cypress. 
 
+## {% fa fa-angle-right %} How do I wait for my application to load? 
+
+We have seen many different iterations of this question. The answers can be varied depending on how your application behaves and the circumstances under which you are testing it. Here are some of the most common versions of this question.
+
+**_How do I know if my page is done loading?_** 
+
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this commands' default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose, yet friendly error message to let you know. 
+
+**_In CI, how do I make sure my server has started?_**
+
+There are a couple really great modules that we recommend using for this, {% url '`wait-on`' https://www.npmjs.com/package/wait-on %} and {% url '`start-server-and-test`'. https://github.com/bahmutov/start-server-and-test' %}
+
+**_How can I wait for my requests to be complete?_**
+
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these requests and tell Cypress which requests you want to wait on.  
+
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
 You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
