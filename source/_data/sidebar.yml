@@ -26,6 +26,7 @@ guides:
     launching-browsers: launching-browsers.html
     web-security: web-security.html
   tooling:
+    intelligent-code-completion: intelligent-code-completion.html
     plugins-guide: plugins-guide.html
     reporters: reporters.html
     typescript-support: typescript-support.html
@@ -175,6 +176,7 @@ examples:
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html
+    screencasts-media: screencasts-media.html
 
 faq:
   questions:
