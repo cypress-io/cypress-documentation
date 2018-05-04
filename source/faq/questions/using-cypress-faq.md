@@ -246,6 +246,10 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 
 You can read more about parallelization {% issue 64 'here' %}.
 
+## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
+
+Cypress’ API is compatible with WebDriver specific tasks that Sauce Labs and BrowserStack use to launch browsers. Because Cypress currently only supports Chrome* based browsers, we have not yet added integration for these services. When cross browsers are added, Cypress will add full integration with Sauce Labs and BrowserStack.
+
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} on a test suite or specific test.
