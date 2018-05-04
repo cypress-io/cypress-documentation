@@ -24,14 +24,14 @@ Cypress.Screenshot.defaults(options)
 
 An object containing one or more of the following:
 
-Option | Accepts | Default | Description
---- | --- | --- | ---
-`blackout` | `array of strings` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken. Only applies to `app` captures.
-`capture` | `string` | `'app'` | Which parts of the UI to capture. Valid values are `'runner'`, `'app'`. When `runner`, the entire browser viewport, including the Cypress UI, is captured. When `app`, only your app is captured. For test failure screenshots, capture is always coerced to `'runner'`.
-`disableTimersAndAnimations` | `boolean` | `true`| When true, disables JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
-`screenshotOnRunFailure` | `boolean` | `true` | When true, automatically takes a screenshot when there is a failure in Run mode.
-`scaleAppCaptures` | `boolean` | `false` | When true and capturing the `app`, will scale the app to fit into the browser viewport. Only applies to `app` captures.
-`waitForCommandSynchronization` | `boolean` | `true` | When true, makes a best effort to sync the command log, showing the last run command. Only applies to `runner` captures.
+Option | Default | Description
+--- | --- | ---
+`blackout` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
+`capture` | `'fullpage'` | Which parts of the UI to capture. Valid values are  `app`, `fullpage`, or `runner`. When `app`, your app is captured with the current viewport. When `fullpage`, your app is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress UI, is captured.  For test failure screenshots, capture is always coerced to `runner`. This value is ignored for element captures.
+`disableTimersAndAnimations` | `true`| When true, disables JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
+`screenshotOnRunFailure` | `true` | When true, automatically takes a screenshot when there is a failure in Run mode.
+`scaleAppCaptures` | `false` | When true and capture is `app` or `fullpage`, will scale the app to fit into the browser viewport.
+`waitForCommandSynchronization` | `true` | When true, makes a best effort to sync the command log, showing the last run command. Only applies to `runner` captures.
 
 # Examples
 
