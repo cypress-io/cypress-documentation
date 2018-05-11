@@ -1,3 +1,18 @@
+- title: "Extracting a React Component with Cypress"
+  url: https://youtu.be/Sth0bGfFOMw
+  sourceName: Big Nerd Ranch Webinar
+  date: May 1, 2018
+  author: Josh Justice
+  youtubeId: Sth0bGfFOMw
+
+- title: "Outside-in Testing in Vue"
+  url: https://youtu.be/Tu9FI5gQX-k
+  sourceName: Atlanta Vue.js Meetup
+  sourceUrl: https://www.meetup.com/Atlanta-Vue-js-Meetup/events/247593045/
+  date: Apr 26, 2018
+  author: Josh Justice
+  youtubeId: CMN8boToKWI
+
 - title: "Painless testing for React applications"
   url: https://youtu.be/lgurVvQsOTY
   sourceName: ReactJS Boston
