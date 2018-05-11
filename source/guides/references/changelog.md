@@ -13,11 +13,12 @@ comments: false
 **Features:**
 
 - You can now run specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
-- The seeded `example_spec.js` file has been replaced by an `examples` folder with spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
+- The seeded `example_spec.js` file has been replaced by an `examples` folder with several spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files that will now be run in isolation. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
 - The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
 - Cypress now watches all the `plugins` file's entire dependency tree to make iterating on plugins easier. Addresses {% issue 1407 %}
 - We now pass any reporter errors along and provide a stack if the module does not exist. Fixes {% issue 1192 %}
 - Videos will now be named after the associated `spec` file that it represents. Addresses {% issue 980 %}
+- The Test Runner now visually displays `skipped` tests differently than `pending` tests.
 
 **Bugfixes:**
 
@@ -27,14 +28,19 @@ comments: false
 
 **Misc:**
 
+- Searching in the Test Runner now filters out any non-matching folders. Fixes {% issue 1706 %}
+- Duplicate subsequent logs in the Command Log are now collapsed and can be expanded to view all logs. {% issue 1580 %}
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
 - Cypress will error and exit with status 1 if no specs were found during `cypress run`. Addresses {% issue 1585 %}.
 - Added keywords to Cypress NPM package. Addresses {% issue 1508 %}.
 - We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
 - Internal changes to our API structure and communication. Addresses {% issue 1169 %},{% issue 1170 %}, {% issue 1248 %}, {% issue 1413 %}, {% issue 1415 %}.
+- Centered the animating icon in the Test runner when 'running'.
+- We made some changes to internal reference of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. {% issue 1140 %}
 
 **Documentation Changes:**
 
+- {% url 'Updated `Writing and Organizing Tests` to include newly seeded `examples` folder' writing-and-organizing-tests#folder-structure %}
 - {% url 'Updated `cypress run` spec args' command-line#cypress-run %}
 - {% url 'Updated `Dashboard Service`' dashboard-service %}
 
