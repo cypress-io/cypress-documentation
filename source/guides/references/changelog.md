@@ -12,19 +12,21 @@ comments: false
 
 **Features:**
 
-- You can now run specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
+- You can now run multiple specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
 - The seeded `example_spec.js` file has been replaced by an `examples` folder with several spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files that will now be run in isolation. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
 - The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
 - Cypress now watches all the `plugins` file's entire dependency tree to make iterating on plugins easier. Addresses {% issue 1407 %}
 - We now pass any reporter errors along and provide a stack if the module does not exist. Fixes {% issue 1192 %}
-- Videos will now be named after the associated `spec` file that it represents. Addresses {% issue 980 %}
-- The Test Runner now visually displays `skipped` tests differently than `pending` tests.
+- Videos will now be saved with a filename named after the associated `spec` file that it represents. Addresses {% issue 980 %}
+- The Test Runner now visually displays `skipped` tests differently than `pending` tests. {% issue #244 %}
 
 **Bugfixes:**
 
 - Asserting that an attribute equals a falsy value no longer fails when the value correctly equals the falsy value. Fixes {% issue 831 %} and {% issue 1491 %}
 - Snapshots now ignore stylesheets with `media="print"`. Fixes {% issue 1568 %}.
 - Fixed issue where the Cypress `window` was being returned instead of AUT's `window`. Fixes {% issue 1436 %}
+- The `close` event now properly fires on `file` when manually closing the browser. Fixes {% issue 1560 %}
+- `cypress.env.json` is now being watched for changes. Fixes {% issue 1464 %}
 
 **Misc:**
 
@@ -36,13 +38,15 @@ comments: false
 - We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
 - Internal changes to our API structure and communication. Addresses {% issue 1169 %},{% issue 1170 %}, {% issue 1248 %}, {% issue 1413 %}, {% issue 1415 %}.
 - Centered the animating icon in the Test runner when 'running'.
-- We made some changes to internal reference of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. {% issue 1140 %}
+- We made some changes to internal reference of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. Addresses {% issue 1140 %}
+- The test name text is now selectable inside the Command Log. Fixes {% issue 1476 %}
 
 **Documentation Changes:**
 
-- {% url 'Updated `Writing and Organizing Tests` to include newly seeded `examples` folder' writing-and-organizing-tests#folder-structure %}
+- {% url 'Updated `Writing and Organizing Tests` to include newly seeded `examples` folder' writing-and-organizing-tests %}
 - {% url 'Updated `cypress run` spec args' command-line#cypress-run %}
 - {% url 'Updated `Dashboard Service`' dashboard-service %}
+- {% url 'Updated `Preprocessors` to reflect all ways `close` event could be triggered' dashboard-service %}
 
 ## 2.1.0
 
@@ -676,7 +680,7 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 
 **Bugfixes:**
 
-Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" https://facebook.github.io/react/ %} on versions {% url "15.6.x" https://github.com/facebook/react/releases/tag/v15.6.0 %}. Fixes {% issue 536 '#536' %}.
+Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" https://reactjs.org/ %} on versions {% url "15.6.x" https://github.com/facebook/react/releases/tag/v15.6.0 %}. Fixes {% issue 536 '#536' %}.
 
 
 # 0.19.3
@@ -783,7 +787,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Overview:**
 
-- We have officially implemented our [Sinon.JS](http://sinonjs.org/docs/) integration: adding {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %}, {% url `cy.clock()` clock %}, and {% url `cy.tick()` tick %}. We've matched Sinon's API's and added `sinon-as-promised` and `chai-sinon`. In addition we've fixed Sinon performance issues, and improved the display of assertion passes and failures.
+- We have officially implemented our [Sinon.JS](http://sinonjs.org/) integration: adding {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %}, {% url `cy.clock()` clock %}, and {% url `cy.tick()` tick %}. We've matched Sinon's API's and added `sinon-as-promised` and `chai-sinon`. In addition we've fixed Sinon performance issues, and improved the display of assertion passes and failures.
 - These new API's will work well in both `unit` tests and `integration` tests.
 
 **Features:**
@@ -938,7 +942,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Summary:**
 
 - We've added automatic ES2015+, module, JSX, and CJSX support to all test files. This means you can use `require`, `import`, or `export` declarations to load other files. You can also use this to import your own application specific JavaScript modules and write unit tests for them. More of these details are yet to come. {% issue 318 'See this issue' %}.
-- You can now use your regularly installed `node_modules` in your project to do things like utilizing {% url "`lodash`" https://lodash.com/ %} for utility functions or extending {% url "`chai`" http://chaijs.com/ %} with assertion plugins.
+- You can now use your regularly installed `node_modules` in your project to do things like utilizing {% url "`lodash`" https://lodash.com/ %} for utility functions or extending {% url "`chai`" http://www.chaijs.com/ %} with assertion plugins.
 - Because we're now processing the spec files prior to handing them off to the browser, this means we will display problems like syntax errors when something in the processing goes wrong. Additionally, we print these out when running headlessly, so you're not stuck wondering what went wrong.
 
 **Breaking Changes:**
@@ -1201,7 +1205,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Overview:**
 
 - The desktop application has been completely redesigned. We have moved from a tray application to a standard dock application. The list of projects is now in the same window as the list of tests in a project. As each test runs, the application highlights the currently running spec and displays the browser version running. The configuration of a project is now displayed in its own tab. There is now a Desktop Menu where you can logout, check for updates, or view help links.
-- The test {% url "runner" https://github.com/cypress-io/cypress-core-runner %} has been rebuilt from the ground up in {% url "React.js" https://facebook.github.io/react/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress-core-reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
+- The test {% url "runner" https://github.com/cypress-io/cypress-core-runner %} has been rebuilt from the ground up in {% url "React.js" https://reactjs.org/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress-core-reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
 - We have rewritten the entire proxy layer of the Cypress server to finally fix all the problems with CORS.
 
 **Breaking Changes:**

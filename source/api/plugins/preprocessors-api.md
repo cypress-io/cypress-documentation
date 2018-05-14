@@ -66,7 +66,7 @@ module.exports = (on, config) => {
 }
 ```
 
-***The callback function should return one of the following:***
+### The callback function should return one of the following:
 
 * A promise\* that eventually resolves the path to the **built file**\*\*.
 * A promise\* that eventually rejects with an error that occurred during processing.
@@ -104,9 +104,9 @@ Property | Description
 
 The `file` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
-***Receiving 'close' event***
+### Receiving 'close' event
 
-When the spec being run is closed or the project is closed, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
+When the running spec, the project, or the browser is closed while running tests, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript
 // example
@@ -117,7 +117,7 @@ file.on('close', () => {
 })
 ```
 
-***Sending 'rerun' event***
+### Sending 'rerun' event
 
 If watching for file changes, emit `rerun` after a file has finished being processed to let Cypress know to rerun the tests.
 
