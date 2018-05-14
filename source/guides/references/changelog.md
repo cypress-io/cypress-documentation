@@ -7,7 +7,7 @@ comments: false
 
 **Breaking Changes:**
 
-- We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This result should be better performance on longer test runs. Fixes {% issue 431 %} and {% issue 681 %}
+- We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This result should be better performance on longer test runs. Addresses {% issue 431 %}, {% issue 681 %}, {% issue 1589 %}, {% issue 1539 %}, and {% issue 1692 %}
 - Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Addresses {% issue 1592 %}.
 
 **Features:**
@@ -27,12 +27,14 @@ comments: false
 - Fixed issue where the Cypress `window` was being returned instead of AUT's `window`. Fixes {% issue 1436 %}
 - The `close` event now properly fires on `file` when manually closing the browser. Fixes {% issue 1560 %}
 - `cypress.env.json` is now being watched for changes. Fixes {% issue 1464 %}
+- Fixed issue when using TypeScript that caused namespace errors to be thrown. Fixed {% issue 1627 %}
 
 **Misc:**
 
 - Searching in the Test Runner now filters out any non-matching folders. Fixes {% issue 1706 %}
 - Duplicate subsequent logs in the Command Log are now collapsed and can be expanded to view all logs. {% issue 1580 %}
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
+- The type definition for {% url "`.filter()`" filter %} not correctly supports a function argument.
 - Cypress will error and exit with status 1 if no specs were found during `cypress run`. Addresses {% issue 1585 %}.
 - Added keywords to Cypress NPM package. Addresses {% issue 1508 %}.
 - We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
