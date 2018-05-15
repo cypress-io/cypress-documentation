@@ -44,6 +44,7 @@ Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/c
 
 {% note info %}
 Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
+As of version `3.0.0`, the binary is downloaded to a global cache directory to be used across projects.
 {% endnote %}
 
 {% note success Best Practice %}
@@ -160,8 +161,49 @@ To override what is installed, you simply set `CYPRESS_BINARY_VERSION` with the 
 
 In all cases, the fact that the binary was installed from a custom location *is not saved* in your `package.json` file. Every repeated installation would have to use the same environment variable to install the same binary.
 
-{% note warning Note %}
-Setting the `CYPRESS_BINARY_VERSION` to a URL or local path will always display a warning message when opening. This is normal as the Cypress CLI cannot match the binary version with the `npm` package version.
+## Overriding the Binary Cache Directory
+
+As of version `3.0.0`, the Cypress npm package downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
+
+- **MacOS**: `~/Library/Caches/Cypress`
+- **Linux**: `~/.cache/Cypress`
+- **Windows**: `/AppData/Local/Cypress/Cache`
+
+Use the environment variable `CYPRESS_BINARY_CACHE` to override the cache location for any of the cli commands.
+
+```shell
+CYPRESS_BINARY_CACHE=~/Desktop/Cypress_Cache npm install
+```
+
+```shell
+CYPRESS_BINARY_CACHE=~/Desktop/Cypress_Cache npm open
+```
+
+```shell
+CYPRESS_BINARY_CACHE=~/Desktop/Cypress_Cache npm run
+```
+
+```shell
+CYPRESS_BINARY_CACHE=~/Desktop/Cypress_Cache npm verify
+```
+
+{% note warning %}
+`CYPRESS_BINARY_CACHE` will need to be set every time cypress is launched. To ensure this, consider exporting this environment variable, for example in a `.bash_profile` (macOS, linux), or using `RegEdit` (windows). 
+{% endnote %}
+
+## Overriding the Cypress Binary Folder
+
+Setting the environment variable `CYPRESS_BINARY_FOLDER` overrides the Cypress binary globally and for all projects.
+`CYPRESS_BINARY_FOLDER` should be a path to an already unzipped binary. Cypress commands `open`, `run`, and `verify` will use the set binary.
+
+```shell
+CYPRESS_BINARY_FOLDER=~/Downloads/Cypress.app cypress run
+# MacOS binary folders are named 'Cypress.app'
+# Linux and Windows are named 'Cypress'
+```
+
+{% note warning %}
+It is not recommended that you use this outside of CI; this will affect every local install of the `npm` package on your computer
 {% endnote %}
 
 ## Skipping Installation
