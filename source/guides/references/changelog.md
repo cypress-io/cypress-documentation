@@ -9,6 +9,7 @@ comments: false
 
 - We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This result should be better performance on longer test runs. Addresses {% issue 431 %}, {% issue 681 %}, {% issue 1589 %}, {% issue 1539 %}, and {% issue 1692 %}
 - Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Addresses {% issue 1592 %}.
+- The standard output has been redesigned to better visualize spec files running in isolation and to be more visually appealing. This may break any specialized logic written that expected the standard output to be strunctured in a specific way or contain specific words. Addresses {% issue 1588 %}
 
 **Features:**
 
@@ -18,7 +19,9 @@ comments: false
 - Cypress now watches all the `plugins` file's entire dependency tree to make iterating on plugins easier. Addresses {% issue 1407 %}
 - We now pass any reporter errors along and provide a stack if the module does not exist. Fixes {% issue 1192 %}
 - Videos will now be saved with a filename named after the associated `spec` file that it represents. Addresses {% issue 980 %}
-- The Test Runner now visually displays `skipped` tests differently than `pending` tests. {% issue #244 %}
+- The Test Runner and now visually displays `skipped` tests differently than `pending` tests. {% issue 244 %}
+- Standard output now displays the number of `skipped` tests within the summary output during `cypress run`. {% issue 1559 %}
+- The build number and url for tests run within {% url "Drone" https://drone.io/ %} are now captured and displayed on the run within the Dashboard. {% issue 1709 %}
 
 **Bugfixes:**
 
@@ -27,14 +30,20 @@ comments: false
 - Fixed issue where the Cypress `window` was being returned instead of AUT's `window`. Fixes {% issue 1436 %}
 - The `close` event now properly fires on `file` when manually closing the browser. Fixes {% issue 1560 %}
 - `cypress.env.json` is now being watched for changes. Fixes {% issue 1464 %}
-- Fixed issue when using TypeScript that caused namespace errors to be thrown. Fixed {% issue 1627 %}
+- Fixed issue when using TypeScript that caused namespace errors to be thrown. Fixes {% issue 1627 %}
+- Fixed error message on {% url "`.type()`" type %} and {% url "`.clear()`" clear %} when typing into non-typable elements or clearing non-clearable elements to accurately list the elements allowed. Fixes {% issue 1650 %}
 
 **Misc:**
 
 - Searching in the Test Runner now filters out any non-matching folders. Fixes {% issue 1706 %}
-- Duplicate subsequent logs in the Command Log are now collapsed and can be expanded to view all logs. {% issue 1580 %}
+- Duplicate, subsequent logs in the Command Log are now collapsed and can be expanded to view all logs. {% issue 1580 %}
+- We now throw an error if an alias using {% url "`.as()`" as %} was defined starting with the `@` character. {% issue 1643 %}
+- We now pass the `--disable-device-discovery-notifications` flag automatically. This should prevent Chromium browser from automatically trying to communicate with devices in your network, such as printers, while running tests. Fixes {% issue 1600 %}
+- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" command-line#Cypress-Module-API %}, just as you would from the command line. {% issue 1442 %}
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
-- The type definition for {% url "`.filter()`" filter %} not correctly supports a function argument.
+- The type definition for {% url "`.filter()`" filter %} now correctly supports a function argument.
+- The type definition for {% url "`.scrollIntoView()` scrollintoview %} no longer errors when passed a `duration` option. Fixes {% issue 1606 %}
+- `NODE_OPTIONS` environment variables now print within the `cypress:cli` logs when running in `DEBUG` mode. Although using `NODE_OPTIONS` themselves should not be used due to {% issue 1676 %}. Addresses {% issue 1673 %}
 - Cypress will error and exit with status 1 if no specs were found during `cypress run`. Addresses {% issue 1585 %}.
 - Added keywords to Cypress NPM package. Addresses {% issue 1508 %}.
 - We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
@@ -42,6 +51,7 @@ comments: false
 - Centered the animating icon in the Test runner when 'running'.
 - We made some changes to internal reference of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. Addresses {% issue 1140 %}
 - The test name text is now selectable inside the Command Log. Fixes {% issue 1476 %}
+- Minor improvements to contributing docs and scripts. Fixes {% issue 1665 %}
 
 **Documentation Changes:**
 
