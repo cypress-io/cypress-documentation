@@ -3,11 +3,18 @@ title: screenshot
 
 ---
 
-Take a screenshot of the application under test and the Cypress Command Log.
+Take a screenshot of the application under test and, optionally, the Cypress Command Log.
 
 # Syntax
 
 ```javascript
+.screenshot()
+.screenshot(fileName)
+.screenshot(options)
+.screenshot(fileName, options)
+
+// ---or---
+
 cy.screenshot()
 cy.screenshot(fileName)
 cy.screenshot(options)
@@ -19,7 +26,8 @@ cy.screenshot(fileName, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.screenshot()    
+cy.screenshot()
+cy.get(".post").screenshot()
 ```
 
 ## Arguments
@@ -32,10 +40,18 @@ A name for the image file. By default the filename will be the title of the test
 
 Pass in an options object to change the default behavior of `cy.screenshot()`.
 
-Option | Default | Description
+Option |Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.screenshot %}
+`blackout` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
+`capture` | `'fullpage'` | Which parts of the UI to capture. Valid values are  `app`, `fullpage`, or `runner`. When `app`, your app is captured with the current viewport. When `fullpage`, your app is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress UI, is captured.  For test failure screenshots, capture is always coerced to `runner`. This value is ignored for element captures.
+`clip` | `null` | Position and dimensions of a part of the screenshot to crop out of the final image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
+`disableTimersAndAnimations` | `true`| When true, disables JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
+`scaleAppCaptures` | `false` | When true and capture is `app` or `fullpage`, will scale the app to fit into the browser viewport.
+`waitForCommandSynchronization` | `true` | When true, makes a best effort to sync the command log, showing the last run command. Only applies to `runner` captures.
+
+For more details on many of these options and to set their defaults, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
 ## Yields {% helper_icon yields %}
 
@@ -69,13 +85,28 @@ describe('my tests', function () {
 cy.screenshot('clickingOnNav')
 ```
 
+## Clip
+
+```javascript
+// screenshot will be clipped 20 pixels from the top and left
+// to the dimensions 400 x 300
+cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
+```
+
+## Screenshot an element
+
+```javascript
+// screenshot will be only of the first .post element
+cy.get(".post").first().screenshot()
+```
+
 # Notes
 
 ## Test Failures
 
 ***Automatic screenshots on test failure***
 
-When running headlessly or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnHeadlessFailure` to `false` in your {% url 'configuration' configuration %}.
+When running headlessly or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` with {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 ## Viewing Screenshots
 
@@ -101,11 +132,21 @@ It's possible for us to synchronize taking a screenshot with our renderer, but i
 
 {% open_an_issue %} if you'd like us to add support for synchronizing the screenshot with our Reporter.
 
+## Fullpage captures and fixed/sticky elements
+
+For fullpage captures, Cypress scrolls the page from top to bottom, takes screenshots at each point and stitches them together. Due to this, elements that are fixed or sticky will appear multiple times in the final screenshot. To prevent this, in most cases you can change the element to be `position: absolute` before the screenshot and change it back afterwards.
+
+```javascript
+cy.get('.sticky-header').invoke('css', 'position', 'absolute')
+cy.screenshot()
+cy.get('.sticky-header').invoke('css', 'position', null)
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements parent cy.screenshot %}
+{% requirements dual_existence_single_dom cy.screenshot %}
 
 ## Assertions {% helper_icon assertions %}
 
@@ -133,6 +174,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 
 # See also
 
+- {% url `Cypress.Screenshot` screenshot-api %}
 - {% url `cy.debug()` debug %}
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `.pause()` pause %}
