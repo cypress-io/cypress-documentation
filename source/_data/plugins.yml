@@ -10,6 +10,11 @@
       link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
       keywords: [file-watcher, cucumber]
 
+    - name: ESLint
+      description: Runs linting via ESLint on your spec files as they are loaded and display errors in the console
+      link: https://github.com/chinchiheather/cypress-eslint-preprocessor
+      keywords: [eslint]
+
     - name: Watch
       description: Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.
       link: https://github.com/cypress-io/cypress-watch-preprocessor
@@ -37,3 +42,15 @@
       description: Official TypeScript definitions for the Cypress API.
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
+
+- name: Custom Commands
+  plugins:
+    - name: cypressautomocker
+      description: Allow recording API results and replaying the APIs as a mock server.
+      link: https://github.com/scottschafer/cypressautomocker
+      keywords: [routing, mock]
+
+    - name: cypress-testing-library
+      description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
+      link: https://github.com/kentcdodds/cypress-testing-library
+      keywords: [testing-library, dom-testing-library, react-testing-library]

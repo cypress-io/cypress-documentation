@@ -53,6 +53,8 @@ cy.get('div').should(($div) => {
 })
 ```
 
+This is the equivalent of Selenium's `getText()` method, which returns the innerText of a visible element. 
+
 ## {% fa fa-angle-right %} How do I get an input's value?
 
 Cypress yields you jQuery objects, so you can simply call methods on them.
@@ -76,7 +78,7 @@ cy.get('input').should(($input) => {
 })
 ```
 
-If you need to hold a reference reference or compare values of text:
+If you need to hold a reference or compare values of text:
 
 ```javascript
 cy.get('input').invoke('val').then((val1) => {
@@ -97,6 +99,13 @@ cy.get('input').invoke('val').then((val1) => {
 
 Our {% url 'Variables and Aliases guide' variables-and-aliases %} gives you examples of doing exactly that.
 
+## {% fa fa-angle-right %} Can I store an attribute's value in a constant or a variable for later use?
+
+Yes, and there are a couple of ways to do this. One way to hold a value or reference is with {% url '`closures`' variables-and-aliases#Closures %}.
+Commonly, users believe they have a need to store a value in a `const`, `var`, or `let`. Cypress recommends doing this only when dealing with mutable objects (that change state).  
+
+For examples how to do this, please read our {% url 'Variables and Aliases guide' variables-and-aliases %}.
+
 ## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
 
 Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
@@ -112,6 +121,43 @@ cy.get('button').then(($el) => {
 What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
+
+## {% fa fa-angle-right %} How can I make Cypress wait until something is visible in the DOM?
+
+{% note info Remember %}
+ DOM based commands will automatically retry and wait for their corresponding elements to exist before failing.
+{% endnote %}
+
+Cypress offers you many robust ways to {% url 'query the DOM' introduction-to-cypress#Querying-Elements %}, all wrapped with retry-and-timeout logic.
+
+Other ways to wait for an element's presence in the DOM is through `timeouts`. Cypress commands have a default timeout of 4 seconds, however, most Cypress commands have {% url 'customizable timeout options' configuration#Timeouts %}. Timeouts can be configured globally or on a per-command basis.
+
+In {% url 'some cases' interacting-with-elements#Visibility %}, your DOM element will not be actionable. Cypress gives you a powerful {%url '`{force:true}`' interacting-with-elements#Forcing %} option you can pass to most action commands. 
+
+**Please read** our {% url 'Core Concepts Introduction to Cypress' introduction-to-cypress %}. This is the single most important guide for understanding how to test with Cypress. 
+
+## {% fa fa-angle-right %} How do I wait for my application to load? 
+
+We have seen many different iterations of this question. The answers can be varied depending on how your application behaves and the circumstances under which you are testing it. Here are a few of the most common versions of this question.
+
+**_How do I know if my page is done loading?_** 
+
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message. 
+
+
+**_In CI, how do I make sure my server has started?_**
+
+There are a couple really great modules that we recommend using for this, {% url '`wait-on`' https://www.npmjs.com/package/wait-on %} and {% url '`start-server-and-test`'. https://github.com/bahmutov/start-server-and-test' %}
+
+**_How can I wait for my requests to be complete?_**
+
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.  
+
+## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
+
+You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
+
+We do not currently offer any options to simulate this headlessly.
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
@@ -200,6 +246,10 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% issue 64 'here' %}.
+
+## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
+
+Cypress’ API is compatible with WebDriver specific tasks that Sauce Labs and BrowserStack use to launch browsers. Because Cypress currently only supports Chrome* based browsers, we have not yet added integration for these services. When cross browsers are added, Cypress will add full integration with Sauce Labs and BrowserStack.
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
@@ -323,6 +373,31 @@ Luckily there are lots of easy and safe workarounds that enable you to test this
 
 {% url 'Read through this recipe to see how to test anchor links.' recipes#Tab-Handling-and-Links %}
 
+## {% fa fa-angle-right %} Can I dynamically test multiple viewports? 
+
+Yes, you can. We provide an {% url 'example here' viewport#Width-Height %}.
+
+## {% fa fa-angle-right %} Can I run the same tests on multiple subdomains?
+
+Yes. In this example, we loop through an array of urls and make assertions on the logo.
+
+```javascript
+
+const urls = ['https://docs.cypress.io', 'https://www.cypress.io']
+
+describe('Logo', () => {
+  urls.forEach((url) => {
+    it(`Should display logo on ${url}`, () => {
+      cy.visit(url)
+      cy.get('#logo img')
+        .should('have.attr', 'src')
+        .and('include', 'logo')
+    })
+  })
+})
+```
+
+![Command Log multiple urls](/img/faq/questions/command-log-of-dynamic-url-test.png)
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
 
@@ -377,7 +452,7 @@ If it's just an anchor that initiates the download, you could just test that it 
 
 In the end, it's up to you to know your implementation and to test just enough to cover everything.
 
-## {% fa fa-angle-right %} Is is possible to catch the promise chain in Cypress?
+## {% fa fa-angle-right %} Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command. {% url "Read more about how the Cypress commands are not Promises" introduction-to-cypress#Commands-Are-Not-Promises %}
 

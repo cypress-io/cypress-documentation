@@ -44,6 +44,10 @@ Each document attempts to cover the essentials of each method including:
 
 **See also:** Other related methods.
 
+## Intelligent Code Completion
+
+IntelliSense is available for Cypress. It offers intelligent parameter information when writing Cypress commands directly in your IDE. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+
 # Reporting a Problem
 
 If you spot a typo, broken link, incorrect code sample or want to contribute to improve the documentation, we're happy to have your help!
