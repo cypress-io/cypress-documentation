@@ -186,6 +186,7 @@ sidebar:
     arch: arch
     platform: platform
     selector-playground-api: SelectorPlayground
+    screenshot-api: Screenshot
   examples:
     examples: Examples
     recipes: Recipes
