@@ -92,7 +92,7 @@ To see an example of every command used in Cypress, open the {% url "`example` f
 
 To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
-## Plugin Files
+## Plugin files
 
 By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
