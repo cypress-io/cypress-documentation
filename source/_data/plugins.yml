@@ -25,12 +25,6 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
       
-    - name: cypress-testrail-reporter
-      description: Custom reporter for publishing Cypress results to a TestRail test run. 
-      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
-      keywords: [testrail, reporter]   
-
-
 - name: Development Tools
   plugins:
     - name: Docker
@@ -59,3 +53,10 @@
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
+      
+- name: Reporting
+  plugins:
+  - name: cypress-testrail-reporter
+    description: Custom reporter for publishing Cypress results to a TestRail test run. 
+    link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
+    keywords: [testrail, reporter]
