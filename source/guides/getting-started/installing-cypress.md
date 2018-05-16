@@ -56,7 +56,7 @@ The recommended approach is to install Cypress with `npm` because :
 
 ## {% fa fa-download %} Direct Download
 
-If you're not using `node` or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
+If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
@@ -120,7 +120,7 @@ npm run cypress:open
 
 By installing Cypress through `npm` you also get access to many other CLI commands.
 
-As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your node scripts.
+As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your Node scripts.
 
 You can {% url 'read more about the CLI here' command-line %}.
 

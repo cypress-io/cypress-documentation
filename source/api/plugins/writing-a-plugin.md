@@ -88,23 +88,23 @@ Your `pluginsFile` is invoked when Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then `requires` in your `pluginsFile`. This is similar to the way Visual Studio Code or Atom works.
 
-You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local node version, and not anything else under your control.
+You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local Node version, and not anything else under your control.
 
-Because of this, this global context and the version of node is controlled by Cypress.
+Because of this, this global context and the version of Node is controlled by Cypress.
 
 {% note warning "Node version" %}
 
-Keep in mind - code executed in plugins is executed **by the node version** that comes bundled in Cypress itself.
+Keep in mind - code executed in plugins is executed **by the Node version** that comes bundled in Cypress itself.
 
-This version of node has **nothing to do** with your locally installed versions. Therefore you have to write node code which is compatible with this version.
+This version of Node has **nothing to do** with your locally installed versions. Therefore you have to write Node code which is compatible with this version.
 
-You can find the current node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
+You can find the current Node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 
 {% endnote %}
 
 ## NPM modules
 
-When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any node module** you have installed.
+When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any Node module** you have installed.
 
 You can also `require` local files relative to your project.
 

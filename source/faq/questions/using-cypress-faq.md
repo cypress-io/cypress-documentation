@@ -405,9 +405,9 @@ The code you write in Cypress is executed in the browser, so you can import or r
 
 You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
-Cypress doesn't have direct access to node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
+Cypress doesn't have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
-- {% url `cy.task()` task %} to run code in node via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.exec()` exec %} to execute a shell command
 
 {% url 'Check out this example recipe.' recipes#Node-Modules %}
@@ -438,7 +438,7 @@ Yes. You can read more {% url "here" writing-and-organizing-tests#Hooks %}.
 
 ## {% fa fa-angle-right %} I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
 
-First, make sure you have {% url "`node`" https://nodejs.org %} installed on your system. `npm` is a `node` package that is installed globally by default when you install node and is required to install our {% url "`cypress` npm  package" command-line %}.
+First, make sure you have {% url "Node" https://nodejs.org %} installed on your system. `npm` is a Node package that is installed globally by default when you install Node and is required to install our {% url "`cypress` npm  package" command-line %}.
 
 Next, you'd want to check that you have the proper permissions for installing on your system or you may need to run `sudo npm install cypress`.
 
@@ -494,7 +494,7 @@ To start the server, run the tests and then shutdown the server we recommend {% 
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
-Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + node.
+Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + Node.
 
 That being said, we use Cypress to test our own Desktop app's front end - by stubbing events from Electron. These tests are open source so you can check them out {% url "here" https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui/cypress/integration %}.
 

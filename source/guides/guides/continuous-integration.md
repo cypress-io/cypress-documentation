@@ -285,7 +285,7 @@ The `cy:run` command will only be executed when the URL `http://localhost:3030` 
 
 ## Module API
 
-Oftentimes it can be much easier to simply programmatically control and boot your servers with a node script.
+Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
 
 If you're using our {% url 'Module API' command-line#Cypress-Module-API %} then it would be trivial to write a script which boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
 

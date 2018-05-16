@@ -54,9 +54,9 @@ The **sweet spot** of Cypress is to be used as a tool to test your own applicati
 
 In case you missed it before - Cypress tests run inside of the browser! This means we can do things nobody else can. There is no object serialization or JSON wire protocols. You have real, native access to everything in your application under test. It is impossible for Cypress to 'miss' elements and it always knows the moment your application fires any kind of event.
 
-But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in `Node.js`, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
+But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node.js, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 
-This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you will soon have the ability to use `Node.js` to import or talk directly to your backend scripts once {% issue 684 %} lands.
+This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you will soon have the ability to use Node.js to import or talk directly to your backend scripts once {% issue 684 %} lands.
 
 To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your backend language.
 

@@ -247,7 +247,7 @@ Cypress binary version: 0.20.0
 
 # Cypress Module API
 
-You can use also require Cypress as a node module.
+You can use also require Cypress as a Node module.
 
 {% note warning %}
 The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.

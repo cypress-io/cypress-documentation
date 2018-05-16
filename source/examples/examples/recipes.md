@@ -10,7 +10,7 @@ Recipes show you how to test common scenarios in Cypress.
 
 Recipe | Category | Description
 --- | --- | ---
-{% urlHash 'Node Modules' Node-Modules %} | Fundamentals | Import your own node modules
+{% urlHash 'Node Modules' Node-Modules %} | Fundamentals | Import your own Node modules
 {% urlHash 'Single Sign On' Single-Sign-On %} | Logging In | Log in across multiple servers or providers
 {% urlHash 'HTML Web Forms' HTML-Web-Forms %} | Logging In | Log in with a basic HTML form
 {% urlHash 'XHR Web Forms' XHR-Web-Forms %} | Logging In | Log in using an XHR
@@ -193,6 +193,6 @@ Get around the lack of a `.hover()` command.
 
 ## [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node)
 
-- Use {% url `cy.task()` task %} to communicate with node via the `pluginsFile`.
+- Use {% url `cy.task()` task %} to communicate with Node via the `pluginsFile`.
 - Seed your database with test data.
 - Wrap your `pluginsFile` so you can require files that use ES modules (`import`/`export`).

@@ -140,11 +140,11 @@ Event | Details
 
 ## Other Events
 
-There are a myriad of other events Cypress fires to communicate with the node server process, automation servers, mocha, the runner, and the reporter. They are strictly internal to the way Cypress works and not useful for users.
+There are a myriad of other events Cypress fires to communicate with the Node server process, automation servers, mocha, the runner, and the reporter. They are strictly internal to the way Cypress works and not useful for users.
 
 # Binding to Events
 
-Both the global `Cypress` and `cy` objects are standard `node.js` event emitters. That means you can use the following methods to bind and unbind from events.
+Both the global `Cypress` and `cy` objects are standard `Node.js` event emitters. That means you can use the following methods to bind and unbind from events.
 
 - {% url 'on' https://nodejs.org/api/events.html#events_emitter_on_eventname_listener %}
 - {% url 'once' https://nodejs.org/api/events.html#events_emitter_once_eventname_listener %}

@@ -24,7 +24,7 @@ Once you get the hang of async code - you'll realize you can do everything you c
 This guide explores many common patterns for writing good Cypress code that can handle even the most complex situations.
 {% endnote %}
 
-Asynchronous API's are here to stay in JavaScript. They are found everywhere in modern code. In fact, most new browser API's are asynchronous and many core `Node.js` modules are asynchronous as well.
+Asynchronous API's are here to stay in JavaScript. They are found everywhere in modern code. In fact, most new browser API's are asynchronous and many core Node modules are asynchronous as well.
 
 The patterns we'll explore below are useful in and outside of Cypress.
 
