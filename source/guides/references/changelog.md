@@ -10,9 +10,11 @@ comments: false
 - We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This result should be better performance on longer test runs. Addresses {% issue 431 %}, {% issue 681 %}, {% issue 1589 %}, {% issue 1539 %}, and {% issue 1692 %}
 - Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Addresses {% issue 1592 %}.
 - The standard output has been redesigned to better visualize spec files running in isolation and to be more visually appealing. This may break any specialized logic written that expected the standard output to be strunctured in a specific way or contain specific words. Addresses {% issue 1588 %}
+- When running `cypress run --record` within CI without a record key, we now detect if the build is from a pull request in a remote fork. We no longer stop the tests from running in this case and instead display a warning, continue to run the tests, but turn off recording. {% issue 1193 %}
 
 **Features:**
 
+- There is a new `cy.task()` command.
 - You can now run multiple specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
 - The seeded `example_spec.js` file has been replaced by an `examples` folder with several spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files that will now be run in isolation. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
 - The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
