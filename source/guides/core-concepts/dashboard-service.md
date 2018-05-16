@@ -1,6 +1,6 @@
 ---
 title: Dashboard Service
-comments: false
+
 ---
 
 {% note info %}

@@ -1,6 +1,6 @@
 ---
 title: Writing and Organizing Tests
-comments: false
+
 ---
 
 {% note info %}

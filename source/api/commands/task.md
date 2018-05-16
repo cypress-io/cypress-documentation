@@ -1,6 +1,6 @@
 ---
 title: task
-comments: false
+
 ---
 
 Execute code in node.js via the `task` plugin event.

@@ -1,7 +1,7 @@
 ---
 layout: toc-top
 title: Dashboard
-comments: false
+
 containerClass: faq
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: select
-comments: false
+
 ---
 
 Select an `<option>` within a `<select>`.

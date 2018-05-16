@@ -1,6 +1,6 @@
 ---
 title: type
-comments: false
+
 ---
 
 Type into a DOM element.

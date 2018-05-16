@@ -1,6 +1,6 @@
 ---
 title: Changelog
-comments: false
+
 ---
 
 ## 3.0.0

@@ -1,6 +1,6 @@
 ---
 title: Continuous Integration
-comments: false
+
 ---
 
 Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:

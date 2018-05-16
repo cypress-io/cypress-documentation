@@ -1,6 +1,6 @@
 ---
 title: hash
-comments: false
+
 ---
 
 Get the current URL hash of the page that is currently active.

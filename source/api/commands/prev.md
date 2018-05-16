@@ -1,6 +1,6 @@
 ---
 title: prev
-comments: false
+
 ---
 
 Get the immediately preceding sibling of each element in a set of the elements.

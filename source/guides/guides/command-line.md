@@ -1,6 +1,6 @@
 ---
 title: Command Line
-comments: false
+
 ---
 
 {% note info %}

@@ -1,6 +1,6 @@
 ---
 title: Preprocessors API
-comments: false
+
 ---
 
 A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.

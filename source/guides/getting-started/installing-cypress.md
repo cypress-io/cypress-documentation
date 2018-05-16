@@ -1,6 +1,6 @@
 ---
 title: Installing Cypress
-comments: false
+
 ---
 
 {% note info %}

@@ -1,6 +1,6 @@
 ---
 title: Introduction to Cypress
-comments: false
+
 ---
 
 {% note info %}

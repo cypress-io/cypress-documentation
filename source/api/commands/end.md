@@ -1,6 +1,6 @@
 ---
 title: end
-comments: false
+
 ---
 
 End a chain of commands.

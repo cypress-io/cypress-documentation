@@ -1,6 +1,6 @@
 ---
 title: Testing Your App
-comments: false
+
 ---
 
 {% note info %}

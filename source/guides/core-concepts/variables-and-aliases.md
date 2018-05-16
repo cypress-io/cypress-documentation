@@ -1,6 +1,6 @@
 ---
 title: Variables and Aliases
-comments: false
+
 ---
 
 {% note info %}

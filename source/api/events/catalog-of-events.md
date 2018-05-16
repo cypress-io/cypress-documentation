@@ -1,6 +1,6 @@
 ---
 title: Catalog of Events
-comments: false
+
 ---
 
 Cypress emits a series of events as it runs in your browser.

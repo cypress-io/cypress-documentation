@@ -1,6 +1,6 @@
 ---
 title: Writing a Plugin
-comments: false
+
 ---
 
 The Plugins API allows you to hook into and extend Cypress behavior.

@@ -1,6 +1,6 @@
 ---
 title: Recipes
-comments: false
+
 containerClass: examples
 ---
 

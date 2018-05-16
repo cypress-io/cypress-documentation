@@ -1,6 +1,6 @@
 ---
 title: Interacting with Elements
-comments: false
+
 ---
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn

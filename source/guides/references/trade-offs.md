@@ -1,6 +1,6 @@
 ---
 title: Trade-offs
-comments: false
+
 containerClass: faq
 ---
 
