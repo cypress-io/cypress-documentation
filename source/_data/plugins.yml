@@ -24,6 +24,11 @@
       description: Watches and bundles your spec files via webpack.
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
+      
+    - name: cypress-testrail-reporter
+      description: Custom reporter for publishing Cypress results to a TestRail test run. 
+      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
+      keywords: [testrail, reporter]   
 
 
 - name: Development Tools
