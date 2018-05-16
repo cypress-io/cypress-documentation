@@ -8,7 +8,7 @@ title: Changelog
 
 - We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This result should be better performance on longer test runs. Addresses {% issue 431 %}, {% issue 681 %}, {% issue 1589 %}, {% issue 1539 %}, and {% issue 1692 %}
 - Fullpage screenshots are now taken when using {% url "`cy.screenshot()`" screenshot %}. Cypress scrolls the page from top to bottom, takes screenshots at each point and stitches them together.
-<!-- - `screenshotOnHeadlessFailure` has been removed as an option from our configuration. This behavior can be turned off by setting `screenshotOnRunFailure` to `false` within the new {% url "Screenshot API" screenshot-api %} using {% url 'Cypress.Screenshot.defaults()' screenshot-api %}. `screenshotOnRunFailure` more accurately reflects that screenshots are taken on failure during `cypress run` - not only within headless browsers. Addresses {% issue 1140 %} -->
+- `screenshotOnHeadlessFailure` has been removed as an option from our configuration. This behavior can be turned off by setting `screenshotOnRunFailure` to `false` within the new {% url "Screenshot API" screenshot-api %} using {% url '`Cypress.Screenshot.defaults()`' screenshot-api %}. `screenshotOnRunFailure` more accurately reflects that screenshots are taken on failure during `cypress run` - not only within headless browsers. Addresses {% issue 1140 %}
 - Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Addresses {% issue 1592 %}.
 - The standard output has been redesigned to better visualize spec files running in isolation and to be more visually appealing. This may break any specialized logic written that expected the standard output to be strunctured in a specific way or contain specific words. Addresses {% issue 1588 %}
 - When running `cypress run --record` within CI without a record key, we now detect if the build is from a pull request in a remote fork. We no longer stop the tests from running in this case and instead display a warning, continue to run the tests, but turn off recording. {% issue 1193 %}
@@ -18,8 +18,8 @@ title: Changelog
 - There is a new `cy.task()` command for executing arbitrary Node.js code.
 - You can now run multiple specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
 - `.screenshot()` can now be chained off of commands that yield a DOM element and will only take a screenshot that element.
-<!-- - There is a new {% url "Screenshot API" screenshot-api %} that allows you set defaults for how screenshots are captured such as whether to include the Cypress Command Log, scale your app, disable timers and animations, or which elements to black out in the screenshot. You can also set defaults for whether to automatically take screenshots when there are test failures or whether to wait for the Command Log to synchronize before taking the screenshot. -->
-- New `options` can be passed to `cy.screenshot()` for how the screenshot is captured such as whether to include the Cypress Command Log, scale your app, capture the full page, disable timers and animations, which elements to black out, or how to crop the screenshot. You can also pass an option for whether to wait for the Command Log to synchronize before taking the screenshot. This does not alter the behavior of the automatic screenshot taken on test failure.
+- There is a new {% url "Screenshot API" screenshot-api %} that allows you set defaults for how screenshots are captured such as whether to include the Cypress Command Log, scale your app, disable timers and animations, or which elements to black out in the screenshot. You can also set defaults for whether to automatically take screenshots when there are test failures or whether to wait for the Command Log to synchronize before taking the screenshot.
+- New `options` can be passed to {% url "`cy.screenshot()`" screenshot %} for how the screenshot is captured such as whether to include the Cypress Command Log, scale your app, capture the full page, disable timers and animations, which elements to black out, or how to crop the screenshot. You can also pass an option for whether to wait for the Command Log to synchronize before taking the screenshot. This does not alter the behavior of the automatic screenshot taken on test failure.
 - During install of cypress, the Cypress binary is now downloaded to a configurable global cache directory to be used across projects. Fixes {% issue 1300 %}
 - The seeded `example_spec.js` file has been replaced by an `examples` folder with several spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files that will now be run in isolation. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
 - The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
@@ -62,10 +62,10 @@ title: Changelog
 
 **Documentation Changes:**
 
-- {% url 'New `cy.task` doc' writing-and-organizing-tests %}
-- {% url 'New `Screenshot API` doc' writing-and-organizing-tests %}
-- {% url 'Update `cy.screenshot` doc to include new accepted usage and options' writing-and-organizing-tests %}
-- {% url 'Update `Installing Cypress` doc to include new options for Cypress binary caching %}
+- {% url 'New `cy.task()` doc' task %}
+- {% url 'New `Screenshot API` doc' screenshot-api %}
+- {% url 'Update `.screenshot()` doc to include new accepted usage and options' screenshot %}
+- {% url 'Update `Installing Cypress` doc to include new options for Cypress binary caching' installing-cypress %}
 - {% url 'Updated `Writing and Organizing Tests` to include newly seeded `examples` folder' writing-and-organizing-tests %}
 - {% url 'Updated `cypress run` spec args' command-line#cypress-run %}
 - {% url 'Updated `Dashboard Service`' dashboard-service %}
