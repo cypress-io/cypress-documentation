@@ -61,33 +61,20 @@ Option | Default | Description
 
 ## Command
 
-`cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside the scope of Cypress. This is great for:
+`cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
 - Seeding your test database.
 - Storing state in Node that you want persisted between tests.
-- Performing parallel tasks (like making multiple http requests outside of Cypress).
+- Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. If you don't need to return a value, explicitly return `null` to signal that the given event has been handled.
+In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. 
 
-***Log a string to the terminal***
+If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
 
-```javascript
-// in test
-cy.task('log', 'This will be output to the terminal')
+### Read a JSON file's contents
 
-// in plugins file
-on('task', {
-  log (message) {
-    console.log(message) // This will log to the terminal
-    return null // Signal that the 'log' event has been handled
-  }
-})
-```
-
-***Read a JSON file's contents***
-
-Note: this serves as a demonstration only. We recommend using fixtures or {% url "`cy.readFile`" readfile %} for a more robust implementation of reading a file with Cypress.
+Note: this serves as a demonstration only. We recommend using {% url "`cy.fixture()`" fixture %} or {% url "`cy.readFile()`" readfile %} for a more robust implementation of reading a file in your tests.
 
 ```javascript
 // in test
@@ -98,7 +85,9 @@ cy.task('readJson', 'cypress.json').then((data) => {
   //   ...
   // }
 })
+```
 
+```javascript
 // in plugins file
 on('task', {
   readJson () {
@@ -110,11 +99,11 @@ on('task', {
 
 ## Options
 
-***Change the timeout***
+### Change the timeout
 
-You can increase the time allowed to execute the task, although *we don't recommend executing tasks that take a long time to exit*.
+You can increase the time allowed to execute the task, although *we do not recommend executing tasks that take a long time to exit*.
 
-Cypress will *not* continue running any other commands until `cy.task()` has finished, so a long-running command will drastically slow down your test cycle.
+Cypress will *not* continue running any other commands until `cy.task()` has finished, so a long-running command will drastically slow down your test runs.
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
@@ -123,15 +112,15 @@ cy.task('seedDatabase', null, { timeout: 20000 });
 
 # Notes
 
-## Tasks Must End
+## Tasks must end
 
-***Tasks that do not end are not supported***
+### Tasks that do not end are not supported
 
-`cy.task()` does not support tasks that don't end, such as:
+`cy.task()` does not support tasks that do not end, such as:
 
-- Starting a server
-- A task that runs a watch
-- Any process that needs to be manually interrupted to stop
+- Starting a server.
+- A task that watches for file changes.
+- Any process that needs to be manually interrupted to stop.
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
 
@@ -151,7 +140,7 @@ A task must end within the `taskTimeout` or Cypress will fail the current test.
 
 # Command Log
 
-***List the contents of cypress.json***
+### List the contents of `cypress.json`
 
 ```javascript
 cy.task('readJson', 'cypress.json')
@@ -168,6 +157,7 @@ When clicking on the `task` command within the command log, the console outputs 
 # See also
 
 - {% url `cy.exec()` exec %}
+- {% url `cy.fixture()` fixture %}
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
 - {% url `cy.writeFile()` writefile %}
