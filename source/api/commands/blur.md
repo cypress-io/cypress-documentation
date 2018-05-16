@@ -1,6 +1,6 @@
 ---
 title: blur
-comments: false
+
 ---
 
 Blur a focused element.

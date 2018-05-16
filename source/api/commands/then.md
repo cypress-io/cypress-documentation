@@ -1,6 +1,6 @@
 ---
 title: then
-comments: false
+
 ---
 
 Enables you to work with the subject yielded from the previous command.

@@ -1,7 +1,7 @@
 ---
 layout: toc-top
 title: Error Messages
-comments: false
+
 ---
 
 # Test File Errors

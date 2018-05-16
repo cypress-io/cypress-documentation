@@ -1,6 +1,6 @@
 ---
 title: Screencasts
-comments: false
+
 containerClass: examples
 layout: media
 dataType: screencasts

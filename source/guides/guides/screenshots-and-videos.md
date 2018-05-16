@@ -1,6 +1,6 @@
 ---
 title: Screenshots and Videos
-comments: false
+
 ---
 
 {% note info %}

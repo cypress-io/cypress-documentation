@@ -1,7 +1,7 @@
 ---
 layout: toc-top
 title: Company
-comments: false
+
 containerClass: faq
 ---
 

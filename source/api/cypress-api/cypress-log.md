@@ -1,6 +1,6 @@
 ---
 title: Cypress.log
-comments: false
+
 ---
 
 This is the internal API for controlling what get's printed to the Command Log.

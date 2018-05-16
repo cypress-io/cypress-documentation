@@ -1,6 +1,6 @@
 ---
 title: readFile
-comments: false
+
 ---
 
 Read a file and yield its contents.

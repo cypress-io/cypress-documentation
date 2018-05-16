@@ -1,6 +1,6 @@
 ---
 title: Cypress.SelectorPlayground
-comments: false
+
 ---
 
 The Selector Playground exposes API's that enable you to:

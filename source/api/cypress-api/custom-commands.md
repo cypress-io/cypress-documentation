@@ -1,6 +1,6 @@
 ---
 title: Custom Commands
-comments: false
+
 ---
 
 Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.

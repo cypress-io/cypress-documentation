@@ -1,6 +1,6 @@
 ---
 title: Dashboard Service
-comments: false
+
 ---
 
 {% note info %}
@@ -173,7 +173,7 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
-You will also see a summary at the bottom indicating the files, screenshots, or videos that were created during the recording.
+You will also see a summary at the bottom indicating the files, screenshots, or videos that were uploaded during the recording.
 
 ![output](/img/dashboard/standard-output-of-recorded-test-run.png)
 
@@ -183,21 +183,20 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 
 ***Each failure displays:***
 
+- **Test title:** The title of the failed test.
 - **Error:** The stack trace of the error.
-- **Video:** The recorded video scrubbed to the point of failure in the test.
 - **Screenshot:** Any screenshots taken during the test.
+- **Video:** The recorded video scrubbed to the point of failure in the test.
 
 ![failures](/img/dashboard/failures-of-recorded-run.png)
 
 ***{% fa fa-picture-o fa-fw %} Screenshots***
 
-All screenshots taken during the test run can be found under the **Screenshots** tab. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here. Each screenshot includes the application under test as well as the Cypress Command Log.
-
-![Screenshots](/img/dashboard/screenshots-of-recorded-test-run.png)
+All screenshots taken during the test run can be found in **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here. Each screenshot includes the application under test as well as the Cypress Command Log.
 
 ***{% fa fa-video-camera fa-fw %}  Videos***
 
-Any videos recorded during the test run can be found under the **Videos** tab. You can also download the video of a run.
+Any videos recorded during the test run can be found under in **Videos** of the spec. You can also download the video.
 
 ![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
 

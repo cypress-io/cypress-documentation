@@ -1,6 +1,6 @@
 ---
 title: Testing Your App
-comments: false
+
 ---
 
 {% note info %}
@@ -57,7 +57,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `example_spec.js` that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
 
 ```shell
 rm cypress/integration/example_spec.js
@@ -156,9 +156,10 @@ Perhaps you'll need to generate a user, and seed them with associations and reco
 
 To test various page states - like an empty view, or a pagination view, you'd need to seed the server so that this state can be tested.
 
-**While there's a lot more to this strategy, you generally have two ways to facilitate this with Cypress:**
+**While there is a lot more to this strategy, you generally have three ways to facilitate this with Cypress:**
 
 - {% url `cy.exec()` exec %} - to run system commands
+- {% url `cy.task()` task %} - to run code in Node.js via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.request()` request %} - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.

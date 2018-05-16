@@ -1,6 +1,5 @@
 ---
 title: route
-comments: false
 ---
 
 Use `cy.route()` to manage the behavior of network requests.

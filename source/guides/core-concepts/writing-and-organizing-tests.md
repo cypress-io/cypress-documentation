@@ -1,6 +1,6 @@
 ---
 title: Writing and Organizing Tests
-comments: false
+
 ---
 
 {% note info %}
@@ -28,7 +28,26 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - example.json
 
   /integration
-    - example_spec.js
+    /examples
+      - actions.spec.js
+      - aliasing.spec.js
+      - assertions.spec.js
+      - connectors.spec.js
+      - cookies.spec.js
+      - cypress_api.spec.js
+      - files.spec.js
+      - local_storage.spec.js
+      - location.spec.js
+      - misc.spec.js
+      - navigation.spec.js
+      - network_requests.spec.js
+      - querying.spec.js
+      - spies_stubs_clocks.spec.js
+      - traversal.spec.js
+      - utilities.spec.js
+      - viewport.spec.js
+      - waiting.spec.js
+      - window.spec.js
 
   /plugins
     - index.js
@@ -69,7 +88,7 @@ Cypress also supports `ES2015` out of the box. You can use either `ES2015 module
 Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Node-Modules %}.
 {% endnote %}
 
-To see an example of every command used in Cypress, open the {% url "`example_spec.js`" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/example_spec.js %} within your `cypress/integration` folder.
+To see an example of every command used in Cypress, open the {% url "`example` folder" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} within your `cypress/integration` folder.
 
 To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
