@@ -57,7 +57,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `example_spec.js` that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
 
 ```shell
 rm cypress/integration/example_spec.js

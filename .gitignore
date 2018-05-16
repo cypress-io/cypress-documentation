@@ -2,6 +2,7 @@ node_modules/
 db.json
 public/
 *.log
+.history
 .DS_Store
 .deploy*/
 support
