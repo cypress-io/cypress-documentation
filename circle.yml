@@ -69,6 +69,8 @@ jobs:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
           paths:
             - /root/cypress-documentation
+      - store_artifacts:
+          path: ~/.npm/_logs
 
   "docs-tests":
     <<: *defaults
