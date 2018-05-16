@@ -1,14 +1,11 @@
 ---
 title: task
-
 ---
 
-Execute code in node.js via the `task` plugin event.
+Execute code in {% url "Node.js" https://nodejs.org/ %} via the `task` plugin event.
 
 {% note warning 'Anti-Pattern' %}
-Don't try to start a web server from `cy.task()`.
-
-Read about {% url 'best practices' best-practices#Web-Servers %} here.
+We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
 {% endnote %}
 
 # Syntax
@@ -26,7 +23,8 @@ cy.task(event, arg, options)
 ```javascript
 // in test
 cy.task('log', 'This will be output to the terminal')
-
+```
+```javascript
 // in plugins file
 on('task', {
   log (message) {
@@ -40,11 +38,11 @@ on('task', {
 
 **{% fa fa-angle-right %} event** ***(String)***
 
-An event name (can be any arbitrary string) that you handle via the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+An event name to be handled via the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
-An argument to send along with the event. Can be any type of value that can be serialized by [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)  (string, boolean, array, object, etc.). Types such as functions, regular expressions, Symbols will be omitted or censored to `null`.
+An argument to send along with the event. This can be any value that can be serialized by [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -63,12 +61,12 @@ Option | Default | Description
 
 ## Command
 
-`cy.task()` provides an escape hatch for running arbitrary node code, so you can take actions necessary for your test outside the scope of Cypress. This is great for:
+`cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside the scope of Cypress. This is great for:
 
-- Seeding your test database
-- Storing state in node that you want persisted between tests
-- Performing parallel tasks (like making multiple http requests outside of Cypress)
-- Running an external process
+- Seeding your test database.
+- Storing state in Node that you want persisted between tests.
+- Performing parallel tasks (like making multiple http requests outside of Cypress).
+- Running an external process.
 
 In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. If you don't need to return a value, explicitly return `null` to signal that the given event has been handled.
 
