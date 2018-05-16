@@ -538,7 +538,7 @@ cy.get("table tr").should("have.length", 2)
 ## Web Servers
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %}.
+{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
 {% endnote %}
 
 {% note success %}
@@ -547,9 +547,9 @@ cy.get("table tr").should("have.length", 2)
 
 We do NOT recommend trying to start your backend web server from within Cypress.
 
-`cy.exec()` can only run commands which eventually exit.
+`cy.exec()` and `cy.task()` can only run commands which eventually exit.
 
-Trying to start a web server from `cy.exec()` causes all kinds of problems because:
+Trying to start a web server from `cy.exec()` or `cy.task()` causes all kinds of problems because:
 
 - You have to background the process
 - You lose access to it via terminal

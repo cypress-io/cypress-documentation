@@ -34,6 +34,7 @@ Recipe | Category | Description
 {% urlHash 'File Upload in React' File-Upload-in-React %} | Unit Testing | Test file upload in React application
 {% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
+{% urlHash 'Seeding your Database in Node' Seeding-your-Database-in-Node %} | Server Communication | Seed your database with test data
 
 ## [Node Modules](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules)
 
@@ -189,3 +190,9 @@ Get around the lack of a `.hover()` command.
 - Start your application with test data.
 - Stub an XHR to seed with test data.
 - Wait on an XHR to finish.
+
+## [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node)
+
+- Use {% url `cy.task()` task %} to communicate with node via the `pluginsFile`.
+- Seed your database with test data.
+- Wrap your `pluginsFile` so you can require files that use ES modules (`import`/`export`).

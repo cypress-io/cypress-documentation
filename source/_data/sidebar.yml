@@ -123,6 +123,7 @@ api:
     spy: spy.html
     stub: stub.html
     submit: submit.html
+    task: task.html
     then: then.html
     tick: tick.html
     title: title.html
