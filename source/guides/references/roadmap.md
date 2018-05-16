@@ -14,7 +14,6 @@ Here is where Cypress is headed:
 Feature | Status
 --- | ---
 {% issue 681 'Spec Parallelism #681' %} | In progress
-{% issue 1300 'Better caching of Cypress download - #1300' %} | In progress
 {% issue 1096 'Firefox Browser Support - #310' %} | In progress
 {% issue 687 'Full Network Layer Stubbing - #687' %} | In progress
 {% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features

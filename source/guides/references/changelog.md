@@ -16,6 +16,7 @@ title: Changelog
 
 - There is a new `cy.task()` command.
 - You can now run multiple specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
+- During install of cypress, the Cypress binary is now downloaded to a configurable global cache directory to be used across projects. Fixes {% issue 1300 %}
 - The seeded `example_spec.js` file has been replaced by an `examples` folder with several spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files that will now be run in isolation. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}
 - The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
 - Cypress now watches all the `plugins` file's entire dependency tree to make iterating on plugins easier. Addresses {% issue 1407 %}
