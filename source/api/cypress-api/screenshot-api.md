@@ -26,7 +26,7 @@ An object containing one or more of the following:
 
 Option | Default | Description
 --- | --- | ---
-`blackout` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
+`blackout` | `[]` | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
 `capture` | `'fullpage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `app`, `fullpage`, or `runner`. When `app`, your application under test is captured in the current viewport. When `fullpage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`. 
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scaleAppCaptures` | `false` | Whether to scale the app to fit into the browser viewport when `capture` option is `app` or `fullpage`.

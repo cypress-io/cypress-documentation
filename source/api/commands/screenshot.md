@@ -43,9 +43,9 @@ Pass in an options object to change the default behavior of `.screenshot()`.
 Option |Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
-`blackout` | `[]` | Selectors for elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
+`blackout` | `[]` | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
 `capture` | `'fullpage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `app`, `fullpage`, or `runner`. When `app`, your application under test is captured in the current viewport. When `fullpage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`. 
-`clip` | `null` | Position and dimensions used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
+`clip` | `null` | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scaleAppCaptures` | `false` | Whether to scale the app to fit into the browser viewport when `capture` option is `app` or `fullpage`.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
@@ -92,8 +92,8 @@ cy.screenshot('clicking-on-nav')
 ### Crop a screenshot to a specific location and size
 
 ```javascript
-// screenshot will be clipped 20 pixels from the top and left
-// to the dimensions 400 x 300
+// screenshot will be clipped 20px from the top and left
+// to the dimensions 400px x 300px
 cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
 ```
 
@@ -131,9 +131,7 @@ For example - say a command we wrote timed out: {% url "`cy.get('#element')`" ge
 
 Another potential problem to be aware of is that our own Command Log is using React.js under the hood and only rendering asynchronously during an animation frame. It is possible you will see screenshots taken before our Command Log is done rendering. This means you may not see the **error displayed** in the screenshot. But this is also why we take a video - to show you the complete failure.
 
-It is possible for us to synchronize taking a screenshot with our renderer, but it would delay taking the screenshot. The trade off here is that adding an artificial delay would mean then there's a greater chance your own application's state is not accurate.
-
-{% open_an_issue %} if you would like us to add support for synchronizing the screenshot with our Command Log.
+We make our best effort to synchronize taking a screenshot with our renderer, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture. You can turn off the command log synchronization by passing `false` to `waitForCommandSynchronization` to get a more accurate screenshot of your application under test.
 
 ## Fullpage captures and fixed/sticky elements
 
