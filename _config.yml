@@ -53,19 +53,43 @@ alias:
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
   examples/index.html: examples/examples/recipes.html
+
+  examples/recipes/index.html: examples/examples/recipes.html
   examples/unit-testing-recipe.html: examples/examples/recipes.html
-  examples/logging-in-recipe.html: examples/examples/recipes.html
-  examples/testing-the-dom-recipe.html: examples/examples/recipes.html
-  examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
-  examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
-  examples/extending-cypress-recipe.html: examples/examples/recipes.html
   examples/recipes/unit-testing-recipe.html: examples/examples/recipes.html
+  examples/logging-in-recipe.html: examples/examples/recipes.html
+  examples/recipes/logging-in-recipe.html: examples/examples/recipes.html
+  examples/testing-the-dom-recipe.html: examples/examples/recipes.html
+  examples/recipes/testing-the-dom-recipe.html: examples/examples/recipes.html
+  examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
+  examples/recipes/working-with-the-backend-recipe.html: examples/examples/recipes.html
+  examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
+  examples/recipes/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
+  examples/extending-cypress-recipe.html: examples/examples/recipes.html
+  examples/recipes/extending-cypress-recipe.html: examples/examples/recipes.html
+
+  examples/applications/kitchen-sink.html: examples/examples/applications.html
+  examples/applications/todo-mvc.html: examples/examples/applications.html
+  examples/applications/pie-chopper.html: examples/examples/applications.html
+  examples/applications/phonecat.html: examples/examples/applications.html
+
+  examples/docker/docker-images.html: examples/examples/docker.html
+  examples/docker/circle-ci.html: examples/examples/docker.html
+  examples/docker/codeship.html: examples/examples/docker.html
+
+  examples/userland/userland-extensions.html: plugins/index.html
 
   tutorials/index.html: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/introduction/: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/introduction.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/introduction-to-tutorials.html: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/: examples/examples/tutorials.html
   tutorials/: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/testing-inputs.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-form-submission.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-app-init.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-item-testing.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-toggle-debug.html: examples/examples/tutorials.html
 
   plugins/: plugins/index.html
 
