@@ -4,6 +4,7 @@ public/
 *.log
 .history
 .DS_Store
+.history
 .deploy*/
 support
 .idea/
