@@ -88,13 +88,45 @@ cy.task('readJson', 'cypress.json').then((data) => {
 ```
 
 ```javascript
-// in plugins file
+// in plugins/index.js file
 on('task', {
   readJson () {
     // reads the file relative to current working directory
     return fsExtra.readJson(path.join(process.cwd(), arg)
   }
 })
+```
+
+### Seed a database
+
+```javascript
+// in test
+describe('e2e', () => {
+  beforeEach(() => {
+    cy.task('defaults:db')
+    cy.visit('/')
+  })
+
+  it('displays article values', () => {
+    cy.get('.article-list')
+      .should('have.length', 10)
+  })
+})
+```
+
+```javascript
+// in plugins/index.js file
+// we require some code in our app that
+// is responsible for seeding our database
+const db = require('../../server/src/db')
+
+module.exports = (on, config) => {
+  on('task', {
+    'defaults:db': () => {
+      return db.seed('defaults')
+    }
+  })
+}
 ```
 
 ## Options
