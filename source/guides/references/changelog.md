@@ -39,6 +39,7 @@ title: Changelog
 - `cypress.env.json` is now being watched for changes. Fixes {% issue 1464 %}
 - Fixed issue when using TypeScript that caused namespace errors to be thrown. Fixes {% issue 1627 %}
 - Fixed error message on {% url "`.type()`" type %} and {% url "`.clear()`" clear %} when typing into non-typable elements or clearing non-clearable elements to accurately list the elements allowed. Fixes {% issue 1650 %}
+- Added Chrome flag `--disable-blink-features=RootLayerScrolling` to prevent the application under test from "shaking" in some versions of Chrome. Addresses {% issue 1620 %}
 
 **Misc:**
 
@@ -56,7 +57,7 @@ title: Changelog
 - We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
 - Internal changes to our API structure and communication. Addresses {% issue 1169 %},{% issue 1170 %}, {% issue 1248 %}, {% issue 1413 %}, {% issue 1415 %}.
 - Centered the animating icon in the Test runner when 'running'.
-- We made some changes to internal reference of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. Addresses {% issue 1140 %}
+- We made some changes to internal references of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. Addresses {% issue 1140 %}
 - The test name text is now selectable inside the Command Log. Fixes {% issue 1476 %}
 - Minor improvements to contributing docs and scripts. Fixes {% issue 1665 %}
 
