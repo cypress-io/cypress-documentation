@@ -44,18 +44,32 @@ Option |Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `blackout` | `[]` | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
-`capture` | `'fullpage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `app`, `fullpage`, or `runner`. When `app`, your application under test is captured in the current viewport. When `fullpage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`. 
+`capture` | `'fullpage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullpage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullpage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
 `clip` | `null` | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
-`scaleAppCaptures` | `false` | Whether to scale the app to fit into the browser viewport when `capture` option is `app` or `fullpage`.
+`scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
-`waitForCommandSynchronization` | `true` | Whether to make an effort to sync the command log, showing the latest command run, when `capture` option is `runner`.
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
 ## Yields {% helper_icon yields %}
 
-{% yields null cy.screenshot %}
+`cy.screenshot()` yields an object with the following properties:
+
+- `blackout`
+- `capture`
+- `dimensions`
+- `duration`
+- `name`
+- `path`
+- `pixelRatio`
+- `scaled`
+- `size`
+- `takenAt`
+
+`.screenshot()` yields an object with above properties plus the following:
+
+- `el` (the element captured by the screenshot)
 
 # Examples
 
@@ -70,9 +84,9 @@ You can change the directory where screenshots are saved in your {% url 'configu
 ```javascript
 describe('my tests', function () {
   it('takes a screenshot', function () {
-    // screenshot will be saved as 
+    // screenshot will be saved as
     // cypress/screenshots/my tests -- takes a screenshot.png
-    cy.screenshot() 
+    cy.screenshot()
   })
 })
 ```
@@ -89,7 +103,7 @@ cy.screenshot('clicking-on-nav')
 
 ## Clip
 
-### Crop a screenshot to a specific location and size
+### Crop a screenshot to a specific position and size
 
 ```javascript
 // screenshot will be clipped 20px from the top and left
@@ -103,6 +117,12 @@ cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
 
 ```javascript
 cy.get(".post").first().screenshot()
+```
+
+### Chain off the screenshot to click the element captured
+
+```javascript
+cy.get("button").first().screenshot().its("el").click()
 ```
 
 # Notes
@@ -131,7 +151,7 @@ For example - say a command we wrote timed out: {% url "`cy.get('#element')`" ge
 
 Another potential problem to be aware of is that our own Command Log is using React.js under the hood and only rendering asynchronously during an animation frame. It is possible you will see screenshots taken before our Command Log is done rendering. This means you may not see the **error displayed** in the screenshot. But this is also why we take a video - to show you the complete failure.
 
-We make our best effort to synchronize taking a screenshot with our renderer, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture. You can turn off the command log synchronization by passing `false` to `waitForCommandSynchronization` to get a more accurate screenshot of your application under test.
+We make our best effort to synchronize taking a screenshot with our renderer, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture.
 
 ## Fullpage captures and fixed/sticky elements
 
@@ -151,7 +171,7 @@ cy.get('.sticky-header').invoke('css', 'position', null)
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions none cy.screenshot %}
+{% assertions once cy.screenshot %}
 
 ## Timeouts {% helper_icon timeout %}
 
