@@ -158,7 +158,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 ```javascript
 // if this assertion fails cy.readFile will poll the file
-// until it eventually passes its assertions (or time out)
+// until it eventually passes its assertions (or times out)
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
