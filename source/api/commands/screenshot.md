@@ -44,7 +44,7 @@ Option |Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `blackout` | `[]` | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
-`capture` | `'fullpage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullpage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullpage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
+`capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
 `clip` | `null` | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
@@ -153,9 +153,9 @@ Another potential problem to be aware of is that our own Command Log is using Re
 
 We make our best effort to synchronize taking a screenshot with our renderer, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture.
 
-## Fullpage captures and fixed/sticky elements
+## Full page captures and fixed/sticky elements
 
-When passing `fullpage` to the `capture` option, Cypress scrolls the application under test from top to bottom, takes screenshots at each point and stitches them together. Due to this, elements that are `position: fixed` or `position: sticky` will appear multiple times in the final screenshot. To prevent this, in most cases you can programmatically change the element to be `position: absolute` before the screenshot and change it back afterwards like shown below:
+When passing `fullPage` to the `capture` option, Cypress scrolls the application under test from top to bottom, takes screenshots at each point and stitches them together. Due to this, elements that are `position: fixed` or `position: sticky` will appear multiple times in the final screenshot. To prevent this, in most cases you can programmatically change the element to be `position: absolute` before the screenshot and change it back afterwards like shown below:
 
 ```javascript
 cy.get('.sticky-header').invoke('css', 'position', 'absolute')
