@@ -128,7 +128,7 @@ Any environment variable on your machine that starts with either `CYPRESS_` or `
 
 Conflicting values will override values from `cypress.json` and `cypress.env.json` files.
 
-Cypress will *strips off* the `CYPRESS_` when adding your environment variables.
+Cypress will *strip off* the `CYPRESS_` when adding your environment variables.
 
 ***Export cypress env variables from the command line***
 
