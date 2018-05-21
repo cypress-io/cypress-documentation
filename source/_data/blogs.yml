@@ -1,3 +1,11 @@
+- title: "End-To-End Testing A VueJS HackerNews Clone"
+  url: https://medium.com/js-dojo/end-to-end-testing-a-vuejs-hackernews-clone-23b9415fd5c5
+  sourceName: Vue.js Developers
+  sourceUrl: https://medium.com/js-dojo
+  date: May 7, 2018
+  author: Gleb Bahmutov
+  img: /img/examples/vue-js-hackernews-clong.jpg
+
 - title: "Cypress vs. Selenium, is this the end of an era?"
   url: https://automationrhapsody.com/cypress-vs-selenium-end-era/
   sourceName: Automation Rhapsody
