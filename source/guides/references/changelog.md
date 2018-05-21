@@ -31,6 +31,7 @@ title: Changelog
 - The Test Runner and now visually displays `skipped` tests differently than `pending` tests. {% issue 244 %}
 - Standard output now displays the number of `skipped` tests within the summary output during `cypress run`. {% issue 1559 %}
 - The build number and url for tests run within {% url "Drone" https://drone.io/ %} are now captured and displayed on the run within the Dashboard. {% issue 1709 %}
+- You can now pass `NO_COLOR=1` as an environment variable to `cypress run` to prevent colors display in stdout. {% issue 1748 %}
 
 **Bugfixes:**
 

@@ -129,22 +129,20 @@ You can {% url 'read more about the CLI here' command-line %}.
 
 ## Environment Variables
 
-Using an environment variable you can control how Cypress is installed.
+Using an environment variable you can control how Cypress is installed. This is helpful if you want to:
 
-This is helpful if you want to:
-
-- Install a different version than the default npm package
-- Specify an external URL (to bypass a corporate firewall)
-- Specify a local file (to install locally instead of using the internet)
+- Install a different version than the default npm package.
+- Specify an external URL (to bypass a corporate firewall).
+- Specify a local file to install locally instead of using the internet.
 
 To override what is installed, you simply set `CYPRESS_INSTALL_BINARY` with the `npm install` command.
 
-***Examples:***
+### Examples:
 
-1. Install the `cypress` npm package version `1.0.3` with the binary `1.0.1` version:
+1. Install the `cypress` npm package version `2.0.3` with the binary `2.0.1` version:
 
     ```shell
-    CYPRESS_INSTALL_BINARY=1.0.1 npm install cypress@1.0.3
+    CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3
     ```
 
 2. Install the Cypress binary from a given URL:
@@ -153,19 +151,19 @@ To override what is installed, you simply set `CYPRESS_INSTALL_BINARY` with the 
     CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
     ```
 
-3. Install the Cypress binary from a local file.
+3. Install the Cypress binary from a local file:
 
     ```shell
     CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
     ```
 
-In all cases, the fact that the binary was installed from a custom location *is not saved* in your `package.json` file. Every repeated installation would have to use the same environment variable to install the same binary.
+In all cases, the fact that the binary was installed from a custom location *is not saved in your `package.json` file*. Every repeated installation needs to use the same environment variable to install the same binary.
 
 ## Skipping Installation
 
-You can also force Cypress to skip the installation of the binary application. This could be useful if you want to prevent Cypress from downloading the Cypress binary at the time of `npm install`
+You can also force Cypress to skip the installation of the binary application. This could be useful if you want to prevent Cypress from downloading the Cypress binary at the time of `npm install`.
 
-Just set `CYPRESS_INSTALL_BINARY=0`:
+Just set `CYPRESS_INSTALL_BINARY=0`
 
 ```shell
 CYPRESS_INSTALL_BINARY=0 npm install
@@ -175,13 +173,13 @@ Now Cypress will skip its install phase once the npm module is installed.
 
 ## Overriding the Binary Cache Folder
 
-As of version `3.0.0`, the Cypress npm package downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
+As of version `3.0.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`
 - **Windows**: `/AppData/Local/Cypress/Cache`
 
-If you would like to override the default cache folder, set the environment variable `CYPRESS_CACHE_FOLDER`.
+To override the default cache folder, set the environment variable `CYPRESS_CACHE_FOLDER`.
 
 ```shell
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
@@ -192,13 +190,14 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
 ```
 
 {% note warning %}
-`CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable- for example in a `.bash_profile` (macOS, linux), or using `RegEdit` (windows).
+`CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
 {% endnote %}
 
 ## Overriding the Cypress Binary at Runtime
 
-Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the `npm` module finds the Cypress binary.
-`CYPRESS_RUN_BINARY` should a path to an already unzipped binary executable. Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
+Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
+
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
@@ -207,7 +206,7 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
 ```
 
 {% note warning %}
-We recommend **not exporting** `CYPRESS_RUN_BINARY`, since it will affect every cypress module installed on your file system.
+We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, since it will affect every cypress module installed on your file system.
 {% endnote %}
 
 ## Hosting
@@ -227,9 +226,9 @@ The download server url is `https://download.cypress.io`.
 `GET` | `/desktop/:version?platform=p`    | downloads desktop app by OS which could be `darwin`, `win32` or `linux64`
 
 {% note info "Example:" %}
-`https://download.cypress.io/desktop/1.0.1?platform=win32`
+`https://download.cypress.io/desktop/2.0.1?platform=win32`
 
-This will download Cypress `1.0.1` for Windows platform.
+This will download Cypress `2.0.1` for Windows platform.
 {% endnote %}
 
-If you don't provide a platform, it will be detected automatically.
+If you do not provide a platform, it will be detected automatically.

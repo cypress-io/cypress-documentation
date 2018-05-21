@@ -97,7 +97,7 @@ Cypress provides a nice {% url 'GUI' test-runner %} that gives you a visual stru
 All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cypress bakes in.
 
 - `describe` and `it` come from {% url 'Mocha' https://mochajs.org %}
-- `expect` comes from {% url 'Chai' http://chaijs.com %}
+- `expect` comes from {% url 'Chai' http://www.chaijs.com %}
 
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
@@ -149,7 +149,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`, 
 {% img /img/guides/first-test-visit-30fps.gif "A real test visiting a website" %}
 
 {% note danger Only Test Apps You Control %}
-Although in this guide we are testing our example application: {% url `https://example.cypress.io` https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
+Although in this guide we are testing our example application: {% url "`https://example.cypress.io`" https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
 
 - They are liable to change at any moment which will break tests.
 - They may do A/B testing which makes it impossible to get consistent results.
@@ -165,7 +165,7 @@ Cypress is not a **general purpose** web automation tool. It is poorly suited fo
 
 Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
 
-To find this element by its contents, we'll use {% url `cy.contains()` contains %}.
+To find this element by its contents, we'll use {% url "`cy.contains()`" contains %}.
 
 Let's add it to our test and see what happens:
 
@@ -398,10 +398,10 @@ In addition to having a helpful UI, there are also special commands dedicated to
 
 For instance there is:
 
-- {% url `cy.pause()` pause %}
-- {% url `cy.debug()` debug %}
+- {% url "`cy.pause()`" pause %}
+- {% url "`cy.debug()`" debug %}
 
-Let's add a {% url `cy.pause()` pause %} to our test code and see what happens.
+Let's add a {% url "`cy.pause()`" pause %} to our test code and see what happens.
 
 ```js
 describe('My First Test', function() {

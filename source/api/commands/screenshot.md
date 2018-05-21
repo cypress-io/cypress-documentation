@@ -44,10 +44,10 @@ Option |Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `blackout` | `[]` | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
-`capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
+`capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
 `clip` | `null` | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
-`scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
+`scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
@@ -73,9 +73,7 @@ For more details on these options and to set some as defaults across all uses of
 
 # Examples
 
-The screenshot will be stored in the `cypress/screenshots` folder by default.
-
-You can change the directory where screenshots are saved in your {% url 'configuration' configuration#Folders-Files %}.
+The screenshot will be stored in the `cypress/screenshots` folder by default. You can change the directory where screenshots are saved in your {% url 'configuration' configuration#Folders-Files %}.
 
 ## No Args
 
@@ -113,16 +111,16 @@ cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
 
 ## Screenshot an element
 
-### Take a screenshot of the `.post` element
+### Take a screenshot of the first `.post` element
 
 ```javascript
-cy.get(".post").first().screenshot()
+cy.get('.post').first().screenshot()
 ```
 
 ### Chain off the screenshot to click the element captured
 
 ```javascript
-cy.get("button").first().screenshot().its("el").click()
+cy.get('button').first().screenshot().its('el').click()
 ```
 
 # Notes
