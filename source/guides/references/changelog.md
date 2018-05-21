@@ -42,6 +42,9 @@ title: Changelog
 - Fixed issue when using TypeScript that caused namespace errors to be thrown. Fixes {% issue 1627 %}
 - Fixed error message on {% url "`.type()`" type %} and {% url "`.clear()`" clear %} when typing into non-typable elements or clearing non-clearable elements to accurately list the elements allowed. Fixes {% issue 1650 %}
 - Added Chrome flag `--disable-blink-features=RootLayerScrolling` to prevent the application under test from "shaking" in some versions of Chrome. Addresses {% issue 1620 %}
+- Fixed issue where some TTY characters were not properly formatted in the terminal for Windows 7 during `cypress run`. Fixes {% issue 1143 %} and {% issue 1550 %}
+- Some CI providers colors were not properly displaying during `cypress run`. This has been fixed. Fixes {% issue 1747 %}
+- Removed an extraneous error display from Electron during `cypress run` about a "transparent titlebar" setting. Fixes {% issue 1745 %}
 
 **Misc:**
 
@@ -55,9 +58,9 @@ title: Changelog
 - The type definition for {% url "`.scrollIntoView()`" scrollintoview %} no longer errors when passed a `duration` option. Fixes {% issue 1606 %}
 - `NODE_OPTIONS` environment variables now print within the `cypress:cli` logs when running in `DEBUG` mode. Although using `NODE_OPTIONS` themselves should not be used due to {% issue 1676 %}. Addresses {% issue 1673 %}
 - Cypress will error and exit with status 1 if no specs were found during `cypress run`. Addresses {% issue 1585 %}.
-- Added keywords to Cypress NPM package. Addresses {% issue 1508 %}.
-- We are not counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
+- We are now counting and aggregating the stats at the end of test runs for display. Addresses {% issue 1163 %}
 - Internal changes to our API structure and communication. Addresses {% issue 1169 %},{% issue 1170 %}, {% issue 1248 %}, {% issue 1413 %}, {% issue 1415 %}.
+- Added keywords to Cypress NPM package. Addresses {% issue 1508 %}.
 - Centered the animating icon in the Test runner when 'running'.
 - We made some changes to internal references of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. Addresses {% issue 1140 %}
 - The test name text is now selectable inside the Command Log. Fixes {% issue 1476 %}
