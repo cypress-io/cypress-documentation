@@ -30,7 +30,9 @@ title: Changelog
 - Videos will now be saved with a filename named after the associated `spec` file that it represents. Addresses {% issue 980 %}
 - The Test Runner and now visually displays `skipped` tests differently than `pending` tests. {% issue 244 %}
 - Standard output now displays the number of `skipped` tests within the summary output during `cypress run`. {% issue 1559 %}
-- The build number and url for tests run within {% url "Drone" https://drone.io/ %} are now captured and displayed on the run within the Dashboard. {% issue 1709 %}
+- The url to view the run in the Dashboard is now printed to output during `cypress run`. {% issue 494 %}
+- We now print the browser and browser version run in the output during `cypress run`. {% issue 833 %}
+- The build number and url to CI for tests run within {% url "Drone" https://drone.io/ %} are now captured and displayed on the run within the Dashboard. {% issue 1709 %}
 - You can now pass `NO_COLOR=1` as an environment variable to `cypress run` to prevent colors display in stdout. {% issue 1748 %}
 
 **Bugfixes:**
