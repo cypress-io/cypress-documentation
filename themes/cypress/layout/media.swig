@@ -23,11 +23,18 @@
                 {% endif %}
                 <p>
                   Published on
-                  <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
+                  {% if media.sourceUrl %}
+                    <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
+                  {% else %}
+                    {{ media.sourceName }}
+                  {% endif %}
                   {% if media.author %}
                     by {{ media.author }}
                   {% endif %}
-                  <em>({{ media.date }})</em>
+                  <em>({{ media.date }}).</em>
+                  {% if media.slides %}
+                    <a href="{{ media.slides }}" target="_blank" rel="noopener noreferrer">Slides.</a>
+                  {% endif %}
                 </p>
               </div>
             {% endfor %}

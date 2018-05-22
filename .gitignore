@@ -3,6 +3,7 @@ db.json
 public/
 *.log
 .DS_Store
+.history
 .deploy*/
 support
 .idea/

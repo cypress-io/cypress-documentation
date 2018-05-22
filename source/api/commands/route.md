@@ -34,7 +34,7 @@ cy.route('/users/**')
 
 Set a route matching the specific `url`.
 
-**{% fa fa-angle-right %} response** ***(String, Object)***
+**{% fa fa-angle-right %} response** ***(String, Object, Array)***
 
 Supply a response `body` to *stub* in the matching route.
 
