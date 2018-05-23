@@ -58,7 +58,6 @@
     "@cypress/questions-remain": "1.0.1",
     "@keyv/redis": "github:bahmutov/keyv-redis#5850d5999ca897ba832c751c0574d77c7b566034",
     "@types/fluent-ffmpeg": "2.1.6",
-    "@types/hexo-fs": "0.2.4",
     "@types/jest": "22.2.3",
     "beeper": "1.1.1",
     "bin-up": "1.1.0",
@@ -107,8 +106,7 @@
     "start-server-and-test": "1.4.1",
     "underscore.string": "3.3.4",
     "wait-on": "2.1.0",
-    "yamljs": "0.3.0",
-    "yargs": "11.0.0"
+    "yamljs": "0.3.0"
   },
   "dependencies": {
     "bluebird": "3.5.1",
