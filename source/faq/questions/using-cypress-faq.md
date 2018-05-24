@@ -403,7 +403,7 @@ The code you write in Cypress is executed in the browser, so you can import or r
 
 You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
-Cypress doesn't have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
+Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
 - {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.exec()` exec %} to execute a shell command

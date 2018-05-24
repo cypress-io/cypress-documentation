@@ -1,6 +1,5 @@
 ---
 title: log
-
 ---
 
 Print a message to the Cypress Command Log.
@@ -17,7 +16,7 @@ cy.log(message, args...)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.log('created new user')    
+cy.log('created new user')
 ```
 
 ## Arguments
@@ -38,7 +37,7 @@ Additional arguments to be printed to the Cypress Command Log. There is no limit
 
 ## Message
 
-***Print a message to the Command Log.***
+### Print a message to the Command Log.
 
 ```javascript
 cy.click('Login')
@@ -48,7 +47,7 @@ cy.log('Login successful')
 
 ## Args
 
-***Print a message with arguments to the Command Log.***
+### Print a message with arguments to the Command Log.
 
 ```javascript
 cy.log('events triggered', events)
@@ -70,7 +69,7 @@ cy.log('events triggered', events)
 
 # Command Log
 
-***Print messages with arguments to the Command Log.***
+### Print messages with arguments to the Command Log.
 
 ```javascript
 cy.log('log out any message we want here')
@@ -88,3 +87,5 @@ When clicking on `log` within the command log, the console outputs the following
 # See also
 
 - {% url `cy.exec()` exec %}
+- {% url `Cypress.log` cypress-log %}
+- {% url `cy.task()` task %}

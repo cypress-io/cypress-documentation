@@ -73,7 +73,7 @@ Examples of parent commands:
 - {% url `cy.exec()` exec %}
 - {% url `cy.route()` route %}
 
-***Custom `login` command***
+### Custom `login` command
 
 ```javascript
 Cypress.Commands.add('login', (userType, options = {}) => {
@@ -119,7 +119,7 @@ Cypress.Commands.add('login', (userType, options = {}) => {
 })
 ```
 
-***Usage***
+### Usage
 
 ```javascript
 cy.login('admin') // can start a chain off of cy
@@ -147,7 +147,7 @@ Examples of child commands:
 - {% url `.should()` should %}
 - {% url `.as()` as %}
 
-***Custom `console` command***
+### Custom `console` command
 
 ```javascript
 // not a super useful custom command
@@ -173,7 +173,7 @@ Cypress.Commands.add('console', {
 })
 ```
 
-***Usage***
+### Usage
 
 ```javascript
 cy.get('button').console('info').then(($button) => {
@@ -195,17 +195,18 @@ Whenever you're using a child command you likely want to use `cy.wrap()` on the 
 
 ## Dual Commands
 
-A dual command can either start a chain of commands or be chained off of an existing one. It's basically the hybrid between both a parent and a child command. You will likely rarely use this, and only a handful of our internal commands use this.
+A dual command can either start a chain of commands or be chained off of an existing one. It is basically the hybrid between both a parent and a child command. You will likely rarely use this, and only a handful of our internal commands use this.
 
 Nevertheless, it is useful if your command can work in multiple ways - either with an existing subject or without one.
 
 Examples of dual commands:
 
 - {% url `cy.contains()` contains %}
+- {% url `cy.screenshot()` screenshot %}
 - {% url `cy.scrollTo()` scrollto %}
 - {% url `cy.wait()` wait %}
 
-***Custom Dual Command***
+### Custom Dual Command
 
 ```javascript
 // not a great example (WIP) :-)
@@ -227,7 +228,7 @@ Cypress.Commands.add('dismiss', {
 })
 ```
 
-***Usage***
+### Usage
 
 ```javascript
 cy.dismiss() // no subject
@@ -238,7 +239,7 @@ cy.get('#dialog').dismiss() // with subject
 
 You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up just using the original.
 
-***Overwrite `visit` command***
+### Overwrite `visit` command
 
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
@@ -311,7 +312,7 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 ## Allow Multiple Types
 
-***Example 2: `.trigger()`***
+### Example 2: `.trigger()`
 
 Require subject be one of the following types: `element`, `document` or `window`
 
@@ -396,7 +397,7 @@ Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're iss
 
 ## Best Practices
 
-***1. Don't make everything a custom command***
+### 1. Don't make everything a custom command
 
 Custom commands work well when you're needing to describe behavior that's desirable across **all of your tests**. Examples would be a `cy.setup()` or `cy.login()` or extending your application's behavior like `cy.get('.dropdown').dropdown('Apples')`. These are specific to your application and can be used everywhere.
 
@@ -493,7 +494,7 @@ it('paginates many search results', function () {
 })
 ```
 
-***2. Don't overcomplicate things***
+### 2. Don't overcomplicate things
 
 Every custom command you write is generally an abstraction over a series of internal commands. That means you and your team members exert much more mental effort to understand what your custom command does.
 
@@ -512,13 +513,13 @@ Testing in Cypress is all about **readability** and **simplicity**. You don't ha
 
 Try not to overcomplicate things and create too many abstractions. When in doubt, just use a regular function for individual spec files.
 
-***3. Don't do too much in a single command***
+### 3. Don't do too much in a single command
 
 Make your custom commands composable and as unopinionated as possible. Cramming too much into them makes them inflexible and requires more and more options passing to control their behavior.
 
 Try to add either zero or as few assertions as possible in your custom command. Those tend to shape your command into a much more rigid structure. Sometimes this is unavoidable, but a best practice is to let the calling code choose when and how to use assertions.
 
-***4. Skip your UI as much as possible***
+### 4. Skip your UI as much as possible
 
 Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use {% url `cy.request()` request %} to login, set cookies or local storage directly, stub and mock your applications functions, and / or trigger events programmatically.
 

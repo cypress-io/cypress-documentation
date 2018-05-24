@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: General Questions
-
 containerClass: faq
 ---
 

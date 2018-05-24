@@ -196,4 +196,5 @@ When clicking on the `readFile` command within the command log, the console outp
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}
+- {% url `cy.task()` task %}
 - {% url `cy.writeFile()` writefile %}

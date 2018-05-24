@@ -228,11 +228,11 @@ However - there is likely still a balance here where **both** strategies are val
 
 While stubbing is great, it means that you don't have the guarantees that these response payloads actually match what the server will send. However, there are still many valid ways to get around this:
 
-***Generate the fixture stubs ahead of time***
+### Generate the fixture stubs ahead of time
 
 You could have the server generate all of the fixture stubs for you ahead of time. This means their data will reflect what the server will actually send.
 
-***Write a single e2e test without stubs, and then stub the rest***
+### Write a single e2e test without stubs, and then stub the rest
 
 Another more balanced approach is just to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
 
@@ -248,7 +248,7 @@ One of the first (and arguably one of the hardest) hurdles you'll have to overco
 
 Nothing slows a test suite down like having to log in, but all the good parts of your application most likely require an authenticated user! Here are some tips.
 
-***Fully Test the Login Flow -- But Only Once!***
+### Fully Test the Login Flow -- But Only Once!
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
@@ -311,7 +311,7 @@ Do not use **your UI** to login before each test.
 
 Let's investigate and tease apart why.
 
-***Bypassing your UI***
+### Bypassing your UI
 
 When you're writing tests for a very **specific feature**, you *should* use your UI to test it.
 

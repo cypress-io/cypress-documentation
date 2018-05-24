@@ -288,6 +288,7 @@ When clicking on `request` within the command log, the console outputs the follo
 # See also
 
 - {% url `cy.exec()` exec %}
+- {% url `cy.task()` task %}
 - {% url `cy.visit()` visit %}
 - {% url "Recipe: Logging In - Single Sign on" recipes#Single-Sign-On %}
 - {% url "Recipe: Logging In - HTML Web Form" recipes#HTML-Web-Forms %}
