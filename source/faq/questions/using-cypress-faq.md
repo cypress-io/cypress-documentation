@@ -255,9 +255,7 @@ Cypress’ API is compatible with WebDriver specific tasks that Sauce Labs and B
 
 You can run a group of tests or a single test by placing an {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} on a test suite or specific test.
 
-You can run a single test file headlessly by passing the `--spec` flag to {% url '`cypress run`' command-line#cypress-run %}.
-
-Currently there is no way to specify a group of test files to run headlessly. You can read more {% issue 263 'here' %}.
+You can run a single test file or group of tests by passing the `--spec` flag to {% url '`cypress run`' command-line#cypress-run %}.
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
