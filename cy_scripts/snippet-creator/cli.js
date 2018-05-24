@@ -14,7 +14,7 @@ const start = (argv) => {
   return Promise.try(() => {
 
     program
-    .option('-d, --debug', 'eable debugging')
+    .option('-d, --debug', 'enable debugging')
     .option('-y, --yes', 'auto agree')
     .parse(argv)
 
