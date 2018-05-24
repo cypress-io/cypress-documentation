@@ -24,7 +24,7 @@ Option | Default | Description
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
-`reporter` | `spec` | The {% url 'reporter' reporters %} used when running headlessly or in CI
+`reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
@@ -70,8 +70,8 @@ Option | Default | Description
 ----- | ---- | ----
 `trashAssetsBeforeHeadlessRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before headless or CI test runs.
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
-`videosFolder`     | `cypress/videos`     | Where Cypress will automatically save the video of the test run when running headlessly.
-`videoRecording`     | `true`     | Whether Cypress will record a video of the test run when running headlessly.
+`videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when  tests run during `cypress run`.
+`videoRecording`     | `true`     | Whether Cypress will record a video of the tests run during `cypress run`.
 `videoUploadOnPasses`     | `true`     | Whether Cypress will upload the video to the Dashboard even if all tests are passing. This applies only when recording your runs to the Dashboard. Turn this off if you'd like the video uploaded only when there are failing tests.
 
 ## Browser

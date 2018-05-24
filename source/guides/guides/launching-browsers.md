@@ -28,9 +28,9 @@ The Electron browser has two unique advantages:
 1. It can be run headlessly.
 2. It comes baked into Cypress and does not need to be installed separately.
 
-By default, when running {% url '`cypress run`' command-line#cypress-run %} from the CLI we will launch Electron headlessly.
+By default, when running {% url '`cypress run`' command-line#cypress-run %} from the CLI, we will launch Electron headlessly.
 
-***You can also launch Electron headed:***
+### You can also launch Electron headed:
 
 ```bash
 cypress run --headed
@@ -42,7 +42,7 @@ Because Electron is the default browser - it is typically run in CI. If you are 
 
 All Chrome* flavored browsers will be detected and are supported.
 
-***You can launch Chrome browsers:***
+### You can launch Chrome browsers:
 
 ```bash
 cypress run --browser chrome
@@ -81,7 +81,7 @@ That's no problem - you just have to reinstall them **once** in the Cypress laun
 
 Cypress automatically disables certain functionality in the Cypress launched browser that tend to get in the way of automated testing.
 
-***The Cypress launched browser automatically:***
+### The Cypress launched browser automatically:
 
 - Ignores certificate errors.
 - Allows blocked pop-ups.

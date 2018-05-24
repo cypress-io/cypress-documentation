@@ -19,7 +19,7 @@ Assuming you've successfully {% url "installed the Test Runner" installing-cypre
 
 1. Create a `simple_spec.js` file.
 2. Watch Cypress update our list of specs.
-3. Launch our browser into the Cypress GUI.
+3. Launch Cypress in interactive mode.
 
 Let's create a new file in the `cypress/integration` folder that was created for us:
 
@@ -37,7 +37,7 @@ Cypress opens the test in a browser installed on your system. You can read more 
 
 {% img /img/guides/empty-file-30fps.gif %}
 
-We are now officially in the {% url 'Cypress GUI' test-runner %}. This is where we'll spend the majority of your time testing.
+We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This is where we will spend the majority of your time testing.
 
 {% note warning %}
 Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
@@ -89,7 +89,7 @@ Once you save again, you'll see Cypress display the failing test in red since `t
 
 {% img /img/guides/failing-test.png "Failing test" %}
 
-Cypress provides a nice {% url 'GUI' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
+Cypress provides a nice {% url 'Test Runner' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
 
 {% img /img/guides/first-test-30fps.gif "Writing a passing and failing test in Cypress" %}
 
@@ -137,7 +137,7 @@ describe('My First Test', function() {
 })
 ```
 
-Save the file and switch back over to the Cypress GUI. You might notice a few things:
+Save the file and switch back over to the Cypress Test Runner. You might notice a few things:
 
 1. The {% url 'Command Log' test-runner#Command-Log %} now shows the new `VISIT` action.
 2. The Kitchen Sink application has been loaded into the {% url 'App Preview' test-runner#Overview %} pane.
@@ -349,13 +349,13 @@ Commands are also interactive. Go ahead and click on the `CLICK` command.
 
 Notice it highlights in purple. This did three things worth noting...
 
-***1. Pinned Snapshots***
+### 1. Pinned Snapshots
 We have now **pinned** this snapshot. Hovering over other commands will not revert to them. This gives us a chance to manually inspect the DOM of our application under test at the time the snapshot was taken.
 
-***2. Event Hitbox***
+### 2. Event Hitbox
 Since {% url `.click()` click %} is an action command, that means we also see a red hitbox at the coordinates the event took place.
 
-***3. Snapshot Menu Panel***
+### 3. Snapshot Menu Panel
 There is also a new menu panel. Some commands (like action commands) will take multiple snapshots: **before** and **after**. We can now cycle through these.
 
 The **before** snapshot is taken prior to the click event firing. The **after** snapshot is taken immediately after the click event. Although this click event caused our browser to load a new page, it's not an instantaneous transition. Depending on how fast your page loaded, you may see still see the same page, or a blank screen as the page is unloading and in transition.

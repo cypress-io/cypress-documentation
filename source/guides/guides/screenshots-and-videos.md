@@ -1,24 +1,23 @@
 ---
 title: Screenshots and Videos
-
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
 - How Cypress captures screenshots of test failures automatically
-- How to manually grab your own screenshot
+- How to manually capture your own screenshot
 - How Cypress can record a video of the entire run
 - Some options of what to do with screenshot and video artifacts
 {% endnote %}
 
 # Screenshots
 
-Cypress comes with the ability to take screenshots, whether you are running in a real, headed browser (such as Chrome) or when you are running headlessly, possibly in CI.
+Cypress comes with the ability to take screenshots, whether you are running in interactive mode using `cypress open` or run mode using `cypress run`, possibly in CI.
 
 To take a manual screenshot just use the {% url `cy.screenshot()` screenshot %} command.
 
-Additionally, Cypress will automatically capture screenshots when a failure happens but only during a headless run.
+Additionally, Cypress will automatically capture screenshots when a failure happens during runs outside of interactive mode.
 
 This behavior can be turned off by setting `screenshotOnRunFailure` to `false` with {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
@@ -28,19 +27,19 @@ By default, Cypress clears any existing screenshots before a headless run. If do
 
 # Videos
 
-Cypress also records videos when running headlessly from the CLI.
+Cypress also records videos when running from the CLI.
 
 This behavior can be turned off by setting {% url `videoRecording` configuration#Videos %} to `false`.
 
 Videos are stored in the {% url `videosFolder` configuration#Videos %} which is set to `cypress/videos` by default.
 
-After a headless run completes, Cypress will automatically compress the video to save on file size. By default it compresses to a `32 CRF` but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
+After `cypress run` completes, Cypress will automatically compress the video in order to save on file size. By default it compresses to a `32 CRF` but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
 
 By default, Cypress clears any existing videos before a headless run. If don't want to clear your videos folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRuns` configuration#Videos %} to `false`.
 
 # Now What?
 
-So you're capturing screenshots and recording videos of your test runs, now what?
+So you are capturing screenshots and recording videos of your test runs, now what?
 
 ## Share Them With Your Team
 

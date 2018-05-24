@@ -122,7 +122,7 @@ Get around the lack of a `.hover()` command.
 
 - [Blog article written here](https://www.cypress.io/blog/2017/11/07/Add-GUI-to-Your-E2E-API-Tests)
 - Use {% url `cy.request()` request %} to perform API Testing
-- Use the Cypress GUI to help debug requests
+- Use the Cypress Test Runner to help debug requests
 
 ## [Codepen Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__codepen-demo)
 

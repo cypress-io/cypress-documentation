@@ -10,7 +10,7 @@ In this guide we will lay out what some of the trade-offs are - and specifically
 
 While at first it may seem like these are strict limitations in Cypress - we think you will soon realize that many of these boundaries are actually **good** to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 
-***Permanent trade-offs:***
+### Permanent trade-offs:
 
 - Cypress is not a general purpose {% urlHash "automation tool" Automation-restrictions %}.
 - Cypress commands run {% urlHash "inside of a browser" Inside-the-browser %}.
@@ -18,7 +18,7 @@ While at first it may seem like these are strict limitations in Cypress - we thi
 - You cannot use Cypress to drive {% urlHash "two browsers at the same time" Multiple-browsers-open-at-the-same-time %}.
 - Each test is bound to a {% urlHash "single origin" Same-origin %}.
 
-***Temporary trade-offs:***
+### Temporary trade-offs:
 
 We have {% url 'open issues' 'https://github.com/cypress-io/cypress/issues' %} where you can find a full list of things Cypress will eventually address, we wanted to highlight some of the more important *temporary* restrictions that Cypress will eventually address. {% url "PRs are welcome ;-)" https://on.cypress.io/contributing %}
 
@@ -29,11 +29,10 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 311#issuecomment-339824191 "There is not any native or mobile events support." %}
 - {% issue 170#issuecomment-340012621 "Testing file uploads is application specific." %}
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
-- {% issue 181 "You can take screenshots, but diffing them needs work." %}
 - {% issue 685 "Iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
 - {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/stubbing-spying__window-fetch/cypress/integration/spy-stub-clock-spec.js %}
-- {% issue 350 "When running headlessly on very long and memory intense applications, we are seeing renderer crashes with Docker. This issue describes exactly how to avoid this by adding a flag."%}
+- {% issue 350 "During `cypress run`, on very long and memory intense applications, we are seeing renderer crashes with Docker. This issue describes exactly how to avoid this by adding a flag."%}
 
 # Permanent trade-offs
 
@@ -98,7 +97,7 @@ Doing it this way can be faster, more accurate, and more scalable.
 
 While outside the scope of this article, you could test a chat application using the following principles. Each one will incrementally introduce more collaboration:
 
-***1. Use only the browser:***
+### 1. Use only the browser:
 
 ```text
     &downarrow;
@@ -110,7 +109,7 @@ Avoid the server, invoke your JavaScript callbacks manually thereby simulating w
 
 You can {% url "stub" stub %} everything and simulate every single scenario. Chat messages, offline messages, connections, reconnections, disconnections, group chat, etc.  Everything that happens inside of the browser can be fully tested. Requests leaving the browser could also be stubbed and you could assert that the request bodies were correct.
 
-***2. Stub the other connection:***
+### 2. Stub the other connection:
 
 ```text
 server &rightarrow; browser
@@ -126,7 +125,7 @@ Use your server to receive messages from the browser, and simulate "the other pa
 
 Typically this pattern enables you to avoid making a secondary WebSocket connection and yet still fulfills the bidirectional browser and server contract. This means you could also test edge cases (disconnections, etc) without actually handling real connections.
 
-***3: Introduce another connection:***
+### 3: Introduce another connection:
 
 ```text
 server &rightarrow; browser

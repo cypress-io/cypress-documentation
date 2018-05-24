@@ -7,7 +7,7 @@ title: Command Line
 # {% fa fa-graduation-cap %} What You'll Learn
 
 - How to run Cypress from the command line
-- How to run headlessly
+- How to specify which spec files to run
 - How to launch other browsers
 - How to record your tests
 {% endnote %}
@@ -57,7 +57,7 @@ Option | Description
 `-o`, `--reporter-options`  | Specify mocha reporter options
 `-s`, `--spec`  | Specify the specs to run
 `--record`  | Whether to record the test run
-`--headed`  | Display the electron browser instead of running headlessly
+`--headed`  | Display the Electron browser instead of running headlessly
 
 ### Run tests specifying browser
 
@@ -77,7 +77,7 @@ DEBUG=cypress:launcher cypress run --browser chrome
 
 By default, Cypress will run tests in Electron headlessly.
 
-Passing `--headed` will force Electron to be shown. This matches how you run Electron in the GUI.
+Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
 
 ```shell
 cypress run --headed

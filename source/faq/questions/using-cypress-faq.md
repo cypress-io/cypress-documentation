@@ -157,7 +157,7 @@ The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %},
 
 You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
 
-We do not currently offer any options to simulate this headlessly.
+We do not currently offer any options to simulate this during `cypress run`.
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
@@ -482,11 +482,11 @@ Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-p
 
 This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
 
-## {% fa fa-angle-right %} Is there an option to run Cypress headlessly with DevTools open? We want to track network and console issues.
+## {% fa fa-angle-right %} Is there an option to run Cypress in CI with DevTools open? We want to track network and console issues.
 
-No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress headlessly with DevTools open.
+No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress in `cypress run` with DevTools open.
 
-You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
+You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that is as close as you will get with DevTools open and replicating the environment that was run during `cypress run`.
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
