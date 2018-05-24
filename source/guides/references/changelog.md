@@ -28,7 +28,7 @@ title: Changelog
 - The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1444 %}
 - Cypress now watches all the `plugins` file's entire dependency tree to make iterating on plugins easier. Addresses {% issue 1407 %}
 - We now pass any reporter errors along and provide a stack if the module does not exist. Fixes {% issue 1192 %}
-- Videos will now be saved with a filename named after the associated `spec` file that it represents. Addresses {% issue 980 %}
+- Videos will now be saved locally with a filename named after the associated `spec` file that it represents. Addresses {% issue 980 %}
 - The Test Runner and now visually displays `skipped` tests differently than `pending` tests. {% issue 244 %}
 - Standard output now displays the number of `skipped` tests within the summary output during `cypress run`. {% issue 1559 %}
 - The url to view the run in the Dashboard is now printed to output during `cypress run`. {% issue 494 %}
