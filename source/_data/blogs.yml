@@ -1,3 +1,27 @@
+- title: "Dynamic XHR responses recording & stubbing with Cypress"
+  url: https://medium.com/ax2-inc/dynamic-xhr-responses-recording-stubbing-with-cypress-9257d4f730cd
+  sourceName: Medium 
+  sourceUrl: https://medium.com/
+  date: May 15, 2018
+  author: Paul Gascou-Vaillancourt
+  img: /img/examples/dynamic-xhr-responses-with-cypress.jpg 
+
+- title: "Cypress.io - A JavaScript E2E Testing Framework"
+  url: http://committed.software/posts/cypress/cypress/
+  sourceName: Committed
+  sourceUrl: http://committed.software/
+  date: May 9, 2018
+  author: Matt Copas
+  img: /img/examples/a-javascript-e2e-testing-framework-committed.jpg  
+
+- title: "Testing Angular with Cypress and Docker"
+  url: https://testdriven.io/testing-angular-with-cypress-and-docker
+  sourceName: testdriven.io
+  sourceUrl: https://testdriven.io/
+  date: May 7, 2018
+  author: Michael Herman
+  img: /img/examples/testing-angular-with-cypress-and-docker.jpg
+
 - title: "End-To-End Testing A VueJS HackerNews Clone"
   url: https://medium.com/js-dojo/end-to-end-testing-a-vuejs-hackernews-clone-23b9415fd5c5
   sourceName: Vue.js Developers
