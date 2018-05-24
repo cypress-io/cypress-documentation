@@ -34,7 +34,7 @@ gulp.task('move:menu:spy:js', function () {
 })
 
 gulp.task('move:doc:yall:js', function () {
-  return moveJSNodeModule('yall/dist/yall-2.0.1.min')
+  return moveJSNodeModule('yall/dist/yall*.js')
 })
 
 gulp.task('move:scrolling:element:js', function () {
