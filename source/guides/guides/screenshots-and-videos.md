@@ -23,7 +23,7 @@ This behavior can be turned off by setting `screenshotOnRunFailure` to `false` w
 
 Screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
 
-By default, Cypress clears any existing screenshots before a headless run. If don't want to clear your screenshots folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRuns` configuration#Screenshots %} to `false`.
+By default, Cypress clears any existing screenshots before `cypress run`. If you do not want to clear your screenshots folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Screenshots %} to `false`.
 
 # Videos
 
@@ -35,7 +35,7 @@ Videos are stored in the {% url `videosFolder` configuration#Videos %} which is 
 
 After `cypress run` completes, Cypress will automatically compress the video in order to save on file size. By default it compresses to a `32 CRF` but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
 
-By default, Cypress clears any existing videos before a headless run. If don't want to clear your videos folder before a headless run, you can set {% url `trashAssetsBeforeHeadlessRuns` configuration#Videos %} to `false`.
+By default, Cypress clears any existing videos before a `cypress run`. If do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
 
 # Now What?
 
@@ -47,4 +47,4 @@ Something you can take advantage of today is the {% url 'Cypress Dashboard Servi
 
 ## Visual Regression Test / Screenshot Diffing
 
-Another possibility is visual regression testing: comparing screenshots of past runs with the current run to ensure that nothing changed. Cypress doesn't currently have this built-in, but it is on our radar. {% issue 495 'Follow this issue' %} if you're interested in being updated about this feature, leave comments if you'd like to influence what gets built, and open a pull request if you work on it yourself!
+Another possibility is visual regression testing: comparing screenshots of past runs with the current run to ensure that nothing changed. Cypress does not currently have this built-in, but it is on our radar. {% issue 495 'Follow this issue' %} if you are interested in being updated about this feature, leave comments if you would like to influence what gets built, and open a pull request if you would like to work on it yourself!

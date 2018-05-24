@@ -60,7 +60,7 @@ Option | Default | Description
 Option | Default | Description
 ----- | ---- | ----
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a headless run's test failure
-`trashAssetsBeforeHeadlessRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before headless test runs.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run during `cypress run`.
 
 For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
 
@@ -68,7 +68,7 @@ For more options regarding screenshots, view the {% url 'Cypress.Screenshot API'
 
 Option | Default | Description
 ----- | ---- | ----
-`trashAssetsBeforeHeadlessRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before headless or CI test runs.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run during `cypress run`.
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when  tests run during `cypress run`.
 `videoRecording`     | `true`     | Whether Cypress will record a video of the tests run during `cypress run`.
