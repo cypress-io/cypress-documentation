@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Cypress.io Documentation
+title: Cypress Documentation
 subtitle: Testing, the way it should be.
 description: Cypress is a test engine that runs unit and integration tests in your browser. It makes it easy to write and debug web application tests.
 author: Cypress.io
