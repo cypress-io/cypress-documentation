@@ -88,6 +88,7 @@ Cypress automatically disables certain functionality in the Cypress launched bro
 - Disables 'Saving passwords'.
 - Disables 'Autofill forms and passwords'.
 - Disables asking to become your primary browser.
+- Disables device discovery notifications.
 - Disables language translations.
 - Disables restoring sessions.
 - Disables background network traffic.

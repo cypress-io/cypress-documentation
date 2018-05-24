@@ -78,6 +78,7 @@ title: Changelog
 - {% url 'Updated `Writing and Organizing Tests` to include newly seeded `examples` folder' writing-and-organizing-tests %}
 - {% url 'Updated `cypress run` spec args' command-line#cypress-run %}
 - {% url 'Updated `Dashboard Service`' dashboard-service %}
+- {% url 'Updated `Launching Browsers` to include our disabling of device discovery notifications' launching-browsers %}
 - {% url 'Updated `Preprocessors` to reflect all ways `close` event could be triggered' dashboard-service %}
 - Updated use of "running headlessly" to more accurate "during `cypress run`"
 
