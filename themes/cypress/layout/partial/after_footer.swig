@@ -4,7 +4,7 @@
 {{ js('js/lang_select') }}
 {{ js('js/vendor/scrollingelement') }}
 {{ js('js/vendor/menuspy') }}
-{{ js('js/vendor/yall') }}
+{{ js('js/vendor/yall-2.0.1.min.js') }}
 {{ js('js/toc') }}
 {{ js('js/mobile_nav') }}
 {{ js('js/ac_tracking') }}
