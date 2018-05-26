@@ -11,15 +11,15 @@ IntelliSense is available for Cypress. It offers intelligent code suggestions di
 
 ### Autocomplete while typing Cypress commands
 
-{% img /img/guides/intellisense-cypress-assertion-matchers.gif "Autocomplete on Cypress methods" %}
+{% video local /img/snippets/intellisense-cypress-assertion-matchers.mp4 %}
 
 ### Signature help when writing and hovering on Cypress commands
 
-{% img /img/guides/intellisense-method-signature-examples.gif "Method Signature Tooltips" %} 
+{% video local /img/snippets/intellisense-method-signature-examples.mp4 %}
 
 ### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
 
-{% img /img/guides/intellisense-assertion-chainers.gif "Assertion Chainers in VSCode" %}
+{% video local /img/snippets/intellisense-assertion-chainers.mp4 %}
 
 ## Set up in your Dev Environment
 
@@ -54,7 +54,7 @@ Adding a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/han
 /// <reference types="Cypress" />
 ```
 
-{% img /img/guides/intellisense-setup.gif %}
+{% video local /img/snippets/intellisense-setup.mp4 %}
 
 
 # Configuration
@@ -65,11 +65,11 @@ When editing the {% url "`cypress.json`" configuration %} file, you can use our 
 
 ### Property help when writing and hovering on configuration keys
 
-{% img /img/guides/intellisense-cypress-config-tooltips.gif "Configuration tooltips" %}
+{% video local /img/snippets/intellisense-cypress-config-tooltips.mp4 %}
 
 ### Properties list with intelligent defaults
 
-{% img /img/guides/intellisense-config-defaults.gif "Default values prefill" %}
+{% video local /img/snippets/intellisense-config-defaults.mp4 %}
 
 
 ## Set up in your Dev Environment
