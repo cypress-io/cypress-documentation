@@ -21,7 +21,7 @@ That's it!
 
 For more examples please read the {% url 'Command Line' command-line#cypress-run %} documentation.
 
-{% img /img/guides/running-in-ci.gif "Running in Circle CI" %}
+{% video local /img/snippets/running-in-ci.mp4 %}
 
 # What's Supported?
 

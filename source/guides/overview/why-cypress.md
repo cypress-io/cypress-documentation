@@ -73,22 +73,22 @@ Cypress comes fully baked, batteries included. Here is a list of things it can d
 
 There are no servers, drivers, or any other dependencies to install or configure. You can write your first passing test in 60 seconds.
 
-{% img /img/guides/installing-cli.gif %}
+{% video local /img/snippets/installing-cli.mp4 %}
 
 ## {% fa fa-code %} Writing Tests
 
 Tests written in Cypress are easy to read and understand. Our API comes fully baked, on top of tools you are familiar with already.
 
-{% img /img/guides/writing-tests.gif %}
+{% video local /img/snippets/writing-tests.mp4 %}
 
 ## {% fa fa-play-circle %} Running Tests
 
 Cypress runs as fast as your browser can render content. You can watch tests run in real time as you develop your applications. TDD FTW!
 
-{% img /img/guides/running-tests.gif %}
+{% video local /img/snippets/running-tests.mp4 %}
 
 ## {% fa fa-bug %} Debugging Tests
 
 Readable error messages help you to debug quickly. You also have access to all the developer tools you know and love.
 
-{% img /img/guides/debugging.gif %}
+{% video local /img/snippets/debugging.mp4 %}

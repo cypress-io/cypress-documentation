@@ -35,7 +35,7 @@ Even though we haven't written any tests yet - that's okay - let's click on `sim
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
 {% endnote %}
 
-{% img /img/guides/empty-file-30fps.gif %}
+{% video local /img/snippets/empty-file-30fps.mp4 %}
 
 We are now officially in the {% url 'Cypress GUI' test-runner %}. This is where we'll spend the majority of your time testing.
 
@@ -91,7 +91,7 @@ Once you save again, you'll see Cypress display the failing test in red since `t
 
 Cypress provides a nice {% url 'GUI' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
 
-{% img /img/guides/first-test-30fps.gif "Writing a passing and failing test in Cypress" %}
+{% video local /img/snippets/first-test-30fps.mp4 %}
 
 {% note info What are describe, it, and expect? %}
 All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cypress bakes in.
@@ -146,7 +146,7 @@ Save the file and switch back over to the Cypress GUI. You might notice a few th
 
 Had this request come back with a non `2xx` status code such as `404` or `500`, or if there was a JavaScript error in the application's code, the test would have failed.
 
-{% img /img/guides/first-test-visit-30fps.gif "A real test visiting a website" %}
+{% video local /img/snippets/first-test-visit-30fps.mp4 %}
 
 {% note danger Only Test Apps You Control %}
 Although in this guide we are testing our example application: {% url `https://example.cypress.io` https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
@@ -195,7 +195,7 @@ We've taken care at Cypress to write hundreds of custom error messages that atte
 
 Before we add another command - let's get this test back to passing. Replace `hype` with `type`.
 
-{% img /img/guides/first-test-contains-30fps.gif %}
+{% video local /img/snippets/first-test-contains-30fps.mp4 %}
 
 ## {% fa fa-mouse-pointer %} Step 3: Click an Element
 
@@ -217,7 +217,7 @@ Also note that the {% url 'App Preview' test-runner#Overview %} pane has updated
 
 Now we can assert something about this new page!
 
-{% img /img/guides/first-test-click-30fps.gif %}
+{% video local /img/snippets/first-test-click-30fps.mp4 %}
 
 ## {% fa fa-check-square-o %} Step 4: Make an Assertion
 
@@ -287,7 +287,7 @@ Even your non-technical collaborators can appreciate the way this reads!
 
 And hey, this is a very clean test! We didn't have to say anything about *how* things work, just that we'd like to verify a particular series of events and outcomes.
 
-{% img /img/guides/first-test-assertions-30fps.gif %}
+{% video local /img/snippets/first-test-assertions-30fps.mp4 %}
 
 {% note info 'Page Transitions' %}
 Worth noting is that this test transitioned across two different pages.
@@ -429,7 +429,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 ## In Action
 
-{% img /img/guides/first-test-debugging-30fps.gif %}
+{% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
 <!-- ## Bonus Step: Refactor
 
