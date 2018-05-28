@@ -53,7 +53,7 @@ const start = (argv) => {
       if (shouldConvert) {
         return convert.convert(inputFile, outFile, outImg)
         .then((filesize) => {
-          Logger.log(`Wrote ${filesize}kbs to ${outFile}`)
+          log.log(`Wrote ${filesize}kbs to ${outFile}`)
         })
       }
     })
@@ -73,7 +73,7 @@ const handleKnownErrors = (err) => {
     ${err.stack}
     `)
   }
-  Logger.err(errorText)
+  log.err(errorText)
   return errorText
 }
 
@@ -88,7 +88,7 @@ const errors = {
   badArgs: (num) => `Script takes exactly 1 argument, received ${num}`,
 }
 
-const Logger = {
+const log = {
   /* eslint-disable no-console */
   log (msg) {
     console.log(msg)
