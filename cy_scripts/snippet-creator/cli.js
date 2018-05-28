@@ -1,14 +1,16 @@
-const program = require('commander')
-const chalk = require('chalk')
 const fs = require('fs-extra')
-const debug = require('debug')('snippet')
 const path = require('path')
+const chalk = require('chalk')
+const debug = require('debug')('snippet')
 const Confirm = require('prompt-confirm')
-
+const program = require('commander')
+const Promise = require('bluebird')
 
 const convert = require('./convert')
 
-global.Promise = require('bluebird')
+Promise.config({
+  cancellation: true,
+})
 
 const start = (argv) => {
   return Promise.try(() => {
@@ -16,6 +18,7 @@ const start = (argv) => {
     program
     .option('-d, --debug', 'enable debugging')
     .option('-y, --yes', 'auto agree')
+    .usage('Takes path to a video, such as my-video.mp4.')
     .parse(argv)
 
     if (program.args.length !== 1) {
@@ -33,7 +36,7 @@ const start = (argv) => {
     const outImg = path.resolve(`${outBaseFile}.png`)
 
     return Promise.all([fs.pathExists(inputFile), fs.pathExists(outFile)])
-    .then(([inExists, outExists]) => {
+    .spread((inExists, outExists) => {
 
       if (!inExists) {
         debug('file provided was invalid:', inputFile)
@@ -50,7 +53,7 @@ const start = (argv) => {
       if (shouldConvert) {
         return convert.convert(inputFile, outFile, outImg)
         .then((filesize) => {
-          Log.log(`Wrote ${filesize}kbs to ${outFile}`)
+          log.log(`Wrote ${filesize}kbs to ${outFile}`)
         })
       }
     })
@@ -70,7 +73,7 @@ const handleKnownErrors = (err) => {
     ${err.stack}
     `)
   }
-  Log.err(errorText)
+  log.err(errorText)
   return errorText
 }
 
@@ -85,7 +88,7 @@ const errors = {
   badArgs: (num) => `Script takes exactly 1 argument, received ${num}`,
 }
 
-const Log = {
+const log = {
   /* eslint-disable no-console */
   log (msg) {
     console.log(msg)
@@ -101,7 +104,7 @@ module.exports = {
 }
 
 function removeExtension (filename) {
-  return filename.replace(/\.[^/.]+$/, '')
+  return filename.replace(path.extname(filename), '')
 }
 
 // node cy_scripts/snippet-creator/ -d source/img/guides/writing-tests.gif

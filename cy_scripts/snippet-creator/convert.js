@@ -1,13 +1,15 @@
+const Promise = require('bluebird')
 const ffmpeg = require('fluent-ffmpeg')
 const debug = require('debug')
 const ora = require('ora')
+
 
 const convert = (inFile, outVid, outImg) => {
   let filesize = 0
   const spinner = ora('Creating .mp4 - 0kB').start()
   return Promise.all([
-    new Promise((resolve, reject) => {
-      ffmpeg()
+    new Promise((resolve, reject, onCancel) => {
+      const ff = ffmpeg()
       .input(inFile)
       .withNoAudio()
       .videoCodec('libx264')
@@ -21,33 +23,37 @@ const convert = (inFile, outVid, outImg) => {
         debug('successful')
         return resolve()
       })
-      .on('error', (...args) => ffError(...args, reject))
+      .on('error', ffError(reject))
       .on('progress', (progress) => {
         filesize = progress.targetSize
         spinner.text = `Creating .mp4 - ${filesize}kB`
       })
+
+      onCancel(() => ff.kill())
     }),
-    new Promise((resolve, reject) => {
-      ffmpeg(inFile)
+    new Promise((resolve, reject, onCancel) => {
+      // ffmpeg -i $file.mp4 -r 1/1 -vframes 1 $file.png
+      const ff = ffmpeg(inFile)
       .outputOptions([
         '-r 1/1',
         '-vframes 1',
         '-vf scale=50:25',
       ])
       .save(outImg)
-      .on('error', (...args) => ffError(...args, reject))
+      .on('error', ffError(reject))
       .on('end', resolve)
 
-    //ffmpeg -i $filename.mp4 -r 1/1 -vframes 1  $filename.png
+      onCancel(() => ff.kill())
     }),
   ])
   .then(() => {
-    spinner.stop()
     return filesize
   })
   .catch((err) => {
-    spinner.stop()
     throw err
+  })
+  .finally(() => {
+    spinner.stop()
   })
 
 
@@ -57,7 +63,7 @@ module.exports = {
   convert,
 }
 
-const ffError = (err, stdout, stderr, reject) => {
+const ffError = (reject) => (err, stdout, stderr) => {
   debug('ERROR')
   err.message += `
       ${stdout}
