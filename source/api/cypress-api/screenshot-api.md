@@ -76,7 +76,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-## Scale 'viewport' and 'fullPage' captures
+## Scale `viewport` and `fullPage` captures
 
 By default, scaling the application under test is turned off during when the `capture` option is `viewport` to prevent differences between screenshots on screens with different resolutions. You can turn scaling on and have your app scaled like it is during normal use of Cypress. This is always coerced to `true` if the `capture` option is `runner`.
 
@@ -86,11 +86,11 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-## Use onBeforeScreenshot and onAfterScreenshot callbacks to change the DOM
+## Change the DOM using `onBeforeScreenshot` and `onAfterScreenshot`
 
-The `onBeforeScreenshot` and `onAfterScreenshot` callbacks provide an opportunity to synchronously change the DOM for the sake of a screenshot.
+The `onBeforeScreenshot` and `onAfterScreenshot` callbacks provide an opportunity to synchronously change the DOM to create a more consistent state for the screenshot.
 
-In this example, imagine there's a clock in your app showing the current time. This can cause screenshots to be non-deterministic, which could create false negatives when screenshot diffing. You can use `onBeforeScreenshot` to hide the clock and then show it again with `onAfterScreenshot`.
+In this example, imagine there is a clock in your app showing the current time. This can cause screenshots to be non-deterministic, which could create false negatives when screenshot diffing. You can use `onBeforeScreenshot` to hide the clock and then show it again with `onAfterScreenshot`.
 
 ```javascript
 Cypress.Screenshot.defaults({
@@ -110,13 +110,13 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-## Get information about the screenshot from the onAfterScreenshot callback
+## Get properties from the `onAfterScreenshot` callback
 
 ```javascript
 Cypress.Screenshot.defaults({
   onAfterScreenshot (props) {
-    // props has information about the screenshot, including but not
-    // limited to the following:
+    // props has information about the screenshot,
+    // including but not limited to the following:
 
     // {
     //   path: '/Users/janelane/project/screenshots/my-screenshot.png',

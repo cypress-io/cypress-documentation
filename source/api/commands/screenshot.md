@@ -130,8 +130,8 @@ cy.get('button').first().screenshot().its('el').click()
 ```javascript
 cy.screenshot("my-screenshot", {
   onAfterScreenshot (props) {
-    // props has information about the screenshot, including but not
-    // limited to the following:
+    // props has information about the screenshot, 
+    // including but not limited to the following:
 
     // {
     //   name: 'my-screenshot',
