@@ -49,6 +49,8 @@ Option |Default | Description
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
+`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `document`.
+`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument the element being captured. For other screenshots, the first argument the `document`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
@@ -121,6 +123,30 @@ cy.get('.post').first().screenshot()
 
 ```javascript
 cy.get('button').first().screenshot().its('el').click()
+```
+
+## Get information about the screenshot from the onAfterScreenshot callback
+
+```javascript
+cy.screenshot("my-screenshot", {
+  onAfterScreenshot (props) {
+    // props has information about the screenshot, including but not
+    // limited to the following:
+
+    // {
+    //   name: 'my-screenshot',
+    //   path: '/Users/janelane/project/screenshots/my-screenshot.png',
+    //   size: '15 kb',
+    //   dimensions: {
+    //     width: 1000,
+    //     height: 660,
+    //   },
+    //   scaled: true,
+    //   blackout: [],
+    //   duration: 2300,
+    // }
+  },
+})
 ```
 
 # Notes

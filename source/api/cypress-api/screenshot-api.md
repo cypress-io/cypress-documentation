@@ -31,6 +31,8 @@ Option | Default | Description
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
 `screenshotOnRunFailure` | `true` | When true, automatically takes a screenshot when there is a failure in Run mode.
+`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `document`.
+`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument the element being captured. For other screenshots, the first argument the `document`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
 
 # Examples
 
@@ -84,13 +86,50 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-## Disable waiting for command synchronization
+## Use onBeforeScreenshot and onAfterScreenshot callbacks to change the DOM
 
-By default, when taking the `capture` option is `runner`, Cypress makes its best effort to wait until the Command Log is synchronized before taking a screenshot. This is useful because it shows the current state of the Test Runner in the screenshot, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture. Turn off the command log synchronization to get a more accurate screenshot of your application under test. This is ignored if the `capture` option is `viewport`.
+The `onBeforeScreenshot` and `onAfterScreenshot` callbacks provide an opportunity to synchronously change the DOM for the sake of a screenshot.
+
+In this example, imagine there's a clock in your app showing the current time. This can cause screenshots to be non-deterministic, which could create false negatives when screenshot diffing. You can use `onBeforeScreenshot` to hide the clock and then show it again with `onAfterScreenshot`.
 
 ```javascript
 Cypress.Screenshot.defaults({
-  waitForCommandSynchronization: false
+  onBeforeScreenshot (doc) {
+    const clock = doc.querySelector('.clock')
+    if (clock) {
+      clock.style.visibility = 'hidden'
+    }
+  },
+
+  onAfterScreenshot (doc) {
+    const clock = doc.querySelector('.clock')
+    if (clock) {
+      clock.style.visibility = null
+    }
+  },
+})
+```
+
+## Get information about the screenshot from the onAfterScreenshot callback
+
+```javascript
+Cypress.Screenshot.defaults({
+  onAfterScreenshot (props) {
+    // props has information about the screenshot, including but not
+    // limited to the following:
+
+    // {
+    //   path: '/Users/janelane/project/screenshots/my-screenshot.png',
+    //   size: '15 kb',
+    //   dimensions: {
+    //     width: 1000,
+    //     height: 660,
+    //   },
+    //   scaled: true,
+    //   blackout: ['.foo'],
+    //   duration: 2300,
+    // }
+  },
 })
 ```
 
