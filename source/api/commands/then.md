@@ -27,10 +27,6 @@ cy.location().then((loc) => {})   // Yields location object as first arg
 
 ## Arguments
 
-**{% fa fa-angle-right %} callbackFn** ***(Function)***
-
-Pass a function that takes the previously yielded subject as its first argument.
-
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to change the default behavior of `.then()`.
@@ -38,6 +34,10 @@ Pass in an options object to change the default behavior of `.then()`.
 Option | Default | Description
 --- | --- | ---
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .then %}
+
+**{% fa fa-angle-right %} callbackFn** ***(Function)***
+
+Pass a function that takes the previously yielded subject as its first argument.
 
 ## Yields {% helper_icon yields %}
 

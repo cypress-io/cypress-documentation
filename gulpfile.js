@@ -33,6 +33,10 @@ gulp.task('move:menu:spy:js', function () {
   return moveJSNodeModule('menuspy/dist/menuspy.js')
 })
 
+gulp.task('move:doc:yall:js', function () {
+  return moveJSNodeModule('yall/dist/yall-2.0.1.min.js')
+})
+
 gulp.task('move:scrolling:element:js', function () {
   return moveJSNodeModule('scrollingelement/scrollingelement.js')
 })
@@ -109,4 +113,4 @@ gulp.task('post:build', (cb) => {
   runSequence('clean:js', 'clean:css', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
 })
 
-gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:search:css', 'move:fira:fonts', 'move:font:awesome:fonts'])
+gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:yall:js', 'move:doc:search:css', 'move:fira:fonts', 'move:font:awesome:fonts'])

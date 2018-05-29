@@ -241,4 +241,4 @@ You can turn this option off if the application or site you're testing **does no
 
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while eidting your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
