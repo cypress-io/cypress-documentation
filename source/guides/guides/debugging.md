@@ -1,6 +1,6 @@
 ---
 title: Debugging
-comments: false
+
 ---
 
 {% note info %}

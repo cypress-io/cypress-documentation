@@ -1,6 +1,6 @@
 ---
 title: window
-comments: false
+
 ---
 
 Get the `window` object of the page that is currently active.

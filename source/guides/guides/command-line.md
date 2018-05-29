@@ -1,13 +1,13 @@
 ---
 title: Command Line
-comments: false
+
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
 - How to run Cypress from the command line
-- How to run headlessly
+- How to specify which spec files to run
 - How to launch other browsers
 - How to record your tests
 {% endnote %}
@@ -36,7 +36,7 @@ Or just add cypress commands to the `scripts` field in your `package.json` file.
 
 Runs Cypress to completion. By default will run all tests headlessly in the `Electron` browser.
 
-***Run tests***
+### Run tests
 
 ```shell
 cypress run [options]
@@ -55,11 +55,11 @@ Option | Description
 `-P`, `--project` | Path to a specific project
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
-`-s`, `--spec`  | A single test file to run instead of all tests
+`-s`, `--spec`  | Specify the specs to run
 `--record`  | Whether to record the test run
-`--headed`  | Display the electron browser instead of running headlessly
+`--headed`  | Display the Electron browser instead of running headlessly
 
-***Run tests specifying browser***
+### Run tests specifying browser
 
 ```shell
 cypress run --browser chrome
@@ -73,17 +73,17 @@ Cypress will attempt to find all supported browsers available on your system. If
 DEBUG=cypress:launcher cypress run --browser chrome
 ```
 
-***Run tests in Electron in headed mode***
+### Run tests in Electron in headed mode
 
 By default, Cypress will run tests in Electron headlessly.
 
-Passing `--headed` will force Electron to be shown. This matches how you run Electron in the GUI.
+Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
 
 ```shell
 cypress run --headed
 ```
 
-***Run tests specifying configuration***
+### Run tests specifying configuration
 
 Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
 
@@ -91,37 +91,49 @@ Read more about {% url 'environment variables' environment-variables %} and {% u
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-***Run tests specifying environment variables***
+### Run tests specifying environment variables
 
 ```shell
 cypress run --env host=api.dev.local
 ```
 
-***Run tests specifying a port***
+### Run tests specifying a port
 
 ```shell
 cypress run --port 8080
 ```
 
-***Run tests specifying a mocha reporter***
+### Run tests specifying a mocha reporter
 
 ```shell
 cypress run --reporter json
 ```
 
-***Run tests specifying mochas reporter options***
+### Run tests specifying mochas reporter options
 
 ```shell
 cypress run --reporter-options mochaFile=result.xml,toConsole=true
 ```
 
-***Run tests specifying a single test file to run instead of all tests***
+### Run tests specifying a single test file to run instead of all tests
 
 ```shell
-cypress run --spec cypress/integration/app_spec.js
+cypress run --spec cypress/integration/app.spec.js
 ```
 
-***Run tests specifying a project***
+### Run tests specifying a glob of where to look for test files
+
+```shell
+cypress run --spec cypress/integration/login/**/*
+```
+
+### Run tests specifying multiple test files to run
+
+```shell
+cypress run --spec cypress/integration/filter.spec.js, cypress/integration/users.spec.js
+```
+
+### Run tests specifying a project
 
 By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
 
@@ -133,7 +145,7 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress run --project ./some/nested/folder
 ```
 
-***Run and record video of tests***
+### Run and record video of tests
 
 Record video of tests running after {% url 'setting up your project to record' dashboard-service#Setup %}. After setting up your project you will be given a **Record Key**.
 
@@ -161,7 +173,7 @@ You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
 
 Opens the Cypress Test Runner in interactive mode.
 
-***Open Cypress***
+### Open Cypress
 
 ```shell
 cypress open [options]
@@ -181,25 +193,25 @@ Option | Description
 `-P`, `--project` | Path to a specific project
 `--global` | Run in global mode
 
-***Open Cypress projects specifying port***
+### Open Cypress projects specifying port
 
 ```shell
 cypress open --port 8080
 ```
 
-***Open Cypress projects specifying configuration***
+### Open Cypress projects specifying configuration
 
 ```shell
 cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-***Open Cypress projects specifying environment variables***
+### Open Cypress projects specifying environment variables
 
 ```shell
 cypress open --env host=api.dev.local
 ```
 
-***Open Cypress in global mode***
+### Open Cypress in global mode
 
 Opening Cypress in global mode is useful if you have multiple nested projects but want to share a single global installation of Cypress. In this case you can add each nested project to the Cypress in global mode, thus giving you a nice UI to switch between them.
 
@@ -215,7 +227,7 @@ Verify that Cypress is installed correctly and is executable.
 cypress verify
 ```
 
-***Example Output***
+### Example Output
 
 ```shell
 Cypress application is valid and should be okay to run: /Applications/Cypress.app
@@ -232,7 +244,7 @@ In most cases they will be the same, but could be different if you have installe
 cypress version
 ```
 
-***Example Output***
+### Example Output
 
 ```shell
 Cypress package version: 0.20.0
@@ -241,7 +253,7 @@ Cypress binary version: 0.20.0
 
 # Cypress Module API
 
-You can use also require Cypress as a node module.
+You can use also require Cypress as a Node module.
 
 {% note warning %}
 The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.
@@ -297,7 +309,7 @@ Even when tests fail, the `Promise` still resolves with the test results.
 
 The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed. In that case, the `Promise` will be rejected with a detailed error.
 
-***Options***
+### Options
 
 Just like the CLI options above, you can pass options that modify how Cypress runs.
 

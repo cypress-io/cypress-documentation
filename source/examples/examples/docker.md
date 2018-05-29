@@ -1,6 +1,6 @@
 ---
 title: Docker
-comments: false
+
 containerClass: examples
 ---
 

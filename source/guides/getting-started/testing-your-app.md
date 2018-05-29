@@ -1,6 +1,6 @@
 ---
 title: Testing Your App
-comments: false
+
 ---
 
 {% note info %}
@@ -57,7 +57,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `example_spec.js` that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
 
 ```shell
 rm cypress/integration/example_spec.js
@@ -156,9 +156,10 @@ Perhaps you'll need to generate a user, and seed them with associations and reco
 
 To test various page states - like an empty view, or a pagination view, you'd need to seed the server so that this state can be tested.
 
-**While there's a lot more to this strategy, you generally have two ways to facilitate this with Cypress:**
+**While there is a lot more to this strategy, you generally have three ways to facilitate this with Cypress:**
 
 - {% url `cy.exec()` exec %} - to run system commands
+- {% url `cy.task()` task %} - to run code in Node.js via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.request()` request %} - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
@@ -227,11 +228,11 @@ However - there is likely still a balance here where **both** strategies are val
 
 While stubbing is great, it means that you don't have the guarantees that these response payloads actually match what the server will send. However, there are still many valid ways to get around this:
 
-***Generate the fixture stubs ahead of time***
+### Generate the fixture stubs ahead of time
 
 You could have the server generate all of the fixture stubs for you ahead of time. This means their data will reflect what the server will actually send.
 
-***Write a single e2e test without stubs, and then stub the rest***
+### Write a single e2e test without stubs, and then stub the rest
 
 Another more balanced approach is just to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
 
@@ -247,7 +248,7 @@ One of the first (and arguably one of the hardest) hurdles you'll have to overco
 
 Nothing slows a test suite down like having to log in, but all the good parts of your application most likely require an authenticated user! Here are some tips.
 
-***Fully Test the Login Flow -- But Only Once!***
+### Fully Test the Login Flow -- But Only Once!
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
@@ -310,7 +311,7 @@ Do not use **your UI** to login before each test.
 
 Let's investigate and tease apart why.
 
-***Bypassing your UI***
+### Bypassing your UI
 
 When you're writing tests for a very **specific feature**, you *should* use your UI to test it.
 
@@ -395,5 +396,5 @@ From here you may want to explore some more of our guides:
 - {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
 - {% url "Cypress API" api %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
-- {% url 'Command Line' command-line %} for running all your tests headlessly
+- {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
 - {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI

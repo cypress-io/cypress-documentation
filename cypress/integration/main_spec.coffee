@@ -6,7 +6,7 @@ API_PATH = "/api/introduction/api"
 EXAMPLES_PATH = "/examples/examples/recipes"
 FAQ_PATH = "/faq/questions/using-cypress-faq"
 
-describe "Documentation", ->
+describe "Main", ->
   beforeEach ->
     cy.server()
 

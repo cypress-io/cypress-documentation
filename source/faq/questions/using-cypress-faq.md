@@ -1,7 +1,7 @@
 ---
 layout: toc-top
 title: Using Cypress
-comments: false
+
 containerClass: faq
 ---
 
@@ -157,7 +157,7 @@ The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %},
 
 You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
 
-We do not currently offer any options to simulate this headlessly.
+We do not currently offer any options to simulate this during `cypress run`.
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
@@ -255,9 +255,7 @@ Cypress’ API is compatible with WebDriver specific tasks that Sauce Labs and B
 
 You can run a group of tests or a single test by placing an {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} on a test suite or specific test.
 
-You can run a single test file headlessly by passing the `--spec` flag to {% url '`cypress run`' command-line#cypress-run %}.
-
-Currently there is no way to specify a group of test files to run headlessly. You can read more {% issue 263 'here' %}.
+You can run a single test file or group of tests by passing the `--spec` flag to {% url '`cypress run`' command-line#cypress-run %}.
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
@@ -317,7 +315,7 @@ cy.get('#list>li').should('have.length', 20)
 
 ## {% fa fa-angle-right %} How do I seed / reset my database?
 
-You can use either {% url `cy.request()` request %} or {% url `cy.exec()` exec %} to talk to your backend to seed data.
+You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your backend to seed data.
 
 You could also just stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
 
@@ -405,7 +403,10 @@ The code you write in Cypress is executed in the browser, so you can import or r
 
 You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
-Cypress doesn't have direct access to node or your file system. We recommend utilizing {% url `cy.exec()` exec %} or {% url `cy.readFile()` readfile %} to execute a shell command or a node script that will do what you need.
+Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
+
+- {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.exec()` exec %} to execute a shell command
 
 {% url 'Check out this example recipe.' recipes#Node-Modules %}
 
@@ -435,7 +436,7 @@ Yes. You can read more {% url "here" writing-and-organizing-tests#Hooks %}.
 
 ## {% fa fa-angle-right %} I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
 
-First, make sure you have {% url "`node`" https://nodejs.org %} installed on your system. `npm` is a `node` package that is installed globally by default when you install node and is required to install our {% url "`cypress` npm  package" command-line %}.
+First, make sure you have {% url "Node" https://nodejs.org %} installed on your system. `npm` is a Node package that is installed globally by default when you install Node and is required to install our {% url "`cypress` npm  package" command-line %}.
 
 Next, you'd want to check that you have the proper permissions for installing on your system or you may need to run `sudo npm install cypress`.
 
@@ -479,11 +480,11 @@ Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-p
 
 This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
 
-## {% fa fa-angle-right %} Is there an option to run Cypress headlessly with DevTools open? We want to track network and console issues.
+## {% fa fa-angle-right %} Is there an option to run Cypress in CI with DevTools open? We want to track network and console issues.
 
-No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress headlessly with DevTools open.
+No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress in `cypress run` with DevTools open.
 
-You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
+You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that is as close as you will get with DevTools open and replicating the environment that was run during `cypress run`.
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
@@ -491,7 +492,7 @@ To start the server, run the tests and then shutdown the server we recommend {% 
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
-Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + node.
+Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + Node.
 
 That being said, we use Cypress to test our own Desktop app's front end - by stubbing events from Electron. These tests are open source so you can check them out {% url "here" https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui/cypress/integration %}.
 

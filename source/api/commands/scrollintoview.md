@@ -1,6 +1,6 @@
 ---
 title: scrollIntoView
-comments: false
+
 ---
 
 Scroll an element into view.

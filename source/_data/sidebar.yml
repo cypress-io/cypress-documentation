@@ -123,6 +123,7 @@ api:
     spy: spy.html
     stub: stub.html
     submit: submit.html
+    task: task.html
     then: then.html
     tick: tick.html
     title: title.html
@@ -147,6 +148,7 @@ api:
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html
+    screenshot-api: screenshot-api.html
     selector-playground-api: selector-playground-api.html
     cypress-server: cypress-server.html
     arch: arch.html

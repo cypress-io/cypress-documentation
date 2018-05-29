@@ -1,6 +1,6 @@
 ---
 title: Cypress.Promise
-comments: false
+
 ---
 
 Cypress automatically includes {% url 'Bluebird' https://github.com/petkaantonov/bluebird %} and exposes it as `Cypress.Promise`.

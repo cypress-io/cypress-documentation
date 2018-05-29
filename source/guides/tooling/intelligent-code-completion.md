@@ -1,6 +1,6 @@
 ---
 title: Intelligent Code Completion
-comments: false
+
 ---
 
 # Writing Tests
