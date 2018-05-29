@@ -39,7 +39,7 @@ Option | Default | Description
 Elements that match the specified selectors will be blacked out from the screenshot, but only when the `capture` option is `viewport`. `blackout` is ignored is `capture` is `runner`.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
+Cypress.Screenshot.defaults({
   blackout: ['.secret-info', '[data-hide=true]']
 })
 ```
@@ -49,7 +49,7 @@ Cypress.SelectorPlayground.defaults({
 By default, {% url `cy.screenshot()` screenshot %} only captures your application under test. You may want it to capture the entire Test Runner for debugging purposes.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
+Cypress.Screenshot.defaults({
   capture: 'runner'
 })
 ```
@@ -59,7 +59,7 @@ Cypress.SelectorPlayground.defaults({
 By default, JavaScript timers and CSS animations are disabled to try to prevent changes to your application under test while the screenshot is taken, but you can turn off this behavior.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
+Cypress.Screenshot.defaults({
   disableTimersAndAnimations: false
 })
 ```
@@ -69,7 +69,7 @@ Cypress.SelectorPlayground.defaults({
 By default, Cypress automatically takes a screenshot when there is a failure when running `cypress run`, but you can disable this.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
+Cypress.Screenshot.defaults({
   screenshotOnRunFailure: false
 })
 ```
@@ -79,7 +79,7 @@ Cypress.SelectorPlayground.defaults({
 By default, scaling the application under test is turned off during when the `capture` option is `viewport` to prevent differences between screenshots on screens with different resolutions. You can turn scaling on and have your app scaled like it is during normal use of Cypress. This is always coerced to `true` if the `capture` option is `runner`.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
+Cypress.Screenshot.defaults({
   scale: true
 })
 ```
@@ -89,7 +89,7 @@ Cypress.SelectorPlayground.defaults({
 By default, when taking the `capture` option is `runner`, Cypress makes its best effort to wait until the Command Log is synchronized before taking a screenshot. This is useful because it shows the current state of the Test Runner in the screenshot, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture. Turn off the command log synchronization to get a more accurate screenshot of your application under test. This is ignored if the `capture` option is `viewport`.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
+Cypress.Screenshot.defaults({
   waitForCommandSynchronization: false
 })
 ```
