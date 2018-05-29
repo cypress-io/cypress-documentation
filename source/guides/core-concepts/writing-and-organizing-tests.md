@@ -99,7 +99,7 @@ beforeEach(function () {
 {% endnote %}
 
 {% note danger%}
-{% fa fa-warning %} Keep in mind, setting something in global hook will render it less flexible for changes and for testing its behavior down the road. 
+{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road. 
 {% endnote %}
 
 From your support file you should also `import` or `require` other files to keep things organized.
@@ -158,7 +158,7 @@ describe('Unit test our math functions', function() {
       expect(divide(27, 9)).to.eq(3)
     })
 
-    specify('can muliple numbers', function() {
+    specify('can multiply numbers', function() {
       expect(multiply(5, 4)).to.eq(20)
     })
   })
