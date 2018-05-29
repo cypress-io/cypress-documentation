@@ -27,7 +27,7 @@ function initHexo () {
     hfc_js: {
       enable: true,
       mangle: true,
-      output: null,
+      output: {},
       compress: {},
       exclude: ['*.min.js'],
     },
