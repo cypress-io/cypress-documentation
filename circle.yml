@@ -19,15 +19,6 @@ defaults: &defaults
         <<: *env_defaults
 
 jobs:
-  # job to update package-lock.json file using Greenkeeper
-  lockfile:
-    <<: *defaults
-    steps:
-      - checkout
-      - run: npm install -g greenkeeper-lockfile@1
-      - run: greenkeeper-lockfile-update
-      - run: greenkeeper-lockfile-upload
-
   ## code checkout and NPM installs
   build:
     <<: *defaults
@@ -48,7 +39,7 @@ jobs:
 
       # need to restore a separate cache for each package.json
       - restore_cache:
-          key: v1-{{ .Branch }}-deps
+          key: v2-{{ .Branch }}-deps
 
       - run: npm ci
       - run: npm prune
@@ -57,10 +48,12 @@ jobs:
       - run: git status
 
       # save each node_modules folder per package
+      # also save ~/.cache folder with Cypress v3+ binary
       - save_cache:
-          key: v1-{{ .Branch }}-deps-{{ checksum "package.json" }}
+          key: v2-{{ .Branch }}-deps-{{ checksum "package.json" }}
           paths:
             - node_modules
+            - /root/.cache
 
       ## save entire folder as artifact for other jobs to continue
       ## hmm, do not see a good way to cache it, since all code
@@ -148,11 +141,7 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      # disabled for now - needs GH_TOKEN with write permissions
-      # - lockfile
       - build
-          # requires:
-          #   - lockfile
       - docs-tests:
           requires:
             - build
