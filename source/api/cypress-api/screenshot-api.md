@@ -31,8 +31,8 @@ Option | Default | Description
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
 `screenshotOnRunFailure` | `true` | When true, automatically takes a screenshot when there is a failure in Run mode.
-`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `document`.
-`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `document`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
+`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.
+`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
 
 # Examples
 
@@ -94,17 +94,17 @@ In this example, imagine there is a clock in your app showing the current time. 
 
 ```javascript
 Cypress.Screenshot.defaults({
-  onBeforeScreenshot (doc) {
-    const clock = doc.querySelector('.clock')
-    if (clock) {
-      clock.style.visibility = 'hidden'
+  onBeforeScreenshot ($el) {
+    const $clock = $el.find('.clock')
+    if ($clock) {
+      $clock.hide()
     }
   },
 
-  onAfterScreenshot (doc) {
-    const clock = doc.querySelector('.clock')
-    if (clock) {
-      clock.style.visibility = null
+  onAfterScreenshot ($el, props) {
+    const $clock = $el.find('.clock')
+    if ($clock) {
+      $clock.show()
     }
   },
 })
@@ -114,7 +114,7 @@ Cypress.Screenshot.defaults({
 
 ```javascript
 Cypress.Screenshot.defaults({
-  onAfterScreenshot (props) {
+  onAfterScreenshot ($el, props) {
     // props has information about the screenshot,
     // including but not limited to the following:
 

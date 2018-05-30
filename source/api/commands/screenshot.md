@@ -49,8 +49,8 @@ Option |Default | Description
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
-`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `document`.
-`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `document`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
+`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.
+`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
@@ -129,8 +129,8 @@ cy.get('button').first().screenshot().its('el').click()
 
 ```javascript
 cy.screenshot("my-screenshot", {
-  onAfterScreenshot (props) {
-    // props has information about the screenshot, 
+  onAfterScreenshot ($el, props) {
+    // props has information about the screenshot,
     // including but not limited to the following:
 
     // {
