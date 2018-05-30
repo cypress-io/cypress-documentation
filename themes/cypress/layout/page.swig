@@ -17,7 +17,6 @@
             <div class="article-footer-updated">
               <time datetime="{{ date_xml(page.updated) }}" itemprop="dateModified">{{ __('page.last-updated', date(page.updated)) }}</time>
             </div>
-            {{ partial('partial/comment') }}
           </div>
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
