@@ -69,6 +69,8 @@ jobs:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
           paths:
             - /root/cypress-documentation
+      - store_artifacts:
+          path: ~/.npm/_logs
 
   "docs-tests":
     <<: *defaults
@@ -99,6 +101,8 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
 
   "deploy-docs-staging":
     <<: *defaults
@@ -126,6 +130,8 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
 
   "deploy-docs-production":
     <<: *defaults

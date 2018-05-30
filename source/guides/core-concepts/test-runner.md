@@ -1,6 +1,6 @@
 ---
 title: The Test Runner
-comments: false
+
 ---
 
 {% note info %}

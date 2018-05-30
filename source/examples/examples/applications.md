@@ -1,6 +1,6 @@
 ---
 title: Applications
-comments: false
+
 containerClass: examples
 ---
 

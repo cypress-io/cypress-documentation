@@ -1,6 +1,6 @@
 ---
 title: title
-comments: false
+
 ---
 
 Get the `document.title` property of the page that is currently active.

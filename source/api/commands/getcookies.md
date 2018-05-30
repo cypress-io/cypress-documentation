@@ -1,6 +1,6 @@
 ---
 title: getCookies
-comments: false
+
 ---
 
 Get all of the browser cookies.

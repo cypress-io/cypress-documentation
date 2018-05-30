@@ -1,6 +1,6 @@
 ---
 title: Conditional Testing
-comments: false
+
 ---
 
 {% note info %}

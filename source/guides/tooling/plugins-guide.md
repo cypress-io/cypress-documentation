@@ -1,11 +1,11 @@
 ---
 title: Plugins
-comments: false
+
 ---
 
 Plugins enable you to tap into, modify, or extend the internal behavior of Cypress.
 
-Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a **Node.js** process that plugins can use.
+Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node.js process that plugins can use.
 
 > Plugins enable you to tap into the `node` process running outside of the browser.
 
@@ -50,7 +50,7 @@ Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which des
 
 This event: `before:browser:launch` can be used to modify the launch arguments for each particular browser.
 
-You can use the `before:browser:launch` to do things like:
+You can use the `before:browser:launch` event to do things like:
 
 - Load a Chrome extension
 - Change print media
@@ -58,6 +58,17 @@ You can use the `before:browser:launch` to do things like:
 - Control which Chrome components are loaded
 
 Check out our {% url 'Browser Launch API docs' browser-launch-api %} which describe how to use this event.
+
+## cy.task
+
+This event: `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
+
+You can use the `task` event to do things like:
+
+- Manipulating a database (seeding, reading, writing, etc.)
+- Storing state in Node that you want persisted (since the driver is fully refreshed on visits)
+- Performing parallel tasks (like making multiple http requests outside of Cypress)
+- Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer)
 
 # List of plugins
 

@@ -11,5 +11,5 @@ title: Next Steps
 - **Want to See Cypress in Action?** Check out examples, recipes, blog posts, and videos of Cypress in real world usage
 - **Configuration:** A cheatsheet on
 - **Is Cypress Open Source?** You bet it is!
-- **Continuous Integration:** Cypress expects to be run headlessly and has a SaaS service that makes CI _awesome_
+- **Continuous Integration:** Cypress expects to be run in CI and has a Dashboard Service that makes CI _awesome_
 - **Roadmap:** Where we’re going, now and later
