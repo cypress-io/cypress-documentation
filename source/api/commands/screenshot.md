@@ -171,7 +171,7 @@ Alternatively, to see screenshots in your Continuous Integration UI, most CI pro
 
 Taking a screenshot is an asynchronous action that takes around `100ms` to complete. By the time the screenshot is taken, *it is possible something in your application may have changed*. It is important to realize that the screenshot may not reflect what your application looked like 100% when the command was issued.
 
-For example - say a command we wrote timed out: {% url "`cy.get('#element')`" get %}. This causes your test to fail. Cypress then automatically takes a screenshot when the test fails, but it is possible something in your application changed within this `100ms` timeframe. Hypothetically, your app could render the element you were originally expecting to be present. When this happens, the screenshot may provide confusing results. It iss unlikely, but theoretically possible.
+For example - say a command we wrote timed out: {% url "`cy.get('#element')`" get %}. This causes your test to fail. Cypress then automatically takes a screenshot when the test fails, but it is possible something in your application changed within this `100ms` timeframe. Hypothetically, your app could render the element you were originally expecting to be present. When this happens, the screenshot may provide confusing results. It is unlikely, but theoretically possible.
 
 Another potential problem to be aware of is that our own Command Log is using React.js under the hood and only rendering asynchronously during an animation frame. It is possible you will see screenshots taken before our Command Log is done rendering. This means you may not see the **error displayed** in the screenshot. But this is also why we take a video - to show you the complete failure.
 
