@@ -233,6 +233,10 @@ cy.server()
 cy.route('DELETE', '**/users/*', {})
 ```
 
+{% note info Making multiple requests to the same route %}
+Sometimes you need to test a previously aliased route with a new response object. You can redefine your route, passing in a new response argument, and call this route using {% url '`cy.wait()`' wait %}. Your newly defined route will be waited on. You can see an example of this {% url 'here' wait#Alias %}.
+{% endnote %} 
+
 ## Fixtures
 
 Instead of writing a response inline you can automatically connect a response with a {% url `cy.fixture()` fixture %}.
