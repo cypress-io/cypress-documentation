@@ -124,7 +124,7 @@
     "hexo-prism-plugin": "2.2.0",
     "hexo-renderer-marked": "0.3.2",
     "hexo-renderer-scss": "github:cypress-io/hexo-renderer-scss#node-8",
-    "hexo-server": "0.3.1",
+    "hexo-server": "0.3.2",
     "lazy-ass": "1.6.0",
     "lodash": "4.17.10",
     "lunr": "2.2.1",
