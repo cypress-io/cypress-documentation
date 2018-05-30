@@ -45,6 +45,7 @@ jobs:
       - run: npm -v
       # print the caches just for information
       - run: ls /root/.cache || true
+      - run: ls /root/.cache/Cypress || true
       - run: ls /root/.npm || true
       - run: npm ci
       - run: npx cypress verify
