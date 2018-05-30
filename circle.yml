@@ -47,6 +47,7 @@ jobs:
       - run: ls /root/.cache || true
       - run: ls /root/.npm || true
       - run: npm ci
+      - run: npx cypress verify
       - run: npm prune
       # see if package-lock.json file has changed
       # if yes, this means it is out of date
