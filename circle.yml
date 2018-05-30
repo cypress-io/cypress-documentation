@@ -41,6 +41,11 @@ jobs:
       - restore_cache:
           key: v2-{{ .Branch }}-deps
 
+      - run: node -v
+      - run: npm -v
+      # print the caches just for information
+      - run: ls /root/.cache || true
+      - run: ls /root/.npm || true
       - run: npm ci
       - run: npm prune
       # see if package-lock.json file has changed
