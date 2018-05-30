@@ -51,16 +51,16 @@ Option | Default | Description
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
 `pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
-`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a headless or CI run's test failure
+`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
-`videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved after a headless or CI run
+`videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
 
 ## Screenshots
 
 Option | Default | Description
 ----- | ---- | ----
-`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a headless run's test failure
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run during `cypress run`.
+`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
 
 For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
 
@@ -68,10 +68,10 @@ For more options regarding screenshots, view the {% url 'Cypress.Screenshot API'
 
 Option | Default | Description
 ----- | ---- | ----
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run during `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
-`videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when  tests run during `cypress run`.
-`videoRecording`     | `true`     | Whether Cypress will record a video of the tests run during `cypress run`.
+`videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
+`video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
 `videoUploadOnPasses`     | `true`     | Whether Cypress will upload the video to the Dashboard even if all tests are passing. This applies only when recording your runs to the Dashboard. Turn this off if you'd like the video uploaded only when there are failing tests.
 
 ## Browser

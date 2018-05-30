@@ -29,7 +29,7 @@ By default, Cypress clears any existing screenshots before `cypress run`. If you
 
 Cypress also records videos when running from the CLI.
 
-This behavior can be turned off by setting {% url `videoRecording` configuration#Videos %} to `false`.
+This behavior can be turned off by setting {% url `video` configuration#Videos %} to `false`.
 
 Videos are stored in the {% url `videosFolder` configuration#Videos %} which is set to `cypress/videos` by default.
 
