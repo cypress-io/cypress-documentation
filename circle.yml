@@ -62,6 +62,7 @@ jobs:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
           paths:
             - /root/cypress-documentation
+            - /root/.cache
       - store_artifacts:
           path: ~/.npm/_logs
 
