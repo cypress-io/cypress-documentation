@@ -72,6 +72,7 @@ Option | Default | Description
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when  tests run during `cypress run`.
 `videoRecording`     | `true`     | Whether Cypress will record a video of the tests run during `cypress run`.
+`video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
 `videoUploadOnPasses`     | `true`     | Whether Cypress will upload the video to the Dashboard even if all tests are passing. This applies only when recording your runs to the Dashboard. Turn this off if you'd like the video uploaded only when there are failing tests.
 
 ## Browser
