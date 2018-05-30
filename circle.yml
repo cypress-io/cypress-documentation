@@ -47,12 +47,12 @@ jobs:
       # if yes, this means it is out of date
       - run: git status
 
-      # save each node_modules folder per package
+      # cache ~/.npm folder
       # also save ~/.cache folder with Cypress v3+ binary
       - save_cache:
           key: v2-{{ .Branch }}-deps-{{ checksum "package.json" }}
           paths:
-            - node_modules
+            - /root/.npm
             - /root/.cache
 
       ## save entire folder as artifact for other jobs to continue
