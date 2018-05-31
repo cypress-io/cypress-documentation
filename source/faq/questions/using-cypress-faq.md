@@ -151,7 +151,55 @@ There are a couple really great modules that we recommend using for this, {% url
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.  
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on. 
+
+## {% fa fa-angle-right %} Can I test the HTML `<head>` element? 
+
+Yes, you sure can. While executing tests in the Test Runner, you can view the entire `window.document` object in your open console using {% url '`cy.document()`' document %}. You can even make assertions on the `<head>` element. Check out this example.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <meta name="description" content="This description is so meta">
+  <title>Test the HEAD content</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+</body>
+</html>
+```
+
+```js
+describe('The Document Metadata', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
+  it("looks inside the head content using `cy.document()`", () => {
+    // this will yield the entire window.document object
+    // if you click on DOCUMENT from the command log,
+    // it will output the entire #document to the console
+    cy.document();
+
+  })
+  
+  // or make assertions on any of the metadata in the head element
+
+  it('looks inside <title> tag', () => {
+    cy.get('head title')
+      .should('contain', 'Test the HEAD content')
+  })
+
+  it('looks inside <meta> tag for description', () => {
+    cy.get('head meta[name="description"]')
+      .should("have.attr", "content", "This description is so meta")
+  })
+
+})
+```
 
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
