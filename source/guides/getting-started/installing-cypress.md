@@ -44,7 +44,7 @@ Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/c
 
 {% note info %}
 Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
-As of version `3.0.0`, the binary is downloaded to a global cache directory to be used across projects.
+As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 {% endnote %}
 
 {% note success Best Practice %}
@@ -173,7 +173,7 @@ Now Cypress will skip its install phase once the npm module is installed.
 
 ## Overriding the Binary Cache Folder
 
-As of version `3.0.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
+As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`

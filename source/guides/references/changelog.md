@@ -2,6 +2,17 @@
 title: Changelog
 ---
 
+## 3.0.1
+
+*Released 5/30/2018*
+
+**Bugfixes:**
+
+- Seeded KitchenSink tests no longer fail. Fixes {% issue 1812 %}.
+- The binary cache now correctly works and will not reinstall Cypress if an existing version is already installed. Fixes {% issue 1813 %}.
+- Closing the `Electron` browser and then opening `Chrome` no longer causes `cy.screenshot()` to fail. Fixes {% issue 1820 %}.
+- Fixed a bug with Windows users seeing crashes with `tty.getWindowSize is not a function`. Fixes {% issue 1815 %} and {% issue 1817 %}.
+
 ## 3.0.0
 
 *Released 5/29/2018*

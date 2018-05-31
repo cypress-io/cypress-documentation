@@ -177,10 +177,6 @@ gitter: cypress-io/cypress
 facebook_admin_id: 22600147
 facebook_app_id: 446223215719535
 
-# Disqus settings
-# _your_disqus_short_name_
-disqus_shortname: cypress-documentation
-
 # Google Plugins
 google:
   tag_manager_id: GTM-KNKBWLD

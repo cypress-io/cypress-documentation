@@ -3,8 +3,8 @@ db.json
 public/
 *.log
 .history
+.vscode
 .DS_Store
-.history
 .deploy*/
 support
 .idea/
