@@ -235,7 +235,7 @@ cy.route('DELETE', '**/users/*', {})
 
 ***Making multiple requests to the same route***
 
-You can test a route multiple times with unique repsonse objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
+You can test a route multiple times with unique response objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
 
 ```js
 cy.server()
