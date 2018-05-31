@@ -1,6 +1,5 @@
 ---
 title: Network Requests
-
 ---
 
 {% note info %}
@@ -18,7 +17,9 @@ title: Network Requests
 
 Cypress makes it easy to test the entire lifecycle of AJAX / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
-**Please be aware that Cypress does NOT currently support the Fetch API. See https://github.com/cypress-io/cypress/issues/95 for more details and temporary workarounds.**
+{% note warning %}
+Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
+{% endnote %}
 
 ***Common testing scenarios:***
 
