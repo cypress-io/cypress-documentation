@@ -130,7 +130,7 @@ cypress run --spec cypress/integration/login/**/*
 ### Run tests specifying multiple test files to run
 
 ```shell
-cypress run --spec cypress/integration/filter.spec.js, cypress/integration/users.spec.js
+cypress run --spec cypress/integration/filter.spec.js,cypress/integration/users.spec.js
 ```
 
 ### Run tests specifying a project
