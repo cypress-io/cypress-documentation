@@ -56,22 +56,7 @@ For more details on these options and to set some as defaults across all uses of
 
 ## Yields {% helper_icon yields %}
 
-`cy.screenshot()` yields an object with the following properties:
-
-- `blackout`
-- `capture`
-- `dimensions`
-- `duration`
-- `name`
-- `path`
-- `pixelRatio`
-- `scaled`
-- `size`
-- `takenAt`
-
-`.screenshot()` yields an object with above properties plus the following:
-
-- `el` (the element captured by the screenshot)
+{% yields same_subject .screenshot %}
 
 # Examples
 

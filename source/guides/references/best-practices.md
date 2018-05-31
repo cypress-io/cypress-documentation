@@ -100,7 +100,7 @@ If we looked at the `<html>` of our button again...
 <button id="main" class="btn btn-large" data-cy="submit">Submit</button>
 ```
 
-The question is: how important is the `Submit` text content to your test? If the text changed from `Subject` to `Save` - would you want the test to fail?
+The question is: how important is the `Submit` text content to your test? If the text changed from `Submit` to `Save` - would you want the test to fail?
 
 If the answer is **yes** because the word `Submit` is critical and should not be changed - then use {% url `cy.contains()` contains %} to target the element. This way, if it is changed, the test will fail.
 
