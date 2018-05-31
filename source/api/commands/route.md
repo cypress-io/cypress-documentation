@@ -233,9 +233,35 @@ cy.server()
 cy.route('DELETE', '**/users/*', {})
 ```
 
-{% note info Making multiple requests to the same route %}
-Sometimes you need to test a previously aliased route with a new response object. You can redefine your route, passing in a new response argument, and call this route using {% url '`cy.wait()`' wait %}. Your newly defined route will be waited on. You can see an example of this {% url 'here' wait#Alias %}.
-{% endnote %} 
+***Making multiple requests to the same route***
+
+You can test a route multiple times with unique repsonse objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
+
+```js
+cy.server()
+cy.route('/beetles', []).as('getBeetles')
+cy.get('#search').type('Weevil')
+
+// wait for the first response to finish
+cy.wait('@getBeetles')
+
+// the results should be empty because we
+// responded with an empty array first
+cy.get('#beetle-results').should('be.empty')
+
+// now re-define the /beetles response
+cy.route('/beetles', [{name: 'Geotrupidae'}])
+
+cy.get('#search').type('Geotrupidae')
+
+// now when we wait for 'getBeetles' again, Cypress will
+// automatically know to wait for the 2nd response
+cy.wait('@getBeetles')
+
+// we responded with 1 beetle item so now we should
+// have one result
+cy.get('#beetle-results').should('have.length', 1) 
+``` 
 
 ## Fixtures
 
