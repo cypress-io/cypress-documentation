@@ -44,7 +44,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
 {% note info %}
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci), or equivalents.
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci), or equivalents, as demonstrated in the configs below.
 {% endnote %}
 
 ## Travis
