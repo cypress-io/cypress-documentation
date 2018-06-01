@@ -19,10 +19,9 @@ title: Changelog
 
 **Summary:**
 
-- The docs are still being updated with all of the changes. You may see some incorrect notes as we update everything.
 - There is a new {% url `cy.task()` task %} command that enables you to go outside the browser to perform tasks directly in `node`. This will make it easy to setup, scaffold, seed, talk to your database, or anything else useful on a backend.
 - {% url `cy.screenshot()` screenshot %} has been rewritten from the ground up. It now takes a screenshot of **only** the application under test by default. It also can take full page screenshots or element only screenshots. This is the first step of Cypress Dashboard support for screenshot diffing.
-- When running with `cypress run` we now run each spec file in isolation from others. We've rewritten our reporter to provide more details and provide a summary of the run at the bottom.
+- When running with `cypress run` we now run each spec file in isolation from others. We have rewritten our reporter to provide more details and provide a summary of the run at the bottom.
 - The Dashboard has been upgraded to make it easier to understand the results of each spec run. This was done in anticipation of providing you the ability to parallelize and load balance your spec files automatically in CI.
 - We are now capturing the performance and timings data of every test when using `--record` mode and are beginning to offer the first analytics and insights into the health of your tests on our Dashboard service.
 - Cypress now caches globally per version which prevents it from being installed multiple times across projects.
@@ -37,7 +36,8 @@ title: Changelog
 - `videoRecording` has been renamed to `video` in our configuration to be clearer and prevent confusion about recording to our Dashboard. Fixes {% issue 562 %}.
 - Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Fixes {% issue 1592 %}.
 - The standard output has been redesigned to better visualize spec files running in isolation and to be more visually appealing. This may break any specialized logic written that expected the standard output to be structured in a specific way or contain specific words. Fixes {% issue 1588 %}.
-- {% url `cy.screenshot()` screenshot %} no longer takes a screenshot of the runner by dfeault. Instead it will hide the runner, remove application scaling and then scroll to take a full page picture of your application.
+- {% url `cy.screenshot()` screenshot %} no longer takes a screenshot of the runner by default. Instead it will hide the runner, remove application scaling and then scroll to take a full page picture of your application.
+- `before` and `after` hooks within a {% url "support file" writing-and-organizing-tests#Support-file %} now run before/after every spec file, instead of only once before/after the entire run. {% issue 681 %}
 
 **Features:**
 
