@@ -81,15 +81,15 @@ cy.get('footer').scrollIntoView({ duration: 2000 })
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements dom .scrollToIntoView %}
+{% requirements dom .scrollIntoView %}
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions wait .scrollToIntoView %}
+{% assertions wait .scrollIntoView %}
 
 ## Timeouts {% helper_icon timeout %}
 
-{% timeouts assertions .scrollToIntoView %}
+{% timeouts assertions .scrollIntoView %}
 
 # Command Log
 
