@@ -1,3 +1,11 @@
+- title: "Running e2e tests with Selenium *AND* Cypress"
+  url: https://medium.com/@wataruoguchi/running-e2e-tests-with-selenium-and-cypress-1de69b95d936
+  sourceName: Medium
+  sourceUrl: https://medium.com/
+  date: May 18, 2018
+  author: Wataru Oguchi
+  img: /img/examples/e2e-with-selenium-and-cypress.jpg
+
 - title: "Dynamic XHR responses recording & stubbing with Cypress"
   url: https://medium.com/ax2-inc/dynamic-xhr-responses-recording-stubbing-with-cypress-9257d4f730cd
   sourceName: Medium 
