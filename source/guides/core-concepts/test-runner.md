@@ -1,6 +1,6 @@
 ---
 title: The Test Runner
-comments: false
+
 ---
 
 {% note info %}
@@ -89,7 +89,7 @@ The Selector Playground is an interactive feature that helps you:
 * See what elements match a given selector.
 * See what element matches a string of text.
 
-{% img /img/guides/selector-playground.gif Selector Playground %}
+{% video local /img/snippets/selector-playground.mp4 %}
 
 ## Uniqueness
 

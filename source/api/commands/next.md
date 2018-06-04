@@ -1,6 +1,6 @@
 ---
 title: next
-comments: false
+
 ---
 
 Get the immediately following sibling of each DOM element within a set of DOM elements.

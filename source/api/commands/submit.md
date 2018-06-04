@@ -1,6 +1,6 @@
 ---
 title: submit
-comments: false
+
 ---
 
 Submit a form.

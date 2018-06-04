@@ -1,6 +1,6 @@
 ---
 title: wrap
-comments: false
+
 ---
 
 Yield the object passed into `.wrap()`.

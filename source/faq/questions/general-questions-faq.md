@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: General Questions
-comments: false
 containerClass: faq
 ---
 
@@ -23,11 +22,11 @@ Currently our users use Cypress to control the viewport with the {% url `cy.view
 
 Cypress is kind of a hybrid application/framework/service all rolled into one. It takes a little bit of other testing tools, brings them together and improves on them.
 
-***Mocha***
+### Mocha
 
  Mocha is a testing framework for JavaScript. {% url "Mocha" http://mochajs.org/ %} gives you the `it`, `describe`, `beforeEach` methods. Cypress isn't **different** from Mocha, it actually **uses** Mocha under the hood. All of your tests will be written on top of Mocha's `bdd` interface.
 
-***Karma***
+### Karma
 
 A unit testing runner for JavaScript, {% url "Karma" http://karma-runner.github.io/ %}, works with either {% url "Jasmine" https://jasmine.github.io/ %}, {% url "Mocha" http://mochajs.org/ %}, or any other JavaScript testing framework.
 
@@ -35,15 +34,15 @@ Karma also watches your JavaScript files, live reloads when they change, and is 
 
 Cypress essentially replaces Karma because it does all of this already and much more.
 
-***Capybara***
+### Capybara
 
 The `Ruby` specific tool that allows you to write integration tests for your web application is {% url "Capybara" http://teamcapybara.github.io/capybara/ %}. In the Rails world, this is the *go-to* tool for testing your application. It uses {% url "Sauce Labs" https://SauceLabs.com/ %} (or another headless driver) to interact with browsers. Its API consists of commands that query for DOM elements, perform user actions, navigate around, etc.
 
-Cypress essentially replaces Capybara because it does all of these things and much more. The difference is that instead of testing your application in a GUI-less console, you'd see your application at all times. You'd never have to take a screenshot to debug because all commands instantly provide you the state of your application while they run. Upon any command failing, you'll get a human-readable error explaining why it failed. There's no "guessing" when debugging.
+Cypress essentially replaces Capybara because it does all of these things and much more. The difference is that instead of testing your application in a GUI-less console, you would see your application at all times. You'd never have to take a screenshot to debug because all commands instantly provide you the state of your application while they run. Upon any command failing, you'll get a human-readable error explaining why it failed. There's no "guessing" when debugging.
 
 Oftentimes Capybara begins to not work as well in complex JavaScript applications. Additionally, trying to TDD your application is often difficult. You often have to resort to writing your application code first (typically manually refreshing your browser after changes) until you get it working. From there you write tests, but lose the entire value of TDD.
 
-***Protractor***
+### Protractor
 
 Using {% url "Protractor" http://www.protractortest.org/ %} provides a nice Promise-based interface on top of Selenium, which makes it easy to deal with asynchronous code. Protractor comes with all of the features of Capybara and essentially suffers from the same problems.
 
@@ -51,7 +50,7 @@ Cypress replaces Protractor because it does all of these things and much more. O
 
 Also, Protractor is very much focused on `AngularJS`, whereas Cypress is designed to work with any JavaScript framework. Protractor, because it's based on Selenium, is still pretty slow, and is prohibitive when trying to TDD your application. Cypress, on the other hand, runs at the speed your browser and application are capable of serving and rendering, there is no additional bloat.
 
-***Sauce Labs***
+### Sauce Labs
 
 Using {% url "Sauce Labs" https://SauceLabs.com/ %} enables Selenium-based tests to be run across various browsers and operating systems. Additionally, they have a JavaScript Unit Testing tool that isn't Selenium focused.
 
@@ -87,7 +86,7 @@ No. But if you're wanting to test parts of your application that are not easily 
 
 No. In fact Cypress' architecture is very different from Selenium in a few critical ways:
 
-- Cypress runs in the context of the browser. With Cypress it's much easier to accurately test the browser, but harder to talk to the outside world. In Selenium it's the exact opposite, it runs outside of the browser where your application is running. Although Cypress has a few commands that give you access to the outside world - like {% url `cy.request()` request %} and {% url `cy.exec()` exec %}.
+- Cypress runs in the context of the browser. With Cypress it's much easier to accurately test the browser, but harder to talk to the outside world. In Selenium it's the exact opposite, it runs outside of the browser where your application is running. Although Cypress has a few commands that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}.
 - With Selenium - aka WebDriver, you either get 100% simulated events (with Selenium RC) or you got 100% native events with Selenium WebDriver. However, with Cypress, you actually get both. For the most part we use simulated events; We can reproduce them with nearly 100% fidelity, they are much faster, and guaranteed to work the same way every time. However we do use automation API's for things like Cookies where we extend outside of the JavaScript sandbox and interact with the underlying browser API's. This gives us flexibility to determine which type of event to use in specific situations. We've yet to add native input events though.
 
 ## {% fa fa-angle-right %} If Cypress runs in the browser, doesn't that mean it's sandboxed?

@@ -1,6 +1,6 @@
 ---
 title: get
-comments: false
+
 ---
 
 Get one or more DOM elements by selector or {% url 'alias' variables-and-aliases %}.

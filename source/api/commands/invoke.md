@@ -1,6 +1,6 @@
 ---
 title: invoke
-comments: false
+
 ---
 
 Invoke a function on the previously yielded subject.

@@ -1,6 +1,6 @@
 ---
 title: Recipes
-comments: false
+
 containerClass: examples
 ---
 
@@ -10,7 +10,7 @@ Recipes show you how to test common scenarios in Cypress.
 
 Recipe | Category | Description
 --- | --- | ---
-{% urlHash 'Node Modules' Node-Modules %} | Fundamentals | Import your own node modules
+{% urlHash 'Node Modules' Node-Modules %} | Fundamentals | Import your own Node modules
 {% urlHash 'Single Sign On' Single-Sign-On %} | Logging In | Log in across multiple servers or providers
 {% urlHash 'HTML Web Forms' HTML-Web-Forms %} | Logging In | Log in with a basic HTML form
 {% urlHash 'XHR Web Forms' XHR-Web-Forms %} | Logging In | Log in using an XHR
@@ -34,6 +34,7 @@ Recipe | Category | Description
 {% urlHash 'File Upload in React' File-Upload-in-React %} | Unit Testing | Test file upload in React application
 {% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
+{% urlHash 'Seeding your Database in Node' Seeding-your-Database-in-Node %} | Server Communication | Seed your database with test data
 
 ## [Node Modules](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules)
 
@@ -121,7 +122,7 @@ Get around the lack of a `.hover()` command.
 
 - [Blog article written here](https://www.cypress.io/blog/2017/11/07/Add-GUI-to-Your-E2E-API-Tests)
 - Use {% url `cy.request()` request %} to perform API Testing
-- Use the Cypress GUI to help debug requests
+- Use the Cypress Test Runner to help debug requests
 
 ## [Codepen Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__codepen-demo)
 
@@ -189,3 +190,9 @@ Get around the lack of a `.hover()` command.
 - Start your application with test data.
 - Stub an XHR to seed with test data.
 - Wait on an XHR to finish.
+
+## [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node)
+
+- Use {% url `cy.task()` task %} to communicate with Node via the `pluginsFile`.
+- Seed your database with test data.
+- Wrap your `pluginsFile` so you can require files that use ES modules (`import`/`export`).

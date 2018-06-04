@@ -1,6 +1,6 @@
 ---
 title: not
-comments: false
+
 ---
 
 Filter DOM element(s) from a set of DOM elements.
