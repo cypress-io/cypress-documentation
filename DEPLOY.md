@@ -9,7 +9,7 @@
 ## Automatic Deployment
 
 Any commits landed in `develop` branch of this repository will be deployed
-to `staging` environment if end to end tests pass and can be previewed at [https://docs-staging.cypress.io](https://docs-staging.cypress.io).
+to `staging` environment if end-to-end tests pass and can be previewed at [https://docs-staging.cypress.io](https://docs-staging.cypress.io).
 
 Any commits landed in `master` branch will be deployed to the `production`
 environment and can be previewed at [https://docs.cypress.io](https://docs.cypress.io).
@@ -37,8 +37,8 @@ To debug deployment actions, run with `DEBUG=deploy ...` environment variable.
 
 **Note**
 
-on CI, the deployment and scraping configuration are passed via environment
-variables `support__aws_credentials_json` and `support__circle_credentials_json`
+On CI, the deployment and scraping configuration are passed via environment
+variables `support__aws_credentials_json` and `support__circle_credentials_json`,
 which are just JSON files as strings.
 
 ```shell
@@ -53,3 +53,9 @@ You can see the latest deployed version, including deployment date at:
 | --- | ---- |
 | Master | [https://docs.cypress.io/build.json](https://docs.cypress.io/build.json) |
 | Staging | [https://docs-staging.cypress.io/build.json](https://docs-staging.cypress.io/build.json) |
+
+## Caching link checks
+
+We use a helper function to check that links used in the documentation are valid. The checks are using in-memory store, but if you have a Redis instance, you can run `REDIS_URL=...redis_url npm run build` to cache the checks for several hours. This will speed up the build a lot because the external pages will not be requested again.
+
+To see debug messages during the build, run with `DEBUG=docs` environment variable.

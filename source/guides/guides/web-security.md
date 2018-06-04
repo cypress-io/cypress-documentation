@@ -1,6 +1,6 @@
 ---
 title: Web Security
-comments: false
+
 ---
 
 Browsers adhere to a strict {% url "`same-origin policy`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}. This means that browsers restrict access between `<iframes>` when their origin policies do not match.
@@ -248,6 +248,14 @@ One last thing to consider here is that every once in a while we discover bugs i
 
 To start, you will need to understand that *not all browsers expose a way to turn off web security*. Some do, some don't. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
 
+**Setting `chromeWebSecurity` to `false` allows to to do the following:**
+
+- Display insecure content
+- Navigate to any superdomain without cross origin errors
+- Access cross origin iframes that are embedded in your application.
+
+One thing you may notice though is that Cypress still enforces visiting a single superdomain with {% url `cy.visit()` visit %}, but there is an {% issue 944 'issue open' %} to change this restriction.
+
 Still here? That's cool, let's disable web security!
 
 ***Set `chromeWebSecurity` to `false` in `cypress.json` and we'll take care of the rest.***
@@ -258,6 +266,4 @@ Still here? That's cool, let's disable web security!
 }
 ```
 
-The browser will now display insecure content, you can now navigate to any superdomain without cross origin errors, and you can access cross origin iframes that are embedded in your application.
 
-One thing you may notice though is that Cypress still enforces visiting a single superdomain with {% url `cy.visit()` visit %}. This is an artificial limitation (and one that can be removed). You should {% open_an_issue 'open an issue' %} and tell us what you're trying to do!

@@ -1,7 +1,116 @@
 ---
 title: Changelog
-comments: false
 ---
+
+## 3.0.1
+
+*Released 5/30/2018*
+
+**Bugfixes:**
+
+- Seeded KitchenSink tests no longer fail. Fixes {% issue 1812 %}.
+- The binary cache now correctly works and will not reinstall Cypress if an existing version is already installed. Fixes {% issue 1813 %}.
+- Closing the `Electron` browser and then opening `Chrome` no longer causes `cy.screenshot()` to fail. Fixes {% issue 1820 %}.
+- Fixed a bug with Windows users seeing crashes with `tty.getWindowSize is not a function`. Fixes {% issue 1815 %} and {% issue 1817 %}.
+
+## 3.0.0
+
+*Released 5/29/2018*
+
+**Summary:**
+
+- There is a new {% url `cy.task()` task %} command that enables you to go outside the browser to perform tasks directly in `node`. This will make it easy to setup, scaffold, seed, talk to your database, or anything else useful on a backend.
+- {% url `cy.screenshot()` screenshot %} has been rewritten from the ground up. It now takes a screenshot of **only** the application under test by default. It also can take full page screenshots or element only screenshots. This is the first step of Cypress Dashboard support for screenshot diffing.
+- When running with `cypress run` we now run each spec file in isolation from others. We have rewritten our reporter to provide more details and provide a summary of the run at the bottom.
+- The Dashboard has been upgraded to make it easier to understand the results of each spec run. This was done in anticipation of providing you the ability to parallelize and load balance your spec files automatically in CI.
+- We are now capturing the performance and timings data of every test when using `--record` mode and are beginning to offer the first analytics and insights into the health of your tests on our Dashboard service.
+- Cypress now caches globally per version which prevents it from being installed multiple times across projects.
+
+**Breaking Changes:**
+
+- We now run each spec file in isolation from one another. This *shouldn't* technically break anything, but if you have set up your tests in a way that requires the state of a previous spec file, this could potentially break your tests. This will go a long ways towards reducing problems we were seeing with long runs in CI. Fixes {% issue 431 %}, {% issue 681 %}, {% issue 1589 %}, {% issue 1539 %}, and {% issue 1692 %}.
+- The environment variable `CYPRESS_BINARY_VERSION` has been removed. You should use the equivalent environment variable `CYPRESS_INSTALL_BINARY` instead.
+- The environment variable `CYPRESS_SKIP_BINARY_INSTALL` has been removed. To skip the binary install, set `CYPRESS_INSTALL_BINARY=0`.
+- `screenshotOnHeadlessFailure` has been removed as an option in `cypress.json`. Instead you can now control this behavior directly with code by setting `screenshotOnRunFailure` to `false` within the new {% url "Screenshot API" screenshot-api %}. Fixes {% issue 1140 %} and {% issue 1754 %}.
+- `trashAssetsBeforeHeadlessRuns` has been renamed to `trashAssetsBeforeRuns` in our configuration. Fixes {% issue 1754 %}.
+- `videoRecording` has been renamed to `video` in our configuration to be clearer and prevent confusion about recording to our Dashboard. Fixes {% issue 562 %}.
+- Cypress no longer copies screenshots and videos to artifacts for CircleCI. Copying artifacts should be left up to the user to {% url "handle themselves in their `circle.yml` file" https://circleci.com/docs/2.0/artifacts/ %}. Fixes {% issue 1592 %}.
+- The standard output has been redesigned to better visualize spec files running in isolation and to be more visually appealing. This may break any specialized logic written that expected the standard output to be structured in a specific way or contain specific words. Fixes {% issue 1588 %}.
+- {% url `cy.screenshot()` screenshot %} no longer takes a screenshot of the runner by default. Instead it will hide the runner, remove application scaling and then scroll to take a full page picture of your application.
+- `before` and `after` hooks within a {% url "support file" writing-and-organizing-tests#Support-file %} now run before/after every spec file, instead of only once before/after the entire run. {% issue 681 %}
+
+**Features:**
+
+- There is a new {% url `cy.task()` task %} command for executing any arbitrary `node` code.
+- You can now run multiple specs by passing a glob to the `--spec` argument of `cypress run`. Fixes {% issue 263 %}, {% issue 416 %} and {% issue 681 %}.
+- There is a new {% url "Screenshot API" screenshot-api %} and new {% url `cy.screenshot()` screenshot %} options that allow you set defaults for how screenshots are captured, whether to scale your app, disable timers and animations, or which elements to black out in the screenshot. You can also set defaults for whether to automatically take screenshots when there are test failures or whether to wait for the Command Log to synchronize before taking the screenshot. Fixes {% issue 1424 %}.
+- {% url `cy.screenshot()` screenshot %} can now be chained off of commands that yield a DOM element and will only take a screenshot that element.
+- During install of cypress, the Cypress binary is now downloaded to a global cache. This prevents multiple projects from downloading the same Cypress version. Fixes {% issue 1300 %}.
+- The seeded `example_spec.js` file has been replaced by an `examples` folder with several spec files. This more closely reflects the recommended use of Cypress - as smaller groups of tests split among many files that will now be run in isolation. The tests were also updated from ES5 to ES6. You can see all changes in the {% url "`cypress-example-kitchensink` repo" https://github.com/cypress-io/cypress-example-kitchensink %} Fixes {% issue 1460 %}.
+- Cypress now watches all the `plugins file`'s entire dependency tree to make iterating on plugins easier. Fixes {% issue 1407 %}.
+- Videos will now be saved locally with a filename named after the associated `spec` file that it represents. Fixes {% issue 980 %}.
+- The Test Runner now displays `skipped` tests differently than `pending` tests. {% issue 244 %}.
+- Standard output now displays the number of `skipped` tests within the summary output during `cypress run`. {% issue 1559 %}.
+- The url to view the run in the Dashboard is now printed to output during `cypress run`. {% issue 494 %}.
+- We now print the browser and browser version run in the output during `cypress run`. {% issue 833 %}.
+- The build number and url to CI for tests run within {% url "Drone" https://drone.io/ %} are now captured and displayed on the run within the Dashboard. {% issue 1709 %}.
+
+**Bugfixes:**
+
+- Cypress no longer crashes when attempting to proxy a websocket connection that fails. Fixes {% issue 556 %}.
+- Asserting that an attribute equals a falsy value no longer fails when the value was falsy. Fixes {% issue 831 %} and {% issue 1491 %}.
+- Snapshots now ignore stylesheets with `media="print"`. Fixes {% issue 1568 %}.
+- Fixed issue where the Cypress `window` was being returned instead of AUT's `window`. Fixes {% issue 1436 %}.
+- The `close` event now properly fires on `file` when manually closing the browser. Fixes {% issue 1560 %}.
+- `cypress.env.json` is now being watched for changes. Fixes {% issue 1464 %}.
+- Fixed issue when using TypeScript that caused namespace errors to be thrown. Fixes {% issue 1627 %}.
+- Fixed error message on {% url "`.type()`" type %} and {% url "`.clear()`" clear %} when typing into non-typeable elements or clearing non-clearable elements to accurately list the elements allowed. Fixes {% issue 1650 %}.
+- Added Chrome flag `--disable-blink-features=RootLayerScrolling` to prevent the application under test from "shaking" in recent versions of Chrome. Fixes {% issue 1620 %}.
+- Fixed issue where some TTY characters were not properly formatted in the terminal for Windows during `cypress run`. Fixes {% issue 1143 %} and {% issue 1550 %}.
+- Removed an extraneous error display from Electron during `cypress run` about a "transparent titlebar" setting. Fixes {% issue 1745 %}.
+
+**Misc:**
+
+- We are now aggressively turning on colors when running in CI. If you're using Jenkins and **do not** have an ANSI color plugin installed, you can turn off colors with the `NO_COLOR=1` environment variable. Fixes {% issue 1747 %} and {% issue 1748 %}.
+- When running `cypress run --record` on forked PR's, we now detect that the Record Key is missing and do not fail the build. We will display a warning, but continue running the tests. Fixes {% issue 1193 %}.
+- Searching in the Test Runner now filters out any non-matching folders. Fixes {% issue 1706 %}.
+- Duplicate, subsequent logs in the Command Log are now collapsed and can be expanded to view all logs. Fixes {% issue 1580 %}.
+- We now throw a descriptive error if an alias using {% url "`.as()`" as %} was defined starting with the `@` character. {% issue 1643 %}.
+- We now pass the `--disable-device-discovery-notifications` flag automatically. This should prevent Chromium browser from automatically trying to communicate with devices in your network, such as printers, while running tests. Fixes {% issue 1600 %}.
+- We now pass any reporter errors along and provide a stack if a custom reporter you've provided does not exist. Fixes {% issue 1192 %}.
+- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" command-line#Cypress-Module-API %}, just as you would from the command line. {% issue 1442 %}.
+- Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
+- Update type definitions for {% url `cy.screenshot()` screenshot %} to reflect new changes to command's options. Fixes {% issue 1753 %}.
+- The type definition for {% url `.filter()` filter %} now correctly supports a function argument.
+- The type definition for {% url `.scrollIntoView()` scrollintoview %} no longer errors when passed a `duration` option. Fixes {% issue 1606 %}.
+- `NODE_OPTIONS` environment variables now print within the `cypress:cli` logs when running in `DEBUG` mode. Although using `NODE_OPTIONS` themselves should not be used due to {% issue 1676 %}. Fixes {% issue 1673 %}.
+- Cypress will error and exit with status 1 if no specs were found during `cypress run`. Fixes {% issue 1585 %}.
+- We are now counting and aggregating the stats at the end of test runs separately from Mocha. Cypress considers a test to be the `it` and any accompanying `hooks` that run before or after a test. Cypress will correctly associate failures in those hooks to the test itself. We believe this more accurately models and just "makes sense". Fixes {% issue 1163 %}.
+- The minimum viewport size has been lowered from `200` pixels to `20` pixels. Fixes {% issue 1169 %} and {% issue 1444 %}.
+- Internal changes to our API structure and communication. Fixes {% issue 1170 %}, {% issue 1413 %}, {% issue 1415 %}.
+- We output a much more complete test results object when using cypress as a module. Fixes {% issue 1248 %}.
+- Added keywords to Cypress NPM package. Fixes {% issue 1508 %}.
+- Centered the animating icon in the Test runner when 'running'. Fixes {% issue 1695 %}.
+- We made some changes to internal references of `headed` and `headless` to be more specific and instead reference `run mode` and `interactive mode`. Fixes {% issue 1140 %}.
+- The test name text is now selectable inside the Command Log. Fixes {% issue 1476 %}.
+- Minor improvements to contributing docs and scripts. Fixes {% issue 1665 %}.
+- We now collect Semaphore CI params and provide URL's to click into the builds from the Dashboard. Fixes {% issue 1785 %}.
+- Config overrides coming from the CLI or environment variables are now validated the same way as if they've been set in `cypress.json`. Fixes {% issue 1783 %}.
+- There is a better / more helpful experience around passing unknown options to the CLI. Fixes {% issue 837 %}.
+- Display an empty message when there is no commit information on recorded runs. Fixes {% issue 1809 %}.
+
+**Documentation Changes:**
+
+- {% url 'New `cy.task()` doc' task %}
+- {% url 'New `Screenshot API` doc' screenshot-api %}
+- {% url 'Update `cy.screenshot()` doc to include new accepted usage and options' screenshot %}
+- {% url 'Update `Installing Cypress` doc to include new options for Cypress binary caching' installing-cypress %}
+- {% url 'Updated `Writing and Organizing Tests` to include newly seeded `examples` folder' writing-and-organizing-tests %}
+- {% url 'Updated `cypress run` spec args' command-line#cypress-run %}
+- {% url 'Updated `Dashboard Service`' dashboard-service %}
+- {% url 'Updated `Launching Browsers` to include our disabling of device discovery notifications' launching-browsers %}
+- {% url 'Updated `Preprocessors` to reflect all ways `close` event could be triggered' dashboard-service %}
+- Updated use of "running headlessly" to more accurate "during `cypress run`"
 
 ## 2.1.0
 
@@ -69,8 +178,8 @@ comments: false
 
 **Breaking Changes:**
 
-- The built in default `Electron` browser has been bumped from version `53` to `59`. This version represents the version of `Chromium` that Electron is using. In other words, running headlessly (or via `Electron`) will be like running your tests in `Chrome 59` now. Although it is unlikely this would actually *break* any of your tests - it is technically possible they could behave differently. Fixes {% issue 895 %} and {% issue 891 %} and {% issue 823 %} and {% issue 860 %} and {% issue 1011 %} and {% issue 1252 %} and {% issue 1276 %}.
-- We are now detecting and automatically stripping code that obstructs Cypress from being able to test your application. Specifically, we are removing JavaScript code that tries to prevent **clickjacking** and **framebusting**. We have written very conservative rules that do their best to **only** strip these specific JS snippets, but it is technically possible that it may unintentionally rewrite valid JS if they match the regexp patterns. There is a new configuration option called {% url "`modifyObstructiveCode`" configuration#Browser %} that is `true` by default. If you are experiencing problems after upgrading, you can turn this off and this will disable modifying your JS code. If you were using Cypress and upon visiting your website you would experience seemingly "random" redirects - these problems should now be eliminated. Fixes {% issue 886 %} and {% issue 1245 %} and {% issue 1064 %} and {% issue 992 %}.
+- The built in default `Electron` browser has been bumped from version `53` to `59`. This version represents the version of `Chromium` that Electron is using. In other words, running `cypress run` (or via `Electron`) will be like running your tests in `Chrome 59` now. Although it is unlikely this would actually *break* any of your tests - it is technically possible they could behave differently. Fixes {% issue 895 %} and {% issue 891 %} and {% issue 823 %} and {% issue 860 %} and {% issue 1011 %} and {% issue 1252 %} and {% issue 1276 %}.
+- We are now detecting and automatically stripping code that obstructs Cypress from being able to test your application. Specifically, we are removing JavaScript code that tries to prevent **clickjacking** and **framebusting**. We have written very conservative rules that do their best to **only** strip these specific JS snippets, but it is technically possible that it may unintentionally rewrite valid JS if they match the regexp patterns. There is a new configuration option called {% url "`modifyObstructiveCode`" configuration#Browser %} that is `true` by default. If you are experiencing problems after upgrading, you can turn this off and this will disable modifying your JS code. If you were using Cypress and upon visiting your website you would experience seemingly "random" redirects - these problems should now be eliminated. Fixes {% issue 886 %} and {% issue 1245 %} and {% issue 1064 %} and {% issue 992 %} and {% issue 692 %} and {% issue 352 %}.
 - We are now clearing the browser's disk cache each time it opens (before any tests run). This means that any files that have been cached from `Cache-Control` headers will be cleaned and removed. In the future, we will expose a new `cy.clearCache()` method to provide finer grained control of clearing the cache on a per test basis. But for now, this is an improvement. Fixes {% issue 1124 %}.
 - The `--spec` option is now normalized against the current working directory `cwd` instead of the project that you are running Cypress in. That means passing a path from the command line to a spec file will now work even when the project path is not `cwd`. Fixes {% issue 1159 %}.
 
@@ -635,7 +744,7 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 
 **Bugfixes:**
 
-Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" https://facebook.github.io/react/ %} on versions {% url "15.6.x" https://github.com/facebook/react/releases/tag/v15.6.0 %}. Fixes {% issue 536 '#536' %}.
+Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" https://reactjs.org/ %} on versions {% url "15.6.x" https://github.com/facebook/react/releases/tag/v15.6.0 %}. Fixes {% issue 536 '#536' %}.
 
 
 # 0.19.3
@@ -652,7 +761,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Features:**
 
-- You can now run your tests in the {% url 'Electron browser' launching-browsers#Electron-Browser %} that comes built with Cypress. You will see it as an option in the browser dropdown. This is the same browser that Cypress uses when running Cypress headlessly. This is useful for debugging issues that only occur during headless runs. Addresses {% issue 452 '#452' %}.
+- You can now run your tests in the {% url 'Electron browser' launching-browsers#Electron-Browser %} that comes built with Cypress. You will see it as an option in the browser dropdown. This is the same browser that Cypress uses when running `cypress run`. This is useful for debugging issues that only occur during headless runs. Addresses {% issue 452 '#452' %}.
 - New traversal commands {% url `.nextAll()` nextall %}, {% url `.nextUntil()` nextuntil %}, {% url `.parentsUntil()` parentsuntil %}, {% url `.prevAll()` prevall %}, and {% url `.prevUntil()` prevuntil %} have been added. Addresses {% issue 432 '#432' %}.
 
 **Bugfixes:**
@@ -665,7 +774,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - Error handling for invalid arguments passed to {% url `cy.wait()` wait %} have been improved and will now suggest valid arguments that are acceptable.
 - Browsers in the browser dropdown now have colored icons, which help visually distinguish the variants of Chrome.
-- Increased timeout for browser to make a connection when running headlessly from 10 seconds to 30 seconds.
+- Increased timeout for browser to make a connection when running during `cypress run` from 10 seconds to 30 seconds.
 - Internally refactored how browsers are added and spawned in preparation of us adding cross browser support.
 - Switching specs in the GUI now closes the browser and respawns it and refocuses it.
 
@@ -742,7 +851,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Overview:**
 
-- We have officially implemented our [Sinon.JS](http://sinonjs.org/docs/) integration: adding {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %}, {% url `cy.clock()` clock %}, and {% url `cy.tick()` tick %}. We've matched Sinon's API's and added `sinon-as-promised` and `chai-sinon`. In addition we've fixed Sinon performance issues, and improved the display of assertion passes and failures.
+- We have officially implemented our [Sinon.JS](http://sinonjs.org/) integration: adding {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %}, {% url `cy.clock()` clock %}, and {% url `cy.tick()` tick %}. We've matched Sinon's API's and added `sinon-as-promised` and `chai-sinon`. In addition we've fixed Sinon performance issues, and improved the display of assertion passes and failures.
 - These new API's will work well in both `unit` tests and `integration` tests.
 
 **Features:**
@@ -800,7 +909,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Misc:**
 
-- Improved performance when running headlessly by caching the last bundled spec. This prevents having the same spec file rebundled each time {% url `cy.visit()` visit %} caused a full page navigation. You should see a moderate improvement in test run time. Fixes {% issue 370 '#370' %}.
+- Improved performance when running `cypress run` by caching the last bundled spec. This prevents having the same spec file rebundled each time {% url `cy.visit()` visit %} caused a full page navigation. You should see a moderate improvement in test run time. Fixes {% issue 370 '#370' %}.
 - We are now capturing `stdout` and several other properties for use + display in our Dashboard on `cypress ci` runs.
 - Enable {% url `cy.fixture()` fixture %} to send an encoding for images other than forcing the default encoding of `base64`. Fixes {% issue 373 '#373' %}.
 - Enable {% url `cy.route()` route %} to pass an `encoding` parameter when using `fx:fixture` syntax. Fixes {% issue 374 '#374' %}.
@@ -871,13 +980,13 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Bugfixes:**
 
 - Cypress' internal `babel` will no longer attempt to load your project's `.babelrc`. This helps avoid potential version conflicts. Fixes {% issue 312 '#312' %}.
-- We no longer watch the `supportFile` while running headlessly. Fixes {% issue 329 '#329' %}.
+- We no longer watch the `supportFile` while running `cypress run`. Fixes {% issue 329 '#329' %}.
 - `watchForFileChanges` is now correctly respected in regards to watching all files, including the `supportFile`. Fixes {% issue 336 '#336' %}.
 - There is no longer an error when scaffolding a new Cypress project. Fixes {% issue 326 '#326' %}.
 - The Runner UI no longer appears to be "running" when there is a spec bundle error in the `supportFile`.
-- Cypress now correctly exits when running headlessly in `linux` when the browser fails to connect. Fixes {% issue 333 '#333' %}.
-- Cypress now correctly exits when running headlessly in `linux` when there is a spec bundle error. Fixes {% issue 337 '#337' %}.
-- Cypress now retries up to 3 times for the browser to connect when running headlessly. The warning / error messages were also updated to be clearer. Partially addresses {% issue 334 '#334' %}.
+- Cypress now correctly exits during `cypress run` in `linux` when the browser fails to connect. Fixes {% issue 333 '#333' %}.
+- Cypress now correctly exits during `cypress run` in `linux` when there is a spec bundle error. Fixes {% issue 337 '#337' %}.
+- Cypress now retries up to 3 times for the browser to connect during `cypress run`. The warning / error messages were also updated to be clearer. Partially addresses {% issue 334 '#334' %}.
 
 **Misc:**
 
@@ -897,8 +1006,8 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Summary:**
 
 - We've added automatic ES2015+, module, JSX, and CJSX support to all test files. This means you can use `require`, `import`, or `export` declarations to load other files. You can also use this to import your own application specific JavaScript modules and write unit tests for them. More of these details are yet to come. {% issue 318 'See this issue' %}.
-- You can now use your regularly installed `node_modules` in your project to do things like utilizing {% url "`lodash`" https://lodash.com/ %} for utility functions or extending {% url "`chai`" http://chaijs.com/ %} with assertion plugins.
-- Because we're now processing the spec files prior to handing them off to the browser, this means we will display problems like syntax errors when something in the processing goes wrong. Additionally, we print these out when running headlessly, so you're not stuck wondering what went wrong.
+- You can now use your regularly installed `node_modules` in your project to do things like utilizing {% url "`lodash`" https://lodash.com/ %} for utility functions or extending {% url "`chai`" http://www.chaijs.com/ %} with assertion plugins.
+- Because we're now processing the spec files prior to handing them off to the browser, this means we will display problems like syntax errors when something in the processing goes wrong. Additionally, we print these out during `cypress run`, so you're not stuck wondering what went wrong.
 
 **Breaking Changes:**
 
@@ -908,7 +1017,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - We now support ES2015+, modules, and JSX in all spec files. Fixes {% issue 246 '#246' %}.
 - Spec files may now be written as `.js`, `.jsx`, `.coffee`, or `cjsx` files.
-- Test files with JS syntax errors are now {% url 'handled' error-messages %} and we provide a GUI that points to the exact line/column number. Additionally we print these out when running headlessly and exit the process with `code 1`. Fixes {% issue 293 '#293' %}.
+- Test files with JS syntax errors are now {% url 'handled' error-messages %} and we provide a GUI that points to the exact line/column number. Additionally we print these out during `cypress run` and exit the process with `code 1`. Fixes {% issue 293 '#293' %}.
 
 **Misc:**
 
@@ -925,7 +1034,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - You no longer have to log in again after updating. Fixes {% issue 305 '#305' %}.
 - Updating in app now works again. Sorry about that. Fixes {% issue 304 '#304' %}.
 - Headless frame rate is now correctly set to `20` instead of resetting back to `60`. Fixes {% issue 303 '#303' %}.
-- We now automatically drop frames that the CPU cannot keep up with while video recording headlessly. Previously we would buffer all frames in memory and it was possible to exhaust all memory due to the way that streaming backpressure works. Fixes {% issue 302 '#302' %}.
+- We now automatically drop frames that the CPU cannot keep up with while video recording during `cypress run`. Previously we would buffer all frames in memory and it was possible to exhaust all memory due to the way that streaming backpressure works. Fixes {% issue 302 '#302' %}.
 - Fixed an edge case in the `driver` that could lead to memory leaks. This happened when Command Logs updated from previously run tests. Normally, in headless mode, we automatically remove references to purge memory after each test, but when logs were updated after this, their references were merged back in again and held onto forever. If you were seeing long Cypress runs die or eventually halt, this was likely the cause. We did extensive memory regression analysis on Cypress and could not find any more memory leaks. Fixes {% issue 301 '#301' %}.
 
 **Misc:**
@@ -956,9 +1065,9 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - We've redesigned the headless run `stdout` to give you more details of the run, the stats after the run, what screenshots were taken, the video that was recorded, compression settings for the video, uploading asset progress, etc.
 - Screenshot names now include their parent titles, and invalid file system characters are scrubbed. Fixes {% issue 297 '#297' %}.
 - We no longer artificially restrict the environment `cypress ci` can run in. It can now run *anywhere*. Fixes {% issue 296 '#296' %}.
-- We removed scaffolding any directories on a new project (when running headlessly). Fixes {% issue 295 '#295' %}.
+- We removed scaffolding any directories on a new project (during `cypress run`). Fixes {% issue 295 '#295' %}.
 - {% url '`cypress run`' command-line#cypress-run %} no longer prompts the user for any kind of interaction, thus enabling you to use this in CI if you choose to do so. Fixes {% issue 294 '#294' %}.
-- There is a new {% url 'configuration' configuration %} property called: `trashAssetsBeforeHeadlessRuns` that is set to `true` by default and will automatically clear out screenshots + videos folders before each run. These files are not deleted, they are just moved to your trash.
+- There is a new {% url 'configuration' configuration %} property called: ~~`trashAssetsBeforeHeadlessRuns`~~ (This was changed to `trashAssetsBeforeRuns` in [`3.0.0`](#3.0.0)) that is set to `true` by default and will automatically clear out screenshots + videos folders before each run. These files are not deleted, they are just moved to your trash.
 - There are several new {% url 'configuration' configuration %} properties for video recording: `videoRecording`, `videoCompression`, and `videosFolder`.
 
 # 0.17.10
@@ -1120,7 +1229,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 - We stopped minifying `vendor.js` (for real this time). More optimizations to come around this.
 - Prevented accidentally setting `domain` cookies when they were really `hostOnly` cookies, thus duplicating the number of cookies sent on requests. Kudos to {% url "@bahmutov" https://github.com/bahmutov %} for finding this one. Fixes {% issue 207 '#207' %}.
 - Fixed some edge cases in `cypress-core-extension` where it threw errors when attempting to `executeScript` on a tab with `about:blank` or `chrome://` urls.
-- We've fixed some underlying issues with {% url `cy.go()` go %} while running headlessly. It always worked fine in real Chrome. Previously there were some situations where it would not navigate forward / back correctly.
+- We've fixed some underlying issues with {% url `cy.go()` go %} during `cypress run`. It always worked fine in real Chrome. Previously there were some situations where it would not navigate forward / back correctly.
 
 **Misc:**
 
@@ -1160,7 +1269,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Overview:**
 
 - The desktop application has been completely redesigned. We have moved from a tray application to a standard dock application. The list of projects is now in the same window as the list of tests in a project. As each test runs, the application highlights the currently running spec and displays the browser version running. The configuration of a project is now displayed in its own tab. There is now a Desktop Menu where you can logout, check for updates, or view help links.
-- The test {% url "runner" https://github.com/cypress-io/cypress-core-runner %} has been rebuilt from the ground up in {% url "React.js" https://facebook.github.io/react/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress-core-reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
+- The test {% url "runner" https://github.com/cypress-io/cypress-core-runner %} has been rebuilt from the ground up in {% url "React.js" https://reactjs.org/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress-core-reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
 - We have rewritten the entire proxy layer of the Cypress server to finally fix all the problems with CORS.
 
 **Breaking Changes:**
@@ -1256,7 +1365,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Features:**
 
 - Added new {% url `cy.screenshot()` screenshot %} command which can take screenshots on demand.
-- When running headlessly or in CI Cypress will now automatically take a screenshot when a test fails. You can optionally turn this off by setting {% url `screenshotOnHeadlessFailure` configuration#Screenshots %} to `false` in your configuration.
+- When running `cypress run` or in CI, Cypress will now automatically take a screenshot when a test fails. You can optionally turn this off by setting {% url `screenshotOnHeadlessFailure` configuration#Screenshots %} to `false` in your configuration.
 - Added new {% url `screenshotsFolder` configuration#Screenshots %} configuration option with default of `cypress/screenshots`.
 - When running in {% url "Circle CI" https://circleci.com/ %}, we automatically export screenshots as artifacts which makes them available directly in their web UI. If you're using Circle CI, you'll be able to see screenshots without doing anything. If you're using {% url "Travis CI" https://travis-ci.org/ %}, you'll need to upload artifacts to an `s3 bucket`. This is a small slice of what is coming to help diagnose and understand errors in CI. Also in `0.17.0` we will automatically scroll the tests and more intelligently and open / close test commands so you can visually see what happened. Currently you may not see the test command's failure in the Command Log due to the view not scrolling.
 - Added new {% url `.each()` each %} command which iterates serially on a collection yielding the iteratee, the index, and the collection. Addresses {% issue 156 '#156' %}.
@@ -1380,7 +1489,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Bugfixes:**
 
-- When running headlessly, windows created with `window.open` will no longer physically display. They are now correctly headless. Fixes {% issue 123 '#123' %}.
+- During `cypress run`, windows created with `window.open` will no longer physically display. They are now correctly headless. Fixes {% issue 123 '#123' %}.
 - The auto generated `example_spec.js` no longer errors on `cy.visit('app/index.html')` since that file would likely not locally exist.
 
 **Misc:**
@@ -1418,7 +1527,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 - The {% url 'error message when Cypress detects that a test has ended early' error-messages %} (there are still commands left in the queue) now displays a list of these commands with a much improved explanation.
 - There is now a new {% url 'configuration option' configuration %}: `watchForFileChanges` that, when set to `false` in the `cypress.json`, will prevent Cypress from attempting to watch for file changes and restart your tests.
-- You can now set the default {% url `reporter` configuration %} in `cypress.json` for use when running headlessly or in CI.
+- You can now set the default {% url `reporter` configuration %} in `cypress.json` for use during `cypress run` or in CI.
 
 **Bugfixes:**
 
@@ -1519,7 +1628,7 @@ More Info:
 **Misc:**
 
 - Removed `fa-refresh` icons next to suites and tests until this behavior has been reimplemented due to ID removal.
-- Removed resetting the runnable timeout when a `page load` event resolves. This prevents an edge case where the next test may show as timed out when running headlessly.
+- Removed resetting the runnable timeout when a `page load` event resolves. This prevents an edge case where the next test may show as timed out during `cypress run`.
 
 # 0.14.1
 
@@ -1755,7 +1864,7 @@ Known Issues:
 **Features:**
 
 - Upgraded `Chromium` for headless and CI runs from `41` to `45`.
-- You will now see better stack traces and errors when running headlessly / in CI. No more `undefined is not a function` errors.
+- You will now see better stack traces and errors during `cypress run` / in CI. No more `undefined is not a function` errors.
 - Ported all links to use the new Cypress CDN.
 - {% url 'Documentation to CLI' command-line %}.
 
@@ -1768,7 +1877,7 @@ Known Issues:
 **Breaking Changes:**
 
 - Temporarily ignoring the `--reporter` option for headless / CI runs. Currently it is locked to the `spec` reporter, which is the default. This will be fixed in the next few patch releases.
-- ~~Accessing `window.history.go()`, `window.history.back()`, `window.history.forward()` will throw an error when running headlessly / CI. This is a regression that will be fixed - hopefully very soon.~~ This is fixed in [`0.13.3`](#0-13-3)
+- ~~Accessing `window.history.go()`, `window.history.back()`, `window.history.forward()` will throw an error during `cypress run` / CI. This is a regression that will be fixed - hopefully very soon.~~ This is fixed in [`0.13.3`](#0-13-3)
 - While this new Chromium application passes our internal tests, it may crop up other regressions we aren't aware of. If you're experiencing different behavior in CI vs running locally in Chrome, this may be an indication of these.
 
 # 0.12.8
@@ -1865,7 +1974,7 @@ Known Issues:
 
 **Bugfixes:**
 
-- Prevent {% url `.pause()` pause %} from actually pausing when running headlessly.
+- Prevent {% url `.pause()` pause %} from actually pausing during `cypress run`.
 - Fix for {% url `cy.request()` request %} SSL issues when host certificates were self signed.
 
 # 0.12.2
@@ -2003,7 +2112,7 @@ Almost there:
 
 **Bugfixes:**
 
-- {% url `.pause()` pause %} is now noop when Cypress is running headlessly in {% url '`cypress run`' command-line#cypress-run %} or `cypress ci`.
+- {% url `.pause()` pause %} is now noop during {% url '`cypress run`' command-line#cypress-run %} or `cypress ci`.
 
 **Misc:**
 
@@ -2080,7 +2189,7 @@ Almost there:
 
 **Features:**
 
-- The `Linux` version of Cypress now works correctly for GUI Desktop versions (tested on Ubuntu Desktop). Previously it would only work headlessly in server versions. The `tray` used in OSX does not work with the `Linux`, so in `Linux` we just use a standard window + menu.
+- The `Linux` version of Cypress now works correctly for GUI Desktop versions (tested on Ubuntu Desktop). Previously it would only worked during `cypress run` in server versions. The `tray` used in OSX does not work with the `Linux`, so in `Linux` we just use a standard window + menu.
 - Added Desktop Icon.
 
 **Bugfixes:**
@@ -2293,7 +2402,7 @@ Deprecations:
 
 **Summary:**
 
-- Cypress is now able to run all the tests, run headlessly, and includes support for Linux and CI. Additionally, most of the functionality of he GUI Desktop App can now be accessed through command line arguments.
+- Cypress is now able to run all the tests, run in the terminal, and includes support for Linux and CI. Additionally, most of the functionality of he GUI Desktop App can now be accessed through command line arguments.
 - Because each operating system requires a specific build of Cypress - a new CLI tool has been created which abstracts away these differences and orchestrates the Desktop App regardless of which OS you are running.
 - This {% url "CLI tool is now published on NPM" https://www.npmjs.com/package/cypress %}, though the documentation still needs to be written.
 - There is now a download service to access the latest version of Cypress and previous versions.
@@ -2307,17 +2416,17 @@ Deprecations:
 
 - The latest version of Cypress can be downloaded here: {% url "http://download.cypress.io/latest" http://download.cypress.io/latest %}.
 - Cypress can alternatively be downloaded / installed / managed through the CLI utility.
-- Cypress can now be run headlessly through the terminal.
+- Cypress can now be run through the terminal.
 - You can now run all of your tests inside of the GUI App.
 - You can use the CLI tool to run Cypress in CI. The documentation for this needs to be written, but it will be very simple to do. You will robably only have to write 2 lines in your CI scripts to run Cypress.
 - You can configure CI to use any reporter built into Mocha, and additionally we are adding JUnit XML output (for Jenkins) as a built in default.
 - You can write your own custom reporter which Cypress can use in CI.
-- Console output from your apps is suppressed while running headlessly.
+- Console output from your apps is suppressed while running in the terminal.
 
 **Bugfixes:**
 
 - Several security problems with projects have been closed in preparation for running in CI.
-- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run headlessly, Cypress doesn't apply any of its debugging tools, so CI will be unaffected.
+- Extensive memory profiling has been done and Cypress has implemented several strategies for aggressively causing garbage collection. The ebugging tools (which allow you to walk back in time through DOM snapshots, or access objects from previous tests) could exhaust all available emory in previous versions. This likely never affected most users, but if a user ran 1000's of tests (which have been written in Cypress) it ould bomb. Now Cypress only stores data for up to 50 tests, and will begin purging data past that. When run in the terminal, Cypress doesn't apply any of its debugging tools, so CI will be unaffected.
 - Several instances of memory leaks were plugged up.
 
 **Misc:**

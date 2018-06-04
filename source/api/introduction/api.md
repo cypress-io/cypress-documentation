@@ -1,6 +1,6 @@
 ---
 title: API
-comments: false
+
 ---
 
 # Sections
@@ -43,6 +43,10 @@ Each document attempts to cover the essentials of each method including:
 **Command Log:** If and how the method displays in the Cypress Command Log and console.
 
 **See also:** Other related methods.
+
+## Intelligent Code Completion
+
+IntelliSense is available for Cypress. It offers intelligent parameter information when writing Cypress commands directly in your IDE. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
 
 # Reporting a Problem
 

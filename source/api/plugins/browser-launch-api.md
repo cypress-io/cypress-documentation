@@ -1,6 +1,6 @@
 ---
 title: Browser Launch API
-comments: false
+
 ---
 
 Before Cypress launches a browser, it gives you the ability to modify the arguments used to launch it.

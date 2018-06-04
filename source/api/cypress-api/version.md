@@ -1,6 +1,6 @@
 ---
 title: Cypress.version
-comments: false
+
 ---
 
 `Cypress.version` returns you the current version of Cypress you are running.

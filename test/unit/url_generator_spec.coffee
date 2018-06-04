@@ -4,7 +4,6 @@ fs = require("hexo-fs")
 path = require("path")
 Promise = require("bluebird")
 urlGenerator = require("../../lib/url_generator")
-snapshot = require("snap-shot-it")
 
 data = {
   guides: {
@@ -30,7 +29,7 @@ data = {
 }
 
 describe "lib/url_generator", ->
-  context ".normalizeNestedPaths", ->
+  describe ".normalizeNestedPaths", ->
     it "flattens object and returns each keypath to the value", ->
       expect(urlGenerator.normalizeNestedPaths(data).flattened).to.deep.eq({
         "why-cypress": "guides/getting-started/why-cypress.html"
@@ -42,6 +41,7 @@ describe "lib/url_generator", ->
         "and": "api/commands/and.html"
         "as": "api/commands/as.html"
       })
+      return undefined
 
     it "expands object keypaths on the values", ->
       expect(urlGenerator.normalizeNestedPaths(data).expanded).to.deep.eq({
@@ -66,21 +66,24 @@ describe "lib/url_generator", ->
           },
         }
       })
+      return undefined
 
-  context ".findFileBySource", ->
+  describe ".findFileBySource", ->
     it "finds by key", ->
       expect(urlGenerator.findFileBySource(data, "core-concepts")).to.eq(
         "guides/cypress-basics/core-concepts.html"
       )
+      return undefined
 
     it "finds by property", ->
       expect(urlGenerator.findFileBySource(data, "guides/cypress-basics/overview")).to.eq(
         "guides/cypress-basics/overview.html"
       )
+      return undefined
 
-  context ".getLocalFile", ->
+  describe ".getLocalFile", ->
     beforeEach ->
-      @sandbox.stub(fs, "stat").returns(Promise.resolve())
+      sinon.stub(fs, "stat").returns(Promise.resolve())
 
     it "requests file", ->
       urlGenerator.getLocalFile(data, "as")
@@ -98,7 +101,7 @@ describe "lib/url_generator", ->
       .catch (err) ->
         snapshot(err.message)
 
-  context ".validateAndGetUrl", ->
+  describe ".validateAndGetUrl", ->
     it "fails when given undefined href", ->
       render = (str) ->
         return Promise.resolve("<html><div id='notes'>notes</div></html>")
@@ -139,7 +142,7 @@ describe "lib/url_generator", ->
         expect(str).to.eq(markdown)
         "<html><div id='notes'>notes</div></html>"
 
-      @sandbox.stub(fs, "readFile").returns(Promise.resolve(markdown))
+      sinon.stub(fs, "readFile").returns(Promise.resolve(markdown))
 
       urlGenerator.validateAndGetUrl(data, "and#notes", "", "", render)
       .then (pathToFile) ->
@@ -186,7 +189,7 @@ describe "lib/url_generator", ->
     it "fails when hash is not present in local file", ->
       render = (str) -> "<html></html>"
 
-      @sandbox.stub(fs, "readFile").returns(Promise.resolve(""))
+      sinon.stub(fs, "readFile").returns(Promise.resolve(""))
 
       urlGenerator.validateAndGetUrl(data, "and#foo", "guides/core-concepts/bar.md", "content", render)
       .then ->
@@ -203,8 +206,8 @@ describe "lib/url_generator", ->
           expect(err.message).to.include(msg)
 
     it "resolves cached values in a promise", ->
-      urlGenerator.cache["foo"] = "bar"
-
-      urlGenerator.validateAndGetUrl(data, "foo")
-      .then (url) ->
-        expect(url).to.eq("bar")
+      urlGenerator.cache.set("foo", "bar")
+      .then ->
+        urlGenerator.validateAndGetUrl(data, "foo")
+        .then (url) ->
+          expect(url).to.eq("bar")

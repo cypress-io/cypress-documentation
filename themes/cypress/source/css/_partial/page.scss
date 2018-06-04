@@ -74,7 +74,7 @@
     padding-left: 30px;
     list-style: decimal;
 
-    li:not('.toc-item') {
+    li:not(.toc-item) {
       margin: 15px 0;
 
       p {
@@ -160,7 +160,7 @@
     }
 
     td {
-      padding: 5px 15px;
+      padding: 10px;
       font-size: 0.9em;
       line-height: 1.5em;
     }
@@ -254,11 +254,13 @@
   }
 
   h3 {
-    font-size: 1em;
-    line-height: 1em;
-    font-weight: bold;
-    margin: 1em 0;
+    font-size: 1.1em;
+    line-height: 1.7em;
+    font-weight: 500;
+    margin: 1.5em 0 0px;
     font-family: $font-title;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #eee;
   }
 
   h4 {

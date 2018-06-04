@@ -1,6 +1,6 @@
 ---
 title: server
-comments: false
+
 ---
 
 Start a server to begin routing responses to `cy.route()` and `cy.request()`.

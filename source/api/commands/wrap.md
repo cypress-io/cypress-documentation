@@ -1,6 +1,6 @@
 ---
 title: wrap
-comments: false
+
 ---
 
 Yield the object passed into `.wrap()`.
@@ -71,7 +71,7 @@ cy.get('form').within(($form) => {
 cy
   .get('button')
   .then(($button) => {
-    // $el is a wrapped jQuery element
+    // $button is a wrapped jQuery element
     if ($button.someMethod() === 'something') {
       // wrap this element so we can
       // use cypress commands on it

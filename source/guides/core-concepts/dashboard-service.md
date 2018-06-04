@@ -1,6 +1,6 @@
 ---
 title: Dashboard Service
-comments: false
+
 ---
 
 {% note info %}
@@ -11,21 +11,21 @@ comments: false
 - How to manage organizations, projects, and users in the Dashboard Service.
 {% endnote %}
 
-The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service we have created that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
-
-{% img /img/guides/maintain-tests.gif %}
+The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
 
 # Overview
 
-***The Dashboard allows you to:***
+### The Dashboard allows you to:
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail or when using {% url `cy.screenshot()` screenshot %}.
+- View screenshots taken when tests fail or when using {% url `.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a video clip at the point of test failure.
 - Manage who has access to your recorded test data.
 
-***See Tests Runs in the Test Runner***
+{% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
+
+### See Tests Runs in the Test Runner
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -41,7 +41,6 @@ Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboar
 
 **Here are some of our own public projects you can view:**
 
--  [{% fa fa-folder-open-o %} cypress-core-desktop-gui](https://dashboard.cypress.io/#/projects/fas5qd)
 - [{% fa fa-folder-open-o %} cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
 - [{% fa fa-folder-open-o %} cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
 - [{% fa fa-folder-open-o %} cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
@@ -49,7 +48,7 @@ Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboar
 
 # Projects
 
-With Cypress, you have the ability to record the tests for each project you work in.
+With Cypress, you have the ability to record your project's tests.
 
 You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration %}, but you can also record your tests when running locally.
 
@@ -61,7 +60,7 @@ To set up your project to record, you must use the {% url "Test Runner" test-run
 Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
 
-***To set up a project to record:***
+### To set up a project to record:
 
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
@@ -90,19 +89,19 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
     cypress run --record
   ```
 
-🎉 Your tests are now recording! As soon as tests finish running, you will see them in the {% url 'Dashboard' https://on.cypress.io/dashboard %} and in the Runs tab of the {% url "Test Runner" test-runner %}.
+🎉 Your tests are now recording! As soon as tests finish running, you will see them in the {% url "Dashboard" https://on.cypress.io/dashboard %} and in the Runs tab of the {% url "Test Runner" test-runner %}.
 
-![Dashboard Screenshot](/img/dashboard/dashboard-runs-list.png)
+{% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-![Runs List](/img/dashboard/runs-list-in-desktop-gui.png)
+{% img /img/dashboard/runs-list-in-desktop-gui.png "Runs List" %}
 
 ## Identification
 
-***Project ID***
+### Project ID
 
 Once you set up your project to record, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
 
-***The `projectId` is a 6 character string in your `cypress.json`:***
+### The `projectId` is a 6 character string in your `cypress.json`:
 
 ```json
 {
@@ -112,11 +111,11 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**. We recommend that you check your `cypress.json` including the `projectId` into source control.
 
-***Record Key {% fa fa-key %}***
+### Record Key {% fa fa-key %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
-***A record key is a GUID that looks like this:***
+### A record key is a GUID that looks like this:
 
 ```text
 f4466038-70c2-4688-9ed9-106bf013cd73
@@ -124,13 +123,13 @@ f4466038-70c2-4688-9ed9-106bf013cd73
 
 You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard' https://on.cypress.io/dashboard %}. You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-![Record Key in Configuration Tab](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
+{% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
-***Authentication***
+### Authentication
 
 Cypress uses your `projectId` and *Record Key* together to uniquely identify projects.
 
-![ProjectID and Record Keys in Dashboard](/img/dashboard/project-id-and-record-key-shown-in-dashboard.png)
+{% img /img/dashboard/project-id-and-record-key-shown-in-dashboard.png "ProjectID and Record Keys in Dashboard" %}
 
 The record key is used to authenticate that your project is *allowed* to record. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
 
@@ -170,37 +169,62 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-***{% fa fa-code fa-fw %} Standard Output***
+### Run Details
+
+Details of each run are displayed including:
+
+- The number of skipped, pending, passing, and failing tests.
+- The GitHub branch, author, commit sha and commit message associated with the run (if any)
+- The time the run started and ended.
+- What Continuous Integration the run ran in (if any)
+- The operating system and version
+- The browser and version 
+- The Cypress version
+
+![run details](/img/dashboard/run-details.png)
+
+### {% fa fa-code fa-fw %} Standard Output
 
 Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
-You will also see a summary at the bottom indicating the files, screenshots, or videos that were created during the recording.
+You will also see a summary at the bottom indicating the files, screenshots, or videos that were uploaded during the recording.
 
 ![output](/img/dashboard/standard-output-of-recorded-test-run.png)
 
-***{% fa fa-exclamation-triangle fa-fw %} Test Failures***
+### {% fa fa-exclamation-triangle fa-fw %} Test Failures
 
 Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 
-***Each failure displays:***
+### Each failure displays:
 
+- **Test title:** The title of the failed test.
 - **Error:** The stack trace of the error.
-- **Video:** The recorded video scrubbed to the point of failure in the test.
 - **Screenshot:** Any screenshots taken during the test.
+- **Video:** The recorded video scrubbed to the point of failure in the test.
 
 ![failures](/img/dashboard/failures-of-recorded-run.png)
 
-***{% fa fa-picture-o fa-fw %} Screenshots***
+### {% fa fa-picture-o fa-fw %} Screenshots
 
-All screenshots taken during the test run can be found under the **Screenshots** tab. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here. Each screenshot includes the application under test as well as the Cypress Command Log.
+All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `.screenshot()` screenshot %} command will show up here.
 
-![Screenshots](/img/dashboard/screenshots-of-recorded-test-run.png)
+### {% fa fa-video-camera fa-fw %} Videos
 
-***{% fa fa-video-camera fa-fw %}  Videos***
-
-Any videos recorded during the test run can be found under the **Videos** tab. You can also download the video of a run.
+The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
 ![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
+
+### {% fa fa-file-code-o fa-fw %} Spec Files
+
+You can see the result of each spec file that ran within **Specs**.
+
+![Specs tab](/img/dashboard/spec-tab.png)
+
+### {% fa fa-clock-o fa-fw %} Spec & Test Durations
+
+The duration that each spec and test ran is displayed in **Insights**.
+
+![Insights tab](/img/dashboard/insights-spec-durations.png)
 
 # Organizations
 
@@ -208,7 +232,7 @@ Organizations are used to group projects and manage access to those projects.
 
 ![Organizations](/img/dashboard/organizations-listed-in-dashboard.png)
 
-***With organizations you can:***
+### With organizations you can:
 
 - Create projects
 - Invite users
@@ -228,20 +252,20 @@ By default, every user of Cypress is given a personal organization - named after
 
 ## Manage users
 
-***Inviting users***
+### Inviting users
 
 You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
 **To invite a user to an organization:**
 
-1. Click **{% fa fa-cog %} Settings** beside the Project you want to give the user access to.
+1. Click into the organization you want the user to access.
 2. Click **Users**, then **Invite User**. *Note: you must have the role of 'owner' or 'admin' to invite users.*
 3. Fill in their email and select their role then click 'Invite User' *Note: only 'owners can give other user's 'owner' access.*
 4. The user will receive an invite email with a link to accept the invitation.
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-***User roles***
+### User roles
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -249,11 +273,9 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-***User requests***
+### User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
-
-![User requesting access](/img/dashboard/user-requesting-access-to-organization.png)
 
 ## Delete Org
 

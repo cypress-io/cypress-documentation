@@ -1,6 +1,6 @@
 ---
 title: Continuous Integration
-comments: false
+
 ---
 
 Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
@@ -21,7 +21,7 @@ That's it!
 
 For more examples please read the {% url 'Command Line' command-line#cypress-run %} documentation.
 
-{% img /img/guides/running-in-ci.gif "Running in Circle CI" %}
+{% video local /img/snippets/running-in-ci.mp4 %}
 
 # What's Supported?
 
@@ -43,6 +43,10 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 
 Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
+{% note info %}
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci), or equivalents, as demonstrated in the configs below.
+{% endnote %}
+
 ## Travis
 
 ***Example `.travis.yml` config file***
@@ -50,13 +54,13 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 ```yaml
 language: node_js
 node_js:
-  - 6
+  - 8
 cache:
   directories:
     - ~/.npm
-    - node_modules
+    - ~/.cache
 install:
-  - npm install
+  - npm ci
 script:
   - $(npm bin)/cypress run --record
 ```
@@ -70,13 +74,13 @@ Caching folders with NPM modules saves a lot of time after the first build.
 ```yaml
 machine:
   node:
-    version: 6
+    version: 8
 dependencies:
   cache_directories:
     - ~/.npm
-    - node_modules
+    - ~/.cache
   pre:
-    - npm install
+    - npm ci
 test:
   override:
     - $(npm bin)/cypress run --record --key <record_key>
@@ -89,14 +93,21 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:6
+      - image: cypress/base:8
         environment:
           ## this enables colors in the output
           TERM: xterm
     working_directory: ~/app
     steps:
       - checkout
-      - run: npm install
+      - restore_cache:
+          key: v1-app
+      - run: npm ci
+      - save_cache:
+          key: v1-app
+          paths:
+            - ~/.npm
+            - ~/.cache
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
@@ -182,7 +193,7 @@ You can set any configuration value as an environment variable. This overrides v
 - `CYPRESS_BASE_URL`
 - `CYPRESS_VIDEO_COMPRESSION`
 - `CYPRESS_REPORTER`
-- `CYPRESS_BINARY_VERSION`
+- `CYPRESS_INSTALL_BINARY`
 
 {% note info %}
 Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
@@ -285,7 +296,7 @@ The `cy:run` command will only be executed when the URL `http://localhost:3030` 
 
 ## Module API
 
-Oftentimes it can be much easier to simply programmatically control and boot your servers with a node script.
+Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
 
 If you're using our {% url 'Module API' command-line#Cypress-Module-API %} then it would be trivial to write a script which boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
 

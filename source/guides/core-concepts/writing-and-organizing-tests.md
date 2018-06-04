@@ -1,6 +1,6 @@
 ---
 title: Writing and Organizing Tests
-comments: false
+
 ---
 
 {% note info %}
@@ -10,6 +10,12 @@ comments: false
 - What languages are supported in your test files.
 - How Cypress handles unit tests vs integration tests.
 - How to group your tests.
+{% endnote %}
+
+{% note success "Best Practices" %}
+We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach breaking down your application and organizing your tests.
+
+{% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 {% endnote %}
 
 # Folder Structure
@@ -22,7 +28,26 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - example.json
 
   /integration
-    - example_spec.js
+    /examples
+      - actions.spec.js
+      - aliasing.spec.js
+      - assertions.spec.js
+      - connectors.spec.js
+      - cookies.spec.js
+      - cypress_api.spec.js
+      - files.spec.js
+      - local_storage.spec.js
+      - location.spec.js
+      - misc.spec.js
+      - navigation.spec.js
+      - network_requests.spec.js
+      - querying.spec.js
+      - spies_stubs_clocks.spec.js
+      - traversal.spec.js
+      - utilities.spec.js
+      - viewport.spec.js
+      - waiting.spec.js
+      - window.spec.js
 
   /plugins
     - index.js
@@ -32,11 +57,15 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-***Configuring Folder Structure***
+### Configuring Folder Structure
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
 You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration %} for more detail.
+
+{% note info "What files should I add to my '.gitignore file' ?" %}
+Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or `cypress.env.json`, these should also be ignored when you check into source control.  
+{% endnote %}
 
 ## Fixture Files
 
@@ -59,11 +88,11 @@ Cypress also supports `ES2015` out of the box. You can use either `ES2015 module
 Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Node-Modules %}.
 {% endnote %}
 
-To see an example of every command used in Cypress, open the {% url "`example_spec.js`" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/example_spec.js %} within your `cypress/integration` folder.
+To see an example of every command used in Cypress, open the {% url "`example` folder" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} within your `cypress/integration` folder.
 
 To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
-## Plugin Files
+## Plugin files
 
 By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
@@ -71,9 +100,26 @@ By default Cypress will automatically include the plugins file `cypress/plugins/
 
 ## Support file
 
-By default Cypress will automatically include the support file `cypress/support/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
 The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
+
+You can define your behaviors in a `beforeEach` within any of the `cypress/support` files:
+
+```javascript
+beforeEach(function () {
+  cy.log("I run before every test in every spec file!!!!!!")
+})
+```
+![global hooks](/img/guides/global-hooks.png)
+
+{% note info %}
+**Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 
+{% endnote %}
+
+{% note danger%}
+{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road. 
+{% endnote %}
 
 From your support file you should also `import` or `require` other files to keep things organized.
 
@@ -131,7 +177,7 @@ describe('Unit test our math functions', function() {
       expect(divide(27, 9)).to.eq(3)
     })
 
-    specify('can muliple numbers', function() {
+    specify('can multiply numbers', function() {
       expect(multiply(5, 4)).to.eq(20)
     })
   })
@@ -165,7 +211,7 @@ describe('Hooks', function() {
 })
 ```
 
-***The order of hook and test execution is as follows:***
+### The order of hook and test execution is as follows:
 
 - All `before()` hooks run (once)
 - Any `beforeEach()` hooks run
@@ -179,7 +225,7 @@ describe('Hooks', function() {
 
 ## Excluding and Including Tests
 
-To run a specified suite or test, simply append `.only()` to the function. All nested suites will also be executed.
+To run a specified suite or test, simply append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
 
 ```javascript
 // -- Start: Our Application Code --

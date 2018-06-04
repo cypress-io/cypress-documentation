@@ -1,6 +1,6 @@
 ---
 title: its
-comments: false
+
 ---
 
 Get a property's value on the previously yielded subject.

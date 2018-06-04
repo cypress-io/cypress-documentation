@@ -1,6 +1,5 @@
 ---
 title: route
-comments: false
 ---
 
 Use `cy.route()` to manage the behavior of network requests.
@@ -34,7 +33,7 @@ cy.route('/users/**')
 
 Set a route matching the specific `url`.
 
-**{% fa fa-angle-right %} response** ***(String, Object)***
+**{% fa fa-angle-right %} response** ***(String, Object, Array)***
 
 Supply a response `body` to *stub* in the matching route.
 
@@ -75,7 +74,7 @@ You can also set options for all {% url `cy.wait()` wait %}'s `requestTimeout` a
 
 If you do not pass a `response` to a route, Cypress will pass the request through without stubbing it. We can still wait for the request to resolve later.
 
-***Wait on XHR request matching `url`***
+***Wait on XHR `GET` request matching `url`***
 
 ```javascript
 cy.server()
@@ -233,6 +232,36 @@ The below example matches all `DELETE` requests to "/users" and stubs a response
 cy.server()
 cy.route('DELETE', '**/users/*', {})
 ```
+
+***Making multiple requests to the same route***
+
+You can test a route multiple times with unique response objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
+
+```js
+cy.server()
+cy.route('/beetles', []).as('getBeetles')
+cy.get('#search').type('Weevil')
+
+// wait for the first response to finish
+cy.wait('@getBeetles')
+
+// the results should be empty because we
+// responded with an empty array first
+cy.get('#beetle-results').should('be.empty')
+
+// now re-define the /beetles response
+cy.route('/beetles', [{name: 'Geotrupidae'}])
+
+cy.get('#search').type('Geotrupidae')
+
+// now when we wait for 'getBeetles' again, Cypress will
+// automatically know to wait for the 2nd response
+cy.wait('@getBeetles')
+
+// we responded with 1 beetle item so now we should
+// have one result
+cy.get('#beetle-results').should('have.length', 1) 
+``` 
 
 ## Fixtures
 

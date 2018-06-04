@@ -1,6 +1,6 @@
 ---
 title: closest
-comments: false
+
 ---
 
 Get the first DOM element that matches the selector (whether it be itself or one of its ancestors).

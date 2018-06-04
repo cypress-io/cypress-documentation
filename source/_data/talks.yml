@@ -1,10 +1,78 @@
+- title: "Extracting a React Component with Cypress"
+  url: https://youtu.be/Sth0bGfFOMw
+  sourceName: Big Nerd Ranch Webinar
+  date: May 1, 2018
+  author: Josh Justice
+  youtubeId: Sth0bGfFOMw
+
+- title: "Outside-in Testing in Vue"
+  url: https://youtu.be/Tu9FI5gQX-k
+  sourceName: Atlanta Vue.js Meetup
+  sourceUrl: https://www.meetup.com/Atlanta-Vue-js-Meetup/events/247593045/
+  date: Apr 26, 2018
+  author: Josh Justice
+  youtubeId: CMN8boToKWI
+
+- title: "Painless testing for React applications"
+  url: https://youtu.be/lgurVvQsOTY
+  sourceName: ReactJS Boston
+  sourceUrl: https://www.meetup.com/ReactJS-Boston/events/248512859/
+  date: Apr 3, 2018
+  author: Gleb Bahmutov
+  youtubeId: lgurVvQsOTY
+  slides: https://slides.com/bahmutov/painless-react-testing
+
+- title: "Speedy Testing with Cypress"
+  url: https://youtu.be/k-4pwQZRCN4
+  sourceName: DrupalCon
+  sourceUrl: https://events.drupal.org/nashville2018
+  date: Apr 12, 2018
+  author: Randall Kent
+  youtubeId: k-4pwQZRCN4
+  slides: https://drive.google.com/drive/folders/0B_MmuZNiBFDUdXotYmtlczl1VWs
+
+- title: "Effective React Testing"
+  url: https://youtu.be/Eakp29J38YA
+  sourceName: Jeremy Fairbank's YouTube
+  sourceUrl: https://www.youtube.com/channel/UCIF0e4G6TQ7RNqauicoy10g
+  date: Apr 6, 2018
+  author: Jeremy Fairbank
+  youtubeId: Eakp29J38YA
+
+- title: "End to End Testing: The Game Has Changed"
+  url: https://www.youtube.com/watch?v=D-h3bhzauKo&feature=youtu.be&t=11383
+  sourceName: JSConf Iceland
+  sourceUrl: https://2018.jsconf.is/
+  date: Mar 1, 2018
+  author: Will Klein
+  youtubeId: D-h3bhzauKo?start=189
+
+- title: "Moving Around the Testing Pyramid"
+  url: https://www.youtube.com/watch?v=5FnalKRjpZk&t=0s&index=5&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
+  sourceName: "Assert(js)"
+  sourceUrl:
+    https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
+  date: Feb 22, 2018
+  author: Gleb Bahmutov
+  youtubeId: 5FnalKRjpZk
+  slides: https://slides.com/bahmutov/assertjs
+
+- title: "Cypress Best Practices"
+  url: https://www.youtube.com/watch?v=5XQOK0v_YRE&t=0s&index=4&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
+  sourceName: "Assert(js)"
+  sourceUrl: https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
+  date: Feb 22, 2018
+  author: Brian Mann
+  youtubeId: 5XQOK0v_YRE
+  slides: https://speakerdeck.com/brianmann/cypress-best-practices
+
 - title: "End to End Testing: The Game Has Changed"
   url: https://www.youtube.com/watch?v=rICGz5qrYJU&feature=youtu.be&t=1h14m46s
   sourceName: ReactJS Denver
   sourceUrl: https://www.meetup.com/ReactJS-Denver/
   date: Nov 14, 2017
   author: Will Klein
-  img: /img/examples/cypress-the-game-has-changed.jpg
+  youtubeId: rICGz5qrYJU
 
 - title: Modern Integration Testing for JavaScript Applications
   url: https://www.youtube.com/watch?v=D20nX2zAypk&feature=youtu.be
@@ -12,7 +80,8 @@
   sourceUrl: https://www.meetup.com/boston_JS/
   date: Oct 3, 2017
   author: Gleb Bahmutov
-  img: /img/examples/cypress-star-wars-intro.jpg
+  youtubeId: D20nX2zAypk
+  slides: https://slides.com/bahmutov/boston-js-testing
 
 - title: "Slaying Selenium with Cypress"
   url: https://www.youtube.com/watch?v=bSpLEJ-CrGk
@@ -20,7 +89,7 @@
   sourceUrl: https://www.meetup.com/MelbCSS/
   date: Oct 3, 2017
   author: Ray Hua
-  img: /img/examples/slaying-selenium-with-cypress.jpg
+  youtubeId: bSpLEJ-CrGk
 
 - title: Testing JavaScript Applications (feat. React and Redux)
   url: https://frontendmasters.com/courses/testing-javascript/
@@ -44,7 +113,8 @@
   sourceUrl: https://reactiveconf.com/
   date: Oct 27, 2016
   author: Brian Mann
-  img: /img/examples/reactiveconf-what-is-cypressio-brian-mann-talk.jpg
+  youtubeId: N9RbcP4iY90
+  slides: https://speakerdeck.com/brianmann/enter-cypress-integration-testing-done-right
 
 - title: "Enter Cypress - Integration Testing Done Right"
   url: https://www.youtube.com/watch?v=JWOjQrGIokw&feature=youtu.be
@@ -52,7 +122,7 @@
   sourceUrl: https://twc.amsterdam/
   date: Oct 7, 2016
   author: Brian Mann
-  img: /img/examples/test-works-conf-brian-mann-cypress.jpg
+  youtubeId: JWOjQrGIokw
 
 - title: "Testing, the way it should be"
   url: https://youtu.be/yq99BvSe1AQ
@@ -60,4 +130,4 @@
   sourceUrl: https://twc.amsterdam/
   date: Nov 15, 2015
   author: Brian Mann
-  img: /img/examples/nodevember-talk-testing-the-way-it-should-be-cypress.jpg
+  youtubeId: yq99BvSe1AQ

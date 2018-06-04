@@ -1,6 +1,6 @@
 ---
 title: pause
-comments: false
+
 ---
 
 Stop `cy` commands from running and allow interaction with the application under test. You can then "resume" running all commands or choose to step through the "next" commands from the Command Log.
@@ -118,4 +118,4 @@ When clicking on "Next: 'click'" at the top of the Command Log, the Command Log 
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `cy.debug()` debug %}
 - {% url `cy.log()` log %}
-- {% url `cy.screenshot()` screenshot %}
+- {% url `.screenshot()` screenshot %}

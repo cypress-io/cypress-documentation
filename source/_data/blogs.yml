@@ -1,3 +1,99 @@
+- title: "Dynamic XHR responses recording & stubbing with Cypress"
+  url: https://medium.com/ax2-inc/dynamic-xhr-responses-recording-stubbing-with-cypress-9257d4f730cd
+  sourceName: Medium 
+  sourceUrl: https://medium.com/
+  date: May 15, 2018
+  author: Paul Gascou-Vaillancourt
+  img: /img/examples/dynamic-xhr-responses-with-cypress.jpg 
+
+- title: "Cypress.io - A JavaScript E2E Testing Framework"
+  url: http://committed.software/posts/cypress/cypress/
+  sourceName: Committed
+  sourceUrl: http://committed.software/
+  date: May 9, 2018
+  author: Matt Copas
+  img: /img/examples/a-javascript-e2e-testing-framework-committed.jpg  
+
+- title: "Testing Angular with Cypress and Docker"
+  url: https://testdriven.io/testing-angular-with-cypress-and-docker
+  sourceName: testdriven.io
+  sourceUrl: https://testdriven.io/
+  date: May 7, 2018
+  author: Michael Herman
+  img: /img/examples/testing-angular-with-cypress-and-docker.jpg
+
+- title: "End-To-End Testing A VueJS HackerNews Clone"
+  url: https://medium.com/js-dojo/end-to-end-testing-a-vuejs-hackernews-clone-23b9415fd5c5
+  sourceName: Vue.js Developers
+  sourceUrl: https://medium.com/js-dojo
+  date: May 7, 2018
+  author: Gleb Bahmutov
+  img: /img/examples/vue-js-hackernews-clong.jpg
+
+- title: "Cypress vs. Selenium, is this the end of an era?"
+  url: https://automationrhapsody.com/cypress-vs-selenium-end-era/
+  sourceName: Automation Rhapsody
+  sourceUrl: https://automationrhapsody.com/
+  date: Apr 26, 2018
+  author: Lyudmil Latinov
+  img: /img/examples/cypress-vs-selenium-end-of-era.jpg
+  
+- title: "What if your e2e tests generated your user documentation?"
+  url: https://hackernoon.com/what-if-your-e2e-tests-generated-your-user-documentation-baefe3ebaee9
+  sourceName: Hackernoon
+  sourceUrl: https://hackernoon.com/
+  date: Apr 23, 2018
+  author: Mike Nikles
+  img: /img/examples/test-generated-documentation.jpg
+
+- title: "WiD - Cypress e2e testing"
+  url: https://wetainment.com/wid-2018-04-11/
+  sourceName: "wetainment"
+  sourceUrl: https://wetainment.com/
+  date: Apr 11, 2018
+  author: Christoph Benjamin Weber
+  img: /img/examples/cloud-and-hand.jpg
+
+- title: "Cypress.io — Use the Log API with custom commands"
+  url: https://medium.com/@NicholasBoll/cypress-io-use-the-log-api-with-custom-commands-b4bffca0d4c5
+  sourceName: "Medium @NicholasBoll"
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Mar 18, 2018
+  author: Nicholas Boll
+  img: /img/examples/cy-log-api-commands.jpg
+
+- title: "Using Jest matchers in Cypress"
+  url: https://medium.com/@NicholasBoll/using-jest-matchers-in-cypress-5e8e7281f5dd
+  sourceName: "Medium @NicholasBoll"
+  sourceUrl: https://medium.com/@NicholasBoll
+  date: Mar 18, 2018
+  author: Nicholas Boll
+  img: /img/examples/jest-assertion-matcher-cypress.jpg
+
+- title: "9 top open-source testing automation frameworks: How to choose"
+  url: https://techbeacon.com/9-top-open-source-testing-automation-frameworks-how-choose
+  sourceName: "TechBeacon"
+  sourceUrl: https://techbeacon.com/
+  date: Mar 6, 2018
+  author: Joe Colantonio
+  img: /img/examples/top-testing-automation-frameworks.png
+  
+- title: "Comparing Vue Component Testing Tools"
+  url: https://codingitwrong.com/2018/03/04/comparing-vue-component-testing-tools.html
+  sourceName: Coding It Wrong
+  sourceUrl: https://codingitwrong.com/
+  date: Mar 4, 2018
+  author: Josh Justice
+  img: /img/examples/comparing-vue-component-testing-tools.jpg
+
+- title: "How to write tests and maintain your sanity"
+  url: https://blog.manifold.co/testing-sucks-here-is-how-to-make-it-better-7af1ff93cc9
+  sourceName: "Manifold"
+  sourceUrl: https://blog.manifold.co/
+  date: Feb 26, 2018
+  author: Daniel Enman
+  img: /img/examples/how-to-write-tests-and-maintina-sanity.png
+
 - title: "✅ AssertJS 2018 Passed the Test ✅"
   url: https://medium.com/@michaelsholty/assertjs-2018-passed-the-test-f456bc20161
   sourceName: "Medium @michaelsholty"

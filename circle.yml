@@ -39,19 +39,21 @@ jobs:
 
       # need to restore a separate cache for each package.json
       - restore_cache:
-          key: v1-{{ .Branch }}-deps
+          key: v2-{{ .Branch }}-deps
 
-      - run: npm install
+      - run: npm ci
       - run: npm prune
       # see if package-lock.json file has changed
       # if yes, this means it is out of date
       - run: git status
 
       # save each node_modules folder per package
+      # also save ~/.cache folder with Cypress v3+ binary
       - save_cache:
-          key: v1-{{ .Branch }}-deps-{{ checksum "package.json" }}
+          key: v2-{{ .Branch }}-deps-{{ checksum "package.json" }}
           paths:
             - node_modules
+            - /root/.cache
 
       ## save entire folder as artifact for other jobs to continue
       ## hmm, do not see a good way to cache it, since all code
@@ -60,6 +62,9 @@ jobs:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
           paths:
             - /root/cypress-documentation
+            - /root/.cache
+      - store_artifacts:
+          path: ~/.npm/_logs
 
   "docs-tests":
     <<: *defaults
@@ -90,6 +95,8 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
 
   "deploy-docs-staging":
     <<: *defaults
@@ -117,6 +124,8 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
 
   "deploy-docs-production":
     <<: *defaults

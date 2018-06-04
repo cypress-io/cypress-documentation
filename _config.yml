@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Cypress.io Documentation
+title: Cypress Documentation
 subtitle: Testing, the way it should be.
 description: Cypress is a test engine that runs unit and integration tests in your browser. It makes it easy to write and debug web application tests.
 author: Cypress.io
@@ -44,6 +44,7 @@ alias:
   guides/core-concepts/overview-of-the-gui.html: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-test-runner.html: guides/core-concepts/test-runner.html
   guides/core-concepts/overview-of-test-runner/: guides/core-concepts/test-runner.html
+  guides/core-concepts/screenshots-and-videos: guides/guides/screenshots-and-videos.html
   overview-of-test-runner/: guides/core-concepts/test-runner.html
   why-cypress/: guides/overview/why-cypress.html
 
@@ -52,19 +53,43 @@ alias:
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
   examples/index.html: examples/examples/recipes.html
+
+  examples/recipes/index.html: examples/examples/recipes.html
   examples/unit-testing-recipe.html: examples/examples/recipes.html
-  examples/logging-in-recipe.html: examples/examples/recipes.html
-  examples/testing-the-dom-recipe.html: examples/examples/recipes.html
-  examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
-  examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
-  examples/extending-cypress-recipe.html: examples/examples/recipes.html
   examples/recipes/unit-testing-recipe.html: examples/examples/recipes.html
+  examples/logging-in-recipe.html: examples/examples/recipes.html
+  examples/recipes/logging-in-recipe.html: examples/examples/recipes.html
+  examples/testing-the-dom-recipe.html: examples/examples/recipes.html
+  examples/recipes/testing-the-dom-recipe.html: examples/examples/recipes.html
+  examples/working-with-the-backend-recipe.html: examples/examples/recipes.html
+  examples/recipes/working-with-the-backend-recipe.html: examples/examples/recipes.html
+  examples/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
+  examples/recipes/stubs-spies-and-clocks-recipe.html: examples/examples/recipes.html
+  examples/extending-cypress-recipe.html: examples/examples/recipes.html
+  examples/recipes/extending-cypress-recipe.html: examples/examples/recipes.html
+
+  examples/applications/kitchen-sink.html: examples/examples/applications.html
+  examples/applications/todo-mvc.html: examples/examples/applications.html
+  examples/applications/pie-chopper.html: examples/examples/applications.html
+  examples/applications/phonecat.html: examples/examples/applications.html
+
+  examples/docker/docker-images.html: examples/examples/docker.html
+  examples/docker/circle-ci.html: examples/examples/docker.html
+  examples/docker/codeship.html: examples/examples/docker.html
+
+  examples/userland/userland-extensions.html: plugins/index.html
 
   tutorials/index.html: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/introduction/: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/introduction.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/introduction-to-tutorials.html: examples/examples/tutorials.html
   tutorials/test-a-react-todo-app/: examples/examples/tutorials.html
   tutorials/: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/testing-inputs.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-form-submission.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-app-init.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-item-testing.html: examples/examples/tutorials.html
+  tutorials/test-a-react-todo-app/react-todo-toggle-debug.html: examples/examples/tutorials.html
 
   plugins/: plugins/index.html
 
@@ -101,7 +126,8 @@ alias:
   docs/cli/: guides/guides/command-line.html
   docs/wait/: api/commands/wait.html
   docs/launching-browsers/: guides/core-concepts/launching-browsers.html
-  docs/known-issues/: guides/references/known-issues.html
+  docs/known-issues/: guides/references/trade-offs.html
+  guides/references/known-issues/: guides/references/trade-offs.html
   docs/finding-elements/: guides/core-concepts/introduction-to-cypress.html#Querying-Elements
 
   continuous-integration.html: guides/guides/continuous-integration.html
@@ -150,10 +176,6 @@ email: support@cypress.io
 gitter: cypress-io/cypress
 facebook_admin_id: 22600147
 facebook_app_id: 446223215719535
-
-# Disqus settings
-# _your_disqus_short_name_
-disqus_shortname: cypress-documentation
 
 # Google Plugins
 google:
