@@ -1,3 +1,11 @@
+- title: "Start your end to end testing with Angular and Cypress"
+  url: https://offering.solutions/blog/articles/2018/05/27/end-to-end-testing-with-angular-cypress/
+  sourceName: Offering Solutions Software
+  sourceUrl: https://offering.solutions/blog/
+  date: May 27, 2018
+  author: Fabian Gosebrink
+  img: /img/examples/e2e-with-angular-and-cypress.jgp
+
 - title: "Testing React Apps with Cypress:
 A brief guide on how to run End-To-End testing on React apps with Cypress."
   url: https://blog.bitsrc.io/testing-react-apps-with-cypress-658bc482678
