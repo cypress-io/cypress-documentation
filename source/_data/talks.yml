@@ -12,6 +12,14 @@
   date: Apr 26, 2018
   author: Josh Justice
   youtubeId: CMN8boToKWI
+  
+  - title: "VueJs Applied + Testing with Cypress.io"
+  url: https://www.youtube.com/watch?time_continue=29&v=dpB0YgnFyZQ
+  sourceName: JavaScript Meetup - St. Louis
+  sourceUrl: https://www.meetup.com/STL-JS-meetup/events/247430738/
+  date: Apr 19, 2018
+  author: Christian Catalan
+  youtubeId: dpB0YgnFyZQ
 
 - title: "Painless testing for React applications"
   url: https://youtu.be/lgurVvQsOTY
