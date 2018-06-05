@@ -1,3 +1,28 @@
+- title: "Start your end to end testing with Angular and Cypress"
+  url: https://offering.solutions/blog/articles/2018/05/27/end-to-end-testing-with-angular-cypress/
+  sourceName: Offering Solutions Software
+  sourceUrl: https://offering.solutions/blog/
+  date: May 27, 2018
+  author: Fabian Gosebrink
+  img: /img/examples/e2e-with-angular-and-cypress.jpg
+
+- title: "Testing React Apps with Cypress:
+A brief guide on how to run End-To-End testing on React apps with Cypress."
+  url: https://blog.bitsrc.io/testing-react-apps-with-cypress-658bc482678
+  sourceName: Bits and Pieces
+  sourceUrl: https://blog.bitsrc.io/
+  date: May 21, 2018
+  author: Rajat S
+  img: /img/examples/testing-react-apps-with-cypress.jpg
+
+- title: "Running e2e tests with Selenium *AND* Cypress"
+  url: https://medium.com/@wataruoguchi/running-e2e-tests-with-selenium-and-cypress-1de69b95d936
+  sourceName: Medium
+  sourceUrl: https://medium.com/
+  date: May 18, 2018
+  author: Wataru Oguchi
+  img: /img/examples/e2e-with-selenium-and-cypress.jpg
+
 - title: "Dynamic XHR responses recording & stubbing with Cypress"
   url: https://medium.com/ax2-inc/dynamic-xhr-responses-recording-stubbing-with-cypress-9257d4f730cd
   sourceName: Medium 
