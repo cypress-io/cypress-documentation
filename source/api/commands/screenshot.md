@@ -117,7 +117,7 @@ cy.get('.post').first().screenshot()
 ### Chain off the screenshot to click the element captured
 
 ```javascript
-cy.get('button').first().screenshot().its('el').click()
+cy.get('button').first().screenshot().click()
 ```
 
 ## Get information about the screenshot from the onAfterScreenshot callback
