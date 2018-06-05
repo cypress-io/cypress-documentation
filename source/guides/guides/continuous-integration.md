@@ -44,7 +44,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
 {% note info %}
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci), or equivalents, as demonstrated in the configs below.
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
 {% endnote %}
 
 ## Travis
@@ -54,7 +54,7 @@ As of Cypress version 3.0, Cypress downloads its binary to the global system cac
 ```yaml
 language: node_js
 node_js:
-  - 8
+  - 10
 cache:
   directories:
     - ~/.npm
@@ -74,13 +74,13 @@ Caching folders with NPM modules saves a lot of time after the first build.
 ```yaml
 machine:
   node:
-    version: 8
+    version: 10
 dependencies:
+  override:
+    - npm ci
   cache_directories:
     - ~/.npm
     - ~/.cache
-  pre:
-    - npm ci
 test:
   override:
     - $(npm bin)/cypress run --record --key <record_key>
@@ -101,10 +101,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-app
+          key: cache-deps
       - run: npm ci
       - save_cache:
-          key: v1-app
+          key: cache-deps
           paths:
             - ~/.npm
             - ~/.cache
