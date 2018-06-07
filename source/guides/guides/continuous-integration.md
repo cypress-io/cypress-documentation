@@ -43,9 +43,19 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 
 Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
-{% note info %}
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
-{% endnote %}
+## Caching the Cypress Binary
+
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download. 
+
+***We recommend users***: 
+
+- Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below. You shouldn't add a `checksum` to this cache.
+
+- **Don't** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`. Also the cache is usually wiped when **anything** in `package.json` changes, causing a much slower install time.
+
+- If you are using `npm install` in your build process, consider [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and caching the `~/.npm` directory for a faster and more reliable build.
+
+- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches.
 
 ## Travis
 
@@ -109,6 +119,30 @@ jobs:
             - ~/.npm
             - ~/.cache
       - run: $(npm bin)/cypress run --record --key <record_key>
+```
+
+***Example `circle.yml` v2 config file with `yarn`***
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - restore_cache:
+          key: cache-deps
+      - run: yarn
+      - save_cache:
+          key: cache-deps
+          paths:
+            - ~/.cache  ## cache both yarn and Cypress!
+      - run: $(yarn bin)/cypress run --record --key <record_key>
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
