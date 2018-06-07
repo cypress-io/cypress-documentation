@@ -1512,7 +1512,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Bugfixes:**
 
-- The `-s` or `--spec` option now works correctly. You now must pass a relative or absolute path to your spec file. This is much less confusing, allows you to easily autocomplete entries from bash, and will support `unitFolder` later when it's added. Assuming you want to run a spec file that is located in `cypress/integration/foo_spec.js` you would pass: `cypress run --spec cypress/integration/foo_spec.js`. Previously you could just pass `--spec foo_spec.js` which now no longer works (and was broken anyway). Fixes {% issue 120 '#120' %}.
+- The `-s` or `--spec` option now works correctly. You now must pass a relative or absolute path to your spec file. This is much less confusing, allows you to easily autocomplete entries from bash, and will support `unitFolder` later when it's added. Assuming you want to run a spec file that is located in `cypress/integration/foo_spec.js` you would pass: `cypress run --spec 'cypress/integration/foo_spec.js'`. Previously you could just pass `--spec foo_spec.js` which now no longer works (and was broken anyway). Fixes {% issue 120 '#120' %}.
 
 **Misc:**
 
