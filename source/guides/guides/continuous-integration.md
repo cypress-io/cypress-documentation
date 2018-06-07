@@ -49,13 +49,13 @@ As of Cypress version 3.0, Cypress downloads its binary to the global system cac
 
 ***We recommend users***: 
 
-- Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below. You shouldn't add a `checksum` to this cache.
+- Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
 
-- **Don't** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`. Also the cache is usually wiped when **anything** in `package.json` changes, causing a much slower install time.
+- **Don't** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
 
 - If you are using `npm install` in your build process, consider [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and caching the `~/.npm` directory for a faster and more reliable build.
 
-- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches.
+- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
 ## Travis
 
@@ -111,10 +111,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: cache-deps
-      - run: npm ci
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps-
+      - run:
+          name: Install Dependencies
+          command: npm ci
       - save_cache:
-          key: cache-deps
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.npm
             - ~/.cache
@@ -136,10 +140,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: cache-deps
-      - run: yarn
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps-
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: cache-deps
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.cache  ## cache both yarn and Cypress!
       - run: $(yarn bin)/cypress run --record --key <record_key>
@@ -156,6 +164,18 @@ FROM cypress/base
 RUN npm install
 RUN $(npm bin)/cypress run
 ```
+
+{% note warning %}
+Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
+
+```shell
+docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+# Error: the cypress binary is not installed
+```
+
+Instead, you should build a docker container for your project's version of cypress.
+
+{% endnote %}
 
 ***Docker Images & CI examples***
 
