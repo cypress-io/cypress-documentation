@@ -1,6 +1,5 @@
 ---
 title: Continuous Integration
-
 ---
 
 Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
@@ -47,7 +46,7 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download. 
 
-***We recommend users***: 
+### We recommend users: 
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
 
@@ -59,7 +58,7 @@ As of Cypress version 3.0, Cypress downloads its binary to the global system cac
 
 ## Travis
 
-***Example `.travis.yml` config file***
+### Example `.travis.yml` config file
 
 ```yaml
 language: node_js
@@ -79,7 +78,7 @@ Caching folders with NPM modules saves a lot of time after the first build.
 
 ## CircleCI
 
-***Example `circle.yml` v1 config file***
+### Example `circle.yml` v1 config file
 
 ```yaml
 machine:
@@ -96,7 +95,7 @@ test:
     - $(npm bin)/cypress run --record --key <record_key>
 ```
 
-***Example `circle.yml` v2 config file***
+### Example `circle.yml` v2 config file
 
 ```yaml
 version: 2
@@ -125,7 +124,7 @@ jobs:
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-***Example `circle.yml` v2 config file with `yarn`***
+### Example `circle.yml` v2 config file with `yarn`
 
 ```yaml
 version: 2
@@ -177,10 +176,9 @@ Instead, you should build a docker container for your project's version of cypre
 
 {% endnote %}
 
-***Docker Images & CI examples***
+### Docker Images & CI examples
 
 See our {% url 'examples' https://on.cypress.io/docker %} for additional information on our maintained images and configurations on several CI providers.
-
 
 # Dependencies
 
@@ -194,14 +192,14 @@ apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 liba
 
 Cypress can record your tests running and make them available in our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 
-***Recorded tests allow you to:***
+### Recorded tests allow you to:
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a clip at the point of test failure.
 
-***To record tests running:***
+### To record tests running:
 
 1. {% url 'Set up your project to record' dashboard-service#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
@@ -230,11 +228,11 @@ cypress run --record
 
 Typically you'd set this inside of your CI provider.
 
-***CircleCI Environment Variable***
+### CircleCI Environment Variable
 
 ![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
 
-***TravisCI Environment Variable***
+### TravisCI Environment Variable
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
 
@@ -242,7 +240,7 @@ Typically you'd set this inside of your CI provider.
 
 You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
 
-***Typical use cases would be modifying things like:***
+### Typical use cases would be modifying things like:
 
 - `CYPRESS_BASE_URL`
 - `CYPRESS_VIDEO_COMPRESSION`
