@@ -390,7 +390,7 @@ We will automatically apply the record key environment variable.
 
 ## {% fa fa-exclamation-triangle red %} A Cached Cypress Binary Could not be found
 
-This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux thats `~/.cache/Cypress`).
+This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
 To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching-the-Cypress-Binary %}, then bump the version of your CI cache to ensure a clean build.
 
