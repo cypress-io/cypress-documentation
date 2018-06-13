@@ -1,10 +1,10 @@
 - title: "Dynamic XHR responses recording & stubbing with Cypress"
   url: https://medium.com/ax2-inc/dynamic-xhr-responses-recording-stubbing-with-cypress-9257d4f730cd
-  sourceName: Medium 
+  sourceName: Medium
   sourceUrl: https://medium.com/
   date: May 15, 2018
   author: Paul Gascou-Vaillancourt
-  img: /img/examples/dynamic-xhr-responses-with-cypress.jpg 
+  img: /img/examples/dynamic-xhr-responses-with-cypress.jpg
 
 - title: "Cypress.io - A JavaScript E2E Testing Framework"
   url: http://committed.software/posts/cypress/cypress/
@@ -12,7 +12,7 @@
   sourceUrl: http://committed.software/
   date: May 9, 2018
   author: Matt Copas
-  img: /img/examples/a-javascript-e2e-testing-framework-committed.jpg  
+  img: /img/examples/a-javascript-e2e-testing-framework-committed.jpg
 
 - title: "Testing Angular with Cypress and Docker"
   url: https://testdriven.io/testing-angular-with-cypress-and-docker
@@ -37,7 +37,7 @@
   date: Apr 26, 2018
   author: Lyudmil Latinov
   img: /img/examples/cypress-vs-selenium-end-of-era.jpg
-  
+
 - title: "What if your e2e tests generated your user documentation?"
   url: https://hackernoon.com/what-if-your-e2e-tests-generated-your-user-documentation-baefe3ebaee9
   sourceName: Hackernoon
@@ -77,7 +77,7 @@
   date: Mar 6, 2018
   author: Joe Colantonio
   img: /img/examples/top-testing-automation-frameworks.png
-  
+
 - title: "Comparing Vue Component Testing Tools"
   url: https://codingitwrong.com/2018/03/04/comparing-vue-component-testing-tools.html
   sourceName: Coding It Wrong
