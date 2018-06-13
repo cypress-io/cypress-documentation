@@ -1,5 +1,5 @@
-***What's the difference between `.then()` and `.should()`/`.and()`?***
+***`.then()` と `.should()`/`.and()` の違いってなに?***
 
-Using `.then()` simply allows you to use the yielded subject in a callback function and should be used when you need to manipulate some values or do some actions.
+`.then()` を使うことは、単純に、戻ってきた値をコールバック内で使えるようにします、必要なら他の処理で使うことが出来ます。
 
-When using a callback function with `.should()` or `.and()`, on the other hand, there is special logic to rerun the callback function until no assertions throw within it. You should be careful of side affects in a `.should()` or `.and()` callback function that you would not want performed multiple times.
+しかし、一方で、コールバック関数を `.should()` か `.and()` で使うとき、コールバック関数を返すために特別な処理が必要です。`.should()` か `.and()` を使う場合、コールバック関数が複数実行される場合がありますので副作用を起こさないように十分に気をつけてください。
