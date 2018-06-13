@@ -1,3 +1,4 @@
 en: English
-# ru:
-#   name: Русский
+ja:
+  name: 日本語
+  disqus_lang: ja
