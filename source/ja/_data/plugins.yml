@@ -1,0 +1,62 @@
+- name: Preprocessors
+  plugins:
+    - name: Browserify
+      description: Watches and bundles your spec files via browserify. This is the default preprocessor that's built into Cypress.
+      link: https://github.com/cypress-io/cypress-browserify-preprocessor
+      keywords: [browserify]
+
+    - name: Cucumber
+      description: Run cucumber/gherkin-syntaxed specs with cypress.io
+      link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
+      keywords: [file-watcher, cucumber]
+
+    - name: ESLint
+      description: Runs linting via ESLint on your spec files as they are loaded and display errors in the console
+      link: https://github.com/chinchiheather/cypress-eslint-preprocessor
+      keywords: [eslint]
+
+    - name: Watch
+      description: Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.
+      link: https://github.com/cypress-io/cypress-watch-preprocessor
+      keywords: [file-watcher]
+
+    - name: Webpack
+      description: Watches and bundles your spec files via webpack.
+      link: https://github.com/cypress-io/cypress-webpack-preprocessor
+      keywords: [webpack]
+      
+- name: Development Tools
+  plugins:
+    - name: Docker
+      description: Docker images providing all the dependencies to run Cypress in CI including browsers.
+      link: https://github.com/cypress-io/cypress-docker-images
+      keywords: [docker, continuous-integration]
+      
+    - name: ESLint
+      description: ESLint plugin that sets globals for writing tests in Cypress.
+      link: https://github.com/cypress-io/eslint-plugin-cypress
+      keywords: [eslint]
+
+    - name: TypeScript
+      description: Official TypeScript definitions for the Cypress API.
+      link: https://github.com/cypress-io/cypress/tree/master/cli/types
+      keywords: [typescript]
+
+- name: Custom Commands
+  plugins:
+    - name: cypressautomocker
+      description: Allow recording API results and replaying the APIs as a mock server.
+      link: https://github.com/scottschafer/cypressautomocker
+      keywords: [routing, mock]
+
+    - name: cypress-testing-library
+      description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
+      link: https://github.com/kentcdodds/cypress-testing-library
+      keywords: [testing-library, dom-testing-library, react-testing-library]
+      
+- name: Reporting
+  plugins:
+  - name: cypress-testrail-reporter
+    description: Custom reporter for publishing Cypress results to a TestRail test run. 
+    link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
+    keywords: [testrail, reporter]
