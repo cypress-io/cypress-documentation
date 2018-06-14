@@ -26,7 +26,6 @@ sed -i -E "s/^\## No Args$/## 引数なしの場合/" source/ja/api/commands/*.m
 sed -i -E "s/^\## Selector$/## セレクターを使う場合/" source/ja/api/commands/*.md
 sed -i -E "s/^\## Requirements {% helper\_icon requirements %}$/## 条件 {% helper_icon requirements %}/" source/ja/api/commands/*.md
 sed -i -E "s/^\## Assertions {% helper\_icon assertions %}$/## アサーション {% helper_icon assertions %}/" source/ja/api/commands/*.md
-sed -i -E "s/^\## Assertions$/## アサーション/" source/ja/api/commands/*.md
 sed -i -E "s/^\## Timeouts {% helper\_icon timeout %}$/## タイムアウト {% helper_icon timeout %}/" source/ja/api/commands/*.md
 sed -i -E "s/^\## Timeout\(s\)$/## タイムアウト/" source/ja/api/commands/*.md
 sed -i -E "s/^\## Command\(s\)*$/## コマンド/" source/ja/api/commands/*.md
