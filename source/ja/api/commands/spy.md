@@ -91,7 +91,7 @@ You will see the following in the command log:
 
 The main difference between `cy.spy()` and {% url `cy.stub()` stub %} is that `cy.spy()` does not replace the method, it only wraps it. So, while invocations are recorded, the original method is still called. This can be very useful when testing methods on native browser objects. You can verify a method is being called by your test and still have the original method action invoked.
 
-## Assertions
+## アサーション
 
 ***Assertion Support***
 
