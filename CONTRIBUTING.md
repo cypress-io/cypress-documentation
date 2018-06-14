@@ -55,9 +55,17 @@ npm start
 
 Visit [http://localhost:2222/](http://localhost:2222/).
 
-**Note:** If you need to debug the documentation build step, run it this way: `DEBUG=docs npm run build`
+**Note:** If you need to debug the documentation build step, run it this way: 
 
-**Note:** When Cypress generates the docs, it has to validate hundreds (thousands?) of URLs. This is expensive and the docs take a while to initialize. You can turn off validation of external URLs by passing a flag: `npm start -- --no-validate`.
+```
+DEBUG=docs npm run build
+```
+
+**Note:** When Cypress generates the docs, it has to validate hundreds (thousands?) of URLs. This is expensive and the docs take a while to initialize. You can turn off validation of external URLs by passing a flag: 
+
+```
+npm start -- --no-validate
+```
 
 ### Testing
 
