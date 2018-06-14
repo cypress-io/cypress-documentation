@@ -9,14 +9,14 @@ Get the first DOM element within a set of DOM elements.
 The querying behavior of this command matches exactly how {% url `.first()` http://api.jquery.com/first %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .first()
 .first(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.first()                  // Errors, cannot be chained off 'cy'
 cy.getCookies().first()     // Errors, 'getCookies' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -42,13 +42,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .first %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .first %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Get the first list item in a list.***
 
@@ -66,21 +66,21 @@ Option | Default | Description
 cy.get('li').first()
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .first %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .find %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .first %}
 
-# コマンドログ
+# Command Log
 
 ***Find the first input in the form***
 
@@ -96,7 +96,7 @@ When clicking on `first` within the command log, the console outputs the followi
 
 ![console.log first](/img/api/first/console-log-the-first-element.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.eq()` eq %}
 - {% url `.last()` last %}

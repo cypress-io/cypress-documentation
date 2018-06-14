@@ -5,7 +5,7 @@ title: select
 
 Select an `<option>` within a `<select>`.
 
-# シンタックス
+# Syntax
 
 ```javascript
 .select(value)
@@ -14,7 +14,7 @@ Select an `<option>` within a `<select>`.
 .select(values, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -29,7 +29,7 @@ cy.select('John Adams')  // Errors, cannot be chained off 'cy'
 cy.location().select()   // Errors, 'location' does not yield <select> element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} value**  ***(String)***
 
@@ -49,11 +49,11 @@ Option | Default | Description
 `force` | `false` | {% usage_options force select %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .select %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .select %}
 
-# 例
+# Examples
 
 ## Text Content
 
@@ -125,27 +125,27 @@ cy.get('select')
   .should('deep.equal', ['456', '457'])
 ```
 
-# ノート
+# Notes
 
-## 操作ができる状態
+## Actionability
 
 `.select()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements selectability .select %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions actions .select %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts actions .select %}
 
-# コマンドログ
+# Command Log
 
 ***Select the option with the text "Homer Simpson"***
 
@@ -161,6 +161,6 @@ When clicking on `select` within the command log, the console outputs the follow
 
 ![Console Log select](/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.click()` click %}

@@ -5,14 +5,14 @@ title: document
 
 Get the `window.document` of the page that is currently active.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.document()
 cy.document(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.document(options)
 cy.document()     // yield the window.document object
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -31,13 +31,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.document %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.document 'yields the `window.document` object' %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Get document and do some work***
 
@@ -53,21 +53,21 @@ cy.document().then((doc) => {
 cy.document().its('contentType').should('eq', 'text/html')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.document %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions retry cy.document %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions cy.document %}
 
-# コマンドログ
+# Command Log
 
 ***Get the document***
 
@@ -83,6 +83,6 @@ When clicking on `document` within the command log, the console outputs the foll
 
 ![console.log document](/img/api/document/console-yields-the-document-of-aut.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.window()` window %}

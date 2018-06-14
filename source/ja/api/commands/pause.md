@@ -9,7 +9,7 @@ Stop `cy` commands from running and allow interaction with the application under
 This does not set a `debugger` in your code, unlike {% url `.debug()` debug %}
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .pause()
@@ -19,7 +19,7 @@ cy.pause()
 cy.pause(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -28,7 +28,7 @@ cy.pause().getCookie('app') // Pause at the beginning of commands
 cy.get('nav').pause()       // Pause after the 'get' commands yield
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -38,13 +38,13 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .pause %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 **Pause after assertion**
 
@@ -53,21 +53,21 @@ cy.get('a').should('have.attr', 'href').and('match', /dashboard/).pause()
 cy.get('button').should('not.be.disabled')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dual .pause %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions utility .pause %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none .pause %}
 
-# コマンドログ
+# Command Log
 
 **Pause and step through each `.click()` command**
 
@@ -113,7 +113,7 @@ When clicking on "Next: 'click'" at the top of the Command Log, the Command Log 
 
 ![Pause command](/img/api/pause/next-then-resume-shows-our-test-has-ended.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `cy.debug()` debug %}

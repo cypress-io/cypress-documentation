@@ -4,7 +4,7 @@ title: writeFile
 
 Write to a file with the specified contents.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.writeFile(filePath, contents)
@@ -13,7 +13,7 @@ cy.writeFile(filePath, contents, options)
 cy.writeFile(filePath, contents, encoding, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -21,7 +21,7 @@ cy.writeFile(filePath, contents, encoding, options)
 cy.writeFile('menu.json')    
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
@@ -55,11 +55,11 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.writeFile 'yields the contents written to the file' %}
 
-# 例
+# Examples
 
 ## Text
 
@@ -130,21 +130,21 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
 Hello World
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements write_file cy.writeFile %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once cy.writeFile %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts automation cy.writeFile %}
 
-# コマンドログ
+# Command Log
 
 ***Write an array to a file***
 
@@ -160,6 +160,6 @@ When clicking on the `writeFile` command within the command log, the console out
 
 ![Console Log](/img/api/writefile/console-log-shows-contents-written-to-file.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.readFile()` readfile %}

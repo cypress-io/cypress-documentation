@@ -5,14 +5,14 @@ title: type
 
 Type into a DOM element.
 
-# シンタックス
+# Syntax
 
 ```javascript
 .type(text)
 .type(text, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -27,7 +27,7 @@ cy.type('Welcome')               // Errors, cannot be chained off 'cy'
 cy.url().type('www.cypress.io')  // Errors, 'url' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} text**  ***(String)***
 
@@ -69,11 +69,11 @@ Option | Default | Description
 `release` | `true` | Keep a modifier activated between commands
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .type %}
 
-# 例
+# Examples
 
 ## Input/Textarea
 
@@ -247,7 +247,7 @@ cy.get('body').type('{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightar
 cy.get('body').type('{shift}', {release: false}).get('li:first').click()
 ```
 
-## オプション
+## Options
 
 ***Force typing regardless of its actionable state***
 
@@ -257,13 +257,13 @@ Forcing typing overrides the {% url 'actionable checks' interacting-with-element
 cy.get('input[type=text]').type('Test all the things', { force: true })
 ```
 
-# ノート
+# Notes
 
-## 操作ができる状態
+## Actionability
 
 `.type()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-## イベント
+## Events
 
 ***When element is not in focus***
 
@@ -394,21 +394,21 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 
 Of course if the form's `submit` event is `preventedDefault` the form will not actually be submitted.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .type %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions actions .type %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts actions .type %}
 
-# コマンドログ
+# Command Log
 
 **Type into the input**
 
@@ -424,7 +424,7 @@ When clicking on `type` within the command log, the console outputs the followin
 
 ![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.blur()` blur %}
 - {% url `.clear()` clear %}

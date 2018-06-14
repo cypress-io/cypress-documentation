@@ -9,13 +9,13 @@ Move time after overriding a native time function with {% url `cy.clock()` clock
 {% url `cy.clock()` clock %} must be called before `cy.tick()` in order to override native time functions first.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.tick(milliseconds)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -23,13 +23,13 @@ cy.tick(milliseconds)
 cy.tick(500)
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} milliseconds** ***(Number)***
 
 The number of `milliseconds` to move the clock. Any timers within the affected range of time will be called.
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -43,7 +43,7 @@ The number of `milliseconds` to move the clock. Any timers within the affected r
 
 You can also access the `clock` object via `this.clock` in a {% url `.then()` then %} callback.
 
-# 例
+# Examples
 
 ## Milliseconds
 
@@ -72,21 +72,21 @@ cy.get('#header').should('have.text', 'Hello, World')
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
 {% endnote %}
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements tick cy.tick %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions utility cy.tick %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none cy.tick %}
 
-# コマンドログ
+# Command Log
 
 ***Create a clock and tick it 1 second***
 
@@ -103,7 +103,7 @@ When clicking on the `tick` command within the command log, the console outputs 
 
 ![Console Log](/img/api/tick/console-shows-same-clock-object-as-clock-command.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.clock()` clock %}
 - {% url `cy.spy()` spy %}

@@ -9,14 +9,14 @@ Get the last DOM element within a set of DOM elements.
 The querying behavior of this command matches exactly how {% url `.last()` http://api.jquery.com/last %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .last()
 .last(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.last()                  // Errors, cannot be chained off 'cy'
 cy.getCookies().last()     // Errors, 'getCookies' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -42,13 +42,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .last %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .last %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Get the last list item in a list.***
 
@@ -66,21 +66,21 @@ Option | Default | Description
 cy.get('li').last()
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .last %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .last %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .last %}
 
-# コマンドログ
+# Command Log
 
 ***Find the last button in the form***
 
@@ -96,7 +96,7 @@ When clicking on `last` within the command log, the console outputs the followin
 
 ![Console log last](/img/api/last/inspect-last-element-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.eq()` eq %}
 - {% url `.first()` first %}

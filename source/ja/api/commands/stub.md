@@ -9,7 +9,7 @@ Replace a function, record its usage and control its behavior.
 **Note:** `.stub()` assumes you are already familiar with our guide: {% url 'Stubs, Spies, and Clocks' stubs-spies-and-clocks %}
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.stub()
@@ -17,7 +17,7 @@ cy.stub(object, method)
 cy.stub(object, method, replacerFn)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -25,7 +25,7 @@ cy.stub(object, method, replacerFn)
 cy.stub(user, 'addFriend')    
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} object** ***(Object)***
 
@@ -39,13 +39,13 @@ The name of the `method` on the `object` to be wrapped.
 
 The function used to replace the `method` on the `object`.
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 Unlike most Cypress commands, `cy.stub()` is *synchronous* and returns a value (the stub) instead of a Promise-like chain-able object.
 
 `cy.stub()` returns a {% url "Sinon.js stub" http://sinonjs.org %}. All methods found on {% url "Sinon.js" http://sinonjs.org %} spies and stubs are supported.
 
-# 例
+# Examples
 
 ## Method
 
@@ -118,7 +118,7 @@ cy.get('.name').should('have.value', 'my custom message')
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
 {% endnote %}
 
-## エイリアス
+## Aliases
 
 Adding an alias using {% url `.as()` as %} to stubs makes them easier to identify in error messages and Cypress' command log.
 
@@ -138,7 +138,7 @@ You will see the following in the command log:
 
 ![stubs with aliases](/img/api/stub/stubs-with-aliases-and-error-in-command-log.png)
 
-# ノート
+# Notes
 
 ## Restores
 
@@ -146,27 +146,27 @@ You will see the following in the command log:
 
 `cy.stub()` creates stubs in a {% url "sandbox" http://sinonjs.org/releases/v2.0.0/sandbox/ %}, so all stubs created are automatically reset/restored between tests without you having to explicitly reset/restore them.
 
-## 相違点
+## Differences
 
 ***Difference between cy.spy() and cy.stub()***
 
 The main difference between `cy.spy()` and {% url `cy.stub()` stub %} is that `cy.spy()` does not replace the method, it only wraps it. So, while invocations are recorded, the original method is still called. This can be very useful when testing methods on native browser objects. You can verify a method is being called by your test and still have the original method action invoked.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.stub %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions none cy.stub %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none cy.stub %}
 
-# コマンドログ
+# Command Log
 
 ***Create a stub, alias it, and call it***
 
@@ -187,7 +187,7 @@ When clicking on the `(stub-1)` event within the command log, the console output
 
 ![Command Log](/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.as()` as %}
 - {% url `cy.clock()` clock %}

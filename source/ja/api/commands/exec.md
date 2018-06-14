@@ -11,14 +11,14 @@ Don't try to start a web server from `cy.exec()`.
 Read about {% url 'best practices' best-practices#Web-Servers %} here.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.exec(command)
 cy.exec(command, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -26,7 +26,7 @@ cy.exec(command, options)
 cy.exec('npm run build')    
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} command** ***(String)***
 
@@ -43,16 +43,16 @@ Option | Default | Description
 `failOnNonZeroExit` | `true` | whether to fail if the command exits with a non-zero code
 `timeout` | {% url `execTimeout` configuration#Timeouts %} | {% usage_options timeout cy.exec %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.exec()` yields an object with the following properties:
 - `code`
 - `stdout`
 - `stderr`
 
-# 例
+# Examples
 
-## コマンド
+## Command
 
 `cy.exec()` provides an escape hatch for running arbitrary system commands, so you can take actions necessary for your test outside the scope of Cypress. This is great for:
 
@@ -97,7 +97,7 @@ cy.wait('@postComment').then((xhr) => {
 })
 ```
 
-## オプション
+## Options
 
 ***Change the timeout***
 
@@ -127,7 +127,7 @@ cy
   .its('stdout').should('contain', 'johndoe')
 ```
 
-# ノート
+# Notes
 
 ## Commands Must Exit
 
@@ -141,21 +141,21 @@ cy
 
 A command must exit within the `execTimeout` or Cypress will kill the command's process and fail the current test.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements exec cy.exec %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once cy.exec %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts exec cy.exec %}
 
-# コマンドログ
+# Command Log
 
 ***List the contents of cypress.json***
 
@@ -171,7 +171,7 @@ When clicking on the `exec` command within the command log, the console outputs 
 
 ![console.log exec](/img/api/exec/console-shows-code-shell-stderr-and-stdout-for-exec.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}

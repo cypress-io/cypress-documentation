@@ -6,14 +6,14 @@ title: scrollIntoView
 Scroll an element into view.
 
 
-# シンタックス
+# Syntax
 
 ```javascript
 .scrollIntoView()
 .scrollIntoView(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -28,7 +28,7 @@ cy.scrollIntoView('footer')   // Errors, cannot be chained off 'cy'
 cy.window().scrollIntoView()  // Errors, 'window' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -42,36 +42,36 @@ Option | Default | Description
 `offset` | `{top: 0, left: 0}` | Amount to scroll after the element has been scrolled into view
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .scrollIntoView %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .scrollIntoView %}
 
-# 例
+# Examples
 
-# ノート
+# Notes
 
-## スナップショット
+## Snapshots
 
 ***Snapshots do not reflect scroll behavior***
 
 *Cypress does not reflect the accurate scroll positions of any elements within snapshots.* If you want to see the actual scrolling behavior in action, we recommend using {% url `.pause()` pause %} to walk through each command or {% url 'watching the video of the test run' screenshots-and-videos.html#Videos %}.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .scrollToIntoView %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions wait .scrollToIntoView %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions .scrollToIntoView %}
 
-# コマンドログ
+# Command Log
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.scrollTo()` scrollto %}

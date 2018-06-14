@@ -9,7 +9,7 @@ Get one or more DOM elements by selector or {% url 'alias' variables-and-aliases
 The querying behavior of this command matches exactly how {% url `$(...)` http://api.jquery.com/jQuery/ %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.get(selector)
@@ -18,7 +18,7 @@ cy.get(selector, options)
 cy.get(alias, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -26,7 +26,7 @@ cy.get(alias, options)
 cy.get('.list > li')    // Yield the <li>'s in .list
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector** ***(String selector)***
 
@@ -53,13 +53,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_dom_subject cy.get %}
 
-# 例
+# Examples
 
-## セレクターを使う場合
+## Selector
 
 ***Get the input element***
 
@@ -92,7 +92,7 @@ cy.get('form').within(() => {
 })
 ```
 
-## エイリアス
+## Alias
 
 For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases#Aliases %}.
 
@@ -137,21 +137,21 @@ it('disables on click', function () {
 })
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom cy.get %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence cy.get %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence cy.get %}
 
-# コマンドログ
+# Command Log
 
 ***Get an input and assert on the value***
 
@@ -167,7 +167,7 @@ When clicking on the `get` command within the command log, the console outputs t
 
 ![Console Log get](/img/api/get/console-log-get-command-and-elements-found.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.as()` as %}
 - {% url `cy.contains()` contains %}

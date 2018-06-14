@@ -9,14 +9,14 @@ Invoke a function on the previously yielded subject.
 If you want to get a property that is not a function on the previously yielded subject, use {% url `.its()` its %}.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .invoke(functionName)
 .invoke(functionName, args...)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -32,7 +32,7 @@ cy.invoke('convert')                   // Errors, cannot be chained off 'cy'
 cy.wrap({name: 'Jane'}).invoke('name') // Errors, 'name' is not a function
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} functionName**  ***(String)***
 
@@ -42,9 +42,9 @@ Name of function to be invoked.
 
 Additional arguments to be given to the function call. There is no limit to the number of arguments.
 
-# 例
+# Examples
 
-## 関数
+## Function
 
 ***Assert on a function's return value***
 
@@ -110,7 +110,7 @@ cy
     .should('include', 'myLogo')
 ```
 
-# ノート
+# Notes
 
 ## Third Party Plugins
 
@@ -135,21 +135,21 @@ cy
   .invoke('val').should('match', /apples/)
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements child .invoke %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions retry .invoke %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions .invoke %}
 
-# コマンドログ
+# Command Log
 
 ***Invoke jQuery show method on element***
 
@@ -166,7 +166,7 @@ When clicking on `invoke` within the command log, the console outputs the follow
 
 ![Console log invoke](/img/api/invoke/log-function-invoked-and-return.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.its()` its %}
 - {% url `.then()` then %}

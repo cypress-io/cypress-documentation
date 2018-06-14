@@ -9,14 +9,14 @@ Expand an array into multiple arguments.
 Identical to {% url `.then()` then %}, but always expects an array-like structure as its subject.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .spread(callbackFn)
 .spread(options, callbackFn)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.spread(() => {}) // Errors, cannot be chained off 'cy'
 cy.location().spread()   // Errors, 'location' does not yield an array
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} fn** ***(Function)***
 
@@ -45,11 +45,11 @@ Option | Default | Description
 --- | --- | ---
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .spread %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields maybe_changes_subject .spread 'yields the return value of your callback function' %}
 
-# 例
+# Examples
 
 ## Aliased Routes
 
@@ -76,25 +76,25 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 })
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements spread .spread %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once .spread %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts promises .spread %}
 
-# コマンドログ
+# Command Log
 
 `.spread()` does *not* log in the command log
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.each()` each %}
 - {% url `.then()` then %}

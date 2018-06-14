@@ -13,7 +13,7 @@ title: clock
 
 The clock starts at the unix epoch (timestamp of 0). This means that when you instantiate `new Date` in your application, it will have a time of `January 1st, 1970`.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.clock()
@@ -24,7 +24,7 @@ cy.clock(now, options)
 cy.clock(now, functionNames, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -32,7 +32,7 @@ cy.clock(now, functionNames, options)
 cy.clock()
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} now** ***(Date)***
 
@@ -50,7 +50,7 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.clock()` yields a `clock` object with the following methods:
 
@@ -64,9 +64,9 @@ Option | Default | Description
 
 You can also access the `clock` object via `this.clock` in a {% url `.then()` then %} callback.
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Create a clock and use it to trigger a setInterval***
 
@@ -171,7 +171,7 @@ cy.clock(null, ['setTimeout', 'clearTimeout'])
 {% url 'Check out our example recipe testing spying, stubbing and time.' recipes#Stubbing-window-fetch %}
 {% endnote %}
 
-# ノート
+# Notes
 
 ## Iframes
 
@@ -185,21 +185,21 @@ Note that `cy.clock()` only applies to the `top` window on a web page. It will n
 
 If you call `cy.clock()` before visiting a page with {% url `cy.visit()` visit %}, the page's native global functions will be overridden on window load, before any of your app code runs, so even if `setTimeout`, for example, is called on page load, it can still be controlled via {% url `cy.tick()` tick %}. This also applies if, during the course of a test, the page under test is reloaded or changed.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.clock %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions utility cy.clock %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none cy.clock %}
 
-# コマンドログ
+# Command Log
 
 ***Create a clock and tick it 1 second***
 
@@ -216,7 +216,7 @@ When clicking on the `clock` command within the command log, the console outputs
 
 ![console.log clock command](/img/api/clock/clock-displays-methods-replaced-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.spy()` spy %}
 - {% url `cy.stub()` stub %}

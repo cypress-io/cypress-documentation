@@ -5,14 +5,14 @@ title: getCookies
 
 Get all of the browser cookies.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.getCookies()
 cy.getCookies(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.getCookies(options)
 cy.getCookies()    // Get all cookies
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -31,7 +31,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.getCookies %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the following properties:
 
@@ -43,7 +43,7 @@ Option | Default | Description
 - `secure`
 - `expiry`
 
-# 例
+# Examples
 
 ## Get Cookies
 
@@ -62,21 +62,21 @@ cy.getCookies()
   })
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.getCookies %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once cy.getCookies %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts automation cy.getCookies %}
 
-# コマンドログ
+# Command Log
 
 ```javascript
 cy.getCookies().should('have.length', 1).then((cookies) => {
@@ -97,7 +97,7 @@ When clicking on `getCookies` within the command log, the console outputs the fo
 
 ![Console Log](/img/api/getcookies/test-application-cookies.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.clearCookie()` clearcookie %}
 - {% url `cy.clearCookies()` clearcookies %}

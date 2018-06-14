@@ -9,13 +9,13 @@ Get a property's value on the previously yielded subject.
 If you want to call a function on the previously yielded subject, use {% url `.invoke()` invoke %}.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .its(propertyName)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,17 +31,17 @@ cy.its('window')                // Errors, cannot be chained off 'cy'
 cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} propertyName**  ***(String)***
 
 Name of property or nested properties (with dot notation) to get.
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_subject .its 'yields the value of the property' %}
 
-# 例
+# Examples
 
 ## Plain Objects
 
@@ -71,7 +71,7 @@ cy
 cy.title().its('length').should('eq', 24)
 ```
 
-## 関数
+## Functions
 
 ***Get function as property***
 
@@ -131,21 +131,21 @@ const user = {
 cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements child .its %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions its .its %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts its .its %}
 
-# コマンドログ
+# Command Log
 
 ***Get `responseBody` of aliased route***
 
@@ -167,7 +167,7 @@ When clicking on `its` within the command log, the console outputs the following
 
 ![Console Log](/img/api/its/response-body-yielded-with-its-command-log.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.invoke()` invoke %}
 - {% url `.then()` then %}

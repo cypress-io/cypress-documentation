@@ -5,14 +5,14 @@ title: getCookie
 
 Get a browser cookie by its name.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.getCookie(name)
 cy.getCookie(name, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.getCookie(name, options)
 cy.getCookie('auth_key')     // Get cookie with name 'auth_key'
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} name** ***(String)***
 
@@ -35,7 +35,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.getCookie %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
@@ -51,9 +51,9 @@ Option | Default | Description
 
 `cy.getCookie()` yields `null`.
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Get `session_id` cookie after logging in***
 
@@ -73,21 +73,21 @@ cy.getCookie('session_id')
 Check out our example recipes using `cy.getCookie()` to test {% url 'logging in using HTML web forms' recipes#HTML-Web-Forms %}, {% url 'logging in using XHR web forms' recipes#XHR-Web-Forms %} and {% url 'logging in with single sign on' recipes#Single-Sign-On %}
 {% endnote %}
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.getCookie %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once cy.getCookie %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts automation cy.getCookie %}
 
-# コマンドログ
+# Command Log
 
 ```javascript
 cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
@@ -101,7 +101,7 @@ When clicking on `getCookie` within the command log, the console outputs the fol
 
 ![Console Log](/img/api/getcookie/inspect-cookie-object-properties-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.clearCookie()` clearcookie %}
 - {% url `cy.clearCookies()` clearcookies %}

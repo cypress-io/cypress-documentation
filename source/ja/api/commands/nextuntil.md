@@ -9,7 +9,7 @@ Get all following siblings of each DOM element in a set of matched DOM elements 
 The querying behavior of this command matches exactly how {% url `.nextUntil()` http://api.jquery.com/nextUntil %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .nextUntil(selector)
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how {% url `.nextUntil()` 
 .nextUntil(element, filter, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -35,7 +35,7 @@ cy.nextUntil()                  // Errors, cannot be chained off 'cy'
 cy.location().nextUntil('path') // Errors, 'location' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -58,13 +58,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .nextUntil %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .nextUntil %}
 
-# 例
+# Examples
 
-## セレクターを使う場合
+## Selector
 
 ***Find all of the element's siblings following `#veggies` until `#nuts`***
 
@@ -90,21 +90,21 @@ Option | Default | Description
 cy.get('#veggies').nextUntil('#nuts')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .nextUntil %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .nextUntil %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .nextUntil %}
 
-# コマンドログ
+# Command Log
 
 ***Find all of the element's siblings following `#veggies` until `#nuts`***
 
@@ -120,7 +120,7 @@ When clicking on `nextUntil` within the command log, the console outputs the fol
 
 ![Console Log nextUntil](/img/api/nextuntil/console-log-of-next-elements-until.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.next()` next %}
 - {% url `.nextAll()` nextall %}

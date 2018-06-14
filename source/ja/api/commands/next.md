@@ -9,7 +9,7 @@ Get the immediately following sibling of each DOM element within a set of DOM el
 The querying behavior of this command matches exactly how {% url `.next()` http://api.jquery.com/next %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .next()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.next()` http:
 .next(selector, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.next()                // Errors, cannot be chained off 'cy'
 cy.getCookies().next()   // Errors, 'getCookies' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .next %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .next %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Find the element next to `.second`***
 
@@ -71,7 +71,7 @@ Option | Default | Description
 cy.get('.second').next()
 ```
 
-## セレクターを使う場合
+## Selector
 
 ***Find the very next sibling of each li. Keep only the ones with a class `selected`.***
 
@@ -89,21 +89,21 @@ cy.get('.second').next()
 cy.get('li').next('.selected')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .next %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .next %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .next %}
 
-# コマンドログ
+# Command Log
 
 ***Find the element next to the `.active` li***
 
@@ -119,7 +119,7 @@ When clicking on `next` within the command log, the console outputs the followin
 
 ![Console log next](/img/api/next/elements-next-command-applied-to.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.nextAll()` nextall %}
 - {% url `.nextUntil()` nextuntil %}

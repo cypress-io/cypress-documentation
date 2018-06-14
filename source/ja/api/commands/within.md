@@ -4,14 +4,14 @@ title: within
 ---
 Scopes all subsequent cy commands to within this element. Useful when working within a particular group of elements such as a `<form>`.
 
-# シンタックス
+# Syntax
 
 ```javascript
 .within(callbackFn)
 .within(options, callbackFn)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -26,7 +26,7 @@ cy.within(() => {})              // Errors, cannot be chained off 'cy'
 cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
@@ -40,11 +40,11 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .within %}
 
-# 例
+# Examples
 
 ## Forms
 
@@ -68,21 +68,21 @@ cy.get('form').within(($form) => {
 })
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements child .within %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once .within %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none .within %}
 
-# コマンドログ
+# Command Log
 
 ***Get the input within the form***
 
@@ -100,6 +100,6 @@ When clicking on the `within` command within the command log, the console output
 
 ![Console Log](/img/api/within/within-shows-its-yield-in-console-log.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.root()` root %}

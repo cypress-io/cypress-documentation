@@ -5,7 +5,7 @@ title: trigger
 
 Trigger an event on a DOM element.  
 
-# シンタックス
+# Syntax
 
 ```javascript
 .trigger(eventName)
@@ -16,7 +16,7 @@ Trigger an event on a DOM element.
 .trigger(eventName, x, y, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.trigger('touchstart')             // Errors, cannot be chained off 'cy'
 cy.location().trigger('mouseleave')  // Errors, 'location' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} eventName**  ***(String)***
 
@@ -65,13 +65,13 @@ Option | Default | Description
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .trigger %}
 
-# 例
+# Examples
 
-## マウスイベント
+## Mouse Events
 
 ***Trigger a `mouseover` on the button***
 
@@ -87,7 +87,7 @@ cy.get('button').trigger('mouseover') // yields 'button'
 {% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' drag-and-drop %}
 {% endnote %}
 
-## チェンジイベント
+## Change Event
 
 ***Interact with a range input (slider)***
 
@@ -106,7 +106,7 @@ cy.get('input[type=range]').as('range')
 cy.get('@range').siblings('p').should('have.text', '25')
 ```
 
-## 位置で指定
+## Position
 
 ***Trigger a `mousedown` on the top right of a button***
 
@@ -114,7 +114,7 @@ cy.get('@range').siblings('p').should('have.text', '25')
 cy.get('button').trigger('mousedown', 'topRight')
 ```
 
-## 座標で指定
+## Coordinates
 
 ***Specify explicit coordinates relative to the top left corner***
 
@@ -122,7 +122,7 @@ cy.get('button').trigger('mousedown', 'topRight')
 cy.get('button').trigger('contextmenu', 15, 40)
 ```
 
-## オプション
+## Options
 
 ***Specify that the event should not bubble***
 
@@ -140,21 +140,21 @@ This overrides the default auto-positioning based on the element itself. Useful 
 cy.get('button').trigger('mousemove', {clientX: 200, clientY: 300})
 ```
 
-# ノート
+# Notes
 
-## 操作ができる状態
+## Actionability
 
 ***The element must first reach actionability***
 
 `.trigger()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-## イベント
+## Events
 
 ***What event should I fire?***
 
 `cy.trigger()` is meant to be a low-level utility that makes triggering events easier than manually constructing and dispatching them. Since any arbitrary event can be triggered, Cypress tries not to make any assumptions about how it should be triggered. This means you'll need to know the implementation details (which may be in a 3rd party library) of the event handler(s) receiving the event and provide the necessary properties.
 
-## 相違点
+## Differences
 
 ***What's the difference between triggering and event and calling the corresponding cypress command?***
 
@@ -176,21 +176,21 @@ Both types commands will first verify element actionability, but only the "true"
 
 That means that your event listener callbacks will be invoked, but don't expect the browser to actually "do" anything for these events. For the most part, it shouldn't matter, which is why `.trigger()` is an excellent stop-gap if the command / event you're looking for hasn't been implemented yet.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .trigger %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions actions .trigger %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts actions .trigger %}
 
-# コマンドログ
+# Command Log
 
 ***Trigger a `mouseover` event on the first button***
 
@@ -206,7 +206,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 
 ![console.log for trigger](https://cloud.githubusercontent.com/assets/1157043/23477276/749aac54-fe8b-11e6-81b3-e7600cca0ba0.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.blur()` blur %}
 - {% url `.check()` check %}

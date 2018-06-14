@@ -5,7 +5,7 @@ title: fixture
 
 Load a fixed set of data located in a file.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.fixture(filePath)
@@ -14,7 +14,7 @@ cy.fixture(filePath, options)
 cy.fixture(filePath, encoding, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -25,7 +25,7 @@ cy.fixture('logo.png').then((logo) => {
 })  
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} filePath**  ***(String)***
 
@@ -61,11 +61,11 @@ Option | Default | Description
 --- | --- | ---
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.fixture %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.fixture()` yields the contents of the file. Formatting is determined by its file extension.
 
-# 例
+# Examples
 
 ## JSON
 
@@ -172,7 +172,7 @@ cy.wait('@getUser').then((xhr)  => {
 })
 ```
 
-# ノート
+# Notes
 
 ## Shortcuts
 
@@ -213,25 +213,25 @@ Cypress automatically determines the encoding for the following file types:
 
 For other types of files, they will be read as `utf8` by default, unless specified in the second argument of `cy.fixture()`.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.fixture %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions once cy.fixture %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts automation cy.fixture %}
 
-# コマンドログ
+# Command Log
 
 - `cy.fixture()` does *not* log in the command log
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.route()` route %}
 - {% url `.then()` then %}

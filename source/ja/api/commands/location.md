@@ -5,7 +5,7 @@ title: location
 
 Get the global `window.location` object of the page that is currently active.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.location()
@@ -14,7 +14,7 @@ cy.location(options)
 cy.location(key, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -24,7 +24,7 @@ cy.location('host') // Get the host of the location object
 cy.location('port') // Get the port of the location object
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} key** ***(String)***
 
@@ -39,7 +39,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.location %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 `cy.location()` yields the location object with the following properties:
 
@@ -58,9 +58,9 @@ Option | Default | Description
 
 {% yields sets_subject cy.location 'yields the value of the location property as a string' %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Make assertions about every location property***
 
@@ -104,7 +104,7 @@ cy.visit('http://localhost:3000/admin')
 cy.location('pathname').should('eq', '/login')
 ```
 
-# ノート
+# Notes
 
 ## Native Location
 
@@ -134,21 +134,21 @@ cy.location().then((loc) => {
 
 ![Console Log of Cypress location command](/img/api/location/special-cypress-location-object-logged-in-console-output.png)
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.location %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions retry cy.location %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions cy.location %}
 
-# コマンドログ
+# Command Log
 
 ***Assert on the location's href***
 
@@ -166,7 +166,7 @@ When clicking on `location` within the command log, the console outputs the foll
 
 ![Console Log](/img/api/location/location-object-in-console-log.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.hash()` hash %}
 - {% url `cy.url()` url %}

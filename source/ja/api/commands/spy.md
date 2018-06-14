@@ -9,13 +9,13 @@ Wrap a method in a spy in order to record calls to and arguments of the function
 **Note:** `.spy()` assumes you are already familiar with our guide: {% url 'Stubs, Spies, and Clocks' stubs-spies-and-clocks %}
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.spy(object, method)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -23,7 +23,7 @@ cy.spy(object, method)
 cy.spy(user, 'addFriend')    
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} object** ***(Object)***
 
@@ -33,13 +33,13 @@ The `object` that has the `method` to be wrapped.
 
 The name of the `method` on the `object` to be wrapped.
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 Unlike most Cypress commands, `cy.spy()` is *synchronous* and returns a value (the spy) instead of a Promise-like chain-able object.
 
 `cy.spy()` returns a [Sinon.js spy](http://sinonjs.org/docs/#spies). All [methods](http://sinonjs.org/docs/#spies-api) found on Sinon.JS spies are supported.
 
-# 例
+# Examples
 
 ## Method
 
@@ -58,7 +58,7 @@ expect(util.addListeners).to.be.called
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
 {% endnote %}
 
-## エイリアス
+## Aliases
 
 Adding an alias using {% url `.as()` as %} to spies makes them easier to identify in error messages and Cypress' command log.
 
@@ -77,7 +77,7 @@ You will see the following in the command log:
 
 ![spies with aliases](https://cloud.githubusercontent.com/assets/1157043/22437291/805bd0d4-e6f5-11e6-99c5-bded81b9c42b.png)
 
-# ノート
+# Notes
 
 ## Restores
 
@@ -85,7 +85,7 @@ You will see the following in the command log:
 
 `cy.spy()` creates spies in a [sandbox](http://sinonjs.org/docs/#sandbox), so all spies created are automatically reset/restored between tests without you having to explicitly reset/restore them.
 
-## 相違点
+## Differences
 
 ***Difference between cy.spy() and cy.stub()***
 
@@ -97,21 +97,21 @@ The main difference between `cy.spy()` and {% url `cy.stub()` stub %} is that `c
 
 Cypress has also built-in {% url "sinon-chai" bundled-tools#Sinon-Chai %} support, so any {% url "assertions supported by `sinon-chai`" assertions#Sinon-Chai %} can be used without any configuration.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.spy %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions none cy.spy %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none cy.spy %}
 
-# コマンドログ
+# Command Log
 
 ***Create a spy, alias it, and call it***
 
@@ -132,7 +132,7 @@ When clicking on the `spy-1` event within the command log, the console outputs t
 
 ![Command Log](/img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.as()` as %}
 - {% url `cy.clock()` clock %}

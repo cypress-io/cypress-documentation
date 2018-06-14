@@ -5,7 +5,7 @@ title: reload
 
 Reload the page.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.reload()
@@ -14,7 +14,7 @@ cy.reload(options)
 cy.reload(forceReload, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -22,7 +22,7 @@ cy.reload(forceReload, options)
 cy.reload()    
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} forceReload** ***(Boolean)***
 
@@ -35,13 +35,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.reload %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.reload 'yields the `window` object after the page finishes loading' %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Reload the page as if the user clicked 'Refresh'***
 
@@ -61,21 +61,21 @@ cy.visit('http://localhost:3000/admin')
 cy.reload(true)
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements page cy.reload %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions wait cy.reload %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts page cy.reload %}
 
-# コマンドログ
+# Command Log
 
 ***Reload the page***
 
@@ -91,7 +91,7 @@ When clicking on `reload` within the command log, the console outputs the follow
 
 ![Console Log](/img/api/reload/command-log-for-reload-cypress.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.go()` go %}
 - {% url `cy.visit()` visit %}

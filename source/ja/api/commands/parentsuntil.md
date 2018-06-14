@@ -9,7 +9,7 @@ Get all ancestors of each DOM element in a set of matched DOM elements up to, bu
 The querying behavior of this command matches exactly how {% url `.parentsUntil()` http://api.jquery.com/parentsUntil %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .parentsUntil(selector)
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how {% url `.parentsUntil(
 .parentsUntil(element, filter, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -35,7 +35,7 @@ cy.parentsUntil()                  // Errors, cannot be chained off 'cy'
 cy.location().parentsUntil('href') // Errors, 'location' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -58,13 +58,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .parentsUntil %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .parentsUntil %}
 
-# 例
+# Examples
 
-## セレクターを使う場合
+## Selector
 
 ***Find all of the `.active` element's ancestors until `.nav`***
 
@@ -89,21 +89,21 @@ Option | Default | Description
 cy.get('.active').parentsUntil('.nav')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .parentsUntil %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .parentsUntil %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .parentsUntil %}
 
-# コマンドログ
+# Command Log
 
 ***Find all of the `active` element's ancestors until `.nav`***
 
@@ -119,7 +119,7 @@ When clicking on `parentsUntil` within the command log, the console outputs the 
 
 ![Console Log parentsUntil](/img/api/parentsuntil/show-parents-until-nav-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.parent()` parent %}
 - {% url `.parents()` parents %}

@@ -5,7 +5,7 @@ title: scrollTo
 
 Scroll to a specific position.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.scrollTo(position)
@@ -14,7 +14,7 @@ cy.scrollTo(position, options)
 cy.scrollTo(x, y, options)
 ```
 
-## 使い方
+## Usage
 
 `cy.scrollTo()` can be chained off of `cy` to scroll to a position in the window or chained off another cy command that *yields* a DOM element - limiting scrolling to its yielded element.
 
@@ -29,7 +29,7 @@ cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to its bottom
 cy.title().scrollTo('My App')  // Errors, 'title' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} position** ***(String)***
 
@@ -56,25 +56,25 @@ Option | Default | Description
 `easing` | `swing` | Will scroll with the easing animation
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .scrollTo %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject cy.scrollTo %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 `cy.scrollTo()` will wait until the window or element is in a 'scrollable' state for the duration of the {% url `defaultCommandTimeout` configuration#Timeouts %} or the duration of the `timeout` specified in the command's options.
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements scrollability .scrollTo %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions .scrollTo %}
 
-# 例
+# Examples
 
-## 位置で指定
+## Position
 
 ***Scroll to the bottom of the window***
 
@@ -88,7 +88,7 @@ cy.scrollTo('bottom')
 cy.get('#movies-list').scrollTo('center')
 ```
 
-## 座標で指定
+## Coordinates
 
 ***Scroll 500px down the list***
 
@@ -108,7 +108,7 @@ cy.scrollTo('500px')
  cy.get('.user-photo').scrollTo('0%', '25%')
 ```
 
-## オプション
+## Options
 
 ***Use linear easing animation to scroll***
 
@@ -122,15 +122,15 @@ cy.get('.documentation').scrollTo('top', { easing: 'linear'} )
 cy.get('#slider').scrollTo('right', { duration: 2000} )
 ```
 
-# ノート
+# Notes
 
-## スナップショット
+## Snapshots
 
 ***Snapshots do not reflect scroll behavior***
 
 *Cypress does not reflect the accurate scroll positions of any elements within snapshots.* If you want to see the actual scrolling behavior in action, we recommend using {% url `.pause()` pause %} to walk through each command or {% url 'watching the video of the test run' screenshots-and-videos.html#Videos %}.
 
-# コマンドログ
+# Command Log
 
 ***Scroll to the bottom of the window then scroll the element to the "right"***
 
@@ -147,6 +147,6 @@ When clicking on `scrollTo` within the command log, the console outputs the foll
 
 ![console.log for scrollTo](https://cloud.githubusercontent.com/assets/1271364/25049182/6e07211a-210e-11e7-9419-b57f3e08a608.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.scrollIntoView()` scrollintoview %}

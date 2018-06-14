@@ -9,14 +9,14 @@ Get the current URL of the page that is currently active.
 This is an alias of {% url "`cy.location('href')`" location %}
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.url()
 cy.url(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -24,7 +24,7 @@ cy.url(options)
 cy.url()    // Yields the current url as a string
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -37,13 +37,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.url %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.url 'yields the current URL as a string' %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Assert the URL is `http://localhost:8000/users/1/edit`***
 
@@ -53,7 +53,7 @@ cy.get('#user-edit a').click()
 cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 ```
 
-# ノート
+# Notes
 
 ## Href Shorthand
 
@@ -66,7 +66,7 @@ cy.url()                  // these yield the same string
 cy.location('href')       // these yield the same string
 ```
 
-## 相違点
+## Differences
 
 ***Url versus href***
 
@@ -86,21 +86,21 @@ But you may be wondering where the `url` property comes from.  Per the `window.l
 
 `cy.url()` exists because it's what most developers naturally assume would return them the full current URL.  We almost never refer to the URL as an `href`.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.url %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions retry cy.url %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions cy.url %}
 
-# コマンドログ
+# Command Log
 
 ***Assert that the url contains "#users/new"***
 
@@ -116,7 +116,7 @@ When clicking on `url` within the command log, the console outputs the following
 
 ![Console Log](/img/api/url/console-log-of-browser-url-string.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.hash()` hash %}
 - {% url `cy.location()` location %}

@@ -5,14 +5,14 @@ title: focused
 
 Get the DOM element that is currently focused.
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.focused()
 cy.focused(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.focused(options)
 cy.focused()    // Yields the element currently in focus
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -31,13 +31,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.focused %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_dom_subject cy.focused %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Get the element that is focused***
 
@@ -59,21 +59,21 @@ cy.focused().blur()
 cy.focused().should('have.attr', 'name', 'username')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom cy.focused %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence cy.focused %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence cy.focused %}
 
-# コマンドログ
+# Command Log
 
 ***Make an assertion on the focused element***
 
@@ -89,7 +89,7 @@ When clicking on the `focused` command within the command log, the console outpu
 
 ![console focused](/img/api/focused/currently-focused-element-in-an-input.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.blur()` blur %}
 - {% url `.focus()` focus %}

@@ -5,7 +5,7 @@ title: click
 
 Click a DOM element.
 
-# シンタックス
+# Syntax
 
 ```javascript
 .click()
@@ -16,7 +16,7 @@ Click a DOM element.
 .click(x, y, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.click('button')          // Errors, cannot be chained off 'cy'
 cy.window().click()         // Errors, 'window' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} position** ***(String)***
 
@@ -60,13 +60,13 @@ Option | Default | Description
 `multiple` | `false` | {% usage_options multiple click %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .click %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .click %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Click the button***
 
@@ -74,7 +74,7 @@ Option | Default | Description
 cy.get('button').click()
 ```
 
-## 位置で指定
+## Position
 
 ***Specify a corner of the element to click***
 
@@ -84,7 +84,7 @@ Click the top right corner of the button.
 cy.get('button').click('topRight')
 ```
 
-## 座標で指定
+## Coordinates
 
 ***Specify explicit coordinates relative to the top left corner***
 
@@ -94,7 +94,7 @@ The click below will be issued inside of the element (15px from the left and 40p
 cy.get('button').click(15, 40)
 ```
 
-## オプション
+## Options
 
 ***Force a click regardless of its actionable state***
 
@@ -124,15 +124,15 @@ By default, Cypress will error if you're trying to click multiple elements. By p
 cy.get('button').click({ multiple: true })
 ```
 
-# ノート
+# Notes
 
-## 操作ができる状態
+## Actionability
 
 ***The element must first reach actionability***
 
 `.click()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-## イベント
+## Events
 
 ***Events that are fired:***
 
@@ -172,21 +172,21 @@ The spec states what should happen if the element clicked is removed from the DO
 
 Cypress does not currently factor in `pointer-events: none` in its clicking algorithm. {% open_an_issue %} if you need this to be fixed.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .click %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions actions .click %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts actions .click %}
 
-# コマンドログ
+# Command Log
 
 ***Click the button in the form that has text "Create User"***
 
@@ -202,7 +202,7 @@ When clicking on `click` within the command log, the console outputs the followi
 
 ![console.log for click](/img/api/click/click-coords-and-events-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.check()` check %}
 - {% url `.dblclick()` dblclick %}

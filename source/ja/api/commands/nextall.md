@@ -9,7 +9,7 @@ Get all following siblings of each DOM element in a set of matched DOM elements.
 The querying behavior of this command matches exactly how {% url `.nextAll()` http://api.jquery.com/nextAll %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .nextAll()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.nextAll()` ht
 .nextAll(selector, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.nextAll()                // Errors, cannot be chained off 'cy'
 cy.getCookies().nextAll()   // Errors, 'getCookies' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .nextAll %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .nextAll %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Find all of the element's siblings following `.second`***
 
@@ -73,7 +73,7 @@ Option | Default | Description
 cy.get('.second').nextAll()
 ```
 
-## セレクターを使う場合
+## Selector
 
 ***Find all of the following siblings of each li. Keep only the ones with a class `selected`.***
 
@@ -92,21 +92,21 @@ cy.get('.second').nextAll()
 cy.get('li').nextAll('.selected')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .nextAll %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .nextAll %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .nextAll %}
 
-# コマンドログ
+# Command Log
 
 ***Find all elements following the `.active` li***
 
@@ -122,7 +122,7 @@ When clicking on `nextAll` within the command log, the console outputs the follo
 
 ![Console log nextAll](/img/api/nextall/all-next-elements-are-logged-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.next()` next %}
 - {% url `.nextUntil()` nextuntil %}

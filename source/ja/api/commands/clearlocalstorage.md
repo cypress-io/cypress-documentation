@@ -9,7 +9,7 @@ Clear data in local storage.
 Cypress automatically runs this command *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear localStorage inside a single test.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.clearLocalStorage()
@@ -18,7 +18,7 @@ cy.clearLocalStorage(options)
 cy.clearLocalStorage(keys, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -26,7 +26,7 @@ cy.clearLocalStorage(keys, options)
 cy.clearLocalStorage()  // clear all local storage
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} keys** ***(String, RegExp)***
 
@@ -40,13 +40,13 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields null cy.clearLocalStorage %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 **Clear all local storage**
 
@@ -68,21 +68,21 @@ cy.clearLocalStorage('appName')
 cy.clearLocalStorage(/app-/)
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements parent cy.clearLocalStorage %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions none cy.clearLocalStorage %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none cy.clearLocalStorage %}
 
-# コマンドログ
+# Command Log
 
 ```javascript
 cy.clearLocalStorage(/prop1|2/).then((ls) => {
@@ -100,6 +100,6 @@ When clicking on `clearLocalStorage` within the command log, the console outputs
 
 ![console.log for clearLocalStorage](/img/api/clearlocalstorage/local-storage-object-shown-in-console.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.clearCookies()` clearcookies %}

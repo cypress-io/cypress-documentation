@@ -9,7 +9,7 @@ Set a `debugger` and log what the previous command yields.
 You need to have your Developer Tools open for `.debug()` to hit the breakpoint.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .debug()
@@ -21,7 +21,7 @@ cy.debug()
 cy.debug(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -30,7 +30,7 @@ cy.debug().getCookie('app') // Pause to debug at beginning of commands
 cy.get('nav').debug()       // Debug the `get` command's yield
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -40,11 +40,11 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .debug %}
 
-# 例
+# Examples
 
 ## Debug
 
@@ -54,21 +54,21 @@ Option | Default | Description
 cy.get('a').debug().should('have.attr', 'href')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dual .debug %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions utility .debug %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none .debug %}
 
-# コマンドログ
+# Command Log
 
 ***Log out the current subject for debugging***
 
@@ -84,7 +84,7 @@ When clicking on the `debug` command within the command log, the console outputs
 
 ![console.log debug](/img/api/debug/console-gives-all-debug-info-for-command.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `.pause()` pause %}

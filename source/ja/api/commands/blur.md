@@ -9,14 +9,14 @@ Blur a focused element.
 This element must currently be in focus. If you want to ensure an element is focused before blurring, try using {% url `.focus()` focus %} before `.blur()`.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .blur()
 .blur(options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -32,7 +32,7 @@ cy.blur('input')              // Errors, cannot be chained off 'cy'
 cy.window().blur()            // Errors, 'window' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -44,13 +44,13 @@ Option | Default | Description
 `force` | `false` | Forces the action, disables checking if {% urlHash 'element is focused' Requirements %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .blur %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .blur %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Blur the comment input.***
 
@@ -58,7 +58,7 @@ Option | Default | Description
 cy.get('[name="comment"]').type('Nice Product!').blur()
 ```
 
-## オプション
+## Options
 
 ***Blur the first input***
 
@@ -68,9 +68,9 @@ Setting `force` to `true` in the options disables checking whether the input is 
 cy.get('input:first').blur({ force: true })
 ```
 
-# ノート
+# Notes
 
-## 操作ができる状態
+## Actionability
 
 ***Blur is not an action command***
 
@@ -80,7 +80,7 @@ cy.get('input:first').blur({ force: true })
 
 Therefore it's oftentimes much easier and simpler to test the blur behavior directly with `.blur()`.
 
-## タイムアウト
+## Timeouts
 
 ***`.blur()` can time out because your browser did not receive any blur events.***
 
@@ -88,21 +88,21 @@ If you see this error, you may want to ensure that the main browser window is cu
 
 Internally Cypress does account for this, and will polyfill the blur events when necessary to replicate what the browser does. Unfortunately the browser will still behave differently when not in focus - for instance it may throttle async events. Your best bet here is to keep Cypress focused when working on a test.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements blurability .blur %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions wait .blur %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts assertions .blur %}
 
-# コマンドログ
+# Command Log
 
 **Blur a textarea after typing.**
 
@@ -118,7 +118,7 @@ When clicking on the `blur` command within the command log, the console outputs 
 
 ![console.log for blur](/img/api/blur/console-showing-blur-command.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.focus()` focus %}
 - {% url `cy.focused()` focused %}

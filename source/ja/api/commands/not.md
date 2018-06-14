@@ -13,14 +13,14 @@ Opposite of {% url `.filter()` filter %}
 The querying behavior of this command matches exactly how {% url `.not()` http://api.jquery.com/not %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .not(selector)
 .not(selector, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -35,7 +35,7 @@ cy.not('.icon')      // Errors, cannot be chained off 'cy'
 cy.location().not()  // Errors, 'location' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -50,13 +50,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .not %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .not %}
 
-# 例
+# Examples
 
-## セレクターを使う場合
+## Selector
 
 ***Yield the elements that do not have class `active`.***
 
@@ -64,21 +64,21 @@ Option | Default | Description
 cy.get('.left-nav>li').not('.active').should('not.have.class', 'active') // true
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .not %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .not %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .not %}
 
-# コマンドログ
+# Command Log
 
 ***Find all buttons that are not of type submit***
 
@@ -94,6 +94,6 @@ When clicking on `not` within the command log, the console outputs the following
 
 ![Console log not](/img/api/not/log-elements-found-when-using-cy-not.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.filter()` filter %}

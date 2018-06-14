@@ -6,14 +6,14 @@ title: go
 Navigate back or forward to the previous or next URL in the browser's history.
 
 
-# シンタックス
+# Syntax
 
 ```javascript
 cy.go(direction)
 cy.go(direction, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -21,7 +21,7 @@ cy.go(direction, options)
 cy.go('back')    
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} direction** ***(String, Number)***
 
@@ -38,11 +38,11 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.go %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.go 'yields the `window` object after the page finishes loading' %}
 
-# 例
+# Examples
 
 ## Direction
 
@@ -72,7 +72,7 @@ cy.go(-1)       // equivalent to clicking back button
 cy.go(1)        // equivalent to clicking forward button
 ```
 
-# ノート
+# Notes
 
 ***Refreshing and loading the page***
 
@@ -80,21 +80,21 @@ If going forward or back causes a full page refresh, Cypress will wait for the n
 
 Cypress additionally handles situations where a page load was not caused (such as hash routing) and will resolve immediately.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements page cy.go %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions wait cy.go %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts page cy.go %}
 
-# コマンドログ
+# Command Log
 
 ***Go back in browser's history***
 
@@ -112,7 +112,7 @@ When clicking on the `go` command within the command log, the console outputs th
 
 ![Console Log](/img/api/go/window-is-logged-when-go-back-in-browser-history.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.reload()` reload %}
 - {% url `cy.visit()` visit %}

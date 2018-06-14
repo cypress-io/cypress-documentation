@@ -9,7 +9,7 @@ Get all previous siblings of each DOM element in a set of matched DOM elements.
 The querying behavior of this command matches exactly how {% url `.prevAll()` http://api.jquery.com/prevAll %} works in jQuery.
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .prevAll()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.prevAll()` ht
 .prevAll(selector, options)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.prevAll()                // Errors, cannot be chained off 'cy'
 cy.getCookies().prevAll()   // Errors, 'getCookies' does not yield DOM element
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .prevAll %}
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .prevAll %}
 
-# 例
+# Examples
 
-## 引数なしの場合
+## No Args
 
 ***Find all of the element's siblings before `.third`***
 
@@ -73,7 +73,7 @@ Option | Default | Description
 cy.get('.third').prevAll()
 ```
 
-## セレクターを使う場合
+## Selector
 
 ***Find all of the previous siblings of each li. Keep only the ones with a class `selected`.***
 
@@ -92,21 +92,21 @@ cy.get('.third').prevAll()
 cy.get('li').prevAll('.selected')
 ```
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements dom .prevAll %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions existence .prevAll %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts existence .prevAll %}
 
-# コマンドログ
+# Command Log
 
 ***Find all elements before the `.active` li***
 
@@ -122,7 +122,7 @@ When clicking on `prevAll` within the command log, the console outputs the follo
 
 ![Console Log](/img/api/prevall/console-log-all-previous-elements-traversed.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `.nextAll()` nextall %}
 - {% url `.parents()` parents %}

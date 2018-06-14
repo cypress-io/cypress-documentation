@@ -9,13 +9,13 @@ Assign an alias for later use. Reference the alias later within a {% url `cy.get
 **Note:** `.as()` assumes you are already familiar with core concepts such as {% url 'aliases' variables-and-aliases %}
 {% endnote %}
 
-# シンタックス
+# Syntax
 
 ```javascript
 .as(aliasName)
 ```
 
-## 使い方
+## Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -32,17 +32,17 @@ cy.spy(win, 'fetch').as('winFetch')                   // Alias 'spy' as @winFetc
 cy.as('foo')   // Errors, cannot be chained off 'cy'
 ```
 
-## 引数
+## Arguments
 
 **{% fa fa-angle-right %} aliasName** ***(String)***
 
 The name of the alias to be referenced later within a {% url `cy.get()` get %} or {% url `cy.wait()` wait %} command using a `@` prefix.
 
-## 実行結果 {% helper_icon yields %}
+## Yields {% helper_icon yields %}
 
 {% yields same_subject .as %}
 
-# 例
+# Examples
 
 ## DOM Element
 
@@ -62,7 +62,7 @@ cy.wait('@userPut')
   .its('url').should('contain', 'users')
 ```
 
-# ノート
+# Notes
 
 ## Reserved Words
 
@@ -70,21 +70,21 @@ cy.wait('@userPut')
 
 Some strings are not allowed as alias names since they are reserved words in Cypress. These words include: `test`, `runnable`, `timeout`, `slow`, `skip`, and `inspect`.
 
-# ルール
+# Rules
 
-## 条件 {% helper_icon requirements %}
+## Requirements {% helper_icon requirements %}
 
 {% requirements child .as %}
 
-## アサーション {% helper_icon assertions %}
+## Assertions {% helper_icon assertions %}
 
 {% assertions utility .as %}
 
-## タイムアウト {% helper_icon timeout %}
+## Timeouts {% helper_icon timeout %}
 
 {% timeouts none .as %}
 
-# コマンドログ
+# Command Log
 
 ***Alias several routes***
 
@@ -100,7 +100,7 @@ Aliases of routes display in the routes instrument panel:
 
 ![Command log for route](/img/api/as/routes-table-in-command-log.png)
 
-# こちらも参考にしてください
+# See also
 
 - {% url `cy.get()` get %}
 - {% url `cy.wait()` wait %}
