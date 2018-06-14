@@ -1,6 +1,5 @@
 ---
 title: Continuous Integration
-
 ---
 
 Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
@@ -43,18 +42,28 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 
 Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
-{% note info %}
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. In order to run efficiently in CI, we highly recommend you cache the `~/.cache` folder after running `npm install`, [`npm ci`](https://docs.npmjs.com/cli/ci), or equivalents, as demonstrated in the configs below.
-{% endnote %}
+## Caching the Cypress Binary
+
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux that's `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download. 
+
+### We recommend users: 
+
+- Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
+
+- **Don't** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
+
+- If you are using `npm install` in your build process, consider [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and caching the `~/.npm` directory for a faster and more reliable build.
+
+- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
 ## Travis
 
-***Example `.travis.yml` config file***
+### Example `.travis.yml` config file
 
 ```yaml
 language: node_js
 node_js:
-  - 8
+  - 10
 cache:
   directories:
     - ~/.npm
@@ -69,24 +78,24 @@ Caching folders with NPM modules saves a lot of time after the first build.
 
 ## CircleCI
 
-***Example `circle.yml` v1 config file***
+### Example `circle.yml` v1 config file
 
 ```yaml
 machine:
   node:
-    version: 8
+    version: 10
 dependencies:
+  override:
+    - npm ci
   cache_directories:
     - ~/.npm
     - ~/.cache
-  pre:
-    - npm ci
 test:
   override:
     - $(npm bin)/cypress run --record --key <record_key>
 ```
 
-***Example `circle.yml` v2 config file***
+### Example `circle.yml` v2 config file
 
 ```yaml
 version: 2
@@ -101,14 +110,46 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-app
-      - run: npm ci
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps
+      - run:
+          name: Install Dependencies
+          command: npm ci
       - save_cache:
-          key: v1-app
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.npm
             - ~/.cache
       - run: $(npm bin)/cypress run --record --key <record_key>
+```
+
+### Example `circle.yml` v2 config file with `yarn`
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.cache  ## cache both yarn and Cypress!
+      - run: $(yarn bin)/cypress run --record --key <record_key>
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
@@ -123,10 +164,21 @@ RUN npm install
 RUN $(npm bin)/cypress run
 ```
 
-***Docker Images & CI examples***
+{% note warning %}
+Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
+
+```shell
+docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+# Error: the cypress binary is not installed
+```
+
+Instead, you should build a docker container for your project's version of cypress.
+
+{% endnote %}
+
+### Docker Images & CI examples
 
 See our {% url 'examples' https://on.cypress.io/docker %} for additional information on our maintained images and configurations on several CI providers.
-
 
 # Dependencies
 
@@ -140,14 +192,14 @@ apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 liba
 
 Cypress can record your tests running and make them available in our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 
-***Recorded tests allow you to:***
+### Recorded tests allow you to:
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a clip at the point of test failure.
 
-***To record tests running:***
+### To record tests running:
 
 1. {% url 'Set up your project to record' dashboard-service#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
@@ -176,11 +228,11 @@ cypress run --record
 
 Typically you'd set this inside of your CI provider.
 
-***CircleCI Environment Variable***
+### CircleCI Environment Variable
 
 ![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
 
-***TravisCI Environment Variable***
+### TravisCI Environment Variable
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
 
@@ -188,7 +240,7 @@ Typically you'd set this inside of your CI provider.
 
 You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
 
-***Typical use cases would be modifying things like:***
+### Typical use cases would be modifying things like:
 
 - `CYPRESS_BASE_URL`
 - `CYPRESS_VIDEO_COMPRESSION`
