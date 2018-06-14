@@ -1,3 +1,35 @@
+- title: "How We Built Our Automated UI Testing Framework"
+  url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
+  sourceName: Endgame
+  sourceUrl: https://www.endgame.com/
+  date: Jun 11, 2018
+  author: Ai Santos
+  img: /img/examples/how-we-built-our-automated-ui-testing.jpg
+
+- title: "Why you should switch to Cypress for modern web testing?"
+  url: https://medium.com/@shivambharadwaj/https-medium-com-shivambharadwaj-why-you-should-switch-to-cypress-for-modern-web-testing-5d3739a19e6
+  sourceName: Medium
+  sourceUrl: https://medium.com/
+  date: Jun 10, 2018
+  author: Shivam Bharadwaj
+  img: /img/examples/switch-to-cypress.jpg
+
+- title: "Cypress: Write Automated Tests to Validate Web Applications"
+  url: https://auth0.com/blog/cypress-write-automated-tests-to-validate-web-applications/
+  sourceName: Auth0
+  sourceUrl: https://auth0.com/
+  date: Jun 5, 2018
+  author: RC
+  img: /img/examples/tests-to-validate-web-applications.jpg
+
+- title: "Secure secrets in Cypress with the Manifold CLI"
+  url: https://blog.manifold.co/secure-secrets-in-cypress-with-the-manifold-cli-6cd144b3be69
+  sourceName: Manifold
+  sourceUrl: https://blog.manifold.co/
+  date: May 31, 2018
+  author: Sam Slotsky
+  img: /img/examples/secure-secrets-manifold-cli.jpg
+  
 - title: "Start your end to end testing with Angular and Cypress"
   url: https://offering.solutions/blog/articles/2018/05/27/end-to-end-testing-with-angular-cypress/
   sourceName: Offering Solutions Software
