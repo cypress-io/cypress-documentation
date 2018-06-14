@@ -5,14 +5,14 @@ title: window
 
 Get the `window` object of the page that is currently active.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.window()
 cy.window(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.window(options)
 cy.window()    
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -31,13 +31,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.window %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields sets_subject cy.window 'yields the `window` object' %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Yields the remote window object***
 
@@ -49,7 +49,7 @@ cy.window().then((win) => {
 })
 ```
 
-## Options
+## オプション
 
 ***Passes timeout through to {% url `.should()` should %} assertion***
 
@@ -57,21 +57,21 @@ cy.window().then((win) => {
 cy.window({ timeout: 10000 }).should('have.property', 'foo')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.window %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions retry cy.window %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions cy.window %}
 
-# Command Log
+# コマンドログ
 
 ***Get the window***
 
@@ -87,7 +87,7 @@ When clicking on `window` within the command log, the console outputs the follow
 
 ![Console Log](/img/api/window/console-shows-the-applications-window-object-being-tested.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.visit()` visit %}
 - {% url `cy.document()` document %}

@@ -5,14 +5,14 @@ title: title
 
 Get the `document.title` property of the page that is currently active.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.title()
 cy.title(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.title(options)
 cy.title()    // Yields the documents title as a string
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -31,13 +31,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.title %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields sets_subject cy.title 'yields the `document.title` property of the current page' %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Assert that the document's title is "My Awesome Application"***
 
@@ -45,21 +45,21 @@ Option | Default | Description
 cy.title().should('eq', 'My Awesome Application')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.title %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions retry cy.title %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions cy.title %}
 
-# Command Log
+# コマンドログ
 
 ***Assert that the document's title includes 'New User'***
 
@@ -75,6 +75,6 @@ When clicking on `title` within the command log, the console outputs the followi
 
 ![Console Log](/img/api/title/see-the-string-yielded-in-the-console.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.document()` document %}

@@ -9,7 +9,7 @@ Control the size and orientation of the screen for your application.
 You can set the viewport's width and height globally by defining `viewportWidth` and `viewportHeight` in the {% url 'configuration' configuration %}.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.viewport(width, height)
@@ -18,7 +18,7 @@ cy.viewport(width, height, options)
 cy.viewport(preset, orientation, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -27,7 +27,7 @@ cy.viewport(550, 750)    // Set viewport to 550px x 750px
 cy.viewport('iphone-6')  // Set viewport to 357px x 667px
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} width** ***(Number)***
 
@@ -66,11 +66,11 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields null cy.viewport %}
 
-# Examples
+# 例
 
 ## Width, Height
 
@@ -157,7 +157,7 @@ cy.viewport('iphone-6') // viewport will change to 414px x 736px
 cy.viewport('iphone-6', 'landscape')
 ```
 
-# Notes
+# ノート
 
 ## devicePixelRatio
 
@@ -198,21 +198,21 @@ Scaling the app should not affect any calculations or behavior of your applicati
 
 The upsides to this are that tests should consistently pass or fail regardless of a developers' screen size. Tests will also consistently run in `CI` because all of the viewports will be the same no matter what machine Cypress runs on.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.viewport %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions none cy.viewport %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts none cy.viewport %}
 
-# Command Log
+# コマンドログ
 
 ***Change viewport size to test responsive nav***
 
@@ -235,6 +235,6 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 ![Console log viewport](/img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url 'configuration' configuration %}

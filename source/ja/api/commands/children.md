@@ -9,7 +9,7 @@ Get the children of each DOM element within a set of DOM elements.
 The querying behavior of this command matches exactly how {% url `.children()` http://api.jquery.com/children %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .children()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.children()` h
 .children(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.children()                // Errors, cannot be chained off 'cy'
 cy.location().children()     // Errors, 'location' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .children %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .children %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Get the children of the "secondary-nav"***
 
@@ -88,7 +88,7 @@ Option | Default | Description
 cy.get('ul.secondary-nav').children()
 ```
 
-## Selector
+## セレクターを使う場合
 
 ***Get the children with class 'active'***
 
@@ -108,21 +108,21 @@ cy.get('ul.secondary-nav').children()
 cy.get('ul').children('.active')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .children %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .children %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .children %}
 
-# Command Log
+# コマンドログ
 
 **Assert that there should be 8 children elements in a nav**
 
@@ -138,7 +138,7 @@ When clicking on the `children` command within the command log, the console outp
 
 ![console.log for children](/img/api/children/children-yielded-in-console.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.next()` next %}
 - {% url `.parent()` parent %}

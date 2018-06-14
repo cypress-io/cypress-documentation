@@ -51,7 +51,7 @@ cy.get('.hidden').click({ force: true })
 cy.get('.checkbox').check({ force: true })
 ```
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.invoke()` invoke %}
 - {% url `.trigger()` trigger %}

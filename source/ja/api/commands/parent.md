@@ -9,7 +9,7 @@ Get the parent DOM element of a set of DOM elements.
 The querying behavior of this command matches exactly how {% url `.parent()` http://api.jquery.com/parent %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .parent()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.parent()` htt
 .parent(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.parent()            // Errors, cannot be chained off 'cy'
 cy.reload().parent()   // Errors, 'reload' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .parent %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .parent %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Get the parent of the active li***
 
@@ -62,7 +62,7 @@ Option | Default | Description
 cy.get('li.active').parent()
 ```
 
-## Selector
+## セレクターを使う場合
 
 ***Get the parent with class `nav` of the active li***
 
@@ -70,21 +70,21 @@ cy.get('li.active').parent()
 cy.get('li.active').parent('.nav')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .parent %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .parent %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .parent %}
 
-# Command Log
+# コマンドログ
 
 ***Assert on the parent of the active li***
 
@@ -100,7 +100,7 @@ When clicking on the `parent` command within the command log, the console output
 
 ![Console Log parent](/img/api/parent/parent-command-found-elements-for-console-log.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.children()` children %}
 - {% url `.parents()` parents %}

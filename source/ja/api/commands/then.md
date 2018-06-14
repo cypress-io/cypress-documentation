@@ -9,14 +9,14 @@ Enables you to work with the subject yielded from the previous command.
 **Note:** `.then()` assumes you are already familiar with core concepts such as {% url 'closures' variables-and-aliases#Closures %}.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .then(callbackFn)
 .then(options, callbackFn)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -25,7 +25,7 @@ cy.get('.nav').then(($nav) => {})  // Yields .nav as first arg
 cy.location().then((loc) => {})   // Yields location object as first arg
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -39,7 +39,7 @@ Option | Default | Description
 
 Pass a function that takes the previously yielded subject as its first argument.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 `.then()` is modeled identically to the way Promises work in JavaScript.  Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 
@@ -47,7 +47,7 @@ When `undefined` is returned by the callback function, the subject will not be m
 
 Just like Promises, you can return any compatible "thenable" (anything that has a `.then()` interface) and Cypress will wait for that to resolve before continuing forward through the chain of commands.
 
-# Examples
+# 例
 
 {% note info %}
 We have several more examples in our {% url 'Core Concepts Guide' variables-and-aliases %} which go into the various ways you can use `.then()` to store, compare, and debug values.
@@ -134,31 +134,31 @@ cy.get('button').click().then(($button) => {
 })
 ```
 
-# Notes
+# ノート
 
-## Differences
+## 相違点
 
 {% partial then_should_difference %}
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements child .then %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once .then %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts promises .then %}
 
-# Command Log
+# コマンドログ
 
 - `.then()` does *not* log in the command log
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.and()` and %}
 - {% url `.each()` each %}

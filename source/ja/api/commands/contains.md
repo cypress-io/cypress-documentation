@@ -5,7 +5,7 @@ title: contains
 
 Get the DOM element containing the text. DOM elements can contain *more* than the desired text and still match. Additionally, Cypress {% urlHash 'prefers some DOM elements' Notes %} over the deepest element found.
 
-# Syntax
+# シンタックス
 
 ```javascript
 .contains(content)
@@ -19,7 +19,7 @@ cy.contains(selector, content)
 cy.contains(selector, content, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -35,7 +35,7 @@ cy.title().contains('My App')        // Errors, 'title' does not yield DOM eleme
 cy.getCookies().contains('_key')     // Errors, 'getCookies' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} content** ***(String, Number, RegExp)***
 
@@ -54,11 +54,11 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .contains %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject .contains %}
 
-# Examples
+# 例
 
 ## Content
 
@@ -136,7 +136,7 @@ cy.contains(4)
 cy.contains(/^b\w+/)
 ```
 
-## Selector
+## セレクターを使う場合
 
 ***Specify a selector to return a specific element***
 
@@ -163,9 +163,9 @@ To override the element that is yielded, we can pass 'ul' as the selector.
 cy.contains('ul', 'apples')
 ```
 
-# Notes
+# ノート
 
-## Scopes
+## スコープ
 
 `.contains()` acts differently whether it's starting a series of commands or being chained off of an existing.
 
@@ -307,21 +307,21 @@ Even though the `<span>` is the deepest element that contains "Age", Cypress yie
 cy.contains('Age').find('input').type('29')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dual_existence .contains %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .contains %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .contains %}
 
-# Command Log
+# コマンドログ
 
 ***Element contains text "New User"***
 
@@ -337,7 +337,7 @@ When clicking on the `contains` command within the command log, the console outp
 
 ![console.log contains](/img/api/contains/see-elements-found-from-contains-in-console.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.get()` get %}
 - {% url `.within()` within %}

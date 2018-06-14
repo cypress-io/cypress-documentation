@@ -5,7 +5,7 @@ title: request
 
 Make an HTTP request.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.request(url)
@@ -15,7 +15,7 @@ cy.request(method, url, body)
 cy.request(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -23,7 +23,7 @@ cy.request(options)
 cy.request('http://dev.local/seed')    
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} url** ***(String)***
 
@@ -84,7 +84,7 @@ Option | Default | Description
 
 You can also set options for `cy.request`'s `baseUrl` and `responseTimeout` globally in {% url 'configuration' configuration %}.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 `cy.request()` yields the `response` as an object literal containing properties such as:
 
@@ -93,7 +93,7 @@ You can also set options for `cy.request`'s `baseUrl` and `responseTimeout` glob
 - `headers`
 - `duration`
 
-# Examples
+# 例
 
 ## URL
 
@@ -135,7 +135,7 @@ cy.request('POST', 'http://localhost:8888/users/admin', {name: 'Jane'})
 })
 ```
 
-## Options
+## オプション
 
 ***Request a page while disabling auto redirect***
 
@@ -216,7 +216,7 @@ cy
 
 ```
 
-# Notes
+# ノート
 
 ## Debugging
 
@@ -250,21 +250,21 @@ In other words, `cy.request()` transparently performs all of the underlying func
 
 The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements request cy.request %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once cy.request %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts request cy.request %}
 
-# Command Log
+# コマンドログ
 
 ***Request comments endpoint and test response***
 
@@ -285,7 +285,7 @@ When clicking on `request` within the command log, the console outputs the follo
 
 ![Console log request](/img/api/request/console-log-request-response-body-headers-status-url.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.task()` task %}

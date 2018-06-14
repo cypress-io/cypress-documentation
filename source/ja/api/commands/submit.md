@@ -9,14 +9,14 @@ Submit a form.
 This element must be an `<form>`.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .submit()
 .submit(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.submit()               // Errors, cannot be chained off 'cy'
 cy.get('input').submit()  // Errors, 'input' does not yield a form
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -42,13 +42,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .submit %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .submit %}
 
-# Example
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Submit can only be called on a single form.***
 
@@ -63,9 +63,9 @@ Option | Default | Description
 cy.get('#contact').submit()
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 ***Submit is not an action command***
 
@@ -77,21 +77,21 @@ Oftentimes it's much simpler and conveys what you're trying to test by just usin
 
 If you want the other guarantees of waiting for an element to become actionable, you should use a different command like {% url `.click()` click %} or {% url `.type()` type %}.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements submitability .submit %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions wait .submit %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions .submit %}
 
-# Command Log
+# コマンドログ
 
 ***Submit a form***
 
@@ -108,7 +108,7 @@ When clicking on `submit` within the command log, the console outputs the follow
 
 ![cy.submit console log](/img/api/submit/console-shows-what-form-was-submitted.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.click()` click %}
 - {% url `.type()` type %}

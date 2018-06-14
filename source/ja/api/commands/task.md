@@ -8,7 +8,7 @@ Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin eve
 We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.task(event)
@@ -16,7 +16,7 @@ cy.task(event, arg)
 cy.task(event, arg, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -34,7 +34,7 @@ on('task', {
 })
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} event** ***(String)***
 
@@ -53,13 +53,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `taskTimeout` configuration#Timeouts %} | {% usage_options timeout cy.task %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 `cy.task()` yields the value returned or resolved by the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
-# Examples
+# 例
 
-## Command
+## コマンド
 
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
@@ -129,7 +129,7 @@ module.exports = (on, config) => {
 }
 ```
 
-## Options
+## オプション
 
 ### Change the timeout
 
@@ -142,7 +142,7 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 cy.task('seedDatabase', null, { timeout: 20000 });
 ```
 
-# Notes
+# ノート
 
 ## Tasks must end
 
@@ -156,21 +156,21 @@ cy.task('seedDatabase', null, { timeout: 20000 });
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements task cy.task %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once cy.task %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts task cy.task %}
 
-# Command Log
+# コマンドログ
 
 ### List the contents of `cypress.json`
 
@@ -186,7 +186,7 @@ When clicking on the `task` command within the command log, the console outputs 
 
 ![console.log task](/img/api/task/console-shows-task-result.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}

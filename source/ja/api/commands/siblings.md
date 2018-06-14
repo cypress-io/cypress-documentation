@@ -5,7 +5,7 @@ title: siblings
 
 Get sibling DOM elements.
 
-# Syntax
+# シンタックス
 
 ```javascript
 .siblings()
@@ -14,7 +14,7 @@ Get sibling DOM elements.
 .siblings(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -30,7 +30,7 @@ cy.siblings('.error')     // Errors, cannot be chained off 'cy'
 cy.location().siblings()  // Errors, 'location' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -45,13 +45,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .siblings %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .siblings %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Get the siblings of each li***
 
@@ -69,7 +69,7 @@ Option | Default | Description
 cy.get('.active').siblings()
 ```
 
-## Selector
+## セレクターを使う場合
 
 ***Get siblings of element with class `active`***
 
@@ -78,21 +78,21 @@ cy.get('.active').siblings()
 cy.get('li').siblings('.active')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .siblings %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .siblings %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .siblings %}
 
-# Command Log
+# コマンドログ
 
 ***Get the siblings of element with class `active`***
 
@@ -108,7 +108,7 @@ When clicking on `siblings` within the command log, the console outputs the foll
 
 ![Console Log](/img/api/siblings/console-log-of-sibling-elements.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.prev()` prev %}
 - {% url `.next()` next %}

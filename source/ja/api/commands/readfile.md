@@ -5,7 +5,7 @@ title: readFile
 
 Read a file and yield its contents.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.readFile(filePath)
@@ -14,7 +14,7 @@ cy.readFile(filePath, options)
 cy.readFile(filePath, encoding, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -22,7 +22,7 @@ cy.readFile(filePath, encoding, options)
 cy.readFile('menu.json')    
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
@@ -53,11 +53,11 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.readFile %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields sets_subject cy.readFile 'yields the contents of the file' %}
 
-# Examples
+# 例
 
 ## Text
 
@@ -128,7 +128,7 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
 })
 ```
 
-# Notes
+# ノート
 
 ## Existence
 
@@ -162,21 +162,21 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements read_file cy.readFile %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions retry cy.readFile %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions cy.readFile %}
 
-# Command Log
+# コマンドログ
 
 ***List the contents of cypress.json***
 
@@ -192,7 +192,7 @@ When clicking on the `readFile` command within the command log, the console outp
 
 ![Console Log](/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}

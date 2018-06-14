@@ -5,7 +5,7 @@ title: uncheck
 
 Uncheck checkbox(es).
 
-# Syntax
+# シンタックス
 
 ```javascript
 .uncheck()
@@ -16,7 +16,7 @@ Uncheck checkbox(es).
 .uncheck(values, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
 cy.get('p:first').uncheck()     // Errors, '.get()' does not yield checkbox
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} value**  ***(String)***
 
@@ -51,13 +51,13 @@ Option | Default | Description
 `force` | `false` | {% usage_options force uncheck %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .uncheck %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .uncheck %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Uncheck all checkboxes***
 
@@ -87,29 +87,29 @@ cy.get('input[type="checkbox"]').uncheck(['ga'])
 cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 ***The element must first reach actionability***
 
 `.uncheck()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements checkability .uncheck %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions actions .uncheck %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts actions .uncheck %}
 
-# Command Log
+# コマンドログ
 
 ***Uncheck the first checkbox***
 
@@ -127,7 +127,7 @@ When clicking on `uncheck` within the command log, the console outputs the follo
 
 ![Console Log](/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.check()` check %}
 - {% url `.click()` click %}

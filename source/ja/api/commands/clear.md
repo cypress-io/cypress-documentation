@@ -9,14 +9,14 @@ Clear the value of an `input` or `textarea`.
 An alias for {% url `.type('{selectall}{backspace}')` type %}
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .clear()
 .clear(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -34,7 +34,7 @@ cy.get('nav').clear()     // Errors, 'get' doesn't yield input or textarea
 cy.url().clear()          // Errors, 'url' doesn't yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -46,13 +46,13 @@ Option | Default | Description
 `force` | `false` | {% usage_options force clear %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .clear %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .clear %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 **Clear the input and type a new value.**
 
@@ -60,9 +60,9 @@ Option | Default | Description
 cy.get('textarea').clear().type('Hello, World')
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 ***The element must first reach actionability***
 
@@ -74,21 +74,21 @@ cy.get('textarea').clear().type('Hello, World')
 
 Please read the {% url `.type()` type %} documentation for more details.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements clearability .clear %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions actions .clear %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts actions .clear %}
 
-# Command Log
+# コマンドログ
 
 **Clear the input and type a new value**
 
@@ -104,7 +104,7 @@ When clicking on `clear` within the command log, the console outputs the followi
 
 ![console.log for clear](/img/api/clear/one-input-cleared-in-tests.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.blur()` blur %}
 - {% url `.focus()` focus %}

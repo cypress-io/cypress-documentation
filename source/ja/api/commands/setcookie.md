@@ -5,14 +5,14 @@ title: setCookie
 
 Set a browser cookie.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.setCookie(name, value)
 cy.setCookie(name, value, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.setCookie(name, value, options)
 cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} name** ***(String)***
 
@@ -44,7 +44,7 @@ Option | Default | Description
 `secure` | `false` | Whether the cookie is a secure cookie
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.setCookie %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 `cy.setCookie()` yields a cookie object literal with the following properties:
 
@@ -56,7 +56,7 @@ Option | Default | Description
 - `secure`
 - `expiry`
 
-# Examples
+# 例
 
 ## Name Value
 
@@ -68,21 +68,21 @@ cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
 cy.getCookie('session_id').should('have.property', 'value', '189jd09sufh33aaiidhf99d09')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.setCookie %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once cy.setCookie %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts automation cy.setCookie %}
 
-# Command Log
+# コマンドログ
 
 ```javascript
 cy.getCookies().should('be.empty')
@@ -98,7 +98,7 @@ When clicking on `setCookie` within the command log, the console outputs the fol
 
 ![Console Log](/img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.clearCookie()` clearcookie %}
 - {% url `cy.clearCookies()` clearcookies %}

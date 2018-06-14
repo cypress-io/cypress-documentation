@@ -13,7 +13,7 @@ An alias of {% url `.should()` should %}
 **Note:** `.and()` assumes you are already familiar with core concepts such as {% url 'assertions' introduction-to-cypress#Assertions %}
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .and(chainers)
@@ -22,7 +22,7 @@ An alias of {% url `.should()` should %}
 .and(callbackFn)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -40,7 +40,7 @@ cy.wrap({ foo: 'bar' })
 cy.and('eq', '42')   // Errors, cannot be chained off 'cy'
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} chainers** ***(String)***
 
@@ -58,7 +58,7 @@ A method to be called on the chainer.
 
 Pass a function that can have any number of explicit assertions within it. Whatever was passed to the function is what is yielded.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields assertion_indeterminate .and %}
 
@@ -78,7 +78,7 @@ cy
   .and('match', /serif/)            // yields 'sans-serif'
 ```
 
-# Examples
+# 例
 
 ## Chainers
 
@@ -121,7 +121,7 @@ cy
   .and('have.attr', 'href', '/users')
 ```
 
-## Function
+## 関数
 
 ***Verify length, content, and classes from multiple `<p>`***
 
@@ -169,7 +169,7 @@ cy
 Using a callback function {% urlHash 'will not change the subject' Subjects %}
 {% endnote %}
 
-# Notes
+# ノート
 
 ## Chai
 
@@ -208,17 +208,17 @@ cy
   })
 ```
 
-## Differences
+## 相違点
 
 {% partial then_should_difference %}
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements child .and %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts timeouts .and %}
 
@@ -240,7 +240,7 @@ cy.get('input', {timeout: 10000}).should('have.value', 'US').and(($input) => {
 })
 ```
 
-# Command Log
+# コマンドログ
 
 **Chain assertions on the same subject**
 
@@ -260,7 +260,7 @@ When clicking on `assert` within the command log, the console outputs the follow
 
 ![console.log for assertions](/img/api/and/cypress-assertions-console-log.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.should()` should %}
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}

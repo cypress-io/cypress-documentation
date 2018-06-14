@@ -13,14 +13,14 @@ Opposite of {% url `.not()` not %}
 The querying behavior of this command matches exactly how {% url `.filter()` http://api.jquery.com/filter %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .filter(selector)
 .filter(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -35,7 +35,7 @@ cy.filter('.animated')  // Errors, cannot be chained off 'cy'
 cy.location().filter()  // Errors, 'location' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -50,13 +50,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .filter %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .filter %}
 
-# Examples
+# 例
 
-## Selector
+## セレクターを使う場合
 
 ***Filter the current subject to the elements with the class 'active'.***
 
@@ -75,21 +75,21 @@ Option | Default | Description
 cy.get('ul').find('>li').filter('.active')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .filter %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .filter %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .filter %}
 
-# Command Log
+# コマンドログ
 
 ***Filter the li's to the li with the class 'active'.***
 
@@ -105,6 +105,6 @@ When clicking on the `filter` command within the command log, the console output
 
 ![console.log filter](/img/api/filter/console-shows-list-and-filtered-element.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.not()` not %}

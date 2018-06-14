@@ -9,14 +9,14 @@ Get the first DOM element that matches the selector (whether it be itself or one
 The querying behavior of this command matches exactly how {% url `.closest()` http://api.jquery.com/closest %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .closest(selector)
 .closest(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.closest('.active')  // Errors, cannot be chained off 'cy'
 cy.url().closest()     // Errors, 'url' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -46,13 +46,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .closest %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .closest %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Find the closest element of the 'error' with the class 'banner'***
 
@@ -60,21 +60,21 @@ Option | Default | Description
 cy.get('p.error').closest('.banner')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .closest %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .closest %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .closest %}
 
-# Command Log
+# コマンドログ
 
 ***Find the closest element of 'active li' with the class 'nav'***
 
@@ -90,7 +90,7 @@ When clicking on the `closest` command within the command log, the console outpu
 
 ![console.log closest](/img/api/closest/closest-console-logs-elements-found.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.first()` first %}
 - {% url `.parent()` parent %}

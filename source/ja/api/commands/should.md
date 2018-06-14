@@ -13,7 +13,7 @@ An alias of {% url `.and()` and %}
 **Note:** `.should()` assumes you are already familiar with core concepts such as {% url 'assertions' introduction-to-cypress#Assertions %}
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .should(chainers)
@@ -22,7 +22,7 @@ An alias of {% url `.and()` and %}
 .should(callbackFn)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -39,7 +39,7 @@ cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' prope
 cy.should('eq', '42')   // Errors, cannot be chained off 'cy'
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} chainers** ***(String)***
 
@@ -57,7 +57,7 @@ A method to be called on the chainer.
 
 Pass a function that can have any number of explicit assertions within it. Whatever was passed to the function is what is yielded.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields assertion_indeterminate .should %}
 
@@ -77,7 +77,7 @@ cy
   .and('match', /serif/)            // yields 'sans-serif'
 ```
 
-# Examples
+# 例
 
 ## Chainers
 
@@ -126,7 +126,7 @@ cy.get('button').should('have.id', 'new-user').then(($button) =>{
 cy.get('#header a').should('have.attr', 'href', '/users')
 ```
 
-## Function
+## 関数
 
 ***Verify length, content, and classes from multiple `<p>`***
 
@@ -223,7 +223,7 @@ cy.get('button').click()
   .and('not.have.class', 'inactive')
 ```
 
-# Notes
+# ノート
 
 ## Subjects
 
@@ -246,17 +246,17 @@ cy
   })
 ```
 
-## Differences
+## 相違点
 
 {% partial then_should_difference %}
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements child .should %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts timeouts .should %}
 
@@ -279,7 +279,7 @@ cy.get('input', {timeout: 10000}).should(($input) => {
 })
 ```
 
-# Command Log
+# コマンドログ
 
 ***Assert that there should be 8 children in a nav***
 
@@ -295,7 +295,7 @@ When clicking on `assert` within the command log, the console outputs the follow
 
 ![Console Log should](/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.and()` and %}
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}

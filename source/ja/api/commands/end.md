@@ -6,13 +6,13 @@ title: end
 End a chain of commands.
 
 
-# Syntax
+# シンタックス
 
 ```javascript
 .end()
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -26,11 +26,11 @@ cy.contains('ul').end()   // Yield 'null' instead of 'ul' element
 cy.end()                  // Does not make sense to chain off 'cy'
 ```
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields null .end %}
 
-# Examples
+# 例
 
 `.end()` is useful when you want to end a chain of commands and force the next command to not receive what was yielded in the previous command.
 
@@ -48,25 +48,25 @@ cy.contains('User: Cheryl').click()
 cy.contains('User: Charles').click()  // contains looks for content in document now
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements child .end %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions none .end %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts none .end %}
 
-# Command Log
+# コマンドログ
 
 - `.end()` does *not* log in the command log
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.root()` root %}
 - {% url `.within()` within %}

@@ -5,14 +5,14 @@ title: visit
 
 Visit a remote URL.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.visit(url)
 cy.visit(url, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.visit(url, options)
 cy.visit('http://localhost:3000')    // Yields the window of the remote page
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} url** ***(String)***
 
@@ -43,11 +43,11 @@ Option | Default | Description
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in {% url 'configuration' configuration %}.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields sets_subject cy.visit 'yields the `window` object after the page finishes loading' %}
 
-# Examples
+# 例
 
 ## Url
 
@@ -59,7 +59,7 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 cy.visit('http://localhost:8000')
 ```
 
-## Options
+## オプション
 
 ***Change the default timeout***
 
@@ -130,7 +130,7 @@ cy.visit('http://localhost:3000/#/users', {
 })
 ```
 
-# Notes
+# ノート
 
 ## Redirects
 
@@ -223,21 +223,21 @@ cy.visit('http://localhost:8000/#/app')
 
 Cypress will automatically apply the server and routes to the very next `cy.visit()` and does so immediately before any of your application code runs.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements page cy.visit %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions wait cy.visit %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts page cy.visit %}
 
-# Command Log
+# コマンドログ
 
 ***Visit example application in a `beforeEach`***
 
@@ -255,7 +255,7 @@ When clicking on `visit` within the command log, the console outputs the followi
 
 ![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.go()` go %}
 - {% url `cy.reload()` reload %}

@@ -5,14 +5,14 @@ title: dblclick
 
 Double-click a DOM element.
 
-# Syntax
+# シンタックス
 
 ```javascript
 .dblclick()
 .dblclick(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -29,7 +29,7 @@ cy.dblclick('button')          // Errors, cannot be chained off 'cy'
 cy.window().dblclick()         // Errors, 'window' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -40,13 +40,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .dblclick %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .dblclick %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Double click an anchor link***
 
@@ -54,29 +54,29 @@ Option | Default | Description
 cy.get('a#nav1').dblclick() // yields the <a>
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 ***The element must first reach actionability***
 
 `.dblclick()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .dblclick %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions actions .dblclick %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts actions .dblclick %}
 
-# Command Log
+# コマンドログ
 
 ***Double click on a calendar schedule***
 
@@ -92,6 +92,6 @@ When clicking on `dblclick` within the command log, the console outputs the foll
 
 ![console.log dblclick](/img/api/dblclick/element-double-clicked-on.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.click()` click %}

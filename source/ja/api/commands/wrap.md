@@ -5,14 +5,14 @@ title: wrap
 
 Yield the object passed into `.wrap()`.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.wrap(subject)
 cy.wrap(subject, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -20,7 +20,7 @@ cy.wrap(subject, options)
 cy.wrap({ name: "Jane Lane" })    
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} subject** ***(Object)***
 
@@ -35,11 +35,11 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.wrap %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields sets_subject cy.wrap 'yields the object it was called with' %}
 
-# Examples
+# 例
 
 ## Objects
 
@@ -82,21 +82,21 @@ cy
   })
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.wrap %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions retry cy.wrap %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions cy.wrap %}
 
-# Command Log
+# コマンドログ
 
 **Make assertions about object**
 
@@ -114,7 +114,7 @@ When clicking on the `wrap` command within the command log, the console outputs 
 
 ![Console Log](/img/api/wrap/console-log-only-shows-yield-of-wrap.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.invoke()` invoke %}
 - {% url `.its()` its %}

@@ -9,14 +9,14 @@ Clear all browser cookies.
 Cypress automatically clears all cookies *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear a specific cookie inside a single test.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.clearCookies()
 cy.clearCookies(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -24,7 +24,7 @@ cy.clearCookies(options)
 cy.clearCookies()     // clear all cookies
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -35,13 +35,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.clearCookies %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields null cy.clearCookies %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Clear all cookies after logging in***
 
@@ -56,21 +56,21 @@ cy.visit('/dashboard') // we should be redirected back to login
 cy.url().should('include', 'login')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.clearCookies %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions none cy.clearCookies %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts automation cy.clearCookies %}
 
-# Command Log
+# コマンドログ
 
 ***Clear cookies after getting cookies***
 
@@ -88,7 +88,7 @@ When clicking on `clearCookies` within the command log, the console outputs the 
 
 ![Console Log](/img/api/clearcookies/inspect-cleared-cookies-in-console.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.clearCookie()` clearcookie %}
 - {% url 'Cypress Cookies API' cookies %}

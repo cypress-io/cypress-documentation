@@ -10,14 +10,14 @@ Start a server to begin routing responses to `cy.route()` and `cy.request()`.
 {% endnote %}
 
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.server()
 cy.server(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -25,7 +25,7 @@ cy.server(options)
 cy.server()    
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -57,13 +57,13 @@ Option | Default | Description
 `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs
 `whitelist` | function | Callback function that whitelists requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields null cy.server %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***After starting a server:***
 
@@ -75,7 +75,7 @@ Option | Default | Description
 cy.server()
 ```
 
-## Options
+## オプション
 
 ***Change defaults for {% url `cy.route()` route %}***
 
@@ -207,7 +207,7 @@ cy.route('POST', '/users', {}).as('createUser')
 cy.server({enable: false})
 ```
 
-# Notes
+# ノート
 
 ***Server persists until the next test runs***
 
@@ -225,25 +225,25 @@ Oftentimes your application may make initial requests immediately when it loads 
 
 You can {% url 'read more about XHR strategy here' network-requests %}.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.server %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions none cy.server %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts none cy.server %}
 
-# Command Log
+# コマンドログ
 
 - `cy.server()` does *not* log in the command log
 
-# See also
+# こちらも参考にしてください
 
 - {% url 'Network Requests' network-requests %}
 - {% url `cy.request()` request %}

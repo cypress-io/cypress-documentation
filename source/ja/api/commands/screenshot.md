@@ -5,7 +5,7 @@ title: screenshot
 
 Take a screenshot of the application under test and, optionally, the {% url "Cypress Command Log" test-runner#Command-Log %}.
 
-# Syntax
+# シンタックス
 
 ```javascript
 .screenshot()
@@ -21,7 +21,7 @@ cy.screenshot(options)
 cy.screenshot(fileName, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -30,7 +30,7 @@ cy.screenshot()
 cy.get(".post").screenshot()
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} fileName** ***(String)***
 
@@ -54,15 +54,15 @@ Option |Default | Description
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .screenshot %}
 
-# Examples
+# 例
 
 The screenshot will be stored in the `cypress/screenshots` folder by default. You can change the directory where screenshots are saved in your {% url 'configuration' configuration#Folders-Files %}.
 
-## No Args
+## 引数なしの場合
 
 ### Take a screenshot
 
@@ -134,7 +134,7 @@ cy.screenshot("my-screenshot", {
 })
 ```
 
-# Notes
+# ノート
 
 ## Test Failures
 
@@ -172,21 +172,21 @@ cy.screenshot()
 cy.get('.sticky-header').invoke('css', 'position', null)
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dual_existence_single_dom cy.screenshot %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once cy.screenshot %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts automation cy.screenshot %}
 
-# Command Log
+# コマンドログ
 
 ### Take a screenshot with a specific filename
 
@@ -202,7 +202,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 
 ![Console Log](/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `Cypress.Screenshot` screenshot-api %}
 - {% url `cy.debug()` debug %}

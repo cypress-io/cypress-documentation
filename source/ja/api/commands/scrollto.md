@@ -5,7 +5,7 @@ title: scrollTo
 
 Scroll to a specific position.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.scrollTo(position)
@@ -21,7 +21,7 @@ cy.scrollTo(x, y, options)
 .scrollTo(x, y, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -36,7 +36,7 @@ cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to its bottom
 cy.title().scrollTo('My App')  // Errors, 'title' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} position** ***(String)***
 
@@ -63,13 +63,13 @@ Option | Default | Description
 `easing` | `swing` | Will scroll with the easing animation
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .scrollTo %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject cy.scrollTo %}
 
-# Examples
+# 例
 
-## Position
+## 位置で指定
 
 ***Scroll to the bottom of the window***
 
@@ -83,7 +83,7 @@ cy.scrollTo('bottom')
 cy.get('#movies-list').scrollTo('center')
 ```
 
-## Coordinates
+## 座標で指定
 
 ***Scroll 500px down the list***
 
@@ -103,7 +103,7 @@ cy.scrollTo('500px')
  cy.get('.user-photo').scrollTo('0%', '25%')
 ```
 
-## Options
+## オプション
 
 ***Use linear easing animation to scroll***
 
@@ -117,13 +117,13 @@ cy.get('.documentation').scrollTo('top', { easing: 'linear'} )
 cy.get('#slider').scrollTo('right', { duration: 2000} )
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 `cy.scrollTo()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-## Scopes
+## スコープ
 
 `cy.scrollTo()` acts differently whether it's starting a series of commands or being chained off of an existing.
 
@@ -143,23 +143,23 @@ This will scroll the `<#checkout-items>` element.
 cy.get('#checkout-items').scrollTo('right')
 ```
 
-## Snapshots
+## スナップショット
 
 ***Snapshots do not reflect scroll behavior***
 
 *Cypress does not reflect the accurate scroll positions of any elements within snapshots.* If you want to see the actual scrolling behavior in action, we recommend using {% url `.pause()` pause %} to walk through each command or {% url 'watching the video of the test run' screenshots-and-videos#Videos %}.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements scrollability .scrollTo %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions .scrollTo %}
 
-# Command Log
+# コマンドログ
 
 ***Scroll to the bottom of the window then scroll the element to the "right"***
 
@@ -176,6 +176,6 @@ When clicking on `scrollTo` within the command log, the console outputs the foll
 
 {% img /img/api/scrollto/console-log-scrollto.png "console.log for scrollTo" %}
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.scrollIntoView()` scrollintoview %}

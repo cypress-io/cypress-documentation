@@ -9,7 +9,7 @@ Get A DOM element at a specific index in an array of elements.
 The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery. Its behavior is also similar to that of the CSS pseudo-class {% url `:nth-child()` https://api.jquery.com/nth-child-selector/ %} selector. 
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .eq(index)
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.eq()` http://
 .eq(indexFromEnd, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -34,7 +34,7 @@ cy.eq(0)                  // Errors, cannot be chained off 'cy'
 cy.getCookies().eq(4)     // Errors, 'getCookies' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} index**  ***(Number)***
 
@@ -53,11 +53,11 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .eq %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .eq %}
 
-# Examples
+# 例
 
 ## Index
 
@@ -120,21 +120,21 @@ cy.get('tr').eq(2).should('contain', 'Canada')  //true
 cy.get('li').eq(-2).should('contain', 'sphynx') // true
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .eq %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .eq %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .eq %}
 
-# Command Log
+# コマンドログ
 
 ***Find the 4th `<li>` in the navigation***
 
@@ -150,7 +150,7 @@ When clicking on the `eq` command within the command log, the console outputs th
 
 ![console.log eq](/img/api/eq/see-element-and-list-when-using-eq.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.first()` first %}
 - {% url `.last()` last %}

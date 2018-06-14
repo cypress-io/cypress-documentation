@@ -9,7 +9,7 @@ Get the parent DOM elements of a set of DOM elements.
 The querying behavior of this command matches exactly how {% url `.parents()` http://api.jquery.com/parents %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .parents()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.parents()` ht
 .parents(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.parents()              // Errors, cannot be chained off 'cy'
 cy.go('back').parents()   // Errors, 'go' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .parents %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .parents %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Get the parents of the active li***
 
@@ -62,7 +62,7 @@ Option | Default | Description
 cy.get('li.active').parents()
 ```
 
-## Selector
+## セレクターを使う場合
 
 ***Get the parents with class `nav` of the active li***
 
@@ -70,21 +70,21 @@ cy.get('li.active').parents()
 cy.get('li.active').parents('.nav')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .parents %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .parents %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .parents %}
 
-# Command Log
+# コマンドログ
 
 ***Get the parents of the active `li`***
 
@@ -98,7 +98,7 @@ When clicking on the `parents` command within the command log, the console outpu
 
 ![Console Log parents](/img/api/parents/parents-elements-displayed-in-devtools-console.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.children()` children %}
 - {% url `.parent()` parent %}

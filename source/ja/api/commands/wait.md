@@ -5,7 +5,7 @@ title: wait
 
 Wait for a number of milliseconds or wait for an aliased resource to resolve before moving on to the next command.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.wait(time)
@@ -16,7 +16,7 @@ cy.wait(alias, options)
 cy.wait(aliases, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -25,7 +25,7 @@ cy.wait(500)
 cy.wait('@getProfile')    
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} time** ***(Number)***
 
@@ -52,7 +52,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `requestTimeout` configuration#Timeouts %}, {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.wait %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 ***When given a `time` argument:***
 
@@ -62,7 +62,7 @@ Option | Default | Description
 
 {% yields sets_subject cy.wait 'yields an object containing the HTTP request and response properties of the XHR' %}
 
-# Examples
+# 例
 
 ## Time
 
@@ -80,7 +80,7 @@ Read about {% url 'best practices' best-practices#Unnecessary-Waiting %} here.
 
 Additionally, its often much easier to use {% url `cy.debug()` debug %} or {% url `cy.pause()` pause %} when debugging your test code.
 
-## Alias
+## エイリアス
 
 For a detailed explanation of aliasing, {% url 'read more about waiting on routes here' network-requests#Waiting %}.
 
@@ -129,7 +129,7 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('have.length', 1)
 ```
 
-## Aliases
+## エイリアス
 
 ***You can pass an array of aliases that will be waited on before resolving.***
 
@@ -161,9 +161,9 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
   })
 ```
 
-# Notes
+# ノート
 
-## Timeouts
+## タイムアウト
 
 ***requestTimeout and responseTimeout***
 
@@ -183,21 +183,21 @@ This means Cypress will now wait up to 20 seconds for the external server to res
 
 This gives you the best of both worlds - a fast error feedback loop when requests never go out and a much longer duration for the actual external response.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.wait %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once cy.wait %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts wait cy.wait %}
 
-# Command Log
+# コマンドログ
 
 ***Wait for the PUT to users to resolve.***
 
@@ -216,7 +216,7 @@ When clicking on `wait` within the command log, the console outputs the followin
 
 ![Console Log](/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.as()` as %}
 - {% url `cy.route()` route %}

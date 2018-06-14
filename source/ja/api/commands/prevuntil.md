@@ -9,7 +9,7 @@ Get all previous siblings of each DOM element in a set of matched DOM elements u
 The querying behavior of this command matches exactly how {% url `.prevUntil()` http://api.jquery.com/prevUntil %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .prevUntil(selector)
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how {% url `.prevUntil()` 
 .prevUntil(element, filter, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -35,7 +35,7 @@ cy.prevUntil()                  // Errors, cannot be chained off 'cy'
 cy.location().prevUntil('path') // Errors, 'location' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -58,13 +58,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .prevUntil %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .prevUntil %}
 
-# Examples
+# 例
 
-## Selector
+## セレクターを使う場合
 
 ***Find all of the element's siblings before `#nuts` until `#veggies`***
 
@@ -90,21 +90,21 @@ Option | Default | Description
 cy.get('#nuts').prevUntil('#veggies')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .prevUntil %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .prevUntil %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .prevUntil %}
 
-# Command Log
+# コマンドログ
 
 ***Find all of the element's siblings before `#nuts` until `#veggies`***
 
@@ -120,7 +120,7 @@ When clicking on `prevUntil` within the command log, the console outputs the fol
 
 ![Console Log](/img/api/prevuntil/console-log-previous-elements-until-defined-el.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.prev()` prev %}
 - {% url `.prevAll()` prevall %}

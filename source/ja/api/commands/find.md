@@ -9,14 +9,14 @@ Get the descendent DOM elements of a specific selector.
 The querying behavior of this command matches exactly how {% url `.find()` http://api.jquery.com/find %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .find(selector)
 .find(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -31,7 +31,7 @@ cy.find('.progress')          // Errors, cannot be chained off 'cy'
 cy.exec('node start').find()  // Errors, 'exec' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -46,13 +46,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .find %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .find %}
 
-# Examples
+# 例
 
-## Selector
+## セレクターを使う場合
 
 ***Get li's within parent***
 
@@ -68,21 +68,21 @@ Option | Default | Description
 cy.get('#parent').find('li')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .find %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .find %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .find %}
 
-# Command Log
+# コマンドログ
 
 ***Find the li's within the nav***
 
@@ -98,6 +98,6 @@ When clicking on the `find` command within the command log, the console outputs 
 
 ![console.log find](/img/api/find/find-in-console-shows-list-and-yields.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.get()` get %}

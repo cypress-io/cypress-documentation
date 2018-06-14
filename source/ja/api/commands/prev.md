@@ -9,7 +9,7 @@ Get the immediately preceding sibling of each element in a set of the elements.
 The querying behavior of this command matches exactly how {% url `.prev()` http://api.jquery.com/prev %} works in jQuery.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .prev()
@@ -18,7 +18,7 @@ The querying behavior of this command matches exactly how {% url `.prev()` http:
 .prev(selector, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -33,7 +33,7 @@ cy.prev()                // Errors, cannot be chained off 'cy'
 cy.getCookies().prev()   // Errors, 'getCookies' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} selector**  ***(String selector)***
 
@@ -48,13 +48,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .prev %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields changes_dom_subject_or_subjects .prev %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Find the previous element of the element with class of `active`***
 
@@ -73,7 +73,7 @@ Option | Default | Description
 cy.get('.active').prev()
 ```
 
-## Selector
+## セレクターを使う場合
 
 ***Find the previous element with a class of `active`***
 
@@ -92,21 +92,21 @@ cy.get('.active').prev()
 cy.get('li').prev('.active')
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements dom .prev %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions existence .prev %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts existence .prev %}
 
-# Command Log
+# コマンドログ
 
 ***Find the previous element of the active `li`***
 
@@ -122,7 +122,7 @@ When clicking on `prev` within the command log, the console outputs the followin
 
 ![Console Log](/img/api/prev/previous-element-in-console-log.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.next()` next %}
 - {% url `.prevAll()` prevall %}

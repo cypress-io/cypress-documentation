@@ -5,14 +5,14 @@ title: root
 
 Get the root DOM element.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.root()
 cy.root(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -23,7 +23,7 @@ cy.get('nav').within(($nav) => {
 })
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -34,13 +34,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.root %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 `.root()` yields the root DOM element.
 
 The root element yielded is `<html>` by default. However, when calling `.root()` from a {% url `.within()` within %} command, the root element will point to the element you are "within".
 
-# Examples
+# 例
 
 ## HTML
 
@@ -62,21 +62,21 @@ cy.get('form').within(($form) => {
 })
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.root %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions retry cy.root %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions cy.root %}
 
-# Command Log
+# コマンドログ
 
 ***Get root element***
 
@@ -96,7 +96,7 @@ When clicking on the `root` command within the command log, the console outputs 
 
 ![Console Log root](/img/api/root/console-log-root-which-is-usually-the-main-document.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.get()` get %}
 - {% url `.within()` within %}

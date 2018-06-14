@@ -5,14 +5,14 @@ title: focus
 
 Focus on a DOM element.
 
-# Syntax
+# シンタックス
 
 ```javascript
 .focus()
 .focus(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -27,7 +27,7 @@ cy.focus('#search')  // Errors, cannot be chained off 'cy'
 cy.window().focus()  // Errors, 'window' does not yield DOM element
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -38,13 +38,13 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .focus %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .focus %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Focus on an input***
 
@@ -59,9 +59,9 @@ cy.get('[type="input"]').focus()
 cy.get('textarea').focus().type('Nice Product!').blur()
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 ***Focus is not an action command***
 
@@ -85,7 +85,7 @@ If there is currently a different DOM element with focus, Cypress issues a `blur
 
 Ensure the element you are trying to call `.focus()` on is a {% url 'focusable element' https://www.w3.org/TR/html5/editing.html#focusable %}.
 
-## Timeouts
+## タイムアウト
 
 ***Can time out because your browser did not receive any focus events.***
 
@@ -93,21 +93,21 @@ If you see this error, you may want to ensure that the main browser window is cu
 
 Internally Cypress does account for this, and will polyfill the blur events when necessary to replicate what the browser does. Unfortunately the browser will still behave differently when not in focus - for instance it may throttle async events. Your best bet here is to keep Cypress focused when working on a test.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements focusability .focus %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions wait .focus %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions .focus %}
 
-# Command Log
+# コマンドログ
 
 ***Focus the textarea***
 
@@ -123,7 +123,7 @@ When clicking on the `focus` command within the command log, the console outputs
 
 ![console.log focus](/img/api/focus/console-log-textarea-that-was-focused-on.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.blur()` blur %}
 - {% url `.click()` click %}

@@ -8,7 +8,7 @@ Use `cy.route()` to manage the behavior of network requests.
 **Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.route(url)
@@ -19,7 +19,7 @@ cy.route(callbackFn)
 cy.route(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -27,7 +27,7 @@ cy.route(options)
 cy.route('/users/**')  
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} url** ***(String, Glob, RegExp)***
 
@@ -64,11 +64,11 @@ Option | Default | Description
 
 You can also set options for all {% url `cy.wait()` wait %}'s `requestTimeout` and `responseTimeout` globally in {% url 'configuration' configuration %} to control how long to wait for the request and response of a supplied route.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields null_alias cy.route %}
 
-# Examples
+# 例
 
 ## Without Stubbing
 
@@ -294,7 +294,7 @@ cy.fixture('user').as('fxUser')
 cy.route('POST', '**/users', '@fxUser')
 ```
 
-## Options
+## オプション
 
 ***Pass in an options object***
 
@@ -375,7 +375,7 @@ cy.route({
 })
 ```
 
-## Function
+## 関数
 
 ***Set the routing options by a callback function***
 
@@ -410,7 +410,7 @@ cy.route(() => {
 })
 ```
 
-# Notes
+# ノート
 
 ## Debugging
 
@@ -475,21 +475,21 @@ cy.server({force404: true})
 
 You can {% url 'read more about this here.' server#Options %}
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.route %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions none cy.route %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts none cy.route %}
 
-# Command Log
+# コマンドログ
 
 ```javascript
 cy.server()
@@ -510,7 +510,7 @@ When clicking on `XHR Stub` within the Command Log, the console outputs the foll
 
 ![Console Log](/img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.as()` as %}
 - {% url `cy.fixture()` fixture %}

@@ -4,14 +4,14 @@ title: log
 
 Print a message to the Cypress Command Log.
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.log(message)
 cy.log(message, args...)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -19,7 +19,7 @@ cy.log(message, args...)
 cy.log('created new user')
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} message** ***(String)***
 
@@ -29,11 +29,11 @@ Message to be printed to Cypress Command Log.
 
 Additional arguments to be printed to the Cypress Command Log. There is no limit to the number of arguments.
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields null cy.log %}
 
-# Examples
+# 例
 
 ## Message
 
@@ -53,21 +53,21 @@ cy.log('Login successful')
 cy.log('events triggered', events)
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.log %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions none cy.log %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts none cy.log %}
 
-# Command Log
+# コマンドログ
 
 ### Print messages with arguments to the Command Log.
 
@@ -84,7 +84,7 @@ When clicking on `log` within the command log, the console outputs the following
 
 ![Console log log](/img/api/log/console-shows-logs-message-and-any-arguments.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.exec()` exec %}
 - {% url `Cypress.log` cypress-log %}

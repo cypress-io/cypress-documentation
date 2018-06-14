@@ -9,14 +9,14 @@ Get the current URL hash of the page that is currently active.
 This is an alias of {% url "`cy.location('hash')`" location %}
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 cy.hash()
 cy.hash(options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -24,7 +24,7 @@ cy.hash(options)
 cy.hash()     // Get the url hash
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -37,7 +37,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.hash %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 ***When the current URL contains a hash:***
 
@@ -47,9 +47,9 @@ Option | Default | Description
 
 {% yields sets_subject cy.hash "yields an empty string" %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Assert that hash is `#/users/1` given remote URL: `http://localhost:8000/app/#/users/1`***
 
@@ -73,21 +73,21 @@ cy.get('#users li').find('a').click()
 cy.hash().should('match', /users\/.+$/) // => true
 ```
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements parent cy.hash %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions retry cy.hash %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts assertions cy.hash %}
 
-# Command Log
+# コマンドログ
 
 ***Assert that the hash matches `#users/new`***
 
@@ -103,7 +103,7 @@ When clicking on `hash` within the command log, the console outputs the followin
 
 ![Console Log for hash](/img/api/hash/hash-command-yields-url-after-hash.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `cy.location()` location %}
 - {% url `cy.url()` url %}

@@ -5,13 +5,13 @@ title: each
 
 Iterate through an array like structure (arrays or objects with a `length` property).
 
-# Syntax
+# シンタックス
 
 ```javascript
 .each(callbackFn)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -28,7 +28,7 @@ cy.each(function () {...})            // Errors, cannot be chained off 'cy'
 cy.location().each(function () {...}) // Errors, 'location' doesn't yield an array
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
@@ -38,11 +38,11 @@ Pass a function that is invoked with the following arguments:
 - `index`
 - `collection`
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .each %}
 
-# Examples
+# 例
 
 ## DOM Elements
 
@@ -94,7 +94,7 @@ cy.wrap([1,2,3]).each((num, i, array) => {
 })
 ```
 
-# Notes
+# ノート
 
 ## Return early
 
@@ -102,25 +102,25 @@ cy.wrap([1,2,3]).each((num, i, array) => {
 
 You can stop the `.each()` loop early by returning `false` in the callback function.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements child .each %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions once .each %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts promises .each %}
 
-# Command Log
+# コマンドログ
 
 - `cy.each()` does *not* log in the command log
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}

@@ -9,7 +9,7 @@ Check checkbox(es) or radio(s).
 This element must be an `<input>` with type `checkbox` or `radio`.
 {% endnote %}
 
-# Syntax
+# シンタックス
 
 ```javascript
 .check()
@@ -20,7 +20,7 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 .check(values, options)
 ```
 
-## Usage
+## 使い方
 
 **{% fa fa-check-circle green %} Correct Usage**
 
@@ -36,7 +36,7 @@ cy.check('[type="checkbox"]') // Errors, cannot be chained off 'cy'
 cy.get('p:first').check()     // Errors, '.get()' does not yield checkbox or radio
 ```
 
-## Arguments
+## 引数
 
 **{% fa fa-angle-right %} value**  ***(String)***
 
@@ -56,13 +56,13 @@ Option | Default | Description
 `force` | `false` | {% usage_options force check %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .check %}
 
-## Yields {% helper_icon yields %}
+## 実行結果 {% helper_icon yields %}
 
 {% yields same_subject .check %}
 
-# Examples
+# 例
 
-## No Args
+## 引数なしの場合
 
 ***Check all checkboxes***
 
@@ -98,7 +98,7 @@ cy.get('[type="radio"]').check('US')
 cy.get('[type="checkbox"]').check(['ga', 'ca'])
 ```
 
-## Options
+## オプション
 
 ***Check an invisible checkbox***
 
@@ -109,29 +109,29 @@ cy.get('.action-checkboxes').should('not.be.visible') // Passes
   .check({ force: true }).should('be.checked')        // Passes
 ```
 
-# Notes
+# ノート
 
-## Actionability
+## 操作ができる状態
 
 ***The element must first reach actionability***
 
 `.check()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
-# Rules
+# ルール
 
-## Requirements {% helper_icon requirements %}
+## 条件 {% helper_icon requirements %}
 
 {% requirements checkability .check %}
 
-## Assertions {% helper_icon assertions %}
+## アサーション {% helper_icon assertions %}
 
 {% assertions actions .check %}
 
-## Timeouts {% helper_icon timeout %}
+## タイムアウト {% helper_icon timeout %}
 
 {% timeouts actions .check %}
 
-# Command Log
+# コマンドログ
 
 **check the element with name of 'emailUser'**
 
@@ -147,7 +147,7 @@ When clicking on `check` within the command log, the console outputs the followi
 
 ![console.log for check](/img/api/check/console-showing-events-on-check.png)
 
-# See also
+# こちらも参考にしてください
 
 - {% url `.click()` click %}
 - {% url `.uncheck()` uncheck %}
