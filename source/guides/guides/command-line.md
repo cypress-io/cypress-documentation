@@ -118,19 +118,19 @@ cypress run --reporter-options mochaFile=result.xml,toConsole=true
 ### Run tests specifying a single test file to run instead of all tests
 
 ```shell
-cypress run --spec cypress/integration/app.spec.js
+cypress run --spec 'cypress/integration/app.spec.js'
 ```
 
 ### Run tests specifying a glob of where to look for test files
 
 ```shell
-cypress run --spec cypress/integration/login/**/*
+cypress run --spec 'cypress/integration/login/**/*'  ## Note: quotes required
 ```
 
 ### Run tests specifying multiple test files to run
 
 ```shell
-cypress run --spec cypress/integration/filter.spec.js,cypress/integration/users.spec.js
+cypress run --spec 'cypress/integration/filter.spec.js,cypress/integration/users.spec.js'
 ```
 
 ### Run tests specifying a project

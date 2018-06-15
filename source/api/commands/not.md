@@ -60,8 +60,18 @@ Option | Default | Description
 
 ***Yield the elements that do not have class `active`.***
 
+```html
+<ul>
+  <li>Home</li>
+  <li class='active'>About</li>
+  <li>Services</li>
+  <li>Pricing</li>
+  <li>Contact</li>
+</ul>
+```
+
 ```javascript
-cy.get('.left-nav>li').not('.active').should('not.have.class', 'active') // true
+cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 
 # Rules
