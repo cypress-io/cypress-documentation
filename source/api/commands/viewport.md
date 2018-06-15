@@ -46,8 +46,8 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `macbook-15`  | 1440  | 900    |
 | `macbook-13`  | 1280  | 800    |
 | `macbook-11`  | 1366  | 768    |
-| `ipad-2`      | 1024  | 768    |
-| `ipad-mini`   | 1024  | 768    |
+| `ipad-2`      | 768   | 1024    |
+| `ipad-mini`   | 768   | 1024    |
 | `iphone-6+`   | 414   | 736    |
 | `iphone-6`    | 375   | 667    |
 | `iphone-5`    | 320   | 568    |
