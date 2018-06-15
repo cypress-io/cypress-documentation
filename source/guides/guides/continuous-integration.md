@@ -44,7 +44,7 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ## Caching the Cypress Binary
 
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux thats `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download. 
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux that's `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download. 
 
 ### We recommend users: 
 
@@ -178,7 +178,7 @@ Instead, you should build a docker container for your project's version of cypre
 
 ### Docker Images & CI examples
 
-See our {% url 'examples' https://on.cypress.io/docker %} for additional information on our maintained images and configurations on several CI providers.
+See our {% url 'examples' docker %} for additional information on our maintained images and configurations on several CI providers.
 
 # Dependencies
 
