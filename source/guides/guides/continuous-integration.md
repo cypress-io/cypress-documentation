@@ -178,7 +178,7 @@ Instead, you should build a docker container for your project's version of cypre
 
 ### Docker Images & CI examples
 
-See our {% url 'examples' https://on.cypress.io/docker %} for additional information on our maintained images and configurations on several CI providers.
+See our {% url 'examples' docker %} for additional information on our maintained images and configurations on several CI providers.
 
 # Dependencies
 

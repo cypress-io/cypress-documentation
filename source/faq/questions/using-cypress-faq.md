@@ -147,9 +147,7 @@ When you load your application using `cy.visit()`, Cypress will wait for the `lo
 
 **_In CI, how do I make sure my server has started?_**
 
-
-There are a couple really great modules that we recommend using for this, {% url "`wait-on`" https://github.com/jeffbski/wait-on %} and {% url '`start-server-and-test`' https://github.com/bahmutov/start-server-and-test %}.
-
+There are a couple really great modules that we recommend using for this, {% url '`wait-on`' https://www.npmjs.com/package/wait-on %} and {% url '`start-server-and-test`' https://github.com/bahmutov/start-server-and-test %}.
 
 **_How can I wait for my requests to be complete?_**
 
