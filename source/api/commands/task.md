@@ -64,7 +64,7 @@ Option | Default | Description
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
 - Seeding your test database.
-- Storing state in Node that you want persisted between tests.
+- Storing state in Node that you want persisted between spec files.
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
@@ -90,9 +90,9 @@ cy.task('readJson', 'cypress.json').then((data) => {
 ```javascript
 // in plugins/index.js file
 on('task', {
-  readJson () {
+  readJson: (filename) => {
     // reads the file relative to current working directory
-    return fsExtra.readJson(path.join(process.cwd(), arg)
+    return fsExtra.readJson(path.join(process.cwd(), filename)
   }
 })
 ```
