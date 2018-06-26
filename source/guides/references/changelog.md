@@ -2,6 +2,59 @@
 title: Changelog
 ---
 
+## 3.0.2
+
+*Released 6/26/2018*
+
+**Features:**
+
+- You can now specify environment variables (like `cypress_binary_version`) inside your `.npmrc` file to be used as an environment variable. Addresses {% issue 1399 %} and {% issue 1853 %}
+- If multiple non-named screenshots are taken in a single test, after the first one they're now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
+- Passing `foo/bar/baz` as the name of spec `app.spec.js` will result in the screenshot being saved to `screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}
+- By default, screenshots will be saved in a directory structure matching the spec's path. Screenshots taken within `cypress/integration/foo/bar/baz_spec.js` will save a screenshot as `screenshots/foo/bar/baz_spec.js/test name.png`. Fixes {% issue 1826 %}
+- We now append `-- failed` to screenshots taken automatically during failure. Fixes {% issue 1923 %}
+- Added `Cypress.browser` to yield browser information. Addresses {% issue 1919 %}.
+- Added `Cypress.browser.isHeadless` and `Cypress.browser.isHeaded`. Addresses {% issue 1961 %}.
+- Added `Cypress.spec` to yield spec file information. Addresses {% issue 1918 %}.
+- New commands for handling binarry cache have been added: `cypress cache clear`, `cypress cache folder`, and `cypress cache list`. Addresses {% issue 1856 %}
+- Now support `--no-exit` flag for `cypress run` to keep browser open after test runs. Addresses {% issue 1871 %}
+- Urls in `cy.visit()` are no longer arbitrarily truncated within the Test Runner. Fixes {% issue 1995 %}
+
+**Bugfixes:**
+
+- Screenshots taken with `cy.screenshot()` on 2x DPI are now taken at correct fullsize. Fixes {% issue 1857 %} and  {% issue 2018 %}.
+- Fixes {% issue 1863 %}.
+- `EPIPE` error now fixed in Windows. Fixes {% issue 1841 %} and {% issue 2044 %}.
+- Fixed issue with focusing on window in Test Runner. Fixes {% issue 1909 %} {% issue 1904 %} and {% issue 1939 %}.
+- Fixed issue where Cypress would unnecessarily scroll when attempting to locate elements with `position: sticky`. Fixes {% issue 1475 %}.
+- Fixes {% issue 1704 %}.
+- Fixes {% issue 1396 %}.
+- Fixes {% issue 1756 %}.
+- The `--silent` flag should now be respecting on `npm install cypress` on all OSes. Fixes {% issue 817 %}  and {% issue 1853 %}.
+- Fixed display of project pathnames in Desktop GUI. Fixes {% issue 1830 %}
+- The `config` in the `supportsFile` now no longer prefixes paths with the project root path. Fixes {% issue 1868 %}
+- Fixed issue where `onclick` was not being triggered on `.check()` of radio buttons. Fixes {% issue 1854 %}.
+- Fixed issue where preprocessor errors were being swallowed. Fixes {% issue 1877 %}.
+- Fixed issue where Cypress was randomly hanging in CI runs. Fixes {% issue 2013 %}, {% issue 1912 %},  {% issue 1905 %}, and {% issue 1890 %}.
+- Fixed issue where cancelled runs were never ending. Fixes {% issue 1891 %} and {% issue 1952 %}.
+- Fixes {% issue 1901 %}.
+- Fixed issue where videos would not be recorded when object was returned from `before:browser:launch` in Electron. Fixes {% issue 1992 %}.
+- Fixed issue where Cypress would not inject correctly when visiting a page with `<header>` and no `<head>`. Fixes {% issue 2026 %}
+- Fixes {% issue 2030 %}
+
+**Misc:**
+
+- Dependencies updated. Fixes {% issue 1674 %}, {% issue 1972 %} and {% issue 1942 %}.
+- Several improvements to TypeScript typings. Addresses {% issue 1881 %} and {% issue 2007 %}.
+- Added more debug logs to `ffmpeg` to determine why `ffmpeg` compression dies. Addresses {% issue 1971 %}
+- Fixed icons visually shifting when tests were running in Test Runner. Fixes {% issue 1983 %}
+- We improved error logging around `cypress verify`. Fixes {% issue 1984 %}
+- We no longer log the `skipping install` message if Cypress binary is already installed locally. Fixes {% issue 1985 %}
+
+**Documentation Changes:**
+
+- {% url 'Update `cy.screenshot()` doc to include new file naming behavior' screenshot %}
+
 ## 3.0.1
 
 *Released 5/30/2018*
