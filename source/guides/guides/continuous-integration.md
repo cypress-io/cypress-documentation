@@ -34,7 +34,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
 - {% url "Semaphore" https://semaphoreci.com/ %}
-- {% url 'Concourse' https://concourse.ci/ %}
+- {% url "Concourse" https://concourse-ci.org/ %}
 - {% url "Solano" https://www.solanolabs.com/ %}
 - {% url "Docker" https://www.docker.com/ %}
 
