@@ -1,3 +1,5 @@
+# Text labels for menu links
+
 menu:
   guides: Guides
   api: API
@@ -199,6 +201,7 @@ sidebar:
     screencasts-media: Screencasts
     blogs-media: Blogs
     extensions: Extensions
+    workshop: Workshop
   faq:
     questions: FAQ
     general-questions-faq: General Questions
