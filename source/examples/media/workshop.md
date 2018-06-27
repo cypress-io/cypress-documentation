@@ -1,20 +1,19 @@
 ---
 title: Testing Workshop
-
 containerClass: examples
 ---
 
-We have put together contents for a 3-4 hour workshop that teaches how to test a modern web application using Cypress. The repository [cypress-io/testing-workshop-cypress][workshop repo] has an example application, test exercises (with answers), speaker slides and notes, and should be a good starting step for anyone who wants to learn Cypress or teach it to others. The exercises cover the following topics (see workshop's [README file][workshop readme] for exact list)
+We have put together contents for a 3-4 hour workshop that teaches how to test a modern web application using Cypress. The repository [cypress-io/testing-workshop-cypress][workshop repo] has an example application, test exercises (with answers), speaker slides and notes, and should be a good starting point for anyone who wants to learn Cypress or teach it to others. The exercises cover the following topics (see the workshop's [README file][workshop readme] for an exact list).
 
-- how to install and run Cypress
-- how Cypress scaffolds files
-- writing and running a basic test
-- video recording and screenshot taking on failure
+- How to install and run Cypress
+- How Cypress scaffolds files
+- Writing and running a basic test
+- Setting up video recording and screenshots on failure
 - Selector Playground
-- testing XHR requests
-- using data fixtures in your tests
-- running Cypress tests on CI
-- recording Cypress tests on dashboard
+- Testing XHR requests
+- Using data fixtures in your tests
+- Running Cypress tests on CI
+- Recording Cypress tests on dashboard
 
 We hope this testing workshop proves itself useful in teaching developers and testers good Cypress practices.
 
