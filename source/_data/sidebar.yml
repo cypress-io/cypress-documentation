@@ -173,6 +173,7 @@ examples:
     tutorials: tutorials.html
     applications: applications.html
     docker: docker.html
+    workshop: workshop.html
   media:
     blogs-media: blogs-media.html
     talks-media: talks-media.html
