@@ -262,6 +262,36 @@ Cypress package version: 0.20.0
 Cypress binary version: 0.20.0
 ```
 
+## `cypress cache [command]`
+
+Commands for managing the global Cypress cache. The Cypress cache applies to all installs of Cypress across your machine, global or not.
+
+### `cypress cache path`
+
+Print the `path` to the Cypress cache folder.
+
+```shell
+cypress cache path
+## /.cache/Cypress
+```
+
+### `cypress cache list`
+
+Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+
+```shell
+cypress cache list
+## 3.0.0 3.0.1 3.0.2
+```
+
+### `cypress cache clear`
+
+Clear the contents of the Cypress cache. This is useful when you want Cypress to clear out all installed versions of Cypress that may be cached on your machine. After running this command, you will need to run `cypress install` before running Cypress again.
+
+```shell
+cypress cache clear
+```
+
 # Cypress Module API
 
 You can use also require Cypress as a Node module.
