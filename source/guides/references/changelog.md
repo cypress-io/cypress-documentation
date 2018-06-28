@@ -4,52 +4,50 @@ title: Changelog
 
 ## 3.0.2
 
-*Released 6/26/2018*
-
-**Features:**
-
-- You can now specify environment variables (like `cypress_binary_version`) inside your `.npmrc` file to be used as an environment variable. Addresses {% issue 1399 %} and {% issue 1853 %}
-- If multiple non-named screenshots are taken in a single test, after the first one they're now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
-- Passing `foo/bar/baz` as the name of spec `app.spec.js` will result in the screenshot being saved to `screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}
-- By default, screenshots will be saved in a directory structure matching the spec's path. Screenshots taken within `cypress/integration/foo/bar/baz_spec.js` will save a screenshot as `screenshots/foo/bar/baz_spec.js/test name.png`. Fixes {% issue 1826 %}
-- We now append `-- failed` to screenshots taken automatically during failure. Fixes {% issue 1923 %}
-- Added `Cypress.browser` to yield browser information. Addresses {% issue 1919 %}.
-- Added `Cypress.browser.isHeadless` and `Cypress.browser.isHeaded`. Addresses {% issue 1961 %}.
-- Added `Cypress.spec` to yield spec file information. Addresses {% issue 1918 %}.
-- New commands for handling binarry cache have been added: `cypress cache clear`, `cypress cache folder`, and `cypress cache list`. Addresses {% issue 1856 %}
-- Now support `--no-exit` flag for `cypress run` to keep browser open after test runs. Addresses {% issue 1871 %}
-- Urls in `cy.visit()` are no longer arbitrarily truncated within the Test Runner. Fixes {% issue 1995 %}
+*Released 6/27/2018*
 
 **Bugfixes:**
 
-- Screenshots taken with `cy.screenshot()` on 2x DPI are now taken at correct fullsize. Fixes {% issue 1857 %} and  {% issue 2018 %}.
-- Fixes {% issue 1863 %}.
-- `EPIPE` error now fixed in Windows. Fixes {% issue 1841 %} and {% issue 2044 %}.
-- Fixed issue with focusing on window in Test Runner. Fixes {% issue 1909 %} {% issue 1904 %} and {% issue 1939 %}.
+- Screenshots taken with `cy.screenshot()` on 2x DPI are now taken at the correct full size. Fixes {% issue 1857 %} and {% issue 2018 %}.
+- Windows users no longer exit with `EPIPE` errors when running `cypress run` in newer versions of node. Fixes {% issue 1841 %} and {% issue 2044 %}.
+- Fixed issue where applications stealing focus programmatically would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %}
+- Electron no longer reports the browser as out of focus in `cypress run` mode. and {% issue 1939 %}
+- Modified the `document.hasFocus()` method to return true if the top window (Cypress controls) is in focus. This should now correctly match how your application behaves outside of Cypress. {% issue 1940 %}.
 - Fixed issue where Cypress would unnecessarily scroll when attempting to locate elements with `position: sticky`. Fixes {% issue 1475 %}.
-- Fixes {% issue 1704 %}.
-- Fixes {% issue 1396 %}.
-- Fixes {% issue 1756 %}.
-- The `--silent` flag should now be respecting on `npm install cypress` on all OSes. Fixes {% issue 817 %}  and {% issue 1853 %}.
-- Fixed display of project pathnames in Desktop GUI. Fixes {% issue 1830 %}
-- The `config` in the `supportsFile` now no longer prefixes paths with the project root path. Fixes {% issue 1868 %}
-- Fixed issue where `onclick` was not being triggered on `.check()` of radio buttons. Fixes {% issue 1854 %}.
+- Fixes a bug where changing `integrationFolder` in Windows can lead to errors with plugins. {% issue 1704 %}.
+- Cypress no longer crashes when a 3rd party server sends slightly invalid `gzip` content. Also fixed issues with incorrectly gunzipping multibyte characters which would potentially lead to serving invalid HTML or JS. Fixes {% issue 1396 %} and {% issue 1756 %}.
+- The `--silent` flag should now be respecting on `npm install cypress` on all OSes. Fixes {% issue 817 %}.
+- Fixed some areas of the Desktop GUI that did not display path names correctly in Windows. Fixes {% issue 1830 %}
+- The `pluginsFile` now supports an absolute path instead of just a relative one. Fixes {% issue 1837 %}
+- Fixed regression introduced in `3.x.x` where application code that used `setTimeouts` with a string argument would see `fn.apply is not a function`. Fixes {% issue 1854 %}.
 - Fixed issue where preprocessor errors were being swallowed. Fixes {% issue 1877 %}.
-- Fixed issue where Cypress was randomly hanging in CI runs. Fixes {% issue 2013 %}, {% issue 1912 %},  {% issue 1905 %}, and {% issue 1890 %}.
-- Fixed issue where cancelled runs were never ending. Fixes {% issue 1891 %} and {% issue 1952 %}.
-- Fixes {% issue 1901 %}.
-- Fixed issue where videos would not be recorded when object was returned from `before:browser:launch` in Electron. Fixes {% issue 1992 %}.
-- Fixed issue where Cypress would not inject correctly when visiting a page with `<header>` and no `<head>`. Fixes {% issue 2026 %}
-- Fixes {% issue 2030 %}
+- Fixed issue where Cypress would hang indefinitely when starting a new spec when in `cypress run` mode. Additionally we've optimized the code path not to read in the local `state.json` unnecessarily. Fixes {% issue 2013 %} and {% issue 1912 %} and {% issue 1905 %} and {% issue 1890 %}.
+- Fixed a couple regression in the Dashboard where timed out runs stayed "Pending" forever. Fixes {% issue 1891 %} and {% issue 1952 %}.
+- Fixed another Dashboard regression when recording tests and sending a large list of specs. {% issue 1901 %}.
+- Fixed issue where videos would not be recorded when an object was returned from `before:browser:launch` for the Electron browser. Fixes {% issue 1992 %}.
+- Fixed an issue where Cypress get confused and inject content into the `<header>` tag instead of the `<head>` tag. Fixes {% issue 2026 %}
+- Fixed a oversight where a specific framebusting check was not being properly stripped and removed by the default config option `modifyObstructiveCode`. Fixes {% issue 2030 %}
+- Fixed icons visually shifting when tests were running in Test Runner. Fixes {% issue 1983 %}.
 
 **Misc:**
 
-- Dependencies updated. Fixes {% issue 1674 %}, {% issue 1972 %} and {% issue 1942 %}.
-- Several improvements to TypeScript typings. Addresses {% issue 1881 %} and {% issue 2007 %}.
-- Added more debug logs to `ffmpeg` to determine why `ffmpeg` compression dies. Addresses {% issue 1971 %}
-- Fixed icons visually shifting when tests were running in Test Runner. Fixes {% issue 1983 %}
-- We improved error logging around `cypress verify`. Fixes {% issue 1984 %}
-- We no longer log the `skipping install` message if Cypress binary is already installed locally. Fixes {% issue 1985 %}
+- There are now several new CLI commands for interacting with the binary cache: `cypress cache clear`, `cypress cache folder`, and `cypress cache list`. Fixes {% issue 1856 %}.
+- We've added a new CLI flag: `--no-exit` for `cypress run` to keep browser open after test runs. Fixes {% issue 1871 %}.
+- The CLI now respects config values and environment variables put in your `.npmrc` file. Fixes {% issue 1399 %} and {% issue 1853 %}.
+- Significants improves the performance of taking screenshots. {% issue 1863 %}.
+- Node module dependencies updated. Fixes {% issue 1674 %} and {% issue 1942 %}.
+- The bundled version of `ffmpeg` has now been bumped from `3.x.x` to `4.x.x`. This may help with some issues users were experiencing when recording videos. Fixes {% issue 1972 %}
+- Added more debug logs to `ffmpeg` to determine why `ffmpeg` compression sometimes causes Cypress to crash mostly running in Travis CI. Fixes {% issue 1971 %}.
+- Several improvements to TypeScript typings. Fixes {% issue 1881 %} and {% issue 2007 %}.
+- We improved error logging and user experience around `cypress verify`. Fixes {% issue 1984 %}.
+- We no longer log the `skipping install` message if Cypress binary is already installed locally. Fixes {% issue 1985 %}.
+- Now by default, screenshots are now nested within a folder with the name of **the spec** that's currently running. Example - the spec named `cypress/integration/foo/bar_spec.js` will save screenshots inside of this directory: `cypress/screenshots/foo/bar_spec.js/*`. Fixes {% issue 1826 %}.
+- Passing `foo/bar/baz` as the name of spec `app.spec.js` will now result in the screenshot being saved to a nested folder path such as: `cypress/screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}.
+- We now append `(failed)` to screenshot's file name when taken automatically after a test fails. Fixes {% issue 1923 %}
+- If multiple screenshots are taken during a test with the same name, their file paths are now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
+- Added `Cypress.browser` object which contains information about the currently running browser. Fixes {% issue 1919 %} and {% issue 1961 %}.
+- Added `Cypress.spec` object which contains information about the currently running spec. Fixes {% issue 1918 %}.
+- Urls in `cy.visit()` are no longer truncated beyond what's necessary. Fixes {% issue 1995 %}.
 
 **Documentation Changes:**
 
