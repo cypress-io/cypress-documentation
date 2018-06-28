@@ -29,7 +29,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "Jenkins" https://jenkins.io/ %} (Linux)
 - {% url "TravisCI" https://travis-ci.org/ %}
 - {% url "CircleCI" https://circleci.com %}
-- {% url "CodeShip" https://codeship.com/ %} {% issue 328 "Issue with cy.exec()" %}
+- {% url "CodeShip" https://codeship.com/ %} (Has open {% issue 328 "issue with cy.exec()" %})
 - {% url "GitLab" https://gitlab.com/ %}
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
@@ -44,9 +44,9 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ## Caching the Cypress Binary
 
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux that's `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download. 
+As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux that's `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download.
 
-### We recommend users: 
+### We recommend users:
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
 

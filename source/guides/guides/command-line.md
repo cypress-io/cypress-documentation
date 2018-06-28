@@ -56,6 +56,7 @@ Option | Description
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
 `-s`, `--spec`  | Specify the specs to run
+`--no-exit` | Keep Cypress open after all tests run
 `--record`  | Whether to record the test run
 `--headed`  | Display the Electron browser instead of running headlessly
 
@@ -169,6 +170,16 @@ cypress run --record
 
 You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
 
+### Run without exit
+
+To prevent Cypress from exiting after running tests with `cypress run`, use `--no-exit`.
+
+You can pass `--headed --no-exit` in order to view the **command log** or have access to **developer tools** after a `spec` has run.
+
+```shell
+cypress run --headed --no-exit
+```
+
 ## `cypress open`
 
 Opens the Cypress Test Runner in interactive mode.
@@ -249,6 +260,36 @@ cypress version
 ```shell
 Cypress package version: 0.20.0
 Cypress binary version: 0.20.0
+```
+
+## `cypress cache [command]`
+
+Commands for managing the global Cypress cache. The Cypress cache applies to all installs of Cypress across your machine, global or not.
+
+### `cypress cache path`
+
+Print the `path` to the Cypress cache folder.
+
+```shell
+cypress cache path
+## /.cache/Cypress
+```
+
+### `cypress cache list`
+
+Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+
+```shell
+cypress cache list
+## 3.0.0 3.0.1 3.0.2
+```
+
+### `cypress cache clear`
+
+Clear the contents of the Cypress cache. This is useful when you want Cypress to clear out all installed versions of Cypress that may be cached on your machine. After running this command, you will need to run `cypress install` before running Cypress again.
+
+```shell
+cypress cache clear
 ```
 
 # Cypress Module API
