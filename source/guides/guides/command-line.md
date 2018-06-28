@@ -56,6 +56,7 @@ Option | Description
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
 `-s`, `--spec`  | Specify the specs to run
+`--no-exit` | Keep Cypress open after all tests run
 `--record`  | Whether to record the test run
 `--headed`  | Display the Electron browser instead of running headlessly
 
@@ -168,6 +169,16 @@ cypress run --record
 ```
 
 You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
+
+### Run without exit
+
+To prevent Cypress from exiting after running tests with `cypress run`, use `--no-exit`.
+
+You can pass `--headed --no-exit` in order to view the **command log** or have access to **developer tools** after a `spec` has run.
+
+```shell
+cypress run --headed --no-exit
+```
 
 ## `cypress open`
 
