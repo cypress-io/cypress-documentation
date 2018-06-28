@@ -34,7 +34,7 @@ cy.get(".post").screenshot()
 
 **{% fa fa-angle-right %} fileName** ***(String)***
 
-A name for the image file. By default the filename will be the title of the test.
+A name for the image file. When passed a path with a filename, the folder structure will be created relative to your {% url '`screenshots`' configuration#Folders-Files %} folder.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -67,10 +67,12 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ### Take a screenshot
 
 ```javascript
+// users.spec.js
+
 describe('my tests', function () {
   it('takes a screenshot', function () {
     // screenshot will be saved as
-    // cypress/screenshots/my tests -- takes a screenshot.png
+    // cypress/screenshots/users.spec.js -- my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
@@ -78,12 +80,20 @@ describe('my tests', function () {
 
 ## Filename
 
-### Take a screenshot and save as specific filename
+### Take a screenshot and save as a specific filename
 
 ```javascript
 // screenshot will be saved as
 // cypress/screenshots/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
+```
+
+### Take a screenshot and save in a specific directory
+
+```javascript
+// screenshot will be saved as
+// cypress/screenshots/actions/login/clicking-login.png
+cy.screenshot('actions/login/clicking-login')
 ```
 
 ## Clip
