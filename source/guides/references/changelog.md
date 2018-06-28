@@ -4,30 +4,30 @@ title: Changelog
 
 ## 3.0.2
 
-*Released 6/27/2018*
+*Released 6/28/2018*
 
 **Bugfixes:**
 
-- Screenshots taken with `cy.screenshot()` on 2x DPI are now taken at the correct full size. Fixes {% issue 1857 %} and {% issue 2018 %}.
+- Screenshots taken with {% url "`cy.screenshot()`" screenshot %} on 2x DPI are now taken at the correct full size. Fixes {% issue 1857 %} and {% issue 2018 %}.
 - Windows users no longer exit with `EPIPE` errors when running `cypress run` in newer versions of node. Fixes {% issue 1841 %} and {% issue 2044 %}.
-- Fixed issue where applications stealing focus programmatically would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %}
-- Electron no longer reports the browser as out of focus in `cypress run` mode. and {% issue 1939 %}
-- Modified the `document.hasFocus()` method to return true if the top window (Cypress controls) is in focus. This should now correctly match how your application behaves outside of Cypress. {% issue 1940 %}.
+- Fixed issue where applications programmatically stealing focus would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %}.
+- Electron no longer reports the browser as out of focus when running via `cypress run`. Fixes {% issue 1939 %}.
+- Modified the `document.hasFocus()` method to return `true` if the top window (Cypress window) is in focus. This should now correctly match how your application behaves outside of Cypress. Fixes {% issue 1940 %}.
 - Fixed issue where Cypress would unnecessarily scroll when attempting to locate elements with `position: sticky`. Fixes {% issue 1475 %}.
-- Fixes a bug where changing `integrationFolder` in Windows can lead to errors with plugins. {% issue 1704 %}.
-- Cypress no longer crashes when a 3rd party server sends slightly invalid `gzip` content. Also fixed issues with incorrectly gunzipping multibyte characters which would potentially lead to serving invalid HTML or JS. Fixes {% issue 1396 %} and {% issue 1756 %}.
-- The `--silent` flag should now be respecting on `npm install cypress` on all OSes. Fixes {% issue 817 %}.
-- Fixed some areas of the Desktop GUI that did not display path names correctly in Windows. Fixes {% issue 1830 %}
-- The `pluginsFile` now supports an absolute path instead of just a relative one. Fixes {% issue 1837 %}
-- Fixed regression introduced in `3.x.x` where application code that used `setTimeouts` with a string argument would see `fn.apply is not a function`. Fixes {% issue 1854 %}.
+- Fixed a bug where changing the {% url "`integrationFolder`" configuration#Folders-Files %} in Windows would lead to errors with plugins. Fixes {% issue 1704 %}.
+- Cypress no longer crashes when a 3rd party server sends invalid `gzip` content. Also fixed issues with incorrectly gunzipping multibyte characters which would potentially lead to serving invalid HTML or JS. Fixes {% issue 1396 %} and {% issue 1756 %}.
+- The `--silent` flag should now be respected during `npm install cypress` on all OSes. Fixes {% issue 817 %}.
+- Fixed some areas of the Desktop GUI that did not display path names correctly in Windows. Fixes {% issue 1830 %}.
+- The `pluginsFile` now supports an absolute path instead of just a relative one. Fixes {% issue 1837 %}.
+- Fixed a regression introduced in `3.x.x` where application code that used `setTimeout` with a string argument would see the error `fn.apply is not a function`. Fixes {% issue 1854 %}.
 - Fixed issue where preprocessor errors were being swallowed. Fixes {% issue 1877 %}.
-- Fixed issue where Cypress would hang indefinitely when starting a new spec when in `cypress run` mode. Additionally we've optimized the code path not to read in the local `state.json` unnecessarily. Fixes {% issue 2013 %} and {% issue 1912 %} and {% issue 1905 %} and {% issue 1890 %}.
-- Fixed a couple regression in the Dashboard where timed out runs stayed "Pending" forever. Fixes {% issue 1891 %} and {% issue 1952 %}.
-- Fixed another Dashboard regression when recording tests and sending a large list of specs. {% issue 1901 %}.
-- Fixed issue where videos would not be recorded when an object was returned from `before:browser:launch` for the Electron browser. Fixes {% issue 1992 %}.
-- Fixed an issue where Cypress get confused and inject content into the `<header>` tag instead of the `<head>` tag. Fixes {% issue 2026 %}
-- Fixed a oversight where a specific framebusting check was not being properly stripped and removed by the default config option `modifyObstructiveCode`. Fixes {% issue 2030 %}
-- Fixed icons visually shifting when tests were running in Test Runner. Fixes {% issue 1983 %}.
+- Fixed issue where Cypress would hang indefinitely when starting a new spec when in `cypress run` mode. Additionally we have optimized the code path to not read in the local `state.json` unnecessarily. Fixes {% issue 2013 %} and {% issue 1912 %} and {% issue 1905 %} and {% issue 1890 %}.
+- Fixed a couple regressions in the Dashboard where timed out runs stayed "Pending" forever. Fixes {% issue 1891 %} and {% issue 1952 %}.
+- Fixed another Dashboard regression where an error would throw when recording tests and sending a large list of specs. Fixes {% issue 1901 %}.
+- Fixed issue where videos would not be recorded when an object was returned from `before:browser:launch` when in the Electron browser. Fixes {% issue 1992 %}.
+- Fixed an issue where Cypress would inject content into the `<header>` tag instead of the `<head>` tag. Fixes {% issue 2026 %}.
+- Fixed an oversight where a specific framebusting check was not being properly stripped and removed by the default config option {% url "`modifyObstructiveCode`" configuration#Browser %}. Fixes {% issue 2030 %}.
+- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %}.
 
 **Misc:**
 
