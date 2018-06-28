@@ -67,12 +67,12 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ### Take a screenshot
 
 ```javascript
-// users.specs.js
+// users.spec.js
 
 describe('my tests', function () {
   it('takes a screenshot', function () {
     // screenshot will be saved as
-    // cypress/screenshots/users-spec-js -- my tests -- takes a screenshot.png
+    // cypress/screenshots/users.spec.js -- my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
