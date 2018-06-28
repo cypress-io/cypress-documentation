@@ -593,7 +593,7 @@ Documentation Changes:
 **Breaking Changes:**
 
 - We've removed the undocumented `cy.chain()` command. You should be able to safely remove this from your code. Fixes {% issue 456 %}.
-- Updated {% url "`Cypress._`" _ %} to use {% url "lodash" https://lodash.com/ %} instead of {% url "Underscore" http://underscorejs.org/ %}. Fixes {% issue 548 %}.
+- Updated {% url "`Cypress._`" _ %} to use {% url "lodash" https://lodash.com %} instead of {% url "Underscore" http://underscorejs.org %}. Fixes {% issue 548 %}.
 - If any of an element's parent's overflow is 'hidden', we now calculate if the element is outside of the boundaries of that parent element and validate visibility assertions accordingly. This may cause some tests that were previously passing to now accurately fail. Fixes {% issue 410 %}.
 - {% url `.select()` select %} should now look for the trimmed value inside of an `<option></option>`. This may change the content argument required to select the option you intended in your {% url `.select()` select %} command. Fixes {% issue 175 %}.
 - When passing the option `{ force: true }` to {% url `.click()` click %} and {% url `.type()` type %}, we no longer attempt to scroll the element into view. We've also disabled the check that the element is in view before clicking or typing. Fixes {% issue 553 %} and {% issue 537 %}.
@@ -744,7 +744,7 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 
 **Bugfixes:**
 
-Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" https://reactjs.org/ %} on versions {% url "15.6.x" https://github.com/facebook/react/releases/tag/v15.6.0 %}. Fixes {% issue 536 '#536' %}.
+Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" https://reactjs.org/ %} on versions 15.6.x. Fixes {% issue 536 '#536' %}.
 
 
 # 0.19.3
@@ -1269,7 +1269,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 **Overview:**
 
 - The desktop application has been completely redesigned. We have moved from a tray application to a standard dock application. The list of projects is now in the same window as the list of tests in a project. As each test runs, the application highlights the currently running spec and displays the browser version running. The configuration of a project is now displayed in its own tab. There is now a Desktop Menu where you can logout, check for updates, or view help links.
-- The test {% url "runner" https://github.com/cypress-io/cypress-core-runner %} has been rebuilt from the ground up in {% url "React.js" https://reactjs.org/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress-core-reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
+- The test {% url "runner" https://github.com/cypress-io/cypress/tree/develop/packages/runner %} has been rebuilt from the ground up in {% url "React.js" https://reactjs.org/ %}. The left side of the runner called the {% url "reporter" https://github.com/cypress-io/cypress/tree/develop/packages/reporter %} is now a separate application. This, as well as other changes, markedly improved the performance of running tests. *Your tests will now run faster.* This will also enable you to test your application in full screen. Additionally this paves the way for being able to spawn multiple browsers at once and synchronize testing across them. This also means we'll be able to support mobile browsers. The UI for doing this hasn't been implemented but the vast majority of the work to accomplish this is done now.
 - We have rewritten the entire proxy layer of the Cypress server to finally fix all the problems with CORS.
 
 **Breaking Changes:**
@@ -1512,7 +1512,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Bugfixes:**
 
-- The `-s` or `--spec` option now works correctly. You now must pass a relative or absolute path to your spec file. This is much less confusing, allows you to easily autocomplete entries from bash, and will support `unitFolder` later when it's added. Assuming you want to run a spec file that is located in `cypress/integration/foo_spec.js` you would pass: `cypress run --spec cypress/integration/foo_spec.js`. Previously you could just pass `--spec foo_spec.js` which now no longer works (and was broken anyway). Fixes {% issue 120 '#120' %}.
+- The `-s` or `--spec` option now works correctly. You now must pass a relative or absolute path to your spec file. This is much less confusing, allows you to easily autocomplete entries from bash, and will support `unitFolder` later when it's added. Assuming you want to run a spec file that is located in `cypress/integration/foo_spec.js` you would pass: `cypress run --spec 'cypress/integration/foo_spec.js'`. Previously you could just pass `--spec foo_spec.js` which now no longer works (and was broken anyway). Fixes {% issue 120 '#120' %}.
 
 **Misc:**
 

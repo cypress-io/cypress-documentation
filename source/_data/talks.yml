@@ -20,7 +20,7 @@
   author: Josh Justice
   youtubeId: CMN8boToKWI
   
-  - title: "VueJs Applied + Testing with Cypress.io"
+- title: "VueJs Applied + Testing with Cypress.io"
   url: https://www.youtube.com/watch?time_continue=29&v=dpB0YgnFyZQ
   sourceName: JavaScript Meetup - St. Louis
   sourceUrl: https://www.meetup.com/STL-JS-meetup/events/247430738/
@@ -55,7 +55,7 @@
   youtubeId: Eakp29J38YA
 
 - title: "End to End Testing: The Game Has Changed"
-  url: https://www.youtube.com/watch?v=D-h3bhzauKo&feature=youtu.be&t=11383
+  url: https://www.youtube.com/watch?v=C1D94jWy8uE
   sourceName: JSConf Iceland
   sourceUrl: https://2018.jsconf.is/
   date: Mar 1, 2018

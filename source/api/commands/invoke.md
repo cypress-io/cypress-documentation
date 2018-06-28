@@ -99,7 +99,7 @@ cy
 ***Use `cy.invoke('removeAttr', 'target')` to get around new tab***
 
 {% note info %}
-{% url "Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab" recipes#Tab-Handling-and-Links %}%}
+{% url "Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab" recipes#Tab-Handling-and-Links %}
 {% endnote %}
 
 ***Arguments are automatically forwarded to the function***

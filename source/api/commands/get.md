@@ -123,7 +123,7 @@ it('disables on click', function () {
 
 ```javascript
 beforeEach(function () {
-  cy.fixtures('users.json').as('users')
+  cy.fixture('users.json').as('users')
 })
 
 it('disables on click', function () {
