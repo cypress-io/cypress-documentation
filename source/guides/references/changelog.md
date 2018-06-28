@@ -42,17 +42,19 @@ title: Changelog
 - We improved error logging and the user experience around {% url "`cypress verify`" command-line#cypress-verify %}. Fixes {% issue 1984 %}.
 - We no longer log the `skipping install` message if the Cypress binary is already installed locally. Fixes {% issue 1985 %}.
 - Now, by default, screenshots are nested within a folder with the name of **the spec file** that is currently running. Example - the spec named `cypress/integration/foo/bar_spec.js` will save screenshots inside of this directory: `cypress/screenshots/foo/bar_spec.js/*`. Fixes {% issue 1826 %}.
-- Passing `foo/bar/baz` as the name of spec `app.spec.js` will now result in the screenshot being saved to a nested folder path such as: `cypress/screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}.
-- We now append `(failed)` to screenshot's file name when taken automatically after a test fails. Fixes {% issue 1923 %}
-- If multiple screenshots are taken during a test with the same name, their file paths are now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
+- Passing `foo/bar/baz` as the fileName arg to {% url "`cy.screenshot()`" screenshot#Take-a-screenshot-and-save-in-a-specific-directory %} inside a spec, `app.spec.js`, will now result in the screenshot being saved to a nested folder path such as: `cypress/screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}.
+- We now append `(failed)` to the screenshot filename of screenshots taken automatically during test failure. Fixes {% issue 1923 %}.
+- If multiple screenshots are taken during a test that will result in the same filename, their file paths are now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
 - Added `Cypress.browser` object which contains information about the currently running browser. Fixes {% issue 1919 %} and {% issue 1961 %}.
 - Added `Cypress.spec` object which contains information about the currently running spec. Fixes {% issue 1918 %}.
-- Urls in `cy.visit()` are no longer truncated beyond what's necessary. Fixes {% issue 1995 %}.
+- Urls displayed in the Command Log during {% url "`cy.visit()`" visit %} are no longer arbitrarily truncated at a set width. Fixes {% issue 1995 %}.
 
 **Documentation Changes:**
 
 - {% url 'Update `cy.screenshot()` doc to include new file naming behavior' screenshot %}
 - {% url 'Updated "Command Line" doc to include new cache commands' command-line %}
+- Added `Cypress.browser` doc.
+- Added `Cypress.spec` doc.
 
 ## 3.0.1
 
