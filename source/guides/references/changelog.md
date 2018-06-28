@@ -31,17 +31,17 @@ title: Changelog
 
 **Misc:**
 
-- There are now several new CLI commands for interacting with the binary cache: `cypress cache clear`, `cypress cache folder`, and `cypress cache list`. Fixes {% issue 1856 %}.
-- We've added a new CLI flag: `--no-exit` for `cypress run` to keep browser open after test runs. Fixes {% issue 1871 %}.
-- The CLI now respects config values and environment variables put in your `.npmrc` file. Fixes {% issue 1399 %} and {% issue 1853 %}.
-- Significants improves the performance of taking screenshots. {% issue 1863 %}.
+- There are now several new CLI commands for interacting with the binary cache: {% url "`cypress cache path`" command-line#cypress-cache-path %}, {% url "`cypress cache list`" command-line#cypress-cache-list %}, and {% url "`cypress cache clear`" command-line#cypress-cache-clear %}. Fixes {% issue 1856 %}.
+- We've added a new CLI flag: `--no-exit` for {% url "`cypress run`" command-line#cypress-run %} to keep the browser open after the tests finish running. Fixes {% issue 1871 %}.
+- The {% url "CLI" command-line %} now respects config values and environment variables put in your `.npmrc` file. Fixes {% issue 1399 %} and {% issue 1853 %}.
+- Significantly improved the performance of taking screenshots. {% issue 1863 %}.
 - Node module dependencies updated. Fixes {% issue 1674 %} and {% issue 1942 %}.
-- The bundled version of `ffmpeg` has now been bumped from `3.x.x` to `4.x.x`. This may help with some issues users were experiencing when recording videos. Fixes {% issue 1972 %}
-- Added more debug logs to `ffmpeg` to determine why `ffmpeg` compression sometimes causes Cypress to crash mostly running in Travis CI. Fixes {% issue 1971 %}.
+- The bundled version of `ffmpeg` has now been bumped from `3.x.x` to `4.x.x`. This may help with some issues users were experiencing when recording videos. Fixes {% issue 1972 %}.
+- Added more debug logs to `ffmpeg` to determine why `ffmpeg` compression sometimes causes Cypress to crash (mostly while running in Travis CI). Fixes {% issue 1971 %}.
 - Several improvements to TypeScript typings. Fixes {% issue 1881 %} and {% issue 2007 %}.
-- We improved error logging and user experience around `cypress verify`. Fixes {% issue 1984 %}.
-- We no longer log the `skipping install` message if Cypress binary is already installed locally. Fixes {% issue 1985 %}.
-- Now by default, screenshots are now nested within a folder with the name of **the spec** that's currently running. Example - the spec named `cypress/integration/foo/bar_spec.js` will save screenshots inside of this directory: `cypress/screenshots/foo/bar_spec.js/*`. Fixes {% issue 1826 %}.
+- We improved error logging and the user experience around {% url "`cypress verify`" command-line#cypress-verify %}. Fixes {% issue 1984 %}.
+- We no longer log the `skipping install` message if the Cypress binary is already installed locally. Fixes {% issue 1985 %}.
+- Now, by default, screenshots are nested within a folder with the name of **the spec file** that is currently running. Example - the spec named `cypress/integration/foo/bar_spec.js` will save screenshots inside of this directory: `cypress/screenshots/foo/bar_spec.js/*`. Fixes {% issue 1826 %}.
 - Passing `foo/bar/baz` as the name of spec `app.spec.js` will now result in the screenshot being saved to a nested folder path such as: `cypress/screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}.
 - We now append `(failed)` to screenshot's file name when taken automatically after a test fails. Fixes {% issue 1923 %}
 - If multiple screenshots are taken during a test with the same name, their file paths are now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
@@ -52,6 +52,7 @@ title: Changelog
 **Documentation Changes:**
 
 - {% url 'Update `cy.screenshot()` doc to include new file naming behavior' screenshot %}
+- {% url 'Updated "Command Line" doc to include new cache commands' command-line %}
 
 ## 3.0.1
 
