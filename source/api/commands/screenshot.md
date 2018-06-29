@@ -120,7 +120,7 @@ cy.get('.post').first().screenshot()
 cy.get('button').first().screenshot().click()
 ```
 
-## Get information about the screenshot from the onAfterScreenshot callback
+## Get screenshot info from the `onAfterScreenshot` callback
 
 ```javascript
 cy.screenshot("my-screenshot", {
@@ -145,6 +145,10 @@ cy.screenshot("my-screenshot", {
 ```
 
 # Notes
+
+## `after:screenshot` plugin event
+
+You can get details about any given screenshot and manipulate it after it has been written to disk with the {% url '`after:screenshot` plugin event' after-screenshot-api %}.
 
 ## Test Failures
 
@@ -215,6 +219,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 # See also
 
 - {% url `Cypress.Screenshot` screenshot-api %}
+- {% url 'After Screenshot API' after-screenshot-api %}
 - {% url `cy.debug()` debug %}
 - {% url 'Dashboard Service' dashboard-service %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
