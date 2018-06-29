@@ -58,8 +58,9 @@ title: Changelog
 
 - {% url 'Update `cy.screenshot()` doc to include new file naming behavior' screenshot %}
 - {% url 'Updated "Command Line" doc to include new cache commands' command-line %}
-- Added `Cypress.browser` doc.
-- Added `Cypress.spec` doc.
+- {% url 'Added `Cypress.browser` doc.' browser %}
+- {% url 'Added `Cypress.spec` doc.' spec %}
+- {% url 'Added `after:screenshot` plugin event doc.' after-screenshot-api %}
 
 ## 3.0.1
 
