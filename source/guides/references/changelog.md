@@ -17,6 +17,7 @@ title: Changelog
 - Fixed a bug where changing the {% url "`integrationFolder`" configuration#Folders-Files %} in Windows would lead to errors with plugins. Fixes {% issue 1704 %}.
 - Cypress no longer crashes when a 3rd party server sends invalid `gzip` content. Also fixed issues with incorrectly gunzipping multibyte characters which would potentially lead to serving invalid HTML or JS. Fixes {% issue 1396 %} and {% issue 1756 %}.
 - The `--silent` flag should now be respected during `npm install cypress` on all OSes. Fixes {% issue 817 %}.
+- Corrected a typo in the CLI for a warning message. Fixes {% issue 2038 %}.
 - Fixed some areas of the Desktop GUI that did not display path names correctly in Windows. Fixes {% issue 1830 %}.
 - The `pluginsFile` now supports an absolute path instead of just a relative one. Fixes {% issue 1837 %}.
 - Fixed a regression introduced in `3.x.x` where application code that used `setTimeout` with a string argument would see the error `fn.apply is not a function`. Fixes {% issue 1854 %}.
@@ -27,7 +28,9 @@ title: Changelog
 - Fixed issue where videos would not be recorded when an object was returned from `before:browser:launch` when in the Electron browser. Fixes {% issue 1992 %}.
 - Fixed an issue where Cypress would inject content into the `<header>` tag instead of the `<head>` tag. Fixes {% issue 2026 %}.
 - Fixed an oversight where a specific framebusting check was not being properly stripped and removed by the default config option {% url "`modifyObstructiveCode`" configuration#Browser %}. Fixes {% issue 2030 %}.
-- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %}.
+- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %} and {% issue 2059 %}.
+- Server sent events now *finally* work correctly in Cypress. Fixes {% issue 1440 %} and {% issue 1111 %}.
+- Time traveling snapshots now preserve the styles of empty `<style>` tags with programmatically inserted CSS rules. Fixes {% issue 1226 %}.
 
 **Misc:**
 
@@ -38,13 +41,15 @@ title: Changelog
 - Node module dependencies updated. Fixes {% issue 1674 %} and {% issue 1942 %}.
 - The bundled version of `ffmpeg` has now been bumped from `3.x.x` to `4.x.x`. This may help with some issues users were experiencing when recording videos. Fixes {% issue 1972 %}.
 - Added more debug logs to `ffmpeg` to determine why `ffmpeg` compression sometimes causes Cypress to crash (mostly while running in Travis CI). Fixes {% issue 1971 %}.
-- Several improvements to TypeScript typings. Fixes {% issue 1881 %} and {% issue 2007 %}.
+- Several improvements to TypeScript typings. Fixes {% issue 1881 %} and {% issue 2007 %} and {% issue 1899 %} and {% issue 1902 %} and {% issue 1897 %} and {% issue 1907 %}.
 - We improved error logging and the user experience around {% url "`cypress verify`" command-line#cypress-verify %}. Fixes {% issue 1984 %}.
 - We no longer log the `skipping install` message if the Cypress binary is already installed locally. Fixes {% issue 1985 %}.
 - Now, by default, screenshots are nested within a folder with the name of **the spec file** that is currently running. Example - the spec named `cypress/integration/foo/bar_spec.js` will save screenshots inside of this directory: `cypress/screenshots/foo/bar_spec.js/*`. Fixes {% issue 1826 %}.
 - Passing `foo/bar/baz` as the fileName arg to {% url "`cy.screenshot()`" screenshot#Take-a-screenshot-and-save-in-a-specific-directory %} inside a spec, `app.spec.js`, will now result in the screenshot being saved to a nested folder path such as: `cypress/screenshots/app.spec.js/foo/bar/baz.png`. Fixes {% issue 1771 %}.
 - We now append `(failed)` to the screenshot filename of screenshots taken automatically during test failure. Fixes {% issue 1923 %}.
 - If multiple screenshots are taken during a test that will result in the same filename, their file paths are now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
+- Screenshot `onAfterScreenshot` and `onBeforeScreenshot` callbacks ar enow invoked for failed tests. They include a `testFailure` property to distinguish between automatic ones and your own use of `cy.screenshot()`. Fixes {% issue 2040 %}.
+- There's now an `after:screenshot` plugin event you can use in your `pluginsFile` to work with screenshots after they are taken (in node) instead of the browser. This enables you to rename them, move them around, send them to a service, etc. Fixes {% issue 2039 %}.
 - Added `Cypress.browser` object which contains information about the currently running browser. Fixes {% issue 1919 %} and {% issue 1961 %}.
 - Added `Cypress.spec` object which contains information about the currently running spec. Fixes {% issue 1918 %}.
 - Urls displayed in the Command Log during {% url "`cy.visit()`" visit %} are no longer arbitrarily truncated at a set width. Fixes {% issue 1995 %}.
