@@ -163,6 +163,7 @@ api:
     configuration-api: configuration-api.html
     preprocessors-api: preprocessors-api.html
     browser-launch-api: browser-launch-api.html
+    after-screenshot-api: after-screenshot-api.html
 
 plugins:
   plugins: index.html

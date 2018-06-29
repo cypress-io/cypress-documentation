@@ -34,7 +34,7 @@ Check out our {% url 'Configuration API docs' configuration-api %} which describ
 
 ## Preprocessors
 
-This event: `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
+The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
 
 You can use the `file:preprocessor` event to do things like:
 
@@ -48,7 +48,7 @@ Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which des
 
 ## Browser Launching
 
-This event: `before:browser:launch` can be used to modify the launch arguments for each particular browser.
+The event `before:browser:launch` can be used to modify the launch arguments for each particular browser.
 
 You can use the `before:browser:launch` event to do things like:
 
@@ -61,7 +61,7 @@ Check out our {% url 'Browser Launch API docs' browser-launch-api %} which descr
 
 ## cy.task
 
-This event: `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
+The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
 
 You can use the `task` event to do things like:
 
@@ -69,6 +69,18 @@ You can use the `task` event to do things like:
 - Storing state in Node that you want persisted (since the driver is fully refreshed on visits)
 - Performing parallel tasks (like making multiple http requests outside of Cypress)
 - Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer)
+
+## Screenshot Handling
+
+The event `after:screenshot` is called after a screenshot is taken and saved to disk.
+
+You can use the `after:screenshot` event to do things like:
+
+- Record details about the screenshot
+- Rename the screenshot
+- Manipulate the screenshot image by resizing or cropping it
+
+Check out our {% url 'After Screenshot API docs' after-screenshot-api %} which describe how to use this event.
 
 # List of plugins
 
