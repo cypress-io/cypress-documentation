@@ -120,7 +120,7 @@ cy.get('.post').first().screenshot()
 cy.get('button').first().screenshot().click()
 ```
 
-## Get information about the screenshot from the onAfterScreenshot callback
+## Get screenshot info from the `onAfterScreenshot` callback
 
 ```javascript
 cy.screenshot("my-screenshot", {
@@ -146,7 +146,7 @@ cy.screenshot("my-screenshot", {
 
 # Notes
 
-## after:screenshot Plugin Event
+## `after:screenshot` plugin event
 
 You can get details about any given screenshot and manipulate it after it has been written to disk with the {% url '`after:screenshot` plugin event' after-screenshot-api %}.
 

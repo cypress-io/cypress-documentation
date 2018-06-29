@@ -186,10 +186,12 @@ sidebar:
     configuration-api: Configuration
     version: version
     arch: arch
+    browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
     screenshot-api: Screenshot
     after-screenshot-api: After Screenshot
+    spec: spec
   examples:
     examples: Examples
     recipes: Recipes
