@@ -190,6 +190,7 @@ sidebar:
     platform: platform
     selector-playground-api: SelectorPlayground
     screenshot-api: Screenshot
+    after-screenshot-api: After Screenshot
     spec: spec
   examples:
     examples: Examples
