@@ -3,10 +3,6 @@
     height: 100%;
   }
 
-  .wrapper {
-    max-width: $max-width;
-  }
-
   .inner {
     padding: 0;
   }
@@ -102,11 +98,7 @@
   }
 
   .article-container {
-    float: right;
     width: 100%;
-  }
-  .article-inner {
-    margin-right: $sidebar-width;
   }
   #article-toc {
     display: block;
@@ -139,7 +131,6 @@
 
 @media screen and(min-width: 1001px) {
   #content-inner {
-    margin-left: $sidebar-width;
   }
 
   #lang-select-wrap {

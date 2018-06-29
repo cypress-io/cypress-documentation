@@ -1,14 +1,18 @@
 #sidebar {
   width: $sidebar-width;
-  float: left;
-  padding-bottom: 40px;
   opacity: 0.8;
-  margin-left: -$sidebar-width;
-  display: none;
+  position: fixed;
+  overflow-y: auto;
+  top: 60px;
+  left: 0; 
+  bottom: 0;
+  border-right: 1px solid #eee;
 
   ul {
     list-style: none;
-
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 20px;
   }
 }
 

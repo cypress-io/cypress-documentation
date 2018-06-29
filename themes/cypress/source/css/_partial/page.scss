@@ -1,10 +1,27 @@
-.article {
-  float: left;
+.article-wrapper {
+  position: relative;
+  margin: 60px 0 60px $sidebar-width;
+  display: flex;
+  flex-direction: row;
+}
+
+#article {
+  margin-right: 0;
   width: 100%;
-  padding: 0px 50px;
-  border: 1px solid #eee;
-  border-top: 0;
-  border-bottom: 0;
+
+  &.sidebar-fixed {
+    margin-right: $sidebar-width;
+  }
+}
+
+.article {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  left: 0;
 }
 
 .article-date {

@@ -1,5 +1,10 @@
 #header {
-  position: relative;
+  position: fixed;
+  z-index: 20;
+  background-color: #17202C;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 #header-inner {
@@ -15,7 +20,7 @@
 }
 #logo-wrap {
   box-flex: 1;
-  max-width: 120px;
+  margin: 0 45px;
 }
 #logo {
   width: 120px;
