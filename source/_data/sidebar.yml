@@ -152,11 +152,13 @@ api:
     selector-playground-api: selector-playground-api.html
     cypress-server: cypress-server.html
     arch: arch.html
+    browser: browser.html
     config: config.html
     # dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
+    spec: spec.html
     version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html
