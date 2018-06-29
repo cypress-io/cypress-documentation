@@ -55,6 +55,18 @@ The recommended approach is to install Cypress with `npm` because :
 - It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
 {% endnote %}
 
+## {% fa fa-terminal %} `yarn add`
+
+Installing Cypress via {% url "`yarn`" https://yarnpkg.com %}:
+
+```shell
+cd /your/project/path
+```
+
+```shell
+yarn add cypress --dev
+```
+
 ## {% fa fa-download %} Direct Download
 
 If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
