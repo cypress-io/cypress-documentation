@@ -10,7 +10,7 @@ title: Changelog
 
 - Screenshots taken with {% url "`cy.screenshot()`" screenshot %} on 2x DPI are now taken at the correct full size. Fixes {% issue 1857 %} and {% issue 2018 %}.
 - Windows users no longer exit with `EPIPE` errors when running `cypress run` in newer versions of node. Fixes {% issue 1841 %} and {% issue 2044 %}.
-- Fixed issue where applications programmatically stealing focus would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %}.
+- Fixed issue where applications programmatically stealing focus would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %} and {% issue 1892 %}.
 - Electron no longer reports the browser as out of focus when running via `cypress run`. Fixes {% issue 1939 %}.
 - Modified the `document.hasFocus()` method to return `true` if the top window (Cypress window) is in focus. This should now correctly match how your application behaves outside of Cypress. Fixes {% issue 1940 %}.
 - Fixed issue where Cypress would unnecessarily scroll when attempting to locate elements with `position: sticky`. Fixes {% issue 1475 %}.
@@ -27,8 +27,8 @@ title: Changelog
 - Fixed another Dashboard regression where an error would throw when recording tests and sending a large list of specs. Fixes {% issue 1901 %}.
 - Fixed issue where videos would not be recorded when an object was returned from `before:browser:launch` when in the Electron browser. Fixes {% issue 1992 %}.
 - Fixed an issue where Cypress would inject content into the `<header>` tag instead of the `<head>` tag. Fixes {% issue 2026 %}.
-- Fixed an oversight where a specific framebusting check was not being properly stripped and removed by the default config option {% url "`modifyObstructiveCode`" configuration#Browser %}. Fixes {% issue 2030 %}.
-- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %} and {% issue 2059 %}.
+- Fixed an oversight where a specific framebusting check was not being properly stripped and removed by the default config option {% url "`modifyObstructiveCode`" configuration#Browser %}. Fixes {% issue 2030 %} and {% issue 2059 %}.
+- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %}.
 - Server sent events now *finally* work correctly in Cypress. Fixes {% issue 1440 %} and {% issue 1111 %}.
 - Time traveling snapshots now preserve the styles of empty `<style>` tags with programmatically inserted CSS rules. Fixes {% issue 1226 %}.
 
