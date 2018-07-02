@@ -34,7 +34,7 @@ cy.get(".post").screenshot()
 
 **{% fa fa-angle-right %} fileName** ***(String)***
 
-A name for the image file. When passed a path with a filename, the folder structure will be created relative to your {% url '`screenshots`' configuration#Folders-Files %} folder.
+A name for the image file. Will be relative to the {% url 'screenshots folder' configuration#Folders-Files %} and the path to the spec file. When passed a path, the folder structure will be created. See the {% url "Naming conventions" screenshot#Naming-conventions %} below for more.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -67,12 +67,12 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ### Take a screenshot
 
 ```javascript
-// users.spec.js
+// cypress/integration/users.spec.js
 
 describe('my tests', function () {
   it('takes a screenshot', function () {
     // screenshot will be saved as
-    // cypress/screenshots/users.spec.js -- my tests -- takes a screenshot.png
+    // cypress/screenshots/integration/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
@@ -84,7 +84,7 @@ describe('my tests', function () {
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/clicking-on-nav.png
+// cypress/screenshots/integration/spec.js/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
 ```
 
@@ -92,7 +92,7 @@ cy.screenshot('clicking-on-nav')
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/actions/login/clicking-login.png
+// cypress/screenshots/integration/spec.js/actions/login/clicking-login.png
 cy.screenshot('actions/login/clicking-login')
 ```
 
@@ -130,7 +130,7 @@ cy.screenshot("my-screenshot", {
 
     // {
     //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/my-screenshot.png',
+    //   path: '/Users/janelane/project/screenshots/integration/spec.js/my-screenshot.png',
     //   size: '15 kb',
     //   dimensions: {
     //     width: 1000,
@@ -145,6 +145,34 @@ cy.screenshot("my-screenshot", {
 ```
 
 # Notes
+
+## Naming conventions
+
+Screenshot naming follows these rules:
+
+* By default, a screenshot is saved to a file with a path relative to the {% url 'screenshots folder' configuration#Folders-Files %}, appended by a path relating to where the spec file exists, with a name including the current test's suites and test name: `{screenshotsFolder}/{specPath}/{testName}.png`
+* For a named screenshot, the name is used instead of the the suites and test name: `{screenshotsFolder}/{specPath}/{name}.png`
+* For any duplicate screenshots (named or not), they will be appended with a number: `{screenshotsFolder}/{specPath}/{testName} (1).png`
+* For a failure screenshot, the default naming scheme is used and the name is appended with ` (failed)`: `{screenshotsFolder}/{specPath}/{testName} (failed).png`
+
+For example, given a spec file located at `cypress/integration/users/login_spec.js`:
+
+```javascript
+describe('my tests', function () {
+  it('takes a screenshot', function () {
+    cy.screenshot() // cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot.png
+    cy.screenshot() // cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot (1).png
+    cy.screenshot() // cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot (2).png
+
+    cy.screenshot('my-screenshot') // cypress/screenshots/integration/users/login_spec.js/my-screenshot.png
+    cy.screenshot('my-screenshot') // cypress/screenshots/integration/users/login_spec.js/my-screenshot (1).png
+
+    cy.screenshot('my/nested/screenshot') // cypress/screenshots/integration/users/login_spec.js/my/nested/screenshot.png
+
+    // if this test fails, the screenshot will be saved to cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot (failed).png
+  })
+})
+```
 
 ## `after:screenshot` plugin event
 
