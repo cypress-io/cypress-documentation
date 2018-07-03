@@ -54,6 +54,11 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
       
+    - name: Cypress Image Snapshot
+      description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
+      link: https://github.com/palmerhq/cypress-image-snapshot
+      keywords: [image-diff, snapshot]
+      
 - name: Reporting
   plugins:
   - name: cypress-testrail-reporter
