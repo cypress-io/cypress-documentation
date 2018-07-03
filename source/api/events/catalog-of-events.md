@@ -326,7 +326,7 @@ $('button').on('click', (e) => {
 
 // test code
 it('can control application confirms', function (done) {
-  const count = 0
+  let count = 0
 
   // make sure you bind to this **before** the
   // confirm method is called in your application
