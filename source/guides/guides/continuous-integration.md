@@ -29,7 +29,7 @@ Cypress should run on **all** CI providers. We currently have seen Cypress worki
 - {% url "Jenkins" https://jenkins.io/ %} (Linux)
 - {% url "TravisCI" https://travis-ci.org/ %}
 - {% url "CircleCI" https://circleci.com %}
-- {% url "CodeShip" https://codeship.com/ %} (Has open {% issue 328 "issue with cy.exec()" %})
+- {% url "CodeShip" https://codeship.com/ %}
 - {% url "GitLab" https://gitlab.com/ %}
 - {% url "BuildKite" https://buildkite.com %}
 - {% url "AppVeyor" https://appveyor.com %}
@@ -153,6 +153,22 @@ jobs:
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
+
+## CodeShip
+
+### Example CodeShip Basic commands
+
+```bash
+nvm install 8
+npm install
+
+# If your tests include cy.exec()
+sed -i '/eval $(ssh-agent)/d' ~/.bash_profile
+sed -i '/ssh-add -k/d' ~/.bash_profile
+
+npm start -- --silent &
+cypress run --record
+```
 
 ## Docker
 
@@ -380,3 +396,12 @@ node scripts/run-cypress-tests.js
 ## Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
+
+## CodeShip
+
+If you are using CodeShip Basic and your tests include `cy.exec()`, add these commands to prevent Cypress from hanging after tests run. {% issue 328 'This issue' %} describes the full history.
+
+```bash
+sed -i '/eval $(ssh-agent)/d' ~/.bash_profile
+sed -i '/ssh-add -k/d' ~/.bash_profile
+```
