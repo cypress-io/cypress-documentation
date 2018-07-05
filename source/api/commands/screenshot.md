@@ -72,7 +72,7 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 describe('my tests', function () {
   it('takes a screenshot', function () {
     // screenshot will be saved as
-    // cypress/screenshots/integration/users.spec.js/my tests -- takes a screenshot.png
+    // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
@@ -84,7 +84,7 @@ describe('my tests', function () {
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/integration/spec.js/clicking-on-nav.png
+// cypress/screenshots/spec.js/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
 ```
 
@@ -92,7 +92,7 @@ cy.screenshot('clicking-on-nav')
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/integration/spec.js/actions/login/clicking-login.png
+// cypress/screenshots/spec.js/actions/login/clicking-login.png
 cy.screenshot('actions/login/clicking-login')
 ```
 
@@ -130,7 +130,7 @@ cy.screenshot("my-screenshot", {
 
     // {
     //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/integration/spec.js/my-screenshot.png',
+    //   path: '/Users/janelane/project/screenshots/spec.js/my-screenshot.png',
     //   size: '15 kb',
     //   dimensions: {
     //     width: 1000,
@@ -160,16 +160,16 @@ For example, given a spec file located at `cypress/integration/users/login_spec.
 ```javascript
 describe('my tests', function () {
   it('takes a screenshot', function () {
-    cy.screenshot() // cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot.png
-    cy.screenshot() // cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot (1).png
-    cy.screenshot() // cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot (2).png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
 
-    cy.screenshot('my-screenshot') // cypress/screenshots/integration/users/login_spec.js/my-screenshot.png
-    cy.screenshot('my-screenshot') // cypress/screenshots/integration/users/login_spec.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot.png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot (1).png
 
-    cy.screenshot('my/nested/screenshot') // cypress/screenshots/integration/users/login_spec.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login_spec.js/my/nested/screenshot.png
 
-    // if this test fails, the screenshot will be saved to cypress/screenshots/integration/users/login_spec.js/my tests -- takes a screenshot (failed).png
+    // if this test fails, the screenshot will be saved to cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (failed).png
   })
 })
 ```
