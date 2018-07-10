@@ -24,7 +24,7 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```json
 {
   "compilerOptions": {
-  "strict": true,
+    "strict": true,
     "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es5", "dom"],
