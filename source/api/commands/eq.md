@@ -76,7 +76,7 @@ Option | Default | Description
 ```javascript
 cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
-***Make an assertion on the 2nd row of a table***
+***Make an assertion on the 3rd row of a table***
 
 ```html
 <table>
