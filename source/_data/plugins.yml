@@ -49,6 +49,11 @@
       link: https://github.com/scottschafer/cypressautomocker
       keywords: [routing, mock]
 
+    - name: cypress-on-rails
+      description: Rubygem for using cypress.io with Ruby on Rails applications
+      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
+      keywords: [ruby-rack, ruby-on-rails]
+      
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library
