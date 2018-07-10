@@ -1,3 +1,108 @@
+- title: "How We Built Our Automated UI Testing Framework"
+  url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
+  sourceName: Endgame
+  sourceUrl: https://www.endgame.com/
+  date: Jun 11, 2018
+  author: Ai Santos
+  img: /img/examples/how-we-built-our-automated-ui-testing.jpg
+
+- title: "Why you should switch to Cypress for modern web testing?"
+  url: https://medium.com/@shivambharadwaj/https-medium-com-shivambharadwaj-why-you-should-switch-to-cypress-for-modern-web-testing-5d3739a19e6
+  sourceName: Medium
+  sourceUrl: https://medium.com/
+  date: Jun 10, 2018
+  author: Shivam Bharadwaj
+  img: /img/examples/switch-to-cypress.jpg
+
+- title: "Cypress: Write Automated Tests to Validate Web Applications"
+  url: https://auth0.com/blog/cypress-write-automated-tests-to-validate-web-applications/
+  sourceName: Auth0
+  sourceUrl: https://auth0.com/
+  date: Jun 5, 2018
+  author: RC
+  img: /img/examples/tests-to-validate-web-applications.jpg
+
+- title: "Secure secrets in Cypress with the Manifold CLI"
+  url: https://blog.manifold.co/secure-secrets-in-cypress-with-the-manifold-cli-6cd144b3be69
+  sourceName: Manifold
+  sourceUrl: https://blog.manifold.co/
+  date: May 31, 2018
+  author: Sam Slotsky
+  img: /img/examples/secure-secrets-manifold-cli.jpg
+  
+- title: "Start your end to end testing with Angular and Cypress"
+  url: https://offering.solutions/blog/articles/2018/05/27/end-to-end-testing-with-angular-cypress/
+  sourceName: Offering Solutions Software
+  sourceUrl: https://offering.solutions/blog/
+  date: May 27, 2018
+  author: Fabian Gosebrink
+  img: /img/examples/e2e-with-angular-and-cypress.jpg
+
+- title: "Testing React Apps with Cypress:
+A brief guide on how to run End-To-End testing on React apps with Cypress."
+  url: https://blog.bitsrc.io/testing-react-apps-with-cypress-658bc482678
+  sourceName: Bits and Pieces
+  sourceUrl: https://blog.bitsrc.io/
+  date: May 21, 2018
+  author: Rajat S
+  img: /img/examples/testing-react-apps-with-cypress.jpg
+
+- title: "Running e2e tests with Selenium *AND* Cypress"
+  url: https://medium.com/@wataruoguchi/running-e2e-tests-with-selenium-and-cypress-1de69b95d936
+  sourceName: Medium
+  sourceUrl: https://medium.com/
+  date: May 18, 2018
+  author: Wataru Oguchi
+  img: /img/examples/e2e-with-selenium-and-cypress.jpg
+
+- title: "Dynamic XHR responses recording & stubbing with Cypress"
+  url: https://medium.com/ax2-inc/dynamic-xhr-responses-recording-stubbing-with-cypress-9257d4f730cd
+  sourceName: Medium 
+  sourceUrl: https://medium.com/
+  date: May 15, 2018
+  author: Paul Gascou-Vaillancourt
+  img: /img/examples/dynamic-xhr-responses-with-cypress.jpg 
+
+- title: "Cypress.io - A JavaScript E2E Testing Framework"
+  url: http://committed.software/posts/cypress/cypress/
+  sourceName: Committed
+  sourceUrl: http://committed.software/
+  date: May 9, 2018
+  author: Matt Copas
+  img: /img/examples/a-javascript-e2e-testing-framework-committed.jpg  
+
+- title: "Testing Angular with Cypress and Docker"
+  url: https://testdriven.io/testing-angular-with-cypress-and-docker
+  sourceName: testdriven.io
+  sourceUrl: https://testdriven.io/
+  date: May 7, 2018
+  author: Michael Herman
+  img: /img/examples/testing-angular-with-cypress-and-docker.jpg
+
+- title: "End-To-End Testing A VueJS HackerNews Clone"
+  url: https://medium.com/js-dojo/end-to-end-testing-a-vuejs-hackernews-clone-23b9415fd5c5
+  sourceName: Vue.js Developers
+  sourceUrl: https://medium.com/js-dojo
+  date: May 7, 2018
+  author: Gleb Bahmutov
+  img: /img/examples/vue-js-hackernews-clong.jpg
+
+- title: "Cypress vs. Selenium, is this the end of an era?"
+  url: https://automationrhapsody.com/cypress-vs-selenium-end-era/
+  sourceName: Automation Rhapsody
+  sourceUrl: https://automationrhapsody.com/
+  date: Apr 26, 2018
+  author: Lyudmil Latinov
+  img: /img/examples/cypress-vs-selenium-end-of-era.jpg
+  
+- title: "What if your e2e tests generated your user documentation?"
+  url: https://hackernoon.com/what-if-your-e2e-tests-generated-your-user-documentation-baefe3ebaee9
+  sourceName: Hackernoon
+  sourceUrl: https://hackernoon.com/
+  date: Apr 23, 2018
+  author: Mike Nikles
+  img: /img/examples/test-generated-documentation.jpg
+
 - title: "WiD - Cypress e2e testing"
   url: https://wetainment.com/wid-2018-04-11/
   sourceName: "wetainment"
@@ -29,6 +134,14 @@
   date: Mar 6, 2018
   author: Joe Colantonio
   img: /img/examples/top-testing-automation-frameworks.png
+  
+- title: "Comparing Vue Component Testing Tools"
+  url: https://codingitwrong.com/2018/03/04/comparing-vue-component-testing-tools.html
+  sourceName: Coding It Wrong
+  sourceUrl: https://codingitwrong.com/
+  date: Mar 4, 2018
+  author: Josh Justice
+  img: /img/examples/comparing-vue-component-testing-tools.jpg
 
 - title: "How to write tests and maintain your sanity"
   url: https://blog.manifold.co/testing-sucks-here-is-how-to-make-it-better-7af1ff93cc9

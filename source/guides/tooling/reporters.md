@@ -1,6 +1,6 @@
 ---
 title: Reporters
-comments: false
+
 ---
 
 Because Cypress is built on top of Mocha, that means any reporter built for Mocha can be used with Cypress. Here is a list of built in Mocha reporters.

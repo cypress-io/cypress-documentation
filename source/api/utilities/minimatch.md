@@ -1,6 +1,6 @@
 ---
 title: Cypress.minimatch
-comments: false
+
 ---
 
 Cypress automatically includes {% url "minimatch" https://github.com/isaacs/minimatch %} and exposes it as `Cypress.minimatch`.

@@ -1,6 +1,6 @@
 ---
 title: readFile
-comments: false
+
 ---
 
 Read a file and yield its contents.
@@ -158,7 +158,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 ```javascript
 // if this assertion fails cy.readFile will poll the file
-// until it eventually passes its assertions (or time out)
+// until it eventually passes its assertions (or times out)
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
@@ -196,4 +196,5 @@ When clicking on the `readFile` command within the command log, the console outp
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}
+- {% url `cy.task()` task %}
 - {% url `cy.writeFile()` writefile %}

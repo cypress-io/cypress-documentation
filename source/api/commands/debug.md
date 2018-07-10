@@ -1,6 +1,6 @@
 ---
 title: debug
-comments: false
+
 ---
 
 Set a `debugger` and log what the previous command yields.
@@ -89,4 +89,4 @@ When clicking on the `debug` command within the command log, the console outputs
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `.pause()` pause %}
 - {% url `cy.log()` log %}
-- {% url `cy.screenshot()` screenshot %}
+- {% url `.screenshot()` screenshot %}

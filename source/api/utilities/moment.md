@@ -1,6 +1,6 @@
 ---
 title: Cypress.moment
-comments: false
+
 ---
 
 Cypress automatically includes {% url 'moment.js' http://momentjs.com/ %} and exposes it as `Cypress.moment`.

@@ -1,6 +1,6 @@
 ---
 title: Blogs
-comments: false
+
 containerClass: examples
 layout: media
 dataType: blogs

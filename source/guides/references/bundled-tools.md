@@ -1,6 +1,6 @@
 ---
 title: Bundled Tools
-comments: false
+
 ---
 
 {% note info %}

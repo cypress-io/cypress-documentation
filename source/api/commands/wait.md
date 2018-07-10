@@ -1,6 +1,6 @@
 ---
 title: wait
-comments: false
+
 ---
 
 Wait for a number of milliseconds or wait for an aliased resource to resolve before moving on to the next command.
@@ -140,7 +140,7 @@ cy.route('activities/*').as('getActivities')
 cy.route('comments/*').as('getComments')
 cy.visit('/dashboard')
 
-cy.wait(['@getUsers', '@getActivities', 'getComments']).then((xhrs) => {
+cy.wait(['@getUsers', '@getActivities', '@getComments']).then((xhrs) => {
   // xhrs will now be an array of matching XHR's
   // xhrs[0] <-- getUsers
   // xhrs[1] <-- getActivities
@@ -155,7 +155,7 @@ cy.server()
 cy.route('users/*').as('getUsers')
 cy.route('activities/*').as('getActivities')
 cy.route('comments/*').as('getComments')
-cy.wait(['@getUsers', '@getActivities', 'getComments'])
+cy.wait(['@getUsers', '@getActivities', '@getComments'])
   .spread((getUsers, getActivities, getComments) => {
     // each XHR is now an individual argument
   })

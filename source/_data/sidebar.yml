@@ -123,6 +123,7 @@ api:
     spy: spy.html
     stub: stub.html
     submit: submit.html
+    task: task.html
     then: then.html
     tick: tick.html
     title: title.html
@@ -147,20 +148,24 @@ api:
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html
+    screenshot-api: screenshot-api.html
     selector-playground-api: selector-playground-api.html
     cypress-server: cypress-server.html
     arch: arch.html
+    browser: browser.html
     config: config.html
     # dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
+    spec: spec.html
     version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html
     configuration-api: configuration-api.html
     preprocessors-api: preprocessors-api.html
     browser-launch-api: browser-launch-api.html
+    after-screenshot-api: after-screenshot-api.html
 
 plugins:
   plugins: index.html
@@ -171,6 +176,7 @@ examples:
     tutorials: tutorials.html
     applications: applications.html
     docker: docker.html
+    workshop: workshop.html
   media:
     blogs-media: blogs-media.html
     talks-media: talks-media.html

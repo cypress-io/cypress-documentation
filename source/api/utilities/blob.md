@@ -1,6 +1,6 @@
 ---
 title: Cypress.Blob
-comments: false
+
 ---
 
 Cypress automatically includes a {% url 'Blob' https://github.com/nolanlawson/blob-util %} library and exposes it as `Cypress.Blob`.

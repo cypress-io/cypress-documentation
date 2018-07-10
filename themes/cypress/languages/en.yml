@@ -1,3 +1,5 @@
+# Text labels for menu links
+
 menu:
   guides: Guides
   api: API
@@ -141,6 +143,7 @@ sidebar:
     spy: spy
     stub: stub
     submit: submit
+    task: task
     then: then
     tick: tick
     title: title
@@ -183,8 +186,12 @@ sidebar:
     configuration-api: Configuration
     version: version
     arch: arch
+    browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
+    screenshot-api: Screenshot
+    after-screenshot-api: After Screenshot
+    spec: spec
   examples:
     examples: Examples
     recipes: Recipes
@@ -197,6 +204,7 @@ sidebar:
     screencasts-media: Screencasts
     blogs-media: Blogs
     extensions: Extensions
+    workshop: Workshop
   faq:
     questions: FAQ
     general-questions-faq: General Questions

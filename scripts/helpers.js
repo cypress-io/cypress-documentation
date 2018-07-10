@@ -153,10 +153,3 @@ hexo.extend.helper.register('lang_name', function (lang) {
   let data = this.site.data.languages[lang]
   return data.name || data
 })
-
-hexo.extend.helper.register('disqus_lang', function () {
-  let lang = this.page.lang
-  let data = this.site.data.languages[lang]
-
-  return data.disqus_lang || lang
-})

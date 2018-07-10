@@ -1,6 +1,6 @@
 ---
 title: should
-comments: false
+
 ---
 
 Create an assertion. Assertions are automatically retried until they pass or time out.
@@ -71,10 +71,10 @@ However, some chainers change the subject. In the example below, the second `.sh
 
 ```javascript
 cy
-  .get('nav')                       // yields <nav>
-  .should('be.visible')             // yields <nav>
-  .and('have.css', 'font-family')   // yields 'sans-serif'
-  .and('match', /serif/)            // yields 'sans-serif'
+  .get('nav')                          // yields <nav>
+  .should('be.visible')                // yields <nav>
+  .should('have.css', 'font-family')   // yields 'sans-serif'
+  .and('match', /serif/)               // yields 'sans-serif'
 ```
 
 # Examples
