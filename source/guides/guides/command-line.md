@@ -306,7 +306,7 @@ Here's an example of programmatically running a spec file:
 const cypress = require('cypress')
 
 cypress.run({
-  spec: './cypress/integration/a-spec.js'
+  spec: './cypress/integration/examples/actions.spec.js'
 })
 .then((results) => {
   console.log(results)
@@ -322,33 +322,24 @@ cypress.run({
 
 ```json
 {
-  "tests": 2,
-  "passes": 2,
-  "pending": 0,
-  "failures": 0,
-  "duration": "2 seconds",
-  "screenshots": 0,
-  "video": true,
-  "version": "0.20.0"
+  "startedTestsAt": "2018-07-11T17:53:35.463Z",
+  "endedTestsAt": "2018-07-11T17:53:35.675Z",
+  "totalDuration": 212,
+  "totalTests": 13,
+  "totalFailed": 1,
+  "totalPassed": 0,
+  "totalPending": 0,
+  "totalSkipped": 12,
+  "browserName": "electron",
+  "browserVersion": "59.0.3071.115",
+  "osName": "darwin",
+  "osVersion": "14.5.0",
+  "cypressVersion": "3.0.2",
+  "config": {}
 }
 ```
 
-Even when tests fail, the `Promise` still resolves with the test results.
-
-```json
-{
-  "tests": 2,
-  "passes": 1,
-  "pending": 0,
-  "failures": 1,
-  "duration": "2 seconds",
-  "screenshots": 1,
-  "video": true,
-  "version": "0.20.0"
-}
-```
-
-The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed. In that case, the `Promise` will be rejected with a detailed error.
+Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find . In that case, the `Promise` will be rejected with a detailed error.
 
 ### Options
 
