@@ -169,7 +169,7 @@ Mounting a project directory with an existing `node_modules` into a `cypress/bas
 
 ```shell
 docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
-# Error: the cypress binary is not installed
+Error: the cypress binary is not installed
 ```
 
 Instead, you should build a docker container for your project's version of cypress.
@@ -291,15 +291,11 @@ The problem is - what happens if your server takes seconds to boot? There is no 
 This is a naive scenario assuming your web server boots fast:
 
 {% note danger %}
-Don't write the following - it will fail on slow booting servers.
+Don't write the following - it will fail on slow booting servers. Cypress may start before the server has started.
 {% endnote %}
 
 ```shell
-## background your server
-npm start &
-
-## oops... cypress runs before your server is ready
-cypress run
+npm start & cypress run
 ```
 
 There are easy solutions to this. Instead of introducing arbitrary waits like `sleep 20` you can use a much better option like the {% url 'wait-on module' https://github.com/jeffbski/wait-on %}.
@@ -307,14 +303,10 @@ There are easy solutions to this. Instead of introducing arbitrary waits like `s
 Now, we can simply block the `cypress run` command from executing until your server has booted.
 
 ```shell
-## background your server
-npm start &
+npm start & wait-on http://localhost:8080
+```
 
-## poll the server over and over again
-## until it's been booted
-wait-on http://localhost:8080
-
-## and now run cypress
+```shell
 cypress run
 ```
 
@@ -371,7 +363,6 @@ return server.start()
 ```
 
 ```shell
-## kick off the script
 node scripts/run-cypress-tests.js
 ```
 
