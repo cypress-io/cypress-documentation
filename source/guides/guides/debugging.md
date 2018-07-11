@@ -87,8 +87,16 @@ You can see a walk-through of debugging some application code from Cypress [in t
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
 
+**On Mac or Linux:**
+
 ```shell
 DEBUG=cypress:* cypress open
+```
+
+**On Windows:**
+
+```shell
+set DEBUG=cypress:*
 ```
 
 {% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.

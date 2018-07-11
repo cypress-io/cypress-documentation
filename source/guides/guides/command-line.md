@@ -236,12 +236,7 @@ Verify that Cypress is installed correctly and is executable.
 
 ```shell
 cypress verify
-```
-
-### Example Output
-
-```shell
-Cypress application is valid and should be okay to run: /Applications/Cypress.app
+✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
 ```
 
 ## `cypress version`
@@ -253,13 +248,8 @@ In most cases they will be the same, but could be different if you have installe
 
 ```shell
 cypress version
-```
-
-### Example Output
-
-```shell
-Cypress package version: 0.20.0
-Cypress binary version: 0.20.0
+Cypress package version: 3.0.0
+Cypress binary version: 3.0.0
 ```
 
 ## `cypress cache [command]`
@@ -272,7 +262,7 @@ Print the `path` to the Cypress cache folder.
 
 ```shell
 cypress cache path
-## /.cache/Cypress
+/Users/jane/Library/Caches/Cypress
 ```
 
 ### `cypress cache list`
@@ -281,7 +271,7 @@ Print all existing installed versions of Cypress. The output will be a **space d
 
 ```shell
 cypress cache list
-## 3.0.0 3.0.1 3.0.2
+3.0.0 3.0.1 3.0.2
 ```
 
 ### `cypress cache clear`
@@ -373,7 +363,7 @@ cypress.run({
 
 # Debugging Commands
 
-Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
 **On Mac or Linux:**
 ```shell
@@ -387,12 +377,10 @@ DEBUG=cypress:* cypress run
 
 ```shell
 set DEBUG=cypress:*
-cypress open
 ```
 
 ```shell
 set DEBUG=cypress:*
-cypress run
 ```
 
 Cypress is a rather large and complex project involving a dozen or more submodules, and the default output can be overwhelming.
@@ -411,7 +399,4 @@ DEBUG=cypress:launcher cypress run
 
 ```shell
 DEBUG=cypress:server:project cypress run
-DEBUG=cypress:server:scaffold cypress run
-DEBUG=cypress:server:socket cypress run
-DEBUG=cypress:server:bundle cypress run
 ```
