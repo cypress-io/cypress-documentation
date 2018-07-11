@@ -236,12 +236,7 @@ Verify that Cypress is installed correctly and is executable.
 
 ```shell
 cypress verify
-```
-
-### Example Output
-
-```shell
-Cypress application is valid and should be okay to run: /Applications/Cypress.app
+✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
 ```
 
 ## `cypress version`
@@ -253,13 +248,8 @@ In most cases they will be the same, but could be different if you have installe
 
 ```shell
 cypress version
-```
-
-### Example Output
-
-```shell
-Cypress package version: 0.20.0
-Cypress binary version: 0.20.0
+Cypress package version: 3.0.0
+Cypress binary version: 3.0.0
 ```
 
 ## `cypress cache [command]`
@@ -272,7 +262,7 @@ Print the `path` to the Cypress cache folder.
 
 ```shell
 cypress cache path
-## /.cache/Cypress
+/Users/jane/Library/Caches/Cypress
 ```
 
 ### `cypress cache list`
@@ -281,7 +271,7 @@ Print all existing installed versions of Cypress. The output will be a **space d
 
 ```shell
 cypress cache list
-## 3.0.0 3.0.1 3.0.2
+3.0.0 3.0.1 3.0.2
 ```
 
 ### `cypress cache clear`
@@ -306,7 +296,7 @@ Here's an example of programmatically running a spec file:
 const cypress = require('cypress')
 
 cypress.run({
-  spec: './cypress/integration/a-spec.js'
+  spec: './cypress/integration/examples/actions.spec.js'
 })
 .then((results) => {
   console.log(results)
@@ -322,33 +312,24 @@ cypress.run({
 
 ```json
 {
-  "tests": 2,
-  "passes": 2,
-  "pending": 0,
-  "failures": 0,
-  "duration": "2 seconds",
-  "screenshots": 0,
-  "video": true,
-  "version": "0.20.0"
+  "startedTestsAt": "2018-07-11T17:53:35.463Z",
+  "endedTestsAt": "2018-07-11T17:53:35.675Z",
+  "totalDuration": 212,
+  "totalTests": 13,
+  "totalFailed": 1,
+  "totalPassed": 0,
+  "totalPending": 0,
+  "totalSkipped": 12,
+  "browserName": "electron",
+  "browserVersion": "59.0.3071.115",
+  "osName": "darwin",
+  "osVersion": "14.5.0",
+  "cypressVersion": "3.0.2",
+  "config": {}
 }
 ```
 
-Even when tests fail, the `Promise` still resolves with the test results.
-
-```json
-{
-  "tests": 2,
-  "passes": 1,
-  "pending": 0,
-  "failures": 1,
-  "duration": "2 seconds",
-  "screenshots": 1,
-  "video": true,
-  "version": "0.20.0"
-}
-```
-
-The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed. In that case, the `Promise` will be rejected with a detailed error.
+Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find . In that case, the `Promise` will be rejected with a detailed error.
 
 ### Options
 
@@ -373,7 +354,7 @@ cypress.run({
 
 # Debugging Commands
 
-Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
 **On Mac or Linux:**
 ```shell
@@ -387,12 +368,10 @@ DEBUG=cypress:* cypress run
 
 ```shell
 set DEBUG=cypress:*
-cypress open
 ```
 
 ```shell
 set DEBUG=cypress:*
-cypress run
 ```
 
 Cypress is a rather large and complex project involving a dozen or more submodules, and the default output can be overwhelming.
@@ -411,7 +390,4 @@ DEBUG=cypress:launcher cypress run
 
 ```shell
 DEBUG=cypress:server:project cypress run
-DEBUG=cypress:server:scaffold cypress run
-DEBUG=cypress:server:socket cypress run
-DEBUG=cypress:server:bundle cypress run
 ```

@@ -30,7 +30,7 @@ Using GitHub, create a copy (a fork) of this repository under your personal acco
 
 **Clone your forked repository**
 
-```bash
+```shell
 git clone git@github.com:<your username>/cypress-documentation.git
 cd cypress-documentation
 ```
@@ -40,7 +40,7 @@ cd cypress-documentation
 **Note:** at least Node 6 is required, but Node 8 with NPM v5 is preferred to take advantage of
 the package lock file.
 
-```bash
+```shell
 npm install
 ```
 
@@ -48,7 +48,7 @@ This will install this repo's direct dependencies.
 
 **Then, build the `public` directory and start the app:**
 
-```bash
+```shell
 npm run build
 npm start
 ```

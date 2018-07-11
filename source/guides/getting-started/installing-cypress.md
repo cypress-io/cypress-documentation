@@ -209,12 +209,24 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
 
-`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary. 
+
+### Mac
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
-# linux: 'Cypress/Cypress'
-# Windows: 'Cypress/Cypress.exe'
+```
+
+### Linux
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
+```
+
+### Windows
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 ```
 
 {% note warning %}
