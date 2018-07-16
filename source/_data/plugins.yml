@@ -64,6 +64,11 @@
       link: https://github.com/palmerhq/cypress-image-snapshot
       keywords: [image-diff, snapshot]
       
+    - name: cypress-capybara
+      description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
+      link: https://github.com/testdouble/cypress-capybara
+      keywords: [testing-library, capybara]
+      
 - name: Reporting
   plugins:
   - name: cypress-testrail-reporter
