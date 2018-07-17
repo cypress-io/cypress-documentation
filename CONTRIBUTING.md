@@ -10,7 +10,7 @@ Thanks for taking the time to contribute! :smile:
   - [Tags](#tags)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
-  - [Writing the Changelog])(#writing-the-changelog)
+  - [Writing the Changelog](#writing-the-changelog)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)
