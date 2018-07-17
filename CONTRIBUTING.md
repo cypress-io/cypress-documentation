@@ -7,9 +7,10 @@ Thanks for taking the time to contribute! :smile:
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
 - [Writing Documentation](#writing-documentation)
-  - [Links](#links)
+  - [Tags](#tags)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
+  - [Writing the Changelog])(#writing-the-changelog)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)
@@ -73,6 +74,10 @@ We use Cypress itself to test the documentation. To start the server and run E2E
 
 ## Writing Documentation
 
+### Tags
+
+In addition to built-in Hexo tags (like `{% img ... %}`), we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
+
 ### Adding Examples
 
 To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
@@ -83,13 +88,22 @@ Add an associated image with the example within the [`source/img/examples`](/sou
 {% img /img/examples/name-of-file.jpg "alt text describing img" %}
 ```
 
-### Tags
-
-In addition to built-in Hexo tags (like `{% img ... %}`), we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
-
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, as well as any keywords.
+
+### Writing the Changelog
+
+When adding to the Changelog, be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes).
+
+#### Categories
+
+- **Summary** - If it is a large release, you may write a summary explaining what the point of this release is (mostly used for breaking releases)
+- **Breaking Changes** - The users current implementation of Cypress may break after updating.
+- **Features** - A new feature
+- **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
+- **Misc** - Not a feature or bugfix, but work that was done. May be internal work that was done and associated with an issue
+- **Documentation Changes** - our docs were updated based on behavior changes in release
 
 ## Commiting Code
 
