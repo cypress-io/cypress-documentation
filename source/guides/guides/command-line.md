@@ -52,6 +52,7 @@ Option | Description
 `-h`, `--help`  | Output usage information
 `-k`, `--key`  | Specify your secret record key
 `-p`, `--port`  | Override default port
+`-??`, `--parallel` | Run recorded tests in parallel
 `-P`, `--project` | Path to a specific project
 `-r`, `--reporter`  | Specify a mocha reporter
 `-o`, `--reporter-options`  | Specify mocha reporter options
