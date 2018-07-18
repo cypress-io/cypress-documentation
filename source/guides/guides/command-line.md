@@ -1,6 +1,5 @@
 ---
 title: Command Line
-
 ---
 
 {% note info %}
