@@ -4,19 +4,21 @@ title: Parallelization
 
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
+
+- 
 {% endnote %}
 
 # Overview
 
-If your project has a large number of tests, it can take a large amount of time for tests to complete running when run on one machine serially. Spreading your tests across machines and running multiple tests in parallel can save your team time and money when continuously running tests in CI.
+If your project has a large number of tests, it can take a large amount of time for tests to complete running when run on one machine serially. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuos Integration.
 
-Cypress can run recorded tests in parallel across multiple machines.
+Cypress can run recorded tests in parallel across multiple virtual machines.
 
 This guide assumes you already have your project running and recording within Continuous Integration. If you haven't set up your project yet, check out our Continuous Integration guide.
 
 # Splitting up your test suite
 
-Cypress allocation strategy for parallelism is file-based, so in order to utilize parallelization, you will need to have your tests split across separate files.
+Cypress' allocation strategy for parallelism is file-based, so in order to utilize parallelization, you will want to have your tests split across separate files.
 
 # Turning on parallelization
 
@@ -29,6 +31,11 @@ cypress run --record --parallel
 ```
 
 Running tests in parallel requires the `--record` flag be passed. This ensures Cypress can properly collect the data needed to parallelize the run. This also gives you the full benefit of seeing the results of the parallelization in our Dashboard Service. If you have not set up your project to record, check out our Set up guide.
+
+If you've passed the `--parallel` flag, Cypress is now responsible for a few things:
+
+- We automatically look up the number of available machines.
+- We split up all spec files within your project across any available machines.
 
 # Balance strategy
 

@@ -2,6 +2,29 @@
 title: Changelog
 ---
 
+## 3.1.0
+
+**Summary:**
+
+- Cypress can now run recorded tests in parallel across multiple virtual machines. Fixes {% issue 1690 %} and {% issue 64 %}.
+
+**Features:**
+
+- `cypress run` accept a new `--parallel` flag to run specs in parallel.
+- `cypress run` accepts a new `--group` flag to group multiple spec files within a single run. Fixes {% issue 2153 %}
+- `cypress run` accepts a new `--ci-build-id` flag.
+- The Dashboard Service has new "Insights" available within each run. You can now see how the run was parallelized and calculate how adding or removing virtual machines would change future runtime.
+
+**Misc**
+
+- `cypress run` now creates a new browser profile per run. Fixes {% issue 1566 %}
+- We've implemented a smarter retry and backoff strategy when interacting with our internal API. This will provide better feedback in situations with the API is temporarily unavailable. Fixes {% issue 1590 %}
+
+
+**Documentation Changes:**
+
+- {% url 'Added `Parallelization` doc.' parallelization %}
+
 ## 3.0.2
 
 *Released 6/28/2018*
