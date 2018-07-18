@@ -44,23 +44,24 @@ cypress run [options]
 
 Option | Description
 ------ |  ---------
-`--browser`, `-b`  | {% urlHash "Specify different browser to run tests in" cypress-run-browser %}
-`--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config %}
-`--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env %}
-`--group`  | Group recorded spec files
+`--browser`, `-b`  | {% urlHash "Specify different browser to run tests in" cypress-run-browser-lt-browser-name-gt %}
+`--ci-build-id` | {% urlHash "Specify a unique identifier for a run on your CI provider." cypress-run-ci-build-id-lt-id-gt %}
+`--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
+`--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
+`--group`  | {% urlHash "Group recorded spec files within a single run" cypress-run-group-lt-name-gt %}
 `--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
 `--help`, `-h`  | Output usage information
-`--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record %}
+`--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress open after all tests run" cypress-run-no-exit %}
-`--port`,`-p`  | {% urlHash "Override default port" cypress-run-port %}
-`--parallel` | Run recorded tests in parallel
-`--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project %}
-`--record`  | {% urlHash "Whether to record the test run" cypress-run-record %}
-`--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter %}
-`--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter %}
-`--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec %}
+`--parallel` | {% urlHash "Run recorded tests in parallel across multiple machines" cypress-run-parallel %}
+`--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
+`--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
+`--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
+`--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
+`--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
+`--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
 
-### `cypress run --browser`
+### `cypress run --browser <browser-name>`
 
 ```shell
 cypress run --browser chrome
@@ -72,7 +73,17 @@ Cypress will attempt to find all supported browsers available on your system. If
 DEBUG=cypress:launcher cypress run --browser chrome
 ```
 
-### `cypress run --config`
+### `cypress run --ci-build-id <id>`
+
+This value should be automatically detected for most CI providers and is unnecessary to define unless Cypress is unable to determine it.
+
+Typically, this is defined as an environment variable within your CI provider, defining a unique "build" or "run".
+
+```shell
+cypress run --ci-build-id BUILD_NUMBER
+```
+
+### `cypress run --config <config>`
 
 Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
 
@@ -80,10 +91,16 @@ Read more about {% url 'environment variables' environment-variables %} and {% u
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-### `cypress run --env`
+### `cypress run --env <env>`
 
 ```shell
 cypress run --env host=api.dev.local
+```
+
+### `cypress run --group <name>`
+
+```shell
+cypress run --group develop-env
 ```
 
 ### `cypress run --headed`
@@ -106,13 +123,19 @@ You can pass `--headed --no-exit` in order to view the **command log** or have a
 cypress run --headed --no-exit
 ```
 
-### `cypress run --port`
+### `cypress run --parallel`
+
+```shell
+cypress run --parallel
+```
+
+### `cypress run --port <port>`
 
 ```shell
 cypress run --port 8080
 ```
 
-### `cypress run --project`
+### `cypress run --project <project-path>`
 
 By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
 
@@ -124,7 +147,7 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress run --project ./some/nested/folder
 ```
 
-### `cypress run --record`
+### `cypress run --record --key <record-key>`
 
 Record video of tests running after {% url 'setting up your project to record' dashboard-service#Setup %}. After setting up your project you will be given a **Record Key**.
 
@@ -148,7 +171,7 @@ cypress run --record
 
 You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
 
-### `cypress run --reporter`
+### `cypress run --reporter <reporter>`
 
 You can tests specifying a specific {% url "Mocha reporter" reporters %}.
 
@@ -156,13 +179,13 @@ You can tests specifying a specific {% url "Mocha reporter" reporters %}.
 cypress run --reporter json
 ```
 
-You can specify reporter options using the `--reporter-options` flag.
+You can specify reporter options using the `--reporter-options <reporter-options>` flag.
 
 ```shell
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
 
-### `cypress run --spec`
+### `cypress run --spec <spec>`
 
 Run tests specifying a single test file to run instead of all tests.
 
@@ -196,21 +219,21 @@ Options passed to `cypress open` will automatically be applied to the project yo
 
 Option | Description
 ------ | ---------
-`--config`, `-c`  | {% urlHash "Specify configuration" cypress-open-config %}
+`--config`, `-c`  | {% urlHash "Specify configuration" cypress-open-config-lt-config-gt %}
 `--detached`, `-d` | Open Cypress in detached mode
-`--env`, `-e`  | {% urlHash "Specify environment variables" cypress-open-env %}
+`--env`, `-e`  | {% urlHash "Specify environment variables" cypress-open-env-lt-env-gt %}
 `--global` | {% urlHash "Run in global mode" cypress-open-global %}
 `--help`, `-h`  | Output usage information
-`--port`, `-p`  | {% urlHash "Override default port" cypress-open-port %}
-`--project`, `-P` | {% urlHash "Path to a specific project" cypress-open-project %}
+`--port`, `-p`  | {% urlHash "Override default port" cypress-open-port-lt-port-gt %}
+`--project`, `-P` | {% urlHash "Path to a specific project" cypress-open-project-lt-project-path-gt %}
 
-### `cypress open --config`
+### `cypress open --config <config>`
 
 ```shell
 cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-### `cypress open --env`
+### `cypress open --env <env>`
 
 ```shell
 cypress open --env host=api.dev.local
@@ -224,13 +247,13 @@ Opening Cypress in global mode is useful if you have multiple nested projects bu
 cypress open --global
 ```
 
-### `cypress open --port`
+### `cypress open --port <port>`
 
 ```shell
 cypress open --port 8080
 ```
 
-### `cypress open --project`
+### `cypress open --project <project-path>`
 
 By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
 
