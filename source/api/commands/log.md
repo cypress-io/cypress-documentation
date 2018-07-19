@@ -23,7 +23,7 @@ cy.log('created new user')
 
 **{% fa fa-angle-right %} message** ***(String)***
 
-Message to be printed to Cypress Command Log.
+Message to be printed to Cypress Command Log. Accepts a Markdown formated message.
 
 **{% fa fa-angle-right %} args...**
 
