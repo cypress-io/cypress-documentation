@@ -41,8 +41,9 @@ guides:
   references:
     assertions: assertions.html
     configuration: configuration.html
-    error-messages: error-messages.html
     best-practices: best-practices.html
+    module-api: module-api.html
+    error-messages: error-messages.html
     bundled-tools: bundled-tools.html
     # creating-fixtures: creating-fixtures.html
     # cypress-api-design: cypress-api-design.html
