@@ -215,7 +215,7 @@ Many applications will have already begun routing, initialization, and requests 
 Luckily Cypress supports this use case. Simply reverse the order of the commands:
 
 ```javascript
-// this code is probably want you want
+// this code is probably what you want
 cy.server()
 cy.route('/users/**', {...})
 cy.visit('http://localhost:8000/#/app')
