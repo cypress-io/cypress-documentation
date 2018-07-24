@@ -6,6 +6,44 @@ You can require Cypress as a Node module.
 
 ## `cypress.run()`
 
+### Options
+
+Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
+
+Option | Description
+------ |  ---------
+`browser`  | Specify different browser to run tests in
+`config`  | Specify configuration
+`env`  | Specify environment variables
+`headed`  | Display the Electron browser instead of running headlessly
+`key`  | Specify your secret record key
+`noExit` | Keep Cypress open after all tests run
+`port`  | Override default port
+`project` | Path to a specific project
+`record`  | Whether to record the test run
+`reporter`  | Specify a mocha reporter
+`reporterOptions`  | Specify mocha reporter options
+`spec`  | Specify the specs to run
+
+```javascript
+const cypress = require('cypress')
+
+cypress.run({
+  reporter: 'junit',
+  browser: 'chrome',
+  config: {
+    baseUrl: 'http://localhost:8080',
+    chromeWebSecurity: false,
+  },
+  env: {
+    foo: 'bar',
+    baz: 'quux',
+  }
+})
+```
+
+### Example
+
 Here is an example of programmatically running a spec file:
 
 ```js
@@ -26,20 +64,34 @@ cypress.run({
 
 ```json
 {
-  "startedTestsAt": "2018-07-11T17:53:35.463Z",
+  "cypressVersion": "3.0.2",
   "endedTestsAt": "2018-07-11T17:53:35.675Z",
+  "browserName": "electron",
+  "browserPath": "path/to/browser",
+  "browserVersion": "59.0.3071.115",
+  "config": {...},
+  "osName": "darwin",
+  "osVersion": "14.5.0",
+  "runs": [{
+    "stats": {...},
+    "reporter": "spec",
+    "reporterStats": {...},
+    "hooks": [...],
+    "tests": [...],
+    "error": null,
+    "video": "User/janelane/my-app/cypress/videos/abc123.mp4",
+    "screenshots": [],
+    "spec": {...},
+    "shouldUploadVideo": true
+  }],
+  "startedTestsAt": "2018-07-11T17:53:35.463Z",
   "totalDuration": 212,
-  "totalTests": 13,
   "totalFailed": 1,
   "totalPassed": 0,
   "totalPending": 0,
   "totalSkipped": 12,
-  "browserName": "electron",
-  "browserVersion": "59.0.3071.115",
-  "osName": "darwin",
-  "osVersion": "14.5.0",
-  "cypressVersion": "3.0.2",
-  "config": {}
+  "totalSuites": 8,
+  "totalTests": 13,
 }
 ```
 
@@ -47,44 +99,23 @@ Even when tests fail, the `Promise` still resolves with the test results. The `P
 
 ## `cypress.open()`
 
-```javascript
-const cypress = require('cypress')
-
-cypress.open()
-```
-
-## Options
+### Options
 
 Just like the {% url "Command Line options" command-line %}, you can pass options that modify how Cypress runs.
 
 Option | Description
------- |  ---------
-`browser`  | Specify different browser to run tests in
+------ | ---------
 `config`  | Specify configuration
+`detached` | Open Cypress in detached mode
 `env`  | Specify environment variables
-`headed`  | Display the Electron browser instead of running headlessly
-`key`  | Specify your secret record key
-`no-exit` | Keep Cypress open after all tests run
+`global` | Run in global mode
 `port`  | Override default port
 `project` | Path to a specific project
-`record`  | Whether to record the test run
-`reporter`  | Specify a mocha reporter
-`reporter-options`  | Specify mocha reporter options
-`spec`  | Specify the specs to run
+
+### Example
 
 ```javascript
 const cypress = require('cypress')
 
-cypress.run({
-  reporter: 'junit',
-  browser: 'chrome',
-  config: {
-    baseUrl: 'http://localhost:8080',
-    chromeWebSecurity: false,
-  },
-  env: {
-    foo: 'bar',
-    baz: 'quux',
-  }
-})
+cypress.open()
 ```
