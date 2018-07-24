@@ -43,7 +43,7 @@ cypress.run({
 }
 ```
 
-Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find . In that case, the `Promise` will be rejected with a detailed error.
+Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find  a module dependency. In that case, the `Promise` will be rejected with a detailed error.
 
 ## `cypress.open()`
 
