@@ -1,6 +1,5 @@
 ---
 title: Command Line
-
 ---
 
 {% note info %}
@@ -14,9 +13,9 @@ title: Command Line
 
 # Installation
 
-This Guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module.
+This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands below.
 
-After installing you'll be able to execute all of the following commands.
+You can alternatively require and run Cypress as a node module using our {% url "Module API" module-api %}.
 
 {% note warning %}
 For brevity we've omitted the full path to the cypress executable in each command.
