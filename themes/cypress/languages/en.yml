@@ -74,6 +74,7 @@ sidebar:
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
+    module-api: Module API
   api:
     introduction: Introduction
     api: API
