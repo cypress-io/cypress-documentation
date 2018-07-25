@@ -148,7 +148,7 @@ cy.get('#num').then(($span) => {
     // now capture it again
     const num2 = parseFloat($span.text())
 
-    // make sure its what we expected
+    // make sure it's what we expected
     expect(num2).to.eq(num1 + 1)
   })
 })
