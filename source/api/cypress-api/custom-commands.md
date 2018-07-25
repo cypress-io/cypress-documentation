@@ -292,7 +292,7 @@ Require subject be of type: `element`.
 Cypress.Commands.add('click', {
   prevSubject: 'element'
 }, (subject, options) => {
-  // receives the previous subject and its
+  // receives the previous subject and it's
   // guaranteed to be an element
 })
 ```
@@ -321,7 +321,7 @@ Require subject be one of the following types: `element`, `document` or `window`
 Cypress.Commands.add('trigger', {
   prevSubject: ['element', 'document', 'window']
 }, (subject, eventName, options) => {
-  // receives the previous subject and its
+  // receives the previous subject and it's
   // guaranteed to be an element, document, or window
 })
 ```
@@ -356,7 +356,7 @@ Cypress.Commands.add('contains', {
   // since it's optional.
   //
   // if it's present
-  // then its window, document, or element.
+  // then it's window, document, or element.
   // - when window or document we'll query the entire DOM.
   // - when element we'll query only inside of its children.
   if (subject) {
@@ -413,7 +413,7 @@ The answer is usually **yes**. Here's an example:
 // There's no reason to create something like a cy.search() custom
 // command because this behavior is only applicable to a single spec file
 //
-// Just us a regular ol' javascript function folks!
+// Just use a regular ol' javascript function folks!
 const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
