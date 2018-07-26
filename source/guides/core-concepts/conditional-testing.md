@@ -390,11 +390,6 @@ For instance you may want to do this:
 
 ```js
 cy.get('button').contains('hello')
-  .catch((err) => {
-    // oh no the button wasn't found
-    // (or something else failed)
-    cy.get('somethingElse').click()
-  })
 ```
 
 If you've been reading along, then you should already have a grasp on why trying to implement conditional code with asynchronous rendering is not a good idea. If the test writer cannot accurately predict the given state of the system, then neither can Cypress. Error handling offers no additional proof this can be done deterministically.
@@ -415,11 +410,6 @@ function keepCalmAndCarryOn () {
 
 cy
   .get('#wizard').contains('Close').click()
-  .catch((err) => {
-    // no problem, i guess the wizard didn't exist
-    // or something... no worries
-    keepCalmAndCarryOn()
-  })
   .then(keepCalmAndCarryOn)
 ```
 
