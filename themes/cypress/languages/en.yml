@@ -133,6 +133,7 @@ sidebar:
     siblings: siblings
     spread: spread
     spy: spy
+    state: state
     stub: stub
     submit: submit
     task: task

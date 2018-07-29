@@ -117,6 +117,7 @@ api:
     siblings: siblings.html
     spread: spread.html
     spy: spy.html
+    state: state.html
     stub: stub.html
     submit: submit.html
     task: task.html
