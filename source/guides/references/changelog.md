@@ -4,7 +4,50 @@ title: Changelog
 
 ## 3.0.3
 
-*Released .........*
+*Released 7/30/2018*
+
+**Bugfixes:**
+
+- Reverted the Chrome argument that disabled `RootLayerScrolling` which was used to prevent Chrome from "shaking" due to a bug in versions 66 and 67. This workaround inadvertently created a different and much more severe bug in Chrome 68 that made it miscalculate the pointer coordinates. This would lead to Cypress giving confusing errors about elements being covered up. This is still a bug in Chrome, and is fixed in Canary but has not yet been released to the stable Chrome 68 channel. Nevertheless, removing the `RootLayerScrolling` flag does fix it. We did several experiments to try to ensure that the "shaking" behavior does not exhibit itself in Chrome 68. We've therefore limited this flag to only applying to Chrome 66 and Chrome 67. Fixes {% issue 2223 %} and {% issue 2215 %} and {% issue 2037 %}.
+- Fixed another bug with Chrome that causing the option `chromeWebSecurity: false` not to be respected. This was due to Chrome progressively rolling out trials of a new option that attempts to isolate sites (and iframes) in their own child process if their origins are different. Fixes {% issue 1951 %} and {% issue 2001 %} and {% issue 715 %}.
+- We are now properly serializing nested object arguments when using the module API via `cypress.open()` or `cypress.run()`. Passing nested objects in `reporterOptions` works correctly. Especially useful when using `mocha-multi-reporters`. In addition to fixing the Module API, we are now also properly handling nested arguments from the CLI. In order to pass nested objects within CLI params you pass stringified JSON. Useful for properties such as `blacklistHosts`. Fixes {% issue 1348 %} and {% issue 1357 %} and {% issue 2221 %}.
+- Fixed a bug causing screenshots saved via `cy.screenshot()` to be in different folders when you ran in `cypress open` vs `cypress run` mode. Fixes {% issue 2091 %}.
+- Fixed bugs with Electron losing focus when running headlessly via `cypress run` after navigation. Now the browser will always act as if it is focused no matter what and in all situations when running headlessly. If you were seeing focus related problems when running headlessly, this should fix them. Fixes issue {% issue 2190 %}.
+- Fixed using `cy.click()` on an element that bound to the `focus` event with the browser currently *out of focus*. We've now normalized **all focus and blur events** to behave the same as if the browser is always in focus. This should fix the other batch of `blur` and `focus` issues that users have been experiencing for awhile. Fixes {% issue 549 %} and {% issue 2198 %}.
+- Fixed the vast majority of known issues with `cy.type()`. Fixes {% issue 1241 %}.
+- Using `cy.type()` on an input of type `email` or `number` will no longer fire additional `blur` and `focus` events. Fixes {% issue 2210 %}.
+- Fixed `cy.type()` breaking on chains when passing the same `options` references. Fixes {% issue 365 %}.
+- Fixed an issue with `cy.clear()` not behaving the same as `cy.type('{selectall}{backspace}')`. Fixes {% issue 420 %}.
+- Fixed a bug with issuing an additional `blur` and `click` event when chaining `.clear().type(...)`. Fixes {% issue 593 %}.
+- Fixed many issues with typing into `[contenteditable]` elements. WYSIWYG, draftjs based, or HTML editors now work correctly. Fixes {% issue 596 %} and {% issue 1686 %} and {% issue 2096 %}.
+- The caret now correctly moves on `[contenteditable]` elements. Fixes {% issue 1108 %}.
+- Fixed `cy.type()` inserting a rogue `<br>` tag after the first letter in `[contenteditable]` elements. Fixes {% issue 1926 %}.
+- Fixed change events with `cy.type()` not correctly firing for many more situations and edge cases. Fixes {% issue 651 %}.
+- Fixed issues with typing into JS based text-mask plugins. Basically anything that would alter the `.value` in respond to certain events now works correctly. Fixes {% issue 940 %} and {% issue 1684 %}.
+- Using `.clear()` on an input with a `maxlength` attribute now works. Fixes {% issue 1002 %} and {% issue 2056 %}.
+- Fixed issues with `cy.type()` not firing the `change` event on `input[type=number]`. Fixes {% issue 1171 %}.
+- Fixed other event related issues with `cy.type()` that were not firing correctly. Fixes {% issue 1209 %}.
+- Fixed even more issues with `cy.type()` not inserting characters on `input[type=number]`. Fixes {% issue 1381 %}.
+- Fixed not being able to type negative numbers into `input[type=number]`. Fixes {% issue 2173 %}.
+- Fixed `selectionStart` and `selectionEnd` with `cy.type()` when using `{leftarrow}` or `{rightarrow}`. Fixes {% issue 1234 %}.
+- Fixed not being able to type into a `datetime-local` input. Fixes {% issue 1366 %}.
+- Calling `.focus()` or `.blur()` on `cy.window()` no longer fires blur events on the `activeElement` or causes it to become `body`. Fixes {% issue 2234 %}.
+- Using `cy.get('body').click()` now correctly changes the `activeElement` back to `body` and causes the existing `activeElement` to receive `blur`. Fixes {% issue 2236 %}.
+
+**Misc:**
+
+- We've loosened up the restrictions surrounding what we consider a typeable element. You can now type into inputs with invalid `type` attributes because the browser does still considers them regular `text` inputs, and enables you to type into them. Fixes {% issue 586 %}.
+- Using `{uparrow}` or `{downarrow}` with `cy.type()` on `input[type=number]` now increments or decrements the number configured via the `step` attribute. Fixes {% issue 2110 %}.
+- Using `{uparrow}` or `{downarrow}` with `cy.type()` now correctly moves the cursor on `textarea` or `[contenteditable]` elements. Fixes {% issue 2187 %}.
+- Bumped the built in `junit` reporter dep from `1.12.1` to `1.17.0` which adds a few new features. Fixes {% issue 2238 %}.
+- Bumped deps that `npm audit` was yelling about. Fixes {% issue 1701 %}.
+- Runs showing up in the `Runs` tab now more closely match how they display in the Dashboard. Fixes {% issue 2060 %}.
+- Added more debug logs. Fixes {% issue 2108 %}.
+- When recording to the Dashboard we now more accurately collect commit details when its missing from the local `git` data. Fixes {% issue 2129 %} and {% issue 2073 %}.
+- We now collect and display the PR number in the Dashboard if you're recording in a CI provider that connects commits to PRs. Fixes {% issue 1844 %}.
+- Updated built in example kitchen sink to `1.0.2`. Fixes {% issue 2139 %}.
+- Updated the json-schema describing `videoCompression`. Allow it to be boolean. Fixes {% issue 2140 %}.
+- You can now use `.focus()` or `.blur()` on `cy.get('body')`. Fixes {% issue 2235 %}.
 
 ## 3.0.2
 
