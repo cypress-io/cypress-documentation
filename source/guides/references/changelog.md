@@ -46,7 +46,6 @@ title: Changelog
 - Runs showing up in the `Runs` tab now more closely match how they display in the Dashboard. Fixes {% issue 2060 %}.
 - Added more debug logs. Fixes {% issue 2108 %}.
 - When recording to the Dashboard we now more accurately collect commit details when it is missing from the local `git` data. Fixes {% issue 2129 %} and {% issue 2073 %}.
-- We now collect the pull request information if you are recording in a CI provider that connects commits to PRs. Fixes {% issue 1844 %}.
 - Updated build in example kitchen sink to `1.0.2`. Fixes {% issue 2139 %}.
 - Updated the json-schema describing `videoCompression`. Allowing it to be a boolean. Fixes {% issue 2140 %}.
 
