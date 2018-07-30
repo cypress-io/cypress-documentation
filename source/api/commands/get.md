@@ -73,7 +73,7 @@ cy.get('input').should('be.disabled')
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-***Find the the dropdown-menu and click it.***
+***Find the dropdown-menu and click it.***
 
 ```javascript
 cy.get('.dropdown-menu').click()

@@ -30,7 +30,7 @@ Prior to issuing any of the commands, we check the current state of the DOM and 
 
 Cypress will wait for the element to pass all of these checks for the duration of the {% url `defaultCommandTimeout` configuration#Timeouts %} (described in depth in the {% url 'Default Assertions' introduction-to-cypress#Default-Assertions %} core concept guide).
 
-***Checks and Actions Performed***
+### Checks and Actions Performed
 
 - {% urlHash 'Scroll the element into view.' Scrolling %}
 - {% urlHash 'Ensure the element is not hidden.' Visibility %}
@@ -48,14 +48,14 @@ Cypress checks a lot of things to determine an element's visibility.
 
 The following calculations factor in CSS translations and transforms.
 
-***An element is considered hidden if:***
+### An element is considered hidden if:
 
 - Its `width` or `height` is `0`.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and it's offscreen or covered up.
 
-***Additionally an element is considered hidden if:***
+### Additionally an element is considered hidden if:
 
 - Any of its ancestors **hides overflow**\*
   - AND that ancestor has `width` or `height` of `0`
