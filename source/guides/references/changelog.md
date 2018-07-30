@@ -185,7 +185,7 @@ title: Changelog
 - We now throw a descriptive error if an alias using {% url "`.as()`" as %} was defined starting with the `@` character. {% issue 1643 %}.
 - We now pass the `--disable-device-discovery-notifications` flag automatically. This should prevent Chromium browser from automatically trying to communicate with devices in your network, such as printers, while running tests. Fixes {% issue 1600 %}.
 - We now pass any reporter errors along and provide a stack if a custom reporter you've provided does not exist. Fixes {% issue 1192 %}.
-- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" command-line#Cypress-Module-API %}, just as you would from the command line. {% issue 1442 %}.
+- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" module-api %}, just as you would from the command line. {% issue 1442 %}.
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
 - Update type definitions for {% url `cy.screenshot()` screenshot %} to reflect new changes to command's options. Fixes {% issue 1753 %}.
 - The type definition for {% url `.filter()` filter %} now correctly supports a function argument.
@@ -511,7 +511,7 @@ Documentation Changes:
 **Misc:**
 
 - There is a new `--global` option useful with {% url "`cypress open`" command-line#cypress-open %} to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
-- The {% url "module API" command-line#Cypress-Module-API %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
+- The {% url "module API" module-api %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
 
 **Documentation Changes:**
 
@@ -687,7 +687,7 @@ Documentation Changes:
 - Running `npm install --save-dev cypress` will automatically download the CLI + binary.
 - There is no longer a separate `cypress install` step, but this command still exists if you want to **reinstall** the binary for whatever reason.
 - No need to use `cypress-cli` anymore to manage Cypress versions. **You will need to uninstall the `cypress-cli` by running `npm uninstall -g cypress-cli`**.
-- The {% url "`cypress` module can be `required`" command-line#Cypress-Module-API %} in your own node projects to programmatically control Cypress the same way you would from the command line.
+- The {% url "`cypress` module can be `required`" module-api %} in your own node projects to programmatically control Cypress the same way you would from the command line.
 - We've updated the installation experience to account for running locally and in CI so it doesn't generate a ton of logs in `stdout`.
 - The `CYPRESS_VERSION` environment variable is gone because now the version of the binary is controlled by the npm module version. If for some reason you want to download the binary of a different version you can use the new `CYPRESS_BINARY_VERSION` environment variable - but you'll get a warning message when the versions don't match.
 - If you install cypress globally using `npm install -g cypress` we will warn you that you should check this in as a `devDependency` but Cypress will continue to work in "global mode".
