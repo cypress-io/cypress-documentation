@@ -20,10 +20,59 @@ title: Changelog
 - `cypress run` now creates a new browser profile per run. Fixes {% issue 1566 %}
 - We've implemented a smarter retry and backoff strategy when interacting with our internal API. This will provide better feedback in situations with the API is temporarily unavailable. Fixes {% issue 1590 %}
 
-
 **Documentation Changes:**
 
 - {% url 'Added `Parallelization` doc.' parallelization %}
+## 3.0.3
+
+*Released 7/30/2018*
+
+**Bugfixes:**
+
+- Reverted the Chrome argument that disabled `RootLayerScrolling` which was used to prevent the application under test from "shaking" due to a bug in versions 66 and 67. This workaround inadvertently created a different and much more severe bug in Chrome 68 that would miscalculate pointer coordinates. This led to Cypress giving confusing errors about elements being covered up on action. This is still a bug in Chrome, and is fixed in Canary but has not yet been released to the stable Chrome 68 channel. Nevertheless, removing the `RootLayerScrolling` flag does fix it. We did several experiments to try to ensure that the "shaking" behavior does not exhibit itself in Chrome 68. We have limited the `--disable-blink-features=RootLayerScrolling` flag to Chrome 66 and Chrome 67. Fixes {% issue 2223 %} and {% issue 2215 %} and {% issue 2037 %}.
+- Fixed another bug with Chrome that caused the `chromeWebSecurity: false` option to not be respected. This was due to Chrome progressively rolling out trials of a new option that attempts to isolate sites (and iframes) in their own child process if their origins are different. Fixes {% issue 1951 %} and {% issue 2001 %} and {% issue 715 %}.
+- Fixed Cypress hanging in CI due to excessive and unnecessary globbing. We finally tracked down this issue which made it appear as if Cypress was "hanging" after closing a spec file and then attempting to open the next one. Fixes {% issue 2183 %} and {% issue 1905 %} and {% issue 1912 %}.
+- We are now properly serializing nested object arguments when using the {% url "Module API" module-api %} via `cypress.open()` or `cypress.run()`. Passing nested objects in `reporterOptions` now works correctly. This is especially useful when using `mocha-multi-reporters`. In addition to fixing the {% url "Module API" module-api %}, we are now also properly handling nested arguments from the {% url "Command Line" command-line %}. In order to pass nested objects within CLI params you must pass stringified JSON. This is useful for properties such as `blacklistHosts`. Fixes {% issue 1348 %} and {% issue 1357 %} and {% issue 2221 %}.
+- Fixed a bug causing screenshots saved via {% url "`cy.screenshot()`" screenshot %} to be in different folders when you ran using {% url "`cypress run`" command-line#cypress-open %}  vs {% url "`cypress run`" command-line#cypress-run %} . Fixes {% issue 2091 %}.
+- Fixed bugs with Electron losing focus when running headlessly via {% url "`cypress run`" command-line#cypress-run %} after navigation. Now the browser will always act as if it is focused no matter what and in all situations when running headlessly. If you were seeing focus related problems when running headlessly, this should fix them. Fixes issue {% issue 2190 %}.
+- Fixed using when using {% url "`cy.click()`" click %} on an element that bound to the `focus` event while the browser was currently *out of focus*. We have now normalized **all focus and blur events** to behave the same as if the browser is always in focus. This should fix the other batch of `blur` and `focus` issues that users have been experiencing. Fixes {% issue 549 %} and {% issue 2198 %}.
+- Fixed the vast majority of known issues with {% url "`.type()`" type %}. Fixes {% issue 1241 %}.
+- Using {% url "`.type()`" type %} on an input of type `email` or `number` will no longer fire unnecessary additional `blur` and `focus` events. Fixes {% issue 2210 %}.
+- Fixed {% url "`.type()`" type %} breaking on chains when passing the same `options` references. Fixes {% issue 365 %}.
+- Fixed an issue with {% url "`.clear()`" clear %} not behaving the same as `cy.type('{selectall}{backspace}')`. Fixes {% issue 420 %}.
+- Fixed a bug with issuing an additional `blur` and `click` event when chaining `.clear().type(...)`. Fixes {% issue 593 %}.
+- Fixed many issues with typing into `[contenteditable]` elements. WYSIWYG, {% url "Draft.js" https://draftjs.org/ %} based, and other HTML editors now work correctly. Fixes {% issue 596 %} and {% issue 1686 %} and {% issue 2096 %}.
+- The caret now correctly moves on `[contenteditable]` elements. Fixes {% issue 1108 %}.
+- Fixed {% url "`.type()`" type %} inserting a rogue `<br>` tag after the first letter in `[contenteditable]` elements. Fixes {% issue 1926 %}.
+- Fixed issue where change events with {% url "`.type()`" type %} would not fire correctly for many more situations and edge cases. Fixes {% issue 651 %}.
+- Fixed issues with typing into JS based text-mask plugins. Basically anything that would alter the `.value` in response to certain events now works correctly. Fixes {% issue 940 %} and {% issue 1684 %}.
+- Using {% url "`.clear()`" clear %} on an input with a `maxlength` attribute now works. Fixes {% issue 1002 %} and {% issue 2056 %}.
+- Fixed issues with {% url "`.type()`" type %} not firing the `change` event on `input[type=number]`. Fixes {% issue 1171 %}.
+- Fixed other event related issues with {% url "`.type()`" type %} that were not firing correctly. Fixes {% issue 1209 %}.
+- Fixed even more issues with {% url "`.type()`" type %} not inserting characters on `input[type=number]`. Fixes {% issue 1381 %}.
+- Fixed not being able to type negative numbers into `input[type=number]` elements. Fixes {% issue 2173 %}.
+- Fixed `selectionStart` and `selectionEnd` with {% url "`.type()`" type %} when using `{leftarrow}` or `{rightarrow}`. Fixes {% issue 1234 %}.
+- Fixed not being able to type into a `datetime-local` input. Fixes {% issue 1366 %}.
+- Calling {% url "`.focus()`" focus %} or {% url "`.blur()`" blur %} on {% url "`cy.window()`" window %} no longer fires blur events on the `activeElement` or causes it to become `body`. Fixes {% issue 2234 %}.
+- Using `cy.get('body').click()` now correctly changes the `activeElement` back to `body` and causes the existing `activeElement` to receive `blur`. Fixes {% issue 2236 %}.
+
+**Misc:**
+
+- We've loosened up the restrictions surrounding what we consider a typeable element. You can now type into inputs with invalid `type` attributes because the browser does still consider them regular `text` inputs and allows you to type into them. Fixes {% issue 586 %}.
+- Using `{uparrow}` or `{downarrow}` with {% url "`.type()`" type %} on an `input[type=number]` element now increments or decrements the number configured via the `step` attribute. Fixes {% issue 2110 %}.
+- Using `{uparrow}` or `{downarrow}` with {% url "`.type()`" type %} now correctly moves the cursor on `textarea` or `[contenteditable]` elements. Fixes {% issue 2187 %}.
+- You can now use {% url "`.focus()`" focus %} or {% url "`.blur()`" blur %} on `cy.get('body')`. Fixes {% issue 2235 %}.
+- Bumped the version in `junit` reporter dep from `1.12.1` to `1.17.0` which adds a few new features. Fixes {% issue 2238 %}.
+- Bumped deps that `npm audit` was yelling about. Fixes {% issue 1701 %}.
+- Runs showing up in the `Runs` tab now more closely match how they display in the Dashboard. Fixes {% issue 2060 %}.
+- Added more debug logs. Fixes {% issue 2108 %}.
+- When recording to the Dashboard we now more accurately collect commit details when it is missing from the local `git` data. Fixes {% issue 2129 %} and {% issue 2073 %}.
+- Updated build in example kitchen sink to `1.0.2`. Fixes {% issue 2139 %}.
+- Updated the json-schema describing `videoCompression`. Allowing it to be a boolean. Fixes {% issue 2140 %}.
+
+**Documentation Changes:**
+
+- {% url 'New "Module API" doc' module-api %}
 
 ## 3.0.2
 
@@ -161,7 +210,7 @@ title: Changelog
 - We now throw a descriptive error if an alias using {% url "`.as()`" as %} was defined starting with the `@` character. {% issue 1643 %}.
 - We now pass the `--disable-device-discovery-notifications` flag automatically. This should prevent Chromium browser from automatically trying to communicate with devices in your network, such as printers, while running tests. Fixes {% issue 1600 %}.
 - We now pass any reporter errors along and provide a stack if a custom reporter you've provided does not exist. Fixes {% issue 1192 %}.
-- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" command-line#Cypress-Module-API %}, just as you would from the command line. {% issue 1442 %}.
+- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" module-api %}, just as you would from the command line. {% issue 1442 %}.
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
 - Update type definitions for {% url `cy.screenshot()` screenshot %} to reflect new changes to command's options. Fixes {% issue 1753 %}.
 - The type definition for {% url `.filter()` filter %} now correctly supports a function argument.
@@ -487,7 +536,7 @@ Documentation Changes:
 **Misc:**
 
 - There is a new `--global` option useful with {% url "`cypress open`" command-line#cypress-open %} to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
-- The {% url "module API" command-line#Cypress-Module-API %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
+- The {% url "module API" module-api %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
 
 **Documentation Changes:**
 
@@ -663,7 +712,7 @@ Documentation Changes:
 - Running `npm install --save-dev cypress` will automatically download the CLI + binary.
 - There is no longer a separate `cypress install` step, but this command still exists if you want to **reinstall** the binary for whatever reason.
 - No need to use `cypress-cli` anymore to manage Cypress versions. **You will need to uninstall the `cypress-cli` by running `npm uninstall -g cypress-cli`**.
-- The {% url "`cypress` module can be `required`" command-line#Cypress-Module-API %} in your own node projects to programmatically control Cypress the same way you would from the command line.
+- The {% url "`cypress` module can be `required`" module-api %} in your own node projects to programmatically control Cypress the same way you would from the command line.
 - We've updated the installation experience to account for running locally and in CI so it doesn't generate a ton of logs in `stdout`.
 - The `CYPRESS_VERSION` environment variable is gone because now the version of the binary is controlled by the npm module version. If for some reason you want to download the binary of a different version you can use the new `CYPRESS_BINARY_VERSION` environment variable - but you'll get a warning message when the versions don't match.
 - If you install cypress globally using `npm install -g cypress` we will warn you that you should check this in as a `devDependency` but Cypress will continue to work in "global mode".

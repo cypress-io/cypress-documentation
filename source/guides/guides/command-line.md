@@ -13,9 +13,9 @@ title: Command Line
 
 # Installation
 
-This Guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module.
+This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands below.
 
-After installing you'll be able to execute all of the following commands.
+You can alternatively require and run Cypress as a node module using our {% url "Module API" module-api %}.
 
 {% note warning %}
 For brevity we've omitted the full path to the cypress executable in each command.
@@ -312,76 +312,6 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 
 ```shell
 cypress cache clear
-```
-
-# Cypress Module API
-
-You can use also require Cypress as a Node module.
-
-{% note warning %}
-The Cypress module is still in beta and we are still adding more functionality to it. Its API may change in the future.
-{% endnote %}
-
-Here is an example of programmatically running a spec file:
-
-```js
-const cypress = require('cypress')
-
-cypress.run({
-  spec: './cypress/integration/examples/actions.spec.js'
-})
-.then((results) => {
-  console.log(results)
-})
-.catch((err) => {
-  console.error(err)
-})
-```
-
-## `cypress.run()`
-
-`cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run with 2 passing tests could return something like this:
-
-```json
-{
-  "startedTestsAt": "2018-07-11T17:53:35.463Z",
-  "endedTestsAt": "2018-07-11T17:53:35.675Z",
-  "totalDuration": 212,
-  "totalTests": 13,
-  "totalFailed": 1,
-  "totalPassed": 0,
-  "totalPending": 0,
-  "totalSkipped": 12,
-  "browserName": "electron",
-  "browserVersion": "59.0.3071.115",
-  "osName": "darwin",
-  "osVersion": "14.5.0",
-  "cypressVersion": "3.0.2",
-  "config": {}
-}
-```
-
-Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find . In that case, the `Promise` will be rejected with a detailed error.
-
-### Options
-
-Just like the CLI options above, you can pass options that modify how Cypress runs.
-
-```javascript
-const cypress = require('cypress')
-
-cypress.run({
-  reporter: 'junit',
-  browser: 'chrome',
-  config: {
-    baseUrl: 'http://localhost:8080',
-    chromeWebSecurity: false,
-  },
-  env: {
-    foo: 'bar',
-    baz: 'quux',
-  }
-})
 ```
 
 # Debugging Commands
