@@ -10,11 +10,11 @@ title: Parallelization
 
 # Overview
 
-If your project has a large number of tests, it can take a large amount of time for tests to complete running when run on one machine serially. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuos Integration.
+If your project has a large number of tests, it can take a large amount of time for tests to complete running when run on one machine serially. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuous Integration.
 
 Cypress can run recorded tests in parallel across multiple virtual machines.
 
-This guide assumes you already have your project running and recording within Continuous Integration. If you haven't set up your project yet, check out our Continuous Integration guide.
+This guide assumes you already have your project running and recording within Continous Integration. If you haven't set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
 # Splitting up your test suite
 
@@ -30,7 +30,7 @@ Once multiple machines are available within your CI environment, you can pass th
 cypress run --record --parallel
 ```
 
-Running tests in parallel requires the `--record` flag be passed. This ensures Cypress can properly collect the data needed to parallelize the run. This also gives you the full benefit of seeing the results of the parallelization in our Dashboard Service. If you have not set up your project to record, check out our Set up guide.
+Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize the run. This also gives you the full benefit of seeing the results of the parallelization in our Dashboard Service. If you have not set up your project to record, check out our Set up guide.
 
 If you've passed the `--parallel` flag, Cypress is now responsible for a few things:
 
@@ -39,4 +39,4 @@ If you've passed the `--parallel` flag, Cypress is now responsible for a few thi
 
 # Balance strategy
 
-Cypress will automatically balance your spec files across the available machines in your CI provider. Cypress calculates which spec file to run based on from data collected from previous runs. This ensures that your spec files run as fast as possible, with no need for manual configuration or tweaking.
+Cypress will automatically balance your spec files across the available machines in your CI provider. Cypress calculates which spec file to run based from data collected from previous runs. This ensures that your spec files run as fast as possible, with no need for manual configuration or tweaking.

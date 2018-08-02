@@ -52,7 +52,7 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ## Caching the Cypress Binary
 
-As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
 
 ### We recommend users:
 
