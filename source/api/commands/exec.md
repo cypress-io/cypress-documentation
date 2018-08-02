@@ -160,7 +160,12 @@ A command must exit within the `execTimeout` or Cypress will kill the command's 
 ***List the contents of cypress.json***
 
 ```javascript
-cy.exec('cat cypress.json')
+if (Cypress.platform === 'win32') {
+      cy.exec('print cypress.json')
+        .its('stderr').should('be.empty')
+    } else {
+      cy.exec('cat cypress.json')
+        .its('stderr').should('be.empty')
 ```
 
 The command above will display in the command log as:
