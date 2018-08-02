@@ -166,6 +166,7 @@ if (Cypress.platform === 'win32') {
 } else {
   cy.exec('cat cypress.json')
     .its('stderr').should('be.empty')
+}
 ```
 
 The command above will display in the command log as:
