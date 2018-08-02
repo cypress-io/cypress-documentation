@@ -1,5 +1,7 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:base"
+  ],
   "automerge": true,
   "commitMessage": "{{semanticPrefix}}Update {{depName}} to {{newVersion}} 🌟",
   "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} dependency {{depName}} to version {{#if isRange}}{{newVersion}}{{else}}{{#if isMajor}}{{newVersionMajor}}.x{{else}}{{newVersion}}{{/if}}{{/if}} 🌟",
@@ -9,7 +11,6 @@
   "minor": {
     "automerge": false
   },
-  "prConcurrentLimit": 3,
   "prHourlyLimit": 2,
   "timezone": "America/New_York",
   "schedule": [
