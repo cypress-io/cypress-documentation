@@ -2,6 +2,10 @@
 title: Parallelization
 ---
 
+{% note warning %}
+This documentation is still a work in progress.
+{% endnote %}
+
 # Overview
 
 If your project has a large number of tests, it can take a large amount of time for tests to complete running when run on one machine serially. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuous Integration.
@@ -37,3 +41,11 @@ If you have passed the `--parallel` flag, Cypress is now responsible for a few t
 # Balance strategy
 
 Cypress will automatically balance your spec files across the available machines in your CI provider. Cypress calculates which spec file to run based from data collected from previous runs. This ensures that your spec files run as fast as possible, with no need for manual configuration or tweaking.
+
+# Visualizing parallelization in the Dashboard
+
+You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-service %} in the run's **Specs** tab. 
+
+There is the option to see the specs in **Timeline View**. The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in on each machine.
+
+{% img /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
