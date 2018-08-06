@@ -44,15 +44,15 @@ cypress run [options]
 Option | Description
 ------ |  ---------
 `--browser`, `-b`  | {% urlHash "Specify different browser to run tests in" cypress-run-browser-lt-browser-name-gt %}
-`--ci-build-id` | {% urlHash "Specify a unique identifier for a run on your CI provider." cypress-run-ci-build-id-lt-id-gt %}
+`--ci-build-id` | {% urlHash "Specify a unique identifier for a run to enable grouping or parallelization." cypress-run-ci-build-id-lt-id-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
-`--group`  | {% urlHash "Group recorded spec files within a single run" cypress-run-group-lt-name-gt %}
+`--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
 `--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress open after all tests run" cypress-run-no-exit %}
-`--parallel` | {% urlHash "Run recorded tests in parallel across multiple machines" cypress-run-parallel %}
+`--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
 `--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
@@ -98,8 +98,20 @@ cypress run --env host=api.dev.local
 
 ### `cypress run --group <name>`
 
+Group recorded tests together under a single run.
+
 ```shell
 cypress run --group develop-env
+```
+
+You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
+
+```shell
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+```
+
+```shell
+cypress run --group user-tests --spec 'cypress/integration/user/**/*
 ```
 
 ### `cypress run --headed`
@@ -124,8 +136,16 @@ cypress run --headed --no-exit
 
 ### `cypress run --parallel`
 
+Run recorded specs in parallel across multiple machines
+
 ```shell
-cypress run --parallel
+cypress run --record --parallel
+```
+
+You can additionally pass a `--group` flag so this shows up as a named group.
+
+```shell
+cypress run --record --parallel --group e2e-staging-specs
 ```
 
 ### `cypress run --port <port>`
