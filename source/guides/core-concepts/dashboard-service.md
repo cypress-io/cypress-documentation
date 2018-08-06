@@ -19,7 +19,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail or when using {% url `.screenshot()` screenshot %}.
+- View screenshots taken when tests fail or when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a video clip at the point of test failure.
 - Manage who has access to your recorded test data.
 
@@ -206,7 +206,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 
 ### {% fa fa-picture-o fa-fw %} Screenshots
 
-All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `.screenshot()` screenshot %} command will show up here.
+All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here.
 
 ### {% fa fa-video-camera fa-fw %} Videos
 
