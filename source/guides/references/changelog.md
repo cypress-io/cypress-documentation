@@ -4,31 +4,41 @@ title: Changelog
 
 ## 3.1.0
 
+*Released 8/6/2018*
+
 **Summary:**
 
-- Cypress can now run recorded tests in parallel across multiple virtual machines. Fixes {% issue 1690 %} and {% issue 64 %}.
+- Cypress can now run tests in parallel across multiple virtual machines, or can be parallelized on a single machine. Cypress will automatically figure out, detect, and load balance all of your specs in the fastest and most efficient way possible. There is no configuration other than passing a `--parallel` flag and spinning up multiple machines on your CI provider. From our experiments you can expect to see approximately 40% reduction in overall run time **per machine** you add. However, attempting to run in parallel on a single machine requires server grade hardware with dozens (or even hundreds) of CPU's and GB of RAM to run efficiently. A much better and simpler approach is to use a cluster of docker containers that are all isolated from each other. Any standard CI service (CircleCI, TravisCI, etc) comes with the ability to do this. We automatically tap into their environment variables to make parallelization possible without you having to configure anything.
+- Beyond parallelization, you now have the ability to group multiple runs with each other so that they show up together (grouped) in the Dashboard. This enables you to test different applications, groups of specs, or different environments (like development, staging, production) and see all of the results together. We know how important cross browser testing is to everyone, so we built this to lead directly into aggregating the results of multiple browsers into a single run.
+- The Dashboard Service has been updated to show you more visual information about what happened during a run. You can see how specs were parallelized and you can calculate the effect of adding or removing machines to help reduce the overall run time.
 
 **Features:**
 
-- `cypress run` accept a new `--parallel` flag to run specs in parallel.
-- `cypress run` accepts a new `--group` flag to group multiple spec files within a single run. Fixes {% issue 2153 %} and {% issue 2169 %}
-- `cypress run` accepts a new `--ci-build-id` flag.
-- The Dashboard Service has new "Insights" available within each run. You can now see how the run was parallelized and calculate how adding or removing virtual machines would change future runtime.
+- `cypress run` accept a new `--parallel` flag to run specs in parallel. Fixes {% issue 1690 %} and {% issue 64 %}.
+- `cypress run` accepts a new `--group` flag to group multiple spec files within a single run. Fixes {% issue 2169 %}
+- `cypress run` accepts a new `--ci-build-id` flag. Fixes {% issue 2153 %}.
 
 **Bugfixes:**
-- `cypress run` now creates a new browser profile per run. Fixes {% issue 1566 %}
-- Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %}
 
+- Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %}.
+- Fixed a regression in `3.0.2` that caused typing `{enter}` not to subit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %}.
 
 **Misc**
 
-- We are collecting more environment variables related to CI providers in an effort to show more relavant CI information in the Dashboard instead of 'Unknown'. Addresses {% issue 1990 %} and {% issue 2146 %}
-- We've implemented a smarter retry and backoff strategy when interacting with our internal API. This will provide better feedback in situations with the API is temporarily unavailable. Fixes {% issue 1590 %}
-- The Desktop-GUI has been updated to get the new routes provided by the Cypress API for runs. Addresses {% issue 2189 %}
+- When recording to the dashboard, we now provide estimated durations per spec directly within the output, as long as the spec has had enough run history for this to be determined. Fixes {% issue 2276 %}.
+- When using the new `--parallel` or `--group` feature, we now visually indicate that to you in the output when recording. Fixes {% issue 2275 %}.
+- We've added support for more CI providers to automatically detect and show more relevant information to you in the Dashboard, instead of showing 'Unknown'. Fixes {% issue 2146 %}.
+- We've added better checks and reliability for detecting runs in Jenkins. Fixes {% issue 1990 %}.
+- The built in `cypress-browserify-preprocessor` was bumped to `1.1.0`. This supports more JavaScript features by default, including async/await, object rest spread, and class properties. Fixes {% issue 2254 %}.
+- `cypress run` now creates a new browser profile per run per browser, but keeps the same browser profile for interactive mode with `cypress open`. This means you can run Cypress locally over multiple processes and the browser profiles will not conflit with each other. Fixes {% issue 1566 %}.
+- The Desktop-GUI has been updated to get the new routes provided by the Cypress API for runs. Fixes {% issue 2189 %}.
+- Cypress now retries multiple times (with a backoff strategy) when communication with our API fails during recorded runs. This will provide better feedback in situations with the API is temporarily unavailable. Fixes {% issue 1590 %}.
+- When Cypress retries due to an API timeout or failure it now displays a very nice message indicating to you the delay and number of retries left. Fixes {% issue 2280 %}.
 
 **Documentation Changes:**
 
 - {% url 'Added `Parallelization` doc.' parallelization %}
+
 ## 3.0.3
 
 *Released 7/30/2018*
