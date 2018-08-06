@@ -59,7 +59,7 @@ To set up your project to record, you must use the {% url "Test Runner" test-run
 Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
 
-### To set up a project to record:
+***To set up a project to record:***
 
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
@@ -70,7 +70,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in Github. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
-  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
+  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-Users %}*.
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
@@ -96,11 +96,11 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 ## Identification
 
-### Project ID
+***Project ID***
 
 Once you set up your project to record, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
 
-### The `projectId` is a 6 character string in your `cypress.json`:
+***The `projectId` is a 6 character string in your `cypress.json`:***
 
 ```json
 {
@@ -110,11 +110,11 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**. We recommend that you check your `cypress.json` including the `projectId` into source control.
 
-### Record Key {% fa fa-key %}
+***Record Key {% fa fa-key %}***
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
-### A record key is a GUID that looks like this:
+***A record key is a GUID that looks like this:***
 
 ```text
 f4466038-70c2-4688-9ed9-106bf013cd73
@@ -124,7 +124,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 {% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
-### Authentication
+## Authentication
 
 Cypress uses your `projectId` and *Record Key* together to uniquely identify projects.
 
@@ -144,7 +144,7 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
-- **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+- **Private** means that only {% urlHash 'users' Manage-Users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ## Transfer ownership
 
@@ -168,7 +168,7 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-### Run Details
+***Run Details***
 
 Details of each run are displayed including:
 
@@ -182,7 +182,7 @@ Details of each run are displayed including:
 
 ![run details](/img/dashboard/run-details.png)
 
-### {% fa fa-code fa-fw %} Standard Output
+***{% fa fa-code fa-fw %} Standard Output***
 
 Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
@@ -190,11 +190,11 @@ You will also see a summary at the bottom indicating the files, screenshots, or 
 
 ![output](/img/dashboard/standard-output-of-recorded-test-run.png)
 
-### {% fa fa-exclamation-triangle fa-fw %} Test Failures
+***{% fa fa-exclamation-triangle fa-fw %} Test Failures***
 
 Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 
-### Each failure displays:
+***Each failure displays:***
 
 - **Test title:** The title of the failed test.
 - **Error:** The stack trace of the error.
@@ -203,23 +203,23 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 
 ![failures](/img/dashboard/failures-of-recorded-run.png)
 
-### {% fa fa-picture-o fa-fw %} Screenshots
+***{% fa fa-picture-o fa-fw %} Screenshots***
 
 All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here.
 
-### {% fa fa-video-camera fa-fw %} Videos
+***{% fa fa-video-camera fa-fw %} Videos***
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
 ![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
 
-### {% fa fa-file-code-o fa-fw %} Spec Files
+***{% fa fa-file-code-o fa-fw %} Spec Files***
 
 You can see the result of each spec file that ran within **Specs**.
 
 ![Specs tab](/img/dashboard/spec-tab.png)
 
-### {% fa fa-clock-o fa-fw %} Spec & Test Durations
+***{% fa fa-clock-o fa-fw %} Spec & Test Durations***
 
 The duration that each spec and test ran is displayed in **Insights**.
 
@@ -239,19 +239,19 @@ Organizations are used to group projects and manage access to those projects.
 
 Once out of beta, organizations will also display usage and allow you to handle billing.
 
-## Create
+## Create Org
 
 You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by going to the **Organizations** tab and clicking **{% fa fa-plus %} Add Organization**.
 
 ![Add Organization dialog](/img/dashboard/add-organization-dialog.png)
 
-## Personal orgs
+## Personal Orgs
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
 
-## Manage users
+## Manage Users
 
-### Inviting users
+***Inviting users***
 
 You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
@@ -264,7 +264,7 @@ You can invite users to Cypress from the {% url 'Dashboard Service' https://on.c
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-### User roles
+***User roles***
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -272,7 +272,7 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-### User requests
+***User requests***
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
 
