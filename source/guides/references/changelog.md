@@ -20,7 +20,7 @@ title: Changelog
 
 **Bugfixes:**
 
-- Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %}.
+- Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %} and {% issue 2288 %}.
 - Fixed a regression in `3.0.2` that caused typing `{enter}` not to subit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %}.
 
 **Misc**
