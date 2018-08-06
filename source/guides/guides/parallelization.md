@@ -2,12 +2,6 @@
 title: Parallelization
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
-
-- 
-{% endnote %}
-
 # Overview
 
 If your project has a large number of tests, it can take a large amount of time for tests to complete running when run on one machine serially. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuous Integration.
