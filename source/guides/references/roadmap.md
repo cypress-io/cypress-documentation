@@ -1,6 +1,5 @@
 ---
 title: Roadmap
-
 ---
 
 # Upcoming Features
@@ -9,7 +8,7 @@ At any one time, our team is planning / working on really "big" upcoming feature
 
 Here is where Cypress is headed:
 
-### Test Runner
+## Test Runner
 
 Feature | Status
 --- | ---
@@ -24,7 +23,7 @@ Feature | Status
 {% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
 {% issue 311 'Native Events - #311' %} | No proposal yet
 
-### Dashboard Service
+## Dashboard Service
 
 Feature | Status
 --- | ---

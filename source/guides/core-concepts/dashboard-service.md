@@ -1,6 +1,5 @@
 ---
 title: Dashboard Service
-
 ---
 
 {% note info %}
@@ -15,7 +14,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 # Overview
 
-### The Dashboard allows you to:
+***The Dashboard allows you to:***
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
@@ -25,7 +24,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-### See Tests Runs in the Test Runner
+***See Tests Runs in the Test Runner***
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -178,7 +177,7 @@ Details of each run are displayed including:
 - The time the run started and ended.
 - What Continuous Integration the run ran in (if any)
 - The operating system and version
-- The browser and version 
+- The browser and version
 - The Cypress version
 
 ![run details](/img/dashboard/run-details.png)
@@ -232,7 +231,7 @@ Organizations are used to group projects and manage access to those projects.
 
 ![Organizations](/img/dashboard/organizations-listed-in-dashboard.png)
 
-### With organizations you can:
+***With organizations you can:***
 
 - Create projects
 - Invite users

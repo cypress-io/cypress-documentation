@@ -1,6 +1,5 @@
 ---
 title: Trade-offs
-
 containerClass: faq
 ---
 

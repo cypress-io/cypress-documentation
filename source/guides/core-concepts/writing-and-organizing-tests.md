@@ -57,7 +57,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-### Configuring Folder Structure
+***Configuring Folder Structure***
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
