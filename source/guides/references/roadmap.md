@@ -12,7 +12,6 @@ Here is where Cypress is headed:
 
 Feature | Status
 --- | ---
-{% issue 681 'Spec Parallelism #681' %} | In progress
 {% issue 1096 'Firefox Browser Support - #310' %} | In progress
 {% issue 687 'Full Network Layer Stubbing - #687' %} | In progress
 {% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features
@@ -27,9 +26,8 @@ Feature | Status
 
 Feature | Status
 --- | ---
-{% issue 681 'Spec Parallelism - #681' %} | In progress
-{% issue 981 'Zapier Integration - #981' %} | In progress
 Billing Portal with Usage data | In progress
+{% issue 981 'Zapier Integration - #981' %} | In progress
 {% issue 981 'GitHub Integration - #981' %} | In progress
 {% issue 448 'Capture Logs of Everything - #448' %} | Partially complete
 {% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
