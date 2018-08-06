@@ -72,7 +72,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in Github. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
-  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-Users %}*.
+  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
@@ -146,7 +146,7 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
-- **Private** means that only {% urlHash 'users' Manage-Users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+- **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ## Transfer ownership
 
@@ -261,7 +261,7 @@ You can create an organization from within the {% url "Dashboard Service" https:
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
 
-## Manage Users
+## Manage users
 
 ***Inviting users***
 

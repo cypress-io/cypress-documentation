@@ -394,7 +394,7 @@ To fix this error, follow instructions on {% url "caching the cypress binary in 
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
-You passed the `--ci-build-id` flag but did not provide either a `--group` or `--parallel` flag.
+You passed the `--ci-build-id` flag but did not provide either a {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
 
 The `--ci-build-id` flag is used to either group or parallelize multiple runs together.
 
@@ -402,7 +402,7 @@ Check out our {% url "guide on parallelizing runs" parallelization %} and when t
 
 ## {% fa fa-exclamation-triangle red %} The `--ci-build-id`, `--group`, or `--parallel` flags can only be used when recording
 
-You passed the `--ci-build-id`, `--group`, or `--parallel` flag without also passing the `--record` flag.
+You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
 
 These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
 
