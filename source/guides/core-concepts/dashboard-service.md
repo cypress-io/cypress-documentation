@@ -16,10 +16,12 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 ***The Dashboard allows you to:***
 
-- See the number of failed, pending and passing tests.
+- See the number of failed, passing, pending and skipped tests.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail or when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a video clip at the point of test failure.
+- See how fast your spec files ran within CI including whether they were run in parallel.
+- See related groupings of tests.
 - Manage who has access to your recorded test data.
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
@@ -173,22 +175,54 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 Details of each run are displayed including:
 
 - The number of skipped, pending, passing, and failing tests.
-- The GitHub branch, author, commit sha and commit message associated with the run (if any)
-- The time the run started and ended.
-- What Continuous Integration the run ran in (if any)
+- The GitHub branch, pull request, author, commit sha and commit message associated with the run (if any)
+- The times the run, each spec file, and test started and ended.
+- What Continuous Integration the run ran in (if any) and its CI id and url.
 - The operating system and version
 - The browser and version
 - The Cypress version
 
-![run details](/img/dashboard/run-details.png)
+{% img /img/dashboard/run-details.png "run-details" %}
+
+### {% fa fa-file-code-o fa-fw %} Spec Files
+
+You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
+
+***Timeline View***
+
+The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in {% url "parallel" parallelization %}.
+
+{% img /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
+
+***Bar Chart View***
+
+The Bar Chart View charts the lengths of each spec file. This view is helpful to determine which spec files or tests are running longer than others.
+
+{% img /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
+
+***Jump to failed tests***
+
+If you had any failed tests, you can hover over the spec chart and click on the link to the failed test to go directly to its error message and stack trace.
+
+{% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
 
 ### {% fa fa-code fa-fw %} Standard Output
 
-Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
-You will also see a summary at the bottom indicating the files, screenshots, or videos that were uploaded during the recording.
+You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
-![output](/img/dashboard/standard-output-of-recorded-test-run.png)
+{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output %}
+
+### {% fa fa-picture-o fa-fw %} Screenshots
+
+All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here.
+
+### {% fa fa-video-camera fa-fw %} Videos
+
+The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
+
+{% url /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
 ### {% fa fa-exclamation-triangle fa-fw %} Test Failures
 
@@ -201,29 +235,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 - **Screenshot:** Any screenshots taken during the test.
 - **Video:** The recorded video scrubbed to the point of failure in the test.
 
-![failures](/img/dashboard/failures-of-recorded-run.png)
-
-### {% fa fa-picture-o fa-fw %} Screenshots
-
-All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here.
-
-### {% fa fa-video-camera fa-fw %} Videos
-
-The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
-
-![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
-
-### {% fa fa-file-code-o fa-fw %} Spec Files
-
-You can see the result of each spec file that ran within **Specs**.
-
-![Specs tab](/img/dashboard/spec-tab.png)
-
-### {% fa fa-clock-o fa-fw %} Spec & Test Durations
-
-The duration that each spec and test ran is displayed in **Insights**.
-
-![Insights tab](/img/dashboard/insights-spec-durations.png)
+{% img /img/dashboard/failures-of-recorded-run.png "failure tab" %}
 
 # Organizations
 
