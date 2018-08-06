@@ -14,30 +14,32 @@ title: Changelog
 
 **Features:**
 
-- `cypress run` accept a new `--parallel` flag to run specs in parallel. Fixes {% issue 1690 %} and {% issue 64 %}.
-- `cypress run` accepts a new `--group` flag to group multiple spec files within a single run. Fixes {% issue 2169 %}
-- `cypress run` accepts a new `--ci-build-id` flag. Fixes {% issue 2153 %}.
+- `cypress run` accepts a new {% url "`--parallel`" command-line#cypress-run-parallel %} flag to run specs in parallel. Fixes {% issue 1690 %} and {% issue 64 %}.
+- `cypress run` accepts a new {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag to group multiple spec files within a single run. Fixes {% issue 2169 %}
+- `cypress run` accepts a new {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %} flag. Fixes {% issue 2153 %}.
 
 **Bugfixes:**
 
 - Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %} and {% issue 2288 %}.
-- Fixed a regression in `3.0.2` that caused typing `{enter}` not to subit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %}.
+- Fixed a regression in `3.0.2` that caused typing `{enter}` not to submit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %}.
 
 **Misc**
 
-- When recording to the dashboard, we now provide estimated durations per spec directly within the output, as long as the spec has had enough run history for this to be determined. Fixes {% issue 2276 %}.
-- When using the new `--parallel` or `--group` feature, we now visually indicate that to you in the output when recording. Fixes {% issue 2275 %}.
-- We've added support for more CI providers to automatically detect and show more relevant information to you in the Dashboard, instead of showing 'Unknown'. Fixes {% issue 2146 %}.
-- We've added better checks and reliability for detecting runs in Jenkins. Fixes {% issue 1990 %}.
-- The built in `cypress-browserify-preprocessor` was bumped to `1.1.0`. This supports more JavaScript features by default, including async/await, object rest spread, and class properties. Fixes {% issue 2254 %}.
-- `cypress run` now creates a new browser profile per run per browser, but keeps the same browser profile for interactive mode with `cypress open`. This means you can run Cypress locally over multiple processes and the browser profiles will not conflit with each other. Fixes {% issue 1566 %}.
+- When recording to the Dashboard Service, we now provide estimated durations per spec directly within the standard output, as long as the spec has had enough run history for this to be determined. Fixes {% issue 2276 %}.
+- When using the new {% url "`--parallel`" command-line#cypress-run-parallel %} or {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} feature, we now visually indicate that to you in the standard output when recording. Fixes {% issue 2275 %}.
+- We have added support for more CI providers to automatically detect and show more relevant information in the Dashboard, instead of showing 'Unknown'. Fixes {% issue 2146 %}.
+- We have added better checks and reliability for detecting runs in Jenkins. Fixes {% issue 1990 %}.
+- The built in {% url "`cypress-browserify-preprocessor`" https://github.com/cypress-io/cypress-browserify-preprocessor %} was bumped to `1.1.0`. This supports more JavaScript features by default, including async/await, object rest spread, and class properties. Fixes {% issue 2254 %}.
+- {% url "`cypress run`" command-line#cypress-run %} now creates a new browser profile per run per browser, but keeps the same browser profile for interactive mode with {% url "`cypress open`" command-line#cypress-open %}. This means you can run Cypress locally over multiple processes and the browser profiles will not conflict with each other. Fixes {% issue 1566 %}.
 - The Desktop-GUI has been updated to get the new routes provided by the Cypress API for runs. Fixes {% issue 2189 %}.
-- Cypress now retries multiple times (with a backoff strategy) when communication with our API fails during recorded runs. This will provide better feedback in situations with the API is temporarily unavailable. Fixes {% issue 1590 %}.
+- Cypress now retries multiple times (with a backoff strategy) when communicating with our API fails while recording runs. This will provide better feedback in situations when the API is temporarily unavailable. Fixes {% issue 1590 %}.
 - When Cypress retries due to an API timeout or failure it now displays a very nice message indicating to you the delay and number of retries left. Fixes {% issue 2280 %}.
 
 **Documentation Changes:**
 
 - {% url 'Added `Parallelization` doc.' parallelization %}
+- {% url 'Update `Dashboard Service` doc with new screenshots and run sections.' dashboard-service %}
+- {% url 'Update `Command Line` doc with new flags and alphabetized flags.' command-line %}
 
 ## 3.0.3
 

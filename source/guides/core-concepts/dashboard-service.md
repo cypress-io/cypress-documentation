@@ -16,10 +16,12 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 ***The Dashboard allows you to:***
 
-- See the number of failed, pending and passing tests.
+- See the number of failed, passing, pending and skipped tests.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail or when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a video clip at the point of test failure.
+- See how fast your spec files ran within CI including whether they were run in parallel.
+- See related groupings of tests.
 - Manage who has access to your recorded test data.
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
@@ -70,7 +72,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in Github. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
-  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-Users %}*.
+  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
@@ -144,7 +146,7 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
-- **Private** means that only {% urlHash 'users' Manage-Users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+- **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ## Transfer ownership
 
@@ -173,35 +175,44 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 Details of each run are displayed including:
 
 - The number of skipped, pending, passing, and failing tests.
-- The GitHub branch, author, commit sha and commit message associated with the run (if any)
-- The time the run started and ended.
-- What Continuous Integration the run ran in (if any)
+- The GitHub branch, pull request, author, commit sha and commit message associated with the run (if any)
+- The times the run, each spec file, and test started and ended.
+- What Continuous Integration the run ran in (if any) and its CI id and url.
 - The operating system and version
 - The browser and version
 - The Cypress version
 
-![run details](/img/dashboard/run-details.png)
+{% img /img/dashboard/run-details.png "run-details" %}
 
-***{% fa fa-code fa-fw %} Standard Output***
+### {% fa fa-file-code-o fa-fw %} Spec Files
 
-Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
 
-You will also see a summary at the bottom indicating the files, screenshots, or videos that were uploaded during the recording.
+***Timeline View***
 
-![output](/img/dashboard/standard-output-of-recorded-test-run.png)
+The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in {% url "parallel" parallelization %}.
 
-***{% fa fa-exclamation-triangle fa-fw %} Test Failures***
+{% img /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
 
-Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
+***Bar Chart View***
 
-***Each failure displays:***
+The Bar Chart View charts the lengths of each spec file. This view is helpful to determine which spec files or tests are running longer than others.
 
-- **Test title:** The title of the failed test.
-- **Error:** The stack trace of the error.
-- **Screenshot:** Any screenshots taken during the test.
-- **Video:** The recorded video scrubbed to the point of failure in the test.
+{% img /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
 
-![failures](/img/dashboard/failures-of-recorded-run.png)
+***Jump to failed tests***
+
+If you had any failed tests, you can hover over the spec chart and click on the link to the failed test to go directly to its error message and stack trace.
+
+{% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
+
+### {% fa fa-code fa-fw %} Standard Output
+
+Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+
+You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
+
+{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output %}
 
 ***{% fa fa-picture-o fa-fw %} Screenshots***
 
@@ -211,19 +222,20 @@ All screenshots taken during the test run can be found in the **Screenshots** of
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
-![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
+{% url /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
-***{% fa fa-file-code-o fa-fw %} Spec Files***
+### {% fa fa-exclamation-triangle fa-fw %} Test Failures
 
-You can see the result of each spec file that ran within **Specs**.
+Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 
-![Specs tab](/img/dashboard/spec-tab.png)
+### Each failure displays:
 
-***{% fa fa-clock-o fa-fw %} Spec & Test Durations***
+- **Test title:** The title of the failed test.
+- **Error:** The stack trace of the error.
+- **Screenshot:** Any screenshots taken during the test.
+- **Video:** The recorded video scrubbed to the point of failure in the test.
 
-The duration that each spec and test ran is displayed in **Insights**.
-
-![Insights tab](/img/dashboard/insights-spec-durations.png)
+{% img /img/dashboard/failures-of-recorded-run.png "failure tab" %}
 
 # Organizations
 
@@ -249,7 +261,7 @@ You can create an organization from within the {% url "Dashboard Service" https:
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
 
-## Manage Users
+## Manage users
 
 ***Inviting users***
 
