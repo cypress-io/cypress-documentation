@@ -820,9 +820,6 @@ cy
     // and .get() converts this to a simple array
     texts = texts.get()
 
-    // array should have length of 3
-    expect(texts).to.have.length(3)
-
     // with this specific content
     expect(texts).to.deep.eq([
       'Some text from first p',
