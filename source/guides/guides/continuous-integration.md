@@ -61,9 +61,13 @@ As of Cypress version 3.0, Cypress downloads its binary to the global system cac
 ### Example `.travis.yml` config file
 
 ```yaml
+dist: trusty
+sudo: required
 language: node_js
 node_js:
   - 10
+addons:
+  chrome: stable  
 cache:
   directories:
     - ~/.npm
