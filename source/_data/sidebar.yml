@@ -27,6 +27,7 @@ guides:
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
     web-security: web-security.html
+    watching-tests: watching-tests.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
     plugins-guide: plugins-guide.html
