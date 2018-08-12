@@ -164,7 +164,10 @@ You can {% url 'read more about Environment Variables' environment-variables %}.
 ## `Cypress.config()`
 
 You can also override configuration values within your test using {% url `Cypress.config()` config %}.
-Any value you change will be permanently changed for the remainder of your tests.
+
+{% note warning Scope %}
+Configuration set using `Cypress.config` _is only in scope for the current spec file._
+{% endnote %}
 
 ```javascript
 Cypress.config("pageLoadTimeout", 100000)
