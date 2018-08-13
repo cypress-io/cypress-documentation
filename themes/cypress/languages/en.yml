@@ -45,6 +45,7 @@ sidebar:
     guides: Guides
     command-line: Command Line
     continuous-integration: Continuous Integration
+    parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
     advanced-cypress: Advanced
@@ -74,6 +75,7 @@ sidebar:
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
+    module-api: Module API
   api:
     introduction: Introduction
     api: API

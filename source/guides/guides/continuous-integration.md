@@ -2,6 +2,14 @@
 title: Continuous Integration
 ---
 
+{% note info %}
+# {% fa fa-graduation-cap %} What You'll Learn
+
+- How to run and record Cypress tests in Continuous Integration
+- How to configure and cache Cypress in CI
+- Strategies for booting your server in CI
+{% endnote %}
+
 Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
 
   1. **Install Cypress**
@@ -44,13 +52,13 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ## Caching the Cypress Binary
 
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux that's `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
 
 ### We recommend users:
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
 
-- **Don't** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
+- **Do not** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
 
 - If you are using `npm install` in your build process, consider [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and caching the `~/.npm` directory for a faster and more reliable build.
 
@@ -169,7 +177,7 @@ Mounting a project directory with an existing `node_modules` into a `cypress/bas
 
 ```shell
 docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
-# Error: the cypress binary is not installed
+Error: the cypress binary is not installed
 ```
 
 Instead, you should build a docker container for your project's version of cypress.
@@ -205,6 +213,14 @@ Cypress can record your tests running and make them available in our {% url 'Das
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
 
 You can {% url 'read more about the Dashboard Service here' dashboard-service %}.
+
+# Running Tests in Parallel in CI
+
+Cypress can run recorded tests running in parallel across multiple machines.
+
+You'll want to refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
+
+Once multiple machines are available within your CI environment, you can pass the {% url "`--parallel`" command-line#cypress-run-parallel %} key to {% url "`cypress run`" command-line#cypress-run %} to have your recorded tests parallelized.
 
 # Environment Variables
 
@@ -278,7 +294,7 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 # Booting Your Server
 
-Typically you'll need to boot a local server prior to running Cypress. Here are some typical recipes for users who are new to CI.
+Typically you will need to boot a local server prior to running Cypress. Here are some typical recipes for users who are new to CI.
 
 ## Command Line
 
@@ -291,15 +307,11 @@ The problem is - what happens if your server takes seconds to boot? There is no 
 This is a naive scenario assuming your web server boots fast:
 
 {% note danger %}
-Don't write the following - it will fail on slow booting servers.
+Don't write the following - it will fail on slow booting servers. Cypress may start before the server has started.
 {% endnote %}
 
 ```shell
-## background your server
-npm start &
-
-## oops... cypress runs before your server is ready
-cypress run
+npm start & cypress run
 ```
 
 There are easy solutions to this. Instead of introducing arbitrary waits like `sleep 20` you can use a much better option like the {% url 'wait-on module' https://github.com/jeffbski/wait-on %}.
@@ -307,14 +319,10 @@ There are easy solutions to this. Instead of introducing arbitrary waits like `s
 Now, we can simply block the `cypress run` command from executing until your server has booted.
 
 ```shell
-## background your server
-npm start &
+npm start & wait-on http://localhost:8080
+```
 
-## poll the server over and over again
-## until it's been booted
-wait-on http://localhost:8080
-
-## and now run cypress
+```shell
 cypress run
 ```
 
@@ -350,7 +358,7 @@ The `cy:run` command will only be executed when the URL `http://localhost:3030` 
 
 Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
 
-If you're using our {% url 'Module API' command-line#Cypress-Module-API %} then it would be trivial to write a script which boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
+If you're using our {% url 'Module API' module-api %} then it would be trivial to write a script which boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
 
 ```js
 // scripts/run-cypress-tests.js
@@ -371,7 +379,6 @@ return server.start()
 ```
 
 ```shell
-## kick off the script
 node scripts/run-cypress-tests.js
 ```
 

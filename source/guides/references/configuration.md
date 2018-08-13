@@ -137,6 +137,9 @@ By default, any environment variable that matches a corresponding configuration 
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
+```
+
+```shell
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
@@ -146,6 +149,9 @@ We automatically normalize both the key and the value. Cypress will *strip off* 
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
+```
+
+```shell
 export CYPRESS_PAGE_LOAD_TIMEOUT=100000
 ```
 
