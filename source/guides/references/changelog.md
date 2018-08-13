@@ -4,7 +4,7 @@ title: Changelog
 
 ## 3.1.0
 
-*Released 8/6/2018*
+*Released 8/13/2018*
 
 **Summary:**
 
@@ -14,14 +14,17 @@ title: Changelog
 
 **Features:**
 
-- `cypress run` accepts a new {% url "`--parallel`" command-line#cypress-run-parallel %} flag to run specs in parallel. Fixes {% issue 1690 %} and {% issue 64 %}.
+- `cypress run` accepts a new {% url "`--parallel`" command-line#cypress-run-parallel %} flag to run specs in parallel. Fixes {% issue 1690 %} and {% issue 64 %} and {% issue 2297 %}.
 - `cypress run` accepts a new {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag to group multiple spec files within a single run. Fixes {% issue 2169 %}
 - `cypress run` accepts a new {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %} flag. Fixes {% issue 2153 %}.
 
 **Bugfixes:**
 
+- We've finally tracked down the source of specs "hanging" and failing to start when running Electron. We finally tracked it down to a bug in Electron itself with setting `menu` when using offscreen rendering. Fixes {% issue 2322 %}.
 - Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %} and {% issue 2288 %}.
-- Fixed a regression in `3.0.2` that caused typing `{enter}` not to submit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %}.
+- Fixed a regression in `3.0.2` that caused typing `{enter}` not to submit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %} and {% issue 2326 %}.
+- Fixed a small visual bug where failed commands were not aligned to other commands. Fixes {% issue 2314 %}.
+- Fixes a race condition where async electron browser commands came in after the renderer had been destroyed, causing failures. Fixes {% issue 2321 %}.
 
 **Misc**
 
@@ -34,6 +37,7 @@ title: Changelog
 - The Desktop-GUI has been updated to get the new routes provided by the Cypress API for runs. Fixes {% issue 2189 %}.
 - Cypress now retries multiple times (with a backoff strategy) when communicating with our API fails while recording runs. This will provide better feedback in situations when the API is temporarily unavailable. Fixes {% issue 1590 %}.
 - When Cypress retries due to an API timeout or failure it now displays a very nice message indicating to you the delay and number of retries left. Fixes {% issue 2280 %}.
+- We've added parallelization to our own internal tests for the driver and the desktop-gui. We've been able to reduce the number of concurrent instances our tests use by 4, and shaved about 6 minutes off of each build. Faster with less resources. Fixes {% issue 2325 %}.
 
 **Documentation Changes:**
 
