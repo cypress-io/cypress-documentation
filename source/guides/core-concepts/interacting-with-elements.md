@@ -30,7 +30,7 @@ Prior to issuing any of the commands, we check the current state of the DOM and 
 
 Cypress will wait for the element to pass all of these checks for the duration of the {% url `defaultCommandTimeout` configuration#Timeouts %} (described in depth in the {% url 'Default Assertions' introduction-to-cypress#Default-Assertions %} core concept guide).
 
-### Checks and Actions Performed
+***Checks and Actions Performed***
 
 - {% urlHash 'Scroll the element into view.' Scrolling %}
 - {% urlHash 'Ensure the element is not hidden.' Visibility %}
