@@ -40,12 +40,13 @@ CYPRESS_baseUrl=https://staging.app.com cypress run
 
 There are 5 different ways to set environment variables. Each has a slightly different use case.
 
-### To summarize you can:
+***To summarize you can:***
 
-- Set in `cypress.json`
-- Create a `cypress.env.json`
-- Export as `CYPRESS_*`
-- Pass in the CLI as `--env`
+- {% urlHash "Set in `cypress.json`" Option-1-cypress-json %}
+- {% urlHash "Create a `cypress.env.json`" Option-2-cypress-env-json %}
+- {% urlHash "Export as `CYPRESS_*`" Option-3-CYPRESS %}
+- {% urlHash "Pass in the CLI as `--env`" Option-4-env %}
+- {% urlHash "Set an environment variable within your plugins." Option-5-Plugins %}
 
 Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration %}.
 
