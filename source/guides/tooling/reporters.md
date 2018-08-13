@@ -81,9 +81,9 @@ You need to install any peer dependencies the reporter requires, even if they're
 
 Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
 
-```javascript
-// cypress.json
+***cypress.json***
 
+```json
 {
   "reporter": "junit",
   "reporterOptions": {
