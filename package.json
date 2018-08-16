@@ -91,7 +91,7 @@
     "gulp-rev-all": "1.0.0",
     "human-interval": "0.1.6",
     "husky": "0.15.0-rc.13",
-    "inquirer": "5.2.0",
+    "inquirer": "6.1.0",
     "jest": "22.4.4",
     "keyv": "3.0.0",
     "minimist": "1.2.0",
