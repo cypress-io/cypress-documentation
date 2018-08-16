@@ -10,7 +10,6 @@ env_defaults: &env_defaults
   npm_config_unsafe-perm: true
 
 defaults: &defaults
-  parallelism: 1
   working_directory: ~/cypress-documentation
   docker:
     # the Docker image with Cypress dependencies
@@ -68,6 +67,7 @@ jobs:
 
   "docs-tests":
     <<: *defaults
+    parallelism: 4
     steps:
       - restore_cache:
           key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
@@ -87,7 +87,7 @@ jobs:
           name: Running Cypress tests
           command: |
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "develop"
             else
               $(npm bin)/cypress run
             fi
@@ -116,7 +116,7 @@ jobs:
           command: |
             export CYPRESS_baseUrl=https://docs-staging.cypress.io
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "staging"
             else
               $(npm bin)/cypress run
             fi
