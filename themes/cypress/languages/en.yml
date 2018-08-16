@@ -76,7 +76,6 @@ sidebar:
     reporters: Reporters
     typescript-support: TypeScript
     module-api: Module API
-    watching-tests: Watching Tests
   api:
     introduction: Introduction
     api: API
