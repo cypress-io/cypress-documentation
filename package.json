@@ -34,8 +34,12 @@
     "test": "jest",
     "test-watch": "npm run test --silent -- --watch",
     "lint": "echo 'Linting scripts...' && eslint --fix *.js cy_scripts/*.js scripts/*.js && echo 'Lint successful'",
-    "precommit": "npm run lint",
     "add-snippet": "node ./cy_scripts/snippet-creator"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "jest": {
     "unmockedModulePathPatterns": [
@@ -103,7 +107,7 @@
     "sinon": "5.1.1",
     "sinon-chai": "3.1.0",
     "snap-shot-it": "5.0.1",
-    "start-server-and-test": "1.5.0",
+    "start-server-and-test": "1.7.0",
     "underscore.string": "3.3.4",
     "wait-on": "2.1.0",
     "yamljs": "0.3.0"

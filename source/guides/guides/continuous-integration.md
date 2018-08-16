@@ -2,6 +2,14 @@
 title: Continuous Integration
 ---
 
+{% note info %}
+# {% fa fa-graduation-cap %} What You'll Learn
+
+- How to run and record Cypress tests in Continuous Integration
+- How to configure and cache Cypress in CI
+- Strategies for booting your server in CI
+{% endnote %}
+
 Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
 
   1. **Install Cypress**
@@ -44,13 +52,13 @@ Depending on which CI provider you use, you may need a config file. You'll want 
 
 ## Caching the Cypress Binary
 
-As of Cypress version 3.0, Cypress downloads its binary to the global system cache - on linux that's `~/.cache/Cypress`. Ensuring this cache persists across builds, you can shave minutes off install time by preventing a large binary download.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
 
 ### We recommend users:
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`, [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in the configs below.
 
-- **Don't** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
+- **Do not** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
 
 - If you are using `npm install` in your build process, consider [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable) and caching the `~/.npm` directory for a faster and more reliable build.
 
@@ -206,6 +214,14 @@ Cypress can record your tests running and make them available in our {% url 'Das
 
 You can {% url 'read more about the Dashboard Service here' dashboard-service %}.
 
+# Running Tests in Parallel in CI
+
+Cypress can run recorded tests running in parallel across multiple machines.
+
+You'll want to refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
+
+Once multiple machines are available within your CI environment, you can pass the {% url "`--parallel`" command-line#cypress-run-parallel %} key to {% url "`cypress run`" command-line#cypress-run %} to have your recorded tests parallelized.
+
 # Environment Variables
 
 You can set various environment variables to modify how Cypress runs.
@@ -278,7 +294,7 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 # Booting Your Server
 
-Typically you'll need to boot a local server prior to running Cypress. Here are some typical recipes for users who are new to CI.
+Typically you will need to boot a local server prior to running Cypress. Here are some typical recipes for users who are new to CI.
 
 ## Command Line
 
