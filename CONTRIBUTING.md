@@ -91,15 +91,15 @@ Add an associated image with the example within the [`source/img/examples`](/sou
 
 ### Adding Plugins
 
-To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, as well as any keywords.
+To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, as well as any keywords.
 
 ### Adding Pages
 
 To add a page such as a new guide or API documentation:
 
-* Add the new page to the relevant directory under `source`.
-* Link to your new page in the sidebar.
-* Add translations for the sidebar link.
+* Add the new page to the relevant directory under [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source).
+* Link to your new page in the [`sidebar.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml).
+* Add translations for the sidebar link (for English, this is located in [`en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml)).
 * Build the documentation site locally so that you can visually inspect your new page and the links to it.
 * Submit a [pull request](#Pull-Requests) for your change.
 
@@ -107,9 +107,9 @@ To add a page such as a new guide or API documentation:
 
 Let's imagine that the Cypress team have just added a new command called `privateState` and you've picked up the task to document it.
 
-API documentation for commands is in the `source/api/commands` directory. Add a file called `privatestate.md` to that directory. Look to the existing documentation to see how to structure the content.
+API documentation for commands is in the [`source/api/commands`](https://github.com/cypress-io/cypress-documentation/tree/develop/source/api/commands) directory. Add a file called `privatestate.md` to that directory. Look to the existing documentation to see how to structure the content.
 
-Once you've written the documentation the next step is to link to it from the sidebar. Open the `source/_data/sidebar.yml` file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api.commands` section.
+Once you've written the documentation the next step is to link to it from the sidebar. Open the [`source/_data/sidebar.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml) file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api.commands` section.
 
 ```yaml
 api:
@@ -121,7 +121,7 @@ api:
     privatestate: privatestate.html
 ```
 
-Finally, open `themes/cypress/languages/en.yml` and add an English translation for that sidebar link. In this example we're adding a command so we'll add the following text:
+Finally, open [`themes/cypress/languages/en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml) and add an English translation for that sidebar link's title. In this example we're adding a command so we'll add the following text:
 
 ```yaml
 sidebar:
