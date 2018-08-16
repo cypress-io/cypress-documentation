@@ -6,7 +6,6 @@ const helpers = require('../lib/helpers')
 
 let pathFn = require('path')
 let _ = require('lodash')
-let lunr = require('lunr')
 
 let localizedPath = ['guides', 'api']
 
@@ -123,21 +122,6 @@ hexo.extend.helper.register('raw_link', function (path) {
 })
 
 hexo.extend.helper.register('add_page_anchors', helpers.addPageAnchors)
-
-hexo.extend.helper.register('lunr_index', function (data) {
-  let index = lunr(function () {
-    this.field('name', { boost: 10 })
-    this.field('tags', { boost: 50 })
-    this.field('description')
-    this.ref('id')
-  })
-
-  _.sortBy(data, 'name').forEach(function (item, i) {
-    index.add(_.assign({ id: i }, item))
-  })
-
-  return JSON.stringify(index.toJSON())
-})
 
 hexo.extend.helper.register('canonical_path_for_nav', function () {
   let path = this.page.canonical_path
