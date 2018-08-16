@@ -73,7 +73,7 @@ cy.get('input').should('be.disabled')
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-***Find the the dropdown-menu and click it.***
+***Find the dropdown-menu and click it.***
 
 ```javascript
 cy.get('.dropdown-menu').click()
@@ -123,7 +123,7 @@ it('disables on click', function () {
 
 ```javascript
 beforeEach(function () {
-  cy.fixtures('users.json').as('users')
+  cy.fixture('users.json').as('users')
 })
 
 it('disables on click', function () {

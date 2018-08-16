@@ -55,7 +55,7 @@ Please read this link in the {% url 'browserify preprocessor' https://github.com
 
 # Usage
 
-The use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
+To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
 
 ```javascript
 // plugins file

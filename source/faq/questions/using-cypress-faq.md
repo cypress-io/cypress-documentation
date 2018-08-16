@@ -147,11 +147,59 @@ When you load your application using `cy.visit()`, Cypress will wait for the `lo
 
 **_In CI, how do I make sure my server has started?_**
 
-There are a couple really great modules that we recommend using for this, {% url '`wait-on`' https://www.npmjs.com/package/wait-on %} and {% url '`start-server-and-test`'. https://github.com/bahmutov/start-server-and-test' %}
+There are a couple really great modules that we recommend using for this, {% url '`wait-on`' https://www.npmjs.com/package/wait-on %} and {% url '`start-server-and-test`' https://github.com/bahmutov/start-server-and-test %}.
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.  
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on. 
+
+## {% fa fa-angle-right %} Can I test the HTML `<head>` element? 
+
+Yes, you sure can. While executing tests in the Test Runner, you can view the entire `window.document` object in your open console using {% url '`cy.document()`' document %}. You can even make assertions on the `<head>` element. Check out this example.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <meta name="description" content="This description is so meta">
+  <title>Test the HEAD content</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+</body>
+</html>
+```
+
+```js
+describe('The Document Metadata', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
+  it("looks inside the head content using `cy.document()`", () => {
+    // this will yield the entire window.document object
+    // if you click on DOCUMENT from the command log,
+    // it will output the entire #document to the console
+    cy.document();
+
+  })
+  
+  // or make assertions on any of the metadata in the head element
+
+  it('looks inside <title> tag', () => {
+    cy.get('head title')
+      .should('contain', 'Test the HEAD content')
+  })
+
+  it('looks inside <meta> tag for description', () => {
+    cy.get('head meta[name="description"]')
+      .should("have.attr", "content", "This description is so meta")
+  })
+
+})
+```
 
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
@@ -249,7 +297,7 @@ You can read more about parallelization {% issue 64 'here' %}.
 
 ## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
 
-Cypress’ API is compatible with WebDriver specific tasks that Sauce Labs and BrowserStack use to launch browsers. Because Cypress currently only supports Chrome* based browsers, we have not yet added integration for these services. When cross browsers are added, Cypress will add full integration with Sauce Labs and BrowserStack.
+Our goal is to offer full integration with Sauce Labs and BrowserStack in the future, however, complete integration is not yet available.
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 

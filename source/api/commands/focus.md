@@ -69,7 +69,7 @@ cy.get('textarea').focus().type('Nice Product!').blur()
 
 `.focus()` is just a helpful command which is a simple shortcut. Normally there's no way for a user to simply "focus" an element without causing another action or side effect. Typically the user would have to click or tab to this element.
 
-Oftentimes its much simpler and conveys what you're trying to test by just using `.focus()` directly.
+Oftentimes it's much simpler and conveys what you're trying to test by just using `.focus()` directly.
 
 If you want the other guarantees of waiting for an element to become actionable, you should use a different command like {% url `.click()` click %}.
 

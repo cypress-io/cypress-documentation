@@ -137,6 +137,9 @@ By default, any environment variable that matches a corresponding configuration 
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
+```
+
+```shell
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
@@ -146,6 +149,9 @@ We automatically normalize both the key and the value. Cypress will *strip off* 
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
+```
+
+```shell
 export CYPRESS_PAGE_LOAD_TIMEOUT=100000
 ```
 
@@ -158,7 +164,10 @@ You can {% url 'read more about Environment Variables' environment-variables %}.
 ## `Cypress.config()`
 
 You can also override configuration values within your test using {% url `Cypress.config()` config %}.
-Any value you change will be permanently changed for the remainder of your tests.
+
+{% note warning Scope %}
+Configuration set using `Cypress.config` _is only in scope for the current spec file._
+{% endnote %}
 
 ```javascript
 Cypress.config("pageLoadTimeout", 100000)

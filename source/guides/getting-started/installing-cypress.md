@@ -17,7 +17,7 @@ title: Installing Cypress
 Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
 - **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
-- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8
+- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
 - **Windows** 7+, only 32bit binaries are provided for Windows.
 
 # Installing
@@ -44,7 +44,7 @@ Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/c
 
 {% note info %}
 Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
-As of version `3.0.0`, the binary is downloaded to a global cache directory to be used across projects.
+As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 {% endnote %}
 
 {% note success Best Practice %}
@@ -54,6 +54,18 @@ The recommended approach is to install Cypress with `npm` because :
 - Cypress is versioned like any other dependency.
 - It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
 {% endnote %}
+
+## {% fa fa-terminal %} `yarn add`
+
+Installing Cypress via {% url "`yarn`" https://yarnpkg.com %}:
+
+```shell
+cd /your/project/path
+```
+
+```shell
+yarn add cypress --dev
+```
 
 ## {% fa fa-download %} Direct Download
 
@@ -173,7 +185,7 @@ Now Cypress will skip its install phase once the npm module is installed.
 
 ## Overriding the Binary Cache Folder
 
-As of version `3.0.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
+As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`
@@ -197,12 +209,24 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
 
-`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary. 
+
+### Mac
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
-# linux: 'Cypress/Cypress'
-# Windows: 'Cypress/Cypress.exe'
+```
+
+### Linux
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
+```
+
+### Windows
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 ```
 
 {% note warning %}

@@ -65,7 +65,11 @@ it("let's me debug like a fiend", function() {
 })
 ```
 
-Ah, that's better! And functionally equivalent. This is just another example of how Cypress seeks elegance and expressivity for the modern web tester. Fewer keystrokes, more power, don't break standard assumptions, and we all win.
+Ah, that's better! And functionally equivalent. The current subject that was yielded by the {% url `cy.get()` get %} is exposed as `subject` so that you can interact with it in the console.
+
+{% img /img/guides/debugging-subject.png Debugging Subject %}
+
+This is just another example of how Cypress seeks elegance and expressivity for the modern web tester. Fewer keystrokes, more power, don't break standard assumptions, and we all win.
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system state at that moment.
 
@@ -87,8 +91,16 @@ You can see a walk-through of debugging some application code from Cypress [in t
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
 
+**On Mac or Linux:**
+
 ```shell
 DEBUG=cypress:* cypress open
+```
+
+**On Windows:**
+
+```shell
+set DEBUG=cypress:*
 ```
 
 {% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.
