@@ -17,19 +17,19 @@ title: Writing Your First Test
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 
-1. Create a `simple_spec.js` file.
+1. Create a `sample_spec.js` file.
 2. Watch Cypress update our list of specs.
 3. Launch Cypress in interactive mode.
 
 Let's create a new file in the `cypress/integration` folder that was created for us:
 
 ```shell
-touch {your_project}/cypress/integration/simple_spec.js
+touch {your_project}/cypress/integration/sample_spec.js
 ```
 
 Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
 
-Even though we haven't written any tests yet - that's okay - let's click on `simple_spec.js` and watch Cypress launch your browser.
+Even though we haven't written any tests yet - that's okay - let's click on `sample_spec.js` and watch Cypress launch your browser.
 
 {% note info %}
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
@@ -53,7 +53,7 @@ Now it's time to write our first test. We're going to:
 
 As we continue to save our new test file we'll see the browser auto reloading in real time.
 
-Open up your favorite IDE and add the code below to our `simple_spec.js` test file.
+Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
 
 ```js
 describe('My First Test', function() {
