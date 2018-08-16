@@ -116,7 +116,7 @@ jobs:
           command: |
             export CYPRESS_baseUrl=https://docs-staging.cypress.io
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "staging"
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "staging" --ci-build-id $CIRCLE_WORKFLOW_ID-$CIRCLE_BUILD_NUM
             else
               $(npm bin)/cypress run
             fi
