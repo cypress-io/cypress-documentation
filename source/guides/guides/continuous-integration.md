@@ -34,17 +34,20 @@ For more examples please read the {% url 'Command Line' command-line#cypress-run
 
 Cypress should run on **all** CI providers. We currently have seen Cypress working on the following services:
 
-- {% url "Jenkins" https://jenkins.io/ %} (Linux)
-- {% url "TravisCI" https://travis-ci.org/ %}
-- {% url "CircleCI" https://circleci.com %}
-- {% url "CodeShip" https://codeship.com/ %} (Has open {% issue 328 "issue with cy.exec()" %})
-- {% url "GitLab" https://gitlab.com/ %}
-- {% url "BuildKite" https://buildkite.com %}
-- {% url "AppVeyor" https://appveyor.com %}
-- {% url "Semaphore" https://semaphoreci.com/ %}
-- {% url "Concourse" https://concourse-ci.org/ %}
-- {% url "Solano" https://www.solanolabs.com/ %}
-- {% url "Docker" https://www.docker.com/ %}
+CI Provider | Example Project | Example Config
+-- | ------- | ------
+{% url "Jenkins" https://jenkins.io/ %} (Linux) | |
+{% url "TravisCI" https://travis-ci.org/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".travis.yml file" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml %}
+{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml file" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
+{% url "CodeShip Basic" https://codeship.com/features/basic %} (has {% issue 328 "cy.exec() issue" %}) | |
+{% url "CodeShip Pro" https://codeship.com/features/pro %} | {% url "cypress-example-docker-codeship" https://github.com/cypress-io/cypress-example-docker-codeship %} |
+{% url "GitLab" https://gitlab.com/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".gitlab-ci.yml file" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.gitlab-ci.yml %}
+{% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml file" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml.yml %}
+{% url "AppVeyor" https://appveyor.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "appveyor.yml file" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml.yml %}
+{% url "Semaphore" https://semaphoreci.com/ %} | |
+{% url "Concourse" https://concourse-ci.org/ %} | |
+{% url "Solano" https://www.solanolabs.com/ %} | |
+{% url "Docker" https://www.docker.com/ %} | {% url "cypress-docker-images" https://github.com/cypress-io/cypress-docker-images %} |
 
 # Setting Up CI
 

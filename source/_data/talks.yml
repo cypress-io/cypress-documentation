@@ -1,3 +1,17 @@
+- title: "Cypress E2E Testing"
+  url: https://www.youtube.com/watch?v=LFUm9qV_Gjo
+  sourceName: Northwest Chicago Javascript
+  date: Jun 21, 2018
+  author: Steve Schwarz
+  youtubeId: LFUm9qV_Gjo
+
+- title: "Cypress"
+  url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
+  sourceName: Bluesoft Labs
+  date: May 24, 2018
+  author: Adriano Silva
+  youtubeId: GhyE3Y5oS_0
+
 - title: "Accélerez vos tests end to end avec Cypress"
   url: https://www.youtube.com/watch?v=UpBfQ6mdb8U&amp=&feature=youtu.be
   sourceName: Devox France
