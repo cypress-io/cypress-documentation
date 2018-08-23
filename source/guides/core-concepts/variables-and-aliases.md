@@ -58,7 +58,7 @@ cy.get('button').then(($btn) => {
 })
 ```
 
-If you're familiar with native Promises the Cypress `.then()` works the same way. You can continue to nest more Cypress commands inside of the `.then()`.
+If you're familiar with {% url 'native Promises' https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises %} the Cypress `.then()` works the same way. You can continue to nest more Cypress commands inside of the `.then()`.
 
 Each nested command has access to the work done in previous commands. This ends up reading very nicely.
 
@@ -86,12 +86,12 @@ cy.get(...).find(...).should(...)
 The commands outside of the `.then()` will not run until all of the nested commands finish.
 
 {% note info %}
-By using callback functions we've created a closure. Closures enable us to keep references around to refer to work done in previous commands.
+By using callback functions we've created a {% url closure https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures %}. Closures enable us to keep references around to refer to work done in previous commands.
 {% endnote %}
 
 ## Debugging
 
-Using `.then()` functions is an excellent opportunity to use `debugger`. This can help you understand the order in which commands are run. This also enables you to inspect the objects that Cypress yields you in each command.
+Using `.then()` functions is an excellent opportunity to use {% url `debugger` https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures %}. This can help you understand the order in which commands are run. This also enables you to inspect the objects that Cypress yields you in each command.
 
 ```js
 cy.get('button').then(($btn) => {
@@ -108,7 +108,6 @@ cy.get('button').then(($btn) => {
 
       $btn    // is still available
       $select // is still available too
-
     })
   })
 })
@@ -158,7 +157,7 @@ The reason for using `const` is because the `$span` object is mutable. Whenever 
 
 # Aliases
 
-Using `.then()` callback functions to access the previous command values is great - but what happens when you're running code in hooks like `before` or `beforeEach`?
+Using `.then()` callback functions to access the previous command values is great&mdash;but what happens when you're running code in hooks like `before` or `beforeEach`?
 
 ```js
 beforeEach(function () {
@@ -226,7 +225,7 @@ it('has access to text', function () {
 })
 ```
 
-Under the hood, aliasing basic objects and primitives utilizes Mocha's shared `context` object: that is, aliases are available as `this.*`.
+Under the hood, aliasing basic objects and primitives utilizes Mocha's shared {% url `context` https://github.com/mochajs/mocha/wiki/Shared-Behaviours %} object: that is, aliases are available as `this.*`.
 
 Mocha automatically shares contexts for us across all applicable hooks for each test. Additionally these aliases and properties are automatically cleaned up after each test.
 
@@ -247,8 +246,8 @@ describe('parent', function () {
       })
 
       it('can access all aliases as properties', function () {
-        expect(this.a).to.eq('one') // true
-        expect(this.b).to.eq('two') // true
+        expect(this.a).to.eq('one')   // true
+        expect(this.b).to.eq('two')   // true
         expect(this.c).to.eq('three') // true
       })
     })
@@ -260,7 +259,7 @@ describe('parent', function () {
 
 The most common use case for sharing context is when dealing with {% url `cy.fixture()` fixture %}.
 
-Often times you may load in a fixture in a `beforeEach` hook but want to utilize the values in your tests.
+Often times you may load a fixture in a `beforeEach` hook but want to utilize the values in your tests.
 
 ```js
 beforeEach(function () {
@@ -273,7 +272,7 @@ it('utilize users in some way', function () {
   const user = this.users[0]
 
   // make sure the header contains the first
-  // users name
+  // user's name
   cy.get('header').should('contain', user.name)
 })
 ```
@@ -297,7 +296,7 @@ it('is not using aliases correctly', function () {
 })
 ```
 
-The same principles we introduced many times before apply to this situation. If you want to access what a command yields, you'll have to do it in a closure using a {% url `.then()` then %}.
+The same principles we introduced many times before apply to this situation. If you want to access what a command yields you have to do it in a closure using a {% url `.then()` then %}.
 
 ```js
 // yup all good
@@ -314,14 +313,14 @@ cy.fixture('users.json').then((users) => {
 ***Avoiding the use of `this`***
 
 {% note warning 'Arrow Functions' %}
-Accessing aliases as properties with `this.*` will not work if you use "arrow functions" for your tests or hooks.
+Accessing aliases as properties with `this.*` will not work if you use {% url 'arrow functions' https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions %} for your tests or hooks.
 
-This is why you'll notice all of our examples use the regular `function () {}` syntax as opposed to the lambda fat arrow syntax `() => {}`.
+This is why all of our examples use the regular `function () {}` syntax as opposed to the lambda "fat arrow" syntax `() => {}`.
 {% endnote %}
 
 Instead of using the `this.*` syntax, there is another way to access aliases.
 
-The {% url `cy.get()` get %} command is capable of accessing aliases with a special syntax using the '@' character:
+The {% url `cy.get()` get %} command is capable of accessing aliases with a special syntax using the `@` character:
 
 ```js
 beforeEach(function () {
@@ -337,19 +336,19 @@ it('utilize users in some way', function () {
     const user = users[0]
 
     // make sure the header contains the first
-    // users name
+    // user's name
     cy.get('header').should('contain', user.name)
   })
 })
 ```
 
-By using `cy.get()` we avoid the use of `this`.
+By using {% url `cy.get()` get %} we avoid the use of `this`.
 
-But just keep in mind - there are use cases for both approaches because they have different ergonomics.
+Keep in mind that there are use cases for both approaches because they have different ergonomics.
 
 When using `this.users` we have access to it synchronously, whereas when using `cy.get('@users')` it becomes an asynchronous command.
 
-You can think of the `cy.get('@users')` as doing the same thing as `cy.wrap(this.users)`.
+You can think of the `cy.get('@users')` as doing the same thing as {% url `cy.wrap(this.users)` wrap  %}.
 
 ## Elements
 
@@ -375,7 +374,7 @@ Because we've used the `@` character in {% url `cy.get()` get %}, instead of que
 
 ***Stale Elements:***
 
-In many single-page JavaScript applications, the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call {% url `cy.get()` get %} with the alias, Cypress automatically re-queries the DOM to find these elements again.
+In many single-page JavaScript applications the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call {% url `cy.get()` get %} with the alias, Cypress automatically re-queries the DOM to find these elements again.
 
 ```html
 <ul id="todos">
@@ -390,7 +389,7 @@ In many single-page JavaScript applications, the DOM re-renders parts of the app
 </ul>
 ```
 
-Let's imagine when we click the `.edit` button that our `<li>` is re-rendered in the DOM. Instead of displaying the edit button, it instead displays an `<input />` text field allowing you to edit the todo. The previous `<li>` has been *completely* removed from the DOM, and a new `<li>` is rendered in its place.
+Let's imagine when we click the `.edit` button that our `<li>` is re-rendered in the DOM. Instead of displaying the edit button it instead displays an `<input />` text field allowing you to edit the todo. The previous `<li>` has been *completely* removed from the DOM and a new `<li>` is rendered in its place.
 
 ```javascript
 cy.get('#todos li').first().as('firstTodo')
@@ -414,7 +413,7 @@ When in doubt, you can *always* issue a regular {% url `cy.get()` get %} to quer
 
 ## Routes
 
-Aliases can also be used with routes. Aliasing your routes enables you to:
+Aliases can also be used with {% url routes route %}. Aliasing your routes enables you to:
 
 - ensure your application makes the intended requests
 - wait for your server to send the response
