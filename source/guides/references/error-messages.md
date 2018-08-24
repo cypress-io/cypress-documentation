@@ -412,7 +412,7 @@ You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} o
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What’s-Supported %}.
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What-is-supported %}.
 
 You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
 

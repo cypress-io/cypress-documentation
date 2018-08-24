@@ -42,7 +42,7 @@ An event name to be handled via the `task` event in the {% url "`pluginsFile`" c
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
-An argument to send along with the event. This can be any value that can be serialized by [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
+An argument to send along with the event. This can be any value that can be serialized by {% url "JSON.stringify()" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %}. Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 

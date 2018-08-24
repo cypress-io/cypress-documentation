@@ -99,7 +99,7 @@ $(npm bin)/cypress open
 
 **Or by using `npx`**
 
-**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2` or can be installed separately.
+**note**: {% url "npx" https://www.npmjs.com/package/npx %} is included with `npm > v5.2` or can be installed separately.
 
 ```shell
 npx cypress open
