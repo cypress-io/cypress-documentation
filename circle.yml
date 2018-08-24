@@ -60,7 +60,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - app
+            - cypress-documentation
             - .cache/Cypress
 
   "docs-tests":
