@@ -20,7 +20,7 @@ title: Changelog
 
 **Bugfixes:**
 
-- We've finally tracked down the source of specs "hanging" and failing to start when running Electron. We finally tracked it down to a bug in Electron itself with setting `menu` when using offscreen rendering. Fixes {% issue 2322 %} and {% issue 2294 %}.
+- We've finally tracked down the source of specs "hanging" and failing to start when running Electron. We finally tracked it down to a bug in Electron itself with setting `menu` when using offscreen rendering. Fixes {% issue 2322 %} and {% issue 2294 %} and {% issue 1235 %} and {% issue 1333 %}.
 - Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %} and {% issue 2288 %}.
 - Fixed a regression in `3.0.2` that caused typing `{enter}` not to submit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %} and {% issue 2326 %}.
 - Fixed a small visual bug where failed commands were not aligned to other commands. Fixes {% issue 2314 %}.
