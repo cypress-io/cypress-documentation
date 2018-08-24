@@ -17,28 +17,31 @@
     "url": "https://github.com/cypress-io/cypress-documentation.git"
   },
   "scripts": {
-    "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",
-    "prebuild": "npm run clean && npm run deps && gulp pre:build",
+    "add-snippet": "node ./cy_scripts/snippet-creator",
     "build": "node --stack-size=8192 ./index.js generate",
-    "postbuild": "gulp post:build && git-last -m -f public/build.json",
-    "clean": "hexo clean",
     "clean-deps": "rm -rf node_modules",
-    "predeploy": "NODE_ENV=production npm run build",
-    "deploy": "echo Deploying built docs",
-    "postdeploy": "npm run deploy-prebuilt",
+    "clean": "hexo clean",
+    "cypress:run": "cypress run",
+    "cypress:verify": "cypress verify",
     "deploy-prebuilt": "node ./cy_scripts/deploy.js",
+    "deploy": "echo Deploying built docs",
+    "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",
+    "lint": "echo 'Linting scripts...' && eslint --fix *.js cy_scripts/*.js scripts/*.js && echo 'Lint successful'",
+    "postbuild": "gulp post:build && git-last -m -f public/build.json",
+    "postdeploy": "npm run deploy-prebuilt",
+    "prebuild": "npm run clean && npm run deps && gulp pre:build",
+    "predeploy": "NODE_ENV=production npm run build",
     "scrape": "node ./cy_scripts/scrape.js",
     "start": "node --stack-size=8192 ./index.js server --port 2222",
-    "cypress:run": "cypress run",
+    "stop-only": "stop-only --folder cypress",
     "test-e2e": "start-server-and-test start http://localhost:2222 cypress:run",
-    "test": "jest",
     "test-watch": "npm run test --silent -- --watch",
-    "lint": "echo 'Linting scripts...' && eslint --fix *.js cy_scripts/*.js scripts/*.js && echo 'Lint successful'",
-    "add-snippet": "node ./cy_scripts/snippet-creator"
+    "test": "jest",
+    "warn-only": "stop-only --warn --folder cypress"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm run warn-only"
     }
   },
   "jest": {
@@ -108,6 +111,7 @@
     "sinon-chai": "3.2.0",
     "snap-shot-it": "6.0.1",
     "start-server-and-test": "1.7.0",
+    "stop-only": "2.2.1",
     "underscore.string": "3.3.4",
     "wait-on": "2.1.0",
     "yamljs": "0.3.0"
