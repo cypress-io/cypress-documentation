@@ -22,6 +22,7 @@
     "clean-deps": "rm -rf node_modules",
     "clean": "hexo clean",
     "cypress:run": "cypress run",
+    "cypress:verify": "cypress verify",
     "deploy-prebuilt": "node ./cy_scripts/deploy.js",
     "deploy": "echo Deploying built docs",
     "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",

@@ -43,6 +43,9 @@ jobs:
           key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
 
       - run: npm ci
+      # run Cypress verify command to cache its status
+      - run: npm run cypress:verify
+
       # store NPM logs in case there was a problem
       - store_artifacts:
           path: ~/.npm/_logs
