@@ -20,7 +20,7 @@ describe "API", ->
         .contains('Catalog of Events')
 
   context "Main Menu", ->
-    it "goes straight to 'API' homepage", ->
+    it.only "goes straight to 'API' homepage", ->
       cy.visit('/')
 
       cy.contains('API')

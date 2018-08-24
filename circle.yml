@@ -13,6 +13,7 @@ defaults: &defaults
   working_directory: ~/cypress-documentation
   docker:
     # the Docker image with Cypress dependencies
+    # https://github.com/cypress-io/cypress-docker-images
     - image: cypress/base:8
       environment:
         <<: *env_defaults
@@ -27,8 +28,8 @@ jobs:
       ## make sure the TERM is set to 'xterm' in node
       ## else colors (and tests) will fail
       ## See the following information
-      ##   * http://andykdocs.de/development/Docker/Fixing+the+Docker+TERM+variable+issue
-      ##   * https://unix.stackexchange.com/questions/43945/whats-the-difference-between-various-term-variables
+      ##   - http://andykdocs.de/development/Docker/Fixing+the+Docker+TERM+variable+issue
+      ##   - https://unix.stackexchange.com/questions/43945/whats-the-difference-between-various-term-variables
       - run:
           name: Checking TERM is set
           command: |
@@ -36,34 +37,31 @@ jobs:
             node -e 'assert.equal(process.env.TERM, "xterm", "need TERM to be set for Docker to work")'
             node -e 'console.log("TERM %s stdout.isTTY?", process.env.TERM, process.stdout.isTTY)'
 
-      # need to restore a separate cache for each package.json
+      # need to restore previously caches files, if any to speed up the build
+      # we want to use new cache if package or circle files change
       - restore_cache:
-          key: v2-{{ .Branch }}-deps
+          key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
 
       - run: npm ci
-      - run: npm prune
-      # see if package-lock.json file has changed
-      # if yes, this means it is out of date
-      - run: git status
-
-      # save each node_modules folder per package
-      # also save ~/.cache folder with Cypress v3+ binary
-      - save_cache:
-          key: v2-{{ .Branch }}-deps-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-            - /root/.cache
-
-      ## save entire folder as artifact for other jobs to continue
-      ## hmm, do not see a good way to cache it, since all code
-      ## might change
-      - save_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - /root/cypress-documentation
-            - /root/.cache
+      # store NPM logs in case there was a problem
       - store_artifacts:
           path: ~/.npm/_logs
+
+      # cache NPM modules and folder with Cypress v3+ binary
+      # https://on.cypress.io/continuous-integration
+      # this ensures that this job can start quickly next time
+      - save_cache:
+          key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
+          paths:
+            - /root/.npm
+            - /root/.cache
+
+      ## save entire folder + Cypress binary as the workspace for other jobs to continue
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - app
+            - .cache/Cypress
 
   "docs-tests":
     <<: *defaults
@@ -74,6 +72,7 @@ jobs:
       - run: ls -la
       - run: npm run deps
       - run: npm run lint
+      - run: npm run stop-only
       - run: npm test
       - run: npm run build
       - run: ls -Rl themes/cypress/source/js
