@@ -91,7 +91,7 @@ By using callback functions we've created a {% url closure https://developer.moz
 
 ## Debugging
 
-Using `.then()` functions is an excellent opportunity to use {% url `debugger` https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures %}. This can help you understand the order in which commands are run. This also enables you to inspect the objects that Cypress yields you in each command.
+Using `.then()` functions is an excellent opportunity to use {% url `debugger` https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger %}. This can help you understand the order in which commands are run. This also enables you to inspect the objects that Cypress yields you in each command.
 
 ```js
 cy.get('button').then(($btn) => {

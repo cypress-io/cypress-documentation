@@ -45,7 +45,7 @@ The name of the alias to be referenced later within a {% url `cy.get()` get %} o
 
 ## DOM Element
 
-Aliasing a DOM element and then {% url getting get %} that aliased element.
+Aliasing a DOM element and then using {% url `cy.get()` get %} to access the aliased element.
 
 ```javascript
 it('disables on click', function () {
@@ -56,7 +56,7 @@ it('disables on click', function () {
 
 ## Route
 
-Aliasing a {% url route %} and then {% url waiting wait %} on that aliased route.
+Aliasing a route and then using {% url `cy.wait()` wait %} to wait for the aliased route.
 
 ```javascript
 cy.route('PUT', 'users', 'fx:user').as('userPut')
@@ -67,16 +67,16 @@ cy.wait('@userPut')
 
 ## Fixture
 
-Aliasing a {% url fixture %} and then accessing it via `this`.
+Aliasing {% url `cy.fixture()` fixture %} data and then using `this` to access it via the alias.
 
 ```javascript
 beforeEach(function () {
-  cy.fixture('users-admins.json').as('admins');
-});
+  cy.fixture('users-admins.json').as('admins')
+})
 
 it('the users fixture is bound to this.admins', function () {
-  cy.log(`There are ${this.admins.length} administrators.`);
-});
+  cy.log(`There are ${this.admins.length} administrators.`)
+})
 ```
 
 {% note warning %}
@@ -93,43 +93,43 @@ Some strings are not allowed as alias names since they are reserved words in Cyp
 
 ## `as` is asynchronous
 
-Remember that **Cypress commands are async**, including `as()`.
+Remember that **Cypress commands are async**, including `.as()`.
 
 Because of this you cannot _synchronously_ access anything you have aliased. You must use other asynchronous commands such as {% url `.then()` then %} to access what you've aliased.
 
-Here are some further examples of using `as()` that illustrate the asynchronous behaviour.
+Here are some further examples of using `.as()` that illustrate the asynchronous behavior.
 
 ```javascript
 describe('A fixture', () => {
 
   describe('alias can be accessed', () => {
     it('via get().', () => {
-      cy.fixture('admin-users.json').as('admins');
+      cy.fixture('admin-users.json').as('admins')
       cy.get('@admins')
         .then(users => {
-          cy.log(`There are ${users.length} admins.`);
-        });
-    });
+          cy.log(`There are ${users.length} admins.`)
+        })
+    })
 
     it('via then().', function () {
-      cy.fixture('admin-users.json').as('admins');
+      cy.fixture('admin-users.json').as('admins')
       cy.visit('/')
         .then(() => {
-          cy.log(`There are ${this.admins.length} admins.`);
-        });
-    });
-  });
+          cy.log(`There are ${this.admins.length} admins.`)
+        })
+    })
+  })
 
   describe('aliased in beforeEach()', () => {
     beforeEach(function () {
-      cy.fixture('admin-users.json').as('admins');
-    });
+      cy.fixture('admin-users.json').as('admins')
+    })
 
     it('is bound to this.', function () {
-      cy.log(`There are ${this.admins.length} admins.`);
-    });
-  });
-});
+      cy.log(`There are ${this.admins.length} admins.`)
+    })
+  })
+})
 ```
 
 # Rules
