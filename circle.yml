@@ -67,8 +67,9 @@ jobs:
     <<: *defaults
     parallelism: 4
     steps:
-      - restore_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
       - run: ls -la
       - run: npm run deps
       - run: npm run lint
@@ -100,8 +101,9 @@ jobs:
   "deploy-docs-staging":
     <<: *defaults
     steps:
-      - restore_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
       - run: npm ls || true
       - run: NODE_ENV=staging npm run build
       - run: ls -Rl themes/cypress/source/js
@@ -129,8 +131,9 @@ jobs:
   "deploy-docs-production":
     <<: *defaults
     steps:
-      - restore_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
       - run: NODE_ENV=production npm run build
       # because we already built docs for production
       # use script that just deploys without rebuilding the production docs
@@ -155,7 +158,6 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
-                - get-branch
           requires:
             - docs-tests
       - deploy-docs-production:
