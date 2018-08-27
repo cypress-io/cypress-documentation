@@ -191,7 +191,7 @@ cy.route('POST', '**/comments', commentsResponse)
 
 Any request that matches the `method` and `url` of a route will be responded to based on the configuration of that route.
 
-If a request doesn't match any route, [it will automatically receive a 404](#Notes). For example, given we have the following routes:
+If a request doesn't match any route, {% urlHash "it will automatically receive a 404" Notes %}. For example, given we have the following routes:
 
 ```javascript
 cy.server()

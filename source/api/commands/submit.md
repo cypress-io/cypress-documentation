@@ -1,12 +1,11 @@
 ---
 title: submit
-
 ---
 
 Submit a form.
 
 {% note warning %}
-This element must be an `<form>`.
+The {% url subject introduction-to-cypress#Subject-Management %} must be a `<form>`.
 {% endnote %}
 
 # Syntax

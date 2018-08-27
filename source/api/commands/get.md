@@ -83,7 +83,7 @@ cy.get('.dropdown-menu').click()
 
 ***`cy.get()` in the {% url `.within()` within %} command***
 
-Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a [`.within()`]() command.
+Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a {% url "`.within()`" within %} command.
 
 ```javascript
 cy.get('form').within(() => {

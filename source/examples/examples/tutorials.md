@@ -39,7 +39,7 @@ We have a lot of ground to cover, so let's get started!
 
 ## 1. Project setup
 
-We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's [`npm`](https://www.npmjs.com/) dependencies and scripts, then jump right into getting Cypress up and running.
+We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's {% url "`npm`" https://www.npmjs.com/ %} dependencies and scripts, then jump right into getting Cypress up and running.
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/01_setup %}
 
