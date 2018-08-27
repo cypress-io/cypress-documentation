@@ -131,7 +131,7 @@
     "hexo-prism-plugin": "2.2.0",
     "hexo-renderer-marked": "0.3.2",
     "hexo-renderer-scss": "1.2.0",
-    "hexo-server": "0.3.2",
+    "hexo-server": "0.3.3",
     "lazy-ass": "1.6.0",
     "lodash": "4.17.10",
     "menuspy": "1.3.0",
