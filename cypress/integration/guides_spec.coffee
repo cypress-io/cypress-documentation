@@ -83,9 +83,6 @@ describe "Guides", ->
             englishLink  = @english.sidebar.guides[@sidebarLinkNames[i]]
             expect(displayedLink.text().trim()).to.eq(englishLink)
 
-  ## This is running too slow to include for now
-  ## Issue #431 Needs to be fixed first
-  ## https://github.com/cypress-io/cypress/issues/431
   context "Table of Contents", ->
     before ->
       cy.visit(GUIDES_PATH)
