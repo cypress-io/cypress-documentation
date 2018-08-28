@@ -1,3 +1,11 @@
+- title: "Slack App Testing"
+  url: https://medium.com/coveryourads/slack-bot-testing-e7ba6f91a98e
+  sourceName: Medium
+  sourceUrl: https://www.coveryourads.io/
+  date: Aug 27, 2018
+  author: Matthew Ledom
+  img: /img/examples/end-to-end-slack-app-testing-with-cypress.jpg
+  
 - title: "How We Built Our Automated UI Testing Framework"
   url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
   sourceName: Endgame
