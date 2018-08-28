@@ -1,6 +1,5 @@
 ---
 title: type
-
 ---
 
 Type into a DOM element.
@@ -23,8 +22,8 @@ cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.type('Welcome')               // Errors, cannot be chained off 'cy'
-cy.url().type('www.cypress.io')  // Errors, 'url' does not yield DOM element
+cy.type('Welcome')                   // Errors, cannot be chained off 'cy'
+cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
 ```
 
 ## Arguments
@@ -48,7 +47,7 @@ Sequence | Notes
 `{selectall}` | Selects all text by creating a `selection range`
 `{uparrow}` | Fires up event but does **not** move the cursor
 
-Text passed to `.type()` may also include any of the these modifier character sequences:
+Text passed to `.type()` may also include any of these modifier character sequences:
 
 Sequence | Notes
 --- | ---
@@ -121,7 +120,7 @@ Using `.type()` on a date input (`<input type="date">`) requires specifying a va
 
 This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#sec-dates %} and is what the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc) are not permitted.
+Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 ## Month Inputs
 
@@ -131,7 +130,7 @@ Using `.type()` on a month input (`<input type="month">`) requires specifying a 
 
 This isn't exactly how a user would type into a month input, but is a workaround since month input support varies between browsers and the format varies based on locale. `yyyy-MM` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#months %} and is what the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc) are not permitted.
+Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 ## Week Inputs
 
@@ -143,7 +142,7 @@ Where `W` is the literal character 'W' and `ww` is the number of the week (01-53
 
 This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc) are not permitted.
+Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 ## Time Inputs
 
@@ -155,7 +154,7 @@ Using `.type()` on a time input (`<input type="time">`) requires specifying a va
 
 Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc) are not permitted.
+Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 ## Key Combinations
 
@@ -259,6 +258,26 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 # Notes
 
+## Supported Elements
+
+* HTML `<body>` and `<textarea>` elements.
+* Elements with a defined `tabindex` attribute.
+* Elements with a defined `contenteditable` attribute.
+* HTML `<input>` elements with a defined `type` attribute of one of the following:
+  * `text`
+  * `password`
+  * `email`
+  * `number`
+  * `date`
+  * `week`
+  * `month`
+  * `time`
+  * `datetime`
+  * `datetime-local`
+  * `search`
+  * `url`
+  * `tel`
+
 ## Actionability
 
 `.type()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
@@ -269,7 +288,7 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 If the element is currently not in focus, before issuing any keystrokes Cypress will first issue a {% url `.click()` click %} to the element to bring it into focus.
 
-All of the normal events documented on {% url `.click()` click %} will fire.
+All of {% url 'the normal events' click#Events %} documented on {% url `.click()` click %} will fire.
 
 ***Events that fire***
 
