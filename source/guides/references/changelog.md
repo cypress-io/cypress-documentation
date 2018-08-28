@@ -1898,7 +1898,7 @@ Known Issues:
 
 **Features:**
 
-- All commands now retry if the the associated element is disabled until the element is no longer disabled. If the command times out a specific error message is now thrown.
+- All commands now retry if the associated element is disabled until the element is no longer disabled. If the command times out a specific error message is now thrown.
 - {% url `cy.server()` server %} and {% url `cy.route()` route %} now take an optional `onAbort` callback which fires anytime an XHR is aborted.
 
 **Bugfixes:**
