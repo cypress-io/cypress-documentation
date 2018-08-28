@@ -151,7 +151,7 @@ cy.screenshot("my-screenshot", {
 Screenshot naming follows these rules:
 
 * By default, a screenshot is saved to a file with a path relative to the {% url 'screenshots folder' configuration#Folders-Files %}, appended by a path relating to where the spec file exists, with a name including the current test's suites and test name: `{screenshotsFolder}/{specPath}/{testName}.png`
-* For a named screenshot, the name is used instead of the the suites and test name: `{screenshotsFolder}/{specPath}/{name}.png`
+* For a named screenshot, the name is used instead of the suites and test name: `{screenshotsFolder}/{specPath}/{name}.png`
 * For any duplicate screenshots (named or not), they will be appended with a number: `{screenshotsFolder}/{specPath}/{testName} (1).png`
 * For a failure screenshot, the default naming scheme is used and the name is appended with ` (failed)`: `{screenshotsFolder}/{specPath}/{testName} (failed).png`
 
