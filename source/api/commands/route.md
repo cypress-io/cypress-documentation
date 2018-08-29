@@ -39,7 +39,11 @@ Supply a response `body` to *stub* in the matching route.
 
 **{% fa fa-angle-right %} method** ***(String)***
 
-Match the route to a specific method (`GET`, `POST`, `PUT`, etc). If no method is defined, Cypress will match `GET` requests by default.
+Match the route to a specific method (`GET`, `POST`, `PUT`, etc).
+
+{% note bolt %}
+If no method is defined Cypress will match `GET` requests by default.
+{% endnote %}
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
@@ -190,6 +194,10 @@ cy.route('POST', '**/comments', commentsResponse)
 ***Matching requests and routes***
 
 Any request that matches the `method` and `url` of a route will be responded to based on the configuration of that route.
+
+{% note bolt %}
+`GET` is the default HTTP method used to match routes. If you want to stub a route with another HTTP method such as `POST` then you {% urlHash 'must be explicit about the method' Arguments %}.
+{% endnote %}
 
 If a request doesn't match any route, {% urlHash "it will automatically receive a 404" Notes %}. For example, given we have the following routes:
 
