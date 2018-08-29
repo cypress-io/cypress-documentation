@@ -27,7 +27,7 @@ Here's documentation for all the custom tags that we've created.
 
 ## Common Hexo tags
 
-> We didn't create the tags in this&mdash;they ship with Hexo&mdash;but they're used _all over the docs_ so here's the lowdown.
+> We didn't create the tags in this section&mdash;they ship with Hexo&mdash;but they're used _all over the docs_ so here's the lowdown.
 
 ### `img`
 
@@ -260,7 +260,7 @@ Generate a link.
 {% url http://foo.com %}
 ```
 
-### `url_hash`
+### `urlHash`
 
 * [lib/tags/url.js](lib/tags/url.js)
 
