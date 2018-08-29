@@ -28,7 +28,7 @@ The documentation in this repo is generated using [Hexo](https://hexo.io/).
 
 **Fork this repository**
 
-Using GitHub, create a copy (a fork) of this repository under your personal account.
+Using GitHub, [create a copy](https://guides.github.com/activities/forking/) (a fork) of this repository under your personal account.
 
 **Clone your forked repository**
 
@@ -91,7 +91,7 @@ Add an associated image with the example within the [`source/img/examples`](/sou
 
 ### Adding Plugins
 
-To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, as well as any keywords.
+To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
 
 ### Adding Pages
 
@@ -155,10 +155,10 @@ Danger 📛: because we are minifying client-side code using a [Hexo plugin](htt
 
 ### Pull Requests
 
-You should push your local changes to your forked GitHub repository and then open a pull request from your repo to the `cypress-io/cypress-documentation` repo.
+You should push your local changes to your forked GitHub repository and then open a pull request (PR) from your repo to the `cypress-io/cypress-documentation` repo.
 
-- The pull request should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
-- When opening a PR for a specific issue already open, please use the `address #[issue number]` or `closes #[issue number]` syntax in the pull request description.
+- The PR should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
+- When opening a PR for a specific issue already open, please use the `closes #[issue number]` syntax in the pull request description so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
 ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
 
