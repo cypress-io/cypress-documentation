@@ -390,13 +390,6 @@ A brief guide on how to run End-To-End testing on React apps with Cypress."
   date: Jul 20, 2017
   img: /img/examples/javascript-e2e-integration-testing-active-devs.jpg
 
-- title: Cypress.io – ersetzt diese neue Automations-Engine Selenium?
-  url: http://www.testplus.at/2017/07/cypress-io-ersetzt-diese-neue-automations-engine-selenium/
-  sourceName: TestPlus
-  sourceUrl: http://www.testplus.at/
-  date: Jul 12, 2017
-  img: /img/examples/test-runner-automation-engine-cypress-testplus-bericht.jpg
-
 - title: Cypress - a genuine alternative to Selenium at last?
   url: https://red-badger.com/blog/2017/6/16/cypress-a-genuine-alternative-to-selenium-at-last
   sourceName: Red Badger
