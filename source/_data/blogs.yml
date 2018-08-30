@@ -460,11 +460,3 @@ A brief guide on how to run End-To-End testing on React apps with Cypress."
   date: Jan 27, 2016
   author: Kiki Roeder
   img: /img/examples/hypepotamus-guy-testing-website.jpg
-
-- title: "Front-end testing with Cypress"
-  url: http://blog.clevertech.biz/post/front-end-testing-with-cypress
-  sourceName: clevertech Blog
-  sourceUrl: http://blog.clevertech.biz
-  date: Jun 30, 2015
-  author: Bruno Bernardino
-  img: /img/examples/cypress-code-clevertech-blog.jpg
