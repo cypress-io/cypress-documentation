@@ -114,7 +114,7 @@ This helps us uniquely identify your project. If you manually alter this, **Cypr
 
 We recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
 
-```bash
+```shell
 $ export CYPRESS_PROJECT_ID={projectId}   # replace {projectId} with your actual projectId
 ```
 
