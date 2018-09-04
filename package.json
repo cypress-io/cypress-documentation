@@ -79,12 +79,12 @@
     "cypress": "3.1.0",
     "dependency-check": "3.2.0",
     "deps-ok": "1.4.1",
-    "eslint": "5.4.0",
+    "eslint": "5.5.0",
     "eslint-plugin-cypress-dev": "1.1.2",
     "fluent-ffmpeg": "2.1.2",
     "fs-extra": "7.0.0",
     "ggit": "2.4.5",
-    "git-last": "1.2.0",
+    "git-last": "1.2.2",
     "got": "8.3.2",
     "gulp": "3.9.1",
     "gulp-awspublish": "3.3.3",
@@ -116,7 +116,7 @@
     "yamljs": "0.3.0"
   },
   "dependencies": {
-    "bluebird": "3.5.1",
+    "bluebird": "3.5.2",
     "check-more-types": "2.24.0",
     "debug": "3.1.0",
     "docsearch.js": "2.5.2",
