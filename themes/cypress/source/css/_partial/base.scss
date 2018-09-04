@@ -160,7 +160,7 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   ul {
     list-style: none;
     padding: 0;
-    margin: 50px 0 50px 0;
+    margin: 50px 0 20px 0;
     display: inline-block;
     text-align: left;
 
@@ -179,9 +179,13 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   }
 
   blockquote {
-    margin: 15px 0 100px 0;
+    margin: 10px 0 100px 0;
     padding: 15px;
     font-style: italic;
+
+    strong {
+      font-weight: bold;
+    }
   }
 }
 
