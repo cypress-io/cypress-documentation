@@ -112,7 +112,7 @@
     "start-server-and-test": "1.7.1",
     "stop-only": "2.2.1",
     "underscore.string": "3.3.4",
-    "wait-on": "2.1.0",
+    "wait-on": "2.1.2",
     "yamljs": "0.3.0"
   },
   "dependencies": {
