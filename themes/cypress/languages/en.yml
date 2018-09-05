@@ -162,6 +162,8 @@ sidebar:
     writefile: writeFile
     events: Events
     catalog-of-events: Catalog of Events
+    assertions: Assertions
+    all-assertions: All Assertions
     on: on
     once: once
     removelistener: removeListener

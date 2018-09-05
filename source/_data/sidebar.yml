@@ -59,6 +59,8 @@ api:
     api: api.html
   events:
     catalog-of-events: catalog-of-events.html
+  assertions:
+    all-assertions: assertions.html
   commands:
     and: and.html
     as: as.html

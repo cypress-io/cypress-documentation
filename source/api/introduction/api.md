@@ -1,11 +1,12 @@
 ---
 title: API
-
 ---
 
 # Sections
 
 - **{% url 'Commands:' and %}** Drive your tests in the browser like a real user would. They let you perform actions like typing, clicking, xhr requests, and can also assert things like "my button should be disabled".
+
+- **{% url 'Assertions:' assertions %}** See a list of every assertion supported by Cypress.
 
 - **{% url 'Events:' catalog-of-events %}** See a list of Cypress events that are fired and the accompanying methods used to listen to and remove those events.
 
@@ -26,7 +27,6 @@ Each document attempts to cover the essentials of each method including:
   - **Arguments:** Definition of arguments including types accepted.
 
   - **Yields:** What is yielded (and in rare cases, returned) from the method.
-
 
 **Examples:** Real world examples of using the methods.
 
