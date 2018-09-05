@@ -1,12 +1,18 @@
 ---
 title: Cypress.config
-comments: false
+
 ---
 
 `get` and `set` configuration options *in your tests*.
 
 {% note info New to Cypress? %}
 {% url 'Read about configuration first.' configuration %}
+{% endnote %}
+
+{% note warning Scope %}
+Configuration set using `Cypress.config` _is only in scope for the current spec file._
+
+Cypress runs each spec file in isolation: the browser is exited between specs. Configuration changed in one spec won't be visible in other specs.
 {% endnote %}
 
 # Syntax
@@ -38,7 +44,6 @@ Set multiple configuration options with an object literal.
 
 **Get all configuration options.**
 
-
 ```javascript
 // cypress.json
 
@@ -54,7 +59,6 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 ## Name
 
 **Return just a single configuration option value.**
-
 
 ```javascript
 // cypress.json
@@ -72,10 +76,9 @@ Cypress.config("pageLoadTimeout") // => 60000
 
 **Cypress allows you to change the values of your configuration options from within your tests.**
 
-{% note warning %}
-Any value you change will be permanently changed for the remainder of your tests.
+{% note warning Scope %}
+Remember, any changes that you make to configuration using this API will only be in effect for the remainder of the tests _in the same spec file._
 {% endnote %}
-
 
 ```javascript
 // cypress.json
@@ -117,12 +120,13 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 # Notes
 
-**Why use `Cypress.config` instead of `cy.config`?**
+**Why is it `Cypress.config` and not `cy.config`?**
 
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 
-Methods on `cy` are local and specific to a single test. Side effects from `cy` methods are restored between each test. We chose to use `Cypress` because changes to your configuration options take effect for the remainder of **ALL** tests.
+Since the configuration added or changed by `Cypress.config` is only in scope for the current spec file, you'd think that it should be `cy.config` and not `Cypress.config`&hellip;and you'd be right. The fact that `Cypress.config` affects local state is an artifact of the API evolving over time: `Cypress.config` used to affect global state&mdash;configuration added in one test spec file was available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in {% url `3.0.0` changelog#3-0-0 %} and by that time `Cypress.config` was public API.
 
 # See also
 
 - {% url 'configuration' configuration %}
+- The {% url 'Environment Variable' environment-variables %} guide

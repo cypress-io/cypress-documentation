@@ -1,6 +1,5 @@
 ---
 title: Reporters
-comments: false
 ---
 
 Because Cypress is built on top of Mocha, that means any reporter built for Mocha can be used with Cypress. Here is a list of built in Mocha reporters.
@@ -36,7 +35,7 @@ Say you have the following directory structure:
     - custom.js
 ```
 
-***To specify the path to your custom reporter:***
+### To specify the path to your custom reporter:
 
 ```javascript
 // cypress.json
@@ -48,7 +47,7 @@ Say you have the following directory structure:
 
 The path above is relative to where your `cypress.json` is located.
 
-***Command line***
+### Command line
 
 ```shell
 cypress run --reporter reporters/custom.js
@@ -68,7 +67,7 @@ If you installed a custom reporter through npm, specify the package name:
 }
 ```
 
-***Command line***
+### Command line
 
 ```shell
 cypress run --reporter mochawesome
@@ -82,9 +81,9 @@ You need to install any peer dependencies the reporter requires, even if they're
 
 Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
 
-```javascript
-// cypress.json
+***cypress.json***
 
+```json
 {
   "reporter": "junit",
   "reporterOptions": {
@@ -94,7 +93,7 @@ Some reporters accept options that customize their behavior. These can be specif
 }
 ```
 
-***Command line***
+### Command line
 
 ```shell
 cypress run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"

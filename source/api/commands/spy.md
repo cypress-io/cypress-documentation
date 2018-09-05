@@ -1,6 +1,6 @@
 ---
 title: spy
-comments: false
+
 ---
 
 Wrap a method in a spy in order to record calls to and arguments of the function.
@@ -37,7 +37,7 @@ The name of the `method` on the `object` to be wrapped.
 
 Unlike most Cypress commands, `cy.spy()` is *synchronous* and returns a value (the spy) instead of a Promise-like chain-able object.
 
-`cy.spy()` returns a [Sinon.js spy](http://sinonjs.org/docs/#spies). All [methods](http://sinonjs.org/docs/#spies-api) found on Sinon.JS spies are supported.
+`cy.spy()` returns a {% url "Sinon.js spy" https://sinonjs.org/releases/v6.1.5/spies/ %}. All methods found on Sinon.JS spies are supported.
 
 # Examples
 
@@ -83,7 +83,7 @@ You will see the following in the command log:
 
 ***Automatic reset/restore between tests***
 
-`cy.spy()` creates spies in a [sandbox](http://sinonjs.org/docs/#sandbox), so all spies created are automatically reset/restored between tests without you having to explicitly reset/restore them.
+`cy.spy()` creates spies in a {% url "sandbox" https://sinonjs.org/releases/v6.1.5/sandbox/ %}, so all spies created are automatically reset/restored between tests without you having to explicitly reset/restore them.
 
 ## Differences
 

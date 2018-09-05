@@ -1,6 +1,6 @@
 ---
 title: API
-comments: false
+
 ---
 
 # Sections
@@ -56,4 +56,4 @@ If you spot a typo, broken link, incorrect code sample or want to contribute to 
 
 - Use the 'Improve this doc' link at the top of the document.
 
-- Open an issue or pull request to the [GitHub repository](https://github.com/cypress-io/cypress).
+- Open an issue or pull request to the {% url "GitHub repository" https://github.com/cypress-io/cypress %}.

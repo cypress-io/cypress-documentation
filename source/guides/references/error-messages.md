@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: Error Messages
-comments: false
 ---
 
 # Test File Errors
@@ -12,12 +11,11 @@ This message means that Cypress was unable to find tests in the specified file. 
 
 {% img /img/guides/no-tests-found.png No tests found %}
 
-
 ## {% fa fa-exclamation-triangle red %} We found an error preparing your test file
 
 This message means that Cypress encountered an error when compiling and/or bundling your test file. Cypress automatically compiles and bundles your test code so you can use ES2015, CoffeeScript, modules, etc.
 
-***You'll typically receive this message due to:***
+### You'll typically receive this message due to:
 
 - The file not existing
 - A syntax error in the file or one of its dependencies
@@ -33,7 +31,7 @@ The `supportFolder` option was removed from Cypress in version {% url `0.18.0` c
 
 Cypress used to automatically include any scripts in the `supportFolder` before your test files. However, automatically including all the files in a certain directory is somewhat magical and unintuitive, and requires creating globals for the purpose of utility functions.
 
-***Use modules for utility functions***
+### Use modules for utility functions
 
 Cypress supports both ES2015 modules and CommonJS modules. You can import/require npm modules as well as local modules:
 
@@ -47,7 +45,7 @@ it('uses modules', function () {
 })
 ```
 
-***Use supportFile to load scripts before your test code***
+### Use supportFile to load scripts before your test code
 
 It's still useful to load a setup file before your test code. If you are setting Cypress defaults or utilizing custom Cypress commands, instead of needing to import/require those defaults/commands in every test file, you can use the {% url `supportFile` configuration#Folders-Files %} configuration option.
 
@@ -103,7 +101,7 @@ Cypress errors because it can't interact with "dead" elements - just like a real
 
 Let's take a look at an example below.
 
-***Application HTML***
+### Application HTML
 
 ```html
 <body>
@@ -113,7 +111,7 @@ Let's take a look at an example below.
 </body>
 ```
 
-***Application JavaScript***
+### Application JavaScript
 
 ```javascript
 $('button').click(() => {
@@ -123,7 +121,7 @@ $('button').click(() => {
 })
 ```
 
-***Test Code causing error***
+### Test Code causing error
 
 ```javascript
 cy.get('button').click().parent()
@@ -133,7 +131,7 @@ We've programmed our application above so that as soon as the `click` event happ
 
 We can prevent Cypress from throwing this error by rewriting our test code.
 
-***Fixed Test Code***
+### Fixed Test Code
 
 ```javascript
 cy.get("button").click()
@@ -168,7 +166,7 @@ There have been situations where Cypress does not correctly allow you to interac
 
 If you'd like to override these built-in checks, provide the `{force: true}` option to the action itself. Refer to each command for their available options, additional use cases, and argument usage.
 
-***Ignore built-in error checking***
+### Ignore built-in error checking
 
 ```javascript
 cy.get('[disabled]').click({force: true}).
@@ -194,9 +192,9 @@ cy.get('#modal button').click({waitForAnimations: false})
 
 You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
 
-```javascript
-// cypress.json
+### cypress.json
 
+```json
 {
   "waitForAnimations": false,
   "animationDistanceThreshold": 50
@@ -213,7 +211,7 @@ Let's examine several different ways you may get this error message. In every si
 Several of these tests are dependent on race conditions. You may have to run these tests multiple times before they will actually fail. You can also try tweaking some of the delays.
 {% endnote %}
 
-***Simple Example***
+### Simple Example
 
 This first test below will pass and shows you that Cypress tries to prevent leaving commands behind in the queue in every test.
 
@@ -241,7 +239,7 @@ it('but you can forcibly end the test early which does fail', function (done) {
 })
 ```
 
-***Complex Async Example***
+### Complex Async Example
 
 What's happening in this example is that because we have *NOT* told mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
 
@@ -273,7 +271,7 @@ it('does not cause commands to bleed into the next test', function (done) {
 })
 ```
 
-***Complex Promise Example***
+### Complex Promise Example
 
 In the example below, we forget to return the `Promise` in our test. This means the test passes synchronously but our `Promise` resolves in the next test.
 This also causes the commands to be queued on the wrong test. We will get the error in the next test that Cypress detected it had commands in its command queue.
@@ -388,6 +386,80 @@ cypress run --record
 
 We will automatically apply the record key environment variable.
 
+## {% fa fa-exclamation-triangle red %} A Cached Cypress Binary Could not be found
+
+This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
+
+To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching-the-Cypress-Binary %}, then bump the version of your CI cache to ensure a clean build.
+
+## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
+
+You passed the `--ci-build-id` flag but did not provide either a {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+
+The `--ci-build-id` flag is used to either group or parallelize multiple runs together.
+
+Check out our {% url "guide on parallelizing runs" parallelization %} and when to use the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} option.
+
+## {% fa fa-exclamation-triangle red %} The `--ci-build-id`, `--group`, or `--parallel` flags can only be used when recording
+
+You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
+
+These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
+
+## {% fa fa-exclamation-triangle red %} We could not determine a unique CI build ID
+
+You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag but we could not automatically determine or generate a `ciBuildId`.
+
+In order to use either of these parameters a `ciBuildId` must be determined.
+
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What-is-supported %}.
+
+You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
+
+## {% fa fa-exclamation-triangle red %} Group name has already been used for this run
+
+You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag, but this group name has already been used for this run.
+
+If you are trying to parallelize this run, then also pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, else pass a different group name.
+
+## {% fa fa-exclamation-triangle red %} Cannot parallelize tests across environments
+
+You passed the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but we do not parallelize tests across different environments.
+
+This machine is sending different environment parameters than the first machine that started this parallel run.
+
+In order to run in parallel mode each machine must send identical environment parameters such as:
+
+- Specs
+- Operation system name
+- Operating system version
+- Browser name
+- Major browser version
+
+## {% fa fa-exclamation-triangle red %} Cannot parallelize tests in this group
+
+You passed the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run group was originally created without the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+
+You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+
+## {% fa fa-exclamation-triangle red %} Run must pass `--parallel` flag
+
+You did not pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run's group was originally created with the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+
+You must use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+
+## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
+
+You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+
+You cannot run tests on a run that has been complete for that long.
+
+## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
+
+The run you are attempting access to is already complete and will not accept new groups.
+
+When a run finishes all of its groups, it waits for a configurable set of time before finally completing. You must add more groups during that time period.
+
 # Page Load Errors
 
 ## {% fa fa-exclamation-triangle red %} Cypress detected a cross origin error happened on page load
@@ -400,7 +472,7 @@ This error means that your application navigated to a superdomain that Cypress w
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 
-***There are a few simple workarounds to these common situations:***
+### There are a few simple workarounds to these common situations:
 
 1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So simply make an assertion about that. You can see more strategies on testing anchor links {% url 'in our Example Recipe' recipes#Tab-Handling-and-Links %}.
 

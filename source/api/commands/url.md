@@ -1,6 +1,6 @@
 ---
 title: url
-comments: false
+
 ---
 
 Get the current URL of the page that is currently active.

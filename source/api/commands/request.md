@@ -1,6 +1,6 @@
 ---
 title: request
-comments: false
+
 ---
 
 Make an HTTP request.
@@ -109,7 +109,7 @@ beforeEach(function () {
 
 ***Issue a simple HTTP request***
 
-Sometimes it is quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resource to load.
+Sometimes it's quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resources to load.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
@@ -288,6 +288,7 @@ When clicking on `request` within the command log, the console outputs the follo
 # See also
 
 - {% url `cy.exec()` exec %}
+- {% url `cy.task()` task %}
 - {% url `cy.visit()` visit %}
 - {% url "Recipe: Logging In - Single Sign on" recipes#Single-Sign-On %}
 - {% url "Recipe: Logging In - HTML Web Form" recipes#HTML-Web-Forms %}

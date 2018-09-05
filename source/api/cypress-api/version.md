@@ -1,6 +1,6 @@
 ---
 title: Cypress.version
-comments: false
+
 ---
 
 `Cypress.version` returns you the current version of Cypress you are running.
@@ -25,4 +25,4 @@ if (semver.gte(Cypress.version, '1.1.3')) {
 }
 ```
 
-**Hint:** you can use [semver](https://github.com/npm/node-semver#readme) library to work with semantic versions.
+**Hint:** you can use {% url "semver" https://github.com/npm/node-semver#readme %} library to work with semantic versions.

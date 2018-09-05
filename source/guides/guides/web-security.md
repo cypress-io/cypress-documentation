@@ -1,6 +1,6 @@
 ---
 title: Web Security
-comments: false
+
 ---
 
 Browsers adhere to a strict {% url "`same-origin policy`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}. This means that browsers restrict access between `<iframes>` when their origin policies do not match.
@@ -248,7 +248,7 @@ One last thing to consider here is that every once in a while we discover bugs i
 
 To start, you will need to understand that *not all browsers expose a way to turn off web security*. Some do, some don't. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
 
-**Setting `chromeWebSecurity` to `false` allows to to do the following:**
+**Setting `chromeWebSecurity` to `false` allows you to do the following:**
 
 - Display insecure content
 - Navigate to any superdomain without cross origin errors

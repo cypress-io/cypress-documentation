@@ -1,6 +1,6 @@
 ---
 title: Cypress.moment
-comments: false
+
 ---
 
 Cypress automatically includes {% url 'moment.js' http://momentjs.com/ %} and exposes it as `Cypress.moment`.
@@ -29,7 +29,7 @@ cy.moment()  // Errors, cannot be chained off 'cy'
 
 # Examples
 
-**test that the span contains formatted text for today**
+**Test that the span contains formatted text for today**
 
 ```javascript
 const todaysDate = Cypress.moment().format("MMM DD, YYYY")

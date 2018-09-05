@@ -1,6 +1,6 @@
 ---
 title: The Test Runner
-comments: false
+
 ---
 
 {% note info %}
@@ -22,7 +22,7 @@ The lefthand side of the test runner is a visual representation of your test sui
 
 {% img /img/guides/command-log.png 436 Cypress Test Runner %}
 
-***Hovering on Commands***
+### Hovering on Commands
 
 Each command and assertion, when hovered over, restores the Application Under Test (righthand side) to the state it was in when that command executed. This allows you to 'time-travel' back to previous states of your application when testing.
 
@@ -30,26 +30,25 @@ Each command and assertion, when hovered over, restores the Application Under Te
 By default, Cypress keeps 50 tests worth of snapshots and command data for time traveling. If you are seeing extremely high memory consumption in your browser, you may want to lower the `numTestsKeptInMemory` in your {% url 'configuration' configuration#Global %}.
 {% endnote %}
 
-***Clicking on Commands***
+### Clicking on Commands
 
 Each command, assertion, or error, when clicked on, displays extra information in the dev tools console. Clicking also 'pins' the Application Under Test (righthand side) to its previous state when the command executed.
 
 {% img /img/guides/clicking-commands.png Click to console.log and to pin %}
 
-
 # Instrument Panel
 
 For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
 
-***Routes:***
+### Routes:
 
 {% img /img/guides/instrument-panel-routes.png Routes Instrument Panel %}
 
-***Stubs:***
+### Stubs:
 
 {% img /img/guides/instrument-panel-stubs.png Stubs Instrument Panel %}
 
-***Spies:***
+### Spies:
 
 {% img /img/guides/instrument-panel-spies.png Spies Instrument Panel %}
 
@@ -89,7 +88,7 @@ The Selector Playground is an interactive feature that helps you:
 * See what elements match a given selector.
 * See what element matches a string of text.
 
-{% img /img/guides/selector-playground.gif Selector Playground %}
+{% video local /img/snippets/selector-playground.mp4 %}
 
 ## Uniqueness
 
@@ -137,13 +136,13 @@ Click on the element and its selector will appear at the top. From there, you ca
 
 The box at the top that displays the selector is also a text input.
 
-***Editing a Selector***
+### Editing a Selector
 
 When you edit the selector, it will show you how many elements match and highlight those elements in your app.
 
 ![Type a selector to see what elements it matches](https://user-images.githubusercontent.com/1157043/36675059-ec04b89a-1ad5-11e8-8fec-273600912ce8.gif)
 
-***Switching to Contains***
+### Switching to Contains
 
 You can also experiment with what {% url `cy.contains()` contains %} would yield given a string of text. Click on `cy.get` and switch to `cy.contains`.
 
@@ -151,7 +150,7 @@ Type in text to see which element it matches. Note that {% url `cy.contains()` c
 
 ![Experiment with cy.contains](https://user-images.githubusercontent.com/1157043/36675344-b312762a-1ad6-11e8-89c0-f7aebbe5a985.gif)
 
-***Disabling Highlights***
+### Disabling Highlights
 
 If you would like to interact with your app while the Selector Playground is open, the element highlighting might get in the way. Toggling the highlighting off will allow you to interact with your app more easily.
 

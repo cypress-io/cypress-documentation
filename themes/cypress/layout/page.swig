@@ -17,12 +17,11 @@
             <div class="article-footer-updated">
               <time datetime="{{ date_xml(page.updated) }}" itemprop="dateModified">{{ __('page.last-updated', date(page.updated)) }}</time>
             </div>
-            {{ partial('partial/comment') }}
           </div>
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">{{ __('page.contents') }}</strong>
-              {{ toc(page.content, {list_number: false}) }}
+              {{ toc(page.content, {list_number: false, max_depth: 2}) }}
               <a href="#" id="article-toc-top"><i class="fa fa-long-arrow-up"></i> {{ __('page.back-to-top') }}</a>
             </div>
           </aside>

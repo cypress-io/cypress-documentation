@@ -1,6 +1,6 @@
 ---
 title: Writing Your First Test
-comments: false
+
 ---
 
 {% note info %}
@@ -17,27 +17,27 @@ comments: false
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 
-1. Create a `simple_spec.js` file.
+1. Create a `sample_spec.js` file.
 2. Watch Cypress update our list of specs.
-3. Launch our browser into the Cypress GUI.
+3. Launch Cypress in interactive mode.
 
 Let's create a new file in the `cypress/integration` folder that was created for us:
 
 ```shell
-touch {your_project}/cypress/integration/simple_spec.js
+touch {your_project}/cypress/integration/sample_spec.js
 ```
 
 Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
 
-Even though we haven't written any tests yet - that's okay - let's click on `simple_spec.js` and watch Cypress launch your browser.
+Even though we haven't written any tests yet - that's okay - let's click on `sample_spec.js` and watch Cypress launch your browser.
 
 {% note info %}
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
 {% endnote %}
 
-{% img /img/guides/empty-file-30fps.gif %}
+{% video local /img/snippets/empty-file-30fps.mp4 %}
 
-We are now officially in the {% url 'Cypress GUI' test-runner %}. This is where we'll spend the majority of your time testing.
+We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This is where we will spend the majority of your time testing.
 
 {% note warning %}
 Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
@@ -53,7 +53,7 @@ Now it's time to write our first test. We're going to:
 
 As we continue to save our new test file we'll see the browser auto reloading in real time.
 
-Open up your favorite IDE and add the code below to our `simple_spec.js` test file.
+Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
 
 ```js
 describe('My First Test', function() {
@@ -89,21 +89,21 @@ Once you save again, you'll see Cypress display the failing test in red since `t
 
 {% img /img/guides/failing-test.png "Failing test" %}
 
-Cypress provides a nice {% url 'GUI' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
+Cypress provides a nice {% url 'Test Runner' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
 
-{% img /img/guides/first-test-30fps.gif "Writing a passing and failing test in Cypress" %}
+{% video local /img/snippets/first-test-30fps.mp4 %}
 
 {% note info What are describe, it, and expect? %}
 All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cypress bakes in.
 
 - `describe` and `it` come from {% url 'Mocha' https://mochajs.org %}
-- `expect` comes from {% url 'Chai' http://chaijs.com %}
+- `expect` comes from {% url 'Chai' http://www.chaijs.com %}
 
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
 
 {% note success Using ESlint? %}
-Check out our [Cypress ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress).
+Check out our {% url "Cypress ESLint plugin" https://github.com/cypress-io/eslint-plugin-cypress %}.
 {% endnote %}
 
 # Write a *Real* Test
@@ -137,7 +137,7 @@ describe('My First Test', function() {
 })
 ```
 
-Save the file and switch back over to the Cypress GUI. You might notice a few things:
+Save the file and switch back over to the Cypress Test Runner. You might notice a few things:
 
 1. The {% url 'Command Log' test-runner#Command-Log %} now shows the new `VISIT` action.
 2. The Kitchen Sink application has been loaded into the {% url 'App Preview' test-runner#Overview %} pane.
@@ -146,10 +146,10 @@ Save the file and switch back over to the Cypress GUI. You might notice a few th
 
 Had this request come back with a non `2xx` status code such as `404` or `500`, or if there was a JavaScript error in the application's code, the test would have failed.
 
-{% img /img/guides/first-test-visit-30fps.gif "A real test visiting a website" %}
+{% video local /img/snippets/first-test-visit-30fps.mp4 %}
 
 {% note danger Only Test Apps You Control %}
-Although in this guide we are testing our example application: {% url `https://example.cypress.io` https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
+Although in this guide we are testing our example application: {% url "`https://example.cypress.io`" https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
 
 - They are liable to change at any moment which will break tests.
 - They may do A/B testing which makes it impossible to get consistent results.
@@ -165,7 +165,7 @@ Cypress is not a **general purpose** web automation tool. It is poorly suited fo
 
 Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
 
-To find this element by its contents, we'll use {% url `cy.contains()` contains %}.
+To find this element by its contents, we'll use {% url "`cy.contains()`" contains %}.
 
 Let's add it to our test and see what happens:
 
@@ -195,7 +195,7 @@ We've taken care at Cypress to write hundreds of custom error messages that atte
 
 Before we add another command - let's get this test back to passing. Replace `hype` with `type`.
 
-{% img /img/guides/first-test-contains-30fps.gif %}
+{% video local /img/snippets/first-test-contains-30fps.mp4 %}
 
 ## {% fa fa-mouse-pointer %} Step 3: Click an Element
 
@@ -217,7 +217,7 @@ Also note that the {% url 'App Preview' test-runner#Overview %} pane has updated
 
 Now we can assert something about this new page!
 
-{% img /img/guides/first-test-click-30fps.gif %}
+{% video local /img/snippets/first-test-click-30fps.mp4 %}
 
 ## {% fa fa-check-square-o %} Step 4: Make an Assertion
 
@@ -287,7 +287,7 @@ Even your non-technical collaborators can appreciate the way this reads!
 
 And hey, this is a very clean test! We didn't have to say anything about *how* things work, just that we'd like to verify a particular series of events and outcomes.
 
-{% img /img/guides/first-test-assertions-30fps.gif %}
+{% video local /img/snippets/first-test-assertions-30fps.mp4 %}
 
 {% note info 'Page Transitions' %}
 Worth noting is that this test transitioned across two different pages.
@@ -349,13 +349,13 @@ Commands are also interactive. Go ahead and click on the `CLICK` command.
 
 Notice it highlights in purple. This did three things worth noting...
 
-***1. Pinned Snapshots***
+### 1. Pinned Snapshots
 We have now **pinned** this snapshot. Hovering over other commands will not revert to them. This gives us a chance to manually inspect the DOM of our application under test at the time the snapshot was taken.
 
-***2. Event Hitbox***
+### 2. Event Hitbox
 Since {% url `.click()` click %} is an action command, that means we also see a red hitbox at the coordinates the event took place.
 
-***3. Snapshot Menu Panel***
+### 3. Snapshot Menu Panel
 There is also a new menu panel. Some commands (like action commands) will take multiple snapshots: **before** and **after**. We can now cycle through these.
 
 The **before** snapshot is taken prior to the click event firing. The **after** snapshot is taken immediately after the click event. Although this click event caused our browser to load a new page, it's not an instantaneous transition. Depending on how fast your page loaded, you may see still see the same page, or a blank screen as the page is unloading and in transition.
@@ -398,10 +398,10 @@ In addition to having a helpful UI, there are also special commands dedicated to
 
 For instance there is:
 
-- {% url `cy.pause()` pause %}
-- {% url `cy.debug()` debug %}
+- {% url "`cy.pause()`" pause %}
+- {% url "`cy.debug()`" debug %}
 
-Let's add a {% url `cy.pause()` pause %} to our test code and see what happens.
+Let's add a {% url "`cy.pause()`" pause %} to our test code and see what happens.
 
 ```js
 describe('My First Test', function() {
@@ -429,7 +429,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 ## In Action
 
-{% img /img/guides/first-test-debugging-30fps.gif %}
+{% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
 <!-- ## Bonus Step: Refactor
 

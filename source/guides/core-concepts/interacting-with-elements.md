@@ -1,6 +1,6 @@
 ---
 title: Interacting with Elements
-comments: false
+
 ---
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
@@ -48,14 +48,14 @@ Cypress checks a lot of things to determine an element's visibility.
 
 The following calculations factor in CSS translations and transforms.
 
-***An element is considered hidden if:***
+### An element is considered hidden if:
 
 - Its `width` or `height` is `0`.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and it's offscreen or covered up.
 
-***Additionally an element is considered hidden if:***
+### Additionally an element is considered hidden if:
 
 - Any of its ancestors **hides overflow**\*
   - AND that ancestor has `width` or `height` of `0`

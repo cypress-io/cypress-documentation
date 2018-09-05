@@ -1,6 +1,6 @@
 ---
 title: Conditional Testing
-comments: false
+
 ---
 
 {% note info %}
@@ -77,7 +77,7 @@ it('does something different based on the class of the button', function () {
 
   cy.get('button').then(($btn) => {
     if ($btn.hasClass('active')) {
-      // do something if its active
+      // do something if it's active
     } else {
       // do something else
     }

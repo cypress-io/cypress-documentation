@@ -1,6 +1,6 @@
 ---
 title: focused
-comments: false
+
 ---
 
 Get the DOM element that is currently focused.

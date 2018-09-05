@@ -1,11 +1,19 @@
 ---
 title: TypeScript
-comments: false
 ---
 
 Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript. All that is required is a little bit of configuration.
 
-## Set up you Dev Environment
+## Transpiling TypeScript test files
+
+Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`file:preprocessor` event" preprocessors-api %} you can use to customize how your test code is transpiled and sent to the browser.
+
+### Examples
+
+- {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
+- {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
+
+## Set up your dev environment
 
 Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" intelligent-code-completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
@@ -16,7 +24,7 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```json
 {
   "compilerOptions": {
-	"strict": true,
+    "strict": true,
     "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es5", "dom"],
@@ -29,8 +37,3 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```
 
 The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since {% url "Chai" bundled-tools#Chai %} and {% url "jQuery" bundled-tools#Other-Library-Utilities %} are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
-
-## Examples
-
-- {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
-- {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}

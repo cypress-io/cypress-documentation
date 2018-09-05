@@ -1,12 +1,11 @@
 ---
 title: Network Requests
-comments: false
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What You'll Learn
 
-- How Cypress enables you stub out the backend with {% url `cy.route()` route %}
+- How Cypress enables you to stub out the backend with {% url `cy.route()` route %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
 - How to use Fixtures to reuse XHR responses
@@ -17,6 +16,10 @@ comments: false
 # Testing Strategies
 
 Cypress makes it easy to test the entire lifecycle of AJAX / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
+
+{% note warning %}
+Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
+{% endnote %}
 
 ***Common testing scenarios:***
 
@@ -114,7 +117,7 @@ Cypress automatically indicates when an XHR request happens in your application.
 
 ![snapshot_request](https://user-images.githubusercontent.com/1271364/26947393-930508b0-4c60-11e7-90a0-4d42ee3f24c0.gif)
 
-By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed in the {% url 'configuration' configuration %}.
+By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
 
 Cypress automatically collects the request `headers` and the request `body` and will make this available to you.
 

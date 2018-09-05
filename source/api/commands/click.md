@@ -1,6 +1,6 @@
 ---
 title: click
-comments: false
+
 ---
 
 Click a DOM element.

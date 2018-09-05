@@ -1,7 +1,7 @@
 ---
 layout: toc-top
 title: Using Cypress
-comments: false
+
 containerClass: faq
 ---
 
@@ -78,7 +78,7 @@ cy.get('input').should(($input) => {
 })
 ```
 
-If you need to hold a reference reference or compare values of text:
+If you need to hold a reference or compare values of text:
 
 ```javascript
 cy.get('input').invoke('val').then((val1) => {
@@ -99,6 +99,13 @@ cy.get('input').invoke('val').then((val1) => {
 
 Our {% url 'Variables and Aliases guide' variables-and-aliases %} gives you examples of doing exactly that.
 
+## {% fa fa-angle-right %} Can I store an attribute's value in a constant or a variable for later use?
+
+Yes, and there are a couple of ways to do this. One way to hold a value or reference is with {% url '`closures`' variables-and-aliases#Closures %}.
+Commonly, users believe they have a need to store a value in a `const`, `var`, or `let`. Cypress recommends doing this only when dealing with mutable objects (that change state).  
+
+For examples how to do this, please read our {% url 'Variables and Aliases guide' variables-and-aliases %}.
+
 ## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
 
 Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
@@ -115,11 +122,90 @@ What you're asking about is conditional testing and control flow.
 
 Please read our extensive {% url 'Conditional Testing Guide' conditional-testing %} which explains this in detail.
 
+## {% fa fa-angle-right %} How can I make Cypress wait until something is visible in the DOM?
+
+{% note info Remember %}
+ DOM based commands will automatically retry and wait for their corresponding elements to exist before failing.
+{% endnote %}
+
+Cypress offers you many robust ways to {% url 'query the DOM' introduction-to-cypress#Querying-Elements %}, all wrapped with retry-and-timeout logic.
+
+Other ways to wait for an element's presence in the DOM is through `timeouts`. Cypress commands have a default timeout of 4 seconds, however, most Cypress commands have {% url 'customizable timeout options' configuration#Timeouts %}. Timeouts can be configured globally or on a per-command basis.
+
+In {% url 'some cases' interacting-with-elements#Visibility %}, your DOM element will not be actionable. Cypress gives you a powerful {%url '`{force:true}`' interacting-with-elements#Forcing %} option you can pass to most action commands. 
+
+**Please read** our {% url 'Core Concepts Introduction to Cypress' introduction-to-cypress %}. This is the single most important guide for understanding how to test with Cypress. 
+
+## {% fa fa-angle-right %} How do I wait for my application to load? 
+
+We have seen many different iterations of this question. The answers can be varied depending on how your application behaves and the circumstances under which you are testing it. Here are a few of the most common versions of this question.
+
+**_How do I know if my page is done loading?_** 
+
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message. 
+
+
+**_In CI, how do I make sure my server has started?_**
+
+There are a couple really great modules that we recommend using for this, {% url '`wait-on`' https://www.npmjs.com/package/wait-on %} and {% url '`start-server-and-test`' https://github.com/bahmutov/start-server-and-test %}.
+
+**_How can I wait for my requests to be complete?_**
+
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on. 
+
+## {% fa fa-angle-right %} Can I test the HTML `<head>` element? 
+
+Yes, you sure can. While executing tests in the Test Runner, you can view the entire `window.document` object in your open console using {% url '`cy.document()`' document %}. You can even make assertions on the `<head>` element. Check out this example.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <meta name="description" content="This description is so meta">
+  <title>Test the HEAD content</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+</body>
+</html>
+```
+
+```js
+describe('The Document Metadata', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
+  it("looks inside the head content using `cy.document()`", () => {
+    // this will yield the entire window.document object
+    // if you click on DOCUMENT from the command log,
+    // it will output the entire #document to the console
+    cy.document();
+
+  })
+  
+  // or make assertions on any of the metadata in the head element
+
+  it('looks inside <title> tag', () => {
+    cy.get('head title')
+      .should('contain', 'Test the HEAD content')
+  })
+
+  it('looks inside <meta> tag for description', () => {
+    cy.get('head meta[name="description"]')
+      .should("have.attr", "content", "This description is so meta")
+  })
+
+})
+```
+
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
 You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
 
-We do not currently offer any options to simulate this headlessly.
+We do not currently offer any options to simulate this during `cypress run`.
 
 ## {% fa fa-angle-right %} Can I use the new ES7 async / await syntax?
 
@@ -209,13 +295,15 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 
 You can read more about parallelization {% issue 64 'here' %}.
 
+## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
+
+Our goal is to offer full integration with Sauce Labs and BrowserStack in the future, however, complete integration is not yet available.
+
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} on a test suite or specific test.
 
-You can run a single test file headlessly by passing the `--spec` flag to {% url '`cypress run`' command-line#cypress-run %}.
-
-Currently there is no way to specify a group of test files to run headlessly. You can read more {% issue 263 'here' %}.
+You can run a single test file or group of tests by passing the `--spec` flag to {% url '`cypress run`' command-line#cypress-run %}.
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
@@ -223,9 +311,7 @@ It is possible to upload files in your application but it's different based on h
 
 ## {% fa fa-angle-right %} What is the projectId for?
 
-Once you {% url "set up your tests to record" dashboard-service#Recorded-runs %}, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
-
-***The `projectId` is a 6 character string in your cypress.json:***
+The `projectId` is a 6 character string that helps identify your project once you've {% url "set up your tests to record" dashboard-service#Recorded-runs %}. It's generated by Cypress and typically is found in your {% url `cypress.json` configuration %} file.
 
 ```json
 {
@@ -233,25 +319,17 @@ Once you {% url "set up your tests to record" dashboard-service#Recorded-runs %}
 }
 ```
 
-This is how we uniquely identify your project. If you manually alter this, *Cypress will no longer be able to identify your project or find the recorded tests for it*. We recommend that you check your `cypress.json`, including the `projectId`, into source control.
+For further detail see the {% url Identification dashboard-service#Identification %} section of the {% url "Dashboard Service" dashboard-service %} docs.
 
 ## {% fa fa-angle-right %} What is a Record Key?
 
-Once you're {% url "set up to record test runs" dashboard-service#Recorded-runs %}, we automatically generate a *Record Key* for the project.
+A *Record Key* is a GUID that's generated automatically by Cypress once you've {% url "set up your tests to record" dashboard-service#Recorded-runs %}. It helps identify your project and authenticate that your project is even *allowed* to record tests.
 
-***A record key is a GUID that looks like this:***
+You can find your project's record key inside of the *Settings* tab in the Test Runner.
 
-```text
-f4466038-70c2-4688-9ed9-106bf013cd73
-```
+{% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
-{% note info  %}
-You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
-{% endnote %}
-
-You can also find your Record Key inside of the *Settings* tab in the Test Runner.
-
-![Settings Tab of Test Runner](/img/dashboard/record-key-shown-in-desktop-gui-configuration.png)
+For further detail see the {% url Identification dashboard-service#Identification %} section of the {% url "Dashboard Service" dashboard-service %} docs.
 
 ## {% fa fa-angle-right %} How do I check that an email was sent out?
 
@@ -275,7 +353,7 @@ cy.get('#list>li').should('have.length', 20)
 
 ## {% fa fa-angle-right %} How do I seed / reset my database?
 
-You can use either {% url `cy.request()` request %} or {% url `cy.exec()` exec %} to talk to your backend to seed data.
+You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your backend to seed data.
 
 You could also just stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
 
@@ -363,7 +441,10 @@ The code you write in Cypress is executed in the browser, so you can import or r
 
 You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
-Cypress doesn't have direct access to node or your file system. We recommend utilizing {% url `cy.exec()` exec %} or {% url `cy.readFile()` readfile %} to execute a shell command or a node script that will do what you need.
+Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
+
+- {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.exec()` exec %} to execute a shell command
 
 {% url 'Check out this example recipe.' recipes#Node-Modules %}
 
@@ -393,7 +474,7 @@ Yes. You can read more {% url "here" writing-and-organizing-tests#Hooks %}.
 
 ## {% fa fa-angle-right %} I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
 
-First, make sure you have {% url "`node`" https://nodejs.org %} installed on your system. `npm` is a `node` package that is installed globally by default when you install node and is required to install our {% url "`cypress` npm  package" command-line %}.
+First, make sure you have {% url "Node" https://nodejs.org %} installed on your system. `npm` is a Node package that is installed globally by default when you install Node and is required to install our {% url "`cypress` npm  package" command-line %}.
 
 Next, you'd want to check that you have the proper permissions for installing on your system or you may need to run `sudo npm install cypress`.
 
@@ -437,11 +518,11 @@ Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-p
 
 This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
 
-## {% fa fa-angle-right %} Is there an option to run Cypress headlessly with DevTools open? We want to track network and console issues.
+## {% fa fa-angle-right %} Is there an option to run Cypress in CI with DevTools open? We want to track network and console issues.
 
-No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress headlessly with DevTools open.
+No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress in `cypress run` with DevTools open.
 
-You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that's as close as you'll get with DevTools open and replicating the environment that was run headlessly.
+You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that is as close as you will get with DevTools open and replicating the environment that was run during `cypress run`.
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
@@ -449,7 +530,7 @@ To start the server, run the tests and then shutdown the server we recommend {% 
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
-Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + node.
+Testing your Electron app will not 'just work', as Cypress is designed to test anything that runs in a browser and Electron is a browser + Node.
 
 That being said, we use Cypress to test our own Desktop app's front end - by stubbing events from Electron. These tests are open source so you can check them out {% url "here" https://github.com/cypress-io/cypress/tree/develop/packages/desktop-gui/cypress/integration %}.
 

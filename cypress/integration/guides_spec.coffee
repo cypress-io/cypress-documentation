@@ -83,17 +83,14 @@ describe "Guides", ->
             englishLink  = @english.sidebar.guides[@sidebarLinkNames[i]]
             expect(displayedLink.text().trim()).to.eq(englishLink)
 
-  ## This is running too slow to include for now
-  ## Issue #431 Needs to be fixed first
-  ## https://github.com/cypress-io/cypress/issues/431
-  context.skip "Table of Contents", ->
+  context "Table of Contents", ->
     before ->
       cy.visit(GUIDES_PATH)
 
     it "displays toc", ->
       cy.get('.sidebar-link').each (linkElement) ->
+        cy.log(linkElement[0].innerText)
         cy.request(linkElement[0].href).its('body').then (body) ->
-
           $body = Cypress.$(body)
 
           $h1s = $body.find('.article h1').not('.article-title')

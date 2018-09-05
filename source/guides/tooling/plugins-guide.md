@@ -1,11 +1,11 @@
 ---
 title: Plugins
-comments: false
+
 ---
 
 Plugins enable you to tap into, modify, or extend the internal behavior of Cypress.
 
-Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a **Node.js** process that plugins can use.
+Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node.js process that plugins can use.
 
 > Plugins enable you to tap into the `node` process running outside of the browser.
 
@@ -21,7 +21,7 @@ You can {% url "check out the API docs here" writing-a-plugin %}.
 
 ## Configuration
 
-With plugins, you can programmatically alter the resolved configuration and environment variables that come from `cypress.json`, `cypress.env.json`, the CLI, or system environment variables.
+With plugins, you can programmatically alter the resolved configuration and environment variables that come from `cypress.json`, {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, the CLI, or system environment variables.
 
 This enables you to do things like:
 
@@ -34,7 +34,7 @@ Check out our {% url 'Configuration API docs' configuration-api %} which describ
 
 ## Preprocessors
 
-This event: `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
+The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
 
 You can use the `file:preprocessor` event to do things like:
 
@@ -48,9 +48,9 @@ Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which des
 
 ## Browser Launching
 
-This event: `before:browser:launch` can be used to modify the launch arguments for each particular browser.
+The event `before:browser:launch` can be used to modify the launch arguments for each particular browser.
 
-You can use the `before:browser:launch` to do things like:
+You can use the `before:browser:launch` event to do things like:
 
 - Load a Chrome extension
 - Change print media
@@ -58,6 +58,29 @@ You can use the `before:browser:launch` to do things like:
 - Control which Chrome components are loaded
 
 Check out our {% url 'Browser Launch API docs' browser-launch-api %} which describe how to use this event.
+
+## Screenshot handling
+
+The event `after:screenshot` is called after a screenshot is taken and saved to disk.
+
+You can use the `after:screenshot` event to do things like:
+
+- Save details about the screenshot
+- Rename the screenshot
+- Manipulate the screenshot image by resizing or cropping it
+
+Check out our {% url 'After Screenshot API docs' after-screenshot-api %} which describe how to use this event.
+
+## cy.task
+
+The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
+
+You can use the `task` event to do things like:
+
+- Manipulating a database (seeding, reading, writing, etc.)
+- Storing state in Node that you want persisted (since the driver is fully refreshed on visits)
+- Performing parallel tasks (like making multiple http requests outside of Cypress)
+- Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer)
 
 # List of plugins
 

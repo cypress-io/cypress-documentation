@@ -1,6 +1,6 @@
 ---
 title: Cypress.Blob
-comments: false
+
 ---
 
 Cypress automatically includes a {% url 'Blob' https://github.com/nolanlawson/blob-util %} library and exposes it as `Cypress.Blob`.
@@ -51,7 +51,7 @@ cy.get("input[type=file]").then(($input) => {
 
 ## Getting dataUrl string
 
-**create an `img` element and set its `src` to the `dataUrl`**
+**Create an `img` element and set its `src` to the `dataUrl`**
 
 ```javascript
 return Cypress.Blob.imgSrcToDataURL("/assets/img/logo.png").then((dataUrl) => {

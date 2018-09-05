@@ -1,6 +1,6 @@
 ---
 title: Key Differences
-comments: false
+
 ---
 
 {% note info %}

@@ -1,6 +1,6 @@
 ---
 title: root
-comments: false
+
 ---
 
 Get the root DOM element.

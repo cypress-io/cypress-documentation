@@ -1,6 +1,6 @@
 ---
 title: trigger
-comments: false
+
 ---
 
 Trigger an event on a DOM element.  

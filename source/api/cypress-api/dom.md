@@ -1,6 +1,6 @@
 ---
 title: Cypress.dom
-comments: false
+
 ---
 
 `Cypress.dom.method()` is a collection of DOM related helper methods.
