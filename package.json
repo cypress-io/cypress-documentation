@@ -27,7 +27,7 @@
     "deploy": "echo Deploying built docs",
     "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",
     "lint": "echo 'Linting scripts...' && eslint --fix *.js cy_scripts/*.js scripts/*.js && echo 'Lint successful'",
-    "postbuild": "gulp post:build && git-last -m -f public/build.json",
+    "postbuild": "ls -la && gulp post:build && git-last -m -f public/build.json",
     "postdeploy": "npm run deploy-prebuilt",
     "prebuild": "npm run clean && npm run deps && gulp pre:build",
     "predeploy": "NODE_ENV=production npm run build",
