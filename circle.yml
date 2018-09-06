@@ -66,7 +66,8 @@ jobs:
       - run: npm run deps
       - run: npm run lint
       - run: npm run stop-only
-      - run: npm test
+      # unset REDIS_URL to make sure we are not using cached url check result
+      - run: REDIS_URL= npm test
       - run: npm run build
 
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
