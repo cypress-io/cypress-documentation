@@ -49,6 +49,7 @@ alias:
   why-cypress/: guides/overview/why-cypress.html
 
   api/index.html: api/introduction/api.html
+  api/assertions/assertions.html: guides/references/assertions.html
   api/commands/cypress-blob.html: api/utilities/blob.html
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
