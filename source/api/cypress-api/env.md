@@ -127,7 +127,7 @@ Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
 
 Here's an example that uses `Cypress.env` to access an environment variable that's been {% url 'dynamically set in a plugin' environment-variables#Option-5-Plugins %}.
 
-Use this approach to grab the value of an environment variable _once_ before any of the tests in your fixture run.
+Use this approach to grab the value of an environment variable _once_ before any of the tests in your spec run.
 
 ```js
 // cypress/plugins/index.js
