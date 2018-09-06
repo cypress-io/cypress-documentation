@@ -307,3 +307,22 @@
     width: 100%;
   }
 }
+
+@media screen and(max-width: 375px) {
+  .not-found {
+  
+    h1 {
+      font-size: 30px;
+      line-height: 50px;
+    }
+
+    p {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    ul {
+      margin: 30px 20px 0 20px;
+    }
+  }
+}
