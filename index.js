@@ -5,6 +5,14 @@ process.on('unhandledRejection', function (reason, p) {
   process.exit(-1)
 })
 
+process.on('beforeExit', (exitCode) => {
+  console.log('beforExit exitCode:', exitCode)
+})
+
+process.on('exit', (code) => {
+  console.log('exitting with code', code)
+})
+
 const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
@@ -83,6 +91,13 @@ function initHexo () {
   return hexo.init()
   .then(() => {
     return hexo.call(cmd, args)
+  })
+  .then(() => {
+    console.log('all done with command', cmd)
+  }, (e) => {
+    console.error('error in command', cmd)
+    console.error(e)
+    throw e
   })
 
 }
