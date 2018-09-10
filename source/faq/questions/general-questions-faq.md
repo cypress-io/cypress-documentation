@@ -16,7 +16,7 @@ You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Window
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
-Cypress will never be able to run on a native mobile app, but we do intent to support mobile web browsers in the future. Down the road we'll likely have first class support for this, but today it is not a current priority.
+Cypress will never be able to run on a native mobile app, but we do intend to support mobile web browsers in the future. Down the road we'll likely have first class support for this, but today it is not a current priority.
 
 Currently our users use Cypress to control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application.
 
@@ -88,8 +88,8 @@ No. But if you're wanting to test parts of your application that are not easily 
 
 No. In fact Cypress' architecture is very different from Selenium in a few critical ways:
 
-- Cypress runs in the context of the browser. With Cypress it's easier to inspect what it running in the browser, but harder to talk to the outside world. In Selenium it's the exact opposite. Selenium runs outside of the browser where your application is running. Although Cypress is adding more commands every day that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}.
-- With Selenium - aka WebDriver, you either get 100% simulated events (with Selenium RC) or you got 100% native events with Selenium WebDriver. However, with Cypress, you get both. For the most part we use simulated events. However we do use automation API's for things like Cookies where we extend outside of the JavaScript sandbox and interact with the underlying browser API's. This gives us flexibility to determine which type of event to use in specific situations. Native event support is on our {% url "roadmap" roadmap %}.
+- Cypress runs in the context of the browser. With Cypress it's easier to inspect what is running in the browser, but harder to talk to the outside world. In Selenium it's the exact opposite. Selenium runs outside of the browser where your application is running. Although Cypress is adding more commands every day that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}.
+- With Selenium you get either 100% simulated events (with Selenium RC) or 100% native events (with Selenium WebDriver). With Cypress, you get both. For the most part we use simulated events. However we do use automation APIs for things like Cookies where we extend outside of the JavaScript sandbox and interact with the underlying browser APIs. This gives us flexibility to determine which type of event to use in specific situations. Native event support is on our {% url "roadmap" roadmap %}.
 
 ## {% fa fa-angle-right %} If Cypress runs in the browser, doesn't that mean it's sandboxed?
 
