@@ -6,7 +6,9 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} Is Cypress free and open source?
 
-Yes. The Cypress Test Runner is free and open source (MIT license).
+The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-service %} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI. 
+
+Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
 ## {% fa fa-angle-right %} What operating systems do you support?
 
@@ -14,13 +16,13 @@ You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Window
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
-Cypress will never be able to run on a native mobile app, but would be able to run in a mobile web browser. In that mode, you'd see the commands display in a browser while you would drive the mobile device separately. Down the road we'll likely have first class support for this, but today it is not a current priority.
+Cypress will never be able to run on a native mobile app, but we do intent to support mobile web browsers in the future. Down the road we'll likely have first class support for this, but today it is not a current priority.
 
 Currently our users use Cypress to control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application.
 
 ## {% fa fa-angle-right %} How is this different from 'X' testing tool?
 
-Cypress is kind of a hybrid application/framework/service all rolled into one. It takes a little bit of other testing tools, brings them together and improves on them.
+The Cypress Test Runner is a hybrid application/framework/service all rolled into one. It takes a little bit of other testing tools, brings them together and improves on them.
 
 ### Mocha
 
@@ -70,7 +72,7 @@ Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything 
 
 You'll write your tests in JavaScript, but beyond that Cypress works everywhere.
 
-## {% fa fa-angle-right %} Can I run cypress on another browser other than Chrome?
+## {% fa fa-angle-right %} Can I run Cypress on another browser other than Chrome?
 
 You can read about our currently available browsers {% url "here" launching-browsers %}.
 
@@ -86,8 +88,8 @@ No. But if you're wanting to test parts of your application that are not easily 
 
 No. In fact Cypress' architecture is very different from Selenium in a few critical ways:
 
-- Cypress runs in the context of the browser. With Cypress it's much easier to accurately test the browser, but harder to talk to the outside world. In Selenium it's the exact opposite, it runs outside of the browser where your application is running. Although Cypress has a few commands that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}.
-- With Selenium - aka WebDriver, you either get 100% simulated events (with Selenium RC) or you got 100% native events with Selenium WebDriver. However, with Cypress, you actually get both. For the most part we use simulated events; We can reproduce them with nearly 100% fidelity, they are much faster, and guaranteed to work the same way every time. However we do use automation API's for things like Cookies where we extend outside of the JavaScript sandbox and interact with the underlying browser API's. This gives us flexibility to determine which type of event to use in specific situations. We've yet to add native input events though.
+- Cypress runs in the context of the browser. With Cypress it's easier to inspect what it running in the browser, but harder to talk to the outside world. In Selenium it's the exact opposite. Selenium runs outside of the browser where your application is running. Although Cypress is adding more commands every day that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}.
+- With Selenium - aka WebDriver, you either get 100% simulated events (with Selenium RC) or you got 100% native events with Selenium WebDriver. However, with Cypress, you get both. For the most part we use simulated events. However we do use automation API's for things like Cookies where we extend outside of the JavaScript sandbox and interact with the underlying browser API's. This gives us flexibility to determine which type of event to use in specific situations. Native event support is on our {% url "roadmap" roadmap %}.
 
 ## {% fa fa-angle-right %} If Cypress runs in the browser, doesn't that mean it's sandboxed?
 
@@ -133,17 +135,3 @@ Unit tests are not something we are really trying to solve right now. Most of th
 We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing, it just remains a thing that's possible if we wanted to go down that route.
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
-
-<!-- ## What is Cypress? -->
-
-<!-- ## Hasn’t this been done before? -->
-
-<!-- ## What are good use cases for Cypress? -->
-
-<!-- ## What are bad use cases for Cypress? -->
-
-<!-- ## What kind of tests do I write in Cypress? -->
-
-<!-- ## Does Cypress have an equivalent to Selenium IDE? -->
-
-<!-- ## How can I contribute to Cypress? -->
