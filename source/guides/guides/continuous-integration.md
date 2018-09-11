@@ -32,7 +32,7 @@ For more examples please read the {% url 'Command Line' command-line#cypress-run
 
 # What is supported?
 
-Cypress should run on **all** CI providers. We currently have seen Cypress working on the following services (alphabetically sorted):
+Cypress should run on **all** CI providers. We currently have seen Cypress working on the following services:
 
 CI Provider | Example Project | Example Config
 ----------- | --------------- | --------------
