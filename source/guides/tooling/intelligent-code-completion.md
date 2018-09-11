@@ -23,7 +23,12 @@ IntelliSense is available for Cypress. It offers intelligent code suggestions di
 
 ## Set up in your Dev Environment
 
-The TypeScript {% url "type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} are used to generate the data for intellisense and come packaged within Cypress. This document assumes you have {% url "installed Cypress" installing-cypress %}.
+The TypeScript {% url "type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} are used to generate the data for intellisense. This document assumes you have {% url "installed Cypress" installing-cypress %}.
+
+Add type definitions by running:
+```shell
+npm install --save-dev @types/mocha @types/cypress
+```
 
 Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get {% url "TypeScript support" typescript-support %} and intelligent code completion configured in your developer environment first. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
