@@ -45,7 +45,7 @@ CI Provider | Example Project | Example Config
 {% url "Concourse" https://concourse-ci.org/ %} | |
 {% url "Docker" https://www.docker.com/ %} | {% url "cypress-docker-images" https://github.com/cypress-io/cypress-docker-images %} |
 {% url "GitLab" https://gitlab.com/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".gitlab-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.gitlab-ci.yml %}
-{% url "Jenkins" https://jenkins.io/ %} (Linux) | |
+{% url "Jenkins" https://jenkins.io/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "Jenkinsfile" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile %}
 {% url "Semaphore" https://semaphoreci.com/ %} | |
 {% url "Shippable" https://app.shippable.com/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "shippable.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/shippable.yml %}
 {% url "Solano" https://www.solanolabs.com/ %} | |
