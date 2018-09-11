@@ -50,7 +50,7 @@ Option | Default | Description
 ```javascript
 // clicking the anchor causes the browser to follow the link
 cy.get('#user-edit a').click()
-cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
+cy.url().should('eq', Cypress.config().baseUrl + '/users/1/edit') // => true
 ```
 
 # Notes
@@ -73,11 +73,11 @@ cy.location('href')       // these yield the same string
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
 
 ```javascript
-cy.location('href').should('eq', 'http://localhost:8000/index.html')
+cy.location('href').should('eq', Cypress.config().baseUrl + '/index.html')
 
-cy.location().its('href').should('eq', 'http://localhost:8000/index.html')
+cy.location().its('href').should('eq', Cypress.config().baseUrl + '/index.html')
 
-cy.url().should('eq', 'http://localhost:8000/index.html')
+cy.url().should('eq', Cypress.config().baseUrl + '/index.html')
 ```
 
 `href` and `toString` come from the `window.location` spec.
