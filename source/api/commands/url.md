@@ -50,7 +50,8 @@ Option | Default | Description
 ```javascript
 // clicking the anchor causes the browser to follow the link
 cy.get('#user-edit a').click()
-cy.url().should('eq', Cypress.config().baseUrl + '/users/1/edit') // => true
+cy.url().should('include', '/users/1/edit') // => true
+cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 ```
 
 # Notes
@@ -73,11 +74,11 @@ cy.location('href')       // these yield the same string
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
 
 ```javascript
-cy.location('href').should('eq', Cypress.config().baseUrl + '/index.html')
+cy.location('href').should('include', '/index.html')
 
-cy.location().its('href').should('eq', Cypress.config().baseUrl + '/index.html')
+cy.location().its('href').should('include', '/index.html')
 
-cy.url().should('eq', Cypress.config().baseUrl + '/index.html')
+cy.url().should('include', '/index.html')
 ```
 
 `href` and `toString` come from the `window.location` spec.
@@ -85,6 +86,23 @@ cy.url().should('eq', Cypress.config().baseUrl + '/index.html')
 But you may be wondering where the `url` property comes from.  Per the `window.location` spec, there actually isn't a `url` property on the `location` object.
 
 `cy.url()` exists because it's what most developers naturally assume would return them the full current URL.  We almost never refer to the URL as an `href`.
+
+***Hardcoded versus sing the configuration object***
+
+Instead of hardcoding the URL you can use the `baseUrl` of the {% url 'Cypress configuration' configuration %}.
+
+Given the remote URL, `http://localhost:8000/index.html`, these assertions are the same.
+
+```javascript
+cy.url().should('eq', 'http://localhost:8000//index.html')
+cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
+```
+
+***Assert that the url contains "#users/new"***
+
+```javascript
+cy.url().should('contain', '#users/new')
+```
 
 # Rules
 
@@ -101,12 +119,6 @@ But you may be wondering where the `url` property comes from.  Per the `window.l
 {% timeouts assertions cy.url %}
 
 # Command Log
-
-***Assert that the url contains "#users/new"***
-
-```javascript
-cy.url().should('contain', '#users/new')
-```
 
 The commands above will display in the command log as:
 
