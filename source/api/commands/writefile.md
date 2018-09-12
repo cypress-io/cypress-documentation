@@ -54,6 +54,7 @@ Pass in an options object to change the default behavior of `cy.writeFile()`.
 Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
+`flag` | `w` | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags)
 
 ## Yields {% helper_icon yields %}
 
@@ -118,7 +119,7 @@ cy.fixture('users').then((users) => {
 
 ## Encoding
 
-***Specify the encoding with the third argument.***
+***Specify the encoding with the third argument***
 
 ```javascript
 cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
@@ -129,6 +130,16 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
 ```text
 Hello World
 ```
+
+## Flags
+
+***Append contents to the end of a file***
+
+```javascript
+cy.writeFile('path/to/message.txt', 'Hello World', {flag: "a+"}))
+```
+
+To see more flags, see the [Node File System](https://nodejs.org/api/fs.html#fs_file_system_flags) documentation.
 
 # Rules
 
