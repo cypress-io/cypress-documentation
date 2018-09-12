@@ -87,7 +87,7 @@ But you may be wondering where the `url` property comes from.  Per the `window.l
 
 `cy.url()` exists because it's what most developers naturally assume would return them the full current URL.  We almost never refer to the URL as an `href`.
 
-***Hardcoded versus sing the configuration object***
+***Hardcoded versus using the configuration object***
 
 Instead of hardcoding the URL you can use the `baseUrl` of the {% url 'Cypress configuration' configuration %}.
 
