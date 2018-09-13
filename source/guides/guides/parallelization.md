@@ -9,8 +9,8 @@ title: Parallelization
 - How to parallelize test runs
 - How to group test runs
 - Strategies for grouping test runs
-- How test spec load-balancing works
-- Gaining better insights into tests with Dashboard spec views
+- How load-balancing of tests worksworks
+- What test insights are available on the Dashboard
 
 {% endnote %}
 
@@ -18,15 +18,15 @@ title: Parallelization
 
 If your project has a large number of tests, it can take a long time for tests to complete running when run serially on one machine. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuous Integration (CI).
 
-Cypress can run recorded tests in parallel across multiple machines. Parallel tests can also technically run on a single machine, but this machine would require significant resources to run your tests efficiently.
+Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and recording within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
 # Splitting up your test suite
 
 Cypress' parallelization strategy is file-based, so in order to utilize parallelization, your tests will need to be split across separate files.
 
-Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}. So you can not determine ahead of time the order spec files will run when parallelized.
+Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}. Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
 
 # Turning on parallelization
 
@@ -39,7 +39,7 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-    Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future run. This also gives you the full benefit of seeing the results of the parallelization in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+    Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
     {% endnote %}
 
 # CI parallelization interactions
