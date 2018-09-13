@@ -57,7 +57,7 @@ Option | Default | Description
 `encoding` | `utf8` | The encoding to be used when writing to the file
 
 {% note info %}
-To use encoding with other options, have your options object be your third parameter and include encoding there. This is the same behavior as`fs.writeFile`.
+To use encoding with other options, have your options object be your third parameter and include encoding there. This is the same behavior as {% url `fs.writeFile` https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback %}.
 {% endnote %}
 
 ## Yields {% helper_icon yields %}
