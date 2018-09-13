@@ -133,7 +133,7 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 You can test your application against different browsers and view the results under a single run within the dashboard. Group names could simply be the name of the browser being tested:
 
-- The first group can called `electron`. *Electron is the default browser used in Cypress runs*.
+- The first group can be called `electron`. *Electron is the default browser used in Cypress runs*.
 
   ```shell
   cypress run --record --group electron
@@ -164,7 +164,7 @@ cypress run --record --group 4x-electron
 The `1x`, `2x`, `4x` group prefix used here is simply an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
 
 {% note info %}
-Please do take into account the number machines dedicated for each `cypress run` call is based on your CI configuration for the project.
+The number of machines dedicated for each `cypress run` call is based on your CI configuration for the project.
 {% endnote %}
 
 These grouped runs would look something like this within the Cypress Dashboard:
@@ -220,7 +220,7 @@ This waiting period is called the **run completion delay** and it begins after t
 
 {% img 'no-border' /img/guides/parallelization/run-completion-delay.png "Test run completion delay" %}
 
-This **delay is 60 seconds by default**, but is configurable within Dashboard project settings page:
+This **delay is 60 seconds by default**, but is configurable within the Dashboard project settings page:
 
 {% img /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
 
