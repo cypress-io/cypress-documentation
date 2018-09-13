@@ -9,7 +9,7 @@ title: Parallelization
 - How to parallelize test runs
 - How to group test runs
 - Strategies for grouping test runs
-- How load-balancing of tests worksworks
+- How load-balancing of tests works
 - What test insights are available on the Dashboard
 
 {% endnote %}
@@ -61,7 +61,7 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-se
 
 Cypress will automatically balance your spec files across the available machines in your CI provider. Cypress calculates which spec file to run based on the data collected from previous runs. This ensures that your spec files run as fast as possible, with no need for manual configuration.
 
-As more and more tests are recorded to the Cypress Dashboard, Cypress can better predict how long a given spec file will take to run. To prevent irrelevant data from affecting the duration prediction, Cypress doesn't use old historical run data regarding the spec file. 
+As more and more tests are recorded to the Cypress Dashboard, Cypress can better predict how long a given spec file will take to run. To prevent irrelevant data from affecting the duration prediction, Cypress doesn't use old historical run data regarding the spec file.
 
 ### Spec duration history analysis
 
@@ -156,11 +156,11 @@ cypress run --record --group 1x-electron
 ```
 
 ```shell
-cypress run --record --group 2x-chrome --browser chrome
+cypress run --record --group 2x-chrome --browser chrome --parallel
 ```
 
 ```shell
-cypress run --record --group 4x-electron
+cypress run --record --group 4x-electron --parallel
 ```
 
 The `1x`, `2x`, `4x` group prefix used here is simply an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
