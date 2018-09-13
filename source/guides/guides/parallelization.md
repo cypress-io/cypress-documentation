@@ -9,13 +9,8 @@ title: Parallelization
 - How to parallelize test runs
 - How to group test runs
 - Strategies for grouping test runs
-<<<<<<< HEAD
 - How load-balancing of tests worksworks
 - What test insights are available on the Dashboard
-=======
-- How test spec load-balancing works
-- Gain better insights into tests with Dashboard spec views
->>>>>>> origin/parallelization-902
 
 {% endnote %}
 
@@ -31,11 +26,7 @@ This guide assumes you already have your project running and {% url "recording" 
 
 Cypress' parallelization strategy is file-based, so in order to utilize parallelization, your tests will need to be split across separate files.
 
-<<<<<<< HEAD
 Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}. Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
-=======
-Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}, so you cannot determine ahead of time the order spec files will run when parallelized.
->>>>>>> origin/parallelization-902
 
 # Turning on parallelization
 
@@ -48,11 +39,7 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-<<<<<<< HEAD
     Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
-=======
-    Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of the parallelization in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
->>>>>>> origin/parallelization-902
     {% endnote %}
 
 # CI parallelization interactions
