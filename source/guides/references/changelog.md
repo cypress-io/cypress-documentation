@@ -113,7 +113,7 @@ title: Changelog
 - The `--silent` flag should now be respected during `npm install cypress` on all OSes. Fixes {% issue 817 %}.
 - Corrected a typo in the CLI for a warning message. Fixes {% issue 2038 %}.
 - Fixed some areas of the Desktop GUI that did not display path names correctly in Windows. Fixes {% issue 1830 %}.
-- The `pluginsFile` now supports an absolute path instead of just a relative one. Fixes {% issue 1837 %}.
+- The `backgroundFile` now supports an absolute path instead of just a relative one. Fixes {% issue 1837 %}.
 - Fixed a regression introduced in `3.x.x` where application code that used `setTimeout` with a string argument would see the error `fn.apply is not a function`. Fixes {% issue 1854 %}.
 - Fixed issue where preprocessor errors were being swallowed. Fixes {% issue 1877 %}.
 - Fixed issue where Cypress would hang indefinitely when starting a new spec when in `cypress run` mode. Additionally we have optimized the code path to not read in the local `state.json` unnecessarily. Fixes {% issue 2013 %} and {% issue 1912 %} and {% issue 1905 %} and {% issue 1890 %}.
@@ -143,7 +143,7 @@ title: Changelog
 - We now append `(failed)` to the screenshot filename of screenshots taken automatically during test failure. Fixes {% issue 1923 %}.
 - If multiple screenshots are taken during a test that will result in the same filename, their file paths are now appended with a number, i.e. `test name (1).png`. This prevents screenshot files with the same name from being overwritten. Fixes {% issue 1766 %}.
 - Screenshot `onAfterScreenshot` and `onBeforeScreenshot` callbacks ar enow invoked for failed tests. They include a `testFailure` property to distinguish between automatic ones and your own use of `cy.screenshot()`. Fixes {% issue 2040 %}.
-- There's now an {% url "`after:screenshot` plugin event" after-screenshot-api %} you can use in your `pluginsFile` to work with screenshots after they are taken. This enables you to rename them, move their location, resize them, send them to a service, etc. Fixes {% issue 2039 %}.
+- There's now an {% url "`after:screenshot` background event" after-screenshot-event %} you can use in your `backgroundFile` to work with screenshots after they are taken. This enables you to rename them, move their location, resize them, send them to a service, etc. Fixes {% issue 2039 %}.
 - Added `Cypress.browser` object which contains information about the currently running browser. Fixes {% issue 1919 %} and {% issue 1961 %}.
 - Added `Cypress.spec` object which contains information about the currently running spec. Fixes {% issue 1918 %}.
 - Urls displayed in the Command Log during {% url "`cy.visit()`" visit %} are no longer arbitrarily truncated at a set width. Fixes {% issue 1995 %}.
@@ -154,7 +154,7 @@ title: Changelog
 - {% url 'Updated "Command Line" doc to include new cache commands' command-line %}
 - {% url 'Added `Cypress.browser` doc.' browser %}
 - {% url 'Added `Cypress.spec` doc.' spec %}
-- {% url 'Added `after:screenshot` plugin event doc.' after-screenshot-api %}
+- {% url 'Added `after:screenshot` background event doc.' after-screenshot-event %}
 
 # 3.0.1
 
@@ -419,14 +419,14 @@ title: Changelog
 
 **Features:**
 
-- Plugins now emit a {% url "`before:browser:launch`" plugins-guide#Browser-Launching %} event exposing you the browser that will be launched and its launch arguments. This enables you to modify the arguments prior to launching the browser. You can also use these arguments to modify how Chrome runs and to also test Chrome extensions. Fixes {% issue 691 %} and {% issue 298 %}.
+- Plugins now emit a {% url "`before:browser:launch`" background-process#Browser-Launching %} event exposing you the browser that will be launched and its launch arguments. This enables you to modify the arguments prior to launching the browser. You can also use these arguments to modify how Chrome runs and to also test Chrome extensions. Fixes {% issue 691 %} and {% issue 298 %}.
 - We have launched a "CSS Selector Playground", a new UI button in the Test Runner that enables you to highlight elements in your application and receive a unique selector. You can also find elements by their text content. These mimics {% url "`cy.get()`" get %} and {% url "`cy.contains()`" contains %} behavior. Additionally you can copy the generated Cypress command to your clipboard or output the generated selector to your console. This feature is in beta. It only works in Chrome (not in Electron). We are aware of some bugs in it, but it is good enough for use and feedback. Please check out issue {% issue 917 %}, watch an animated gif demonstration, and leave any feedback you have there. Fixes {% issue 917 %}.
 
 Documentation Changes:
 
-- {% url 'Added `Browser Launch API`' browser-launch-api %}
-- {% url 'Updated `Plugins Guide`' plugins-guide %}
-- {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
+- {% url 'Added `Browser Launch API`' before-browser-launch-event %}
+- {% url 'Updated `Plugins Guide`' background-process %}
+- {% url 'Updated `Writing a Plugin API`' background-process %}
 
 # 1.2.0
 
@@ -452,13 +452,13 @@ Documentation Changes:
 
 **Documentation Changes:**
 
-- {% url 'Added `Configuration API`' configuration-api %}
+- {% url 'Added `Configuration API`' configuration-event %}
 - {% url 'Added `Recipes`' recipes %}
 - {% url 'Updated `Configuration`' configuration %}
 - {% url 'Updated `Environment Variables`' environment-variables %}
 - {% url 'Updated `Using Cypress FAQ`' using-cypress-faq %}
-- {% url 'Updated `Plugins Guide`' plugins-guide %}
-- {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
+- {% url 'Updated `Plugins Guide`' background-process %}
+- {% url 'Updated `Writing a Plugin API`' background-process %}
 
 # 1.1.4
 
@@ -474,7 +474,7 @@ Documentation Changes:
 **Misc:**
 
 - There is now a new {% url `CYPRESS_SKIP_BINARY_INSTALL` installing-cypress#Skipping-Installation %} flag you can pass during `npm install` which skips the binary installation after the `cypress` npm module completes its installation. Fixes {% issue 1005 %}.
-- We now launch Chrome with `--no-sandbox` and `--disable-gpu` options in Linux. We will soon release a new plugin event that enables you to modify the browser arguments we use by default. This *shouldn't* cause issues with existing Linux users, and instead it should fix many CI setups that were using our Docker containers or your own home grown installed Chrome setup. Fixes {% issue 1021 %} and {% issue 1020 %}.
+- We now launch Chrome with `--no-sandbox` and `--disable-gpu` options in Linux. We will soon release a new background event that enables you to modify the browser arguments we use by default. This *shouldn't* cause issues with existing Linux users, and instead it should fix many CI setups that were using our Docker containers or your own home grown installed Chrome setup. Fixes {% issue 1021 %} and {% issue 1020 %}.
 - Removed several aliases from our browser detector. These were not implemented properly and not needed - and thus only caused indirection. Fixes {% issue 1023 %}.
 
 # 1.1.3
@@ -537,12 +537,12 @@ Documentation Changes:
 **Summary:**
 
 - We have officially launched the new **Plugins API** interface. This adds a `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you will be able to use `node` API's that are executed outside of the browser.
-- We have currently added only {% url "one event" writing-a-plugin#List-of-events %} for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
+- We have currently added only {% url "one event" catalog-of-events %} for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
 - We have extracted the default `browserify` preprocessor into its own package - {% url `@cypress/browserify-preprocessor` https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is bundled with Cypress, but it is extracted so it can be used / modified by you to change the default options we pass to `browserify`. Additionally, you can swap out this preprocessor for something else entirely.
 
 **Features:**
-- There is now a {% url "Plugins API interface" plugins-guide %}. Partially addresses {% issue 684 %}.
-- We have added the first Plugin API event called: {% url "`file:preprocessor`" writing-a-plugin#List-of-events %}. Fixes {% issue 580 %} and {% issue 581 %}.
+- There is now a {% url "Plugins API interface" background-process %}. Partially addresses {% issue 684 %}.
+- We have added the first Plugin API event called: {% url "`file:preprocessor`" catalog-of-events %}. Fixes {% issue 580 %} and {% issue 581 %}.
 - You can now customize the default babel configuration options for the `browserify` preprocessor. Fixes {% issue 343 %} and {% issue 905 %}.
 - CoffeeScript 2 is supported via modifying the default options for the `browserify` preprocessor. Fixes {% issue 663 %}.
 - You can swap out or extend the default preprocessor to do exotic things like compile ClojureScript into JavaScript. Fixes {% issue 533 %}.
@@ -565,10 +565,10 @@ Documentation Changes:
 - {% url 'Created "Testing React TodoMVC" tutorials' tutorials %}
 - {% url 'Created "Variables and Aliases" core concept' variables-and-aliases %}
 - {% url 'Created "Conditional Testing" core concept' conditional-testing %}
-- {% url 'Created "Plugins" guide' plugins-guide %}
+- {% url 'Created "Plugins" guide' background-process %}
 - {% url 'Created "List of Plugins"' plugins %}
-- {% url 'Created "Writing a Plugin" API' writing-a-plugin %}
-- {% url 'Created "Preprocessors API"' preprocessors-api %}
+- {% url 'Created "Writing a Plugin" API' background-process %}
+- {% url 'Created "Preprocessors API"' file-preprocessor-event %}
 - {% url 'Updated "Using Cypress FAQ"' using-cypress-faq %}
 - {% url 'Updated "Best Practices"' best-practices %}
 

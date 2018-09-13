@@ -204,7 +204,7 @@ Instead of setting environment variables in a file, you can use plugins to dynam
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
-{% url "We've fully documented how to do this here." configuration-api %}
+{% url "We've fully documented how to do this here." configuration-event %}
 
 # Overriding Configuration
 

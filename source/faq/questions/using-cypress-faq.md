@@ -53,7 +53,7 @@ cy.get('div').should(($div) => {
 })
 ```
 
-This is the equivalent of Selenium's `getText()` method, which returns the innerText of a visible element. 
+This is the equivalent of Selenium's `getText()` method, which returns the innerText of a visible element.
 
 ## {% fa fa-angle-right %} How do I get an input's value?
 
@@ -102,7 +102,7 @@ Our {% url 'Variables and Aliases guide' variables-and-aliases %} gives you exam
 ## {% fa fa-angle-right %} Can I store an attribute's value in a constant or a variable for later use?
 
 Yes, and there are a couple of ways to do this. One way to hold a value or reference is with {% url '`closures`' variables-and-aliases#Closures %}.
-Commonly, users believe they have a need to store a value in a `const`, `var`, or `let`. Cypress recommends doing this only when dealing with mutable objects (that change state).  
+Commonly, users believe they have a need to store a value in a `const`, `var`, or `let`. Cypress recommends doing this only when dealing with mutable objects (that change state).
 
 For examples how to do this, please read our {% url 'Variables and Aliases guide' variables-and-aliases %}.
 
@@ -132,17 +132,17 @@ Cypress offers you many robust ways to {% url 'query the DOM' introduction-to-cy
 
 Other ways to wait for an element's presence in the DOM is through `timeouts`. Cypress commands have a default timeout of 4 seconds, however, most Cypress commands have {% url 'customizable timeout options' configuration#Timeouts %}. Timeouts can be configured globally or on a per-command basis.
 
-In {% url 'some cases' interacting-with-elements#Visibility %}, your DOM element will not be actionable. Cypress gives you a powerful {%url '`{force:true}`' interacting-with-elements#Forcing %} option you can pass to most action commands. 
+In {% url 'some cases' interacting-with-elements#Visibility %}, your DOM element will not be actionable. Cypress gives you a powerful {%url '`{force:true}`' interacting-with-elements#Forcing %} option you can pass to most action commands.
 
-**Please read** our {% url 'Core Concepts Introduction to Cypress' introduction-to-cypress %}. This is the single most important guide for understanding how to test with Cypress. 
+**Please read** our {% url 'Core Concepts Introduction to Cypress' introduction-to-cypress %}. This is the single most important guide for understanding how to test with Cypress.
 
-## {% fa fa-angle-right %} How do I wait for my application to load? 
+## {% fa fa-angle-right %} How do I wait for my application to load?
 
 We have seen many different iterations of this question. The answers can be varied depending on how your application behaves and the circumstances under which you are testing it. Here are a few of the most common versions of this question.
 
-**_How do I know if my page is done loading?_** 
+**_How do I know if my page is done loading?_**
 
-When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message. 
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
 
 
 **_In CI, how do I make sure my server has started?_**
@@ -151,9 +151,9 @@ There are a couple really great modules that we recommend using for this, {% url
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on. 
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
 
-## {% fa fa-angle-right %} Can I test the HTML `<head>` element? 
+## {% fa fa-angle-right %} Can I test the HTML `<head>` element?
 
 Yes, you sure can. While executing tests in the Test Runner, you can view the entire `window.document` object in your open console using {% url '`cy.document()`' document %}. You can even make assertions on the `<head>` element. Check out this example.
 
@@ -185,7 +185,7 @@ describe('The Document Metadata', () => {
     cy.document();
 
   })
-  
+
   // or make assertions on any of the metadata in the head element
 
   it('looks inside <title> tag', () => {
@@ -243,9 +243,9 @@ This is documented in detail on the {% url "Catalog Of Events" catalog-of-events
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 
-Yes, you use your `pluginsFile` to modify configuration values and environment variables.
+Yes, you use your `backgroundFile` to modify configuration values and environment variables.
 
-{% url "We have a whole API document showing you how to do just that." configuration-api %}
+{% url "We have a whole API document showing you how to do just that." configuration-event %}
 
 ## {% fa fa-angle-right %} Can I override or change the default user agent the browser uses?
 
@@ -269,11 +269,11 @@ Check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics
 
 ## {% fa fa-angle-right %} Can I test a chrome extension? How do I load my chrome extension?
 
-Yes. You can test your extensions by {% url 'loading them when we launch the browser.' browser-launch-api %}.
+Yes. You can test your extensions by {% url 'loading them when we launch the browser.' before-browser-launch-event %}.
 
 ## {% fa fa-angle-right %} How can I modify or pass arguments used to launch the browser?
 
-You use the {% url `before:browser:launch` browser-launch-api %} plugin event.
+You use the {% url `before:browser:launch` before-browser-launch-event %} background event.
 
 ## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
 
@@ -295,7 +295,7 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 
 You can read more about parallelization {% issue 64 'here' %}.
 
-## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack? 
+## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
 
 Our goal is to offer full integration with Sauce Labs and BrowserStack in the future, however, complete integration is not yet available.
 
@@ -409,7 +409,7 @@ Luckily there are lots of easy and safe workarounds that enable you to test this
 
 {% url 'Read through this recipe to see how to test anchor links.' recipes#Tab-Handling-and-Links %}
 
-## {% fa fa-angle-right %} Can I dynamically test multiple viewports? 
+## {% fa fa-angle-right %} Can I dynamically test multiple viewports?
 
 Yes, you can. We provide an {% url 'example here' viewport#Width-Height %}.
 
@@ -443,7 +443,7 @@ You can simply `require` or `import` them as you're accustomed to. We preprocess
 
 Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
-- {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.task()` task %} to run code in Node via the {% url "`backgroundFile`" configuration#Folders-Files %}
 - {% url `cy.exec()` exec %} to execute a shell command
 
 {% url 'Check out this example recipe.' recipes#Node-Modules %}
@@ -498,7 +498,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 ## {% fa fa-angle-right %} Does Cypress support ES7?
 
-Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
+Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' file-preprocessor-event %}.
 
 Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
 

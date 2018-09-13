@@ -72,7 +72,7 @@ sidebar:
     all-videos: Videos
     tooling: Tooling
     intelligent-code-completion: Intelligent Code Completion
-    plugins-guide: Plugins
+    background-process: Background Process
     reporters: Reporters
     typescript-support: TypeScript
     module-api: Module API
@@ -181,19 +181,41 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
-    plugins: Plugins
-    writing-a-plugin: Writing a Plugin
-    preprocessors-api: Preprocessors
-    browser-launch-api: Browser Launching
-    configuration-api: Configuration
     version: version
     arch: arch
     browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
     screenshot-api: Screenshot
-    after-screenshot-api: After Screenshot
     spec: spec
+    after-screenshot-event: after:screenshot
+    after-test-run-event: after:test:run
+    after-run-event: after:run
+    after-spec-event: after:spec
+    before-browser-launch-event: before:browser:launch
+    before-run-event: before:run
+    before-spec-event: before:spec
+    before-test-run-event: before:test:run
+    before-window-load-event: before:window:load
+    before-window-unload-event: before:window:unload
+    command-end-event: command:end
+    command-enqueued-event: command:enqueued
+    command-retry-event: command:retry
+    command-start-event: command:start
+    configuration-event: configuration
+    fail-event: fail
+    file-preprocessor-event: file:preprocessor
+    log-added-event: log:added
+    log-changed-event: log:changed
+    scrolled-event: scrolled
+    task-event: task
+    uncaught-exception-event: uncaught:exception
+    url-changed-event: url:changed
+    viewport-changed-event: viewport:changed
+    window-alert-event: window:alert
+    window-confirm-event: window:confirm
+    window-load-event: window:load
+    window-unload-event: window:unload
   examples:
     examples: Examples
     recipes: Recipes

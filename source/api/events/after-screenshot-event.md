@@ -1,17 +1,25 @@
 ---
-title: After Screenshot API
+title: after:screenshot event
 ---
 
-After a screenshot is taken, you can get details about the screenshot via the `after:screenshot` plugin event. This event is called whether a screenshot is taken with {% url `cy.screenshot()` screenshot %} or as a result of a test failure. The event is called after the screenshot image is written to disk.
+After a screenshot is taken, you can get details about the screenshot via the `after:screenshot` background event. This event is called whether a screenshot is taken with {% url `cy.screenshot()` screenshot %} or as a result of a test failure. The event is called after the screenshot image is written to disk.
 
 This allows you to record those details or manipulate the image as needed. You can also return updated details about the image.
 
+# Environment
+
+Occurs only in the {% url "background process" background-process %}.
+
+# Arguments
+
+* screenshot details **(Object)**
+
 # Usage
 
-Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `after:screenshot` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:screenshot` event.
 
 ```js
-// cypress/plugins/index.js
+// cypress/background/index.js
 
 const fs = require('fs')
 

@@ -2,10 +2,10 @@
 title: task
 ---
 
-Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin event.
+Execute code in {% url "Node.js" https://nodejs.org %} via the {% url "`task` background event" task-event %}.
 
 {% note warning 'Anti-Pattern' %}
-We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
+We do not recommend starting a web server using `cy.task()`. Read more about {% url "the `task` background event" task-event#Notes %} and about {% url 'best practices' best-practices#Web-Servers %}.
 {% endnote %}
 
 # Syntax
@@ -24,8 +24,9 @@ cy.task(event, arg, options)
 // in test
 cy.task('log', 'This will be output to the terminal')
 ```
+
 ```javascript
-// in plugins file
+// in background file
 on('task', {
   log (message) {
     console.log(message)
@@ -38,7 +39,7 @@ on('task', {
 
 **{% fa fa-angle-right %} event** ***(String)***
 
-An event name to be handled via the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+An event name to be handled via the {% url "`task` event" task-event %} in the {% url "`backgroundFile`" configuration#Folders-Files %}.
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
@@ -55,7 +56,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-`cy.task()` yields the value returned or resolved by the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+`cy.task()` yields the value returned or resolved by the `task` event in the {% url "`backgroundFile`" configuration#Folders-Files %}.
 
 # Examples
 
@@ -68,9 +69,9 @@ Option | Default | Description
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. 
+In the {% url "`task` background event" task-event %}, the command will fail if `undefined` is returned. It will also fail if you return a promise that resolves `undefined`. This helps catch typos or cases where the task event is not handled.
 
-If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
+If you do not need to return a value, explicitly return or resolve `null` to signal that the given event has been handled.
 
 ### Read a JSON file's contents
 
@@ -88,11 +89,13 @@ cy.task('readJson', 'cypress.json').then((data) => {
 ```
 
 ```javascript
-// in plugins/index.js file
+// in background/index.js file
+const fs = require('fs-extra')
+
 on('task', {
   readJson: (filename) => {
     // reads the file relative to current working directory
-    return fsExtra.readJson(path.join(process.cwd(), filename)
+    return fs.readJson(path.join(process.cwd(), filename)
   }
 })
 ```
@@ -103,7 +106,7 @@ on('task', {
 // in test
 describe('e2e', () => {
   beforeEach(() => {
-    cy.task('defaults:db')
+    cy.task('seed:database')
     cy.visit('/')
   })
 
@@ -115,15 +118,15 @@ describe('e2e', () => {
 ```
 
 ```javascript
-// in plugins/index.js file
+// in background/index.js file
 // we require some code in our app that
 // is responsible for seeding our database
-const db = require('../../server/src/db')
+const database = require('../../app/database')
 
 module.exports = (on, config) => {
   on('task', {
-    'defaults:db': () => {
-      return db.seed('defaults')
+    'seed:database': () => {
+      return database.seed()
     }
   })
 }
@@ -141,20 +144,6 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 // will fail if seeding the database takes longer than 20 seconds to finish
 cy.task('seedDatabase', null, { timeout: 20000 });
 ```
-
-# Notes
-
-## Tasks must end
-
-### Tasks that do not end are not supported
-
-`cy.task()` does not support tasks that do not end, such as:
-
-- Starting a server.
-- A task that watches for file changes.
-- Any process that needs to be manually interrupted to stop.
-
-A task must end within the `taskTimeout` or Cypress will fail the current test.
 
 # Rules
 
@@ -184,10 +173,11 @@ The command above will display in the command log as:
 
 When clicking on the `task` command within the command log, the console outputs the following:
 
-![console.log task](/img/api/task/console-shows-task-result.png)
+![console.log task](/img/api/task/console-shresult.png)
 
 # See also
 
+- {% url "`task` event" task-event %}
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}
 - {% url `cy.readFile()` readfile %}

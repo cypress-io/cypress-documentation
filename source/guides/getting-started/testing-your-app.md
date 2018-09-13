@@ -159,7 +159,7 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 **While there is a lot more to this strategy, you generally have three ways to facilitate this with Cypress:**
 
 - {% url `cy.exec()` exec %} - to run system commands
-- {% url `cy.task()` task %} - to run code in Node.js via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.task()` task %} - to run code in Node.js via the {% url "`backgroundFile`" configuration#Folders-Files %}
 - {% url `cy.request()` request %} - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.

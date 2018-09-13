@@ -108,4 +108,4 @@ set DEBUG=cypress:*
 
 When Cypress is running in your browser, you can have every event it fires logged out to the console.
 
-{% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
+{% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Browser-Events %}.

@@ -522,4 +522,4 @@ This error likely appeared because:
 
 WIP. We'll be adding more here soon.
 
-For now, please visit the {% url 'Catalog of Events' catalog-of-events#Uncaught-Exceptions %} page for examples how to turn off catching uncaught exceptions.
+For now, please view the {% url 'details on the `uncaught-exception` event' uncaught-exception-event %} for examples how to turn off catching uncaught exceptions.

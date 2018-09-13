@@ -48,7 +48,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
       - waiting.spec.js
       - window.spec.js
 
-  /plugins
+  /background
     - index.js
 
   /support
@@ -91,11 +91,11 @@ To see an example of every command used in Cypress, open the {% url "`example` f
 
 To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
-## Plugin files
+## Background file
 
-By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+Cypress runs a background Node.js process that you can utilize via the the background file (`cypress/background/index.js` by default).
 
-{% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
+{% url "Read more about using the background process to extend Cypress behavior." background-process %}
 
 ## Support file
 
@@ -113,11 +113,11 @@ beforeEach(function () {
 ![global hooks](/img/guides/global-hooks.png)
 
 {% note info %}
-**Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 
+**Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}.
 {% endnote %}
 
 {% note danger%}
-{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road. 
+{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road.
 {% endnote %}
 
 From your support file you should also `import` or `require` other files to keep things organized.
@@ -337,7 +337,7 @@ Remember to use {% url `.only` writing-and-organizing-tests#Excluding-and-Includ
 
 * `cypress/integration/`
 * `cypress/support/`
-* `cypress/plugins/`
+* `cypress/background/`
 
 The folder, the files within the folder, and all child folders and their files (recursively) are watched.
 

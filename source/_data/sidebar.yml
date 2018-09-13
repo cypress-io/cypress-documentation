@@ -29,7 +29,7 @@ guides:
     web-security: web-security.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
-    plugins-guide: plugins-guide.html
+    background-process: background-process.html
     reporters: reporters.html
     typescript-support: typescript-support.html
 
@@ -57,8 +57,6 @@ guides:
 api:
   introduction:
     api: api.html
-  events:
-    catalog-of-events: catalog-of-events.html
   commands:
     and: and.html
     as: as.html
@@ -147,6 +145,36 @@ api:
     minimatch: minimatch.html
     moment: moment.html
     promise: promise.html
+  events:
+    catalog-of-events: catalog-of-events.html
+    after-screenshot-event: after-screenshot-event.html
+    after-run-event: after-run-event.html
+    after-spec-event: after-spec-event.html
+    after-test-run-event: after-test-run-event.html
+    before-browser-launch-event: before-browser-launch-event.html
+    before-run-event: before-run-event.html
+    before-spec-event: before-spec-event.html
+    before-test-run-event: before-test-run-event.html
+    before-window-load-event: before-window-load-event.html
+    before-window-unload-event: before-window-unload-event.html
+    command-end-event: command-end-event.html
+    command-enqueued-event: command-enqueued-event.html
+    command-retry-event: command-retry-event.html
+    command-start-event: command-start-event.html
+    configuration-event: configuration-event.html
+    fail-event: fail-event.html
+    file-preprocessor-event: file-preprocessor-event.html
+    log-added-event: log-added-event.html
+    log-changed-event: log-changed-event.html
+    scrolled-event: scrolled-event.html
+    task-event: task-event.html
+    uncaught-exception-event: uncaught-exception-event.html
+    url-changed-event: url-changed-event.html
+    viewport-changed-event: viewport-changed-event.html
+    window-alert-event: window-alert-event.html
+    window-confirm-event: window-confirm-event.html
+    window-load-event: window-load-event.html
+    window-unload-event: window-unload-event.html
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html
@@ -162,12 +190,6 @@ api:
     platform: platform.html
     spec: spec.html
     version: version.html
-  plugins:
-    writing-a-plugin: writing-a-plugin.html
-    configuration-api: configuration-api.html
-    preprocessors-api: preprocessors-api.html
-    browser-launch-api: browser-launch-api.html
-    after-screenshot-api: after-screenshot-api.html
 
 plugins:
   plugins: index.html

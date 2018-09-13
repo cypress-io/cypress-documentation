@@ -1,9 +1,8 @@
 ---
-title: Configuration API
-
+title: Configuration via the Background File
 ---
 
-Cypress enables you to dynamically modify configuration values and environment variables from your plugin file.
+Cypress enables you to dynamically modify configuration values and environment variables from your background file.
 
 These means you can do things like store multiple configuration files and switch between them like:
 
@@ -13,12 +12,16 @@ These means you can do things like store multiple configuration files and switch
 
 How you choose to organize your configuration and environment variables is up to you.
 
+# Environment
+
+Occurs only in the {% url "background process" background-process %}.
+
 # Usage
 
-To modify configuration, you simply return an object from your plugins file exported function.
+To modify configuration, you simply return an object from your background file's exported function.
 
 ```javascript
-// cypress/plugins/index.js
+// cypress/background/index.js
 module.exports = (on, config) => {
   console.log(config) // see what all is in here!
 
@@ -34,13 +37,13 @@ module.exports = (on, config) => {
 }
 ```
 
-Whenever you return an object from your `pluginFile`, Cypress will take this and "diff" it against the original configuration, and automatically set the resolved values to point to what you returned.
+Whenever you return an object from your `backgroundFile`, Cypress will take this and "diff" it against the original configuration, and automatically set the resolved values to point to what you returned.
 
 If you don't return an object, then configuration will not be modified.
 
 Resolved values will show up in your Settings tab.
 
-{% img /img/guides/plugin-configuration.png %}
+{% img /img/guides/background-configuration.png %}
 
 ## Promises
 
@@ -57,7 +60,7 @@ function getConfigurationByFile (file) {
   return fs.readJson(pathToConfigFile)
 }
 
-// plugins file
+// background file
 module.exports = (on, config) => {
   // accept a configFile value or use development by default
   const file = config.env.configFile || 'development'
@@ -134,4 +137,4 @@ This would enable you to do things like this:
 
 These are just simple examples. Remember - you have the full power of `Node.js` at your disposal.
 
-How you choose to organize multiple configurations and sets of environment variables is up to you. You don't even have to read off of the file system - you could store them all in memory inside of your `pluginsFile` if you wanted to.
+How you choose to organize multiple configurations and sets of environment variables is up to you. You don't even have to read off of the file system - you could store them all in memory inside of your `backgroundFile` if you wanted to.

@@ -1,13 +1,18 @@
 ---
-title: Preprocessors API
-
+title: file:preprocessor Event
 ---
+
+The `file:preprocessor` event allows you to modify how your spec files and support file are preprocessed for the browser.
 
 A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.
 
 A preprocessor could transpile your file from another language (CoffeeScript or ClojureScript) or from a newer version of JavaScript (ES2017).
 
 A preprocessor also typically watches the source files for changes, processes them again, and then notifies Cypress to re-run the tests.
+
+# Environment
+
+Occurs only in the {% url "background process" background-process %}.
 
 # Examples
 
@@ -55,10 +60,10 @@ Please read this link in the {% url 'browserify preprocessor' https://github.com
 
 # Usage
 
-To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
+To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`backgroundFile`" configuration#Folders-Files %}:
 
 ```javascript
-// plugins file
+// background file
 module.exports = (on, config) => {
   on('file:preprocessor', (file) => {
     // ...

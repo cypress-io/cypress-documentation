@@ -193,6 +193,6 @@ Get around the lack of a `.hover()` command.
 
 ## [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node)
 
-- Use {% url `cy.task()` task %} to communicate with Node via the `pluginsFile`.
+- Use {% url `cy.task()` task %} to communicate with Node via the `backgroundFile`.
 - Seed your database with test data.
-- Wrap your `pluginsFile` so you can require files that use ES modules (`import`/`export`).
+- Wrap your `backgroundFile` so you can require files that use ES modules (`import`/`export`).
