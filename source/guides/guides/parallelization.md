@@ -9,14 +9,19 @@ title: Parallelization
 - How to parallelize test runs
 - How to group test runs
 - Strategies for grouping test runs
+<<<<<<< HEAD
 - How load-balancing of tests worksworks
 - What test insights are available on the Dashboard
+=======
+- How test spec load-balancing works
+- Gain better insights into tests with Dashboard spec views
+>>>>>>> origin/parallelization-902
 
 {% endnote %}
 
 # Overview
 
-If your project has a large number of tests, it can take a long time for tests to complete running when run serially on one machine. Spreading your tests across many virtual machines and running tests in parallel can save your team time and money when running tests in Continuous Integration (CI).
+If your project has a large number of tests, it can take a long time for tests to complete running serially on one machine. Running tests in parallel across many virtual machines can save your team time and money when running tests in Continuous Integration (CI).
 
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
@@ -26,7 +31,11 @@ This guide assumes you already have your project running and {% url "recording" 
 
 Cypress' parallelization strategy is file-based, so in order to utilize parallelization, your tests will need to be split across separate files.
 
+<<<<<<< HEAD
 Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}. Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
+=======
+Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}, so you cannot determine ahead of time the order spec files will run when parallelized.
+>>>>>>> origin/parallelization-902
 
 # Turning on parallelization
 
@@ -39,7 +48,11 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
+<<<<<<< HEAD
     Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+=======
+    Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of the parallelization in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+>>>>>>> origin/parallelization-902
     {% endnote %}
 
 # CI parallelization interactions
@@ -49,7 +62,7 @@ During parallelization mode, Cypress {% url "Dashboard Service" dashboard-servic
 1. CI machines contact Cypress {% url "Dashboard Service" dashboard-service %} to indicate the project spec files of the test run.
 2. Once a machine has contacted Cypress, it has automatically opted-in to receiving work or a spec file to run.
 3. Upon receiving requests from a CI machines, Cypress calculates the estimated duration to test each spec file for the run.
-4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in manner that minimizes overall test run time.
+4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
 5. As each CI machine finishes its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to support {% urlHash 'grouping of runs' Grouping-test-runs %}.
 
@@ -68,7 +81,7 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 With a duration forecast (or estimation) for each spec file of a test run, Cypress will be able to distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs are started first which effectively minimizes the overall test run duration.
 
 {% note info %}
-Duration estimation is done for each browser the spec file was tested against. This is necessary since performances characteristics vary by browser, and therefore it is perfectly acceptable to see different duration estimates for each browser a spec file was tested against.
+Duration estimation is done for each browser the spec file was tested against. This is necessary since performance characteristics vary by browser, and therefore it is perfectly acceptable to see different duration estimates for each browser a spec file was tested against.
 {% endnote %}
 
 **Example of tests run without parallelization**
@@ -147,7 +160,7 @@ You can test your application against different browsers and view the results un
 
 ## Grouping with parallelization
 
-We also have to power of Cypress parallelization, so we could speed up testing of any desired group. For the sake of demonstration, lets run a group to test against Chrome with 2 machines, one group to test against Electron with 4 machines, and another group to test against Electron again, but only with one machine:
+We also have the power of Cypress parallelization, so we could speed up testing of any desired group. For the sake of demonstration, let's run a group to test against Chrome with 2 machines, one group to test against Electron with 4 machines, and another group to test against Electron again, but only with one machine:
 
 ```shell
 cypress run --record --group 1x-electron
@@ -173,7 +186,7 @@ These grouped runs would look something like this within the Cypress Dashboard:
 
 ## Grouping by spec context
 
-Lets say you have an application that has a *customer facing portal* and an *administration facing portal*. You could organize and test these two parts of your application within the same run:
+Let's say you have an application that has a *customer facing portal* and an *administration facing portal*. You could organize and test these two parts of your application within the same run:
 
 - One group can be called `customer-portal`:
 
@@ -214,7 +227,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 
 # Run completion delay
 
-During parallelization mode or when grouping runs, Cypress will wait for a specified amount of time before closing down and completing the test run in case any more relevant work. This is to compensate for various scenarios where CI machines could be backed-up in a queue.
+During parallelization mode or when grouping runs, Cypress will wait for a specified amount of time before closing down and completing the test run in case any more relevant work remains. This is to compensate for various scenarios where CI machines could be backed-up in a queue.
 
 This waiting period is called the **run completion delay** and it begins after the last known CI machine has completed as shown in the diagram below:
 
@@ -242,6 +255,6 @@ The Bar Chart View visualizes the **duration** of your spec files relative to ea
 
 ## Machines View
 
-The Machines View charts spec files by the machines that executed them. This view makes it easy to grok the contribution of each machine to the overall test run.
+The Machines View charts spec files by the machines that executed them. This view makes it easy to evaluate the contribution of each machine to the overall test run.
 
 {% img /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
