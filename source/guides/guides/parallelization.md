@@ -147,7 +147,7 @@ You can test your application against different browsers and view the results un
   cypress run --record --group chrome --browser chrome
   ```
 
-## Grouping with parallelization
+## Grouping to label parallelization
 
 We also have the power of Cypress parallelization with our groups. For the sake of demonstration, let's run a group to test against Chrome with 2 machines, a group to test against Electron with 4 machines, and another group to test against Electron again, but only with one machine:
 
@@ -189,11 +189,11 @@ Let's say you have an application that has a *customer facing portal* and an *ad
   cypress run --record --group admin-portal --spec 'cypress/integration/portals/admin/**/*'
   ```
 
-This pattern is especially useful for monorepo projects. Each segment of the monorepo can be assigned its own group, and larger segments could be parallelized to speed up their testing.
+This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
 
 # Linking CI machines for parallelization or grouping
 
-A CI build ID is used to associate multiple CI machines to a parallelized or grouped test run. This identifier is based on environment variables that are unique to each CI build, and vary based on CI provider. Cypress has out-of-the-box support for most of the commonly-used CI providers, so you would typically not need to directly set the CI build ID via the {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %} as Cypress automatically handles this for you.
+A CI build ID is used to associate multiple CI machines to one test run. This identifier is based on environment variables that are unique to each CI build, and vary based on CI provider. Cypress has out-of-the-box support for most of the commonly-used CI providers, so you would typically not need to directly set the CI build ID via the {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
 
 {% img 'no-border' /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" %}
 
@@ -216,13 +216,13 @@ Cypress currently uses the following CI environment variables to determine a CI 
 
 # Run completion delay
 
-During parallelization mode or when grouping runs, Cypress will wait for a specified amount of time before closing down and completing the test run in case any more relevant work remains. This is to compensate for various scenarios where CI machines could be backed-up in a queue.
+During parallelization mode or when grouping runs, Cypress will wait for a specified amount of time before completing the test run in case any more relevant work remains. This is to compensate for various scenarios where CI machines could be backed-up in a queue.
 
 This waiting period is called the **run completion delay** and it begins after the last known CI machine has completed as shown in the diagram below:
 
 {% img 'no-border' /img/guides/parallelization/run-completion-delay.png "Test run completion delay" %}
 
-This **delay is 60 seconds by default**, but is configurable within the Dashboard project settings page:
+This **delay is 60 seconds by default**, but is configurable within the {% url "Dashboard" dashboard-service %} project settings page:
 
 {% img /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
 
