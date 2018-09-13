@@ -70,8 +70,14 @@ You could now swap out configuration + environment variables like so:
 
 ```shell
 cypress run
+```
+```shell
 cypress run --env configFile=qa
+```
+```shell
 cypress run --env configFile=staging
+```
+```shell
 cypress run --env configFile=production
 ```
 
