@@ -133,7 +133,7 @@
     "hexo-renderer-scss": "1.2.0",
     "hexo-server": "0.3.3",
     "lazy-ass": "1.6.0",
-    "lodash": "4.17.10",
+    "lodash": "4.17.11",
     "menuspy": "1.3.0",
     "scrollingelement": "1.5.2",
     "set-immediate-shim": "2.0.0",
