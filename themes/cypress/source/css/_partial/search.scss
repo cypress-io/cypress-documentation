@@ -12,6 +12,9 @@
   &.on {
     display: inline-block;
   }
+  .algolia-autocomplete {
+    width: calc(100% - 30px);
+  }
 }
 
 #search-input-icon {
@@ -24,6 +27,7 @@
 }
 
 #search-input {
+  width: 100%;
   background: none;
   font-size: inherit;
   font-family: $font-sans;
