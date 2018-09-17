@@ -110,7 +110,13 @@ Once you set up your project to record, we generate a unique `projectId` for you
 }
 ```
 
-This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**. We recommend that you check your `cypress.json` including the `projectId` into source control.
+This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
+
+We recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
+
+```shell
+$ export CYPRESS_PROJECT_ID={projectId}   # replace {projectId} with your actual projectId
+```
 
 ***Record Key {% fa fa-key %}***
 
@@ -212,7 +218,7 @@ Standard output includes details and summaries of your tests for each spec file 
 
 You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
-{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output %}
+{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output" %}
 
 ***{% fa fa-picture-o fa-fw %} Screenshots***
 
@@ -222,7 +228,7 @@ All screenshots taken during the test run can be found in the **Screenshots** of
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
-{% url /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
+{% img /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
 ### {% fa fa-exclamation-triangle fa-fw %} Test Failures
 

@@ -339,10 +339,10 @@ cypress cache clear
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
 **On Mac or Linux:**
+
 ```shell
 DEBUG=cypress:* cypress open
 ```
-
 ```shell
 DEBUG=cypress:* cypress run
 ```
@@ -351,9 +351,8 @@ DEBUG=cypress:* cypress run
 ```shell
 set DEBUG=cypress:*
 ```
-
 ```shell
-set DEBUG=cypress:*
+cypress run
 ```
 
 Cypress is a rather large and complex project involving a dozen or more submodules, and the default output can be overwhelming.

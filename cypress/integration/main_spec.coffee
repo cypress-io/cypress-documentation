@@ -57,10 +57,10 @@ describe "Main", ->
         cy.url().should("include", GUIDES_PATH)
 
   context "Navigation", ->
+    beforeEach ->
+      cy.visit("/")
+    
     it "displays links to pages", ->
-      beforeEach ->
-        cy.visit("/")
-
       cy.contains(".main-nav-link", "Guides")
         .should("have.attr", "href").and("include", GUIDES_PATH)
 
@@ -74,13 +74,11 @@ describe "Main", ->
         .should("have.attr", "href").and("include", FAQ_PATH)
 
     it "displays link to github repo", ->
-      cy.visit("/")
       cy.get(".main-nav-link").find(".fa-github").parent()
         .should("have.attr", "href")
         .and("eq", "https://github.com/cypress-io/cypress")
 
     it "displays language dropdown", ->
-      cy.visit("/")
       cy.contains("select", "English").find("option").contains("English")
 
     describe "active nav", ->

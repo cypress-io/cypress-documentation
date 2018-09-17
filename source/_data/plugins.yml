@@ -68,6 +68,11 @@
       description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
       link: https://github.com/testdouble/cypress-capybara
       keywords: [testing-library, capybara]
+    
+    - name: PickleJS
+      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
+      link: https://picklejs.com
+      keywords: [cucumber, collection, actions, commands]
       
 - name: Reporting
   plugins:

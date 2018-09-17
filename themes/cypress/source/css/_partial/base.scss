@@ -145,11 +145,48 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   height: 100%;
 }
 
-.not-found h1 {
+.not-found {
   text-align: center;
-  font-size: 50px;
-  line-height: 100px;
-  margin: 100px 0;
+
+  h1 {
+    font-family: 'Fira Sans';
+    font-size: 50px;
+    font-weight: bold;
+    line-height: 100px;
+    margin: 50px 0 50px 0;
+    text-transform: capitalize;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 50px 0 20px 0;
+    display: inline-block;
+    text-align: left;
+
+    li {
+      margin-bottom: 20px;
+      &>i.fa {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  a {
+    color: #3B94D9;
+    text-decoration: none;
+    border-bottom: 1px dotted #bde1fd;
+  }
+
+  blockquote {
+    margin: 10px 0 100px 0;
+    padding: 15px;
+    font-style: italic;
+
+    strong {
+      font-weight: bold;
+    }
+  }
 }
 
 i.fa {
