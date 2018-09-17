@@ -1,162 +1,164 @@
-- title: "Cypress E2E Testing"
-  url: https://www.youtube.com/watch?v=LFUm9qV_Gjo
-  sourceName: Northwest Chicago Javascript
-  date: Jun 21, 2018
-  author: Steve Schwarz
-  youtubeId: LFUm9qV_Gjo
+# large links with thumbnails, links, embedded video
+large:
+  - title: "Cypress E2E Testing"
+    url: https://www.youtube.com/watch?v=LFUm9qV_Gjo
+    sourceName: Northwest Chicago Javascript
+    date: Jun 21, 2018
+    author: Steve Schwarz
+    youtubeId: LFUm9qV_Gjo
 
-- title: "Cypress"
-  url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
-  sourceName: Bluesoft Labs
-  date: May 24, 2018
-  author: Adriano Silva
-  youtubeId: GhyE3Y5oS_0
+  - title: "Cypress"
+    url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
+    sourceName: Bluesoft Labs
+    date: May 24, 2018
+    author: Adriano Silva
+    youtubeId: GhyE3Y5oS_0
 
-- title: "Accélerez vos tests end to end avec Cypress"
-  url: https://www.youtube.com/watch?v=UpBfQ6mdb8U&amp=&feature=youtu.be
-  sourceName: Devox France
-  date: May 2, 2018
-  author: Rodolphe Bung
-  youtubeId: UpBfQ6mdb8U
+  - title: "Accélerez vos tests end to end avec Cypress"
+    url: https://www.youtube.com/watch?v=UpBfQ6mdb8U&amp=&feature=youtu.be
+    sourceName: Devox France
+    date: May 2, 2018
+    author: Rodolphe Bung
+    youtubeId: UpBfQ6mdb8U
 
-- title: "Extracting a React Component with Cypress"
-  url: https://youtu.be/Sth0bGfFOMw
-  sourceName: Big Nerd Ranch Webinar
-  date: May 1, 2018
-  author: Josh Justice
-  youtubeId: Sth0bGfFOMw
+  - title: "Extracting a React Component with Cypress"
+    url: https://youtu.be/Sth0bGfFOMw
+    sourceName: Big Nerd Ranch Webinar
+    date: May 1, 2018
+    author: Josh Justice
+    youtubeId: Sth0bGfFOMw
 
-- title: "Outside-in Testing in Vue"
-  url: https://youtu.be/Tu9FI5gQX-k
-  sourceName: Atlanta Vue.js Meetup
-  sourceUrl: https://www.meetup.com/Atlanta-Vue-js-Meetup/events/247593045/
-  date: Apr 26, 2018
-  author: Josh Justice
-  youtubeId: CMN8boToKWI
-  
-- title: "VueJs Applied + Testing with Cypress.io"
-  url: https://www.youtube.com/watch?time_continue=29&v=dpB0YgnFyZQ
-  sourceName: JavaScript Meetup - St. Louis
-  sourceUrl: https://www.meetup.com/STL-JS-meetup/events/247430738/
-  date: Apr 19, 2018
-  author: Christian Catalan
-  youtubeId: dpB0YgnFyZQ
+  - title: "Outside-in Testing in Vue"
+    url: https://youtu.be/Tu9FI5gQX-k
+    sourceName: Atlanta Vue.js Meetup
+    sourceUrl: https://www.meetup.com/Atlanta-Vue-js-Meetup/events/247593045/
+    date: Apr 26, 2018
+    author: Josh Justice
+    youtubeId: CMN8boToKWI
 
-- title: "Painless testing for React applications"
-  url: https://youtu.be/lgurVvQsOTY
-  sourceName: ReactJS Boston
-  sourceUrl: https://www.meetup.com/ReactJS-Boston/events/248512859/
-  date: Apr 3, 2018
-  author: Gleb Bahmutov
-  youtubeId: lgurVvQsOTY
-  slides: https://slides.com/bahmutov/painless-react-testing
+  - title: "VueJs Applied + Testing with Cypress.io"
+    url: https://www.youtube.com/watch?time_continue=29&v=dpB0YgnFyZQ
+    sourceName: JavaScript Meetup - St. Louis
+    sourceUrl: https://www.meetup.com/STL-JS-meetup/events/247430738/
+    date: Apr 19, 2018
+    author: Christian Catalan
+    youtubeId: dpB0YgnFyZQ
 
-- title: "Speedy Testing with Cypress"
-  url: https://youtu.be/k-4pwQZRCN4
-  sourceName: DrupalCon
-  sourceUrl: https://events.drupal.org/nashville2018
-  date: Apr 12, 2018
-  author: Randall Kent
-  youtubeId: k-4pwQZRCN4
-  slides: https://drive.google.com/drive/folders/0B_MmuZNiBFDUdXotYmtlczl1VWs
+  - title: "Painless testing for React applications"
+    url: https://youtu.be/lgurVvQsOTY
+    sourceName: ReactJS Boston
+    sourceUrl: https://www.meetup.com/ReactJS-Boston/events/248512859/
+    date: Apr 3, 2018
+    author: Gleb Bahmutov
+    youtubeId: lgurVvQsOTY
+    slides: https://slides.com/bahmutov/painless-react-testing
 
-- title: "Effective React Testing"
-  url: https://youtu.be/Eakp29J38YA
-  sourceName: Jeremy Fairbank's YouTube
-  sourceUrl: https://www.youtube.com/channel/UCIF0e4G6TQ7RNqauicoy10g
-  date: Apr 6, 2018
-  author: Jeremy Fairbank
-  youtubeId: Eakp29J38YA
+  - title: "Speedy Testing with Cypress"
+    url: https://youtu.be/k-4pwQZRCN4
+    sourceName: DrupalCon
+    sourceUrl: https://events.drupal.org/nashville2018
+    date: Apr 12, 2018
+    author: Randall Kent
+    youtubeId: k-4pwQZRCN4
+    slides: https://drive.google.com/drive/folders/0B_MmuZNiBFDUdXotYmtlczl1VWs
 
-- title: "End to End Testing: The Game Has Changed"
-  url: https://www.youtube.com/watch?v=C1D94jWy8uE
-  sourceName: JSConf Iceland
-  sourceUrl: https://2018.jsconf.is/
-  date: Mar 1, 2018
-  author: Will Klein
-  youtubeId: D-h3bhzauKo?start=189
+  - title: "Effective React Testing"
+    url: https://youtu.be/Eakp29J38YA
+    sourceName: Jeremy Fairbank's YouTube
+    sourceUrl: https://www.youtube.com/channel/UCIF0e4G6TQ7RNqauicoy10g
+    date: Apr 6, 2018
+    author: Jeremy Fairbank
+    youtubeId: Eakp29J38YA
 
-- title: "Moving Around the Testing Pyramid"
-  url: https://www.youtube.com/watch?v=5FnalKRjpZk&t=0s&index=5&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
-  sourceName: "Assert(js)"
-  sourceUrl:
-    https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
-  date: Feb 22, 2018
-  author: Gleb Bahmutov
-  youtubeId: 5FnalKRjpZk
-  slides: https://slides.com/bahmutov/assertjs
+  - title: "End to End Testing: The Game Has Changed"
+    url: https://www.youtube.com/watch?v=C1D94jWy8uE
+    sourceName: JSConf Iceland
+    sourceUrl: https://2018.jsconf.is/
+    date: Mar 1, 2018
+    author: Will Klein
+    youtubeId: D-h3bhzauKo?start=189
 
-- title: "Cypress Best Practices"
-  url: https://www.youtube.com/watch?v=5XQOK0v_YRE&t=0s&index=4&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
-  sourceName: "Assert(js)"
-  sourceUrl: https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
-  date: Feb 22, 2018
-  author: Brian Mann
-  youtubeId: 5XQOK0v_YRE
-  slides: https://speakerdeck.com/brianmann/cypress-best-practices
+  - title: "Moving Around the Testing Pyramid"
+    url: https://www.youtube.com/watch?v=5FnalKRjpZk&t=0s&index=5&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
+    sourceName: "Assert(js)"
+    sourceUrl:
+      https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
+    date: Feb 22, 2018
+    author: Gleb Bahmutov
+    youtubeId: 5FnalKRjpZk
+    slides: https://slides.com/bahmutov/assertjs
 
-- title: "End to End Testing: The Game Has Changed"
-  url: https://www.youtube.com/watch?v=rICGz5qrYJU&feature=youtu.be&t=1h14m46s
-  sourceName: ReactJS Denver
-  sourceUrl: https://www.meetup.com/ReactJS-Denver/
-  date: Nov 14, 2017
-  author: Will Klein
-  youtubeId: rICGz5qrYJU
+  - title: "Cypress Best Practices"
+    url: https://www.youtube.com/watch?v=5XQOK0v_YRE&t=0s&index=4&list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw
+    sourceName: "Assert(js)"
+    sourceUrl: https://www.youtube.com/playlist?list=PLZ66c9_z3umNSrKSb5cmpxdXZcIPNvKGw&mc_cid=ddf9309c22&mc_eid=c05d20b621
+    date: Feb 22, 2018
+    author: Brian Mann
+    youtubeId: 5XQOK0v_YRE
+    slides: https://speakerdeck.com/brianmann/cypress-best-practices
 
-- title: Modern Integration Testing for JavaScript Applications
-  url: https://www.youtube.com/watch?v=D20nX2zAypk&feature=youtu.be
-  sourceName: BostonJS
-  sourceUrl: https://www.meetup.com/boston_JS/
-  date: Oct 3, 2017
-  author: Gleb Bahmutov
-  youtubeId: D20nX2zAypk
-  slides: https://slides.com/bahmutov/boston-js-testing
+  - title: "End to End Testing: The Game Has Changed"
+    url: https://www.youtube.com/watch?v=rICGz5qrYJU&feature=youtu.be&t=1h14m46s
+    sourceName: ReactJS Denver
+    sourceUrl: https://www.meetup.com/ReactJS-Denver/
+    date: Nov 14, 2017
+    author: Will Klein
+    youtubeId: rICGz5qrYJU
 
-- title: "Slaying Selenium with Cypress"
-  url: https://www.youtube.com/watch?v=bSpLEJ-CrGk
-  sourceName: MelbCSS
-  sourceUrl: https://www.meetup.com/MelbCSS/
-  date: Oct 3, 2017
-  author: Ray Hua
-  youtubeId: bSpLEJ-CrGk
+  - title: Modern Integration Testing for JavaScript Applications
+    url: https://www.youtube.com/watch?v=D20nX2zAypk&feature=youtu.be
+    sourceName: BostonJS
+    sourceUrl: https://www.meetup.com/boston_JS/
+    date: Oct 3, 2017
+    author: Gleb Bahmutov
+    youtubeId: D20nX2zAypk
+    slides: https://slides.com/bahmutov/boston-js-testing
 
-- title: Testing JavaScript Applications (feat. React and Redux)
-  url: https://frontendmasters.com/courses/testing-javascript/
-  sourceName: Frontend Masters
-  sourceUrl: https://frontendmasters.com
-  date: Jun 21, 2017
-  author: Kent C. Dodds
-  img: /img/examples/frontend-masters-kent-c-dodds-javascript-testing.jpg
+  - title: "Slaying Selenium with Cypress"
+    url: https://www.youtube.com/watch?v=bSpLEJ-CrGk
+    sourceName: MelbCSS
+    sourceUrl: https://www.meetup.com/MelbCSS/
+    date: Oct 3, 2017
+    author: Ray Hua
+    youtubeId: bSpLEJ-CrGk
 
-- title: "Testing Made Easy: Better, Faster, Stronger Unit Tests and Integration Tests"
-  url: https://pusher.com/sessions/meetup/js-monthly-london/testing-made-easy-better-faster-stronger-unit-tests-and-integration-tests
-  sourceName: JS Monthly London
-  sourceUrl: https://www.meetup.com/js-monthly/
-  date: Apr 25, 2017
-  author: Norbert de Langen
-  img: /img/examples/js-monthly-london-norbert-de-langen-testing-made-easy-cypress.jpg
+  - title: Testing JavaScript Applications (feat. React and Redux)
+    url: https://frontendmasters.com/courses/testing-javascript/
+    sourceName: Frontend Masters
+    sourceUrl: https://frontendmasters.com
+    date: Jun 21, 2017
+    author: Kent C. Dodds
+    img: /img/examples/frontend-masters-kent-c-dodds-javascript-testing.jpg
 
-- title: "Testing, the way it should be"
-  url: https://youtu.be/N9RbcP4iY90?t=48m14s
-  sourceName: ReactiveConf
-  sourceUrl: https://reactiveconf.com/
-  date: Oct 27, 2016
-  author: Brian Mann
-  youtubeId: N9RbcP4iY90
-  slides: https://speakerdeck.com/brianmann/enter-cypress-integration-testing-done-right
+  - title: "Testing Made Easy: Better, Faster, Stronger Unit Tests and Integration Tests"
+    url: https://pusher.com/sessions/meetup/js-monthly-london/testing-made-easy-better-faster-stronger-unit-tests-and-integration-tests
+    sourceName: JS Monthly London
+    sourceUrl: https://www.meetup.com/js-monthly/
+    date: Apr 25, 2017
+    author: Norbert de Langen
+    img: /img/examples/js-monthly-london-norbert-de-langen-testing-made-easy-cypress.jpg
 
-- title: "Enter Cypress - Integration Testing Done Right"
-  url: https://www.youtube.com/watch?v=JWOjQrGIokw&feature=youtu.be
-  sourceName: TestWorksConf
-  sourceUrl: https://twc.amsterdam/
-  date: Oct 7, 2016
-  author: Brian Mann
-  youtubeId: JWOjQrGIokw
+  - title: "Testing, the way it should be"
+    url: https://youtu.be/N9RbcP4iY90?t=48m14s
+    sourceName: ReactiveConf
+    sourceUrl: https://reactiveconf.com/
+    date: Oct 27, 2016
+    author: Brian Mann
+    youtubeId: N9RbcP4iY90
+    slides: https://speakerdeck.com/brianmann/enter-cypress-integration-testing-done-right
 
-- title: "Testing, the way it should be"
-  url: https://youtu.be/yq99BvSe1AQ
-  sourceName: Nodevember
-  sourceUrl: https://twc.amsterdam/
-  date: Nov 15, 2015
-  author: Brian Mann
-  youtubeId: yq99BvSe1AQ
+  - title: "Enter Cypress - Integration Testing Done Right"
+    url: https://www.youtube.com/watch?v=JWOjQrGIokw&feature=youtu.be
+    sourceName: TestWorksConf
+    sourceUrl: https://twc.amsterdam/
+    date: Oct 7, 2016
+    author: Brian Mann
+    youtubeId: JWOjQrGIokw
+
+  - title: "Testing, the way it should be"
+    url: https://youtu.be/yq99BvSe1AQ
+    sourceName: Nodevember
+    sourceUrl: https://twc.amsterdam/
+    date: Nov 15, 2015
+    author: Brian Mann
+    youtubeId: yq99BvSe1AQ

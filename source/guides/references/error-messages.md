@@ -412,7 +412,7 @@ You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} o
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What-is-supported %}.
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What-is-supported %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
 
 You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
 
@@ -421,6 +421,8 @@ You can avoid this check in the future by passing an ID to the {% url "`--ci-bui
 You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag, but this group name has already been used for this run.
 
 If you are trying to parallelize this run, then also pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, else pass a different group name.
+
+Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests across environments
 
@@ -441,6 +443,8 @@ In order to run in parallel mode each machine must send identical environment pa
 You passed the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run group was originally created without the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
 
 You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+
+Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run must pass `--parallel` flag
 

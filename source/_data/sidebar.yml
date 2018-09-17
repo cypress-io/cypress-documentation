@@ -58,6 +58,8 @@ guides:
 api:
   introduction:
     api: api.html
+  assertions:
+    all-assertions: assertions.html
   commands:
     and: and.html
     as: as.html

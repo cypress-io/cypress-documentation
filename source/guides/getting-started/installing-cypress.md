@@ -198,7 +198,7 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 ```
 
 ```shell
-CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
+CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
 {% note warning %}
