@@ -6,7 +6,7 @@ API_PATH = "/api/introduction/api"
 API_HTML = API_PATH + '.html'
 
 FIRST_PAGE = "api.html"
-NEXT_PAGE = "and.html"
+NEXT_PAGE = "assertions.html"
 
 describe "API", ->
   context "Catalog of events", ->
