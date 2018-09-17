@@ -18,10 +18,8 @@ Occurs only in the **browser**.
 Debug the moment a test fails.
 
 ```javascript
-// if you want to debug when any test fails
-// bind to Cypress, and you likely want to
-// put this in a support file, or at the top
-// of an individual spec file
+// if you want to debug when a test fails, put this in the support file, 
+// or at the top of an individual spec file
 Cypress.on('fail', (err, runnable) => {
   debugger
 

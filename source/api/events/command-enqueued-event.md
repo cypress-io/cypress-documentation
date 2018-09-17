@@ -2,7 +2,7 @@
 title: command:enqueued Event
 ---
 
-The `command:enqueued` event fires when a cy command is first invoked and enqueued to be run later. Useful for debugging purposes if you're confused about the order in which commands will execute.
+The `command:enqueued` event fires when a `cy` command is first invoked and enqueued to be run later. Useful for debugging purposes if you're confused about the order in which commands will execute.
 
 # Environment
 

@@ -14,7 +14,7 @@ Occurs only in the **browser**.
 
 # Usage
 
-This example demonstrates testing that your application was redirected
+This example demonstrates testing that your application was redirected.
 
 ```javascript
 // in your app

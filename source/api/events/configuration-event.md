@@ -18,7 +18,7 @@ Occurs only in the {% url "background process" background-process %}.
 
 # Usage
 
-To modify configuration, you simply return an object from your background file's exported function.
+To modify configuration, return an object from your background file's exported function.
 
 ```javascript
 // cypress/background/index.js

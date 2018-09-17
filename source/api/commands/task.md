@@ -173,7 +173,7 @@ The command above will display in the command log as:
 
 When clicking on the `task` command within the command log, the console outputs the following:
 
-![console.log task](/img/api/task/console-shresult.png)
+![console.log task](/img/api/task/console-shows-task-result.png)
 
 # See also
 

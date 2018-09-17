@@ -2,7 +2,7 @@
 title: command:start Event
 ---
 
-The `command:start` event fires when cy begins actually running and executing your command. Useful for debugging and understanding how the command queue is async.
+The `command:start` event fires when Cypress begins actually running and executing your command. Useful for debugging and understanding {% url 'how the command queue is async' introduction-to-cypress#Commands-Are-Asynchronous %}.
 
 # Environment
 
@@ -22,8 +22,8 @@ In the browser, the argument is the actual command instance.
 // in a test or cypress/support/index.js
 
 Cypress.on('command:start', (command) => {
-  command.get('name') // => 'get'
-  command.get('args') // => ['#foo']
+  command.get('name')    // => 'get'
+  command.get('args')    // => ['#foo']
   command.get('subject') // => jQuery(<div#foo />)
   // command instance has the following properties you can 'get':
   // - name

@@ -2,7 +2,7 @@
 title: command:end Event
 ---
 
-The `command:end` event fires when cy finishes running and executing your command. Useful for debugging and understanding how commands are handled.
+The `command:end` event fires when Cypress finishes running and executing your command. Useful for debugging and understanding how commands are handled.
 
 # Environment
 
@@ -11,12 +11,6 @@ Occurs in the **browser** and in the {% url "background process" background-proc
 # Arguments
 
 * command **(Object)**
-
-In the **browser**, the object is the actual command instance. In the **background process**, it's a serialized version of the command object.
-
-```javascript
-// looks something like this
-```
 
 # Usage
 

@@ -2,7 +2,7 @@
 title: before:window:load Event
 ---
 
-The `before:window:load` event fires as the page begins to load, but before any of your applications JavaScript has executed. This fires at the exact same time as `cy.visit()` `onBeforeLoad` callback. Useful to modify the window on a page transition.
+The `before:window:load` event fires as the page begins to load, but before any of your application's JavaScript has executed. This fires immediately after the `cy.visit()` `onBeforeLoad` callback. Useful to modify the window on a page transition.
 
 # Environment
 
