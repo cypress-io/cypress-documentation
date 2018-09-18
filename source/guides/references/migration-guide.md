@@ -55,7 +55,7 @@ Various events have been renamed to maintain a more consistent format. If you li
 - Rename `window:before:load` to `before:window:load`
 - Rename `window:before:unload` to `before:window:unload`
 
-In your test code...
+For example, in your test code...
 
 ```javascript
 Cypress.on('test:before:run', () => {
@@ -67,7 +67,7 @@ cy.on('window:before:load', () => {
 })
 ```
 
-...should become:
+...should be changed to:
 
 ```javascript
 Cypress.on('before:test:run', () => {

@@ -39,7 +39,7 @@ module.exports = (on, config) => {
 
 # Examples
 
-We've have three preprocessors as examples. These are fully functioning preprocessors.
+We have created three preprocessors as examples. These are fully functioning preprocessors.
 
 The code contains comments that explain how it utilizes the preprocessor API.
 
@@ -49,7 +49,7 @@ The code contains comments that explain how it utilizes the preprocessor API.
 
 # Recipes
 
-We've also have some recipes showing how to utilize these preprocessors.
+We also have some recipes showing how to utilize these preprocessors.
 
 Here are two recipes using both webpack and browserify to write your tests in TypeScript.
 
