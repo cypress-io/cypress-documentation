@@ -63,5 +63,5 @@ it('redirects to another page on click', function (done) {
 # See also
 
 - {% url `before:window:load` before-window-load-event %}
-- {% url `window:load` window-load %}
-- {% url `window:unload` window-unload %}
+- {% url `window:load` window-load-event %}
+- {% url `window:unload` window-unload-event %}
