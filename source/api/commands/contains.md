@@ -1,6 +1,5 @@
 ---
 title: contains
-
 ---
 
 Get the DOM element containing the text. DOM elements can contain *more* than the desired text and still match. Additionally, Cypress {% urlHash 'prefers some DOM elements' Notes %} over the deepest element found.
@@ -31,8 +30,8 @@ cy.contains('Hello')              // Yield first el in document containing 'Hell
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.title().contains('My App')        // Errors, 'title' does not yield DOM element
-cy.getCookies().contains('_key')     // Errors, 'getCookies' does not yield DOM element
+cy.title().contains('My App')     // Errors, 'title' does not yield DOM element
+cy.getCookies().contains('_key')  // Errors, 'getCookies' does not yield DOM element
 ```
 
 ## Arguments
@@ -106,7 +105,7 @@ cy.get('form').contains('submit the form!').click()
 
 ***Find the first element containing a number***
 
-Even though the `<span>` is the deepest element that contains a "4", Cypress automatically yields `<button>` elements over spans.
+Even though the `<span>` is the deepest element that contains a "4", Cypress automatically yields `<button>` elements over spans because of its {% urlHash 'preferred element order' Preferences %}.
 
 ```html
 <button class="btn btn-primary" type="button">
@@ -142,9 +141,9 @@ cy.contains(/^b\w+/)
 
 Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example below all contain "apples".
 
-Normally Cypress would return the first `<li>` since that is the *deepest* element that contains: "apples"
+Normally Cypress would return the first `<li>` since that is the *deepest* element that contains "apples".
 
-To override the element that is yielded, we can pass 'ul' as the selector.
+To override the element that is yielded we can pass 'ul' as the selector.
 
 ```html
 <html>
@@ -163,11 +162,33 @@ To override the element that is yielded, we can pass 'ul' as the selector.
 cy.contains('ul', 'apples')
 ```
 
+***Keeping the form as the subject***
+
+Here's an example that uses the selector to ensure that the `<form>` remains the {% url subject introduction-to-cypress#Subject-Management %} for future chaining.
+
+```html
+<form>
+  <div>
+    <label>name</label>
+    <input name="name" />
+  </div>
+  <button type="submit">Proceed</button>
+</form>
+```
+
+```javascript
+cy.get('form')                  // yields <form>...</form>
+  .contains('form', 'Proceed')  // yields <form>...</form>
+  .submit()                     // yields <form>...</form>
+```
+
+Without the explicit selector the subject would change to be the `<button>`. Using the explicit selector ensures that chained commands will have the `<form>` as the subject.
+
 # Notes
 
 ## Scopes
 
-`.contains()` acts differently whether it's starting a series of commands or being chained off of an existing.
+`.contains()` acts differently whether it's starting a series of commands or being chained off an existing series.
 
 ***When starting a series of commands:***
 
@@ -240,12 +261,14 @@ cy.get('#main').contains('Jane Lane')
 
 ***Element preference order***
 
-`.contains()` will always prefer elements higher in the tree when they are:
+`.contains()` defaults to preferring elements higher in the tree when they are:
 
 - `input[type='submit']`
 - `button`
 - `a`
 - `label`
+
+Cypress will ignore this element preference order if you pass a selector argument to `.contains()`.
 
 ***Favor of `<button>` over other deeper elements***
 

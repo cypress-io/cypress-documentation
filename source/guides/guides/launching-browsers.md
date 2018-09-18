@@ -32,7 +32,7 @@ By default, when running {% url '`cypress run`' command-line#cypress-run %} from
 
 ### You can also launch Electron headed:
 
-```bash
+```shell
 cypress run --headed
 ```
 
@@ -44,7 +44,7 @@ All Chrome* flavored browsers will be detected and are supported.
 
 ### You can launch Chrome browsers:
 
-```bash
+```shell
 cypress run --browser chrome
 ```
 

@@ -10,6 +10,20 @@
 
   if (!toc) return
 
+  // override MenuSpy's .tick implementation because it incorrectly
+  // calculates the current scroll offset and doesn't handle the
+  // case where the user is right at the top of the document.
+  MenuSpy.prototype.tick = function tick () {
+    var fromTop = this.currScrollTop + headerHeight;
+    var inViewElms = this.scrollItems.filter(function (item) {
+      return item.offset < fromTop;
+    });
+    var elementInView = (inViewElms.length > 0)
+      ? inViewElms.pop()
+      : this.scrollItems[0];
+    this.activateItem(elementInView)
+  };
+
   /* global MenuSpy */
   var ms = new MenuSpy(tocInner)
 

@@ -1,6 +1,5 @@
 ---
 title: Dashboard Service
-
 ---
 
 {% note info %}
@@ -15,17 +14,19 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 # Overview
 
-### The Dashboard allows you to:
+***The Dashboard allows you to:***
 
-- See the number of failed, pending and passing tests.
+- See the number of failed, passing, pending and skipped tests.
 - Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail or when using {% url `.screenshot()` screenshot %}.
+- View screenshots taken when tests fail or when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a video clip at the point of test failure.
+- See how fast your spec files ran within CI including whether they were run in parallel.
+- See related groupings of tests.
 - Manage who has access to your recorded test data.
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-### See Tests Runs in the Test Runner
+***See Tests Runs in the Test Runner***
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -60,7 +61,7 @@ To set up your project to record, you must use the {% url "Test Runner" test-run
 Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
 
-### To set up a project to record:
+***To set up a project to record:***
 
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
@@ -97,11 +98,11 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 ## Identification
 
-### Project ID
+***Project ID***
 
 Once you set up your project to record, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
 
-### The `projectId` is a 6 character string in your `cypress.json`:
+***The `projectId` is a 6 character string in your `cypress.json`:***
 
 ```json
 {
@@ -109,13 +110,19 @@ Once you set up your project to record, we generate a unique `projectId` for you
 }
 ```
 
-This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**. We recommend that you check your `cypress.json` including the `projectId` into source control.
+This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
-### Record Key {% fa fa-key %}
+We recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
+
+```shell
+$ export CYPRESS_PROJECT_ID={projectId}   # replace {projectId} with your actual projectId
+```
+
+***Record Key {% fa fa-key %}***
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
-### A record key is a GUID that looks like this:
+***A record key is a GUID that looks like this:***
 
 ```text
 f4466038-70c2-4688-9ed9-106bf013cd73
@@ -125,7 +132,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 {% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
-### Authentication
+## Authentication
 
 Cypress uses your `projectId` and *Record Key* together to uniquely identify projects.
 
@@ -169,27 +176,59 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-### Run Details
+***Run Details***
 
 Details of each run are displayed including:
 
 - The number of skipped, pending, passing, and failing tests.
-- The GitHub branch, author, commit sha and commit message associated with the run (if any)
-- The time the run started and ended.
-- What Continuous Integration the run ran in (if any)
+- The GitHub branch, pull request, author, commit sha and commit message associated with the run (if any)
+- The times the run, each spec file, and test started and ended.
+- What Continuous Integration the run ran in (if any) and its CI id and url.
 - The operating system and version
-- The browser and version 
+- The browser and version
 - The Cypress version
 
-![run details](/img/dashboard/run-details.png)
+{% img /img/dashboard/run-details.png "run-details" %}
+
+### {% fa fa-file-code-o fa-fw %} Spec Files
+
+You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
+
+***Timeline View***
+
+The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in {% url "parallel" parallelization %}.
+
+{% img /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
+
+***Bar Chart View***
+
+The Bar Chart View charts the lengths of each spec file. This view is helpful to determine which spec files or tests are running longer than others.
+
+{% img /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
+
+***Jump to failed tests***
+
+If you had any failed tests, you can hover over the spec chart and click on the link to the failed test to go directly to its error message and stack trace.
+
+{% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
 
 ### {% fa fa-code fa-fw %} Standard Output
 
-Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
-You will also see a summary at the bottom indicating the files, screenshots, or videos that were uploaded during the recording.
+You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
-![output](/img/dashboard/standard-output-of-recorded-test-run.png)
+{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output" %}
+
+***{% fa fa-picture-o fa-fw %} Screenshots***
+
+All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here.
+
+***{% fa fa-video-camera fa-fw %} Videos***
+
+The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
+
+{% img /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
 ### {% fa fa-exclamation-triangle fa-fw %} Test Failures
 
@@ -202,29 +241,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 - **Screenshot:** Any screenshots taken during the test.
 - **Video:** The recorded video scrubbed to the point of failure in the test.
 
-![failures](/img/dashboard/failures-of-recorded-run.png)
-
-### {% fa fa-picture-o fa-fw %} Screenshots
-
-All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `.screenshot()` screenshot %} command will show up here.
-
-### {% fa fa-video-camera fa-fw %} Videos
-
-The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
-
-![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
-
-### {% fa fa-file-code-o fa-fw %} Spec Files
-
-You can see the result of each spec file that ran within **Specs**.
-
-![Specs tab](/img/dashboard/spec-tab.png)
-
-### {% fa fa-clock-o fa-fw %} Spec & Test Durations
-
-The duration that each spec and test ran is displayed in **Insights**.
-
-![Insights tab](/img/dashboard/insights-spec-durations.png)
+{% img /img/dashboard/failures-of-recorded-run.png "failure tab" %}
 
 # Organizations
 
@@ -232,7 +249,7 @@ Organizations are used to group projects and manage access to those projects.
 
 ![Organizations](/img/dashboard/organizations-listed-in-dashboard.png)
 
-### With organizations you can:
+***With organizations you can:***
 
 - Create projects
 - Invite users
@@ -240,19 +257,19 @@ Organizations are used to group projects and manage access to those projects.
 
 Once out of beta, organizations will also display usage and allow you to handle billing.
 
-## Create
+## Create Org
 
 You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by going to the **Organizations** tab and clicking **{% fa fa-plus %} Add Organization**.
 
 ![Add Organization dialog](/img/dashboard/add-organization-dialog.png)
 
-## Personal orgs
+## Personal Orgs
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
 
 ## Manage users
 
-### Inviting users
+***Inviting users***
 
 You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
@@ -265,7 +282,7 @@ You can invite users to Cypress from the {% url 'Dashboard Service' https://on.c
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-### User roles
+***User roles***
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -273,7 +290,7 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-### User requests
+***User requests***
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
 

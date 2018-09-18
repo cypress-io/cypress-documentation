@@ -2,7 +2,101 @@
 title: Changelog
 ---
 
-## 3.0.2
+# 3.1.0
+
+*Released 8/13/2018*
+
+**Summary:**
+
+- Cypress can now run tests in parallel across multiple virtual machines, or can be parallelized on a single machine. Cypress will automatically figure out, detect, and load balance all of your specs in the fastest and most efficient way possible. There is no configuration other than passing a `--parallel` flag and spinning up multiple machines on your CI provider. From our experiments you can expect to see approximately 40% reduction in overall run time **per machine** you add. However, attempting to run in parallel on a single machine requires server grade hardware with dozens (or even hundreds) of CPU's and GB of RAM to run efficiently. A much better and simpler approach is to use a cluster of docker containers that are all isolated from each other. Any standard CI service (CircleCI, TravisCI, etc) comes with the ability to do this. We automatically tap into their environment variables to make parallelization possible without you having to configure anything.
+- Beyond parallelization, you now have the ability to group multiple runs with each other so that they show up together (grouped) in the Dashboard. This enables you to test different applications, groups of specs, or different environments (like development, staging, production) and see all of the results together. We know how important cross browser testing is to everyone, so we built this to lead directly into aggregating the results of multiple browsers into a single run.
+- The Dashboard Service has been updated to show you more visual information about what happened during a run. You can see how specs were parallelized and you can calculate the effect of adding or removing machines to help reduce the overall run time.
+
+**Features:**
+
+- `cypress run` accepts a new {% url "`--parallel`" command-line#cypress-run-parallel %} flag to run specs in parallel. Fixes {% issue 1690 %} and {% issue 64 %} and {% issue 2297 %}.
+- `cypress run` accepts a new {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag to group multiple spec files within a single run. Fixes {% issue 2169 %}
+- `cypress run` accepts a new {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %} flag. Fixes {% issue 2153 %}.
+
+**Bugfixes:**
+
+- We've finally tracked down the source of specs "hanging" and failing to start when running Electron. We finally tracked it down to a bug in Electron itself with setting `menu` when using offscreen rendering. Fixes {% issue 2322 %} and {% issue 2294 %} and {% issue 1235 %} and {% issue 1333 %}.
+- Clicking on svg elements is now working. 3.0.2 introduced a bug that would throw an 'illegal invocation' error. Fixes {% issue 2245 %} and {% issue 2252 %} and {% issue 2258 %} and {% issue 2277 %} and {% issue 2288 %}.
+- Fixed a regression in `3.0.2` that caused typing `{enter}` not to submit a form when there were `<button>` elements other than `type='submit'`. Fixes {% issue 2261 %} and {% issue 2326 %}.
+- Fixed a small visual bug where failed commands were not aligned to other commands. Fixes {% issue 2314 %}.
+- Fixes a race condition where async electron browser commands came in after the renderer had been destroyed, causing failures. Fixes {% issue 2321 %}.
+
+**Misc**
+
+- When recording to the Dashboard Service, we now provide estimated durations per spec directly within the standard output, as long as the spec has had enough run history for this to be determined. Fixes {% issue 2276 %}.
+- When using the new {% url "`--parallel`" command-line#cypress-run-parallel %} or {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} feature, we now visually indicate that to you in the standard output when recording. Fixes {% issue 2275 %}.
+- We have added support for more CI providers to automatically detect and show more relevant information in the Dashboard, instead of showing 'Unknown'. Fixes {% issue 2146 %}.
+- We have added better checks and reliability for detecting runs in Jenkins. Fixes {% issue 1990 %}.
+- The built in {% url "`cypress-browserify-preprocessor`" https://github.com/cypress-io/cypress-browserify-preprocessor %} was bumped to `1.1.0`. This supports more JavaScript features by default, including async/await, object rest spread, and class properties. Fixes {% issue 2254 %}.
+- {% url "`cypress run`" command-line#cypress-run %} now creates a new browser profile per run per browser, but keeps the same browser profile for interactive mode with {% url "`cypress open`" command-line#cypress-open %}. This means you can run Cypress locally over multiple processes and the browser profiles will not conflict with each other. Fixes {% issue 1566 %}.
+- The Desktop-GUI has been updated to get the new routes provided by the Cypress API for runs. Fixes {% issue 2189 %}.
+- Cypress now retries multiple times (with a backoff strategy) when communicating with our API fails while recording runs. This will provide better feedback in situations when the API is temporarily unavailable. Fixes {% issue 1590 %}.
+- When Cypress retries due to an API timeout or failure it now displays a very nice message indicating to you the delay and number of retries left. Fixes {% issue 2280 %}.
+- We've added parallelization to our own internal tests for the driver and the desktop-gui. We've been able to reduce the number of concurrent instances our tests use by 4, and shaved about 6 minutes off of each build. Faster with less resources. Fixes {% issue 2325 %}.
+
+**Documentation Changes:**
+
+- {% url 'Added `Parallelization` doc.' parallelization %}
+- {% url 'Update `Dashboard Service` doc with new screenshots and run sections.' dashboard-service %}
+- {% url 'Update `Command Line` doc with new flags and alphabetized flags.' command-line %}
+
+# 3.0.3
+
+*Released 7/30/2018*
+
+**Bugfixes:**
+
+- Reverted the Chrome argument that disabled `RootLayerScrolling` which was used to prevent the application under test from "shaking" due to a bug in versions 66 and 67. This workaround inadvertently created a different and much more severe bug in Chrome 68 that would miscalculate pointer coordinates. This led to Cypress giving confusing errors about elements being covered up on action. This is still a bug in Chrome, and is fixed in Canary but has not yet been released to the stable Chrome 68 channel. Nevertheless, removing the `RootLayerScrolling` flag does fix it. We did several experiments to try to ensure that the "shaking" behavior does not exhibit itself in Chrome 68. We have limited the `--disable-blink-features=RootLayerScrolling` flag to Chrome 66 and Chrome 67. Fixes {% issue 2223 %} and {% issue 2215 %} and {% issue 2037 %}.
+- Fixed another bug with Chrome that caused the `chromeWebSecurity: false` option to not be respected. This was due to Chrome progressively rolling out trials of a new option that attempts to isolate sites (and iframes) in their own child process if their origins are different. Fixes {% issue 1951 %} and {% issue 2001 %} and {% issue 715 %}.
+- Fixed Cypress hanging in CI due to excessive and unnecessary globbing. We finally tracked down this issue which made it appear as if Cypress was "hanging" after closing a spec file and then attempting to open the next one. Fixes {% issue 2183 %} and {% issue 1905 %} and {% issue 1912 %}.
+- We are now properly serializing nested object arguments when using the {% url "Module API" module-api %} via `cypress.open()` or `cypress.run()`. Passing nested objects in `reporterOptions` now works correctly. This is especially useful when using `mocha-multi-reporters`. In addition to fixing the {% url "Module API" module-api %}, we are now also properly handling nested arguments from the {% url "Command Line" command-line %}. In order to pass nested objects within CLI params you must pass stringified JSON. This is useful for properties such as `blacklistHosts`. Fixes {% issue 1348 %} and {% issue 1357 %} and {% issue 2221 %}.
+- Fixed a bug causing screenshots saved via {% url "`cy.screenshot()`" screenshot %} to be in different folders when you ran using {% url "`cypress open`" command-line#cypress-open %}  vs {% url "`cypress run`" command-line#cypress-run %} . Fixes {% issue 2091 %}.
+- Fixed bugs with Electron losing focus when running headlessly via {% url "`cypress run`" command-line#cypress-run %} after navigation. Now the browser will always act as if it is focused no matter what and in all situations when running headlessly. If you were seeing focus related problems when running headlessly, this should fix them. Fixes issue {% issue 2190 %}.
+- Fixed using when using {% url "`cy.click()`" click %} on an element that bound to the `focus` event while the browser was currently *out of focus*. We have now normalized **all focus and blur events** to behave the same as if the browser is always in focus. This should fix the other batch of `blur` and `focus` issues that users have been experiencing. Fixes {% issue 549 %} and {% issue 2198 %}.
+- Fixed the vast majority of known issues with {% url "`.type()`" type %}. Fixes {% issue 1241 %}.
+- Using {% url "`.type()`" type %} on an input of type `email` or `number` will no longer fire unnecessary additional `blur` and `focus` events. Fixes {% issue 2210 %}.
+- Fixed {% url "`.type()`" type %} breaking on chains when passing the same `options` references. Fixes {% issue 365 %}.
+- Fixed an issue with {% url "`.clear()`" clear %} not behaving the same as `cy.type('{selectall}{backspace}')`. Fixes {% issue 420 %}.
+- Fixed a bug with issuing an additional `blur` and `click` event when chaining `.clear().type(...)`. Fixes {% issue 593 %}.
+- Fixed many issues with typing into `[contenteditable]` elements. WYSIWYG, {% url "Draft.js" https://draftjs.org/ %} based, and other HTML editors now work correctly. Fixes {% issue 596 %} and {% issue 1686 %} and {% issue 2096 %}.
+- The caret now correctly moves on `[contenteditable]` elements. Fixes {% issue 1108 %}.
+- Fixed {% url "`.type()`" type %} inserting a rogue `<br>` tag after the first letter in `[contenteditable]` elements. Fixes {% issue 1926 %}.
+- Fixed issue where change events with {% url "`.type()`" type %} would not fire correctly for many more situations and edge cases. Fixes {% issue 651 %}.
+- Fixed issues with typing into JS based text-mask plugins. Basically anything that would alter the `.value` in response to certain events now works correctly. Fixes {% issue 940 %} and {% issue 1684 %}.
+- Using {% url "`.clear()`" clear %} on an input with a `maxlength` attribute now works. Fixes {% issue 1002 %} and {% issue 2056 %}.
+- Fixed issues with {% url "`.type()`" type %} not firing the `change` event on `input[type=number]`. Fixes {% issue 1171 %}.
+- Fixed other event related issues with {% url "`.type()`" type %} that were not firing correctly. Fixes {% issue 1209 %}.
+- Fixed even more issues with {% url "`.type()`" type %} not inserting characters on `input[type=number]`. Fixes {% issue 1381 %}.
+- Fixed not being able to type negative numbers into `input[type=number]` elements. Fixes {% issue 2173 %}.
+- Fixed `selectionStart` and `selectionEnd` with {% url "`.type()`" type %} when using `{leftarrow}` or `{rightarrow}`. Fixes {% issue 1234 %}.
+- Fixed not being able to type into a `datetime-local` input. Fixes {% issue 1366 %}.
+- Calling {% url "`.focus()`" focus %} or {% url "`.blur()`" blur %} on {% url "`cy.window()`" window %} no longer fires blur events on the `activeElement` or causes it to become `body`. Fixes {% issue 2234 %}.
+- Using `cy.get('body').click()` now correctly changes the `activeElement` back to `body` and causes the existing `activeElement` to receive `blur`. Fixes {% issue 2236 %}.
+
+**Misc:**
+
+- We've loosened up the restrictions surrounding what we consider a typeable element. You can now type into inputs with invalid `type` attributes because the browser does still consider them regular `text` inputs and allows you to type into them. Fixes {% issue 586 %}.
+- Using `{uparrow}` or `{downarrow}` with {% url "`.type()`" type %} on an `input[type=number]` element now increments or decrements the number configured via the `step` attribute. Fixes {% issue 2110 %}.
+- Using `{uparrow}` or `{downarrow}` with {% url "`.type()`" type %} now correctly moves the cursor on `textarea` or `[contenteditable]` elements. Fixes {% issue 2187 %}.
+- You can now use {% url "`.focus()`" focus %} or {% url "`.blur()`" blur %} on `cy.get('body')`. Fixes {% issue 2235 %}.
+- Bumped the version in `junit` reporter dep from `1.12.1` to `1.17.0` which adds a few new features. Fixes {% issue 2238 %}.
+- Bumped deps that `npm audit` was yelling about. Fixes {% issue 1701 %}.
+- Runs showing up in the `Runs` tab now more closely match how they display in the Dashboard. Fixes {% issue 2060 %}.
+- Added more debug logs. Fixes {% issue 2108 %}.
+- When recording to the Dashboard we now more accurately collect commit details when it is missing from the local `git` data. Fixes {% issue 2129 %} and {% issue 2073 %}.
+- Updated build in example kitchen sink to `1.0.2`. Fixes {% issue 2139 %}.
+- Updated the json-schema describing `videoCompression`. Allowing it to be a boolean. Fixes {% issue 2140 %}.
+
+**Documentation Changes:**
+
+- {% url 'New "Module API" doc' module-api %}
+
+# 3.0.2
 
 *Released 6/28/2018*
 
@@ -10,7 +104,7 @@ title: Changelog
 
 - Screenshots taken with {% url "`cy.screenshot()`" screenshot %} on 2x DPI are now taken at the correct full size. Fixes {% issue 1857 %} and {% issue 2018 %}.
 - Windows users no longer exit with `EPIPE` errors when running `cypress run` in newer versions of node. Fixes {% issue 1841 %} and {% issue 2044 %}.
-- Fixed issue where applications programmatically stealing focus would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %}.
+- Fixed issue where applications programmatically stealing focus would lead to slow runs in Electron when running via `cypress run`. {% issue 1909 %} and {% issue 1892 %}.
 - Electron no longer reports the browser as out of focus when running via `cypress run`. Fixes {% issue 1939 %}.
 - Modified the `document.hasFocus()` method to return `true` if the top window (Cypress window) is in focus. This should now correctly match how your application behaves outside of Cypress. Fixes {% issue 1940 %}.
 - Fixed issue where Cypress would unnecessarily scroll when attempting to locate elements with `position: sticky`. Fixes {% issue 1475 %}.
@@ -27,8 +121,8 @@ title: Changelog
 - Fixed another Dashboard regression where an error would throw when recording tests and sending a large list of specs. Fixes {% issue 1901 %}.
 - Fixed issue where videos would not be recorded when an object was returned from `before:browser:launch` when in the Electron browser. Fixes {% issue 1992 %}.
 - Fixed an issue where Cypress would inject content into the `<header>` tag instead of the `<head>` tag. Fixes {% issue 2026 %}.
-- Fixed an oversight where a specific framebusting check was not being properly stripped and removed by the default config option {% url "`modifyObstructiveCode`" configuration#Browser %}. Fixes {% issue 2030 %}.
-- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %} and {% issue 2059 %}.
+- Fixed an oversight where a specific framebusting check was not being properly stripped and removed by the default config option {% url "`modifyObstructiveCode`" configuration#Browser %}. Fixes {% issue 2030 %} and {% issue 2059 %}.
+- Fixed icons visually shifting when tests were running in the Test Runner. Fixes {% issue 1983 %}.
 - Server sent events now *finally* work correctly in Cypress. Fixes {% issue 1440 %} and {% issue 1111 %}.
 - Time traveling snapshots now preserve the styles of empty `<style>` tags with programmatically inserted CSS rules. Fixes {% issue 1226 %}.
 
@@ -62,7 +156,7 @@ title: Changelog
 - {% url 'Added `Cypress.spec` doc.' spec %}
 - {% url 'Added `after:screenshot` plugin event doc.' after-screenshot-api %}
 
-## 3.0.1
+# 3.0.1
 
 *Released 5/30/2018*
 
@@ -73,7 +167,7 @@ title: Changelog
 - Closing the `Electron` browser and then opening `Chrome` no longer causes `cy.screenshot()` to fail. Fixes {% issue 1820 %}.
 - Fixed a bug with Windows users seeing crashes with `tty.getWindowSize is not a function`. Fixes {% issue 1815 %} and {% issue 1817 %}.
 
-## 3.0.0
+# 3.0.0
 
 *Released 5/29/2018*
 
@@ -138,7 +232,7 @@ title: Changelog
 - We now throw a descriptive error if an alias using {% url "`.as()`" as %} was defined starting with the `@` character. {% issue 1643 %}.
 - We now pass the `--disable-device-discovery-notifications` flag automatically. This should prevent Chromium browser from automatically trying to communicate with devices in your network, such as printers, while running tests. Fixes {% issue 1600 %}.
 - We now pass any reporter errors along and provide a stack if a custom reporter you've provided does not exist. Fixes {% issue 1192 %}.
-- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" command-line#Cypress-Module-API %}, just as you would from the command line. {% issue 1442 %}.
+- You can now pass a normal object to `cypress.open()` or `cypress.run()` through the {% url "Module API" module-api %}, just as you would from the command line. {% issue 1442 %}.
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes {% issue 1110 %} and {% issue 1591 %}.
 - Update type definitions for {% url `cy.screenshot()` screenshot %} to reflect new changes to command's options. Fixes {% issue 1753 %}.
 - The type definition for {% url `.filter()` filter %} now correctly supports a function argument.
@@ -172,7 +266,7 @@ title: Changelog
 - {% url 'Updated `Preprocessors` to reflect all ways `close` event could be triggered' dashboard-service %}
 - Updated use of "running headlessly" to more accurate "during `cypress run`"
 
-## 2.1.0
+# 2.1.0
 
 *Released 3/1/2018*
 
@@ -192,7 +286,7 @@ title: Changelog
 - {% url 'Updated `FAQ`' using-cypress-faq %}
 - {% url 'Updated `Introduction to Cypress`' introduction-to-cypress %}
 
-## 2.0.4
+# 2.0.4
 
 *Released 2/25/2018*
 
@@ -200,7 +294,7 @@ title: Changelog
 
 - The `cypress` npm package now has the correct `engines` set in `package.json`. This was accidentally getting overwritten and caused errors when `engineStrict` was set in environments using `node` older than `8.2.1`. Fixes {% issue 1373 %}.
 
-## 2.0.3
+# 2.0.3
 
 *Released 2/21/2018*
 
@@ -213,7 +307,7 @@ title: Changelog
 
 - The viewport dropdown helper in the Runner now displays string quoted JSON instead of an object literal. This better matches how you should write those options in `cypress.json`. Fixes {% issue 1350 %}.
 
-## 2.0.2
+# 2.0.2
 
 *Released 2/17/2018*
 
@@ -223,7 +317,7 @@ title: Changelog
 - Fixed an edge case when hooks such as `beforeEach` or `afterEach` threw an **identical** error message, Cypress would hang indefinitely and never finish running the tests. Fixes {% issue 674 %}.
 - Fixed bug when `Errors` that threw with no arguments: `throw new Error()` and had their messages appended would duplicate the message over and over again. Fixes {% issue 1338 %}.
 
-## 2.0.1
+# 2.0.1
 
 *Released 2/16/2018*
 
@@ -232,7 +326,7 @@ title: Changelog
 - Using {% url "`cy.contains()`" contains %} with a regexp argument is now properly escaped. Fixes {% issue 1322 %}.
 - Fixed a runaway regexp causing large `.js` files to take dozens of seconds to process. This was a regression caused by `2.0.0` with the new {% url "`modifyObstructiveCode`" configuration#Browser %} option. We've optimized the regexp and the performance is back to being almost identical to transparently passing responses through. Fixes {% issue 1330 %}.
 
-## 2.0.0
+# 2.0.0
 
 *Released 2/15/2018*
 
@@ -262,7 +356,7 @@ title: Changelog
   - Linux: `~/.cache/Cypress`
   - Windows: `%APPDATA%\Cypress\cy\production\browsers`
 
-## 1.4.2
+# 1.4.2
 
 *Released 2/4/2018*
 
@@ -285,7 +379,7 @@ title: Changelog
 - Added TypeScript `should/and` autocomplete and typings for Cypress events. Fixes {% issue 1187 %} and {% issue 1132 %}.
 - Upgrade deps. Fixes {% issue 1174 %}.
 
-## 1.4.1
+# 1.4.1
 
 *Released 12/26/2017*
 
@@ -304,7 +398,7 @@ title: Changelog
 - When developing on Cypress, we now start the process through the CLI to bring it into parity with how it works when used in production. Fixes {% issue 838 %}.
 - Upgraded various CLI dependencies that were flagged for security warnings. There wasn't an actual security problem - just static analyzers complaining. Fixes {% issue 1103 %}.
 
-## 1.4.0
+# 1.4.0
 
 *Released 12/19/2017*
 
@@ -319,7 +413,7 @@ title: Changelog
 - Some minor improvements to TypeScript definitions around {% url "`.then()`" then %}. Fixes {% issue 1084 %}.
 - The Selector Playground now works correctly in the Electron browser. Fixes {% issue 1086 %}.
 
-## 1.3.0
+# 1.3.0
 
 *Released 12/17/2017*
 
@@ -334,7 +428,7 @@ Documentation Changes:
 - {% url 'Updated `Plugins Guide`' plugins-guide %}
 - {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
 
-## 1.2.0
+# 1.2.0
 
 *Released 12/14/2017*
 
@@ -366,7 +460,7 @@ Documentation Changes:
 - {% url 'Updated `Plugins Guide`' plugins-guide %}
 - {% url 'Updated `Writing a Plugin API`' writing-a-plugin %}
 
-## 1.1.4
+# 1.1.4
 
 *Released 12/6/2017*
 
@@ -383,7 +477,7 @@ Documentation Changes:
 - We now launch Chrome with `--no-sandbox` and `--disable-gpu` options in Linux. We will soon release a new plugin event that enables you to modify the browser arguments we use by default. This *shouldn't* cause issues with existing Linux users, and instead it should fix many CI setups that were using our Docker containers or your own home grown installed Chrome setup. Fixes {% issue 1021 %} and {% issue 1020 %}.
 - Removed several aliases from our browser detector. These were not implemented properly and not needed - and thus only caused indirection. Fixes {% issue 1023 %}.
 
-## 1.1.3
+# 1.1.3
 
 *Released 12/3/2017*
 
@@ -408,7 +502,7 @@ Documentation Changes:
 - {% url 'Added `Cypress.arch`' arch %}
 - {% url 'Added `Cypress.platform`' platform %}
 
-## 1.1.2
+# 1.1.2
 
 *Released 11/26/2017*
 
@@ -427,7 +521,7 @@ Documentation Changes:
 - {% url 'Added more video tutorials' tutorials %}
 - {% url 'Improved displaying list of Tutorials, Recipes, Applications, and Docker examples' recipes %}
 
-## 1.1.1
+# 1.1.1
 
 *Released 11/20/2017*
 
@@ -436,7 +530,7 @@ Documentation Changes:
 - Fixed a bug swallowing plugin errors due to undefined `reject` function. Fixes {% issue 934 %}.
 - {% url "`.type()`" type %} now respects the `maxlength` attribute and will not type beyond it. Fixes {% issue 928 %}.
 
-## 1.1.0
+# 1.1.0
 
 *Released 11/19/2017*
 
@@ -464,7 +558,7 @@ Documentation Changes:
 **Misc:**
 
 - There is a new `--global` option useful with {% url "`cypress open`" command-line#cypress-open %} to force Cypress to open in global mode. This is helpful when you have multiple nested Cypress projects but only want to install Cypress once in the root project. Fixes {% issue 889 %}.
-- The {% url "module API" command-line#Cypress-Module-API %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
+- The {% url "module API" module-api %} accepts `reporterOptions` as an object literal like it does for the `env` and `config` properties. Fixes {% issue 899 %}.
 
 **Documentation Changes:**
 
@@ -478,7 +572,7 @@ Documentation Changes:
 - {% url 'Updated "Using Cypress FAQ"' using-cypress-faq %}
 - {% url 'Updated "Best Practices"' best-practices %}
 
-## 1.0.3
+# 1.0.3
 
 *Released 10/29/2017*
 
@@ -509,7 +603,7 @@ Documentation Changes:
 - {% url 'Updated "Best Practices"' best-practices %}
 - {% url 'Updated "FAQ Usage"' using-cypress-faq %}
 
-## 1.0.2
+# 1.0.2
 
 *Released 10/13/2017*
 
@@ -529,7 +623,7 @@ Documentation Changes:
 - {% url 'Added examples for "Catalog of Events"' catalog-of-events %}
 - {% url 'Added / Updated FAQ for "Using Cypress"' using-cypress-faq %}
 
-## 1.0.1
+# 1.0.1
 
 *Released 10/10/2017*
 
@@ -537,7 +631,7 @@ Documentation Changes:
 
 - Prevent error during verification in the CLI on Linux / OSX. Also makes terminal colors work again. Fixes {% issue 717 %} and {% issue 718 %}.
 
-## 1.0.0
+# 1.0.0
 
 *Released 10/09/2017*
 
@@ -640,7 +734,7 @@ Documentation Changes:
 - Running `npm install --save-dev cypress` will automatically download the CLI + binary.
 - There is no longer a separate `cypress install` step, but this command still exists if you want to **reinstall** the binary for whatever reason.
 - No need to use `cypress-cli` anymore to manage Cypress versions. **You will need to uninstall the `cypress-cli` by running `npm uninstall -g cypress-cli`**.
-- The {% url "`cypress` module can be `required`" command-line#Cypress-Module-API %} in your own node projects to programmatically control Cypress the same way you would from the command line.
+- The {% url "`cypress` module can be `required`" module-api %} in your own node projects to programmatically control Cypress the same way you would from the command line.
 - We've updated the installation experience to account for running locally and in CI so it doesn't generate a ton of logs in `stdout`.
 - The `CYPRESS_VERSION` environment variable is gone because now the version of the binary is controlled by the npm module version. If for some reason you want to download the binary of a different version you can use the new `CYPRESS_BINARY_VERSION` environment variable - but you'll get a warning message when the versions don't match.
 - If you install cypress globally using `npm install -g cypress` we will warn you that you should check this in as a `devDependency` but Cypress will continue to work in "global mode".
@@ -1804,7 +1898,7 @@ Known Issues:
 
 **Features:**
 
-- All commands now retry if the the associated element is disabled until the element is no longer disabled. If the command times out a specific error message is now thrown.
+- All commands now retry if the associated element is disabled until the element is no longer disabled. If the command times out a specific error message is now thrown.
 - {% url `cy.server()` server %} and {% url `cy.route()` route %} now take an optional `onAbort` callback which fires anytime an XHR is aborted.
 
 **Bugfixes:**

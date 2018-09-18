@@ -17,7 +17,7 @@ title: Installing Cypress
 Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
 - **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
-- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8
+- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
 - **Windows** 7+, only 32bit binaries are provided for Windows.
 
 # Installing
@@ -99,7 +99,7 @@ $(npm bin)/cypress open
 
 **Or by using `npx`**
 
-**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2` or can be installed separately.
+**note**: {% url "npx" https://www.npmjs.com/package/npx %} is included with `npm > v5.2` or can be installed separately.
 
 ```shell
 npx cypress open
@@ -198,7 +198,7 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 ```
 
 ```shell
-CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
+CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
 {% note warning %}
@@ -209,12 +209,24 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
 
-`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary. 
+
+### Mac
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
-# linux: 'Cypress/Cypress'
-# Windows: 'Cypress/Cypress.exe'
+```
+
+### Linux
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
+```
+
+### Windows
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 ```
 
 {% note warning %}

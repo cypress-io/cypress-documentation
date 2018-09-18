@@ -21,7 +21,7 @@ You can {% url "check out the API docs here" writing-a-plugin %}.
 
 ## Configuration
 
-With plugins, you can programmatically alter the resolved configuration and environment variables that come from `cypress.json`, `cypress.env.json`, the CLI, or system environment variables.
+With plugins, you can programmatically alter the resolved configuration and environment variables that come from `cypress.json`, {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, the CLI, or system environment variables.
 
 This enables you to do things like:
 
