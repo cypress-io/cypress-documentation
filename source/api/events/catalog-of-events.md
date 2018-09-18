@@ -3,7 +3,7 @@ title: Catalog of Events
 containerClass: catalog-of-events
 ---
 
-Cypress emits a series of events as it runs. Some occur in the browser and some occur in the {% url "background process" background-process %}.
+Cypress emits a series of events as it runs. Some occur in the {% urlHash "browser" Browser-Events %} and some occur in the {% url "background process" background-process %}.
 
 These events are useful not only to control your application's behavior, but also for debugging purposes.
 
@@ -18,11 +18,11 @@ Here are some examples you can do with these events:
 
 Some events run in the {% urlHash "browser" Browser-Events %}, some run in the {% urlHash "background process" Background-Events %}, and some run in both.
 
-Event | Browser | Background
+Event | {% urlHash "Browser" Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
 {% url `after:run` after-run-event %} | | {% fa fa-check-circle green %}
-{% url `after:spec` after-spec-event %} | | {% fa fa-check-circle green %}
 {% url `after:screenshot` after-screenshot-event %} | | {% fa fa-check-circle green %}
+{% url `after:spec` after-spec-event %} | | {% fa fa-check-circle green %}
 {% url `after:test:run` after-test-run-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 {% url `before:browser:launch` before-browser-launch-event %} | | {% fa fa-check-circle green %}
 {% url `before:run` before-run-event %} | | {% fa fa-check-circle green %}

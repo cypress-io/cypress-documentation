@@ -1,12 +1,14 @@
 ---
-title: after:spec  Event
+title: after:spec
 ---
 
 The `after:spec` event fires after a spec file and its tests run.
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `after:spec` after-spec-event %} | | {% fa fa-check-circle green %}
 
 # Arguments
 

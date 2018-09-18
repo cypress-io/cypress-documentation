@@ -1,12 +1,14 @@
 ---
-title: viewport:changed Event
+title: viewport:changed
 ---
 
 The `viewport:changed` event fires whenever the viewport changes via a `cy.viewport()` or naturally when Cypress resets the viewport to the default between tests. Useful for debugging purposes.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `viewport:changed` viewport-changed-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

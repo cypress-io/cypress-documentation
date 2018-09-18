@@ -1,12 +1,14 @@
 ---
-title: uncaught:exception Event
+title: uncaught:exception
 ---
 
 The `uncaught:exception` event fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `uncaught:exception` uncaught-exception-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

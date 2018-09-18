@@ -1,12 +1,14 @@
 ---
-title: log:added Event
+title: log:added
 ---
 
 The `log:added` event fires whenever a command emits this event so it can be displayed in the Command Log. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `log:added` log-added-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

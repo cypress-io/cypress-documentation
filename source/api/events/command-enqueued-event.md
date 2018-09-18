@@ -1,12 +1,14 @@
 ---
-title: command:enqueued Event
+title: command:enqueued
 ---
 
 The `command:enqueued` event fires when a `cy` command is first invoked and enqueued to be run later. Useful for debugging purposes if you're confused about the order in which commands will execute.
 
 # Environment
 
-Occurs in the **browser** and in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `command:enqueued` command-enqueued-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

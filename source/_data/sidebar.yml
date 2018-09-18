@@ -150,8 +150,8 @@ api:
     promise: promise.html
   events:
     catalog-of-events: catalog-of-events.html
-    after-screenshot-event: after-screenshot-event.html
     after-run-event: after-run-event.html
+    after-screenshot-event: after-screenshot-event.html
     after-spec-event: after-spec-event.html
     after-test-run-event: after-test-run-event.html
     before-browser-launch-event: before-browser-launch-event.html

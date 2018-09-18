@@ -1,5 +1,5 @@
 ---
-title: after:screenshot event
+title: after:screenshot
 ---
 
 After a screenshot is taken, you can get details about the screenshot via the `after:screenshot` background event. This event is called whether a screenshot is taken with {% url `cy.screenshot()` screenshot %} or as a result of a test failure. The event is called after the screenshot image is written to disk.
@@ -8,7 +8,9 @@ This allows you to record those details or manipulate the image as needed. You c
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `after:screenshot` after-screenshot-event %} | | {% fa fa-check-circle green %}
 
 # Arguments
 

@@ -6,7 +6,9 @@ The `after:run` event fires after the run finishes.
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `after:run` after-run-event %} | | {% fa fa-check-circle green %}
 
 # Arguments
 

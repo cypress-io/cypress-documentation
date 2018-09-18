@@ -14,7 +14,9 @@ How you choose to organize your configuration and environment variables is up to
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `configuration` configuration-event %} | | {% fa fa-check-circle green %}
 
 # Usage
 

@@ -1,12 +1,14 @@
 ---
-title: command:start Event
+title: command:start
 ---
 
 The `command:start` event fires when Cypress begins actually running and executing your command. Useful for debugging and understanding {% url 'how the command queue is async' introduction-to-cypress#Commands-Are-Asynchronous %}.
 
 # Environment
 
-Occurs in the **browser** and in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `command:start` command-start-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

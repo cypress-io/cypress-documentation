@@ -1,5 +1,5 @@
 ---
-title: command:retry Event
+title: command:retry
 ---
 
 The `command:retry` event fires whenever a command begins its retrying routines. This is called on the trailing edge after Cypress has internally waited for the retry interval. When commands fail, the final error is the one that actually bubbles up to fail the test.
@@ -8,7 +8,9 @@ This is useful to understand **why** a command is retrying, and generally includ
 
 # Environment
 
-Occurs in the **browser** and in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `command:retry` command-retry-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

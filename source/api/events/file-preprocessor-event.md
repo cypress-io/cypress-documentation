@@ -1,5 +1,5 @@
 ---
-title: file:preprocessor Event
+title: file:preprocessor
 ---
 
 The `file:preprocessor` event allows you to modify how your spec files and support files are preprocessed for the browser.
@@ -12,7 +12,9 @@ A preprocessor also typically watches the source files for changes, processes th
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `file:preprocessor` file-preprocessor-event %} | | {% fa fa-check-circle green %}
 
 # Examples
 

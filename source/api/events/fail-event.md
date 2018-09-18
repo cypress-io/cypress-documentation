@@ -1,12 +1,14 @@
 ---
-title: fail Event
+title: fail
 ---
 
 The `fail` event fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `fail` fail-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

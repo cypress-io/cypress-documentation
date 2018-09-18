@@ -1,12 +1,14 @@
 ---
-title: before:run Event
+title: before:run
 ---
 
 The `before:run` event fires before the run starts.
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `before:run` before-run-event %} | | {% fa fa-check-circle green %}
 
 # Arguments
 

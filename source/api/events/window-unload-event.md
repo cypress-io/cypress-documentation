@@ -1,12 +1,14 @@
 ---
-title: window:unload Event
+title: window:unload
 ---
 
 The `window:unload` event fires when your application is has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `window:unload` window-unload-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

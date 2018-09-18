@@ -1,12 +1,14 @@
 ---
-title: command:end Event
+title: command:end
 ---
 
 The `command:end` event fires when Cypress finishes running and executing your command. Useful for debugging and understanding how commands are handled.
 
 # Environment
 
-Occurs in the **browser** and in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `command:end` command-end-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

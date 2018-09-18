@@ -1,12 +1,14 @@
 ---
-title: after:test:run Event
+title: after:test:run
 ---
 
 The `after:test:run` event fires after the test and all **afterEach** and **after** hooks run.
 
 # Environment
 
-Occurs in the **browser** and in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `after:test:run` after-test-run-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments Received
 

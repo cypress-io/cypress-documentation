@@ -1,5 +1,5 @@
 ---
-title: before:browser:launch Event
+title: before:browser:launch
 ---
 
 Before Cypress launches a browser, it gives you the ability to modify the arguments used to launch it.
@@ -10,7 +10,9 @@ The most common use case is adding your own chrome extension.
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `before:browser:launch` before-browser-launch-event %} | | {% fa fa-check-circle green %}
 
 # Arguments
 

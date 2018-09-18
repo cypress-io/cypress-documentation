@@ -1,12 +1,14 @@
 ---
-title: window:load Event
+title: window:load
 ---
 
 The `window:load` event fires after all your resources have finished loading after a page transition. This fires at the exact same time as a `cy.visit()` `onLoad` callback.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `window:load` window-load-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

@@ -1,12 +1,14 @@
 ---
-title: before:window:unload Event
+title: before:window:unload
 ---
 
 The `before:window:unload` event fires when your application is about to navigate away. The real event object is provided to you. Your app may have set a `returnValue` on the event, which is useful to assert on.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `before:window:unload` before-window-unload-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

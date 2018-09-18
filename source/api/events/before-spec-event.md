@@ -1,12 +1,14 @@
 ---
-title: before:spec Event
+title: before:spec
 ---
 
 The `before:spec` event fires before a spec file is run.
 
 # Environment
 
-Occurs only in the {% url "background process" background-process %}.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `before:spec` before-spec-event %} | | {% fa fa-check-circle green %}
 
 # Arguments
 

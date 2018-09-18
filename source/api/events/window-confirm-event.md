@@ -1,12 +1,14 @@
 ---
-title: window:confirm Event
+title: window:confirm
 ---
 
 The `window:confirm` event fires when your app calls the global `window.confirm()` method. Cypress will auto accept confirmations. Return `false` from this event and the confirmation will be cancelled.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `window:confirm` window-confirm-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

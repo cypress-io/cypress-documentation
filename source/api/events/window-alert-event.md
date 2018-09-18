@@ -1,12 +1,14 @@
 ---
-title: window:alert Event
+title: window:alert
 ---
 
 The `window:alert` event fires when your app calls the global `window.alert()` method. Cypress will auto accept alerts. You cannot change this behavior.
 
 # Environment
 
-Occurs only in the **browser**.
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `window:alert` window-alert-event %} | {% fa fa-check-circle green %} |
 
 # Arguments
 

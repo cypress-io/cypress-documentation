@@ -1,5 +1,5 @@
 ---
-title: task Event
+title: task
 ---
 
 The `task` event allows you to execute code in {% url "Node.js" https://nodejs.org %} in conjunction with {% url `cy.task()` task %}.
@@ -8,7 +8,13 @@ The `task` event allows you to execute code in {% url "Node.js" https://nodejs.o
 We do not recommend starting a web server using the `task` event. Read about {% url 'best practices' best-practices#Web-Servers %} here.
 {% endnote %}
 
-## Usage
+# Environment
+
+Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+--- | --- | ---
+{% url `task` task-event %} | | {% fa fa-check-circle green %}
+
+# Usage
 
 **{% fa fa-check-circle green %} Correct Usage**
 ```javascript
@@ -73,7 +79,7 @@ on('task', {
 
 # Examples
 
-### Read a JSON file's contents
+## Read a JSON file's contents
 
 {% note info %}
 This serves as a demonstration only. We recommend using {% url "`cy.fixture()`" fixture %} or {% url "`cy.readFile()`" readfile %} for a more robust implementation of reading a file in your tests.
@@ -102,7 +108,7 @@ on('task', {
 })
 ```
 
-### Seed a database
+## Seed a database
 
 ```javascript
 // in test
@@ -135,9 +141,9 @@ module.exports = (on, config) => {
 }
 ```
 
-## Options
+# Options
 
-### Change the timeout
+## Change the timeout
 
 You can increase the time allowed to execute the task, although *we do not recommend executing tasks that take a long time to exit*.
 
