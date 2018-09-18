@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* new viewport dimensions **(Object)**
+**{% fa fa-angle-right %} viewport** ***(String)***
+
+The new viewport dimensions.
 
 # Usage
 

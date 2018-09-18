@@ -10,9 +10,11 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 --- | --- | ---
 {% url `before:test:run` before-test-run-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
-# Arguments Received
+# Arguments
 
-* test attributes **(Object)**
+**{% fa fa-angle-right %} test** ***(Object)***
+
+Details of the test.
 
 # Usage
 

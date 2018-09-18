@@ -12,8 +12,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the error **(Object)**
-* mocha runnable **(Object)**
+**{% fa fa-angle-right %} error** ***(Object)***
+
+The error instance.
+
+**{% fa fa-angle-right %} runnable** ***(Object)***
+
+The Mocha runnable this failed on.
 
 # Usage
 

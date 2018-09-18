@@ -12,8 +12,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the element or window being scrolled **(Object)**
-* type of element scrolled ('element' | 'window' | 'container')
+**{% fa fa-angle-right %} el** ***(Object)***
+
+The element or `window` being scrolled
+
+**{% fa fa-angle-right %} type** ***('element'|'window'|'container')***
+
+The type of element being scrolled.
 
 # Usage
 

@@ -14,7 +14,10 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* retry details **(Object)**
+**{% fa fa-angle-right %} retry** ***(Object)***
+
+Details of the command retry.
+
 
 # Usage
 
@@ -32,7 +35,7 @@ Cypress.on('command:retry', (details) => {
   //     stack: 'AssertionError: expected \'#login\' to exist in the DOM',
   //     displayMessage: 'Expected to find element: \'#login\', but never found it.',
   //     actual: '#login',
-  //     expected: '#login'     
+  //     expected: '#login'
   //   }
   //   _name: "get"
   //   _runnable: Test {

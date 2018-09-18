@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* run details **(Object)**
+**{% fa fa-angle-right %} run** ***(Object)***
+
+Details of the run.
 
 # Usage
 

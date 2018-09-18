@@ -12,8 +12,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* spec **(Object)**
-* spec results **(Object)**
+**{% fa fa-angle-right %} spec** ***(Object)***
+
+Details of the spec file including name and path.
+
+**{% fa fa-angle-right %} results** ***(Object)***
+
+Details of the spec file's run results.
 
 # Usage
 

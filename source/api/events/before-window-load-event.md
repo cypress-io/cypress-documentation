@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the remote window **(Object)**
+**{% fa fa-angle-right %} window** ***(Object)***
+
+The remote window
 
 # Usage
 

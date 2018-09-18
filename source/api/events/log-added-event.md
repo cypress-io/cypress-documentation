@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* log attributes **(Object)**
+**{% fa fa-angle-right %} log** ***(Object)***
+
+The log attributes.
 
 # Usage
 

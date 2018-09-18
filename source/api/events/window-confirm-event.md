@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the confirmation text **(String)**
+**{% fa fa-angle-right %} text** ***(String)***
+
+The confirmation text.
 
 # Usage
 

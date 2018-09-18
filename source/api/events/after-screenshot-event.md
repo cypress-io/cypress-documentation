@@ -14,7 +14,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* screenshot details **(Object)**
+**{% fa fa-angle-right %} screenshot** ***(Object)***
+
+Details of the screenshot including dimensions, path names, and any screenshot options.
 
 # Usage
 

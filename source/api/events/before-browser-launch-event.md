@@ -16,8 +16,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* browser **(Object)**
-* args **(Array|Object)**
+**{% fa fa-angle-right %} browser** ***(Object)***
+
+Details of the browser including name, version, and path.
+
+**{% fa fa-angle-right %} args** ***(Array|Object)***
+
+Arguments passed to the browser. Arguments are different per browser, sometimes it is an Array, sometimes an Object.
 
 # Usage
 

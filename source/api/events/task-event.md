@@ -14,6 +14,12 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 --- | --- | ---
 {% url `task` task-event %} | | {% fa fa-check-circle green %}
 
+# Arguments
+
+**{% fa fa-angle-right %} args**
+
+The arguments originally passed to `cy.task()`
+
 # Usage
 
 **{% fa fa-check-circle green %} Correct Usage**

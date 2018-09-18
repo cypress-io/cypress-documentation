@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the new url **(String)**
+**{% fa fa-angle-right %} url** ***(String)***
+
+The new url.
 
 # Usage
 

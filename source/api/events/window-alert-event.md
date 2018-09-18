@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the alert text **(String)**
+**{% fa fa-angle-right %} text** ***(String)***
+
+The alert text.
 
 # Usage
 

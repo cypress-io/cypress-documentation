@@ -12,7 +12,9 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* the actual unload event **(Object)**
+**{% fa fa-angle-right %} event** ***(Object)***
+
+The `beforeunload` event.
 
 # Examples
 

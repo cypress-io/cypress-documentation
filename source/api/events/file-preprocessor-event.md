@@ -16,6 +16,12 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 --- | --- | ---
 {% url `file:preprocessor` file-preprocessor-event %} | | {% fa fa-check-circle green %}
 
+# Arguments
+
+**{% fa fa-angle-right %} file** ***(Object)***
+
+The file being processed.
+
 # Examples
 
 We've have three preprocessors as examples. These are fully functioning preprocessors.

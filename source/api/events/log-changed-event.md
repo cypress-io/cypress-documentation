@@ -12,12 +12,18 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* log attributes **(Object)**, whether Cypress is in interactive mode **(Boolean)**
+**{% fa fa-angle-right %} log** ***(Object)***
+
+The log attributes.
+
+**{% fa fa-angle-right %} interactiveMode** ***(Boolean)***
+
+Whether Cypress is in interactive mode.
 
 # Usage
 
 ```javascript
-Cypress.on('log:changed', (log) => {
+Cypress.on('log:changed', (log, interactiveMode) => {
   // log looks something like this:
   //  {
   //     name: 'get',

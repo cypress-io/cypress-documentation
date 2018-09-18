@@ -12,7 +12,10 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Arguments
 
-* spec **(Object)**
+**{% fa fa-angle-right %} spec** ***(Object)***
+
+Details of the spec file including name and paths.
+
 
 # Usage
 
