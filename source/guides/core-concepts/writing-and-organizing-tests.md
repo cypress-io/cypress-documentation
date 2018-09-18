@@ -93,7 +93,7 @@ To start writing tests for your app, simply create a new file like `app_spec.js`
 
 ## Background file
 
-Cypress runs a background Node.js process that you can utilize via the the background file (`cypress/background/index.js` by default).
+Cypress runs a background Node.js process that you can utilize via the the {% url "background file" configuration#Folders-Files %} (`cypress/background/index.js` by default).
 
 {% url "Read more about using the background process to extend Cypress behavior." background-process %}
 

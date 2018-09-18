@@ -41,7 +41,7 @@ Whenever you return an object from your `backgroundFile`, Cypress will take this
 
 If you don't return an object, then configuration will not be modified.
 
-Resolved values will show up in your Settings tab.
+Resolved values will show up in your Settings tab in the Test Runner.
 
 {% img /img/guides/background-configuration.png %}
 
@@ -69,7 +69,7 @@ module.exports = (on, config) => {
 }
 ```
 
-You could now swap out configuration + environment variables like so:
+You could now swap out configuration and environment variables like so:
 
 ```shell
 cypress run

@@ -6,7 +6,7 @@ title: Migration Guide
 
 ## pluginsFile renamed to backgroundFile
 
-The `pluginsFile` configuration property has been renamed to `backgroundFile`. 
+The `pluginsFile` configuration property has been renamed to {% url "`backgroundFile`" configuration#Folders-Files %}. In your `cypress.json` file...
 
 ```json
 {
@@ -14,7 +14,7 @@ The `pluginsFile` configuration property has been renamed to `backgroundFile`.
 }
 ```
 
-should become:
+...should be changed to:
 
 ```json
 {
@@ -24,7 +24,7 @@ should become:
 
 ## Default background file path changed
 
-The default path of the {% url 'background file' background-process %} (previously known as the plugins file) has been changed from `cypress/plugins/index.js` to `cypress/background/index.js`. If you don't explicitly set the `backgroundFile` to a custom path, you'll need to move your background file to the new default path.
+The default path of the {% url 'background file' background-process %} (previously known as the plugins file) has been changed from `cypress/plugins/index.js` to `cypress/background/index.js`. If you don't explicitly set the `backgroundFile` to a custom path, you'll need to move your background file to the new default path. In your `cypress` folder...
 
 ```text
 /cypress
@@ -35,7 +35,7 @@ The default path of the {% url 'background file' background-process %} (previous
     - index.js
 ```
 
-should become:
+...should be changed to:
 
 ```text
 /cypress
@@ -48,12 +48,14 @@ should become:
 
 ## Events renamed
 
-Various events have been renamed to a more consistent format. If you listen for any of the following events in your test code, you'll need to rename them.
+Various events have been renamed to maintain a more consistent format. If you listen for any of the following events in your test code, you'll need to rename them.
 
-- `test:before:run` renamed to `before:test:run`
-- `test:after:run` renamed to `after:test:run`
-- `window:before:load` renamed to `before:window:load`
-- `window:before:unload` renamed to `before:window:unload`
+- Rename `test:before:run` to `before:test:run`
+- Rename `test:after:run` to `after:test:run`
+- Rename `window:before:load` to `before:window:load`
+- Rename `window:before:unload` to `before:window:unload`
+
+In your test code...
 
 ```javascript
 Cypress.on('test:before:run', () => {
@@ -65,7 +67,7 @@ cy.on('window:before:load', () => {
 })
 ```
 
-should become:
+...should become:
 
 ```javascript
 Cypress.on('before:test:run', () => {

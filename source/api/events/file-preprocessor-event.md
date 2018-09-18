@@ -2,7 +2,7 @@
 title: file:preprocessor Event
 ---
 
-The `file:preprocessor` event allows you to modify how your spec files and support file are preprocessed for the browser.
+The `file:preprocessor` event allows you to modify how your spec files and support files are preprocessed for the browser.
 
 A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.
 
@@ -16,7 +16,7 @@ Occurs only in the {% url "background process" background-process %}.
 
 # Examples
 
-We've created three preprocessors as examples for you to look at. These are fully functioning preprocessors.
+We've have three preprocessors as examples. These are fully functioning preprocessors.
 
 The code contains comments that explain how it utilizes the preprocessor API.
 
@@ -26,7 +26,7 @@ The code contains comments that explain how it utilizes the preprocessor API.
 
 # Recipes
 
-We've also added some recipes showing how to utilize these preprocessors.
+We've also have some recipes showing how to utilize these preprocessors.
 
 Here are two recipes using both webpack and browserify to write your tests in TypeScript.
 
@@ -46,9 +46,7 @@ The Browserify Preprocessor handles:
 
 The exact default configuration options {% url 'can be found here' https://github.com/cypress-io/cypress-browserify-preprocessor#browserifyoptions %}.
 
-{% note info %}
-Are you looking to change the **default options** for Browserify?
-{% endnote %}
+{% note info "Are you looking to change the default options for Browserify?" %}
 
 Changing the Browserify options lets you:
 
@@ -57,10 +55,11 @@ Changing the Browserify options lets you:
 - Add support for CoffeeScript `2.x.x`
 
 Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
+{% endnote %}
 
 # Usage
 
-To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`backgroundFile`" configuration#Folders-Files %}:
+To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`backgroundFile`" configuration#Folders-Files %}.
 
 ```javascript
 // background file
@@ -82,7 +81,8 @@ module.exports = (on, config) => {
 
 > \*\* The built file is the file that is created by the preprocessor that will eventually be served to the browser.
 
-> If, for example, the source file is `spec.coffee`, the preprocessor should:
+If, for example, the source file is `spec.coffee`, the preprocessor should:
+
 1. Compile the CoffeeScript into JavaScript `spec.js`
 2. Write that JavaScript file to disk (example: `/Users/foo/tmp/spec.js`)
 3. Resolve with the absolute path to that file: `/Users/foo/tmp/spec.js`
@@ -114,7 +114,6 @@ The `file` object passed to the callback function is an {% url "Event Emitter" h
 When the running spec, the project, or the browser is closed while running tests, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript
-// example
 const watcher = fs.watch(filePath, /* ... */)
 
 file.on('close', () => {
@@ -127,7 +126,6 @@ file.on('close', () => {
 If watching for file changes, emit `rerun` after a file has finished being processed to let Cypress know to rerun the tests.
 
 ```javascript
-// example
 fs.watch(filePath, () => {
   file.emit('rerun')
 })
@@ -147,4 +145,4 @@ Use the following npm keywords:
 ]
 ```
 
-Feel free to submit your published plugins to our {% url "list of plugins" plugins %}.
+Feel free to submit your published plugin to our {% url "list of plugins" plugins %}.

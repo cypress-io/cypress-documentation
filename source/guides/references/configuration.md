@@ -50,7 +50,7 @@ Option | Default | Description
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
-`backgroundFile` | `cypress/background/index.js` | Path to background file. (Pass `false` to disable)
+`backgroundFile` | `cypress/background/index.js` | Path to {% url "background file" background-process %}. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
 `videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
@@ -123,9 +123,9 @@ cypress run --record --config viewportWidth=1280,viewportHeight=720
 
 ## Background Process
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node.js code via the {% url "background process" background-process %}. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node.js code via the {% url "background process" background-process %}. This enables you to do things like use `fs` or read and dynamically change configuration values.
 
-While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
+While this may take a bit more work than other options - it yields you the most amount of flexibility to manage configuration however you'd like.
 
 {% url "We've fully documented how to do this here." configuration-event %}
 
