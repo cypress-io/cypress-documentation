@@ -1,6 +1,5 @@
 ---
 title: Launching Browsers
-
 ---
 
 When you run tests in Cypress, we launch a browser for you. This enables us to:

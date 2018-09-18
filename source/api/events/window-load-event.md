@@ -31,3 +31,9 @@ it('listens for window:load', function () {
   cy.visit('/test.html')
 })
 ```
+
+# See also
+
+- {% url `before:window:load` before-window-load-event %}
+- {% url `before:window:unload` before-window-unload-event %}
+- {% url `window:unload` window-unload-event %}

@@ -246,7 +246,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 # See also
 
 - {% url `Cypress.Screenshot` screenshot-api %}
-- {% url '`after:screenshot` event' after-screenshot-event %}
+- {% url '`after:screenshot`' after-screenshot-event %}
 - {% url `cy.debug()` debug %}
 - {% url 'Dashboard Service' dashboard-service %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}

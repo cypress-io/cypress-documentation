@@ -42,3 +42,10 @@ it('calls the "fail" callback when this test fails', function () {
   cy.get('element-that-does-not-exist')
 })
 ```
+
+# See also
+
+- {% url `command:end:event` command-end-event %}
+- {% url `command:retry:event` command-retry-event %}
+- {% url `uncaught:exception` uncaught-exception-event %}
+

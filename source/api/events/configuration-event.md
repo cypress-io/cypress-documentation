@@ -147,3 +147,7 @@ This would enable you to do things like this:
 These are just simple examples. Remember - you have the full power of `Node.js` at your disposal.
 
 How you choose to organize multiple configurations and sets of environment variables is up to you. You don't even have to read off of the file system - you could store them all in memory inside of your `backgroundFile` if you wanted to.
+
+# See also
+
+- {% url "Configuration" configuration %}

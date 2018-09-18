@@ -156,3 +156,8 @@ Use the following npm keywords:
 ```
 
 Feel free to submit your published plugin to our {% url "list of plugins" plugins %}.
+
+# See also
+
+- {% url `before:spec` before-spec-event %}
+- {% url "Plugins" plugins %}

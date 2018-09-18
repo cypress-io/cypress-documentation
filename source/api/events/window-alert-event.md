@@ -56,3 +56,7 @@ it('can assert on the alert text content', function () {
     })
 })
 ```
+
+# See also
+
+- {% url `window:confirm` window-confirm-event %}

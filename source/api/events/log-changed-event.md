@@ -39,3 +39,9 @@ Cypress.on('log:changed', (log, interactiveMode) => {
   //  }
 })
 ```
+
+# See also
+
+- {% url `cy.log()` log %}
+- {% url `Cypress.log` cypress-log %}
+- {% url `log:added` log-added-event %}

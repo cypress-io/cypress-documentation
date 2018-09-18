@@ -79,3 +79,8 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+# See also
+
+- {% url `.screenshot()` screenshot %}
+- {% url `Cypress.Screenshot` screenshot-api %}

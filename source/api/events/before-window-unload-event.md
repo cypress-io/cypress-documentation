@@ -59,3 +59,9 @@ it('redirects to another page on click', function (done) {
   cy.get('button').click()
 })
 ```
+
+# See also
+
+- {% url `before:window:load` before-window-load-event %}
+- {% url `window:load` window-load %}
+- {% url `window:unload` window-unload %}

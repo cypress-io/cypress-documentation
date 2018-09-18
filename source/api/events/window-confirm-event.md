@@ -114,3 +114,7 @@ it('could also use a stub instead of imperative code', function () {
     })
 })
 ```
+
+# See also
+
+- {% url `window:alert` window-alert-event %}

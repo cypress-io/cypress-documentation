@@ -35,3 +35,7 @@ it('changes the viewport', () => {
   cy.viewport(500, 400)
 })
 ```
+
+# See also
+
+- {% url `cy.viewport` viewport %}

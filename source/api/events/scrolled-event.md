@@ -31,3 +31,8 @@ Cypress.on('scrolled', (elOrWindow, type) => {
 
 })
 ```
+
+# See also
+
+- {% url `cy.scrollTo()` scrollto %}
+- {% url `.scrollIntoView()` scrollintoview %}

@@ -71,3 +71,8 @@ it('is doing something very important', function (done) {
   cy.get('button').click()
 })
 ```
+
+# See also
+
+- {% url "Debugging" debugging %}
+- {% url `fail` fail-event %}

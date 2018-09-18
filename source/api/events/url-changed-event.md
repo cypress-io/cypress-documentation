@@ -33,3 +33,8 @@ it('clicks links to new page', () => {
   cy.get('a[href="/page2.html"]').click()
 })
 ```
+
+# See also
+
+- {% url `cy.location` location %}
+- {% url `cy.url` url %}
