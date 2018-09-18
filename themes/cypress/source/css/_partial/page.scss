@@ -235,6 +235,7 @@
     margin: 1.5em 0 15px 0;
     font-family: $font-title;
     border-bottom: 1px solid #eee;
+    color: #282C34;
 
     &>a {
       font-weight: 500;
@@ -258,6 +259,7 @@
     margin: 1.5em 0 15px;
     font-family: $font-title;
     border-bottom: 1px solid #eee;
+    color: #282C34;
 
     &>a {
       &:hover {
@@ -541,11 +543,12 @@
 .article-title {
   float: left;
   font-family: $font-title;
-  font-size: 2.1em;
   font-weight: bold;
   text-decoration: none;
   color: $color-default;
   line-height: 1.7em;
+  color: #282C34;
+  font-size: 2.6em;
 }
 
 .article-inner {

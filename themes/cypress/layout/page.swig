@@ -22,13 +22,11 @@
         </div>
       <aside id="article-toc" role="navigation">
         <div id="article-toc-inner">
-          {{ toc(page.content, {list_number: false, max_depth: 2}}) }}
+          {{ toc(page.content, {list_number: false, max_depth: 2}) }}
           <a href="#" id="article-toc-top"><i class="fa fa-long-arrow-up"></i> {{ __('page.back-to-top') }}</a>
         </div>
       </aside>
       </div>
-      
-      
     </div>
   </div>
 </div>
