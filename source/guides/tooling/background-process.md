@@ -1,11 +1,10 @@
 ---
 title: Background Process
-
 ---
 
-Normally, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress also runs a Node.js process outside the browser that you can utilize. We call this the **background process**.
+Normally your application and all of your test code are executed in the browser. But you can utilize a Node.js process that Cypress runs outside the browser. We call this the **background process**.
 
-The **background file** enables you to run code in the **background process** to hook into, modify, or extend the internal behavior of Cypress via Node.js.
+You can run code in the **background process** in order to hook into, modify, or extend the behavior of Cypress via the **background file**.
 
 **Background events** are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle. {% url "Check out the various events here" catalog-of-events %}.
 
@@ -13,22 +12,22 @@ The **background file** enables you to run code in the **background process** to
 
 ## Configuration
 
-You can programmatically alter the resolved configuration and environment variables that come from `cypress.json`, {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, the CLI, or system environment variables.
+You can programmatically alter the resolved configuration and environment variables that come from your `cypress.json` file, your {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %} file, the CLI, or system environment variables.
 
-This enables you to do things like:
+### This enables you to do things like:
 
-- Use multiple environments with their own configurations
-- Swap out environment variables based on an environment
-- Read in configuration files using the built in `fs` lib
-- Write your configuration in `yml`
+- Set up different configurations for multiple environments.
+- Swap out environment variables based on an environment.
+- Read in configuration files using the built in `fs` library.
+- Write your configuration in `yml`.
 
-Check out our {% url '`configuration` docs' configuration-event %} which describe how to use this event.
+Check out our {% url 'configuration docs' configuration-event %} which describe how to use this event.
 
 ## Preprocessors
 
-The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
+The {% url '`file:preprocessor`' file-preprocessor-event %} event is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
 
-You can use the `file:preprocessor` event to do things like:
+### You can use the `file:preprocessor` event to do things like:
 
 - Add TypeScript support.
 - Add the latest ES* support.
@@ -36,49 +35,49 @@ You can use the `file:preprocessor` event to do things like:
 - Customize the `babel` settings to add your own plugins.
 - Swap out `browserify` for `webpack` or anything else.
 
-Check out the {% url '`file:preprocessor` event docs' file-preprocessor-event %} which describe how to use this event.
+Check out the {% url '`file:preprocessor` event' file-preprocessor-event %} which describe how to use this event.
 
 ## Browser Launching
 
-The event `before:browser:launch` can be used to modify the launch arguments for each particular browser.
+The {% url "`before:browser:launch`" before-browser-launch-event %} event can be used to modify the launch arguments for each particular browser.
 
-You can use the `before:browser:launch` event to do things like:
+### You can use the `before:browser:launch` event to do things like:
 
-- Load a Chrome extension
-- Change print media
-- Enable or disable experimental chrome features
-- Control which Chrome components are loaded
+- Load a Chrome extension.
+- Specify the media type
+- Enable or disable experimental chrome features.
+- Control which Chrome components are loaded.
 
-Check out the {% url '`before:browser:launch` event docs' before-browser-launch-event %} which describe how to use this event.
+Check out the {% url '`before:browser:launch` event' before-browser-launch-event %} which describe how to use this event.
 
 ## Screenshot handling
 
-The event `after:screenshot` is called after a screenshot is taken and saved to disk.
+The {% url '`after:screenshot`' after-screenshot-event %} event is called after a screenshot is taken and saved to disk.
 
-You can use the `after:screenshot` event to do things like:
+### You can use the `after:screenshot` event to do things like:
 
-- Save details about the screenshot
-- Rename the screenshot
-- Manipulate the screenshot image by resizing or cropping it
+- Save details about the screenshot.
+- Rename the screenshot.
+- Manipulate the screenshot image by resizing or cropping it.
 
 Check out the {% url '`after:screenshot` event docs' after-screenshot-event %} which describe how to use this event.
 
 ## cy.task
 
-The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
+The {% url '`task`' task-event %} event is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
 
-You can use the `task` event to do things like:
+### You can use the `task` event to do things like:
 
-- Manipulating a database (seeding, reading, writing, etc.)
-- Storing state in Node that you want persisted (since the driver is fully refreshed on visits)
-- Performing parallel tasks (like making multiple http requests outside of Cypress)
-- Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer)
+- Manipulating a database (seeding, reading, writing, etc.).
+- Storing state in Node.js that you want persisted (since the driver is fully refreshed on visits).
+- Performing parallel tasks (like making multiple http requests outside of Cypress).
+- Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer).
 
 Check out the {% url '`task` event docs' task-event %} which describe how to use this event.
 
 # API
 
-Whether you install an NPM module, or just want to write your own code - you should do all of that in this file:
+Whether you install an NPM module, or just want to write your own code - you should do all of that in the **background file** located at:
 
 ```text
 cypress/background/index.js
@@ -88,9 +87,9 @@ cypress/background/index.js
 By default Cypress seeds this file for new projects, but if you have an existing project, just create this file yourself.
 {% endnote %}
 
-Inside of this file, you will export a function. Cypress will call this function, pass you the project's configuration, and enable you to bind to the events exposed.
+Inside of this file, a function should be exported. Cypress will call this function, pass you the project's configuration, and enable you to bind to the exposed events.
 
-```javascript
+```js
 // cypress/background/index.js
 
 // export a function
@@ -103,13 +102,13 @@ module.exports = (on, config) => {
 }
 ```
 
-The exported function is called whenever a project is opened either with {% url "`cypress open`" command-line#cypress-open %} or {% url "`cypress run`" command-line#cypress-run %}.
+The exported function is called whenever a project is opened using {% url "`cypress open`" command-line#cypress-open %} or {% url "`cypress run`" command-line#cypress-run %}.
 
 Your function will receive 2 arguments: `on` and `config`.
 
-You can return a synchronous function, or you can also return a Promise, and it will be awaited until it resolves. This enables you to perform asynchronous actions in your exported function such as reading files in from the filesystem.
+You can return a synchronous function or you can return a Promise that will be awaited until it resolves. This enables you to perform asynchronous actions in your exported function such as reading files in from the filesystem.
 
-If you return or resolve with an object, Cypress will then merge this object into the `config` which enables you to overwrite configuration or environment variables.
+If you return or resolve with an object, Cypress will merge this object into the `config`. This enables you to overwrite configuration or environment variables.
 
 ## on
 
@@ -129,15 +128,13 @@ Each event documents its own argument signature. To understand how to use them, 
 
 ## config
 
-`config` is the resolved {% url "Cypress configuration" configuration %} of the opened project.
+`config` is the resolved {% url "Cypress configuration" configuration %} of the running project.
 
 This configuration contains all of the values that get passed into the browser for your project.
 
 {% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
 
-Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
-
-You can programmatically modify these values and Cypress will then respect these changes. This enables you to swap out configuration based on things like the environment you're running in.
+You can programmatically modify these values and Cypress will then respect the changes. This enables you to swap out configuration based on things like the environment you're running in.
 
 {% url "Please check out our API docs for modifying configuration here." configuration-event %}
 
@@ -145,29 +142,29 @@ You can programmatically modify these values and Cypress will then respect these
 
 Your `backgroundFile` is invoked when Cypress opens a project.
 
-Cypress does this by spawning an independent `child_process` which then `requires` in your `backgroundFile`. This is similar to the way Visual Studio Code or Atom works.
+Cypress does this by spawning an independent `child_process` which then `requires` in your `backgroundFile`. This is similar to the way Visual Studio Code or Atom work.
 
-You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local Node version, and not anything else under your control.
+You will need to keep in mind that **Cypress is requiring your file** - not your local project, not your local Node version, and not anything else under your control.
 
-Because of this, this global context and the version of Node is controlled by Cypress.
+Because of this, global context and the Node version is controlled by Cypress.
 
 {% note warning "Node version" %}
 
-Keep in mind - code executed in plugins is executed **by the Node version** that comes bundled in Cypress itself.
+Code executed in the background file is executed **by the Node version** that comes bundled with Cypress.
 
-This version of Node has **no relation** to locally installed versions. Therefore you have to write Node code which is compatible with this version.
+This Node version has **no relation** to locally installed versions. Therefore you have to write Node code which is compatible with this version.
 
-You can find the current Node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
+You can find the current Node version in Cypress {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 
 {% endnote %}
 
 ## NPM modules
 
-When Cypress executes your `backgroundFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any Node module** you have installed.
+When Cypress executes your `backgroundFile` it will execute with `process.cwd()` set to your {% url "root project's path" configuration#Folders-Files %}. Additionally - you will be able to `require` **any Node module** you have installed.
 
 You can also `require` local files relative to your project.
 
-**For example, if your `package.json` looked like this:**
+### For example, if your `package.json` looks like this:
 
 ```js
 {
@@ -181,33 +178,33 @@ You can also `require` local files relative to your project.
 }
 ```
 
-**Then you could do any of the following in your `backgroundFile`:**
+### Then you could do any of the following in your `backgroundFile`:
 
 ```js
 // cypress/plugins/index.js
 
-const path = require('path') // native node packages
-const debug = require('debug') // dependencies
-const _ = require('lodash') // dev dependencies
+const path = require('path')                  // native node packages
+const debug = require('debug')                // dependencies
+const _ = require('lodash')                   // dev dependencies
 const User = require('../../lib/models/user') // relative local modules
 
-console.log(__filename) // /Users/janelane/Dev/my-project/cypress/background/index.js
+console.log(__filename)    // /Users/janelane/Dev/my-project/cypress/background/index.js
 
 console.log(process.cwd()) // /Users/janelane/Dev/my-project
 ```
 
 # Error handling
 
-Cypress spawns your `backgroundFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress' own execution in any way.
+Cypress spawns your `backgroundFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress's own execution in any way.
 
-If your `backgroundFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
+If your `backgroundFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or any other error - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
 
-Errors from your plugins *will not crash* Cypress.
+Errors from your `backgroundFile` *will not crash* Cypress.
 
 # File changes
 
 Normally when writing code in Node, you typically have to restart the process after changing any files.
 
-With Cypress, we automatically watch your `backgroundFile` and any changes made will take effect immediately. We will read the file in and execute the exported function again.
+With Cypress, we automatically watch your `backgroundFile` so that any changes made will take effect immediately. We will read the file in and execute the exported function again.
 
-This enables you to iterate on plugin code even with Cypress already running.
+This enables you to iterate on plugin code even while Cypress is running.
