@@ -18,9 +18,11 @@ Details of the run.
 
 # Usage
 
-```javascript
-// cypress/background/index.js
+## In the background process
 
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `before:run` event.
+
+```javascript
 module.exports = (on, config) => {
   on('before:run', (details) => {
     // details will look something like this:

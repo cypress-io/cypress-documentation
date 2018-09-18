@@ -18,14 +18,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 Details of the command retry.
 
-
 # Usage
 
 ## In the browser
 
-```javascript
-// in a test or cypress/support/index.js
+In a spec file or support file you can tap into the `command:retry` event.
 
+```javascript
 Cypress.on('command:retry', (details) => {
   // details looks something like this:
   // {
@@ -51,15 +50,13 @@ Cypress.on('command:retry', (details) => {
 
 ## In the background process
 
-The retry details look a little different in the background process.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `command:retry` event. The retry details look a little different in the background process.
 
 ```javascript
-// cypress/background/index.js
-
 module.exports = (on, config) => {
   on('command:retry', (details) => {
     // details looks something like this:
-    // { 
+    // {
     //   name: 'get',
     //   error: {
     //     name: 'AssertionError',
@@ -67,15 +64,15 @@ module.exports = (on, config) => {
     //     stack: 'AssertionError: expected \'#login\' to exist in the DOM',
     //     displayMessage: 'Expected to find element: \'#login\', but never found it.',
     //     actual: '#login',
-    //     expected: '#login' 
+    //     expected: '#login'
     //   },
-    //   runnable: { 
+    //   runnable: {
     //     async: 0,
     //     body: 'function () {\n  cy.visit(\'/test.html\');\n  cy.get(\'#login\');',
     //     title: 'test login',
     //     type: 'test',
     //     ... more properties ...
-    //   } 
+    //   }
     // }
   })
 }

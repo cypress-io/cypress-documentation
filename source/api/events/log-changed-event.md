@@ -22,6 +22,10 @@ Whether Cypress is in interactive mode.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `log:changed` event.
+
 ```javascript
 Cypress.on('log:changed', (log, interactiveMode) => {
   // log looks something like this:

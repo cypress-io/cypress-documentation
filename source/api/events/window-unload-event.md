@@ -16,6 +16,18 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 The `beforeunload` event.
 
+# Usage
+
+## In the browser
+
+In a spec file or support file you can tap into the `window:unload` event.
+
+```javascript
+cy.on('window:unload', (e) => {
+
+})
+```
+
 # Examples
 
 ## Test that your application was redirected

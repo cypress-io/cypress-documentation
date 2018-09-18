@@ -18,6 +18,10 @@ The new viewport dimensions.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `viewport:changed` event.
+
 ```javascript
 Cypress.on('viewport:changed', (viewport) => {
   // viewport is:

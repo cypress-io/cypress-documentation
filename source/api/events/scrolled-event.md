@@ -22,6 +22,10 @@ The type of element being scrolled.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `scrolled` event.
+
 ```javascript
 Cypress.on('scrolled', (elOrWindow, type) => {
 

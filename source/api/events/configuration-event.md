@@ -20,10 +20,11 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 # Usage
 
-To modify configuration, return an object from your background file's exported function.
+## In the background process
+
+To modify configuration, return an object from your {% url "`backgroundFile`" background-process %}'s exported function.
 
 ```javascript
-// cypress/background/index.js
 module.exports = (on, config) => {
   console.log(config) // see what all is in here!
 

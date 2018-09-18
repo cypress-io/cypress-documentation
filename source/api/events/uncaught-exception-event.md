@@ -22,6 +22,18 @@ The Mocha runnable this failed on.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `uncaught:exception` event.
+
+```javascript
+Cypress.on('uncaught:exception', (err, runnable) => {
+
+})
+```
+
+# Examples
+
 ## To turn off all uncaught exception handling
 
 ```javascript
@@ -34,7 +46,6 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   // failing the test
   return false
 })
-
 ```
 
 ## To catch a single uncaught exception

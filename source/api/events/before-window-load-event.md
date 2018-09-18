@@ -18,7 +18,19 @@ The remote window
 
 # Usage
 
-This example demonstrates stubbing a global variable before the window loads originally or after page transitions.
+## In the browser
+
+In a spec file or support file you can tap into the `before:window:load` event.
+
+```js
+cy.on('before:window:load', (win) => {
+
+})
+```
+
+# Examples
+
+## Stub a global variable before window loads or after page transitions
 
 ```javascript
 it('can modify the window prior to page load on all pages', function () {

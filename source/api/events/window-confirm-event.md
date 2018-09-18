@@ -18,6 +18,18 @@ The confirmation text.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `window:confirm` event.
+
+```js
+cy.on('window:confirm', (text) => {
+
+})
+```
+
+# Examples
+
 ## Control whether you accept or reject confirmations
 
 This enables you to test how your application reacts to accepted confirmations and rejected confirmations.

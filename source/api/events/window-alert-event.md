@@ -18,6 +18,18 @@ The alert text.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `window:alert` event.
+
+```js
+Cypress.on('window:alert', (text) => {
+
+})
+```
+
+# Examples
+
 ## Assert on the alert text
 
 Cypress automatically accepts alerts but you can still assert on the text content.

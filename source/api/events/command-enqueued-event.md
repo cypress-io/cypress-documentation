@@ -20,9 +20,9 @@ The properties of the command to be run.
 
 ## In the browser
 
-```javascript
-// in a test or cypress/support/index.js
+In a spec file or support file you can tap into the `command:enqueued` event.
 
+```javascript
 Cypress.on('command:enqueued', (command) => {
   // command looks something like this:
   // {
@@ -35,9 +35,9 @@ Cypress.on('command:enqueued', (command) => {
 
 ## In the background process
 
-```javascript
-// cypress/background/index.js
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `command:enqueued` event.
 
+```javascript
 module.exports = (on, config) => {
   on('command:enqueued', (command) => {
     // command looks something like this:

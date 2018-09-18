@@ -20,9 +20,9 @@ Details of the test.
 
 ## In the browser
 
-```javascript
-// in a test or cypress/support/index.js
+In a spec file or support file you can tap into the `before:test:run` event.
 
+```javascript
 Cypress.on('before:test:run', (test) => {
   // test looks something like this:
   // {
@@ -36,9 +36,9 @@ Cypress.on('before:test:run', (test) => {
 
 ## In the background process
 
-```javascript
-// cypress/background/index.js
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `before:test:run` event.
 
+```javascript
 module.exports = (on, config) => {
   on('before:test:run', (test) => {
   // test looks something like this:

@@ -18,7 +18,19 @@ The `beforeunload` event.
 
 # Usage
 
-This example demonstrates testing that your application was redirected.
+## In the browser
+
+In a spec file or support file you can tap into the `before:window:unload` event. 
+
+```js
+cy.on('before:window:unload', (e) => {
+
+})
+```
+
+# Examples
+
+## Test that your application was redirected.
 
 ```javascript
 // in your app

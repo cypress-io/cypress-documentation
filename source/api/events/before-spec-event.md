@@ -16,12 +16,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 Details of the spec file including name and paths.
 
-
 # Usage
 
-```javascript
-// cypress/background/index.js
+## In the background process
 
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `before:spec` event.
+
+```javascript
 module.exports = (on, config) => {
   on('before:spec', (spec) => {
     // spec will look something like this:

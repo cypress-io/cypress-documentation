@@ -18,9 +18,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 **{% fa fa-angle-right %} args**
 
-The arguments originally passed to `cy.task()`
+The arguments originally passed to {% url `cy.task()` task %}.
 
 # Usage
+
+## In the background process
+
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `task` event.
 
 **{% fa fa-check-circle green %} Correct Usage**
 ```javascript
@@ -35,6 +39,8 @@ on('task', {
 })
 ```
 
+In a spec file or support file you can trigger `task` event using {% url `cy.task()` task %}.
+
 ```javascript
 // in test
 cy.task('seed:database')
@@ -42,7 +48,7 @@ cy.task('seed:database')
 
 The `task` event should be provided an object with string keys and function values. The string keys (i.e. 'seed:database') are used by {% url `cy.task()` task %} to execute the associated function.
 
-You can return a value from the function, or return a promise and it will be awaited by `cy.task()`.
+You can return a value from the function, or return a promise and it will be awaited by {% url `cy.task()` task %}.
 
 ```javascript
 on('task', {
@@ -76,7 +82,7 @@ on('task', {
 })
 ```
 
-`cy.task()` and the `task` event provide an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
+{% url `cy.task()` task %} and the `task` event provide an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
 - Seeding your test database.
 - Storing state in Node that you want persisted between spec files.
@@ -153,7 +159,7 @@ module.exports = (on, config) => {
 
 You can increase the time allowed to execute the task, although *we do not recommend executing tasks that take a long time to exit*.
 
-Cypress will *not* continue running any other commands until `cy.task()` has finished, so a long-running command will drastically slow down your test runs.
+Cypress will *not* continue running any other commands until {% url `cy.task()` task %} has finished, so a long-running command will drastically slow down your test runs.
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish

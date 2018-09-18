@@ -20,11 +20,9 @@ The command to be run.
 
 ## In the browser
 
-In the browser, the argument is the actual command instance.
+In a spec file or support file you can tap into the `command:start` event. In the browser, the argument is the actual command instance.
 
 ```javascript
-// in a test or cypress/support/index.js
-
 Cypress.on('command:start', (command) => {
   command.get('name')    // => 'get'
   command.get('args')    // => ['#foo']
@@ -40,7 +38,7 @@ Cypress.on('command:start', (command) => {
 
 ## In the background process
 
-In the background process, the argument is a pared-down, serialized version of the command.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `command:start` event. In the background process, the argument is a pared-down, serialized version of the command.
 
 ```javascript
 // cypress/background/index.js

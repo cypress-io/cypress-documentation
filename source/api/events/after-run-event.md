@@ -16,12 +16,13 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 Results of the run.
 
-
 # Usage
 
-```javascript
-// cypress/background/index.js
+## In the background process
 
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:run` event.
+
+```javascript
 module.exports = (on, config) => {
   on('after:run', (results) => {
     // results will look something like this:

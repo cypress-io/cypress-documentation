@@ -22,9 +22,11 @@ Details of the spec file's run results.
 
 # Usage
 
-```javascript
-// cypress/background/index.js
+## In the background process
 
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:spec` event.
+
+```javascript
 module.exports = (on, config) => {
   on('after:spec', (spec, results) => {
     // spec will look something like this:

@@ -22,7 +22,9 @@ The Mocha runnable this failed on.
 
 # Usage
 
-Debug the moment a test fails.
+## In the browser
+
+In a spec file or support file you can tap into the `fail` event to debug the moment a test fails.
 
 ```javascript
 // if you want to debug when a test fails, put this in the support file, 

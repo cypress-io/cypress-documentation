@@ -22,6 +22,21 @@ Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Backgroun
 
 The file being processed.
 
+# Usage
+
+## In the background process
+
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `file:preprocessor` event.
+
+```javascript
+// background file
+module.exports = (on, config) => {
+  on('file:preprocessor', (file) => {
+    // ...
+  })
+}
+```
+
 # Examples
 
 We've have three preprocessors as examples. These are fully functioning preprocessors.
@@ -64,19 +79,6 @@ Changing the Browserify options lets you:
 
 Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
 {% endnote %}
-
-# Usage
-
-To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`backgroundFile`" configuration#Folders-Files %}.
-
-```javascript
-// background file
-module.exports = (on, config) => {
-  on('file:preprocessor', (file) => {
-    // ...
-  })
-}
-```
 
 ### The callback function should return one of the following:
 

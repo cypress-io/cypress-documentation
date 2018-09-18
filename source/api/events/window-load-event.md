@@ -18,6 +18,10 @@ The remote window
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `window:load` event.
+
 ```javascript
 it('listens for window:load', function () {
   cy.on('window:load', (win) => {

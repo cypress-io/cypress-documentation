@@ -18,6 +18,10 @@ The log attributes.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `log:added` event.
+
 ```javascript
 Cypress.on('log:added', (log) => {
   // log looks something like this:

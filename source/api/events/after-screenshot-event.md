@@ -20,13 +20,21 @@ Details of the screenshot including dimensions, path names, and any screenshot o
 
 # Usage
 
+## In the background process
+
 Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:screenshot` event.
 
+You can return an object or a promise that resolves an object from the callback function. Any type of value other than an object will be ignored. The object can contain the following properties:
+
+* **path**: absolute path to the image
+* **size**: size of the image file in bytes
+* **dimensions**: width and height of the image in pixels (as an object with the shape `{ width: 100, height: 50 }`)
+
+If you change any of those properties of the image, you should include the new values in the returned object, so that the details are correctly reported in the test results. For example, if you crop the image, return the new size and dimensions of the image.
+
+The properties will be merged into the screenshot details and passed to the `onAfterScreenshot` callback (if defined with {% url 'Cypress.Screenshot.defaults()' screenshot-api %} and/or {% url 'cy.screenshot()' screenshot %}). Any other properties besides *path*, *size*, and *dimensions* will be ignored.
+
 ```js
-// cypress/background/index.js
-
-const fs = require('fs')
-
 module.exports = (on, config) => {
   on('after:screenshot', (details) => {
     // details will look something like this:
@@ -44,9 +52,19 @@ module.exports = (on, config) => {
     //   scaled: true
     //   blackout: []
     // }
+  })
+})
+```
 
-    // example of renaming the screenshot file
+# Examples 
 
+## Rename a screenshot file
+
+```js
+const fs = require('fs')
+
+module.exports = (on, config) => {
+  on('after:screenshot', (details) => {
     const newPath = '/new/path/to/screenshot.png'
 
     return new Promise((resolve, reject) => {
@@ -61,13 +79,3 @@ module.exports = (on, config) => {
   })
 }
 ```
-
-You can return an object or a promise that resolves an object from the callback function. Any type of value other than an object will be ignored. The object can contain the following properties:
-
-* **path**: absolute path to the image
-* **size**: size of the image file in bytes
-* **dimensions**: width and height of the image in pixels (as an object with the shape `{ width: 100, height: 50 }`)
-
-If you change any of those properties of the image, you should include the new values in the returned object, so that the details are correctly reported in the test results. For example, if you crop the image, return the new size and dimensions of the image.
-
-The properties will be merged into the screenshot details and passed to the `onAfterScreenshot` callback (if defined with {% url 'Cypress.Screenshot.defaults()' screenshot-api %} and/or {% url 'cy.screenshot()' screenshot %}). Any other properties besides *path*, *size*, and *dimensions* will be ignored.

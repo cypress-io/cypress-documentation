@@ -18,6 +18,10 @@ The new url.
 
 # Usage
 
+## In the browser
+
+In a spec file or support file you can tap into the `url:changed` event.
+
 ```javascript
 Cypress.on('url:changed', (url) => {
   // will be called once with url equal to 'http://<url>/page1.html'
