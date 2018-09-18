@@ -5,8 +5,8 @@ _ = require('lodash')
 API_PATH = "/api/introduction/api"
 API_HTML = API_PATH + '.html'
 
-FIRST_PAGE = "api.html"
-NEXT_PAGE = "assertions.html"
+FIRST_PAGE = "and.html"
+NEXT_PAGE = "as.html"
 
 describe "API", ->
   context "Catalog of events", ->
@@ -127,7 +127,7 @@ describe "API", ->
 
   context "Pagination", ->
     beforeEach ->
-      cy.visit(API_PATH + ".html")
+      cy.visit("api/commands/" + FIRST_PAGE)
 
     it "does not display Prev link on first page", ->
       cy.get(".article-footer-prev").should("not.exist")
