@@ -542,7 +542,7 @@ Documentation Changes:
 
 **Features:**
 - There is now a Plugins API interface. Partially addresses {% issue 684 %}.
-- We have added the first Plugin API event called: {% url "`file:preprocessor`" writing-a-plugin#List-of-events %}. Fixes {% issue 580 %} and {% issue 581 %}.
+- We have added the first Plugin API event called: `file:preprocessor`. Fixes {% issue 580 %} and {% issue 581 %}.
 - You can now customize the default babel configuration options for the `browserify` preprocessor. Fixes {% issue 343 %} and {% issue 905 %}.
 - CoffeeScript 2 is supported via modifying the default options for the `browserify` preprocessor. Fixes {% issue 663 %}.
 - You can swap out or extend the default preprocessor to do exotic things like compile ClojureScript into JavaScript. Fixes {% issue 533 %}.
