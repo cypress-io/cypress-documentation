@@ -5,9 +5,6 @@ _ = require('lodash')
 API_PATH = "/api/introduction/api"
 API_HTML = API_PATH + '.html'
 
-FIRST_PAGE = "and.html"
-NEXT_PAGE = "as.html"
-
 describe "API", ->
   context "Catalog of events", ->
     PAGE = "/api/events/catalog-of-events.html"
@@ -126,17 +123,22 @@ describe "API", ->
             expect($link.attr('href')).to.eq('#' + $h2.attr('id'))
 
   context "Pagination", ->
-    beforeEach ->
-      cy.visit("api/commands/" + FIRST_PAGE)
-
-    it "does not display Prev link on first page", ->
-      cy.get(".article-footer-prev").should("not.exist")
-
-    it "displays Next link", ->
-      cy.get(".article-footer-next").should("have.attr", "href").and("include", NEXT_PAGE)
-
-    describe "click on Next page", ->
+    describe "first page", ->
       beforeEach ->
+        cy.visit("api/introduction/api.html")
+
+      it "does not display Prev link on first page", ->
+        cy.get(".article-footer-prev").should("not.exist")
+
+      it "displays Next link", ->
+        cy.get(".article-footer-next").should("have.attr", "href").and("include", "assertions.html")
+
+    describe "Next/Prev", ->
+      FIRST_PAGE = "and.html"
+      NEXT_PAGE = "as.html"
+
+      beforeEach ->
+        cy.visit("api/commands/#{FIRST_PAGE}")
         cy.get(".article-footer-next").click()
         cy.url().should("contain", NEXT_PAGE)
 
