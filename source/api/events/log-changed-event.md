@@ -8,7 +8,7 @@ The `log:changed` event fires whenever a command's attributes changes. This even
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `log:changed` log-changed-event %} | {% fa fa-check-circle green %} |
+`log:changed` | {% fa fa-check-circle green %} |
 
 # Arguments
 

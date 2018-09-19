@@ -8,7 +8,7 @@ The `command:enqueued` event fires when a `cy` command is first invoked and enqu
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `command:enqueued` command-enqueued-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`command:enqueued` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

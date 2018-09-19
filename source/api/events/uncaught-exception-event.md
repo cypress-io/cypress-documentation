@@ -8,7 +8,7 @@ The `uncaught:exception` event fires when an uncaught exception occurs in your a
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `uncaught:exception` uncaught-exception-event %} | {% fa fa-check-circle green %} |
+`uncaught:exception` | {% fa fa-check-circle green %} |
 
 # Arguments
 

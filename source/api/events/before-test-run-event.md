@@ -8,7 +8,7 @@ The `before:test:run` event fires before the test and all **before** and **befor
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `before:test:run` before-test-run-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`before:test:run` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

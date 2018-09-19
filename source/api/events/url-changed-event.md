@@ -8,7 +8,7 @@ The `url:changed` event fires whenever Cypress detects that your application's U
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `url:changed` url-changed-event %} | {% fa fa-check-circle green %} |
+`url:changed` | {% fa fa-check-circle green %} |
 
 # Arguments
 

@@ -8,7 +8,7 @@ The `fail` event fires when the test has failed. It is technically possible to p
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `fail` fail-event %} | {% fa fa-check-circle green %} |
+`fail` | {% fa fa-check-circle green %} |
 
 # Arguments
 

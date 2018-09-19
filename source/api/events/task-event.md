@@ -12,7 +12,7 @@ We do not recommend starting a web server using the `task` event. Read about {% 
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `task` task-event %} | | {% fa fa-check-circle green %}
+`task` | | {% fa fa-check-circle green %}
 
 # Arguments
 

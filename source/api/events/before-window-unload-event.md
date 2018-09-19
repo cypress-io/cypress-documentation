@@ -8,7 +8,7 @@ The `before:window:unload` event fires when your application is about to navigat
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `before:window:unload` before-window-unload-event %} | {% fa fa-check-circle green %} |
+`before:window:unload` | {% fa fa-check-circle green %} |
 
 # Arguments
 

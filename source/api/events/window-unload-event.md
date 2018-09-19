@@ -8,7 +8,7 @@ The `window:unload` event fires when your application is has unloaded and is nav
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `window:unload` window-unload-event %} | {% fa fa-check-circle green %} |
+`window:unload` | {% fa fa-check-circle green %} |
 
 # Arguments
 

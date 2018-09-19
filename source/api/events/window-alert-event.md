@@ -8,7 +8,7 @@ The `window:alert` event fires when your app calls the global `window.alert()` m
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `window:alert` window-alert-event %} | {% fa fa-check-circle green %} |
+`window:alert` | {% fa fa-check-circle green %} |
 
 # Arguments
 

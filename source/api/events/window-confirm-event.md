@@ -8,7 +8,7 @@ The `window:confirm` event fires when your app calls the global `window.confirm(
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `window:confirm` window-confirm-event %} | {% fa fa-check-circle green %} |
+`window:confirm` | {% fa fa-check-circle green %} |
 
 # Arguments
 

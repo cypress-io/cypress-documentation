@@ -8,7 +8,7 @@ The `after:spec` event fires after a spec file and its tests run.
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `after:spec` after-spec-event %} | | {% fa fa-check-circle green %}
+`after:spec` | | {% fa fa-check-circle green %}
 
 # Arguments
 

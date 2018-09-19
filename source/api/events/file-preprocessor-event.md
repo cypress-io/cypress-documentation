@@ -14,7 +14,7 @@ A preprocessor also typically watches the source files for changes, processes th
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `file:preprocessor` file-preprocessor-event %} | | {% fa fa-check-circle green %}
+`file:preprocessor` | | {% fa fa-check-circle green %}
 
 # Arguments
 

@@ -8,7 +8,7 @@ The `log:added` event fires whenever a command emits this event so it can be dis
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `log:added` log-added-event %} | {% fa fa-check-circle green %} |
+`log:added` | {% fa fa-check-circle green %} |
 
 # Arguments
 

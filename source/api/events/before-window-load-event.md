@@ -8,7 +8,7 @@ The `before:window:load` event fires as the page begins to load, but before any 
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `before:window:load` before-window-load-event %} | {% fa fa-check-circle green %} |
+`before:window:load` | {% fa fa-check-circle green %} |
 
 # Arguments
 

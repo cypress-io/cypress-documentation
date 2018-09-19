@@ -8,7 +8,7 @@ The `before:run` event fires before the run starts.
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `before:run` before-run-event %} | | {% fa fa-check-circle green %}
+`before:run` | | {% fa fa-check-circle green %}
 
 # Arguments
 

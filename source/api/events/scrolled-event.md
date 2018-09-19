@@ -8,7 +8,7 @@ The `scrolled` event fires whenever **Cypress** is scrolling your application. T
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `scrolled` scrolled-event %} | {% fa fa-check-circle green %} |
+`scrolled` | {% fa fa-check-circle green %} |
 
 # Arguments
 

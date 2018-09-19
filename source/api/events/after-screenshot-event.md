@@ -10,7 +10,7 @@ This allows you to record those details or manipulate the image as needed. You c
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `after:screenshot` after-screenshot-event %} | | {% fa fa-check-circle green %}
+`after:screenshot` | | {% fa fa-check-circle green %}
 
 # Arguments
 

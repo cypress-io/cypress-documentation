@@ -10,7 +10,7 @@ This is useful to understand **why** a command is retrying, and generally includ
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `command:retry` command-retry-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`command:retry` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

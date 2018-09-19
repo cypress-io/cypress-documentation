@@ -8,7 +8,7 @@ The `viewport:changed` event fires whenever the viewport changes via a `cy.viewp
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `viewport:changed` viewport-changed-event %} | {% fa fa-check-circle green %} |
+`viewport:changed` | {% fa fa-check-circle green %} |
 
 # Arguments
 

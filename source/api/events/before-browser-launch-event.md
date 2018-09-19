@@ -12,7 +12,7 @@ The most common use case is adding your own chrome extension.
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `before:browser:launch` before-browser-launch-event %} | | {% fa fa-check-circle green %}
+`before:browser:launch` | | {% fa fa-check-circle green %}
 
 # Arguments
 

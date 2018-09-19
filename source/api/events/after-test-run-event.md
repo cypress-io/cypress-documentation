@@ -8,7 +8,7 @@ The `after:test:run` event fires after the test and all **afterEach** and **afte
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `after:test:run` after-test-run-event %} | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`after:test:run` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 # Arguments
 

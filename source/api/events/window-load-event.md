@@ -8,7 +8,7 @@ The `window:load` event fires after all your resources have finished loading aft
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-{% url `window:load` window-load-event %} | {% fa fa-check-circle green %} |
+`window:load` | {% fa fa-check-circle green %} |
 
 # Arguments
 
