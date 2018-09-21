@@ -81,9 +81,9 @@ describe "lib/url_generator", ->
       )
       return undefined
 
-  describe ".validateAndGetUrl", ->
+  describe ".getUrl", ->
     it "fails when given undefined href", ->
-      urlGenerator.validateAndGetUrl(data, undefined, 'foo', 'content')
+      urlGenerator.getUrl(data, undefined, 'foo', 'content')
       .then ->
         throw new Error("should have caught error")
       .catch (err) ->
@@ -94,27 +94,19 @@ describe "lib/url_generator", ->
         ].forEach (msg) ->
           expect(err.message).to.include(msg)
 
-    it "verifies local file and caches subsequent requests", ->
-      urlGenerator.validateAndGetUrl(data, "and#notes", "", "")
+    it "generates local file path", ->
+      urlGenerator.getUrl(data, "and#notes", "", "")
       .then (pathToFile) ->
         expect(pathToFile).to.eq("/api/commands/and.html#notes")
 
-        urlGenerator.validateAndGetUrl(data, "and#notes", "", "")
-      .then (pathToFile) ->
-        expect(pathToFile).to.eq("/api/commands/and.html#notes")
-
-    it "verifies external url with anchor href matching hash", ->
-      urlGenerator.validateAndGetUrl(data, "https://www.google.com/#assertions")
-      .then (url) ->
-        expect(url).to.eq("https://www.google.com/#assertions")
-
-        urlGenerator.validateAndGetUrl(data, "https://www.google.com/#assertions")
+    it "returns external urls", ->
+      urlGenerator.getUrl(data, "https://www.google.com/#assertions")
       .then (url) ->
         expect(url).to.eq("https://www.google.com/#assertions")
 
     it "resolves cached values in a promise", ->
       urlGenerator.cache.set("foo", "bar")
       .then ->
-        urlGenerator.validateAndGetUrl(data, "foo")
+        urlGenerator.getUrl(data, "foo")
         .then (url) ->
           expect(url).to.eq("bar")
