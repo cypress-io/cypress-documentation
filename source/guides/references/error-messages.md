@@ -408,7 +408,7 @@ These flags can only be used when recording to the {% url "Dashboard Service" da
 
 ## {% fa fa-exclamation-triangle red %} We could not determine a unique CI build ID
 
-You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% "`--parallel`" cypress-run-parallel %} flag but we could not automatically determine or generate a `ciBuildId`.
+You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag but we could not automatically determine or generate a `ciBuildId`.
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
@@ -420,7 +420,7 @@ You can avoid this check in the future by passing an ID to the {% url "`--ci-bui
 
 You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag, but this group name has already been used for this run.
 
-If you are trying to parallelize this run, then also pass the {% "`--parallel`" cypress-run-parallel %} flag, else pass a different group name.
+If you are trying to parallelize this run, then also pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, else pass a different group name.
 
 Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
@@ -444,7 +444,7 @@ Please review {% url "environment variables" environment-variables %} documentat
 
 You passed the `--parallel` flag, but this run group was originally created without the `--parallel` flag.
 
-You can not use the {% "`--parallel`" cypress-run-parallel %} flag with this group.
+You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
 
 Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
@@ -452,7 +452,7 @@ Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} 
 
 You did not pass the `--parallel` flag, but this run's group was originally created with the `--parallel` flag.
 
-You must use the {% "`--parallel`" cypress-run-parallel %} flag with this group.
+You must use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
 
 Please review {% url "environment variables" environment-variables %} documentation to learn more.
 
