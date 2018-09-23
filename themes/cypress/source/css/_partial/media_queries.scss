@@ -212,8 +212,6 @@
     position: relative;
     top: -6px;
     left: -120px;
-    max-width: 320px;
-    min-width: 320px;
   }
 
   #content-inner {
@@ -299,6 +297,11 @@
   .media {
     width: 100%;
     padding-right: 0;
+  }
+  
+  .algolia-autocomplete .ds-dropdown-menu {
+    max-width: 320px;
+    min-width: 320px;
   }
 }
 

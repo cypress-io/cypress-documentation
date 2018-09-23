@@ -9,35 +9,51 @@
               <a href="https://github.com/cypress-io/cypress-documentation/edit/develop/source/_data/{{ page.dataType }}.yml" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
             </header>
             <div class="article-content" itemprop="articleBody">
-            {% for media in site.data[page.dataType] %}
-              <div class="media">
-                <h2><a href="{{ media.url }}">{{ media.title }}</a></h2>
-                {% if media.youtubeId %}
-                  <div class="embed-container">
-                    <iframe src="https://www.youtube.com/embed/{{ media.youtubeId }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              {% if site.data[page.dataType].small %}
+                <div class="small-media">
+                  <ul>
+                    {% for media in site.data[page.dataType].small %}
+                      <li class="small-media-item">
+                        <a href="{{ media.sourceUrl }}" target="_blank" rel="noopener noreferrer">{{ media.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+            {% if site.data[page.dataType].large %}
+              <div class="media-large">
+                {% for media in site.data[page.dataType].large %}
+                  <div class="media">
+                    <h2><a href="{{ media.url }}">{{ media.title }}</a></h2>
+                    {% if media.youtubeId %}
+                      <div class="embed-container">
+                        <iframe src="https://www.youtube.com/embed/{{ media.youtubeId }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      </div>
+                    {% else %}
+                      <a href="{{ media.url }}" class="img-link">
+                        <img src="{{ media.img }}" alt="{{ media.title }}"/>
+                      </a>
+                    {% endif %}
+                    <p>
+                      Published on
+                      {% if media.sourceUrl %}
+                        <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
+                      {% else %}
+                        {{ media.sourceName }}
+                      {% endif %}
+                      {% if media.author %}
+                        by {{ media.author }}
+                      {% endif %}
+                      <em>({{ media.date }}).</em>
+                      {% if media.slides %}
+                        <a href="{{ media.slides }}" target="_blank" rel="noopener noreferrer">Slides.</a>
+                      {% endif %}
+                    </p>
                   </div>
-                {% else %}
-                  <a href="{{ media.url }}" class="img-link">
-                    <img src="{{ media.img }}" alt="{{ media.title }}"/>
-                  </a>
-                {% endif %}
-                <p>
-                  Published on
-                  {% if media.sourceUrl %}
-                    <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
-                  {% else %}
-                    {{ media.sourceName }}
-                  {% endif %}
-                  {% if media.author %}
-                    by {{ media.author }}
-                  {% endif %}
-                  <em>({{ media.date }}).</em>
-                  {% if media.slides %}
-                    <a href="{{ media.slides }}" target="_blank" rel="noopener noreferrer">Slides.</a>
-                  {% endif %}
-                </p>
+                {% endfor %}
               </div>
-            {% endfor %}
+            {% endif %}
             </div>
             <footer class="article-footer">
               {{ page_nav() }}
