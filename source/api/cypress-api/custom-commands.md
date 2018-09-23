@@ -484,7 +484,7 @@ it('paginates many search results', function () {
         }
       })
     })
-    .get('#pagination').should($pagination) => {
+    .get('#pagination').should(($pagination) => {
       // should offer to goto next page
       expect($pagination).to.contain('Next')
 
