@@ -394,7 +394,7 @@ To fix this error, follow instructions on {% url "caching the cypress binary in 
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
-You passed the `--ci-build-id` flag but did not provide either a {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+You passed the `--ci-build-id` flag but did not provide either a {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or `--parallel` flag.
 
 The `--ci-build-id` flag is used to either group or parallelize multiple runs together.
 
@@ -402,13 +402,13 @@ Check out our {% url "guide on parallelizing runs" parallelization %} and when t
 
 ## {% fa fa-exclamation-triangle red %} The `--ci-build-id`, `--group`, or `--parallel` flags can only be used when recording
 
-You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
+You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or `--parallel` flag without also passing the `--record` flag.
 
 These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
 
 ## {% fa fa-exclamation-triangle red %} We could not determine a unique CI build ID
 
-You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag but we could not automatically determine or generate a `ciBuildId`.
+You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or `--parallel` flag but we could not automatically determine or generate a `ciBuildId`.
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
@@ -420,13 +420,13 @@ You can avoid this check in the future by passing an ID to the {% url "`--ci-bui
 
 You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag, but this group name has already been used for this run.
 
-If you are trying to parallelize this run, then also pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, else pass a different group name.
+If you are trying to parallelize this run, then also pass the `--parallel` flag, else pass a different group name.
 
 Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests across environments
 
-You passed the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but we do not parallelize tests across different environments.
+You passed the `--parallel` flag, but we do not parallelize tests across different environments.
 
 This machine is sending different environment parameters than the first machine that started this parallel run.
 
@@ -440,21 +440,21 @@ In order to run in parallel mode each machine must send identical environment pa
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests in this group
 
-You passed the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run group was originally created without the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+You passed the `--parallel` flag, but this run group was originally created without the `--parallel` flag.
 
-You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+You can not use the `--parallel` flag with this group.
 
 Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run must pass `--parallel` flag
 
-You did not pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run's group was originally created with the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+You did not pass the `--parallel` flag, but this run's group was originally created with the `--parallel` flag.
 
-You must use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+You must use the `--parallel` flag with this group.
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
-You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+You are attempting to pass the `--parallel` flag to a run that was completed over 24 hours ago.
 
 You cannot run tests on a run that has been complete for that long.
 

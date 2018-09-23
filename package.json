@@ -80,14 +80,14 @@
     "cypress": "3.1.0",
     "dependency-check": "3.2.1",
     "deps-ok": "1.4.1",
-    "eslint": "5.5.0",
+    "eslint": "4.19.1",
     "eslint-plugin-cypress-dev": "1.1.2",
     "fluent-ffmpeg": "2.1.2",
     "fs-extra": "7.0.0",
     "ggit": "2.4.5",
     "git-last": "1.2.3",
     "got": "8.3.2",
-    "gulp": "3.9.1",
+    "gulp": "4.0.0",
     "gulp-awspublish": "3.4.0",
     "gulp-clean": "0.4.0",
     "gulp-debug": "4.0.0",
@@ -117,10 +117,14 @@
     "yamljs": "0.3.0"
   },
   "dependencies": {
+    "ajv": "5.5.2",
+    "babel-eslint": "7.2.3",
     "bluebird": "3.5.2",
     "check-more-types": "2.24.0",
     "debug": "3.2.5",
     "docsearch.js": "2.5.2",
+    "eslint-plugin-mocha": "4.12.1",
+    "eslint-plugin-react": "7.11.1",
     "fira": "github:cypress-io/fira#fb63362742eea8cdce0d90825ab9264d77719e3d",
     "font-awesome": "4.7.0",
     "hexo": "3.7.1",
@@ -136,8 +140,10 @@
     "lazy-ass": "1.6.0",
     "lodash": "4.17.11",
     "menuspy": "1.3.0",
+    "minimatch": "3.0.2",
     "scrollingelement": "1.5.2",
     "set-immediate-shim": "2.0.0",
+    "tunnel-agent": "0.6.0",
     "yall": "github:malchata/yall.js#1c782f1ab7a0becb1a88fd6f3b260e55d5e213a2"
   }
 }
