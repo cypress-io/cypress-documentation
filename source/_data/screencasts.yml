@@ -1,31 +1,33 @@
-- title: "Cypress.io React TodoMVC test"
-  url: https://youtu.be/nq_WRILIFTw
-  sourceName: Grafikart
-  sourceUrl: https://twitter.com/winkler1
-  date: Apr 5, 2018
-  author: Jeff Winkler
-  youtubeId: nq_WRILIFTw
+# large links with thumbnails, links, embedded video
+large:
+  - title: "Cypress.io React TodoMVC test"
+    url: https://youtu.be/nq_WRILIFTw
+    sourceName: Grafikart
+    sourceUrl: https://twitter.com/winkler1
+    date: Apr 5, 2018
+    author: Jeff Winkler
+    youtubeId: nq_WRILIFTw
 
-- title: "Tests fonctionnels avec Cypress"
-  url: https://www.youtube.com/watch?v=CC-1i0bMIoA&feature=youtu.be
-  sourceName: Grafikart
-  sourceUrl: https://www.grafikart.fr/formations/javascript-unit-test/cypress
-  date: Mar 21, 2018
-  author: Jonathan Boyer
-  youtubeId: CC-1i0bMIoA
+  - title: "Tests fonctionnels avec Cypress"
+    url: https://www.youtube.com/watch?v=CC-1i0bMIoA&feature=youtu.be
+    sourceName: Grafikart
+    sourceUrl: https://www.grafikart.fr/formations/javascript-unit-test/cypress
+    date: Mar 21, 2018
+    author: Jonathan Boyer
+    youtubeId: CC-1i0bMIoA
 
-- title: "Testing hyperapp with Cypress"
-  url: https://www.youtube.com/watch?v=w8liCoPsDIU
-  sourceName: Hyperapp Cypress Demo
-  sourceUrl: https://github.com/LearnHyperapp/hyperapp-cypress-demo
-  date: Mar 17, 2018
-  author: Alex Barry
-  youtubeId: w8liCoPsDIU
+  - title: "Testing hyperapp with Cypress"
+    url: https://www.youtube.com/watch?v=w8liCoPsDIU
+    sourceName: Hyperapp Cypress Demo
+    sourceUrl: https://github.com/LearnHyperapp/hyperapp-cypress-demo
+    date: Mar 17, 2018
+    author: Alex Barry
+    youtubeId: w8liCoPsDIU
 
-- title: "Cypress.io - five-minute introduction"
-  url: https://youtu.be/AddBNz1T08U
-  sourceName: Gorrion 
-  sourceUrl: https://gorrion.io/blog/getting-started-with-cypress-io/
-  date: Jan 31, 2018
-  author: Łukasz Wroński
-  youtubeId: AddBNz1T08U
+  - title: "Cypress.io - five-minute introduction"
+    url: https://youtu.be/AddBNz1T08U
+    sourceName: Gorrion
+    sourceUrl: https://gorrion.io/blog/getting-started-with-cypress-io/
+    date: Jan 31, 2018
+    author: Łukasz Wroński
+    youtubeId: AddBNz1T08U
