@@ -8,7 +8,7 @@ The `after:run` event fires after the run finishes.
 
 Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
 --- | --- | ---
-`after:run` | | {% fa fa-check-circle green %}
+`after:run` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 # Arguments
 

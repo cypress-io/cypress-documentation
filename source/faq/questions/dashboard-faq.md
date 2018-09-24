@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: Dashboard
-
 containerClass: faq
 ---
 
@@ -21,10 +20,6 @@ You can read more {% url 'here' dashboard-service %}.
 After recording your tests, you will see them in the {% url 'Dashboard' https://on.cypress.io/dashboard %} and in the "Runs" tab of the Test Runner.
 
 ## {% fa fa-angle-right %} How much does it cost?
-
-Everything is free while we are in Beta.
-
-In the future, we will charge per month for private projects.
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
@@ -73,18 +68,4 @@ We have already begun the implementation for capturing even more things from you
 
 These will be added in subsequent releases.
 
-<!-- ## How many recordings can I store? -->
 
-<!-- ## Can't I just record my app running, without the Cypress runner? -->
-
-<!-- ## Can I see the mouse movements in my recorded video? -->
-
-<!-- ## Is there a way to see console logs or application errors in a recorded run? -->
-
-<!-- ## Is it possible to transfer a project to an organization I'm not a member of? -->
-
-<!-- ## Why are my tests displaying a “still running”? -->
-
-<!-- ## Is there any way to remove a run and the data from the Dashboard? -->
-
-<!-- ## How secure is storing my test runs (videos and screenshots) on your servers? -->

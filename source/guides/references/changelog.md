@@ -536,8 +536,13 @@ Documentation Changes:
 
 **Summary:**
 
+<<<<<<< HEAD
 - We have officially launched the new **Plugins API** interface. This adds a `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you will be able to use `node` API's that are executed outside of the browser.
 - We have currently added only one event for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
+=======
+- We have officially launched the new **Plugins API** interface. This adds a `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you will be able to use `node` APIs that are executed outside of the browser.
+- We have currently added only {% url "one event" writing-a-plugin#List-of-events %} for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
+>>>>>>> develop
 - We have extracted the default `browserify` preprocessor into its own package - {% url `@cypress/browserify-preprocessor` https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is bundled with Cypress, but it is extracted so it can be used / modified by you to change the default options we pass to `browserify`. Additionally, you can swap out this preprocessor for something else entirely.
 
 **Features:**
@@ -1005,15 +1010,15 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Overview:**
 
-- We have officially implemented our [Sinon.JS](http://sinonjs.org/) integration: adding {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %}, {% url `cy.clock()` clock %}, and {% url `cy.tick()` tick %}. We've matched Sinon's API's and added `sinon-as-promised` and `chai-sinon`. In addition we've fixed Sinon performance issues, and improved the display of assertion passes and failures.
-- These new API's will work well in both `unit` tests and `integration` tests.
+- We have officially implemented our [Sinon.JS](http://sinonjs.org/) integration: adding {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %}, {% url `cy.clock()` clock %}, and {% url `cy.tick()` tick %}. We've matched Sinon's APIs and added `sinon-as-promised` and `chai-sinon`. In addition we've fixed Sinon performance issues, and improved the display of assertion passes and failures.
+- These new APIs will work well in both `unit` tests and `integration` tests.
 
 **Features:**
 
 - You can now use {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} synchronously. These both match the Sinon API identically. We will display `stub/spy` calls in the command log and provide the call count, arguments, context, and return values when you click on the log. Stubs are automatically reset between tests.  Fixes {% issue 377 '#377' %}.
 - We've added our own special aliasing flavor to {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %}. You can use the {% url `.as()` as %} command and we will associate spy and stub invocations (the same way we do with XHR aliasing and route matching).
 - We've added {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} which are both asynchronous methods to modify timers in your application under test. We automatically apply clock (even if you invoke it before your first {% url `cy.visit()` visit %}) and will automatically reapply it after page load. {% url `cy.tick()` tick %} will enable you to control the amount of time you want passed in your application. This is great for controlling *throttled* or *debounced* functions.
-- `sinon-as-promised` is automatically applied under the hood which extends Sinon and provides the `.resolves(...)` and `.rejects(...)` API's which makes it easy to stub promise returning functions.
+- `sinon-as-promised` is automatically applied under the hood which extends Sinon and provides the `.resolves(...)` and `.rejects(...)` APIs which makes it easy to stub promise returning functions.
 - We support and display multiple sub spies when using Sinon's `.withArgs(...)` function.
 
 **Misc:**
@@ -1571,7 +1576,7 @@ Fixed {% url "`.type()`" type %} not firing `input` event for {% url "React" htt
 
 **Overview:**
 
-- `0.16.0` marks a significant change for Cypress. Before this we only issued commands using regular JavaScript and coordinated these with the backend server which is running. As of `0.16.0` we are now tapping into the underlying browser automation libraries which enable us to exceed the limitations of the JavaScript sandbox. This means we have total control over the browser for more powerful automation tooling. The downside is that we have only implemented these API's for Chrome, and therefore running on multiple browsers will no longer work. This is a temporary setback as we'll be adding driver support for all of the other browsers over a period of time. You can read more about our browser management {% url 'here' launching-browsers %}.
+- `0.16.0` marks a significant change for Cypress. Before this we only issued commands using regular JavaScript and coordinated these with the backend server which is running. As of `0.16.0` we are now tapping into the underlying browser automation libraries which enable us to exceed the limitations of the JavaScript sandbox. This means we have total control over the browser for more powerful automation tooling. The downside is that we have only implemented these APIs for Chrome, and therefore running on multiple browsers will no longer work. This is a temporary setback as we'll be adding driver support for all of the other browsers over a period of time. You can read more about our browser management {% url 'here' launching-browsers %}.
 
 **Breaking Changes:**
 
@@ -1859,7 +1864,7 @@ Known Issues:
 
 - Update links to match new {% url "documentation" https://docs.cypress.io %}
 - {% url `.debug()` debug %} has been zipped up - it no longer logs confusing debugging information and now logs information about the previously run command.
-- {% url `Cypress._` _ %}, {% url `Cypress.$` $ %}, {% url `Cypress.Promise` promise %}, {% url `Cypress.Blob` blob %}, {% url `Cypress.moment` moment %} utilities have been moved off of `cy` and are now attached to `Cypress`. This is much more consistent with how the `cy` and `Cypress` API's work. You can continue to use these objects off of `cy` but this has been deprecated and you will see a warning message.
+- {% url `Cypress._` _ %}, {% url `Cypress.$` $ %}, {% url `Cypress.Promise` promise %}, {% url `Cypress.Blob` blob %}, {% url `Cypress.moment` moment %} utilities have been moved off of `cy` and are now attached to `Cypress`. This is much more consistent with how the `cy` and `Cypress` APIs work. You can continue to use these objects off of `cy` but this has been deprecated and you will see a warning message.
 
 # 0.13.8
 
