@@ -3,15 +3,14 @@ code {
   padding: 0px 4px;
   display: inline-block;
   line-height: 1.5;
-  border: 1px solid #eee;
+  border: 0;
   outline: 0;
   font-weight: 600;
   font-family: inherit;
-  font-size: 0.9em;
+  font-size: 1em;
   vertical-align: baseline;
-  color: $highlight-foreground;
   font-family: $font-mono;
-  background-color: $highlight-background;
+  background-color: #EDF9F5;
   border-radius: 3px;
 }
 
@@ -20,14 +19,15 @@ a code {
 
   &:hover {
     color: $color-link-hover;
-    background-color: darken($highlight-background, 2%);
+    background-color: darken(#EDF9F5, 2%);
   }
 }
 
-.article pre, .article code,
-.faq pre, .faq code {
+.article pre, .article pre code,
+.faq pre, .faq pre code {
   &[class*="language-"] {
-    font-size: 0.9em;
+    color: $highlight-foreground; 
+    font-size: 1em;
     line-height: $line-height;
     background-image: none;
     background-color: $highlight-background;
@@ -63,11 +63,16 @@ a code {
 
 .article pre, .faq pre {
   &[class*="language-"] {
-    border-left: 5px solid $color-border;
+    border-left: 5px solid $highlight-background;
     padding: 15px 0;
-    margin: 15px 0;
+    margin: 25px 0;
+
+    .token.punctuation {
+      color: #acb0b1;
+    }
   }
 }
+
 
 .article pre.language-shell code,
 .faq pre.language-shell code {
@@ -76,7 +81,7 @@ a code {
 
 .article pre.language-shell,
 .faq pre.language-shell {
-  border-left: 5px solid #000;
+  border-left: 5px solid  $highlight-background;
   background-color: #252831;
   color: #f5f6f8;
 
@@ -85,6 +90,7 @@ a code {
     background-color: #252831;
     color: #f5f6f8;
   }
+
 
   &:before{
     content: '$';
@@ -102,5 +108,29 @@ a code {
     -ms-transform: rotate(0);
     -o-transform: rotate(0);
     transform: rotate(0);
+  }
+}
+
+.article pre.language-html,
+.faq pre.language-html {
+
+  .token.tag {
+    color: $highlight-red;
+  }
+
+  .token.attr-name {
+    color: $highlight-red;
+  }
+}
+
+.article pre.language-javascript code,
+.faq pre.language-javascript code {
+  .token.property, .token.tag, .token.boolean, .token.number, .token.function-name, .token.constant, .token.symbol, .token.deleted {
+    color: $highlight-red;
+  }
+
+  .token.operator, .token.entity, .token.url, .token.variable {
+    background-color: transparent;
+    color: $highlight-red;
   }
 }
