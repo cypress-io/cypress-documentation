@@ -81,6 +81,21 @@ describe "lib/url_generator", ->
       )
       return undefined
 
+  describe ".getLocalFilePath", ->
+    it "requests file", ->
+      urlGenerator.getLocalFilePath(data, "as")
+      .then (pathToFile) ->
+        expect(pathToFile).to.eq("/api/commands/as.html")
+
+    it "throws when cannot find file", ->
+      source = "my-file.md"
+      href = "foo"
+      urlGenerator.getLocalFilePath(data, href, source)
+      .then ->
+        throw new Error("should have caught error")
+      .catch (err) ->
+        snapshot(err.message)
+
   describe ".getUrl", ->
     it "fails when given undefined href", ->
       urlGenerator.getUrl(data, undefined, 'foo', 'content')
