@@ -38,6 +38,7 @@
     "test-e2e": "start-server-and-test start http://localhost:2222 cypress:run",
     "test-watch": "npm run test --silent -- --watch",
     "test": "jest",
+    "textlint": "textlint source/*",
     "warn-only": "stop-only --warn --folder cypress"
   },
   "husky": {
@@ -112,6 +113,8 @@
     "snap-shot-it": "6.1.8",
     "start-server-and-test": "1.7.1",
     "stop-only": "2.2.2",
+    "textlint": "11.0.0",
+    "textlint-rule-no-dead-link": "4.4.1",
     "underscore.string": "3.3.4",
     "wait-on": "2.1.2",
     "yamljs": "0.3.0"
