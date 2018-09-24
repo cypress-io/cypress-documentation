@@ -337,7 +337,7 @@ For further detail see the {% url Identification dashboard-service#Identificatio
 ## {% fa fa-angle-right %} How do I check that an email was sent out?
 
 {% note warning 'Anti-Pattern' %}
-Don't try to use your UI to check email. Instead opt to programmatically use 3rd party API's or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-external-sites %} here.
+Don't try to use your UI to check email. Instead opt to programmatically use 3rd party APIs or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-external-sites %} here.
 {% endnote %}
 
 ## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
@@ -364,7 +364,7 @@ You could also just stub XHR requests directly using {% url `cy.route()` route %
 
 As of {% issue 136#issuecomment-328100955 `0.20.0` %} you can now wrap the elements of an iframe and work with them.
 
-We have an {% issue 685 'open proposal' %} to expand the API's to support "switching into" an iframe and then back out of them.
+We have an {% issue 685 'open proposal' %} to expand the APIs to support "switching into" an iframe and then back out of them.
 
 ## {% fa fa-angle-right %} How do I preserve cookies / localStorage in between my tests?
 

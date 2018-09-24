@@ -381,12 +381,12 @@ cy.route(() => {
 ```javascript
 cy.route(() => {
   // a silly example of async return
-  return new Cypress.Promise((resolve) =>{
+  return new Cypress.Promise((resolve) => {
     // resolve this promise after 1 second
     setTimeout(() => {
       resolve({
-        method: 'PUT'
-        url: '**/posts/**'
+        method: 'PUT',
+        url: '**/posts/**',
         response: '@postFixture'
       })
     }, 1000)

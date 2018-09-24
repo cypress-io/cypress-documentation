@@ -23,6 +23,8 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 - See how fast your spec files ran within CI including whether they were run in parallel.
 - See related groupings of tests.
 - Manage who has access to your recorded test data.
+- See usage details for each organization.
+- Pay for your selected billing plan.
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
@@ -61,7 +63,7 @@ To set up your project to record, you must use the {% url "Test Runner" test-run
 Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
 
-***To set up a project to record:***
+### To set up a project to record:
 
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
@@ -118,7 +120,7 @@ We recommend that you check your `cypress.json` including the `projectId` into s
 $ export CYPRESS_PROJECT_ID={projectId}   # replace {projectId} with your actual projectId
 ```
 
-***Record Key {% fa fa-key %}***
+### Record Key {% fa fa-key %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
@@ -176,7 +178,7 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-***Run Details***
+### Run Details
 
 Details of each run are displayed including:
 
@@ -254,8 +256,7 @@ Organizations are used to group projects and manage access to those projects.
 - Create projects
 - Invite users
 - Transfer projects
-
-Once out of beta, organizations will also display usage and allow you to handle billing.
+- Pay for all of your projects usage.
 
 ## Create Org
 
@@ -269,7 +270,7 @@ By default, every user of Cypress is given a personal organization - named after
 
 ## Manage users
 
-***Inviting users***
+### Inviting users
 
 You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
@@ -282,7 +283,7 @@ You can invite users to Cypress from the {% url 'Dashboard Service' https://on.c
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-***User roles***
+### User roles
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -290,7 +291,7 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-***User requests***
+### User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
 

@@ -93,7 +93,7 @@ You don't have to do any work on the server. Your application will have no idea 
 {% note info Suggested Use %}
 - Use for the vast majority of tests
 - Mix and match, typically have one true end to end test, and then stub the rest
-- Perfect for JSON API's
+- Perfect for JSON APIs
 {% endnote %}
 
 # Stubbing

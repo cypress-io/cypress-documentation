@@ -6,7 +6,7 @@ title: Launching Browsers
 When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 1. Create a clean, pristine testing environment.
-2. Access the privileged browser API's for automation.
+2. Access the privileged browser APIs for automation.
 
 # Browsers
 

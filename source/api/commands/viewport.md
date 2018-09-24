@@ -24,7 +24,7 @@ cy.viewport(preset, orientation, options)
 
 ```javascript
 cy.viewport(550, 750)    // Set viewport to 550px x 750px
-cy.viewport('iphone-6')  // Set viewport to 357px x 667px
+cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 ```
 
 ## Arguments
