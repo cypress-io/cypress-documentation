@@ -19,8 +19,8 @@ describe "Main", ->
     # only works in development environment where each CSS
     # file is separate
     if Cypress.config('baseUrl').includes('localhost')
-      it "loads fira", ->
-        cy.request("fonts/vendor/fira/fira.css")
+      it "loads roboto", ->
+        cy.request("fonts/vendor/roboto")
 
     it "has limited container height", ->
       cy.get('#container')

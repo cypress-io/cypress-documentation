@@ -1,10 +1,8 @@
 ---
 title: Parallelization
 ---
-
-{% note info %}
-
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to parallelize test runs
 - How to group test runs

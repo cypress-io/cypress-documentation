@@ -1,6 +1,6 @@
 .article-wrapper {
   position: relative;
-  margin: 60px 0 60px $sidebar-width;
+  margin: 60px 0 60px $sidebar-width + 30px;
   display: flex;
   flex-direction: row;
 }
@@ -35,11 +35,9 @@
 
 }
 .article-edit-link {
-  float: right;
-  color: $color-link;
-  font-size: 14px;
+  color: #888;;
+  font-size: 1em;
   text-decoration: none;
-  line-height: 50px;
   transition: 0.2s;
   display: none;
   &:hover {
@@ -60,15 +58,19 @@
   }
 }
 
-.article-anchor {
+.article-content a.article-anchor {
   margin-left: 10px;
   display: none;
   border: 0;
+  color: #1DBE89;
+
+  &:hover {
+    color: darken(#1DBE89, 0.5%);
+  }
 
   &:before {
     content: "#";
   }
-
 }
 .article-content, .toc-top .article {
   line-height: $line-height;
@@ -81,7 +83,8 @@
   }
 
   p {
-    margin: 15px 0;
+    margin: 25px 0;
+    font-size: 1.1em;
     word-wrap: break-word;
     font-family: $font-sans;
   }
@@ -166,10 +169,10 @@
 
     th {
       font-weight: 500;
-      padding: 2px 15px;
+      padding: 5px 10px;
       text-align: left;
       border-bottom: 1px solid #e8e8e8;
-      font-size: 0.9em;
+      font-size: 1em;
 
       &:empty {
         padding: 0;
@@ -177,8 +180,8 @@
     }
 
     td {
-      padding: 10px;
-      font-size: 0.9em;
+      padding: 15px 10px;
+      font-size: 1em;
       line-height: 1.5em;
     }
 
@@ -228,14 +231,24 @@
     margin: 1em 0;
   }
 
+  h1.article-title {
+    font-family: $font-title;
+    font-weight: bold;
+    text-decoration: none;
+    color: $color-default;
+    line-height: 1.7em;
+    color: #282C34;
+    font-size: 2.6em;
+  }
+
   h1 {
     font-size: 1.9em;
     line-height: 1.7em;
     font-weight: bold;
-    margin: 1.5em 0 15px 0;
+    margin: 2em 0 15px 0;
     font-family: $font-title;
     border-bottom: 1px solid #eee;
-    color: #282C34;
+    color: $color-default;
 
     &>a {
       font-weight: 500;
@@ -345,8 +358,9 @@
   }
 
   li {
-    margin: 10px;
+    margin: 20px 10px;
     line-height: 1.7em;
+    font-size: 1.1em;
 
     p {
       margin: 0;
@@ -384,14 +398,15 @@
   }
 
   .note {
-    font-weight: 200;
+    font-weight: 400;
     border: 0;
-    margin: 15px 0;
-    padding: 15px 25px;
+    margin: 25px 0;
+    padding: 20px 40px;
     position: relative;
     border-left: 5px solid $highlight-comment;
     font-style: normal;
-    font-size: 16px;
+    font-size: 1em;
+    color: #45494c;
 
     footer {
       margin: 15px 0;
@@ -414,8 +429,13 @@
       border: 0;
     }
 
+    ul>li {
+      font-weight: 400;
+      color: #45494c;
+    }
+
     h1 {
-      font-size: 1em;
+      font-size: 1.2em;
     }
 
     p:first-of-type:last-of-type {
@@ -447,11 +467,11 @@
       }
     }
     &.success {
-      border-left-color: #50af51;
-      background-color: #f3f8f3;
+      border-left-color: #00bf88;
+      background-color: #edf9f5;
 
       .note-title {
-        color: #50af51;
+        color: #00bf88;
       }
     }
     &.danger {
@@ -462,12 +482,13 @@
         color: #d9534f;
       }
     }
-
   }
+
   .note-title {
     margin: 0;
+    margin-bottom: 15px;
     display: block;
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: 500;
     font-family: $font-title;
   }
@@ -535,13 +556,15 @@
 }
 
 .article-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 0 15px 0;
   border-bottom: 1px solid #ddd;
-  @include clearfix;
 }
 
 .article-title {
-  float: left;
   font-family: $font-title;
   font-weight: bold;
   text-decoration: none;

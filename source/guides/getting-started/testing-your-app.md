@@ -1,10 +1,9 @@
 ---
 title: Testing Your App
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - The relationship between Cypress and your back-end
 - How to configure Cypress to fit your app

@@ -1,9 +1,8 @@
 ---
 title: Bundled Tools
-
 ---
 
-{% note info %}
+{% note success %}
 Cypress relies on many best-of-breed open source testing libraries to lend stability and familiarity to the platform from the get-go. If you've been testing in JavaScript, you'll recognize many old friends in this list. Understand how we exploit them and hit the ground running with Cypress!
 
 {% endnote %}

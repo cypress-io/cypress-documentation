@@ -20,12 +20,25 @@
 .sidebar-title {
   margin-top: 15px;
   font-size: 1em;
-  padding: 10px 20px;
+  padding: 1em 2em;
   font-family: $font-title;
-  font-weight: 400;
+  font-weight: 500;
   color: $color-default;
   display: inline-block;
   line-height: 1;
+  font-size: 1.2em;
+  width: 100%;
+  position: relative;
+
+  &:after {
+    // content: "\f077"; //fa-chevron-up
+    content: "\f078"; //fa-chevron-down
+    font-family: FontAwesome;
+    position: absolute;
+    right: 2em;
+    top: 35%;
+    font-size: 0.7em;
+  }
 }
 
 #sidebar .sidebar-title:first-child {
@@ -38,29 +51,28 @@
 
 .sidebar-link {
   font-family: $font-sans;
-  font-size: 0.9em;
+  font-size: 1em;
   display: block;
-  color: $color-link;
+  color: $color-default;
   text-decoration: none;
-  padding: 3px 15px 3px 21px;
+  padding: 3px 2.5em;
   position: relative;
   width: 100%;
   font-weight: 400;
   overflow: auto;
   white-space: normal;
 
-
   &.current {
     color: white;
     font-weight: 500;
-    background-color: $color-link;
+    background-color: #1DBE89;
     &:hover {
       color: white;
-      background-color: $color-link;
+      background-color: #1DBE89;
     }
   }
 
   &:hover {
-    color: $color-link-hover;
+    color: #129e70;
   }
 }

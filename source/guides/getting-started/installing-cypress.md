@@ -1,10 +1,9 @@
 ---
 title: Installing Cypress
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to install Cypress via `npm`.
 - How to install Cypress via direct download.

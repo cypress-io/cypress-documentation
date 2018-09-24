@@ -1,10 +1,9 @@
 ---
 title: Debugging
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress runs in the runloop with your code, keeping debugging simple and understandable for modern web developers
 - How Cypress embraces the standard DevTools

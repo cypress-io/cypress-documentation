@@ -1,6 +1,5 @@
 ---
 title: Best Practices
-
 layout: toc-top
 ---
 

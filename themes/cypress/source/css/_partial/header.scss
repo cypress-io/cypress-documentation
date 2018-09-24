@@ -20,8 +20,9 @@
 }
 #logo-wrap {
   box-flex: 1;
-  margin: 0 45px;
+  margin: 0 60px;
 }
+
 #logo {
   width: 120px;
 
@@ -39,14 +40,15 @@
 
 .main-nav-link {
   display: none;
-  font-size: 14px;
+  font-size: 1.1em;
   color: $white-60;
   text-decoration: none;
   line-height: 50px;
   transition: 0.2s;
   font-family: $font-title;
-  padding: 5px 15px;
+  padding: 5px 20px 2px;
   font-weight: 400;
+  border-bottom: 5px solid transparent;
 
   &:hover {
     opacity: 1;
@@ -56,6 +58,7 @@
   &.active {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+    border-bottom: 5px solid #00bf88;
   }
 
   .fa-github {

@@ -1,6 +1,5 @@
 ---
 title: Configuration
-
 ---
 
 When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.

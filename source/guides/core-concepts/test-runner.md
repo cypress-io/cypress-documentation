@@ -1,10 +1,9 @@
 ---
 title: The Test Runner
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - The names and purposes of the visual parts of the Cypress Test Runner
 - How to use the Selector Playground for targeting your page elements

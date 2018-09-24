@@ -1,10 +1,9 @@
 ---
 title: Introduction to Cypress
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress queries the DOM
 - How Cypress manages subjects and chains of commands

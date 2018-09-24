@@ -1,10 +1,9 @@
 ---
 title: Key Differences
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - What makes Cypress unique
 - How its architecture differs from Selenium

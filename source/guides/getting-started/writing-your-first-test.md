@@ -1,10 +1,9 @@
 ---
 title: Writing Your First Test
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to start testing a new project in Cypress.
 - What passing and failing tests look like.

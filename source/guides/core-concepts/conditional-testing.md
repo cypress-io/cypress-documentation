@@ -1,10 +1,9 @@
 ---
 title: Conditional Testing
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - When conditional testing is a good choice for your tests
 - Situations where conditional testing is impossible

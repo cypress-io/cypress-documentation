@@ -1,10 +1,9 @@
 ---
 title: Variables and Aliases
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to deal with async commands
 - What Aliases are and how they simplify your code

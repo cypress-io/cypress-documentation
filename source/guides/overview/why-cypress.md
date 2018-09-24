@@ -1,10 +1,9 @@
 ---
 title: Why Cypress?
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - What Cypress is and why you should use it
 - Our mission, and what we believe in

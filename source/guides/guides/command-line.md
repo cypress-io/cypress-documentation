@@ -2,8 +2,8 @@
 title: Command Line
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress from the command line
 - How to specify which spec files to run

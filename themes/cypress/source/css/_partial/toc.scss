@@ -42,7 +42,7 @@
 .toc-link {
   font-family: $font-title;
   display: block;
-  color: #999;
+  color: #787e82;
   text-decoration: none;
   padding: 5px 0 5px 5px;
   line-height: 1.2;
@@ -92,11 +92,11 @@
 }
 
 .toc-top {
-
   .toc {
     border-left: 0; 
     padding-left: 0; 
   }
+
   .article-content {
     padding-top: 20px;
   }
@@ -112,9 +112,17 @@
 
   .toc-link {
     padding-left: 0;
-    padding: 5px 10px;
-    line-height: 1.5em;
-    font-size: 14.5px;
+    padding: 0 10px;
+    line-height: 2em;
+    font-size: 1em;
+  }
+
+  .article {
+    padding: 40px 0;
+  }
+
+  .article-header h1, .article-header .article-edit-link {
+    border-bottom: 0;
   }
 
   .toc-level-1 {
@@ -149,7 +157,7 @@
 
       &:hover {
         cursor: pointer;
-        color: #0369b3;
+        color:$color-link-hover;
         border-bottom: 0;
       }
     }

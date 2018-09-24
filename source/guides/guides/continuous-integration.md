@@ -2,8 +2,8 @@
 title: Continuous Integration
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run and record Cypress tests in Continuous Integration
 - How to configure and cache Cypress in CI

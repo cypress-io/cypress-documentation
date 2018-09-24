@@ -50,10 +50,21 @@ gulp.task('move:doc:search:css', function () {
 })
 
 // move font files
-gulp.task('move:fira:fonts', function () {
+gulp.task('move:roboto:fonts', function (cb) {
+  runSequence('move:roboto:css', 'move:roboto:fonts:folder', cb)
+})
+
+gulp.task('move:roboto:fonts:folder', function () {
   return gulp
-  .src('./node_modules/fira/**')
-  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/fira'))
+  .src('./node_modules/roboto-fontface/fonts/roboto/**')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto/fonts/roboto'))
+})
+
+
+gulp.task('move:roboto:css', function () {
+  return gulp
+  .src('./node_modules/roboto-fontface/css/roboto/**')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto/css/roboto'))
 })
 
 gulp.task('move:font:awesome:fonts', (cb) => {
@@ -99,6 +110,10 @@ gulp.task('clean:css', () => {
   return remove('public/css/!(style|prism-coy).css')
 })
 
+gulp.task('clean:fonts:folders', () => {
+  return remove('public/fonts/vender')
+})
+
 gulp.task('clean:tmp', () => {
   return remove('tmp')
 })
@@ -110,7 +125,7 @@ gulp.task('clean:public', () => {
 gulp.task('pre:build', ['copy:static:assets'])
 
 gulp.task('post:build', (cb) => {
-  runSequence('clean:js', 'clean:css', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
+  runSequence('clean:js', 'clean:css', 'clean:fonts:folders', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
 })
 
-gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:yall:js', 'move:doc:search:css', 'move:fira:fonts', 'move:font:awesome:fonts'])
+gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:yall:js', 'move:doc:search:css', 'move:roboto:fonts', 'move:font:awesome:fonts'])

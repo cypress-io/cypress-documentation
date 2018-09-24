@@ -1,10 +1,9 @@
 ---
 title: Stubs, Spies, and Clocks
-
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+{% note success %}
+# {% fa fa-graduation-cap %} What you'll learn
 
 - Which libraries Cypress includes to provide typical testing functionality
 - How to use stubs for asserting that code was called but preventing it from executing
