@@ -25,8 +25,8 @@ Cypress automatically bundles and wraps these libraries:
 
 | Name | What it does |
 | --- | ---- |
-| {% url "`sinon`" http://sinonjs.org %} | provides the {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} API's |
-| {% url "`lolex`" https://github.com/sinonjs/lolex %} | provides the {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} API's |
+| {% url "`sinon`" http://sinonjs.org %} | provides the {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} APIs |
+| {% url "`lolex`" https://github.com/sinonjs/lolex %} | provides the {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} APIs |
 | {% url "`sinon-chai`" https://github.com/domenic/sinon-chai %} | adds `chai` assertions for stubs and spies |
 
 You can refer to each of these libraries' documentation for more examples and explanations.
@@ -182,10 +182,10 @@ Beyond just integrating these tools together we have also extended and improved 
 
 - We replaced Sinon's argument stringifier for a much less noisy, more performant, custom version.
 - We improved the `sinon-chai` assertion output by changing what is displayed during a passing vs. failing test.
-- We added aliasing support to `stub` and `spy` API's.
+- We added aliasing support to `stub` and `spy` APIs.
 - We automatically restore and tear down `stub`, `spy`, and `clock` between tests.
 
-We also integrated all of these API's directly into the Command Log, so you can visually see what's happening in your application.
+We also integrated all of these APIs directly into the Command Log, so you can visually see what's happening in your application.
 
 ***We visually indicate when:***
 
