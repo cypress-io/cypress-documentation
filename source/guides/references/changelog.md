@@ -536,13 +536,8 @@ Documentation Changes:
 
 **Summary:**
 
-<<<<<<< HEAD
 - We have officially launched the new **Plugins API** interface. This adds a `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you will be able to use `node` API's that are executed outside of the browser.
 - We have currently added only one event for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
-=======
-- We have officially launched the new **Plugins API** interface. This adds a `cypress/plugins/index.js` file to new and existing projects. Using this file will enable you to modify the internals of Cypress running in the background `node` process. This means you will be able to use `node` APIs that are executed outside of the browser.
-- We have currently added only {% url "one event" writing-a-plugin#List-of-events %} for modifying the test file preprocessor, but this paves the way for adding many more event types. You can now modify every aspect of how files are sent to the browser.
->>>>>>> develop
 - We have extracted the default `browserify` preprocessor into its own package - {% url `@cypress/browserify-preprocessor` https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is bundled with Cypress, but it is extracted so it can be used / modified by you to change the default options we pass to `browserify`. Additionally, you can swap out this preprocessor for something else entirely.
 
 **Features:**
