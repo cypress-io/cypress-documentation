@@ -60,14 +60,14 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let prefix = `sidebar.${type}.`
 
   _.each(sidebar, function (menu, title) {
-    result += `<strong class="${className}-title">${self.__(prefix + title)}</strong>`
+    result += `<li  class="${className}-title" data-toggle="collapse" data-target="sidebar-li-${title}"><strong>${self.__(prefix + title)}</strong><ul></ul></li>`
 
     _.each(menu, function (link, text) {
       let href = [type, title, link].join('/')
       let itemClass = `${className}-link`
       if (link === path) itemClass += ' current'
 
-      result += `<li class='sidebar-li'><a href="${self.config.root + href}" class="${itemClass}">
+      result += `<li class='sidebar-li-${title} collapse'><a href="${self.config.root + href}" class="${itemClass}">
         ${self.__(prefix + text)}</a></li>`
     })
   })

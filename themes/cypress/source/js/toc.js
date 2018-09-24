@@ -3,7 +3,6 @@
 
   var header = document.getElementById('header')
   var toc = document.getElementById('article-toc')
-  var article = document.getElementById('article')
   var tocInner = document.querySelector('.toc')
   var tocTop = document.getElementById('article-toc-top')
   var headerHeight = header.clientHeight
@@ -14,15 +13,15 @@
   // calculates the current scroll offset and doesn't handle the
   // case where the user is right at the top of the document.
   MenuSpy.prototype.tick = function tick () {
-    var fromTop = this.currScrollTop + headerHeight;
+    var fromTop = this.currScrollTop + headerHeight
     var inViewElms = this.scrollItems.filter(function (item) {
-      return item.offset < fromTop;
-    });
+      return item.offset < fromTop
+    })
     var elementInView = (inViewElms.length > 0)
       ? inViewElms.pop()
-      : this.scrollItems[0];
+      : this.scrollItems[0]
     this.activateItem(elementInView)
-  };
+  }
 
   /* global MenuSpy */
   var ms = new MenuSpy(tocInner)
@@ -40,12 +39,10 @@
   function updateSidebarPosition () {
     var scrollTop = document.scrollingElement.scrollTop
 
-    if (scrollTop > (headerHeight - 50)) {
+    if (scrollTop > headerHeight) {
       toc.classList.add('fixed')
-      article.classList.add('sidebar-fixed')
     } else {
       toc.classList.remove('fixed')
-      article.classList.remove('sidebar-fixed')
     }
   }
 

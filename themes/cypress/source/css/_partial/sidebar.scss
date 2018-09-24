@@ -29,6 +29,11 @@
   font-size: 1.2em;
   width: 100%;
   position: relative;
+  cursor: pointer;
+
+  &:hover {
+    color: #222;
+  }
 
   &:after {
     // content: "\f077"; //fa-chevron-up
