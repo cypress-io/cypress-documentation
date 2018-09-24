@@ -16,9 +16,11 @@ Here are some examples you can do with these events:
 - Modify how Cypress preprocesses your spec files
 - Modify browser launch arguments
 
+# Environment
+
 Some events run in the {% urlHash "browser" Browser-Events %}, some run in the {% urlHash "background process" Background-Events %}, and some run in both.
 
-Event | {% urlHash "Browser" Browser-Events %} | {% url "Background Process" background-process %}
+Event | Browser | Background Process
 --- | --- | ---
 {% url `after:run` after-run-event %} | | {% fa fa-check-circle green %}
 {% url `after:screenshot` after-screenshot-event %} | | {% fa fa-check-circle green %}

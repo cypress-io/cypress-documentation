@@ -6,9 +6,11 @@ The `after:spec` event fires after a spec file and its tests run.
 
 # Environment
 
-Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+
+Event | Browser | Background Process
 --- | --- | ---
-`after:spec` | | {% fa fa-check-circle green %}
+`after:spec` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 # Arguments
 

@@ -6,7 +6,9 @@ The `command:start` event fires when Cypress begins actually running and executi
 
 # Environment
 
-Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+
+Event | Browser | Background Process
 --- | --- | ---
 `command:start` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 

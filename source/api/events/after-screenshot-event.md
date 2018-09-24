@@ -8,9 +8,11 @@ This allows you to record those details or manipulate the image as needed. You c
 
 # Environment
 
-Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+
+Event | Browser | Background Process
 --- | --- | ---
-`after:screenshot` | | {% fa fa-check-circle green %}
+`after:screenshot` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 # Arguments
 

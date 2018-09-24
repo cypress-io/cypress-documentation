@@ -6,9 +6,11 @@ The `log:changed` event fires whenever a command's attributes changes. This even
 
 # Environment
 
-Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+
+Event | Browser | Background Process
 --- | --- | ---
-`log:changed` | {% fa fa-check-circle green %} |
+`log:changed` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 # Arguments
 

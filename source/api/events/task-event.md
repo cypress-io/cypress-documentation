@@ -10,9 +10,11 @@ We do not recommend starting a web server using the `task` event. Read about {% 
 
 # Environment
 
-Event | {% url "Browser" catalog-of-events#Browser-Events %} | {% url "Background Process" background-process %}
+Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+
+Event | Browser | Background Process
 --- | --- | ---
-`task` | | {% fa fa-check-circle green %}
+`task` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 # Arguments
 
