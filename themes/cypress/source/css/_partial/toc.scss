@@ -8,13 +8,11 @@
   opacity: 0.8;
   font-size: 0.9em;
   justify-self: flex-end;
-
-  &.fixed {
-    position: absolute;
-    top: 160px;
-    bottom: 0;
-    right: 0
-  }
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
 }
 
 .toc {
@@ -85,10 +83,8 @@
   color: $color-default;
 }
 
-.fixed #article-toc-inner {
-  position: fixed;
-  top: 110px;
-  bottom: 0;
+#article-toc-inner {
+  padding: 2.5em 20px;
 }
 
 .toc-top {
