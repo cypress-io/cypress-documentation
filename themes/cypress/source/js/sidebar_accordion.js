@@ -2,6 +2,8 @@
   'use strict'
 
   var sidebar = document.getElementById('sidebar')
+  var expandSidebar = document.getElementById('expand-sidebar')
+  var collapseSidebar = document.getElementById('collapse-sidebar')
 
   if (!sidebar) return
 
@@ -45,6 +47,7 @@
     })
   }
 
+  // listen for click on sidebar titles
   sidebar.addEventListener('click', function (e) {
     if (e.target && e.target.dataset.toggle === 'collapse') {
       var sidebarTitle = e.target
@@ -61,6 +64,49 @@
         // mark the section as "currently collapsed"
         sidebarTitle.classList.add('is-collapsed')
       }
+    }
+  })
+
+  // listen for click on expand all
+  expandSidebar.addEventListener('click', function (e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    var collapsibleSections = sidebar.getElementsByClassName('sidebar-links')
+
+    for (var i = 0; i < collapsibleSections.length; i++) {
+      var sidebarTitle = collapsibleSections[i].parentElement
+
+      // if we're currently on a page within the section, don't collapse it
+      if (sidebarTitle.classList.contains('is-collapsed')) {
+        expandSection(collapsibleSections[i])
+
+        // mark the section as "currently not collapsed"
+        sidebarTitle.classList.remove('is-collapsed')
+      }
+
+    }
+  })
+
+  // listen for click on collapse all
+  collapseSidebar.addEventListener('click', function (e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    var collapsibleSections = sidebar.getElementsByClassName('sidebar-links')
+
+    for (var i = 0; i < collapsibleSections.length; i++) {
+      var sidebarTitle = collapsibleSections[i].parentElement
+
+      // if we're currently on a page within the section, don't collapse it
+      // if we're already collapsed, don't collapse it
+      if (!sidebarTitle.classList.contains('current') && !sidebarTitle.classList.contains('is-collapsed')) {
+        collapseSection(collapsibleSections[i])
+
+        // mark the section as "currently collapsed"
+        sidebarTitle.classList.add('is-collapsed')
+      }
+
     }
   })
 })()
