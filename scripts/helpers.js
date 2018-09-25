@@ -60,16 +60,26 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let prefix = `sidebar.${type}.`
 
   _.each(sidebar, function (menu, title) {
-    result += `<li  class="${className}-title" data-toggle="collapse" data-target="sidebar-li-${title}"><strong>${self.__(prefix + title)}</strong><ul></ul></li>`
+    result += `<li class="${className}-title is-collapsed" data-target="sidebar-li-${title}" data-toggle="collapse"><strong>${self.__(prefix + title)}</strong><ul class="sidebar-links">`
 
     _.each(menu, function (link, text) {
       let href = [type, title, link].join('/')
       let itemClass = `${className}-link`
-      if (link === path) itemClass += ' current'
+      let currentlyActive = link === path
 
-      result += `<li class='sidebar-li-${title} collapse'><a href="${self.config.root + href}" class="${itemClass}">
+      if (currentlyActive) {
+        itemClass += ' current'
+        // remove 'is-collapsed' class from parent container
+        result = result.replace(`is-collapsed" data-target="sidebar-li-${title}`, `" data-target="sidebar-li-${title}`)
+
+      }
+
+      result += `<li class='sidebar-li sidebar-li-${title}'><a href="${self.config.root + href}" class="${itemClass}">
         ${self.__(prefix + text)}</a></li>`
     })
+
+    // close the ul containing the menus
+    result += '</ul></li>'
   })
 
   return result

@@ -9,41 +9,70 @@
   bottom: 0;
   border-right: 1px solid #eee;
 
-  ul {
+  &>ul {
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
-    margin-top: 20px;
+    margin-top: 2em;
   }
 }
 
 .sidebar-title {
-  margin-top: 15px;
   font-size: 1em;
-  padding: 1em 2em;
+  padding: 0;
   font-family: $font-title;
   font-weight: 500;
   color: $color-default;
   display: inline-block;
-  line-height: 1;
+  line-height: 1.2em;
   font-size: 1.2em;
   width: 100%;
   position: relative;
   cursor: pointer;
+  overflow: hidden;
+  margin: 10px 0;
+
+  strong {
+    padding: 0 30px;
+    display: block;
+  }
 
   &:hover {
     color: #222;
   }
 
   &:after {
-    // content: "\f077"; //fa-chevron-up
     content: "\f078"; //fa-chevron-down
     font-family: FontAwesome;
     position: absolute;
     right: 2em;
-    top: 35%;
+    top: 0;
     font-size: 0.7em;
   }
+
+  ul.sidebar-links {
+    margin-top: 0; 
+    transition: height 0.2s ease-out;
+    height: auto;
+    list-style: none;
+
+    &>.sidebar-li:first-child {
+      padding-top: 10px;
+    }
+  }
+
+  &.is-collapsed {
+    ul.sidebar-links {
+      transition: height 0.2s ease-out;
+      height: 0;
+    }
+
+    &:after {
+      content: "\f077"; //fa-chevron-up
+    }
+  }
+
+
 }
 
 #sidebar .sidebar-title:first-child {
@@ -54,13 +83,13 @@
   line-height: 1.7;
 }
 
-.sidebar-link {
+.sidebar-title .sidebar-link {
   font-family: $font-sans;
-  font-size: 1em;
+  font-size: 0.9em;
   display: block;
   color: $color-default;
   text-decoration: none;
-  padding: 3px 2.5em;
+  padding: 3px 30px;
   position: relative;
   width: 100%;
   font-weight: 400;

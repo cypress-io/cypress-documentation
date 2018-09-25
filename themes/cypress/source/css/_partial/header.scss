@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   right: 0;
+  opacity: 0.9;
 }
 
 #header-inner {
@@ -20,7 +21,7 @@
 }
 #logo-wrap {
   box-flex: 1;
-  margin: 0 60px;
+  margin: 0 ($sidebar-width - 215px);
 }
 
 #logo {

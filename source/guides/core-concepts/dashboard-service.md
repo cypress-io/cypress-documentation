@@ -28,7 +28,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-***See Tests Runs in the Test Runner***
+***See tests runs in the test runner***
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -38,7 +38,7 @@ Additionally we've integrated the tests run into the Cypress {% url 'Test Runner
 {% url "We have answered some common questions about the Dashboard Service in our FAQ." dashboard-faq %}.
 {% endnote %}
 
-## Example Projects
+## Example projects
 
 Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboard %} you can view any {% urlHash "public project" Public-vs-Private %}.
 
@@ -120,7 +120,7 @@ We recommend that you check your `cypress.json` including the `projectId` into s
 $ export CYPRESS_PROJECT_ID={projectId}   # replace {projectId} with your actual projectId
 ```
 
-### Record Key {% fa fa-key %}
+### Record key {% fa fa-key %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
@@ -178,7 +178,7 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-### Run Details
+### Run details
 
 Details of each run are displayed including:
 
@@ -192,7 +192,7 @@ Details of each run are displayed including:
 
 {% img /img/dashboard/run-details.png "run-details" %}
 
-### {% fa fa-file-code-o fa-fw %} Spec Files
+### {% fa fa-file-code-o fa-fw %} Spec files
 
 You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
 
@@ -214,7 +214,7 @@ If you had any failed tests, you can hover over the spec chart and click on the 
 
 {% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
 
-### {% fa fa-code fa-fw %} Standard Output
+### {% fa fa-code fa-fw %} Standard output
 
 Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
@@ -232,7 +232,7 @@ The video recorded during the test run can be found under the **Video** of the s
 
 {% img /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
-### {% fa fa-exclamation-triangle fa-fw %} Test Failures
+### {% fa fa-exclamation-triangle fa-fw %} Test failures
 
 Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 

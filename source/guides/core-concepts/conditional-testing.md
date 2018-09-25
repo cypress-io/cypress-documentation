@@ -130,13 +130,13 @@ If you are unable to guarantee that the DOM is stable - don't worry, there are o
 
 Let's explore some examples of conditional testing that will pass or fail 100% of the time.
 
-## A/B Campaign
+## A/B campaign
 
 In this example let's assume you visit your website and the content will be different based on which A/B campaign your server decides to send. Perhaps it is based on geo-location, IP address, time of day, locale, or other factors that are difficult to control. How can you write tests in this manner?
 
 Easily: control which campaign gets sent, or provide a reliable means to know which one it is.
 
-***Use URL query params:***
+### Use URL query params:
 
 ```js
 // tell your backend server which campaign you want sent
@@ -154,7 +154,7 @@ cy.visit('https://app.com?campaign=C')
 
 Now there is not even a need to do conditional testing since you are able to know ahead of time what campaign was sent. Yes, this may require server side updates, but you have to make an untestable app testable if you want to test it!
 
-***Use the server:***
+### Use the server:
 
 Alternatively, if your server saves the campaign with a session, you could just ask your server to tell you which campaign you are on.
 
@@ -173,7 +173,7 @@ cy.request('https://app.com/me')
   })
 ```
 
-***Use session cookies:***
+### Use session cookies:
 
 Perhaps an even easier way to test this is if your server sent the campaign in a session cookie that you could read off.
 
@@ -185,7 +185,7 @@ cy.getCookie('campaign')
   })
 ```
 
-***Embed data in the DOM:***
+### Embed data in the DOM:
 
 Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present and query-able. It would have to be present 100% of the time, else this would not work.
 
@@ -208,7 +208,7 @@ Once again - we will need another reliable way to achieve this without involving
 
 These patterns are pretty much the same as before:
 
-***Use the URL to control it:***
+### Use the URL to control it:
 
 ```js
 // dont show the wizard
@@ -222,7 +222,7 @@ cy.visit('https://app.com?wizard=1')
 
 We would likely just need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
 
-***Use Cookies to know ahead of time:***
+### Use Cookies to know ahead of time:
 
 In the case where you cannot control it, you can still conditionally dismiss it **if** you know whether it is going to be shown.
 
@@ -241,7 +241,7 @@ cy.getCookie('showWizard')
   .click()     // more commands here
 ```
 
-***Use your server or database:***
+### Use your server or database:
 
 If you store and/or persist whether to show the wizard on the server, then just ask it.
 
@@ -263,7 +263,7 @@ cy.request('https://app.com/me')
 
 Alternatively, if you are creating users, it might just be easier to create the user and simply set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
-***Embed data in the DOM:***
+### Embed data in the DOM:
 
 Another valid strategy would be to embed data directly into the DOM but to do so in a way that the data is **always** present and query-able. The data would have to be present 100% of the time, otherwise this strategy would not work.
 
@@ -280,7 +280,7 @@ cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
 .click()     // more commands here
 ```
 
-## Element Existence
+## Element existence
 
 In the case where you **are** trying to use the DOM to do conditional testing, you can utilize the ability to synchronously query for elements in Cypress to create control flow.
 
@@ -351,11 +351,11 @@ Cypress._.times(100, (i) => {
 })
 ```
 
-## Dynamic Text
+## Dynamic text
 
 The pattern of doing something conditionally based on whether or not certain text is present is identical to element existence above.
 
-***Conditionally check whether an element has certain text:***
+### Conditionally check whether an element has certain text:
 
 ```js
 // this only works if there's 100% guarantee

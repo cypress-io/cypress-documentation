@@ -8,6 +8,7 @@ html, body, a, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
   font-family: inherit;
   font-size: inherit;
   vertical-align: baseline;
+  -webkit-padding-start: 0;
 }
 
 html {
@@ -15,7 +16,7 @@ html {
 }
 body {
   line-height: $line-height;
-  background: $color-background;
+  background: #fff;
   font-size: $font-size;
   font-weight: normal;
   font-family: $font-sans;
