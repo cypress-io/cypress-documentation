@@ -65,6 +65,7 @@ jobs:
       - run: ls -la
       - run: npm run deps
       - run: npm run lint
+      - run: npm run textlint
       - run: npm run stop-only
       - run: npm test
       - run: npm run build

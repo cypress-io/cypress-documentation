@@ -81,32 +81,24 @@ describe "lib/url_generator", ->
       )
       return undefined
 
-  describe ".getLocalFile", ->
-    beforeEach ->
-      sinon.stub(fs, "stat").returns(Promise.resolve())
-
+  describe ".getLocalFilePath", ->
     it "requests file", ->
-      urlGenerator.getLocalFile(data, "as")
-      .spread (pathToFile, str) ->
-        expect(pathToFile).to.eq("api/commands/as.html")
-        expect(str).to.be.a("string")
+      urlGenerator.getLocalFilePath(data, "as")
+      .then (pathToFile) ->
+        expect(pathToFile).to.eq("/api/commands/as.html")
 
     it "throws when cannot find file", ->
       source = "my-file.md"
       href = "foo"
-      fullUrl = href
-      urlGenerator.getLocalFile(data, href, source, fullUrl)
+      urlGenerator.getLocalFilePath(data, href, source)
       .then ->
         throw new Error("should have caught error")
       .catch (err) ->
         snapshot(err.message)
 
-  describe ".validateAndGetUrl", ->
+  describe ".getUrl", ->
     it "fails when given undefined href", ->
-      render = (str) ->
-        return Promise.resolve("<html><div id='notes'>notes</div></html>")
-
-      urlGenerator.validateAndGetUrl(data, undefined, 'foo', 'content', render )
+      urlGenerator.getUrl(data, undefined, 'foo', 'content')
       .then ->
         throw new Error("should have caught error")
       .catch (err) ->
@@ -117,97 +109,19 @@ describe "lib/url_generator", ->
         ].forEach (msg) ->
           expect(err.message).to.include(msg)
 
-    it "fails when external returns non 2xx", ->
-      nock("https://www.google.com")
-      .head("/")
-      .reply(500)
-
-      urlGenerator.validateAndGetUrl(data, "https://www.google.com")
-      .then ->
-        throw new Error("should have caught error")
-      .catch (err) ->
-        expect(err.message).to.include("Request to: https://www.google.com/ failed. (Status Code 500)")
-
-    it "fails when URL is invalid", ->
-      urlGenerator.validateAndGetUrl(data, "https://hub.docker.com/[object Object]p>")
-      .then ->
-        throw new Error("should have caught error")
-      .catch (err) ->
-        expect(err.message).to.include("You must quote the URL: https://hub.docker.com")
-
-    it "verifies local file and caches subsequent requests", ->
-      markdown = "## Notes\nfoobarbaz"
-
-      render = (str) ->
-        expect(str).to.eq(markdown)
-        "<html><div id='notes'>notes</div></html>"
-
-      sinon.stub(fs, "readFile").returns(Promise.resolve(markdown))
-
-      urlGenerator.validateAndGetUrl(data, "and#notes", "", "", render)
+    it "generates local file path", ->
+      urlGenerator.getUrl(data, "and#notes", "", "")
       .then (pathToFile) ->
         expect(pathToFile).to.eq("/api/commands/and.html#notes")
 
-        urlGenerator.validateAndGetUrl(data, "and#notes", "", "", render)
-      .then (pathToFile) ->
-        expect(pathToFile).to.eq("/api/commands/and.html#notes")
-
-        expect(fs.readFile).to.be.calledOnce
-
-    it "verifies external url with anchor href matching hash", ->
-      nock("https://www.google.com")
-      .get("/")
-      .reply(200, "<html><a href='#assertions'>assertions</a></html>")
-
-      urlGenerator.validateAndGetUrl(data, "https://www.google.com/#assertions")
+    it "returns external urls", ->
+      urlGenerator.getUrl(data, "https://www.google.com/#assertions")
       .then (url) ->
         expect(url).to.eq("https://www.google.com/#assertions")
-
-        urlGenerator.validateAndGetUrl(data, "https://www.google.com/#assertions")
-      .then (url) ->
-        expect(url).to.eq("https://www.google.com/#assertions")
-
-    it "fails when hash is not present in response", ->
-      nock("https://www.google.com")
-      .get("/")
-      .reply(200, "<html></html>")
-
-      urlGenerator.validateAndGetUrl(data, "https://www.google.com/#foo", "bar.md")
-      .then ->
-        throw new Error("should have caught error")
-      .catch (err) ->
-        [
-          "Constructing {% url %} tag helper failed"
-          "The source file was: bar.md"
-          "You referenced a hash that does not exist at: https://www.google.com/",
-          "Expected to find an element matching the id: #foo or href: #foo"
-          "The HTML response body was:"
-          "<html></html>"
-        ].forEach (msg) ->
-          expect(err.message).to.include(msg)
-
-    it "fails when hash is not present in local file", ->
-      render = (str) -> "<html></html>"
-
-      sinon.stub(fs, "readFile").returns(Promise.resolve(""))
-
-      urlGenerator.validateAndGetUrl(data, "and#foo", "guides/core-concepts/bar.md", "content", render)
-      .then ->
-        throw new Error("should have caught error")
-      .catch (err) ->
-        [
-          "Constructing {% url %} tag helper failed"
-          "The source file was: guides/core-concepts/bar.md"
-          "You referenced a hash that does not exist at: api/commands/and.html",
-          "Expected to find an element matching the id: #foo or href: #foo"
-          "The HTML response body was:"
-          "<html></html>"
-        ].forEach (msg) ->
-          expect(err.message).to.include(msg)
 
     it "resolves cached values in a promise", ->
       urlGenerator.cache.set("foo", "bar")
       .then ->
-        urlGenerator.validateAndGetUrl(data, "foo")
+        urlGenerator.getUrl(data, "foo")
         .then (url) ->
           expect(url).to.eq("bar")

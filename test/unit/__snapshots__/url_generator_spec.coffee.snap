@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`lib/url_generator .getLocalFile throws when cannot find file 1`] = `
+exports[`lib/url_generator .getLocalFilePath throws when cannot find file 1`] = `
 "Constructing {% url %} tag helper failed
 
     > The source file was: my-file.md

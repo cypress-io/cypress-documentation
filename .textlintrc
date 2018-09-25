@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "no-dead-link": {
+        "checkRelative": false,
+        "ignoreRedirects": true,
+        "ignore": [
+          "https://on.cypress.io/",
+          "mailto*",
+          "http://localhost*"
+        ]
+    }
+  }
+}
