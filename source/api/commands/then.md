@@ -73,7 +73,7 @@ cy.get('button').then(($btn) => {
 cy.wrap(null).then(() => {
     return {id: 123}
   })
-  .then((obj) =>{
+  .then((obj) => {
     // subject is now the obj {id: 123}
     expect(obj.id).to.eq(123) // true
   })
@@ -87,7 +87,7 @@ cy.get('form').then(($form) => {
     // undefined is returned here, but $form will be
     // yielded to allow for continued chaining
   })
-  .find('input').then(($input) =>{
+  .find('input').then(($input) => {
     // we have our $input element here since
     // our form element was yielded and we called
     // .find('input') on it
