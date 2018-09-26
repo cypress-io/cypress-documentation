@@ -103,10 +103,12 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
     display: none !important;
   }
   .article-content {
-    font-size: 12pt;
+    font-size: 1.1em;
+
     a {
       color: $color-default;
       text-decoration: underline;
+      
       &:after {
         content: "(" attr(href) ")";
         font-size: 80%;

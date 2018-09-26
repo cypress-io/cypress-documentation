@@ -85,6 +85,30 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   return result
 })
 
+hexo.extend.helper.register('api_toc', function () {
+  let type = this.page.canonical_path.split('/')[0]
+  let sidebar = this.site.data.sidebar[type]
+  let result = ''
+  let self = this
+  let prefix = `sidebar.${type}.`
+
+  _.each(sidebar, function (menu, title) {
+    result += `<li class="api-title"><h2>${self.__(prefix + title)}</h2><ul class="api-links">`
+
+    _.each(menu, function (link, text) {
+      let href = [type, title, link].join('/')
+
+      result += `<li class='api-li api-li-${title}'><a href="${self.config.root + href}" class="api-link">
+        ${self.__(prefix + text)}</a></li>`
+    })
+
+    // close the ul containing the menus
+    result += '</ul></li>'
+  })
+
+  return result
+})
+
 hexo.extend.helper.register('menu', function (type) {
   let file = `${type}-menu`
   let menu = this.site.data[file]

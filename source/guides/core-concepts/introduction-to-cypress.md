@@ -194,7 +194,7 @@ If your app is translated into multiple languages for i18n, make sure you consid
 
 As we showed above, Cypress anticipates the asynchronous nature of web applications and doesn't fail immediately the first time an element is not found. Instead, Cypress gives your app a window of time to finish whatever it may be doing!
 
-This is known as a `timeout`, and most commands can be customized with specific timeout periods ({% url 'the default timeout is 4 seconds' configuration#Timeouts %}). These Commands will list a {% url `timeout` api#Rules %} option in their API documentation, detailing how to set the number of milliseconds you want to continue to try finding the element.
+This is known as a `timeout`, and most commands can be customized with specific timeout periods ({% url 'the default timeout is 4 seconds' configuration#Timeouts %}). These Commands will list a `timeout` option in their API documentation, detailing how to set the number of milliseconds you want to continue to try finding the element.
 
 ```js
 // Give this element 10 seconds to appear

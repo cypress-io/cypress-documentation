@@ -74,6 +74,22 @@
 }
 .article-content, .toc-top .article {
   line-height: $line-height;
+  font-size: 16px;
+
+  .api-toc, .api-links {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .api-li, .api-title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  // we don't want to show the first page we're on
+  .api-title:first-child {
+    display: none;
+  }
 
   hr {
     border: 0;
@@ -84,7 +100,7 @@
 
   p {
     margin: 25px 0;
-    font-size: 1.1em;
+    font-size: 1.21em;
     word-wrap: break-word;
     font-family: $font-sans;
     line-height: 2em;
@@ -365,6 +381,7 @@
 
     p {
       margin: 0;
+      font-size: 1.1em;
     }
     table {
       margin: 2em 0;
@@ -406,7 +423,7 @@
     position: relative;
     border-left: 5px solid $highlight-comment;
     font-style: normal;
-    font-size: 1em;
+    font-size: 1.1em;
     color: #45494c;
 
     footer {
