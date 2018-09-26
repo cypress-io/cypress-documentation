@@ -135,7 +135,7 @@ sidebar:
 
 ### Writing the Changelog
 
-When adding to the Changelog, be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes).
+When adding to the Changelog, create a new file in `source/_changelogs` named as the version number. Be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes).
 
 #### Categories
 
