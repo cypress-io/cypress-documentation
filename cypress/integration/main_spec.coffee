@@ -141,14 +141,22 @@ describe "Main", ->
       cy.get("aside#sidebar")
         .should("be.visible")
 
-    it "has table of contents and goes to 0.19.0", ->
-      cy.get("aside#article-toc")
-        .should("be.visible")
-        .wait(2000) # allows menuspy to load and set the menu links
-        .contains("0.19.0")
-        .click()
-      cy.url()
-        .should('include', '#0-19-0')
+    it "has a populated table of contents", ->
+      if Cypress.config('baseUrl').includes('localhost')
+        cy.get("aside#article-toc")
+          .should("be.visible")
+          .get(".toc-item")
+          .should("have.length", 5)
+        cy.url()
+          .should("match", /.+#\d+-\d+-\d+/)
+      else
+        cy.get("aside#article-toc")
+          .should("be.visible")
+          .wait(2000) # allows menuspy to load and set the menu links
+          .contains("0.19.0")
+          .click()
+        cy.url()
+          .should('include', '#0-19-0')
 
   describe "Intro to Cypress", ->
     beforeEach ->
