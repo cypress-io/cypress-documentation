@@ -72,7 +72,7 @@ window._load_script = function(url, callback) {
   var _removed = false
   var form_to_submit = document.getElementById('_form_1019_')
   var allInputs = []
-  if form_to_submit {
+  if (form_to_submit) {
     allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false
   }
 
