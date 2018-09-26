@@ -134,3 +134,15 @@ a code {
     color: $highlight-red;
   }
 }
+
+.article pre.language-json code,
+.faq pre.language-json code {
+  .token.property, .token.tag, .token.boolean, .token.number, .token.function-name, .token.constant, .token.symbol, .token.deleted {
+    
+    color: $highlight-red;
+  }
+
+  .token.operator, .token.entity, .token.url, .token.variable {
+    background-color: transparent;
+  }
+}
