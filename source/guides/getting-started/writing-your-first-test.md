@@ -12,7 +12,7 @@ title: Writing Your First Test
 
 {% video vimeo 237115455 %}
 
-# Add a Test File
+# Add a test file
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 
@@ -42,7 +42,7 @@ We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This i
 Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
 {% endnote %}
 
-# Write a Simple Test
+# Write a simple test
 
 Now it's time to write our first test. We're going to:
 
@@ -105,7 +105,7 @@ Cypress builds on these popular tools and frameworks that you *hopefully* alread
 Check out our {% url "Cypress ESLint plugin" https://github.com/cypress-io/eslint-plugin-cypress %}.
 {% endnote %}
 
-# Write a *Real* Test
+# Write a *real* test
 
 **A solid test generally covers 3 phases:**
 
@@ -122,7 +122,7 @@ Today, we'll take a narrow view of these steps and map them cleanly to Cypress c
 3. Interact with that element.
 4. Assert about the content on the page.
 
-## {% fa fa-globe %} Step 1: Visit a Page
+## {% fa fa-globe %} Step 1: Visit a page
 
 First, let's visit a web page. We will visit our {% url 'Kitchen Sink' applications#Kitchen-Sink %} application in this example so that you can try Cypress out without needing to worry about finding a page to test.
 
@@ -160,7 +160,7 @@ The point of Cypress is to be a tool you use every day to build and test **your 
 Cypress is not a **general purpose** web automation tool. It is poorly suited for scripting live, production websites not under your control.
 {% endnote %}
 
-## {% fa fa-search %} Step 2: Query for an Element
+## {% fa fa-search %} Step 2: Query for an element
 
 Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
 
@@ -196,7 +196,7 @@ Before we add another command - let's get this test back to passing. Replace `hy
 
 {% video local /img/snippets/first-test-contains-30fps.mp4 %}
 
-## {% fa fa-mouse-pointer %} Step 3: Click an Element
+## {% fa fa-mouse-pointer %} Step 3: Click an element
 
 Ok, now we want to click on the link we found. How do we do that? You could almost guess this one: just add a {% url "`.click()`" click %} command to the end of the previous command, like so:
 
@@ -218,7 +218,7 @@ Now we can assert something about this new page!
 
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
 
-## {% fa fa-check-square-o %} Step 4: Make an Assertion
+## {% fa fa-check-square-o %} Step 4: Make an assertion
 
 Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with {% url "`.should()`" should %}.
 
@@ -237,7 +237,7 @@ describe('My First Test', function() {
 })
 ```
 
-### Adding More Commands and Assertions
+### Adding more commands and assertions
 
 We are not limited to a single interaction and assertion in a given test. In fact, many interactions in an application may require multiple steps and are likely to change your application state in more than one way.
 
@@ -322,7 +322,7 @@ Cypress comes with a host of debugging tools to help you understand a test.
 
 Let's see some of this in action using our existing test code.
 
-## Time Travel
+## Time travel
 
 Take your mouse and **hover over** the `CONTAINS` command in the Command Log.
 
@@ -348,20 +348,20 @@ Commands are also interactive. Go ahead and click on the `CLICK` command.
 
 Notice it highlights in purple. This did three things worth noting...
 
-### 1. Pinned Snapshots
+### 1. Pinned snapshots
 We have now **pinned** this snapshot. Hovering over other commands will not revert to them. This gives us a chance to manually inspect the DOM of our application under test at the time the snapshot was taken.
 
-### 2. Event Hitbox
+### 2. Event hitbox
 Since {% url `.click()` click %} is an action command, that means we also see a red hitbox at the coordinates the event took place.
 
-### 3. Snapshot Menu Panel
+### 3. Snapshot menu panel
 There is also a new menu panel. Some commands (like action commands) will take multiple snapshots: **before** and **after**. We can now cycle through these.
 
 The **before** snapshot is taken prior to the click event firing. The **after** snapshot is taken immediately after the click event. Although this click event caused our browser to load a new page, it's not an instantaneous transition. Depending on how fast your page loaded, you may still see the same page, or a blank screen as the page is unloading and in transition.
 
 When a command causes an immediate visual change in our application, cycling between before and after will update our snapshot. We can see this in action by clicking the `TYPE` command in the Command Log. Now, clicking **before** will show us the input in a default state, showing the placeholder text. Click **after** will show us what the input looks like when the `TYPE` command has completed.
 
-## Page Events
+## Page events
 
 Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
 
@@ -374,7 +374,7 @@ Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by anoth
 - Page Loads
 - Form Submissions
 
-## Console Output
+## Console output
 
 Besides Commands being interactive, they also output additional debugging information to your console.
 
@@ -391,7 +391,7 @@ Open up your Dev Tools and click on the `GET` for the `.action-email` class sele
 
 We can even expand what was returned and inspect each individual element or even right click and inspect them in the Elements panel!
 
-## Special Commands
+## Special commands
 
 In addition to having a helpful UI, there are also special commands dedicated to the task of debugging.
 
@@ -426,7 +426,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 {% img /img/guides/first-test-paused.png %}
 
-## In Action
+## In action
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 

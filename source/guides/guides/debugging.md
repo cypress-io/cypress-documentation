@@ -101,7 +101,7 @@ DEBUG=cypress:* cypress open
 set DEBUG=cypress:*
 ```
 
-{% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.
+{% url 'Read more about the CLI options here' command-line#Debugging-commands %}.
 
 # Debug the Browser Driver
 

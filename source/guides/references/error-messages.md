@@ -390,7 +390,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching-the-Cypress-Binary %}, then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching-the-Cypress-binary %}, then bump the version of your CI cache to ensure a clean build.
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
