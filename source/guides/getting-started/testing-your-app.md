@@ -13,7 +13,7 @@ title: Testing Your App
 
 {% video youtube 5XQOK0v_YRE %}
 
-# {% fa fa-terminal %} Step 1: Start Your Server
+# {% fa fa-terminal %} Step 1: Start your server
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Test Runner" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
 
@@ -52,7 +52,7 @@ With that said - you still have the option to have it **both ways**.
 Many of our users run the *majority* of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
 {% endnote %}
 
-# {% fa fa-globe %} Step 2: Visit Your Server
+# {% fa fa-globe %} Step 2: Visit your server
 
 Once your server is running, it's time to visit it.
 
@@ -133,7 +133,7 @@ Cypress has many more configuration options you can use to customize its behavio
 Check them out in {% url "Configuration" configuration %}!
 {% endnote %}
 
-# Testing Strategies
+# Testing strategies
 
 You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advice to give you.
 
@@ -141,7 +141,7 @@ You're about to embark on writing tests for your application, and only _you_ kno
 
 That said, modern web testing has a few wrinkles that every team experiences, so here are some quick tips on common situations you're likely to run into.
 
-## Seeding Data
+## Seeding data
 
 Depending on how your application is built - it's likely that your web application is going to be affected and controlled by the server.
 
@@ -213,7 +213,7 @@ The good news is that we aren't Selenium, nor are we a traditional e2e testing t
 
 **With Cypress, there are several other approaches that can offer an arguably better and faster experience.**
 
-## Stubbing the Server
+## Stubbing the server
 
 Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
 
@@ -241,13 +241,13 @@ Once you've established it's working you can then use stubs to test all of the e
 Please read our {% url 'Guide on Network Requests' network-requests %} for a much more thorough analysis and approach to accomplishing this.
 {% endnote %}
 
-## Logging In
+## Logging in
 
 One of the first (and arguably one of the hardest) hurdles you'll have to overcome is testing logging into your application.
 
 Nothing slows a test suite down like having to log in, but all the good parts of your application most likely require an authenticated user! Here are some tips.
 
-### Fully Test the Login Flow -- But Only Once!
+### Fully test the login flow -- but only once!
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
@@ -386,7 +386,7 @@ We've created several recipes covering additional scenarios like dealing with CS
 Feel free to {% url 'explore these additional logging in' recipes %} recipes.
 {% endnote %}
 
-# Get Started
+# Get started
 
 Ok, we're done talking.  Now dive in and get started testing your app!
 

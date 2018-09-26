@@ -12,7 +12,7 @@ Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more 
 
 ## {% fa fa-angle-right %} What operating systems do you support?
 
-You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Windows. For additional information, please see our {% url "System Requirements"  installing-cypress#System-Requirements %}.
+You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Windows. For additional information, please see our {% url "System requirements"  installing-cypress#System-requirements %}.
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
