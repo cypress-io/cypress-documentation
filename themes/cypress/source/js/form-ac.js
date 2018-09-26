@@ -1,18 +1,18 @@
 window.cfields = []
-window._show_thank_you = function(id, message, trackcmp_url) {
-  var form = document.getElementById('_form_' + id + '_'), thank_you = form.querySelector('._form-thank-you')
+window._show_thank_you = function (id, message, trackcmp_url) {
+  var form = document.getElementById('_form_' + id + '_'); var thank_you = form.querySelector('._form-thank-you')
   form.querySelector('._form-content').style.display = 'none'
   thank_you.innerHTML = message
   thank_you.style.display = 'block'
-  if (typeof(trackcmp_url) != 'undefined' && trackcmp_url) {
+  if (typeof (trackcmp_url) !== 'undefined' && trackcmp_url) {
     // Site tracking URL to use after inline form submission.
     _load_script(trackcmp_url)
   }
   if (typeof window._form_callback !== 'undefined') window._form_callback(id)
 }
 
-window._show_error = function(id, message, html) {
-  var form = document.getElementById('_form_' + id + '_'), err = document.createElement('div'), button = form.querySelector('button'), old_error = form.querySelector('._form_error')
+window._show_error = function (id, message, html) {
+  var form = document.getElementById('_form_' + id + '_'); var err = document.createElement('div'); var button = form.querySelector('button'); var old_error = form.querySelector('._form_error')
   if (old_error) old_error.parentNode.removeChild(old_error)
   err.innerHTML = message
   err.className = '_error-inner _form_error _no_arrow'
@@ -28,41 +28,39 @@ window._show_error = function(id, message, html) {
   }
 }
 
-window._load_script = function(url, callback) {
-  var head = document.querySelector('head'), script = document.createElement('script'), r = false
+window._load_script = function (url, callback) {
+  var head = document.querySelector('head'); var script = document.createElement('script'); var r = false
   script.type = 'text/javascript'
   script.charset = 'utf-8'
   script.src = url
   if (callback) {
-    script.onload = script.onreadystatechange = function() {
-    if (!r && (!this.readyState || this.readyState == 'complete')) {
-      r = true
-      callback()
+    script.onload = script.onreadystatechange = function () {
+      if (!r && (!this.readyState || this.readyState == 'complete')) {
+        r = true
+        callback()
       }
     }
   }
   head.appendChild(script)
-}
-
-(function() {
-  if (window.location.search.search("excludeform") !== -1) return false
-  var getCookie = function(name) {
+}(function () {
+  if (window.location.search.search('excludeform') !== -1) return false
+  var getCookie = function (name) {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^]+)'))
     return match ? match[2] : null
   }
-  var setCookie = function(name, value) {
+  var setCookie = function (name, value) {
     var now = new Date()
     var time = now.getTime()
     var expireTime = time + 1000 * 60 * 60 * 24 * 365
     now.setTime(expireTime)
     document.cookie = name + '=' + value + ' expires=' + now + 'path=/'
   }
-      var addEvent = function(element, event, func) {
+  var addEvent = function (element, event, func) {
     if (element.addEventListener) {
       element.addEventListener(event, func)
     } else {
       var oldFunc = element['on' + event]
-      element['on' + event] = function() {
+      element['on' + event] = function () {
         oldFunc.apply(this, arguments)
         func.apply(this, arguments)
       }
@@ -76,14 +74,14 @@ window._load_script = function(url, callback) {
     allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false
   }
 
-  var getUrlParam = function(name) {
+  var getUrlParam = function (name) {
     var regexStr = '[\?&]' + name + '=([^&#]*)'
     var results = new RegExp(regexStr, 'i').exec(window.location.href)
     return results != undefined ? decodeURIComponent(results[1]) : false
   }
 
-  for (var i = 0 i < allInputs.length i++) {
-    var regexStr = "field\\[(\\d+)\\]"
+  for (var i = 0; i < allInputs.length; i++) {
+    var regexStr = 'field\\[(\\d+)\\]'
     var results = new RegExp(regexStr).exec(allInputs[i].name)
 
     if (results != undefined) {
@@ -95,7 +93,7 @@ window._load_script = function(url, callback) {
     var fieldVal = getUrlParam(allInputs[i].dataset.name)
 
     if (fieldVal) {
-      if (allInputs[i].type == "radio" || allInputs[i].type == "checkbox") {
+      if (allInputs[i].type == 'radio' || allInputs[i].type == 'checkbox') {
         if (allInputs[i].value == fieldVal) {
           allInputs[i].checked = true
         }
@@ -105,15 +103,15 @@ window._load_script = function(url, callback) {
     }
   }
 
-  var remove_tooltips = function() {
-    for (var i = 0 i < tooltips.length i++) {
+  var remove_tooltips = function () {
+    for (var i = 0; i < tooltips.length; i++) {
       tooltips[i].tip.parentNode.removeChild(tooltips[i].tip)
     }
-      tooltips = []
+    tooltips = []
   }
 
-  var remove_tooltip = function(elem) {
-    for (var i = 0 i < tooltips.length i++) {
+  var remove_tooltip = function (elem) {
+    for (var i = 0; i < tooltips.length; i++) {
       if (tooltips[i].elem === elem) {
         tooltips[i].tip.parentNode.removeChild(tooltips[i].tip)
         tooltips.splice(i, 1)
@@ -122,8 +120,8 @@ window._load_script = function(url, callback) {
     }
   }
 
-  var create_tooltip = function(elem, text) {
-    var tooltip = document.createElement('div'), arrow = document.createElement('div'), inner = document.createElement('div'), new_tooltip = {}
+  var create_tooltip = function (elem, text) {
+    var tooltip = document.createElement('div'); var arrow = document.createElement('div'); var inner = document.createElement('div'); var new_tooltip = {}
     if (elem.type != 'radio' && elem.type != 'checkbox') {
       tooltip.className = '_error'
       arrow.className = '_error-arrow'
@@ -144,9 +142,9 @@ window._load_script = function(url, callback) {
     return new_tooltip
   }
 
-  var resize_tooltip = function(tooltip) {
+  var resize_tooltip = function (tooltip) {
     var rect = tooltip.elem.getBoundingClientRect()
-    var doc = document.documentElement, scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0))
+    var doc = document.documentElement; var scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0))
     if (scrollPosition < 40) {
       tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _below'
     } else {
@@ -154,31 +152,31 @@ window._load_script = function(url, callback) {
     }
   }
 
-  var resize_tooltips = function() {
+  var resize_tooltips = function () {
     if (_removed) return
-    for (var i = 0 i < tooltips.length i++) {
+    for (var i = 0; i < tooltips.length; i++) {
       if (!tooltips[i].no_arrow) resize_tooltip(tooltips[i])
     }
   }
 
-  var validate_field = function(elem, remove) {
-    var tooltip = null, value = elem.value, no_error = true
+  var validate_field = function (elem, remove) {
+    var tooltip = null; var value = elem.value; var no_error = true
     remove ? remove_tooltip(elem) : false
     if (elem.type != 'checkbox') elem.className = elem.className.replace(/ ?_has_error ?/g, '')
     if (elem.getAttribute('required') !== null) {
       if (elem.type == 'radio' || (elem.type == 'checkbox' && /any/.test(elem.className))) {
         var elems = form_to_submit.elements[elem.name]
         no_error = false
-        for (var i = 0 i < elems.length i++) {
+        for (var i = 0; i < elems.length; i++) {
           if (elems[i].checked) no_error = true
         }
         if (!no_error) {
-          tooltip = create_tooltip(elem, "Please select an option.")
+          tooltip = create_tooltip(elem, 'Please select an option.')
         }
-      } else if (elem.type =='checkbox') {
-        var elems = form_to_submit.elements[elem.name], found = false, err = []
+      } else if (elem.type == 'checkbox') {
+        var elems = form_to_submit.elements[elem.name]; var found = false; var err = []
         no_error = true
-        for (var i = 0 i < elems.length i++) {
+        for (var i = 0; i < elems.length; i++) {
           if (elems[i].getAttribute('required') === null) continue
           if (!found && elems[i] !== elem) return true
           found = true
@@ -186,7 +184,7 @@ window._load_script = function(url, callback) {
           if (!elems[i].checked) {
             no_error = false
             elems[i].className = elems[i].className + ' _has_error'
-            err.push("Checking %s is required".replace("%s", elems[i].value))
+            err.push('Checking %s is required'.replace('%s', elems[i].value))
           }
         }
         if (!no_error) {
@@ -196,14 +194,14 @@ window._load_script = function(url, callback) {
         var selected = true
         if (elem.multiple) {
           selected = false
-          for (var i = 0 i < elem.options.length i++) {
+          for (var i = 0; i < elem.options.length; i++) {
             if (elem.options[i].selected) {
               selected = true
               break
             }
           }
         } else {
-          for (var i = 0 i < elem.options.length i++) {
+          for (var i = 0; i < elem.options.length; i++) {
             if (elem.options[i].selected && !elem.options[i].value) {
               selected = false
             }
@@ -211,59 +209,59 @@ window._load_script = function(url, callback) {
         }
         if (!selected) {
           no_error = false
-          tooltip = create_tooltip(elem, "Please select an option.")
+          tooltip = create_tooltip(elem, 'Please select an option.')
         }
       } else if (value === undefined || value === null || value === '') {
         elem.className = elem.className + ' _has_error'
         no_error = false
-        tooltip = create_tooltip(elem, "This field is required.")
+        tooltip = create_tooltip(elem, 'This field is required.')
       }
     }
     if (no_error && elem.name == 'email') {
       if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
         elem.className = elem.className + ' _has_error'
         no_error = false
-        tooltip = create_tooltip(elem, "Enter a valid email address.")
+        tooltip = create_tooltip(elem, 'Enter a valid email address.')
       }
     }
     if (no_error && /date_field/.test(elem.className)) {
       if (!value.match(/^\d\d\d\d-\d\d-\d\d$/)) {
         elem.className = elem.className + ' _has_error'
         no_error = false
-        tooltip = create_tooltip(elem, "Enter a valid date.")
+        tooltip = create_tooltip(elem, 'Enter a valid date.')
       }
     }
     tooltip ? resize_tooltip(tooltip) : false
     return no_error
   }
 
-  var needs_validate = function(el) {
+  var needs_validate = function (el) {
     return el.name == 'email' || el.getAttribute('required') !== null
   }
 
-  var validate_form = function(e) {
-    var err = form_to_submit.querySelector('._form_error'), no_error = true
+  var validate_form = function (e) {
+    var err = form_to_submit.querySelector('._form_error'); var no_error = true
 
     if (!submitted) {
       submitted = true
-      for (var i = 0, len = allInputs.length i < len i++) {
+      for (var i = 0, len = allInputs.length; i < len; i++) {
         var input = allInputs[i]
         if (needs_validate(input)) {
           if (input.type == 'text') {
-            addEvent(input, 'input', function() {
+            addEvent(input, 'input', function () {
               validate_field(this, true)
             })
           } else if (input.type == 'radio' || input.type == 'checkbox') {
-            (function(el) {
+            (function (el) {
               var radios = form_to_submit.elements[el.name]
-              for (var i = 0 i < radios.length i++) {
-                addEvent(radios[i], 'click', function() {
+              for (var i = 0; i < radios.length; i++) {
+                addEvent(radios[i], 'click', function () {
                   validate_field(el, true)
                 })
               }
             })(input)
           } else if (input.tagName == 'SELECT') {
-            addEvent(input, 'change', function() {
+            addEvent(input, 'change', function () {
               validate_field(input, true)
             })
           }
@@ -273,7 +271,7 @@ window._load_script = function(url, callback) {
 
     remove_tooltips()
 
-    for (var i = 0, len = allInputs.length i < len i++) {
+    for (var i = 0, len = allInputs.length; i < len; i++) {
       var elem = allInputs[i]
       if (needs_validate(elem)) {
         validate_field(elem) ? true : no_error = false
@@ -294,12 +292,12 @@ window._load_script = function(url, callback) {
   window._old_serialize = null
 
   if (typeof serialize !== 'undefined') window._old_serialize = window.serialize
-  _load_script("//d3rxaij56vjege.cloudfront.net/form-serialize/0.3/serialize.min.js", function() {
+  _load_script('//d3rxaij56vjege.cloudfront.net/form-serialize/0.3/serialize.min.js', function () {
     window._form_serialize = window.serialize
     if (window._old_serialize) window.serialize = window._old_serialize
   })
 
-  var form_submit = function(e) {
+  var form_submit = function (e) {
     e.preventDefault()
     if (validate_form()) {
 
