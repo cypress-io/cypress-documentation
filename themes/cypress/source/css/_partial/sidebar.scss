@@ -80,6 +80,9 @@
   }
 
   &:after {
+    transition: 0.3s;
+	  transform-style: preserve-3d;
+    transform: rotateX(0deg);
     content: "\f078"; //fa-chevron-down
     font-family: FontAwesome;
     position: absolute;
@@ -106,7 +109,7 @@
     }
 
     &:after {
-      content: "\f077"; //fa-chevron-up
+      transform: rotateX(180deg);
     }
   }
 
