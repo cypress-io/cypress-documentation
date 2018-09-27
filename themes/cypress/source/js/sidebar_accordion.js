@@ -5,8 +5,6 @@
   var expandSidebar = document.getElementById('expand-sidebar')
   var collapseSidebar = document.getElementById('collapse-sidebar')
 
-  if (!sidebar) return
-
   function collapseSection (element) {
     // get the height of the element's inner content, regardless of its actual size
     var sectionHeight = element.scrollHeight
@@ -31,6 +29,7 @@
   }
 
   function expandSection (element) {
+    if (!element) return
     // get the height of the element's inner content, regardless of its actual size
     var sectionHeight = element.scrollHeight
 
@@ -47,66 +46,73 @@
     })
   }
 
-  // listen for click on sidebar titles
-  sidebar.addEventListener('click', function (e) {
-    if (e.target && e.target.dataset.toggle === 'collapse') {
-      var sidebarTitle = e.target
-      var isCollapsed = sidebarTitle.classList.contains('is-collapsed')
-      var collapsibleSection = sidebarTitle.getElementsByClassName('sidebar-links')[0]
+  if (sidebar) {
+    // listen for click on sidebar titles
+    sidebar.addEventListener('click', function (e) {
+      if (e.target && e.target.dataset.toggle === 'collapse') {
+        var sidebarTitle = e.target
+        var isCollapsed = sidebarTitle.classList.contains('is-collapsed')
+        var collapsibleSection = sidebarTitle.getElementsByClassName('sidebar-links')[0]
 
-      // toggle the collapse class on each menu section
-      if (isCollapsed) {
-        expandSection(collapsibleSection)
-        // mark the section as "currently not collapsed"
-        sidebarTitle.classList.remove('is-collapsed')
-      } else {
-        collapseSection(collapsibleSection)
-        // mark the section as "currently collapsed"
-        sidebarTitle.classList.add('is-collapsed')
+        // toggle the collapse class on each menu section
+        if (isCollapsed) {
+          expandSection(collapsibleSection)
+          // mark the section as "currently not collapsed"
+          sidebarTitle.classList.remove('is-collapsed')
+        } else {
+          collapseSection(collapsibleSection)
+          // mark the section as "currently collapsed"
+          sidebarTitle.classList.add('is-collapsed')
+        }
       }
-    }
-  })
+    })
+  }
+
 
   // listen for click on expand all
-  expandSidebar.addEventListener('click', function (e) {
-    e.preventDefault()
-    e.stopPropagation()
+  if (expandSidebar) {
+    expandSidebar.addEventListener('click', function (e) {
+      e.preventDefault()
+      e.stopPropagation()
 
-    var collapsibleSections = sidebar.getElementsByClassName('sidebar-links')
+      var collapsibleSections = sidebar.getElementsByClassName('sidebar-links')
 
-    for (var i = 0; i < collapsibleSections.length; i++) {
-      var sidebarTitle = collapsibleSections[i].parentElement
+      for (var i = 0; i < collapsibleSections.length; i++) {
+        var sidebarTitle = collapsibleSections[i].parentElement
 
-      // if we're currently on a page within the section, don't collapse it
-      if (sidebarTitle.classList.contains('is-collapsed')) {
-        expandSection(collapsibleSections[i])
+        // if we're currently on a page within the section, don't collapse it
+        if (sidebarTitle.classList.contains('is-collapsed')) {
+          expandSection(collapsibleSections[i])
 
-        // mark the section as "currently not collapsed"
-        sidebarTitle.classList.remove('is-collapsed')
+          // mark the section as "currently not collapsed"
+          sidebarTitle.classList.remove('is-collapsed')
+        }
       }
+    })
+  }
 
-    }
-  })
 
-  // listen for click on collapse all
-  collapseSidebar.addEventListener('click', function (e) {
-    e.preventDefault()
-    e.stopPropagation()
+  if (collapseSidebar) {
+    // listen for click on collapse all
+    collapseSidebar.addEventListener('click', function (e) {
+      e.preventDefault()
+      e.stopPropagation()
 
-    var collapsibleSections = sidebar.getElementsByClassName('sidebar-links')
+      var collapsibleSections = sidebar.getElementsByClassName('sidebar-links')
 
-    for (var i = 0; i < collapsibleSections.length; i++) {
-      var sidebarTitle = collapsibleSections[i].parentElement
+      for (var i = 0; i < collapsibleSections.length; i++) {
+        var sidebarTitle = collapsibleSections[i].parentElement
 
-      // if we're currently on a page within the section, don't collapse it
-      // if we're already collapsed, don't collapse it
-      if (!sidebarTitle.classList.contains('current') && !sidebarTitle.classList.contains('is-collapsed')) {
-        collapseSection(collapsibleSections[i])
+        // if we're currently on a page within the section, don't collapse it
+        // if we're already collapsed, don't collapse it
+        if (!sidebarTitle.classList.contains('current') && !sidebarTitle.classList.contains('is-collapsed')) {
+          collapseSection(collapsibleSections[i])
 
-        // mark the section as "currently collapsed"
-        sidebarTitle.classList.add('is-collapsed')
+          // mark the section as "currently collapsed"
+          sidebarTitle.classList.add('is-collapsed')
+        }
       }
+    })
+  }
 
-    }
-  })
 })()

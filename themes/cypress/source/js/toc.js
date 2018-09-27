@@ -35,8 +35,10 @@
     ms.tick()
   })
 
-  tocTop.addEventListener('click', function (e) {
-    e.preventDefault()
-    document.scrollingElement.scrollTop = 0
-  })
+  if (tocTop) {
+    tocTop.addEventListener('click', function (e) {
+      e.preventDefault()
+      document.scrollingElement.scrollTop = 0
+    })
+  }
 })()
