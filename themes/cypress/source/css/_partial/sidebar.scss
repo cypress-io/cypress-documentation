@@ -93,7 +93,7 @@
 
   ul.sidebar-links {
     margin-top: 0; 
-    transition: height 0.2s ease-out;
+    transition: height 0.2s ease;
     height: auto;
     list-style: none;
 
@@ -104,7 +104,6 @@
 
   &.is-collapsed {
     ul.sidebar-links {
-      transition: height 0.2s ease-out;
       height: 0;
     }
 
