@@ -42,7 +42,9 @@ window._load_script = function (url, callback) {
     }
   }
   head.appendChild(script)
-}(function () {
+};
+
+(function () {
   if (window.location.search.search('excludeform') !== -1) return false
   var getCookie = function (name) {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^]+)'))
@@ -240,7 +242,7 @@ window._load_script = function (url, callback) {
   }
 
   var validate_form = function (e) {
-    var err = form_to_submit.querySelector('._form_error'); var no_error = true
+    var no_error = true
 
     if (!submitted) {
       submitted = true
