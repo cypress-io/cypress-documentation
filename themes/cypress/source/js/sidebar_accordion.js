@@ -1,6 +1,7 @@
 (function () {
   'use strict'
 
+
   var sidebar = document.getElementById('sidebar')
   var expandSidebar = document.getElementById('expand-sidebar')
   var collapseSidebar = document.getElementById('collapse-sidebar')
@@ -29,7 +30,6 @@
         header.classList.add('is-collapsed')
       })
     })
-
   }
 
   function expandSection (element, header) {
@@ -56,8 +56,15 @@
   if (sidebar) {
     // listen for click on sidebar titles
     sidebar.addEventListener('click', function (e) {
-      if (e.target && e.target.dataset.toggle === 'collapse') {
-        var sidebarTitle = e.target
+      if (e.target && e.target.dataset.toggle === 'collapse' || e.target.nodeName === 'STRONG') {
+        var sidebarTitle
+
+        if (e.target.nodeName === 'STRONG') {
+          sidebarTitle = e.target.parentElement
+        } else {
+          sidebarTitle = e.target
+        }
+
         var isCollapsed = sidebarTitle.classList.contains('is-collapsed')
         var collapsibleSection = sidebarTitle.getElementsByClassName('sidebar-links')[0]
 
