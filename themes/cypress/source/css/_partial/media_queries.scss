@@ -123,59 +123,24 @@
   #article-toc {
     display: block;
   }
-
-  #lang-select-wrap {
-    display: none;
-  }
 }
 
-@media screen and(min-width: 1001px) {
-  #content-inner {
-  }
-
-  #lang-select-wrap {
-    display: inline-block;
-  }
-}
-
-@media screen and(max-width: 1000px) {
-  #content-wrap {
-    padding-top: 0;
-  }
-
-  .article {
-    padding: 0 30px !important;
-  }
-
-  .article-inner {
-    margin-right: 0 !important;
-  }
-
-  #article-toc {
-    display: none;
-    width: auto;
-    margin-right: 0;
-
-    &.fixed {
-      right: auto;
-    }
-  }
-
-  #footer-social {
-    width: 200px;
-    margin: 10px auto;
-    border-top: 1px solid #333;
-    padding: 10px 20px;
-    float: none;
-  }
-}
 @media screen and(max-width: 769px) {
   #content-wrap {
     padding-top: 0;
   }
 
+  .article-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   #header-inner {
     flex-direction: column;
+  }
+
+  #sidebar {
+    display: none;
   }
 
   #main-nav {
@@ -196,7 +161,7 @@
   }
 
   .searchbox {
-   width: 300px !important;
+    width: 300px !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu {
@@ -281,6 +246,64 @@
 
   ul.plugins-list li {
     width: 50%;
+  }
+
+  #logo-wrap {
+    display: flex;
+  }
+}
+
+@media screen and(max-width: 1200px) {
+  #lang-select-wrap {
+    display: none;
+  }
+
+  #logo-wrap {
+    margin-right: 0;
+    margin-left: 0; 
+  }
+}
+
+@media screen and(min-width: 1001px) {
+  // #lang-select-wrap {
+  //   display: inline-block;
+  // }
+}
+
+@media screen and(max-width: 1000px) {
+  #content-wrap {
+    padding-top: 0;
+  }
+
+  .main-nav-link {
+    font-size: 1em;
+    padding: 5px 10px 2px;
+  }
+
+  .article {
+    padding: 0 30px !important;
+  }
+
+  .article-inner {
+    margin-right: 0 !important;
+  }
+
+  #article-toc {
+    display: none;
+    width: auto;
+    margin-right: 0;
+
+    &.fixed {
+      right: auto;
+    }
+  }
+
+  #footer-social {
+    width: 200px;
+    margin: 10px auto;
+    border-top: 1px solid #333;
+    padding: 10px 20px;
+    float: none;
   }
 }
 
