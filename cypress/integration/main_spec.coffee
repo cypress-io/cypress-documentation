@@ -151,9 +151,7 @@ describe "Main", ->
           .should("match", /.+#\d+-\d+-\d+/)
       else
         cy.get("aside#article-toc")
-          .should("be.visible")
-          .wait(2000) # allows menuspy to load and set the menu links
-          .contains("0.19.0")
+          .contains("0.19.0", { timeout: 10000 })
           .click()
         cy.url()
           .should('include', '#0-19-0')
