@@ -58,7 +58,7 @@ window._load_script = function (url, callback) {
     document.cookie = name + '=' + value + ' expires=' + now + 'path=/'
   }
   var addEvent = function (element, event, func) {
-    if (element.addEventListener) {
+    if (element && element.addEventListener) {
       element.addEventListener(event, func)
     } else {
       var oldFunc = element['on' + event]
