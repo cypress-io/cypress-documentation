@@ -4,7 +4,7 @@ const clean = require('gulp-clean')
 const runSequence = require('run-sequence')
 
 const revisionOpts = {
-  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png'],
+  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'roboto*.css'],
   dontRenameFile: ['.html', 'CNAME'],
   dontUpdateReference: ['.html'],
   dontSearchFile: ['.js'],
@@ -56,15 +56,15 @@ gulp.task('move:roboto:fonts', function (cb) {
 
 gulp.task('move:roboto:fonts:folder', function () {
   return gulp
-  .src('./node_modules/roboto-fontface/fonts/roboto/**')
-  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto/fonts/roboto'))
+  .src('./node_modules/roboto-fontface/fonts/**')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto-fontface/fonts'))
 })
 
 
 gulp.task('move:roboto:css', function () {
   return gulp
-  .src('./node_modules/roboto-fontface/css/roboto/**')
-  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto/css/roboto'))
+  .src('./node_modules/roboto-fontface/css/**')
+  .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto-fontface/css'))
 })
 
 gulp.task('move:font:awesome:fonts', (cb) => {
