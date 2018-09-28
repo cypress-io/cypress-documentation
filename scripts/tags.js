@@ -15,6 +15,7 @@ const { issue, openAnIssue, user } = require('../lib/tags/issues')
 const { url, urlHash } = require('../lib/tags/url')
 const { fa, helperIcon } = require('../lib/tags/icons')
 const video = require('../lib/tags/video')
+const changelog = require('../lib/tags/changelog')
 
 const tags = {
   // partials
@@ -50,6 +51,9 @@ const tags = {
 
   // video
   video: video,
+
+  // changelog
+  changelog: changelog,
 }
 
 // tags which require ending

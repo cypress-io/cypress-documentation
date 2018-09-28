@@ -21,6 +21,7 @@
     "build": "node --stack-size=8192 ./index.js generate",
     "clean-deps": "rm -rf node_modules",
     "clean": "hexo clean",
+    "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:verify": "cypress verify",
     "deploy-prebuilt": "node ./cy_scripts/deploy.js",
