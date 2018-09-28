@@ -139,9 +139,11 @@
   }
 
   table {
-    margin: 15px 0;
-    width: 100%;
     border: 1px solid #e8e8e8;
+    display: block;
+    margin: 15px 0;
+    overflow: auto;
+    width: 100%;
 
     code {
       white-space: nowrap;
