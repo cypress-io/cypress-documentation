@@ -141,15 +141,16 @@ describe "Main", ->
       cy.get("aside#sidebar")
         .should("be.visible")
 
-    it "has a populated table of contents", ->
-      if Cypress.env('NODE_ENV') is 'development'
+    if Cypress.env('NODE_ENV') is 'development'
+      it "has a truncated table of contents", ->
         cy.get("aside#article-toc")
           .should("be.visible")
           .get(".toc-item")
-          .should("have.length", 5)
+          .should("have.length", 6) ## including truncation warning
         cy.url()
           .should("match", /.+#\d+-\d+-\d+/)
-      else
+    else
+      it "has a populated table of contents", ->
         cy.get("aside#article-toc")
           .contains("0.19.0", { timeout: 10000 })
           .click()
