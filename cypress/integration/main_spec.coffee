@@ -18,7 +18,7 @@ describe "Main", ->
 
     # only works in development environment where each CSS
     # file is separate
-    if Cypress.config('baseUrl').includes('localhost')
+    if Cypress.env('NODE_ENV') is 'development'
       it "loads fira", ->
         cy.request("fonts/vendor/fira/fira.css")
 
@@ -142,7 +142,7 @@ describe "Main", ->
         .should("be.visible")
 
     it "has a populated table of contents", ->
-      if Cypress.config('baseUrl').includes('localhost')
+      if Cypress.env('NODE_ENV') is 'development'
         cy.get("aside#article-toc")
           .should("be.visible")
           .get(".toc-item")
