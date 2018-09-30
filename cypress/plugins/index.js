@@ -25,7 +25,7 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
   // extract node env from environment variable
   // or base url or set as development by default
-  config.env.NODE_ENV = getNodeEnv(config.env.baseUrl)
+  config.env.NODE_ENV = getNodeEnv(config.baseUrl)
 
   return config
 }
