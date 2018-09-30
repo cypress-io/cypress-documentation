@@ -211,3 +211,13 @@ describe "lib/url_generator", ->
         urlGenerator.validateAndGetUrl(data, "foo")
         .then (url) ->
           expect(url).to.eq("bar")
+
+    it "correctly composes changelog URLs", ->
+      urlGenerator.validateAndGetUrl(data, "changelog#3-0-0", "", "")
+      .then (pathToFile) ->
+        console.log(pathToFile)
+        expect(pathToFile).to.eq("/guides/references/changelog.html#3-0-0")
+
+        urlGenerator.validateAndGetUrl(data, "changelog", "", "")
+        .then (pathToFile) ->
+          expect(pathToFile).to.eq("/guides/references/changelog.html")

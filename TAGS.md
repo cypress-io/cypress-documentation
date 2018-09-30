@@ -10,6 +10,7 @@ Here's documentation for all the custom tags that we've created.
   - [`img`](#img)
 - [Cypress custom tags](#cypress-custom-tags)
   - [`assertions`](#assertions)
+  - [`changelog`](#changelog)
   - [`fa`](#fa)
   - [`helper_icon`](#helper_icon)
   - [`issue`](#issue)
@@ -69,6 +70,12 @@ The following assertions are supported:
 * `retry`
 * `utility`
 * `wait`
+
+### `changelog`
+
+* [lib/tags/changelog.js](lib/tags/changelog.js)
+
+Builds a single changelog file from the contents of `source/_changelogs`
 
 ### `fa`
 
