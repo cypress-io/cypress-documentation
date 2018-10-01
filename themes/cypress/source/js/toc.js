@@ -15,7 +15,7 @@
   MenuSpy.prototype.tick = function tick () {
     var fromTop = this.currScrollTop + headerHeight
     var inViewElms = this.scrollItems.filter(function (item) {
-      return item.offset < fromTop
+      return (item.offset - 60) < fromTop
     })
     var elementInView = (inViewElms.length > 0)
       ? inViewElms.pop()

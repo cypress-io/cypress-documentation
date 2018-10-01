@@ -87,11 +87,9 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
 
 #content-wrap {
   background-color: white;
-  border-top: 1px solid $color-background;
-  border-bottom: 1px solid $color-background;
   margin: -1px 0;
   position: relative;
-  top: 60px;
+  top: 62px;
 }
 
 @media print {
@@ -210,4 +208,11 @@ i.fa {
   &.green {
     color: $color-green;
   }
+}
+
+:target::before {
+  content: "";
+  display: block;
+  height: 92px; /* fixed header height*/
+  margin: -92px 0 0; /* negative fixed header height */
 }
