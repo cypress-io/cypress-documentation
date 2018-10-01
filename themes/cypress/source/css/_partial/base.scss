@@ -180,9 +180,9 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   }
 
   a {
-    color: #3B94D9;
+    color: $color-link;
     text-decoration: none;
-    border-bottom: 1px dotted #bde1fd;
+    border-bottom: 1px dotted #86ceb6;
   }
 
   blockquote {
