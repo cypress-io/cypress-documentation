@@ -1,4 +1,4 @@
-(function () {
+window.onload = function () {
   window.cfields = []
   window._show_thank_you = function (id, message, trackcmp_url) {
     var form = document.getElementById('_form_' + id + '_'); var thank_you = form.querySelector('._form-thank-you')
@@ -318,5 +318,4 @@
 
     addEvent(form_to_submit, 'submit', form_submit)
   })()
-
-})()
+}
