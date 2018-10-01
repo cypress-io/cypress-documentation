@@ -58,7 +58,7 @@ window._load_script = function (url, callback) {
     document.cookie = name + '=' + value + '; expires=' + now + ';path=/'
   }
   var addEvent = function (element, event, func) {
-    if (element.addEventListener) {
+    if (element && element.addEventListener) {
       element.addEventListener(event, func)
     } else {
       var oldFunc = element['on' + event]
@@ -72,9 +72,9 @@ window._load_script = function (url, callback) {
   var _removed = false
   var form_to_submit = document.getElementById('_form_1019_')
   if (form_to_submit) {
-    var allInputs = form_to_submit.querySelectorAll('input, select, textarea') 
+    var allInputs = form_to_submit.querySelectorAll('input, select, textarea')
   }
-  var tooltips = [] 
+  var tooltips = []
   var submitted = false
 
   var getUrlParam = function (name) {
