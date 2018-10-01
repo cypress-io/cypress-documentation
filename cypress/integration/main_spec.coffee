@@ -20,7 +20,7 @@ describe "Main", ->
     # file is separate
     if Cypress.env('NODE_ENV') is 'development'
       it "loads roboto", ->
-        cy.request("fonts/vendor/roboto")
+        cy.request("/fonts/vendor/roboto-fontface/css/roboto/roboto-fontface.css")
 
     it "has limited container height", ->
       cy.get('#container')
