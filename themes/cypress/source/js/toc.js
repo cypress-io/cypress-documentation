@@ -7,7 +7,7 @@
   var tocTop = document.getElementById('article-toc-top')
   var headerHeight = header.clientHeight
 
-  if (!toc) return
+  if (!toc || !tocInner) return
 
   // override MenuSpy's .tick implementation because it incorrectly
   // calculates the current scroll offset and doesn't handle the
@@ -31,8 +31,10 @@
   window.addEventListener('load', function () {
     // https://github.com/lcdsantos/menuspy
     // This highlights the proper toc link while scrolling
-    ms.cacheItems()
-    ms.tick()
+    if (ms) {
+      ms.cacheItems()
+      ms.tick()
+    }
   })
 
   if (tocTop) {
