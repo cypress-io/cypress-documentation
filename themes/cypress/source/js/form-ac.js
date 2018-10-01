@@ -1,7 +1,9 @@
 window.cfields = []
 window._show_thank_you = function (id, message, trackcmp_url) {
   var form = document.getElementById('_form_' + id + '_'); var thank_you = form.querySelector('._form-thank-you')
-  form.querySelector('._form-content').style.display = 'none'
+  if (form) {
+    form.querySelector('._form-content').style.display = 'none'
+  }
   thank_you.innerHTML = message
   thank_you.style.display = 'block'
   if (typeof (trackcmp_url) !== 'undefined' && trackcmp_url) {
@@ -12,14 +14,21 @@ window._show_thank_you = function (id, message, trackcmp_url) {
 }
 
 window._show_error = function (id, message, html) {
-  var form = document.getElementById('_form_' + id + '_'); var err = document.createElement('div'); var button = form.querySelector('button'); var old_error = form.querySelector('._form_error')
+  var form = document.getElementById('_form_' + id + '_') 
+  var err = document.createElement('div') 
+  if (form) {
+    var button = form.querySelector('button') 
+  }
+  var old_error = form.querySelector('._form_error')
   if (old_error) old_error.parentNode.removeChild(old_error)
   err.innerHTML = message
   err.className = '_error-inner _form_error _no_arrow'
   var wrapper = document.createElement('div')
   wrapper.className = '_form-inner'
   wrapper.appendChild(err)
-  button.parentNode.insertBefore(wrapper, button)
+  if (button) {
+    button.parentNode.insertBefore(wrapper, button)
+  }
   if (html) {
     var div = document.createElement('div')
     div.className = '_error-html'
@@ -126,7 +135,10 @@ window._load_script = function (url, callback) {
   }
 
   var create_tooltip = function (elem, text) {
-    var tooltip = document.createElement('div'); var arrow = document.createElement('div'); var inner = document.createElement('div'); var new_tooltip = {}
+    var tooltip = document.createElement('div') 
+    var arrow = document.createElement('div') 
+    var inner = document.createElement('div') 
+    var new_tooltip = {}
     if (elem.type != 'radio' && elem.type != 'checkbox') {
       tooltip.className = '_error'
       arrow.className = '_error-arrow'
@@ -149,7 +161,8 @@ window._load_script = function (url, callback) {
 
   var resize_tooltip = function (tooltip) {
     var rect = tooltip.elem.getBoundingClientRect()
-    var doc = document.documentElement; var scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0))
+    var doc = document.documentElement 
+    var scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0))
     if (scrollPosition < 40) {
       tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _below'
     } else {
