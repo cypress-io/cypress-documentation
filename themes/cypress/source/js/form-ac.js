@@ -9,7 +9,7 @@ window._show_thank_you = function (id, message, trackcmp_url) {
     _load_script(trackcmp_url)
   }
   if (typeof window._form_callback !== 'undefined') window._form_callback(id)
-};
+}
 
 window._show_error = function (id, message, html) {
   var form = document.getElementById('_form_' + id + '_'); var err = document.createElement('div'); var button = form.querySelector('button'); var old_error = form.querySelector('._form_error')
@@ -65,39 +65,45 @@ window._load_script = function (url, callback) {
       element['on' + event] = function () {
         oldFunc.apply(this, arguments)
         func.apply(this, arguments)
-      };
+      }
     }
   }
 
   var _removed = false
   var form_to_submit = document.getElementById('_form_1019_')
-  var allInputs = form_to_submit.querySelectorAll('input, select, textarea'); var tooltips = []; var submitted = false
+  if (form_to_submit) {
+    var allInputs = form_to_submit.querySelectorAll('input, select, textarea') 
+  }
+  var tooltips = [] 
+  var submitted = false
 
   var getUrlParam = function (name) {
     var regexStr = '[\?&]' + name + '=([^&#]*)'
     var results = new RegExp(regexStr, 'i').exec(window.location.href)
     return results != undefined ? decodeURIComponent(results[1]) : false
-  };
+  }
 
-  for (var i = 0; i < allInputs.length; i++) {
-    var regexStr = 'field\\[(\\d+)\\]';
-    var results = new RegExp(regexStr).exec(allInputs[i].name)
+  if (allInputs) {
+    for (var i = 0; i < allInputs.length; i++) {
+      var regexStr = 'field\\[(\\d+)\\]'
+      var results = new RegExp(regexStr).exec(allInputs[i].name)
 
-    if (results != undefined) {
-      allInputs[i].dataset.name = window.cfields[results[1]]
-    } else {
-      allInputs[i].dataset.name = allInputs[i].name
-    }
-
-    var fieldVal = getUrlParam(allInputs[i].dataset.name)
-
-    if (fieldVal) {
-      if (allInputs[i].type == 'radio' || allInputs[i].type == 'checkbox') {
-        if (allInputs[i].value == fieldVal) {
-          allInputs[i].checked = true
-        }
+      if (results != undefined) {
+        allInputs[i].dataset.name = window.cfields[results[1]]
       } else {
-        allInputs[i].value = fieldVal
+        allInputs[i].dataset.name = allInputs[i].name
+      }
+
+      var fieldVal = getUrlParam(allInputs[i].dataset.name)
+
+      if (fieldVal) {
+        if (allInputs[i].type == 'radio' || allInputs[i].type == 'checkbox') {
+          if (allInputs[i].value == fieldVal) {
+            allInputs[i].checked = true
+          }
+        } else {
+          allInputs[i].value = fieldVal
+        }
       }
     }
   }
@@ -107,14 +113,14 @@ window._load_script = function (url, callback) {
       tooltips[i].tip.parentNode.removeChild(tooltips[i].tip)
     }
     tooltips = []
-  };
+  }
 
   var remove_tooltip = function (elem) {
     for (var i = 0; i < tooltips.length; i++) {
       if (tooltips[i].elem === elem) {
         tooltips[i].tip.parentNode.removeChild(tooltips[i].tip)
         tooltips.splice(i, 1)
-        return;
+        return
       }
     }
   }
@@ -139,7 +145,7 @@ window._load_script = function (url, callback) {
     new_tooltip.elem = elem
     tooltips.push(new_tooltip)
     return new_tooltip
-  };
+  }
 
   var resize_tooltip = function (tooltip) {
     var rect = tooltip.elem.getBoundingClientRect()
@@ -196,7 +202,7 @@ window._load_script = function (url, callback) {
           for (var i = 0; i < elem.options.length; i++) {
             if (elem.options[i].selected) {
               selected = true
-              break;
+              break
             }
           }
         } else {
@@ -232,11 +238,11 @@ window._load_script = function (url, callback) {
     }
     tooltip ? resize_tooltip(tooltip) : false
     return no_error
-  };
+  }
 
   var needs_validate = function (el) {
     return el.name == 'email' || el.getAttribute('required') !== null
-  };
+  }
 
   var validate_form = function (e) {
     var err = form_to_submit.querySelector('._form_error'); var no_error = true
@@ -283,7 +289,7 @@ window._load_script = function (url, callback) {
 
     resize_tooltips()
     return no_error
-  };
+  }
 
   addEvent(window, 'resize', resize_tooltips)
   addEvent(window, 'scroll', resize_tooltips)
@@ -310,7 +316,7 @@ window._load_script = function (url, callback) {
       _load_script('https://cypressio.activehosted.com/proc.php?' + serialized + '&jsonp=true')
     }
     return false
-  };
+  }
 
   addEvent(form_to_submit, 'submit', form_submit)
 })()
