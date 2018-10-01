@@ -62,12 +62,12 @@ describe "API", ->
           @english = YAML.parse(yamlString)
 
     it "displays current page as highlighted", ->
-      cy.get("#sidebar").find(".current")
+      cy.get("#sidebar").find("a.current")
         .should("have.attr", "href").and("include", "api.html")
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
-        .find(".sidebar-title").each (displayedTitle, i) ->
+        .find(".sidebar-title strong").each (displayedTitle, i) ->
           englishTitle  = @english.sidebar.api[@sidebarTitles[i]]
           expect(displayedTitle.text()).to.eq(englishTitle)
 
@@ -90,8 +90,8 @@ describe "API", ->
       it "displays sidebar in mobile menu on click", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
-          .find(".sidebar-li")
-          .first(1).each (displayedLink, i) ->
+          .find(".main-nav-link")
+          .eq(1).each (displayedLink, i) ->
             englishLink  = @english.sidebar.api[@sidebarLinkNames[i]]
             expect(displayedLink.text().trim()).to.eq(englishLink)
 
@@ -99,7 +99,7 @@ describe "API", ->
     beforeEach ->
       cy.visit(API_PATH + ".html")
 
-    it "displays toc", ->
+    it.only "displays toc", ->
       cy.get('.sidebar-link').each (linkElement) ->
         cy.log(linkElement[0].innerText)
         cy.request(linkElement[0].href).its('body').then (body) ->
@@ -111,19 +111,21 @@ describe "API", ->
           $h1links = $body.find('.toc-level-1>.toc-link')
           $h2links = $body.find('.toc-level-2>.toc-link')
 
-          $h1s.each (i, el) ->
-            $h1 = Cypress.$(el)
-            $link = $h1links.eq(i)
+          if $h1links.length
+            $h1s.each (i, el) ->
+              $h1 = Cypress.$(el)
+              $link = $h1links.eq(i)
+  
+              expect($link.text()).to.eq($h1.text())
+              expect($link.attr('href')).to.eq('#' + $h1.attr('id'))
 
-            expect($link.text()).to.eq($h1.text())
-            expect($link.attr('href')).to.eq('#' + $h1.attr('id'))
+          if $h2links.length
+            $h2s.each (i, el) ->
+              $h2 = Cypress.$(el)
+              $link = $h2links.eq(i)
 
-          $h2s.each (i, el) ->
-            $h2 = Cypress.$(el)
-            $link = $h2links.eq(i)
-
-            expect($link.text()).to.eq($h2.text())
-            expect($link.attr('href')).to.eq('#' + $h2.attr('id'))
+              expect($link.text()).to.eq($h2.text())
+              expect($link.attr('href')).to.eq('#' + $h2.attr('id'))
 
   context "Pagination", ->
     beforeEach ->
