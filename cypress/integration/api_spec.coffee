@@ -99,7 +99,7 @@ describe "API", ->
     beforeEach ->
       cy.visit(API_PATH + ".html")
 
-    it.only "displays toc", ->
+    it "displays toc", ->
       cy.get('.sidebar-link').each (linkElement) ->
         cy.log(linkElement[0].innerText)
         cy.request(linkElement[0].href).its('body').then (body) ->
