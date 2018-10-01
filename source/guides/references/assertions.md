@@ -159,7 +159,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | selected | `expect($option).not.to.be.selected` |
 | checked | `expect($input).not.to.be.checked` |
 | enabled | `expect($input).to.be.enabled` |
-| disabled | `expect($input).not.to.be.disabled` |
+| disabled | `expect($input).to.be.disabled` |
 | empty | `expect($el).not.to.be.empty` |
 | exist | `expect($nonexistent).not.to.exist` |
 | match( *selector* ) | `expect($emptyEl).to.match(':empty')` |
