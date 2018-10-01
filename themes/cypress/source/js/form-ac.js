@@ -1,11 +1,14 @@
 window.cfields = []
 window._show_thank_you = function (id, message, trackcmp_url) {
-  var form = document.getElementById('_form_' + id + '_'); var thank_you = form.querySelector('._form-thank-you')
+  var form = document.getElementById('_form_' + id + '_') 
   if (form) {
+    var thank_you = form.querySelector('._form-thank-you')
     form.querySelector('._form-content').style.display = 'none'
   }
-  thank_you.innerHTML = message
-  thank_you.style.display = 'block'
+  if (thank_you) {
+    thank_you.innerHTML = message
+    thank_you.style.display = 'block'
+  }
   if (typeof (trackcmp_url) !== 'undefined' && trackcmp_url) {
     // Site tracking URL to use after inline form submission.
     _load_script(trackcmp_url)
@@ -14,10 +17,10 @@ window._show_thank_you = function (id, message, trackcmp_url) {
 }
 
 window._show_error = function (id, message, html) {
-  var form = document.getElementById('_form_' + id + '_') 
-  var err = document.createElement('div') 
+  var form = document.getElementById('_form_' + id + '_')
+  var err = document.createElement('div')
   if (form) {
-    var button = form.querySelector('button') 
+    var button = form.querySelector('button')
   }
   var old_error = form.querySelector('._form_error')
   if (old_error) old_error.parentNode.removeChild(old_error)
@@ -38,7 +41,9 @@ window._show_error = function (id, message, html) {
 }
 
 window._load_script = function (url, callback) {
-  var head = document.querySelector('head'); var script = document.createElement('script'); var r = false
+  var head = document.querySelector('head') 
+  var script = document.createElement('script') 
+  var r = false
   script.type = 'text/javascript'
   script.charset = 'utf-8'
   script.src = url
@@ -50,7 +55,9 @@ window._load_script = function (url, callback) {
       }
     }
   }
-  head.appendChild(script)
+  if (head) {
+    head.appendChild(script)
+  }
 };
 
 (function () {
@@ -67,13 +74,15 @@ window._load_script = function (url, callback) {
     document.cookie = name + '=' + value + '; expires=' + now + ';path=/'
   }
   var addEvent = function (element, event, func) {
-    if (element && element.addEventListener) {
-      element.addEventListener(event, func)
-    } else {
-      var oldFunc = element['on' + event]
-      element['on' + event] = function () {
-        oldFunc.apply(this, arguments)
-        func.apply(this, arguments)
+    if (element) {
+      if (element.addEventListener) {
+        element.addEventListener(event, func)
+      } else {
+        var oldFunc = element['on' + event]
+        element['on' + event] = function () {
+          oldFunc.apply(this, arguments)
+          func.apply(this, arguments)
+        }
       }
     }
   }
@@ -135,9 +144,9 @@ window._load_script = function (url, callback) {
   }
 
   var create_tooltip = function (elem, text) {
-    var tooltip = document.createElement('div') 
-    var arrow = document.createElement('div') 
-    var inner = document.createElement('div') 
+    var tooltip = document.createElement('div')
+    var arrow = document.createElement('div')
+    var inner = document.createElement('div')
     var new_tooltip = {}
     if (elem.type != 'radio' && elem.type != 'checkbox') {
       tooltip.className = '_error'
@@ -161,7 +170,7 @@ window._load_script = function (url, callback) {
 
   var resize_tooltip = function (tooltip) {
     var rect = tooltip.elem.getBoundingClientRect()
-    var doc = document.documentElement 
+    var doc = document.documentElement
     var scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0))
     if (scrollPosition < 40) {
       tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _below'
@@ -272,10 +281,12 @@ window._load_script = function (url, callback) {
           } else if (input.type == 'radio' || input.type == 'checkbox') {
             (function (el) {
               var radios = form_to_submit.elements[el.name]
-              for (var i = 0; i < radios.length; i++) {
-                addEvent(radios[i], 'click', function () {
-                  validate_field(el, true)
-                })
+              if (radios) {
+                for (var i = 0; i < radios.length; i++) {
+                  addEvent(radios[i], 'click', function () {
+                    validate_field(el, true)
+                  })
+                }
               }
             })(input)
           } else if (input.tagName == 'SELECT') {
@@ -321,7 +332,9 @@ window._load_script = function (url, callback) {
 
       // disable the submit button
       var submitBtn = form_to_submit.querySelector('[type="submit"]')
-      submitBtn.setAttribute('disabled', true)
+      if (submitBtn) {
+        submitBtn.setAttribute('disabled', true)
+      }
 
       var serialized = _form_serialize(document.getElementById('_form_1019_'))
       var err = form_to_submit.querySelector('._form_error')
