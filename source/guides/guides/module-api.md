@@ -13,14 +13,14 @@ Just like the {% url "Command Line options" command-line %} for `cypress run`, y
 Option | Description
 ------ |  ---------
 `browser`  | Specify different browser to run tests in
-`ciBuildId` | Specify a unique identifier for a run to enable grouping or parallelization
+`ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
 `config`  | Specify configuration
 `env`  | Specify environment variables
-`group` | Group recorded tests together under a single run
+`group` | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
 `headed`  | Display the Electron browser instead of running headlessly
 `key`  | Specify your secret record key
 `noExit` | Keep Cypress open after all tests run
-`parallel` | Run recorded specs in parallel across multiple machines
+`parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
 `port`  | Override default port
 `project` | Path to a specific project
 `record`  | Whether to record the test run
