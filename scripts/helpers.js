@@ -58,6 +58,11 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let result = ''
   let self = this
   let prefix = `sidebar.${type}.`
+  let expandAll = false
+
+  if (_.keys(sidebar).length <= 2) {
+    expandAll = true
+  }
 
   _.each(sidebar, function (menu, title) {
     result += `<li class="${className}-title is-collapsed" data-target="sidebar-li-${title}" data-toggle="collapse"><strong>${self.__(prefix + title)}</strong><ul class="sidebar-links">`
@@ -69,9 +74,11 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
       if (currentlyActive) {
         itemClass += ' current'
+      }
+
+      if (currentlyActive || expandAll) {
         // remove 'is-collapsed' class from parent container
         result = result.replace(`is-collapsed" data-target="sidebar-li-${title}`, `current" data-target="sidebar-li-${title}`)
-
       }
 
       result += `<li class='sidebar-li sidebar-li-${title}'><a href="${self.config.root + href}" class="${itemClass}">
@@ -129,7 +136,7 @@ hexo.extend.helper.register('menu', function (type) {
     // Does our current path match our menu?
     let isCurrent = currentPathFolder === firstPathName
 
-    return `${result}<a href="${self.url_for(menuPath)}" class="${type}-nav-link ${isCurrent ? 'active' : ''}"> ${self.__(`menu.${title}`)}</a>`
+    return `${result}<li><a href="${self.url_for(menuPath)}" class="${type}-nav-link ${isCurrent ? 'active' : ''}"> ${self.__(`menu.${title}`)}</a></li>`
   }, '')
 })
 
