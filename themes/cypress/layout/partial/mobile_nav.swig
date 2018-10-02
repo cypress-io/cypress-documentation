@@ -7,7 +7,9 @@
       </li>
     </ul>
     {% if page.layout == 'page' || page.layout == 'toc-top' %}
-      {{ doc_sidebar('mobile-nav') }}
+      <ul>
+        {{ doc_sidebar('mobile-nav') }}
+      </ul>
     {% endif %}
   </div>
   <div id="mobile-lang-select-wrap">
