@@ -4,7 +4,7 @@ const clean = require('gulp-clean')
 const runSequence = require('run-sequence')
 
 const revisionOpts = {
-  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'roboto*.css'],
+  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png'],
   dontRenameFile: ['.html', 'CNAME'],
   dontUpdateReference: ['.html'],
   dontSearchFile: ['.js'],
