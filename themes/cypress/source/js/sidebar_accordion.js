@@ -108,7 +108,7 @@
 
         // if we're currently on a page within the section, don't collapse it
         // if we're already collapsed, don't collapse it
-        if (!sidebarTitle.classList.contains('current') && !sidebarTitle.classList.contains('is-collapsed')) {
+        if (!sidebarTitle.classList.contains('is-collapsed')) {
           collapseSection(collapsibleSections[i], sidebarTitle)
         }
       }
