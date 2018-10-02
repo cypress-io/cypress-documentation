@@ -35,7 +35,7 @@
 
 }
 a.article-edit-link {
-  color: #888;;
+  color: #616161;
   font-size: 1em;
   text-decoration: none;
   transition: 0.2s;
@@ -477,21 +477,21 @@ a.article-edit-link {
     }
 
     &.info {
-      border-left-color: #5bc0de;
-      background-color: #f4f8fa;
+      border-left-color: #2a98b9;
+      background-color: #f8fdff;
 
       a {
-        color: #2ab6dc;
-        border-bottom-color: #2ab6dc;
+        color: #2a98b9;
+        border-bottom-color: #2a98b9;
       }
 
       .note-title {
-        color: #5bc0de;
+        color: #2a98b9;
       }
     }
     &.success {
       border-left-color: #00bf88;
-      background-color: #edf9f5;
+      background-color: #f5fffc;
 
       .note-title {
         color: #00bf88;

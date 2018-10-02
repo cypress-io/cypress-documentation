@@ -1,6 +1,6 @@
 #sidebar {
   width: $sidebar-width;
-  background-color: #f6f9f8;
+  background-color: #f9fcfb;
   position: fixed;
   overflow-y: auto;
   top: 60px;
@@ -27,7 +27,7 @@
   justify-content: space-between;
 
   a, span {
-    color: #7b7b7b;
+    color: #505050;
     text-transform: uppercase;
     font-size: 0.85em;
     text-decoration: none;
@@ -60,10 +60,10 @@
 
   &.current {
     strong, &:after {
-      color: $color-link;
+      color: #06885d;
 
       i {
-        color: $color-link;
+        color: #06885d;
       }
     }
   }

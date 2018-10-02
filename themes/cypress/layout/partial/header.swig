@@ -18,6 +18,7 @@
             <div id="search-input-icon">
               <i class="fa fa-search"></i>
             </div>
+            <label for="search-input">Search</label>
             <input type="search" id="search-input" aria-label="Search" placeholder="Search...">
           </div>
         </div>
