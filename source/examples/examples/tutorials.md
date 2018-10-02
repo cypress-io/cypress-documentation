@@ -1,6 +1,6 @@
 ---
 title: Tutorial Videos
-
+containerClass: examples
 ---
 
 # Best Practices

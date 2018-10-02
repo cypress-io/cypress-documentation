@@ -1,6 +1,5 @@
 ---
 title: and
-
 ---
 
 Create an assertion. Assertions are automatically retried until they pass or time out.
