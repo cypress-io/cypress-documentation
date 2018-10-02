@@ -62,10 +62,10 @@ a.article-edit-link {
   margin-left: 10px;
   display: none;
   border: 0;
-  color: #1DBE89;
+  color: $color-link;
 
   &:hover {
-    color: darken(#1DBE89, 0.5%);
+    color: darken($color-link, 0.5%);
   }
 
   &:before {
@@ -136,7 +136,7 @@ a.article-edit-link {
   }
 
   ul {
-    margin: 15px 0;
+    margin: 0;
     padding-left: 30px;
     list-style: disc;
 
@@ -337,11 +337,11 @@ a.article-edit-link {
   a {
     color: $color-link;
     text-decoration: none;
-    border-bottom: 1px dotted #86ceb6;
+    border-bottom: 1px dotted $color-link;
 
     &:hover {
       color: $color-link-hover;
-      border-bottom: 1px solid $color-link;
+      border-bottom: 1px solid $color-link-hover;
     }
   }
 
@@ -372,8 +372,8 @@ a.article-edit-link {
   }
 
   li {
-    margin: 5px 10px;
-    line-height: 2em;
+    margin: 15px 10px;
+    line-height: 1.7em;
 
     p {
       margin: 0;
@@ -407,7 +407,7 @@ a.article-edit-link {
   video {
     max-width: 100%;
     border: 1px solid #ddd;
-    margin: 15px 0;
+    margin: 0;
   }
 
   .note {
@@ -493,10 +493,16 @@ a.article-edit-link {
       border-left-color: #00bf88;
       background-color: #f5fffc;
 
+      a {
+        color: #00bf88;
+        border-bottom-color: #00bf88;
+      }
+
       .note-title {
         color: #00bf88;
       }
     }
+
     &.danger {
       border-left-color: #d9534f;
       background-color: #fff8f8;

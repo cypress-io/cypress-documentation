@@ -44,6 +44,14 @@ code {
 
 .note.success code {
   background-color: #cff1e6;
+
+  a code {
+    color: #00bf88;
+
+    &:hover {
+      background-color: darken(#00bf88, 2%);
+    }
+  }
 }
 
 .note.danger {
