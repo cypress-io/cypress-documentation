@@ -6,7 +6,6 @@
   display: none;
   width: $sidebar-width;
   opacity: 0.8;
-  font-size: 0.9em;
   justify-self: flex-end;
   position: fixed;
   top: 60px;
@@ -21,7 +20,7 @@
 }
 .toc-child {
   padding-left: 1em;
-  font-size: 0.85em;
+  font-size: 0.9em;
   line-height: 1.5;
   list-style: none;
 }
@@ -44,7 +43,6 @@
   text-decoration: none;
   padding: 5px 0 5px 5px;
   line-height: 1.2;
-  font-size: 0.95em;
   position: relative;
   width: 100%;
   font-weight: 400;
@@ -63,7 +61,6 @@
 
 #article-toc-top {
   margin-top: 2em;
-  font-size: 0.9em;
   text-decoration: none;
   color: $color-link;
   display: block;
@@ -111,7 +108,6 @@
     padding-left: 0;
     padding: 0 10px;
     line-height: 2em;
-    font-size: 1em;
   }
 
   .article-header h1, .article-header .article-edit-link {
