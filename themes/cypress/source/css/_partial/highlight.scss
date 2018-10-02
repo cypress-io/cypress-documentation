@@ -5,13 +5,65 @@ code {
   line-height: 1.5;
   border: 0;
   outline: 0;
-  font-weight: 600;
   font-family: inherit;
-  font-size: 1em;
   vertical-align: baseline;
   font-family: $font-mono;
   background-color: #EDF9F5;
   border-radius: 3px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.note.info {
+  code {
+    background-color: #dcf1f7;
+  }
+
+  a code {
+    color: #2ab6dc;
+
+    &:hover {
+      background-color: darken(#dcf1f7, 2%);
+    }
+  }
+}
+
+.note.warning {
+  code {
+    background-color: #f7ebd7;
+  }
+
+  a code {
+    color: #ce820c;
+
+    &:hover {
+      background-color: darken(#f7ebd7, 4%);
+    }
+  }
+}
+
+.note.success code {
+  background-color: #cff1e6;
+}
+
+.note.danger {
+  code {
+    background-color: #f5e4e4;
+  }
+
+  a code {
+    color: #de5e5a;
+
+    &:hover {
+      background-color: darken(#f5e4e4, 2%);
+    }
+  }
+}
+
+blockquote {
+  code {
+    background-color: #eaeaea;
+  }
 }
 
 a code {
@@ -26,20 +78,33 @@ a code {
 .article pre, .article pre code,
 .faq pre, .faq pre code {
   &[class*="language-"] {
+    font-size: 0.95em;
+    font-family: $font-mono;
     color: $highlight-foreground; 
-    font-size: 1em;
-    line-height: $line-height;
     background-image: none;
     background-color: $highlight-background;
-    color: $highlight-foreground;
+    font-weight: 500;
     box-shadow: none !important;
     border: 0;
     border-radius: 0;
-    font-weight: normal;
+    line-height: 1.8em;
+
+    .punctuation, .operator {
+      background-color: $highlight-background;
+    }
+
+    .atrule {
+      color: $highlight-blue;
+    }
+
+    .operator {
+      color: $highlight-orange;
+    }
 
     .token {
       &.keyword, &.function {
-        color: $highlight-purple;
+        
+        color: $highlight-blue;
       }
 
       &.comment {
@@ -47,15 +112,23 @@ a code {
       }
 
       &.string {
-        color: $highlight-blue;
+        color: $highlight-green;
       }
 
-      &.regex {
+      &.regex, &.boolean, &.number  {
         color: $highlight-red;
       }
 
-      &.keyword, .attr-value {
-        color: $highlight-aqua;
+      .attr-value {
+        color: $highlight-purple;
+      }
+
+      .interpolation {
+        color: $highlight-red;
+      }
+
+      .interpolation-punctuation {
+         color: $highlight-purple;
       }
     }
   }
@@ -63,27 +136,41 @@ a code {
 
 .article pre, .faq pre {
   &[class*="language-"] {
-    border-left: 5px solid $highlight-background;
     padding: 15px 0;
     margin: 25px 0;
 
     .token.punctuation {
-      color: #acb0b1;
+      color: #ddd;
     }
   }
 }
 
-
+.article pre code.language-shell, 
+.faq pre code.language-shell, 
 .article pre.language-shell code,
 .faq pre.language-shell code {
   padding-left: 3.8em;
+  font-size: 0.9em;
+}
+
+.article pre code.language-text, 
+.faq pre code.language-text, 
+.article pre.language-text code,
+.faq pre.language-text code {
+  background-color: #f7f7f7;
+  color: #666;
+}
+
+.article pre.language-text,
+.faq pre.language-text {
+  background-color: #f7f7f7;
 }
 
 .article pre.language-shell,
 .faq pre.language-shell {
   border-left: 5px solid  $highlight-background;
-  background-color: #252831;
-  color: #f5f6f8;
+  background-color: $highlight-background;
+  color: $highlight-foreground;
 
   code {
     padding-left: 2em;
@@ -113,7 +200,6 @@ a code {
 
 .article pre.language-html,
 .faq pre.language-html {
-
   .token.tag {
     color: $highlight-red;
   }
@@ -123,8 +209,11 @@ a code {
   }
 }
 
-.article pre.language-javascript code,
-.faq pre.language-javascript code {
+.article pre.language-js
+.article pre code.language-js,
+.faq pre.language-js
+.faq pre code.language-js {
+  
   .token.property, .token.tag, .token.boolean, .token.number, .token.function-name, .token.constant, .token.symbol, .token.deleted {
     color: $highlight-red;
   }
@@ -133,6 +222,8 @@ a code {
     background-color: transparent;
     color: $highlight-red;
   }
+
+
 }
 
 .article pre.language-json code,
