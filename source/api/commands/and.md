@@ -26,11 +26,11 @@ An alias of {% url `.should()` should %}
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('.error').should('be.empty').and('be.hidden')  // Assert '.error' is empty and hidden
-cy.contains('Login').and('be.visible')                // Assert el is visible
+cy.get('.err').should('be.empty').and('be.hidden') // Assert '.err' is empty & hidden
+cy.contains('Login').and('be.visible')             // Assert el is visible
 cy.wrap({ foo: 'bar' })
-  .should('have.property', 'foo')                     // Assert the 'foo' property exists
-  .and('eq', 'bar')                                   // Assert the 'foo' property equals 'bar'
+  .should('have.property', 'foo')                  // Assert 'foo' property exists
+  .and('eq', 'bar')                                // Assert 'foo' property is 'bar'
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
