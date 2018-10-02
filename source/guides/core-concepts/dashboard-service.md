@@ -2,7 +2,7 @@
 title: Dashboard Service
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to set up a project to have its tests recorded.

@@ -2,7 +2,7 @@
 title: Command Line
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress from the command line

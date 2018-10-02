@@ -2,7 +2,7 @@
 title: Conditional Testing
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - When conditional testing is a good choice for your tests

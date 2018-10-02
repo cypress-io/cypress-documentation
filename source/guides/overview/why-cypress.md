@@ -2,7 +2,7 @@
 title: Why Cypress?
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - What Cypress is and why you should use it

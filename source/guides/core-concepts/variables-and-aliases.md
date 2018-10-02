@@ -2,7 +2,7 @@
 title: Variables and Aliases
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to deal with async commands

@@ -2,7 +2,7 @@
 title: Interacting with Elements
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress calculates visibility

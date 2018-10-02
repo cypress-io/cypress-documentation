@@ -2,7 +2,7 @@
 title: Key Differences
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - What makes Cypress unique

@@ -1,7 +1,8 @@
 ---
 title: Parallelization
 ---
-{% note success %}
+
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to parallelize test runs

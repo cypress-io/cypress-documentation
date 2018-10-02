@@ -2,7 +2,7 @@
 title: Network Requests
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress enables you to stub out the backend with {% url `cy.route()` route %}

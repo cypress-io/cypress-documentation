@@ -2,7 +2,7 @@
 title: Writing and Organizing Tests
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to organize your test and support files.

@@ -2,7 +2,7 @@
 title: Installing Cypress
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to install Cypress via `npm`.

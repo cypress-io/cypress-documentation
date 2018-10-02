@@ -2,7 +2,7 @@
 title: Screenshots and Videos
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress captures screenshots of test failures automatically

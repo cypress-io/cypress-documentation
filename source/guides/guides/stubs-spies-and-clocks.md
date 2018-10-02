@@ -2,7 +2,7 @@
 title: Stubs, Spies, and Clocks
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - Which libraries Cypress includes to provide typical testing functionality

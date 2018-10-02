@@ -2,7 +2,7 @@
 title: The Test Runner
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - The names and purposes of the visual parts of the Cypress Test Runner

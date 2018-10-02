@@ -20,7 +20,7 @@ code {
   }
 
   a code {
-    color: #2ab6dc;
+    color: #0f7d9a;
 
     &:hover {
       background-color: darken(#dcf1f7, 2%);
@@ -174,7 +174,7 @@ a code {
 
   code {
     padding-left: 2em;
-    background-color: #252831;
+    background-color: $highlight-background;
     color: #f5f6f8;
   }
 

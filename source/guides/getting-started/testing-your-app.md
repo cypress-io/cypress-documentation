@@ -2,7 +2,7 @@
 title: Testing Your App
 ---
 
-{% note success %}
+{% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
 - The relationship between Cypress and your back-end
