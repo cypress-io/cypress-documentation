@@ -68,7 +68,7 @@ Although it doesn't do anything useful, this is our first passing test! ✅
 
 Over in the {% url 'Command Log' test-runner#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
 
-{% img /img/guides/first-test.png %}
+{% img /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 
 {% note info %}
 Notice Cypress displays a message about this being the default page {% url "on the righthand side" test-runner#Application-Under-Test %}. Cypress assumes you'll want to go out and {% url "visit" visit %} a URL on the internet - but it can also work just fine without that.
@@ -186,7 +186,7 @@ To verify this, replace `type` with something not on the page, like `hype`. You'
 
 Can you see what Cypress is doing under the hood? It's automatically waiting and retrying because it expects the content to **eventually** be found in the DOM. It doesn't immediately fail!
 
-{% img /img/guides/first-test-failing-contains.png %}
+{% img /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning 'Error Messages' %}
 We've taken care at Cypress to write hundreds of custom error messages that attempt to explain in simple terms what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
@@ -328,7 +328,7 @@ Take your mouse and **hover over** the `CONTAINS` command in the Command Log.
 
 Do you see what happened?
 
-{% img /img/guides/first-test-hover-contains.png %}
+{% img /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
 
 Cypress automatically traveled back in time to a snapshot of when that command resolved. Additionally, since {% url `cy.contains()` contains %} finds DOM elements on the page, Cypress also highlights the element and scrolls it into view (to the top of the page).
 
@@ -338,13 +338,13 @@ Now if you remember at the end of the test we ended up on a different URL:
 
 But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was present when our snapshot was taken.
 
-{% img /img/guides/first-test-url-revert.png %}
+{% img /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
 
 ## Snapshots
 
 Commands are also interactive. Go ahead and click on the `CLICK` command.
 
-{% img /img/guides/first-test-click-revert.png %}
+{% img /img/guides/first-test-click-revert.png "A click on the click command in the command log with test runner labeled as 1, 2, 3" %}
 
 Notice it highlights in purple. This did three things worth noting...
 
@@ -365,7 +365,7 @@ When a command causes an immediate visual change in our application, cycling bet
 
 Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
 
-{% img /img/guides/first-test-page-load.png %}
+{% img /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
 
 **Cypress logs out page events for:**
 
@@ -380,7 +380,7 @@ Besides Commands being interactive, they also output additional debugging inform
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class selector.
 
-{% img /img/guides/first-test-console-output.png %}
+{% img /img/guides/first-test-console-output.png "Test runner with get command pinned and console log open showing the yielded element" %}
 
 **We can see Cypress output additional information in the console:**
 
@@ -424,7 +424,7 @@ describe('My First Test', function() {
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.
 
-{% img /img/guides/first-test-paused.png %}
+{% img /img/guides/first-test-paused.png "Test runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
 ## In action
 

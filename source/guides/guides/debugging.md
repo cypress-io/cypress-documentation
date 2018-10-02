@@ -66,7 +66,7 @@ it("let's me debug like a fiend", function() {
 
 Ah, that's better! And functionally equivalent. The current subject that was yielded by the {% url `cy.get()` get %} is exposed as `subject` so that you can interact with it in the console.
 
-{% img /img/guides/debugging-subject.png Debugging Subject %}
+{% img /img/guides/debugging-subject.png "Debugging Subject" %}
 
 This is just another example of how Cypress seeks elegance and expressivity for the modern web tester. Fewer keystrokes, more power, don't break standard assumptions, and we all win.
 

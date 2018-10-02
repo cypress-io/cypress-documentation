@@ -81,7 +81,7 @@ cy
 
 ## Chainers
 
-***Chain assertions on the same subject***
+### Chain assertions on the same subject
 
 ```javascript
 cy.get('button').should('have.class', 'active').and('not.be.disabled')
@@ -89,7 +89,7 @@ cy.get('button').should('have.class', 'active').and('not.be.disabled')
 
 ## Value
 
-***Chain assertions when yield changes***
+### Chain assertions when yield changes
 
 ```html
 <!-- App Code -->
@@ -111,7 +111,7 @@ cy
 
 ## Method and Value
 
-***Assert the href is equal to '/users'***
+### Assert the href is equal to '/users'
 
 ```javascript
 cy
@@ -122,7 +122,7 @@ cy
 
 ## Function
 
-***Verify length, content, and classes from multiple `<p>`***
+### Verify length, content, and classes from multiple `<p>`
 
 Passing a function to `.and()` enables you to assert on the yielded subject. This gives you the opportunity to *massage* what you'd like to assert.
 
@@ -172,7 +172,7 @@ Using a callback function {% urlHash 'will not change the subject' Subjects %}
 
 ## Chai
 
-***Similarities to Chai***
+### Similarities to Chai
 
 If you've worked in {% url "Chai" http://chaijs.com/ %} before, you will recognize that `.and()` matches the same fluent assertion syntax.
 
@@ -186,11 +186,11 @@ expect({foo: 'bar'}).to.have.property('foo').and.eq('bar')
 
 ## Subjects
 
-***How do I know which assertions change the subject and which keep it the same?***
+### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from {% url 'Chai' bundled-tools#Chai %} or {% url 'Chai-jQuery' bundled-tools#Chai-jQuery %} will always document what they return.
 
-***Using a callback function will not change what is yielded***
+### Using a callback function will not change what is yielded
 
 Whenever you use a callback function, its return value is always ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
 
