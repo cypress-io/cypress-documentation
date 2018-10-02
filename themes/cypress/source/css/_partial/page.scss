@@ -99,10 +99,8 @@ a.article-edit-link {
 
   p {
     margin: 25px 0;
-    font-size: 1.21em;
     word-wrap: break-word;
     font-family: $font-sans;
-    line-height: 2em;
   }
 
   ol {
@@ -374,13 +372,11 @@ a.article-edit-link {
   }
 
   li {
-    margin: 20px 10px;
-    line-height: 1.7em;
-    font-size: 1.1em;
+    margin: 15px 10px;
+    line-height: 2em;
 
     p {
       margin: 0;
-      font-size: 1.1em;
     }
     table {
       margin: 2em 0;
@@ -422,7 +418,6 @@ a.article-edit-link {
     position: relative;
     border-left: 5px solid $highlight-comment;
     font-style: normal;
-    font-size: 1.1em;
     color: #45494c;
 
     footer {
@@ -474,10 +469,21 @@ a.article-edit-link {
       .note-title {
         color: $color-orange;
       }
+
+      a {
+        color: #e4a23b;
+        border-bottom-color: #e4a23b;
+      }
     }
+
     &.info {
       border-left-color: #5bc0de;
       background-color: #f4f8fa;
+
+      a {
+        color: #2ab6dc;
+        border-bottom-color: #2ab6dc;
+      }
 
       .note-title {
         color: #5bc0de;
@@ -498,6 +504,11 @@ a.article-edit-link {
       .note-title {
         color: #d9534f;
       }
+
+      a {
+        color: #de5e5a;
+        border-bottom-color: #de5e5a;
+      }
     }
   }
 
@@ -505,7 +516,6 @@ a.article-edit-link {
     margin: 0;
     margin-bottom: 15px;
     display: block;
-    font-size: 1.2em;
     font-weight: 500;
     font-family: $font-title;
   }
@@ -517,7 +527,7 @@ a.article-edit-link {
   border-top: 1px solid $color-border;
   text-align: center;
   color: $color-gray;
-  line-height: 1em;
+  line-height: 1.2em;
   padding-top: 2em;
   position: relative;
   overflow: auto;

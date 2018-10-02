@@ -13,29 +13,29 @@ $color-red: #EA4D5C;
 $color-orange: #f0ad4e;
 $color-default: #2e3138;
 $color-border: #e3e3e3;
-$color-link: #22b987;
-$color-link-hover: #15946a;
+$color-link: #0e9e6f;
+$color-link-hover: #09885e;
 $color-background: #172432;
 
-$highlight-background:    #252831;
+$highlight-background:    #21242B;
 $highlight-current-line:  #efefef;
 $highlight-selection:     #d6d6d6;
-$highlight-foreground:    #ecebeb;
-$highlight-comment:       #777b84;
-$highlight-red:           #de7b82;
-$highlight-orange:        #D19A66;
-$highlight-yellow:        #F2CC97;
-$highlight-green:         #73d684;
-$highlight-aqua:          #6BCECD;
-$highlight-blue:          #9cd3ff;
-$highlight-purple:        #ec96e9;
+$highlight-foreground:    #f18d98;
+$highlight-comment:       #8F949E;
+$highlight-red:           #f18d98;
+$highlight-orange:        #efab6b;
+$highlight-yellow:        #f3cd93;
+$highlight-green:         #84ce9e;
+$highlight-aqua:          #67cece;
+$highlight-blue:          #83b8e4;
+$highlight-purple:        #e4a7e4;
 
 // Typography
 $font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-serif: Garamond, Georgia, "Times New Roman", serif;
-$font-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+$font-mono: Monaco, Consolas, "Liberation Mono", Menlo, Courier, monospace;
 $font-title: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-size: 16px;
+$font-size: 18px;
 $line-height: 1.7em;
 
 // Layout

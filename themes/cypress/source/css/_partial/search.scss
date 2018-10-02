@@ -3,6 +3,7 @@
   float: right;
   top: 10px;
   margin-top: 17px;
+  font-size: 0.95em;
 }
 
 // The actual search input box
@@ -41,7 +42,6 @@
 .searchbox {
   display: inline-block;
   position: relative;
-  width: 200px;
   height: 32px !important;
   white-space: nowrap;
   box-sizing: border-box;
@@ -284,7 +284,7 @@
   width: 100%;
   padding: 25px 0;
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .algolia-autocomplete .algolia-docsearch-suggestion code {

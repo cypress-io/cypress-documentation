@@ -1,4 +1,4 @@
-html, body, a, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, abbr, acronym, address, big, cite, del, dfn, table, caption, td, th, ins, img, em, kbd, q, s, samp, small, strike, strong, sup, sub, var, tt, dl, dt, dd, ol, ul, li, form, fieldset, label, tr, thead, tfoot, tbody, legend, pre {
+html, body, a, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, abbr, acronym, address, big, cite, del, dfn, table, caption, td, th, ins, img, em, kbd, q, s, samp, small, strike, strong, sup, sub, var, tt, dl, dt, dd, ol, ul, li, form, fieldset, label, tr, thead, tfoot, tbody, legend, pre, code {
   margin: 0;
   padding: 0;
   border: 0;
@@ -90,6 +90,7 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   margin: -1px 0;
   position: relative;
   top: 62px;
+  bottom: 334px;
 }
 
 @media print {
@@ -103,7 +104,6 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
     display: none !important;
   }
   .article-content {
-
     a {
       color: $color-default;
       text-decoration: underline;
@@ -156,17 +156,17 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
 
   h1 {
     font-family: $font-title;
-    font-size: 50px;
+    font-size: 3em;
     font-weight: bold;
     line-height: 100px;
-    margin: 50px 0 50px 0;
+    margin: 50px 0 0px 0;
     text-transform: capitalize;
   }
 
   ul {
     list-style: none;
     padding: 0;
-    margin: 50px 0 20px 0;
+    margin: 30px 0 0px 0;
     display: inline-block;
     text-align: left;
 

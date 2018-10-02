@@ -38,6 +38,7 @@
 
 .toc-link {
   font-family: $font-title;
+  font-size: 0.95em;
   display: block;
   color: #787e82;
   text-decoration: none;
@@ -67,6 +68,7 @@
   margin-bottom: 40px;
   font-family: $font-sans;
   margin-left: 20px;
+  font-size: 0.9em;
   &:hover {
     color: $color-link-hover;
   }
@@ -76,9 +78,14 @@
   list-style: none;
 }
 
+.toc-link {
+  border-left: 5px solid transparent;
+}
+
 .active>.toc-link {
   font-weight: 500;
   color: $color-default;
+  border-left-color: $color-link;
 }
 
 #article-toc-inner {
@@ -106,8 +113,9 @@
 
   .toc-link {
     padding-left: 0;
-    padding: 0 10px;
+    padding: 3px 10px;
     line-height: 2em;
+    font-size: 1.1em;
   }
 
   .article-header h1, .article-header .article-edit-link {

@@ -11,7 +11,7 @@ title: Introduction to Cypress
 - How timeouts are applied to commands
 {% endnote %}
 
-{% note success Important! %}
+{% note info Important! %}
 **This is the single most important guide** for understanding how to test with Cypress. Read it. Understand it. Ask questions about it so that we can improve it.
 
 After you're done, we suggest watching some of our {% fa fa-video-camera %} {% url "Tutorial Videos" tutorials %}.

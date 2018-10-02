@@ -6,24 +6,29 @@
       </a>
     </h1>
     <nav id="main-nav">
-      {{ menu('main') }}
-      <a href="https://github.com/{{ config.github_main_repo }}" class="main-nav-link"><i class="fa fa-github"></i></a>
-
-      <div id="search-container">
-        <div id="search-input-wrap">
-          <div id="search-input-icon">
-            <i class="fa fa-search"></i>
+      <ul>
+        {{ menu('main') }}
+        <li>
+          <a href="https://github.com/{{ config.github_main_repo }}" aria-label="GitHub repo" class="main-nav-link"><i class="fa fa-github"></i></a>
+        </li>
+      </ul>
+      <div class="main-nav-right">
+        <div id="search-container">
+          <div id="search-input-wrap">
+            <div id="search-input-icon">
+              <i class="fa fa-search"></i>
+            </div>
+            <input type="search" id="search-input" aria-label="Search" placeholder="Search...">
           </div>
-          <input type="search" id="search-input" placeholder="Search...">
         </div>
-      </div>
-      <div id="lang-select-wrap">
-        <label id="lang-select-label"><i class="fa fa-globe"></i><span>{{ lang_name(page.lang) }}</span><i class="fa fa-caret-down"></i></label>
-        <select id="lang-select" data-canonical="{{ canonical_path_for_nav() }}">
-          {% for lang in site.data.languages %}
-            <option value="{{ loop.key }}"{% if page.lang === loop.key %} selected{% endif %}>{{ lang_name(loop.key) }}</option>
-          {% endfor %}
-        </select>
+        <div id="lang-select-wrap">
+          <label aria-label="Select language" id="lang-select-label"><i class="fa fa-globe"></i><span>{{ lang_name(page.lang) }}</span><i class="fa fa-caret-down"></i></label>
+          <select aria-label="Select language" id="lang-select" data-canonical="{{ canonical_path_for_nav() }}">
+            {% for lang in site.data.languages %}
+              <option value="{{ loop.key }}"{% if page.lang === loop.key %} selected{% endif %}>{{ lang_name(loop.key) }}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
     </nav>
 
