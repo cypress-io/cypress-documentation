@@ -74,11 +74,13 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
       if (currentlyActive) {
         itemClass += ' current'
-      }
-
-      if (currentlyActive || expandAll) {
         // remove 'is-collapsed' class from parent container
         result = result.replace(`is-collapsed" data-target="sidebar-li-${title}`, `current" data-target="sidebar-li-${title}`)
+      }
+
+      if (expandAll) {
+        // remove 'is-collapsed' class from parent container
+        result = result.replace(`is-collapsed" data-target="sidebar-li-${title}`, `" data-target="sidebar-li-${title}`)
       }
 
       result += `<li class='sidebar-li sidebar-li-${title}'><a href="${self.config.root + href}" class="${itemClass}">
