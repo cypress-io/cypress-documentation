@@ -2,10 +2,10 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-API_PATH = "/api/introduction/api"
+API_PATH = "/api/api/table-of-contents"
 API_HTML = API_PATH + '.html'
 
-FIRST_PAGE = "api.html"
+FIRST_PAGE = "table-of-contents.html"
 NEXT_PAGE = "catalog-of-events.html"
 
 describe "API", ->
@@ -25,7 +25,7 @@ describe "API", ->
 
       cy.contains('API')
         .click()
-      cy.contains('h1', "API")
+      cy.contains('h1', "Table of Contents")
 
       cy.url()
         .should('match', new RegExp(API_HTML))
@@ -63,7 +63,7 @@ describe "API", ->
 
     it "displays current page as highlighted", ->
       cy.get("#sidebar").find("a.current")
-        .should("have.attr", "href").and("include", "api.html")
+        .should("have.attr", "href").and("include", API_HTML)
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")

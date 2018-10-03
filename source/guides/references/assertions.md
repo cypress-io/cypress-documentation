@@ -4,7 +4,7 @@ title: Assertions
 
 Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, as well as helpful extensions for {% url 'Sinon' assertions#Sinon-Chai %} and {% url 'jQuery' assertions#Chai-jQuery %}, bringing you dozens of powerful assertions for free.
 
-{% note success "New to Cypress?" %}
+{% note info "New to Cypress?" %}
 This document is only a reference to every assertion Cypress supports.
 
 If you're looking to understand **how** to use these assertions please read about assertions in our {% url "Introduction to Cypress" introduction-to-cypress#Assertions guide %}.
