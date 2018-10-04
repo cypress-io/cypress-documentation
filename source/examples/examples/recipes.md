@@ -1,6 +1,5 @@
 ---
 title: Recipes
-
 containerClass: examples
 ---
 

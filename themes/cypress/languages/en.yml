@@ -77,8 +77,8 @@ sidebar:
     typescript-support: TypeScript
     module-api: Module API
   api:
-    introduction: Introduction
     api: API
+    table-of-contents: Table of Contents
     commands: Commands
     and: and
     as: as

@@ -43,9 +43,14 @@ function isRightBranch (env) {
       return false
     }
 
-    const allowed = branchToEnv[branch] === env
-    console.log('branch %s is valid for env %s?', branch, env, allowed)
-    return allowed
+    if (env === 'master') {
+      const allowed = branchToEnv[branch] === env
+      console.log('branch %s is valid for env %s?', branch, env, allowed)
+      return allowed
+    } else if (env === 'staging') {
+      console.log('branch %s is valid for env %s?', branch, env, true)
+      return true
+    }
   }
 
   let branch

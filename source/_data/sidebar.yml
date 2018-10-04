@@ -55,8 +55,8 @@ guides:
     # all-videos: all-videos.html
 
 api:
-  introduction:
-    api: api.html
+  api:
+    table-of-contents: table-of-contents.html
   events:
     catalog-of-events: catalog-of-events.html
   assertions:

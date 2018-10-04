@@ -1,6 +1,5 @@
 ---
 title: Docker
-
 containerClass: examples
 ---
 

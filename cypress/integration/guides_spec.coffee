@@ -50,12 +50,12 @@ describe "Guides", ->
           @english = YAML.parse(yamlString)
 
     it "displays current page as highlighted", ->
-      cy.get("#sidebar").find(".current")
+      cy.get("#sidebar").find("a.current")
         .should("have.attr", "href").and("include", FIRST_PAGE)
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
-        .find(".sidebar-title").each (displayedTitle, i) ->
+        .find(".sidebar-title strong").each (displayedTitle, i) ->
           englishTitle  = @english.sidebar.guides[@sidebarTitles[i]]
           expect(displayedTitle.text()).to.eq(englishTitle)
 

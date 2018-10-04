@@ -3,7 +3,7 @@ title: Command Line
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress from the command line
 - How to specify which spec files to run
@@ -340,7 +340,7 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
-# Debugging Commands
+# Debugging commands
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
@@ -352,6 +352,7 @@ DEBUG=cypress:* cypress open
 ```shell
 DEBUG=cypress:* cypress run
 ```
+
 **On Windows:**
 
 ```shell

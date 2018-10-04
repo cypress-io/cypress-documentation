@@ -2,10 +2,10 @@ YAML = require('yamljs')
 _ = require('lodash')
 {improveUrl} = require('./repo.coffee')
 
-API_PATH = "/api/introduction/api"
+API_PATH = "/api/api/table-of-contents"
 API_HTML = API_PATH + '.html'
 
-FIRST_PAGE = "api.html"
+FIRST_PAGE = "table-of-contents.html"
 NEXT_PAGE = "catalog-of-events.html"
 
 describe "API", ->
@@ -25,7 +25,7 @@ describe "API", ->
 
       cy.contains('API')
         .click()
-      cy.contains('h1', "API")
+      cy.contains('h1', "Table of Contents")
 
       cy.url()
         .should('match', new RegExp(API_HTML))
@@ -51,23 +51,23 @@ describe "API", ->
         @sidebarTitles = _.keys(@sidebar.api)
 
         @sidebarLinkNames =  _.reduce @sidebar.api, (memo, nestedObj, key) ->
-           memo.concat(_.keys(nestedObj))
+          memo.concat(_.keys(nestedObj))
         , []
 
         @sidebarLinks =  _.reduce @sidebar.api, (memo, nestedObj, key) ->
-             memo.concat(_.values(nestedObj))
-          , []
+          memo.concat(_.values(nestedObj))
+        , []
 
       cy.readFile("themes/cypress/languages/en.yml").then (yamlString) ->
-          @english = YAML.parse(yamlString)
+        @english = YAML.parse(yamlString)
 
     it "displays current page as highlighted", ->
-      cy.get("#sidebar").find(".current")
-        .should("have.attr", "href").and("include", "api.html")
+      cy.get("#sidebar").find("a.current")
+        .should("have.attr", "href").and("include", API_HTML)
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
-        .find(".sidebar-title").each (displayedTitle, i) ->
+        .find(".sidebar-title strong").each (displayedTitle, i) ->
           englishTitle  = @english.sidebar.api[@sidebarTitles[i]]
           expect(displayedTitle.text()).to.eq(englishTitle)
 
@@ -90,16 +90,18 @@ describe "API", ->
       it "displays sidebar in mobile menu on click", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
-          .find(".sidebar-li")
-          .first(1).each (displayedLink, i) ->
-            englishLink  = @english.sidebar.api[@sidebarLinkNames[i]]
-            expect(displayedLink.text().trim()).to.eq(englishLink)
+          .find(".main-nav-link")
+          .eq(1)
+          .contains("API")
 
   context "Table of Contents", ->
     beforeEach ->
       cy.visit(API_PATH + ".html")
 
     it "displays toc", ->
+      ## skip running this test if we are in interactive mode
+      return @skip() if Cypress.config("isInteractive")
+      
       cy.get('.sidebar-link').each (linkElement) ->
         cy.log(linkElement[0].innerText)
         cy.request(linkElement[0].href).its('body').then (body) ->
@@ -111,19 +113,21 @@ describe "API", ->
           $h1links = $body.find('.toc-level-1>.toc-link')
           $h2links = $body.find('.toc-level-2>.toc-link')
 
-          $h1s.each (i, el) ->
-            $h1 = Cypress.$(el)
-            $link = $h1links.eq(i)
+          if $h1links.length
+            $h1s.each (i, el) ->
+              $h1 = Cypress.$(el)
+              $link = $h1links.eq(i)
+  
+              expect($link.text()).to.eq($h1.text())
+              expect($link.attr('href')).to.eq('#' + $h1.attr('id'))
 
-            expect($link.text()).to.eq($h1.text())
-            expect($link.attr('href')).to.eq('#' + $h1.attr('id'))
+          if $h2links.length
+            $h2s.each (i, el) ->
+              $h2 = Cypress.$(el)
+              $link = $h2links.eq(i)
 
-          $h2s.each (i, el) ->
-            $h2 = Cypress.$(el)
-            $link = $h2links.eq(i)
-
-            expect($link.text()).to.eq($h2.text())
-            expect($link.attr('href')).to.eq('#' + $h2.attr('id'))
+              expect($link.text()).to.eq($h2.text())
+              expect($link.attr('href')).to.eq('#' + $h2.attr('id'))
 
   context "Pagination", ->
     beforeEach ->

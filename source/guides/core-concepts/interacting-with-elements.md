@@ -1,9 +1,9 @@
 ---
 title: Interacting with Elements
-
 ---
+
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress calculates visibility
 - How Cypress ensures elements are actionable
