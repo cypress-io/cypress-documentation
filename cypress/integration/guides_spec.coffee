@@ -79,7 +79,7 @@ describe "Guides", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
           .find(".sidebar-li")
-          .first(1).each (displayedLink, i) ->
+          .each (displayedLink, i) ->
             englishLink  = @english.sidebar.guides[@sidebarLinkNames[i]]
             expect(displayedLink.text().trim()).to.eq(englishLink)
 

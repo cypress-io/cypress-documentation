@@ -90,9 +90,10 @@ describe "API", ->
       it "displays sidebar in mobile menu on click", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
-          .find(".main-nav-link")
-          .eq(1)
-          .contains("API")
+          .find(".sidebar-li")
+          .each (displayedLink, i) ->
+            englishLink  = @english.sidebar.api[@sidebarLinkNames[i]]
+            expect(displayedLink.text().trim()).to.eq(englishLink)
 
   context "Table of Contents", ->
     beforeEach ->
