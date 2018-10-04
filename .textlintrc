@@ -1,14 +1,14 @@
 {
-	"rules": {
-		"eslint": {
-			"configFile": ".eslintrc-textlint",
-			"ignoreParsingErrors": true
-		}
-	},
-		"filters": {
-			"comments": {
-				"enablingComment": "textlint-enable",
-				"disablingComment": "textlint-disable"
-			}
-		}
+  "rules": {
+    "eslint": {
+      "configFile": ".eslintrc-textlint",
+      "ignoreParsingErrors": true
+    }
+  },
+    "filters": {
+      "comments": {
+        "enablingComment": "textlint-enable",
+        "disablingComment": "textlint-disable"
+      }
+    }
 }
