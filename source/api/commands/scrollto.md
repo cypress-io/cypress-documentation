@@ -100,7 +100,7 @@ cy.scrollTo('500px')
 ***Scroll 25% down the element's height***
 
 ```javascript
- cy.get('.user-photo').scrollTo('0%', '25%')
+cy.get('.user-photo').scrollTo('0%', '25%')
 ```
 
 ## Options
@@ -108,13 +108,13 @@ cy.scrollTo('500px')
 ***Use linear easing animation to scroll***
 
 ```javascript
-cy.get('.documentation').scrollTo('top', { easing: 'linear'} )
+cy.get('.documentation').scrollTo('top', { easing: 'linear' })
 ```
 
 ***Scroll to the right over 2000ms***
 
 ```javascript
-cy.get('#slider').scrollTo('right', { duration: 2000} )
+cy.get('#slider').scrollTo('right', { duration: 2000 })
 ```
 
 # Notes

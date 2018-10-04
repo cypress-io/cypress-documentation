@@ -180,7 +180,7 @@ If you've worked in {% url "Chai" http://chaijs.com/ %} before, you will recogni
 Take this *explicit* assertion for example:
 
 ```javascript
-expect({foo: 'bar'}).to.have.property('foo').and.eq('bar')
+expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 ```
 
 `.and()` reproduces this same assertion behavior.
@@ -200,8 +200,8 @@ cy
   .get('button')
   .should('be.active')
   .and(($button) => {
-    expect({foo: 'bar'}).to.deep.eq({foo: 'bar'})
-    return {foo: 'bar'} // return is ignored, .and() yields <button>
+    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+    return { foo: 'bar' } // return is ignored, .and() yields <button>
   })
   .then(($button) => {
     // do anything we want with <button>

@@ -72,8 +72,8 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 ```
 
 ```javascript
-Cypress.env("foo") // => bar
-Cypress.env("baz") // => quux
+Cypress.env('foo') // => bar
+Cypress.env('baz') // => quux
 ```
 
 ## Name and Value

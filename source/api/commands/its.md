@@ -20,7 +20,7 @@ If you want to call a function on the previously yielded subject, use {% url `.i
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wrap({width: '50'}).its('width') // Get the 'width' property
+cy.wrap({ width: '50' }).its('width') // Get the 'width' property
 cy.window().its('angular')          // Get the 'angular' property
 ```
 
@@ -48,7 +48,7 @@ Name of property or nested properties (with dot notation) to get.
 ***Get property***
 
 ```javascript
-cy.wrap({age: 52}).its('age').should('eq', 52) // true
+cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
 ```
 
 ## DOM Elements
@@ -80,7 +80,7 @@ const fn = () => {
   return 42
 }
 
-cy.wrap({getNum: fn}).its('getNum').should('be.a', 'function')
+cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 ```
 
 ***Access function properties***
@@ -154,8 +154,8 @@ cy.server()
 cy.route(/comments/, 'fixture:comments.json').as('getComments')
 cy.get('#fetch-comments').click()
 cy.wait('@getComments').its('responseBody').should('deep.eq', [
-  {id: 1, comment: 'hi'},
-  {id: 2, comment: 'there'}
+  { id: 1, comment: 'hi' },
+  { id: 2, comment: 'there' }
 ])
 ```
 

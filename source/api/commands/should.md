@@ -238,8 +238,8 @@ Whatever is returned in the function is ignored. Cypress always forces the comma
 ```javascript
 cy
   .get('button').should(($button) => {
-    expect({foo: 'bar'}).to.deep.eq({foo: 'bar'})
-    return {foo: 'bar'} // return is ignored, .should() yields <button>
+    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+    return { foo: 'bar' } // return is ignored, .should() yields <button>
   })
   .then(($button) => {
     // do anything we want with <button>
@@ -261,15 +261,13 @@ cy
 {% timeouts timeouts .should %}
 
 ```javascript
-cy.get('input', {timeout: 10000}).should('have.value', '10')
-  //                    ↲
-  // timeout here will be passed down to the '.should()'
-  // and it will retry for up to 10 secs
+cy.get('input', { timeout: 10000 }).should('have.value', '10')
+// timeout here will be passed down to the '.should()'
+// and it will retry for up to 10 secs
 ```
 
 ```javascript
-cy.get('input', {timeout: 10000}).should(($input) => {
-  //                    ↲
+cy.get('input', { timeout: 10000 }).should(($input) => {
   // timeout here will be passed down to the '.should()'
   // unless an assertion throws earlier,
   // ALL of the assertions will retry for up to 10 secs

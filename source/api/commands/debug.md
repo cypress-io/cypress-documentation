@@ -73,7 +73,7 @@ cy.get('a').debug().should('have.attr', 'href')
 ***Log out the current subject for debugging***
 
 ```javascript
-cy.get(".ls-btn").click({ force: true }).debug()
+cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
 The commands above will display in the command log as:

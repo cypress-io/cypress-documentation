@@ -58,7 +58,7 @@ cy.get('button#checkout').scrollIntoView()
 ### Use linear easing animation to scroll
 
 ```javascript
-cy.get('.next-page').scrollIntoView({ easing: 'linear' } )
+cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 ```
 
 ### Scroll to element over 2000ms

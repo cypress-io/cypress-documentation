@@ -27,7 +27,7 @@ cy.screenshot(fileName, options)
 
 ```javascript
 cy.screenshot()
-cy.get(".post").screenshot()
+cy.get('.post').screenshot()
 ```
 
 ## Arguments
@@ -123,7 +123,7 @@ cy.get('button').first().screenshot().click()
 ## Get screenshot info from the `onAfterScreenshot` callback
 
 ```javascript
-cy.screenshot("my-screenshot", {
+cy.screenshot('my-screenshot', {
   onAfterScreenshot ($el, props) {
     // props has information about the screenshot,
     // including but not limited to the following:

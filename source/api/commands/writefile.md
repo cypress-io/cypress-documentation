@@ -18,7 +18,7 @@ cy.writeFile(filePath, contents, encoding, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.writeFile('menu.json')    
+cy.writeFile('menu.json')
 ```
 
 ## Arguments
