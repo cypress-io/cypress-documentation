@@ -32,17 +32,23 @@ function isRightBranch (env) {
     branch.startsWith('docs-') && env === 'staging'
 
   const isBranchAllowedToDeploy = (branch) => {
+    debug('checking if branch "%s" allowed to deploy?', branch)
+
     if (isDocsToStagingBranch(branch)) {
       console.log('documentation branch %s is allowed to deploy to %s',
         branch, env)
       return true
     }
 
-    if (!values(branchToEnv).includes(env)) {
+    const environments = values(branchToEnv)
+    debug('checking branches for environments %o', environments)
+
+    if (!environments.includes(env)) {
       console.log('could not get branch for environment', env)
       return false
     }
 
+    debug('target environments include current environment "%s"', env)
     if (env === 'master') {
       const allowed = branchToEnv[branch] === env
       console.log('branch %s is valid for env %s?', branch, env, allowed)
@@ -51,12 +57,15 @@ function isRightBranch (env) {
       console.log('branch %s is valid for env %s?', branch, env, true)
       return true
     }
+
+    debug('fell through, returning false')
+    return false
   }
 
   let branch
   return git.branchName()
   .then(tap((name) => {
-    console.log('branch name', name)
+    console.log('branch name: %s', name)
     branch = name
   }))
   .then(isBranchAllowedToDeploy)
