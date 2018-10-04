@@ -530,9 +530,9 @@ return fs.readFile('/foo.txt', 'utf8')
   // so it essentially becomes 'lost'.
   // this can create bizarre race conditions and
   // bugs that are difficult to track down
-  fs.writeFile('/foo.txt', txt.replace("foo", "bar"))
+  fs.writeFile('/foo.txt', txt.replace('foo', 'bar'))
 
-  return fs.readFile("/bar.json")
+  return fs.readFile('/bar.json')
   .then((json) => {
     // ...
   })
@@ -611,7 +611,7 @@ Here's another example.
 To express this with an assertion you'd write:
 
 ```js
-cy.request('/users/1').its('body').should('deep.eq', {name: 'Jane'})
+cy.request('/users/1').its('body').should('deep.eq', { name: 'Jane' })
 ```
 
 ## When To Assert?
@@ -808,7 +808,7 @@ Doing so enables you to **block** and **guard** Cypress by ensuring the state of
 
 ```javascript
 cy
-  .get("p")
+  .get('p')
   .should(($p) => {
     // massage our subject from a DOM element
     // into an array of texts from all of the p's
@@ -829,7 +829,7 @@ cy
       'More text from second p',
       'And even more text from third p'
     ])
-})
+  })
 ```
 
 {% note danger Make sure `.should()` is safe %}

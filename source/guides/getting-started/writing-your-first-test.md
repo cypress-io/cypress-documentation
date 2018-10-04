@@ -227,7 +227,7 @@ Here's what that looks like:
 
 ```js
 describe('My First Test', function() {
-  it("clicking 'type' navigates to a new url", function() {
+  it('clicking "type" navigates to a new url', function() {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -248,7 +248,7 @@ We can use {% url "`cy.get()`" get %} to select an element based on a CSS class.
 
 ```js
 describe('My First Test', function() {
-  it("Gets, types and asserts", function() {
+  it('Gets, types and asserts', function() {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -405,14 +405,14 @@ Let's add a {% url "`cy.pause()`" pause %} to our test code and see what happens
 
 ```js
 describe('My First Test', function() {
-  it("clicking 'type' shows the right headings", function() {
+  it('clicking \'type\' shows the right headings', function() {
     cy.visit('https://example.cypress.io')
 
     cy.pause()
 
     cy.contains('type').click()
 
-     // Should be on a new URL which includes '/commands/actions'
+    // Should be on a new URL which includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
@@ -468,7 +468,7 @@ We've got some duplication here and could probably make a number of refactoring 
 ```js
 describe('My First Test', function() {
   beforeEach(function() {
-    cy.visit('https://example.cypress.io')    
+    cy.visit('https://example.cypress.io')
   })
 
   it("clicking type shows the heading Actions", function() {
