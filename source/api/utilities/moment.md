@@ -24,7 +24,7 @@ Cypress.moment()
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.moment()  // Errors, cannot be chained off 'cy'
+cy.moment() // Errors, cannot be chained off 'cy'
 ```
 
 # Examples
@@ -32,7 +32,7 @@ cy.moment()  // Errors, cannot be chained off 'cy'
 **Test that the span contains formatted text for today**
 
 ```javascript
-const todaysDate = Cypress.moment().format("MMM DD, YYYY")
+const todaysDate = Cypress.moment().format('MMM DD, YYYY')
 
-cy.get("span").should("contain", "Order shipped on: " + todaysDate)
+cy.get('span').should('contain', 'Order shipped on: ' + todaysDate)
 ```
