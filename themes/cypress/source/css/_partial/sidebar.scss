@@ -1,6 +1,6 @@
 #sidebar {
   width: $sidebar-width;
-  background-color: #f9fcfb;
+  background-color: #fbfbfb;
   position: fixed;
   overflow-y: auto;
   top: 60px;
@@ -17,29 +17,37 @@
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
-    margin-top: 1.5em;
+  }
+
+  &:hover .toggle-sidebar-btns {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 300ms;
   }
 }
 
 .toggle-sidebar-btns {
   display: flex;
-  margin: 20px 30px 0;
+  margin: 10px 30px 0;
   justify-content: space-between;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
 
   a, span {
     color: #505050;
+    font-weight: 300;
     text-transform: uppercase;
     font-size: 0.85em;
     text-decoration: none;
-    font-weight: 400;
 
-    &:hover, &:focus:hover {
-      color: $color-link-hover;
+    &:hover {
+      color: #000;
     }
+  }
 
-    &:focus, &:active {
-      color: #999;
-    }
+  span {
+    user-select: none;
   }
 }
 
@@ -47,7 +55,7 @@
   font-size: 1em;
   padding: 0;
   font-family: $font-title;
-  font-weight: 500;
+  font-weight: 400;
   color: $color-default;
   display: inline-block;
   line-height: 1.2em;
@@ -56,20 +64,21 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 0 0 5px;
 
   &.current {
     strong, &:after {
-      color: #06885d;
+      color: #333;
 
       i {
-        color: #06885d;
+        color: #333;
       }
     }
   }
 
   strong {
-    padding: 0 30px;
+    margin-top: 2px;
+    padding: 8px 30px;
     display: block;
   }
 
@@ -85,7 +94,7 @@
     font-family: FontAwesome;
     position: absolute;
     right: 2em;
-    top: 0;
+    top: 10px;
     font-size: 0.7em;
   }
 
@@ -96,7 +105,11 @@
     list-style: none;
 
     &>.sidebar-li:first-child {
-      padding-top: 10px;
+      padding-top: 0;
+    }
+
+    &>.sidebar-li:last-child {
+      margin-bottom: 7px;
     }
   }
 
@@ -125,7 +138,7 @@
   font-family: $font-sans;
   font-size: 0.9em;
   display: block;
-  color: $color-default;
+  color: $color-link;
   text-decoration: none;
   padding: 3px 30px;
   position: relative;
@@ -138,13 +151,22 @@
     color: white;
     font-weight: 500;
     background-color: #1DBE89;
+    
     &:hover {
       color: white;
       background-color: #1DBE89;
+
+      span {
+        border-bottom: 0;
+      }
     }
   }
 
   &:hover {
-    color: #129e70;
+    color: $color-link-hover;
+
+    span {
+      border-bottom: 1px solid $color-link;
+    }
   }
 }
