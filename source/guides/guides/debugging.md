@@ -57,7 +57,7 @@ Now we're in business! The first time through, {% url `cy.visit()` visit %} and 
 But that's a lot of typing just to call `debugger` in context, yeah? Cypress exposes a shortcut for this, {% url `.debug()` debug %}. Let's rewrite the test using this helper method:
 
 ```js
-it("let's me debug like a fiend", function() {
+it('let me debug like a fiend', function() {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')

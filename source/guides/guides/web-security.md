@@ -207,7 +207,7 @@ If that's the case, don't worry - you can work around it with {% url `cy.request
 In fact we can likely bypass the initial visit altogether and just `POST` directly to your `SSO` server.
 
 ```javascript
-cy.request('POST', 'https://sso.corp.com/auth', {username: 'foo', password: 'bar'})
+cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'bar' })
   .then((response) => {
     // pull out the location redirect
     const loc = response.headers['Location']

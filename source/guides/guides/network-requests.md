@@ -184,7 +184,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 To access the fixtures nested within the `images` folder, simply include the folder in your {% url `cy.fixture()` fixture %} command.
 
 ```javascript
-cy.fixture("images/dogs.png") //returns dogs.png as Base64
+cy.fixture('images/dogs.png') //returns dogs.png as Base64
 ```
 
 # Waiting
@@ -233,7 +233,7 @@ What makes this example below so powerful is that Cypress will automatically wai
 
 ```javascript
 cy.server()
-cy.route('/search*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
+cy.route('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
@@ -276,7 +276,7 @@ In our example above we can assert about the request object to verify that it se
 
 ```javascript
 cy.server()
-cy.route('search/*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
+cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 

@@ -48,19 +48,19 @@ A stub is most commonly used in a unit test but is still useful during some inte
 cy.stub()
 
 // replace obj.method() with a stubbed function
-cy.stub(obj, "method")
+cy.stub(obj, 'method')
 
 // force obj.method() to return "foo"
-cy.stub(obj, "method").returns("foo")
+cy.stub(obj, 'method').returns('foo')
 
 // force obj.method() when called with "bar" argument to return "foo"
-cy.stub(obj, "method").withArgs("bar").returns("foo")
+cy.stub(obj, 'method').withArgs('bar').returns('foo')
 
 // force obj.method() to return a promise which resolves to "foo"
-cy.stub(obj, "method").resolves("foo")
+cy.stub(obj, 'method').resolves('foo')
 
 // force obj.method() to return a promise rejected with an error
-cy.stub(obj, "method").rejects(new Error("foo"))
+cy.stub(obj, 'method').rejects(new Error('foo'))
 ```
 
 You generally stub a function when it has side effects you are trying to control.
@@ -86,7 +86,7 @@ A spy gives you the ability to "spy" on a function, by letting you capture and t
 A spy does **not** modify the behavior of the function - it is left perfectly intact. A spy is most useful when you are testing the contract between multiple functions and you don't care about the side effects the real function may create (if any).
 
 ```javascript
-cy.spy(obj, "method")
+cy.spy(obj, 'method')
 ```
 
 {% note info cy.spy() %}
@@ -112,8 +112,8 @@ Once you've enabled {% url `cy.clock()` clock %} you can control time by **ticki
 
 ```javascript
 cy.clock()
-cy.visit("http://localhost:3333")
-cy.get("#search").type("foobarbaz")
+cy.visit('http://localhost:3333')
+cy.get('#search').type('foobarbaz')
 cy.tick(1000)
 ```
 
@@ -134,44 +134,44 @@ const user = {
   },
 
   fail: () => {
-    throw new Error("fail whale")
+    throw new Error('fail whale')
   }
 }
 
 // force user.getName() to return "Jane"
-cy.stub(user, "getName").returns("Jane Lane")
+cy.stub(user, 'getName').returns('Jane Lane')
 
 // spy on updateEmail but do not change its behavior
-cy.spy(user, "updateEmail")
+cy.spy(user, 'updateEmail')
 
 // spy on fail but do not change its behavior
-cy.spy(user, "fail")
+cy.spy(user, 'fail')
 
 // invoke getName
 const name  = user.getName(123)
 
 // invoke updateEmail
-const email = user.updateEmail("jane@devs.com")
+const email = user.updateEmail('jane@devs.com')
 
 try {
   // invoke fail
   user.fail()
-  } catch (e) {
+} catch (e) {
 
 }
 
-expect(name).to.eq("Jane Lane")                            // true
+expect(name).to.eq('Jane Lane')                            // true
 expect(user.getName).to.be.calledOnce                      // true
 expect(user.getName).not.to.be.calledTwice                 // true
 expect(user.getName).to.be.calledWith(123)
 expect(user.getName).to.be.calledWithExactly(123)          // true
 expect(user.getName).to.be.calledOn(user)                  // true
 
-expect(email).to.eq("jane@devs.com")                       // true
-expect(user.updateEmail).to.be.calledWith("jane@devs.com") // true
-expect(user.updateEmail).to.have.returned("jane@devs.com") // true
+expect(email).to.eq('jane@devs.com')                       // true
+expect(user.updateEmail).to.be.calledWith('jane@devs.com') // true
+expect(user.updateEmail).to.have.returned('jane@devs.com') // true
 
-expect(user.fail).to.have.thrown("Error")                  // true
+expect(user.fail).to.have.thrown('Error')                  // true
 ```
 
 # Integration and Extensions
