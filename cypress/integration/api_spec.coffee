@@ -51,15 +51,15 @@ describe "API", ->
         @sidebarTitles = _.keys(@sidebar.api)
 
         @sidebarLinkNames =  _.reduce @sidebar.api, (memo, nestedObj, key) ->
-           memo.concat(_.keys(nestedObj))
+          memo.concat(_.keys(nestedObj))
         , []
 
         @sidebarLinks =  _.reduce @sidebar.api, (memo, nestedObj, key) ->
-             memo.concat(_.values(nestedObj))
-          , []
+          memo.concat(_.values(nestedObj))
+        , []
 
       cy.readFile("themes/cypress/languages/en.yml").then (yamlString) ->
-          @english = YAML.parse(yamlString)
+        @english = YAML.parse(yamlString)
 
     it "displays current page as highlighted", ->
       cy.get("#sidebar").find("a.current")
@@ -91,15 +91,17 @@ describe "API", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
           .find(".main-nav-link")
-          .eq(1).each (displayedLink, i) ->
-            englishLink  = @english.sidebar.api[@sidebarLinkNames[i]]
-            expect(displayedLink.text().trim()).to.eq(englishLink)
+          .eq(1)
+          .contains("API")
 
   context "Table of Contents", ->
     beforeEach ->
       cy.visit(API_PATH + ".html")
 
     it "displays toc", ->
+      ## skip running this test if we are in interactive mode
+      return @skip() if Cypress.config("isInteractive")
+      
       cy.get('.sidebar-link').each (linkElement) ->
         cy.log(linkElement[0].innerText)
         cy.request(linkElement[0].href).its('body').then (body) ->
