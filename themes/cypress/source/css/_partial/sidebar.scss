@@ -1,6 +1,6 @@
 #sidebar {
   width: $sidebar-width;
-  background-color: #fbfbfb;
+  background-color: #f9fcfb;
   position: fixed;
   overflow-y: auto;
   top: 60px;
@@ -17,37 +17,30 @@
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
+    margin-top: 1.5em;
   }
 
-  &:hover .toggle-sidebar-btns {
-    visibility: visible;
-    opacity: 1;
-    transition: visibility 0s linear 0s, opacity 300ms;
-  }
 }
 
 .toggle-sidebar-btns {
   display: flex;
-  margin: 10px 30px 0;
+  margin: 20px 30px 0;
   justify-content: space-between;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 300ms, opacity 300ms;
 
   a, span {
     color: #505050;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     font-size: 0.85em;
     text-decoration: none;
 
-    &:hover {
-      color: #000;
+    &:hover, &:focus:hover {
+      color: #129e70;
     }
-  }
 
-  span {
-    user-select: none;
+    &:focus, &:active {
+      color: #999;
+    }
   }
 }
 
@@ -55,7 +48,7 @@
   font-size: 1em;
   padding: 0;
   font-family: $font-title;
-  font-weight: 400;
+  font-weight: 500;
   color: $color-default;
   display: inline-block;
   line-height: 1.2em;
@@ -64,21 +57,20 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  margin: 0 0 5px;
+  margin: 10px 0;
 
   &.current {
     strong, &:after {
-      color: #333;
+      color: #06885d;
 
       i {
-        color: #333;
+        color: #06885d;
       }
     }
   }
 
   strong {
-    margin-top: 2px;
-    padding: 8px 30px;
+    padding: 0 30px;
     display: block;
   }
 
@@ -94,7 +86,7 @@
     font-family: FontAwesome;
     position: absolute;
     right: 2em;
-    top: 10px;
+    top: 0;
     font-size: 0.7em;
   }
 
@@ -105,11 +97,7 @@
     list-style: none;
 
     &>.sidebar-li:first-child {
-      padding-top: 0;
-    }
-
-    &>.sidebar-li:last-child {
-      margin-bottom: 7px;
+      padding-top: 10px;
     }
   }
 
@@ -134,11 +122,11 @@
   line-height: 1.7;
 }
 
-.sidebar-title .sidebar-link {
+.sidebar-title a.sidebar-link {
   font-family: $font-sans;
   font-size: 0.9em;
   display: block;
-  color: $color-link;
+  color: $color-default;
   text-decoration: none;
   padding: 3px 30px;
   position: relative;
@@ -163,10 +151,6 @@
   }
 
   &:hover {
-    color: $color-link-hover;
-
-    span {
-      border-bottom: 1px solid $color-link;
-    }
+    color: #129e70;
   }
 }

@@ -84,7 +84,7 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
       }
 
       result += `<li class='sidebar-li sidebar-li-${title}'><a href="${self.config.root + href}" class="${itemClass}">
-        <span>${self.__(prefix + text)}</span></a></li>`
+        ${self.__(prefix + text)}</a></li>`
     })
 
     // close the ul containing the menus
