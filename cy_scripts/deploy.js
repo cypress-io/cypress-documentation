@@ -8,7 +8,7 @@ const minimist = require('minimist')
 const debug = require('debug')('deploy')
 const questionsRemain = require('@cypress/questions-remain')
 const scrape = require('./scrape')
-const shouldDeploy = require('./should-deploy')
+const { shouldDeploy } = require('./should-deploy')
 const R = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
@@ -120,9 +120,10 @@ function deploy () {
     return shouldDeploy(env)
     .then((should) => {
       if (!should) {
-        console.log('nothing to deploy for environment %s', env)
+        console.log('should NOT deploy to environment %s', env)
         return false
       }
+      console.log('should deploy to environment %s', env)
       return doDeploy(env)
     })
   })

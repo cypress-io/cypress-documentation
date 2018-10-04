@@ -7,6 +7,7 @@ const debug = require('debug')('deploy')
 const { isEmpty, complement, tap, path, all, equals, T, values } = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
+const Promise = require('bluebird')
 
 const docsChanged = complement(isEmpty)
 
@@ -15,8 +16,13 @@ const isForced = process.argv.some(equals('--force'))
 const isValidEnvironment = is.oneOf(['staging', 'production'])
 
 /* eslint-disable no-console */
-/* global Promise */
 
+/**
+ * Checks if current Git branch (develop, master, hot-fix-1)
+ * is allowed to deploy to the target environment
+ *
+ * @param env {string} Target environment, like "staging" or "production"
+ */
 function isRightBranch (env) {
   la(is.unemptyString(env), 'expected environment name', env)
 
@@ -50,7 +56,7 @@ function isRightBranch (env) {
     }
 
     debug('target environments include current environment "%s"', env)
-    if (env === 'master') {
+    if (env === 'production') {
       const allowed = branchToEnv[branch] === env
       console.log('branch %s is valid for env %s?', branch, env, allowed)
       return allowed
@@ -140,11 +146,15 @@ function shouldDeploy (env = 'production') {
 
   return git.branchName()
   .then((branchName) => {
+    debug('checking if should deploy branch %s to environment %s', branchName, env)
     const questions = [
       isRightBranch(env),
       docsFilesChangedSinceLastDeploy(env, branchName),
     ]
     return Promise.all(questions)
+    .tap((answers) => {
+      debug('answers: %o', answers)
+    })
     .then(all(equals(true)))
     .then(Boolean)
     .then((result) => {
@@ -152,12 +162,16 @@ function shouldDeploy (env = 'production') {
         console.log('should deploy is forced!')
         return isForced
       }
+      debug('should deploy answers %o', result)
       return result
     })
   })
 }
 
-module.exports = shouldDeploy
+module.exports = {
+  shouldDeploy,
+  isRightBranch,
+}
 
 if (!module.parent) {
   // see list of changed files since last docs deploy
