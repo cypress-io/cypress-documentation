@@ -33,6 +33,7 @@ function isRightBranch (env) {
 
   const isBranchAllowedToDeploy = (branch) => {
     debug('checking if branch "%s" allowed to deploy?', branch)
+    debug('branches to environments %o', branchToEnv)
 
     if (isDocsToStagingBranch(branch)) {
       console.log('documentation branch %s is allowed to deploy to %s',
