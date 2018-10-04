@@ -134,8 +134,8 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 ### Fixed Test Code
 
 ```javascript
-cy.get("button").click()
-cy.get("#parent")
+cy.get('button').click()
+cy.get('#parent')
 ```
 
 The above example is an oversimplification. Let's look at a more complex example.
@@ -187,7 +187,7 @@ Cypress will continuously attempt to interact with the element until it eventual
 - Pass `{animationDistanceThreshold: 20}` to decrease the sensitivity of detecting if an element is animating. By increasing the threshold this enables your element to move farther on the page without causing Cypress to continuously retry.
 
 ```javascript
-cy.get('#modal button').click({waitForAnimations: false})
+cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.

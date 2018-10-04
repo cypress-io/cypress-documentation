@@ -170,9 +170,9 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 {% endnote %}
 
 ```javascript
-Cypress.config("pageLoadTimeout", 100000)
+Cypress.config('pageLoadTimeout', 100000)
 
-Cypress.config("pageLoadTimeout") // => 100000
+Cypress.config('pageLoadTimeout') // => 100000
 ```
 
 # Resolved Configuration
