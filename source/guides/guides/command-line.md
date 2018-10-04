@@ -3,7 +3,7 @@ title: Command Line
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress from the command line
 - How to specify which spec files to run
@@ -82,6 +82,8 @@ Typically, this is defined as an environment variable within your CI provider, d
 cypress run --ci-build-id BUILD_NUMBER
 ```
 
+Read our {% url "parallelization" parallelization %} documentation to learn more.
+
 ### `cypress run --config <config>`
 
 Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
@@ -98,7 +100,7 @@ cypress run --env host=api.dev.local
 
 ### `cypress run --group <name>`
 
-Group recorded tests together under a single run.
+{% url "Group recorded tests together" parallelization#Grouping-test-runs %} under a single run.
 
 ```shell
 cypress run --group develop-env
@@ -113,6 +115,8 @@ cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
 ```shell
 cypress run --group user-tests --spec 'cypress/integration/user/**/*
 ```
+
+{% url "Read more about grouping." parallelization#Grouping-test-runs %}
 
 ### `cypress run --headed`
 
@@ -136,17 +140,19 @@ cypress run --headed --no-exit
 
 ### `cypress run --parallel`
 
-Run recorded specs in parallel across multiple machines
+Run recorded specs in {% url "parallel" parallelization %} across multiple machines.
 
 ```shell
 cypress run --record --parallel
 ```
 
-You can additionally pass a `--group` flag so this shows up as a named group.
+You can additionally pass a `--group` flag so this shows up as a named {% url "group" parallelization#Grouping-test-runs %}.
 
 ```shell
 cypress run --record --parallel --group e2e-staging-specs
 ```
+
+Read our {% url "parallelization" parallelization %} documentation to learn more.
 
 ### `cypress run --port <port>`
 
@@ -334,7 +340,7 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
-# Debugging Commands
+# Debugging commands
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
@@ -346,6 +352,7 @@ DEBUG=cypress:* cypress open
 ```shell
 DEBUG=cypress:* cypress run
 ```
+
 **On Windows:**
 
 ```shell

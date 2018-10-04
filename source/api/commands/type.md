@@ -339,7 +339,7 @@ In a real browser, preventing `mousedown` on a form field will prevent it from r
 
 ***Key Events Table***
 
-Cypress prints out a table of key events that detail the keys that were pressed when clicking on type within the {% url 'Command Log' type#Command-Log %}. Each character will contain the `which` character code and the events that happened as a result of that key press.
+Cypress prints out a table of key events that detail the keys that were pressed when clicking on type within the {% urlHash 'Command Log' Command-Log %}. Each character will contain the `which` character code and the events that happened as a result of that key press.
 
 Events that were `defaultPrevented` may prevent other events from firing and those will show up as empty.  For instance, canceling `keydown` will not fire `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the spec).
 

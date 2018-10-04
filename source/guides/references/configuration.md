@@ -1,6 +1,5 @@
 ---
 title: Configuration
-
 ---
 
 When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
@@ -234,7 +233,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
-{% img /img/guides/blacklist-host.png %}
+{% img /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
 
 ## modifyObstructiveCode
 

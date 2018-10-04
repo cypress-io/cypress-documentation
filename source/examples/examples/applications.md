@@ -1,6 +1,5 @@
 ---
 title: Applications
-
 containerClass: examples
 ---
 

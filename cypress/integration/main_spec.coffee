@@ -2,7 +2,7 @@ YAML = require('yamljs')
 _ = require('lodash')
 
 GUIDES_PATH = "/guides/overview/why-cypress"
-API_PATH = "/api/introduction/api"
+API_PATH = "/api/api/table-of-contents"
 EXAMPLES_PATH = "/examples/examples/recipes"
 FAQ_PATH = "/faq/questions/using-cypress-faq"
 
@@ -19,8 +19,8 @@ describe "Main", ->
     # only works in development environment where each CSS
     # file is separate
     if Cypress.env('NODE_ENV') is 'development'
-      it "loads fira", ->
-        cy.request("fonts/vendor/fira/fira.css")
+      it "loads roboto", ->
+        cy.request("/fonts/vendor/roboto-fontface/css/roboto/roboto-fontface.css")
 
     it "has limited container height", ->
       cy.get('#container')

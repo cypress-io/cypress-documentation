@@ -1,4 +1,4 @@
-<div id="content-wrap" class="{{ page.containerClass }} toc-top">
+<div id="content-wrap"  class="{{ page.containerClass }}">
   <div id="content" class="wrapper">
     <div id="content-inner">
       {{ partial('partial/sidebar') }}
@@ -9,8 +9,10 @@
               <h1 class="article-title" itemprop="name">{{ page.title }}</h1>
               <a href="{{ raw_link(page.source) }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
             </header>
-            {{ toc(page.content, {list_number: false, max_depth: 2}) }}
             <div class="article-content" itemprop="articleBody">
+              <ul class="api-toc">
+                {{ api_toc('sidebar') }}
+              </ul>
               {{ add_page_anchors(page.content) }}
             </div>
             <footer class="article-footer">
@@ -22,6 +24,10 @@
           </div>
         </div>
       </div>
+      <aside id="article-toc" role="navigation">
+        <div id="article-toc-inner">
+        </div>
+      </aside>
     </div>
   </div>
 </div>
