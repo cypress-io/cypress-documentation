@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "End-to-End Testing with Cypress"
+    url: https://deliciousbrains.com/cypress-testing/
+    sourceName: Delicious Brains
+    sourceUrl: https://deliciousbrains.com/blog/
+    date: Oct 2, 2018
+    author: Peter Tasker
+    img: /img/examples/end-to-end-testing-with-cypress.jpg
+
   - title: "Slack App Testing"
     url: https://medium.com/coveryourads/slack-bot-testing-e7ba6f91a98e
     sourceName: Medium
@@ -15,7 +23,7 @@ large:
     date: Aug 27, 2018
     author: Matthew Ledom
     img: /img/examples/end-to-end-slack-app-testing-with-cypress.jpg
-  
+
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
     sourceName: Endgame
