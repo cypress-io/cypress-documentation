@@ -47,6 +47,11 @@
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
 
+    - name: cypress-dark
+      description: Dark mode for Cypress test runner
+      link: https://github.com/bahmutov/cypress-dark
+      keywords: [theme]
+
 - name: Custom Commands
   plugins:
     - name: cypressautomocker
