@@ -2,7 +2,7 @@
   <div id="content" class="wrapper">
     <div id="content-inner">
       {{ partial('partial/sidebar') }}
-      <div class="article-wrapper">
+      <article class="article-wrapper">
         <div id="article">
           <div class="article" itemscope itemtype="http://schema.org/Article">
             <header class="article-header">
@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </article>
       <aside id="article-toc" role="navigation">
         <div id="article-toc-inner">
           {{ toc(page.content, {list_number: false, max_depth: 2}) }}
