@@ -304,7 +304,7 @@ Now, once you have your login completely tested - you may be tempted to think:
 
 > "...okay great! Let's repeat this login process before every single test!"
 
-{% note danger 'No! Please don't. %}
+{% note danger 'No! Please don\'t.' %}
 Do not use **your UI** to login before each test.
 {% endnote %}
 
