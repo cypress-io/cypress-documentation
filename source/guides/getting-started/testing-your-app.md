@@ -330,7 +330,7 @@ Read about {% url 'best practices' best-practices %} here.
 
 Using your UI to **log in** is the *exact same scenario* as what we just described above. Logging in is just a prerequisite of state that comes before all of your other tests.
 
-Because Cypress isn't Selenium, we can actually take a huge short cut here and skip needing to use our UI by using {% url `cy.request()` request %}.
+Because Cypress isn't Selenium, we can actually take a huge shortcut here and skip needing to use our UI by using {% url `cy.request()` request %}.
 
 Because {% url `cy.request()` request %} automatically gets and sets cookies under the hood, we can actually use it to build up state without using your browser's UI, yet still have it perform exactly as if it came from the browser!
 
