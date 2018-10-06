@@ -278,9 +278,9 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `.actions-email` input
+> 3. And they type ["fake@email.com"](#or-in-the-given-when-then-syntax) into the `.actions-email` input
 > 3. Then the URL should include `/commands/actions`
-> 4. And the `.actions-email` input has "fake@email.com" as its value
+> 4. And the `.actions-email` input has ["fake@email.com"](#or-in-the-given-when-then-syntax) as its value
 
 Even your non-technical collaborators can appreciate the way this reads!
 
