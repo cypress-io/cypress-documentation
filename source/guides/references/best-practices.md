@@ -546,7 +546,7 @@ cy.get("table tr").should("have.length", 2)
 
 We do NOT recommend trying to start your backend web server from within Cypress.
 
-{% url "`cy.exec()`" exec %} and {% url "`cy.task()`" task %} can only run commands which eventually exit.
+Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually.
 
 Trying to start a web server from {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} causes all kinds of problems because:
 
