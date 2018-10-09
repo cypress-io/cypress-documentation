@@ -10,6 +10,9 @@
               <a href="{{ raw_link(page.source) }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
             </header>
             <div class="article-content" itemprop="articleBody">
+              <ul class="api-toc">
+                {{ api_toc('sidebar') }}
+              </ul>
               {{ add_page_anchors(page.content) }}
             </div>
             <footer class="article-footer">
@@ -23,8 +26,6 @@
       </article>
       <aside id="article-toc" role="navigation">
         <div id="article-toc-inner">
-          {{ toc(page.content, {list_number: false, max_depth: 2}) }}
-          <a href="#" id="article-toc-top"><i class="fa fa-long-arrow-up"></i> {{ __('page.back-to-top') }}</a>
         </div>
       </aside>
     </div>

@@ -20,7 +20,7 @@
   <!-- Icon -->
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico" sizes="16x16" />
 
-  {{ css('fonts/vendor/fira/fira') }}
+  {{ css('fonts/vendor/roboto-fontface/css/roboto/roboto-fontface') }}
   {{ css('fonts/vendor/font-awesome/css/font-awesome') }}
 
   <!-- CSS -->

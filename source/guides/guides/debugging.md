@@ -1,10 +1,9 @@
 ---
 title: Debugging
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress runs in the runloop with your code, keeping debugging simple and understandable for modern web developers
 - How Cypress embraces the standard DevTools
@@ -67,7 +66,7 @@ it('let me debug like a fiend', function() {
 
 Ah, that's better! And functionally equivalent. The current subject that was yielded by the {% url `cy.get()` get %} is exposed as `subject` so that you can interact with it in the console.
 
-{% img /img/guides/debugging-subject.png Debugging Subject %}
+{% img /img/guides/debugging-subject.png "Debugging Subject" %}
 
 This is just another example of how Cypress seeks elegance and expressivity for the modern web tester. Fewer keystrokes, more power, don't break standard assumptions, and we all win.
 
@@ -102,7 +101,7 @@ DEBUG=cypress:* cypress open
 set DEBUG=cypress:*
 ```
 
-{% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.
+{% url 'Read more about the CLI options here' command-line#Debugging-commands %}.
 
 # Debug the Browser Driver
 

@@ -1,6 +1,5 @@
 ---
 title: Cypress.config
-
 ---
 
 `get` and `set` configuration options *in your tests*.

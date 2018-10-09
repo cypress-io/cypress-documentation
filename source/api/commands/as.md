@@ -43,7 +43,7 @@ The name of the alias to be referenced later within a {% url `cy.get()` get %} o
 
 # Examples
 
-## DOM Element
+## DOM element
 
 Aliasing a DOM element and then using {% url `cy.get()` get %} to access the aliased element.
 
@@ -85,9 +85,9 @@ Note the use of the standard function syntax. Using {% url 'arrow functions' htt
 
 # Notes
 
-## Reserved Words
+## Reserved words
 
-***Alias names cannot match some reserved words.***
+### Alias names cannot match some reserved words.
 
 Some strings are not allowed as alias names since they are reserved words in Cypress. These words include: `test`, `runnable`, `timeout`, `slow`, `skip`, and `inspect`.
 
