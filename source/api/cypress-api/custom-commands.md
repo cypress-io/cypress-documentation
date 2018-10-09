@@ -187,7 +187,7 @@ Invoking it like this would error:
 
 ```javascript
 cy.console() // error about how you can't call console without a subject
-``
+```
 
 {% note info %}
 Whenever you're using a child command you likely want to use `cy.wrap()` on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.

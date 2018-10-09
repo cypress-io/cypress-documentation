@@ -405,7 +405,7 @@ Let's add a {% url "`cy.pause()`" pause %} to our test code and see what happens
 
 ```js
 describe('My First Test', function() {
-  it('clicking \'type\' shows the right headings', function() {
+  it('clicking "type" shows the right headings', function() {
     cy.visit('https://example.cypress.io')
 
     cy.pause()
