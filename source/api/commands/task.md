@@ -139,7 +139,7 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
-cy.task('seedDatabase', null, { timeout: 20000 });
+cy.task('seedDatabase', null, { timeout: 20000 })
 ```
 
 # Notes

@@ -199,7 +199,7 @@ Modifiers are automatically released between tests, even with `{release: false}`
 ```javascript
 it('has modifiers activated', function () {
   // 'altKey' will be true while typing 'foo'
-  cy.get('input').type('{alt}foo', {release: false})
+  cy.get('input').type('{alt}foo', { release: false })
 })
 
 it('does not have modifiers activated', function () {
@@ -212,7 +212,7 @@ To manually release modifiers within a test after using `{release: false}`, use 
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
-cy.get('input').type('{alt}foo', {release: false})
+cy.get('input').type('{alt}foo', { release: false })
 // 'altKey' will be true during the 'get' and 'click' commands
 cy.get('button').click()
 // 'altKey' will be released after this command
@@ -243,7 +243,7 @@ cy.get('body').type('{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightar
 // execute a SHIFT + click on the first <li>
 // {release: false} is necessary so that
 // SHIFT will not be released after the type command
-cy.get('body').type('{shift}', {release: false}).get('li:first').click()
+cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 ```
 
 ## Options
@@ -325,7 +325,7 @@ Cypress respects all default browser behavior when events are cancelled.
 // prevent the characters from being inserted
 // by canceling keydown, keypress, or textInput
 $('#username').on('keydown', (e) => {
-  e.preventDefault();
+  e.preventDefault()
 })
 
 // Cypress will not insert any characters if keydown, keypress, or textInput

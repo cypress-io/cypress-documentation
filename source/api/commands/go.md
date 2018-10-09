@@ -18,7 +18,7 @@ cy.go(direction, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.go('back')    
+cy.go('back')
 ```
 
 ## Arguments

@@ -497,7 +497,7 @@ Let's imagine the following examples:
 Waiting here is unnecessary since the {% url `cy.request()` request %} command will not resolve until it receives a response from your server. Adding the wait here only adds 5 seconds after the {% url `cy.request()` request %} has already resolved.
 
 ```javascript
-cy.request("http://localhost:8080/db/seed")
+cy.request('http://localhost:8080/db/seed')
 cy.wait(5000)     // <--- this is unnecessary
 ```
 
@@ -506,7 +506,7 @@ cy.wait(5000)     // <--- this is unnecessary
 Waiting for this is unnecessary because the {% url '`cy.visit()`' visit %} resolves once the page fires its `load` event. By that time all of your assets have been loaded including javascript, stylesheets, and html.
 
 ```javascript
-cy.visit("http://localhost/8080")
+cy.visit('http://localhost/8080')
 cy.wait(5000)     // <--- this is unnecessary
 ```
 
@@ -518,20 +518,20 @@ Whenever commands have an assertion they will not resolve until their associated
 
 ```javascript
 cy.server()
-cy.route("GET", /users/, [{"name": "Maggy"}, {"name": "Joan"}])
-cy.get("#fetch").click()
+cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
+cy.get('#fetch').click()
 cy.wait(4000)     // <--- this is unnecessary
-cy.get("table tr").should("have.length", 2)
+cy.get('table tr').should('have.length', 2)
 ```
 
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
 cy.server()
-cy.route("GET", /users/, [{"name": "Maggy"}, {"name": "Joan"}]).as("getUsers")
-cy.get("#fetch").click()
-cy.wait("@getUsers")     // <--- wait explicitly for this route to finish
-cy.get("table tr").should("have.length", 2)
+cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
+cy.get('#fetch').click()
+cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
+cy.get('table tr').should('have.length', 2)
 ```
 
 ## Web Servers

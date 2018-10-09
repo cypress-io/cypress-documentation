@@ -22,7 +22,7 @@ cy.fixture(filePath, encoding, options)
 cy.fixture('users').as('usersJson')  // load data from users.json
 cy.fixture('logo.png').then((logo) => {
   // load data from logo.png
-})  
+})
 ```
 
 ## Arguments
@@ -148,7 +148,7 @@ Using an alias provides the benefit of terseness and readability. It also makes 
 cy.fixture('users').as('usersJSON')
 cy.route('GET', '/users/**', '@usersJSON')
 
-  // ...later on...
+// ...later on...
 
 cy.get('#email').then(() => {
   // we have access to this.usersJSON since it was aliased

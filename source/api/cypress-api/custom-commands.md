@@ -126,7 +126,7 @@ cy.login('admin') // can start a chain off of cy
 
 cy
   .get('button')
-  .login('user') // can also be chained but will not receive the previous subject
+  .login('user') // can be chained but will not receive the previous subject
 ```
 
 {% note info 'Command Log' %}
@@ -186,7 +186,7 @@ By setting the `{ prevSubject: true }`, our new `.console()` command will requir
 Invoking it like this would error:
 
 ```javascript
-cy.console() // detailed error about how you can't call console without a subject
+cy.console() // error about how you can't call console without a subject
 ```
 
 {% note info %}
@@ -243,7 +243,7 @@ You can also modify the behavior of existing Cypress commands. This is useful to
 
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
-  const domain = Cypress.env("BASE_DOMAIN") // assuming you care about this env var
+  const domain = Cypress.env('BASE_DOMAIN')
 
   if (domain === '...') {
     url = '...'

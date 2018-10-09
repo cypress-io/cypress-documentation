@@ -18,10 +18,10 @@ Cypress.platform // 'darwin'
 
 ```javascript
 it('has JSON files', function () {
-    // if windows do one thing, else do another
-    const cmd = Cypress.platform === 'win32' ? 'dir *.json' : 'ls *.json'
+  // if windows do one thing, else do another
+  const cmd = Cypress.platform === 'win32' ? 'dir *.json' : 'ls *.json'
 
-    cy.exec(cmd)
+  cy.exec(cmd)
     .its('stdout')
     .should('include', 'package.json')
 })

@@ -20,7 +20,7 @@ cy.spy(object, method)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.spy(user, 'addFriend')    
+cy.spy(user, 'addFriend')
 ```
 
 ## Arguments
