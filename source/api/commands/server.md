@@ -20,7 +20,7 @@ cy.server(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.server()    
+cy.server()
 ```
 
 ## Arguments
@@ -89,7 +89,7 @@ cy.server({
   response: {}
 })
 
-cy.route('/users/', {errors: 'Name cannot be blank'})
+cy.route('/users/', { errors: 'Name cannot be blank' })
 ```
 
 ***Change the default delay for all routes***
@@ -98,7 +98,7 @@ Adding delay can help simulate real world network latency. Normally stubbed resp
 
 ```javascript
 // delay each route's response 1500ms
-cy.server({delay: 1500})
+cy.server({ delay: 1500 })
 ```
 
 ***Send 404s on unmatched requests***
@@ -137,11 +137,11 @@ Cypress automatically sets `Content-Length` and `Content-Type` based on the resp
 
 ```javascript
 cy.server({
-    headers: {
-      'x-token': 'abc-123-foo-bar'
-    }
-  })
-cy.route('GET', '/users/1', {id: 1, name: 'Amanda'}).as('getUser')
+  headers: {
+    'x-token': 'abc-123-foo-bar'
+  }
+})
+cy.route('GET', '/users/1', { id: 1, name: 'Amanda' }).as('getUser')
 cy.visit('/users/1/profile')
 cy.wait('@getUser').its('responseHeaders')
   .should('have.property', 'x-token', 'abc-123-foo-bar') // true
@@ -202,7 +202,7 @@ You can disable all stubbing and its effects and restore it to the default behav
 ```javascript
 cy.server()
 cy.route('POST', '/users', {}).as('createUser')
-cy.server({enable: false})
+cy.server({ enable: false })
 ```
 
 # Notes

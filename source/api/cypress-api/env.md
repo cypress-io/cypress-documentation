@@ -72,8 +72,8 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 ```
 
 ```javascript
-Cypress.env("foo") // => bar
-Cypress.env("baz") // => quux
+Cypress.env('foo') // => bar
+Cypress.env('baz') // => quux
 ```
 
 ## Name and Value
@@ -136,7 +136,7 @@ module.exports = (on, config) => {
   config.env.sharedSecret = process.env.NODE_ENV === 'qa'
     ? 'hoop brick tort'
     : 'sushi cup lemon'
-  
+
   return config
 }
 ```

@@ -318,16 +318,16 @@ $('button').on('click', (e) => {
 // elements to appear
 cy.get('button').click()
 cy.get('body').then(($body) => {
-    // synchronously query from body
-    // to find which element was created
-    if ($body.find('input').length) {
-      // input was found, do something else here
-      return 'input'
-    }
+  // synchronously query from body
+  // to find which element was created
+  if ($body.find('input').length) {
+    // input was found, do something else here
+    return 'input'
+  }
 
-    // else assume it was textarea
-    return 'textarea'
-  })
+  // else assume it was textarea
+  return 'textarea'
+})
   .then((selector) => {
     // selector is a string that represents
     // the selector we could use to find it
@@ -345,7 +345,7 @@ If you are not sure if you have written a potentially flaky test, there is an ea
 
 ```js
 Cypress._.times(100, (i) => {
-  it(`num ${i+1} - test the thing conditionally`, () => {
+  it(`num ${i + 1} - test the thing conditionally`, () => {
     // do the conditional bits 100 times
   })
 })

@@ -53,7 +53,7 @@ To access what each Cypress command yields you use {% url `.then()` then %}.
 ```js
 cy.get('button').then(($btn) => {
   // $btn is the object that the previous
-  // command yielded us  
+  // command yielded us
 })
 ```
 

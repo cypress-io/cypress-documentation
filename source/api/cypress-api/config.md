@@ -51,9 +51,12 @@ Set multiple configuration options with an object literal.
 }
 ```
 
+<!-- textlint-disable -->
+
 ```javascript
 Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ...}
 ```
+<!-- textlint-enable -->
 
 ## Name
 
@@ -68,7 +71,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 ```
 
 ```javascript
-Cypress.config("pageLoadTimeout") // => 60000
+Cypress.config('pageLoadTimeout') // => 60000
 ```
 
 ## Name and Value
@@ -89,9 +92,9 @@ Remember, any changes that you make to configuration using this API will only be
 ```
 
 ```javascript
-Cypress.config("viewportWidth", 800)
+Cypress.config('viewportWidth', 800)
 
-Cypress.config("viewportWidth") // => 800
+Cypress.config('viewportWidth') // => 800
 ```
 
 ## Object

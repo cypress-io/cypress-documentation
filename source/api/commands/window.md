@@ -17,7 +17,7 @@ cy.window(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.window()    
+cy.window()
 ```
 
 ## Arguments

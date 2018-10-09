@@ -20,9 +20,9 @@ Assign an alias for later use. Reference the alias later within a {% url `cy.get
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias first 'li' as @firstNav
-cy.route('PUT', 'users', 'fx:user').as('putUser')     // Alias that route as @putUser   
-cy.stub(api, 'onUnauth').as('unauth')                 // Alias that stub as @unauth   
-cy.spy(win, 'fetch').as('winFetch')                   // Alias that spy as @winFetch  
+cy.route('PUT', 'users', 'fx:user').as('putUser')     // Alias that route as @putUser
+cy.stub(api, 'onUnauth').as('unauth')                 // Alias that stub as @unauth
+cy.spy(win, 'fetch').as('winFetch')                   // Alias that spy as @winFetch
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -106,7 +106,7 @@ describe('A fixture', () => {
     it('via get().', () => {
       cy.fixture('admin-users.json').as('admins')
       cy.get('@admins')
-        .then(users => {
+        .then((users) => {
           cy.log(`There are ${users.length} admins.`)
         })
     })
