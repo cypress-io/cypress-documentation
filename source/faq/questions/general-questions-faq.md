@@ -6,7 +6,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} Is Cypress free and open source?
 
-The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-service %} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI. 
+The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-service %} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
@@ -62,8 +62,8 @@ Ultimately Sauce Labs and Cypress offer very different value propositions. Sauce
 
 Cypress on the other hand **helps** you write your tests. You would use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
 
-{% note info A note about Cypress and Sauce Labs %} 
-Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future, however, complete integration is not yet available. 
+{% note info A note about Cypress and Sauce Labs %}
+Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future, however, complete integration is not yet available.
 {% endnote %}
 
 ## {% fa fa-angle-right %} Do you support X language or X framework?
@@ -126,7 +126,7 @@ There is nothing currently built into Cypress to do this. Adding code coverage a
 
 ## {% fa fa-angle-right %} Are there driver bindings in my language?
 
-Cypress does *not* utilize WebDriver for testing, so does not use or have any notion of driver bindings.
+Cypress does *not* utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure {% url "Cypress WebPack preprocessor" https://github.com/cypress-io/cypress-webpack-preprocessor %} or {% url "Cypress Browserify preprocessor" https://github.com/cypress-io/cypress-browserify-preprocessor %} to transpile your tests to JavaScript that Cypress can run.
 
 ## {% fa fa-angle-right %} So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
 
