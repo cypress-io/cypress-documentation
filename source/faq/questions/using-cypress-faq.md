@@ -552,3 +552,7 @@ We see organizations starting with Cypress by placing end-to-end tests in a sepa
 ## {% fa fa-angle-right %} What is the right balance between custom commands and utility functions?
 
 There is already a great section in {% url "Custom Commands" custom-commands#Best-Practices %} guide that talks about trade-offs between custom commands and utility functions. We feel reusable functions in general are a way to go. Plus they do not confuse {% issue 1065 'IntelliSense like custom commands do' %}
+
+## {% fa fa-angle-right %} Can I print the list of commands from a test in the terminal?
+
+If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin {% url cypress-failed-log https://github.com/bahmutov/cypress-failed-log %} that saves a JSON file with all commands from a failed test. We are also working on mirroring `console.log` messages from the browser in the terminal, see {% issue 2078 %}.
