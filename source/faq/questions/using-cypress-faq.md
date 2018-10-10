@@ -551,4 +551,4 @@ We see organizations starting with Cypress by placing end-to-end tests in a sepa
 
 ## {% fa fa-angle-right %} What is the right balance between custom commands and utility functions?
 
-There is already a great section in {% url "Custom Commands" custom-commands.html#Best-Practices %} guide that talks about trade-offs between custom commands and utility functions. We feel reusable functions in general are a way to go. Plus they do not confuse {% issue 1065 "IntelliSense like custom commands do" %}
+There is already a great section in {% url "Custom Commands" custom-commands#Best-Practices %} guide that talks about trade-offs between custom commands and utility functions. We feel reusable functions in general are a way to go. Plus they do not confuse {% issue 1065 'IntelliSense like custom commands do' %}
