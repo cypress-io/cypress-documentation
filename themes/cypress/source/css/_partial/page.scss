@@ -257,7 +257,7 @@ a.article-edit-link {
     font-size: 2.6em;
   }
 
-  h1 {
+  h1, .history-heading {
     font-size: 1.9em;
     line-height: 1.7em;
     font-weight: bold;
@@ -635,4 +635,14 @@ a.article-edit-link {
 
 .tutorial .article-inner {
   margin-right: 0;
+}
+
+.history {
+  thead, tbody, th, tr {
+    border-collapse: collapse;
+  }
+
+  th:last-child {
+    width: 100%;
+  }
 }
