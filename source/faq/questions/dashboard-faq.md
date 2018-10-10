@@ -72,9 +72,9 @@ These will be added in subsequent releases.
 
 Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the test runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
 
-Spec file durations are also more meaningful and consistent than timings of individual tests, thus we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishing individual tests.
+Spec file durations are also more meaningful and consistent than timings of individual tests, we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishing individual tests.
 
-To better load balance the specs, thus you would want more spec files with approximately the same running duration. Otherwise, a single very long running test might be the limit how fast all your tests finish, and the run completes. Due to starting a new test execution context before each spec file and encoding and uploading video after, making spec files to run shorter than approximately 10 seconds would also be fruitless - because Cypress overhead would eat any time savings.
+To better load balance the specs, thus you would want more spec files with approximately the same running duration. Otherwise, a single very long running test might limit how fast all your tests finish, and the run completes. Due to starting a new test execution context before each spec file and encoding and uploading video after, making spec files to run shorter than approximately 10 seconds would also be fruitless - because Cypress overhead would eat any time savings.
 
 ## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
