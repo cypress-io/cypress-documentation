@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: Using Cypress
-
 containerClass: faq
 ---
 
@@ -542,3 +541,14 @@ That being said, we use Cypress to test our own Desktop app's front end - by stu
 - Search existing {% url "open issues" https://github.com/cypress-io/cypress/issues %}, it may already be reported!
 - Update Cypress. Your issue may have {% url "already been fixed" changelog %}.
 - {% open_an_issue %}. Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
+
+## {% fa fa-angle-right %} What are your best practices for organizing tests?
+
+We see organizations starting with Cypress by placing end-to-end tests in a separate repo. This is a great practice that allows someone on the team to prototype a few tests and evaluate Cypress without "scaring" everyone else with a new tool. As the time passes and the number of tests grows, we suggest moving end-to-end tests to live right alongside your front-end code. This brings two benefits:
+
+- keeps tests and the features they tests in sync
+- allows code sharing between the application code and the tests (like selectors)
+
+## {% fa fa-angle-right %} What is the right balance between custom commands and utility functions?
+
+There is already a great section in {% url "Custom Commands" custom-commands.html#Best-Practices %} guide that talks about trade-offs between custom commands and utility functions. We feel reusable functions in general are a way to go. Plus they do not confuse {% issue 1065 "IntelliSense like custom commands do" %}
