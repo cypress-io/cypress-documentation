@@ -48,7 +48,7 @@
       keywords: [typescript]
 
     - name: cypress-dark
-      description: Dark mode for Cypress test runner
+      description: Several color themes for Cypress test runner
       link: https://github.com/bahmutov/cypress-dark
       keywords: [theme]
 
@@ -90,3 +90,9 @@
     description: Custom reporter for publishing Cypress results to a TestRail test run.
     link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
     keywords: [testrail, reporter]
+
+  - name: cypress-failed-log
+    description: Saves the Cypress test command log as a JSON file if a test fails.
+    link: https://github.com/bahmutov/cypress-failed-log
+    keywords: [reporter]
+
