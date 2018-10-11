@@ -72,55 +72,64 @@ With a duration estimation for each spec file of a test run, Cypress can distrib
 Duration estimation is done separately for every browser the spec file was tested against. This is helpful since performance characteristics vary by browser, and therefore it is perfectly acceptable to see different duration estimates for each browser a spec file was tested against.
 {% endnote %}
 
-### Example of tests run without parallelization
+# Example
 
-Without running your Cypress tests in parallel, your spec files run alphabetically, one right after another. Below shows an example of how our {% url "`example-kitchen-sink`" https://github.com/cypress-io/cypress-example-kitchensink %} tests may run without parallelization - taking **2 mins and 38 secs** to complete all of our tests.
+The examples below are from an actual run of our {% url "`example-kitchen-sink`" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can find this run on the {% url "project's dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
+
+## Without parallelization
+
+First, a single machine ran job named `1x-electron` and executed 19 specs one by one alphabetically. It took **1 min and 51 secs** to complete all tests.
 
 ```text
-Machine 1 (Total of 2m 38s)
+1x-electron, machine 1
 --------------------------
--- actions.spec.js (16s)
--- aliasing.spec.js (2s)
--- assertions.spec.js (2s)
--- connectors.spec.js (3s)
--- cookies.spec.js (3s)
--- cypress_api.spec.js (4s)
--- files.spec.js (3s)
--- local_storage.spec.js (2s)
--- location.spec.js (2s)
--- misc.spec.js (6s)
+-- actions.spec.js (14s)
+-- aliasing.spec.js (1s)
+-- assertions.spec.js (1s)
+-- connectors.spec.js (2s)
+-- cookies.spec.js (2s)
+-- cypress_api.spec.js (3s)
+-- files.spec.js (2s)
+-- local_storage.spec.js (1s)
+-- location.spec.js (1s)
+-- misc.spec.js (4s)
 -- navigation.spec.js (3s)
--- network_requests.spec.js (4s)
--- querying.spec.js (2s)
--- spies_stubs_clocks.spec.js (2s)
--- traversal.spec.js (6s)
--- utilities.spec.js (4s)
--- viewport.spec.js (5s)
--- waiting.spec.js (6s)
--- window.spec.js (2s)
+-- network_requests.spec.js (3s)
+-- querying.spec.js (1s)
+-- spies_stubs_clocks.spec.js (1s)
+-- traversal.spec.js (4s)
+-- utilities.spec.js (3s)
+-- viewport.spec.js (3s)
+-- waiting.spec.js (5s)
+-- window.spec.js (1s)
 ```
 
-### Example of tests run with parallelization
+Notice that _pure_ spec running times together add up to less than the total **1:51** running time. There is overhead for each spec: starting the browser, encoding and uploading video the dashboard, asking for the next spec to run.
 
-When we run these same tests with parallelization, Cypress decides the best order to run the specs in based on the spec's previous run history. If we have 2 machines available, below represents how our {% url "`example-kitchen-sink`" https://github.com/cypress-io/cypress-example-kitchensink %} tests may run with parallelization - taking **39 secs** to complete all of our tests.
+## With parallelization
+
+When we run the same tests with parallelization, Cypress decides the best order to run the specs in based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` and it has finished in **59 seconds**.
 
 ```text
-Machine 1 (Total of 39s)                  Machine 2 (Total of 38s)
+2x-electron, machine 1, 9 specs           2x-electron, machine 2, 10 specs
 --------------------------------          -----------------------------------
--- actions.spec.js (16s)                  -- waiting.spec.js (6s)
--- viewport.spec.js (5s)                  -- traversal.spec.js (6s)
--- network_requests.spec.js (4s)          -- misc.spec.js (6s)
--- navigation.spec.js (3s)                -- cypress_api.spec.js (4s)
--- cookies.spec.js (3s)                   -- utilities.spec.js (4s)
--- connectors.spec.js (3s)                -- files.spec.js (3s)
--- assertions.spec.js (2s)                -- aliasing.spec.js (2s)
--- location.spec.js (2s)                  -- local_storage.spec.js (2s)
-                                          -- spies_stubs_clocks.spec.js (2s)
-                                          -- querying.spec.js (2s)
-                                          -- window.spec.js (2s)
+-- actions.spec.js (14s)                  -- waiting.spec.js (6s)
+-- traversal.spec.js (4s)                 -- navigation.spec.js (3s)
+-- misc.spec.js (4s)                      -- utilities.spec.js (3s)
+-- cypress_api.spec.js (4s)               -- viewport.spec.js (4s)
+-- cookies.spec.js (3s)                   -- network_requests.spec.js (3s)
+-- files.spec.js (3s)                     -- connectors.spec.js (2s)
+-- location.spec.js (2s)                  -- assertions.spec.js (1s)
+-- querying.spec.js (2s)                  -- aliasing.spec.js (1s)
+-- location.spec.js (1s)                  -- spies_stubs_clocks.spec.js (1s)
+                                          -- window.spec.js (1s)
 ```
 
-Parallelizing our tests across only 1 extra machine saved us about 2 minutes of our already small runtime. This time saved adds up on test runs that could be up to 30 minutes in length.
+The difference in running times and machine utilization is very clear when looking at the [Machines View](#Machines-View) on the Dashboard. Notice how the parallelized run has sorted all specs by duration, while the run without parallelization has not.
+
+{% img /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
+
+Parallelizing our tests across 2 machines has saved us almost 50% of the total run time, and we can further decrease the build time by adding more machines.
 
 # Grouping test runs
 
@@ -251,4 +260,4 @@ The Machines View charts spec files by the machines that executed them. This vie
 
 - {% url "Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
-- {% url https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} has configurations for basic and parallel setup for many CI systems. You can see the results on {% url "the project's Dashboard page" https://dashboard.cypress.io/#/projects/4b7344/runs %}.
+- {% url https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} has configurations for basic and parallel setup for many CI systems which you can use as reference.
