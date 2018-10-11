@@ -8,7 +8,7 @@
       "defaultTerms": false,
       "terms": [
         // Cypress product
-        ["command log", "Command Log"],
+        ["the command log", "the Command Log"],
         ["dashboard service", "Dashboard Service"],
         ["test runner", "Test Runner"],
 
@@ -34,7 +34,6 @@
         "CLI",
         "CSS",
         "gif",
-        "url",
         ["API['’]?s", "APIs"],
 
         // Words and phrases
