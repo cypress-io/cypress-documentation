@@ -152,7 +152,7 @@ Hello World
 cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log](/img/api/writefile/write-data-to-system-file-for-testing.png)
 

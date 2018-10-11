@@ -18,8 +18,8 @@ Recipe | Category | Description
 {% urlHash 'Hover and Hidden Elements' Hover-and-Hidden-Elements %} | Testing the DOM | Test hidden elements requiring hover
 {% urlHash 'Form Interactions' Form-Interactions %} | Testing the DOM | Test form elements like input type `range`
 {% urlHash 'Drag and Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
-{% urlHash 'Typescript with Browserify' Typescript-with-Browserify %} | Preprocessors | Add typescript support with browserify
-{% urlHash 'Typescript with Webpack' Typescript-with-Webpack %} | Preprocessors | Add typescript support with webpack
+{% urlHash 'TypeScript with Browserify' Typescript-with-Browserify %} | Preprocessors | Add TypeScript support with browserify
+{% urlHash 'TypeScript with Webpack' Typescript-with-Webpack %} | Preprocessors | Add TypeScript support with webpack
 {% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
 {% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
 {% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
@@ -62,7 +62,7 @@ Recipe | Category | Description
 
 ## [XHR Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__xhr-web-forms)
 
-- Test an AJAX backed `username/password` form.
+- Test an Ajax backed `username/password` form.
 - Test errors submitting invalid data.
 - Stub JSON based XHR requests.
 - Stub application functions.
@@ -102,13 +102,13 @@ Get around the lack of a `.hover()` command.
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses mouse events.
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses drag events.
 
-## [Typescript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify)
+## [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify)
 
-- Use {% url "`@cypress/browserify-preprocessor`" https://github.com/cypress-io/cypress-browserify-preprocessor %} to write Cypress tests in Typescript
+- Use {% url "`@cypress/browserify-preprocessor`" https://github.com/cypress-io/cypress-browserify-preprocessor %} to write Cypress tests in TypeScript
 
-## [Typescript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
+## [TypeScript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
 
-- Use {% url "`@cypress/webpack-preprocessor`" https://github.com/cypress-io/cypress-webpack-preprocessor %} to write Cypress tests in Typescript
+- Use {% url "`@cypress/webpack-preprocessor`" https://github.com/cypress-io/cypress-webpack-preprocessor %} to write Cypress tests in TypeScript
 - Lint TypeScript spec code against Cypress type definitions
 
 ## [Direct Control of AngularJS](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__direct-control-angular)

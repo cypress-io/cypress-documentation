@@ -15,7 +15,7 @@ title: Network Requests
 
 # Testing Strategies
 
-Cypress makes it easy to test the entire lifecycle of AJAX / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
+Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
 {% note warning %}
 Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
@@ -38,11 +38,11 @@ Let's investigate both strategies, why you would use one versus the other, and w
 
 ## Don't Stub Responses
 
-Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end to end* tests. This means you are driving your application the same way a real user would.
+Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end-to-end* tests. This means you are driving your application the same way a real user would.
 
 > When requests are not stubbed, this guarantees that the *contract* between your client and server is working correctly.
 
-In other words, you can have confidence your server is sending the correct data in the correct structure to your client to consume. It is a good idea to have *end to end* tests around your application's *critical paths*. These typically include user login, signup, or other critical paths such as billing.
+In other words, you can have confidence your server is sending the correct data in the correct structure to your client to consume. It is a good idea to have *end-to-end* tests around your application's *critical paths*. These typically include user login, signup, or other critical paths such as billing.
 
 ***There are downsides to not stubbing responses you should be aware of:***
 
@@ -92,7 +92,7 @@ You don't have to do any work on the server. Your application will have no idea 
 
 {% note info Suggested Use %}
 - Use for the vast majority of tests
-- Mix and match, typically have one true end to end test, and then stub the rest
+- Mix and match, typically have one true end-to-end test, and then stub the rest
 - Perfect for JSON APIs
 {% endnote %}
 

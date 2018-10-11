@@ -70,7 +70,7 @@ These will be added in subsequent releases.
 
 ## {% fa fa-angle-right %} Why is test parallelization based on spec files and not on the individual functions?
 
-Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the test runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
+Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the Test Runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
 
 Spec file durations are also more meaningful and consistent than timings of individual tests, we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishing individual tests.
 

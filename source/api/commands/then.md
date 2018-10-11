@@ -157,7 +157,7 @@ cy.get('button').click().then(($button) => {
 
 # Command Log
 
-- `.then()` does *not* log in the command log
+- `.then()` does *not* log in the Command Log
 
 # See also
 

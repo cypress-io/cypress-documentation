@@ -159,7 +159,7 @@ cy.wait('@getComments').its('responseBody').should('deep.eq', [
 ])
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/its/xhr-response-its-response-body-for-testing.png)
 

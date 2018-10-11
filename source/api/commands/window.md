@@ -79,7 +79,7 @@ cy.window({ timeout: 10000 }).should('have.property', 'foo')
 cy.window()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/window/window-command-log-for-cypress-tests.png)
 

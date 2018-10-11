@@ -251,7 +251,7 @@ cy
     .and('not.be.disabled')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for assertions](/img/api/and/cypress-and-command-log.png)
 

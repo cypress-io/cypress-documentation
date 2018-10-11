@@ -80,7 +80,7 @@ cy.clearCookies()
 cy.getCookies().should('be.empty')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/clearcookies/clear-all-cookies-in-cypress-tests.png)
 

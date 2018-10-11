@@ -88,7 +88,7 @@ script:
   - $(npm bin)/cypress run --record
 ```
 
-Caching folders with NPM modules saves a lot of time after the first build.
+Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 

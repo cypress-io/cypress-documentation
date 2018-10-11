@@ -195,9 +195,9 @@ cy.visit('index.html').then((contentWindow) => {
 
 ## Routing
 
-***Preventing XHR / AJAX requests before a remote page initially loads***
+***Preventing XHR / Ajax requests before a remote page initially loads***
 
-One common scenario Cypress supports is visiting a remote page and also preventing any AJAX requests from immediately going out.
+One common scenario Cypress supports is visiting a remote page and also preventing any Ajax requests from immediately going out.
 
 You may think this works:
 
@@ -247,7 +247,7 @@ beforeEach(function () {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log visit](/img/api/visit/visit-example-page-in-before-each-of-test.png)
 

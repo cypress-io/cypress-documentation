@@ -229,7 +229,7 @@ For other types of files, they will be read as `utf8` by default, unless specifi
 
 # Command Log
 
-- `cy.fixture()` does *not* log in the command log
+- `cy.fixture()` does *not* log in the Command Log
 
 # See also
 
