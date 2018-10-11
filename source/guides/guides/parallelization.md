@@ -246,3 +246,9 @@ The Bar Chart View visualizes the **duration** of your spec files relative to ea
 The Machines View charts spec files by the machines that executed them. This view makes it easy to evaluate the contribution of each machine to the overall test run.
 
 {% img /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
+
+# See also
+
+- {% url "Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
+- {% url "Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
+- {% url https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} has configurations for basic and parallel setup for many CI systems. You can see the results on {% url "the project's Dashboard page" https://dashboard.cypress.io/#/projects/4b7344/runs %}.
