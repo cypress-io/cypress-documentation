@@ -63,6 +63,26 @@ cy
 })
 ```
 
+## Requests
+
+***Get the `user` object of the response's `body`***
+
+```javascript
+cy
+  .request(...)
+  .its('body.user')
+  .then(user => ...)
+```
+
+alternatively, use destructuring
+
+```javascript
+cy
+  .request(...)
+  .its('body')
+  .then(({user}) => ...)
+```
+
 ## Strings
 
 ***Get `length` of title***

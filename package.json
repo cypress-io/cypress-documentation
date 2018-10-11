@@ -44,7 +44,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run warn-only"
+      "pre-commit": "npm run lint && npm run md-lint && npm run warn-only"
     }
   },
   "jest": {
@@ -112,7 +112,7 @@
     "run-sequence": "2.2.1",
     "sinon": "6.3.5",
     "sinon-chai": "3.2.0",
-    "snap-shot-it": "6.1.9",
+    "snap-shot-it": "6.1.10",
     "start-server-and-test": "1.7.4",
     "stop-only": "2.2.2",
     "textlint": "11.0.0",

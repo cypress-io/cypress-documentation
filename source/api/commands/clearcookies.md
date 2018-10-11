@@ -3,7 +3,7 @@ title: clearCookies
 
 ---
 
-Clear all browser cookies.
+Clear all browser cookies for current domain and subdomain.
 
 {% note warning %}
 Cypress automatically clears all cookies *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear a specific cookie inside a single test.
