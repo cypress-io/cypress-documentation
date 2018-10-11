@@ -153,7 +153,13 @@ When adding to the Changelog, create a new file in `source/_changelogs` named as
 Danger 📛: because we are minifying client-side code using a [Hexo plugin](https://github.com/mamboer/hexo-filter-cleanup) which in turn calls
 `uglify`, the code should be strictly ES5. Thus everything inside the `theme` should be linted with ES5 settings and not upgraded to ES6.
 
-In addition to ESLint, we use Textlint to lint Markdown files. This currently [lints code snippets](https://github.com/textlint-rule/textlint-rule-eslint) using the rules in `.eslintrc-textlint` and checks [terminology](https://github.com/sapegin/textlint-rule-terminology) using the terms in `.textlintrc`.
+In addition to ESLint, we use Textlint to lint Markdown files. This currently [lints code snippets](https://github.com/textlint-rule/textlint-rule-eslint) using the rules in `.eslintrc-textlint` and checks [terminology](https://github.com/sapegin/textlint-rule-terminology) using the terms in `.textlintrc`. To disable Textlint for a block, do the following:
+
+```md
+<!-- textlint-disable -->
+{% video youtube 5XQOK0v_YRE %}
+<!-- textlint-enable -->
+```
 
 ### Pull Requests
 
