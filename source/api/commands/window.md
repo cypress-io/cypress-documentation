@@ -61,7 +61,7 @@ if (window.Cypress) {
 }
 ```
 
-Cypress test runner can wait for the property `window.appReady` to be `true` before every test
+Cypress Test Runner can wait for the property `window.appReady` to be `true` before every test
 
 ```javascript
 // spec.js
@@ -115,4 +115,4 @@ When clicking on `window` within the command log, the console outputs the follow
 
 - {% url `cy.visit()` visit %}
 - {% url `cy.document()` document %}
-- {% url "When Can The Test Start?" https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/ %} uses `cy.window` to spy on DOM prototype to detect when the application starts adding event listeners to the DOM elements. When this happens for the first time, Cypress test runner knows that the application has started, and the tests can begin.
+- {% url "When Can The Test Start?" https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/ %} uses `cy.window` to spy on DOM prototype to detect when the application starts adding event listeners to the DOM elements. When this happens for the first time, Cypress Test Runner knows that the application has started, and the tests can begin.
