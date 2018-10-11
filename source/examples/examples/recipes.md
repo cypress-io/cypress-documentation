@@ -18,8 +18,8 @@ Recipe | Category | Description
 {% urlHash 'Hover and Hidden Elements' Hover-and-Hidden-Elements %} | Testing the DOM | Test hidden elements requiring hover
 {% urlHash 'Form Interactions' Form-Interactions %} | Testing the DOM | Test form elements like input type `range`
 {% urlHash 'Drag and Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
-{% urlHash 'TypeScript with Browserify' Typescript-with-Browserify %} | Preprocessors | Add TypeScript support with browserify
-{% urlHash 'TypeScript with Webpack' Typescript-with-Webpack %} | Preprocessors | Add TypeScript support with webpack
+{% urlHash 'TypeScript with Browserify' TypeScript-with-Browserify %} | Preprocessors | Add TypeScript support with browserify
+{% urlHash 'TypeScript with Webpack' TypeScript-with-Webpack %} | Preprocessors | Add TypeScript support with webpack
 {% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
 {% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
 {% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
