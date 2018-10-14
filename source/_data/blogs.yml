@@ -478,3 +478,11 @@ large:
     date: Jan 27, 2016
     author: Kiki Roeder
     img: /img/examples/hypepotamus-guy-testing-website.jpg
+    
+  - title: Cypress.io - A JavaScript End To End Testing Tool
+    url: https://www.c-sharpcorner.com/article/getting-started-with-cypress-io/
+    sourceName: C# Corner
+    sourceUrl: https://www.c-sharpcorner.com
+    date: Sep 10, 2018
+    author: Khaja Moizuddin
+    img: /img/examples/cloud-and-hand.jpg
