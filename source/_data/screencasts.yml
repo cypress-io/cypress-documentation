@@ -31,3 +31,13 @@ large:
     date: Jan 31, 2018
     author: Łukasz Wroński
     youtubeId: AddBNz1T08U
+    
+  - title: "Cypress End-to-End Testing"
+    url: https://www.youtube.com/watch?v=7N63cMKosIE
+    sourceName: Angular Firebase
+    sourceUrl: https://angularfirebase.com/lessons/cypress-angular-testing-end-to-end/
+    date: June 22, 2018
+    author: Jeff Delaney
+    youtubeId: 7N63cMKosIE
+    
+    
