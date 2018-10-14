@@ -478,3 +478,11 @@ large:
     date: Jan 27, 2016
     author: Kiki Roeder
     img: /img/examples/hypepotamus-guy-testing-website.jpg
+    
+  - title: Comparing JavaScript Browser Automation Frameworks: Selenium Versus Webdriver.io Versus Puppeteer
+    url: https://applitools.com/blog/comparing-javascript-browser-automation-frameworks
+    sourceName: applitools
+    sourceUrl: https://applitools.com/blog/
+    date: June 25, 2018
+    author: Gil Tayar
+    img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
