@@ -15,6 +15,14 @@ large:
     date: Oct 2, 2018
     author: Peter Tasker
     img: /img/examples/end-to-end-testing-with-cypress.jpg
+    
+  - title: Cypress.io - A JavaScript End To End Testing Tool
+    url: https://www.c-sharpcorner.com/article/getting-started-with-cypress-io/
+    sourceName: C# Corner
+    sourceUrl: https://www.c-sharpcorner.com
+    date: Sep 10, 2018
+    author: Khaja Moizuddin
+    img: /img/examples/cloud-and-hand.jpg
 
   - title: "Slack App Testing"
     url: https://medium.com/coveryourads/slack-bot-testing-e7ba6f91a98e
