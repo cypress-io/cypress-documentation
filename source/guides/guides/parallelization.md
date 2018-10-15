@@ -130,6 +130,8 @@ Multiple {% url "`cypress run`" command-line#cypress-run %} calls can be labeled
 For multiple runs to be grouped into a single run, it is required for CI machines to share a common CI build ID environment variable. Typically these CI machines will run in parallel or within the same build workflow or pipeline, but **it is not required to use Cypress parallelization to group runs**. Grouping of runs can be utilized independently of Cypress parallelization.
 {% endnote %}
 
+{% img 'no-border' /img/guides/parallelization/machines-view-grouping-expanded.png "Parallelization with Grouping" %}
+
 ## Grouping by browser
 
 You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
