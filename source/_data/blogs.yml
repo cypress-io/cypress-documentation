@@ -23,6 +23,14 @@ large:
     date: Aug 27, 2018
     author: Matthew Ledom
     img: /img/examples/end-to-end-slack-app-testing-with-cypress.jpg
+    
+  - title: Comparing JavaScript Browser Automation Frameworks: Selenium Versus Webdriver.io Versus Puppeteer
+    url: https://applitools.com/blog/comparing-javascript-browser-automation-frameworks
+    sourceName: applitools
+    sourceUrl: https://applitools.com/blog/
+    date: June 25, 2018
+    author: Gil Tayar
+    img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
 
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
