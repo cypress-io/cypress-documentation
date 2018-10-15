@@ -32,7 +32,7 @@ large:
     author: Matthew Ledom
     img: /img/examples/end-to-end-slack-app-testing-with-cypress.jpg
     
-  - title: Comparing JavaScript Browser Automation Frameworks: Selenium Versus Webdriver.io Versus Puppeteer
+  - title: "Comparing JavaScript Browser Automation Frameworks: Selenium Versus Webdriver.io Versus Puppeteer"
     url: https://applitools.com/blog/comparing-javascript-browser-automation-frameworks
     sourceName: applitools
     sourceUrl: https://applitools.com/blog/
