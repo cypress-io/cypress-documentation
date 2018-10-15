@@ -31,3 +31,11 @@ large:
     date: Jan 31, 2018
     author: Łukasz Wroński
     youtubeId: AddBNz1T08U
+
+  - title: "Using Cypress for end-to-end testing with Gleb Bahmutov"
+    url: https://www.youtube.com/watch?v=zTHQqiu_y0Q
+    sourceName: stefan judis
+    sourceUrl: https://www.youtube.com/channel/UCLpT9xDn3WQ24wfVCkAZU6A
+    date: Feb 11, 2018
+    author: Stefan Judis
+    youtubeId: zTHQqiu_y0Q
