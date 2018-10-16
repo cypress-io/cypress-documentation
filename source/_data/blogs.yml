@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress vs Selenium Webdriver: Which is Better for You?"
+    url: https://applitools.com/blog/cypress-vs-selenium-webdriver-which-is-better-for-you
+    sourceName: applitools
+    sourceUrl: https://applitools.com/blog
+    date: Oct 16, 2018
+    author: Gil Tayar
+    img: /img/examples/cypress-vs-selenium.png
+
   - title: "End-to-End Testing with Cypress"
     url: https://deliciousbrains.com/cypress-testing/
     sourceName: Delicious Brains

@@ -1,5 +1,22 @@
 # large links with thumbnails, links, embedded video
 large:
+
+  - title: "Cypress"
+    url: https://blog.codepen.io/2018/10/16/195-cypress/
+    sourceName: CodePen
+    sourceUrl: https://blog.codepen.io/
+    date: October 16, 2018
+    author: Alex Vazquez, Marie Mosley, and Chris Coyier 
+    img: /img/examples/code-pen-cypress.png
+
+  - title: "Episode 3: Dan Wahlin on End to End Testing with Cypress.io"
+    url: https://realtalkjavascript.simplecast.fm/e03e32ef
+    sourceName: Real Talk Javascript 
+    sourceUrl: https://realtalkjavascript.simplecast.fm/
+    date: October 16, 2018
+    author: Dan Wahlin, John Papa, and Ward Bell 
+    img: /img/examples/real-talk-javascript.png
+
   - title: "Cypress.io"
     url: https://thewebplatformpodcast.com/164-cypressio
     sourceName: The Web Platform Podcast 

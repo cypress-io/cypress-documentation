@@ -14,6 +14,13 @@ large:
     author: David Madner
     youtubeId: jijOIqtBGYg
 
+  - title: "QIT: Caching, Testing, and Project Management"
+    url: https://www.youtube.com/watch?v=NTanPba9mZM&feature=youtu.be
+    sourceName: Coding Blocks 
+    date: Jul 1, 2018
+    author: Dave Follett, Joe Zack, Nicolas Marcora
+    youtubeId: NTanPba9mZM
+
   - title: "Cypress E2E Testing"
     url: https://www.youtube.com/watch?v=LFUm9qV_Gjo
     sourceName: Northwest Chicago Javascript
