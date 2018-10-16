@@ -1,11 +1,11 @@
 # large links with thumbnails, links, embedded video
 large:
-  - title: "End to End Testing in the Future"
-    url: https://www.youtube.com/watch?v=p38bIMC-YOU
-    sourceName: WeAreDevs Conference
-    date: May 18, 2018
-    author: Gleb Bahmutov
-    youtubeId: p38bIMC-YOU
+  - title: "Hassle free E2E tests with Cypress"
+    url: https://www.youtube.com/watch?v=jijOIqtBGYg
+    sourceName: React Vienna 
+    date: Jul 17, 2018
+    author: David Madner
+    youtubeId: jijOIqtBGYg
 
   - title: "Cypress E2E Testing"
     url: https://www.youtube.com/watch?v=LFUm9qV_Gjo
@@ -28,6 +28,13 @@ large:
     date: May 24, 2018
     author: Adriano Silva
     youtubeId: GhyE3Y5oS_0
+
+  - title: "End to End Testing in the Future"
+    url: https://www.youtube.com/watch?v=p38bIMC-YOU
+    sourceName: WeAreDevs Conference
+    date: May 18, 2018
+    author: Gleb Bahmutov
+    youtubeId: p38bIMC-YOU
 
   - title: "Accélerez vos tests end to end avec Cypress"
     url: https://www.youtube.com/watch?v=UpBfQ6mdb8U&amp=&feature=youtu.be
