@@ -14,6 +14,14 @@ large:
     author: Steve Schwarz
     youtubeId: LFUm9qV_Gjo
 
+  - title: "Automated Testing for the Modern Web"
+    url: https://www.recallact.com/presentation/automated-testing-modern-web
+    sourceName: Recall Act 
+    sourceUrl: https://www.recallact.com/
+    date: Jun 21, 2018
+    author: Jennifer Shehane
+    img: /img/examples/automated-testing-for-the-modern.png
+
   - title: "Cypress"
     url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
     sourceName: Bluesoft Labs
