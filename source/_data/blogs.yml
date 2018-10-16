@@ -39,7 +39,7 @@ large:
     date: June 25, 2018
     author: Gil Tayar
     img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
-
+  
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
     sourceName: Endgame
@@ -288,6 +288,14 @@ large:
     date: Dec 2, 2017
     author: Martin Jakubík
     img: /img/examples/cypress-typescript-blog.jpg
+
+  - title: "Up and Running with Cypress and Typescript"
+    url: https://www.linkedin.com/pulse/unleash-test-automation-power-cypressio-kushan-shalindra-amarasiri-/
+    sourceName: LinkedIn Pulse 
+    sourceUrl: https://www.linkedin.com/in/kushana/detail/recent-activity/posts/
+    date: Nov 25, 2017
+    author: Kushan Shalindra Amarasiri 
+    img: /img/examples/kiwi-unleash-test-automation.png
 
   - title: "Cypress.io Vs Selenium Test Automation"
     url: https://www.joecolantonio.com/2017/11/16/cypress-io-vs-selenium-test-automation/
