@@ -24,6 +24,14 @@ large:
     author: Khaja Moizuddin
     img: /img/examples/c-sharp-corner-end-to-end-cypress.png
 
+  - title: Improving our Cypress test automation time by 3x
+    url: https://blog.hasura.io/improving-our-cypress-test-automation-time-by-3x-e79f21313610
+    sourceName: Medium 
+    sourceUrl: https://blog.hasura.io/
+    date: Sep 10, 2018
+    author: Praveen Durairaj
+    img: /img/examples/improving-our-cypress-tests.png
+
   - title: "An Intro to Web Site Testing with Cypress"
     url: https://css-tricks.com/an-intro-to-web-app-testing-with-cypress-io/
     sourceName: Medium
