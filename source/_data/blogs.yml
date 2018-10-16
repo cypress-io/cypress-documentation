@@ -80,6 +80,14 @@ large:
     author: Sitefinity Steve
     img: /img/examples/testing-functionality-with-cypress.png
 
+  - title: "Getting Cypress JS to Interact with CKEditor"
+    url: https://medium.com/@nickdenardis/getting-cypress-js-to-interact-with-ckeditor-f46eec01132f
+    sourceName: Medium
+    sourceUrl: https://medium.com/@nickdenardis
+    date: Jul 15, 2018
+    author: Nick DeNardis
+    img: /img/examples/getting-cypress-to-interact.png
+
   - title: "Cypress and AuthO"
     url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
     sourceName: blog.johnnyreilly.com
