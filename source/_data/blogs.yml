@@ -48,6 +48,22 @@ large:
     author: Kyle Galbraith
     img: /img/examples/kyle-galbraith-how-to-run.png
 
+  - title: "Setting up Bitbucket Pipelines with proper caching of NPM and Cypress"
+    url: https://medium.com/@ondrej.janosik42/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress-74d033888186
+    sourceName: Medium
+    sourceUrl: https://medium.com/@ondrej.janosik42
+    date: Aug 5, 2018
+    author: Ondrej Janosik 
+    img: /img/examples/setting-up-bitbucket.png
+
+  - title: "Testing with Cypress.io"
+    url: https://medium.com/@grant.glidewell/testing-with-cypress-io-10ca7e4984e0
+    sourceName: Medium
+    sourceUrl: https://medium.com/@grant.glidewell
+    date: Jul 30, 2018
+    author: Grant Glidewell
+    img: /img/examples/testing-with-cypress-io.png
+
   - title: "Cypress and AuthO"
     url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
     sourceName: blog.johnnyreilly.com
