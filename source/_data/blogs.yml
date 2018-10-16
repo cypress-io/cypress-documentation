@@ -14,7 +14,7 @@ large:
     sourceUrl: https://deliciousbrains.com/blog/
     date: Oct 2, 2018
     author: Peter Tasker
-    img: /img/examples/end-to-end-testing-with-cypress.jpg
+    img: /img/examples/end-to-end-testing-with-cypress.png
     
   - title: Cypress.io - A JavaScript End To End Testing Tool
     url: https://www.c-sharpcorner.com/article/getting-started-with-cypress-io/
@@ -30,7 +30,15 @@ large:
     sourceUrl: https://www.coveryourads.io/
     date: Aug 27, 2018
     author: Matthew Ledom
-    img: /img/examples/end-to-end-slack-app-testing-with-cypress.jpg
+    img: /img/examples/end-to-end-slack-app-testing-with-cypress.png
+
+  - title: "Cypress.io Raises $4 Million for Front End Automated Testing"
+    url: https://www.businesswire.com/news/home/20180626005183/en/Cypress.io-Raises-4-Million-Front-Automated-Testing
+    sourceName: Business Wire 
+    sourceUrl: https://www.businesswire.com/portal/site/home/news/
+    date: June 26, 2018
+    author: Business Wire 
+    img: /img/examples/business-wire-4mil.png
     
   - title: "Comparing JavaScript Browser Automation Frameworks: Selenium Versus Webdriver.io Versus Puppeteer"
     url: https://applitools.com/blog/comparing-javascript-browser-automation-frameworks
