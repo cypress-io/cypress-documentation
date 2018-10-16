@@ -1,10 +1,9 @@
 ---
 title: Debugging
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress runs in the runloop with your code, keeping debugging simple and understandable for modern web developers
 - How Cypress embraces the standard DevTools
@@ -57,7 +56,7 @@ Now we're in business! The first time through, {% url `cy.visit()` visit %} and 
 But that's a lot of typing just to call `debugger` in context, yeah? Cypress exposes a shortcut for this, {% url `.debug()` debug %}. Let's rewrite the test using this helper method:
 
 ```js
-it("let's me debug like a fiend", function() {
+it('let me debug like a fiend', function() {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -65,7 +64,11 @@ it("let's me debug like a fiend", function() {
 })
 ```
 
-Ah, that's better! And functionally equivalent. This is just another example of how Cypress seeks elegance and expressivity for the modern web tester. Fewer keystrokes, more power, don't break standard assumptions, and we all win.
+Ah, that's better! And functionally equivalent. The current subject that was yielded by the {% url `cy.get()` get %} is exposed as `subject` so that you can interact with it in the console.
+
+{% img /img/guides/debugging-subject.png "Debugging Subject" %}
+
+This is just another example of how Cypress seeks elegance and expressivity for the modern web tester. Fewer keystrokes, more power, don't break standard assumptions, and we all win.
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system state at that moment.
 
@@ -73,11 +76,10 @@ Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your
 
 Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your app and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
-
 {% note info %}
 ## {% fa fa-video-camera %} See it in action!
 
-You can see a walk-through of debugging some application code from Cypress [in this segment from our React tutorial series](https://vimeo.com/242961930#t=264s).
+You can see a walk-through of debugging some application code from Cypress {% url "in this segment from our React tutorial series" https://vimeo.com/242961930#t=264s %}.
 
 {% endnote %}
 
@@ -87,11 +89,19 @@ You can see a walk-through of debugging some application code from Cypress [in t
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
 
+**On Mac or Linux:**
+
 ```shell
 DEBUG=cypress:* cypress open
 ```
 
-{% url 'Read more about the CLI options here' command-line#Debugging-Commands %}.
+**On Windows:**
+
+```shell
+set DEBUG=cypress:*
+```
+
+{% url 'Read more about the CLI options here' command-line#Debugging-commands %}.
 
 # Debug the Browser Driver
 

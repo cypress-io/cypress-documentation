@@ -17,7 +17,7 @@ cy.wrap(subject, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wrap({ name: "Jane Lane" })    
+cy.wrap({ name: 'Jane Lane' })
 ```
 
 ## Arguments

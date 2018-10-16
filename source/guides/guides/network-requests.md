@@ -3,9 +3,9 @@ title: Network Requests
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
-- How Cypress enables you stub out the backend with {% url `cy.route()` route %}
+- How Cypress enables you to stub out the backend with {% url `cy.route()` route %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
 - How to use Fixtures to reuse XHR responses
@@ -93,7 +93,7 @@ You don't have to do any work on the server. Your application will have no idea 
 {% note info Suggested Use %}
 - Use for the vast majority of tests
 - Mix and match, typically have one true end to end test, and then stub the rest
-- Perfect for JSON API's
+- Perfect for JSON APIs
 {% endnote %}
 
 # Stubbing
@@ -134,7 +134,7 @@ cy.route({
 
 When you start a {% url `cy.server()` server %} and define {% url `cy.route()` route %} commands, Cypress displays this under "Routes" in the Command Log.
 
-{% img /img/guides/server-routing-table.png Routing Table %}
+{% img /img/guides/server-routing-table.png "Routing Table" %}
 
 Once you start a server with {% url `cy.server()` server %}, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.
 
@@ -184,7 +184,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 To access the fixtures nested within the `images` folder, simply include the folder in your {% url `cy.fixture()` fixture %} command.
 
 ```javascript
-cy.fixture("images/dogs.png") //returns dogs.png as Base64
+cy.fixture('images/dogs.png') //returns dogs.png as Base64
 ```
 
 # Waiting
@@ -233,7 +233,7 @@ What makes this example below so powerful is that Cypress will automatically wai
 
 ```javascript
 cy.server()
-cy.route('/search*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
+cy.route('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
@@ -264,7 +264,7 @@ In this example, there are many possible sources of failure. In most testing too
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
 
-{% img /img/guides/clear-source-of-failure.png Wait Failure %}
+{% img /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
 
@@ -276,7 +276,7 @@ In our example above we can assert about the request object to verify that it se
 
 ```javascript
 cy.server()
-cy.route('search/*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
+cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 

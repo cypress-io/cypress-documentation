@@ -73,7 +73,7 @@ cy.get('input').should('be.disabled')
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-***Find the the dropdown-menu and click it.***
+***Find the dropdown-menu and click it.***
 
 ```javascript
 cy.get('.dropdown-menu').click()
@@ -83,7 +83,7 @@ cy.get('.dropdown-menu').click()
 
 ***`cy.get()` in the {% url `.within()` within %} command***
 
-Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a [`.within()`]() command.
+Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a {% url "`.within()`" within %} command.
 
 ```javascript
 cy.get('form').within(() => {
@@ -123,7 +123,7 @@ it('disables on click', function () {
 
 ```javascript
 beforeEach(function () {
-  cy.fixtures('users.json').as('users')
+  cy.fixture('users.json').as('users')
 })
 
 it('disables on click', function () {

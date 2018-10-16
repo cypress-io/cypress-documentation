@@ -55,7 +55,7 @@ cy.setCookie('foo', 'bar')
 By default Cypress will log out the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
 
 ```javascript
-Cypress.Cookies.debug(true, {verbose: false})
+Cypress.Cookies.debug(true, { verbose: false })
 ```
 
 Now when Cypress logs cookies they will only include the `name` and `value`.
@@ -85,7 +85,7 @@ You can use `Cypress.Cookies.preserveOnce()` to preserve cookies through multipl
 There are *likely* better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
 
 ```javascript
-describe("Dashboard", function () {
+describe('Dashboard', function () {
   before(function () {
     // log in only once before any of the tests run.
     // your app will likely set some sort of session cookie.
@@ -101,18 +101,18 @@ describe("Dashboard", function () {
     //
     // the name of your cookies will likely be different
     // this is just a simple example
-    Cypress.Cookies.preserveOnce("session_id", "remember_token")
+    Cypress.Cookies.preserveOnce('session_id', 'remember_token')
   })
 
-  it("displays stats", function () {
+  it('displays stats', function () {
     // ...
   })
 
-  it("can do something", function () {
+  it('can do something', function () {
     // ...
   })
 
-  it("opens a modal", function () {
+  it('opens a modal', function () {
     // ...
   })
 })
@@ -143,7 +143,7 @@ A great place to put this configuration is in your `cypress/support/index.js` fi
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: "session_id"
+  whitelist: 'session_id'
 })
 ```
 
@@ -153,7 +153,7 @@ Cypress.Cookies.defaults({
 // now any cookie with the name 'session_id' or 'remember_token'
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: ["session_id", "remember_token"]
+  whitelist: ['session_id', 'remember_token']
 })
 ```
 
@@ -171,7 +171,7 @@ Cypress.Cookies.defaults({
 
 ```javascript
 Cypress.Cookies.defaults({
-  whitelist: function(cookie){
+  whitelist: function(cookie) {
     // implement your own logic here
     // if the function returns truthy
     // then the cookie will not be cleared

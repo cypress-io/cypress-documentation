@@ -37,12 +37,12 @@ describe "FAQ", ->
           @english = YAML.parse(yamlString)
 
     it "displays current page as highlighted", ->
-      cy.get("#sidebar").find(".current")
+      cy.get("#sidebar").find("a.current")
         .should("have.attr", "href").and("include", FAQ_PATH + ".html")
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
-        .find(".sidebar-title").each (displayedTitle, i) ->
+        .find(".sidebar-title strong").each (displayedTitle, i) ->
           englishTitle  = @english.sidebar.faq[@sidebarTitles[i]]
           expect(displayedTitle.text()).to.eq(englishTitle)
 
@@ -66,7 +66,7 @@ describe "FAQ", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
           .find(".sidebar-li")
-          .first(1).each (displayedLink, i) ->
+          .each (displayedLink, i) ->
             englishLink  = @english.sidebar.faq[@sidebarLinkNames[i]]
             expect(displayedLink.text().trim()).to.eq(englishLink)
 

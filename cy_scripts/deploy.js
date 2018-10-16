@@ -8,7 +8,7 @@ const minimist = require('minimist')
 const debug = require('debug')('deploy')
 const questionsRemain = require('@cypress/questions-remain')
 const scrape = require('./scrape')
-const shouldDeploy = require('./should-deploy')
+const { shouldDeploy } = require('./should-deploy')
 const R = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
@@ -53,6 +53,7 @@ const getScrapeDocs = R.partial(cliOrAsk,
   ['scrape', promptToScrape, { boolean: 'scrape' }])
 
 function scrapeDocs (env, branch) {
+  debug('scraping documentation')
   console.log('')
 
   // if we aren't on master do nothing
@@ -82,8 +83,10 @@ function deployEnvironmentBranch (env, branch) {
   la(is.unemptyString(branch), 'missing branch to deploy', branch)
   la(isValidEnvironment(env), 'invalid deploy environment', env)
 
+  debug('checking branch %s for environment %s', branch, env)
   checkBranchEnvFolder(branch)(env)
 
+  debug('uploading to S3 dist folder %s', distDir)
   uploadToS3(distDir, env)
   .then(() => scrapeDocs(env, branch))
   .then(() => {
@@ -117,9 +120,10 @@ function deploy () {
     return shouldDeploy(env)
     .then((should) => {
       if (!should) {
-        console.log('nothing to deploy for environment %s', env)
+        console.log('should NOT deploy to environment %s', env)
         return false
       }
+      console.log('should deploy to environment %s', env)
       return doDeploy(env)
     })
   })

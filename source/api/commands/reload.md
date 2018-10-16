@@ -19,7 +19,7 @@ cy.reload(forceReload, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.reload()    
+cy.reload()
 ```
 
 ## Arguments

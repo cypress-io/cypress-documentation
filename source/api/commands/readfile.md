@@ -19,7 +19,7 @@ cy.readFile(filePath, encoding, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.readFile('menu.json')    
+cy.readFile('menu.json')
 ```
 
 ## Arguments
@@ -100,14 +100,14 @@ cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 const YAML = require('yamljs')
 
 cy
-  .readFile("languages/en.yml")
+  .readFile('languages/en.yml')
   .then((str) => {
     // parse the string into object literal
     const english = YAML.parse(str)
 
     cy
-      .get("#sidebar")
-      .find(".sidebar-title")
+      .get('#sidebar')
+      .find('.sidebar-title')
       .each(($el, i) => {
         englishTitle = english.sidebar[i]
 

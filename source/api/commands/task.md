@@ -42,7 +42,7 @@ An event name to be handled via the `task` event in the {% url "`pluginsFile`" c
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
-An argument to send along with the event. This can be any value that can be serialized by [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
+An argument to send along with the event. This can be any value that can be serialized by {% url "JSON.stringify()" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %}. Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -64,11 +64,11 @@ Option | Default | Description
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
 - Seeding your test database.
-- Storing state in Node that you want persisted between tests.
+- Storing state in Node that you want persisted between spec files.
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. 
+In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled.
 
 If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
 
@@ -90,9 +90,9 @@ cy.task('readJson', 'cypress.json').then((data) => {
 ```javascript
 // in plugins/index.js file
 on('task', {
-  readJson () {
+  readJson: (filename) => {
     // reads the file relative to current working directory
-    return fsExtra.readJson(path.join(process.cwd(), arg)
+    return fsExtra.readJson(path.join(process.cwd(), filename)
   }
 })
 ```
@@ -139,7 +139,7 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
-cy.task('seedDatabase', null, { timeout: 20000 });
+cy.task('seedDatabase', null, { timeout: 20000 })
 ```
 
 # Notes
@@ -193,3 +193,5 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
 - {% url `cy.writeFile()` writefile %}
+- {% url "Incredibly Powerful cy.task" https://glebbahmutov.com/blog/powerful-cy-task/ %} uses `cy.task` to check if the record has been added to the database.
+- {% url "Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %} uses `cy.task` to bundle a component before mounting it inside Cypress for testing.

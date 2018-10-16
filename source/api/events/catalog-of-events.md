@@ -308,6 +308,8 @@ it('can modify the window prior to page load on all pages', function () {
 
 This enables you to test how your application reacts to accepted confirmations and rejected confirmations.
 
+<!-- textlint-disable -->
+
 ```javascript
 // app code
 $('button').on('click', (e) => {
@@ -326,7 +328,7 @@ $('button').on('click', (e) => {
 
 // test code
 it('can control application confirms', function (done) {
-  const count = 0
+  let count = 0
 
   // make sure you bind to this **before** the
   // confirm method is called in your application
@@ -336,7 +338,7 @@ it('can control application confirms', function (done) {
   cy.on('window:confirm', (str) => {
     count += 1
 
-    switch(count) {
+    switch (count) {
       case 1:
         expect(str).to.eq('first confirm')
         // returning nothing here automatically
@@ -388,6 +390,7 @@ it('could also use a stub instead of imperative code', function () {
     })
 })
 ```
+<!-- textlint-enable -->
 
 ## Window Alert
 
@@ -427,7 +430,7 @@ Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node mod
 If you'd like to see (the huge) stream of events that Cypress emits you can pop open your Dev Tools and write this line in the console.
 
 ```javascript
-localStorage.debug = "cypress:*"
+localStorage.debug = 'cypress:*'
 ```
 
 After you refresh the page you'll see something that looks like this in your console:

@@ -126,7 +126,7 @@ cy.login('admin') // can start a chain off of cy
 
 cy
   .get('button')
-  .login('user') // can also be chained but will not receive the previous subject
+  .login('user') // can be chained but will not receive the previous subject
 ```
 
 {% note info 'Command Log' %}
@@ -186,7 +186,7 @@ By setting the `{ prevSubject: true }`, our new `.console()` command will requir
 Invoking it like this would error:
 
 ```javascript
-cy.console() // detailed error about how you can't call console without a subject
+cy.console() // error about how you can't call console without a subject
 ```
 
 {% note info %}
@@ -243,7 +243,7 @@ You can also modify the behavior of existing Cypress commands. This is useful to
 
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
-  const domain = Cypress.env("BASE_DOMAIN") // assuming you care about this env var
+  const domain = Cypress.env('BASE_DOMAIN')
 
   if (domain === '...') {
     url = '...'
@@ -292,7 +292,7 @@ Require subject be of type: `element`.
 Cypress.Commands.add('click', {
   prevSubject: 'element'
 }, (subject, options) => {
-  // receives the previous subject and its
+  // receives the previous subject and it's
   // guaranteed to be an element
 })
 ```
@@ -321,7 +321,7 @@ Require subject be one of the following types: `element`, `document` or `window`
 Cypress.Commands.add('trigger', {
   prevSubject: ['element', 'document', 'window']
 }, (subject, eventName, options) => {
-  // receives the previous subject and its
+  // receives the previous subject and it's
   // guaranteed to be an element, document, or window
 })
 ```
@@ -356,7 +356,7 @@ Cypress.Commands.add('contains', {
   // since it's optional.
   //
   // if it's present
-  // then its window, document, or element.
+  // then it's window, document, or element.
   // - when window or document we'll query the entire DOM.
   // - when element we'll query only inside of its children.
   if (subject) {
@@ -413,7 +413,7 @@ The answer is usually **yes**. Here's an example:
 // There's no reason to create something like a cy.search() custom
 // command because this behavior is only applicable to a single spec file
 //
-// Just us a regular ol' javascript function folks!
+// Just use a regular ol' javascript function folks!
 const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
@@ -484,7 +484,7 @@ it('paginates many search results', function () {
         }
       })
     })
-    .get('#pagination').should($pagination) => {
+    .get('#pagination').should(($pagination) => {
       // should offer to goto next page
       expect($pagination).to.contain('Next')
 

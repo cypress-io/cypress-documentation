@@ -50,12 +50,12 @@ describe "Guides", ->
           @english = YAML.parse(yamlString)
 
     it "displays current page as highlighted", ->
-      cy.get("#sidebar").find(".current")
+      cy.get("#sidebar").find("a.current")
         .should("have.attr", "href").and("include", FIRST_PAGE)
 
     it "displays English titles in sidebar", ->
       cy.get("#sidebar")
-        .find(".sidebar-title").each (displayedTitle, i) ->
+        .find(".sidebar-title strong").each (displayedTitle, i) ->
           englishTitle  = @english.sidebar.guides[@sidebarTitles[i]]
           expect(displayedTitle.text()).to.eq(englishTitle)
 
@@ -79,21 +79,18 @@ describe "Guides", ->
         cy.get("#mobile-nav-toggle").click()
         cy.get("#mobile-nav-inner").should("be.visible")
           .find(".sidebar-li")
-          .first(1).each (displayedLink, i) ->
+          .each (displayedLink, i) ->
             englishLink  = @english.sidebar.guides[@sidebarLinkNames[i]]
             expect(displayedLink.text().trim()).to.eq(englishLink)
 
-  ## This is running too slow to include for now
-  ## Issue #431 Needs to be fixed first
-  ## https://github.com/cypress-io/cypress/issues/431
-  context.skip "Table of Contents", ->
+  context "Table of Contents", ->
     before ->
       cy.visit(GUIDES_PATH)
 
     it "displays toc", ->
       cy.get('.sidebar-link').each (linkElement) ->
+        cy.log(linkElement[0].innerText)
         cy.request(linkElement[0].href).its('body').then (body) ->
-
           $body = Cypress.$(body)
 
           $h1s = $body.find('.article h1').not('.article-title')

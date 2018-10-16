@@ -27,14 +27,14 @@ cy.screenshot(fileName, options)
 
 ```javascript
 cy.screenshot()
-cy.get(".post").screenshot()
+cy.get('.post').screenshot()
 ```
 
 ## Arguments
 
 **{% fa fa-angle-right %} fileName** ***(String)***
 
-A name for the image file. By default the filename will be the title of the test.
+A name for the image file. Will be relative to the {% url 'screenshots folder' configuration#Folders-Files %} and the path to the spec file. When passed a path, the folder structure will be created. See the {% url "Naming conventions" screenshot#Naming-conventions %} below for more.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -67,10 +67,12 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ### Take a screenshot
 
 ```javascript
+// cypress/integration/users.spec.js
+
 describe('my tests', function () {
   it('takes a screenshot', function () {
     // screenshot will be saved as
-    // cypress/screenshots/my tests -- takes a screenshot.png
+    // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
@@ -78,12 +80,20 @@ describe('my tests', function () {
 
 ## Filename
 
-### Take a screenshot and save as specific filename
+### Take a screenshot and save as a specific filename
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/clicking-on-nav.png
+// cypress/screenshots/spec.js/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
+```
+
+### Take a screenshot and save in a specific directory
+
+```javascript
+// screenshot will be saved as
+// cypress/screenshots/spec.js/actions/login/clicking-login.png
+cy.screenshot('actions/login/clicking-login')
 ```
 
 ## Clip
@@ -107,20 +117,20 @@ cy.get('.post').first().screenshot()
 ### Chain off the screenshot to click the element captured
 
 ```javascript
-cy.get('button').first().screenshot().its('el').click()
+cy.get('button').first().screenshot().click()
 ```
 
-## Get information about the screenshot from the onAfterScreenshot callback
+## Get screenshot info from the `onAfterScreenshot` callback
 
 ```javascript
-cy.screenshot("my-screenshot", {
+cy.screenshot('my-screenshot', {
   onAfterScreenshot ($el, props) {
     // props has information about the screenshot,
     // including but not limited to the following:
 
     // {
     //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/my-screenshot.png',
+    //   path: '/Users/janelane/project/screenshots/spec.js/my-screenshot.png',
     //   size: '15 kb',
     //   dimensions: {
     //     width: 1000,
@@ -135,6 +145,38 @@ cy.screenshot("my-screenshot", {
 ```
 
 # Notes
+
+## Naming conventions
+
+Screenshot naming follows these rules:
+
+* By default, a screenshot is saved to a file with a path relative to the {% url 'screenshots folder' configuration#Folders-Files %}, appended by a path relating to where the spec file exists, with a name including the current test's suites and test name: `{screenshotsFolder}/{specPath}/{testName}.png`
+* For a named screenshot, the name is used instead of the suites and test name: `{screenshotsFolder}/{specPath}/{name}.png`
+* For any duplicate screenshots (named or not), they will be appended with a number: `{screenshotsFolder}/{specPath}/{testName} (1).png`
+* For a failure screenshot, the default naming scheme is used and the name is appended with ` (failed)`: `{screenshotsFolder}/{specPath}/{testName} (failed).png`
+
+For example, given a spec file located at `cypress/integration/users/login_spec.js`:
+
+```javascript
+describe('my tests', function () {
+  it('takes a screenshot', function () {
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
+
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot.png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot (1).png
+
+    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login_spec.js/my/nested/screenshot.png
+
+    // if this test fails, the screenshot will be saved to cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (failed).png
+  })
+})
+```
+
+## `after:screenshot` plugin event
+
+You can get details about any given screenshot and manipulate it after it has been written to disk with the {% url '`after:screenshot` plugin event' after-screenshot-api %}.
 
 ## Test Failures
 
@@ -205,6 +247,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 # See also
 
 - {% url `Cypress.Screenshot` screenshot-api %}
+- {% url 'After Screenshot API' after-screenshot-api %}
 - {% url `cy.debug()` debug %}
 - {% url 'Dashboard Service' dashboard-service %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}

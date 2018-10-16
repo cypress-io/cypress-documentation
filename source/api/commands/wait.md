@@ -21,8 +21,8 @@ cy.wait(aliases, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wait(500)    
-cy.wait('@getProfile')    
+cy.wait(500)
+cy.wait('@getProfile')
 ```
 
 ## Arguments
@@ -116,7 +116,7 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('be.empty')
 
 // now re-define the /books response
-cy.route('/books', [{name: 'Emperor of all maladies'}])
+cy.route('/books', [{ name: 'Emperor of all maladies' }])
 
 cy.get('#search').type('Emperor of')
 

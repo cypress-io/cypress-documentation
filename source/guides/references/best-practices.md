@@ -1,6 +1,5 @@
 ---
 title: Best Practices
-
 layout: toc-top
 ---
 
@@ -498,7 +497,7 @@ Let's imagine the following examples:
 Waiting here is unnecessary since the {% url `cy.request()` request %} command will not resolve until it receives a response from your server. Adding the wait here only adds 5 seconds after the {% url `cy.request()` request %} has already resolved.
 
 ```javascript
-cy.request("http://localhost:8080/db/seed")
+cy.request('http://localhost:8080/db/seed')
 cy.wait(5000)     // <--- this is unnecessary
 ```
 
@@ -507,7 +506,7 @@ cy.wait(5000)     // <--- this is unnecessary
 Waiting for this is unnecessary because the {% url '`cy.visit()`' visit %} resolves once the page fires its `load` event. By that time all of your assets have been loaded including javascript, stylesheets, and html.
 
 ```javascript
-cy.visit("http://localhost/8080")
+cy.visit('http://localhost/8080')
 cy.wait(5000)     // <--- this is unnecessary
 ```
 
@@ -519,20 +518,20 @@ Whenever commands have an assertion they will not resolve until their associated
 
 ```javascript
 cy.server()
-cy.route("GET", /users/, [{"name": "Maggy"}, {"name": "Joan"}])
-cy.get("#fetch").click()
+cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
+cy.get('#fetch').click()
 cy.wait(4000)     // <--- this is unnecessary
-cy.get("table tr").should("have.length", 2)
+cy.get('table tr').should('have.length', 2)
 ```
 
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
 cy.server()
-cy.route("GET", /users/, [{"name": "Maggy"}, {"name": "Joan"}]).as("getUsers")
-cy.get("#fetch").click()
-cy.wait("@getUsers")     // <--- wait explicitly for this route to finish
-cy.get("table tr").should("have.length", 2)
+cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
+cy.get('#fetch').click()
+cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
+cy.get('table tr').should('have.length', 2)
 ```
 
 ## Web Servers
@@ -547,9 +546,9 @@ cy.get("table tr").should("have.length", 2)
 
 We do NOT recommend trying to start your backend web server from within Cypress.
 
-{% url "`cy.exec()`" exec %} and {% url "`cy.task()`" task %} can only run commands which eventually exit.
+Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually. Otherwise, Cypress will not continue running any other commands.
 
-Trying to start a web server from {% url "`cy.exec()`" exec %} or `cy.task()` causes all kinds of problems because:
+Trying to start a web server from {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} causes all kinds of problems because:
 
 - You have to background the process
 - You lose access to it via terminal
@@ -588,7 +587,7 @@ Adding a {% url "`baseUrl`" configuration#Global %} can also save some time duri
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
-{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png %}
+{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
 
@@ -603,8 +602,8 @@ By setting the `baseUrl`, you can avoid this reload altogether. Cypress will loa
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png %}
+{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
 
-{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png %}
+{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test runner with warning about how Cypress could not verify server set as the baseUrl is running" %}

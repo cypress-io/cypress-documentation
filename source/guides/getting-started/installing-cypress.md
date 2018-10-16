@@ -1,10 +1,9 @@
 ---
 title: Installing Cypress
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to install Cypress via `npm`.
 - How to install Cypress via direct download.
@@ -12,12 +11,12 @@ title: Installing Cypress
 
 {% endnote %}
 
-# System Requirements
+# System requirements
 
 Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
 - **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
-- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8
+- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
 - **Windows** 7+, only 32bit binaries are provided for Windows.
 
 # Installing
@@ -55,7 +54,19 @@ The recommended approach is to install Cypress with `npm` because :
 - It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
 {% endnote %}
 
-## {% fa fa-download %} Direct Download
+## {% fa fa-terminal %} `yarn add`
+
+Installing Cypress via {% url "`yarn`" https://yarnpkg.com %}:
+
+```shell
+cd /your/project/path
+```
+
+```shell
+yarn add cypress --dev
+```
+
+## {% fa fa-download %} Direct download
 
 If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
 
@@ -65,7 +76,7 @@ Just manually unzip and double click. Cypress will run without needing to instal
 
 {% video local /img/snippets/installing-global.mp4 %}
 
-## {% fa fa-refresh %} Continuous Integration
+## {% fa fa-refresh %} Continuous integration
 
 Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
@@ -87,7 +98,7 @@ $(npm bin)/cypress open
 
 **Or by using `npx`**
 
-**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2` or can be installed separately.
+**note**: {% url "npx" https://www.npmjs.com/package/npx %} is included with `npm > v5.2` or can be installed separately.
 
 ```shell
 npx cypress open
@@ -101,8 +112,6 @@ While there's nothing wrong with writing out the full path to the Cypress execut
 
 ```javascript
 {
-  // package.json
-
   "scripts": {
     "cypress:open": "cypress open"
   }
@@ -117,7 +126,7 @@ npm run cypress:open
 
 ...and Cypress will open right up for you.
 
-# CLI Tools
+# CLI tools
 
 By installing Cypress through `npm` you also get access to many other CLI commands.
 
@@ -127,7 +136,7 @@ You can {% url 'read more about the CLI here' command-line %}.
 
 # Advanced
 
-## Environment Variables
+## Environment variables
 
 Using an environment variable you can control how Cypress is installed. This is helpful if you want to:
 
@@ -159,7 +168,7 @@ To override what is installed, you simply set `CYPRESS_INSTALL_BINARY` with the 
 
 In all cases, the fact that the binary was installed from a custom location *is not saved in your `package.json` file*. Every repeated installation needs to use the same environment variable to install the same binary.
 
-## Skipping Installation
+## Skipping installation
 
 You can also force Cypress to skip the installation of the binary application. This could be useful if you want to prevent Cypress from downloading the Cypress binary at the time of `npm install`.
 
@@ -171,7 +180,7 @@ CYPRESS_INSTALL_BINARY=0 npm install
 
 Now Cypress will skip its install phase once the npm module is installed.
 
-## Overriding the Binary Cache Folder
+## Overriding the binary cache folder
 
 As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
 
@@ -186,23 +195,35 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 ```
 
 ```shell
-CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run
+CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
 {% note warning %}
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
 {% endnote %}
 
-## Overriding the Cypress Binary at Runtime
+## Overriding the Cypress binary at runtime
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
 
-`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary. 
+
+### Mac
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
-# linux: 'Cypress/Cypress'
-# Windows: 'Cypress/Cypress.exe'
+```
+
+### Linux
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
+```
+
+### Windows
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 ```
 
 {% note warning %}

@@ -40,7 +40,7 @@ If you don't return an object, then configuration will not be modified.
 
 Resolved values will show up in your Settings tab.
 
-{% img /img/guides/plugin-configuration.png %}
+{% img /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
 
 ## Promises
 
@@ -49,6 +49,7 @@ Additionally, Cypress will respect and await promises you return. This enables y
 ```javascript
 // promisified fs module
 const fs = require('fs-extra')
+const path = require('path')
 
 function getConfigurationByFile (file) {
   const pathToConfigFile = path.resolve('..', 'config', `${file}.json`)
@@ -69,8 +70,14 @@ You could now swap out configuration + environment variables like so:
 
 ```shell
 cypress run
+```
+```shell
 cypress run --env configFile=qa
+```
+```shell
 cypress run --env configFile=staging
+```
+```shell
 cypress run --env configFile=production
 ```
 
@@ -85,46 +92,46 @@ cypress/config/production.json
 
 This would enable you to do things like this:
 
-```js
+```json
 // cypress/config/development.json
 
 {
-  baseUrl: 'http://localhost:1234',
-  env: {
-    something: 'development'
+  "baseUrl": "http://localhost:1234",
+  "env": {
+    "something": "development"
   }
 }
 ```
 
-```js
+```json
 // cypress/config/qa.json
 
 {
-  baseUrl: 'https://qa.acme.com',
-  env: {
-    something: 'qa'
+  "baseUrl": "https://qa.acme.com",
+  "env": {
+    "something": "qa"
   }
 }
 ```
 
-```js
+```json
 // cypress/config/staging.json
 
 {
-  baseUrl: 'https://staging.acme.com',
-  env: {
-    something: 'staging'
+  "baseUrl": "https://staging.acme.com",
+  "env": {
+    "something": "staging"
   }
 }
 ```
 
-```js
+```json
 // cypress/config/production.json
 
 {
-  baseUrl: 'https://production.acme.com',
-  env: {
-    something: 'production'
+  "baseUrl": "https://production.acme.com",
+  "env": {
+    "something": "production"
   }
 }
 ```

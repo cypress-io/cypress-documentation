@@ -1,6 +1,6 @@
 ---
 title: Tutorial Videos
-
+containerClass: examples
 ---
 
 # Best Practices
@@ -19,7 +19,7 @@ First we'll test our "Login Page", refactor, and then create a {% url "Custom Co
 
 In this tutorial, we will walk through building a "Todo" application in {% url "React" https://reactjs.org %} while testing it with Cypress. We will look at ways we can use Cypress to not only create a test suite for our application, but help us write our tests and guide feature implementation.
 
-By the end of this tutorial, you will have a feel for what it is like to test your application with Cypress while implementing features. You will gain experience with many of the Cypress {% url "commands" api %} and see how Cypress can help you build your application while creating a great safety net of tests along the way.
+By the end of this tutorial, you will have a feel for what it is like to test your application with Cypress while implementing features. You will gain experience with many of the Cypress {% url "commands" table-of-contents %} and see how Cypress can help you build your application while creating a great safety net of tests along the way.
 
 We have a lot of ground to cover, so let's get started!
 
@@ -39,7 +39,7 @@ We have a lot of ground to cover, so let's get started!
 
 ## 1. Project setup
 
-We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's [`npm`](https://www.npmjs.com/) dependencies and scripts, then jump right into getting Cypress up and running.
+We will start by cloning a starter {% url "repository" https://github.com/cypress-io/cypress-tutorial-build-todo-starter %}. This repo already has the build and server configuration handled. We will take a look at the project's {% url "`npm`" https://www.npmjs.com/ %} dependencies and scripts, then jump right into getting Cypress up and running.
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/01_setup %}
 

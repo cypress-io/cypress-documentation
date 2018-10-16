@@ -1,6 +1,5 @@
 ---
 title: Configuration
-
 ---
 
 When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
@@ -39,7 +38,7 @@ Option | Default | Description
 `defaultCommandTimeout` | `4000` | Time, in milliseconds, to wait until most DOM based commands are considered timed out
 `execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a {% url `cy.exec()` exec %} command
 `taskTimeout` | `60000` | Time, in milliseconds, to wait for a task to finish executing during a {% url `cy.task()` task %} command
-`pageLoadTimeout` | `60000` | Time, in milliseconds, to wait for `page transition events` or {% url `cy.visit()` visit %}, {% url `cy.go()` go %}, {% url `cy.reload()` reload %} commands to fire their page `load` events
+`pageLoadTimeout` | `60000` | Time, in milliseconds, to wait for `page transition events` or {% url `cy.visit()` visit %}, {% url `cy.go()` go %}, {% url `cy.reload()` reload %} commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.
 `requestTimeout` | `5000` | Time, in milliseconds, to wait for an XHR request to go out in a {% url `cy.wait()` wait %} command
 `responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a {% url `cy.request()` request %}, {% url `cy.wait()` wait %}, {% url `cy.fixture()` fixture %}, {% url `cy.getCookie()` getcookie %}, {% url `cy.getCookies()` getcookies %}, {% url `cy.setCookie()` setcookie %}, {% url `cy.clearCookie()` clearcookie %}, {% url `cy.clearCookies()` clearcookies %}, and {% url `cy.screenshot()` screenshot %} commands
 
@@ -137,6 +136,9 @@ By default, any environment variable that matches a corresponding configuration 
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
+```
+
+```shell
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
@@ -146,6 +148,9 @@ We automatically normalize both the key and the value. Cypress will *strip off* 
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
+```
+
+```shell
 export CYPRESS_PAGE_LOAD_TIMEOUT=100000
 ```
 
@@ -158,12 +163,15 @@ You can {% url 'read more about Environment Variables' environment-variables %}.
 ## `Cypress.config()`
 
 You can also override configuration values within your test using {% url `Cypress.config()` config %}.
-Any value you change will be permanently changed for the remainder of your tests.
+
+{% note warning Scope %}
+Configuration set using `Cypress.config` _is only in scope for the current spec file._
+{% endnote %}
 
 ```javascript
-Cypress.config("pageLoadTimeout", 100000)
+Cypress.config('pageLoadTimeout', 100000)
 
-Cypress.config("pageLoadTimeout") // => 100000
+Cypress.config('pageLoadTimeout') // => 100000
 ```
 
 # Resolved Configuration
@@ -225,7 +233,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
-{% img /img/guides/blacklist-host.png %}
+{% img /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
 
 ## modifyObstructiveCode
 

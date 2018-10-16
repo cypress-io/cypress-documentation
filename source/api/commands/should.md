@@ -71,10 +71,10 @@ However, some chainers change the subject. In the example below, the second `.sh
 
 ```javascript
 cy
-  .get('nav')                       // yields <nav>
-  .should('be.visible')             // yields <nav>
-  .and('have.css', 'font-family')   // yields 'sans-serif'
-  .and('match', /serif/)            // yields 'sans-serif'
+  .get('nav')                          // yields <nav>
+  .should('be.visible')                // yields <nav>
+  .should('have.css', 'font-family')   // yields 'sans-serif'
+  .and('match', /serif/)               // yields 'sans-serif'
 ```
 
 # Examples
@@ -112,7 +112,7 @@ cy.get('input').should('not.have.value', 'Jane')
 ***The current subject is yielded***
 
 ```javascript
-cy.get('button').should('have.id', 'new-user').then(($button) =>{
+cy.get('button').should('have.id', 'new-user').then(($button) => {
   // $button is yielded
 })
 ```
@@ -145,7 +145,7 @@ Just be sure *not* to include any code that has side effects in your callback fu
 ```javascript
 cy
   .get('p')
-  .should(($p) =>{
+  .should(($p) => {
     // should have found 3 elements
     expect($p).to.have.length(3)
 
@@ -237,9 +237,9 @@ Whatever is returned in the function is ignored. Cypress always forces the comma
 
 ```javascript
 cy
-  .get('button').should(($button) =>{
-    expect({foo: 'bar'}).to.deep.eq({foo: 'bar'})
-    return {foo: 'bar'} // return is ignored, .should() yields <button>
+  .get('button').should(($button) => {
+    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+    return { foo: 'bar' } // return is ignored, .should() yields <button>
   })
   .then(($button) => {
     // do anything we want with <button>
@@ -261,15 +261,13 @@ cy
 {% timeouts timeouts .should %}
 
 ```javascript
-cy.get('input', {timeout: 10000}).should('have.value', '10')
-  //                    ↲
-  // timeout here will be passed down to the '.should()'
-  // and it will retry for up to 10 secs
+cy.get('input', { timeout: 10000 }).should('have.value', '10')
+// timeout here will be passed down to the '.should()'
+// and it will retry for up to 10 secs
 ```
 
 ```javascript
-cy.get('input', {timeout: 10000}).should(($input) => {
-  //                    ↲
+cy.get('input', { timeout: 10000 }).should(($input) => {
   // timeout here will be passed down to the '.should()'
   // unless an assertion throws earlier,
   // ALL of the assertions will retry for up to 10 secs

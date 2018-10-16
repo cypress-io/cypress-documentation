@@ -22,7 +22,7 @@ cy.stub(object, method, replacerFn)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.stub(user, 'addFriend')    
+cy.stub(user, 'addFriend')
 ```
 
 ## Arguments
@@ -101,9 +101,9 @@ expect(removeStub).to.be.called
 ```javascript
 // assume App.start uses prompt to set the value of an element with class "name"
 cy.visit('http://localhost:3000', {
-    onBeforeLoad(win) {
-        cy.stub(win, 'prompt').returns('my custom message')
-    }
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').returns('my custom message')
+  }
 })
 
 App.start()

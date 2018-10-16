@@ -1,4 +1,4 @@
-html, body, a, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, abbr, acronym, address, big, cite, del, dfn, table, caption, td, th, ins, img, em, kbd, q, s, samp, small, strike, strong, sup, sub, var, tt, dl, dt, dd, ol, ul, li, form, fieldset, label, tr, thead, tfoot, tbody, legend, pre {
+html, body, a, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, abbr, acronym, address, big, cite, del, dfn, table, caption, td, th, ins, img, em, kbd, q, s, samp, small, strike, strong, sup, sub, var, tt, dl, dt, dd, ol, ul, li, form, fieldset, label, tr, thead, tfoot, tbody, legend, pre, code {
   margin: 0;
   padding: 0;
   border: 0;
@@ -8,6 +8,9 @@ html, body, a, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
   font-family: inherit;
   font-size: inherit;
   vertical-align: baseline;
+  -webkit-padding-start: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 
 html {
@@ -15,7 +18,7 @@ html {
 }
 body {
   line-height: $line-height;
-  background: $color-background;
+  background: #fff;
   font-size: $font-size;
   font-weight: normal;
   font-family: $font-sans;
@@ -84,10 +87,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
 
 #content-wrap {
   background-color: white;
-  border-top: 1px solid $color-background;
-  border-bottom: 1px solid $color-background;
-  padding-top: 40px;
   margin: -1px 0;
+  position: relative;
+  top: 62px;
+  bottom: 334px;
 }
 
 @media print {
@@ -101,10 +104,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
     display: none !important;
   }
   .article-content {
-    font-size: 12pt;
     a {
       color: $color-default;
       text-decoration: underline;
+      
       &:after {
         content: "(" attr(href) ")";
         font-size: 80%;
@@ -136,7 +139,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   position: relative;
   @include clearfix;
 }
+
 #content-inner {
+  position: static;
+  overflow-x: hidden;
   @include clearfix;
 }
 
@@ -145,11 +151,48 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   height: 100%;
 }
 
-.not-found h1 {
+.not-found {
   text-align: center;
-  font-size: 50px;
-  line-height: 100px;
-  margin: 100px 0;
+
+  h1 {
+    font-family: $font-title;
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 100px;
+    margin: 50px 0 0px 0;
+    text-transform: capitalize;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0px 0;
+    display: inline-block;
+    text-align: left;
+
+    li {
+      margin-bottom: 20px;
+      &>i.fa {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  a {
+    color: $color-link;
+    text-decoration: none;
+    border-bottom: 1px dotted #86ceb6;
+  }
+
+  blockquote {
+    margin: 10px 0 100px 0;
+    padding: 15px;
+    font-style: italic;
+
+    strong {
+      font-weight: bold;
+    }
+  }
 }
 
 i.fa {
@@ -164,4 +207,11 @@ i.fa {
   &.green {
     color: $color-green;
   }
+}
+
+:target::before {
+  content: "";
+  display: block;
+  height: 92px; /* fixed header height*/
+  margin: -92px 0 0; /* negative fixed header height */
 }

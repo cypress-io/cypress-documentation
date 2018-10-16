@@ -24,14 +24,19 @@
       description: Watches and bundles your spec files via webpack.
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
-      
+
+    - name: cypress-app-watcher-preprocessor
+      description: Reruns Cypress tests when the backend server restarts
+      link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
+      keywords: [file-watcher]
+
 - name: Development Tools
   plugins:
     - name: Docker
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
       link: https://github.com/cypress-io/cypress-docker-images
       keywords: [docker, continuous-integration]
-      
+
     - name: ESLint
       description: ESLint plugin that sets globals for writing tests in Cypress.
       link: https://github.com/cypress-io/eslint-plugin-cypress
@@ -42,6 +47,11 @@
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
 
+    - name: cypress-dark
+      description: Several color themes for Cypress test runner
+      link: https://github.com/bahmutov/cypress-dark
+      keywords: [theme]
+
 - name: Custom Commands
   plugins:
     - name: cypressautomocker
@@ -49,14 +59,40 @@
       link: https://github.com/scottschafer/cypressautomocker
       keywords: [routing, mock]
 
+    - name: cypress-on-rails
+      description: Rubygem for using cypress.io with Ruby on Rails applications
+      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
+      keywords: [ruby-rack, ruby-on-rails]
+
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
-      
+
+    - name: Cypress Image Snapshot
+      description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
+      link: https://github.com/palmerhq/cypress-image-snapshot
+      keywords: [image-diff, snapshot]
+
+    - name: cypress-capybara
+      description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
+      link: https://github.com/testdouble/cypress-capybara
+      keywords: [testing-library, capybara]
+
+    - name: PickleJS
+      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
+      link: https://picklejs.com
+      keywords: [cucumber, collection, actions, commands]
+
 - name: Reporting
   plugins:
   - name: cypress-testrail-reporter
-    description: Custom reporter for publishing Cypress results to a TestRail test run. 
+    description: Custom reporter for publishing Cypress results to a TestRail test run.
     link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
     keywords: [testrail, reporter]
+
+  - name: cypress-failed-log
+    description: Saves the Cypress test command log as a JSON file if a test fails.
+    link: https://github.com/bahmutov/cypress-failed-log
+    keywords: [reporter]
+
