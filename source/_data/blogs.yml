@@ -32,6 +32,14 @@ large:
     author: Matthew Ledom
     img: /img/examples/end-to-end-slack-app-testing-with-cypress.png
 
+  - title: "Integrate an awesome software testing tool, Cypress.io, into a React app in less than 5 minutes"
+    url: https://medium.com/@johnryancottam/integrate-an-awesome-software-testing-tool-cypress-io-into-a-react-app-in-less-than-5-minutes-b4c8bbf1f71c
+    sourceName: Medium
+    sourceUrl: https://medium.com/@johnryancottam
+    date: Aug 15, 2018
+    author: John Ryan Cottam
+    img: /img/examples/integrate-an-awesome-software.png
+
   - title: "Cypress and AuthO"
     url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
     sourceName: blog.johnnyreilly.com
