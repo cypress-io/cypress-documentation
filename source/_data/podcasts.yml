@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress.io"
+    url: https://thewebplatformpodcast.com/164-cypressio
+    sourceName: The Web Platform Podcast 
+    sourceUrl: https://thewebplatformpodcast.com/
+    date: June 28, 2018
+    author: Brian Mann and Gleb Bahmutov
+    img: /img/examples/web-platform-podcast.png
+
   - title: "JavaScript Testing Using Jest with Kent C. Dodds"
     url: https://joecolantonio.com/testtalks/195-javascript-testing-using-jest-with-kent-c-dodds/
     sourceName: TestTalks
