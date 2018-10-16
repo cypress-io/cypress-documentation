@@ -1,5 +1,30 @@
 # large links with thumbnails, links, embedded video
 large:
+
+  - title: "Cypress"
+    url: https://blog.codepen.io/2018/10/16/195-cypress/
+    sourceName: CodePen
+    sourceUrl: https://blog.codepen.io/
+    date: October 16, 2018
+    author: Alex Vazquez, Marie Mosley, and Chris Coyier 
+    img: /img/examples/code-pen-cypress.png
+
+  - title: "Episode 3: Dan Wahlin on End to End Testing with Cypress.io"
+    url: https://realtalkjavascript.simplecast.fm/e03e32ef
+    sourceName: Real Talk Javascript 
+    sourceUrl: https://realtalkjavascript.simplecast.fm/
+    date: October 16, 2018
+    author: Dan Wahlin, John Papa, and Ward Bell 
+    img: /img/examples/real-talk-javascript.png
+
+  - title: "Cypress.io"
+    url: https://thewebplatformpodcast.com/164-cypressio
+    sourceName: The Web Platform Podcast 
+    sourceUrl: https://thewebplatformpodcast.com/
+    date: June 28, 2018
+    author: Brian Mann and Gleb Bahmutov
+    img: /img/examples/web-platform-podcast.png
+
   - title: "JavaScript Testing Using Jest with Kent C. Dodds"
     url: https://joecolantonio.com/testtalks/195-javascript-testing-using-jest-with-kent-c-dodds/
     sourceName: TestTalks
