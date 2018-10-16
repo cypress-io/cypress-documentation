@@ -49,6 +49,30 @@ cy.window().then((win) => {
 })
 ```
 
+## Starting tests when the application is ready
+
+If an application takes a while to start, it might "signal" its readiness by setting a property that Cypress can wait for.
+
+```javascript
+// app.js
+// only set property "appReady" if Cypress is running tests
+if (window.Cypress) {
+  window.appReady = true
+}
+```
+
+Cypress test runner can wait for the property `window.appReady` to be `true` before every test
+
+```javascript
+// spec.js
+beforeEach(() => {
+  cy.visit('/')
+  cy.window().should('have.property', 'appReady', true)
+})
+```
+
+See {% url "Set flag to start tests" https://glebbahmutov.com/blog/set-flag-to-start-tests/ %} for more examples.
+
 ## Options
 
 ***Passes timeout through to {% url `.should()` should %} assertion***
@@ -91,3 +115,4 @@ When clicking on `window` within the command log, the console outputs the follow
 
 - {% url `cy.visit()` visit %}
 - {% url `cy.document()` document %}
+- {% url "When Can The Test Start?" https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/ %} uses `cy.window` to spy on DOM prototype to detect when the application starts adding event listeners to the DOM elements. When this happens for the first time, Cypress test runner knows that the application has started, and the tests can begin.
