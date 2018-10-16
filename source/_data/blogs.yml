@@ -72,6 +72,14 @@ large:
     author: Las Olas VC (a.k.a. LOVC)
     img: /img/examples/our-investment-in-cypress.png
 
+  - title: "Testing Functionality With Cypress.io"
+    url: https://www.sitefinitysteve.com/blog/code/2018/07/20/testing-functionality-with-cypress-io
+    sourceName: Sitefinity Steve 
+    sourceUrl: https://www.sitefinitysteve.com/
+    date: Jul 20, 2018
+    author: Sitefinity Steve
+    img: /img/examples/testing-functionality-with-cypress.png
+
   - title: "Cypress and AuthO"
     url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
     sourceName: blog.johnnyreilly.com
