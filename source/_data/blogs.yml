@@ -32,6 +32,14 @@ large:
     author: Matthew Ledom
     img: /img/examples/end-to-end-slack-app-testing-with-cypress.png
 
+  - title: "Cypress and AuthO"
+    url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
+    sourceName: blog.johnnyreilly.com
+    sourceUrl: https://blog.johnnyreilly.com/
+    date: Jul 9, 2018
+    author: John Reilly
+    img: /img/examples/cypress-autho.png
+
   - title: "Cypress.io Raises $4 Million for Front End Automated Testing"
     url: https://www.businesswire.com/news/home/20180626005183/en/Cypress.io-Raises-4-Million-Front-Automated-Testing
     sourceName: Business Wire 
