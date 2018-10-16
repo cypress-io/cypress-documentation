@@ -34,7 +34,7 @@ cy.clock()
 
 ## Arguments
 
-**{% fa fa-angle-right %} now** ***(Date)***
+**{% fa fa-angle-right %} now** ***(number)***
 
 A timestamp specifying where the clock should start.
 
