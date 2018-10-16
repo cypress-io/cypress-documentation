@@ -24,6 +24,14 @@ large:
     author: Khaja Moizuddin
     img: /img/examples/c-sharp-corner-end-to-end-cypress.png
 
+  - title: "An Intro to Web Site Testing with Cypress"
+    url: https://css-tricks.com/an-intro-to-web-app-testing-with-cypress-io/
+    sourceName: Medium
+    sourceUrl: https://css-tricks.com/
+    date: Aug 29, 2018
+    author: Devon Campbell 
+    img: /img/examples/intro-to-website-testing.png
+
   - title: "Slack App Testing"
     url: https://medium.com/coveryourads/slack-bot-testing-e7ba6f91a98e
     sourceName: Medium
