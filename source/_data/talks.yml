@@ -1,6 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
   - title: "Hassle free E2E tests with Cypress"
+    url: https://www.youtube.com/watch?v=1PMxLTfh6lo&feature=youtu.be&t=1
+    sourceName: BuzzJS
+    date: Jul 30, 2018
+    author: Gleb Bahmutov
+    youtubeId: 1PMxLTfh6lo
+
+  - title: "Hassle free E2E tests with Cypress"
     url: https://www.youtube.com/watch?v=jijOIqtBGYg
     sourceName: React Vienna 
     date: Jul 17, 2018
