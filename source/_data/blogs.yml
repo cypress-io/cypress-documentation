@@ -40,6 +40,14 @@ large:
     author: John Ryan Cottam
     img: /img/examples/integrate-an-awesome-software.png
 
+  - title: "How To Run Browser Tests via Cypress in Your CI/CD Pipeline with AWS CodeBuild"
+    url: https://blog.kylegalbraith.com/2018/08/14/how-to-run-browser-tests-via-cypress-in-your-cicd-pipeline-with-aws-codebuild/
+    sourceName: blog.kylegalbraith.com
+    sourceUrl: https://blog.kylegalbraith.com/
+    date: Aug 14, 2018
+    author: Kyle Galbraith
+    img: /img/examples/kyle-galbraith-how-to-run.png
+
   - title: "Cypress and AuthO"
     url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
     sourceName: blog.johnnyreilly.com
