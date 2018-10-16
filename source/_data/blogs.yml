@@ -64,6 +64,14 @@ large:
     author: Grant Glidewell
     img: /img/examples/testing-with-cypress-io.png
 
+  - title: "Our Investment in Cypress.io"
+    url: https://medium.com/@er_17361/our-investment-in-cypress-io-bc974155838d
+    sourceName: Medium
+    sourceUrl: https://medium.com/@er_17361
+    date: Jul 24, 2018
+    author: Las Olas VC (a.k.a. LOVC)
+    img: /img/examples/our-investment-in-cypress.png
+
   - title: "Cypress and AuthO"
     url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
     sourceName: blog.johnnyreilly.com
