@@ -11,7 +11,9 @@ title: Testing Your App
 - Effectively leveraging test data
 {% endnote %}
 
+<!-- textlint-disable terminology -->
 {% video youtube 5XQOK0v_YRE %}
+<!-- textlint-enable -->
 
 # {% fa fa-terminal %} Step 1: Start your server
 
@@ -86,7 +88,7 @@ Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 
-{% img /img/guides/testing-your-app-visit-fail.png "Error in test runner showing cy.visit failed" %}
+{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 If you've started your server, then you should see your application loaded and working.
 
@@ -145,7 +147,7 @@ That said, modern web testing has a few wrinkles that every team experiences, so
 
 Depending on how your application is built - it's likely that your web application is going to be affected and controlled by the server.
 
-Typically these days servers communicate with frontend apps via JSON, but you could also be running a traditional server-side rendered HTML web application.
+Typically these days servers communicate with front end apps via JSON, but you could also be running a traditional server-side rendered HTML web application.
 
 Generally the server is responsible for sending responses that reflect some kind of **state** it holds - generally in a database.
 

@@ -120,7 +120,7 @@ cy.url().should('contain', '#users/new')
 
 # Command Log
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/url/test-url-of-website-or-web-application.png)
 

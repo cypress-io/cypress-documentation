@@ -215,7 +215,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 
 | Provider  | Environment Variable  |
 |--|--|
-| Appveyor  | `APPVEYOR_BUILD_NUMBER`  |
+| AppVeyor  | `APPVEYOR_BUILD_NUMBER`  |
 | Bamboo  | `BAMBOO_BUILD_NUMBER`  |
 | Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER` |
 | Codeship  | `CI_BUILD_NUMBER`  |

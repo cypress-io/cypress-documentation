@@ -200,7 +200,7 @@ Taking a screenshot is an asynchronous action that takes around `100ms` to compl
 
 For example - say a command we wrote timed out: {% url "`cy.get('#element')`" get %}. This causes your test to fail. Cypress then automatically takes a screenshot when the test fails, but it is possible something in your application changed within this `100ms` timeframe. Hypothetically, your app could render the element you were originally expecting to be present. When this happens, the screenshot may provide confusing results. It is unlikely, but theoretically possible.
 
-Another potential problem to be aware of is that our own Command Log is using React.js under the hood and only rendering asynchronously during an animation frame. It is possible you will see screenshots taken before our Command Log is done rendering. This means you may not see the **error displayed** in the screenshot. But this is also why we take a video - to show you the complete failure.
+Another potential problem to be aware of is that our own Command Log is using React under the hood and only rendering asynchronously during an animation frame. It is possible you will see screenshots taken before our Command Log is done rendering. This means you may not see the **error displayed** in the screenshot. But this is also why we take a video - to show you the complete failure.
 
 We make our best effort to synchronize taking a screenshot with our renderer, but the current state of your application under test could have changed in the meantime and not be an accurate representation of what you want to capture.
 
@@ -236,7 +236,7 @@ cy.get('.sticky-header').invoke('css', 'position', null)
 cy.screenshot('my-image')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png)
 

@@ -352,7 +352,7 @@ cy.contains('Age').find('input').type('29')
 cy.get('h1').contains('New User')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log contains](/img/api/contains/find-el-that-contains-text.png)
 
