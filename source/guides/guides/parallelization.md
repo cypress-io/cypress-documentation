@@ -14,7 +14,7 @@ title: Parallelization
 {% endnote %}
 
 {% note warning %}
-Please be aware that the following instructions for parallelization are only applicable to paid users of the Dashboard Service
+Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}. 
 {% endnote %}
 
 # Overview
