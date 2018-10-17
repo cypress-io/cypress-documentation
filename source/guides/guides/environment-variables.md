@@ -223,3 +223,7 @@ export CYPRESS_FOO=bar
 ```
 
 You can {% url 'read more about how environment variables can change configuration here' configuration %}.
+
+## See also
+
+- {% url "Environment Variables recipe" recipes#Environment-Variables %}

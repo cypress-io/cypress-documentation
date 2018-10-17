@@ -299,3 +299,7 @@ cy.get('#results')
 - Request Headers
 - Response Body
 - Response Headers
+
+# See also
+
+- {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
