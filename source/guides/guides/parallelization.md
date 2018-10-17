@@ -52,7 +52,7 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-se
 5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.
 
-### Parallelization process
+## Parallelization process
 
 {% img 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
 
@@ -62,7 +62,7 @@ Cypress will automatically balance your spec files across the available machines
 
 As more and more tests are recorded to the Cypress Dashboard, Cypress can better predict how long a given spec file will take to run. To prevent irrelevant data from affecting the duration prediction, Cypress doesn't use old historical run data regarding the spec file.
 
-### Spec duration history analysis
+## Spec duration history analysis
 
 {% img 'no-border' /img/guides/parallelization/spec-forecast.png "Spec duration forecasting" %}
 
