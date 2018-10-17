@@ -74,14 +74,14 @@ Duration estimation is done separately for every browser the spec file was teste
 
 # Example
 
-The examples below are from an actual run of our {% url "`example-kitchen-sink`" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can find this run on the {% url "project's dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
+The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
 
 ## Without parallelization
 
-First, a single machine ran job named `1x-electron` and executed 19 specs one by one alphabetically. It took **1 min and 51 secs** to complete all tests.
+In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
 
 ```text
-1x-electron, machine 1
+1x-electron, Machine #1
 --------------------------
 -- actions.spec.js (14s)
 -- aliasing.spec.js (1s)
@@ -104,14 +104,16 @@ First, a single machine ran job named `1x-electron` and executed 19 specs one by
 -- window.spec.js (1s)
 ```
 
-Notice that _pure_ spec running times together add up to less than the total **1:51** running time. There is overhead for each spec: starting the browser, encoding and uploading video the dashboard, asking for the next spec to run.
+{% note info %}
+Notice that when adding up the spec's run times (**0:55**), they add up to less than the total time for the run to complete (**1:51**) . There is extra time in the run for each spec: starting the browser, encoding and uploading the video to the dashboard, requesting the next spec to run.
+{% endnote %}
 
 ## With parallelization
 
-When we run the same tests with parallelization, Cypress decides the best order to run the specs in based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` and it has finished in **59 seconds**.
+When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file and it finished in **59 seconds**.
 
 ```text
-2x-electron, machine 1, 9 specs           2x-electron, machine 2, 10 specs
+2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
 --------------------------------          -----------------------------------
 -- actions.spec.js (14s)                  -- waiting.spec.js (6s)
 -- traversal.spec.js (4s)                 -- navigation.spec.js (3s)
@@ -125,11 +127,11 @@ When we run the same tests with parallelization, Cypress decides the best order 
                                           -- window.spec.js (1s)
 ```
 
-The difference in running times and machine utilization is very clear when looking at the [Machines View](#Machines-View) on the Dashboard. Notice how the parallelized run has sorted all specs by duration, while the run without parallelization has not.
+The difference in running times and machines used is very clear when looking at the {% urlHash "Machines View" Machines-View %} on the Dashboard. Notice how the run parallelized across 2 machines automatically ran all specs based on their duration, while the run without parallelization did not.
 
 {% img /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
 
-Parallelizing our tests across 2 machines has saved us almost 50% of the total run time, and we can further decrease the build time by adding more machines.
+Parallelizing our tests across 2 machines saved us almost 50% of the total run time, and we can further decrease the build time by adding more machines.
 
 # Grouping test runs
 
