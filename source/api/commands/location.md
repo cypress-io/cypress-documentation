@@ -158,7 +158,7 @@ cy.location().should((loc) => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/location/make-assertion-about-location-url-in-tests.png)
 

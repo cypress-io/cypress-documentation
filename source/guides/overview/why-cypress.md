@@ -31,7 +31,7 @@ Our users are typically developers or QA engineers building web applications usi
 
 Cypress enables you to write all types of tests:
 
-- End to end tests
+- End-to-end tests
 - Integration tests
 - Unit tests
 

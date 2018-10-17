@@ -76,7 +76,7 @@ cy.get('a').debug().should('have.attr', 'href')
 cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log debug](/img/api/debug/how-debug-displays-in-command-log.png)
 

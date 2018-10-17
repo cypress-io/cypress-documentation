@@ -178,7 +178,7 @@ A task must end within the `taskTimeout` or Cypress will fail the current test.
 cy.task('readJson', 'cypress.json')
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log task](/img/api/task/task-read-cypress-json.png)
 

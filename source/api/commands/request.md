@@ -249,7 +249,7 @@ In other words, `cy.request()` transparently performs all of the underlying func
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 # Rules
 
@@ -278,7 +278,7 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log request](/img/api/request/testing-request-url-and-its-response-body-headers.png)
 
