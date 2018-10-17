@@ -260,6 +260,6 @@ The Machines View charts spec files by the machines that executed them. This vie
 
 # See also
 
-- {% url "Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
-- {% url "Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
-- {% url https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} has configurations for basic and parallel setup for many CI systems which you can use as reference.
+- {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
+- {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
+- {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
