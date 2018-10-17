@@ -8,13 +8,21 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress vs Selenium Webdriver: Which is Better for You?"
+    url: https://applitools.com/blog/cypress-vs-selenium-webdriver-which-is-better-for-you
+    sourceName: applitools
+    sourceUrl: https://applitools.com/blog
+    date: Oct 16, 2018
+    author: Gil Tayar
+    img: /img/examples/cypress-vs-selenium.png
+
   - title: "End-to-End Testing with Cypress"
     url: https://deliciousbrains.com/cypress-testing/
     sourceName: Delicious Brains
     sourceUrl: https://deliciousbrains.com/blog/
     date: Oct 2, 2018
     author: Peter Tasker
-    img: /img/examples/end-to-end-testing-with-cypress.jpg
+    img: /img/examples/end-to-end-testing-with-cypress.png
     
   - title: Cypress.io - A JavaScript End To End Testing Tool
     url: https://www.c-sharpcorner.com/article/getting-started-with-cypress-io/
@@ -24,13 +32,109 @@ large:
     author: Khaja Moizuddin
     img: /img/examples/c-sharp-corner-end-to-end-cypress.png
 
+  - title: Improving our Cypress test automation time by 3x
+    url: https://blog.hasura.io/improving-our-cypress-test-automation-time-by-3x-e79f21313610
+    sourceName: Medium 
+    sourceUrl: https://blog.hasura.io/
+    date: Sep 10, 2018
+    author: Praveen Durairaj
+    img: /img/examples/improving-our-cypress-tests.png
+
+  - title: "An Intro to Web Site Testing with Cypress"
+    url: https://css-tricks.com/an-intro-to-web-app-testing-with-cypress-io/
+    sourceName: Medium
+    sourceUrl: https://css-tricks.com/
+    date: Aug 29, 2018
+    author: Devon Campbell 
+    img: /img/examples/intro-to-website-testing.png
+
   - title: "Slack App Testing"
     url: https://medium.com/coveryourads/slack-bot-testing-e7ba6f91a98e
     sourceName: Medium
     sourceUrl: https://www.coveryourads.io/
     date: Aug 27, 2018
     author: Matthew Ledom
-    img: /img/examples/end-to-end-slack-app-testing-with-cypress.jpg
+    img: /img/examples/end-to-end-slack-app-testing-with-cypress.png
+
+  - title: "Where Am I: URL Assertions with Cypress"
+    url: https://hashrocket.com/blog/posts/where-am-i-url-assertions-with-cypress
+    sourceName: HashRocket
+    sourceUrl: https://hashrocket.com/blog
+    date: Aug 23, 2018
+    author: Josh Branchaud
+    img: /img/examples/where-am-i.png
+
+  - title: "Integrate an awesome software testing tool, Cypress.io, into a React app in less than 5 minutes"
+    url: https://medium.com/@johnryancottam/integrate-an-awesome-software-testing-tool-cypress-io-into-a-react-app-in-less-than-5-minutes-b4c8bbf1f71c
+    sourceName: Medium
+    sourceUrl: https://medium.com/@johnryancottam
+    date: Aug 15, 2018
+    author: John Ryan Cottam
+    img: /img/examples/integrate-an-awesome-software.png
+
+  - title: "How To Run Browser Tests via Cypress in Your CI/CD Pipeline with AWS CodeBuild"
+    url: https://blog.kylegalbraith.com/2018/08/14/how-to-run-browser-tests-via-cypress-in-your-cicd-pipeline-with-aws-codebuild/
+    sourceName: blog.kylegalbraith.com
+    sourceUrl: https://blog.kylegalbraith.com/
+    date: Aug 14, 2018
+    author: Kyle Galbraith
+    img: /img/examples/kyle-galbraith-how-to-run.png
+
+  - title: "Setting up Bitbucket Pipelines with proper caching of NPM and Cypress"
+    url: https://medium.com/@ondrej.janosik42/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress-74d033888186
+    sourceName: Medium
+    sourceUrl: https://medium.com/@ondrej.janosik42
+    date: Aug 5, 2018
+    author: Ondrej Janosik 
+    img: /img/examples/setting-up-bitbucket.png
+
+  - title: "Testing with Cypress.io"
+    url: https://medium.com/@grant.glidewell/testing-with-cypress-io-10ca7e4984e0
+    sourceName: Medium
+    sourceUrl: https://medium.com/@grant.glidewell
+    date: Jul 30, 2018
+    author: Grant Glidewell
+    img: /img/examples/testing-with-cypress-io.png
+
+  - title: "Our Investment in Cypress.io"
+    url: https://medium.com/@er_17361/our-investment-in-cypress-io-bc974155838d
+    sourceName: Medium
+    sourceUrl: https://medium.com/@er_17361
+    date: Jul 24, 2018
+    author: Las Olas VC (a.k.a. LOVC)
+    img: /img/examples/our-investment-in-cypress.png
+
+  - title: "Testing Functionality With Cypress.io"
+    url: https://www.sitefinitysteve.com/blog/code/2018/07/20/testing-functionality-with-cypress-io
+    sourceName: Sitefinity Steve 
+    sourceUrl: https://www.sitefinitysteve.com/
+    date: Jul 20, 2018
+    author: Sitefinity Steve
+    img: /img/examples/testing-functionality-with-cypress.png
+
+  - title: "Getting Cypress JS to Interact with CKEditor"
+    url: https://medium.com/@nickdenardis/getting-cypress-js-to-interact-with-ckeditor-f46eec01132f
+    sourceName: Medium
+    sourceUrl: https://medium.com/@nickdenardis
+    date: Jul 15, 2018
+    author: Nick DeNardis
+    img: /img/examples/getting-cypress-to-interact.png
+
+  - title: "Cypress and AuthO"
+    url: https://blog.johnnyreilly.com/2018/07/cypress-and-auth0.html
+    sourceName: blog.johnnyreilly.com
+    sourceUrl: https://blog.johnnyreilly.com/
+    date: Jul 9, 2018
+    author: John Reilly
+    img: /img/examples/cypress-autho.png
+
+  - title: "Cypress.io Raises $4 Million for Front End Automated Testing"
+    url: https://www.businesswire.com/news/home/20180626005183/en/Cypress.io-Raises-4-Million-Front-Automated-Testing
+    sourceName: Business Wire 
+    sourceUrl: https://www.businesswire.com/portal/site/home/news/
+    date: June 26, 2018
+    author: Business Wire 
+    img: /img/examples/business-wire-4mil.png
     
   - title: "Comparing JavaScript Browser Automation Frameworks: Selenium Versus Webdriver.io Versus Puppeteer"
     url: https://applitools.com/blog/comparing-javascript-browser-automation-frameworks
@@ -39,7 +143,7 @@ large:
     date: June 25, 2018
     author: Gil Tayar
     img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
-
+  
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
     sourceName: Endgame
@@ -288,6 +392,14 @@ large:
     date: Dec 2, 2017
     author: Martin Jakubík
     img: /img/examples/cypress-typescript-blog.jpg
+
+  - title: "Up and Running with Cypress and Typescript"
+    url: https://www.linkedin.com/pulse/unleash-test-automation-power-cypressio-kushan-shalindra-amarasiri-/
+    sourceName: LinkedIn Pulse 
+    sourceUrl: https://www.linkedin.com/in/kushana/detail/recent-activity/posts/
+    date: Nov 25, 2017
+    author: Kushan Shalindra Amarasiri 
+    img: /img/examples/kiwi-unleash-test-automation.png
 
   - title: "Cypress.io Vs Selenium Test Automation"
     url: https://www.joecolantonio.com/2017/11/16/cypress-io-vs-selenium-test-automation/
