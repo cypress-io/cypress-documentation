@@ -193,5 +193,5 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
 - {% url `cy.writeFile()` writefile %}
-- {% url "Incredibly Powerful cy.task" https://glebbahmutov.com/blog/powerful-cy-task/ %} uses `cy.task` to check if the record has been added to the database.
-- {% url "Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %} uses `cy.task` to bundle a component before mounting it inside Cypress for testing.
+- {% url "Blog: Incredibly Powerful cy.task()" https://glebbahmutov.com/blog/powerful-cy-task/ %}
+- {% url "Blog: Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %}
