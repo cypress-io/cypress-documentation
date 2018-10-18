@@ -7,7 +7,7 @@ large:
     date: June 22, 2018
     author: Jeff Delaney
     youtubeId: 7N63cMKosIE
-    
+
   - title: "Cypress.io React TodoMVC test"
     url: https://youtu.be/nq_WRILIFTw
     sourceName: Grafikart
@@ -31,7 +31,7 @@ large:
     date: Mar 17, 2018
     author: Alex Barry
     youtubeId: w8liCoPsDIU
-    
+
   - title: "Using Cypress for end-to-end testing with Gleb Bahmutov"
     url: https://www.youtube.com/watch?v=zTHQqiu_y0Q
     sourceName: stefan judis
@@ -47,3 +47,11 @@ large:
     date: Jan 31, 2018
     author: Łukasz Wroński
     youtubeId: AddBNz1T08U
+
+  - title: "Get the latest updates from Cypress"
+    url: https://www.youtube.com/watch?v=FfqD1ExUGlw
+    sourceName: Slides
+    sourceUrl: https://slides.com/bahmutov/cy-parallelization#/
+    date: Oct 16, 2018
+    author: Brian Mann
+    youtubeId: FfqD1ExUGlw
