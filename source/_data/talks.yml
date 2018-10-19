@@ -9,14 +9,14 @@ large:
 
   - title: "Hassle free E2E tests with Cypress"
     url: https://www.youtube.com/watch?v=jijOIqtBGYg
-    sourceName: React Vienna 
+    sourceName: React Vienna
     date: Jul 17, 2018
     author: David Madner
     youtubeId: jijOIqtBGYg
 
   - title: "QIT: Caching, Testing, and Project Management"
     url: https://www.youtube.com/watch?v=NTanPba9mZM&feature=youtu.be
-    sourceName: Coding Blocks 
+    sourceName: Coding Blocks
     date: Jul 1, 2018
     author: Dave Follett, Joe Zack, Nicolas Marcora
     youtubeId: NTanPba9mZM
@@ -30,7 +30,7 @@ large:
 
   - title: "Automated Testing for the Modern Web"
     url: https://www.recallact.com/presentation/automated-testing-modern-web
-    sourceName: Recall Act 
+    sourceName: Recall Act
     sourceUrl: https://www.recallact.com/
     date: Jun 21, 2018
     author: Jennifer Shehane
@@ -175,7 +175,7 @@ large:
     img: /img/examples/js-monthly-london-norbert-de-langen-testing-made-easy-cypress.jpg
 
   - title: "Testing, the way it should be"
-    url: https://youtu.be/N9RbcP4iY90?t=48m14s
+    url: https://youtu.be/lK_ihqnQQEM
     sourceName: ReactiveConf
     sourceUrl: https://reactiveconf.com/
     date: Oct 27, 2016
