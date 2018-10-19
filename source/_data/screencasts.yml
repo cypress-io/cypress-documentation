@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Get the latest updates from Cypress"
+    url: https://www.youtube.com/watch?v=FfqD1ExUGlw
+    sourceName: Cypress.io
+    sourceUrl: https://slides.com/bahmutov/cy-parallelization
+    date: October 16, 2018
+    author: Brian Mann & Gleb Bahmutov
+    youtubeId: FfqD1ExUGlw
+    
   - title: "Cypress End-to-End Testing"
     url: https://www.youtube.com/watch?v=7N63cMKosIE
     sourceName: Angular Firebase
