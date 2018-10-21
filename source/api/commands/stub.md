@@ -179,7 +179,7 @@ obj.foo('foo', 'bar')
 expect(stub).to.be.called
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log](/img/api/stub/stub-in-command-log.png)
 

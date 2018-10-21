@@ -418,7 +418,7 @@ Even the `Initiator` is included, which is a stack trace to what caused the XHR 
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 ## Matches
 
