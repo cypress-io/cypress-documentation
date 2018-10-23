@@ -153,7 +153,7 @@ cy.get('select')
 cy.get('select').select('Homer Simpson')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log select](/img/api/select/select-homer-option-from-browser-dropdown.png)
 

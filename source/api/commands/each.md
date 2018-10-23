@@ -118,7 +118,7 @@ You can stop the `.each()` loop early by returning `false` in the callback funct
 
 # Command Log
 
-- `cy.each()` does *not* log in the command log
+- `cy.each()` does *not* log in the Command Log
 
 # See also
 

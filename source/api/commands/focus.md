@@ -115,7 +115,7 @@ Internally Cypress does account for this, and will polyfill the blur events when
 cy.get('[name="comment"]').focus()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log focus](/img/api/focus/get-input-then-focus.png)
 

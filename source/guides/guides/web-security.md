@@ -61,7 +61,7 @@ If your site embeds an `<iframe>` that is a cross-origin frame, Cypress will not
 
 ***Examples of uses for cross-origin iframes:***
 
-- Embedding a Vimeo or Youtube video.
+- Embedding a Vimeo or YouTube video.
 - Displaying a credit card form from Stripe or Braintree.
 - Displaying an embedded login form from Auth0.
 - Showing comments from Disqus.

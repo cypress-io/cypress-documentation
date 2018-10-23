@@ -168,7 +168,7 @@ cy.scrollTo('bottom')
 cy.get('#scrollable-horizontal').scrollTo('right')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 {% img /img/api/scrollto/command-log-scrollto.png "command log for scrollTo" %}
 
