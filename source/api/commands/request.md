@@ -80,7 +80,7 @@ Option | Default | Description
 `gzip` | `true` | Whether to accept the `gzip` encoding
 `headers` | `null` | Additional headers to send; Accepts object literal
 `qs` | `null` | Query parameters to append to the `url` of the request
-`timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.request %}
+`timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.request %}.  This will affect Mocked and Non-Mocked requests.
 
 You can also set options for `cy.request`'s `baseUrl` and `responseTimeout` globally in {% url 'configuration' configuration %}.
 
