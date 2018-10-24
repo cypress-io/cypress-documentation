@@ -73,6 +73,10 @@
 }
 
 @media screen and(max-width: 769px) {
+  #logo img {
+    padding-top: 4px;
+  }
+  
   #content-wrap {
     padding-top: 0;
   }
@@ -231,6 +235,7 @@
 }
 
 @media screen and(max-width: 1000px) {
+
   #content-wrap {
     padding-top: 0;
   }
