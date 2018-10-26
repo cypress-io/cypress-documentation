@@ -253,7 +253,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
     url = '...'
   }
 
-  // originalFn is the existing `visit` command that need to call
+  // originalFn is the existing `visit` command that you need to call
   // and it will receive whatever you pass in here.
   //
   // make sure to add a return here!
