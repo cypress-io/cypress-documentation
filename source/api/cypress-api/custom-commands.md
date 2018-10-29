@@ -209,7 +209,6 @@ Examples of dual commands:
 ### Custom Dual Command
 
 ```javascript
-// not a great example (WIP) :-)
 Cypress.Commands.add('dismiss', {
   prevSubject: 'optional'
 }, (subject, arg1, arg2) => {
@@ -384,10 +383,6 @@ cy.wrap(null).contains() // has subject, but not `element`, will error
 ```
 
 # Notes
-
-## Retryability
-
-WIP
 
 ## Command Logging
 
