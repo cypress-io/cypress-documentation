@@ -14,6 +14,7 @@ Feature | Status
 --- | ---
 {% issue 310 'Cross Browser Support - #310' %} | In progress
 {% issue 687 'Full Network Layer Stubbing - #687' %} | In progress
+{% issue 1313 'Retries - #1313' %} | In progress
 {% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features
 {% issue 685 'Iframe Switching APIs - #685' %} | Partially complete
 {% issue 1469 'Better Corporate Proxy Support - #1469' %} | Proposal complete
