@@ -285,7 +285,7 @@ cy.get('input', { timeout: 10000 }).should(($input) => {
 cy.get('.left-nav>.nav').children().should('have.length', 8)
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log should](/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png)
 

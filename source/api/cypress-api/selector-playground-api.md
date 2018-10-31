@@ -39,7 +39,7 @@ Option | Accepts | Description
 
 **{% fa fa-angle-right %} $el**  ***(Object)***
 
-The {% url 'JQuery element' http://api.jquery.com/Types/#jQuery %} that you want to get the selector value for.
+The {% url 'jQuery element' http://api.jquery.com/Types/#jQuery %} that you want to get the selector value for.
 
 # Examples
 

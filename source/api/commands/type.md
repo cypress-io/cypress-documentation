@@ -435,7 +435,7 @@ Of course if the form's `submit` event is `preventedDefault` the form will not a
 cy.get('input[name=firstName]').type('Jane Lane')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/type/type-in-input-shown-in-command-log.png)
 

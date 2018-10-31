@@ -227,7 +227,7 @@ cy.get('.navbar-toggle').should('be.visible').click()
 cy.get('.nav').find('a').should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log viewport](/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png)
 

@@ -194,7 +194,7 @@ Cypress does not currently factor in `pointer-events: none` in its clicking algo
 cy.get('form').find('button').contains('Create User').click()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for click](/img/api/click/click-button-in-form-during-test.png)
 

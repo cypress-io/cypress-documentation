@@ -75,7 +75,7 @@ cy.document().its('contentType').should('eq', 'text/html')
 cy.document()
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command log document](/img/api/document/get-document-of-application-in-command-log.png)
 

@@ -67,7 +67,7 @@ cy.title().should('eq', 'My Awesome Application')
 cy.title().should('include', 'New User')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/title/test-title-of-website-or-webapp.png)
 

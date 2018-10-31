@@ -159,7 +159,7 @@ it('disables on click', function () {
 cy.get('input[name="firstName"]').should('have.value', 'Homer')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log get](/img/api/get/get-element-and-make-an-assertion.png)
 

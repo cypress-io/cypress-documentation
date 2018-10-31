@@ -104,6 +104,12 @@ $(npm bin)/cypress open
 npx cypress open
 ```
 
+**Or by using `yarn`**
+
+```shell
+yarn run cypress open
+```
+
 After a moment, the Cypress Test Runner will launch.
 
 ## Adding npm scripts

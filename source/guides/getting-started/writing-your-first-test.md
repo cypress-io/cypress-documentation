@@ -344,7 +344,7 @@ But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was pr
 
 Commands are also interactive. Go ahead and click on the `CLICK` command.
 
-{% img /img/guides/first-test-click-revert.png "A click on the click command in the command log with test runner labeled as 1, 2, 3" %}
+{% img /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
 
 Notice it highlights in purple. This did three things worth noting...
 
@@ -380,7 +380,7 @@ Besides Commands being interactive, they also output additional debugging inform
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class selector.
 
-{% img /img/guides/first-test-console-output.png "Test runner with get command pinned and console log open showing the yielded element" %}
+{% img /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
 
 **We can see Cypress output additional information in the console:**
 
@@ -424,7 +424,7 @@ describe('My First Test', function() {
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.
 
-{% img /img/guides/first-test-paused.png "Test runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
+{% img /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
 ## In action
 
