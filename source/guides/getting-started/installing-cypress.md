@@ -138,52 +138,39 @@ You can {% url 'read more about the CLI here' command-line %}.
 
 ## Environment variables
 
-| name                                                     | description                                                                                                                      |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `CYPRESS_INSTALL_BINARY`                                 | {% urlHash "Changes from where the Cypress binary is downloaded and installed" Changing-how-the-Cypress-binary-gets-installed %} |
-| `CYPRESS_DOWNLOAD_MIRROR`                                | {% urlHash "Downloads the Cypress binary though a mirror server"  Mirroring %}                                                   |
-| `CYPRESS_CACHE_FOLDER`                                   | {% urlHash "Changes the Cypress binary cache location"  Overriding-the-binary-cache-folder %}                                    |
-| `CYPRESS_RUN_BINARY`                                     | {% urlHash "Location for Cypress binary at run-time" Overriding-the-Cypress-binary-at-run-time %}                                |
-| `CYPRESS_SKIP_BINARY_INSTALL` {% badge danger removed %} | use `CYPRESS_INSTALL_BINARY=0` instead                                                                                           |
-| `CYPRESS_BINARY_VERSION` {% badge danger removed %}      | use `CYPRESS_INSTALL_BINARY` instead                                                                                             |
+Name | Description
+------ |  ---------
+`CYPRESS_INSTALL_BINARY` | {% urlHash "Destination of Cypress binary that's downloaded and installed" Install-binary %}
+`CYPRESS_DOWNLOAD_MIRROR` | {% urlHash "Downloads the Cypress binary though a mirror server"  Mirroring %}
+`CYPRESS_CACHE_FOLDER` | {% urlHash "Changes the Cypress binary cache location" Binary-cache %}
+`CYPRESS_RUN_BINARY` | {% urlHash "Location of Cypress binary at run-time" Run-binary %}
+~~CYPRESS_SKIP_BINARY_INSTALL~~ | {% badge danger removed %} use `CYPRESS_INSTALL_BINARY=0` instead
+~~CYPRESS_BINARY_VERSION~~ | {% badge danger removed %} use `CYPRESS_INSTALL_BINARY` instead
 
+## Install binary
 
-### Changing how the Cypress binary gets installed
+Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cypress is installed.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
 
-Using this environment variable you can control how Cypress is installed. This is helpful if you want to:
+**This is helpful if you want to:**
 
-- Install a different version than the default npm package.
+- Install a version different than the default npm package.
+    ```shell
+CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3
+    ```
 - Specify an external URL (to bypass a corporate firewall).
-- Specify a local file to install locally instead of using the internet.
-
-To override what is installed, you simply set `CYPRESS_INSTALL_BINARY` with the `npm install` command.
-Changing install binary
-
-1. Install the `cypress` npm package version `2.0.3` with the binary `2.0.1` version:
-
     ```shell
-    CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3
+CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
     ```
-
-2. Install the Cypress binary from a given URL:
-
+- Specify a file to install locally instead of using the internet.
     ```shell
-    CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
-    ```
-
-3. Install the Cypress binary from a local file:
-
-    ```shell
-    CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
+CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
     ```
 
 In all cases, the fact that the binary was installed from a custom location *is not saved in your `package.json` file*. Every repeated installation needs to use the same environment variable to install the same binary.
 
 ### Skipping installation
 
-You can also force Cypress to skip the installation of the binary application. This could be useful if you want to prevent Cypress from downloading the Cypress binary at the time of `npm install`.
-
-Just set `CYPRESS_INSTALL_BINARY=0`
+You can also force Cypress to skip the installation of the binary application by setting `CYPRESS_INSTALL_BINARY=0`. This could be useful if you want to prevent Cypress from downloading the Cypress binary at the time of `npm install`.
 
 ```shell
 CYPRESS_INSTALL_BINARY=0 npm install
@@ -191,44 +178,7 @@ CYPRESS_INSTALL_BINARY=0 npm install
 
 Now Cypress will skip its install phase once the npm module is installed.
 
-### Hosting / Mirroring
-
-If you want to download a specific Cypress version for a given platform, you can get it from our CDN.
-
-You may want to do this if you want to host Cypress yourself and serve it from a local network.
-
-The download server url is `https://download.cypress.io`.
-
- | Method | Url                            | Description                                                               |
- | ------ | ------------------------------ | ------------------------------------------------------------------------- |
- | `GET`  | `/desktop                 `    | Download latest desktop app                                               |
- | `GET`  | `/desktop?platform=p      `    | downloads latest desktop app for specific platform                        |
- | `GET`  | `/desktop.json            `    | returns desktop manifest.json                                             |
- | `GET`  | `/desktop/:version`            | downloads desktop app by version                                          |
- | `GET`  | `/desktop/:version?platform=p` | downloads desktop app by OS which could be `darwin`, `win32` or `linux64` |
-
-{% note info "Example:" %}
-`https://download.cypress.io/desktop/2.0.1?platform=win32`
-
-This will download Cypress `2.0.1` for Windows platform.
-{% endnote %}
-
-If you do not provide a platform, it will be detected automatically.
-
-### Mirroring
-
-If you choose to mirror the entire cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server url from `https://download.cypress.io` to your own mirror.
-
-For example: 
-
-```shell
-CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
-```
-
-Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
-
-
-### Overriding the binary cache folder
+## Binary cache
 
 As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
 
@@ -250,25 +200,25 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
 {% endnote %}
 
-### Overriding the Cypress binary at run-time
+## Run binary
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
 
 `CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary. 
 
-#### Mac
+### Mac
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
 ```
 
-#### Linux
+### Linux
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
 ```
 
-#### Windows
+### Windows
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
@@ -278,3 +228,36 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, since it will affect every cypress module installed on your file system.
 {% endnote %}
 
+## Hosting
+
+If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN. You may also want to host Cypress yourself and serve it from a local network.
+
+The download server url is `https://download.cypress.io`. 
+
+See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
+
+ Method | Url                            | Description
+ ------ | ------------------------------ | -------------------------------------------------------------------------
+ `GET`  | `/desktop                 `    | Download Cypress at latest version (platform auto-detected)
+ `GET`  | `/desktop.json            `    | Returns JSON containing latest available CDN destinations
+ `GET`  | `/desktop?platform=p      `    | Download Cypress for a specific platform
+ `GET`  | `/desktop/:version`            | Download Cypress with a specified version
+ `GET`  | `/desktop/:version?platform=p` | Download Cypress with a specified version and platform
+
+**Example of downloading Cypress `3.0.0` for Windows platform:**
+
+```
+https://download.cypress.io/desktop/3.0.0?platform=win
+```
+
+## Mirroring
+
+If you choose to mirror the entire Cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server url from `https://download.cypress.io` to your own mirror.
+
+For example:
+
+```shell
+CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
+```
+
+Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
