@@ -12,6 +12,7 @@ const assertions = require('../lib/tags/assertions')
 const timeouts = require('../lib/tags/timeouts')
 const usageOptions = require('../lib/tags/usage')
 const { issue, openAnIssue, user } = require('../lib/tags/issues')
+const { badge } = require('../lib/tags/badge')
 const { url, urlHash } = require('../lib/tags/url')
 const { fa, helperIcon } = require('../lib/tags/icons')
 const video = require('../lib/tags/video')
@@ -25,6 +26,9 @@ const tags = {
   open_an_issue: openAnIssue,
   issue: issue,
   user: user,
+
+  // badge
+  badge: badge,
 
   // icons
   fa: fa,
