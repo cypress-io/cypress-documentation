@@ -68,7 +68,7 @@ To use encoding with other options, have your options object be your third param
 
 ## Text
 
-***Write some text to a `txt` file***
+### Write some text to a `txt` file
 
 If the path to the file does not exist, the file and its path will be created. If the file already exists, it will be over-written.
 
@@ -88,7 +88,7 @@ cy
 
 ## JSON
 
-***Write JSON to a file***
+### Write JSON to a file
 
 JavaScript arrays and objects are stringified and formatted into text.
 
@@ -108,7 +108,7 @@ cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
 }
 ```
 
-***Write response data to a fixture file***
+### Write response data to a fixture file
 
 ```javascript
 cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
@@ -123,7 +123,7 @@ cy.fixture('users').then((users) => {
 
 ## Encoding
 
-***Specify the encoding as a String***
+### Specify the encoding as a String
 
 ```javascript
 cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
@@ -135,18 +135,18 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
 Hello World
 ```
 
-***Specify the encoding as part of the options object***
+### Specify the encoding as part of the options object
 
 ```javascript
-cy.writeFile('path/to/ascii.txt', 'Hello World', {encoding: 'ascii', flag: 'a+'})
+cy.writeFile('path/to/ascii.txt', 'Hello World', { encoding: 'ascii', flag: 'a+' })
 ```
 
 ## Flags
 
-***Append contents to the end of a file***
+### Append contents to the end of a file
 
 ```javascript
-cy.writeFile('path/to/message.txt', 'Hello World', {flag: 'a+'})
+cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
 ```
 
 # Rules
