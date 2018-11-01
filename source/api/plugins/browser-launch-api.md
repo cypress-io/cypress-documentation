@@ -13,6 +13,10 @@ The most common use case is adding your own chrome extension.
 
 Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify the arguments based on the browser that Cypress is launching.
 
+{% note warning %}
+Sending browser flags to the Electron browser (used in CI) does not currently work. See {% issue 1519 %}.
+{% endnote %}
+
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
