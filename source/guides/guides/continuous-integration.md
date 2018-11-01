@@ -78,9 +78,9 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 language: node_js
 node_js:
   - 10
-cache:
+cache: 
+  npm: true
   directories:
-    - ~/.npm
     - ~/.cache
 install:
   - npm ci
