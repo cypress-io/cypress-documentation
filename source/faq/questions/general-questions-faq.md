@@ -134,6 +134,3 @@ Unit tests are not something we are really trying to solve right now. Most of th
 We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing, it just remains a thing that's possible if we wanted to go down that route.
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
-
-## {% fa fa-angle-right %} Do you have whitepapers? 
-Check out {% url "how it works" https://www.cypress.io/how-it-works/ %}
