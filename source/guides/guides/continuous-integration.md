@@ -155,6 +155,8 @@ Find the complete CircleCI v2 example with caching and artifact upload in the {%
 
 The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
 
+Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
+
 A typical project can simply have:
 
 ```yaml
