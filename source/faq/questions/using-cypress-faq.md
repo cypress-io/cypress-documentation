@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: Using Cypress
-
 containerClass: faq
 ---
 
@@ -154,7 +153,7 @@ We recommend these great modules for this use case:
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or AJAX requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
+The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
 
 ## {% fa fa-angle-right %} Can I test the HTML `<head>` element?
 
@@ -181,11 +180,11 @@ describe('The Document Metadata', () => {
     cy.visit('/')
   })
 
-  it("looks inside the head content using `cy.document()`", () => {
+  it('looks inside the head content using `cy.document()`', () => {
     // this will yield the entire window.document object
     // if you click on DOCUMENT from the command log,
     // it will output the entire #document to the console
-    cy.document();
+    cy.document()
 
   })
 
@@ -198,7 +197,7 @@ describe('The Document Metadata', () => {
 
   it('looks inside <meta> tag for description', () => {
     cy.get('head meta[name="description"]')
-      .should("have.attr", "content", "This description is so meta")
+      .should('have.attr', 'content', 'This description is so meta')
   })
 
 })
@@ -246,9 +245,9 @@ This is documented in detail on the {% url "Catalog Of Events" catalog-of-events
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 
-Yes, you use your `backgroundFile` to modify configuration values and environment variables.
+Yes, you can pass configuration to Cypress via environment variables, CLI arguments, JSON files and other means.
 
-{% url "We have a whole API document showing you how to do just that." configuration-event %}
+{% url "Read the Environment Variables guide." environment-variables %}
 
 ## {% fa fa-angle-right %} Can I override or change the default user agent the browser uses?
 
@@ -376,7 +375,7 @@ You can whitelist specific cookies to be preserved across tests using the {% url
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: "session_id"
+  whitelist: 'session_id'
 })
 ```
 
@@ -529,7 +528,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these NPM tools" continuous-integration#Helpers %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Helpers %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
@@ -542,3 +541,20 @@ That being said, we use Cypress to test our own Desktop app's front end - by stu
 - Search existing {% url "open issues" https://github.com/cypress-io/cypress/issues %}, it may already be reported!
 - Update Cypress. Your issue may have {% url "already been fixed" changelog %}.
 - {% open_an_issue %}. Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
+
+## {% fa fa-angle-right %} What are your best practices for organizing tests?
+
+We see organizations _starting_ with Cypress by placing end-to-end tests in a separate repo. This is a great practice that allows someone on the team to prototype a few tests and evaluate Cypress within minutes. As the time passes and the number of tests grows, we _strongly suggest_ moving end-to-end tests to live right alongside your front end code. This brings many benefits:
+
+- engages developers in writing end-to-end tests sooner
+- keeps tests and the features they tests in sync
+- tests can be run every time the code changes
+- allows code sharing between the application code and the tests (like selectors)
+
+## {% fa fa-angle-right %} What is the right balance between custom commands and utility functions?
+
+There is already a great section in {% url "Custom Commands" custom-commands#Best-Practices %} guide that talks about trade-offs between custom commands and utility functions. We feel reusable functions in general are a way to go. Plus they do not confuse {% issue 1065 'IntelliSense like custom commands do' %}.
+
+## {% fa fa-angle-right %} Can I print the list of commands from a test in the terminal?
+
+If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin {% url cypress-failed-log https://github.com/bahmutov/cypress-failed-log %} that saves a JSON file with all commands from a failed test. We are also working on mirroring `console.log` messages from the browser in the terminal, see {% issue 2078 %}.

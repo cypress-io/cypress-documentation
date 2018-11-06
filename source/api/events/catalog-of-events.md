@@ -91,7 +91,7 @@ Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node mod
 If you'd like to see (the huge) stream of events that Cypress emits in the browser you can pop open your Dev Tools and write this line in the console.
 
 ```javascript
-localStorage.debug = "cypress:*"
+localStorage.debug = 'cypress:*'
 ```
 
 After you refresh the page you'll see something that looks like this in your console:

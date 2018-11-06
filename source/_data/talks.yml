@@ -1,5 +1,26 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Hassle free E2E tests with Cypress"
+    url: https://www.youtube.com/watch?v=1PMxLTfh6lo&feature=youtu.be&t=1
+    sourceName: BuzzJS
+    date: Jul 30, 2018
+    author: Gleb Bahmutov
+    youtubeId: 1PMxLTfh6lo
+
+  - title: "Hassle free E2E tests with Cypress"
+    url: https://www.youtube.com/watch?v=jijOIqtBGYg
+    sourceName: React Vienna
+    date: Jul 17, 2018
+    author: David Madner
+    youtubeId: jijOIqtBGYg
+
+  - title: "QIT: Caching, Testing, and Project Management"
+    url: https://www.youtube.com/watch?v=NTanPba9mZM&feature=youtu.be
+    sourceName: Coding Blocks
+    date: Jul 1, 2018
+    author: Dave Follett, Joe Zack, Nicolas Marcora
+    youtubeId: NTanPba9mZM
+
   - title: "Cypress E2E Testing"
     url: https://www.youtube.com/watch?v=LFUm9qV_Gjo
     sourceName: Northwest Chicago Javascript
@@ -7,12 +28,27 @@ large:
     author: Steve Schwarz
     youtubeId: LFUm9qV_Gjo
 
+  - title: "Automated Testing for the Modern Web"
+    url: https://www.recallact.com/presentation/automated-testing-modern-web
+    sourceName: Recall Act
+    sourceUrl: https://www.recallact.com/
+    date: Jun 21, 2018
+    author: Jennifer Shehane
+    img: /img/examples/automated-testing-for-the-modern.png
+
   - title: "Cypress"
     url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
     sourceName: Bluesoft Labs
     date: May 24, 2018
     author: Adriano Silva
     youtubeId: GhyE3Y5oS_0
+
+  - title: "End to End Testing in the Future"
+    url: https://www.youtube.com/watch?v=p38bIMC-YOU
+    sourceName: WeAreDevs Conference
+    date: May 18, 2018
+    author: Gleb Bahmutov
+    youtubeId: p38bIMC-YOU
 
   - title: "Accélerez vos tests end to end avec Cypress"
     url: https://www.youtube.com/watch?v=UpBfQ6mdb8U&amp=&feature=youtu.be
@@ -139,7 +175,7 @@ large:
     img: /img/examples/js-monthly-london-norbert-de-langen-testing-made-easy-cypress.jpg
 
   - title: "Testing, the way it should be"
-    url: https://youtu.be/N9RbcP4iY90?t=48m14s
+    url: https://youtu.be/lK_ihqnQQEM
     sourceName: ReactiveConf
     sourceUrl: https://reactiveconf.com/
     date: Oct 27, 2016

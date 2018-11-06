@@ -1,10 +1,9 @@
 ---
 title: Variables and Aliases
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to deal with async commands
 - What Aliases are and how they simplify your code
@@ -54,7 +53,7 @@ To access what each Cypress command yields you use {% url `.then()` then %}.
 ```js
 cy.get('button').then(($btn) => {
   // $btn is the object that the previous
-  // command yielded us  
+  // command yielded us
 })
 ```
 

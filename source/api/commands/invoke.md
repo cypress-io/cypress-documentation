@@ -21,7 +21,7 @@ If you want to get a property that is not a function on the previously yielded s
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wrap({animate: fn}).invoke('animate') // Invoke the 'animate' function
+cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
 cy.get('.modal').invoke('show')          // Invoke the jQuery 'show' function
 ```
 
@@ -29,7 +29,7 @@ cy.get('.modal').invoke('show')          // Invoke the jQuery 'show' function
 
 ```javascript
 cy.invoke('convert')                   // Errors, cannot be chained off 'cy'
-cy.wrap({name: 'Jane'}).invoke('name') // Errors, 'name' is not a function
+cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 ```
 
 ## Arguments
@@ -53,7 +53,7 @@ const fn = () => {
   return 'bar'
 }
 
-cy.wrap({foo: fn}).invoke('foo').should('eq', 'bar') // true
+cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 ```
 
 ***Use `.invoke()` to test HTML content***
@@ -90,7 +90,7 @@ const fn = (a, b, c) => {
 }
 
 cy
-  .wrap({sum: fn})
+  .wrap({ sum: fn })
   .invoke('sum', 2, 4, 6)
     .should('be.gt', 10) // true
     .and('be.lt', 20)    // true
@@ -158,7 +158,7 @@ cy.get('.connectors-div').should('be.hidden')
   .invoke('show').should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log invoke](/img/api/invoke/invoke-jquery-show-on-element-for-testing.png)
 

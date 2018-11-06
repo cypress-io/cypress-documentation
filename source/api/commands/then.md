@@ -71,27 +71,28 @@ cy.get('button').then(($btn) => {
 
 ```javascript
 cy.wrap(null).then(() => {
-    return {id: 123}
-  })
-  .then((obj) => {
-    // subject is now the obj {id: 123}
-    expect(obj.id).to.eq(123) // true
-  })
+  return { id: 123 }
+})
+.then((obj) => {
+  // subject is now the obj {id: 123}
+  expect(obj.id).to.eq(123) // true
+})
 ```
 
 ***Returning `null` or `undefined` will not modify the yielded subject***
 
 ```javascript
-cy.get('form').then(($form) => {
-    console.log('form is:', $form)
-    // undefined is returned here, but $form will be
-    // yielded to allow for continued chaining
-  })
-  .find('input').then(($input) => {
-    // we have our $input element here since
-    // our form element was yielded and we called
-    // .find('input') on it
-  })
+cy.get('form')
+.then(($form) => {
+  console.log('form is:', $form)
+  // undefined is returned here, but $form will be
+  // yielded to allow for continued chaining
+})
+.find('input').then(($input) => {
+  // we have our $input element here since
+  // our form element was yielded and we called
+  // .find('input') on it
+})
 ```
 
 ## Promises
@@ -156,7 +157,7 @@ cy.get('button').click().then(($button) => {
 
 # Command Log
 
-- `.then()` does *not* log in the command log
+- `.then()` does *not* log in the Command Log
 
 # See also
 

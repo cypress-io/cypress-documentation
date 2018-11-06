@@ -142,7 +142,7 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
-cy.task('seedDatabase', null, { timeout: 20000 });
+cy.task('seedDatabase', null, { timeout: 20000 })
 ```
 
 # Rules
@@ -167,7 +167,7 @@ cy.task('seedDatabase', null, { timeout: 20000 });
 cy.task('readJson', 'cypress.json')
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log task](/img/api/task/task-read-cypress-json.png)
 
@@ -183,3 +183,5 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
 - {% url `cy.writeFile()` writefile %}
+- {% url "Blog: Incredibly Powerful cy.task()" https://glebbahmutov.com/blog/powerful-cy-task/ %}
+- {% url "Blog: Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %}

@@ -199,7 +199,7 @@ Modifiers are automatically released between tests, even with `{release: false}`
 ```javascript
 it('has modifiers activated', function () {
   // 'altKey' will be true while typing 'foo'
-  cy.get('input').type('{alt}foo', {release: false})
+  cy.get('input').type('{alt}foo', { release: false })
 })
 
 it('does not have modifiers activated', function () {
@@ -212,7 +212,7 @@ To manually release modifiers within a test after using `{release: false}`, use 
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
-cy.get('input').type('{alt}foo', {release: false})
+cy.get('input').type('{alt}foo', { release: false })
 // 'altKey' will be true during the 'get' and 'click' commands
 cy.get('button').click()
 // 'altKey' will be released after this command
@@ -243,7 +243,7 @@ cy.get('body').type('{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightar
 // execute a SHIFT + click on the first <li>
 // {release: false} is necessary so that
 // SHIFT will not be released after the type command
-cy.get('body').type('{shift}', {release: false}).get('li:first').click()
+cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 ```
 
 ## Options
@@ -325,7 +325,7 @@ Cypress respects all default browser behavior when events are cancelled.
 // prevent the characters from being inserted
 // by canceling keydown, keypress, or textInput
 $('#username').on('keydown', (e) => {
-  e.preventDefault();
+  e.preventDefault()
 })
 
 // Cypress will not insert any characters if keydown, keypress, or textInput
@@ -339,7 +339,7 @@ In a real browser, preventing `mousedown` on a form field will prevent it from r
 
 ***Key Events Table***
 
-Cypress prints out a table of key events that detail the keys that were pressed when clicking on type within the {% url 'Command Log' type#Command-Log %}. Each character will contain the `which` character code and the events that happened as a result of that key press.
+Cypress prints out a table of key events that detail the keys that were pressed when clicking on type within the {% urlHash 'Command Log' Command-Log %}. Each character will contain the `which` character code and the events that happened as a result of that key press.
 
 Events that were `defaultPrevented` may prevent other events from firing and those will show up as empty.  For instance, canceling `keydown` will not fire `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the spec).
 
@@ -435,7 +435,7 @@ Of course if the form's `submit` event is `preventedDefault` the form will not a
 cy.get('input[name=firstName]').type('Jane Lane')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/type/type-in-input-shown-in-command-log.png)
 

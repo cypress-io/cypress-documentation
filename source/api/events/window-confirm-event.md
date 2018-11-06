@@ -36,6 +36,7 @@ cy.on('window:confirm', (text) => {
 
 This enables you to test how your application reacts to accepted confirmations and rejected confirmations.
 
+<!-- textlint-disable -->
 ```javascript
 // app code
 $('button').on('click', (e) => {
@@ -64,11 +65,12 @@ it('can control application confirms', function (done) {
   cy.on('window:confirm', (str) => {
     count += 1
 
-    switch(count) {
+    switch (count) {
       case 1:
         expect(str).to.eq('first confirm')
         // returning nothing here automatically
         // accepts the confirmation
+        return
       case 2:
         expect(str).to.eq('second confirm')
 
@@ -116,6 +118,7 @@ it('could also use a stub instead of imperative code', function () {
     })
 })
 ```
+<!-- textlint-enable -->
 
 # See also
 

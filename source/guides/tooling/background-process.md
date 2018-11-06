@@ -77,7 +77,7 @@ Check out the {% url '`task` event docs' task-event %} which describe how to use
 
 # API
 
-Whether you install an NPM module, or just want to write your own code - you should do all of that in the **background file** located at:
+Whether you install an npm module, or just want to write your own code - you should do all of that in the **background file** located at:
 
 ```text
 cypress/background/index.js
@@ -158,7 +158,7 @@ You can find the current Node version in Cypress {% url 'here' https://github.co
 
 {% endnote %}
 
-## NPM modules
+## Npm modules
 
 When Cypress executes your `backgroundFile` it will execute with `process.cwd()` set to your {% url "root project's path" configuration#Folders-Files %}. Additionally - you will be able to `require` **any Node module** you have installed.
 

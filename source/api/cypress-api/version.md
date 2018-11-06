@@ -19,9 +19,9 @@ Cypress.version // '1.1.0'
 const semver = require('semver')
 
 if (semver.gte(Cypress.version, '1.1.3')) {
-    it('has Cypress.platform', () => {
-        expect(Cypress.platform).to.be.a('string')
-    })
+  it('has Cypress.platform', () => {
+    expect(Cypress.platform).to.be.a('string')
+  })
 }
 ```
 

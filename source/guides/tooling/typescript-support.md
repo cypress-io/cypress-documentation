@@ -28,7 +28,7 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
     "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress"],
+    "types": ["cypress"]
   },
   "include": [
     "**/*.ts"

@@ -24,7 +24,7 @@ cy.route(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.route('/users/**')  
+cy.route('/users/**')
 ```
 
 ## Arguments
@@ -155,7 +155,7 @@ When passing a `string` as the `url`, the XHR's URL must match *exactly* what yo
 
 ```javascript
 cy.server()
-cy.route('https://localhost:7777/users', [{id: 1, name: 'Pat'}])
+cy.route('https://localhost:7777/users', [{ id: 1, name: 'Pat' }])
 ```
 
 ***`url` as a RegExp***
@@ -164,7 +164,7 @@ When passing a RegExp as the `url`, the XHR's url will be tested against the reg
 
 ```javascript
 cy.server()
-cy.route(/users\/\d+/, {id: 1, name: 'Phoebe'})
+cy.route(/users\/\d+/, { id: 1, name: 'Phoebe' })
 ```
 
 ```javascript
@@ -234,7 +234,7 @@ cy.wait('@getBeetles')
 cy.get('#beetle-results').should('be.empty')
 
 // now re-define the /beetles response
-cy.route('/beetles', [{name: 'Geotrupidae'}])
+cy.route('/beetles', [{ name: 'Geotrupidae' }])
 
 cy.get('#search').type('Geotrupidae')
 
@@ -244,7 +244,7 @@ cy.wait('@getBeetles')
 
 // we responded with 1 beetle item so now we should
 // have one result
-cy.get('#beetle-results').should('have.length', 1) 
+cy.get('#beetle-results').should('have.length', 1)
 ``` 
 
 ## Fixtures
@@ -418,7 +418,7 @@ Even the `Initiator` is included, which is a stack trace to what caused the XHR 
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 ## Matches
 

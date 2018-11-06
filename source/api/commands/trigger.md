@@ -155,7 +155,7 @@ cy.get('button').trigger('mouseover', { bubbles: false })
 This overrides the default auto-positioning based on the element itself. Useful for events like `mousemove` where you need the position to be outside the element itself.
 
 ```javascript
-cy.get('button').trigger('mousemove', {clientX: 200, clientY: 300})
+cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
 
 # Notes
@@ -218,7 +218,7 @@ cy.get('.trigger-input-range')
   .trigger('change')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 {% img /img/api/trigger/command-log-trigger.png "command log trigger" %}
 

@@ -3,8 +3,7 @@ title: Parallelization
 ---
 
 {% note info %}
-
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to parallelize test runs
 - How to group test runs
@@ -12,6 +11,10 @@ title: Parallelization
 - How load-balancing of tests works
 - What test insights are available on the Dashboard
 
+{% endnote %}
+
+{% note warning %}
+Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}. 
 {% endnote %}
 
 # Overview
@@ -39,7 +42,7 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-    Running tests in parallel requires the `--record` {% url "flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
     {% endnote %}
 
 # CI parallelization interactions
@@ -53,7 +56,7 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-se
 5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.
 
-### Parallelization process
+## Parallelization process
 
 {% img 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
 
@@ -63,7 +66,7 @@ Cypress will automatically balance your spec files across the available machines
 
 As more and more tests are recorded to the Cypress Dashboard, Cypress can better predict how long a given spec file will take to run. To prevent irrelevant data from affecting the duration prediction, Cypress doesn't use old historical run data regarding the spec file.
 
-### Spec duration history analysis
+## Spec duration history analysis
 
 {% img 'no-border' /img/guides/parallelization/spec-forecast.png "Spec duration forecasting" %}
 
@@ -73,55 +76,66 @@ With a duration estimation for each spec file of a test run, Cypress can distrib
 Duration estimation is done separately for every browser the spec file was tested against. This is helpful since performance characteristics vary by browser, and therefore it is perfectly acceptable to see different duration estimates for each browser a spec file was tested against.
 {% endnote %}
 
-### Example of tests run without parallelization
+# Example
 
-Without running your Cypress tests in parallel, your spec files run alphabetically, one right after another. Below shows an example of how our {% url "`example-kitchen-sink`" https://github.com/cypress-io/cypress-example-kitchensink %} tests may run without parallelization - taking **2 mins and 38 secs** to complete all of our tests.
+The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
+
+## Without parallelization
+
+In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
 
 ```text
-Machine 1 (Total of 2m 38s)
+1x-electron, Machine #1
 --------------------------
--- actions.spec.js (16s)
--- aliasing.spec.js (2s)
--- assertions.spec.js (2s)
--- connectors.spec.js (3s)
--- cookies.spec.js (3s)
--- cypress_api.spec.js (4s)
--- files.spec.js (3s)
--- local_storage.spec.js (2s)
--- location.spec.js (2s)
--- misc.spec.js (6s)
+-- actions.spec.js (14s)
+-- aliasing.spec.js (1s)
+-- assertions.spec.js (1s)
+-- connectors.spec.js (2s)
+-- cookies.spec.js (2s)
+-- cypress_api.spec.js (3s)
+-- files.spec.js (2s)
+-- local_storage.spec.js (1s)
+-- location.spec.js (1s)
+-- misc.spec.js (4s)
 -- navigation.spec.js (3s)
--- network_requests.spec.js (4s)
--- querying.spec.js (2s)
--- spies_stubs_clocks.spec.js (2s)
--- traversal.spec.js (6s)
--- utilities.spec.js (4s)
--- viewport.spec.js (5s)
--- waiting.spec.js (6s)
--- window.spec.js (2s)
+-- network_requests.spec.js (3s)
+-- querying.spec.js (1s)
+-- spies_stubs_clocks.spec.js (1s)
+-- traversal.spec.js (4s)
+-- utilities.spec.js (3s)
+-- viewport.spec.js (3s)
+-- waiting.spec.js (5s)
+-- window.spec.js (1s)
 ```
 
-### Example of tests run with parallelization
+{% note info %}
+Notice that when adding up the spec's run times (**0:55**), they add up to less than the total time for the run to complete (**1:51**) . There is extra time in the run for each spec: starting the browser, encoding and uploading the video to the dashboard, requesting the next spec to run.
+{% endnote %}
 
-When we run these same tests with parallelization, Cypress decides the best order to run the specs in based on the spec's previous run history. If we have 2 machines available, below represents how our {% url "`example-kitchen-sink`" https://github.com/cypress-io/cypress-example-kitchensink %} tests may run with parallelization - taking **39 secs** to complete all of our tests.
+## With parallelization
+
+When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file and it finished in **59 seconds**.
 
 ```text
-Machine 1 (Total of 39s)                  Machine 2 (Total of 38s)
+2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
 --------------------------------          -----------------------------------
--- actions.spec.js (16s)                  -- waiting.spec.js (6s)
--- viewport.spec.js (5s)                  -- traversal.spec.js (6s)
--- network_requests.spec.js (4s)          -- misc.spec.js (6s)
--- navigation.spec.js (3s)                -- cypress_api.spec.js (4s)
--- cookies.spec.js (3s)                   -- utilities.spec.js (4s)
--- connectors.spec.js (3s)                -- files.spec.js (3s)
--- assertions.spec.js (2s)                -- aliasing.spec.js (2s)
--- location.spec.js (2s)                  -- local_storage.spec.js (2s)
-                                          -- spies_stubs_clocks.spec.js (2s)
-                                          -- querying.spec.js (2s)
-                                          -- window.spec.js (2s)
+-- actions.spec.js (14s)                  -- waiting.spec.js (6s)
+-- traversal.spec.js (4s)                 -- navigation.spec.js (3s)
+-- misc.spec.js (4s)                      -- utilities.spec.js (3s)
+-- cypress_api.spec.js (4s)               -- viewport.spec.js (4s)
+-- cookies.spec.js (3s)                   -- network_requests.spec.js (3s)
+-- files.spec.js (3s)                     -- connectors.spec.js (2s)
+-- location.spec.js (2s)                  -- assertions.spec.js (1s)
+-- querying.spec.js (2s)                  -- aliasing.spec.js (1s)
+-- location.spec.js (1s)                  -- spies_stubs_clocks.spec.js (1s)
+                                          -- window.spec.js (1s)
 ```
 
-Parallelizing our tests across only 1 extra machine saved us about 2 minutes of our already small runtime. This time saved adds up on test runs that could be up to 30 minutes in length.
+The difference in running times and machines used is very clear when looking at the {% urlHash "Machines View" Machines-View %} on the Dashboard. Notice how the run parallelized across 2 machines automatically ran all specs based on their duration, while the run without parallelization did not.
+
+{% img /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
+
+Parallelizing our tests across 2 machines saved us almost 50% of the total run time, and we can further decrease the build time by adding more machines.
 
 # Grouping test runs
 
@@ -130,6 +144,8 @@ Multiple {% url "`cypress run`" command-line#cypress-run %} calls can be labeled
 {% note info %}
 For multiple runs to be grouped into a single run, it is required for CI machines to share a common CI build ID environment variable. Typically these CI machines will run in parallel or within the same build workflow or pipeline, but **it is not required to use Cypress parallelization to group runs**. Grouping of runs can be utilized independently of Cypress parallelization.
 {% endnote %}
+
+{% img 'no-border' /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" %}
 
 ## Grouping by browser
 
@@ -203,7 +219,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 
 | Provider  | Environment Variable  |
 |--|--|
-| Appveyor  | `APPVEYOR_BUILD_NUMBER`  |
+| AppVeyor  | `APPVEYOR_BUILD_NUMBER`  |
 | Bamboo  | `BAMBOO_BUILD_NUMBER`  |
 | Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER` |
 | Codeship  | `CI_BUILD_NUMBER`  |
@@ -247,3 +263,9 @@ The Bar Chart View visualizes the **duration** of your spec files relative to ea
 The Machines View charts spec files by the machines that executed them. This view makes it easy to evaluate the contribution of each machine to the overall test run.
 
 {% img /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
+
+# See also
+
+- {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
+- {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
+- {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}

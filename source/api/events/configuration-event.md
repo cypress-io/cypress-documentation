@@ -48,7 +48,7 @@ If you don't return an object, then configuration will not be modified.
 
 Resolved values will show up in your Settings tab in the Test Runner.
 
-{% img /img/guides/background-configuration.png %}
+{% img /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
 
 ## Promises
 

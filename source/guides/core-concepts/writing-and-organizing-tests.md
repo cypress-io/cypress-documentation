@@ -3,7 +3,7 @@ title: Writing and Organizing Tests
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to organize your test and support files.
 - What languages are supported in your test files.
@@ -107,7 +107,7 @@ You can define your behaviors in a `beforeEach` within any of the `cypress/suppo
 
 ```javascript
 beforeEach(function () {
-  cy.log("I run before every test in every spec file!!!!!!")
+  cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
 ![global hooks](/img/guides/global-hooks.png)
@@ -228,15 +228,15 @@ To run a specified suite or test, simply append `.only` to the function. All nes
 // -- Start: Our Application Code --
 function fizzbuzz (num) {
   if (num % 3 === 0 && num % 5 === 0) {
-    return "fizzbuzz"
+    return 'fizzbuzz'
   }
 
   if (num % 3 === 0) {
-    return "fizz"
+    return 'fizz'
   }
 
   if (num % 5 === 0) {
-    return "buzz"
+    return 'buzz'
   }
 }
 // -- End: Our Application Code --
@@ -252,15 +252,15 @@ describe('Unit Test FizzBuzz', function () {
   }
 
   it.only('returns "fizz" when number is multiple of 3', function () {
-    numsExpectedToEq([9, 12, 18], "fizz")
+    numsExpectedToEq([9, 12, 18], 'fizz')
   })
 
   it('returns "buzz" when number is multiple of 5', function () {
-    numsExpectedToEq([10, 20, 25], "buzz")
+    numsExpectedToEq([10, 20, 25], 'buzz')
   })
 
   it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
-    numsExpectedToEq([15, 30, 60], "fizzbuzz")
+    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
 
@@ -270,7 +270,7 @@ To skip a specified suite or test, simply append `.skip()` to the function. All 
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function () {
-  numsExpectedToEq([9, 12, 18], "fizz")
+  numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
 

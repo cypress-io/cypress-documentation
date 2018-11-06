@@ -21,8 +21,8 @@ cy.wait(aliases, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wait(500)    
-cy.wait('@getProfile')    
+cy.wait(500)
+cy.wait('@getProfile')
 ```
 
 ## Arguments
@@ -116,7 +116,7 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('be.empty')
 
 // now re-define the /books response
-cy.route('/books', [{name: 'Emperor of all maladies'}])
+cy.route('/books', [{ name: 'Emperor of all maladies' }])
 
 cy.get('#search').type('Emperor of')
 
@@ -208,7 +208,7 @@ cy.get('form').submit()
 cy.wait('@userPut').its('url').should('include', 'users')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/wait/command-log-when-waiting-for-aliased-route.png)
 

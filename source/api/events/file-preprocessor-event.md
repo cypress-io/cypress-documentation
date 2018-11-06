@@ -76,7 +76,7 @@ The exact default configuration options {% url 'can be found here' https://githu
 Changing the Browserify options lets you:
 
 - Add your own Babel plugins
-- Add support for Typescript
+- Add support for TypeScript
 - Add support for CoffeeScript `2.x.x`
 
 Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.

@@ -20,7 +20,7 @@ cy.spy(object, method)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.spy(user, 'addFriend')    
+cy.spy(user, 'addFriend')
 ```
 
 ## Arguments
@@ -124,7 +124,7 @@ obj.foo('foo', 'bar')
 expect(spy).to.be.called
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log spy](/img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png)
 

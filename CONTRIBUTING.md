@@ -135,7 +135,7 @@ sidebar:
 
 ### Writing the Changelog
 
-When adding to the Changelog, be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes).
+When adding to the Changelog, create a new file in `source/_changelogs` named as the version number. Be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes). Be aware that in development, only the five most recent entries will appear but the full changelog will be built in staging and production.
 
 #### Categories
 
@@ -152,6 +152,14 @@ When adding to the Changelog, be sure to follow the category structure defined b
 
 Danger 📛: because we are minifying client-side code using a [Hexo plugin](https://github.com/mamboer/hexo-filter-cleanup) which in turn calls
 `uglify`, the code should be strictly ES5. Thus everything inside the `theme` should be linted with ES5 settings and not upgraded to ES6.
+
+In addition to ESLint, we use Textlint to lint Markdown files. This currently [lints code snippets](https://github.com/textlint-rule/textlint-rule-eslint) using the rules in `.eslintrc-textlint` and checks [terminology](https://github.com/sapegin/textlint-rule-terminology) using the terms in `.textlintrc`. To disable Textlint for a block, do the following:
+
+```md
+<!-- textlint-disable -->
+{% video youtube 5XQOK0v_YRE %}
+<!-- textlint-enable -->
+```
 
 ### Pull Requests
 

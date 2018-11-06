@@ -2,7 +2,7 @@ YAML = require('yamljs')
 _ = require('lodash')
 
 GUIDES_PATH = "/guides/overview/why-cypress"
-API_PATH = "/api/introduction/api"
+API_PATH = "/api/api/table-of-contents"
 EXAMPLES_PATH = "/examples/examples/recipes"
 FAQ_PATH = "/faq/questions/using-cypress-faq"
 
@@ -18,9 +18,9 @@ describe "Main", ->
 
     # only works in development environment where each CSS
     # file is separate
-    if Cypress.config('baseUrl').includes('localhost')
-      it "loads fira", ->
-        cy.request("fonts/vendor/fira/fira.css")
+    if Cypress.env('NODE_ENV') is 'development'
+      it "loads roboto", ->
+        cy.request("/fonts/vendor/roboto-fontface/css/roboto/roboto-fontface.css")
 
     it "has limited container height", ->
       cy.get('#container')
@@ -141,14 +141,21 @@ describe "Main", ->
       cy.get("aside#sidebar")
         .should("be.visible")
 
-    it "has table of contents and goes to 0.19.0", ->
-      cy.get("aside#article-toc")
-        .should("be.visible")
-        .wait(2000) # allows menuspy to load and set the menu links
-        .contains("0.19.0")
-        .click()
-      cy.url()
-        .should('include', '#0-19-0')
+    if Cypress.env('NODE_ENV') is 'development'
+      it "has a truncated table of contents", ->
+        cy.get("aside#article-toc")
+          .should("be.visible")
+          .get(".toc-item")
+          .should("have.length", 6) ## including truncation warning
+        cy.url()
+          .should("match", /.+#\d+-\d+-\d+/)
+    else
+      it "has a populated table of contents", ->
+        cy.get("aside#article-toc")
+          .contains("0.19.0", { timeout: 10000 })
+          .click()
+        cy.url()
+          .should('include', '#0-19-0')
 
   describe "Intro to Cypress", ->
     beforeEach ->

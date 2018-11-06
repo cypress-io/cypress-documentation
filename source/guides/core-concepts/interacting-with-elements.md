@@ -1,9 +1,9 @@
 ---
 title: Interacting with Elements
-
 ---
+
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress calculates visibility
 - How Cypress ensures elements are actionable
@@ -81,7 +81,7 @@ Cypress will automatically determine if an element is animating and wait until i
 
 To calculate whether an element is animating we take a sample of the last positions it was at and calculate the element's slope. You might remember this from 8th grade algebra. 😉
 
-If the element's slope (the distance between its previous position and its current position) exceeds the {% url `animationDistanceThreshold` configuration#Animations %} then we consider the element to be animating.
+To calculate whether an element is animating we check the current and previous positions of the element itself. If the distance exceeds the {% url `animationDistanceThreshold` configuration#Animations %}, then we consider the element to be animating.
 
 When coming up with this value, we did a few experiments to find a speed that "feels" too fast for a user to interact with. You can always {% url "increase or decrease this threshold" configuration#Animations %}.
 

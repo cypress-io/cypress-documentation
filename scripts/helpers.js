@@ -58,18 +58,63 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let result = ''
   let self = this
   let prefix = `sidebar.${type}.`
+  let expandAll = false
+
+  // IF the sidebar's categories aren't that many,
+  // just expand them all, since it's more of a hassle to expand one by one
+  if (_.keys(sidebar).length <= 6) {
+    expandAll = true
+  }
 
   _.each(sidebar, function (menu, title) {
-    result += `<strong class="${className}-title">${self.__(prefix + title)}</strong>`
+    result += `<li class="${className}-title is-collapsed" data-target="sidebar-li-${title}" data-toggle="collapse"><strong>${self.__(prefix + title)}</strong><ul class="sidebar-links">`
 
     _.each(menu, function (link, text) {
       let href = [type, title, link].join('/')
       let itemClass = `${className}-link`
-      if (link === path) itemClass += ' current'
+      let currentlyActive = link === path
 
-      result += `<li class='sidebar-li'><a href="${self.config.root + href}" class="${itemClass}">
+      if (currentlyActive) {
+        itemClass += ' current'
+        // remove 'is-collapsed' class from parent container
+        result = result.replace(`is-collapsed" data-target="sidebar-li-${title}`, `current" data-target="sidebar-li-${title}`)
+      }
+
+      if (expandAll) {
+        // remove 'is-collapsed' class from parent container
+        result = result.replace(`is-collapsed" data-target="sidebar-li-${title}`, `" data-target="sidebar-li-${title}`)
+      }
+
+      result += `<li class='sidebar-li sidebar-li-${title}'><a href="${self.config.root + href}" class="${itemClass}">
         ${self.__(prefix + text)}</a></li>`
     })
+
+    // close the ul containing the menus
+    result += '</ul></li>'
+  })
+
+  return result
+})
+
+hexo.extend.helper.register('api_toc', function () {
+  let type = this.page.canonical_path.split('/')[0]
+  let sidebar = this.site.data.sidebar[type]
+  let result = ''
+  let self = this
+  let prefix = `sidebar.${type}.`
+
+  _.each(sidebar, function (menu, title) {
+    result += `<li class="api-title"><h2>${self.__(prefix + title)}</h2><ul class="api-links">`
+
+    _.each(menu, function (link, text) {
+      let href = [type, title, link].join('/')
+
+      result += `<li class='api-li api-li-${title}'><a href="${self.config.root + href}" class="api-link">
+        ${self.__(prefix + text)}</a></li>`
+    })
+
+    // close the ul containing the menus
+    result += '</ul></li>'
   })
 
   return result
@@ -95,7 +140,7 @@ hexo.extend.helper.register('menu', function (type) {
     // Does our current path match our menu?
     let isCurrent = currentPathFolder === firstPathName
 
-    return `${result}<a href="${self.url_for(menuPath)}" class="${type}-nav-link ${isCurrent ? 'active' : ''}"> ${self.__(`menu.${title}`)}</a>`
+    return `${result}<li><a href="${self.url_for(menuPath)}" class="${type}-nav-link ${isCurrent ? 'active' : ''}"> ${self.__(`menu.${title}`)}</a></li>`
   }, '')
 })
 

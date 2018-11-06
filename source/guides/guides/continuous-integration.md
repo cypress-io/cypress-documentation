@@ -3,7 +3,7 @@ title: Continuous Integration
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run and record Cypress tests in Continuous Integration
 - How to configure and cache Cypress in CI
@@ -52,11 +52,11 @@ CI Provider | Example Project | Example Config
 {% url "TravisCI" https://travis-ci.org/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".travis.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml %}
 {% url "VSTS CI / TeamFoundation" https://visualstudio.microsoft.com/tfs/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
 
-# Setting Up CI
+# Setting up CI
 
 Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
 
-## Caching the Cypress Binary
+## Caching the Cypress binary
 
 As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
 
@@ -78,9 +78,9 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 language: node_js
 node_js:
   - 10
-cache:
+cache: 
+  npm: true
   directories:
-    - ~/.npm
     - ~/.cache
 install:
   - npm ci
@@ -88,7 +88,7 @@ script:
   - $(npm bin)/cypress run --record
 ```
 
-Caching folders with NPM modules saves a lot of time after the first build.
+Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 
@@ -190,7 +190,7 @@ Instead, you should build a docker container for your project's version of cypre
 
 {% endnote %}
 
-### Docker Images & CI examples
+### Docker images & CI examples
 
 See our {% url 'examples' docker %} for additional information on our maintained images and configurations on several CI providers.
 
@@ -202,7 +202,7 @@ If you are not using one of the above CI providers then make sure your system ha
 apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
-# Recording Tests in CI
+# Recording tests in CI
 
 Cypress can record your tests running and make them available in our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
 
@@ -234,7 +234,7 @@ You can set various environment variables to modify how Cypress runs.
 
 ## Record Key
 
-If you are {% url 'recording your runs' continuous-integration#Recording-Tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% url 'recording your runs' continuous-integration#Recording-tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
 
 Instead of hard coding it into your run command like this:
 
@@ -393,3 +393,9 @@ node scripts/run-cypress-tests.js
 ## Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
+
+# See also
+
+- {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
+- {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
+- {% url "Blog: Record Test Artifacts from any Docker CI" https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/ %}

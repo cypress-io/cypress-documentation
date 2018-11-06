@@ -34,7 +34,7 @@ cy.clock()
 
 ## Arguments
 
-**{% fa fa-angle-right %} now** ***(Date)***
+**{% fa fa-angle-right %} now** ***(number)***
 
 A timestamp specifying where the clock should start.
 
@@ -72,7 +72,7 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 ```javascript
 // your app code
-const seconds = 0
+let seconds = 0
 
 setInterval(() => {
   $('#seconds-elapsed').text(++seconds + ' seconds')
@@ -208,7 +208,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log clock](/img/api/clock/clock-displays-in-command-log.png)
 

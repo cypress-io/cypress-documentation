@@ -29,7 +29,7 @@ The Mocha runnable this failed on.
 In a spec file or support file you can tap into the `fail` event to debug the moment a test fails.
 
 ```javascript
-// if you want to debug when a test fails, put this in the support file, 
+// if you want to debug when a test fails, put this in the support file,
 // or at the top of an individual spec file
 Cypress.on('fail', (err, runnable) => {
   debugger
@@ -50,4 +50,3 @@ it('calls the "fail" callback when this test fails', function () {
 - {% url `command:end:event` command-end-event %}
 - {% url `command:retry:event` command-retry-event %}
 - {% url `uncaught:exception` uncaught-exception-event %}
-

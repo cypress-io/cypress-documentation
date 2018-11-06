@@ -17,7 +17,7 @@ cy.wrap(subject, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wrap({ name: "Jane Lane" })    
+cy.wrap({ name: 'Jane Lane' })
 ```
 
 ## Arguments
@@ -106,7 +106,7 @@ cy.wrap({ amount: 10 })
   .and('eq', 10)
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/wrap/wrapped-object-in-cypress-tests.png)
 

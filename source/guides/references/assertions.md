@@ -1,6 +1,5 @@
 ---
 title: Assertions
-
 ---
 
 Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, as well as helpful extensions for {% url 'Sinon' assertions#Sinon-Chai %} and {% url 'jQuery' assertions#Chai-jQuery %}, bringing you dozens of powerful assertions for free.
@@ -160,7 +159,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | selected | `expect($option).not.to.be.selected` |
 | checked | `expect($input).not.to.be.checked` |
 | enabled | `expect($input).to.be.enabled` |
-| disabled | `expect($input).not.to.be.disabled` |
+| disabled | `expect($input).to.be.disabled` |
 | empty | `expect($el).not.to.be.empty` |
 | exist | `expect($nonexistent).not.to.exist` |
 | match( *selector* ) | `expect($emptyEl).to.match(':empty')` |
@@ -202,7 +201,7 @@ These chainers are used on assertions with {% url `cy.stub()` stub %} and {% url
 Because we are using `chai`, that means you can extend it however you'd like. Cypress will automatically "just work" with new assertions added to `chai`. You can simply:
 
 - Write your own `chai` assertions as {% url 'documented here' http://chaijs.com/api/plugins/ %}.
-- ...or NPM install any existing `chai` library and import into your test file or support file.
+- ...or npm install any existing `chai` library and import into your test file or support file.
 
 {% note info %}
 {% url 'Check out our example recipe extending chai with new assertions.' recipes#Adding-Chai-Assertions %}

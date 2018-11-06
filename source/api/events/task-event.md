@@ -165,7 +165,7 @@ Cypress will *not* continue running any other commands until {% url `cy.task()` 
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
-cy.task('seed:database', null, { timeout: 20000 });
+cy.task('seed:database', null, { timeout: 20000 })
 ```
 
 # Notes
@@ -212,7 +212,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Both you and 'some-plugin' attempt to register the `seed:database` task. In such a case, the last one registered will win out and overwrite the earlier registration. So in the above code, only the plugin's `seed:database` handler will be executed when `cy.task('seed:database')` is called. 
+Both you and 'some-plugin' attempt to register the `seed:database` task. In such a case, the last one registered will win out and overwrite the earlier registration. So in the above code, only the plugin's `seed:database` handler will be executed when `cy.task('seed:database')` is called.
 
 If you wish for your own handler to be executed, call `somePlugin(on, config)` earlier than your own task registration.
 

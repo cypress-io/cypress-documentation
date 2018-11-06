@@ -19,7 +19,7 @@ Cypress.arch // 'x64'
 
 ```javascript
 it('has expected CPU architecture', function () {
-    expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
+  expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
 })
 ```
 
