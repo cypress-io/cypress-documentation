@@ -76,7 +76,6 @@ sidebar:
     reporters: Reporters
     typescript-support: TypeScript
     module-api: Module API
-    circleci-orb: CircleCI Orb
   api:
     api: API
     table-of-contents: Table of Contents

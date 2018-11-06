@@ -52,8 +52,6 @@ guides:
     # contributing: contributing.html
     changelog: changelog.html
     roadmap: roadmap.html
-    # all-videos: all-videos.html
-    circleci-orb: circleci-orb.html
 
 api:
   api:
