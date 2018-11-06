@@ -53,7 +53,7 @@ For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub 
 
 # Application Under Test
 
-The righthand side of the Test Runner is used to display the Application Under Test (AUT: the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
+The righthand side of the Test Runner is used to display the Application Under Test (AUT): the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
 
 In the example below, we wrote the following code in our test file:
 
