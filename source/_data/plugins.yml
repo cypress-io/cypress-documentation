@@ -62,6 +62,11 @@
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
 
+    - name: CircleCI Cypress Orb
+      description: Official Cypress Orb for CircleCI configuration.
+      link: https://github.com/cypress-io/circleci-orb
+      keywords: [continuous-integration]
+
 - name: Custom Commands
   plugins:
     - name: cypressautomocker
