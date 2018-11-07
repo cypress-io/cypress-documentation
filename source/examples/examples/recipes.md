@@ -35,6 +35,7 @@ Recipe | Category | Description
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
 {% urlHash 'Seeding your Database in Node' Seeding-your-Database-in-Node %} | Server Communication | Seed your database with test data
 {% urlHash 'Environment Variables' Environment-Variables %} | Server Communication | Pass environment variables to your tests
+{% urlHash 'Cypress CircleCI Orb' Cypress-CircleCI-Orb %} | Continuous Integration | Install, cache and run Cypress.io tests on CircleCI with minimal configuration.
 
 ## [Node Modules](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules)
 
@@ -202,3 +203,9 @@ Get around the lack of a `.hover()` command.
 - Pass values via `env` object in `cypress.json`.
 - Pass any variable that starts with `CYPRESS_`.
 - Extract any other variable from `process.env` using `cypress/plugins/index.js` callback.
+
+## [Cypress CircleCI Orb](https://github.com/cypress-io/cypress-example-circleci-orb)
+
+- Installs npm dependencies
+- Run Cypress tests
+- Record the output to the Cypress Dashboard

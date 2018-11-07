@@ -62,7 +62,7 @@ To use encoding with other options, have your options object be your third param
 
 ## Yields {% helper_icon yields %}
 
-{% yields sets_subject cy.writeFile 'yields the contents written to the file' %}
+{% yields null cy.writeFile %}
 
 # Examples
 
