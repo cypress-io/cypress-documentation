@@ -78,7 +78,7 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 language: node_js
 node_js:
   - 10
-cache: 
+cache:
   npm: true
   directories:
     - ~/.cache
@@ -192,7 +192,7 @@ workflows:
 
 In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
 
-You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/examples.md %}.
+You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %}.
 
 ## Docker
 
