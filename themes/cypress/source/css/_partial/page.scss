@@ -257,7 +257,7 @@ a.article-edit-link {
     font-size: 2.6em;
   }
 
-  h1, .history-heading {
+  h1 {
     font-size: 1.9em;
     line-height: 1.7em;
     font-weight: bold;
@@ -642,7 +642,24 @@ a.article-edit-link {
     border-collapse: collapse;
   }
 
+  summary {
+    color: transparent;
+    display: block;
+  }
+
   th:last-child {
     width: 100%;
+  }
+
+  .history-disclosure {
+    font-size: 0.7em;
+    padding-right: 0.5em;
+    transition: 0.3s;
+    transform-style: preserve-3d;
+    transform: rotateX(180deg);
+  }
+
+  &[open] .history-disclosure{
+    transform: rotateX(0deg);
   }
 }
