@@ -84,6 +84,11 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
 
+    - name: cypress-plugin-snapshots
+      description: Enable data snapshot testing with Cypress, compare against previously stored snapshot. User interface is integrated in Cypress.
+      link: https://github.com/meinaart/cypress-plugin-snapshots
+      keywords: [snapshot]
+
     - name: Cypress Image Snapshot
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
       link: https://github.com/palmerhq/cypress-image-snapshot
