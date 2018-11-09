@@ -92,66 +92,7 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 
-### Example `circle.yml` v2 config file
-
-```yaml
-version: 2
-jobs:
-  build:
-    docker:
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    steps:
-      - checkout
-      - restore_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          key: v1-deps-{{ .Branch }}
-          key: v1-deps
-      - run:
-          name: Install Dependencies
-          command: npm ci
-      - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-      - run: $(npm bin)/cypress run --record --key <record_key>
-```
-
-### Example `circle.yml` v2 config file with `yarn`
-
-```yaml
-version: 2
-jobs:
-  build:
-    docker:
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    steps:
-      - checkout
-      - restore_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          key: v1-deps-{{ .Branch }}
-          key: v1-deps
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.cache  ## cache both yarn and Cypress!
-      - run: $(yarn bin)/cypress run --record --key <record_key>
-```
-
-Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
-
-### {% badge success Beta %} Example CircleCI Orb
+### {% badge success New %} Example CircleCI Orb
 
 The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
 
@@ -193,6 +134,67 @@ workflows:
 In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
 
 You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %}.
+
+### Example `circle.yml` v2 config file
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run: $(npm bin)/cypress run --record --key <record_key>
+```
+
+### Example `circle.yml` v2 config file with `yarn`
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.cache  ## cache both yarn and Cypress!
+      - run: $(yarn bin)/cypress run --record --key <record_key>
+```
+
+Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
 
 ## Docker
 
