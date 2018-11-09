@@ -92,6 +92,49 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 
+### {% badge success New %} Example CircleCI Orb
+
+The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
+
+Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
+
+A typical project can simply have:
+
+```yaml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.0.0
+workflows:
+  build:
+    jobs:
+      - cypress/run # "run" job comes from "cypress" orb
+```
+
+A more complex project that needs to install dependencies, build an application and run tests across 10 CI machines {% url "in parallel" parallelization %} may have:
+
+```yaml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.0.0
+workflows:
+  build:
+    jobs:
+      - cypress/install:
+          build: 'npm run build'  # run a custom app build step
+      - cypress/run:
+          requires:
+            - cypress/install
+          record: true        # record results on Cypress Dashboard
+          parallel: true      # split all specs across machines
+          parallelism: 10     # use 10 CircleCI machines to finish quickly
+          group: 'all tests'  # name this group "all tests" on the dashboard
+          start: 'npm start'  # start server before running tests
+```
+
+In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
+
+You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %}.
+
 ### Example `circle.yml` v2 config file
 
 ```yaml
@@ -152,49 +195,6 @@ jobs:
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
-
-### {% badge success Beta %} Example CircleCI Orb
-
-The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
-
-Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
-
-A typical project can simply have:
-
-```yaml
-version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1.0.0
-workflows:
-  build:
-    jobs:
-      - cypress/run # "run" job comes from "cypress" orb
-```
-
-A more complex project that needs to install dependencies, build an application and run tests across 10 CI machines {% url "in parallel" parallelization %} may have:
-
-```yaml
-version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1.0.0
-workflows:
-  build:
-    jobs:
-      - cypress/install:
-          build: 'npm run build'  # run a custom app build step
-      - cypress/run:
-          requires:
-            - cypress/install
-          record: true        # record results on Cypress Dashboard
-          parallel: true      # split all specs across machines
-          parallelism: 10     # use 10 CircleCI machines to finish quickly
-          group: 'all tests'  # name this group "all tests" on the dashboard
-          start: 'npm start'  # start server before running tests
-```
-
-In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
-
-You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %}.
 
 ## Docker
 
