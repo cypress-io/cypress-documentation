@@ -167,7 +167,7 @@ The `cy` object is bound to each individual test. Events bound to `cy` will **au
 
 ## Uncaught Exceptions
 
-***To turn off all uncaught exception handling***
+### To turn off all uncaught exception handling
 
 ```javascript
 // likely want to do this in a support file
@@ -182,7 +182,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ```
 
-***To catch a single uncaught exception***
+### To catch a single uncaught exception
 
 ```javascript
 it('is doing something very important', function (done) {
@@ -209,30 +209,31 @@ it('is doing something very important', function (done) {
 
 ## Catching Test Failures
 
-***Debug the moment a test fails***
+### Debug the moment a test fails
 
 ```javascript
 // if you want to debug when any test fails
-// bind to Cypress, and you likely want to
-// put this in a support file, or at the top
-// of an individual spec file
+// You likely want to put this in a support file,
+// or at the top of an individual spec file
 Cypress.on('fail', (err, runnable) => {
   debugger
 
   // we now have access to the err instance
   // and the mocha runnable this failed on
+
+  throw error // throw error to have test still fail
 })
 
 it('calls the "fail" callback when this test fails', function () {
-  // when this cy.get() fails the callback is invoked
-  // with the error
+  // when this cy.get() fails the callback
+  // is invoked with the error
   cy.get('element-that-does-not-exist')
 })
 ```
 
 ## Page Navigation
 
-***Test that your application was redirected***
+### Test that your application was redirected
 
 ```javascript
 // app code
@@ -264,7 +265,7 @@ it('redirects to another page on click', function (done) {
 
 ## Window Before Load
 
-***Modify your Application before it loads after page transitions***
+### Modify your Application before it loads after page transitions
 
 ```javascript
 it('can modify the window prior to page load on all pages', function () {
@@ -304,7 +305,7 @@ it('can modify the window prior to page load on all pages', function () {
 
 ## Window Confirm
 
-***Control whether you accept or reject confirmations***
+### Control whether you accept or reject confirmations
 
 This enables you to test how your application reacts to accepted confirmations and rejected confirmations.
 
@@ -394,7 +395,7 @@ it('could also use a stub instead of imperative code', function () {
 
 ## Window Alert
 
-**Assert on the alert text**
+### Assert on the alert text
 
 Cypress automatically accepts alerts but you can still assert on the text content.
 

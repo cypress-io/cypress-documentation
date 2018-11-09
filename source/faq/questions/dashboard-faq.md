@@ -68,4 +68,20 @@ We have already begun the implementation for capturing even more things from you
 
 These will be added in subsequent releases.
 
+## {% fa fa-angle-right %} Why is test parallelization based on spec files and not on the individual functions?
 
+Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the Test Runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
+
+Spec file durations are also more meaningful and consistent than timings of individual tests, we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishing individual tests.
+
+To better load balance the specs, thus you would want more spec files with approximately the same running duration. Otherwise, a single very long running test might limit how fast all your tests finish, and the run completes. Due to starting a new test execution context before each spec file and encoding and uploading video after, making spec files to run shorter than approximately 10 seconds would also be fruitless - because Cypress overhead would eat any time savings.
+
+## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
+
+Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration#What-is-supported %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
+
+```shell
+cypress run --record --parallel --ci-build-id $CI_RUN_ID
+```
+
+For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable than is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might just be good enough for the job.

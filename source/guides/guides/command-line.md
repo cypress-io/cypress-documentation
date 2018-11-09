@@ -301,8 +301,8 @@ cypress verify
 
 ## `cypress version`
 
-Output both the versions of the installed Cypress binary application and the NPM module.
-In most cases they will be the same, but they could be different if you have installed a different version of the NPM package and for some reason could not install the matching binary.
+Output both the versions of the installed Cypress binary application and the npm module.
+In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
 
 ```shell
 cypress version

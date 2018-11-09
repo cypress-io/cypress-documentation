@@ -1,6 +1,5 @@
 ---
 title: window
-
 ---
 
 Get the `window` object of the page that is currently active.
@@ -39,7 +38,7 @@ Option | Default | Description
 
 ## No Args
 
-***Yields the remote window object***
+### Yields the remote window object
 
 ```javascript
 cy.visit('http://localhost:8080/app')
@@ -49,9 +48,37 @@ cy.window().then((win) => {
 })
 ```
 
+## Start tests when app is ready
+
+If an application takes a while to start, it might "signal" its readiness by setting a property that Cypress can wait for.
+
+```javascript
+// app.js
+// only set property "appReady" if Cypress is running tests
+if (window.Cypress) {
+  window.appReady = true
+}
+```
+
+Cypress Test Runner can wait for the property `window.appReady` to be `true` before every test
+
+```javascript
+// spec.js
+beforeEach(() => {
+  cy.visit('/')
+  cy.window().should('have.property', 'appReady', true)
+})
+```
+
+{% note info "When Can The Test Start?" %}
+{% url "This blog post" https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/ %} explains how to use `cy.window()` to spy on the DOM `prototype` to detect when the application starts adding event listeners to the DOM elements. When this happens for the first time, the Test Runner knows that the application has started and the tests can begin.
+
+See {% url '"Set flag to start tests"' https://glebbahmutov.com/blog/set-flag-to-start-tests/ %} for more examples.
+{% endnote %}
+
 ## Options
 
-***Passes timeout through to {% url `.should()` should %} assertion***
+### Passes timeout through to {% url `.should()` should %} assertion
 
 ```javascript
 cy.window({ timeout: 10000 }).should('have.property', 'foo')
@@ -79,7 +106,7 @@ cy.window({ timeout: 10000 }).should('have.property', 'foo')
 cy.window()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/window/window-command-log-for-cypress-tests.png)
 

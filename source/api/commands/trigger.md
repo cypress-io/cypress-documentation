@@ -218,7 +218,7 @@ cy.get('.trigger-input-range')
   .trigger('change')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 {% img /img/api/trigger/command-log-trigger.png "command log trigger" %}
 

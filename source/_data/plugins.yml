@@ -32,6 +32,16 @@
 
 - name: Development Tools
   plugins:
+    - name: Applitools
+      description: Fast, easy and reliable visual UI testing with Cypress
+      link: https://applitools.com/tutorials/cypress.html
+      keyword: [screenshots, visual regression, visual-ai]
+
+    - name: cypress-dark
+      description: Several color themes for Cypress test runner
+      link: https://github.com/bahmutov/cypress-dark
+      keywords: [theme]
+
     - name: Docker
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
       link: https://github.com/cypress-io/cypress-docker-images
@@ -42,15 +52,20 @@
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
 
+    - name: Percy
+      description: Visual regression testing for Cypress tests with Percy.
+      link: https://docs.percy.io/docs/cypress
+      keywords: [screenshots, visual regression]
+
     - name: TypeScript
       description: Official TypeScript definitions for the Cypress API.
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
 
-    - name: cypress-dark
-      description: Dark mode for Cypress test runner
-      link: https://github.com/bahmutov/cypress-dark
-      keywords: [theme]
+    - name: CircleCI Cypress Orb
+      description: Official Cypress Orb for CircleCI configuration.
+      link: https://github.com/cypress-io/circleci-orb
+      keywords: [continuous-integration]
 
 - name: Custom Commands
   plugins:
@@ -90,3 +105,9 @@
     description: Custom reporter for publishing Cypress results to a TestRail test run.
     link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
     keywords: [testrail, reporter]
+
+  - name: cypress-failed-log
+    description: Saves the Cypress test command log as a JSON file if a test fails.
+    link: https://github.com/bahmutov/cypress-failed-log
+    keywords: [reporter]
+

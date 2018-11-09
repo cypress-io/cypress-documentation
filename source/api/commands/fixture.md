@@ -121,6 +121,16 @@ cy.fixture('images/logo.png', 'binary').then((logo) => {
 })
 ```
 
+## Playing MP3 file
+
+```javascript
+cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
+  const uri = 'data:audio/mp3;base64,' + mp3
+  const audio = new Audio(uri)
+  audio.play()
+})
+```
+
 ## Accessing Fixture Data
 
 ***Using .then() to access fixture data***
@@ -229,7 +239,7 @@ For other types of files, they will be read as `utf8` by default, unless specifi
 
 # Command Log
 
-- `cy.fixture()` does *not* log in the command log
+- `cy.fixture()` does *not* log in the Command Log
 
 # See also
 

@@ -93,7 +93,7 @@ Check out our example recipes using `cy.getCookie()` to test {% url 'logging in 
 cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png)
 

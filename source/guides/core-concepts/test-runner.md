@@ -17,7 +17,7 @@ Cypress runs tests in a unique interactive runner that allows you to see command
 
 # Command Log
 
-The lefthand side of the test runner is a visual representation of your test suite. Each test block is properly nested and each test, when clicked, displays every Cypress command and assertion executed within the test's block as well as any command or assertion executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
+The lefthand side of the Test Runner is a visual representation of your test suite. Each test block is properly nested and each test, when clicked, displays every Cypress command and assertion executed within the test's block as well as any command or assertion executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
 {% img /img/guides/command-log.png 436 "Cypress Test Runner" %}
 
@@ -53,7 +53,7 @@ For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub 
 
 # Application Under Test
 
-The righthand side of the test runner is used to display the Application Under Test (AUT: the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
+The righthand side of the Test Runner is used to display the Application Under Test (AUT): the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
 
 In the example below, we wrote the following code in our test file:
 

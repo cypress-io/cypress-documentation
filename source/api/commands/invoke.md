@@ -158,7 +158,7 @@ cy.get('.connectors-div').should('be.hidden')
   .invoke('show').should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log invoke](/img/api/invoke/invoke-jquery-show-on-element-for-testing.png)
 

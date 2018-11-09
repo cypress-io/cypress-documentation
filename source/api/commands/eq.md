@@ -142,7 +142,7 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 cy.get('.left-nav.nav').find('>li').eq(3)
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log eq](/img/api/eq/find-element-at-index.png)
 
