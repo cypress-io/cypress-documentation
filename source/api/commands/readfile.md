@@ -184,7 +184,7 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 cy.readFile('cypress.json')
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log](/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png)
 

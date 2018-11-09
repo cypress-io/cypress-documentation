@@ -92,7 +92,7 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 # Command Log
 
-`.spread()` does *not* log in the command log
+`.spread()` does *not* log in the Command Log
 
 # See also
 

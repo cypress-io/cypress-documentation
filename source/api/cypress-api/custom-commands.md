@@ -209,7 +209,6 @@ Examples of dual commands:
 ### Custom Dual Command
 
 ```javascript
-// not a great example (WIP) :-)
 Cypress.Commands.add('dismiss', {
   prevSubject: 'optional'
 }, (subject, arg1, arg2) => {
@@ -253,7 +252,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
     url = '...'
   }
 
-  // originalFn is the existing `visit` command that need to call
+  // originalFn is the existing `visit` command that you need to call
   // and it will receive whatever you pass in here.
   //
   // make sure to add a return here!
@@ -384,10 +383,6 @@ cy.wrap(null).contains() // has subject, but not `element`, will error
 ```
 
 # Notes
-
-## Retryability
-
-WIP
 
 ## Command Logging
 

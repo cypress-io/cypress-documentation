@@ -68,7 +68,7 @@ Option | Default | Description
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. 
+In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled.
 
 If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
 
@@ -178,7 +178,7 @@ A task must end within the `taskTimeout` or Cypress will fail the current test.
 cy.task('readJson', 'cypress.json')
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log task](/img/api/task/task-read-cypress-json.png)
 
@@ -193,3 +193,5 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
 - {% url `cy.writeFile()` writefile %}
+- {% url "Blog: Incredibly Powerful cy.task()" https://glebbahmutov.com/blog/powerful-cy-task/ %}
+- {% url "Blog: Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %}

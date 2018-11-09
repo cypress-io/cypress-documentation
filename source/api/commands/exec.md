@@ -169,7 +169,7 @@ if (Cypress.platform === 'win32') {
 }
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log exec](/img/api/exec/exec-cat-in-shell.png)
 

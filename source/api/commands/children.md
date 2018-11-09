@@ -130,7 +130,7 @@ cy.get('ul').children('.active')
 cy.get('.left-nav>.nav').children().should('have.length', 8)
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for children](/img/api/children/children-elements-shown-in-command-log.png)
 

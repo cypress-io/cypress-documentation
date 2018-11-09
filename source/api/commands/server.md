@@ -169,7 +169,7 @@ xhr.send()
 
 Any request that passes the `whitelist` will be ignored - it will not be logged nor will it be stubbed in any way (even if it matches a specific {% url `cy.route()` route %}).
 
-The idea is that we never want to interfere with static assets that are fetched via AJAX.
+The idea is that we never want to interfere with static assets that are fetched via Ajax.
 
 **The default whitelist function in Cypress is:**
 
@@ -239,7 +239,7 @@ You can {% url 'read more about XHR strategy here' network-requests %}.
 
 # Command Log
 
-- `cy.server()` does *not* log in the command log
+- `cy.server()` does *not* log in the Command Log
 
 # See also
 

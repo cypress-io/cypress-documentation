@@ -28,7 +28,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-***See tests runs in the test runner***
+***See tests runs in the Test Runner***
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -71,7 +71,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 2. You will need to log in to record your tests, so you may need to log in with GitHub here.
 3. Click **Setup Project to Record**.
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
-5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in Github. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
+5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
   - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
