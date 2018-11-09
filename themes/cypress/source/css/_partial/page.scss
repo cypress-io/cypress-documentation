@@ -638,6 +638,8 @@ a.article-edit-link {
 }
 
 .history {
+  cursor: pointer;
+
   thead, tbody, th, tr {
     border-collapse: collapse;
   }
@@ -645,6 +647,10 @@ a.article-edit-link {
   summary {
     color: transparent;
     display: block;
+
+    h1.article-heading {
+      margin-top: 0;
+    }
   }
 
   th:last-child {
