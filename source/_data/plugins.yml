@@ -74,6 +74,16 @@
       link: https://github.com/scottschafer/cypressautomocker
       keywords: [routing, mock]
 
+    - name: cypress-axe
+      description: Helps test your applications for accessibility issues using axe-core.
+      link: https://github.com/avanslaars/cypress-axe
+      keywords: [testing-library, axe-core]
+
+    - name: cyphell
+      description: Converts WDIO automation tests to Cypress.
+      link: https://github.com/intuit/cyphfell
+      keywords: [testing-library, wdio]
+
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
