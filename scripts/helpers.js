@@ -62,7 +62,8 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
   // IF the sidebar's categories aren't that many,
   // just expand them all, since it's more of a hassle to expand one by one
-  if (_.keys(sidebar).length <= 6) {
+  // but don't expand all for the API since it has a lot of pages
+  if (_.keys(sidebar).length <= 6 && type !== 'api') {
     expandAll = true
   }
 
