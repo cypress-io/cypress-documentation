@@ -25,6 +25,8 @@ Cypress can run recorded tests in parallel across multiple machines since versio
 
 This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
+{% img 'no-border' /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" %}
+
 # Splitting up your test suite
 
 Cypress' parallelization strategy is file-based, so in order to utilize parallelization, your tests will need to be split across separate files.
@@ -68,7 +70,7 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 
 ## Spec duration history analysis
 
-{% img 'no-border' /img/guides/parallelization/spec-forecast.png "Spec duration forecasting" %}
+{% img 'no-border' /img/guides/parallelization/load-balancing.png "Spec duration forecasting" %}
 
 With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
 
