@@ -2,7 +2,7 @@
 title: window:unload
 ---
 
-The `window:unload` event fires when your application is has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
+The `window:unload` event fires when your application has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
 
 # Environment
 
