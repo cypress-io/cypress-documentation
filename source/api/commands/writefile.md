@@ -179,6 +179,11 @@ When clicking on the `writeFile` command within the command log, the console out
 
 ![Console Log](/img/api/writefile/console-log-shows-contents-written-to-file.png)
 
+{% history %}
+| 3.1.1 | Added `flag` option and appending with `a+`
+| 1.0.0 | Introduced
+{% endhistory %}
+
 # See also
 
 - {% url `cy.readFile()` readfile %}
