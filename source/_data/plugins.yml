@@ -69,10 +69,20 @@
 
 - name: Custom Commands
   plugins:
+    - name: cyphell
+      description: Converts WDIO automation tests to Cypress.
+      link: https://github.com/intuit/cyphfell
+      keywords: [wdio]
+      
     - name: cypressautomocker
       description: Allow recording API results and replaying the APIs as a mock server.
       link: https://github.com/scottschafer/cypressautomocker
       keywords: [routing, mock]
+
+    - name: cypress-axe
+      description: Helps test your applications for accessibility issues using axe-core.
+      link: https://github.com/avanslaars/cypress-axe
+      keywords: [accessibility, a11y]
 
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
