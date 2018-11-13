@@ -215,7 +215,7 @@ it('is doing something very important', function (done) {
 // if you want to debug when any test fails
 // You likely want to put this in a support file,
 // or at the top of an individual spec file
-Cypress.on('fail', (err, runnable) => {
+Cypress.on('fail', (error, runnable) => {
   debugger
 
   // we now have access to the err instance
