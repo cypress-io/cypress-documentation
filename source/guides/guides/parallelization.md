@@ -165,6 +165,8 @@ You can test your application against different browsers and view the results un
   cypress run --record --group chrome --browser chrome
   ```
 
+{% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
+
 ## Grouping to label parallelization
 
 We also have the power of Cypress parallelization with our groups. For the sake of demonstration, let's run a group to test against Chrome with 2 machines, a group to test against Electron with 4 machines, and another group to test against Electron again, but only with one machine:
@@ -208,6 +210,8 @@ Let's say you have an application that has a *customer facing portal* and an *ad
   ```
 
 This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
+
+{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %} 
 
 # Linking CI machines for parallelization or grouping
 
