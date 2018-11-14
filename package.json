@@ -83,7 +83,7 @@
     "dependency-check": "3.2.1",
     "deps-ok": "1.4.1",
     "eslint": "5.9.0",
-    "eslint-plugin-cypress-dev": "1.1.2",
+    "eslint-plugin-cypress-dev": "2.0.0",
     "fluent-ffmpeg": "2.1.2",
     "fs-extra": "7.0.1",
     "ggit": "2.4.6",
