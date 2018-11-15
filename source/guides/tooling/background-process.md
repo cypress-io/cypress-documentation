@@ -6,7 +6,7 @@ Normally your application and all of your test code are executed in the browser.
 
 You can run code in the **background process** in order to hook into, modify, or extend the behavior of Cypress via the **background file**. The default location of the **background file** is `cypress/background/index.js`, but you can {% url 'configure it to be a custom path' configuration#Folders-Files %}.
 
-**Background events** are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle. {% url "Check out the various events here" catalog-of-events %}.
+**Background events** are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle. {% url "Check out the various events here" all-events %}.
 
 # Use Cases
 
@@ -124,7 +124,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Each event documents its own argument signature. To understand how to use them, please {% url "refer to the docs for each one" catalog-of-events %}.
+Each event documents its own argument signature. To understand how to use them, please {% url "refer to the docs for each one" all-events %}.
 
 ## config
 

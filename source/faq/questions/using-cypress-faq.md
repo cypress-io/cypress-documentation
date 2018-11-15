@@ -241,7 +241,7 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 - Debug the error instance itself
 - Prevent Cypress from failing the test
 
-This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
+This is documented in detail on the {% url "All Events" all-events %} page.
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 

@@ -149,7 +149,7 @@ api:
     moment: moment.html
     promise: promise.html
   events:
-    catalog-of-events: catalog-of-events.html
+    all-events: all-events.html
     after-run-event: after-run-event.html
     after-screenshot-event: after-screenshot-event.html
     after-spec-event: after-spec-event.html

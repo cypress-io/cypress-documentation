@@ -6,15 +6,15 @@ API_PATH = "/api/api/table-of-contents"
 API_HTML = API_PATH + '.html'
 
 describe "API", ->
-  context "Catalog of events", ->
-    PAGE = "/api/events/catalog-of-events.html"
+  context "all events", ->
+    PAGE = "/api/events/all-events.html"
 
     beforeEach ->
       cy.visit(PAGE)
 
-    it "loads catalog of events", ->
+    it "loads all events", ->
       cy.get('.article-title')
-        .contains('Catalog of Events')
+        .contains('All Events')
 
   context "Main Menu", ->
     it "goes straight to 'API' homepage", ->
