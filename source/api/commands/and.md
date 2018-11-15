@@ -200,6 +200,7 @@ cy
   .should('be.active')
   .and(($button) => {
     expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+
     return { foo: 'bar' } // return is ignored, .and() yields <button>
   })
   .then(($button) => {
