@@ -6,7 +6,7 @@ The `before:window:unload` event fires when your application is about to navigat
 
 # Environment
 
-Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
@@ -22,7 +22,7 @@ The `beforeunload` event.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `before:window:unload` event. 
+In a spec file or support file you can tap into the `before:window:unload` event.
 
 ```js
 cy.on('before:window:unload', (e) => {

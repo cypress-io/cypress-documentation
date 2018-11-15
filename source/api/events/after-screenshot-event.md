@@ -8,7 +8,7 @@ This allows you to record those details or manipulate the image as needed. You c
 
 # Environment
 
-Some events run in the {% url "browser" catalog-of-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both. {% url "See all events" catalog-of-events#Environment %}.
+Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
@@ -58,7 +58,7 @@ module.exports = (on, config) => {
 })
 ```
 
-# Examples 
+# Examples
 
 ## Rename a screenshot file
 
