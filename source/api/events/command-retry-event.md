@@ -8,11 +8,15 @@ This is useful to understand **why** a command is retrying, and generally includ
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `command:retry` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+
+{% wrap_end %}
 
 # Arguments
 

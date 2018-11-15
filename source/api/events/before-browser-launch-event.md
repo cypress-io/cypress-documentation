@@ -10,11 +10,15 @@ The most common use case is adding your own chrome extension.
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `before:browser:launch` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+
+{% wrap_end %}
 
 # Arguments
 

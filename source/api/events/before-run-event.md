@@ -6,11 +6,15 @@ The `before:run` event fires before the run starts.
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `before:run` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+
+{% wrap_end %}
 
 # Arguments
 

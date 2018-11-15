@@ -4,6 +4,7 @@
 const _ = require('lodash')
 const Promise = require('bluebird')
 const beepAndLog = require('../lib/beep')
+const { wrapStart, wrapEnd } = require('../lib/tags/html')
 const partial = require('../lib/tags/partial')
 const note = require('../lib/tags/note')
 const yields = require('../lib/tags/yields')
@@ -19,6 +20,10 @@ const video = require('../lib/tags/video')
 const changelog = require('../lib/tags/changelog')
 
 const tags = {
+  // html
+  wrap_start: wrapStart,
+  wrap_end: wrapEnd,
+
   // partials
   partial: partial,
 

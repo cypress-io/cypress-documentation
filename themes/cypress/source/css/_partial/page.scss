@@ -640,3 +640,14 @@ a.article-edit-link {
 .tutorial .article-inner {
   margin-right: 0;
 }
+
+.event-environment table {
+  display: table;
+
+  th:nth-child(2),
+  th:nth-child(3),
+  td:nth-child(2),
+  td:nth-child(3) {
+    text-align: center;
+  }
+}

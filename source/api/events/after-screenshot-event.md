@@ -8,11 +8,15 @@ This allows you to record those details or manipulate the image as needed. You c
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `after:screenshot` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+
+{% wrap_end %}
 
 # Arguments
 

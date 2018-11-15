@@ -6,11 +6,15 @@ The `command:enqueued` event fires when a `cy` command is first invoked and enqu
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `command:enqueued` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+
+{% wrap_end %}
 
 # Arguments
 

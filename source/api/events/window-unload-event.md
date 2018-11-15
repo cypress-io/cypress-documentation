@@ -6,11 +6,15 @@ The `window:unload` event fires when your application has unloaded and is naviga
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `window:unload` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+
+{% wrap_end %}
 
 # Arguments
 

@@ -6,11 +6,15 @@ The `before:window:load` event fires as the page begins to load, but before any 
 
 # Environment
 
+{% wrap_start 'event-environment' %}
+
 Some events run in the {% url "browser" all-events#Browser-Events %}, some in the {% url "background process" background-process %}, and some in both.
 
 Event | Browser | Background Process
 --- | --- | ---
 `before:window:load` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+
+{% wrap_end %}
 
 # Arguments
 
