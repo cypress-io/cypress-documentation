@@ -233,6 +233,18 @@
     display: block;
   }
 }
+@media screen and (max-width: 1351px) {
+  .article-wrapper {
+    margin:60px 100px 60px 330px;
+  }
+
+  .media {
+    h2 {
+      font-size: 1.2em;
+    }
+  }
+}
+
 
 @media screen and(max-width: 1000px) {
 
@@ -265,6 +277,12 @@
 
   .article-wrapper {
     margin-right: 30px;
+
+    .media {
+      h2 {
+        font-size:1em;
+      }
+    }
   }
 
   #footer-social {
