@@ -907,7 +907,7 @@ Cypress offers several different timeout values based on the type of command.
 We've set their default timeout durations based on how long we expect certain actions to take.
 
 For instance:
-- {% url `cy.visit()` visit %} loads a remote page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
+- {% url `cy.visit()` visit %} loads a page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
 - {% url `cy.exec()` exec %} runs a system command such as *seeding a database*. We expect this to potentially take a long time, and its default timeout is set to `60000ms`.
 - {% url `cy.wait()` wait %} actually uses 2 different timeouts. When waiting for a {% url 'routing alias' variables-and-aliases#Routes %}, we wait for a matching request for `5000ms`, and then additionally for the server's response for `30000ms`. We expect your application to make a matching request quickly, but we expect the server's response to potentially take much longer.
 
