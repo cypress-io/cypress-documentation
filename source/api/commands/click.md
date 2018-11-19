@@ -60,6 +60,15 @@ Option | Default | Description
 `multiple` | `false` | {% usage_options multiple click %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .click %}
 
+ `.click()` method may also be fired with the following modifiers:
+
+Sequence | Notes
+--- | ---
+`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
+`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
+`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
+`{shift}` | Activates the `shiftKey` modifier.
+
 ## Yields {% helper_icon yields %}
 
 {% yields same_subject .click %}
