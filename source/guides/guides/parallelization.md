@@ -156,19 +156,19 @@ You can test your application against different browsers and view the results un
 - The first group can be called `Windows/Chrome 69`. 
 
   ```shell
-  cypress run --record --group Windows/Chrome-69
+  cypress run --record --group Windows/Chrome-69 --browser chrome
   ```
 
 - The second group can be called `Mac/Chrome 70`. 
 
   ```shell
-  cypress run --record --group chrome --browser Mac/Chrome-70
+  cypress run --record --group Mac/Chrome-70 --browser chrome
   ```
 
 - The third group can be called `Linux/Electron`. *Electron is the default browser used in Cypress runs*.
 
   ```shell
-  cypress run --record --group chrome --browser Linux/Electron
+  cypress run --record --group Linux/Electron 
   ```
 
 {% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
