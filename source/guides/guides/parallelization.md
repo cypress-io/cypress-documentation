@@ -25,6 +25,8 @@ Cypress can run recorded tests in parallel across multiple machines since versio
 
 This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
+{% img 'no-border' /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" %}
+
 # Splitting up your test suite
 
 Cypress' parallelization strategy is file-based, so in order to utilize parallelization, your tests will need to be split across separate files.
@@ -68,7 +70,7 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 
 ## Spec duration history analysis
 
-{% img 'no-border' /img/guides/parallelization/spec-forecast.png "Spec duration forecasting" %}
+{% img 'no-border' /img/guides/parallelization/load-balancing.png "Spec duration forecasting" %}
 
 With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
 
@@ -151,17 +153,25 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
 
-- The first group can be called `electron`. *Electron is the default browser used in Cypress runs*.
+- The first group can be called `Windows/Chrome 69`. 
 
   ```shell
-  cypress run --record --group electron
+  cypress run --record --group Windows/Chrome-69 --browser chrome
   ```
 
-- The second group can be called `chrome`.
+- The second group can be called `Mac/Chrome 70`. 
 
   ```shell
-  cypress run --record --group chrome --browser chrome
+  cypress run --record --group Mac/Chrome-70 --browser chrome
   ```
+
+- The third group can be called `Linux/Electron`. *Electron is the default browser used in Cypress runs*.
+
+  ```shell
+  cypress run --record --group Linux/Electron 
+  ```
+
+{% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
 
 ## Grouping to label parallelization
 
@@ -191,21 +201,30 @@ Labeling these groups in this manner helps up later when we review our test runs
 
 ## Grouping by spec context
 
-Let's say you have an application that has a *customer facing portal* and an *administration facing portal*. You could organize and test these two parts of your application within the same run:
+Let's say you have an application that has a *customer facing portal*, *guest facing portal* and an *administration facing portal*. You could organize and test these three parts of your application within the same run:
 
-- One group can be called `customer-portal`:
+- One group can be called `package/admin`:
 
-  ```shell
-  cypress run --record --group customer-portal --spec 'cypress/integration/portals/customer/**/*'
-  ```
+```shell
+cypress run --record --group package/admin --spec 'cypress/integration/packages/admin/**/*'
+```
 
-- The other group can be called `admin-portal`:
+- Another can be called `package/customer`:
 
-  ```shell
-  cypress run --record --group admin-portal --spec 'cypress/integration/portals/admin/**/*'
-  ```
+```shell
+cypress run --record --group package/customer --spec 'cypress/integration/packages/customer/**/*'
+```
+
+- The last group can be called `package/guest`:
+
+```shell
+cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
+```
+
+{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %} 
 
 This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
+
 
 # Linking CI machines for parallelization or grouping
 
