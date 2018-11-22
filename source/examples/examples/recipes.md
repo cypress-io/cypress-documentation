@@ -23,7 +23,8 @@ Recipe | Category | Description
 {% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
 {% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
 {% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
-{% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central data store
+{% urlHash 'Redux Testing' Redux-Testing %} | Blogs | Test an application that uses central Redux data store
+{% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central Vuex data store
 {% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
 {% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
 {% urlHash 'Stub methods called on `window`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` for methods called on `window`
@@ -130,6 +131,14 @@ Get around the lack of a `.hover()` command.
 - Load Codepen and get around iframe security restrictions.
 - Use {% url "`cy.request()`" request %} to load a document into test iframe.
 - Test {% url "HyperApp.js" https://hyperapp.js.org/ %} application through the DOM and through actions.
+
+## [Redux Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__testing-redux-store)
+
+- control application via DOM and check the Redux store
+- use Redux actions directly from tests
+- load initial Redux state from a fixture file
+- use {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe#readme %} plugin
+- use {% url cypress-plugin-snapshots https://github.com/meinaart/cypress-plugin-snapshots#readme %} plugin
 
 ## [Vue + Vuex + REST Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__vue-vuex-rest)
 
