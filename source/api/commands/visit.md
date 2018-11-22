@@ -5,6 +5,11 @@ title: visit
 
 Visit a remote URL.
 
+{% note warning 'Anti-Pattern' %}
+Don't use `cy.visit()` without setting a `baseUrl`.
+
+Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} here.
+{% endnote %}
 # Syntax
 
 ```javascript
