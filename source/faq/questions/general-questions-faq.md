@@ -137,3 +137,30 @@ Unit tests are not something we are really trying to solve right now. Most of th
 We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing, it just remains a thing that's possible if we wanted to go down that route.
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
+
+## {% fa fa-angle-right %} When should I write unit test and when should I write an end-to-end test?
+
+We believe unit tests and end-to-end tests have differences that should guide your choice.
+
+| Unit tests | End-to-end tests |
+| --- | ---- |
+| focus on code | focus on the features |
+| should be kept short | can be long |
+| examine the returned result of an action | examine side effect of an action: DOM, storage, network, file system, database |
+| important to the developers | important to the end users |
+
+In addition to the above table of differences, below are a few rules of thumb to decide when to write a unit test and when to write an end-to-end test
+
+- if the code you are trying to test is called from other code, use a unit test
+- if the code is to be called from the external system, like a browser, you need an end-to-end test
+- if a unit test requires a lot of mocking, and you have to bring tools like `js-dom`, `enzyme`, `sinon.js` just to simulate a real world environment, you probable want to rewrite it as an end-to-end test
+- if an end-to-end test does NOT go through the browser and instead calls the code directly, you probably can replace it with a unit test
+
+Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests
+
+- focus on and test just one thing
+- are flake-free and do not fail randomly
+- give your confidence to refactor code and add new features
+- are easy to run both locally and on {% url "continuous integration" continuous-integration %} server
+
+Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
