@@ -138,7 +138,7 @@ We have internally experimented at doing DOM based component unit testing in Cyp
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
 
-## {% fa fa-angle-right %} When should I write unit test and when should I write an end-to-end test?
+## {% fa fa-angle-right %} When should I write a unit test and when should I write an end-to-end test?
 
 We believe unit tests and end-to-end tests have differences that should guide your choice.
 
