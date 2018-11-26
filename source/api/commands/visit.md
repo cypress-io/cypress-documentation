@@ -5,8 +5,8 @@ title: visit
 
 Visit a remote URL.
 
-{% note warning 'Anti-Pattern' %}
-Don't use `cy.visit()` without setting a `baseUrl`.
+{% note warning 'Best Practice' %}
+We recommend setting a `baseUrl` when using `cy.visit()`.
 
 Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} here.
 {% endnote %}
