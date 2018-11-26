@@ -144,23 +144,23 @@ We believe unit tests and end-to-end tests have differences that should guide yo
 
 | Unit tests | End-to-end tests |
 | --- | ---- |
-| focus on code | focus on the features |
-| should be kept short | can be long |
-| examine the returned result of an action | examine side effect of an action: DOM, storage, network, file system, database |
-| important to the developers | important to the end users |
+| Focus on code | Focus on the features |
+| Should be kept short | Can be long |
+| Examine the returned result of actions | Examine side effect of actions: DOM, storage, network, file system, database |
+| Important to developer workflow | Important to end user's workflow |
 
-In addition to the above table of differences, below are a few rules of thumb to decide when to write a unit test and when to write an end-to-end test
+In addition to the above differences, below are a few rules of thumb to decide when to write a unit test and when to write an end-to-end test.
 
-- if the code you are trying to test is called from other code, use a unit test
-- if the code is to be called from the external system, like a browser, you need an end-to-end test
-- if a unit test requires a lot of mocking, and you have to bring tools like `js-dom`, `enzyme`, `sinon.js` just to simulate a real world environment, you probable want to rewrite it as an end-to-end test
-- if an end-to-end test does NOT go through the browser and instead calls the code directly, you probably can replace it with a unit test
+- If the code you are trying to test is called from other code, use a unit test.
+- If the code is going be called from the external system, like a browser, use an end-to-end test.
+- If a unit test requires a lot of mocking and you have to bring tools like `js-dom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
+- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewite it as a unit test
 
-Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests
+Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
 
-- focus on and test just one thing
-- are flake-free and do not fail randomly
-- give your confidence to refactor code and add new features
-- are easy to run both locally and on {% url "continuous integration" continuous-integration %} server
+- Focus on and test just one thing.
+- Are flake-free and do not fail randomly.
+- Give you confidence to refactor code and add new features.
+- Are easy to run both locally and on a {% url "continuous integration" continuous-integration %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
