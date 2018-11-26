@@ -166,6 +166,11 @@ You can transfer projects that you own to another {% urlHash "organization" Orga
 
 You can delete projects you own. This will also delete all of their recorded test runs. Deleting projects can only be done from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
+1. Click into 'Runs' in the Dashboard.
+2. Click on the project you want to delete from the lefthand sidebar.
+3. On this page, to the far right, click on 'Settings'.
+4. At the very bottom of the Settings page click the 'Remove Project' button.
+
 ![Delete project dialog](/img/dashboard/remove-project-dialog.png)
 
 # Recorded runs
