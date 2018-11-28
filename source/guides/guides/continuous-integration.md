@@ -301,6 +301,21 @@ Typically you'd set this inside of your CI provider.
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
 
+
+## Git Information 
+Cypress uses {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information (e.g. branch, commit message, author)
+
+It assumes there is `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
+
+Under some environment setup (e.g. `docker`/`docker-compose`) if `.git` directory is not available/mounted, you can pass all git related information under custom environment variables.
+
+- branch: `COMMIT_INFO_BRANCH`
+- message: `COMMIT_INFO_MESSAGE`
+- email: `COMMIT_INFO_EMAIL`
+- author: `COMMIT_INFO_AUTHOR`
+- sha: `COMMIT_INFO_SHA`
+- remote: `COMMIT_INFO_REMOTE`
+
 ## Custom Environment Variables
 
 You can also set custom environment variables for use in your tests. These enable your code to reference dynamic values.
