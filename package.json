@@ -107,7 +107,7 @@
     "ora": "3.0.0",
     "pluralize": "7.0.0",
     "prompt-confirm": "2.0.4",
-    "ramda": "0.26.0",
+    "ramda": "0.26.1",
     "request-promise": "4.2.2",
     "run-sequence": "2.2.1",
     "sinon": "7.1.1",
