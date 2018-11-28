@@ -260,7 +260,22 @@ Once multiple machines are available within your CI environment, you can pass th
 
 You can set various environment variables to modify how Cypress runs.
 
-## Record Key
+## Configuration Values
+
+You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+
+### Typical use cases would be modifying things like:
+
+- `CYPRESS_BASE_URL`
+- `CYPRESS_VIDEO_COMPRESSION`
+- `CYPRESS_REPORTER`
+- `CYPRESS_INSTALL_BINARY`
+
+{% note info %}
+Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+{% endnote %}
+
+### Record Key
 
 If you are {% url 'recording your runs' continuous-integration#Recording-tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
 
@@ -285,21 +300,6 @@ Typically you'd set this inside of your CI provider.
 ### TravisCI Environment Variable
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
-
-## Other Configuration Values
-
-You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
-
-### Typical use cases would be modifying things like:
-
-- `CYPRESS_BASE_URL`
-- `CYPRESS_VIDEO_COMPRESSION`
-- `CYPRESS_REPORTER`
-- `CYPRESS_INSTALL_BINARY`
-
-{% note info %}
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
-{% endnote %}
 
 ## Custom Environment Variables
 
