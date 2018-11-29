@@ -112,7 +112,7 @@
     "run-sequence": "2.2.1",
     "sinon": "7.1.1",
     "sinon-chai": "3.3.0",
-    "snap-shot-it": "6.2.6",
+    "snap-shot-it": "6.2.7",
     "start-server-and-test": "1.7.11",
     "stop-only": "2.2.2",
     "textlint": "11.0.1",
