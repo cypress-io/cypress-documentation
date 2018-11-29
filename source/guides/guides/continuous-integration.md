@@ -303,11 +303,11 @@ Typically you'd set this inside of your CI provider.
 
 
 ## Git Information 
-Cypress uses {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information (e.g. branch, commit message, author)
+Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
-It assumes there is `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
+It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
-Under some environment setup (e.g. `docker`/`docker-compose`) if `.git` directory is not available/mounted, you can pass all git related information under custom environment variables.
+Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` directory is not available or mounted, you can pass all git related information under custom environment variables.
 
 - branch: `COMMIT_INFO_BRANCH`
 - message: `COMMIT_INFO_MESSAGE`
