@@ -98,6 +98,11 @@
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
       link: https://github.com/palmerhq/cypress-image-snapshot
       keywords: [image-diff, snapshot]
+      
+    - name: Cypress Visual Regression
+      description: Adds visual regression testing to Cypress
+      link: https://github.com/mjhea0/cypress-visual-regression
+      keywords: [image-diff, snapshot]
 
     - name: cypress-capybara
       description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
