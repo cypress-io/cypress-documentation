@@ -16,7 +16,7 @@ If you're looking to understand **how** to use these assertions please read abou
 
 ## BDD Assertions
 
-These chainers are available for BDD assertions (`expect`/`should`). You can see the entire list of available BDD Chai assertions {% url "here" http://chaijs.com/api/bdd/ %}.
+These chainers are available for BDD assertions (`expect`/`should`). Aliases listed can be used interchangeably with their original chainer. You can see the entire list of available BDD Chai assertions {% url "here" http://chaijs.com/api/bdd/ %}.
 
 | Chainer | Example |
 | --- | --- |
