@@ -84,6 +84,11 @@
       link: https://github.com/avanslaars/cypress-axe
       keywords: [accessibility, a11y]
 
+    - name: cypress-firebase
+      description: Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).
+      link: https://github.com/prescottprue/cypress-firebase
+      keywords: [firebase, database, commands]
+
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
