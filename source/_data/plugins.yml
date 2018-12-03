@@ -10,7 +10,7 @@
       link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
       keywords: [file-watcher, cucumber]
       
-     - name: cypress-app-watcher-preprocessor
+    - name: cypress-app-watcher-preprocessor
       description: Reruns Cypress tests when the backend server restarts
       link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
       keywords: [file-watcher]
@@ -37,7 +37,7 @@
       link: https://applitools.com/tutorials/cypress.html
       keyword: [screenshots, visual regression, visual-ai]
       
-     - name: CircleCI Cypress Orb
+    - name: CircleCI Cypress Orb
       description: Official Cypress Orb for CircleCI configuration.
       link: https://github.com/cypress-io/circleci-orb
       keywords: [continuous-integration]
@@ -84,7 +84,7 @@
       link: https://github.com/avanslaars/cypress-axe
       keywords: [accessibility, a11y]
       
-     - name: cypress-capybara
+    - name: cypress-capybara
       description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
       link: https://github.com/testdouble/cypress-capybara
       keywords: [testing-library, capybara]
