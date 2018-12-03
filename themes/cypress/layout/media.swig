@@ -46,7 +46,9 @@
                       {% if media.author %}
                         by {{ media.author }}
                       {% endif %}
+                      {% if media.date %}
                       <em>({{ media.date }}).</em>
+                      {% endif %}
                       {% if media.slides %}
                         <a href="{{ media.slides }}" target="_blank" rel="noopener noreferrer">Slides.</a>
                       {% endif %}
