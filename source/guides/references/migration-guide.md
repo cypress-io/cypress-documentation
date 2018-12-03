@@ -108,3 +108,16 @@ expect(function() {}).to.be.empty
 // Would pass in Chai 3 but will fail in 4
 expect(true).to.be.ture
 ```
+
+## Upgrade to Sinon 7
+
+Sinon 3 has been upgraded to Sinon 7 with some [breaking changes](https://sinonjs.org/releases/v7.1.1/#migration-guides), including:
+
+- An error will throw when trying to stub a non-existent property.
+
+```javascript
+// Would pass in Sinon 3 but will fail in 4+
+cy.stub(obj, 'nonExistingProperty')
+```
+
+- `cy.spy.reset()` was replaced by `cy.spy.resetHistory()`.
