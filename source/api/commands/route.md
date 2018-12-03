@@ -326,7 +326,7 @@ cy.route({
 ***Setup route to error on POST to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#XHR-Web-Forms %}
 {% endnote %}
 
 ***Change `headers`***

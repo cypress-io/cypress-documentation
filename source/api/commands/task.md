@@ -30,6 +30,7 @@ cy.task('log', 'This will be output to the terminal')
 on('task', {
   log (message) {
     console.log(message)
+
     return null
   }
 })

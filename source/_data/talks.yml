@@ -1,5 +1,21 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "TDD in Vue with Cypress"
+    url: https://www.vuemastery.com/conferences/connect-tech-2018/Test-Driven-Development-in-Vue-with-Cypress/
+    sourceName: connect.tech 2018
+    sourceUrl: http://connect.tech/
+    date: October 19, 2018
+    author: Josh Justice
+    img: /img/examples/tdd-vue.jpg
+
+  - title: "TDD in React with Cypress"
+    url: https://vimeo.com/298277470
+    sourceName: connect.tech 2018
+    sourceUrl: http://connect.tech/
+    date: October 18, 2018
+    author: Josh Justice
+    img: /img/examples/tdd-react.jpg
+
   - title: "Hassle free E2E tests with Cypress"
     url: https://www.youtube.com/watch?v=1PMxLTfh6lo&feature=youtu.be&t=1
     sourceName: BuzzJS
@@ -63,14 +79,6 @@ large:
     date: May 1, 2018
     author: Josh Justice
     youtubeId: Sth0bGfFOMw
-
-  - title: "Outside-in Testing in Vue"
-    url: https://youtu.be/Tu9FI5gQX-k
-    sourceName: Atlanta Vue.js Meetup
-    sourceUrl: https://www.meetup.com/Atlanta-Vue-js-Meetup/events/247593045/
-    date: Apr 26, 2018
-    author: Josh Justice
-    youtubeId: CMN8boToKWI
 
   - title: "VueJs Applied + Testing with Cypress.io"
     url: https://www.youtube.com/watch?time_continue=29&v=dpB0YgnFyZQ
