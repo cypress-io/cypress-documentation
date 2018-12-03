@@ -51,6 +51,8 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `requestTimeout` configuration#Timeouts %}, {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.wait %}
+`requestTimeout` | {% url `requestTimeout` configuration#Timeouts %} | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.
+`responseTimeout` | {% url `responseTimeout` configuration#Timeouts %} | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.
 
 ## Yields {% helper_icon yields %}
 
