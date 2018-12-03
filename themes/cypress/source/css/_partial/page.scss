@@ -208,6 +208,10 @@ a.article-edit-link {
     tr:nth-child(2n) {
       background: #fafafb;
     }
+
+    small {
+      font-size: small;
+    }
   }
 
   blockquote {
@@ -681,4 +685,10 @@ a.article-edit-link {
   &[open] .history-disclosure{
     transform: rotateX(0deg);
   }
+}
+
+.aliases {
+  display: inline-block;
+  line-height: 1.4em;
+  padding-top: 0.3em;
 }
