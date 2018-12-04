@@ -260,7 +260,22 @@ Once multiple machines are available within your CI environment, you can pass th
 
 You can set various environment variables to modify how Cypress runs.
 
-## Record Key
+## Configuration Values
+
+You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+
+### Typical use cases would be modifying things like:
+
+- `CYPRESS_BASE_URL`
+- `CYPRESS_VIDEO_COMPRESSION`
+- `CYPRESS_REPORTER`
+- `CYPRESS_INSTALL_BINARY`
+
+{% note info %}
+Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+{% endnote %}
+
+### Record Key
 
 If you are {% url 'recording your runs' continuous-integration#Recording-tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
 
@@ -286,20 +301,20 @@ Typically you'd set this inside of your CI provider.
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
 
-## Other Configuration Values
 
-You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+## Git Information 
+Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
-### Typical use cases would be modifying things like:
+It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
-- `CYPRESS_BASE_URL`
-- `CYPRESS_VIDEO_COMPRESSION`
-- `CYPRESS_REPORTER`
-- `CYPRESS_INSTALL_BINARY`
+Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` directory is not available or mounted, you can pass all git related information under custom environment variables.
 
-{% note info %}
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
-{% endnote %}
+- branch: `COMMIT_INFO_BRANCH`
+- message: `COMMIT_INFO_MESSAGE`
+- email: `COMMIT_INFO_EMAIL`
+- author: `COMMIT_INFO_AUTHOR`
+- sha: `COMMIT_INFO_SHA`
+- remote: `COMMIT_INFO_REMOTE`
 
 ## Custom Environment Variables
 

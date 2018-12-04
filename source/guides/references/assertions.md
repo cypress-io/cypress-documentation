@@ -116,8 +116,6 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 | .typeOf(*value*, *name*, *[message]*) | `assert.typeOf('e2e', 'string', 'val is string')` |
 | .notTypeOf(*value*, *name*, *[message]*) | `assert.notTypeOf('e2e', 'number', 'val not number')` |
 
-var func = x => x * x
-
 # Chai-jQuery
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai-jquery %}
