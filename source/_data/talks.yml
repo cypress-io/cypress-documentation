@@ -1,5 +1,14 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: End-to-end testing is hard - but it doesn't have to be
+    url: https://www.youtube.com/watch?v=swpz0H0u13k
+    youtubeId: swpz0H0u13k
+    sourceName: ReactiveConf 2018
+    sourceUrl: https://reactiveconf.com/
+    date: Oct 29, 2018
+    author: Gleb Bahmutov
+    img: /img/examples/reactiveconf-2018.png
+
   - title: Testing Vue with Crypress
     url: https://www.youtube.com/watch?v=uowaTHQDcKc
     sourceName: VueNYC meetup
