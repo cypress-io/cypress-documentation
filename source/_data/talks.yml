@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: Testing Vue with Crypress
+    url: https://www.youtube.com/watch?v=uowaTHQDcKc
+    sourceName: VueNYC meetup
+    sourceUrl: https://www.meetup.com/vueJsNYC/events/254789852/
+    date: Dec 6, 2018
+    author: Gleb Bahmutov
+    img: /img/examples/vuenyc-meetup.jpeg
+
   - title: "TDD in Vue with Cypress"
     url: https://www.vuemastery.com/conferences/connect-tech-2018/Test-Driven-Development-in-Vue-with-Cypress/
     sourceName: connect.tech 2018
