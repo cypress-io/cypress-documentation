@@ -213,6 +213,24 @@ cy.wait(['@getActivities', '@getMessages'])
 
 // these commands will not run until the wait command resolves above
 cy.get('h1').should('contain', 'Dashboard')
+
+//if your route is more generic, and you would like to check several return values you can chain .wait() calls
+
+  cy.server()
+  cy.route({
+    method: 'POST',
+    url: '/myApi',
+  }).as('apiCheck')
+  cy.visit('/')
+  cy.wait('@apiCheck').then(xhr => {
+    assert.isNotNull(xhr.response.body.data,"First API call has data");
+  }).wait('@apiCheck').then(xxhr => {
+    assert.isNotNull(xhr.response.body.data,"Second API call has data");
+  }).wait('@apiCheck').then(xhr => {
+    assert.isNotNull(xhr.response.body.data,"Third API call has data");
+  });
+
+
 ```
 
 Waiting on an aliased route has big advantages:
