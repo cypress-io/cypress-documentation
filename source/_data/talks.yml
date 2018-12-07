@@ -7,6 +7,7 @@ large:
     date: Dec 6, 2018
     author: Gleb Bahmutov
     img: /img/examples/vuenyc-meetup.jpeg
+    youtubeId: uowaTHQDcKc
 
   - title: "TDD in Vue with Cypress"
     url: https://www.vuemastery.com/conferences/connect-tech-2018/Test-Driven-Development-in-Vue-with-Cypress/
@@ -24,8 +25,8 @@ large:
     author: Josh Justice
     img: /img/examples/tdd-react.jpg
 
-  - title: "Hassle free E2E tests with Cypress"
-    url: https://www.youtube.com/watch?v=1PMxLTfh6lo&feature=youtu.be&t=1
+  - title: "Everything I know about writing quality software"
+    url: https://www.youtube.com/watch?v=1PMxLTfh6lo
     sourceName: BuzzJS
     date: Jul 30, 2018
     author: Gleb Bahmutov
