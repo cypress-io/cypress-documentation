@@ -25,8 +25,8 @@ You'll need to prefix each command with:
 - `$(npm bin)/cypress`
 - ...or...
 - `./node_modules/.bin/cypress`
-- ...or... (requires npm@5.2.0 or greater
-- 'npx cypress`
+- ...or... (requires npm@5.2.0 or greater)
+- `npx cypress`
 
 Or just add cypress commands to the `scripts` field in your `package.json` file.
 {% endnote %}
