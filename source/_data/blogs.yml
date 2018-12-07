@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: Testing Your Frontend with Cypress.io Framework
+    url: https://snipcart.com/blog/frontend-testing-cypress
+    sourceName: Snipcart
+    sourceUrl: https://snipcart.com/
+    author: Michael Yagudaev
+    date: Nov 29, 2018
+    img: /img/examples/snipcart.png
+
   - title: Angular Testing – Protractor vs Cypress
     url: https://techblog.fexcofts.com/2018/09/24/end-to-end-e2e-angular-testing-protractor-vs-cypress/
     sourceName: FEXCO Technology Solutions
