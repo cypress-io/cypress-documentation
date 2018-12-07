@@ -8,6 +8,12 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "CircleCI + Cypress.io: End to end testing made easy"
+    url: https://slides.com/bahmutov/circleci-cypress-orb
+    author: Gleb Bahmutov
+    date: Dec 5, 2018
+    img: /img/examples/circleci-orb.png
+
   - title: Testing Your Frontend with Cypress.io Framework
     url: https://snipcart.com/blog/frontend-testing-cypress
     sourceName: Snipcart
