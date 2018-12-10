@@ -53,7 +53,7 @@ Option | Description
 `--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
-`--no-exit` | {% urlHash "Keep Cypress open after all tests run" cypress-run-no-exit %}
+`--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
@@ -132,7 +132,7 @@ cypress run --headed
 
 ### `cypress run --no-exit`
 
-To prevent Cypress from exiting after running tests with `cypress run`, use `--no-exit`.
+To prevent the Cypress Test Runner from exiting after running tests in a spec file, use `--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have access to **developer tools** after a `spec` has run.
 
