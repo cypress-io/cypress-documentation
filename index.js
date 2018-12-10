@@ -87,4 +87,5 @@ function initHexo () {
 
 }
 
-return initHexo()
+return initHexo() // eslint-disable-line
+
