@@ -1,5 +1,21 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: Testing Vue with Crypress
+    url: https://www.youtube.com/watch?v=uowaTHQDcKc
+    sourceName: VueNYC meetup
+    sourceUrl: https://www.meetup.com/vueJsNYC/events/254789852/
+    date: Dec 6, 2018
+    author: Gleb Bahmutov
+    youtubeId: uowaTHQDcKc
+
+  - title: Next Generation Web Application End to End Testing
+    url: https://youtu.be/CkGQ0fFH3yE
+    sourceName: Devoxx Belgium
+    sourceUrl: https://devoxx.be/
+    date: Nov 4, 2018
+    author: Amir Rustamzadeh
+    youtubeId: CkGQ0fFH3yE
+    
   - title: End-to-end testing is hard - but it doesn't have to be
     url: https://www.youtube.com/watch?v=swpz0H0u13k
     youtubeId: swpz0H0u13k
@@ -7,16 +23,6 @@ large:
     sourceUrl: https://reactiveconf.com/
     date: Oct 29, 2018
     author: Gleb Bahmutov
-    img: /img/examples/reactiveconf-2018.png
-
-  - title: Testing Vue with Crypress
-    url: https://www.youtube.com/watch?v=uowaTHQDcKc
-    sourceName: VueNYC meetup
-    sourceUrl: https://www.meetup.com/vueJsNYC/events/254789852/
-    date: Dec 6, 2018
-    author: Gleb Bahmutov
-    img: /img/examples/vuenyc-meetup.jpeg
-    youtubeId: uowaTHQDcKc
 
   - title: "TDD in Vue with Cypress"
     url: https://www.vuemastery.com/conferences/connect-tech-2018/Test-Driven-Development-in-Vue-with-Cypress/
@@ -33,6 +39,14 @@ large:
     date: October 18, 2018
     author: Josh Justice
     img: /img/examples/tdd-react.jpg
+
+  - title: Deterministic Mocking with GraphQL and Apollo
+    url: https://youtu.be/K445DtQ5oHY
+    youtubeId: K445DtQ5oHY
+    sourceName: React Boston 2018
+    sourceUrl: http://www.reactboston.com/
+    date: Sep 29, 2018
+    author: Hillary Bauer & Mark Faga
 
   - title: "Everything I know about writing quality software"
     url: https://www.youtube.com/watch?v=1PMxLTfh6lo
