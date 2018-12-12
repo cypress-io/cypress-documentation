@@ -20,6 +20,7 @@
     var elementInView = (inViewElms.length > 0)
       ? inViewElms.pop()
       : this.scrollItems[0]
+
     this.activateItem(elementInView)
   }
 
