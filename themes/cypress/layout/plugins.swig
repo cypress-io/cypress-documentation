@@ -10,7 +10,7 @@
         {% for pluginType in site.data.plugins %}
           <h2>{{ pluginType.name }}</h2>
           <ul class="plugins-list">
-            {% for plugin in pluginType.plugins %}
+            {% for plugin in order_by_name(pluginType.plugins) %}
               <li>
                 <h3>
                   <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a>
