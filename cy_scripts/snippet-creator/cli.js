@@ -40,6 +40,7 @@ const start = (argv) => {
 
       if (!inExists) {
         debug('file provided was invalid:', inputFile)
+
         return throwKnownError(errors.inputFileNoExist(inputFile))
       }
 
@@ -66,6 +67,7 @@ const start = (argv) => {
 
 const handleKnownErrors = (err) => {
   let errorText
+
   if (err.known) {
     errorText = (`[Snippet Creator] Error: ${err.message}`)
   } else {
@@ -73,12 +75,15 @@ const handleKnownErrors = (err) => {
     ${err.stack}
     `)
   }
+
   log.err(errorText)
+
   return errorText
 }
 
 const throwKnownError = (msg) => {
   const err = new Error(msg)
+
   err.known = true
   throw err
 }

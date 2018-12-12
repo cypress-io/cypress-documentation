@@ -1,8 +1,14 @@
 {
+  "plugins": [
+    "cypress"
+  ],
   "extends": [
-    "plugin:cypress-dev/general"
+    "plugin:cypress-dev/general",
+    "plugin:cypress/recommended"
   ],
   "env": {
-    "node": true
+    "es6": true,
+    "node": true,
+    "cypress/globals": true
   }
 }

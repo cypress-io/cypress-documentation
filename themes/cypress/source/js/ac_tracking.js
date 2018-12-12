@@ -30,6 +30,7 @@
     trackcmp_s[0].parentNode.appendChild(trackcmp)
   } else {
     var trackcmp_h = document.getElementsByTagName('head')
+
     trackcmp_h.length && trackcmp_h[0].appendChild(trackcmp)
   }
-})();
+})()

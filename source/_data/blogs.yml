@@ -8,19 +8,37 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
-  - title: "CircleCI + Cypress.io: End to end testing made easy"
-    url: https://slides.com/bahmutov/circleci-cypress-orb
-    author: Gleb Bahmutov
-    date: Dec 5, 2018
-    img: /img/examples/circleci-orb.png
-
   - title: Testing Your Frontend with Cypress.io Framework
     url: https://snipcart.com/blog/frontend-testing-cypress
     sourceName: Snipcart
     sourceUrl: https://snipcart.com/
     author: Michael Yagudaev
     date: Nov 29, 2018
-    img: /img/examples/snipcart.png
+    img: /img/examples/snipcart.jpg
+  
+  - title: "Building an optimised E2E flow system with Cypress"
+    url: https://medium.com/elements/building-an-optimised-e2e-flow-system-with-cypress-be119025c476
+    sourceName: Elements blog
+    sourceUrl: https://medium.com/elements
+    date: November 23, 2018
+    author: Luis Miguel Fernández
+    img: /img/examples/optimized-e2e-flow-system-with-cypress.jpg
+
+  - title: "CircleCI launches Orbs, a package manager for software delivery automation"
+    url: https://techcrunch.com/2018/11/07/circleci-launches-orbs-a-package-manager-for-software-delivery-automation/
+    sourceName: TechCrunch
+    sourceUrl: https://techcrunch.com
+    author: Frederic Lardinois
+    date: Nov 12, 2018
+    img: /img/examples/circleci-launches-orbs.jpg
+
+  - title: "Strava’s New End-to-End Testing Setup"
+    url: https://medium.com/strava-engineering/stravas-new-end-to-end-testing-setup-18b541727555
+    sourceName: Strava Engineering
+    sourceUrl: https://medium.com/strava-engineering
+    author: Mark Hurwitz
+    date: Oct 11, 2018
+    img: /img/examples/strava-engineering-end-to-end-cypress.jpg
 
   - title: Angular Testing – Protractor vs Cypress
     url: https://techblog.fexcofts.com/2018/09/24/end-to-end-e2e-angular-testing-protractor-vs-cypress/
@@ -28,7 +46,7 @@ large:
     sourceUrl: https://techblog.fexcofts.com/
     author: Tulio Castro
     date: Sep 24, 2018
-    img: /img/examples/e2e-app.png
+    img: /img/examples/e2e-app.jpg
 
   - title: Test Driven Form Development with Cypress
     url: https://palmer.net/blog/test-driven-form-development-with-cypress
@@ -36,7 +54,7 @@ large:
     sourceUrl: https://www.gravitywell.co.uk/
     date:
     author: Jack Cross
-    img: /img/examples/thepalmergroup.jpg
+    img: /img/examples/the-palmer-group.jpg
 
   - title: Using Cypress.io
     url: https://www.gravitywell.co.uk/labs/using-cypress.io

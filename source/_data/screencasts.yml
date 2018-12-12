@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "CircleCI + Cypress.io: End to end testing made easy"
+    url: https://youtu.be/J-xbNtKgXfY
+    sourceName: CircleCI
+    sourceUrl: https://circleci.com/
+    date: December 10, 2018
+    author: Gleb Bahmutov & Eddie Webb
+    youtubeId: J-xbNtKgXfY
+
   - title: "Get the latest updates from Cypress"
     url: https://www.youtube.com/watch?v=FfqD1ExUGlw
     sourceName: Cypress.io
