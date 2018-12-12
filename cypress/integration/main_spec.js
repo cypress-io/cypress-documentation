@@ -207,17 +207,16 @@ describe('Main', () => {
         cy.url()
         .should('match', /.+#\d+-\d+-\d+/)
       })
+    } else {
+      it('has a populated table of contents', () => {
+        cy.get('aside#article-toc')
+        .contains('0.19.0', { timeout: 10000 })
+        .click()
+
+        cy.url()
+        .should('include', '#0-19-0')
+      })
     }
-
-    it('has a populated table of contents', () => {
-      cy.get('aside#article-toc')
-      .contains('0.19.0', { timeout: 10000 })
-      .click()
-
-      cy.url()
-      .should('include', '#0-19-0')
-    })
-
   })
 
   describe('Intro to Cypress', () => {
