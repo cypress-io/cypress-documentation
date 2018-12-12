@@ -7,6 +7,7 @@ const ora = require('ora')
 const convert = (inFile, outVid, outImg) => {
   let filesize = 0
   const spinner = ora('Creating .mp4 - 0kB').start()
+
   return Promise.all([
     new Promise((resolve, reject, onCancel) => {
       const ff = ffmpeg()
@@ -21,6 +22,7 @@ const convert = (inFile, outVid, outImg) => {
       .save(outVid)
       .on('end', () => {
         debug('successful')
+
         return resolve()
       })
       .on('error', ffError(reject))
@@ -69,6 +71,7 @@ const ffError = (reject) => (err, stdout, stderr) => {
       ${stdout}
       ${stderr}
       `
+
   return reject(err)
 }
 

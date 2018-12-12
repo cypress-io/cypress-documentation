@@ -1,18 +1,19 @@
 (function () {
   'use strict'
 
-
   var sidebar = document.getElementById('sidebar')
   var expandSidebar = document.getElementById('expand-sidebar')
   var collapseSidebar = document.getElementById('collapse-sidebar')
 
   function collapseSection (element, header) {
     if (!element) return
+
     // get the height of the element's inner content, regardless of its actual size
     var sectionHeight = element.scrollHeight
 
     // temporarily disable all css transitions
     var elementTransition = element.style.transition
+
     element.style.transition = ''
 
     // on the next frame (as soon as the previous style change has taken effect),
@@ -34,6 +35,7 @@
 
   function expandSection (element, header) {
     if (!element) return
+
     // get the height of the element's inner content, regardless of its actual size
     var sectionHeight = element.scrollHeight
 
