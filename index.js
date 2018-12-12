@@ -87,4 +87,5 @@ function initHexo () {
 
 }
 
-return initHexo()
+initHexo()
+
