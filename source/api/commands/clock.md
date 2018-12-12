@@ -152,7 +152,7 @@ const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
 
 cy.clock(now)
 cy.visit('/index.html')
-cy.get('#date').contains('2017-03-14')
+cy.get('#date').contains('2017-04-14')
 ```
 
 ## Function Names
