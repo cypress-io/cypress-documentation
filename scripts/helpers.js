@@ -186,3 +186,7 @@ hexo.extend.helper.register('lang_name', function (lang) {
 
   return data.name || data
 })
+
+hexo.extend.helper.register('order_by_name', function (posts) {
+  return _.sortBy(posts, (post) => post.name.toLowerCase(), 'name')
+})

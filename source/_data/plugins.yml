@@ -9,7 +9,7 @@
       description: Run cucumber/gherkin-syntaxed specs with cypress.io
       link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
       keywords: [file-watcher, cucumber]
-      
+
     - name: cypress-app-watcher-preprocessor
       description: Reruns Cypress tests when the backend server restarts
       link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
@@ -36,7 +36,7 @@
       description: Fast, easy and reliable visual UI testing with Cypress
       link: https://applitools.com/tutorials/cypress.html
       keyword: [screenshots, visual regression, visual-ai]
-      
+
     - name: CircleCI Cypress Orb
       description: Official Cypress Orb for CircleCI configuration.
       link: https://github.com/cypress-io/circleci-orb
@@ -73,7 +73,7 @@
       description: Converts WDIO automation tests to Cypress.
       link: https://github.com/intuit/cyphfell
       keywords: [wdio]
-      
+
     - name: cypressautomocker
       description: Allow recording API results and replaying the APIs as a mock server.
       link: https://github.com/scottschafer/cypressautomocker
@@ -83,7 +83,7 @@
       description: Helps test your applications for accessibility issues using axe-core.
       link: https://github.com/avanslaars/cypress-axe
       keywords: [accessibility, a11y]
-      
+
     - name: cypress-capybara
       description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
       link: https://github.com/testdouble/cypress-capybara
@@ -108,7 +108,7 @@
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
       link: https://github.com/palmerhq/cypress-image-snapshot
       keywords: [image-diff, snapshot]
-      
+
     - name: Cypress Visual Regression
       description: Adds visual regression testing to Cypress
       link: https://github.com/mjhea0/cypress-visual-regression
@@ -119,13 +119,33 @@
       link: https://picklejs.com
       keywords: [cucumber, collection, actions, commands]
 
+    - name: cypress-pipe
+      description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
+      link: https://github.com/NicholasBoll/cypress-pipe
+      keywords: [commands]
+
+    - name: cypress-plugin-snapshots
+      description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
+      link: https://github.com/meinaart/cypress-plugin-snapshots
+      keywords: [snapshot]
+
+    - name: cypress-graphql-mock
+      description: Adds commands for executing a mocked GraphQL server using only the client
+      link: https://github.com/tgriesser/cypress-graphql-mock
+      keywords: [graphql]
+
+    - name: cypress-xpath
+      description: Adds XPath command to Cypress.io test runner
+      link: https://github.com/cypress-io/cypress-xpath
+      keywords: [xpath, commands]
+
 - name: Reporting
   plugins:
   - name: cypress-failed-log
     description: Saves the Cypress test command log as a JSON file if a test fails.
     link: https://github.com/bahmutov/cypress-failed-log
     keywords: [reporter]
-    
+
   - name: cypress-testrail-reporter
     description: Custom reporter for publishing Cypress results to a TestRail test run.
     link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
