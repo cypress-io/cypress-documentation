@@ -152,7 +152,7 @@ const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
 
 cy.clock(now)
 cy.visit('/index.html')
-cy.get('#date').contains('2017-03-14')
+cy.get('#date').contains('2017-04-14')
 ```
 
 ## Function Names
@@ -163,6 +163,12 @@ This example below will only override `setTimeout` and `clearTimeout` and leave 
 
 ```javascript
 cy.clock(null, ['setTimeout', 'clearTimeout'])
+```
+
+Note that you must specify `Date` in order to override the current datetime. The example below just affects the current datetime without affecting scheduled timers.
+
+```javascript
+cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 ```
 
 ***Using cy.clock() and cy.tick()***
