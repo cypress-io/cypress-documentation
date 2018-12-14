@@ -94,7 +94,7 @@
 
   #logo-wrap {
     margin-right: 20px;
-    margin-left: 0; 
+    margin-left: 0;
   }
 }
 
@@ -164,7 +164,7 @@
   #logo img {
     padding-top: 4px;
   }
-  
+
   #content-wrap {
     padding-top: 0;
   }
@@ -180,7 +180,7 @@
     margin-left: 30px;
     margin-right: 30px;
   }
- 
+
 
   #header-inner {
     flex-direction: column;
@@ -255,7 +255,7 @@
           padding: 0;
         }
       }
-
+      
       td {
         padding: 10px 5px;
         font-size: 0.9em;
@@ -296,11 +296,11 @@
   }
 
   ul.plugins-list {
-    margin: 0 0 0 -10px;  
+    margin: 0 0 0 -10px;
     &>li {
       width: 45%;
-      margin-left: 10px; 
-      margin-right: 10px; 
+      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 
@@ -315,7 +315,7 @@
     width: 100%;
     padding-right: 0;
   }
-  
+
   .algolia-autocomplete .ds-dropdown-menu {
     max-width: 320px;
     min-width: 320px;

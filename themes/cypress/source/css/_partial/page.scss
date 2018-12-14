@@ -183,6 +183,12 @@ a.article-edit-link {
       white-space: nowrap;
     }
 
+    thead
+    {
+      display: table;
+      width: 100%;
+    }
+
     th {
       font-weight: 500;
       padding: 5px 10px;
