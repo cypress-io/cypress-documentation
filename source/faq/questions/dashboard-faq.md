@@ -78,7 +78,7 @@ To better load balance the specs, thus you would want more spec files with appro
 
 ## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
-Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration#What-is-supported %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
+Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration#Examples %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID

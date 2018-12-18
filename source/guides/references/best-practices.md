@@ -564,11 +564,11 @@ While working in the Cypress Test Runner you can always restart / refresh while 
 
 **What should I do then?**
 
-Simple. Start your web server before running Cypress and kill it after it completes.
+Start your web server before running Cypress and kill it after it completes.
 
 Are you trying to run in CI?
 
-We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Booting-Your-Server %}.
+We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Boot-your-server %}.
 
 ## Setting a global baseUrl
 
