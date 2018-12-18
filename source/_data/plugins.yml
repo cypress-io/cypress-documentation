@@ -69,6 +69,11 @@
 
 - name: Custom Commands
   plugins:
+    - name: cy-view
+      description: Run tests on multiple URLs at various viewport sizes.
+      link: https://github.com/andrewmcoupe/cy-view
+      keywords: [viewports]
+
     - name: cyphell
       description: Converts WDIO automation tests to Cypress.
       link: https://github.com/intuit/cyphfell
@@ -141,15 +146,12 @@
 
 - name: Reporting
   plugins:
-  - name: cypress-failed-log
-    description: Saves the Cypress test command log as a JSON file if a test fails.
-    link: https://github.com/bahmutov/cypress-failed-log
-    keywords: [reporter]
+    - name: cypress-failed-log
+      description: Saves the Cypress test command log as a JSON file if a test fails.
+      link: https://github.com/bahmutov/cypress-failed-log
+      keywords: [reporter]
 
-  - name: cypress-testrail-reporter
-    description: Custom reporter for publishing Cypress results to a TestRail test run.
-    link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
-    keywords: [testrail, reporter]
-
-
-
+    - name: cypress-testrail-reporter
+      description: Custom reporter for publishing Cypress results to a TestRail test run.
+      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
+      keywords: [testrail, reporter]

@@ -348,7 +348,7 @@ Refer to the {% url 'configuration' configuration#Environment-Variables %} for m
 
 ***Record Key***
 
-If you are {% url 'recording your runs' continuous-integration#Recording-tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
 
 Instead of hard coding it into your run command like this:
 
