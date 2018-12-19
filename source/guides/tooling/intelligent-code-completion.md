@@ -1,13 +1,12 @@
 ---
 title: Intelligent Code Completion
-
 ---
 
 # Writing Tests
 
 ## Features
 
-IntelliSense is available for Cypress. It offers intelligent code suggestions directly in your IDE while writing tests. A typical IntelliSense popup shows command definition, code example and link to the full documentation page.
+IntelliSense is available for Cypress. It offers intelligent code suggestions directly in your IDE while writing tests. A typical IntelliSense popup shows command definition, a code example and a link to the full documentation page.
 
 ### Autocomplete while typing Cypress commands
 
