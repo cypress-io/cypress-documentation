@@ -160,6 +160,10 @@ The point of Cypress is to be a tool you use every day to build and test **your 
 Cypress is not a **general purpose** web automation tool. It is poorly suited for scripting live, production websites not under your control.
 {% endnote %}
 
+{% note info %}
+{% fa fa-magic %} Seeing IntelliSense in your spec files is as easy as adding a single special comment line. Read {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
+{% endnote %}
+
 ## {% fa fa-search %} Step 2: Query for an element
 
 Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
