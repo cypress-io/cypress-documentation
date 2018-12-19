@@ -487,3 +487,7 @@ describe('My First Test', function() {
 `beforeEach()` runs before each and every test in the same `describe()` block, so both of our tests in this case. Both tests still pass, and both are a bit shorter and easier to read.
 
 -->
+
+# See also
+
+- set up {% url 'Intelligent Code Completion' intelligent-code-completion %} for Cypress commands and assertions
