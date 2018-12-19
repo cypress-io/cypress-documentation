@@ -488,6 +488,11 @@ describe('My First Test', function() {
 
 -->
 
-# See also
+# Next steps
 
 - set up {% url 'Intelligent Code Completion' intelligent-code-completion %} for Cypress commands and assertions
+- use the search box in the top right corner to quickly locate any information in Cypress documentation
+
+{% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
+
+- start {% url 'testing your app' testing-your-app %}
