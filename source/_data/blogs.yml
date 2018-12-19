@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: End-to-End Testing with Cypress
+    url: http://bootcamp.burlingtoncodeacademy.com/lessons/agile/cypress
+    sourceName: Burlington Code Academy
+    sourceUrl: http://bootcamp.burlingtoncodeacademy.com
+    author: Alex Chaffee
+    date: Dec 18, 2018
+    img: /img/examples/burlington-slides.png
+
   - title: Testing Your Frontend with Cypress.io Framework
     url: https://snipcart.com/blog/frontend-testing-cypress
     sourceName: Snipcart
@@ -15,7 +23,7 @@ large:
     author: Michael Yagudaev
     date: Nov 29, 2018
     img: /img/examples/snipcart.jpg
-  
+
   - title: "Building an optimised E2E flow system with Cypress"
     url: https://medium.com/elements/building-an-optimised-e2e-flow-system-with-cypress-be119025c476
     sourceName: Elements blog
