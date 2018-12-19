@@ -160,10 +160,6 @@ The point of Cypress is to be a tool you use every day to build and test **your 
 Cypress is not a **general purpose** web automation tool. It is poorly suited for scripting live, production websites not under your control.
 {% endnote %}
 
-{% note info %}
-{% fa fa-magic %} Seeing IntelliSense in your spec files is as easy as adding a single special comment line. Read {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
-{% endnote %}
-
 ## {% fa fa-search %} Step 2: Query for an element
 
 Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
@@ -221,6 +217,10 @@ Also note that the {% url 'App Preview' test-runner#Overview %} pane has updated
 Now we can assert something about this new page!
 
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
+
+{% note info %}
+{% fa fa-magic %} Seeing IntelliSense in your spec files is as easy as adding a single special comment line. Read about {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
+{% endnote %}
 
 ## {% fa fa-check-square-o %} Step 4: Make an assertion
 
@@ -494,9 +494,8 @@ describe('My First Test', function() {
 
 # Next steps
 
-- set up {% url 'Intelligent Code Completion' intelligent-code-completion %} for Cypress commands and assertions
-- use the search box in the top right corner to quickly locate any information in Cypress documentation
+- Start {% url 'testing your app' testing-your-app %}.
+- Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
+- Search Cypress's documentation to quickly find what you need.
 
 {% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
-
-- start {% url 'testing your app' testing-your-app %}
