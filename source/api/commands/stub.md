@@ -120,7 +120,7 @@ cy.get('.name').should('have.value', 'my custom message')
 
 ## Aliases
 
-Adding an alias using {% url `.as()` as %} to stubs makes them easier to identify in error messages and Cypress' command log.
+Adding an alias using {% url `.as()` as %} to stubs makes them easier to identify in error messages and Cypress command log.
 
 ```javascript
 const obj = {
