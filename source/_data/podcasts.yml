@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "This.JavaScript: State of Testing"
+    url: https://www.youtube.com/watch?v=iycQpCFBASE
+    sourceName: This Dot
+    sourceUrl: https://www.thisdot.co/
+    date: December 18, 2018
+    author: Tracy Lee, Gil Tayar, James Evans, Kent C. Dodds, Gleb Bahmutov, Shai Reznik, Kevin Lamping, Rotem Mizrachi-Meidan
+    youtubeId: iycQpCFBASE
+
   - title: "Testing in JavaScript with Gil Tayar"
     url: https://devchat.tv/js-jabber/jsj-341-testing-in-javascript-with-gil-tayar/
     sourceName: JavaScript Jabber
@@ -71,7 +79,6 @@ large:
     date: Nov 30, 2017
     author: Charles Lowell & Wil Wilsman
     img: /img/examples/frontside-podcast.jpg
-
 
   - title: Cypress.io and End-to-End Testing with Gleb Bahmutov
     url: https://devchat.tv/adv-in-angular/aia-155-cypress-io-end-end-testing-gleb-bahmutov
