@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: 'Cypress: The future of E2E testing'
+    url: https://www.youtube.com/watch?v=pXyBligMMr0
+    sourceName: NG-BE 2018
+    sourceUrl: https://ng-be.org/
+    date: Dec 11, 2018
+    author: Dominic Elm
+    youtubeId: pXyBligMMr0
+
   - title: Testing Vue with Cypress
     url: https://www.youtube.com/watch?v=uowaTHQDcKc
     sourceName: VueNYC meetup
