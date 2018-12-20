@@ -1,6 +1,6 @@
 # large links with thumbnails, links, embedded video
 large:
-  - title: Testing Vue with Crypress
+  - title: Testing Vue with Cypress
     url: https://www.youtube.com/watch?v=uowaTHQDcKc
     sourceName: VueNYC meetup
     sourceUrl: https://www.meetup.com/vueJsNYC/events/254789852/
@@ -15,7 +15,7 @@ large:
     date: Nov 4, 2018
     author: Amir Rustamzadeh
     youtubeId: CkGQ0fFH3yE
-    
+
   - title: End-to-end testing is hard - but it doesn't have to be
     url: https://www.youtube.com/watch?v=swpz0H0u13k
     youtubeId: swpz0H0u13k
