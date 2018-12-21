@@ -140,7 +140,7 @@
       keywords: [graphql]
 
     - name: cypress-xpath
-      description: Adds XPath command to Cypress.io test runner
+      description: Adds XPath command to Cypress.io test runner. If you are writing custom commands, this repo from Cypress team is a good example how to do retries, provide TypeScript definitions, etc.
       link: https://github.com/cypress-io/cypress-xpath
       keywords: [xpath, commands]
 
