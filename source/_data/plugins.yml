@@ -160,5 +160,5 @@
   plugins:
     - name: cypress-ntlm-auth
       description: NTLM authentication support for Cypress
-      link: https://github.com/bjowes/cypress-failed-log
+      link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
