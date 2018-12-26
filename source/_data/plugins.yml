@@ -155,3 +155,10 @@
       description: Custom reporter for publishing Cypress results to a TestRail test run.
       link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
       keywords: [testrail, reporter]
+
+- name: Authentication
+  plugins:
+    - name: cypress-ntlm-auth
+      description: NTLM authentication support for Cypress
+      link: https://github.com/bjowes/cypress-ntlm-auth
+      keywords: [authentication, ntlm]
