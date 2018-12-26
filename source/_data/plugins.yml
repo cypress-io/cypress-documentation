@@ -156,6 +156,11 @@
       link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
       keywords: [testrail, reporter]
 
+    - name: mochawesome-merge
+      description: Merges multiple mochawesome JSON reports
+      link: https://github.com/antontelesh/mochawesome-merge
+      keywords: [reporter, mochawesome]
+
 - name: Authentication
   plugins:
     - name: cypress-ntlm-auth
