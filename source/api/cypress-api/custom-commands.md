@@ -520,7 +520,12 @@ Custom commands are a great way to abstract away setup (specific to your app). W
 
 Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
+### 5. Write TypeScript definitions your commands
+
+You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for working example.
+
 # See also
 
+- We have written {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} that adds command `cy.xpath` and shows best practices for writing custom commands: retries, logging, TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' recipes %}
