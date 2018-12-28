@@ -41,7 +41,7 @@ Typically you will need to boot a local server prior to running Cypress.  When y
 
 Backgrounding your server process means that your CI provider will continue to execute the next command after executing the signal to start your server.
 
-Many people approach this situation by running a command like the following: 
+Many people approach this situation by running a command like the following:
 
 ```shell
 npm start & cypress run // Do not do this
@@ -51,7 +51,7 @@ The problem is - what happens if your server takes time to boot? There is no gua
 
 ### Solutions
 
-Luckily, there are some solutions for this. Instead of introducing arbitrary waits (like `sleep 20`) you can use a better option. 
+Luckily, there are some solutions for this. Instead of introducing arbitrary waits (like `sleep 20`) you can use a better option.
 
 ***`wait-on` module***
 
@@ -102,7 +102,7 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using {% url `cy.screenshot()` screenshot %}.
-- Watch a video of your entire test run or a clip at the point of test failure. 
+- Watch a video of your entire test run or a clip at the point of test failure.
 - See which machines ran each test when {% url "parallelized" parallelization %}.
 
 ### To record tests:
@@ -329,6 +329,8 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 
 - If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
+If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+
 ## Environment variables
 
 You can set various environment variables to modify how Cypress runs.
@@ -372,7 +374,7 @@ Typically you'd set this inside of your CI provider.
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
 
-### Git information 
+### Git information
 Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
 It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
