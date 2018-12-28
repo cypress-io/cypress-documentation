@@ -311,7 +311,7 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 ## Allow Multiple Types
 
-### Example 2: `.trigger()`
+### `.trigger()`
 
 Require subject be one of the following types: `element`, `document` or `window`
 
@@ -520,12 +520,12 @@ Custom commands are a great way to abstract away setup (specific to your app). W
 
 Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
-### 5. Write TypeScript definitions your commands
+### 5. Write TypeScript definitions
 
-You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for working example.
+You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
 
 # See also
 
-- We have written {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} that adds command `cy.xpath` and shows best practices for writing custom commands: retries, logging, TypeScript definition.
+- {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' recipes %}
