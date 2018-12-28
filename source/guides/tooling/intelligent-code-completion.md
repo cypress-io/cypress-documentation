@@ -36,7 +36,7 @@ The simplest way to see IntelliSense when typing a Cypress command or assertion 
 
 {% video local /img/snippets/intellisense-setup.mp4 %}
 
-If you write {% url 'Custom commands' custom-commands %} and you can provide TypeScript definitions for them, you can use triple slash directives to show IntelliSense, even if your project uses only JavaScript. For example, if your custom commands are written in `cypress/support/commands.js` and you describe them in `cypress/support/index.d.ts` use:
+If you write {% url 'custom commands' custom-commands %} and provide TypeScript definitions for them, you can use the triple slash directives to show IntelliSense, even if your project uses only JavaScript. For example, if your custom commands are written in `cypress/support/commands.js` and you describe them in `cypress/support/index.d.ts` use:
 
 ```js
 // type definitions for Cypress object "cy"
@@ -46,7 +46,7 @@ If you write {% url 'Custom commands' custom-commands %} and you can provide Typ
 /// <reference types="../support" />
 ```
 
-See {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for working example.
+See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
 
 If the triple slash directive does not work, please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get {% url "TypeScript support" typescript-support %} and intelligent code completion configured in your developer environment first. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
