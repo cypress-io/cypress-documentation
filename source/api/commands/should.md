@@ -127,11 +127,11 @@ cy.get('#header a').should('have.attr', 'href', '/users')
 
 ## Function
 
-### Verify length, content, and classes from multiple `<p>`
-
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
 Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+
+### Verify length, content, and classes from multiple `<p>`
 
 ```html
 <div>
@@ -163,6 +163,31 @@ cy
       'text-danger',
       'text-default'
     ])
+  })
+```
+
+### Asserting class name that starts with `heading-` is present
+
+```html
+<div class="scope-classes">
+  <div class="main-abc123 heading-xyz987">Scoped classes</div>
+</div>
+```
+
+```js
+cy.get('.scope-classes')
+  .find('div')
+  // .should(cb) callback function will be retried
+  .should(($div) => {
+    expect($div).to.have.length(1)
+    const className = $div[0].className
+
+    expect(className).to.match(/heading-/)
+  })
+  // .then(cb) callback is not retried,
+  // it either passes or fails
+  .then(($div) => {
+    expect($div).to.have.text('Scoped classes')
   })
 ```
 

@@ -240,3 +240,21 @@ cy.get('#loading').should('not.exist')
 // retry until our radio is checked
 cy.get(':radio').should('be.checked')
 ```
+
+# Should callback
+
+If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to `.should()` method. Cypress will automatically retry the callback function until it passes or the command times out. See {% url `should(cb)` should#Function %} documentation.
+
+```html
+<div class="main-abc123 heading-xyz987">Scoped classes</div>
+```
+```javascript
+cy.get('div')
+  .should(($div) => {
+    expect($div).to.have.length(1)
+    const className = $div[0].className
+
+    // className will be a string like "main-abc123 heading-xyz987"
+    expect(className).to.match(/heading-/)
+  })
+```
