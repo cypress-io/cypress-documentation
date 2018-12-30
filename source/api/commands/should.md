@@ -191,9 +191,28 @@ cy.get('.scope-classes')
   })
 ```
 
-### Assert explicitly within `.should()`
+You can even throw your own errors from the callback function.
 
-Any errors raised by failed assertions will immediately bubble up and cause the test to fail.
+```js
+cy.get('.scope-classes')
+  .find('div')
+  .should(($div) => {
+    if ($div.length !== 1) {
+      // you can throw your own errors
+      throw new Error('Did not find 1 element')
+    }
+
+    const className = $div[0].className
+
+    if (!className.match(/heading-/)) {
+      throw new Error(`No class "heading-" in ${className}`)
+    }
+  })
+```
+
+### Assert text contents of 3 elements
+
+Example below first asserts that there are 3 elements, and then checks the text contents of each one.
 
 ```html
 <div id="todos">
@@ -323,3 +342,4 @@ When clicking on `assert` within the command log, the console outputs the follow
 - {% url `.and()` and %}
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
 - {% url 'Reference: List of Assertions' assertions %}
+- {% url 'cypress-example-kitchensink Assertions' https://example.cypress.io/commands/assertions %}
