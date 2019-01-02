@@ -166,20 +166,21 @@ cy
   })
 ```
 
-### Asserting class name that starts with `heading-` is present
+### Assert class name starts with `heading-`
 
 ```html
-<div class="scope-classes">
-  <div class="main-abc123 heading-xyz987">Scoped classes</div>
+<div class="docs-header">
+  <div class="main-abc123 heading-xyz987">Introduction</div>
 </div>
 ```
 
 ```js
-cy.get('.scope-classes')
+cy.get('.docs-header')
   .find('div')
   // .should(cb) callback function will be retried
   .should(($div) => {
     expect($div).to.have.length(1)
+    
     const className = $div[0].className
 
     expect(className).to.match(/heading-/)
@@ -187,14 +188,14 @@ cy.get('.scope-classes')
   // .then(cb) callback is not retried,
   // it either passes or fails
   .then(($div) => {
-    expect($div).to.have.text('Scoped classes')
+    expect($div).to.have.text('Introduction')
   })
 ```
 
 You can even throw your own errors from the callback function.
 
 ```js
-cy.get('.scope-classes')
+cy.get('.docs-header')
   .find('div')
   .should(($div) => {
     if ($div.length !== 1) {
