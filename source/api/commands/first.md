@@ -74,7 +74,7 @@ cy.get('li').first()
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions existence .find %}
+{% assertions existence .first %}
 
 ## Timeouts {% helper_icon timeout %}
 
