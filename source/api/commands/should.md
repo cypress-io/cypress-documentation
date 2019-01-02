@@ -166,7 +166,24 @@ cy
   })
 ```
 
-### Assert class name starts with `heading-`
+{% note warning %}
+Any value returned from `should(cb)` callback function will be ignored. The original subject will passed to the next command automatically.
+
+```
+cy
+  .get('p')
+  .should(($p) => {
+    expect($p).to.have.length(3)
+
+    return 'foo'
+  })
+  .then(($p) => {
+    // the argument $p will be the 3 elements, not "foo"
+  })
+```
+{% endnote %}
+
+### Assert class name contains `heading-`
 
 ```html
 <div class="docs-header">
@@ -180,7 +197,7 @@ cy.get('.docs-header')
   // .should(cb) callback function will be retried
   .should(($div) => {
     expect($div).to.have.length(1)
-    
+
     const className = $div[0].className
 
     expect(className).to.match(/heading-/)
@@ -231,6 +248,10 @@ cy.get('#todos li').should(($lis) => {
   expect($lis.eq(2)).to.contain('Write JavaScript')
 })
 ```
+
+{% note info %}
+Read {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post to see more variations of the above example.
+{% endnote %}
 
 ## Multiple Assertions
 

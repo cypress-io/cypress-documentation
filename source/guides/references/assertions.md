@@ -253,10 +253,16 @@ If built-in assertions are not enough, you can easily write your own assertion f
 cy.get('div')
   .should(($div) => {
     expect($div).to.have.length(1)
-    
+
     const className = $div[0].className
 
     // className will be a string like "main-abc123 heading-xyz987"
     expect(className).to.match(/heading-/)
   })
 ```
+
+# See also
+
+- {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
+- {% url 'cypress-example-kitchensink Assertions' https://example.cypress.io/commands/assertions %}
+- {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post
