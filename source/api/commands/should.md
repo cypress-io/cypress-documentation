@@ -167,7 +167,7 @@ cy
 ```
 
 {% note warning %}
-Any value returned from `should(cb)` callback function will be ignored. The original subject will passed to the next command automatically.
+Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
 
 ```
 cy
