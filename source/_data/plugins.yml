@@ -168,7 +168,7 @@
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
 
-- name: Scaffolding
+- name: Framework Tooling
   plugins:
     - name: Vue CLI
       description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
