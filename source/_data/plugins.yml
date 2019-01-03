@@ -167,3 +167,15 @@
       description: NTLM authentication support for Cypress
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
+
+- name: Scaffolding
+  plugins:
+    - name: Vue CLI
+      description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
+      link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
+      keywords: [vue.js, vue, cli]
+
+    - name: Nx
+      description: Nrwl Extensions for Angular
+      link: https://nrwl.io/nx/e2e-testing-with-cypress
+      keywords: [angular, cli]
