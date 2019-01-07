@@ -38,7 +38,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 ## No Args
 
-### Yields the remote window object
+### Yield the remote window object
 
 ```javascript
 cy.visit('http://localhost:8080/app')
@@ -48,9 +48,9 @@ cy.window().then((win) => {
 })
 ```
 
-### Check custom property
+### Check a custom property
 
-If the application sets a custom property, like
+If the application sets a custom property, like:
 
 ```javascript
 window.tags = {
@@ -58,7 +58,7 @@ window.tags = {
 }
 ```
 
-then our tests can confirm it
+Our test can confirm the property was properly set.
 
 ```javascript
 cy.window()
@@ -66,7 +66,7 @@ cy.window()
   .should('equal', 'bar')
 ```
 
-**Note:** Cypress commands are asynchronous. Thus you cannot check property value before the command ran.
+**Note:** Cypress commands are asynchronous, so you cannot check a property value before the Cypress commands ran.
 
 ```javascript
 it('equals bar', () => {
@@ -76,11 +76,10 @@ it('equals bar', () => {
     .then((win) => {
       foo = win.foo
     })
-  // NOPE, not going to work
   // variable "foo" is still undefined
   // because the above "then" callback
   // has not been executed yet
-  expect(foo).to.equal('bar')
+  expect(foo).to.equal('bar') // test fails
 })
 ```
 
@@ -96,7 +95,7 @@ it('equals bar', () => {
     })
     .then(() =>
       // variable "foo" has been set
-      expect(foo).to.equal('bar')
+      expect(foo).to.equal('bar') // test passes
     )
 })
 ```
