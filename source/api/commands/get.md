@@ -1,6 +1,5 @@
 ---
 title: get
-
 ---
 
 Get one or more DOM elements by selector or {% url 'alias' variables-and-aliases %}.
@@ -23,16 +22,16 @@ cy.get(alias, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('.list > li')    // Yield the <li>'s in .list
+cy.get('.list > li') // Yield the <li>'s in .list
 ```
 
 ## Arguments
 
-**{% fa fa-angle-right %} selector** ***(String selector)***
+**{% fa fa-angle-right %} selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**{% fa fa-angle-right %} alias** ***(String)***
+**{% fa fa-angle-right %} alias** **_(String)_**
 
 An alias as defined using the {% url `.as()` as %} command and referenced with the `@` character and the name of the alias.
 
@@ -44,14 +43,14 @@ When using aliases with DOM elements, Cypress will query the DOM again if the pr
 {% url 'You can read more about aliasing objects and elements in our Core Concept Guide' variables-and-aliases#Aliases %}.
 {% endnote %}
 
-**{% fa fa-angle-right %} options** ***(Object)***
+**{% fa fa-angle-right %} options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.get()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | {% usage_options log %}
-`timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %}
+| Option    | Default                                                  | Description                        |
+| --------- | -------------------------------------------------------- | ---------------------------------- |
+| `log`     | `true`                                                   | {% usage_options log %}            |
+| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %} |
 
 ## Yields {% helper_icon yields %}
 
@@ -61,33 +60,39 @@ Option | Default | Description
 
 ## Selector
 
-***Get the input element***
+**_Get the input element_**
 
 ```javascript
 cy.get('input').should('be.disabled')
 ```
 
-***Find the first `li` descendent within a `ul`***
+**_Find the first `li` descendent within a `ul`_**
 
 ```javascript
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-***Find the dropdown-menu and click it.***
+**_Find the dropdown-menu and click it._**
 
 ```javascript
 cy.get('.dropdown-menu').click()
 ```
 
+**_Find 5 elements with the given data attribute_**
+
+```javascript
+cy.get('[data-test-id="test-example"]').should('have.length', 5)
+```
+
 ## Get in Within
 
-***`cy.get()` in the {% url `.within()` within %} command***
+**_`cy.get()` in the {% url `.within()` within %} command_**
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a {% url "`.within()`" within %} command.
 
 ```javascript
 cy.get('form').within(() => {
-  cy.get('input').type('Pamela')            // Only yield inputs within form
+  cy.get('input').type('Pamela') // Only yield inputs within form
   cy.get('textarea').type('is a developer') // Only yield textareas within form
 })
 ```
@@ -96,7 +101,7 @@ cy.get('form').within(() => {
 
 For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases#Aliases %}.
 
-***Get the aliased 'todos' elements***
+**_Get the aliased 'todos' elements_**
 
 ```javascript
 cy.get('ul#todos').as('todos')
@@ -107,26 +112,26 @@ cy.get('ul#todos').as('todos')
 cy.get('@todos')
 ```
 
-***Get the aliased 'submitBtn' element***
+**_Get the aliased 'submitBtn' element_**
 
 ```javascript
-beforeEach(function () {
+beforeEach(function() {
   cy.get('button[type=submit]').as('submitBtn')
 })
 
-it('disables on click', function () {
+it('disables on click', function() {
   cy.get('@submitBtn').should('be.disabled')
 })
 ```
 
-***Get the aliased 'users' fixture***
+**_Get the aliased 'users' fixture_**
 
 ```javascript
-beforeEach(function () {
+beforeEach(function() {
   cy.fixture('users.json').as('users')
 })
 
-it('disables on click', function () {
+it('disables on click', function() {
   // access the array of users
   cy.get('@users').then((users) => {
     // get the first user
@@ -153,7 +158,7 @@ it('disables on click', function () {
 
 # Command Log
 
-***Get an input and assert on the value***
+**_Get an input and assert on the value_**
 
 ```javascript
 cy.get('input[name="firstName"]').should('have.value', 'Homer')
