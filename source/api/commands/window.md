@@ -21,14 +21,14 @@ cy.window()
 
 ## Arguments
 
-**{% fa fa-angle-right %} options** ***(Object)***
+**{% fa fa-angle-right %} options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.window()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | {% usage_options log %}
-`timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.window %}
+| Option    | Default                                                  | Description                           |
+| --------- | -------------------------------------------------------- | ------------------------------------- |
+| `log`     | `true`                                                   | {% usage_options log %}               |
+| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.window %} |
 
 ## Yields {% helper_icon yields %}
 
@@ -38,13 +38,65 @@ Option | Default | Description
 
 ## No Args
 
-### Yields the remote window object
+### Yield the remote window object
 
 ```javascript
 cy.visit('http://localhost:8080/app')
 cy.window().then((win) => {
   // win is the remote window
   // of the page at: http://localhost:8080/app
+})
+```
+
+### Check a custom property
+
+If the application sets a custom property, like:
+
+```javascript
+window.tags = {
+  foo: 'bar',
+}
+```
+
+Our test can confirm the property was properly set.
+
+```javascript
+cy.window()
+  .its('tags.foo')
+  .should('equal', 'bar')
+```
+
+**Note:** Cypress commands are asynchronous, so you cannot check a property value before the Cypress commands ran.
+
+```javascript
+it('equals bar', () => {
+  let foo
+
+  cy.window()
+    .then((win) => {
+      foo = win.foo
+    })
+  // variable "foo" is still undefined
+  // because the above "then" callback
+  // has not been executed yet
+  expect(foo).to.equal('bar') // test fails
+})
+```
+
+Instead, use {% url `cy.then()` then %} callback to check the value.
+
+```javascript
+it('equals bar', () => {
+  let foo
+
+  cy.window()
+    .then((win) => {
+      foo = win.foo
+    })
+    .then(() =>
+      // variable "foo" has been set
+      expect(foo).to.equal('bar') // test passes
+    )
 })
 ```
 
@@ -100,7 +152,7 @@ cy.window({ timeout: 10000 }).should('have.property', 'foo')
 
 # Command Log
 
-***Get the window***
+**_Get the window_**
 
 ```javascript
 cy.window()
@@ -118,3 +170,4 @@ When clicking on `window` within the command log, the console outputs the follow
 
 - {% url `cy.visit()` visit %}
 - {% url `cy.document()` document %}
+- {% url `cy.its()` its %}
