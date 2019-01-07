@@ -18,6 +18,28 @@ Cypress.dom.isHidden(element)
 
 # Examples
 
+## Is detached
+
+**Returns a boolean indicating whether an element is detached from the DOM.**
+
+```javascript
+cy.get('button').then(($el) => {
+  Cypress.dom.isDetached($el) // false
+})
+```
+
+## Is focusable
+
+**Returns a boolean indicating whether an element can receive focus.**
+
+Cypress internally uses this method *everywhere* to figure out whether an element is hidden, {% url "mostly for actionability" interacting-with-elements %}.
+
+```javascript
+cy.get('input').then(($el) => {
+  Cypress.dom.isFocusable($el) // true
+})
+```
+
 ## Is hidden
 
 **Returns a boolean indicating whether an element is hidden.**
@@ -30,12 +52,25 @@ cy.get('p').then(($el) => {
 })
 ```
 
-## Is detached
+## Is scrollable
 
-**Returns a boolean indicating whether an element is detached from the DOM.**
+**Returns a boolean indicating whether an element is scrollable.**
+
+Cypress internally uses this method *everywhere* to figure out whether an element can be scrolled, {% url "mostly for actionability" interacting-with-elements %}.
 
 ```javascript
-cy.get('p').then(($el) => {
-  Cypress.dom.isDetached($el) // false
+cy.get('body').then(($el) => {
+  Cypress.dom.isScrollable($el) // true
 })
 ```
+
+## Is visible
+
+**Returns a boolean indicating whether an element is visible.**
+
+```javascript
+cy.get('img').then(($el) => {
+  Cypress.dom.isVisible($el) // true
+})
+```
+
