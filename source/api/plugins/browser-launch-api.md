@@ -36,7 +36,14 @@ module.exports = (on, config) => {
     // }
 
     if (browser.name === 'chrome') {
-      args.push('--load-extension=/path/to/my/extension')
+      args.push('--start-fullscreen')
+
+      // whatever you return here becomes the new args
+      return args
+    }
+
+    if (browser.name === 'electron') {
+      args['fullscreen'] = true
 
       // whatever you return here becomes the new args
       return args
