@@ -57,6 +57,11 @@
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
 
+    - name: Knapsack Pro Cypress
+      description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds.
+      link: https://github.com/KnapsackPro/knapsack-pro-cypress
+      keywords: [CI parallelisation, continuous-integration]
+
     - name: Percy
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
