@@ -277,7 +277,7 @@ Some methods yield `null` and thus cannot be chained, such as {% url `cy.clearCo
 
 Some methods, such as {% url `cy.get()` get %} or {% url `cy.contains()` contains %}, yield a DOM element, allowing further commands to be chained onto them (assuming they expect a DOM subject) like {% url `.click()` click %} or even {% url `cy.contains()` contains %} again.
 
-### Some commands can be chained:
+### Some commands cannot be chained:
 - From `cy` only, meaning they do not operate on a subject: {% url `cy.clearCookies()` clearcookies %}.
 - From commands yielding particular kinds of subjects (like DOM elements): {% url `.type()` type %}.
 - From both `cy` *or* from a subject-yielding command: {% url `cy.contains()` contains %}.
