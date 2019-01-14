@@ -102,3 +102,7 @@ To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you c
   ]
 }
 ```
+
+# See also
+
+- {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}

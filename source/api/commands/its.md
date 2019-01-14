@@ -192,3 +192,4 @@ When clicking on `its` within the command log, the console outputs the following
 - {% url `.invoke()` invoke %}
 - {% url `.then()` then %}
 - {% url `cy.wrap()` wrap %}
+- {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
