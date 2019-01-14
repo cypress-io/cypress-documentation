@@ -8,7 +8,10 @@
       <div class="article-content" itemprop="articleBody">
         {{ (page.content) }}
         {% for pluginType in site.data.plugins %}
-          <h2>{{ pluginType.name }}</h2>
+          <h2 id="{{ id(pluginType.name) }}"><a href="#{{ id(pluginType.name) }}">{{ pluginType.name }}</a></h2>
+          {% if pluginType.description %}
+          <div class="plugin-type-description">{{ pluginType.description }}</div>
+          {% endif %}
           <ul class="plugins-list">
             {% for plugin in order_by_name(pluginType.plugins) %}
               <li>

@@ -1,6 +1,7 @@
 'use strict'
 
 /* global hexo */
+const debug = require('debug')('docs')
 
 const helpers = require('../lib/helpers')
 
@@ -190,3 +191,22 @@ hexo.extend.helper.register('lang_name', function (lang) {
 hexo.extend.helper.register('order_by_name', function (posts) {
   return _.sortBy(posts, (post) => post.name.toLowerCase(), 'name')
 })
+
+/**
+ * Helper that creates safe url id from section title.
+ * @example
+ ```
+  {% for pluginType in site.data.plugins %}
+    <h2 id="{{ id(pluginType.name) }}">{{ pluginType.name }}</h2>
+  {% endfor %}
+ ```
+ */
+const id = (title) => {
+  const id = _.kebabCase(_.deburr(title))
+
+  debug('from title "%s" got id "%s"', title, id)
+
+  return id
+}
+
+hexo.extend.helper.register('id', id)
