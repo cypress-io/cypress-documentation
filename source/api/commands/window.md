@@ -171,3 +171,4 @@ When clicking on `window` within the command log, the console outputs the follow
 - {% url `cy.visit()` visit %}
 - {% url `cy.document()` document %}
 - {% url `cy.its()` its %}
+- {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
