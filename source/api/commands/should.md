@@ -253,7 +253,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 Read {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post to see more variations of the above example.
 {% endnote %}
 
-For clarity you can pass a string message as a second argument to any `expect` assertion.
+For clarity you can pass a string message as a second argument to any `expect` assertion, see {% url Chai#expect https://www.chaijs.com/guide/styles/#expect %}.
 
 ```javascript
 cy.get('.connectors-list > li').should(($lis) => {
