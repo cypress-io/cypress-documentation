@@ -45,6 +45,22 @@ An event name to be handled via the `task` event in the {% url "`pluginsFile`" c
 
 An argument to send along with the event. This can be any value that can be serialized by {% url "JSON.stringify()" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %}. Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
 
+If you need to pass multiple arguments, use an object
+
+```javascript
+// in the spec file
+cy.task('hello', { greeting: 'Hello', name: 'World' })
+// in plugins file
+on('task', {
+  // deconstruct the individual properties
+  hello ({ greeting, name }) {
+    console.log('%s, %s', greeting, name)
+
+    return null
+  }
+})
+```
+
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to change the default behavior of `cy.task()`.
@@ -90,10 +106,31 @@ cy.task('readJson', 'cypress.json').then((data) => {
 
 ```javascript
 // in plugins/index.js file
+const fsExtra = require('fs-extra')
 on('task', {
   readJson: (filename) => {
     // reads the file relative to current working directory
     return fsExtra.readJson(path.join(process.cwd(), filename)
+  }
+})
+```
+
+### Read a file that might not exist
+
+Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you need to read a file that might not exist, use `cy.task`.
+
+```javascript
+// in test
+cy.task('readFileMaybe', 'my-file.txt').then((text) => { ... })
+// in plugins file
+const fs = require('fs')
+on('task', {
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    } else {
+      return null
+    }
   }
 })
 ```
@@ -156,6 +193,34 @@ cy.task('seedDatabase', null, { timeout: 20000 })
 - Any process that needs to be manually interrupted to stop.
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
+
+## Combining tasks
+
+Sometimes you might be using plugins that export their tasks for registration. In order to avoid overwriting the already registered tasks, avoid calling `on('task', ...)` more than once.
+
+```javascript
+// in plugins/index.js file
+const tasksA = require('plugin-a/tasks')
+const tasksB = require('plugin-b/tasks')
+
+// do NOT do this
+on('task', tasksA)
+on('task', tasksB)
+// Oops, tasksA are gone, they were overwritten by tasksB
+```
+
+Instead register a combined object yourself. Both `tasksA` and `tasksB` should be objects and can be merged together, assuming they have different property names.
+
+```javascript
+// in plugins/index.js file
+const tasksA = require('plugin-a/tasks')
+const tasksB = require('plugin-b/tasks')
+
+// combine tasks objects into one
+const task = Object.assign({}, tasksA, tasksB)
+
+on('task', task)
+```
 
 # Rules
 
