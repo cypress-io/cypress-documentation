@@ -48,9 +48,12 @@ An argument to send along with the event. This can be any value that can be seri
 If you need to pass multiple arguments, use an object
 
 ```javascript
-// in the spec file
+// in test
 cy.task('hello', { greeting: 'Hello', name: 'World' })
-// in plugins file
+```
+
+```javascript
+// in plugins/index.js
 on('task', {
   // deconstruct the individual properties
   hello ({ greeting, name }) {
@@ -96,7 +99,10 @@ Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you nee
 ```javascript
 // in test
 cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
-// in plugins file
+```
+
+```javascript
+// in plugins/index.js
 const fs = require('fs')
 on('task', {
   readFileMaybe (filename) {
@@ -127,7 +133,7 @@ describe('e2e', () => {
 ```
 
 ```javascript
-// in plugins/index.js file
+// in plugins/index.js
 // we require some code in our app that
 // is responsible for seeding our database
 const db = require('../../server/src/db')
