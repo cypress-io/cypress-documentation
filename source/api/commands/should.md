@@ -270,36 +270,36 @@ These string messages will be shown in the Command Log giving each assertion mor
 
 ### Compare text values of two elements
 
-Example below gets the value of the first element and saves it in a closure variable. Then the test gets the second element and asserts that the two values are the same after normalizing.
+The example below gets the text contained within one element and saves it in a closure variable. Then the test gets the text in another element and asserts that the two text values are the same after normalizing.
 
 ```html
-<div class="two-elements">
-  <div class="first">Foo Bar</div>
-  <div class="second">foo b a r</div>
+<div class="company-details">
+  <div class="title">Acme Developers</div>
+  <div class="identifier">ACMEDEVELOPERS</div>
 </div>
 ```
 
 ```javascript
 const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
 
-// will keep text from first element
+// will keep text from title element
 let text
 
-cy.get('.two-elements')
-  .find('.first')
-  .then(($first) => {
+cy.get('.company-details')
+  .find('.title')
+  .then(($title) => {
     // save text from the first element
-    text = normalizeText($first.text())
+    titleText = normalizeText($title.text())
   })
 
-cy.get('.two-elements')
-  .find('.second')
-  .should(($div) => {
+cy.get('.company-details')
+  .find('.identifier')
+  .should(($identifier) => {
     // we can massage text before comparing
-    const secondText = normalizeText($div.text())
+    const idText = normalizeText($identifier.text())
 
-    // text from the first element should have been set already
-    expect(secondText, 'second text').to.equal(text)
+    // text from the title element should already be set
+    expect(idText, 'ID').to.equal(titleText)
   })
 ```
 
