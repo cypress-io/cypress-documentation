@@ -89,32 +89,6 @@ In the `task` plugin event, the command will fail if `undefined` is returned. Th
 
 If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
 
-### Read a JSON file's contents
-
-Note: this serves as a demonstration only. We recommend using {% url "`cy.fixture()`" fixture %} or {% url "`cy.readFile()`" readfile %} for a more robust implementation of reading a file in your tests.
-
-```javascript
-// in test
-cy.task('readJson', 'cypress.json').then((data) => {
-  // data equals:
-  // {
-  //   projectId: '12345',
-  //   ...
-  // }
-})
-```
-
-```javascript
-// in plugins/index.js file
-const fsExtra = require('fs-extra')
-on('task', {
-  readJson: (filename) => {
-    // reads the file relative to current working directory
-    return fsExtra.readJson(path.join(process.cwd(), filename)
-  }
-})
-```
-
 ### Read a file that might not exist
 
 Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you need to read a file that might not exist, use `cy.task`.
