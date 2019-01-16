@@ -135,7 +135,7 @@
     "hexo-filter-cleanup": "1.1.0",
     "hexo-generator-alias": "0.1.3",
     "hexo-generator-seo-friendly-sitemap": "0.0.22",
-    "hexo-prism-plugin": "2.2.0",
+    "hexo-prism-plugin": "2.3.0",
     "hexo-renderer-marked": "0.3.2",
     "hexo-renderer-scss": "1.2.0",
     "hexo-server": "0.3.3",
