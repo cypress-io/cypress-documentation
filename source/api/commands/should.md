@@ -268,6 +268,41 @@ These string messages will be shown in the Command Log giving each assertion mor
 
 ![Expect assertions with messages](/img/api/should/expect-with-message.png)
 
+### Compare text values of two elements
+
+The example below gets the text contained within one element and saves it in a closure variable. Then the test gets the text in another element and asserts that the two text values are the same after normalizing.
+
+```html
+<div class="company-details">
+  <div class="title">Acme Developers</div>
+  <div class="identifier">ACMEDEVELOPERS</div>
+</div>
+```
+
+```javascript
+const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+
+// will keep text from title element
+let text
+
+cy.get('.company-details')
+  .find('.title')
+  .then(($title) => {
+    // save text from the first element
+    titleText = normalizeText($title.text())
+  })
+
+cy.get('.company-details')
+  .find('.identifier')
+  .should(($identifier) => {
+    // we can massage text before comparing
+    const idText = normalizeText($identifier.text())
+
+    // text from the title element should already be set
+    expect(idText, 'ID').to.equal(titleText)
+  })
+```
+
 ## Multiple Assertions
 
 ### Chaining multiple assertions
