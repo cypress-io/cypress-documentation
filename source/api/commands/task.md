@@ -104,13 +104,14 @@ cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```javascript
 // in plugins/index.js
 const fs = require('fs')
+
 on('task', {
   readFileMaybe (filename) {
     if (fs.existsSync(filename)) {
       return fs.readFileSync(filename, 'utf8')
-    } else {
-      return null
     }
+
+    return null
   }
 })
 ```
