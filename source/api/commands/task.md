@@ -121,7 +121,7 @@ Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you nee
 
 ```javascript
 // in test
-cy.task('readFileMaybe', 'my-file.txt').then((text) => { ... })
+cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 // in plugins file
 const fs = require('fs')
 on('task', {
@@ -194,33 +194,35 @@ cy.task('seedDatabase', null, { timeout: 20000 })
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
 
-## Combining tasks
+## Tasks are merged automatically
 
-Sometimes you might be using plugins that export their tasks for registration. In order to avoid overwriting the already registered tasks, avoid calling `on('task', ...)` more than once.
-
-```javascript
-// in plugins/index.js file
-const tasksA = require('plugin-a/tasks')
-const tasksB = require('plugin-b/tasks')
-
-// do NOT do this
-on('task', tasksA)
-on('task', tasksB)
-// Oops, tasksA are gone, they were overwritten by tasksB
-```
-
-Instead register a combined object yourself. Both `tasksA` and `tasksB` should be objects and can be merged together, assuming they have different property names.
+Sometimes you might be using plugins that export their tasks for registration. Cypress automatically merges `on('task')` objects for you. For example if you are using {% url 'cypress-skip-and-only-ui' https://github.com/bahmutov/cypress-skip-and-only-ui %} plugin and want to install your own task to read a file that might not exist:
 
 ```javascript
 // in plugins/index.js file
-const tasksA = require('plugin-a/tasks')
-const tasksB = require('plugin-b/tasks')
+const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
+const fs = require('fs')
+const myTask = {
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
 
-// combine tasks objects into one
-const task = Object.assign({}, tasksA, tasksB)
+    return null
+  }
+}
 
-on('task', task)
+// register plugin's task
+on('task', skipAndOnlyTask)
+// and register my own task
+on('task', myTask)
 ```
+
+See {% issue 2284 '#2284' %} for implementation.
+
+{% note warning Duplicate task keys %}
+If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+{% endnote %}
 
 # Rules
 
