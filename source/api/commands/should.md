@@ -233,15 +233,15 @@ cy.get('.docs-header')
 Example below first asserts that there are 3 elements, and then checks the text contents of each one.
 
 ```html
-<div id="todos">
+<ul class="connectors-list">
   <li>Walk the dog</li>
   <li>Feed the cat</li>
   <li>Write JavaScript</li>
-</div>
+</ul>
 ```
 
 ```javascript
-cy.get('#todos li').should(($lis) => {
+cy.get('.connectors-list > li').should(($lis) => {
   expect($lis).to.have.length(3)
   expect($lis.eq(0)).to.contain('Walk the dog')
   expect($lis.eq(1)).to.contain('Feed the cat')
@@ -252,6 +252,56 @@ cy.get('#todos li').should(($lis) => {
 {% note info %}
 Read {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post to see more variations of the above example.
 {% endnote %}
+
+For clarity you can pass a string message as a second argument to any `expect` assertion, see {% url Chai#expect https://www.chaijs.com/guide/styles/#expect %}.
+
+```javascript
+cy.get('.connectors-list > li').should(($lis) => {
+  expect($lis, '3 items').to.have.length(3)
+  expect($lis.eq(0), 'first item').to.contain('Walk the dog')
+  expect($lis.eq(1), 'second item').to.contain('Feed the cat')
+  expect($lis.eq(2), 'third item').to.contain('Write JavaScript')
+})
+```
+
+These string messages will be shown in the Command Log giving each assertion more context.
+
+![Expect assertions with messages](/img/api/should/expect-with-message.png)
+
+### Compare text values of two elements
+
+The example below gets the text contained within one element and saves it in a closure variable. Then the test gets the text in another element and asserts that the two text values are the same after normalizing.
+
+```html
+<div class="company-details">
+  <div class="title">Acme Developers</div>
+  <div class="identifier">ACMEDEVELOPERS</div>
+</div>
+```
+
+```javascript
+const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+
+// will keep text from title element
+let text
+
+cy.get('.company-details')
+  .find('.title')
+  .then(($title) => {
+    // save text from the first element
+    titleText = normalizeText($title.text())
+  })
+
+cy.get('.company-details')
+  .find('.identifier')
+  .should(($identifier) => {
+    // we can massage text before comparing
+    const idText = normalizeText($identifier.text())
+
+    // text from the title element should already be set
+    expect(idText, 'ID').to.equal(titleText)
+  })
+```
 
 ## Multiple Assertions
 
