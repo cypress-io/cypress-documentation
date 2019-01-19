@@ -281,13 +281,13 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
 
     // overwrite the default timeout, because screenshot does that internally
     // otherwise the `then` is limited to the default command timeout
-    .then({ timeout: 45000 },
-    () => {
+    .then({ timeout: Cypress.config('responseTimeout') },
+      () => {
 
-      // return the original function so that cypress waits for it
-      return originalFn(subject, name, options);
-    });
-});
+        // return the original function so that cypress waits for it
+        return originalFn(subject, name, options)
+      })
+})
 ```
 
 # Validations
