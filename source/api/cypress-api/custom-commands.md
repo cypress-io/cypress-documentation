@@ -268,6 +268,28 @@ This is usually unnecessary because Cypress is already configured to swap out ba
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
 
+### Overwrite `screenshot` command
+
+This example overwrites `screenshot` to always wait until a certain element is visible.
+
+```javascript
+Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
+
+  // call another command, no need to return as it is managed
+  cy.get('.app')
+    .should('be.visible')
+
+    // overwrite the default timeout, because screenshot does that internally
+    // otherwise the `then` is limited to the default command timeout
+    .then({ timeout: Cypress.config('responseTimeout') },
+      () => {
+
+        // return the original function so that cypress waits for it
+        return originalFn(subject, name, options)
+      })
+})
+```
+
 # Validations
 
 As noted in the {% urlHash 'Arguments' 'Arguments' %} above, you can also set `prevSubject` to one of:

@@ -149,6 +149,11 @@
       link: https://github.com/cypress-io/cypress-xpath
       keywords: [xpath, commands]
 
+    - name: cypress-drag-drop
+      description: Adds a cypress child command for drag'n'drop support.
+      link: https://github.com/4teamwork/cypress-drag-drop
+      keywords: [dragndrop, drag, drop, commands]
+
 - name: Reporting
   plugins:
     - name: cypress-failed-log
