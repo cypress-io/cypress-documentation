@@ -165,7 +165,7 @@ api:
     command-start-event: command-start-event.html
     configuration-event: configuration-event.html
     fail-event: fail-event.html
-    file-preprocessor-event: file-preprocessor-event.html
+    brower-filepreprocessor-event: brower-filepreprocessor-event.html
     log-added-event: log-added-event.html
     log-changed-event: log-changed-event.html
     scrolled-event: scrolled-event.html

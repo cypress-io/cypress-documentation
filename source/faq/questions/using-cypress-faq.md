@@ -506,7 +506,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 ## {% fa fa-angle-right %} Does Cypress support ES7?
 
-Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' file-preprocessor-event %}.
+Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' brower-filepreprocessor-event %}.
 
 Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
 

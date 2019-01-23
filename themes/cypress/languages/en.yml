@@ -207,7 +207,7 @@ sidebar:
     command-start-event: command:start
     configuration-event: configuration
     fail-event: fail
-    file-preprocessor-event: file:preprocessor
+    brower-filepreprocessor-event: brower:filePreprocessor
     log-added-event: log:added
     log-changed-event: log:changed
     scrolled-event: scrolled

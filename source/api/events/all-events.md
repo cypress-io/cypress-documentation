@@ -79,7 +79,7 @@ Event                                                         | Description
 {% url `command:enqueued` command-enqueued-event %}           | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `command:retry` command-retry-event %}                 | Fires before a command begins its retrying routines, with details about the retry.
 {% url `command:start` command-start-event %}                 | Fires before a command executes, with the command that will be run.
-{% url `file:preprocessor` file-preprocessor-event %}         | Fires before a spec file is processed, giving you the ability to control how it's processed.
+{% url `brower:filePreprocessor` brower-filepreprocessor-event %}   | Fires before a spec file is processed, giving you the ability to control how it's processed.
 {% url `task` task-event %}                                   | Fires when you use {% url `cy.task()` task %}, with the arguments you pass to it.
 
 # Other Events
