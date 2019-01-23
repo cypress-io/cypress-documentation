@@ -18,9 +18,12 @@ Event | Browser | Background Process
 
 # Arguments
 
-**{% fa fa-angle-right %} event** ***(Object)***
+**{% fa fa-angle-right %} page details** ***(Object)***
 
-The `beforeunload` event.
+An object with the following properties:
+
+* _win_: The page's window object
+* _url_: The page's URL
 
 # Usage
 
@@ -29,8 +32,14 @@ The `beforeunload` event.
 In a spec file or support file you can tap into the `page:end` event.
 
 ```javascript
-cy.on('page:end', (e) => {
-
+cy.on('page:end', (details) => {
+  // details looks something like this:
+  // {
+  //   win: {
+  //     ... window properties ...
+  //   }
+  //   url: 'http://localhost:3333
+  // }
 })
 ```
 
@@ -54,7 +63,7 @@ it('redirects to another page on click', function (done) {
     expect(e.returnValue).to.be.undefined
   })
 
-  cy.on('page:end', (e) => {
+  cy.on('page:end', () => {
     // using mocha's async done callback to finish
     // this test so we are guaranteed the application
     // was unloaded while navigating to the new page

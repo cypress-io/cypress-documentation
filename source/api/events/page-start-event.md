@@ -18,9 +18,14 @@ Event | Browser | Background Process
 
 # Arguments
 
-**{% fa fa-angle-right %} window** ***(Object)***
+**{% fa fa-angle-right %} page details** ***(Object)***
 
-The remote window
+An object with the following properties:
+
+* _win_: The page's window object
+* _url_: The page's URL
+* _statusCode_: The http status code of the page
+* _headers_: An object containing the headers of the page
 
 # Usage
 
@@ -29,8 +34,19 @@ The remote window
 In a spec file or support file you can tap into the `page:start` event.
 
 ```js
-cy.on('page:start', (win) => {
-
+cy.on('page:start', (details) => {
+  // details looks something like this:
+  // {
+  //   win: {
+  //     ... window properties ...
+  //   }
+  //   url: 'http://localhost:3333
+  //   statusCode: 200
+  //   headers: {
+  //     'Content-Type': 'text/html',
+  //     ...
+  //   }
+  // }
 })
 ```
 
@@ -44,7 +60,7 @@ it('can modify the window prior to page load on all pages', function () {
 
   // prevent google analytics from loading and replace it with a stub before
   // every single page load including all new page navigations
-  cy.on('page:start', (win) => {
+  cy.on('page:start', ({ win }) => {
     Object.defineProperty(win, 'ga', {
       configurable: false,
       writeable: false,

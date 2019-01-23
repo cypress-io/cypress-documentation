@@ -18,9 +18,12 @@ Event | Browser | Background Process
 
 # Arguments
 
-**{% fa fa-angle-right %} window** ***(Object)***
+**{% fa fa-angle-right %} page details** ***(Object)***
 
-The remote window
+An object with the following properties:
+
+* _win_: The page's window object
+* _url_: The page's URL
 
 # Usage
 
@@ -30,8 +33,14 @@ In a spec file or support file you can tap into the `page:ready` event.
 
 ```javascript
 it('listens for page:ready', function () {
-  cy.on('page:ready', (win) => {
-    // window is the newly loaded window
+  cy.on('page:ready', (details) => {
+    // details looks something like this:
+    // {
+    //   win: {
+    //     ... window properties ...
+    //   }
+    //   url: 'http://localhost:3333
+    // }
   })
 
   cy.visit('/test.html')
