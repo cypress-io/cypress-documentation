@@ -70,4 +70,4 @@ it('redirects to another page on click', function (done) {
 
 - {% url `page:start` page-start-event %}
 - {% url `before:window:unload` before-window-unload-event %}
-- {% url `window:load` window-load-event %}
+- {% url `page:ready` page-ready-event %}

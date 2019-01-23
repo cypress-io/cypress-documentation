@@ -175,7 +175,7 @@ api:
     viewport-changed-event: viewport-changed-event.html
     page-alert-event: page-alert-event.html
     page-confirm-event: page-confirm-event.html
-    window-load-event: window-load-event.html
+    page-ready-event: page-ready-event.html
     window-unload-event: window-unload-event.html
   cypress-api:
     custom-commands: custom-commands.html

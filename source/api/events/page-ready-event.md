@@ -1,8 +1,8 @@
 ---
-title: window:load
+title: page:ready
 ---
 
-The `window:load` event fires after all your resources have finished loading after a page transition. This fires at the exact same time as a `cy.visit()` `onLoad` callback.
+The `page:ready` event fires after all the page's resources have finished loading after a page transition. This fires at the exact same time as a `cy.visit()` `onLoad` callback.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`window:load` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`page:ready` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,11 +26,11 @@ The remote window
 
 ## In the browser
 
-In a spec file or support file you can tap into the `window:load` event.
+In a spec file or support file you can tap into the `page:ready` event.
 
 ```javascript
-it('listens for window:load', function () {
-  cy.on('window:load', (win) => {
+it('listens for page:ready', function () {
+  cy.on('page:ready', (win) => {
     // window is the newly loaded window
   })
 

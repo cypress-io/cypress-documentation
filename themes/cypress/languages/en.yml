@@ -217,7 +217,7 @@ sidebar:
     viewport-changed-event: viewport:changed
     page-alert-event: page:alert
     page-confirm-event: page:confirm
-    window-load-event: window:load
+    page-ready-event: page:ready
     window-unload-event: window:unload
   examples:
     examples: Examples
