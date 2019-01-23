@@ -195,7 +195,7 @@ sidebar:
     after-test-run-event: after:test:run
     after-run-event: after:run
     after-spec-event: after:spec
-    before-browser-launch-event: before:browser:launch
+    browser-launch-event: browser:launch
     before-run-event: before:run
     before-spec-event: before:spec
     before-test-run-event: before:test:run

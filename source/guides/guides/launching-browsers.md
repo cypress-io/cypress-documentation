@@ -66,7 +66,7 @@ This enables you to do things like:
 - Load your own chrome extension
 - Enable or disable experimental chrome features
 
-{% url 'This part of the API is documented here.' before-browser-launch-event %}
+{% url 'This part of the API is documented here.' browser-launch-event %}
 
 ## Cypress Profile
 

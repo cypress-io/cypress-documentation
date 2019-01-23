@@ -1,5 +1,5 @@
 ---
-title: before:browser:launch
+title: browser:launch
 ---
 
 Before Cypress launches a browser, it gives you the ability to modify the arguments used to launch it.
@@ -16,7 +16,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`before:browser:launch` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+`browser:launch` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -34,11 +34,11 @@ Arguments passed to the browser. Arguments are different per browser, sometimes 
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `before:browser:launch` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `browser:launch` event.
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('browser:launch', (browser = {}, args) => {
     console.log(browser, args) // see what all is in here!
 
     // browser will look something like this
@@ -66,7 +66,7 @@ Here are options for the currently supported browsers:
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('browser:launch', (browser = {}, args) => {
     if (browser.name === 'chrome') {
       args.push('--start-fullscreen')
     }

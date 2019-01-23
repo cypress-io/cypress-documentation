@@ -65,23 +65,22 @@ The `cy` object is bound to each individual test. Events bound to `cy` will **au
 
 These events occur in the {% url "background file" background-process %}.
 
-Event                                                         | Description
---------------------------------------------------------------|---------------------------------------------------------------------------------------------------------
-{% url `after:run` after-run-event %}                         | Fires after the run finishes, with the results of the run.
-{% url `after:screenshot` after-screenshot-event %}           | Fires after the a screenshot is taken, with details about the screenshot.
-{% url `after:spec` after-spec-event %}                       | Fires after a spec file and its tests run, with details about the spec file and its test results.
-{% url `after:test:run` after-test-run-event %}               | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
-{% url `before:browser:launch` before-browser-launch-event %} | Fires before the browser is launched, giving you the ability to modify the arguments used to launch it.
-{% url `before:run` before-run-event %}                       | Fires before the run starts, with details about the run.
-{% url `before:spec` before-spec-event %}                     | Fires before a spec file is run, with details about the spec file.
-{% url `before:test:run` before-test-run-event %}             | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
-{% url `command:end` command-end-event %}                     | Fires after a command executes, with the command that was run.
-{% url `command:enqueued` command-enqueued-event %}           | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
-{% url `command:retry` command-retry-event %}                 | Fires before a command begins its retrying routines, with details about the retry.
-{% url `command:start` command-start-event %}                 | Fires before a command executes, with the command that will be run.
-{% url `brower:filePreprocessor` brower-filepreprocessor-event %}   | Fires before a spec file is processed, giving you the ability to control how it's processed.
-{% url `task` task-event %}                                   | Fires when you use {% url `cy.task()` task %}, with the arguments you pass to it.
-
+Event                                                             | Description
+------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------
+{% url `after:run` after-run-event %}                             | Fires after the run finishes, with the results of the run.
+{% url `after:screenshot` after-screenshot-event %}               | Fires after the a screenshot is taken, with details about the screenshot.
+{% url `after:spec` after-spec-event %}                           | Fires after a spec file and its tests run, with details about the spec file and its test results.
+{% url `after:test:run` after-test-run-event %}                   | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
+{% url `browser:launch` browser-launch-event %}                   | Fires before the browser is launched, giving you the ability to modify the arguments used to launch it.
+{% url `before:run` before-run-event %}                           | Fires before the run starts, with details about the run.
+{% url `before:spec` before-spec-event %}                         | Fires before a spec file is run, with details about the spec file.
+{% url `before:test:run` before-test-run-event %}                 | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
+{% url `command:end` command-end-event %}                         | Fires after a command executes, with the command that was run.
+{% url `command:enqueued` command-enqueued-event %}               | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
+{% url `command:retry` command-retry-event %}                     | Fires before a command begins its retrying routines, with details about the retry.
+{% url `command:start` command-start-event %}                     | Fires before a command executes, with the command that will be run.
+{% url `brower:filePreprocessor` brower-filepreprocessor-event %} | Fires before a spec file is processed, giving you the ability to control how it's processed.
+{% url `task` task-event %}                                       | Fires when you use {% url `cy.task()` task %}, with the arguments you pass to it.
 # Other Events
 
 There are a myriad of other events Cypress fires to communicate with the Node server process, automation servers, mocha, the runner, and the reporter. They are strictly internal to the way Cypress works and not useful for users.

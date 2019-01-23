@@ -141,7 +141,7 @@ alias:
   api/plugins/writing-a-plugin.html: guides/tooling/background-process.html
   api/plugins/configuration-api.html: api/events/configuration-event.html
   api/plugins/preprocessors-api.html: api/events/brower-filepreprocessor-event.html
-  api/plugins/browser-launch-api.html: api/events/before-browser-launch-event.html
+  api/plugins/browser-launch-api.html: api/events/browser-launch-event.html
   api/plugins/after-screenshot-api.html: api/events/after-screenshot-event.html
 
 # Include/Exclude Files/Folders

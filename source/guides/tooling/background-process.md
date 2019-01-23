@@ -39,16 +39,16 @@ Check out the {% url '`brower:filePreprocessor` event' brower-filepreprocessor-e
 
 ## Browser Launching
 
-The {% url "`before:browser:launch`" before-browser-launch-event %} event can be used to modify the launch arguments for each particular browser.
+The {% url "`browser:launch`" browser-launch-event %} event can be used to modify the launch arguments for each particular browser.
 
-### You can use the `before:browser:launch` event to do things like:
+### You can use the `browser:launch` event to do things like:
 
 - Load a Chrome extension.
 - Specify the media type
 - Enable or disable experimental chrome features.
 - Control which Chrome components are loaded.
 
-Check out the {% url '`before:browser:launch` event' before-browser-launch-event %} which describe how to use this event.
+Check out the {% url '`browser:launch` event' browser-launch-event %} which describe how to use this event.
 
 ## Screenshot handling
 
