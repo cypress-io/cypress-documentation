@@ -40,6 +40,6 @@ it('listens for window:load', function () {
 
 # See also
 
-- {% url `before:window:load` before-window-load-event %}
+- {% url `page:start` page-start-event %}
 - {% url `before:window:unload` before-window-unload-event %}
 - {% url `window:unload` window-unload-event %}

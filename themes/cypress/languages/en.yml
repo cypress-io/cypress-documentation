@@ -199,7 +199,7 @@ sidebar:
     before-run-event: before:run
     before-spec-event: before:spec
     before-test-run-event: before:test:run
-    before-window-load-event: before:window:load
+    page-start-event: page:start
     before-window-unload-event: before:window:unload
     command-end-event: command:end
     command-enqueued-event: command:enqueued

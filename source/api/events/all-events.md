@@ -10,7 +10,7 @@ These events are useful not only to control your application's behavior, but als
 Here are some examples you can do with these events:
 
 - Listen for `alert` or `confirm` calls and change the behavior
-- Listen for `before:window:load` events and modify the `window` before any of your app code runs between page transitions
+- Listen for `page:start` events and modify the `window` before any of your app code runs between page transitions
 - Listen for `command:retry` events to understand why Cypress is internally retrying for debugging purposes
 - Modify how Cypress preprocesses your spec files
 - Modify browser launch arguments
@@ -23,7 +23,7 @@ Event                                                   | Description
 --------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------
 {% url `after:test:run` after-test-run-event %}         | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
 {% url `before:test:run` before-test-run-event %}       | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
-{% url `before:window:load` before-window-load-event %} | Fires before the page begins to load, before any of your pages's JavaScript has executed, with your page's `window` object.
+{% url `page:start` page-start-event %}                 | Fires before the page begins to load, before any of your pages's JavaScript has executed, with your page's `window` object.
 {% url `command:end` command-end-event %}               | Fires after a command executes, with the command that was run.
 {% url `command:enqueued` command-enqueued-event %}     | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `command:retry` command-retry-event %}           | Fires before a command begins its retrying routines, with details about the retry.
@@ -35,8 +35,8 @@ Event                                                   | Description
 {% url `uncaught:exception` uncaught-exception-event %} | Fires after an uncaught exception occurs, with the error and the mocha runnable object.
 {% url `url:changed` url-changed-event %}               | Fires after the page's URL changes, with the new URL.
 {% url `viewport:changed` viewport-changed-event %}     | Fires after the viewport changes, with the new viewport dimensions.
-{% url `page:alert` page-alert-event %}             | Fires when the page calls the global `window.alert()` method, with the alert text.
-{% url `page:confirm` page-confirm-event %}         | Fires when your app calls the global `window.confirm()` method, with the confirm text.
+{% url `page:alert` page-alert-event %}                 | Fires when the page calls the global `window.alert()` method, with the alert text.
+{% url `page:confirm` page-confirm-event %}             | Fires when your app calls the global `window.confirm()` method, with the confirm text.
 
 You can listen to browser events in your spec files or in your {% url "support file" writing-and-organizing-tests#Support-file %} via the `Cypress` and `cy` objects.
 

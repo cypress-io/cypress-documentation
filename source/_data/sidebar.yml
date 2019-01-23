@@ -157,7 +157,7 @@ api:
     before-run-event: before-run-event.html
     before-spec-event: before-spec-event.html
     before-test-run-event: before-test-run-event.html
-    before-window-load-event: before-window-load-event.html
+    page-start-event: page-start-event.html
     before-window-unload-event: before-window-unload-event.html
     command-end-event: command-end-event.html
     command-enqueued-event: command-enqueued-event.html
