@@ -42,4 +42,4 @@ it('listens for page:ready', function () {
 
 - {% url `page:start` page-start-event %}
 - {% url `before:window:unload` before-window-unload-event %}
-- {% url `window:unload` window-unload-event %}
+- {% url `page:end` page-end-event %}

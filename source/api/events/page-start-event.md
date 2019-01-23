@@ -68,4 +68,4 @@ it('can modify the window prior to page load on all pages', function () {
 
 - {% url `before:window:unload` before-window-unload-event %}
 - {% url `page:ready` page-ready-event %}
-- {% url `window:unload` window-unload-event %}
+- {% url `page:end` page-end-event %}

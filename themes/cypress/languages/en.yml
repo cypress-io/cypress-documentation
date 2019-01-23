@@ -218,7 +218,7 @@ sidebar:
     page-alert-event: page:alert
     page-confirm-event: page:confirm
     page-ready-event: page:ready
-    window-unload-event: window:unload
+    page-end-event: page:end
   examples:
     examples: Examples
     recipes: Recipes

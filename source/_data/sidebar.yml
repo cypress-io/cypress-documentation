@@ -176,7 +176,7 @@ api:
     page-alert-event: page-alert-event.html
     page-confirm-event: page-confirm-event.html
     page-ready-event: page-ready-event.html
-    window-unload-event: window-unload-event.html
+    page-end-event: page-end-event.html
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html

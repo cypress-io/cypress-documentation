@@ -25,6 +25,7 @@ Event                                                   | Description
 {% url `before:test:run` before-test-run-event %}       | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
 {% url `page:start` page-start-event %}                 | Fires before the page begins to load, before any of your pages's JavaScript has executed, with your page's `window` object.
 {% url `page:ready` page-ready-event %}                 | Fires after all the page's resources have finished loading.
+{% url `page:end` page-end-event %}                     | Fires when the page has unloaded and is navigating away.
 {% url `command:end` command-end-event %}               | Fires after a command executes, with the command that was run.
 {% url `command:enqueued` command-enqueued-event %}     | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `command:retry` command-retry-event %}           | Fires before a command begins its retrying routines, with details about the retry.

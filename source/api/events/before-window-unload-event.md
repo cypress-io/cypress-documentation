@@ -54,7 +54,7 @@ it('redirects to another page on click', function (done) {
     expect(e.returnValue).to.be.undefined
   })
 
-  cy.on('window:unload', (e) => {
+  cy.on('page:end', (e) => {
     // using mocha's async done callback to finish
     // this test so we are guaranteed the application
     // was unloaded while navigating to the new page
@@ -70,4 +70,4 @@ it('redirects to another page on click', function (done) {
 
 - {% url `page:start` page-start-event %}
 - {% url `page:ready` page-ready-event %}
-- {% url `window:unload` window-unload-event %}
+- {% url `page:end` page-end-event %}

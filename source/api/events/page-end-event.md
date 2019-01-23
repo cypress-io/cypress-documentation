@@ -1,8 +1,8 @@
 ---
-title: window:unload
+title: page:end
 ---
 
-The `window:unload` event fires when your application has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
+The `page:end` event fires when the page has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`window:unload` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`page:end` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The `beforeunload` event.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `window:unload` event.
+In a spec file or support file you can tap into the `page:end` event.
 
 ```javascript
-cy.on('window:unload', (e) => {
+cy.on('page:end', (e) => {
 
 })
 ```
@@ -49,12 +49,12 @@ $('button').on('click', (e) => {
 it('redirects to another page on click', function (done) {
   // this event will automatically be unbound when this
   // test ends because it's attached to 'cy'
-  cy.on('before:window:unload', (e) => {
+  cy.on('before:page:end', (e) => {
     // no return value on the event
     expect(e.returnValue).to.be.undefined
   })
 
-  cy.on('window:unload', (e) => {
+  cy.on('page:end', (e) => {
     // using mocha's async done callback to finish
     // this test so we are guaranteed the application
     // was unloaded while navigating to the new page
@@ -69,5 +69,5 @@ it('redirects to another page on click', function (done) {
 # See also
 
 - {% url `page:start` page-start-event %}
-- {% url `before:window:unload` before-window-unload-event %}
+- {% url `before:page:end` before-window-unload-event %}
 - {% url `page:ready` page-ready-event %}
