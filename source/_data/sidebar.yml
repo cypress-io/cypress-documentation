@@ -174,7 +174,7 @@ api:
     url-changed-event: url-changed-event.html
     viewport-changed-event: viewport-changed-event.html
     page-alert-event: page-alert-event.html
-    window-confirm-event: window-confirm-event.html
+    page-confirm-event: page-confirm-event.html
     window-load-event: window-load-event.html
     window-unload-event: window-unload-event.html
   cypress-api:

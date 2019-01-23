@@ -36,7 +36,7 @@ Event                                                   | Description
 {% url `url:changed` url-changed-event %}               | Fires after the page's URL changes, with the new URL.
 {% url `viewport:changed` viewport-changed-event %}     | Fires after the viewport changes, with the new viewport dimensions.
 {% url `page:alert` page-alert-event %}             | Fires when the page calls the global `window.alert()` method, with the alert text.
-{% url `window:confirm` window-confirm-event %}         | Fires when your app calls the global `window.confirm()` method, with the confirm text.
+{% url `page:confirm` page-confirm-event %}         | Fires when your app calls the global `window.confirm()` method, with the confirm text.
 
 You can listen to browser events in your spec files or in your {% url "support file" writing-and-organizing-tests#Support-file %} via the `Cypress` and `cy` objects.
 

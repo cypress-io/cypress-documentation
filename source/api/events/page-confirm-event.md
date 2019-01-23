@@ -1,8 +1,8 @@
 ---
-title: window:confirm
+title: page:confirm
 ---
 
-The `window:confirm` event fires when your app calls the global `window.confirm()` method. Cypress will auto accept confirmations. Return `false` from this event and the confirmation will be cancelled.
+The `page:confirm` event fires when your app calls the global `window.confirm()` method. Cypress will auto accept confirmations. Return `false` from this event and the confirmation will be cancelled.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`window:confirm` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`page:confirm` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The confirmation text.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `window:confirm` event.
+In a spec file or support file you can tap into the `page:confirm` event.
 
 ```js
-cy.on('window:confirm', (text) => {
+cy.on('page:confirm', (text) => {
 
 })
 ```
@@ -66,7 +66,7 @@ it('can control application confirms', function (done) {
   //
   // this event will automatically be unbound when this
   // test ends because it's attached to 'cy'
-  cy.on('window:confirm', (str) => {
+  cy.on('page:confirm', (str) => {
     count += 1
 
     switch (count) {
@@ -110,7 +110,7 @@ it('could also use a stub instead of imperative code', function () {
   stub.onSecondCall().returns(false)
   stub.onThirdCall().returns(true)
 
-  cy.on('window:confirm', stub)
+  cy.on('page:confirm', stub)
 
   cy
     .get('button').click()
