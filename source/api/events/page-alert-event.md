@@ -1,8 +1,8 @@
 ---
-title: window:alert
+title: page:alert
 ---
 
-The `window:alert` event fires when your app calls the global `window.alert()` method. Cypress will auto accept alerts. You cannot change this behavior.
+The `page:alert` event fires when your app calls the global `window.alert()` method. Cypress will auto accept alerts. You cannot change this behavior.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`window:alert` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`page:alert` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The alert text.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `window:alert` event.
+In a spec file or support file you can tap into the `page:alert` event.
 
 ```js
-Cypress.on('window:alert', (text) => {
+Cypress.on('page:alert', (text) => {
 
 })
 ```
@@ -51,7 +51,7 @@ $('button').on('click', (e) => {
 it('can assert on the alert text content', function () {
   const stub = cy.stub()
 
-  cy.on('window:alert', stub)
+  cy.on('page:alert', stub)
 
   cy
     .get('button').click()

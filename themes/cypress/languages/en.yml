@@ -215,7 +215,7 @@ sidebar:
     uncaught-exception-event: uncaught:exception
     url-changed-event: url:changed
     viewport-changed-event: viewport:changed
-    window-alert-event: window:alert
+    page-alert-event: page:alert
     window-confirm-event: window:confirm
     window-load-event: window:load
     window-unload-event: window:unload
