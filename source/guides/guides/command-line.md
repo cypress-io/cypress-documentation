@@ -234,7 +234,7 @@ Run tests specifying a single test file to run instead of all tests.
 cypress run --spec 'cypress/integration/examples/actions.spec.js'
 ```
 
-Run tests specifying a glob of where to look for test files *(Note: quotes required)*.
+Run tests within the folder matching the glob *(Note: quotes required)*.
 
 ```shell
 cypress run --spec 'cypress/integration/login/**/*'
