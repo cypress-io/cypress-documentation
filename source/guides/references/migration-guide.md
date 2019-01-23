@@ -52,6 +52,8 @@ Various events have been renamed to maintain a more consistent format. If you li
 
 - Rename `test:before:run` to `before:test:run`
 - Rename `test:after:run` to `after:test:run`
+- Rename `window:alert` to `page:alert`
+- Rename `window:confirm` to `page:confirm`
 - Rename `window:before:load` to `page:start`
 - Rename `window:before:unload` to `before:window:unload`
 
