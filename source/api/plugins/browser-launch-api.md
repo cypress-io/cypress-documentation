@@ -10,7 +10,7 @@ The most common use case is adding your own chrome extension.
 
 # Usage
 
-## Modify the arguments based on the browser Cypress is launching.
+## Modify args based on browser
 
 Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify the arguments based on the browser that Cypress is launching.
 
@@ -48,6 +48,32 @@ module.exports = (on, config) => {
       // whatever you return here becomes the new args
       return args
     }
+  })
+}
+```
+
+# Examples
+
+## Use fake video for webcam testing
+
+By default, Cypress passes the Chrome command line switch to enable a fake video for a media stream. This is to better enable testing webcam functionality without having to have the necessary hardware to test.
+
+![](https://camo.githubusercontent.com/ff306c559c215e94f48b6546d861120b884641c3/687474703a2f2f672e7265636f726469742e636f2f6d4336336a794c6d6a6f2e676966)
+
+You can however send your own video file for testing by passing a Chrome command line switch pointing to a video file.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.name === 'chrome') {
+      // Mac/Linux
+      args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
+
+      // Windows
+      // args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+    }
+
+    return args
   })
 }
 ```
