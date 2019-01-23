@@ -85,6 +85,12 @@ Additionally, its often much easier to use {% url `cy.debug()` debug %} or {% ur
 
 For a detailed explanation of aliasing, {% url 'read more about waiting on routes here' network-requests#Waiting %}.
 
+{% note warning 'fetch' %}
+`fetch` is not currently supported. Learn how to stub it [here](
+        cypress-example-recipes/examples/stubbing-spying__window-fetch/cypress/integration/polyfill-fetch-from-tests-spec.js
+      ).
+{% endnote %}
+
 ### Wait for a specific XHR to respond
 
 ```javascript
