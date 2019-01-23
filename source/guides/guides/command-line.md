@@ -96,8 +96,22 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ### `cypress run --env <env>`
 
+Pass a single string variable.
+
 ```shell
 cypress run --env host=api.dev.local
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically converted from strings.
+
+```shell
+cypress run --env host=api.dev.local,port=4222
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress run --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
 ### `cypress run --group <name>`
