@@ -8,6 +8,12 @@ Start a server to begin routing responses to {% url `cy.route()` route %} and {%
 **Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
 {% endnote %}
 
+{% note warning %}
+**Warning:** `cy.server()` and `cy.route()` do not currently support `fetch`. Learn how to stub it [here](
+        cypress-example-recipes/examples/stubbing-spying__window-fetch/cypress/integration/polyfill-fetch-from-tests-spec.js
+      )
+{% endnote %}
+
 # Syntax
 
 ```javascript
