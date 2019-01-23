@@ -35,7 +35,7 @@ Event                                                   | Description
 {% url `log:changed` log-changed-event %}               | Fires after a command's attributes changes, with the log details and whether Cypress is in interactive mode.
 {% url `scrolled` scrolled-event %}                     | Fires after **Cypress** scrolls your page, with the element or `window` being scrolled and the type of element being scrolled.
 {% url `uncaught:exception` uncaught-exception-event %} | Fires after an uncaught exception occurs, with the error and the mocha runnable object.
-{% url `url:changed` url-changed-event %}               | Fires after the page's URL changes, with the new URL.
+{% url `page:urlChanged` page-urlchanged-event %}       | Fires after the page's URL changes, with the new URL.
 {% url `viewport:changed` viewport-changed-event %}     | Fires after the viewport changes, with the new viewport dimensions.
 {% url `page:alert` page-alert-event %}                 | Fires when the page calls the global `window.alert()` method, with the alert text.
 {% url `page:confirm` page-confirm-event %}             | Fires when your app calls the global `window.confirm()` method, with the confirm text.

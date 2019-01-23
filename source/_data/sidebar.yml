@@ -171,7 +171,7 @@ api:
     scrolled-event: scrolled-event.html
     task-event: task-event.html
     uncaught-exception-event: uncaught-exception-event.html
-    url-changed-event: url-changed-event.html
+    page-urlchanged-event: page-urlchanged-event.html
     viewport-changed-event: viewport-changed-event.html
     page-alert-event: page-alert-event.html
     page-confirm-event: page-confirm-event.html

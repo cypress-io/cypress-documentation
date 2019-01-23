@@ -213,7 +213,7 @@ sidebar:
     scrolled-event: scrolled
     task-event: task
     uncaught-exception-event: uncaught:exception
-    url-changed-event: url:changed
+    page-urlchanged-event: page:urlChanged
     viewport-changed-event: viewport:changed
     page-alert-event: page:alert
     page-confirm-event: page:confirm
