@@ -30,7 +30,7 @@ cy.url()    // Yields the current url as a string
 
 Pass in an options object to change the default behavior of `cy.url()`.
 
-**cy.hash( *options* )**
+**cy.url( *options* )**
 
 Option | Default | Description
 --- | --- | ---

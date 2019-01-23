@@ -68,11 +68,15 @@ Here are options for the currently supported browsers:
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, args) => {
     if (browser.name === 'chrome') {
-      args.push('--load-extension=/path/to/my/extension')
-
-      // whatever you return here becomes the new args
-      return args
+      args.push('--start-fullscreen')
     }
+
+    if (browser.name === 'electron') {
+      args['fullscreen'] = true
+    }
+
+    // whatever you return becomes the new args
+    return args
   })
 }
 ```

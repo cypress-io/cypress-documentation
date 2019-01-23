@@ -61,7 +61,7 @@ Once your server is running, it's time to visit it.
 Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
 
 ```shell
-rm cypress/integration/example_spec.js
+rm cypress/integration/sample_spec.js
 ```
 
 Now let's create our own spec file called `home_page_spec.js`.

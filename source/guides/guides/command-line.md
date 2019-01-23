@@ -25,6 +25,8 @@ You'll need to prefix each command with:
 - `$(npm bin)/cypress`
 - ...or...
 - `./node_modules/.bin/cypress`
+- ...or... (requires npm@5.2.0 or greater)
+- `npx cypress`
 
 Or just add cypress commands to the `scripts` field in your `package.json` file.
 {% endnote %}
@@ -51,7 +53,7 @@ Option | Description
 `--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
-`--no-exit` | {% urlHash "Keep Cypress open after all tests run" cypress-run-no-exit %}
+`--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
@@ -94,8 +96,22 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ### `cypress run --env <env>`
 
+Pass a single string variable.
+
 ```shell
 cypress run --env host=api.dev.local
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically converted from strings.
+
+```shell
+cypress run --env host=api.dev.local,port=4222
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress run --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
 ### `cypress run --group <name>`
@@ -130,7 +146,7 @@ cypress run --headed
 
 ### `cypress run --no-exit`
 
-To prevent Cypress from exiting after running tests with `cypress run`, use `--no-exit`.
+To prevent the Cypress Test Runner from exiting after running tests in a spec file, use `--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have access to **developer tools** after a `spec` has run.
 
@@ -218,7 +234,7 @@ Run tests specifying a single test file to run instead of all tests.
 cypress run --spec 'cypress/integration/examples/actions.spec.js'
 ```
 
-Run tests specifying a glob of where to look for test files *(Note: quotes required)*.
+Run tests within the folder matching the glob *(Note: quotes required)*.
 
 ```shell
 cypress run --spec 'cypress/integration/login/**/*'

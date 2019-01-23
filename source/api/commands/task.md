@@ -46,6 +46,25 @@ An event name to be handled via the {% url "`task` event" task-event %} in the {
 
 An argument to send along with the event. This can be any value that can be serialized by {% url "JSON.stringify()" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %}. Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
 
+If you need to pass multiple arguments, use an object
+
+```javascript
+// in test
+cy.task('hello', { greeting: 'Hello', name: 'World' })
+```
+
+```javascript
+// in background/index.js
+on('task', {
+  // deconstruct the individual properties
+  hello ({ greeting, name }) {
+    console.log('%s, %s', greeting, name)
+
+    return null
+  }
+})
+```
+
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to change the default behavior of `cy.task()`.
@@ -74,29 +93,26 @@ In the {% url "`task` background event" task-event %}, the command will fail if 
 
 If you do not need to return a value, explicitly return or resolve `null` to signal that the given event has been handled.
 
-### Read a JSON file's contents
+### Read a file that might not exist
 
-Note: this serves as a demonstration only. We recommend using {% url "`cy.fixture()`" fixture %} or {% url "`cy.readFile()`" readfile %} for a more robust implementation of reading a file in your tests.
+Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you need to read a file that might not exist, use `cy.task`.
 
 ```javascript
 // in test
-cy.task('readJson', 'cypress.json').then((data) => {
-  // data equals:
-  // {
-  //   projectId: '12345',
-  //   ...
-  // }
-})
+cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
 ```javascript
-// in background/index.js file
-const fs = require('fs-extra')
+// in background/index.js
+const fs = require('fs')
 
 on('task', {
-  readJson: (filename) => {
-    // reads the file relative to current working directory
-    return fs.readJson(path.join(process.cwd(), filename)
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
   }
 })
 ```
@@ -119,7 +135,8 @@ describe('e2e', () => {
 ```
 
 ```javascript
-// in background/index.js file
+// in background/index.js
+
 // we require some code in our app that
 // is responsible for seeding our database
 const database = require('../../app/database')
@@ -145,6 +162,48 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 // will fail if seeding the database takes longer than 20 seconds to finish
 cy.task('seedDatabase', null, { timeout: 20000 })
 ```
+
+# Notes
+
+## Tasks that do not end are not supported
+
+`cy.task()` does not support tasks that do not end, such as:
+
+- Starting a server.
+- A task that watches for file changes.
+- Any process that needs to be manually interrupted to stop.
+
+A task must end within the `taskTimeout` or Cypress will fail the current test.
+
+## Tasks are merged automatically
+
+Sometimes you might be using plugins that export their tasks for registration. Cypress automatically merges `on('task')` objects for you. For example if you are using the {% url 'cypress-skip-and-only-ui' https://github.com/bahmutov/cypress-skip-and-only-ui %} plugin and want to install your own task to read a file that might not exist:
+
+```javascript
+// in background/index.js
+const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
+const fs = require('fs')
+const myTask = {
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
+  }
+}
+
+// register plugin's task
+on('task', skipAndOnlyTask)
+// and register my own task
+on('task', myTask)
+```
+
+See {% issue 2284 '#2284' %} for implementation.
+
+{% note warning Duplicate task keys %}
+If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+{% endnote %}
 
 # Rules
 

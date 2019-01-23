@@ -226,6 +226,12 @@ Easy - you don't use classes or ID's. You add `data-*` attributes to your elemen
 
 Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
 
+## {% fa fa-angle-right %} I want to run tests only within one specific folder. How do I do this?
+
+You can specify which test files to run during {% url "`cypress run`" command-line#cypress-run %} by {% url "passing a glob to the `--spec` flag" command-line#cypress-run-spec-lt-spec-gt %} matching the files you want to run. You should be able to pass a glob matching the specific folder where the tests are you want to run.
+
+This feature is not available when using {% url "`cypress open`" command-line#cypress-open %} however.
+
 ## {% fa fa-angle-right %} Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
@@ -528,7 +534,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Helpers %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 

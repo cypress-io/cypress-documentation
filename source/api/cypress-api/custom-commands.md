@@ -268,6 +268,28 @@ This is usually unnecessary because Cypress is already configured to swap out ba
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
 
+### Overwrite `screenshot` command
+
+This example overwrites `screenshot` to always wait until a certain element is visible.
+
+```javascript
+Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
+
+  // call another command, no need to return as it is managed
+  cy.get('.app')
+    .should('be.visible')
+
+    // overwrite the default timeout, because screenshot does that internally
+    // otherwise the `then` is limited to the default command timeout
+    .then({ timeout: Cypress.config('responseTimeout') },
+      () => {
+
+        // return the original function so that cypress waits for it
+        return originalFn(subject, name, options)
+      })
+})
+```
+
 # Validations
 
 As noted in the {% urlHash 'Arguments' 'Arguments' %} above, you can also set `prevSubject` to one of:
@@ -311,7 +333,7 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 ## Allow Multiple Types
 
-### Example 2: `.trigger()`
+### `.trigger()`
 
 Require subject be one of the following types: `element`, `document` or `window`
 
@@ -520,7 +542,12 @@ Custom commands are a great way to abstract away setup (specific to your app). W
 
 Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
+### 5. Write TypeScript definitions
+
+You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
+
 # See also
 
+- {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' recipes %}

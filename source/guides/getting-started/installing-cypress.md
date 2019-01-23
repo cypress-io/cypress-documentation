@@ -186,7 +186,7 @@ Now Cypress will skip its install phase once the npm module is installed.
 
 ## Binary cache
 
-As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, these locations are:
+As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, global cache folders are:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`
@@ -201,6 +201,8 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 ```shell
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
+
+See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
 
 {% note warning %}
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
@@ -238,7 +240,7 @@ We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, si
 
 If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN. You may also want to host Cypress yourself and serve it from a local network.
 
-The download server url is `https://download.cypress.io`. 
+The download server url is `https://download.cypress.io`.
 
 See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
 
