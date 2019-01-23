@@ -44,32 +44,42 @@ function isRightBranch (env) {
     if (isDocsToStagingBranch(branch)) {
       console.log('documentation branch %s is allowed to deploy to %s',
         branch, env)
+
       return true
     }
 
     const environments = values(branchToEnv)
+
     debug('checking branches for environments %o', environments)
 
     if (!environments.includes(env)) {
       console.log('could not get branch for environment', env)
+
       return false
     }
 
     debug('target environments include current environment "%s"', env)
     if (env === 'production') {
       const allowed = branchToEnv[branch] === env
+
       console.log('branch %s is valid for env %s?', branch, env, allowed)
+
       return allowed
-    } else if (env === 'staging') {
+    }
+
+    if (env === 'staging') {
       console.log('branch %s is valid for env %s?', branch, env, true)
+
       return true
     }
 
     debug('fell through, returning false')
+
     return false
   }
 
   let branch
+
   return git.branchName()
   .then(tap((name) => {
     console.log('branch name: %s', name)
@@ -88,7 +98,9 @@ function buildUrlForEnvironment (env) {
     production: 'https://docs.cypress.io/build.json',
   }
   const url = urls[env]
+
   la(url, 'invalid build url for environment', env, url)
+
   return url
 }
 
@@ -96,9 +108,11 @@ function lastDeployedCommit (env) {
   la(is.unemptyString(env), 'missing environment', env)
 
   const url = buildUrlForEnvironment(env)
+
   la(url, 'could not get build url for environment', env)
 
   debug('checking last deploy info using url %s', url)
+
   return got(url, { json: true })
   .then(path(['body', 'id']))
   .then(tap((id) => {
@@ -109,6 +123,7 @@ function lastDeployedCommit (env) {
 const changedFilesSince = (branchName) => (sha) => {
   la(is.unemptyString(branchName), 'missing branch name', branchName)
   debug('finding files changed in branch %s since commit %s', branchName, sha)
+
   return git.changedFilesAfter(sha, branchName)
   .then(tap((list) => {
     debug('%s changed since last docs deploy in branch %s',
@@ -141,6 +156,7 @@ function shouldDeploy (env = 'production') {
   la(is.unemptyString(env), 'missing deploy check environment')
   if (!isValidEnvironment(env)) {
     console.log('invalid environment', env)
+
     return Promise.resolve(false)
   }
 
@@ -151,6 +167,7 @@ function shouldDeploy (env = 'production') {
       isRightBranch(env),
       docsFilesChangedSinceLastDeploy(env, branchName),
     ]
+
     return Promise.all(questions)
     .tap((answers) => {
       debug('answers: %o', answers)
@@ -160,9 +177,12 @@ function shouldDeploy (env = 'production') {
     .then((result) => {
       if (isForced) {
         console.log('should deploy is forced!')
+
         return isForced
       }
+
       debug('should deploy answers %o', result)
+
       return result
     })
   })

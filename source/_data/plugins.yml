@@ -9,6 +9,11 @@
       description: Run cucumber/gherkin-syntaxed specs with cypress.io
       link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
       keywords: [file-watcher, cucumber]
+      
+    - name: cypress-app-watcher-preprocessor
+      description: Reruns Cypress tests when the backend server restarts
+      link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
+      keywords: [file-watcher]
 
     - name: ESLint
       description: Runs linting via ESLint on your spec files as they are loaded and display errors in the console
@@ -25,17 +30,17 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
 
-    - name: cypress-app-watcher-preprocessor
-      description: Reruns Cypress tests when the backend server restarts
-      link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
-      keywords: [file-watcher]
-
 - name: Development Tools
   plugins:
     - name: Applitools
       description: Fast, easy and reliable visual UI testing with Cypress
       link: https://applitools.com/tutorials/cypress.html
       keyword: [screenshots, visual regression, visual-ai]
+      
+    - name: CircleCI Cypress Orb
+      description: Official Cypress Orb for CircleCI configuration.
+      link: https://github.com/cypress-io/circleci-orb
+      keywords: [continuous-integration]
 
     - name: cypress-dark
       description: Several color themes for Cypress test runner
@@ -64,10 +69,30 @@
 
 - name: Custom Commands
   plugins:
+    - name: cyphell
+      description: Converts WDIO automation tests to Cypress.
+      link: https://github.com/intuit/cyphfell
+      keywords: [wdio]
+      
     - name: cypressautomocker
       description: Allow recording API results and replaying the APIs as a mock server.
       link: https://github.com/scottschafer/cypressautomocker
       keywords: [routing, mock]
+
+    - name: cypress-axe
+      description: Helps test your applications for accessibility issues using axe-core.
+      link: https://github.com/avanslaars/cypress-axe
+      keywords: [accessibility, a11y]
+      
+    - name: cypress-capybara
+      description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
+      link: https://github.com/testdouble/cypress-capybara
+      keywords: [testing-library, capybara]
+
+    - name: cypress-firebase
+      description: Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).
+      link: https://github.com/prescottprue/cypress-firebase
+      keywords: [firebase, database, commands]
 
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
@@ -83,11 +108,11 @@
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
       link: https://github.com/palmerhq/cypress-image-snapshot
       keywords: [image-diff, snapshot]
-
-    - name: cypress-capybara
-      description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
-      link: https://github.com/testdouble/cypress-capybara
-      keywords: [testing-library, capybara]
+      
+    - name: Cypress Visual Regression
+      description: Adds visual regression testing to Cypress
+      link: https://github.com/mjhea0/cypress-visual-regression
+      keywords: [image-diff, snapshot]
 
     - name: PickleJS
       description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
@@ -96,13 +121,15 @@
 
 - name: Reporting
   plugins:
+  - name: cypress-failed-log
+    description: Saves the Cypress test command log as a JSON file if a test fails.
+    link: https://github.com/bahmutov/cypress-failed-log
+    keywords: [reporter]
+    
   - name: cypress-testrail-reporter
     description: Custom reporter for publishing Cypress results to a TestRail test run.
     link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
     keywords: [testrail, reporter]
 
-  - name: cypress-failed-log
-    description: Saves the Cypress test command log as a JSON file if a test fails.
-    link: https://github.com/bahmutov/cypress-failed-log
-    keywords: [reporter]
+
 

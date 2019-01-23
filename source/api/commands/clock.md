@@ -148,7 +148,7 @@ $('#date').text(new Date().toJSON())
 ```
 
 ```javascript
-const now = new Date(2017, 3, 14).getTime() // March 14, 2017 timestamp
+const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
 
 cy.clock(now)
 cy.visit('/index.html')

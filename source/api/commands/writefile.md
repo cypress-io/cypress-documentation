@@ -62,7 +62,7 @@ To use encoding with other options, have your options object be your third param
 
 ## Yields {% helper_icon yields %}
 
-{% yields sets_subject cy.writeFile 'yields the contents written to the file' %}
+{% yields null cy.writeFile %}
 
 # Examples
 
@@ -178,6 +178,11 @@ The command above will display in the Command Log as:
 When clicking on the `writeFile` command within the command log, the console outputs the following:
 
 ![Console Log](/img/api/writefile/console-log-shows-contents-written-to-file.png)
+
+{% history %}
+| 3.1.1 | Added `flag` option and appending with `a+`
+| 1.0.0 | Introduced
+{% endhistory %}
 
 # See also
 

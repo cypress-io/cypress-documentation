@@ -221,6 +221,7 @@ Even though we return a string in our test, Cypress automatically figures out th
 // This test passes!
 it('Cypress is smart and this does not fail', function () {
   cy.get('body').children().should('not.contain', 'foo') // <- no return here
+
   return 'foobarbaz'    // <- return here
 })
 ```

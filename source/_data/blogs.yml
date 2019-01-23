@@ -8,6 +8,30 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: Test Driven Form Development with Cypress
+    url: https://palmer.net/blog/test-driven-form-development-with-cypress
+    sourceName: The Palmer Group
+    sourceUrl: https://www.gravitywell.co.uk/
+    date: 
+    author: Jack Cross
+    img: /img/examples/thepalmergroup.jpg
+
+  - title: Using Cypress.io
+    url: https://www.gravitywell.co.uk/labs/using-cypress.io
+    sourceName: Gravitywell
+    sourceUrl: https://www.gravitywell.co.uk/
+    date: Oct 24, 2018
+    author: Luke Baker 
+    img: /img/examples/gravitywell.png
+      
+  - title: Cypress.io advanced setup
+    url: http://dev.topheman.com/cypress-io-advanced-setup/
+    sourceName: Topheman.js
+    sourceUrl: http://dev.topheman.com/
+    date: Oct 19, 2018
+    author: Christophe Rosset
+    img: /img/examples/topheman.png
+
   - title: "Cypress vs Selenium Webdriver: Which is Better for You?"
     url: https://applitools.com/blog/cypress-vs-selenium-webdriver-which-is-better-for-you
     sourceName: applitools
@@ -606,3 +630,5 @@ large:
     date: Jan 27, 2016
     author: Kiki Roeder
     img: /img/examples/hypepotamus-guy-testing-website.jpg
+
+ 

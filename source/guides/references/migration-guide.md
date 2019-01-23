@@ -78,3 +78,46 @@ cy.on('before:window:load', () => {
   // ...
 })
 ```
+
+## Upgrade to Chai 4
+
+Chai 3 has been upgraded to Chai 4, which includes a number of breaking changes and new features outlined in [Chai's migration guide](https://github.com/chaijs/chai/issues/781). Some changes you might notice include:
+
+- The assertions: `within`, `above`, `least`, `below`, `most`, `increase`, `decrease` will throw an error if the assertion's target or arguments are not numbers.
+
+```javascript
+// These will throw errors:
+expect(null).to.be.within(0, 1)
+expect(null).to.be.above(10)
+
+// This will not:
+expect('string').to.have.a.length.of.at.least(3)
+```
+
+- The `.empty` assertion will now throw when it is passed non-string primitives and functions:
+
+```javascript
+// These will throw TypeErrors:
+expect(Symbol()).to.be.empty
+expect(function() {}).to.be.empty
+```
+
+- An error will throw when a non-existent property is read. If there are typos in property assertions, they will now appear as failures.
+
+```javascript
+// Would pass in Chai 3 but will fail in 4
+expect(true).to.be.ture
+```
+
+## Upgrade to Sinon 7
+
+Sinon 3 has been upgraded to Sinon 7 with some [breaking changes](https://sinonjs.org/releases/v7.1.1/#migration-guides), including:
+
+- An error will throw when trying to stub a non-existent property.
+
+```javascript
+// Would pass in Sinon 3 but will fail in 4+
+cy.stub(obj, 'nonExistingProperty')
+```
+
+- `cy.spy.reset()` was replaced by `cy.spy.resetHistory()`.

@@ -133,6 +133,7 @@ hexo.extend.helper.register('menu', function (type) {
     if (!isEnglish && ~localizedPath.indexOf(title)) {
       menuPath = lang + menuPath
     }
+
     // Sees if our current path is part of the menu's path
     // Capture the first folder
     // /guides/welcome/foo.html captures 'guides'
@@ -164,6 +165,7 @@ hexo.extend.helper.register('url_for_lang', function (path) {
 
 hexo.extend.helper.register('raw_link', function (path) {
   const branch = 'develop'
+
   return `https://github.com/cypress-io/cypress-documentation/edit/${branch}/source/${path}`
 })
 
@@ -174,12 +176,14 @@ hexo.extend.helper.register('canonical_path_for_nav', function () {
 
   if (startsWith(path, 'guides/') || startsWith(path, 'api/')) {
     return path
-  } else {
-    return ''
   }
+
+  return ''
+
 })
 
 hexo.extend.helper.register('lang_name', function (lang) {
   let data = this.site.data.languages[lang]
+
   return data.name || data
 })

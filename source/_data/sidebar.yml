@@ -53,7 +53,6 @@ guides:
     changelog: changelog.html
     migration-guide: migration-guide.html
     roadmap: roadmap.html
-    # all-videos: all-videos.html
 
 api:
   api:

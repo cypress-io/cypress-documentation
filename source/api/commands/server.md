@@ -75,7 +75,7 @@ cy.server()
 
 ## Options
 
-***Change defaults for {% url `cy.route()` route %}***
+### Change defaults for {% url `cy.route()` route %}
 
 By default {% url `cy.route()` route %} inherits some of its options from `cy.server()`.
 
@@ -92,7 +92,7 @@ cy.server({
 cy.route('/users/', { errors: 'Name cannot be blank' })
 ```
 
-***Change the default delay for all routes***
+### Change the default delay for all routes
 
 Adding delay can help simulate real world network latency. Normally stubbed responses return in under 20ms. Adding a delay can help you visualize how your application's state reacts to requests that are in flight.
 
@@ -101,7 +101,7 @@ Adding delay can help simulate real world network latency. Normally stubbed resp
 cy.server({ delay: 1500 })
 ```
 
-***Send 404s on unmatched requests***
+### Send 404s on unmatched requests
 
 If you'd like Cypress to automatically send requests that do *NOT* match routes the following response:
 
@@ -127,7 +127,7 @@ $(function () {
 })
 ```
 
-***Change the default response headers for all routes***
+### Change the default response headers for all routes
 
 When you stub requests, you can automatically control their response `headers`. This is useful when you want to send back meta data in the `headers`, such as *pagination* or *token* information.
 
@@ -157,13 +157,14 @@ xhr.open('GET', '/users/1')
 
 xhr.onload = function () {
   const token = this.getResponseHeader('x-token')
+
   console.log(token) // => abc-123-foo-bar
 }
 
 xhr.send()
 ```
 
-***Change the default whitelisting***
+### Change the default whitelisting
 
 `cy.server()` comes with a `whitelist` function that by default filters out any requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
 
@@ -195,7 +196,7 @@ cy.server({
 
 If you would like to change the default option for **ALL** `cy.server()` you {%url 'can change this option permanently' cypress-server#Options %}.
 
-***Turn off the server after you've started it***
+### Turn off the server after you've started it
 
 You can disable all stubbing and its effects and restore it to the default behavior as a test is running. By setting `enable` to `false`, this disables stubbing routes and XHR's will no longer show up as (XHR Stub) in the Command Log. However, routing aliases can continue to be used and will continue to match requests, but will not affect responses.
 

@@ -558,3 +558,10 @@ There is already a great section in {% url "Custom Commands" custom-commands#Bes
 ## {% fa fa-angle-right %} Can I print the list of commands from a test in the terminal?
 
 If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin {% url cypress-failed-log https://github.com/bahmutov/cypress-failed-log %} that saves a JSON file with all commands from a failed test. We are also working on mirroring `console.log` messages from the browser in the terminal, see {% issue 2078 %}.
+
+## {% fa fa-angle-right %} Can my tests interact with Redux / Vuex data store?
+
+Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to assert the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
+
+- see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Redux-Testing %} recipe.
+- see {% url "Testing Vue web applications with Vuex data store & REST backend" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Vue-Vuex-REST-Testing %} recipe.

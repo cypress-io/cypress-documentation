@@ -1,6 +1,5 @@
 ---
 title: should
-
 ---
 
 Create an assertion. Assertions are automatically retried until they pass or time out.
@@ -81,13 +80,13 @@ cy
 
 ## Chainers
 
-***Assert the checkbox is disabled***
+### Assert the checkbox is disabled
 
 ```javascript
 cy.get(':checkbox').should('be.disabled')
 ```
 
-***The current DOM element is yielded***
+### The current DOM element is yielded
 
 ```javascript
 cy.get('option:first').should('be.selected').then(($option) => {
@@ -97,19 +96,19 @@ cy.get('option:first').should('be.selected').then(($option) => {
 
 ## Value
 
-***Assert the class is 'form-horizontal'***
+### Assert the class is 'form-horizontal'
 
 ```javascript
 cy.get('form').should('have.class', 'form-horizontal')
 ```
 
-***Assert the value is not 'Jane'***
+### Assert the value is not 'Jane'
 
 ```javascript
 cy.get('input').should('not.have.value', 'Jane')
 ```
 
-***The current subject is yielded***
+### The current subject is yielded
 
 ```javascript
 cy.get('button').should('have.id', 'new-user').then(($button) => {
@@ -119,7 +118,7 @@ cy.get('button').should('have.id', 'new-user').then(($button) => {
 
 ## Method and Value
 
-***Assert the href is equal to '/users'***
+### Assert the href is equal to '/users'
 
 ```javascript
 // have.attr comes from chai-jquery
@@ -128,7 +127,7 @@ cy.get('#header a').should('have.attr', 'href', '/users')
 
 ## Function
 
-***Verify length, content, and classes from multiple `<p>`***
+### Verify length, content, and classes from multiple `<p>`
 
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
@@ -167,7 +166,7 @@ cy
   })
 ```
 
-***Assert explicitly within `.should()`***
+### Assert explicitly within `.should()`
 
 Any errors raised by failed assertions will immediately bubble up and cause the test to fail.
 
@@ -190,7 +189,7 @@ cy.get('#todos li').should(($lis) => {
 
 ## Multiple Assertions
 
-***Chaining multiple assertions***
+### Chaining multiple assertions
 
 Cypress makes it easy to chain assertions together.
 
@@ -227,11 +226,11 @@ cy.get('button').click()
 
 ## Subjects
 
-***How do I know which assertions change the subject and which keep it the same?***
+### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from {% url 'Chai' bundled-tools#Chai %} or {% url 'Chai-jQuery' bundled-tools#Chai-jQuery %} will always document what they return.
 
-***Using a callback function will not change what is yielded***
+### Using a callback function will not change what is yielded
 
 Whatever is returned in the function is ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
 
@@ -239,6 +238,7 @@ Whatever is returned in the function is ignored. Cypress always forces the comma
 cy
   .get('button').should(($button) => {
     expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+
     return { foo: 'bar' } // return is ignored, .should() yields <button>
   })
   .then(($button) => {
