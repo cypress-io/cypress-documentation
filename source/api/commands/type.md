@@ -46,6 +46,8 @@ Sequence | Notes
 `{rightarrow}` | Moves cursor right
 `{selectall}` | Selects all text by creating a `selection range`
 `{uparrow}` | Fires up event but does **not** move the cursor
+`{home}` | Moves cursor to the start of the line
+`{end}` | Moves cursor to the end of the line
 
 Text passed to `.type()` may also include any of these modifier character sequences:
 
