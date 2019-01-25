@@ -1,8 +1,8 @@
 ---
-title: before:test:run
+title: test:start
 ---
 
-The `before:test:run` event fires before the test and all **before** and **beforeEach** hooks run.
+The `test:start` event fires before the test and all **before** and **beforeEach** hooks run.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`before:test:run` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`test:start` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ Details of the test.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `before:test:run` event.
+In a spec file or support file you can tap into the `test:start` event.
 
 ```javascript
-Cypress.on('before:test:run', (test) => {
+Cypress.on('test:start', (test) => {
   // test looks something like this:
   // {
   //   body: 'function () {\nexpect('login').to.work;\n}',
@@ -42,11 +42,11 @@ Cypress.on('before:test:run', (test) => {
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `before:test:run` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `test:start` event.
 
 ```javascript
 module.exports = (on, config) => {
-  on('before:test:run', (test) => {
+  on('test:start', (test) => {
   // test looks something like this:
   // {
   //   body: 'function () {\nexpect('login').to.work;\n}',
