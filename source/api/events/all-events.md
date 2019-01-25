@@ -29,7 +29,7 @@ Event                                                   | Description
 {% url `internal:commandEnd` internal-commandend-event %}               | Fires after a command executes, with the command that was run.
 {% url `internal:commandEnqueue` internal-commandenqueue-event %}     | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `internal:commandRetry` internal-commandretry-event %}           | Fires before a command begins its retrying routines, with details about the retry.
-{% url `command:start` command-start-event %}           | Fires before a command executes, with the command that will be run.
+{% url `internal:commandStart` internal-commandstart-event %}           | Fires before a command executes, with the command that will be run.
 {% url `fail` fail-event %}                             | Fires before a test fails, with the error and the mocha runnable object.
 {% url `log:added` log-added-event %}                   | Fires before a command is displayed in the Command Log, with details about the log.
 {% url `log:changed` log-changed-event %}               | Fires after a command's attributes changes, with the log details and whether Cypress is in interactive mode.
@@ -78,7 +78,7 @@ Event                                                             | Description
 {% url `internal:commandEnd` internal-commandend-event %}         | Fires after a command executes, with the command that was run.
 {% url `internal:commandEnqueue` internal-commandenqueue-event %} | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `internal:commandRetry` internal-commandretry-event %}     | Fires before a command begins its retrying routines, with details about the retry.
-{% url `command:start` command-start-event %}                     | Fires before a command executes, with the command that will be run.
+{% url `internal:commandStart` internal-commandstart-event %}     | Fires before a command executes, with the command that will be run.
 {% url `brower:filePreprocessor` brower-filepreprocessor-event %} | Fires before a spec file is processed, giving you the ability to control how it's processed.
 {% url `task` task-event %}                                       | Fires when you use {% url `cy.task()` task %}, with the arguments you pass to it.
 

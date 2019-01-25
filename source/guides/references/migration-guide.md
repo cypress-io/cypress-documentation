@@ -59,6 +59,7 @@ Various events have been renamed to maintain a more consistent format. If you li
 - Rename `command:end` to `internal:commandEnd`
 - Rename `command:enqueued` to `internal:commandEnqueue`
 - Rename `command:retry` to `internal:commandRetry`
+- Rename `command:start` to `internal:commandStart`
 
 For example, in your test code...
 

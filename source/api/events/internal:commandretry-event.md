@@ -88,4 +88,4 @@ module.exports = (on, config) => {
 
 - {% url `internal:commandEnd` internal-commandend-event %}
 - {% url `internal:commandEnqueue` internal-commandenqueue-event %}
-- {% url `command:start` command-start-event %}
+- {% url `internal:commandStart` internal-commandstart-event %}

@@ -59,4 +59,4 @@ module.exports = (on, config) => {
 
 - {% url `internal:commandEnd` internal-commandend-event %}
 - {% url `internal:commandRetry` internal-commandretry-event %}
-- {% url `command:start` command-start-event %}
+- {% url `internal:commandStart` internal-commandstart-event %}
