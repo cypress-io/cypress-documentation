@@ -56,6 +56,8 @@ Various events have been renamed to maintain a more consistent format. If you li
 - Rename `window:alert` to `page:alert`
 - Rename `window:confirm` to `page:confirm`
 - Rename `window:before:load` to `page:start`
+- Rename `url:changed` to `page:urlChange`
+- Rename `viewport:changed` to `viewport:change`
 - Rename `window:before:unload` to `before:window:unload`
 - Rename `command:end` to `internal:commandEnd`
 - Rename `command:enqueued` to `internal:commandEnqueue`

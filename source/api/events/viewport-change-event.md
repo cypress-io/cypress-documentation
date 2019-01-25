@@ -1,8 +1,8 @@
 ---
-title: viewport:changed
+title: viewport:change
 ---
 
-The `viewport:changed` event fires whenever the viewport changes via a `cy.viewport()` or naturally when Cypress resets the viewport to the default between tests. Useful for debugging purposes.
+The `viewport:change` event fires whenever the viewport changes via a `cy.viewport()` or naturally when Cypress resets the viewport to the default between tests. Useful for debugging purposes.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`viewport:changed` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`viewport:change` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The new viewport dimensions.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `viewport:changed` event.
+In a spec file or support file you can tap into the `viewport:change` event.
 
 ```javascript
-Cypress.on('viewport:changed', (viewport) => {
+Cypress.on('viewport:change', (viewport) => {
   // viewport is:
   //  {
   //    viewportHeight: 400,
