@@ -58,6 +58,7 @@ Various events have been renamed to maintain a more consistent format. If you li
 - Rename `window:before:unload` to `before:window:unload`
 - Rename `command:end` to `internal:commandEnd`
 - Rename `command:enqueued` to `internal:commandEnqueue`
+- Rename `command:retry` to `internal:commandRetry`
 
 For example, in your test code...
 

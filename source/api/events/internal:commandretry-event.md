@@ -1,8 +1,8 @@
 ---
-title: command:retry
+title: internal:commandRetry
 ---
 
-The `command:retry` event fires whenever a command begins its retrying routines. This is called on the trailing edge after Cypress has internally waited for the retry interval. When commands fail, the final error is the one that actually bubbles up to fail the test.
+The `internal:commandRetry` event fires whenever a command begins its retrying routines. This is called on the trailing edge after Cypress has internally waited for the retry interval. When commands fail, the final error is the one that actually bubbles up to fail the test.
 
 This is useful to understand **why** a command is retrying, and generally includes the actual error causing the retry to happen. Essentially, it can be used to debug why Cypress is failing.
 
@@ -14,7 +14,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`command:retry` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`internal:commandRetry` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -28,10 +28,10 @@ Details of the command retry.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `command:retry` event.
+In a spec file or support file you can tap into the `internal:commandRetry` event.
 
 ```javascript
-Cypress.on('command:retry', (details) => {
+Cypress.on('internal:commandRetry', (details) => {
   // details looks something like this:
   // {
   //   assertions: []
@@ -56,11 +56,11 @@ Cypress.on('command:retry', (details) => {
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `command:retry` event. The retry details look a little different in the background process.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `internal:commandRetry` event. The retry details look a little different in the background process.
 
 ```javascript
 module.exports = (on, config) => {
-  on('command:retry', (details) => {
+  on('internal:commandRetry', (details) => {
     // details looks something like this:
     // {
     //   name: 'get',
@@ -86,6 +86,6 @@ module.exports = (on, config) => {
 
 # See also
 
-- {% url `internal:commandEnd:event` internal-commandend-event %}
-- {% url `internal:commandEnqueue:event` internal-commandenqueue-event %}
-- {% url `command:start:event` command-start-event %}
+- {% url `internal:commandEnd` internal-commandend-event %}
+- {% url `internal:commandEnqueue` internal-commandenqueue-event %}
+- {% url `command:start` command-start-event %}

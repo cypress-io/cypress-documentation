@@ -161,7 +161,7 @@ api:
     before-window-unload-event: before-window-unload-event.html
     internal-commandend-event: internal-commandend-event.html
     internal-commandenqueue-event: internal-commandenqueue-event.html
-    command-retry-event: command-retry-event.html
+    internal-commandretry-event: internal-commandretry-event.html
     command-start-event: command-start-event.html
     configuration-event: configuration-event.html
     fail-event: fail-event.html

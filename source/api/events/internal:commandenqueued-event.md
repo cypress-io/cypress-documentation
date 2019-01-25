@@ -57,6 +57,6 @@ module.exports = (on, config) => {
 
 # See also
 
-- {% url `internal:commandEnd:event` internal-commandend-event %}
-- {% url `command:retry:event` command-retry-event %}
-- {% url `command:start:event` command-start-event %}
+- {% url `internal:commandEnd` internal-commandend-event %}
+- {% url `internal:commandRetry` internal-commandretry-event %}
+- {% url `command:start` command-start-event %}
