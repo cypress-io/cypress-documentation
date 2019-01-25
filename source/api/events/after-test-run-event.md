@@ -60,6 +60,6 @@ module.exports = (on, config) => {
 
 # See also
 
-- {% url `before:test:run` before-test-run-event %}
+- {% url `test:start` test-start-event %}
 - {% url `fail` fail-event %}
 - {% url 'Module API' module-api %}

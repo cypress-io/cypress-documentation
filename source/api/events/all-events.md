@@ -22,7 +22,7 @@ These events occur in the browser.
 Event                                                   | Description
 --------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------
 {% url `after:test:run` after-test-run-event %}         | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
-{% url `before:test:run` before-test-run-event %}       | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
+{% url `test:start` test-start-event %}       | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
 {% url `page:start` page-start-event %}                 | Fires before the page begins to load, before any of your pages's JavaScript has executed, with your page's `window` object.
 {% url `page:ready` page-ready-event %}                 | Fires after all the page's resources have finished loading.
 {% url `page:end` page-end-event %}                     | Fires when the page has unloaded and is navigating away.
@@ -74,7 +74,7 @@ Event                                                             | Description
 {% url `browser:launch` browser-launch-event %}                   | Fires before the browser is launched, giving you the ability to modify the arguments used to launch it.
 {% url `before:run` before-run-event %}                           | Fires before the run starts, with details about the run.
 {% url `before:spec` before-spec-event %}                         | Fires before a spec file is run, with details about the spec file.
-{% url `before:test:run` before-test-run-event %}                 | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
+{% url `test:start` test-start-event %}                           | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
 {% url `internal:commandEnd` internal-commandend-event %}         | Fires after a command executes, with the command that was run.
 {% url `internal:commandEnqueue` internal-commandenqueue-event %} | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `internal:commandRetry` internal-commandretry-event %}     | Fires before a command begins its retrying routines, with details about the retry.
