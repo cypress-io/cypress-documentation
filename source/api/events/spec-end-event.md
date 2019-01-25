@@ -1,8 +1,8 @@
 ---
-title: after:spec
+title: spec:end
 ---
 
-The `after:spec` event fires after a spec file and its tests run.
+The `spec:end` event fires after a spec file and its tests run.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`after:spec` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+`spec:end` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -30,11 +30,11 @@ Details of the spec file's run results.
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:spec` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `spec:end` event.
 
 ```javascript
 module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
+  on('spec:end', (spec, results) => {
     // spec will look something like this:
     // {
     //   name: 'login_spec.js',
