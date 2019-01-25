@@ -1,8 +1,8 @@
 ---
-title: page:urlChanged
+title: page:urlChange
 ---
 
-The `page:urlChanged` event fires whenever Cypress detects that your application's URL has changed.
+The `page:urlChange` event fires whenever Cypress detects that your application's URL has changed.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`page:urlChanged` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`page:urlChange` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The new url.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `page:urlChanged` event.
+In a spec file or support file you can tap into the `page:urlChange` event.
 
 ```javascript
-Cypress.on('page:urlChanged', (url) => {
+Cypress.on('page:urlChange', (url) => {
   // will be called once with url equal to 'http://<url>/page1.html'
   // and again with url equal to 'http://<url>/page2.html'
 })

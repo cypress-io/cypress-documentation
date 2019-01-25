@@ -6,7 +6,7 @@ Cypress ships with {% url "official type declarations" https://github.com/cypres
 
 ## Transpiling TypeScript test files
 
-Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`brower:filePreprocessor` event" brower-filepreprocessor-event %} you can use to customize how your test code is transpiled and sent to the browser.
+Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`browser:filePreprocessor` event" browser-filepreprocessor-event %} you can use to customize how your test code is transpiled and sent to the browser.
 
 ### Examples
 

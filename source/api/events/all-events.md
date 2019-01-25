@@ -21,24 +21,24 @@ These events occur in the browser.
 
 Event                                                             | Description
 ------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------
-{% url `test:end` test-end-event %}                               | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
-{% url `test:start` test-start-event %}                           | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
-{% url `page:start` page-start-event %}                           | Fires before the page begins to load, before any of your pages's JavaScript has executed, with your page's `window` object.
-{% url `page:ready` page-ready-event %}                           | Fires after all the page's resources have finished loading.
-{% url `page:end` page-end-event %}                               | Fires when the page has unloaded and is navigating away.
 {% url `internal:commandEnd` internal-commandend-event %}         | Fires after a command executes, with the command that was run.
 {% url `internal:commandEnqueue` internal-commandenqueue-event %} | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `internal:commandRetry` internal-commandretry-event %}     | Fires before a command begins its retrying routines, with details about the retry.
 {% url `internal:commandStart` internal-commandstart-event %}     | Fires before a command executes, with the command that will be run.
-{% url `test:fail` test-fail-event %}                             | Fires before a test fails, with the error and the mocha runnable object.
 {% url `log:added` log-added-event %}                             | Fires before a command is displayed in the Command Log, with details about the log.
 {% url `log:changed` log-changed-event %}                         | Fires after a command's attributes changes, with the log details and whether Cypress is in interactive mode.
-{% url `scrolled` scrolled-event %}                               | Fires after **Cypress** scrolls your page, with the element or `window` being scrolled and the type of element being scrolled.
-{% url `uncaught:exception` uncaught-exception-event %}           | Fires after an uncaught exception occurs, with the error and the mocha runnable object.
-{% url `page:urlChanged` page-urlchanged-event %}                 | Fires after the page's URL changes, with the new URL.
-{% url `viewport:change` viewport-change-event %}                 | Fires after the viewport changes, with the new viewport dimensions.
 {% url `page:alert` page-alert-event %}                           | Fires when the page calls the global `window.alert()` method, with the alert text.
 {% url `page:confirm` page-confirm-event %}                       | Fires when your app calls the global `window.confirm()` method, with the confirm text.
+{% url `page:end` page-end-event %}                               | Fires when the page has unloaded and is navigating away.
+{% url `page:ready` page-ready-event %}                           | Fires after all the page's resources have finished loading.
+{% url `page:start` page-start-event %}                           | Fires before the page begins to load, before any of your pages's JavaScript has executed, with your page's `window` object.
+{% url `page:urlChange` page-urlchange-event %}                   | Fires after the page's URL changes, with the new URL.
+{% url `scrolled` scrolled-event %}                               | Fires after **Cypress** scrolls your page, with the element or `window` being scrolled and the type of element being scrolled.
+{% url `test:end` test-end-event %}                               | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
+{% url `test:fail` test-fail-event %}                             | Fires before a test fails, with the error and the mocha runnable object.
+{% url `test:start` test-start-event %}                           | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
+{% url `uncaught:exception` uncaught-exception-event %}           | Fires after an uncaught exception occurs, with the error and the mocha runnable object.
+{% url `viewport:change` viewport-change-event %}                 | Fires after the viewport changes, with the new viewport dimensions.
 
 You can listen to browser events in your spec files or in your {% url "support file" writing-and-organizing-tests#Support-file %} via the `Cypress` and `cy` objects.
 
@@ -65,22 +65,22 @@ The `cy` object is bound to each individual test. Events bound to `cy` will **au
 
 These events occur in the {% url "background file" background-process %}.
 
-Event                                                             | Description
-------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------
-{% url `run:end` run-end-event %}                                 | Fires after the run finishes, with the results of the run.
-{% url `screenshot` screenshot-event %}                           | Fires after the a screenshot is taken, with details about the screenshot.
-{% url `spec:end` spec-end-event %}                               | Fires after a spec file and its tests run, with details about the spec file and its test results.
-{% url `test:end` test-end-event %}                               | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
-{% url `browser:launch` browser-launch-event %}                   | Fires before the browser is launched, giving you the ability to modify the arguments used to launch it.
-{% url `run:start` run-start-event %}                             | Fires before the run starts, with details about the run.
-{% url `spec:start` spec-start-event %}                           | Fires before a spec file is run, with details about the spec file.
-{% url `test:start` test-start-event %}                           | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
-{% url `internal:commandEnd` internal-commandend-event %}         | Fires after a command executes, with the command that was run.
-{% url `internal:commandEnqueue` internal-commandenqueue-event %} | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
-{% url `internal:commandRetry` internal-commandretry-event %}     | Fires before a command begins its retrying routines, with details about the retry.
-{% url `internal:commandStart` internal-commandstart-event %}     | Fires before a command executes, with the command that will be run.
-{% url `brower:filePreprocessor` brower-filepreprocessor-event %} | Fires before a spec file is processed, giving you the ability to control how it's processed.
-{% url `task` task-event %}                                       | Fires when you use {% url `cy.task()` task %}, with the arguments you pass to it.
+Event                                                               | Description
+--------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------
+{% url `browser:filePreprocessor` browser-filepreprocessor-event %} | Fires before a spec file is processed, giving you the ability to control how it's processed.
+{% url `browser:launch` browser-launch-event %}                     | Fires before the browser is launched, giving you the ability to modify the arguments used to launch it.
+{% url `internal:commandEnd` internal-commandend-event %}           | Fires after a command executes, with the command that was run.
+{% url `internal:commandEnqueue` internal-commandenqueue-event %}   | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
+{% url `internal:commandRetry` internal-commandretry-event %}       | Fires before a command begins its retrying routines, with details about the retry.
+{% url `internal:commandStart` internal-commandstart-event %}       | Fires before a command executes, with the command that will be run.
+{% url `run:end` run-end-event %}                                   | Fires after the run finishes, with the results of the run.
+{% url `run:start` run-start-event %}                               | Fires before the run starts, with details about the run.
+{% url `screenshot` screenshot-event %}                             | Fires after the a screenshot is taken, with details about the screenshot.
+{% url `spec:end` spec-end-event %}                                 | Fires after a spec file and its tests run, with details about the spec file and its test results.
+{% url `spec:start` spec-start-event %}                             | Fires before a spec file is run, with details about the spec file.
+{% url `task` task-event %}                                         | Fires when you use {% url `cy.task()` task %}, with the arguments you pass to it.
+{% url `test:end` test-end-event %}                                 | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
+{% url `test:start` test-start-event %}                             | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
 
 # Other Events
 

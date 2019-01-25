@@ -25,9 +25,9 @@ Check out our {% url 'configuration docs' configuration-event %} which describe 
 
 ## Preprocessors
 
-The {% url '`brower:filePreprocessor`' brower-filepreprocessor-event %} event is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
+The {% url '`browser:filePreprocessor`' browser-filepreprocessor-event %} event is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
 
-### You can use the `brower:filePreprocessor` event to do things like:
+### You can use the `browser:filePreprocessor` event to do things like:
 
 - Add TypeScript support.
 - Add the latest ES* support.
@@ -35,7 +35,7 @@ The {% url '`brower:filePreprocessor`' brower-filepreprocessor-event %} event is
 - Customize the `babel` settings to add your own plugins.
 - Swap out `browserify` for `webpack` or anything else.
 
-Check out the {% url '`brower:filePreprocessor` event' brower-filepreprocessor-event %} which describe how to use this event.
+Check out the {% url '`browser:filePreprocessor` event' browser-filepreprocessor-event %} which describe how to use this event.
 
 ## Browser Launching
 

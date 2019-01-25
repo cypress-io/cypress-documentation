@@ -1,8 +1,8 @@
 ---
-title: brower:filePreprocessor
+title: browser:filePreprocessor
 ---
 
-The `brower:filePreprocessor` event allows you to modify how your spec files and support files are preprocessed for the browser.
+The `browser:filePreprocessor` event allows you to modify how your spec files and support files are preprocessed for the browser.
 
 A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.
 
@@ -18,7 +18,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`brower:filePreprocessor` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+`browser:filePreprocessor` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -32,12 +32,12 @@ The file being processed.
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `brower:filePreprocessor` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `browser:filePreprocessor` event.
 
 ```javascript
 // background file
 module.exports = (on, config) => {
-  on('brower:filePreprocessor', (file) => {
+  on('browser:filePreprocessor', (file) => {
     // ...
   })
 }
