@@ -159,7 +159,7 @@ api:
     before-test-run-event: before-test-run-event.html
     page-start-event: page-start-event.html
     before-window-unload-event: before-window-unload-event.html
-    command-end-event: command-end-event.html
+    internal-commandend-event: internal-commandend-event.html
     command-enqueued-event: command-enqueued-event.html
     command-retry-event: command-retry-event.html
     command-start-event: command-start-event.html

@@ -56,6 +56,7 @@ Various events have been renamed to maintain a more consistent format. If you li
 - Rename `window:confirm` to `page:confirm`
 - Rename `window:before:load` to `page:start`
 - Rename `window:before:unload` to `before:window:unload`
+- Rename `command:end` to `internal:commandEnd`
 
 For example, in your test code...
 

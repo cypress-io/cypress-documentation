@@ -201,7 +201,7 @@ sidebar:
     before-test-run-event: before:test:run
     page-start-event: page:start
     before-window-unload-event: before:window:unload
-    command-end-event: command:end
+    internal-commandend-event: internal:commandEnd
     command-enqueued-event: command:enqueued
     command-retry-event: command:retry
     command-start-event: command:start

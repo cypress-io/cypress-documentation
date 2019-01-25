@@ -1,8 +1,8 @@
 ---
-title: command:end
+title: internal:commandEnd
 ---
 
-The `command:end` event fires when Cypress finishes running and executing your command. Useful for debugging and understanding how commands are handled.
+The `internal:commandEnd` event fires when Cypress finishes running and executing your command. Useful for debugging and understanding how commands are handled.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`command:end` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`internal:commandEnd` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The command that was run.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `command:end` event. In the browser, the argument is the actual command instance.
+In a spec file or support file you can tap into the `internal:commandEnd` event. In the browser, the argument is the actual command instance.
 
 ```javascript
-Cypress.on('command:end', (command) => {
+Cypress.on('internal:commandEnd', (command) => {
   command.get('name') // => 'get'
   command.get('args') // => ['#foo']
   command.get('subject') // => jQuery(<div#foo />)
@@ -44,11 +44,11 @@ Cypress.on('command:end', (command) => {
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `command:end` event. In the background process, the argument is a pared-down, serialized version of the command.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `internal:commandEnd` event. In the background process, the argument is a pared-down, serialized version of the command.
 
 ```javascript
 module.exports = (on, config) => {
-  on('command:end', (command) => {
+  on('internal:commandEnd', (command) => {
     // command looks something like this:
     // {
     //   name: 'get',

@@ -54,6 +54,6 @@ it('calls the "fail" callback when this test fails', function () {
 
 # See also
 
-- {% url `command:end:event` command-end-event %}
+- {% url `internal:commandEnd:event` internal-commandend-event %}
 - {% url `command:retry:event` command-retry-event %}
 - {% url `uncaught:exception` uncaught-exception-event %}
