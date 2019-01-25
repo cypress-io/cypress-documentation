@@ -165,5 +165,5 @@ Feel free to submit your published plugin to our {% url "list of plugins" plugin
 
 # See also
 
-- {% url `before:spec` before-spec-event %}
+- {% url `spec:start` spec-start-event %}
 - {% url "Plugins" plugins %}
