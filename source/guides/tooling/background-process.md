@@ -52,15 +52,15 @@ Check out the {% url '`browser:launch` event' browser-launch-event %} which desc
 
 ## Screenshot handling
 
-The {% url '`after:screenshot`' after-screenshot-event %} event is called after a screenshot is taken and saved to disk.
+The {% url '`screenshot`' screenshot-event %} event is called after a screenshot is taken and saved to disk.
 
-### You can use the `after:screenshot` event to do things like:
+### You can use the `screenshot` event to do things like:
 
 - Save details about the screenshot.
 - Rename the screenshot.
 - Manipulate the screenshot image by resizing or cropping it.
 
-Check out the {% url '`after:screenshot` event docs' after-screenshot-event %} which describe how to use this event.
+Check out the {% url '`screenshot` event docs' screenshot-event %} which describe how to use this event.
 
 ## cy.task
 

@@ -173,9 +173,9 @@ describe('my tests', function () {
 })
 ```
 
-## `after:screenshot` background event
+## `screenshot` background event
 
-You can get details about any given screenshot and manipulate it after it has been written to disk with the {% url '`after:screenshot` background event' after-screenshot-event %}.
+You can get details about any given screenshot and manipulate it after it has been written to disk with the {% url '`screenshot` background event' screenshot-event %}.
 
 ## Test Failures
 
@@ -246,7 +246,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 # See also
 
 - {% url `Cypress.Screenshot` screenshot-api %}
-- {% url '`after:screenshot`' after-screenshot-event %}
+- {% url '`screenshot`' screenshot-event %}
 - {% url `cy.debug()` debug %}
 - {% url 'Dashboard Service' dashboard-service %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
