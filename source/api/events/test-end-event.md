@@ -1,8 +1,8 @@
 ---
-title: after:test:run
+title: test:end
 ---
 
-The `after:test:run` event fires after the test and all **afterEach** and **after** hooks run.
+The `test:end` event fires after the test and all **afterEach** and **after** hooks run.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`after:test:run` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`test:end` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ Details of the test.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `after:test:run` event.
+In a spec file or support file you can tap into the `test:end` event.
 
 ```javascript
-Cypress.on('after:test:run', (test) => {
+Cypress.on('test:end', (test) => {
   // test looks something like this:
   // {
   //   body: 'function () {\nexpect('login').to.work;\n}',
@@ -42,11 +42,11 @@ Cypress.on('after:test:run', (test) => {
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:test:run` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `test:end` event.
 
 ```javascript
 module.exports = (on, config) => {
-  on('after:test:run', (test) => {
+  on('test:end', (test) => {
   // test looks something like this:
   // {
   //   body: 'function () {\nexpect('login').to.work;\n}',

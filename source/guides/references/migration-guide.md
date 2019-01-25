@@ -51,7 +51,7 @@ The default path of the {% url 'background file' background-process %} (previous
 Various events have been renamed to maintain a more consistent format. If you listen for any of the following events in your test code, you'll need to rename them.
 
 - Rename `test:before:run` to `test:start`
-- Rename `test:after:run` to `after:test:run`
+- Rename `test:after:run` to `test:end`
 - Rename `window:alert` to `page:alert`
 - Rename `window:confirm` to `page:confirm`
 - Rename `window:before:load` to `page:start`

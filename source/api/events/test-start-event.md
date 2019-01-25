@@ -60,4 +60,4 @@ module.exports = (on, config) => {
 
 # See also
 
-- {% url `after:test:run` after-test-run-event %}
+- {% url `test:end` test-end-event %}
