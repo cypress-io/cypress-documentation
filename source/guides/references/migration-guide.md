@@ -57,6 +57,7 @@ Various events have been renamed to maintain a more consistent format. If you li
 - Rename `window:before:load` to `page:start`
 - Rename `window:before:unload` to `before:window:unload`
 - Rename `command:end` to `internal:commandEnd`
+- Rename `command:enqueued` to `internal:commandEnqueue`
 
 For example, in your test code...
 

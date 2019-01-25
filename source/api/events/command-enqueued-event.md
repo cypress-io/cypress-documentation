@@ -1,8 +1,8 @@
 ---
-title: command:enqueued
+title: internal:commandEnqueue
 ---
 
-The `command:enqueued` event fires when a `cy` command is first invoked and enqueued to be run later. Useful for debugging purposes if you're confused about the order in which commands will execute.
+The `internal:commandEnqueue` event fires when a `cy` command is first invoked and enqueued to be run later. Useful for debugging purposes if you're confused about the order in which commands will execute.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`command:enqueued` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
+`internal:commandEnqueue` | {% fa fa-check-circle green %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The properties of the command to be run.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `command:enqueued` event.
+In a spec file or support file you can tap into the `internal:commandEnqueue` event.
 
 ```javascript
-Cypress.on('command:enqueued', (command) => {
+Cypress.on('internal:commandEnqueue', (command) => {
   // command looks something like this:
   // {
   //   name: 'get',
@@ -41,11 +41,11 @@ Cypress.on('command:enqueued', (command) => {
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `command:enqueued` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `internal:commandEnqueue` event.
 
 ```javascript
 module.exports = (on, config) => {
-  on('command:enqueued', (command) => {
+  on('internal:commandEnqueue', (command) => {
     // command looks something like this:
     // {
     //   name: 'get',

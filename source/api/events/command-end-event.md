@@ -60,6 +60,6 @@ module.exports = (on, config) => {
 
 # See also
 
-- {% url `command:enqueued:event` command-enqueued-event %}
+- {% url `internal:commandEnqueue:event` internal-commandenqueue-event %}
 - {% url `command:retry:event` command-retry-event %}
 - {% url `command:start:event` command-start-event %}
