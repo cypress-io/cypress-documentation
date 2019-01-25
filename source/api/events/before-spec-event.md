@@ -44,5 +44,5 @@ module.exports = (on, config) => {
 # See also
 
 - {% url `after:spec:run` after-spec-event %}
-- {% url `before:run` before-run-event %}
+- {% url `run:start` run-start-event %}
 - {% url `brower:filePreprocessor` brower-filepreprocessor-event %}

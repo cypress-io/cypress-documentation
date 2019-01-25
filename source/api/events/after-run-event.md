@@ -62,6 +62,6 @@ module.exports = (on, config) => {
 # See also
 
 - {% url `after:spec` after-spec-event %}
-- {% url `before:run` before-run-event %}
+- {% url `run:start` run-start-event %}
 - {% url `before:spec` before-spec-event %}
 - {% url 'Module API' module-api %}
