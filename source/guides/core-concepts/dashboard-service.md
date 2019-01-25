@@ -156,9 +156,13 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
-Click into the project you'd like to change access to, then click "Settings" in the top right corner. Here you will see a section displaying "Access to Runs". Choose the appropriate access you'd like to assign for the project here.
+### To change project access
+
+Click into the project you'd like to change access to, then click **Settings** in the top right corner.
 
 {% img /img/dashboard/project-settings.png "project-settings" %}
+
+Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
 
 {% img /img/dashboard/access-to-runs.png "access-to-runs" %}
 
