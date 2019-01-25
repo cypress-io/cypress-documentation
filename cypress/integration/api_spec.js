@@ -8,12 +8,12 @@ const API_HTML = `${API_PATH}.html`
 describe('API', () => {
   context('Catalog of events', () => {
     beforeEach(() => {
-      cy.visit('/api/events/catalog-of-events.html')
+      cy.visit('/api/events/all-events.html')
     })
 
     it('loads catalog of events', () =>
       cy.get('.article-title')
-      .contains('Catalog of Events')
+      .contains('All Events')
     )
   })
 
@@ -174,14 +174,15 @@ describe('API', () => {
   })
 
   context('Pagination', () => {
-    const FIRST_PAGE = 'and.html'
-    const NEXT_PAGE = 'as.html'
+    const FIRST_PAGE = 'api/commands/and.html'
+    const NEXT_PAGE = 'api/commands/as.html'
 
     beforeEach(() => {
-      cy.visit(`${API_PATH}.html`)
+      cy.visit(FIRST_PAGE)
     })
 
     it('does not display Prev link on first page', () => {
+      cy.visit('api/api/table-of-contents.html')
       cy.get('.article-footer-prev')
       .should('not.exist')
     })
