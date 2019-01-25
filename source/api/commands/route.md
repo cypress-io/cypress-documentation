@@ -8,6 +8,10 @@ Use `cy.route()` to manage the behavior of network requests.
 **Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
 {% endnote %}
 
+{% note warning %}
+Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
+{% endnote %}
+
 # Syntax
 
 ```javascript
@@ -245,7 +249,7 @@ cy.wait('@getBeetles')
 // we responded with 1 beetle item so now we should
 // have one result
 cy.get('#beetle-results').should('have.length', 1)
-``` 
+```
 
 ## Fixtures
 

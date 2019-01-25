@@ -13,7 +13,7 @@ layout: toc-top
 {% fa fa-check-circle green %} **Best Practice:** Test specs in isolation, programmatically log into your application, and take control of your application's state.
 {% endnote %}
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach writing fast, scalable tests.
+In February 2018 we gave a "Best Practices" conference talk at AssertJS. This video demonstrates how to approach writing fast, scalable tests.
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
@@ -82,7 +82,7 @@ When determining an unique selector it will automatically prefer elements with:
 
 After reading the above rules you may be wondering:
 
-> if I should always use data attributes, then when should I use `cy.contains()`?
+> If I should always use data attributes, then when should I use `cy.contains()`?
 
 A simple rule of thumb is to ask yourself this:
 

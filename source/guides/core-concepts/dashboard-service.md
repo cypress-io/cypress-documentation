@@ -156,6 +156,16 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
+### To change project access
+
+Click into the project you'd like to change access to, then click **Settings** in the top right corner.
+
+{% img /img/dashboard/project-settings.png "project-settings" %}
+
+Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+
+{% img /img/dashboard/access-to-runs.png "access-to-runs" %}
+
 ## Transfer ownership
 
 You can transfer projects that you own to another {% urlHash "organization" Organizations %} you are a part of or to another user in the organization. Projects can only be transferred from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
