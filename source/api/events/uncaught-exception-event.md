@@ -81,4 +81,4 @@ it('is doing something very important', function (done) {
 # See also
 
 - {% url "Debugging" debugging %}
-- {% url `fail` fail-event %}
+- {% url `test:fail` test-fail-event %}

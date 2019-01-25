@@ -30,7 +30,7 @@ Event                                                   | Description
 {% url `internal:commandEnqueue` internal-commandenqueue-event %}     | Fires after a command is first invoked and enqueued to be run later, with the details about the command.
 {% url `internal:commandRetry` internal-commandretry-event %}           | Fires before a command begins its retrying routines, with details about the retry.
 {% url `internal:commandStart` internal-commandstart-event %}           | Fires before a command executes, with the command that will be run.
-{% url `fail` fail-event %}                             | Fires before a test fails, with the error and the mocha runnable object.
+{% url `test:fail` test-fail-event %}                   | Fires before a test fails, with the error and the mocha runnable object.
 {% url `log:added` log-added-event %}                   | Fires before a command is displayed in the Command Log, with details about the log.
 {% url `log:changed` log-changed-event %}               | Fires after a command's attributes changes, with the log details and whether Cypress is in interactive mode.
 {% url `scrolled` scrolled-event %}                     | Fires after **Cypress** scrolls your page, with the element or `window` being scrolled and the type of element being scrolled.

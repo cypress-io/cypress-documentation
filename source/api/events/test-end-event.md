@@ -61,5 +61,5 @@ module.exports = (on, config) => {
 # See also
 
 - {% url `test:start` test-start-event %}
-- {% url `fail` fail-event %}
+- {% url `test:fail` test-fail-event %}
 - {% url 'Module API' module-api %}
