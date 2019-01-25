@@ -74,7 +74,7 @@ module.exports = (on, config) => {
 
 # See also
 
-- {% url `after:run` after-run-event %}
+- {% url `run:end` run-end-event %}
 - {% url `browser:launch` browser-launch-event %}
 - {% url `test:start` test-start-event %}
 - {% url 'Module API' module-api %}

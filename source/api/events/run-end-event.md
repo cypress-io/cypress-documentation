@@ -1,8 +1,8 @@
 ---
-title: after:run Event
+title: run:end Event
 ---
 
-The `after:run` event fires after the run finishes.
+The `run:end` event fires after the run finishes.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`after:run` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
+`run:end` | {% fa fa-times-circle grey %} | {% fa fa-check-circle green %}
 
 {% wrap_end %}
 
@@ -26,11 +26,11 @@ Results of the run.
 
 ## In the background process
 
-Using your {% url "`backgroundFile`" background-process %} you can tap into the `after:run` event.
+Using your {% url "`backgroundFile`" background-process %} you can tap into the `run:end` event.
 
 ```javascript
 module.exports = (on, config) => {
-  on('after:run', (results) => {
+  on('run:end', (results) => {
     // results will look something like this:
     // {
     //   totalDuration: 81,

@@ -67,12 +67,12 @@ These events occur in the {% url "background file" background-process %}.
 
 Event                                                             | Description
 ------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------
-{% url `after:run` after-run-event %}                             | Fires after the run finishes, with the results of the run.
+{% url `run:end` run-end-event %}                               | Fires after the run finishes, with the results of the run.
 {% url `after:screenshot` after-screenshot-event %}               | Fires after the a screenshot is taken, with details about the screenshot.
 {% url `after:spec` after-spec-event %}                           | Fires after a spec file and its tests run, with details about the spec file and its test results.
 {% url `test:end` test-end-event %}                               | Fires after a test and all its **afterEach** and **after** hooks run, with details about the test.
 {% url `browser:launch` browser-launch-event %}                   | Fires before the browser is launched, giving you the ability to modify the arguments used to launch it.
-{% url `run:start` run-start-event %}                           | Fires before the run starts, with details about the run.
+{% url `run:start` run-start-event %}                             | Fires before the run starts, with details about the run.
 {% url `before:spec` before-spec-event %}                         | Fires before a spec file is run, with details about the spec file.
 {% url `test:start` test-start-event %}                           | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
 {% url `internal:commandEnd` internal-commandend-event %}         | Fires after a command executes, with the command that was run.
