@@ -58,6 +58,8 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-se
 5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.
 
+In short: each Test Runner sends a list of the spec files to the Dashboard Service, and the service sends back one spec at a time to each Test Runner to run.
+
 ## Parallelization process
 
 {% img 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
@@ -294,3 +296,4 @@ The Machines View charts spec files by the machines that executed them. This vie
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
 - {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
+- Slides {% url "Cypress Test Parallelization and Grouping" https://slides.com/bahmutov/cy-parallelization %} and {% url "Webinar video" https://www.youtube.com/watch?v=FfqD1ExUGlw %}
