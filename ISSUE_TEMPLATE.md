@@ -1,46 +1,50 @@
-<!--
-PLEASE HELP US PROCESS GITHUB ISSUES FASTER BY PROVIDING THE FOLLOWING INFORMATION.
-ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION.
--->
-
 ## I'm submitting a...
 
 <pre><code>
-[ ] Bug report  <!-- Please search GitHub for a similar issue or PR before submitting -->
-[ ] Feature request
-[ ] Documentation issue or request
+[ ] Bug report 
+[ ] Content update
+[ ] Process update (build, deployment,... )
 </code></pre>
 
-## Current behavior
-
-<!-- Describe how the issue manifests. -->
-
-## Expected behavior
-
-<!-- a cards section for tips on holloween and best place to visit for holloween party -->
-<!-- glowing fonts using CSS keyframes -->
-
-## Minimal reproduction of the problem with instructions
-
-## If this is a feature request please fill out the following:
-
+<!-- For BUG REPORT, please describe... (Add snapshot if needed) -->
+## Type of bug
 <pre><code>
-As a (user, developer, contributor, etc):
-I want:
-So that:
-<!-- Describe the motivation or the concrete use case. -->
+[ ] Bug
+[ ] Broken link
+[ ] Css
+[ ] Dependencies
 </code></pre>
 
-## Environment
 
+<!-- For CONTENT UPDATE, please describe... -->
+## Type of changes
 <pre><code>
-Browser:
-- [ ] Chrome (desktop) version XX
-- [ ] Chrome (Android) version XX
-- [ ] Chrome (iOS) version XX
-- [ ] Firefox version XX
-- [ ] Safari (desktop) version XX
-- [ ] Safari (iOS) version XX
-- [ ] IE version XX
-- [ ] Edge version XX
+[ ] Content Adding
+[ ] Content Removal
+[ ] Content Restructure
+[ ] Content Rewrite
 </code></pre>
+
+## Affected Sections
+<pre><code>
+[ ] Section: Api
+[ ] Section: Examples
+[ ] Section: FAQ
+[ ] Section: Guides
+[ ] Section: Plugins
+[ ] Section: Recipes
+[ ] Section: Tutorials
+</code></pre>
+
+<!-- For PROCESS UPDATE, please describe... -->
+## Type of process
+<pre><code>
+[ ] Build
+[ ] CI
+[ ] Deployment
+[ ] Internal docs
+</code></pre>
+
+
+<!-- Then, describe... -->
+## Changes to be made
