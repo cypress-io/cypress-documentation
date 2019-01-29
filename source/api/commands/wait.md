@@ -83,7 +83,7 @@ You almost **never** need to wait for an arbitrary period of time. There are alw
 Read about {% url 'best practices' best-practices#Unnecessary-Waiting %} here.
 {% endnote %}
 
-Additionally, its often much easier to use {% url `cy.debug()` debug %} or {% url `cy.pause()` pause %} when debugging your test code.
+Additionally, it is often much easier to use {% url `cy.debug()` debug %} or {% url `cy.pause()` pause %} when debugging your test code.
 
 ## Alias
 
