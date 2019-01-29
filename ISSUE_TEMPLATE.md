@@ -25,7 +25,7 @@
 [ ] Content Rewrite
 </code></pre>
 
-## Affected Sections
+## Affected sections
 <pre><code>
 [ ] Section: Api
 [ ] Section: Examples
