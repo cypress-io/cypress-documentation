@@ -32,11 +32,6 @@
 
 - name: Development Tools
   plugins:
-    - name: Applitools
-      description: Fast, easy and reliable visual UI testing with Cypress
-      link: https://applitools.com/tutorials/cypress.html
-      keyword: [screenshots, visual regression, visual-ai]
-
     - name: CircleCI Cypress Orb
       description: Official Cypress Orb for CircleCI configuration.
       link: https://github.com/cypress-io/circleci-orb
@@ -61,11 +56,6 @@
       description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds.
       link: https://github.com/KnapsackPro/knapsack-pro-cypress
       keywords: [CI parallelisation, continuous-integration]
-
-    - name: Percy
-      description: Visual regression testing for Cypress tests with Percy.
-      link: https://docs.percy.io/docs/cypress
-      keywords: [screenshots, visual regression]
 
     - name: TypeScript
       description: Official TypeScript definitions for the Cypress API.
@@ -202,8 +192,18 @@
       keywords: [component, vue, vue.js]
 
 - name: Visual Testing
-  description: 
+  description:
   plugins:
+    - name: Applitools
+      description: Fast, easy and reliable visual UI testing with Cypress
+      link: https://applitools.com/tutorials/cypress.html
+      keyword: [screenshots, visual regression, visual-ai]
+
+    - name: Percy
+      description: Visual regression testing for Cypress tests with Percy.
+      link: https://docs.percy.io/docs/cypress
+      keywords: [screenshots, visual regression]
+
     - name: Cypress Image Snapshot
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
       link: https://github.com/palmerhq/cypress-image-snapshot
@@ -218,7 +218,7 @@
       description: Module for adding visual regression testing to Cypress.
       link: https://github.com/PatrickWalker/cypress-visual-regression
       keywords: [image-diff, snapshot]
-  
+
 - name: Reporting
   plugins:
     - name: cypress-failed-log
