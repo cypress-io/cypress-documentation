@@ -1,14 +1,5 @@
 # large links with thumbnails, links, embedded video
 large:
-  - title: 'Well Tested Software'
-    url: https://vimeo.com/311931793
-    sourceName: Øredev 2018
-    sourceUrl: http://oredev.org/2018/home
-    date: Nov 24, 2018
-    author: Gleb Bahmutov
-    img: /img/examples/well-tested-software.jpg
-    slides: https://slides.com/bahmutov/well-tested-software
-
   - title: 'Cypress: The future of E2E testing'
     url: https://www.youtube.com/watch?v=pXyBligMMr0
     sourceName: NG-BE 2018
@@ -27,6 +18,15 @@ large:
     youtubeId: uowaTHQDcKc
     slides: https://slides.com/bahmutov/end-vue-end-testing
 
+  - title: 'Well Tested Software'
+    url: https://vimeo.com/311931793
+    sourceName: Øredev 2018
+    sourceUrl: http://oredev.org/2018/home
+    date: Nov 24, 2018
+    author: Gleb Bahmutov
+    img: /img/examples/well-tested-software.jpg
+    slides: https://slides.com/bahmutov/well-tested-software
+
   - title: Next Generation Web Application End to End Testing
     url: https://youtu.be/CkGQ0fFH3yE
     sourceName: Devoxx Belgium
@@ -35,6 +35,15 @@ large:
     author: Amir Rustamzadeh
     youtubeId: CkGQ0fFH3yE
     slides: https://speakerdeck.com/amir/next-generation-web-application-end-to-end-testing-with-cypress
+
+  - title: 'E2E Testing with Cypress'
+    url: https://www.youtube.com/watch?v=HMv365RRwtA
+    sourceName: RVA JavaScript Conf 2018
+    sourceUrl: https://www.rvajavascript.com/
+    date: Nov 2, 2018
+    author: Don Denoncourt
+    youtubeId: HMv365RRwtA
+    slides: https://slides.com/bahmutov/well-tested-software
 
   - title: End-to-end testing is hard - but it doesn't have to be
     url: https://www.youtube.com/watch?v=swpz0H0u13k
