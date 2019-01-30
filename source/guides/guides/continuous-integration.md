@@ -186,7 +186,7 @@ A typical project can simply have:
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.0.0
+  cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
@@ -198,7 +198,7 @@ A more complex project that needs to install dependencies, build an application 
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.0.0
+  cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
