@@ -114,16 +114,6 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
 
-    - name: Cypress Image Snapshot
-      description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
-      link: https://github.com/palmerhq/cypress-image-snapshot
-      keywords: [image-diff, snapshot]
-
-    - name: Cypress Visual Regression
-      description: Adds visual regression testing to Cypress
-      link: https://github.com/mjhea0/cypress-visual-regression
-      keywords: [image-diff, snapshot]
-
     - name: PickleJS
       description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
       link: https://picklejs.com
@@ -153,23 +143,6 @@
       description: Adds a cypress child command for drag'n'drop support.
       link: https://github.com/4teamwork/cypress-drag-drop
       keywords: [dragndrop, drag, drop, commands]
-
-- name: Reporting
-  plugins:
-    - name: cypress-failed-log
-      description: Saves the Cypress test command log as a JSON file if a test fails.
-      link: https://github.com/bahmutov/cypress-failed-log
-      keywords: [reporter]
-
-    - name: cypress-testrail-reporter
-      description: Custom reporter for publishing Cypress results to a TestRail test run.
-      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
-      keywords: [testrail, reporter]
-
-    - name: mochawesome-merge
-      description: Merges multiple mochawesome JSON reports
-      link: https://github.com/antontelesh/mochawesome-merge
-      keywords: [reporter, mochawesome]
 
 - name: Authentication
   plugins:
@@ -227,3 +200,38 @@
       description: Test Vue.js components using Cypress.io test runner
       link: https://github.com/bahmutov/cypress-vue-unit-test
       keywords: [component, vue, vue.js]
+
+- name: Visual Testing
+  description: 
+  plugins:
+    - name: Cypress Image Snapshot
+      description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
+      link: https://github.com/palmerhq/cypress-image-snapshot
+      keywords: [image-diff, snapshot]
+
+    - name: Cypress Visual Regression
+      description: Adds visual regression testing to Cypress
+      link: https://github.com/mjhea0/cypress-visual-regression
+      keywords: [image-diff, snapshot]
+
+    - name: cypress-blink-test
+      description: Module for adding visual regression testing to Cypress.
+      link: https://github.com/PatrickWalker/cypress-visual-regression
+      keywords: [image-diff, snapshot]
+  
+- name: Reporting
+  plugins:
+    - name: cypress-failed-log
+      description: Saves the Cypress test command log as a JSON file if a test fails.
+      link: https://github.com/bahmutov/cypress-failed-log
+      keywords: [reporter]
+
+    - name: cypress-testrail-reporter
+      description: Custom reporter for publishing Cypress results to a TestRail test run.
+      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
+      keywords: [testrail, reporter]
+
+    - name: mochawesome-merge
+      description: Merges multiple mochawesome JSON reports
+      link: https://github.com/antontelesh/mochawesome-merge
+      keywords: [reporter, mochawesome]
