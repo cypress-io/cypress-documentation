@@ -60,6 +60,9 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let self = this
   let prefix = `sidebar.${type}.`
   let expandAll = false
+  let lang = this.page.lang
+  let isEnglish = lang === 'en'
+  let href = ''
 
   // IF the sidebar's categories aren't that many,
   // just expand them all, since it's more of a hassle to expand one by one
@@ -71,7 +74,11 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
     result += `<li class="${className}-title is-collapsed" data-target="sidebar-li-${title}" data-toggle="collapse"><strong>${self.__(prefix + title)}</strong><ul class="sidebar-links">`
 
     _.each(menu, function (link, text) {
-      let href = [type, title, link].join('/')
+      href = [type, title, link].join('/')
+      if (!isEnglish) {
+        href = [lang, href].join('/')
+      }
+
       let itemClass = `${className}-link`
       let currentlyActive = link === path
 
