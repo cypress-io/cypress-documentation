@@ -385,7 +385,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You can **not** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
+You **cannot** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
 
 ## {% fa fa-angle-right %} Some of my elements animate in, how do I work around that?
 

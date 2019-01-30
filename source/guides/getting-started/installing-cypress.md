@@ -82,7 +82,9 @@ Please read our {% url 'Continuous Integration' continuous-integration %} docs f
 
 # Opening Cypress
 
-If you used `npm` to install, Cypress has now been installed to your `./node_modules` directory, with its binary executable accessible from `./node_modules/.bin`. This means you can call it from your project root either of the following ways:
+If you used `npm` to install, Cypress has now been installed to your `./node_modules` directory, with its binary executable accessible from `./node_modules/.bin`.
+
+Now you can open Cypress from your **project root** one of the following ways:
 
 **The long way with the full path**
 
@@ -124,7 +126,7 @@ While there's nothing wrong with writing out the full path to the Cypress execut
 }
 ```
 
-Now you can invoke the command like so:
+Now you can invoke the command from your project root like so:
 
 ```shell
 npm run cypress:open
