@@ -14,7 +14,7 @@ title: Parallelization
 {% endnote %}
 
 {% note warning %}
-Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}. 
+Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}.
 {% endnote %}
 
 # Overview
@@ -57,6 +57,8 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-se
 4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
 5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.
+
+In short: each Test Runner sends a list of the spec files to the Dashboard Service, and the service sends back one spec at a time to each Test Runner to run.
 
 ## Parallelization process
 
@@ -153,13 +155,13 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
 
-- The first group can be called `Windows/Chrome 69`. 
+- The first group can be called `Windows/Chrome 69`.
 
   ```shell
   cypress run --record --group Windows/Chrome-69 --browser chrome
   ```
 
-- The second group can be called `Mac/Chrome 70`. 
+- The second group can be called `Mac/Chrome 70`.
 
   ```shell
   cypress run --record --group Mac/Chrome-70 --browser chrome
@@ -168,7 +170,7 @@ You can test your application against different browsers and view the results un
 - The third group can be called `Linux/Electron`. *Electron is the default browser used in Cypress runs*.
 
   ```shell
-  cypress run --record --group Linux/Electron 
+  cypress run --record --group Linux/Electron
   ```
 
 {% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
@@ -221,7 +223,7 @@ cypress run --record --group package/customer --spec 'cypress/integration/packag
 cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
 ```
 
-{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %} 
+{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %}
 
 This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
 
@@ -248,6 +250,12 @@ Cypress currently uses the following CI environment variables to determine a CI 
 | Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`  |
 | Jenkins  | `BUILD_NUMBER`  |
 | Travis  | `TRAVIS_BUILD_ID`  |
+
+You can pass a different value to link agents to the same run. For example, if you are using Jenkins and think the environment variable `BUILD_TAG` is more unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value via CLI {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+```shell
+cypress run --record --parallel --ci-build-id $BUILD_TAG
+```
 
 # Run completion delay
 
@@ -288,3 +296,4 @@ The Machines View charts spec files by the machines that executed them. This vie
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
 - {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
+- Slides {% url "Cypress Test Parallelization and Grouping" https://slides.com/bahmutov/cy-parallelization %} and {% url "Webinar video" https://www.youtube.com/watch?v=FfqD1ExUGlw %}
