@@ -53,7 +53,7 @@
       keywords: [eslint]
 
     - name: Knapsack Pro Cypress
-      description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds.
+      description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.
       link: https://github.com/KnapsackPro/knapsack-pro-cypress
       keywords: [CI parallelisation, continuous-integration]
 
