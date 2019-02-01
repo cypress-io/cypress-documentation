@@ -89,6 +89,11 @@
       link: https://github.com/testdouble/cypress-capybara
       keywords: [testing-library, capybara]
 
+    - name: cypress-file-upload
+      description: Simple custom command to ease file upload testing
+      link: https://github.com/abramenal/cypress-file-upload
+      keywords: [fileupload, file, upload, commands]
+
     - name: cypress-firebase
       description: Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).
       link: https://github.com/prescottprue/cypress-firebase
