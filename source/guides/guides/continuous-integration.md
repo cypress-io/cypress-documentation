@@ -162,8 +162,9 @@ language: node_js
 node_js:
   - 10
 cache:
-  npm: true
+  npm: true # this cashes ~/.npm folder on Travis
   directories:
+    # we also need to cache folder with Cypress binary
     - ~/.cache
 install:
   - npm ci
@@ -246,6 +247,7 @@ jobs:
           command: npm ci
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          # cache NPM modules and the folder with the Cypress binary
           paths:
             - ~/.npm
             - ~/.cache
