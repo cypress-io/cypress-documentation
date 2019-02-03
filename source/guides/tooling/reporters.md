@@ -99,7 +99,22 @@ Some reporters accept options that customize their behavior. These can be specif
 cypress run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
 ```
 
-Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
+The above configuration will output the JUnit report to `STDOUT` and save it into XML file. Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
+
+## Report per spec
+
+Starting with version 3 of Cypress, each spec is processed completely separately during `cypress run` execution. Thus each spec _overwrites_ the previous report file. To generate unique reports per spect, use the `[hash]` in the `mochaFile` filename.
+
+```json
+{
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "results/my-test-output-[hash].xml"
+  }
+}
+```
+
+This will create separate XML files in the `results` folder. You can then merge the output reports using a separate step using 3rd party tool. For example, for {% url Mochawesome https://github.com/adamgruber/mochawesome %} reporter, there is {% url mochawesome-merge https://github.com/antontelesh/mochawesome-merge %} tool.
 
 # Multiple Reporters
 
