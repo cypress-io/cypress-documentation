@@ -134,6 +134,54 @@ When Cypress is running in the Test Runner, you can have every event it fires lo
 
 {% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
+## Launching browsers 
+
+Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
+
+To see debug logs from the browser launcher, run Cypress with the `DEBUG` environment variable set to `cypress:launcher`.
+
+### Mac
+
+On Mac, Cypress attempts to find installed browsers by their bundle identifier. If this does not succeed, it will fall back to the Linux browser detection method.
+
+Browser Name | Expected Bundle Identifier | Expected Executable
+--- | --- | ---
+`chrome` | `com.google.Chrome` | `Contents/MacOS/Google Chrome`
+`chromium` | `org.chromium.Chromium` | `Contents/MacOS/Chromium`
+`canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
+
+### Linux
+
+On Linux, Cypress scans your `PATH` for a number of different binary names. If the browser you are trying to use does not exist under one of the expected binary names, Cypress will not be able to find it.
+
+Browser Name | Expected Binary Name
+--- | ---
+`chrome` | `google-chrome`
+`chromium` | `chromium-browser`
+`canary` | `google-chrome-canary`
+
+These binary names should work for most Linux distributions. If your distribution packages browsers under a different binary name, you can add a symlink using the expected binary name so that Cypress can detect it.
+
+For example, if your distribution packages Google Chrome as `chrome`, you could add a symlink to `google-chrome` like this:
+
+```shell
+sudo ln `which chrome` /usr/local/bin/google-chrome
+```
+
+### Windows
+
+On Windows, Cypress scans the following locations to try to find each browser:
+
+Browser Name | Expected Path
+--- | ---
+`chrome` | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`
+`chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
+`canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
+
+To use a browser installed at a different path, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
+
+{% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
+
 ## Clear App Data
 
 Cypress maintains some local application data in order to save user preferences and more quickly start up. Sometimes this data can become corrupted. You may fix an issue you have by clearing this app data.
