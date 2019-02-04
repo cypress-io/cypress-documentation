@@ -164,7 +164,7 @@ These binary names should work for most Linux distributions. If your distributio
 
 For example, if your distribution packages Google Chrome as `chrome`, you could add a symlink to `google-chrome` like this:
 
-```sh
+```shell
 sudo ln `which chrome` /usr/local/bin/google-chrome
 ```
 
