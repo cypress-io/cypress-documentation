@@ -47,7 +47,19 @@ All Chrome* flavored browsers will be detected and are supported.
 cypress run --browser chrome
 ```
 
-To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+To use this command in CI, you need to install the browser you want - or use one of our {% url 'docker images' docker %}.
+
+You can also launch Chromium:
+
+```shell
+cypress run --browser chromium
+```
+
+Or Chrome Canary:
+
+```shell
+cypress run --browser canary
+```
 
 ## Unsupported Browsers
 
