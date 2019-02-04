@@ -31,7 +31,7 @@ it('let me debug like a fiend', function() {
 
 This may not work exactly as you are expecting. As you may remember from the {% url "Introduction to Cypress" introduction-to-cypress %}, `cy` commands enqueue an action to be taken later. Can you see what the test above will do given that perspective?
 
-Both {% url `cy.visit()` visit %} and {% url `cy.get()` get %} will both return immediately, having enqueued their work to be done later, and `debugger` will be executed before any of the commands have actually run.
+Both {% url `cy.visit()` visit %} and {% url `cy.get()` get %} will return immediately, having enqueued their work to be done later, and `debugger` will be executed before any of the commands have actually run.
 
 Let's use {% url `.then()` then %} to tap into the Cypress command during execution and add a `debugger` at the appropriate time:
 
