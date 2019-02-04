@@ -134,7 +134,7 @@ When Cypress is running in the Test Runner, you can have every event it fires lo
 
 {% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
-## Launching Chrome 
+## Launching browsers 
 
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
 

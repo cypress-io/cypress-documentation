@@ -49,6 +49,8 @@ cypress run --browser chrome
 
 To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
 
+{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
+
 ## Unsupported Browsers
 
 Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
