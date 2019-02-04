@@ -100,7 +100,7 @@ cypress run --reporter junit \
   --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
 ```
 
-The above configuration will output the JUnit report to `STDOUT` and save it into XML file. Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
+The above configuration will output the JUnit report to `STDOUT` and save it into an XML file. Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
 
 ## Report per spec
 
@@ -119,9 +119,9 @@ This will create separate XML files in the `results` folder. You can then merge 
 
 # Multiple Reporters
 
-Oftentimes we see users wanting the ability to use multiple reporters. When running in CI, you might want to generate a report for `junit` or perhaps a `json` report. This is great, but by setting this reporter you won't receive any additional feedback while the tests are running!
+Oftentimes we see users wanting the ability to use multiple reporters. When running in CI, you might want to generate a report for `junit` and perhaps a `json` report. This is great, but by setting this reporter you won't receive any additional feedback while the tests are running!
 
-The solution here is to use multiple reporters! You can have the benefit of both worlds.
+The solution here is to use multiple reporters. You will have the benefit of both worlds.
 
 We suggest using the excellent npm module:
 
@@ -129,13 +129,13 @@ We suggest using the excellent npm module:
 
 We use multiple reporters for every single one of our internal projects.
 
-## Multiple Reporters Examples
+## Multiple reporters examples
 
 These examples were implemented in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}.
 
-### Spec to STDOUT, save JUnit XML files
+### Spec to `STDOUT`, save JUnit XML files
 
-We want to output "spec" report to `STDOUT`, while saving Mochawesome JSON reports and then combine them into a single report.
+We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON reports and then combine them into a single report.
 
 We need to install additional dependencies including Mocha itself.
 
@@ -143,7 +143,7 @@ We need to install additional dependencies including Mocha itself.
 npm install --save-dev mocha mocha-multi-reporters mocha-junit-reporter
 ```
 
-Then add a separate `reporter-config.json` file that enabled `spec` and `junit` reporters and directs the `junit` reporter to save separate XML files.
+Then add a separate `reporter-config.json` file that enables `spec` and `junit` reporters and directs the `junit` reporter to save a separate XML files.
 
 ```json
 {
@@ -161,7 +161,7 @@ cypress run --reporter mocha-multi-reporters \
   --reporter-options configFile=reporter-config.json
 ```
 
-Note: we recommend deleting all files from `cypress/results` folder before running this command, since each run will output new XML files. For example, we can use npm script commands in `package.json`:
+Note: we recommend deleting all files from the `cypress/results` folder before running this command, since each run will output new XML files. For example, we can add the npm script commands below to our `package.json`:
 
 ```
 {
@@ -175,9 +175,9 @@ Note: we recommend deleting all files from `cypress/results` folder before runni
 
 And then call `npm run report`.
 
-### Spec to STDOUT, produce combined Mochawesome JSON file
+### Spec to `STDOUT`, produce a combined Mochawesome JSON file
 
-This example is shown in branch `spec-and-single-mochawesome-json` in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}. We want to output "spec" report to `STDOUT`, save individual Mochawesome JSON file per test spec, and then combine all JSON reports into a single report.
+This example is shown in the branch `spec-and-single-mochawesome-json` in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}. We want to output a "spec" report to `STDOUT`, save an individual Mochawesome JSON file per test file, and then combine all JSON reports into a single report.
 
 We need to install several dependencies.
 
@@ -185,7 +185,7 @@ We need to install several dependencies.
 npm install --save-dev mocha mochawesome mochawesome-merge mochawesome-report-generator
 ```
 
-We need to configure the reporter in `cypress.json` to skip HTML report generation and save each individual JSON file in `cypress/results` folder.
+We need to configure the reporter in `cypress.json` to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
 
 ```json
 {
@@ -199,18 +199,18 @@ We need to configure the reporter in `cypress.json` to skip HTML report generati
 }
 ```
 
-Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. We can combine them using {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.
+Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. Then we can combine them using the {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.
 
 ```shell
 npx mochawesome-merge --reportDir cypress/results > mochawesome.json
 ```
 
-Then we can generate a combined HTML report from the `mochawesome.json` file using {% url https://github.com/adamgruber/mochawesome-report-generator %}:
+We can now generate a combined HTML report from the `mochawesome.json` file using the {% url https://github.com/adamgruber/mochawesome-report-generator %}:
 
 ```shell
 npx mochawesome-report-generator mochawesome.json
 ```
 
-It generates beautiful standalone HTML report file `mochawesome-report/mochawesome.html` shown below. As you can see all test results, timing information and even test bodies are included.
+It generates the beautiful standalone HTML report file `mochawesome-report/mochawesome.html` shown below. As you can see all test results, timing information, and even test bodies are included.
 
 {% img /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
