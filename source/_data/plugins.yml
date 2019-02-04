@@ -74,11 +74,6 @@
       link: https://github.com/intuit/cyphfell
       keywords: [wdio]
 
-    - name: cypressautomocker
-      description: Allow recording API results and replaying the APIs as a mock server.
-      link: https://github.com/scottschafer/cypressautomocker
-      keywords: [routing, mock]
-
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
       link: https://github.com/avanslaars/cypress-axe
@@ -89,26 +84,31 @@
       link: https://github.com/testdouble/cypress-capybara
       keywords: [testing-library, capybara]
 
+    - name: cypress-drag-drop
+      description: Adds a cypress child command for drag'n'drop support.
+      link: https://github.com/4teamwork/cypress-drag-drop
+      keywords: [dragndrop, drag, drop, commands]
+
+    - name: cypress-file-upload
+      description: Simple custom command to ease file upload testing
+      link: https://github.com/abramenal/cypress-file-upload
+      keywords: [fileupload, file, upload, commands]
+
     - name: cypress-firebase
       description: Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).
       link: https://github.com/prescottprue/cypress-firebase
       keywords: [firebase, database, commands]
 
+    - name: cypress-graphql-mock
+      description: Adds commands for executing a mocked GraphQL server using only the client
+      link: https://github.com/tgriesser/cypress-graphql-mock
+      keywords: [graphql]
+
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
       keywords: [ruby-rack, ruby-on-rails]
-
-    - name: cypress-testing-library
-      description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
-      link: https://github.com/kentcdodds/cypress-testing-library
-      keywords: [testing-library, dom-testing-library, react-testing-library]
-
-    - name: PickleJS
-      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
-      link: https://picklejs.com
-      keywords: [cucumber, collection, actions, commands]
-
+    
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
@@ -119,20 +119,25 @@
       link: https://github.com/meinaart/cypress-plugin-snapshots
       keywords: [snapshot]
 
-    - name: cypress-graphql-mock
-      description: Adds commands for executing a mocked GraphQL server using only the client
-      link: https://github.com/tgriesser/cypress-graphql-mock
-      keywords: [graphql]
+    - name: cypress-testing-library
+      description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
+      link: https://github.com/kentcdodds/cypress-testing-library
+      keywords: [testing-library, dom-testing-library, react-testing-library]
 
     - name: cypress-xpath
       description: Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.
       link: https://github.com/cypress-io/cypress-xpath
       keywords: [xpath, commands]
 
-    - name: cypress-drag-drop
-      description: Adds a cypress child command for drag'n'drop support.
-      link: https://github.com/4teamwork/cypress-drag-drop
-      keywords: [dragndrop, drag, drop, commands]
+    - name: cypressautomocker
+      description: Allow recording API results and replaying the APIs as a mock server.
+      link: https://github.com/scottschafer/cypressautomocker
+      keywords: [routing, mock]
+
+    - name: PickleJS
+      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
+      link: https://picklejs.com
+      keywords: [cucumber, collection, actions, commands]
 
 - name: Authentication
   plugins:
