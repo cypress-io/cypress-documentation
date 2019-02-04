@@ -148,7 +148,7 @@ Browser Name | Expected Bundle Identifier | Expected Executable
 --- | --- | ---
 `chrome` | `com.google.Chrome` | `Contents/MacOS/Google Chrome`
 `chromium` | `org.chromium.Chromium` | `Contents/MacOS/Chromium`
-`canary` | `com/google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
+`canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
 
 ### Linux
 
