@@ -123,3 +123,151 @@ cy.get('.mobile-nav', { timeout: 10000 })
 Cypress will retry for up to 10 seconds to find a visible element with class `mobile-nav` in the DOM with text containing "Home". For more examples, read section {% url 'Timeouts' https://on.cypress.io/introduction-to-cypress#Timeouts %} in the "Introduction to Cypress" guide.
 
 ## Only the last command is retried
+
+Here is a short test that has a subtle reef that can sink your test ship.
+
+```javascript
+it('adds two items', function () {
+  cy.visit('/')
+
+  cy.get('.new-todo').type('todo A{enter}')
+  cy.get('.todo-list li')
+    .find('label')
+    .should('contain', 'todo A')
+
+  cy.get('.new-todo').type('todo B{enter}')
+  cy.get('.todo-list li')
+    .find('label')
+    .should('contain', 'todo B')
+})
+```
+
+The test passes in the Test Runner without a hitch.
+
+![Test passes](/img/guides/retry-ability/adds-two-items-passes.gif)
+
+But sometimes the test fails - not locally, no - it fails on continuous integration server, and when it fails, the test run movie and screenshots are NOT showing any problems! Here is the failing test movie.
+
+![Test fails](/img/guides/retry-ability/adds-two-items-fails.gif)
+
+The problem looks weird - I can clearly see the label "todo B" present in the list, so why isn't Cypress finding it? What is going on? Here is the problem I have introduced into my application code that causes the test to time out: I have added a 100ms delay before the UI rerenders itself.
+
+```javascript
+app.TodoModel.prototype.addTodo = function (title) {
+  this.todos = this.todos.concat({
+    id: Utils.uuid(),
+    title: title,
+    completed: false
+  })
+  setTimeout(() => {
+    this.inform()
+  }, 100)
+}
+```
+
+This delay could be the source of flaky tests when the application is running on CI server, or against staging or production environments. Here is how to see the source of the problem: in the Command Log hover over each command to see which elements the Test Runner found at each step.
+
+In the failing test, the first label has indeed been found correctly:
+
+![First item label](/img/guides/retry-ability/first-item-label.png)
+
+Hover over the second "FIND label" command - something is wrong there. It found the _first label_, and kept retrying finding text "todo B", but the first item always remained with "todo A".
+
+![Second item label](/img/guides/retry-ability/second-item-label.png)
+
+Hmm, weird, why is the Test Runner only looking at the _first_ item? Let us hover over "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that moment.
+
+![Second get li](/img/guides/retry-ability/second-get-li.png)
+
+During the test, `get('.todo-list li')` command quickly found 1 `<li>` item - and that item was the first "todo A" item, because our application was waiting for 100ms before appending the second item "todo B" to the list. By the time the second item has been added, the Test Runner has already "moved on" working with the single first `<li>` element. It only searched for `<label>` inside the first `<li>` element, completely ignoring the newly created 2nd item.
+
+To confirm this, let me remove the artificial delay to see what is happening in the passing test.
+
+![Two items](/img/guides/retry-ability/two-items.png)
+
+When the web application is fast, it gets its items into the DOM before the Cypress command `get('.todo-list li')` runs. After that `get` returns 2 items, the `find` command just has to find the right label. Great.
+
+Now that we understand the real reason behind the flaky test, we need to think why the default retry-ability has not helped us in this situation. Why hasn't Cypress found the 2 `<li>` elements after the second one was added?
+
+For a variety of implementation reasons, Cypress commands **only** retries the **last command** before the assertion. In our test:
+
+```javascript
+cy.get('.new-todo').type('todo B{enter}')
+cy.get('.todo-list li') // passes immediately with 1 element
+  .find('label') // retried, retried, retried with 1 <li>
+  .should('contain', 'todo B') // never succeeds
+```
+
+Luckily, once we understand how retry-ability works, and how only the last command before any assertion retries, we can fix this test for good.
+
+### Merging selectors
+
+The first solution we recommend is to avoid unnecessarily splitting commands that select elements. In our case we first select elements using `cy.get` and then select from that list elements using `cy.find`. We can combine two separate selectors into one - forcing the combined selector to be retried.
+
+```javascript
+it('adds two items', function () {
+  cy.visit('/')
+
+  cy.get('.new-todo').type('todo A{enter}')
+  cy.get('.todo-list li label') // 1 selector command
+    .should('contain', 'todo A') // assertion
+
+  cy.get('.new-todo').type('todo B{enter}')
+  cy.get('.todo-list li label') // 1 selector command
+    .should('contain', 'todo B') // assertion
+})
+```
+
+To show the retries I increased the application's artificial delay to 500ms. The test always passes because the entire selector is retried - and it does find 2 items when the second "todo B" is added to the DOM.
+
+![Combined selector](/img/guides/retry-ability/combined-selectors.gif)
+
+Similarly, when working with deeply nested JavaScript properties using {% url `cy.its` its %} command, do not split it across multiple calls. Instead combine property names into a single call using `.` separator:
+
+```javascript
+// 🛑 not recommended
+// only the last "its" will be retried
+cy.window()
+  .its('app') // runs once
+  .its('model') // runs once
+  .its('todos') // retried
+  .should('have.length', 2)
+// ✅ recommended
+cy.window()
+  .its('app.model.todos') // retried
+  .should('have.length', 2)
+```
+
+See {% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-to-start-tests/ %} for the full example.
+
+### Alternate commands and assertions
+
+There is another way to fix the test. Whenever you write a longer test, we recommend alternating commands with assertions. In this case, I will add an assertion after the `cy.get` command, before the `cy.find` command.
+
+```javascript
+it.only('adds two items', function () {
+  cy.visit('/')
+
+  cy.get('.new-todo').type('todo A{enter}')
+  cy.get('.todo-list li')         // command
+    .should('have.length', 1)     // assertion
+    .find('label')                // command
+    .should('contain', 'todo A')  // assertion
+
+  cy.get('.new-todo').type('todo B{enter}')
+  cy.get('.todo-list li')         // command
+    .should('have.length', 2)     // assertion
+    .find('label')                // command
+    .should('contain', 'todo B')  // assertion
+})
+```
+
+![Passing test](/img/guides/retry-ability/alternating.png)
+
+The test passes, because the second `cy.get('.todo-list li')` is retried with its own assertion now `should('have.length', 2)`. Only after successfully finding two `<li>` elements, the command `find('label')` and its assertion starts, and by now, the item with correct label "todo B" has been correctly selected.
+
+## See also
+
+- You can add retry-ability to your own {% url "custom commands" custom-commands %}, see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for example.
+- You can retry any function with attached assertions using the 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
+- See retry-ability examples in {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.
