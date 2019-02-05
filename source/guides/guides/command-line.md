@@ -356,6 +356,33 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
+
+
+# package scripts
+
+Note that when calling a command defined in `scripts` object in your `package.json` you need to separate command's arguments using `--` string. For example, if you have defined in `package.json` the following commands:
+
+```json
+{
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  }
+}
+```
+
+and want to run tests from a single spec file, and record the results on the Dashboard, the command should be:
+
+```shell
+npm run cy:run -- --record --spec "path to the spec file"
+```
+
+If you are using {% url npx https://github.com/zkat/npx %} tool, you can invoke the locally installed Cypress tool directly bypassing the script command:
+
+```shell
+npx cypress run --record --spec "path to the spec file"
+```
+
 # Debugging commands
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
