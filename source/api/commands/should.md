@@ -127,11 +127,11 @@ cy.get('#header a').should('have.attr', 'href', '/users')
 
 ## Function
 
-### Verify length, content, and classes from multiple `<p>`
-
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
 Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+
+### Verify length, content, and classes from multiple `<p>`
 
 ```html
 <div>
@@ -166,25 +166,141 @@ cy
   })
 ```
 
-### Assert explicitly within `.should()`
+{% note warning %}
+Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
 
-Any errors raised by failed assertions will immediately bubble up and cause the test to fail.
+```
+cy
+  .get('p')
+  .should(($p) => {
+    expect($p).to.have.length(3)
+
+    return 'foo'
+  })
+  .then(($p) => {
+    // the argument $p will be the 3 elements, not "foo"
+  })
+```
+{% endnote %}
+
+### Assert class name contains `heading-`
 
 ```html
-<div id="todos">
-  <li>Walk the dog</li>
-  <li>Feed the cat</li>
-  <li>Write JavaScript</li>
+<div class="docs-header">
+  <div class="main-abc123 heading-xyz987">Introduction</div>
 </div>
 ```
 
+```js
+cy.get('.docs-header')
+  .find('div')
+  // .should(cb) callback function will be retried
+  .should(($div) => {
+    expect($div).to.have.length(1)
+
+    const className = $div[0].className
+
+    expect(className).to.match(/heading-/)
+  })
+  // .then(cb) callback is not retried,
+  // it either passes or fails
+  .then(($div) => {
+    expect($div).to.have.text('Introduction')
+  })
+```
+
+You can even throw your own errors from the callback function.
+
+```js
+cy.get('.docs-header')
+  .find('div')
+  .should(($div) => {
+    if ($div.length !== 1) {
+      // you can throw your own errors
+      throw new Error('Did not find 1 element')
+    }
+
+    const className = $div[0].className
+
+    if (!className.match(/heading-/)) {
+      throw new Error(`No class "heading-" in ${className}`)
+    }
+  })
+```
+
+### Assert text contents of 3 elements
+
+Example below first asserts that there are 3 elements, and then checks the text contents of each one.
+
+```html
+<ul class="connectors-list">
+  <li>Walk the dog</li>
+  <li>Feed the cat</li>
+  <li>Write JavaScript</li>
+</ul>
+```
+
 ```javascript
-cy.get('#todos li').should(($lis) => {
+cy.get('.connectors-list > li').should(($lis) => {
   expect($lis).to.have.length(3)
   expect($lis.eq(0)).to.contain('Walk the dog')
   expect($lis.eq(1)).to.contain('Feed the cat')
   expect($lis.eq(2)).to.contain('Write JavaScript')
 })
+```
+
+{% note info %}
+Read {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post to see more variations of the above example.
+{% endnote %}
+
+For clarity you can pass a string message as a second argument to any `expect` assertion, see {% url Chai#expect https://www.chaijs.com/guide/styles/#expect %}.
+
+```javascript
+cy.get('.connectors-list > li').should(($lis) => {
+  expect($lis, '3 items').to.have.length(3)
+  expect($lis.eq(0), 'first item').to.contain('Walk the dog')
+  expect($lis.eq(1), 'second item').to.contain('Feed the cat')
+  expect($lis.eq(2), 'third item').to.contain('Write JavaScript')
+})
+```
+
+These string messages will be shown in the Command Log giving each assertion more context.
+
+![Expect assertions with messages](/img/api/should/expect-with-message.png)
+
+### Compare text values of two elements
+
+The example below gets the text contained within one element and saves it in a closure variable. Then the test gets the text in another element and asserts that the two text values are the same after normalizing.
+
+```html
+<div class="company-details">
+  <div class="title">Acme Developers</div>
+  <div class="identifier">ACMEDEVELOPERS</div>
+</div>
+```
+
+```javascript
+const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+
+// will keep text from title element
+let text
+
+cy.get('.company-details')
+  .find('.title')
+  .then(($title) => {
+    // save text from the first element
+    titleText = normalizeText($title.text())
+  })
+
+cy.get('.company-details')
+  .find('.identifier')
+  .should(($identifier) => {
+    // we can massage text before comparing
+    const idText = normalizeText($identifier.text())
+
+    // text from the title element should already be set
+    expect(idText, 'ID').to.equal(titleText)
+  })
 ```
 
 ## Multiple Assertions
@@ -223,6 +339,10 @@ cy.get('button').click()
 ```
 
 # Notes
+
+## Effect on default DOM assertions
+
+When you chain `.should()` on a DOM-based command, the default `.should('exist')` assertion is skipped. This may result in an unexpected behavior such as negative assertions passing even when the element doesn't exist in the DOM. See {% url 'Default Assertions' introduction-to-cypress#Default-Assertions %} for more.
 
 ## Subjects
 
@@ -298,3 +418,4 @@ When clicking on `assert` within the command log, the console outputs the follow
 - {% url `.and()` and %}
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
 - {% url 'Reference: List of Assertions' assertions %}
+- {% url 'cypress-example-kitchensink Assertions' https://example.cypress.io/commands/assertions %}

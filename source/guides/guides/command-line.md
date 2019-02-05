@@ -13,7 +13,7 @@ title: Command Line
 
 # Installation
 
-This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands below.
+This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands below from your **project root**.
 
 You can alternatively require and run Cypress as a node module using our {% url "Module API" module-api %}.
 
@@ -96,8 +96,22 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ### `cypress run --env <env>`
 
+Pass a single string variable.
+
 ```shell
 cypress run --env host=api.dev.local
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically converted from strings.
+
+```shell
+cypress run --env host=api.dev.local,port=4222
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress run --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
 ### `cypress run --group <name>`
@@ -220,7 +234,7 @@ Run tests specifying a single test file to run instead of all tests.
 cypress run --spec 'cypress/integration/examples/actions.spec.js'
 ```
 
-Run tests specifying a glob of where to look for test files *(Note: quotes required)*.
+Run tests within the folder matching the glob *(Note: quotes required)*.
 
 ```shell
 cypress run --spec 'cypress/integration/login/**/*'

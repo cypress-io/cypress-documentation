@@ -218,6 +218,10 @@ Now we can assert something about this new page!
 
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
 
+{% note info %}
+{% fa fa-magic %} Seeing IntelliSense in your spec files is as easy as adding a single special comment line. Read about {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
+{% endnote %}
+
 ## {% fa fa-check-square-o %} Step 4: Make an assertion
 
 Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with {% url "`.should()`" should %}.
@@ -487,3 +491,11 @@ describe('My First Test', function() {
 `beforeEach()` runs before each and every test in the same `describe()` block, so both of our tests in this case. Both tests still pass, and both are a bit shorter and easier to read.
 
 -->
+
+# Next steps
+
+- Start {% url 'testing your app' testing-your-app %}.
+- Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
+- Search Cypress's documentation to quickly find what you need.
+
+{% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}

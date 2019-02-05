@@ -63,6 +63,8 @@ Option | Default | Description
 
 {% yields sets_subject cy.wait 'yields an object containing the HTTP request and response properties of the XHR' %}
 
+{% partial network_stubbing_warning %}
+
 # Examples
 
 ## Time

@@ -157,7 +157,7 @@ api:
     arch: arch.html
     browser: browser.html
     config: config.html
-    # dom: dom.html
+    dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
