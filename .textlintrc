@@ -47,6 +47,7 @@
         ["e[- ]mail(s?)", "email$1"],
         ["end[- ]point(s?)", "endpoint$1"],
         ["file[- ]name(s?)", "filename$1"],
+        ["can[- ]not", "cannot$1"],
 
         // Multiple words
         ["front-?end(s?)", "front end$1"],
