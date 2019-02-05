@@ -105,4 +105,21 @@ Some commands that cannot be retried still have built-in _waiting_. For example,
 
 ## Timeouts
 
+By default each command that retries, does so for up to 4 seconds - the {% url `defaultCommandTimeout` https://on.cypress.io/configuration#Timeouts %} setting. You can change this timeout for _all commands_ using configuration file `cypress.json`, or CLI parameter, or via an environment variable, or programmatically. For example, to set the default command timeout to 15 seconds via command line:
+
+```shell
+cypress run --config defaultCommandTimeout=15000
+```
+
+See {% url 'Configuration: Overriding Options' https://on.cypress.io/configuration#Overriding-Options %} for other examples overriding this option. We do not recommend changing the command timeout globally. Instead, add `{ timeout: ms }` option to the actual command you would like to retry for a different period of time. For example:
+
+```javascript
+// we've modified the timeout which affects default + added assertions
+cy.get('.mobile-nav', { timeout: 10000 })
+  .should('be.visible')
+  .and('contain', 'Home')
+```
+
+Cypress will retry for up to 10 seconds to find a visible element with class `mobile-nav` in the DOM with text containing "Home". For more examples, read section {% url 'Timeouts' https://on.cypress.io/introduction-to-cypress#Timeouts %} in the "Introduction to Cypress" guide.
+
 ## Only the last command is retried
