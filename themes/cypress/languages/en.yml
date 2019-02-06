@@ -208,8 +208,8 @@ sidebar:
     configuration-event: configuration
     test-fail-event: test:fail
     browser-filepreprocessor-event: browser:filePreprocessor
-    log-added-event: log:added
-    log-changed-event: log:changed
+    internal-log-event: internal:log
+    internal-logchange-event: internal:logChange
     scrolled-event: scrolled
     task-event: task
     uncaught-exception-event: uncaught:exception
