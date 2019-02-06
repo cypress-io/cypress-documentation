@@ -8,28 +8,62 @@ title: Command Line
 - How to run Cypress from the command line
 - How to specify which spec files to run
 - How to launch other browsers
-- How to record your tests
+- How to record your tests to the Dashboard
 {% endnote %}
 
 # Installation
 
-This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands below from your **project root**.
+This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands in this document from your **project root**.
 
+# How to run commands
+
+{% note info %}
 You can alternatively require and run Cypress as a node module using our {% url "Module API" module-api %}.
-
-{% note warning %}
-For brevity we've omitted the full path to the cypress executable in each command.
-
-You'll need to prefix each command with:
-
-- `$(npm bin)/cypress`
-- ...or...
-- `./node_modules/.bin/cypress`
-- ...or... (requires npm@5.2.0 or greater)
-- `npx cypress`
-
-Or just add cypress commands to the `scripts` field in your `package.json` file.
 {% endnote %}
+
+For brevity we've omitted the full path to the cypress executable in each command's documentation.
+
+To run a command, you'll need to prefix each command in order to properly locate the cypress executable.
+
+```shell
+$(npm bin)/cypress run
+```
+
+...or...
+
+```shell
+./node_modules/.bin/cypress run
+```
+
+...or... (requires npm@5.2.0 or greater)
+
+```shell
+npx cypress run
+```
+
+You may find it easier to add the cypress command to the `scripts` object in your `package.json` file and call it from an {% url "`npm run` script" https://docs.npmjs.com/cli/run-script.html %}.
+
+When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have  the following command defined in your `package.json`
+
+```json
+{
+  "scripts": {
+    "cy:run": "cypress run"
+  }
+}
+```
+
+...and want to run tests from a single spec file and record the results on the Dashboard, the command should be:
+
+```shell
+npm run cy:run -- --record --spec "cypress/integration/my-spec.js"
+```
+
+If you are using the {% url npx https://github.com/zkat/npx %} tool, you can invoke the locally installed Cypress tool directly:
+
+```shell
+npx cypress run --record --spec "cypress/integration/my-spec.js"
+```
 
 # Commands
 
