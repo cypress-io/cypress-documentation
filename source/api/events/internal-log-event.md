@@ -1,8 +1,8 @@
 ---
-title: log:added
+title: internal:log
 ---
 
-The `log:added` event fires whenever a command emits this event so it can be displayed in the Command Log. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
+The `internal:log` event fires whenever a command emits this event so it can be displayed in the Command Log. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
 
 # Environment
 
@@ -12,7 +12,7 @@ Some events run in the {% url "browser" all-events#Browser-Events %}, some in th
 
 Event | Browser | Background Process
 --- | --- | ---
-`log:added` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
+`internal:log` | {% fa fa-check-circle green %} | {% fa fa-times-circle grey %}
 
 {% wrap_end %}
 
@@ -26,10 +26,10 @@ The log attributes.
 
 ## In the browser
 
-In a spec file or support file you can tap into the `log:added` event.
+In a spec file or support file you can tap into the `internal:log` event.
 
 ```javascript
-Cypress.on('log:added', (log) => {
+Cypress.on('internal:log', (log) => {
   // log looks something like this:
   //  {
   //     name: 'get',

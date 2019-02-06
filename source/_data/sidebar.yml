@@ -156,7 +156,7 @@ api:
     internal-commandenqueue-event: internal-commandenqueue-event.html
     internal-commandretry-event: internal-commandretry-event.html
     internal-commandstart-event: internal-commandstart-event.html
-    log-added-event: log-added-event.html
+    internal-log-event: internal-log-event.html
     log-changed-event: log-changed-event.html
     page-alert-event: page-alert-event.html
     page-confirm-event: page-confirm-event.html

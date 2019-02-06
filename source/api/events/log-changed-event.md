@@ -50,4 +50,4 @@ Cypress.on('log:changed', (log, interactiveMode) => {
 
 - {% url `cy.log()` log %}
 - {% url `Cypress.log` cypress-log %}
-- {% url `log:added` log-added-event %}
+- {% url `internal:log` internal-log-event %}

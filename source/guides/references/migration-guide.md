@@ -84,6 +84,7 @@ If you listen for any of the following events in your test code, you'll need to 
 - Rename `command:enqueued` to `internal:commandEnqueue`
 - Rename `command:retry` to `internal:commandRetry`
 - Rename `command:start` to `internal:commandStart`
+- Rename `log:added` to `internal:log`
 
 For example, in your test code...
 
