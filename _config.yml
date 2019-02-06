@@ -187,8 +187,8 @@ google:
   tag_manager_id: GTM-KNKBWLD
 
 # Crash reporting
-raygun:
-  apiKey: SG5ZJfQICgeechPbpRE1DQ==
+sentry:
+  dsn: https://b3169c504f3840d397b4987b3fd68697@sentry.io/1387466
 
 ## Algolia Search
 ## https://github.com/LouisBarranqueiro/hexo-algoliasearch
