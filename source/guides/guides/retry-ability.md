@@ -95,7 +95,7 @@ Because the second assertion `expect($li.get(0).textContent, 'first item').to.eq
 
 # Not every command is retried
 
-Cypress only retries commands that query the DOM: {% url `cy.get()` get %}, {% url `.find()` find %}, {% url `.contains()` contains %}, etc. You can check if a particular command is retried by looking at the "Assertions" section in its API documentation. For example, {% url "`.first()`'s Assertions section" first#Assertions %} tells us that the command is retried until all assertions that follow it are passing.
+Cypress only retries commands that query the DOM: {% url `cy.get()` get %}, {% url `.find()` find %}, {% url `.contains()` contains %}, etc. You can check if a particular command is retried by looking at the "Assertions" section in its API documentation. For example, "Assertions section" of {% url `.first()` first %} tells us that the command is retried until all assertions that follow it are passing.
 
 {% assertions existence .first %}
 
@@ -119,7 +119,7 @@ cy.get('.todo-list li')     // command
 
 ![Retrying built-in assertion](/img/guides/retry-ability/eq.gif)
 
-Some commands that cannot be retried still have built-in _waiting_. For example, the {% url '.click()' click %} command will not "blindly" send a click event to an element. As described in the {% url "`.click()` Assertions section" click#Assertions %}, `.click()` waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
+Some commands that cannot be retried still have built-in _waiting_. For example, the {% url '.click()' click %} command will not "blindly" send a click event to an element. As described in the "Assertions" section of {% url "`.click()`" click %}, it waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
 
 Cypress tries to act like a human user would using the browser.
 
