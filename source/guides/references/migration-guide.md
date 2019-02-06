@@ -71,21 +71,21 @@ Various events have been renamed to maintain a more consistent format.
 
 If you listen for any of the following events in your test code, you'll need to rename them.
 
-- Rename `test:before:run` to `test:start`
-- Rename `test:after:run` to `test:end`
-- Rename `fail` to `test:fail`
-- Rename `window:alert` to `page:alert`
-- Rename `window:confirm` to `page:confirm`
-- Rename `window:before:load` to `page:start`
-- Rename `url:changed` to `page:urlChange`
-- Rename `viewport:changed` to `viewport:change`
-- Rename `window:before:unload` to `before:window:unload`
 - Rename `command:end` to `internal:commandEnd`
 - Rename `command:enqueued` to `internal:commandEnqueue`
 - Rename `command:retry` to `internal:commandRetry`
 - Rename `command:start` to `internal:commandStart`
+- Rename `fail` to `test:fail`
 - Rename `log:added` to `internal:log`
 - Rename `log:changed` to `internal:logChange`
+- Rename `test:before:run` to `test:start`
+- Rename `test:after:run` to `test:end`
+- Rename `url:changed` to `page:urlChange`
+- Rename `viewport:changed` to `viewport:change`
+- Rename `window:alert` to `page:alert`
+- Rename `window:confirm` to `page:confirm`
+- Rename `window:before:load` to `page:start`
+- Rename `window:before:unload` to `before:window:unload`
 
 For example, in your test code...
 
@@ -115,9 +115,9 @@ cy.on('page:start', () => {
 
 If you listen for any of the following events in your `backgroundFile`, you'll need to rename them.
 
-- Rename `file:preprocessor` to `browser:filePreprocessor`
-- Rename `before:browser:launch` to `browser:launch`
 - Rename `after:screenshot` to `screenshot`
+- Rename `before:browser:launch` to `browser:launch`
+- Rename `file:preprocessor` to `browser:filePreprocessor`
 
 For example, in your `backgroundFile`...
 
