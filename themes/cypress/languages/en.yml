@@ -209,7 +209,7 @@ sidebar:
     test-fail-event: test:fail
     browser-filepreprocessor-event: browser:filePreprocessor
     internal-log-event: internal:log
-    log-changed-event: log:changed
+    internal-logchange-event: internal:logChange
     scrolled-event: scrolled
     task-event: task
     uncaught-exception-event: uncaught:exception

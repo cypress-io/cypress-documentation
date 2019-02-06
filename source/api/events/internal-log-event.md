@@ -46,4 +46,4 @@ Cypress.on('internal:log', (log) => {
 
 - {% url `cy.log()` log %}
 - {% url `Cypress.log` cypress-log %}
-- {% url `log:changed` log-changed-event %}
+- {% url `internal:logChange` internal-logchange-event %}

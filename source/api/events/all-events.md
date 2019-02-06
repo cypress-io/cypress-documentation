@@ -26,7 +26,7 @@ Event                                                             | Description
 {% url `internal:commandRetry` internal-commandretry-event %}     | Fires before a command begins its retrying routines, with details about the retry.
 {% url `internal:commandStart` internal-commandstart-event %}     | Fires before a command executes, with the command that will be run.
 {% url `internal:log` internal-log-event %}                       | Fires before a command is displayed in the Command Log, with details about the log.
-{% url `log:changed` log-changed-event %}                         | Fires after a command's attributes changes, with the log details and whether Cypress is in interactive mode.
+{% url `internal:logChange` internal-logchange-event %}           | Fires after a command's attributes changes, with the log details and whether Cypress is in interactive mode.
 {% url `page:alert` page-alert-event %}                           | Fires when the page calls the global `window.alert()` method, with the alert text.
 {% url `page:confirm` page-confirm-event %}                       | Fires when your app calls the global `window.confirm()` method, with the confirm text.
 {% url `page:end` page-end-event %}                               | Fires when the page has unloaded and is navigating away.
