@@ -75,7 +75,7 @@ Within a few milliseconds after the DOM updates, `cy.get()` finds two elements a
 
 # Multiple assertions
 
-A single command followed by multiple assertions retries each one of them -- in order. Thus when the first assertion passes, the command will be retried with first and second assertion. When the first and second assertion pass, then the command will be retried with the first, second, and third assertion, and so on. 
+A single command followed by multiple assertions retries each one of them -- in order. Thus when the first assertion passes, the command will be retried with first and second assertion. When the first and second assertion pass, then the command will be retried with the first, second, and third assertion, and so on.
 
 For example, the following test has {% url `.should()` should %} and {% url `.and()` and %} assertions. `.and()` is an alias of the `.should()` command, so the second assertion is really a custom callback assertion in the form of the {% url `.should(cb)` should#Function %} function with 2 {% url `expect` assertions#BDD-Assertions %} assertions inside of it.
 
@@ -99,7 +99,7 @@ Cypress only retries commands that query the DOM: {% url `cy.get()` get %}, {% u
 
 {% assertions existence .first %}
 
-## Why are some commands *NOT* retried? 
+## Why are some commands *NOT* retried?
 
 Commands are not retried when they could potentially change the state of the application under test. For example, Cypress will not retry the {% url '.click()' click %} command, because it could change something in the application.
 
@@ -277,7 +277,7 @@ See the {% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-
 There is another way to fix our flaky test. Whenever you write a longer test, we recommend alternating commands with assertions. In this case, I will add an assertion after the `cy.get()` command, but before the `.find()` command.
 
 ```javascript
-it.only('adds two items', function () {
+it('adds two items', function () {
   cy.visit('/')
 
   cy.get('.new-todo').type('todo A{enter}')
