@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "I'm so done with E2E Testing....Until Now"
+    url: http://briebug.github.io/presentations/ng-meetup/2018/10/cypress/#/
+    sourceName: Briebug
+    sourceUrl: https://www.briebug.github.io/
+    author: Jesse Sanders
+    date: Feb 7, 2019
+    img: /img/examples/Im-so-done.jpg
+
   - title: "Cypress com Cucumber nos testes E2E"
     url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
     sourceName: Concrete

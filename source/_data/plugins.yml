@@ -62,6 +62,11 @@
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
 
+    - name: Cypress CLI
+      description: A prototype of Cypress CLI for quicker project scaffolding.
+      link: https://github.com/bahmutov/cly
+      keywords: [cypress cli,prototype,CLI,scaffolding]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -148,6 +153,11 @@
 
 - name: Framework Tooling
   plugins:
+    - name: Angular CLI
+      description: Angular CLI addition that allows you to install Cypress E2E to an Angular CLI project
+      link: https://github.com/briebug/cypress-schematic
+      keywords: [angular, cli]
+
     - name: Vue CLI
       description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
