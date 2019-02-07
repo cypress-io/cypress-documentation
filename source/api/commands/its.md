@@ -193,3 +193,4 @@ When clicking on `its` within the command log, the console outputs the following
 - {% url `.then()` then %}
 - {% url `cy.wrap()` wrap %}
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
+- {% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-to-start-tests/ %}

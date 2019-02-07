@@ -60,7 +60,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
-You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration %} for more detail.
+You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
 {% note info "What files should I add to my '.gitignore file' ?" %}
 Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
@@ -68,13 +68,13 @@ Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} an
 
 ## Fixture Files
 
-Fixtures are used as external pieces of static data that can be used by your tests.
+Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in `cypress/fixtures` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory.
 
 You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
 
 ## Test files
 
-Test files may be written as:
+Test files are located in `cypress/integration` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory. Test files may be written as:
 
 - `.js`
 - `.jsx`
@@ -95,11 +95,15 @@ To start writing tests for your app, simply create a new file like `app_spec.js`
 
 Cypress runs a background Node.js process that you can utilize via the the {% url "background file" configuration#Folders-Files %} (`cypress/background/index.js` by default).
 
-{% url "Read more about using the background process to extend Cypress behavior." background-process %}
+The background file can be {% url 'configured to another file' configuration#Folders-Files %}. 
+
+{% url "Read more about using the background process to extend Cypress behavior" background-process %}.
 
 ## Support file
 
 By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+
+The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
 The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
 
