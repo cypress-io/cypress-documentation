@@ -62,9 +62,14 @@
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
 
+    - name: cypress-plugin-retries
+      description: A Cypress plugin to retry failed tests.
+      link: https://github.com/bahmutov/cly
+      keywords: [cypress-plugin-retries]
+
     - name: Cypress CLI
       description: A prototype of Cypress CLI for quicker project scaffolding.
-      link: https://github.com/bahmutov/cly
+      link: https://github.com/Bkucera/cypress-plugin-retries
       keywords: [cypress cli,prototype,CLI,scaffolding]
 
 - name: Custom Commands
