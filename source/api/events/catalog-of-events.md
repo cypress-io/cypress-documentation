@@ -375,19 +375,19 @@ it('could also use a stub instead of imperative code', function () {
   const stub = cy.stub()
 
   // not necessary but showing for clarity
-  stub.onFirstCall().returns(undefined)
-  stub.onSecondCall().returns(false)
-  stub.onThirdCall().returns(true)
+  stub.log().onFirstCall().returns(undefined)
+  stub.log().onSecondCall().returns(false)
+  stub.log().onThirdCall().returns(true)
 
   cy.on('window:confirm', stub)
 
   cy
     .get('button').click()
     .then(() => {
-      expect(stub.getCall(0)).to.be.calledWith('first confirm')
-      expect(stub.getCall(1)).to.be.calledWith('second confirm')
-      expect(stub.getCall(2)).to.be.calledWith('third confirm')
-      expect(stub.getCall(3)).to.be.calledWith('third confirm was true')
+      expect(stub.log().getCall(0)).to.be.calledWith('first confirm')
+      expect(stub.log().getCall(1)).to.be.calledWith('second confirm')
+      expect(stub.log().getCall(2)).to.be.calledWith('third confirm')
+      expect(stub.log().getCall(3)).to.be.calledWith('third confirm was true')
     })
 })
 ```
@@ -415,9 +415,9 @@ it('can assert on the alert text content', function () {
   cy
     .get('button').click()
     .then(() => {
-      expect(stub.getCall(0)).to.be.calledWith('hi')
-      expect(stub.getCall(1)).to.be.calledWith('there')
-      expect(stub.getCall(2)).to.be.calledWith('friend')
+      expect(stub.log().getCall(0)).to.be.calledWith('hi')
+      expect(stub.log().getCall(1)).to.be.calledWith('there')
+      expect(stub.log().getCall(2)).to.be.calledWith('friend')
     })
 })
 ```
