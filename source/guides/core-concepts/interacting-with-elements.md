@@ -160,7 +160,7 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0`, you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
+As of `0.20.0`, you can also {% url 'bind to Events' all-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command

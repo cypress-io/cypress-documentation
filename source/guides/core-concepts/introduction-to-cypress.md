@@ -277,7 +277,7 @@ Some methods yield `null` and thus cannot be chained, such as {% url `cy.clearCo
 
 Some methods, such as {% url `cy.get()` get %} or {% url `cy.contains()` contains %}, yield a DOM element, allowing further commands to be chained onto them (assuming they expect a DOM subject) like {% url `.click()` click %} or even {% url `cy.contains()` contains %} again.
 
-### Some commands can be chained:
+### Some commands cannot be chained:
 - From `cy` only, meaning they do not operate on a subject: {% url `cy.clearCookies()` clearcookies %}.
 - From commands yielding particular kinds of subjects (like DOM elements): {% url `.type()` type %}.
 - From both `cy` *or* from a subject-yielding command: {% url `cy.contains()` contains %}.
@@ -674,10 +674,30 @@ Even more - action commands will automatically wait for their element to reach a
 {% note success Core Concept %}
 All DOM based commands automatically wait for their elements to exist in the DOM.
 
-You **never** need to write {% url "`.should('exist')`" should %} after a DOM based command.
+You don't need to write {% url "`.should('exist')`" should %} after a DOM based command, unless you chain extra `.should()` assertions.
 {% endnote %}
 
-These rules are pretty intuitive, and most commands give you flexibility to override or bypass the default ways they can fail, typically by passing a `{force: true}` option.
+{% note danger "Negative DOM assertions" %}
+If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions ,such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
+
+```
+cy.get('.does-not-exist').should('not.be.visible')         // passes
+cy.get('.does-not-exist').should('not.have.descendants')   // passes
+```
+
+This also applies to custom assertions such as when passing a callback:
+
+```
+// passes, provided the callback itself passes
+cy.get('.does-not-exist').should(($element) => {   
+  expect($element.find('input')).to.not.exist 
+})
+```
+
+There's an {% url 'open discussion' https://github.com/cypress-io/cypress/issues/205 %} about this behavior.
+{% endnote %}
+
+These rules are pretty intuitive, and most commands give you the flexibility to override or bypass the default ways they can fail, typically by passing a `{force: true}` option.
 
 ### Example #1: Existence and Actionability
 
@@ -907,7 +927,7 @@ Cypress offers several different timeout values based on the type of command.
 We've set their default timeout durations based on how long we expect certain actions to take.
 
 For instance:
-- {% url `cy.visit()` visit %} loads a remote page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
+- {% url `cy.visit()` visit %} loads a page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
 - {% url `cy.exec()` exec %} runs a system command such as *seeding a database*. We expect this to potentially take a long time, and its default timeout is set to `60000ms`.
 - {% url `cy.wait()` wait %} actually uses 2 different timeouts. When waiting for a {% url 'routing alias' variables-and-aliases#Routes %}, we wait for a matching request for `5000ms`, and then additionally for the server's response for `30000ms`. We expect your application to make a matching request quickly, but we expect the server's response to potentially take much longer.
 

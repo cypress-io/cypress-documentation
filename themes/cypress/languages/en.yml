@@ -67,12 +67,13 @@ sidebar:
     trade-offs: Trade-offs
     contributing: Contributing
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roadmap
     cypress-api-design: API Design
     all-videos: Videos
     tooling: Tooling
     intelligent-code-completion: Intelligent Code Completion
-    plugins-guide: Plugins
+    background-process: Background Process
     reporters: Reporters
     typescript-support: TypeScript
     module-api: Module API
@@ -161,7 +162,7 @@ sidebar:
     wrap: wrap
     writefile: writeFile
     events: Events
-    catalog-of-events: Catalog of Events
+    all-events: All Events
     assertions: Assertions
     all-assertions: All Assertions
     on: on
@@ -183,19 +184,41 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
-    plugins: Plugins
-    writing-a-plugin: Writing a Plugin
-    preprocessors-api: Preprocessors
-    browser-launch-api: Browser Launching
-    configuration-api: Configuration
     version: version
     arch: arch
     browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
     screenshot-api: Screenshot
-    after-screenshot-api: After Screenshot
     spec: spec
+    screenshot-event: screenshot
+    test-end-event: test:end
+    run-end-event: run:end
+    spec-end-event: spec:end
+    browser-launch-event: browser:launch
+    run-start-event: run:start
+    spec-start-event: spec:start
+    test-start-event: test:start
+    page-start-event: page:start
+    before-window-unload-event: before:window:unload
+    internal-commandend-event: internal:commandEnd
+    internal-commandenqueue-event: internal:commandEnqueue
+    internal-commandretry-event: internal:commandRetry
+    internal-commandstart-event: internal:commandStart
+    configuration-event: configuration
+    test-fail-event: test:fail
+    browser-filepreprocessor-event: browser:filePreprocessor
+    internal-log-event: internal:log
+    internal-logchange-event: internal:logChange
+    scrolled-event: scrolled
+    task-event: task
+    uncaught-exception-event: uncaught:exception
+    page-urlchange-event: page:urlChange
+    viewport-change-event: viewport:change
+    page-alert-event: page:alert
+    page-confirm-event: page:confirm
+    page-ready-event: page:ready
+    page-end-event: page:end
   examples:
     examples: Examples
     recipes: Recipes

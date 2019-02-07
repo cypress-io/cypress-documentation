@@ -23,7 +23,8 @@ Recipe | Category | Description
 {% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
 {% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
 {% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
-{% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central data store
+{% urlHash 'Redux Testing' Redux-Testing %} | Blogs | Test an application that uses central Redux data store
+{% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central Vuex data store
 {% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
 {% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
 {% urlHash 'Stub methods called on `window`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` for methods called on `window`
@@ -35,6 +36,7 @@ Recipe | Category | Description
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
 {% urlHash 'Seeding your Database in Node' Seeding-your-Database-in-Node %} | Server Communication | Seed your database with test data
 {% urlHash 'Environment Variables' Environment-Variables %} | Server Communication | Pass environment variables to your tests
+{% urlHash 'Cypress CircleCI Orb' Cypress-CircleCI-Orb %} | Continuous Integration | Install, cache and run Cypress.io tests on CircleCI with minimal configuration.
 
 ## [Node Modules](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules)
 
@@ -130,6 +132,14 @@ Get around the lack of a `.hover()` command.
 - Use {% url "`cy.request()`" request %} to load a document into test iframe.
 - Test {% url "HyperApp.js" https://hyperapp.js.org/ %} application through the DOM and through actions.
 
+## [Redux Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__testing-redux-store)
+
+- control application via DOM and check the Redux store
+- use Redux actions directly from tests
+- load initial Redux state from a fixture file
+- use {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe#readme %} plugin
+- use {% url cypress-plugin-snapshots https://github.com/meinaart/cypress-plugin-snapshots#readme %} plugin
+
 ## [Vue + Vuex + REST Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__vue-vuex-rest)
 
 - Test a {% url "Vue.js" https://vuejs.org/ %} web application that uses central data store
@@ -193,12 +203,18 @@ Get around the lack of a `.hover()` command.
 
 ## [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node)
 
-- Use {% url `cy.task()` task %} to communicate with Node via the `pluginsFile`.
+- Use {% url `cy.task()` task %} to communicate with Node via the `backgroundFile`.
 - Seed your database with test data.
-- Wrap your `pluginsFile` so you can require files that use ES modules (`import`/`export`).
+- Wrap your `backgroundFile` so you can require files that use ES modules (`import`/`export`).
 
 ## [Environment Variables](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__env-variables)
 
 - Pass values via `env` object in `cypress.json`.
 - Pass any variable that starts with `CYPRESS_`.
 - Extract any other variable from `process.env` using `cypress/plugins/index.js` callback.
+
+## [Cypress CircleCI Orb](https://github.com/cypress-io/cypress-example-circleci-orb)
+
+- Installs npm dependencies
+- Run Cypress tests
+- Record the output to the Cypress Dashboard

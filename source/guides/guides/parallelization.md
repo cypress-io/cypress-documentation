@@ -14,7 +14,7 @@ title: Parallelization
 {% endnote %}
 
 {% note warning %}
-Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}. 
+Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}.
 {% endnote %}
 
 # Overview
@@ -24,6 +24,8 @@ If your project has a large number of tests, it can take a long time for tests t
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
 This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+
+{% img 'no-border' /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" %}
 
 # Splitting up your test suite
 
@@ -56,6 +58,8 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-se
 5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.
 
+In short: each Test Runner sends a list of the spec files to the Dashboard Service, and the service sends back one spec at a time to each Test Runner to run.
+
 ## Parallelization process
 
 {% img 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
@@ -68,7 +72,7 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 
 ## Spec duration history analysis
 
-{% img 'no-border' /img/guides/parallelization/spec-forecast.png "Spec duration forecasting" %}
+{% img 'no-border' /img/guides/parallelization/load-balancing.png "Spec duration forecasting" %}
 
 With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
 
@@ -151,17 +155,25 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
 
-- The first group can be called `electron`. *Electron is the default browser used in Cypress runs*.
+- The first group can be called `Windows/Chrome 69`.
 
   ```shell
-  cypress run --record --group electron
+  cypress run --record --group Windows/Chrome-69 --browser chrome
   ```
 
-- The second group can be called `chrome`.
+- The second group can be called `Mac/Chrome 70`.
 
   ```shell
-  cypress run --record --group chrome --browser chrome
+  cypress run --record --group Mac/Chrome-70 --browser chrome
   ```
+
+- The third group can be called `Linux/Electron`. *Electron is the default browser used in Cypress runs*.
+
+  ```shell
+  cypress run --record --group Linux/Electron
+  ```
+
+{% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
 
 ## Grouping to label parallelization
 
@@ -191,21 +203,30 @@ Labeling these groups in this manner helps up later when we review our test runs
 
 ## Grouping by spec context
 
-Let's say you have an application that has a *customer facing portal* and an *administration facing portal*. You could organize and test these two parts of your application within the same run:
+Let's say you have an application that has a *customer facing portal*, *guest facing portal* and an *administration facing portal*. You could organize and test these three parts of your application within the same run:
 
-- One group can be called `customer-portal`:
+- One group can be called `package/admin`:
 
-  ```shell
-  cypress run --record --group customer-portal --spec 'cypress/integration/portals/customer/**/*'
-  ```
+```shell
+cypress run --record --group package/admin --spec 'cypress/integration/packages/admin/**/*'
+```
 
-- The other group can be called `admin-portal`:
+- Another can be called `package/customer`:
 
-  ```shell
-  cypress run --record --group admin-portal --spec 'cypress/integration/portals/admin/**/*'
-  ```
+```shell
+cypress run --record --group package/customer --spec 'cypress/integration/packages/customer/**/*'
+```
+
+- The last group can be called `package/guest`:
+
+```shell
+cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
+```
+
+{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %}
 
 This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
+
 
 # Linking CI machines for parallelization or grouping
 
@@ -229,6 +250,12 @@ Cypress currently uses the following CI environment variables to determine a CI 
 | Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`  |
 | Jenkins  | `BUILD_NUMBER`  |
 | Travis  | `TRAVIS_BUILD_ID`  |
+
+You can pass a different value to link agents to the same run. For example, if you are using Jenkins and think the environment variable `BUILD_TAG` is more unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value via CLI {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+```shell
+cypress run --record --parallel --ci-build-id $BUILD_TAG
+```
 
 # Run completion delay
 
@@ -269,3 +296,4 @@ The Machines View charts spec files by the machines that executed them. This vie
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
 - {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
+- Slides {% url "Cypress Test Parallelization and Grouping" https://slides.com/bahmutov/cy-parallelization %} and {% url "Webinar video" https://www.youtube.com/watch?v=FfqD1ExUGlw %}

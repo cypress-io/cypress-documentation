@@ -3,7 +3,7 @@ title: trigger
 
 ---
 
-Trigger an event on a DOM element.  
+Trigger an event on a DOM element.
 
 # Syntax
 
@@ -88,9 +88,9 @@ cy.get('.target').trigger('mousedown')
 cy.wait(1000)
 cy.get('.target').trigger('mouseleave')
 ```
-### jQuery UI Sortable 
+### jQuery UI Sortable
 
-To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
+To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.
 
 ```javascript
 cy.get('[data-cy=draggable]')

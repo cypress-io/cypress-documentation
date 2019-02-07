@@ -1,11 +1,91 @@
 # large links with thumbnails, links, embedded video
 large:
-  - title: "Hassle free E2E tests with Cypress"
-    url: https://www.youtube.com/watch?v=1PMxLTfh6lo&feature=youtu.be&t=1
+  - title: 'Cypress: The future of E2E testing'
+    url: https://www.youtube.com/watch?v=pXyBligMMr0
+    sourceName: NG-BE 2018
+    sourceUrl: https://ng-be.org/
+    date: Dec 11, 2018
+    author: Dominic Elm
+    youtubeId: pXyBligMMr0
+    slides: https://speakerdeck.com/d3lm/cypress-the-future-of-e2e-testing
+
+  - title: Testing Vue with Cypress
+    url: https://www.youtube.com/watch?v=uowaTHQDcKc
+    sourceName: VueNYC meetup
+    sourceUrl: https://www.meetup.com/vueJsNYC/events/254789852/
+    date: Dec 6, 2018
+    author: Gleb Bahmutov
+    youtubeId: uowaTHQDcKc
+    slides: https://slides.com/bahmutov/end-vue-end-testing
+
+  - title: 'Well Tested Software'
+    url: https://vimeo.com/311931793
+    sourceName: Øredev 2018
+    sourceUrl: http://oredev.org/2018/home
+    date: Nov 24, 2018
+    author: Gleb Bahmutov
+    img: /img/examples/well-tested-software.jpg
+    slides: https://slides.com/bahmutov/well-tested-software
+
+  - title: Next Generation Web Application End to End Testing
+    url: https://youtu.be/CkGQ0fFH3yE
+    sourceName: Devoxx Belgium
+    sourceUrl: https://devoxx.be/
+    date: Nov 4, 2018
+    author: Amir Rustamzadeh
+    youtubeId: CkGQ0fFH3yE
+    slides: https://speakerdeck.com/amir/next-generation-web-application-end-to-end-testing-with-cypress
+
+  - title: 'E2E Testing with Cypress'
+    url: https://www.youtube.com/watch?v=HMv365RRwtA
+    sourceName: RVA JavaScript Conf 2018
+    sourceUrl: https://www.rvajavascript.com/
+    date: Nov 2, 2018
+    author: Don Denoncourt
+    youtubeId: HMv365RRwtA
+    slides: https://slides.com/bahmutov/well-tested-software
+
+  - title: End-to-end testing is hard - but it doesn't have to be
+    url: https://www.youtube.com/watch?v=swpz0H0u13k
+    youtubeId: swpz0H0u13k
+    sourceName: ReactiveConf 2018
+    sourceUrl: https://reactiveconf.com/
+    date: Oct 29, 2018
+    author: Gleb Bahmutov
+    slides: https://slides.com/bahmutov/reactive-conf
+
+  - title: "TDD in Vue with Cypress"
+    url: https://www.vuemastery.com/conferences/connect-tech-2018/Test-Driven-Development-in-Vue-with-Cypress/
+    sourceName: connect.tech 2018
+    sourceUrl: http://connect.tech/
+    date: October 19, 2018
+    author: Josh Justice
+    img: /img/examples/tdd-vue.jpg
+
+  - title: "TDD in React with Cypress"
+    url: https://vimeo.com/298277470
+    sourceName: connect.tech 2018
+    sourceUrl: http://connect.tech/
+    date: October 18, 2018
+    author: Josh Justice
+    img: /img/examples/tdd-react.jpg
+
+  - title: Deterministic Mocking with GraphQL and Apollo
+    url: https://youtu.be/K445DtQ5oHY
+    youtubeId: K445DtQ5oHY
+    sourceName: React Boston 2018
+    sourceUrl: http://www.reactboston.com/
+    date: Sep 29, 2018
+    author: Hillary Bauer & Mark Faga
+    slides: https://github.com/mjfaga/react-boston-2018-lunar-launch
+
+  - title: "Everything I know about writing quality software"
+    url: https://www.youtube.com/watch?v=1PMxLTfh6lo
     sourceName: BuzzJS
     date: Jul 30, 2018
     author: Gleb Bahmutov
     youtubeId: 1PMxLTfh6lo
+    slides: https://slides.com/bahmutov/quality-software
 
   - title: "Hassle free E2E tests with Cypress"
     url: https://www.youtube.com/watch?v=jijOIqtBGYg
@@ -27,6 +107,7 @@ large:
     date: Jun 21, 2018
     author: Steve Schwarz
     youtubeId: LFUm9qV_Gjo
+    slides: https://docs.google.com/presentation/d/1wMR3n8WJAw7VeibSkosdXA2VRjtKNpDD4wRqOPKQElQ/edit#slide=id.p
 
   - title: "Automated Testing for the Modern Web"
     url: https://www.recallact.com/presentation/automated-testing-modern-web
@@ -35,6 +116,7 @@ large:
     date: Jun 21, 2018
     author: Jennifer Shehane
     img: /img/examples/automated-testing-for-the-modern.png
+    slides: https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web
 
   - title: "Cypress"
     url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
@@ -49,6 +131,7 @@ large:
     date: May 18, 2018
     author: Gleb Bahmutov
     youtubeId: p38bIMC-YOU
+    slides: https://slides.com/bahmutov/e2e-in-the-future
 
   - title: "Accélerez vos tests end to end avec Cypress"
     url: https://www.youtube.com/watch?v=UpBfQ6mdb8U&amp=&feature=youtu.be
@@ -63,14 +146,6 @@ large:
     date: May 1, 2018
     author: Josh Justice
     youtubeId: Sth0bGfFOMw
-
-  - title: "Outside-in Testing in Vue"
-    url: https://youtu.be/Tu9FI5gQX-k
-    sourceName: Atlanta Vue.js Meetup
-    sourceUrl: https://www.meetup.com/Atlanta-Vue-js-Meetup/events/247593045/
-    date: Apr 26, 2018
-    author: Josh Justice
-    youtubeId: CMN8boToKWI
 
   - title: "VueJs Applied + Testing with Cypress.io"
     url: https://www.youtube.com/watch?time_continue=29&v=dpB0YgnFyZQ

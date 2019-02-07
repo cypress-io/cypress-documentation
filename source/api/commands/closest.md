@@ -52,7 +52,7 @@ Option | Default | Description
 
 # Examples
 
-## No Args
+## Selector
 
 ***Find the closest element of the 'error' with the class 'banner'***
 

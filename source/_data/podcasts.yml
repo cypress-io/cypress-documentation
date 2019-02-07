@@ -1,5 +1,20 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "This.JavaScript: State of Testing"
+    url: https://www.youtube.com/watch?v=iycQpCFBASE
+    sourceName: This Dot
+    sourceUrl: https://www.thisdot.co/
+    date: December 18, 2018
+    author: Tracy Lee, Gil Tayar, James Evans, Kent C. Dodds, Gleb Bahmutov, Shai Reznik, Kevin Lamping, Rotem Mizrachi-Meidan
+    youtubeId: iycQpCFBASE
+
+  - title: "Testing in JavaScript with Gil Tayar"
+    url: https://devchat.tv/js-jabber/jsj-341-testing-in-javascript-with-gil-tayar/
+    sourceName: JavaScript Jabber
+    sourceUrl: https://devchat.tv/js-jabber
+    date: November 27, 2018
+    author: Aimee Knight, AJ O’Neal, Charles Max Wood, and Gil Tayar
+    img: /img/examples/javascript-jabber-podcast-cypress.jpg
 
   - title: "Cypress"
     url: https://blog.codepen.io/2018/10/16/195-cypress/
@@ -65,7 +80,6 @@ large:
     author: Charles Lowell & Wil Wilsman
     img: /img/examples/frontside-podcast.jpg
 
-
   - title: Cypress.io and End-to-End Testing with Gleb Bahmutov
     url: https://devchat.tv/adv-in-angular/aia-155-cypress-io-end-end-testing-gleb-bahmutov
     sourceName: Adventures in Angular
@@ -88,7 +102,7 @@ large:
     sourceUrl: https://devchat.tv/js-jabber
     date: Aug 10, 2016
     author: Aimee Knight, Charles Max Woods, Dave Smith, Joe Eames, & Brian Mann
-    img: /img/examples/javascript-jabber-podcast-brian-mann-cypress.jpg
+    img: /img/examples/javascript-jabber-podcast-cypress.jpg
 
   - title: Dave Beck with Foundry 45 and Brian Mann with Cypress.io
     url: http://atlantabusinessradio.businessradiox.com/2016/06/23/dave-beck/

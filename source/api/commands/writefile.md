@@ -10,7 +10,6 @@ Write to a file with the specified contents.
 cy.writeFile(filePath, contents)
 cy.writeFile(filePath, contents, encoding)
 cy.writeFile(filePath, contents, options)
-cy.writeFile(filePath, contents, encoding, options)
 ```
 
 ## Usage
@@ -54,16 +53,22 @@ Pass in an options object to change the default behavior of `cy.writeFile()`.
 Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
+`flag` | `w` | File system flag as used with {% url `fs.writeFile` https://nodejs.org/api/fs.html#fs_file_system_flags %}
+`encoding` | `utf8` | The encoding to be used when writing to the file
+
+{% note info %}
+To use encoding with other options, have your options object be your third parameter and include encoding there. This is the same behavior as {% url `fs.writeFile` https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback %}.
+{% endnote %}
 
 ## Yields {% helper_icon yields %}
 
-{% yields sets_subject cy.writeFile 'yields the contents written to the file' %}
+{% yields null cy.writeFile %}
 
 # Examples
 
 ## Text
 
-***Write some text to a `txt` file***
+### Write some text to a `txt` file
 
 If the path to the file does not exist, the file and its path will be created. If the file already exists, it will be over-written.
 
@@ -83,7 +88,7 @@ cy
 
 ## JSON
 
-***Write JSON to a file***
+### Write JSON to a file
 
 JavaScript arrays and objects are stringified and formatted into text.
 
@@ -103,7 +108,7 @@ cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
 }
 ```
 
-***Write response data to a fixture file***
+### Write response data to a fixture file
 
 ```javascript
 cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
@@ -118,7 +123,7 @@ cy.fixture('users').then((users) => {
 
 ## Encoding
 
-***Specify the encoding with the third argument.***
+### Specify the encoding as a String
 
 ```javascript
 cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
@@ -128,6 +133,20 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
 
 ```text
 Hello World
+```
+
+### Specify the encoding as part of the options object
+
+```javascript
+cy.writeFile('path/to/ascii.txt', 'Hello World', { encoding: 'ascii', flag: 'a+' })
+```
+
+## Flags
+
+### Append contents to the end of a file
+
+```javascript
+cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
 ```
 
 # Rules
@@ -159,6 +178,11 @@ The command above will display in the Command Log as:
 When clicking on the `writeFile` command within the command log, the console outputs the following:
 
 ![Console Log](/img/api/writefile/console-log-shows-contents-written-to-file.png)
+
+{% history %}
+| 3.1.1 | Added `flag` option and appending with `a+`
+| 1.0.0 | Introduced
+{% endhistory %}
 
 # See also
 

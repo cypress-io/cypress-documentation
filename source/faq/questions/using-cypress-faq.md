@@ -141,7 +141,7 @@ We have seen many different iterations of this question. The answers can be vari
 
 **_How do I know if my page is done loading?_**
 
-When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
 
 
 **_In CI, how do I make sure my server has started?_**
@@ -226,6 +226,12 @@ Easy - you don't use classes or ID's. You add `data-*` attributes to your elemen
 
 Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
 
+## {% fa fa-angle-right %} I want to run tests only within one specific folder. How do I do this?
+
+You can specify which test files to run during {% url "`cypress run`" command-line#cypress-run %} by {% url "passing a glob to the `--spec` flag" command-line#cypress-run-spec-lt-spec-gt %} matching the files you want to run. You should be able to pass a glob matching the specific folder where the tests are you want to run.
+
+This feature is not available when using {% url "`cypress open`" command-line#cypress-open %} however.
+
 ## {% fa fa-angle-right %} Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
@@ -241,7 +247,7 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 - Debug the error instance itself
 - Prevent Cypress from failing the test
 
-This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
+This is documented in detail on the {% url "All Events" all-events %} page.
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 
@@ -271,11 +277,11 @@ Check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics
 
 ## {% fa fa-angle-right %} Can I test a chrome extension? How do I load my chrome extension?
 
-Yes. You can test your extensions by {% url 'loading them when we launch the browser.' browser-launch-api %}.
+Yes. You can test your extensions by {% url 'loading them when we launch the browser.' browser-launch-event %}.
 
 ## {% fa fa-angle-right %} How can I modify or pass arguments used to launch the browser?
 
-You use the {% url `before:browser:launch` browser-launch-api %} plugin event.
+You use the {% url `browser:launch` browser-launch-event %} background event.
 
 ## {% fa fa-angle-right %} Can I make cy.request() poll until a condition is met?
 
@@ -379,7 +385,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You can **not** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
+You **cannot** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
 
 ## {% fa fa-angle-right %} Some of my elements animate in, how do I work around that?
 
@@ -445,7 +451,7 @@ You can simply `require` or `import` them as you're accustomed to. We preprocess
 
 Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
-- {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.task()` task %} to run code in Node via the {% url "`backgroundFile`" configuration#Folders-Files %}
 - {% url `cy.exec()` exec %} to execute a shell command
 
 {% url 'Check out this example recipe.' recipes#Node-Modules %}
@@ -500,7 +506,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 ## {% fa fa-angle-right %} Does Cypress support ES7?
 
-Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
+Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' browser-filepreprocessor-event %}.
 
 Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
 
@@ -528,7 +534,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Helpers %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
@@ -558,3 +564,10 @@ There is already a great section in {% url "Custom Commands" custom-commands#Bes
 ## {% fa fa-angle-right %} Can I print the list of commands from a test in the terminal?
 
 If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin {% url cypress-failed-log https://github.com/bahmutov/cypress-failed-log %} that saves a JSON file with all commands from a failed test. We are also working on mirroring `console.log` messages from the browser in the terminal, see {% issue 2078 %}.
+
+## {% fa fa-angle-right %} Can my tests interact with Redux / Vuex data store?
+
+Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to assert the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
+
+- see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Redux-Testing %} recipe.
+- see {% url "Testing Vue web applications with Vuex data store & REST backend" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Vue-Vuex-REST-Testing %} recipe.

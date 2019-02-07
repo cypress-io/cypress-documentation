@@ -29,6 +29,7 @@ function cliOrAsk (property, ask, minimistOptions) {
     [property]: ask,
   })
   const options = minimist(process.argv.slice(2), minimistOptions)
+
   return askRemaining(options).then(R.prop(property))
 }
 
@@ -67,6 +68,7 @@ function scrapeDocs (env, branch) {
   if (env !== 'production') {
     console.log('Skipping doc scraping because you deployed to:', chalk.cyan(env))
     console.log('Only scraping production deploy')
+
     return
   }
 
@@ -99,11 +101,13 @@ function deployEnvironmentBranch (env, branch) {
 function doDeploy (env) {
   la(isValidEnvironment(env), 'invalid deploy environment', env)
   debug('getting current branch')
+
   return getBranch()
   .then((branch) => {
     console.log('deploying branch %s to environment %s',
       chalk.green(branch), chalk.blue(env))
     la(is.unemptyString(branch), 'invalid branch name', branch)
+
     return deployEnvironmentBranch(env, branch)
   })
 }
@@ -121,9 +125,12 @@ function deploy () {
     .then((should) => {
       if (!should) {
         console.log('should NOT deploy to environment %s', env)
+
         return false
       }
+
       console.log('should deploy to environment %s', env)
+
       return doDeploy(env)
     })
   })

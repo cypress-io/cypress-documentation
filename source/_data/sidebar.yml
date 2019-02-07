@@ -29,7 +29,7 @@ guides:
     web-security: web-security.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
-    plugins-guide: plugins-guide.html
+    background-process: background-process.html
     reporters: reporters.html
     typescript-support: typescript-support.html
 
@@ -51,14 +51,12 @@ guides:
     trade-offs: trade-offs.html
     # contributing: contributing.html
     changelog: changelog.html
+    migration-guide: migration-guide.html
     roadmap: roadmap.html
-    # all-videos: all-videos.html
 
 api:
   api:
     table-of-contents: table-of-contents.html
-  events:
-    catalog-of-events: catalog-of-events.html
   assertions:
     all-assertions: assertions.html
   commands:
@@ -149,6 +147,35 @@ api:
     minimatch: minimatch.html
     moment: moment.html
     promise: promise.html
+  events:
+    all-events: all-events.html
+    browser-filepreprocessor-event: browser-filepreprocessor-event.html
+    browser-launch-event: browser-launch-event.html
+    configuration-event: configuration-event.html
+    internal-commandend-event: internal-commandend-event.html
+    internal-commandenqueue-event: internal-commandenqueue-event.html
+    internal-commandretry-event: internal-commandretry-event.html
+    internal-commandstart-event: internal-commandstart-event.html
+    internal-log-event: internal-log-event.html
+    internal-logchange-event: internal-logchange-event.html
+    page-alert-event: page-alert-event.html
+    page-confirm-event: page-confirm-event.html
+    page-end-event: page-end-event.html
+    page-ready-event: page-ready-event.html
+    page-start-event: page-start-event.html
+    page-urlchange-event: page-urlchange-event.html
+    run-end-event: run-end-event.html
+    run-start-event: run-start-event.html
+    screenshot-event: screenshot-event.html
+    scrolled-event: scrolled-event.html
+    spec-end-event: spec-end-event.html
+    spec-start-event: spec-start-event.html
+    task-event: task-event.html
+    test-end-event: test-end-event.html
+    test-fail-event: test-fail-event.html
+    test-start-event: test-start-event.html
+    uncaught-exception-event: uncaught-exception-event.html
+    viewport-change-event: viewport-change-event.html
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html
@@ -158,18 +185,12 @@ api:
     arch: arch.html
     browser: browser.html
     config: config.html
-    # dom: dom.html
+    dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
     spec: spec.html
     version: version.html
-  plugins:
-    writing-a-plugin: writing-a-plugin.html
-    configuration-api: configuration-api.html
-    preprocessors-api: preprocessors-api.html
-    browser-launch-api: browser-launch-api.html
-    after-screenshot-api: after-screenshot-api.html
 
 plugins:
   plugins: index.html

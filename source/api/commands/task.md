@@ -2,10 +2,10 @@
 title: task
 ---
 
-Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin event.
+Execute code in {% url "Node.js" https://nodejs.org %} via the {% url "`task` background event" task-event %}.
 
 {% note warning 'Anti-Pattern' %}
-We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
+We do not recommend starting a web server using `cy.task()`. Read more about {% url "the `task` background event" task-event#Notes %} and about {% url 'best practices' best-practices#Web-Servers %}.
 {% endnote %}
 
 # Syntax
@@ -24,11 +24,13 @@ cy.task(event, arg, options)
 // in test
 cy.task('log', 'This will be output to the terminal')
 ```
+
 ```javascript
-// in plugins file
+// in background file
 on('task', {
   log (message) {
     console.log(message)
+
     return null
   }
 })
@@ -38,11 +40,30 @@ on('task', {
 
 **{% fa fa-angle-right %} event** ***(String)***
 
-An event name to be handled via the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+An event name to be handled via the {% url "`task` event" task-event %} in the {% url "`backgroundFile`" configuration#Folders-Files %}.
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
 An argument to send along with the event. This can be any value that can be serialized by {% url "JSON.stringify()" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %}. Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
+
+If you need to pass multiple arguments, use an object
+
+```javascript
+// in test
+cy.task('hello', { greeting: 'Hello', name: 'World' })
+```
+
+```javascript
+// in background/index.js
+on('task', {
+  // deconstruct the individual properties
+  hello ({ greeting, name }) {
+    console.log('%s, %s', greeting, name)
+
+    return null
+  }
+})
+```
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -55,7 +76,7 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-`cy.task()` yields the value returned or resolved by the `task` event in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+`cy.task()` yields the value returned or resolved by the `task` event in the {% url "`backgroundFile`" configuration#Folders-Files %}.
 
 # Examples
 
@@ -68,31 +89,30 @@ Option | Default | Description
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled.
+In the {% url "`task` background event" task-event %}, the command will fail if `undefined` is returned. It will also fail if you return a promise that resolves `undefined`. This helps catch typos or cases where the task event is not handled.
 
-If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
+If you do not need to return a value, explicitly return or resolve `null` to signal that the given event has been handled.
 
-### Read a JSON file's contents
+### Read a file that might not exist
 
-Note: this serves as a demonstration only. We recommend using {% url "`cy.fixture()`" fixture %} or {% url "`cy.readFile()`" readfile %} for a more robust implementation of reading a file in your tests.
+Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you need to read a file that might not exist, use `cy.task`.
 
 ```javascript
 // in test
-cy.task('readJson', 'cypress.json').then((data) => {
-  // data equals:
-  // {
-  //   projectId: '12345',
-  //   ...
-  // }
-})
+cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
 ```javascript
-// in plugins/index.js file
+// in background/index.js
+const fs = require('fs')
+
 on('task', {
-  readJson: (filename) => {
-    // reads the file relative to current working directory
-    return fsExtra.readJson(path.join(process.cwd(), filename)
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
   }
 })
 ```
@@ -103,7 +123,7 @@ on('task', {
 // in test
 describe('e2e', () => {
   beforeEach(() => {
-    cy.task('defaults:db')
+    cy.task('seed:database')
     cy.visit('/')
   })
 
@@ -115,15 +135,16 @@ describe('e2e', () => {
 ```
 
 ```javascript
-// in plugins/index.js file
+// in background/index.js
+
 // we require some code in our app that
 // is responsible for seeding our database
-const db = require('../../server/src/db')
+const database = require('../../app/database')
 
 module.exports = (on, config) => {
   on('task', {
-    'defaults:db': () => {
-      return db.seed('defaults')
+    'seed:database': () => {
+      return database.seed()
     }
   })
 }
@@ -144,9 +165,7 @@ cy.task('seedDatabase', null, { timeout: 20000 })
 
 # Notes
 
-## Tasks must end
-
-### Tasks that do not end are not supported
+## Tasks that do not end are not supported
 
 `cy.task()` does not support tasks that do not end, such as:
 
@@ -155,6 +174,36 @@ cy.task('seedDatabase', null, { timeout: 20000 })
 - Any process that needs to be manually interrupted to stop.
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
+
+## Tasks are merged automatically
+
+Sometimes you might be using plugins that export their tasks for registration. Cypress automatically merges `on('task')` objects for you. For example if you are using the {% url 'cypress-skip-and-only-ui' https://github.com/bahmutov/cypress-skip-and-only-ui %} plugin and want to install your own task to read a file that might not exist:
+
+```javascript
+// in background/index.js
+const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
+const fs = require('fs')
+const myTask = {
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
+  }
+}
+
+// register plugin's task
+on('task', skipAndOnlyTask)
+// and register my own task
+on('task', myTask)
+```
+
+See {% issue 2284 '#2284' %} for implementation.
+
+{% note warning Duplicate task keys %}
+If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+{% endnote %}
 
 # Rules
 
@@ -188,6 +237,7 @@ When clicking on the `task` command within the command log, the console outputs 
 
 # See also
 
+- {% url "`task` event" task-event %}
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}
 - {% url `cy.readFile()` readfile %}

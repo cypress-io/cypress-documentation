@@ -4,6 +4,7 @@
 const _ = require('lodash')
 const Promise = require('bluebird')
 const beepAndLog = require('../lib/beep')
+const { wrapStart, wrapEnd } = require('../lib/tags/html')
 const partial = require('../lib/tags/partial')
 const note = require('../lib/tags/note')
 const yields = require('../lib/tags/yields')
@@ -11,20 +12,31 @@ const requirements = require('../lib/tags/requirements')
 const assertions = require('../lib/tags/assertions')
 const timeouts = require('../lib/tags/timeouts')
 const usageOptions = require('../lib/tags/usage')
-const { issue, openAnIssue, user } = require('../lib/tags/issues')
+const { issue, PR, openAnIssue, user } = require('../lib/tags/github')
+const { badge } = require('../lib/tags/badge')
 const { url, urlHash } = require('../lib/tags/url')
 const { fa, helperIcon } = require('../lib/tags/icons')
 const video = require('../lib/tags/video')
 const changelog = require('../lib/tags/changelog')
+const history = require('../lib/tags/history')
+const aliases = require('../lib/tags/aliases')
 
 const tags = {
+  // html
+  wrap_start: wrapStart,
+  wrap_end: wrapEnd,
+
   // partials
   partial: partial,
 
   // issues
   open_an_issue: openAnIssue,
   issue: issue,
+  PR: PR,
   user: user,
+
+  // badge
+  badge: badge,
 
   // icons
   fa: fa,
@@ -54,12 +66,18 @@ const tags = {
 
   // changelog
   changelog: changelog,
+
+  // aliases
+  aliases: aliases,
 }
 
 // tags which require ending
 const endingTags = {
   // note
   note: note,
+
+  // history
+  history: history,
 }
 
 function promisify (fn) {

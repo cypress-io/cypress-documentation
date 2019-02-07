@@ -57,7 +57,7 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 5px 0;
 
   &.current {
     strong, &:after {
@@ -70,7 +70,7 @@
   }
 
   strong {
-    padding: 0 30px;
+    padding: 8px 30px;
     display: block;
   }
 
@@ -86,7 +86,7 @@
     font-family: FontAwesome;
     position: absolute;
     right: 2em;
-    top: 0;
+    top: 5px;
     font-size: 0.7em;
   }
 
@@ -95,10 +95,6 @@
     transition: height 0.2s ease-out;
     height: auto;
     list-style: none;
-
-    &>.sidebar-li:first-child {
-      padding-top: 10px;
-    }
   }
 
   &.is-collapsed {

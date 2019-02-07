@@ -1,6 +1,7 @@
 'use strict'
 
 /* global hexo */
+const debug = require('debug')('docs')
 
 const helpers = require('../lib/helpers')
 
@@ -62,7 +63,8 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
   // IF the sidebar's categories aren't that many,
   // just expand them all, since it's more of a hassle to expand one by one
-  if (_.keys(sidebar).length <= 6) {
+  // but don't expand all for the API since it has a lot of pages
+  if (_.keys(sidebar).length <= 6 && type !== 'api') {
     expandAll = true
   }
 
@@ -132,6 +134,7 @@ hexo.extend.helper.register('menu', function (type) {
     if (!isEnglish && ~localizedPath.indexOf(title)) {
       menuPath = lang + menuPath
     }
+
     // Sees if our current path is part of the menu's path
     // Capture the first folder
     // /guides/welcome/foo.html captures 'guides'
@@ -163,6 +166,7 @@ hexo.extend.helper.register('url_for_lang', function (path) {
 
 hexo.extend.helper.register('raw_link', function (path) {
   const branch = 'develop'
+
   return `https://github.com/cypress-io/cypress-documentation/edit/${branch}/source/${path}`
 })
 
@@ -173,12 +177,37 @@ hexo.extend.helper.register('canonical_path_for_nav', function () {
 
   if (startsWith(path, 'guides/') || startsWith(path, 'api/')) {
     return path
-  } else {
-    return ''
   }
+
+  return ''
+
 })
 
 hexo.extend.helper.register('lang_name', function (lang) {
   let data = this.site.data.languages[lang]
+
   return data.name || data
 })
+
+hexo.extend.helper.register('order_by_name', function (posts) {
+  return _.sortBy(posts, (post) => post.name.toLowerCase(), 'name')
+})
+
+/**
+ * Helper that creates safe url id from section title.
+ * @example
+ ```
+  {% for pluginType in site.data.plugins %}
+    <h2 id="{{ id(pluginType.name) }}">{{ pluginType.name }}</h2>
+  {% endfor %}
+ ```
+ */
+const id = (title) => {
+  const id = _.kebabCase(_.deburr(title))
+
+  debug('from title "%s" got id "%s"', title, id)
+
+  return id
+}
+
+hexo.extend.helper.register('id', id)

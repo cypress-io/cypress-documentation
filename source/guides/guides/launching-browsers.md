@@ -47,7 +47,21 @@ All Chrome* flavored browsers will be detected and are supported.
 cypress run --browser chrome
 ```
 
-To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+To use this command in CI, you need to install the browser you want - or use one of our {% url 'docker images' docker %}.
+
+You can also launch Chromium:
+
+```shell
+cypress run --browser chromium
+```
+
+Or Chrome Canary:
+
+```shell
+cypress run --browser canary
+```
+
+{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
 
 ## Unsupported Browsers
 
@@ -66,7 +80,7 @@ This enables you to do things like:
 - Load your own chrome extension
 - Enable or disable experimental chrome features
 
-{% url 'This part of the API is documented here.' browser-launch-api %}
+{% url 'This part of the API is documented here.' browser-launch-event %}
 
 ## Cypress Profile
 
@@ -92,6 +106,10 @@ Cypress automatically disables certain functionality in the Cypress launched bro
 - Disables restoring sessions.
 - Disables background network traffic.
 - Disables background and renderer throttling.
+- Disables prompts requesting permission to use devices like cameras or mics
+- Disables user gesture requirements for autoplaying videos.
+
+You can see all of the default chrome command line switches we send {% url "here" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.coffee#L18 %}.
 
 # Browser Icon
 

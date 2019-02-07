@@ -8,6 +8,8 @@ Use `cy.route()` to manage the behavior of network requests.
 **Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
 {% endnote %}
 
+{% partial network_stubbing_warning %}
+
 # Syntax
 
 ```javascript
@@ -245,7 +247,7 @@ cy.wait('@getBeetles')
 // we responded with 1 beetle item so now we should
 // have one result
 cy.get('#beetle-results').should('have.length', 1)
-``` 
+```
 
 ## Fixtures
 
@@ -326,7 +328,7 @@ cy.route({
 ***Setup route to error on POST to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#XHR-Web-Forms %}
 {% endnote %}
 
 ***Change `headers`***
@@ -414,7 +416,7 @@ Cypress also logs whether the XHR was stubbed or not to the console when you cli
 
 Even the `Initiator` is included, which is a stack trace to what caused the XHR to be sent.
 
-## `cy.route()` can not be debugged using {% url `cy.request()` request %}
+## `cy.route()` cannot be debugged using {% url `cy.request()` request %}
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 

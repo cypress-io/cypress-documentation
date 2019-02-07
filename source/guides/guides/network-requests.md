@@ -17,9 +17,7 @@ title: Network Requests
 
 Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
-{% note warning %}
-Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
-{% endnote %}
+{% partial network_stubbing_warning %}
 
 ***Common testing scenarios:***
 
@@ -213,6 +211,27 @@ cy.wait(['@getActivities', '@getMessages'])
 
 // these commands will not run until the wait command resolves above
 cy.get('h1').should('contain', 'Dashboard')
+```
+
+If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
+
+
+```javascript
+cy.server()
+cy.route({
+  method: 'POST',
+  url: '/myApi',
+}).as('apiCheck')
+cy.visit('/')
+cy.wait('@apiCheck').then((xhr) => {
+  assert.isNotNull(xhr.response.body.data, '1st API call has data')
+})
+cy.wait('@apiCheck').then((xhr) => {
+  assert.isNotNull(xhr.response.body.data, '2nd API call has data')
+})
+cy.wait('@apiCheck').then((xhr) => {
+  assert.isNotNull(xhr.response.body.data, '3rd API call has data')
+})
 ```
 
 Waiting on an aliased route has big advantages:

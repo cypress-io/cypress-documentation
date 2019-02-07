@@ -5,6 +5,11 @@ title: visit
 
 Visit a remote URL.
 
+{% note warning 'Best Practice' %}
+We recommend setting a `baseUrl` when using `cy.visit()`.
+
+Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} here.
+{% endnote %}
 # Syntax
 
 ```javascript
@@ -17,7 +22,7 @@ cy.visit(url, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.visit('http://localhost:3000')    // Yields the window of the remote page
+cy.visit('http://localhost:3000')    // Yields the window of the page
 ```
 
 ## Arguments
@@ -53,7 +58,7 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 
 ***Visit a local server running on `http://localhost:8000`***
 
-`cy.visit()` resolves when the remote page fires its `load` event.
+`cy.visit()` resolves when the page fires its `load` event.
 
 ```javascript
 cy.visit('http://localhost:8000')
@@ -101,7 +106,7 @@ Cypress will automatically attach this header at the network proxy level, outsid
 ```javascript
 cy.visit('http://localhost:3000/#dashboard', {
   onBeforeLoad: (contentWindow) => {
-    // contentWindow is the remote page's window object
+    // contentWindow is the page's window object
   }
 })
 ```
@@ -122,7 +127,7 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 ```javascript
 cy.visit('http://localhost:3000/#/users', {
   onLoad: (contentWindow) => {
-    // contentWindow is the remote page's window object
+    // contentWindow is the page's window object
     if (contentWindow.angular) {
       // do something
     }
@@ -185,19 +190,19 @@ cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 
 ## Window
 
-***Visit will always yield the remote page's window object when it resolves***
+***Visit will always yield the page's window object when it resolves***
 
 ```javascript
 cy.visit('index.html').then((contentWindow) => {
-  // contentWindow is the remote page's window object
+  // contentWindow is the page's window object
 })
 ```
 
 ## Routing
 
-***Preventing XHR / Ajax requests before a remote page initially loads***
+***Preventing XHR / Ajax requests before a page initially loads***
 
-One common scenario Cypress supports is visiting a remote page and also preventing any Ajax requests from immediately going out.
+One common scenario Cypress supports is visiting a page and also preventing any Ajax requests from immediately going out.
 
 You may think this works:
 

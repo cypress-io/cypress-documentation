@@ -5,12 +5,19 @@ title: Continuous Integration
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to run and record Cypress tests in Continuous Integration
-- How to configure and cache Cypress in CI
-- Strategies for booting your server in CI
+- How to run Cypress tests in Continuous Integration
+- How to configure Cypress in various CI Providers
+- How to record tests to the Cypress Dashboard
+- How to run tests in parallel on CI
 {% endnote %}
 
-Running Cypress in Continuous Integration is the same as running it locally. You generally only need to do two things:
+{% video local /img/snippets/running-in-ci.mp4 %}
+
+# Setting up CI
+
+## Basics
+
+Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:
 
   1. **Install Cypress**
 
@@ -24,15 +31,108 @@ Running Cypress in Continuous Integration is the same as running it locally. You
   cypress run
   ```
 
-That's it!
+Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more configuration examples check out our {% urlHash "examples" Examples %}.
 
-For more examples please read the {% url 'Command Line' command-line#cypress-run %} documentation.
+## Boot your server
 
-{% video local /img/snippets/running-in-ci.mp4 %}
+### Challenges
 
-# What is supported?
+Typically you will need to boot a local server prior to running Cypress.  When you boot your web server, it runs as a **long running process** that will never exit. Because of this, you'll need it to run in the **background** - else your CI provider will never move onto the next command.
 
-Cypress should run on **all** CI providers. We currently have seen Cypress working on the following services:
+Backgrounding your server process means that your CI provider will continue to execute the next command after executing the signal to start your server.
+
+Many people approach this situation by running a command like the following:
+
+```shell
+npm start & cypress run // Do not do this
+```
+
+The problem is - what happens if your server takes time to boot? There is no guarantee that when the next command runs (`cypress run`) that your web server is up and available. So your Cypress test may start and try to visit your local server before it is ready to be visited.
+
+### Solutions
+
+Luckily, there are some solutions for this. Instead of introducing arbitrary waits (like `sleep 20`) you can use a better option.
+
+***`wait-on` module***
+
+Using the {% url 'wait-on' https://github.com/jeffbski/wait-on %} module, you can block the `cypress run` command from executing until your server has booted.
+
+```shell
+npm start & wait-on http://localhost:8080
+```
+
+```shell
+cypress run
+```
+
+{% note info %}
+Most CI providers will automatically kill background processes so you don't have to worry about cleaning up your server process once Cypress finishes.
+
+However, if you're running this script locally you'll have to do a bit more work to collect the backgrounded PID and then kill it after `cypress run`.
+{% endnote %}
+
+***`start-server-and-test` module***
+
+If the server takes a very long time to start, we recommend trying the {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} module.
+
+```shell
+npm install --save-dev start-server-and-test
+```
+
+Pass the command to boot your server, the url your server is hosted on and your Cypress test command.
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3030 cy:run"
+  }
+}
+```
+
+In the example above, the `cy:run` command will only be executed when the URL `http://localhost:3030` responds with an HTTP status code of 200. The server will also shut down when the tests complete.
+
+## Record tests
+
+Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %}.
+
+### Recording tests allow you to:
+
+- See the number of failed, pending and passing tests.
+- Get the entire stack trace of failed tests.
+- View screenshots taken when tests fail and when using {% url `cy.screenshot()` screenshot %}.
+- Watch a video of your entire test run or a clip at the point of test failure.
+- See which machines ran each test when {% url "parallelized" parallelization %}.
+
+### To record tests:
+
+1. {% url 'Set up your project to record' dashboard-service#Setup %}
+2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %} within CI.
+
+```shell
+cypress run --record --key=abc123
+```
+
+{% url 'Read the full guide on the Dashboard Service.' dashboard-service %}
+
+## Run tests in parallel
+
+Cypress can running tests in parallel across multiple machines.
+
+You'll want to refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
+
+Once multiple machines are available within your CI environment, you can pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to have your tests run in parallel.
+
+```shell
+cypress run --record --key=abc123 --parallel
+```
+
+{% url 'Read the full guide on parallelization.' parallelization %}
+
+# Examples
+
+Cypress should run on **all** CI providers. We have provided some example projects and configuration for some CI providers to help you get started.
 
 CI Provider | Example Project | Example Config
 ----------- | --------------- | --------------
@@ -52,23 +152,6 @@ CI Provider | Example Project | Example Config
 {% url "TravisCI" https://travis-ci.org/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".travis.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml %}
 {% url "VSTS CI / TeamFoundation" https://visualstudio.microsoft.com/tfs/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
 
-# Setting up CI
-
-Depending on which CI provider you use, you may need a config file. You'll want to refer to your CI provider's documentation to know where to add the commands to install and run Cypress. For more example config files check out any of our {% url "example apps" applications#Kitchen-Sink %}.
-
-## Caching the Cypress binary
-
-As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
-
-### We recommend users:
-
-- Cache the `~/.cache` folder after running `npm install`, `yarn`, {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} or equivalents as demonstrated in the configs below.
-
-- **Do not** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
-
-- If you are using `npm install` in your build process, consider {% url "switching to `npm ci`" https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable %} and caching the `~/.npm` directory for a faster and more reliable build.
-
-- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
 ## Travis
 
@@ -78,9 +161,10 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 language: node_js
 node_js:
   - 10
-cache: 
-  npm: true
+cache:
+  npm: true # this cashes ~/.npm folder on Travis
   directories:
+    # we also need to cache folder with Cypress binary
     - ~/.cache
 install:
   - npm ci
@@ -92,22 +176,52 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 
-### Example `circle.yml` v1 config file
+### {% badge success New %} Example CircleCI Orb
+
+The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
+
+Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
+
+A typical project can simply have:
 
 ```yaml
-machine:
-  node:
-    version: 10
-dependencies:
-  override:
-    - npm ci
-  cache_directories:
-    - ~/.npm
-    - ~/.cache
-test:
-  override:
-    - $(npm bin)/cypress run --record --key <record_key>
+version: 2.1
+orbs:
+  # "cypress-io/cypress@1" installs the latest published
+  # version "1.x.y" of the orb. We recommend you then use
+  # the strict explicit version "cypress-io/cypress@1.x.y"
+  # to lock the version and prevent unexpected CI changes
+  cypress: cypress-io/cypress@1
+workflows:
+  build:
+    jobs:
+      - cypress/run # "run" job comes from "cypress" orb
 ```
+
+A more complex project that needs to install dependencies, build an application and run tests across 4 CI machines {% url "in parallel" parallelization %} may have:
+
+```yaml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
+workflows:
+  build:
+    jobs:
+      - cypress/install:
+          build: 'npm run build'  # run a custom app build step
+      - cypress/run:
+          requires:
+            - cypress/install
+          record: true        # record results on Cypress Dashboard
+          parallel: true      # split all specs across machines
+          parallelism: 4      # use 4 CircleCI machines to finish quickly
+          group: 'all tests'  # name this group "all tests" on the dashboard
+          start: 'npm start'  # start server before running tests
+```
+
+In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
+
+You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
 ### Example `circle.yml` v2 config file
 
@@ -124,14 +238,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          key: v1-deps-{{ .Branch }}
-          key: v1-deps
+          keys:
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
       - run:
           name: Install Dependencies
           command: npm ci
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          # cache NPM modules and the folder with the Cypress binary
           paths:
             - ~/.npm
             - ~/.cache
@@ -153,9 +269,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          key: v1-deps-{{ .Branch }}
-          key: v1-deps
+          keys:
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
@@ -166,7 +283,7 @@ jobs:
       - run: $(yarn bin)/cypress run --record --key <record_key>
 ```
 
-Find the complete CircleCI v2 example with caching and artifact upload in {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
+Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
 
 ## Docker
 
@@ -194,7 +311,9 @@ Instead, you should build a docker container for your project's version of cypre
 
 See our {% url 'examples' docker %} for additional information on our maintained images and configurations on several CI providers.
 
-# Dependencies
+# Advanced setup
+
+## Dependencies
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
@@ -202,39 +321,42 @@ If you are not using one of the above CI providers then make sure your system ha
 apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
-# Recording tests in CI
+## Caching
 
-Cypress can record your tests running and make them available in our {% url 'Dashboard' https://on.cypress.io/dashboard %}.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
 
-### Recorded tests allow you to:
+### We recommend users:
 
-- See the number of failed, pending and passing tests.
-- Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail and when using {% url `cy.screenshot()` screenshot %}.
-- Watch a video of your entire test run or a clip at the point of test failure.
+- Cache the `~/.cache` folder after running `npm install`, `yarn`, {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} or equivalents as demonstrated in the configs below.
 
-### To record tests running:
+- **Do not** cache `node_modules` across builds. This bypasses more intelligent caching packaged with `npm` or `yarn`, and can cause issues with Cypress not downloading the Cypress binary on `npm install`.
 
-1. {% url 'Set up your project to record' dashboard-service#Setup %}
-2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %}
+- If you are using `npm install` in your build process, consider {% url "switching to `npm ci`" https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable %} and caching the `~/.npm` directory for a faster and more reliable build.
 
-You can {% url 'read more about the Dashboard Service here' dashboard-service %}.
+- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
-# Running Tests in Parallel in CI
+If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
 
-Cypress can run recorded tests running in parallel across multiple machines.
-
-You'll want to refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
-
-Once multiple machines are available within your CI environment, you can pass the {% url "`--parallel`" command-line#cypress-run-parallel %} key to {% url "`cypress run`" command-line#cypress-run %} to have your recorded tests parallelized.
-
-# Environment Variables
+## Environment variables
 
 You can set various environment variables to modify how Cypress runs.
 
-## Record Key
+### Configuration Values
 
-If you are {% url 'recording your runs' continuous-integration#Recording-tests-in-CI %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+
+***Typical use cases would be modifying things like:***
+
+- `CYPRESS_BASE_URL`
+- `CYPRESS_VIDEO_COMPRESSION`
+- `CYPRESS_REPORTER`
+- `CYPRESS_INSTALL_BINARY`
+
+Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+
+***Record Key***
+
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
 
 Instead of hard coding it into your run command like this:
 
@@ -250,30 +372,29 @@ cypress run --record
 
 Typically you'd set this inside of your CI provider.
 
-### CircleCI Environment Variable
+***CircleCI Environment Variable***
 
 ![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
 
-### TravisCI Environment Variable
+***TravisCI Environment Variable***
 
 ![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
 
-## Other Configuration Values
+### Git information
+Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
-You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
-### Typical use cases would be modifying things like:
+Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` directory is not available or mounted, you can pass all git related information under custom environment variables.
 
-- `CYPRESS_BASE_URL`
-- `CYPRESS_VIDEO_COMPRESSION`
-- `CYPRESS_REPORTER`
-- `CYPRESS_INSTALL_BINARY`
+- Branch: `COMMIT_INFO_BRANCH`
+- Message: `COMMIT_INFO_MESSAGE`
+- Author email: `COMMIT_INFO_EMAIL`
+- Author: `COMMIT_INFO_AUTHOR`
+- SHA: `COMMIT_INFO_SHA`
+- Remote: `COMMIT_INFO_REMOTE`
 
-{% note info %}
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
-{% endnote %}
-
-## Custom Environment Variables
+### Custom Environment Variables
 
 You can also set custom environment variables for use in your tests. These enable your code to reference dynamic values.
 
@@ -294,77 +415,13 @@ cy.request({
 })
 ```
 
-{% note info %}
 Refer to the dedicated {% url 'Environment Variables Guide' environment-variables %} for more examples.
-{% endnote %}
-
-# Booting Your Server
-
-Typically you will need to boot a local server prior to running Cypress. Here are some typical recipes for users who are new to CI.
-
-## Command Line
-
-Booting your web server means that it is a **long running process** that will never exit. Because of this, you'll need to **background it** - else your CI provider will never move onto the next command.
-
-Backgrounding your server process means that your CI provider will simply "skip" over it and immediately execute the next command.
-
-The problem is - what happens if your server takes seconds to boot? There is no guarantee that when Cypress starts running your web server is available.
-
-This is a naive scenario assuming your web server boots fast:
-
-{% note danger %}
-Don't write the following - it will fail on slow booting servers. Cypress may start before the server has started.
-{% endnote %}
-
-```shell
-npm start & cypress run
-```
-
-There are easy solutions to this. Instead of introducing arbitrary waits like `sleep 20` you can use a much better option like the {% url 'wait-on module' https://github.com/jeffbski/wait-on %}.
-
-Now, we can simply block the `cypress run` command from executing until your server has booted.
-
-```shell
-npm start & wait-on http://localhost:8080
-```
-
-```shell
-cypress run
-```
-
-{% note info %}
-Most CI providers will automatically kill background processes so you don't have to worry about cleaning up your server process once Cypress finishes.
-
-However, if you're running this script locally you'll have to do a bit more work to collect the backgrounded PID and then kill it after `cypress run`.
-{% endnote %}
-
-### Helpers
-
-If the server takes a very long time to start, and Cypress times out while loading the page, we recommend using {% url start-server-and-test https://github.com/bahmutov/start-server-and-test %} utility.
-
-```shell
-npm install --save-dev start-server-and-test
-```
-
-Pass the boot server command, url to check when server is ready, and the Cypress test command.
-
-```json
-{
-  "scripts": {
-    "start": "my-server -p 3030",
-    "cy:run": "cypress run",
-    "test": "start-server-and-test start http://localhost:3030 cy:run"
-  }
-}
-```
-
-The `cy:run` command will only be executed when the URL `http://localhost:3030` responds with HTTP status code 200. The server will be shut down when the tests complete.
 
 ## Module API
 
 Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
 
-If you're using our {% url 'Module API' module-api %} then it would be trivial to write a script which boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
+If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
 
 ```js
 // scripts/run-cypress-tests.js
