@@ -134,7 +134,7 @@ When Cypress is running in the Test Runner, you can have every event it fires lo
 
 {% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
-## Launching browsers 
+## Launching browsers
 
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
 
@@ -154,10 +154,10 @@ Browser Name | Expected Bundle Identifier | Expected Executable
 
 On Linux, Cypress scans your `PATH` for a number of different binary names. If the browser you are trying to use does not exist under one of the expected binary names, Cypress will not be able to find it.
 
-Browser Name | Expected Binary Name
+Browser Name | Expected Binary Name(s)
 --- | ---
-`chrome` | `google-chrome`
-`chromium` | `chromium-browser`
+`chrome` | `google-chrome`, `chrome`, or `google-chrome-stable`
+`chromium` | `chromium-browser` or `chromium`
 `canary` | `google-chrome-canary`
 
 These binary names should work for most Linux distributions. If your distribution packages browsers under a different binary name, you can add a symlink using the expected binary name so that Cypress can detect it.

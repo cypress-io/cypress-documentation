@@ -309,7 +309,7 @@ Option | Description
 `--port`, `-p`  | {% urlHash "Override default port" cypress-open-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-open-project-lt-project-path-gt %}
 
-### `cypress run --browser <browser-path>`
+### `cypress open --browser <browser-path>`
 
 By default, Cypress will automatically find and allow you to use the browsers installed on your system.
 
