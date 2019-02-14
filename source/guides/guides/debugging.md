@@ -134,9 +134,13 @@ When Cypress is running in the Test Runner, you can have every event it fires lo
 
 {% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
-## Launching browsers
+## Browser detection
 
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
+
+{% note info Using the `--browser` command line argument %}
+You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
+{% endnote %}
 
 To see debug logs from the browser launcher, run Cypress with the `DEBUG` environment variable set to `cypress:launcher`.
 
@@ -178,7 +182,7 @@ Browser Name | Expected Path
 `chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
 `canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
 
-To use a browser installed at a different path, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
+To make a browser installed at a different path be auto-detected, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 

@@ -112,7 +112,7 @@ cypress run --browser /usr/bin/chromium
 
 Currently, only browsers in the Chrome family are supported.
 
-{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble with browser detection? Check out the debugging guide" debugging#Browser-detection %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -321,7 +321,7 @@ cypress open --browser /usr/bin/chromium
 
 Currently, only browsers in the Chrome family are supported.
 
-{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Browser-detection %}
 
 ### `cypress open --config <config>`
 
