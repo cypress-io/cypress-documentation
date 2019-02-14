@@ -79,7 +79,7 @@ cypress run [options]
 
 Option | Description
 ------ |  ---------
-`--browser`, `-b`  | {% urlHash "Specify different browser to run tests in" cypress-run-browser-lt-browser-name-gt %}
+`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-run-browser-lt-browser-name-or-path-gt %}
 `--ci-build-id` | {% urlHash "Specify a unique identifier for a run to enable grouping or parallelization." cypress-run-ci-build-id-lt-id-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
@@ -96,17 +96,23 @@ Option | Description
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
 `--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
 
-### `cypress run --browser <browser-name>`
+### `cypress run --browser <browser-name-or-path>`
 
 ```shell
 cypress run --browser chrome
 ```
 
-Cypress will attempt to find all supported browsers available on your system. If Cypress cannot find the browser you should turn on debugging for additional output.
+The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+
+You can also choose a browser by supplying a path:
 
 ```shell
-DEBUG=cypress:launcher cypress run --browser chrome
+cypress run --browser /usr/bin/chromium
 ```
+
+Currently, only browsers in the Chrome family are supported.
+
+{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -294,6 +300,7 @@ Options passed to `cypress open` will automatically be applied to the project yo
 
 Option | Description
 ------ | ---------
+`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-open-browser-lt-browser-path-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-open-config-lt-config-gt %}
 `--detached`, `-d` | Open Cypress in detached mode
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-open-env-lt-env-gt %}
@@ -301,6 +308,20 @@ Option | Description
 `--help`, `-h`  | Output usage information
 `--port`, `-p`  | {% urlHash "Override default port" cypress-open-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-open-project-lt-project-path-gt %}
+
+### `cypress run --browser <browser-path>`
+
+By default, Cypress will automatically find and allow you to use the browsers installed on your system.
+
+The "browser" option allows you to specify the path to a custom browser to use with Cypress:
+
+```shell
+cypress open --browser /usr/bin/chromium
+```
+
+Currently, only browsers in the Chrome family are supported.
+
+{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
 
 ### `cypress open --config <config>`
 
