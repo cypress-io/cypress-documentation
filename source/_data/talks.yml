@@ -8,7 +8,7 @@ large:
     author: Nikola Duza
     youtubeId: I3WJhutZovw
     slides: https://slides.com/nikolalsvk/e2e-cypress
-    
+
   - title: 'Cypress: The future of E2E testing'
     url: https://www.youtube.com/watch?v=pXyBligMMr0
     sourceName: NG-BE 2018
