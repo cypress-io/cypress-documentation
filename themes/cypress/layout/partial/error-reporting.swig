@@ -4,7 +4,10 @@
   if (window.env === 'production') {
     Sentry.init({
       dsn: '{{ config.sentry.dsn }}', 
-      environment: window.env
+      environment: window.env,
+      // ignore ResizeObserver loop limit exceeded errors
+      // https://github.com/cypress-io/cypress-documentation/issues/1426
+      ignoreErrors: ['ResizeObserver']  
     })
   }
  </script>
