@@ -155,6 +155,11 @@
       description: NTLM authentication support for Cypress
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
+      
+    - name: cypress-social-logins
+      description: Cypress authentication flows using social network providers
+      link: https://github.com/lirantal/cypress-social-logins
+      keywords: [authentication, login, social profiles, github, google]
 
 - name: Framework Tooling
   plugins:
