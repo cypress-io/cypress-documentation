@@ -37,7 +37,7 @@ Cypress will prefix the URL with the `baseUrl` configured in your {% url 'networ
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
-Pass in an options object to change the default behavior of `cy.visit()`.
+Pass in an options object to control the behavior of `cy.visit()`.
 
 Option | Default | Description
 --- | --- | ---
