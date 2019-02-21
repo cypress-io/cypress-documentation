@@ -42,7 +42,7 @@ Pass in an options object to control the behavior of `cy.visit()`.
 Option | Default | Description
 --- | --- | ---
 `url` | `null` | The URL to visit. Behaves the same as the `url` argument.
-`method` | `GET` | The HTTP method to use in the visit.
+`method` | `GET` | The HTTP method to use in the visit. Can be `GET` or `POST`.
 `body` | `null` | An optional body to send along with a POST request. If it is a string, it will be passed along unmodified. If it is an object, it will be urlencoded to a string and sent with the `Content-Type: application/x-www-urlencoded` header.
 `headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request.
 `log` | `true` | {% usage_options log %}
