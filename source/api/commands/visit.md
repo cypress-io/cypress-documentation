@@ -10,11 +10,13 @@ We recommend setting a `baseUrl` when using `cy.visit()`.
 
 Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} here.
 {% endnote %}
+
 # Syntax
 
 ```javascript
 cy.visit(url)
 cy.visit(url, options)
+cy.visit(options)
 ```
 
 ## Usage
@@ -39,6 +41,10 @@ Pass in an options object to change the default behavior of `cy.visit()`.
 
 Option | Default | Description
 --- | --- | ---
+`url` | empty string | The URL to visit. Behaves the same as the `url` argument.
+`method` | `GET` | The HTTP method to use in the visit.
+`body` | `null` | An optional body to send along with a POST request. If it is a string, it will be passed along unmodified. If it is an object, it will be urlencoded to a string and sent with the `Content-Type: application/x-www-urlencoded` header.
+`headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request.
 `log` | `true` | {% usage_options log %}
 `auth` | `null` | Adds Basic Authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
@@ -131,6 +137,21 @@ cy.visit('http://localhost:3000/#/users', {
     if (contentWindow.angular) {
       // do something
     }
+  }
+})
+```
+
+***Submitting a form***
+
+To send a request that looks like a user submitting an HTML form, just send a `POST` request with a `body` containing the form values:
+
+```javascript
+cy.visit({
+  url: 'http://localhost:3000/cgi-bin/newsletterSignup',
+  method: 'POST',
+  body: {
+    name: 'George P. Burdell',
+    email: 'burdell@microsoft.com'
   }
 })
 ```
