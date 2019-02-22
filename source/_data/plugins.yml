@@ -262,6 +262,6 @@
       keywords: [reporter, mochawesome]
 
     - name: cypress-slack-healthcheck
-      description: A simple tool which integrates Cypress with Slack to report failing tests.
+      description: A simple tool which integrates Cypress with Slack to report failing tests
       link: https://github.com/bdimitrovski/cypress-healthcheck
       keywords: [reporter, slack, healthcheck]
