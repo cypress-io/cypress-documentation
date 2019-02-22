@@ -260,3 +260,8 @@
       description: Merges multiple mochawesome JSON reports
       link: https://github.com/antontelesh/mochawesome-merge
       keywords: [reporter, mochawesome]
+
+    - name: cypress-slack-healthcheck
+      description: A simple tool which integrates Cypress with Slack to report failing tests.
+      link: https://github.com/bdimitrovski/cypress-healthcheck
+      keywords: [reporter, slack, healthcheck]
