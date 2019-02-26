@@ -68,7 +68,7 @@
     "@cypress/questions-remain": "1.0.1",
     "@keyv/redis": "github:bahmutov/keyv-redis#b64f44cd1d1e87893d989b1469068af8292299d5",
     "@types/fluent-ffmpeg": "2.1.9",
-    "@types/jest": "24.0.6",
+    "@types/jest": "24.0.9",
     "beeper": "1.1.1",
     "bin-up": "1.1.0",
     "chai": "4.2.0",
