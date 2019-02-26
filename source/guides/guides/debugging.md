@@ -9,6 +9,11 @@ title: Debugging
 - How Cypress embraces the standard DevTools
 - How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
 - How to troubleshoot issues with Cypress itself
+- Debugging with `DEBUG=` per package
+- How to disable `DEBUG` messages in the browser
+- Isolating the problem by splitting
+- Debugging thrown error
+- Using `cypress-failed-log` plugin
 {% endnote %}
 
 # Using `debugger`
@@ -75,6 +80,22 @@ The current subject that is yielded by the {% url `cy.get()` get %} is exposed a
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that moment.
 
+## Run Cypress with `DEBUG`
+
+Stop the application server and run Cypress only.
+```shell
+  DEBUG=cypress* \
+  npx cypress run \
+  --spec cypress/integration/02-adding-items/demo.js
+  ```
+
+Note: You should see a LOT of messages before the error is shown
+
+Cypress uses {% url "debug" https://github.com/visionmedia/debug#readme %} module to control debug CLI messages.
+
+Read {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %}
+
+
 # Using the DevTools
 
 Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your application and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
@@ -92,6 +113,21 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 ### When clicking on `.type()` command, the DevTools console outputs the following:
 
 ![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+
+## Debug logs in the browser
+
+If the problem is seen during `cypress open` you can print debug logs too. Open browser DevTools
+
+```
+localStorage.debug = "cypress*"
+// to disable debug messages
+delete localStorage.debug
+```
+Reload the browser "Cmd + R"
+
+There is only "cypress:driver" package that runs in the browser
+
+![Console Log](/img/api/debug/debug-driver.jpg)
 
 # Troubleshooting Cypress
 
@@ -134,7 +170,7 @@ When Cypress is running in the Test Runner, you can have every event it fires lo
 
 {% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
-## Launching browsers 
+## Launching browsers
 
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
 
