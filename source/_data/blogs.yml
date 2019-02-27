@@ -304,13 +304,13 @@ large:
     author: Gil Tayar
     img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
 
-  - title: “Selenium vs. Cypress: Is WebDriver on Its Way Out?”
-   url: https://crossbrowsertesting.com/blog/test-automation/selenium-vs-cypress/
-   sourceName: CrossBrowserTesting
-   sourceUrl: https://crossbrowsertesting.com/blog/
-   date: June 12, 2018
-   author: Alex McPeak
-   img: /img/examples/selenium-vs-cypress-webdriver-on-its-way.png
+  - title: "Selenium vs. Cypress: Is WebDriver on Its Way Out?"
+    url: https://crossbrowsertesting.com/blog/test-automation/selenium-vs-cypress/
+    sourceName: CrossBrowserTesting
+    sourceUrl: https://crossbrowsertesting.com/blog/
+    date: June 12, 2018
+    author: Alex McPeak
+    img: /img/examples/selenium-vs-cypress-webdriver-on-its-way.png
 
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
