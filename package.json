@@ -109,7 +109,7 @@
     "ramda": "0.26.1",
     "request-promise": "4.2.4",
     "run-sequence": "2.2.1",
-    "sinon": "7.2.4",
+    "sinon": "7.2.5",
     "sinon-chai": "3.3.0",
     "snap-shot-it": "6.2.10",
     "start-server-and-test": "1.7.11",
