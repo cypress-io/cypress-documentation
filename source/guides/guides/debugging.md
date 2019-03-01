@@ -9,11 +9,7 @@ title: Debugging
 - How Cypress embraces the standard DevTools
 - How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
 - How to troubleshoot issues with Cypress itself
-- Debugging with `DEBUG=` per package
-- How to disable `DEBUG` messages in the browser
-- Isolating the problem by splitting
-- Debugging thrown error
-- Using `cypress-failed-log` plugin
+- How to learn about bug type and changes
 {% endnote %}
 
 # Using `debugger`
@@ -80,22 +76,6 @@ The current subject that is yielded by the {% url `cy.get()` get %} is exposed a
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that moment.
 
-## Run Cypress with `DEBUG`
-
-Stop the application server and run Cypress only.
-```shell
-  DEBUG=cypress* \
-  npx cypress run \
-  --spec cypress/integration/02-adding-items/demo.js
-  ```
-
-Note: You should see a LOT of messages before the error is shown
-
-Cypress uses {% url "debug" https://github.com/visionmedia/debug#readme %} module to control debug CLI messages.
-
-Read {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %}
-
-
 # Using the DevTools
 
 Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your application and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
@@ -113,21 +93,6 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 ### When clicking on `.type()` command, the DevTools console outputs the following:
 
 ![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
-
-## Debug logs in the browser
-
-If the problem is seen during `cypress open` you can print debug logs too. Open browser DevTools
-
-```
-localStorage.debug = "cypress*"
-// to disable debug messages
-delete localStorage.debug
-```
-Reload the browser "Cmd + R"
-
-There is only "cypress:driver" package that runs in the browser
-
-![Console Log](/img/api/debug/debug-driver.jpg)
 
 # Troubleshooting Cypress
 
@@ -240,3 +205,110 @@ Cypress maintains some local application data in order to save user preferences 
   ```
 4. Delete everything in the `cy` folder
 5. Close Cypress and open it up again
+
+# Type of Bug/Changes
+
+This section will show you how to identify bug types.
+
+## Run Cypress with `DEBUG`
+
+Stop the application server and run Cypress only.
+```shell
+  DEBUG=cypress* \
+  npx cypress run \
+  --spec cypress/integration/02-adding-items/demo.js
+  ```
+
+Note: You should see a LOT of messages before the error is shown
+
+Cypress uses {% url "debug" https://github.com/visionmedia/debug#readme %} module to control debug CLI messages.
+
+Read {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %}
+
+## Detailed Logs
+
+note: there are more levels to DEBUG messages
+
+```shell
+# prints very few top-level messages
+DEBUG=cypress:server ...
+# prints ALL messages from server package
+DEBUG=cypress:server* ...
+# prints messages only from config parsing
+DEBUG=cypress:server:config ...
+```
+
+This allows you to isolate the problem a little better
+
+## Debug logs in the browser
+
+If the problem is seen during `cypress open` you can print debug logs too. Open browser DevTools
+
+```
+localStorage.debug = "cypress*"
+// to disable debug messages
+delete localStorage.debug
+```
+Reload the browser "Cmd + R"
+
+There is only "cypress:driver" package that runs in the browser
+
+![Console Log](/img/api/debug/debug-driver.jpg)
+
+## Step through test
+
+Open 'cypress/integration/02-adding-items/demo.js' and add `cy.pause()` command
+
+```
+it('adds items', function () {
+  cy.pause()
+  cy.get('.new-todo')
+    // ...
+})
+```
+Note: You can observe the application, the DOM, the network, the storage after each command to make sure everything happens as expected.
+
+## After the test has finished
+
+After the test has finished
+```
+cy.now('command name', ...args)
+  .then(console.log)
+Runs single command right now. Might change in the future.
+```
+
+### If your app throws an error
+
+```
+// throw error when loading todos
+loadTodos ({ commit }) {
+  commit('SET_LOADING', true)
+
+  setTimeout(() => {
+    throw new Error('Random problem')
+  }, 50)
+  ```
+![Console Log](/img/api/debug/random-problem.png)
+
+Cypress catches expception from the application
+
+## How to debug `cypress run` failures
+### Isolate the Problem
+
+- Look at the video recording and screenshots
+- Split large spec files into smaller ones
+- Split long tests into shorter ones
+- Run using --browser chrome
+
+### `cypress-failed-log`
+Saves the Cypress test command log as a JSON file if a test fails
+
+## Run failing test
+
+- Add a failure to the cypress/integration/02-adding-items/demo.js spec
+- Run this spec from the command line to see the command log
+Note: expected result is on the next slide
+
+![Console Log](/img/api/debug/failed-log.png)
+
+`cypress-failed-log` output.
