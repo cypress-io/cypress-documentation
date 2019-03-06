@@ -154,6 +154,11 @@
       link: https://picklejs.com
       keywords: [cucumber, collection, actions, commands]
 
+    - name: cypress-plugin-tab
+      description: A Cypress plugin to add a tab command
+      link: https://github.com/Bkucera/cypress-plugin-tab
+      keywords: [commands]
+
 - name: Authentication
   plugins:
     - name: cypress-ntlm-auth
