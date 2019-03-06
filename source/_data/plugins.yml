@@ -72,6 +72,11 @@
       link: https://github.com/bahmutov/cly
       keywords: [cypress cli,prototype,CLI,scaffolding]
 
+    - name: cypress-watch-and-reload
+      description: Reloads Cypress when one of the watched files changes
+      link: https://github.com/bahmutov/cypress-watch-and-reload
+      keywords: [file-watcher]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -118,7 +123,7 @@
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
       keywords: [ruby-rack, ruby-on-rails]
-    
+
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
@@ -155,7 +160,7 @@
       description: NTLM authentication support for Cypress
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
-      
+
     - name: cypress-social-logins
       description: Cypress authentication flows using social network providers
       link: https://github.com/lirantal/cypress-social-logins
