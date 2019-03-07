@@ -92,7 +92,7 @@ cy.getCookie('session_id')
 // some time later, force the "cy.request"
 // to run ONLY after the cookie has been set
 // by placing it inside ".then"
-cy.wrap(null).then(() => {
+cy.then(() => {
   cy.request({
     url: '/api/admin',
     headers: {
