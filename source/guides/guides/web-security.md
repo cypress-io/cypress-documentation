@@ -264,5 +264,9 @@ Still here? That's cool, let's disable web security!
   "chromeWebSecurity": false
 }
 ```
+{% note danger %}
 
+Setting ```chromeWebSecurity: false``` has security implications because it turns off the origin security. A 3rd-party script loaded by the AUT could access ```window.top.cy``` or ```window.top.Cypress``` and access APIs that break outside the browser sandbox, such as writeFile or task.
+
+{% endnote %}
 
