@@ -232,13 +232,13 @@ large:
     author: Kyle Galbraith
     img: /img/examples/kyle-galbraith-how-to-run.png
 
- - title: “Spend more time coding, less time testing: Our Investment in Cypress.io”
-   url: https://www.linkedin.com/pulse/spend-more-time-coding-less-testing-our-investment-michael-droesch
-   sourceName: LinkedIn Pulse
-   sourceUrl:
-   date: Aug 6, 2018
-   author: Michael Droesch
-   img: /img/examples/more-time-coding-less-time-testing.png
+  - title: "Spend more time coding, less time testing: Our Investment in Cypress.io"
+    url: https://www.linkedin.com/pulse/spend-more-time-coding-less-testing-our-investment-michael-droesch
+    sourceName: LinkedIn Pulse
+    sourceUrl:
+    date: Aug 6, 2018
+    author: Michael Droesch
+    img: /img/examples/more-time-coding-less-time-testing.png
 
   - title: "Setting up Bitbucket Pipelines with proper caching of NPM and Cypress"
     url: https://medium.com/@ondrej.janosik42/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress-74d033888186
@@ -304,13 +304,13 @@ large:
     author: Gil Tayar
     img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
 
-  - title: “Selenium vs. Cypress: Is WebDriver on Its Way Out?”
-   url: https://crossbrowsertesting.com/blog/test-automation/selenium-vs-cypress/
-   sourceName: CrossBrowserTesting
-   sourceUrl: https://crossbrowsertesting.com/blog/
-   date: June 12, 2018
-   author: Alex McPeak
-   img: /img/examples/selenium-vs-cypress-webdriver-on-its-way.png
+  - title: "Selenium vs. Cypress: Is WebDriver on Its Way Out?"
+    url: https://crossbrowsertesting.com/blog/test-automation/selenium-vs-cypress/
+    sourceName: CrossBrowserTesting
+    sourceUrl: https://crossbrowsertesting.com/blog/
+    date: June 12, 2018
+    author: Alex McPeak
+    img: /img/examples/selenium-vs-cypress-webdriver-on-its-way.png
 
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
