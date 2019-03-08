@@ -80,7 +80,7 @@ cy.getCookie('my-session-cookie').should('exist')
 
 If you need the cookie value, for example to use in a subsequent call
 
-```javascript
+```js
 let cookie
 
 cy.getCookie('session_id')
@@ -92,14 +92,16 @@ cy.getCookie('session_id')
 // some time later, force the "cy.request"
 // to run ONLY after the cookie has been set
 // by placing it inside ".then"
-cy.then(() => {
-  cy.request({
-    url: '/api/admin',
-    headers: {
-      'my-token-x': cookie.value
-    }
+cy.get('#submit')
+  .click()
+  .then(() => {
+    cy.request({
+      url: '/api/admin',
+      headers: {
+        'my-token-x': cookie.value
+      }
+    })
   })
-})
 ```
 
 ***Using `cy.getCookie()` to test logging in***
