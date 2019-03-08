@@ -241,6 +241,12 @@ If you can't figure out why your JavaScript code is redirecting you to a differe
 
 # Disabling Web Security
 
+{% note danger %}
+
+Setting ```chromeWebSecurity: false``` has security implications because it turns off the origin security. A 3rd-party script loaded by the AUT could access ```window.top.cy``` or ```window.top.Cypress``` and access APIs that break outside the browser sandbox, such as writeFile or task. Turning it off can also allow 3rd-party scripts to access the user data of your application under test, such as cookies or ```localStorage```.
+
+{% endnote %}
+
 So if you cannot work around any of the issues using the suggested workarounds above, you may want to disable web security.
 
 One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to `cross origin` errors that can otherwise be fixed. If you think you're experiencing a bug, {% url "come into our chat" https://gitter.im/cypress-io/cypress %} or {% open_an_issue 'open an issue' %}.
@@ -264,9 +270,3 @@ Still here? That's cool, let's disable web security!
   "chromeWebSecurity": false
 }
 ```
-{% note danger %}
-
-Setting ```chromeWebSecurity: false``` has security implications because it turns off the origin security. A 3rd-party script loaded by the AUT could access ```window.top.cy``` or ```window.top.Cypress``` and access APIs that break outside the browser sandbox, such as writeFile or task.
-
-{% endnote %}
-
