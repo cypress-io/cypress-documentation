@@ -106,9 +106,9 @@ There are times when you will encounter errors or unexpected behavior with Cypre
 - If your organization signs up for one of our {% url "paid plans" https://www.cypress.io/pricing/ %}, you can get dedicated email support, which gives you one-on-one help from our team.
 - If you still haven't found a solution, {% url "open an issue" https://github.com/cypress-io/cypress/issues/new %} *with a reproducible example*.
 
-## Step through test
+## Step through test commands
 
-You can run the test command by command using {% url `pause()` pause %} command.
+You can run the test command by command using the {% url `.pause()` pause %} command.
 
 ```javascript
 it('adds items', function () {
@@ -118,11 +118,11 @@ it('adds items', function () {
 })
 ```
 
-Note: You can inspect the web application, the DOM, the network, the storage after each command to make sure everything happens as expected.
+This allows you to inspect the web application, the DOM, the network, and any storage after each command to make sure everything happens as expected.
 
 ## Print DEBUG logs
 
-Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on. **Note:** you should see a LOT of messages when running with `DEBUG=...` setting.
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on. **Note:** you will see a LOT of messages when running with `DEBUG=...` setting.
 
 **On Mac or Linux:**
 
@@ -159,7 +159,7 @@ This allows you to isolate the problem a little better
 
 ### Debug logs in the browser
 
-If the problem is seen during `cypress open` you can print debug logs too. Open the browser's DevTools and set a `localStorage` property:
+If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's DevTools and set a `localStorage` property:
 
 ```javascript
 localStorage.debug = 'cypress*'
@@ -167,7 +167,7 @@ localStorage.debug = 'cypress*'
 // to disable debug messages
 delete localStorage.debug
 ```
-Reload the browser with "Cmd + R" and see the messages. There is only "cypress:driver" package that runs in the browser, as you can see below.
+Reload the browser and see debug messages within the DevTools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
 
 ![Console Log](/img/api/debug/debug-driver.jpg)
 
@@ -188,7 +188,7 @@ cy.now('task', 123)
 ```
 
 {% note warning %}
-Command `cy.now` is an internal command and can change in the future.
+The `cy.now()` command is an internal command and may change in the future.
 {% endnote %}
 
 ## Launching browsers
@@ -268,13 +268,13 @@ Cypress maintains some local application data in order to save user preferences 
 
 When debugging a failing test, follow these general principles to isolate the problem:
 
-- Look at the video recording and screenshots
-- Split a large spec files into smaller ones
-- Split a long test into shorter tests
+- Look at the {% url "video recording and screenshots" screenshots-and-videos %}
+- Split large spec files into smaller ones
+- Split long tests into smaller tests
 - Run the same test using `--browser chrome`. The problem might be the Electron browser.
 
 ### Write command log to the terminal
 
-You can include plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) with your tests. This plugin writes the list of Cypress commands to the terminal and JSON file if a test fails.
+You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
 
 ![cypress-failed-log terminal output](/img/api/debug/failed-log.png)
