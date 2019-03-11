@@ -18,7 +18,7 @@ cy.go(direction, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.go('back')    
+cy.go('back')
 ```
 
 ## Arguments
@@ -104,7 +104,7 @@ cy
   .go('back')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/go/test-showing-go-back-browser-button.png)
 

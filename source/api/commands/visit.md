@@ -5,6 +5,11 @@ title: visit
 
 Visit a remote URL.
 
+{% note warning 'Best Practice' %}
+We recommend setting a `baseUrl` when using `cy.visit()`.
+
+Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} here.
+{% endnote %}
 # Syntax
 
 ```javascript
@@ -139,7 +144,7 @@ cy.visit('http://localhost:3000/#/users', {
 ```javascript
 // we aren't logged in, so our web server
 // redirected us to /login
-cy.visit('http://localhost3000/admin')
+cy.visit('http://localhost:3000/admin')
 cy.url().should('match', /login/)
 ```
 
@@ -195,9 +200,9 @@ cy.visit('index.html').then((contentWindow) => {
 
 ## Routing
 
-***Preventing XHR / AJAX requests before a remote page initially loads***
+***Preventing XHR / Ajax requests before a remote page initially loads***
 
-One common scenario Cypress supports is visiting a remote page and also preventing any AJAX requests from immediately going out.
+One common scenario Cypress supports is visiting a remote page and also preventing any Ajax requests from immediately going out.
 
 You may think this works:
 
@@ -247,7 +252,7 @@ beforeEach(function () {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log visit](/img/api/visit/visit-example-page-in-before-each-of-test.png)
 

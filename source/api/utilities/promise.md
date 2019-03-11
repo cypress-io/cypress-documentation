@@ -26,7 +26,6 @@ new Cypress.Promise((resolve, reject) => { ... })
 ```javascript
 new cy.Promise(...)  // Errors, cannot be chained off 'cy'
 ```
-
 # Examples
 
 Use `Cypress.Promise` to create promises. Cypress is promise aware so if you return a promise from inside of commands like {% url `.then()` then %}, Cypress will not continue until those promises resolve.
@@ -34,7 +33,7 @@ Use `Cypress.Promise` to create promises. Cypress is promise aware so if you ret
 ## Basic Promise
 
 ```javascript
-cy.get("button").then(($button) => {
+cy.get('button').then(($button) => {
   return new Cypress.Promise((resolve, reject) => {
     // do something custom here
   })
@@ -44,10 +43,10 @@ cy.get("button").then(($button) => {
 ## Waiting for Promises
 
 ```javascript
-it("waits for promises to resolve", function () {
+it('waits for promises to resolve', function () {
   let waited = false
 
-  function waitOneSecond(){
+  function waitOneSecond() {
     // return a promise that resolves after 1 second
     return new Cypress.Promise((resolve, reject) => {
       setTimeout(() => {

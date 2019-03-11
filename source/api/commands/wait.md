@@ -1,6 +1,5 @@
 ---
 title: wait
-
 ---
 
 Wait for a number of milliseconds or wait for an aliased resource to resolve before moving on to the next command.
@@ -21,8 +20,8 @@ cy.wait(aliases, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.wait(500)    
-cy.wait('@getProfile')    
+cy.wait(500)
+cy.wait('@getProfile')
 ```
 
 ## Arguments
@@ -51,22 +50,26 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `requestTimeout` configuration#Timeouts %}, {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.wait %}
+`requestTimeout` | {% url `requestTimeout` configuration#Timeouts %} | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.
+`responseTimeout` | {% url `responseTimeout` configuration#Timeouts %} | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.
 
 ## Yields {% helper_icon yields %}
 
-***When given a `time` argument:***
+### When given a `time` argument:
 
 {% yields same_subject cy.wait %}
 
-***When given an `alias` argument:***
+### When given an `alias` argument:
 
 {% yields sets_subject cy.wait 'yields an object containing the HTTP request and response properties of the XHR' %}
+
+{% partial network_stubbing_warning %}
 
 # Examples
 
 ## Time
 
-***Wait for an arbitrary period of milliseconds:***
+### Wait for an arbitrary period of milliseconds:
 
 ```js
 cy.wait(2000) // wait for 2 seconds
@@ -84,7 +87,7 @@ Additionally, its often much easier to use {% url `cy.debug()` debug %} or {% ur
 
 For a detailed explanation of aliasing, {% url 'read more about waiting on routes here' network-requests#Waiting %}.
 
-***Wait for a specific XHR to respond***
+### Wait for a specific XHR to respond
 
 ```javascript
 // Wait for the route aliased as 'getAccount' to respond
@@ -99,7 +102,7 @@ cy.wait('@getAccount').then((xhr) => {
 })
 ```
 
-***Wait automatically increments responses***
+### Wait automatically increments responses
 
 Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
 
@@ -116,7 +119,7 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('be.empty')
 
 // now re-define the /books response
-cy.route('/books', [{name: 'Emperor of all maladies'}])
+cy.route('/books', [{ name: 'Emperor of all maladies' }])
 
 cy.get('#search').type('Emperor of')
 
@@ -131,7 +134,7 @@ cy.get('#book-results').should('have.length', 1)
 
 ## Aliases
 
-***You can pass an array of aliases that will be waited on before resolving.***
+### You can pass an array of aliases that will be waited on before resolving.
 
 ```javascript
 cy.server()
@@ -148,7 +151,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then((xhrs) => {
 })
 ```
 
-***Using {% url `.spread()` spread %} to spread the array into multiple arguments.***
+### Using {% url `.spread()` spread %} to spread the array into multiple arguments.
 
 ```javascript
 cy.server()
@@ -165,17 +168,17 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
 
 ## Timeouts
 
-***requestTimeout and responseTimeout***
+### `requestTimeout` and `responseTimeout`
 
 When used with an alias, `cy.wait()` goes through two separate "waiting" periods.
 
-The first period waits for a matching request to leave the browser. This duration is configured by {% url `requestTimeout` configuration#Timeouts %} - which has a default of `5000` ms.
+The first period waits for a matching request to leave the browser. This duration is configured by the {% url `requestTimeout` configuration#Timeouts %} option - which has a default of `5000` ms.
 
 This means that when you begin waiting for an aliased XHR, Cypress will wait up to 5 seconds for a matching XHR to be created. If no matching XHR is found, you will get an error message that looks like this:
 
 ![Error for no matching XHR](/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png)
 
-Once Cypress detects that a matching XHR has begun its request, it then switches over to the 2nd waiting period. This duration is configured by {% url `responseTimeout` configuration#Timeouts %} - which has a default of `20000` ms.
+Once Cypress detects that a matching XHR has begun its request, it then switches over to the 2nd waiting period. This duration is configured by the {% url `responseTimeout` configuration#Timeouts %} option - which has a default of `20000` ms.
 
 This means Cypress will now wait up to 20 seconds for the external server to respond to this XHR. If no response is detected, you will get an error message that looks like this:
 
@@ -208,13 +211,17 @@ cy.get('form').submit()
 cy.wait('@userPut').its('url').should('include', 'users')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/wait/command-log-when-waiting-for-aliased-route.png)
 
 When clicking on `wait` within the command log, the console outputs the following:
 
 ![Console Log](/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png)
+
+{% history %}
+| 3.1.3 | Added `requestTimeout` and `responseTimout` option
+{% endhistory %}
 
 # See also
 

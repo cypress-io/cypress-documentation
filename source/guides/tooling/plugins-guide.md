@@ -1,6 +1,5 @@
 ---
 title: Plugins
-
 ---
 
 Plugins enable you to tap into, modify, or extend the internal behavior of Cypress.
@@ -90,7 +89,7 @@ Cypress maintains an official list of plugins created by us and the community. Y
 
 # Installing plugins
 
-Plugins from our {% url 'official list' plugins %} are just NPM modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
+Plugins from our {% url 'official list' plugins %} are just npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
 
 You can install any published plugin using NPM:
 
@@ -100,7 +99,7 @@ npm install &lt;plugin name&gt; --save-dev
 
 # Using a plugin
 
-Whether you install an NPM module, or just want to write your own code - you should do all of that in this file:
+Whether you install an npm module, or just want to write your own code - you should do all of that in this file:
 
 ```text
 cypress/plugins/index.js

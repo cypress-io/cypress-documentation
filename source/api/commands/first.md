@@ -74,7 +74,7 @@ cy.get('li').first()
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions existence .find %}
+{% assertions existence .first %}
 
 ## Timeouts {% helper_icon timeout %}
 
@@ -88,7 +88,7 @@ cy.get('li').first()
 cy.get('form').find('input').first()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log first](/img/api/first/get-the-first-in-list-of-elements.png)
 

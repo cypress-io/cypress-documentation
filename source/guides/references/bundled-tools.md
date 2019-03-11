@@ -1,6 +1,5 @@
 ---
 title: Bundled Tools
-
 ---
 
 {% note info %}

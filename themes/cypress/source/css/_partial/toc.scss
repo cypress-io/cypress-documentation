@@ -4,29 +4,28 @@
 
 #article-toc {
   display: none;
-  float: right;
   width: $sidebar-width;
-  margin-right: -$sidebar-width;
   opacity: 0.8;
-  font-size: 0.9em;
+  justify-self: flex-end;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
 
-  &.fixed {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: $sidebar-width;
-  }
+.toc {
+  border-left: 4px solid #f9f9f9;
+  padding-left: 10px;
 }
 .toc-child {
   padding-left: 1em;
-  font-size: 0.85em;
+  font-size: 0.9em;
   line-height: 1.5;
   list-style: none;
 }
 
 #article-toc-inner {
-  overflow-x: hidden;
-  overflow-y: auto;
   padding: 0 20px;
   width: $sidebar-width;
 
@@ -39,19 +38,18 @@
 
 .toc-link {
   font-family: $font-title;
+  font-size: 0.95em;
   display: block;
-  color: #999;
+  color: #787e82;
   text-decoration: none;
   padding: 5px 0 5px 5px;
   line-height: 1.2;
-  font-size: 0.95em;
   position: relative;
   width: 100%;
   font-weight: 400;
   text-overflow: ellipsis;
   overflow: auto;
   white-space: normal;
-  border-left: 4px solid transparent;
 
   &.current {
     color: $color-link;
@@ -64,12 +62,13 @@
 
 #article-toc-top {
   margin-top: 2em;
-  font-size: 0.9em;
   text-decoration: none;
   color: $color-link;
   display: block;
   margin-bottom: 40px;
   font-family: $font-sans;
+  margin-left: 20px;
+  font-size: 0.9em;
   &:hover {
     color: $color-link-hover;
   }
@@ -79,23 +78,26 @@
   list-style: none;
 }
 
-.toc-item.toc-level-3 {
-  display: none;
+.toc-link {
+  border-left: 5px solid transparent;
 }
 
 .active>.toc-link {
   font-weight: 500;
-  border-left: 4px solid $color-link;
   color: $color-default;
+  border-left-color: $color-green;
 }
 
-.fixed #article-toc-inner {
-  position: fixed;
-  top: 0;
-  bottom: 0;
+#article-toc-inner {
+  padding: 2.5em 20px;
 }
 
 .toc-top {
+  .toc {
+    border-left: 0; 
+    padding-left: 0; 
+  }
+
   .article-content {
     padding-top: 20px;
   }
@@ -111,9 +113,13 @@
 
   .toc-link {
     padding-left: 0;
-    padding: 5px 10px;
-    line-height: 1.5em;
-    font-size: 14.5px;
+    padding: 3px 10px;
+    line-height: 2em;
+    font-size: 1.1em;
+  }
+
+  .article-header h1, .article-header .article-edit-link {
+    border-bottom: 0;
   }
 
   .toc-level-1 {
@@ -148,7 +154,7 @@
 
       &:hover {
         cursor: pointer;
-        color: #0369b3;
+        color:$color-link-hover;
         border-bottom: 0;
       }
     }

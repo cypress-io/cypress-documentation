@@ -88,7 +88,7 @@ cy.get('li').last()
 cy.get('form').find('button').last()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log last](/img/api/last/find-the-last-button-in-a-form.png)
 

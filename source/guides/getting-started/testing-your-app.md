@@ -1,10 +1,9 @@
 ---
 title: Testing Your App
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - The relationship between Cypress and your back-end
 - How to configure Cypress to fit your app
@@ -12,9 +11,11 @@ title: Testing Your App
 - Effectively leveraging test data
 {% endnote %}
 
+<!-- textlint-disable terminology -->
 {% video youtube 5XQOK0v_YRE %}
+<!-- textlint-enable -->
 
-# {% fa fa-terminal %} Step 1: Start Your Server
+# {% fa fa-terminal %} Step 1: Start your server
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Test Runner" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
 
@@ -53,14 +54,14 @@ With that said - you still have the option to have it **both ways**.
 Many of our users run the *majority* of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
 {% endnote %}
 
-# {% fa fa-globe %} Step 2: Visit Your Server
+# {% fa fa-globe %} Step 2: Visit your server
 
 Once your server is running, it's time to visit it.
 
 Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
 
 ```shell
-rm cypress/integration/example_spec.js
+rm cypress/integration/sample_spec.js
 ```
 
 Now let's create our own spec file called `home_page_spec.js`.
@@ -71,7 +72,7 @@ touch cypress/integration/home_page_spec.js
 
 Once that file is created, you should see it in the list of spec files.
 
-{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png %}
+{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
 
 Now you'll need to add in the following code in your test file to visit your server:
 
@@ -87,7 +88,7 @@ Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 
-{% img /img/guides/testing-your-app-visit-fail.png %}
+{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 If you've started your server, then you should see your application loaded and working.
 
@@ -134,7 +135,7 @@ Cypress has many more configuration options you can use to customize its behavio
 Check them out in {% url "Configuration" configuration %}!
 {% endnote %}
 
-# Testing Strategies
+# Testing strategies
 
 You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advice to give you.
 
@@ -142,11 +143,11 @@ You're about to embark on writing tests for your application, and only _you_ kno
 
 That said, modern web testing has a few wrinkles that every team experiences, so here are some quick tips on common situations you're likely to run into.
 
-## Seeding Data
+## Seeding data
 
 Depending on how your application is built - it's likely that your web application is going to be affected and controlled by the server.
 
-Typically these days servers communicate with frontend apps via JSON, but you could also be running a traditional server-side rendered HTML web application.
+Typically these days servers communicate with front end apps via JSON, but you could also be running a traditional server-side rendered HTML web application.
 
 Generally the server is responsible for sending responses that reflect some kind of **state** it holds - generally in a database.
 
@@ -214,7 +215,7 @@ The good news is that we aren't Selenium, nor are we a traditional e2e testing t
 
 **With Cypress, there are several other approaches that can offer an arguably better and faster experience.**
 
-## Stubbing the Server
+## Stubbing the server
 
 Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
 
@@ -242,13 +243,13 @@ Once you've established it's working you can then use stubs to test all of the e
 Please read our {% url 'Guide on Network Requests' network-requests %} for a much more thorough analysis and approach to accomplishing this.
 {% endnote %}
 
-## Logging In
+## Logging in
 
 One of the first (and arguably one of the hardest) hurdles you'll have to overcome is testing logging into your application.
 
 Nothing slows a test suite down like having to log in, but all the good parts of your application most likely require an authenticated user! Here are some tips.
 
-### Fully Test the Login Flow -- But Only Once!
+### Fully test the login flow -- but only once!
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
@@ -305,7 +306,7 @@ Now, once you have your login completely tested - you may be tempted to think:
 
 > "...okay great! Let's repeat this login process before every single test!"
 
-{% note danger 'No! Please don't. %}
+{% note danger 'No! Please don\'t.' %}
 Do not use **your UI** to login before each test.
 {% endnote %}
 
@@ -331,7 +332,7 @@ Read about {% url 'best practices' best-practices %} here.
 
 Using your UI to **log in** is the *exact same scenario* as what we just described above. Logging in is just a prerequisite of state that comes before all of your other tests.
 
-Because Cypress isn't Selenium, we can actually take a huge short cut here and skip needing to use our UI by using {% url `cy.request()` request %}.
+Because Cypress isn't Selenium, we can actually take a huge shortcut here and skip needing to use our UI by using {% url `cy.request()` request %}.
 
 Because {% url `cy.request()` request %} automatically gets and sets cookies under the hood, we can actually use it to build up state without using your browser's UI, yet still have it perform exactly as if it came from the browser!
 
@@ -387,14 +388,14 @@ We've created several recipes covering additional scenarios like dealing with CS
 Feel free to {% url 'explore these additional logging in' recipes %} recipes.
 {% endnote %}
 
-# Get Started
+# Get started
 
 Ok, we're done talking.  Now dive in and get started testing your app!
 
 From here you may want to explore some more of our guides:
 
 - {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
-- {% url "Cypress API" api %} to learn what commands are available as you work
+- {% url "Cypress API" table-of-contents %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
 - {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
 - {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI

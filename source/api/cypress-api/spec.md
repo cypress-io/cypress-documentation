@@ -22,7 +22,7 @@ it('log spec info', function() {
   // {
   //   name: 'filter.spec.js',
   //   relative: 'cypress/integration/filter.spec.js',
-  //   absolute: '/Users/jane/Dev/web-app/cypress/integration/filter.spec.js',
+  //   absolute: '/Users/janelane/Dev/web-app/cypress/integration/filter.spec.js',
   // }
 })
 ```

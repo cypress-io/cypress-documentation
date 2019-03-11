@@ -70,9 +70,9 @@ Any key/value you set in your {% url 'configuration' configuration %} under the 
 ### Test file
 
 ```javascript
-Cypress.env()       // {foo: "bar", some: "value"}
-Cypress.env("foo")  // "bar"
-Cypress.env("some") // "value"
+Cypress.env()       // {foo: 'bar', some: 'value'}
+Cypress.env('foo')  // 'bar'
+Cypress.env('some') // 'value'
 ```
 
 ### Overview
@@ -102,9 +102,9 @@ This strategy is useful because if you add `cypress.env.json` to your `.gitignor
 ### Test file
 
 ```javascript
-Cypress.env()             // {host: "veronica.dev.local", api_server: "http://localhost:8888/api/v1"}
-Cypress.env("host")       // "veronica.dev.local"
-Cypress.env("api_server") // "http://localhost:8888/api/v1/"
+Cypress.env()             // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host')       // 'veronica.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
 ### Overview
@@ -141,9 +141,9 @@ export cypress_api_server=http://localhost:8888/api/v1/
 ### Test file
 
 ```javascript
-Cypress.env()             // {HOST: "laura.dev.local", api_server: "http://localhost:8888/api/v1"}
-Cypress.env("HOST")       // "laura.dev.local"
-Cypress.env("api_server") // "http://localhost:8888/api/v1/"
+Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('HOST')       // 'laura.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
 ### Overview
@@ -180,9 +180,9 @@ cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ### Test file
 
 ```javascript
-Cypress.env()             // {host: "kevin.dev.local", api_server: "http://localhost:8888/api/v1"}
-Cypress.env("host")       // "kevin.dev.local"
-Cypress.env("api_server") // "http://localhost:8888/api/v1/"
+Cypress.env()             // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host')       // 'kevin.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
 ### Overview
@@ -223,3 +223,7 @@ export CYPRESS_FOO=bar
 ```
 
 You can {% url 'read more about how environment variables can change configuration here' configuration %}.
+
+## See also
+
+- {% url "Environment Variables recipe" recipes#Environment-Variables %}

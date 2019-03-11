@@ -1,14 +1,14 @@
 ---
 title: server
-
 ---
 
-Start a server to begin routing responses to `cy.route()` and `cy.request()`.
+Start a server to begin routing responses to {% url `cy.route()` route %} and {% url `cy.request()` request %}.
 
 {% note info %}
 **Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
 {% endnote %}
 
+{% partial network_stubbing_warning %}
 
 # Syntax
 
@@ -22,7 +22,7 @@ cy.server(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.server()    
+cy.server()
 ```
 
 ## Arguments
@@ -53,7 +53,7 @@ Option | Default | Description
 Option | Default | Description
 --- | --- | ---
 `enable` | `true` | pass `false` to disable existing route stubs
-`force404` | `false` | forcibly send XHR's a 404 status when the XHR's do not match any existing
+`force404` | `false` | forcibly send XHR's a 404 status when the XHR's do not match any existing route
 `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs
 `whitelist` | function | Callback function that whitelists requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
 
@@ -67,7 +67,7 @@ Option | Default | Description
 
 ***After starting a server:***
 
-- Any request that does not match a {% url `cy.route()` route %} will be sent a `404` status code.
+- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
 - Any request that matches the `options.whitelist` function will **NOT** be logged or stubbed. In other words it is "whitelisted" and ignored.
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
 
@@ -77,7 +77,7 @@ cy.server()
 
 ## Options
 
-***Change defaults for {% url `cy.route()` route %}***
+### Change defaults for {% url `cy.route()` route %}
 
 By default {% url `cy.route()` route %} inherits some of its options from `cy.server()`.
 
@@ -91,21 +91,21 @@ cy.server({
   response: {}
 })
 
-cy.route('/users/', {errors: 'Name cannot be blank'})
+cy.route('/users/', { errors: 'Name cannot be blank' })
 ```
 
-***Change the default delay for all routes***
+### Change the default delay for all routes
 
 Adding delay can help simulate real world network latency. Normally stubbed responses return in under 20ms. Adding a delay can help you visualize how your application's state reacts to requests that are in flight.
 
 ```javascript
 // delay each route's response 1500ms
-cy.server({delay: 1500})
+cy.server({ delay: 1500 })
 ```
 
-***Prevent sending 404's to unmatched requests***
+### Send 404s on unmatched requests
 
-If you'd like Cypress to automatically send requests that do *NOT* match routes the following:
+If you'd like Cypress to automatically send requests that do *NOT* match routes the following response:
 
 Status | Body | Headers
 --- | --- | ---
@@ -129,7 +129,7 @@ $(function () {
 })
 ```
 
-***Change the default response headers for all routes***
+### Change the default response headers for all routes
 
 When you stub requests, you can automatically control their response `headers`. This is useful when you want to send back meta data in the `headers`, such as *pagination* or *token* information.
 
@@ -139,11 +139,11 @@ Cypress automatically sets `Content-Length` and `Content-Type` based on the resp
 
 ```javascript
 cy.server({
-    headers: {
-      'x-token': 'abc-123-foo-bar'
-    }
-  })
-cy.route('GET', '/users/1', {id: 1, name: 'Amanda'}).as('getUser')
+  headers: {
+    'x-token': 'abc-123-foo-bar'
+  }
+})
+cy.route('GET', '/users/1', { id: 1, name: 'Amanda' }).as('getUser')
 cy.visit('/users/1/profile')
 cy.wait('@getUser').its('responseHeaders')
   .should('have.property', 'x-token', 'abc-123-foo-bar') // true
@@ -159,19 +159,20 @@ xhr.open('GET', '/users/1')
 
 xhr.onload = function () {
   const token = this.getResponseHeader('x-token')
+
   console.log(token) // => abc-123-foo-bar
 }
 
 xhr.send()
 ```
 
-***Change the default whitelisting***
+### Change the default whitelisting
 
 `cy.server()` comes with a `whitelist` function that by default filters out any requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
 
 Any request that passes the `whitelist` will be ignored - it will not be logged nor will it be stubbed in any way (even if it matches a specific {% url `cy.route()` route %}).
 
-The idea is that we never want to interfere with static assets that are fetched via AJAX.
+The idea is that we never want to interfere with static assets that are fetched via Ajax.
 
 **The default whitelist function in Cypress is:**
 
@@ -197,14 +198,14 @@ cy.server({
 
 If you would like to change the default option for **ALL** `cy.server()` you {%url 'can change this option permanently' cypress-server#Options %}.
 
-***Turn off the server after you've started it***
+### Turn off the server after you've started it
 
 You can disable all stubbing and its effects and restore it to the default behavior as a test is running. By setting `enable` to `false`, this disables stubbing routes and XHR's will no longer show up as (XHR Stub) in the Command Log. However, routing aliases can continue to be used and will continue to match requests, but will not affect responses.
 
 ```javascript
 cy.server()
 cy.route('POST', '/users', {}).as('createUser')
-cy.server({enable: false})
+cy.server({ enable: false })
 ```
 
 # Notes
@@ -241,7 +242,7 @@ You can {% url 'read more about XHR strategy here' network-requests %}.
 
 # Command Log
 
-- `cy.server()` does *not* log in the command log
+- `cy.server()` does *not* log in the Command Log
 
 # See also
 

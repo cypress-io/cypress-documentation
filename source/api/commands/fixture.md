@@ -22,7 +22,7 @@ cy.fixture(filePath, encoding, options)
 cy.fixture('users').as('usersJson')  // load data from users.json
 cy.fixture('logo.png').then((logo) => {
   // load data from logo.png
-})  
+})
 ```
 
 ## Arguments
@@ -121,6 +121,17 @@ cy.fixture('images/logo.png', 'binary').then((logo) => {
 })
 ```
 
+## Playing MP3 file
+
+```javascript
+cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
+  const uri = 'data:audio/mp3;base64,' + mp3
+  const audio = new Audio(uri)
+
+  audio.play()
+})
+```
+
 ## Accessing Fixture Data
 
 ***Using .then() to access fixture data***
@@ -148,7 +159,7 @@ Using an alias provides the benefit of terseness and readability. It also makes 
 cy.fixture('users').as('usersJSON')
 cy.route('GET', '/users/**', '@usersJSON')
 
-  // ...later on...
+// ...later on...
 
 cy.get('#email').then(() => {
   // we have access to this.usersJSON since it was aliased
@@ -229,7 +240,7 @@ For other types of files, they will be read as `utf8` by default, unless specifi
 
 # Command Log
 
-- `cy.fixture()` does *not* log in the command log
+- `cy.fixture()` does *not* log in the Command Log
 
 # See also
 

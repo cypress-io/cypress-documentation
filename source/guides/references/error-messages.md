@@ -9,7 +9,7 @@ title: Error Messages
 
 This message means that Cypress was unable to find tests in the specified file. You'll likely get this message if you have an empty test file and have not yet written any tests.
 
-{% img /img/guides/no-tests-found.png No tests found %}
+{% img /img/guides/no-tests-found.png "No tests found" %}
 
 ## {% fa fa-exclamation-triangle red %} We found an error preparing your test file
 
@@ -60,7 +60,7 @@ Just like with your test files, the {% url `supportFile` configuration#Folders-F
 
 ## {% fa fa-exclamation-triangle red %} Cypress cannot execute commands outside a running test
 
-{% img /img/guides/cypress-cannot-execute.png Cannot Execute Commands %}
+{% img /img/guides/cypress-cannot-execute.png "Cannot execute commands" %}
 
 This message means you tried to execute one or more Cypress commands outside of a currently running test. Cypress has to be able to associate commands to a specific test.
 
@@ -95,7 +95,7 @@ If you are purposefully writing commands outside of a test, there is probably a 
 
 Getting this errors means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
 
-{% img /img/guides/cy-method-failed-element-is-detached.png cy.method() failed because element is detached %}
+{% img /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
 
 Cypress errors because it can't interact with "dead" elements - just like a real user could not do this either. Understanding how this happens is very important - and it is often easy to prevent.
 
@@ -134,8 +134,8 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 ### Fixed Test Code
 
 ```javascript
-cy.get("button").click()
-cy.get("#parent")
+cy.get('button').click()
+cy.get('#parent')
 ```
 
 The above example is an oversimplification. Let's look at a more complex example.
@@ -176,7 +176,7 @@ cy.get('[disabled]').click({force: true}).
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element is currently animating
 
-{% img /img/guides/cy-method-failed-element-is-animating.png cy.method() failed because element is animating %}
+{% img /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
 
 By default Cypress detects if an element you're trying to interact with is animating. This check ensures that an element is not animating too quickly for a real user to interact with the element. This also prevents some edge cases where actions, such as {% url `.type()` type %} or {% url `.click()` click %}, happened too fast during a transition.
 
@@ -187,7 +187,7 @@ Cypress will continuously attempt to interact with the element until it eventual
 - Pass `{animationDistanceThreshold: 20}` to decrease the sensitivity of detecting if an element is animating. By increasing the threshold this enables your element to move farther on the page without causing Cypress to continuously retry.
 
 ```javascript
-cy.get('#modal button').click({waitForAnimations: false})
+cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
@@ -205,7 +205,7 @@ You can globally disable animation error checking, or increase the threshold by 
 
 Let's examine several different ways you may get this error message. In every situation, you'll need to change something in your test code to prevent the error.
 
-{% img /img/guides/the-test-has-finished.png The test has finished but Cypress still has commands %}
+{% img /img/guides/the-test-has-finished.png "The test has finished but Cypress still has commands" %}
 
 {% note warning Flaky tests below! %}
 Several of these tests are dependent on race conditions. You may have to run these tests multiple times before they will actually fail. You can also try tweaking some of the delays.
@@ -221,6 +221,7 @@ Even though we return a string in our test, Cypress automatically figures out th
 // This test passes!
 it('Cypress is smart and this does not fail', function () {
   cy.get('body').children().should('not.contain', 'foo') // <- no return here
+
   return 'foobarbaz'    // <- return here
 })
 ```
@@ -358,7 +359,7 @@ Since no record key was passed, Cypress checks for any environment variable with
 
 You can get your project's record key by locating it in your settings tab in the Test Runner or in the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-Key %}.
+You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-tests %}.
 
 ## {% fa fa-exclamation-triangle red %} The `cypress ci` command has been deprecated
 
@@ -390,7 +391,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching-the-Cypress-Binary %}, then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching %}, then bump the version of your CI cache to ensure a clean build.
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
@@ -406,21 +407,27 @@ You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-grou
 
 These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
 
+Please review our {% url "parallelization" parallelization %} documentation to learn more.
+
 ## {% fa fa-exclamation-triangle red %} We could not determine a unique CI build ID
 
 You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} or {% url "`--parallel`" command-line#cypress-run-parallel %} flag but we could not automatically determine or generate a `ciBuildId`.
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What’s-Supported %}.
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#Examples %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
 
 You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
+
+Please review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Group name has already been used for this run
 
 You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} flag, but this group name has already been used for this run.
 
 If you are trying to parallelize this run, then also pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, else pass a different group name.
+
+Please review {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests across environments
 
@@ -436,17 +443,23 @@ In order to run in parallel mode each machine must send identical environment pa
 - Browser name
 - Major browser version
 
+Please review our {% url "parallelization" parallelization %} documentation to learn more.
+
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests in this group
 
-You passed the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run group was originally created without the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+You passed the `--parallel` flag, but this run group was originally created without the `--parallel` flag.
 
-You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+You cannot use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+
+Please review our {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run must pass `--parallel` flag
 
-You did not pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag, but this run's group was originally created with the {% url "`--parallel`" command-line#cypress-run-parallel %} flag.
+You did not pass the `--parallel` flag, but this run's group was originally created with the `--parallel` flag.
 
 You must use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+
+Please review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
@@ -454,11 +467,15 @@ You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-pa
 
 You cannot run tests on a run that has been complete for that long.
 
+Please review our {% url "parallelization" parallelization %} documentation to learn more.
+
 ## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
 
 The run you are attempting access to is already complete and will not accept new groups.
 
 When a run finishes all of its groups, it waits for a configurable set of time before finally completing. You must add more groups during that time period.
+
+Please review our {% url "parallelization" parallelization %} documentation to learn more.
 
 # Page Load Errors
 
@@ -500,7 +517,7 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 
 Browsers are enormously complex pieces of software, and from time to time they will inconsistently crash *for no good reason*. Crashes are just a part of running automated tests.
 
-{% img /img/guides/chromium-renderer-crashed.png Chromium Renderer process just crashed %}
+{% img /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
 
 At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
 

@@ -3,6 +3,11 @@
   float: right;
   top: 10px;
   margin-top: 17px;
+  font-size: 0.95em;
+
+  label {
+    display: none;
+  }
 }
 
 // The actual search input box
@@ -11,6 +16,9 @@
   border-bottom: 1px solid $color-gray;
   &.on {
     display: inline-block;
+  }
+  .algolia-autocomplete {
+    width: calc(100% - 30px);
   }
 }
 
@@ -24,6 +32,7 @@
 }
 
 #search-input {
+  width: 100%;
   background: none;
   font-size: inherit;
   font-family: $font-sans;
@@ -37,7 +46,6 @@
 .searchbox {
   display: inline-block;
   position: relative;
-  width: 200px;
   height: 32px !important;
   white-space: nowrap;
   box-sizing: border-box;
@@ -214,7 +222,7 @@
   border-bottom: 1px solid #eee;
   background-color: #fbfbfb;
   display: none;
-  margin: 0px;
+  margin: 0;
   padding: 2px 8px;
   font-size: 0.9em;
   font-family: $font-title;
@@ -280,7 +288,7 @@
   width: 100%;
   padding: 25px 0;
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .algolia-autocomplete .algolia-docsearch-suggestion code {

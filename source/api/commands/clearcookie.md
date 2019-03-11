@@ -84,7 +84,7 @@ cy.clearCookie('foo')
 cy.getCookie('foo').should('be.null')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/clearcookie/clear-cookie-in-browser-tests.png)
 

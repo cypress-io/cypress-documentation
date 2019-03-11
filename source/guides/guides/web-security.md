@@ -1,6 +1,5 @@
 ---
 title: Web Security
-
 ---
 
 Browsers adhere to a strict {% url "`same-origin policy`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}. This means that browsers restrict access between `<iframes>` when their origin policies do not match.
@@ -62,7 +61,7 @@ If your site embeds an `<iframe>` that is a cross-origin frame, Cypress will not
 
 ***Examples of uses for cross-origin iframes:***
 
-- Embedding a Vimeo or Youtube video.
+- Embedding a Vimeo or YouTube video.
 - Displaying a credit card form from Stripe or Braintree.
 - Displaying an embedded login form from Auth0.
 - Showing comments from Disqus.
@@ -71,7 +70,7 @@ It's actually *possible* for Cypress to accommodate these situations the same wa
 
 As a workaround, you may be able to use {% url "`window.postMessage`" https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage %} to directly communicate with these iframes and control them (if the 3rd party iframe supports it).
 
-Other than that, you'll have to wait for us to implement API's to support this (check our {% issue 136 'open issue' %}), or you can {% url "disable web security" web-security#Disabling-Web-Security %}.
+Other than that, you'll have to wait for us to implement APIs to support this (check our {% issue 136 'open issue' %}), or you can {% url "disable web security" web-security#Disabling-Web-Security %}.
 
 ## Insecure Content
 
@@ -207,7 +206,7 @@ If that's the case, don't worry - you can work around it with {% url `cy.request
 In fact we can likely bypass the initial visit altogether and just `POST` directly to your `SSO` server.
 
 ```javascript
-cy.request('POST', 'https://sso.corp.com/auth', {username: 'foo', password: 'bar'})
+cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'bar' })
   .then((response) => {
     // pull out the location redirect
     const loc = response.headers['Location']

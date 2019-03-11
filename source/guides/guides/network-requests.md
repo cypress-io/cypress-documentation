@@ -3,7 +3,7 @@ title: Network Requests
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress enables you to stub out the backend with {% url `cy.route()` route %}
 - What tradeoffs we make when we stub our network requests
@@ -15,11 +15,9 @@ title: Network Requests
 
 # Testing Strategies
 
-Cypress makes it easy to test the entire lifecycle of AJAX / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
+Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
-{% note warning %}
-Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
-{% endnote %}
+{% partial network_stubbing_warning %}
 
 ***Common testing scenarios:***
 
@@ -38,11 +36,11 @@ Let's investigate both strategies, why you would use one versus the other, and w
 
 ## Don't Stub Responses
 
-Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end to end* tests. This means you are driving your application the same way a real user would.
+Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end-to-end* tests. This means you are driving your application the same way a real user would.
 
 > When requests are not stubbed, this guarantees that the *contract* between your client and server is working correctly.
 
-In other words, you can have confidence your server is sending the correct data in the correct structure to your client to consume. It is a good idea to have *end to end* tests around your application's *critical paths*. These typically include user login, signup, or other critical paths such as billing.
+In other words, you can have confidence your server is sending the correct data in the correct structure to your client to consume. It is a good idea to have *end-to-end* tests around your application's *critical paths*. These typically include user login, signup, or other critical paths such as billing.
 
 ***There are downsides to not stubbing responses you should be aware of:***
 
@@ -92,8 +90,8 @@ You don't have to do any work on the server. Your application will have no idea 
 
 {% note info Suggested Use %}
 - Use for the vast majority of tests
-- Mix and match, typically have one true end to end test, and then stub the rest
-- Perfect for JSON API's
+- Mix and match, typically have one true end-to-end test, and then stub the rest
+- Perfect for JSON APIs
 {% endnote %}
 
 # Stubbing
@@ -134,7 +132,7 @@ cy.route({
 
 When you start a {% url `cy.server()` server %} and define {% url `cy.route()` route %} commands, Cypress displays this under "Routes" in the Command Log.
 
-{% img /img/guides/server-routing-table.png Routing Table %}
+{% img /img/guides/server-routing-table.png "Routing Table" %}
 
 Once you start a server with {% url `cy.server()` server %}, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.
 
@@ -184,7 +182,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 To access the fixtures nested within the `images` folder, simply include the folder in your {% url `cy.fixture()` fixture %} command.
 
 ```javascript
-cy.fixture("images/dogs.png") //returns dogs.png as Base64
+cy.fixture('images/dogs.png') //returns dogs.png as Base64
 ```
 
 # Waiting
@@ -215,6 +213,27 @@ cy.wait(['@getActivities', '@getMessages'])
 cy.get('h1').should('contain', 'Dashboard')
 ```
 
+If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
+
+
+```javascript
+cy.server()
+cy.route({
+  method: 'POST',
+  url: '/myApi',
+}).as('apiCheck')
+cy.visit('/')
+cy.wait('@apiCheck').then((xhr) => {
+  assert.isNotNull(xhr.response.body.data, '1st API call has data')
+})
+cy.wait('@apiCheck').then((xhr) => {
+  assert.isNotNull(xhr.response.body.data, '2nd API call has data')
+})
+cy.wait('@apiCheck').then((xhr) => {
+  assert.isNotNull(xhr.response.body.data, '3rd API call has data')
+})
+```
+
 Waiting on an aliased route has big advantages:
 
 1. Tests are more robust with much less flake.
@@ -233,7 +252,7 @@ What makes this example below so powerful is that Cypress will automatically wai
 
 ```javascript
 cy.server()
-cy.route('/search*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
+cy.route('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
@@ -264,7 +283,7 @@ In this example, there are many possible sources of failure. In most testing too
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
 
-{% img /img/guides/clear-source-of-failure.png Wait Failure %}
+{% img /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
 
@@ -276,7 +295,7 @@ In our example above we can assert about the request object to verify that it se
 
 ```javascript
 cy.server()
-cy.route('search/*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
+cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 
@@ -299,3 +318,7 @@ cy.get('#results')
 - Request Headers
 - Response Body
 - Response Headers
+
+# See also
+
+- {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}

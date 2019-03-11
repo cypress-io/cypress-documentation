@@ -1,5 +1,11 @@
 #header {
-  position: relative;
+  position: fixed;
+  z-index: 20;
+  background-color: #17202C;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
 }
 
 #header-inner {
@@ -14,34 +20,39 @@
   }
 }
 #logo-wrap {
-  box-flex: 1;
-  max-width: 120px;
+  margin: 0 ($sidebar-width - 205px);
 }
-#logo {
-  width: 120px;
 
+#logo {
   img {
-    width: 100%;
+    width: 102px;
     position: relative;
-    top: 4px;
+    vertical-align: middle;
   }
 }
+
 #main-nav {
-  box-flex: 1;
-  flex: 1 auto;
-  padding-left: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  ul {
+    display: flex;
+    list-style: none;
+  }
 }
 
 .main-nav-link {
   display: none;
-  font-size: 14px;
+  font-size: 1.1em;
   color: $white-60;
   text-decoration: none;
   line-height: 50px;
   transition: 0.2s;
   font-family: $font-title;
-  padding: 5px 15px;
+  padding: 5px 20px 2px;
   font-weight: 400;
+  border-bottom: 5px solid transparent;
 
   &:hover {
     opacity: 1;
@@ -51,10 +62,11 @@
   &.active {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+    border-bottom: 5px solid #00bf88;
   }
 
   .fa-github {
-    font-size: 26px;
+    font-size: 1.4em;
     position: relative;
     top: 3px;
   }
@@ -70,6 +82,7 @@
   margin-right: 10px;
   float: right;
   cursor: pointer;
+  font-size: 0.9em;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.18);
@@ -77,11 +90,9 @@
 }
 
 #lang-select-label {
-
   color: $white;
   opacity: 0.7;
   font-family: $font-title;
-  font-size: 14px;
   line-height: 30px;
   span {
     padding-left: 6px;
@@ -99,5 +110,4 @@
   left: 0;
   width: 100%;
   height: 100%;
-  font-size: inherit;
 }

@@ -45,11 +45,12 @@ it('log browser info', function() {
 
 ```javascript
 it('has correct Chrome specific css property', function () {
-    // if in Chrome, check css property was properly applied
-    if (Cypress.browser.name === 'chrome') {
-      cy.get('.header')
-        .should('have.css', 'margin-right')
-        .and('eq', '0')
-    }
+  // if in Chrome, check css property was properly applied
+  if (Cypress.browser.name === 'chrome') {
+    cy
+    .get('.header')
+    .should('have.css', 'margin-right')
+    .and('eq', '0')
+  }
 })
 ```

@@ -1,6 +1,5 @@
 ---
 title: Applications
-
 containerClass: examples
 ---
 
@@ -17,7 +16,7 @@ Name | JS | Description
 
 {% fa fa-github %} {% url https://github.com/cypress-io/cypress-example-kitchensink %}
 
-This is an example app is used to showcase every command available in Cypress.
+This is an example app which is used to showcase every command available in Cypress.
 
 - Query and traverse DOM elements using {% url "`cy.get()`" get %}, {% url "`cy.find()`" find %} and other commands.
 - {% url "`.type()`" type %} into forms, {% url "`.click()`" click %} elements, {% url "`.select()`" select %} dropdowns, and other actions.

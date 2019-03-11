@@ -1,10 +1,9 @@
 ---
 title: The Test Runner
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - The names and purposes of the visual parts of the Cypress Test Runner
 - How to use the Selector Playground for targeting your page elements
@@ -14,13 +13,13 @@ title: The Test Runner
 
 Cypress runs tests in a unique interactive runner that allows you to see commands as they execute while also viewing the application under test.
 
-{% img no-border /img/guides/gui-diagram.png Cypress Test Runner %}
+{% img no-border /img/guides/gui-diagram.png "Cypress Test Runner" %}
 
 # Command Log
 
-The lefthand side of the test runner is a visual representation of your test suite. Each test block is properly nested and each test, when clicked, displays every Cypress command and assertion executed within the test's block as well as any command or assertion executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
+The lefthand side of the Test Runner is a visual representation of your test suite. Each test block is properly nested and each test, when clicked, displays every Cypress command and assertion executed within the test's block as well as any command or assertion executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
-{% img /img/guides/command-log.png 436 Cypress Test Runner %}
+{% img /img/guides/command-log.png 436 "Cypress Test Runner" %}
 
 ### Hovering on Commands
 
@@ -34,7 +33,7 @@ By default, Cypress keeps 50 tests worth of snapshots and command data for time 
 
 Each command, assertion, or error, when clicked on, displays extra information in the dev tools console. Clicking also 'pins' the Application Under Test (righthand side) to its previous state when the command executed.
 
-{% img /img/guides/clicking-commands.png Click to console.log and to pin %}
+{% img /img/guides/clicking-commands.png "Click to console.log and to pin" %}
 
 # Instrument Panel
 
@@ -42,19 +41,19 @@ For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub 
 
 ### Routes:
 
-{% img /img/guides/instrument-panel-routes.png Routes Instrument Panel %}
+{% img /img/guides/instrument-panel-routes.png "Routes Instrument Panel" %}
 
 ### Stubs:
 
-{% img /img/guides/instrument-panel-stubs.png Stubs Instrument Panel %}
+{% img /img/guides/instrument-panel-stubs.png "Stubs Instrument Panel" %}
 
 ### Spies:
 
-{% img /img/guides/instrument-panel-spies.png Spies Instrument Panel %}
+{% img /img/guides/instrument-panel-spies.png "Spies Instrument Panel" %}
 
 # Application Under Test
 
-The righthand side of the test runner is used to display the Application Under Test (AUT: the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
+The righthand side of the Test Runner is used to display the Application Under Test (AUT): the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
 
 In the example below, we wrote the following code in our test file:
 
@@ -66,7 +65,7 @@ cy.title().should('include', 'Kitchen Sink')
 
 In the corresponding Application Preview below, you can see `https://example.cypress.io` is being displayed in the righthand side. Not only is the application visible, but it is fully interactable. You can open your developer tools to inspect elements as you would your normal application. The DOM is completely available for debugging.
 
-{% img /img/guides/application-under-test.png Application Under Test %}
+{% img /img/guides/application-under-test.png "Application Under Test" %}
 
 The AUT also displays in the size and orientation specified in your tests. You can change the size or orientation with the {% url `cy.viewport()` viewport %} command or in your {% url "Cypress configuration" configuration#Viewport %}. If the AUT does not fit within the current browser window, it is scaled appropriately to fit within the window.
 
@@ -74,11 +73,11 @@ The current size and scale of the AUT is displayed in the top right corner of th
 
 The image below shows that our application is displaying at `1000px` width, `660px` height and scaled to `100%`.
 
-{% img /img/guides/viewport-scaling.png Viewport Scaling %}
+{% img /img/guides/viewport-scaling.png "Viewport Scaling" %}
 
 *Note: The righthand side may also be used to display syntax errors in your test file that prevent the tests from running.*
 
-{% img /img/guides/errors.png Errors %}
+{% img /img/guides/errors.png "Errors" %}
 
 # Selector Playground
 

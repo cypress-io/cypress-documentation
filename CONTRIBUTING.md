@@ -10,6 +10,7 @@ Thanks for taking the time to contribute! :smile:
   - [Tags](#tags)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
+  - [Adding Pages](#adding-pages)
   - [Writing the Changelog](#writing-the-changelog)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
@@ -27,7 +28,7 @@ The documentation in this repo is generated using [Hexo](https://hexo.io/).
 
 **Fork this repository**
 
-Using GitHub, create a copy (a fork) of this repository under your personal account.
+Using GitHub, [create a copy](https://guides.github.com/activities/forking/) (a fork) of this repository under your personal account.
 
 **Clone your forked repository**
 
@@ -62,12 +63,6 @@ Visit [http://localhost:2222/](http://localhost:2222/).
 DEBUG=docs npm run build
 ```
 
-**Note:** When Cypress generates the docs, it has to validate hundreds (thousands?) of URLs. This is expensive and the docs take a while to initialize. You can turn off validation of external URLs by passing a flag: 
-
-```
-npm start -- --no-validate
-```
-
 ### Testing
 
 We use Cypress itself to test the documentation. To start the server and run E2E tests, execute the command `npm run test-e2e`.
@@ -90,11 +85,51 @@ Add an associated image with the example within the [`source/img/examples`](/sou
 
 ### Adding Plugins
 
-To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [plugins.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugins code, as well as any keywords.
+To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
+
+### Adding Pages
+
+To add a page such as a new guide or API documentation:
+
+* Add the new page to the relevant directory under [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source).
+* Link to your new page in the [`sidebar.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml).
+* Add translations for the sidebar link (for English, this is located in [`en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml)).
+* Build the documentation site locally so that you can visually inspect your new page and the links to it.
+* Submit a [pull request](#Pull-Requests) for your change.
+
+#### A Worked Example
+
+Let's imagine that the Cypress team have just added a new command called `privateState` and you've picked up the task to document it.
+
+API documentation for commands is in the [`source/api/commands`](https://github.com/cypress-io/cypress-documentation/tree/develop/source/api/commands) directory. Add a file called `privatestate.md` to that directory. Look to the existing documentation to see how to structure the content.
+
+Once you've written the documentation the next step is to link to it from the sidebar. Open the [`source/_data/sidebar.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml) file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api.commands` section.
+
+```yaml
+api:
+  commands:
+    and: and.html
+    as: as.html
+    blur: blur.html
+    # ...
+    privatestate: privatestate.html
+```
+
+Finally, open [`themes/cypress/languages/en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml) and add an English translation for that sidebar link's title. In this example we're adding a command so we'll add the following text:
+
+```yaml
+sidebar:
+  api:
+    introduction: Introduction
+    api: API
+    commands: Commands
+    # ...
+    privatestate: privateState
+```
 
 ### Writing the Changelog
 
-When adding to the Changelog, be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes).
+When adding to the Changelog, create a new file in `source/_changelogs` named as the version number. Be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes). Be aware that in development, only the five most recent entries will appear but the full changelog will be built in staging and production.
 
 #### Categories
 
@@ -105,19 +140,27 @@ When adding to the Changelog, be sure to follow the category structure defined b
 - **Misc** - Not a feature or bugfix, but work that was done. May be internal work that was done and associated with an issue
 - **Documentation Changes** - our docs were updated based on behavior changes in release
 
-## Commiting Code
+## Committing Code
 
 ### Linting
 
 Danger 📛: because we are minifying client-side code using a [Hexo plugin](https://github.com/mamboer/hexo-filter-cleanup) which in turn calls
 `uglify`, the code should be strictly ES5. Thus everything inside the `theme` should be linted with ES5 settings and not upgraded to ES6.
 
+In addition to ESLint, we use Textlint to lint Markdown files. This currently [lints code snippets](https://github.com/textlint-rule/textlint-rule-eslint) using the rules in `.eslintrc-textlint` and checks [terminology](https://github.com/sapegin/textlint-rule-terminology) using the terms in `.textlintrc`. To disable Textlint for a block, do the following:
+
+```md
+<!-- textlint-disable -->
+{% video youtube 5XQOK0v_YRE %}
+<!-- textlint-enable -->
+```
+
 ### Pull Requests
 
-You should push your local changes to your forked GitHub repository and then open a pull request from your repo to the `cypress-io/cypress-documentation` repo.
+You should push your local changes to your forked GitHub repository and then open a pull request (PR) from your repo to the `cypress-io/cypress-documentation` repo.
 
-- The pull request should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
-- When opening a PR for a specific issue already open, please use the `address #[issue number]` or `closes #[issue number]` syntax in the pull request description.
+- The PR should be from your repository to the `develop` branch in `cypress-io/cypress-documentation`
+- When opening a PR for a specific issue already open, please use the `closes #issueNumber` syntax in the pull request description&mdash;for example, `closes #138`&mdash;so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
 ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
 

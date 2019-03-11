@@ -51,6 +51,7 @@
 
   .sidebar-li {
     list-style: none;
+    font-weight: normal;
   }
 }
 
@@ -119,8 +120,7 @@
   color: $color-default;
   font-family: $font-title;
   font-weight: 600;
-  font-size: 0.75;
-  padding: 10px 15px;
+  padding: 10px 0;
   line-height: 1;
   display: block;
   border-top: 1px solid #eee;
@@ -128,18 +128,22 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  strong {
+    padding: 0 15px 10px;
+    display: block;
+  }
 }
 
 #mobile-nav-list {
   list-style: none;
   padding-left: 0;
 
-  li.active {
-    a {
-      color: $color-link-hover;
-      text-decoration: none;
-      background-color: #f1f4f7;
-    }
+  a.active, a.active:hover, a.active:focus {
+    background-color: $color-link;
+    text-decoration: none;
+    color: #fff;
+    border-bottom: 0;
   }
 }
 

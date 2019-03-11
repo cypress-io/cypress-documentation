@@ -1,6 +1,5 @@
 ---
 title: Cypress.env
-
 ---
 
 `get` and `set` environment variables *in your tests*.
@@ -46,7 +45,6 @@ Set multiple environment variables with an object literal.
 
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -65,7 +63,6 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -75,11 +72,11 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 ```
 
 ```javascript
-Cypress.env("foo") // => bar
-Cypress.env("baz") // => quux
+Cypress.env('foo') // => bar
+Cypress.env('baz') // => quux
 ```
 
-# Name and Value
+## Name and Value
 
 **Cypress allows you to change the values of your environment variables from within your tests.**
 
@@ -89,7 +86,6 @@ Remember, any changes that you make to environment variables using this API will
 
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -99,9 +95,9 @@ Remember, any changes that you make to environment variables using this API will
 ```
 
 ```javascript
-Cypress.env("host", "http://server.dev.local")
+Cypress.env('host', 'http://server.dev.local')
 
-Cypress.env("host") // => http://server.dev.local
+Cypress.env('host') // => http://server.dev.local
 ```
 
 ## Object
@@ -110,7 +106,6 @@ Cypress.env("host") // => http://server.dev.local
 
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -121,11 +116,44 @@ Cypress.env("host") // => http://server.dev.local
 
 ```javascript
 Cypress.env({
-  host: "http://server.dev.local",
-  foo: "foo"
+  host: 'http://server.dev.local',
+  foo: 'foo'
 })
 
 Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
+```
+
+## From a plugin
+
+Here's an example that uses `Cypress.env` to access an environment variable that's been {% url 'dynamically set in a plugin' environment-variables#Option-5-Plugins %}.
+
+Use this approach to grab the value of an environment variable _once_ before any of the tests in your spec run.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+
+  config.env.sharedSecret = process.env.NODE_ENV === 'qa'
+    ? 'hoop brick tort'
+    : 'sushi cup lemon'
+
+  return config
+}
+```
+```js
+// cypress/integration/secrets_spec.js
+describe('Environment variable set in plugin', () => {
+
+  let sharedSecret
+
+  before(() => {
+    sharedSecret = Cypress.env('sharedSecret')
+  })
+
+  it.only('can be accessed within test.', () => {
+    cy.log(sharedSecret)
+  })
+})
 ```
 
 # Notes
@@ -144,7 +172,7 @@ The {% url 'Environment Variables' environment-variables %} guide explains the o
 
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 
-Since the environment variables added or changed by `Cypress.env` are only in scope for the current spec file, you'd think that it should be `cy.env` and not `Cypress.env`&hellip;and you'd be right. The fact that `Cypress.env` affects local state is an artifact of the API evolving over time: `Cypress.env` used to affect global state&mdash;environment variables added in one test spec file were available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in {% url `3.0.0` changelog#3-0-0 %} and by that time `Cypress.env` was public API.
+Since the environment variables added or changed by `Cypress.env` are only in scope for the current spec file, you'd think that it should be `cy.env` and not `Cypress.env`&hellip; and you'd be right. The fact that `Cypress.env` affects local state is an artifact of the API evolving over time: `Cypress.env` used to affect global state&mdash;environment variables added in one test spec file were available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in {% url `3.0.0` changelog#3-0-0 %} and by that time `Cypress.env` was public API.
 
 # See also
 

@@ -167,7 +167,7 @@ The `cy` object is bound to each individual test. Events bound to `cy` will **au
 
 ## Uncaught Exceptions
 
-***To turn off all uncaught exception handling***
+### To turn off all uncaught exception handling
 
 ```javascript
 // likely want to do this in a support file
@@ -182,7 +182,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ```
 
-***To catch a single uncaught exception***
+### To catch a single uncaught exception
 
 ```javascript
 it('is doing something very important', function (done) {
@@ -209,30 +209,31 @@ it('is doing something very important', function (done) {
 
 ## Catching Test Failures
 
-***Debug the moment a test fails***
+### Debug the moment a test fails
 
 ```javascript
 // if you want to debug when any test fails
-// bind to Cypress, and you likely want to
-// put this in a support file, or at the top
-// of an individual spec file
-Cypress.on('fail', (err, runnable) => {
+// You likely want to put this in a support file,
+// or at the top of an individual spec file
+Cypress.on('fail', (error, runnable) => {
   debugger
 
   // we now have access to the err instance
   // and the mocha runnable this failed on
+
+  throw error // throw error to have test still fail
 })
 
 it('calls the "fail" callback when this test fails', function () {
-  // when this cy.get() fails the callback is invoked
-  // with the error
+  // when this cy.get() fails the callback
+  // is invoked with the error
   cy.get('element-that-does-not-exist')
 })
 ```
 
 ## Page Navigation
 
-***Test that your application was redirected***
+### Test that your application was redirected
 
 ```javascript
 // app code
@@ -264,15 +265,12 @@ it('redirects to another page on click', function (done) {
 
 ## Window Before Load
 
-***Modify your Application before it loads after page transitions***
+### Modify your Application before it loads after page transitions
 
 ```javascript
 it('can modify the window prior to page load on all pages', function () {
-  // this does the same thing as the onBeforeLoad callback for
-  // cy.visit()
-
   // create the stub here
-  const stub = cy.stub()
+  const ga = cy.stub().as('ga')
 
   // prevent google analytics from loading
   // and replace it with a stub before every
@@ -281,11 +279,10 @@ it('can modify the window prior to page load on all pages', function () {
   cy.on('window:before:load', (win) => {
     Object.defineProperty(win, 'ga', {
       configurable: false,
-      writeable: false,
-      get: () => stub // always return the stub
+      get: () => ga, // always return the stub
+      set: () => {} // don't allow actual google analytics to overwrite this property
     })
   })
-
 
   cy
     // window:before:load will be called here
@@ -298,15 +295,16 @@ it('can modify the window prior to page load on all pages', function () {
 
     // and here
     .get('a').click()
-
 })
 ```
 
 ## Window Confirm
 
-***Control whether you accept or reject confirmations***
+### Control whether you accept or reject confirmations
 
 This enables you to test how your application reacts to accepted confirmations and rejected confirmations.
+
+<!-- textlint-disable -->
 
 ```javascript
 // app code
@@ -336,7 +334,7 @@ it('can control application confirms', function (done) {
   cy.on('window:confirm', (str) => {
     count += 1
 
-    switch(count) {
+    switch (count) {
       case 1:
         expect(str).to.eq('first confirm')
         // returning nothing here automatically
@@ -388,10 +386,11 @@ it('could also use a stub instead of imperative code', function () {
     })
 })
 ```
+<!-- textlint-enable -->
 
 ## Window Alert
 
-**Assert on the alert text**
+### Assert on the alert text
 
 Cypress automatically accepts alerts but you can still assert on the text content.
 
@@ -427,7 +426,7 @@ Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node mod
 If you'd like to see (the huge) stream of events that Cypress emits you can pop open your Dev Tools and write this line in the console.
 
 ```javascript
-localStorage.debug = "cypress:*"
+localStorage.debug = 'cypress:*'
 ```
 
 After you refresh the page you'll see something that looks like this in your console:

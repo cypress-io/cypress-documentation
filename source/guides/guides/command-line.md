@@ -3,31 +3,67 @@ title: Command Line
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress from the command line
 - How to specify which spec files to run
 - How to launch other browsers
-- How to record your tests
+- How to record your tests to the Dashboard
 {% endnote %}
 
 # Installation
 
-This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands below.
+This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands in this document from your **project root**.
 
+# How to run commands
+
+{% note info %}
 You can alternatively require and run Cypress as a node module using our {% url "Module API" module-api %}.
-
-{% note warning %}
-For brevity we've omitted the full path to the cypress executable in each command.
-
-You'll need to prefix each command with:
-
-- `$(npm bin)/cypress`
-- ...or...
-- `./node_modules/.bin/cypress`
-
-Or just add cypress commands to the `scripts` field in your `package.json` file.
 {% endnote %}
+
+For brevity we've omitted the full path to the cypress executable in each command's documentation.
+
+To run a command, you'll need to prefix each command in order to properly locate the cypress executable.
+
+```shell
+$(npm bin)/cypress run
+```
+
+...or...
+
+```shell
+./node_modules/.bin/cypress run
+```
+
+...or... (requires npm@5.2.0 or greater)
+
+```shell
+npx cypress run
+```
+
+You may find it easier to add the cypress command to the `scripts` object in your `package.json` file and call it from an {% url "`npm run` script" https://docs.npmjs.com/cli/run-script.html %}.
+
+When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have  the following command defined in your `package.json`
+
+```json
+{
+  "scripts": {
+    "cy:run": "cypress run"
+  }
+}
+```
+
+...and want to run tests from a single spec file and record the results on the Dashboard, the command should be:
+
+```shell
+npm run cy:run -- --record --spec "cypress/integration/my-spec.js"
+```
+
+If you are using the {% url npx https://github.com/zkat/npx %} tool, you can invoke the locally installed Cypress tool directly:
+
+```shell
+npx cypress run --record --spec "cypress/integration/my-spec.js"
+```
 
 # Commands
 
@@ -51,7 +87,7 @@ Option | Description
 `--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
-`--no-exit` | {% urlHash "Keep Cypress open after all tests run" cypress-run-no-exit %}
+`--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
@@ -82,6 +118,8 @@ Typically, this is defined as an environment variable within your CI provider, d
 cypress run --ci-build-id BUILD_NUMBER
 ```
 
+Read our {% url "parallelization" parallelization %} documentation to learn more.
+
 ### `cypress run --config <config>`
 
 Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
@@ -92,13 +130,27 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ### `cypress run --env <env>`
 
+Pass a single string variable.
+
 ```shell
 cypress run --env host=api.dev.local
 ```
 
+Pass several variables using commas and no spaces. Numbers are automatically converted from strings.
+
+```shell
+cypress run --env host=api.dev.local,port=4222
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress run --env flags='{"feature-a":true,"feature-b":false}'
+```
+
 ### `cypress run --group <name>`
 
-Group recorded tests together under a single run.
+{% url "Group recorded tests together" parallelization#Grouping-test-runs %} under a single run.
 
 ```shell
 cypress run --group develop-env
@@ -114,6 +166,8 @@ cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
 cypress run --group user-tests --spec 'cypress/integration/user/**/*
 ```
 
+{% url "Read more about grouping." parallelization#Grouping-test-runs %}
+
 ### `cypress run --headed`
 
 By default, Cypress will run tests in Electron headlessly.
@@ -126,7 +180,7 @@ cypress run --headed
 
 ### `cypress run --no-exit`
 
-To prevent Cypress from exiting after running tests with `cypress run`, use `--no-exit`.
+To prevent the Cypress Test Runner from exiting after running tests in a spec file, use `--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have access to **developer tools** after a `spec` has run.
 
@@ -136,17 +190,19 @@ cypress run --headed --no-exit
 
 ### `cypress run --parallel`
 
-Run recorded specs in parallel across multiple machines
+Run recorded specs in {% url "parallel" parallelization %} across multiple machines.
 
 ```shell
 cypress run --record --parallel
 ```
 
-You can additionally pass a `--group` flag so this shows up as a named group.
+You can additionally pass a `--group` flag so this shows up as a named {% url "group" parallelization#Grouping-test-runs %}.
 
 ```shell
 cypress run --record --parallel --group e2e-staging-specs
 ```
+
+Read our {% url "parallelization" parallelization %} documentation to learn more.
 
 ### `cypress run --port <port>`
 
@@ -212,7 +268,7 @@ Run tests specifying a single test file to run instead of all tests.
 cypress run --spec 'cypress/integration/examples/actions.spec.js'
 ```
 
-Run tests specifying a glob of where to look for test files *(Note: quotes required)*.
+Run tests within the folder matching the glob *(Note: quotes required)*.
 
 ```shell
 cypress run --spec 'cypress/integration/login/**/*'
@@ -295,8 +351,8 @@ cypress verify
 
 ## `cypress version`
 
-Output both the versions of the installed Cypress binary application and the NPM module.
-In most cases they will be the same, but they could be different if you have installed a different version of the NPM package and for some reason could not install the matching binary.
+Output both the versions of the installed Cypress binary application and the npm module.
+In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
 
 ```shell
 cypress version
@@ -334,26 +390,26 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
-# Debugging Commands
+# Debugging commands
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
 **On Mac or Linux:**
+
 ```shell
 DEBUG=cypress:* cypress open
 ```
-
 ```shell
 DEBUG=cypress:* cypress run
 ```
+
 **On Windows:**
 
 ```shell
 set DEBUG=cypress:*
 ```
-
 ```shell
-set DEBUG=cypress:*
+cypress run
 ```
 
 Cypress is a rather large and complex project involving a dozen or more submodules, and the default output can be overwhelming.

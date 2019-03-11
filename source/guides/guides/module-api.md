@@ -13,14 +13,14 @@ Just like the {% url "Command Line options" command-line %} for `cypress run`, y
 Option | Description
 ------ |  ---------
 `browser`  | Specify different browser to run tests in
-`ciBuildId` | Specify a unique identifier for a run to enable grouping or parallelization
+`ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
 `config`  | Specify configuration
 `env`  | Specify environment variables
-`group` | Group recorded tests together under a single run
+`group` | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
 `headed`  | Display the Electron browser instead of running headlessly
 `key`  | Specify your secret record key
 `noExit` | Keep Cypress open after all tests run
-`parallel` | Run recorded specs in parallel across multiple machines
+`parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
 `port`  | Override default port
 `project` | Path to a specific project
 `record`  | Whether to record the test run
@@ -76,17 +76,18 @@ cypress.run({
   "osName": "darwin",
   "osVersion": "14.5.0",
   "runs": [{
-    "stats": {...},
+    "error": null,
+    "hooks": [...],
     "reporter": "spec",
     "reporterStats": {...},
-    "hooks": [...],
-    "tests": [...],
-    "error": null,
-    "video": "User/janelane/my-app/cypress/videos/abc123.mp4",
     "screenshots": [],
+    "shouldUploadVideo": true,
     "spec": {...},
-    "shouldUploadVideo": true
+    "stats": {...},
+    "tests": [...],
+    "video": "User/janelane/my-app/cypress/videos/abc123.mp4"
   }],
+  "runUrl": "https://dashboard.cypress.io/projects/def456/runs/12",
   "startedTestsAt": "2018-07-11T17:53:35.463Z",
   "totalDuration": 212,
   "totalFailed": 1,

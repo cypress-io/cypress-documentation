@@ -8,7 +8,7 @@ const minimist = require('minimist')
 const debug = require('debug')('deploy')
 const questionsRemain = require('@cypress/questions-remain')
 const scrape = require('./scrape')
-const shouldDeploy = require('./should-deploy')
+const { shouldDeploy } = require('./should-deploy')
 const R = require('ramda')
 const la = require('lazy-ass')
 const is = require('check-more-types')
@@ -29,6 +29,7 @@ function cliOrAsk (property, ask, minimistOptions) {
     [property]: ask,
   })
   const options = minimist(process.argv.slice(2), minimistOptions)
+
   return askRemaining(options).then(R.prop(property))
 }
 
@@ -53,6 +54,7 @@ const getScrapeDocs = R.partial(cliOrAsk,
   ['scrape', promptToScrape, { boolean: 'scrape' }])
 
 function scrapeDocs (env, branch) {
+  debug('scraping documentation')
   console.log('')
 
   // if we aren't on master do nothing
@@ -66,6 +68,7 @@ function scrapeDocs (env, branch) {
   if (env !== 'production') {
     console.log('Skipping doc scraping because you deployed to:', chalk.cyan(env))
     console.log('Only scraping production deploy')
+
     return
   }
 
@@ -82,8 +85,10 @@ function deployEnvironmentBranch (env, branch) {
   la(is.unemptyString(branch), 'missing branch to deploy', branch)
   la(isValidEnvironment(env), 'invalid deploy environment', env)
 
+  debug('checking branch %s for environment %s', branch, env)
   checkBranchEnvFolder(branch)(env)
 
+  debug('uploading to S3 dist folder %s', distDir)
   uploadToS3(distDir, env)
   .then(() => scrapeDocs(env, branch))
   .then(() => {
@@ -96,11 +101,13 @@ function deployEnvironmentBranch (env, branch) {
 function doDeploy (env) {
   la(isValidEnvironment(env), 'invalid deploy environment', env)
   debug('getting current branch')
+
   return getBranch()
   .then((branch) => {
     console.log('deploying branch %s to environment %s',
       chalk.green(branch), chalk.blue(env))
     la(is.unemptyString(branch), 'invalid branch name', branch)
+
     return deployEnvironmentBranch(env, branch)
   })
 }
@@ -117,9 +124,13 @@ function deploy () {
     return shouldDeploy(env)
     .then((should) => {
       if (!should) {
-        console.log('nothing to deploy for environment %s', env)
+        console.log('should NOT deploy to environment %s', env)
+
         return false
       }
+
+      console.log('should deploy to environment %s', env)
+
       return doDeploy(env)
     })
   })

@@ -24,7 +24,7 @@ cy.viewport(preset, orientation, options)
 
 ```javascript
 cy.viewport(550, 750)    // Set viewport to 550px x 750px
-cy.viewport('iphone-6')  // Set viewport to 357px x 667px
+cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 ```
 
 ## Arguments
@@ -118,11 +118,11 @@ describe('Nav Menus', function () {
 ***Dynamically test multiple viewports***
 
 ```javascript
-const sizes = ['iphone-6', 'ipad-2', [1024, 768]] 
+const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
 
 describe('Logo', () => {
   sizes.forEach((size) => {
-    // make assertions on the logo using 
+    // make assertions on the logo using
     // an array of different viewports
     it(`Should display logo on ${size} screen`, () => {
       if (Cypress._.isArray(size)) {
@@ -227,7 +227,7 @@ cy.get('.navbar-toggle').should('be.visible').click()
 cy.get('.nav').find('a').should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log viewport](/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png)
 

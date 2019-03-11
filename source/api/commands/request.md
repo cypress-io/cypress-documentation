@@ -20,7 +20,7 @@ cy.request(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.request('http://dev.local/seed')    
+cy.request('http://dev.local/seed')
 ```
 
 ## Arguments
@@ -34,8 +34,8 @@ If you provide a non fully qualified domain name (FQDN), Cypress will make its b
 1. If you make a `cy.request()` after  visiting a page, Cypress assumes the url used for the `cy.visit()` is the host.
 
   ```javascript
-  cy.visit('http://localhost:8080/app')
-  cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
+cy.visit('http://localhost:8080/app')
+cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
   ```
 
 2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of `cypress.json`.
@@ -49,7 +49,7 @@ If you provide a non fully qualified domain name (FQDN), Cypress will make its b
   ```
 
   ```javascript
-  cy.request('seed/admin') // url is http://localhost:1234/seed/admin
+cy.request('seed/admin') // url is http://localhost:1234/seed/admin
   ```
 
 3. If Cypress cannot determine the host it will throw an error.
@@ -128,11 +128,12 @@ cy.request('DELETE', 'http://localhost:8888/users/827')
 ***Send a `POST` request with a JSON body***
 
 ```javascript
-cy.request('POST', 'http://localhost:8888/users/admin', {name: 'Jane'})
+cy
+  .request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' })
   .then((response) => {
     // response.body is automatically serialized into JSON
     expect(response.body).to.have.property('name', 'Jane') // true
-})
+  })
 ```
 
 ## Options
@@ -145,9 +146,9 @@ The `redirectedToUrl` property is a special Cypress property that normalizes the
 
 ```javascript
 cy.request({
-    url: '/dashboard',
-    followRedirect: false // turn off following redirects
-  })
+  url: '/dashboard',
+  followRedirect: false // turn off following redirects
+})
   .then((resp) => {
     // redirect status code is 302
     expect(resp.status).to.eq(302)
@@ -163,14 +164,14 @@ Using `cy.request()`, we can bypass all of this because it automatically gets an
 
 ```javascript
 cy.request({
-    method: 'POST',
-    url: '/login_with_form', // baseUrl is prepended to url
-    form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
-    body: {
-      username: 'jane.lane',
-      password: 'password123'
-    }
-  })
+  method: 'POST',
+  url: '/login_with_form', // baseUrl is prepended to url
+  form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
+  body: {
+    username: 'jane.lane',
+    password: 'password123'
+  }
+})
 
 // just to prove we have a session
 cy.getCookie('cypress-session-cookie').should('exist')
@@ -204,7 +205,7 @@ function req () {
 
       // else recurse
       req()
-    })  
+    })
 }
 
 cy
@@ -244,11 +245,11 @@ Before sending the HTTP request, we automatically attach cookies that would have
 
 In other words, `cy.request()` transparently performs all of the underlying functions as if it came from the browser.
 
-## `cy.request()` can not be used to debug {% url `cy.server()` server %} and {% url `cy.route()` route %}
+## `cy.request()` cannot be used to debug {% url `cy.server()` server %} and {% url `cy.route()` route %}
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 # Rules
 
@@ -277,7 +278,7 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log request](/img/api/request/testing-request-url-and-its-response-body-headers.png)
 

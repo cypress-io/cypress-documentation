@@ -3,7 +3,7 @@ title: Cypress.arch
 
 ---
 
-`Cypress.arch` returns you the CPU architecture name of the underlying OS, as returned from Node's [`os.arch()`](https://nodejs.org/api/os.html#os_os_arch).
+`Cypress.arch` returns you the CPU architecture name of the underlying OS, as returned from Node's {% url "`os.arch()`" https://nodejs.org/api/os.html#os_os_arch %}.
 
 Even though Cypress runs in the browser, it automatically makes this property available for use in your tests.
 
@@ -19,7 +19,7 @@ Cypress.arch // 'x64'
 
 ```javascript
 it('has expected CPU architecture', function () {
-    expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
+  expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
 })
 ```
 

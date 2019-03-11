@@ -119,7 +119,7 @@ cy
   .find('input[type="checkbox"]').first().uncheck()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/uncheck/test-unchecking-a-checkbox.png)
 

@@ -3,7 +3,7 @@ title: Writing and Organizing Tests
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to organize your test and support files.
 - What languages are supported in your test files.
@@ -60,7 +60,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
-You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration %} for more detail.
+You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
 {% note info "What files should I add to my '.gitignore file' ?" %}
 Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
@@ -68,13 +68,13 @@ Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} an
 
 ## Fixture Files
 
-Fixtures are used as external pieces of static data that can be used by your tests.
+Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in `cypress/fixtures` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory.
 
 You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
 
 ## Test files
 
-Test files may be written as:
+Test files are located in `cypress/integration` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory. Test files may be written as:
 
 - `.js`
 - `.jsx`
@@ -95,11 +95,15 @@ To start writing tests for your app, simply create a new file like `app_spec.js`
 
 By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
+The initial imported plugins file can be {% url 'configured to another file' configuration#Folders-Files %}. 
+
 {% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
 
 ## Support file
 
 By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+
+The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
 The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
 
@@ -107,7 +111,7 @@ You can define your behaviors in a `beforeEach` within any of the `cypress/suppo
 
 ```javascript
 beforeEach(function () {
-  cy.log("I run before every test in every spec file!!!!!!")
+  cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
 ![global hooks](/img/guides/global-hooks.png)
@@ -228,15 +232,15 @@ To run a specified suite or test, simply append `.only` to the function. All nes
 // -- Start: Our Application Code --
 function fizzbuzz (num) {
   if (num % 3 === 0 && num % 5 === 0) {
-    return "fizzbuzz"
+    return 'fizzbuzz'
   }
 
   if (num % 3 === 0) {
-    return "fizz"
+    return 'fizz'
   }
 
   if (num % 5 === 0) {
-    return "buzz"
+    return 'buzz'
   }
 }
 // -- End: Our Application Code --
@@ -252,15 +256,15 @@ describe('Unit Test FizzBuzz', function () {
   }
 
   it.only('returns "fizz" when number is multiple of 3', function () {
-    numsExpectedToEq([9, 12, 18], "fizz")
+    numsExpectedToEq([9, 12, 18], 'fizz')
   })
 
   it('returns "buzz" when number is multiple of 5', function () {
-    numsExpectedToEq([10, 20, 25], "buzz")
+    numsExpectedToEq([10, 20, 25], 'buzz')
   })
 
   it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
-    numsExpectedToEq([15, 30, 60], "fizzbuzz")
+    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
 
@@ -270,7 +274,7 @@ To skip a specified suite or test, simply append `.skip()` to the function. All 
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function () {
-  numsExpectedToEq([9, 12, 18], "fizz")
+  numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
 

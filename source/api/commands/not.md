@@ -96,7 +96,7 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 cy.get('form').find('button').not('[type="submit"]')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log not](/img/api/not/filter-elements-with-not-and-optional-selector.png)
 

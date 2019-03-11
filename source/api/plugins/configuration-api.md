@@ -40,7 +40,7 @@ If you don't return an object, then configuration will not be modified.
 
 Resolved values will show up in your Settings tab.
 
-{% img /img/guides/plugin-configuration.png %}
+{% img /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
 
 ## Promises
 
@@ -70,8 +70,14 @@ You could now swap out configuration + environment variables like so:
 
 ```shell
 cypress run
+```
+```shell
 cypress run --env configFile=qa
+```
+```shell
 cypress run --env configFile=staging
+```
+```shell
 cypress run --env configFile=production
 ```
 

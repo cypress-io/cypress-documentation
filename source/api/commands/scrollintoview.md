@@ -58,7 +58,7 @@ cy.get('button#checkout').scrollIntoView()
 ### Use linear easing animation to scroll
 
 ```javascript
-cy.get('.next-page').scrollIntoView({ easing: 'linear' } )
+cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 ```
 
 ### Scroll to element over 2000ms
@@ -98,7 +98,7 @@ cy.get('#scroll-horizontal button').scrollIntoView()
   .should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 {% img /img/api/scrollintoview/command-log-for-scrollintoview.png "command log scrollintoview" %}
 

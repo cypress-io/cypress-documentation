@@ -103,7 +103,7 @@ You can find the current Node version we use {% url 'here' https://github.com/cy
 
 {% endnote %}
 
-## NPM modules
+## npm modules
 
 When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any Node module** you have installed.
 

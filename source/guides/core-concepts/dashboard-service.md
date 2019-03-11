@@ -3,7 +3,7 @@ title: Dashboard Service
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to set up a project to have its tests recorded.
 - What you see in the Dashboard Service for recorded tests.
@@ -23,10 +23,12 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 - See how fast your spec files ran within CI including whether they were run in parallel.
 - See related groupings of tests.
 - Manage who has access to your recorded test data.
+- See usage details for each organization.
+- Pay for your selected billing plan.
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-***See Tests Runs in the Test Runner***
+***See tests runs in the Test Runner***
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -36,7 +38,7 @@ Additionally we've integrated the tests run into the Cypress {% url 'Test Runner
 {% url "We have answered some common questions about the Dashboard Service in our FAQ." dashboard-faq %}.
 {% endnote %}
 
-## Example Projects
+## Example projects
 
 Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboard %} you can view any {% urlHash "public project" Public-vs-Private %}.
 
@@ -61,7 +63,7 @@ To set up your project to record, you must use the {% url "Test Runner" test-run
 Make sure you {% url "install" installing-cypress %} and {% url "open" installing-cypress#Opening-Cypress %} it first!
 {% endnote %}
 
-***To set up a project to record:***
+### To set up a project to record:
 
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
@@ -69,13 +71,13 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 2. You will need to log in to record your tests, so you may need to log in with GitHub here.
 3. Click **Setup Project to Record**.
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
-5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in Github. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
+5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
   - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
-9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
+9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
@@ -110,9 +112,15 @@ Once you set up your project to record, we generate a unique `projectId` for you
 }
 ```
 
-This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**. We recommend that you check your `cypress.json` including the `projectId` into source control.
+This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
-***Record Key {% fa fa-key %}***
+If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
+
+```shell
+export CYPRESS_PROJECT_ID={projectId}
+```
+
+### Record key {% fa fa-key %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
@@ -148,6 +156,16 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
+### To change project access
+
+Click into the project you'd like to change access to, then click **Settings** in the top right corner.
+
+{% img /img/dashboard/project-settings.png "project-settings" %}
+
+Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+
+{% img /img/dashboard/access-to-runs.png "access-to-runs" %}
+
 ## Transfer ownership
 
 You can transfer projects that you own to another {% urlHash "organization" Organizations %} you are a part of or to another user in the organization. Projects can only be transferred from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
@@ -157,6 +175,11 @@ You can transfer projects that you own to another {% urlHash "organization" Orga
 ## Delete
 
 You can delete projects you own. This will also delete all of their recorded test runs. Deleting projects can only be done from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
+
+1. Click into 'Runs' in the Dashboard.
+2. Click on the project you want to delete from the lefthand sidebar.
+3. On this page, to the far right, click on 'Settings'.
+4. At the very bottom of the Settings page click the 'Remove Project' button.
 
 ![Delete project dialog](/img/dashboard/remove-project-dialog.png)
 
@@ -170,7 +193,7 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-***Run Details***
+### Run details
 
 Details of each run are displayed including:
 
@@ -184,7 +207,7 @@ Details of each run are displayed including:
 
 {% img /img/dashboard/run-details.png "run-details" %}
 
-### {% fa fa-file-code-o fa-fw %} Spec Files
+### {% fa fa-file-code-o fa-fw %} Spec files
 
 You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
 
@@ -206,13 +229,13 @@ If you had any failed tests, you can hover over the spec chart and click on the 
 
 {% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
 
-### {% fa fa-code fa-fw %} Standard Output
+### {% fa fa-code fa-fw %} Standard output
 
 Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
 You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
-{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output %}
+{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output" %}
 
 ***{% fa fa-picture-o fa-fw %} Screenshots***
 
@@ -222,9 +245,9 @@ All screenshots taken during the test run can be found in the **Screenshots** of
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
-{% url /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
+{% img /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
-### {% fa fa-exclamation-triangle fa-fw %} Test Failures
+### {% fa fa-exclamation-triangle fa-fw %} Test failures
 
 Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 
@@ -248,8 +271,7 @@ Organizations are used to group projects and manage access to those projects.
 - Create projects
 - Invite users
 - Transfer projects
-
-Once out of beta, organizations will also display usage and allow you to handle billing.
+- Pay for all of your projects usage.
 
 ## Create Org
 
@@ -263,7 +285,7 @@ By default, every user of Cypress is given a personal organization - named after
 
 ## Manage users
 
-***Inviting users***
+### Inviting users
 
 You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
@@ -276,7 +298,7 @@ You can invite users to Cypress from the {% url 'Dashboard Service' https://on.c
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-***User roles***
+### User roles
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -284,7 +306,7 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-***User requests***
+### User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
 

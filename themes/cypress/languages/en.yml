@@ -76,9 +76,10 @@ sidebar:
     reporters: Reporters
     typescript-support: TypeScript
     module-api: Module API
+    retry-ability: Retry-ability
   api:
-    introduction: Introduction
     api: API
+    table-of-contents: Table of Contents
     commands: Commands
     and: and
     as: as
@@ -162,6 +163,8 @@ sidebar:
     writefile: writeFile
     events: Events
     catalog-of-events: Catalog of Events
+    assertions: Assertions
+    all-assertions: All Assertions
     on: on
     once: once
     removelistener: removeListener
