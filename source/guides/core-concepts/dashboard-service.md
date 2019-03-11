@@ -77,7 +77,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
   - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
-9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
+9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
@@ -114,7 +114,7 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
-We recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
+If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
 
 ```shell
 export CYPRESS_PROJECT_ID={projectId}
@@ -155,6 +155,16 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 - **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
 - **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+
+### To change project access
+
+Click into the project you'd like to change access to, then click **Settings** in the top right corner.
+
+{% img /img/dashboard/project-settings.png "project-settings" %}
+
+Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+
+{% img /img/dashboard/access-to-runs.png "access-to-runs" %}
 
 ## Transfer ownership
 
