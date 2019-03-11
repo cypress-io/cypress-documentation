@@ -18,6 +18,7 @@ const { fa, helperIcon } = require('../lib/tags/icons')
 const video = require('../lib/tags/video')
 const changelog = require('../lib/tags/changelog')
 const history = require('../lib/tags/history')
+const aliases = require('../lib/tags/aliases')
 
 const tags = {
   // partials
@@ -60,6 +61,9 @@ const tags = {
 
   // changelog
   changelog: changelog,
+
+  // aliases
+  aliases: aliases,
 }
 
 // tags which require ending

@@ -86,3 +86,4 @@ When clicking on `document` within the command log, the console outputs the foll
 # See also
 
 - {% url `cy.window()` window %}
+- {% url 'Cypress `should` callback' https://glebbahmutov.com/blog/cypress-should-callback/ %}

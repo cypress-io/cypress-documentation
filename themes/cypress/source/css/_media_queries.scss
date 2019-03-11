@@ -12,18 +12,6 @@
   }
 }
 
-@media screen and(max-width: 860px) {
-  footer.wrapper .top {
-    flex-direction: column;
-    padding: 30px;
-
-    .footer-form {
-      text-align: center;
-      margin: 0 auto;
-    }
-  }
-}
-
 @media screen and(min-width: 769px) {
   .inner {
     padding: 0 $gutter-width;
@@ -72,6 +60,28 @@
   }
 }
 
+@media screen and(min-width: 1001px) {
+  a.article-edit-link {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1351px) {
+
+  .examples.tutorial {
+
+    .article-wrapper {
+      margin:60px 100px 60px 330px;
+    }
+  }
+
+  .media {
+    h2 {
+      font-size: 1.2em;
+    }
+  }
+}
+
 
 @media screen and(max-width: 1300px) {
   #lang-select-wrap {
@@ -88,22 +98,7 @@
   }
 }
 
-@media screen and(min-width: 1001px) {
-  a.article-edit-link {
-    display: block;
-  }
-}
-@media screen and (max-width: 1351px) {
-  .article-wrapper {
-    margin:60px 100px 60px 330px;
-  }
 
-  .media {
-    h2 {
-      font-size: 1.2em;
-    }
-  }
-}
 
 @media screen and(max-width: 1000px) {
 
@@ -152,6 +147,19 @@
     float: none;
   }
 }
+
+@media screen and(max-width: 860px) {
+  footer.wrapper .top {
+    flex-direction: column;
+    padding: 30px;
+
+    .footer-form {
+      text-align: center;
+      margin: 0 auto;
+    }
+  }
+}
+
 @media screen and(max-width: 769px) {
   #logo img {
     padding-top: 4px;
@@ -161,10 +169,18 @@
     padding-top: 0;
   }
 
+  .examples.tutorial {
+     .article-wrapper {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+  }
+
   .article-wrapper {
     margin-left: 30px;
     margin-right: 30px;
   }
+ 
 
   #header-inner {
     flex-direction: column;

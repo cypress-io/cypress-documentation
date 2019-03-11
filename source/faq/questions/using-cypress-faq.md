@@ -226,6 +226,12 @@ Easy - you don't use classes or ID's. You add `data-*` attributes to your elemen
 
 Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
 
+## {% fa fa-angle-right %} I want to run tests only within one specific folder. How do I do this?
+
+You can specify which test files to run during {% url "`cypress run`" command-line#cypress-run %} by {% url "passing a glob to the `--spec` flag" command-line#cypress-run-spec-lt-spec-gt %} matching the files you want to run. You should be able to pass a glob matching the specific folder where the tests are you want to run.
+
+This feature is not available when using {% url "`cypress open`" command-line#cypress-open %} however.
+
 ## {% fa fa-angle-right %} Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
@@ -379,7 +385,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You can **not** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
+You **cannot** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
 
 ## {% fa fa-angle-right %} Some of my elements animate in, how do I work around that?
 
@@ -528,7 +534,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Helpers %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
@@ -561,4 +567,7 @@ If a test fails, Cypress takes a screenshot image, but does not print the list o
 
 ## {% fa fa-angle-right %} Can my tests interact with Redux / Vuex data store?
 
-Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to assert the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions. See {% url "Testing Vue web applications with Vuex data store & REST backend" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Vue-Vuex-REST-Testing %} recipe.
+Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to assert the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
+
+- see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Redux-Testing %} recipe.
+- see {% url "Testing Vue web applications with Vuex data store & REST backend" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Vue-Vuex-REST-Testing %} recipe.
