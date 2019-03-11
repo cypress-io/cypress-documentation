@@ -72,6 +72,11 @@
       link: https://github.com/bahmutov/cly
       keywords: [cypress cli,prototype,CLI,scaffolding]
 
+    - name: cypress-watch-and-reload
+      description: Reloads Cypress when one of the watched files changes
+      link: https://github.com/bahmutov/cypress-watch-and-reload
+      keywords: [file-watcher]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -118,7 +123,7 @@
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
       keywords: [ruby-rack, ruby-on-rails]
-    
+
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
@@ -149,12 +154,22 @@
       link: https://picklejs.com
       keywords: [cucumber, collection, actions, commands]
 
+    - name: cypress-plugin-tab
+      description: A Cypress plugin to add a tab command
+      link: https://github.com/Bkucera/cypress-plugin-tab
+      keywords: [commands]
+
 - name: Authentication
   plugins:
     - name: cypress-ntlm-auth
       description: NTLM authentication support for Cypress
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
+
+    - name: cypress-social-logins
+      description: Cypress authentication flows using social network providers
+      link: https://github.com/lirantal/cypress-social-logins
+      keywords: [authentication, login, social profiles, github, google]
 
 - name: Framework Tooling
   plugins:
@@ -255,3 +270,8 @@
       description: Merges multiple mochawesome JSON reports
       link: https://github.com/antontelesh/mochawesome-merge
       keywords: [reporter, mochawesome]
+
+    - name: cypress-slack-healthcheck
+      description: A simple tool which integrates Cypress with Slack to report failing tests.
+      link: https://github.com/bdimitrovski/cypress-healthcheck
+      keywords: [reporter, slack, healthcheck]
