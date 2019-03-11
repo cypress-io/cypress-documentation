@@ -195,6 +195,10 @@ The `cy.now()` command is an internal command and may change in the future.
 
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
 
+{% note info Using the `--browser` command line argument %}
+You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
+{% endnote %}
+
 To see debug logs from the browser launcher, run Cypress with the `DEBUG` environment variable set to `cypress:launcher`.
 
 ### Mac
@@ -211,10 +215,10 @@ Browser Name | Expected Bundle Identifier | Expected Executable
 
 On Linux, Cypress scans your `PATH` for a number of different binary names. If the browser you are trying to use does not exist under one of the expected binary names, Cypress will not be able to find it.
 
-Browser Name | Expected Binary Name
+Browser Name | Expected Binary Name(s)
 --- | ---
-`chrome` | `google-chrome`
-`chromium` | `chromium-browser`
+`chrome` | `google-chrome`, `chrome`, or `google-chrome-stable`
+`chromium` | `chromium-browser` or `chromium`
 `canary` | `google-chrome-canary`
 
 These binary names should work for most Linux distributions. If your distribution packages browsers under a different binary name, you can add a symlink using the expected binary name so that Cypress can detect it.
@@ -235,7 +239,7 @@ Browser Name | Expected Path
 `chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
 `canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
 
-To use a browser installed at a different path, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
+To make a browser installed at a different path be auto-detected, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 

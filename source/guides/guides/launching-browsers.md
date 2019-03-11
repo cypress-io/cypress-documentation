@@ -61,7 +61,21 @@ Or Chrome Canary:
 cypress run --browser canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
+{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Browser-detection %}
+
+## Launching by a path
+
+You can launch any supported browser by specifying a path to the binary:
+
+```shell
+cypress run --browser /usr/bin/chromium
+# or
+cypress open --browser /usr/bin/chromium
+```
+
+Cypress will automatically detect the type of browser supplied and launch it for you.
+
+{% url 'See the Command Line guide for more information about the `--browser` arguments' command-line %}
 
 ## Unsupported Browsers
 
