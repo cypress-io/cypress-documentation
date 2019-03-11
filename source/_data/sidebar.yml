@@ -10,6 +10,7 @@ guides:
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
+    retry-ability: retry-ability.html
     interacting-with-elements: interacting-with-elements.html
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html

@@ -8,9 +8,7 @@ Use `cy.route()` to manage the behavior of network requests.
 **Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
 {% endnote %}
 
-{% note warning %}
-Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
-{% endnote %}
+{% partial network_stubbing_warning %}
 
 # Syntax
 
@@ -418,7 +416,7 @@ Cypress also logs whether the XHR was stubbed or not to the console when you cli
 
 Even the `Initiator` is included, which is a stack trace to what caused the XHR to be sent.
 
-## `cy.route()` can not be debugged using {% url `cy.request()` request %}
+## `cy.route()` cannot be debugged using {% url `cy.request()` request %}
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 

@@ -449,7 +449,7 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 You passed the `--parallel` flag, but this run group was originally created without the `--parallel` flag.
 
-You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+You cannot use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
 
 Please review our {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 

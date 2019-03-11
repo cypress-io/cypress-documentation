@@ -32,11 +32,6 @@
 
 - name: Development Tools
   plugins:
-    - name: Applitools
-      description: Fast, easy and reliable visual UI testing with Cypress
-      link: https://applitools.com/tutorials/cypress.html
-      keyword: [screenshots, visual regression, visual-ai]
-
     - name: CircleCI Cypress Orb
       description: Official Cypress Orb for CircleCI configuration.
       link: https://github.com/cypress-io/circleci-orb
@@ -58,19 +53,29 @@
       keywords: [eslint]
 
     - name: Knapsack Pro Cypress
-      description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds.
+      description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.
       link: https://github.com/KnapsackPro/knapsack-pro-cypress
       keywords: [CI parallelisation, continuous-integration]
-
-    - name: Percy
-      description: Visual regression testing for Cypress tests with Percy.
-      link: https://docs.percy.io/docs/cypress
-      keywords: [screenshots, visual regression]
 
     - name: TypeScript
       description: Official TypeScript definitions for the Cypress API.
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
+
+    - name: cypress-plugin-retries
+      description: A Cypress plugin to retry failed tests.
+      link: https://github.com/Bkucera/cypress-plugin-retries
+      keywords: [cypress-plugin-retries]
+
+    - name: cly
+      description: A prototype of generating quicker project scaffolding for Cypress.
+      link: https://github.com/bahmutov/cly
+      keywords: [cypress cli,prototype,CLI,scaffolding]
+
+    - name: cypress-watch-and-reload
+      description: Reloads Cypress when one of the watched files changes
+      link: https://github.com/bahmutov/cypress-watch-and-reload
+      keywords: [file-watcher]
 
 - name: Custom Commands
   plugins:
@@ -84,11 +89,6 @@
       link: https://github.com/intuit/cyphfell
       keywords: [wdio]
 
-    - name: cypressautomocker
-      description: Allow recording API results and replaying the APIs as a mock server.
-      link: https://github.com/scottschafer/cypressautomocker
-      keywords: [routing, mock]
-
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
       link: https://github.com/avanslaars/cypress-axe
@@ -99,35 +99,30 @@
       link: https://github.com/testdouble/cypress-capybara
       keywords: [testing-library, capybara]
 
+    - name: cypress-drag-drop
+      description: Adds a cypress child command for drag'n'drop support.
+      link: https://github.com/4teamwork/cypress-drag-drop
+      keywords: [dragndrop, drag, drop, commands]
+
+    - name: cypress-file-upload
+      description: Simple custom command to ease file upload testing
+      link: https://github.com/abramenal/cypress-file-upload
+      keywords: [fileupload, file, upload, commands]
+
     - name: cypress-firebase
       description: Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).
       link: https://github.com/prescottprue/cypress-firebase
       keywords: [firebase, database, commands]
 
+    - name: cypress-graphql-mock
+      description: Adds commands for executing a mocked GraphQL server using only the client
+      link: https://github.com/tgriesser/cypress-graphql-mock
+      keywords: [graphql]
+
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
       keywords: [ruby-rack, ruby-on-rails]
-
-    - name: cypress-testing-library
-      description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
-      link: https://github.com/kentcdodds/cypress-testing-library
-      keywords: [testing-library, dom-testing-library, react-testing-library]
-
-    - name: Cypress Image Snapshot
-      description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
-      link: https://github.com/palmerhq/cypress-image-snapshot
-      keywords: [image-diff, snapshot]
-
-    - name: Cypress Visual Regression
-      description: Adds visual regression testing to Cypress
-      link: https://github.com/mjhea0/cypress-visual-regression
-      keywords: [image-diff, snapshot]
-
-    - name: PickleJS
-      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
-      link: https://picklejs.com
-      keywords: [cucumber, collection, actions, commands]
 
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
@@ -139,37 +134,30 @@
       link: https://github.com/meinaart/cypress-plugin-snapshots
       keywords: [snapshot]
 
-    - name: cypress-graphql-mock
-      description: Adds commands for executing a mocked GraphQL server using only the client
-      link: https://github.com/tgriesser/cypress-graphql-mock
-      keywords: [graphql]
+    - name: cypress-testing-library
+      description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
+      link: https://github.com/kentcdodds/cypress-testing-library
+      keywords: [testing-library, dom-testing-library, react-testing-library]
 
     - name: cypress-xpath
       description: Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.
       link: https://github.com/cypress-io/cypress-xpath
       keywords: [xpath, commands]
 
-    - name: cypress-drag-drop
-      description: Adds a cypress child command for drag'n'drop support.
-      link: https://github.com/4teamwork/cypress-drag-drop
-      keywords: [dragndrop, drag, drop, commands]
+    - name: cypressautomocker
+      description: Allow recording API results and replaying the APIs as a mock server.
+      link: https://github.com/scottschafer/cypressautomocker
+      keywords: [routing, mock]
 
-- name: Reporting
-  plugins:
-    - name: cypress-failed-log
-      description: Saves the Cypress test command log as a JSON file if a test fails.
-      link: https://github.com/bahmutov/cypress-failed-log
-      keywords: [reporter]
+    - name: PickleJS
+      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
+      link: https://picklejs.com
+      keywords: [cucumber, collection, actions, commands]
 
-    - name: cypress-testrail-reporter
-      description: Custom reporter for publishing Cypress results to a TestRail test run.
-      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
-      keywords: [testrail, reporter]
-
-    - name: mochawesome-merge
-      description: Merges multiple mochawesome JSON reports
-      link: https://github.com/antontelesh/mochawesome-merge
-      keywords: [reporter, mochawesome]
+    - name: cypress-plugin-tab
+      description: A Cypress plugin to add a tab command
+      link: https://github.com/Bkucera/cypress-plugin-tab
+      keywords: [commands]
 
 - name: Authentication
   plugins:
@@ -178,8 +166,18 @@
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
 
+    - name: cypress-social-logins
+      description: Cypress authentication flows using social network providers
+      link: https://github.com/lirantal/cypress-social-logins
+      keywords: [authentication, login, social profiles, github, google]
+
 - name: Framework Tooling
   plugins:
+    - name: Cypress Angular Schematic
+      description: Angular CLI addition that allows you to install Cypress E2E to an Angular CLI project
+      link: https://github.com/briebug/cypress-schematic
+      keywords: [angular, cli]
+
     - name: Vue CLI
       description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
@@ -227,3 +225,53 @@
       description: Test Vue.js components using Cypress.io test runner
       link: https://github.com/bahmutov/cypress-vue-unit-test
       keywords: [component, vue, vue.js]
+
+- name: Visual Testing
+  description:
+  plugins:
+    - name: Applitools
+      description: Fast, easy and reliable visual UI testing with Cypress
+      link: https://applitools.com/tutorials/cypress.html
+      keyword: [screenshots, visual regression, visual-ai]
+
+    - name: Percy
+      description: Visual regression testing for Cypress tests with Percy.
+      link: https://docs.percy.io/docs/cypress
+      keywords: [screenshots, visual regression]
+
+    - name: Cypress Image Snapshot
+      description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
+      link: https://github.com/palmerhq/cypress-image-snapshot
+      keywords: [image-diff, snapshot]
+
+    - name: Cypress Visual Regression
+      description: Adds visual regression testing to Cypress
+      link: https://github.com/mjhea0/cypress-visual-regression
+      keywords: [image-diff, snapshot]
+
+    - name: cypress-blink-test
+      description: Module for adding visual regression testing to Cypress.
+      link: https://github.com/PatrickWalker/cypress-visual-regression
+      keywords: [image-diff, snapshot]
+
+- name: Reporting
+  plugins:
+    - name: cypress-failed-log
+      description: Saves the Cypress test command log as a JSON file if a test fails.
+      link: https://github.com/bahmutov/cypress-failed-log
+      keywords: [reporter]
+
+    - name: cypress-testrail-reporter
+      description: Custom reporter for publishing Cypress results to a TestRail test run.
+      link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
+      keywords: [testrail, reporter]
+
+    - name: mochawesome-merge
+      description: Merges multiple mochawesome JSON reports
+      link: https://github.com/antontelesh/mochawesome-merge
+      keywords: [reporter, mochawesome]
+
+    - name: cypress-slack-healthcheck
+      description: A simple tool which integrates Cypress with Slack to report failing tests.
+      link: https://github.com/bdimitrovski/cypress-healthcheck
+      keywords: [reporter, slack, healthcheck]

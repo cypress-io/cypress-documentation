@@ -137,6 +137,7 @@ Cypress should run on **all** CI providers. We have provided some example projec
 CI Provider | Example Project | Example Config
 ----------- | --------------- | --------------
 {% url "AppVeyor" https://appveyor.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "appveyor.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml %}
+{% url "Azure DevOps / VSTS CI / TeamFoundation" https://dev.azure.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
 {% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
 {% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
@@ -150,7 +151,7 @@ CI Provider | Example Project | Example Config
 {% url "Shippable" https://app.shippable.com/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "shippable.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/shippable.yml %}
 {% url "Solano" https://www.solanolabs.com/ %} | |
 {% url "TravisCI" https://travis-ci.org/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".travis.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml %}
-{% url "VSTS CI / TeamFoundation" https://visualstudio.microsoft.com/tfs/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
+
 
 
 ## Travis
@@ -162,8 +163,9 @@ language: node_js
 node_js:
   - 10
 cache:
-  npm: true
+  npm: true # this cashes ~/.npm folder on Travis
   directories:
+    # we also need to cache folder with Cypress binary
     - ~/.cache
 install:
   - npm ci
@@ -186,19 +188,23 @@ A typical project can simply have:
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.0.0
+  # "cypress-io/cypress@1" installs the latest published
+  # version "1.x.y" of the orb. We recommend you then use
+  # the strict explicit version "cypress-io/cypress@1.x.y"
+  # to lock the version and prevent unexpected CI changes
+  cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
       - cypress/run # "run" job comes from "cypress" orb
 ```
 
-A more complex project that needs to install dependencies, build an application and run tests across 10 CI machines {% url "in parallel" parallelization %} may have:
+A more complex project that needs to install dependencies, build an application and run tests across 4 CI machines {% url "in parallel" parallelization %} may have:
 
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.0.0
+  cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
@@ -209,14 +215,14 @@ workflows:
             - cypress/install
           record: true        # record results on Cypress Dashboard
           parallel: true      # split all specs across machines
-          parallelism: 10     # use 10 CircleCI machines to finish quickly
+          parallelism: 4      # use 4 CircleCI machines to finish quickly
           group: 'all tests'  # name this group "all tests" on the dashboard
           start: 'npm start'  # start server before running tests
 ```
 
 In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
 
-You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %}.
+You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
 ### Example `circle.yml` v2 config file
 
@@ -242,6 +248,7 @@ jobs:
           command: npm ci
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          # cache NPM modules and the folder with the Cypress binary
           paths:
             - ~/.npm
             - ~/.cache

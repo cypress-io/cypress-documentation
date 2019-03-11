@@ -63,9 +63,7 @@ Option | Default | Description
 
 {% yields sets_subject cy.wait 'yields an object containing the HTTP request and response properties of the XHR' %}
 
-{% note warning %}
-Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
-{% endnote %}
+{% partial network_stubbing_warning %}
 
 # Examples
 
