@@ -90,7 +90,7 @@
     "git-last": "1.2.10",
     "got": "9.6.0",
     "gulp": "3.9.1",
-    "gulp-awspublish": "3.4.0",
+    "gulp-awspublish": "4.0.0",
     "gulp-clean": "0.4.0",
     "gulp-debug": "4.0.0",
     "gulp-rev-all": "1.0.0",
