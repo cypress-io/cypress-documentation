@@ -10,7 +10,7 @@ Enables you to work with the subject yielded from the previous command.
 {% endnote %}
 
 {% note info %}
-**Note:** Prefer {% url '`.should()` with callback' should#Function %} over `.then()` for assertions as they are automatically rerun until no assertions throw within it but be aware of {% url 'differences' #Differences %}.
+**Note:** Prefer {% url '`.should()` with callback' should#Function %} over `.then()` for assertions as they are automatically rerun until no assertions throw within it but be aware of {% url 'differences' should#Differences %}.
 {% endnote %}
 
 # Syntax
