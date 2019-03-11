@@ -88,7 +88,7 @@
     "fs-extra": "7.0.1",
     "ggit": "2.4.11",
     "git-last": "1.2.10",
-    "got": "8.3.2",
+    "got": "9.6.0",
     "gulp": "3.9.1",
     "gulp-awspublish": "3.4.0",
     "gulp-clean": "0.4.0",
