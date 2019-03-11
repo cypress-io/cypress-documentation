@@ -119,7 +119,7 @@
     "textlint-rule-eslint": "3.1.0",
     "textlint-rule-terminology": "1.1.30",
     "underscore.string": "3.3.5",
-    "wait-on": "2.1.2",
+    "wait-on": "3.2.0",
     "yamljs": "0.3.0"
   },
   "dependencies": {
