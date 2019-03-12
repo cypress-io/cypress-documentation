@@ -168,9 +168,21 @@ Here you will see a section displaying **Access to Runs**. Choose the appropriat
 
 ## Transfer ownership
 
+### Transfer project to other user or organization
+
 You can transfer projects that you own to another {% urlHash "organization" Organizations %} you are a part of or to another user in the organization. Projects can only be transferred from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
 ![Transfer Project dialog](/img/dashboard/transfer-ownership-of-project-dialog.png)
+
+Upon transferring, you can cancel the transfer at any time by visiting the organization's projects and clicking 'Cancel Transfer'.
+
+![Cancel pending transfer of project](/img/dashboard/cancel-transfer-of-project.png)
+
+### Accept or reject transferred project
+
+When a project is transferred to you, you will receive an email notifying you. You will be able to accept or reject the transferred project by visiting your organization's projects and clicking 'Accept' or 'Reject'.
+
+![Accept or reject a transferred project](/img/dashboard/accept-or-reject-transfer-of-project.png)
 
 ## Delete
 

@@ -163,7 +163,9 @@ language: node_js
 node_js:
   - 10
 cache:
-  npm: true # this cashes ~/.npm folder on Travis
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
   directories:
     # we also need to cache folder with Cypress binary
     - ~/.cache
