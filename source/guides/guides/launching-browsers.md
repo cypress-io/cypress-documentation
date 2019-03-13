@@ -61,7 +61,7 @@ Or Chrome Canary:
 cypress run --browser canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Browser-detection %}
+{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
 
 ## Launching by a path
 
