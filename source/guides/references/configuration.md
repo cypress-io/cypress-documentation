@@ -248,6 +248,52 @@ Cypress modifies these scripts at the network level, and therefore there is a ti
 
 You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
 
+## Proxy Configuration
+
+Cypress can be configured to use an HTTP proxy if your organization requires you to use a proxy to access the Internet. Cypress needs Internet access to record test runs and to allow your tested application to access Internet resources, among other things.
+
+Cypress automatically reads an HTTP proxy from the `HTTP_PROXY` environment variable and uses it to proxy all HTTP and HTTPS traffic. If an `HTTPS_PROXY` environment variable is set, HTTPS traffic will use that proxy instead.
+
+To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied.
+
+To view your current proxy configuration inside of Cypress, open "Proxy Settings" inside of your project's "Settings" tab.
+
+{% note warning %}
+Proxy configuration using PAC files or proxies that use SOCKS are not supported at this time.
+{% endnote %}
+
+### Setting a proxy on Linux or macOS
+
+To set your proxy on Linux or macOS, run the following command in a terminal before running Cypress:
+
+```shell
+export HTTP_PROXY=http://my-company-proxy.com
+```
+
+You can also set `NO_PROXY` to bypass the proxy for certain domains:
+
+```shell
+export NO_PROXY=google.com,apple.com
+```
+
+To make these changes permanent, you can add these commands to your shell's `~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every login.
+
+### Setting a proxy on Windows
+
+Cypress will attempt to load the proxy configured in the Windows registry by default. {% url "Learn how to set your proxy settings system-wide in Windows." https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/ %}
+
+You can override this behavior by setting proxy environment variables before running Cypress:
+
+```shell
+set HTTP_PROXY=http://my-company-proxy.com
+```
+
+To save the `HTTP_PROXY` variable and use your proxy for all new shells, use `setx`:
+
+```shell
+setx HTTP_PROXY http://my-company-proxy.com
+```
+
 ## Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
