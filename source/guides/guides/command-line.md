@@ -271,19 +271,19 @@ cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=t
 Run tests specifying a single test file to run instead of all tests.
 
 ```shell
-cypress run --spec 'cypress/integration/examples/actions.spec.js'
+cypress run --spec "cypress/integration/examples/actions.spec.js"
 ```
 
-Run tests within the folder matching the glob *(Note: quotes required)*.
+Run tests within the folder matching the glob *(Note: Using double quotes is strongly recommended)*.
 
 ```shell
-cypress run --spec 'cypress/integration/login/**/*'
+cypress run --spec "cypress/integration/login/**/*"
 ```
 
 Run tests specifying multiple test files to run.
 
 ```shell
-cypress run --spec 'cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js'
+cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
 ```
 
 ## `cypress open`
