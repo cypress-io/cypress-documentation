@@ -273,7 +273,7 @@ export HTTP_PROXY=http://my-company-proxy.com
 You can also set `NO_PROXY` to bypass the proxy for certain domains:
 
 ```shell
-export NO_PROXY=google.com,apple.com
+export NO_PROXY=localhost,google.com,apple.com
 ```
 
 To make these changes permanent, you can add these commands to your shell's `~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every login.
