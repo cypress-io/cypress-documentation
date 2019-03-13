@@ -201,6 +201,10 @@ a.article-edit-link {
       line-height: 1.5em;
     }
 
+    td:last-child, th:last-child {
+      width: 100%;
+    }
+
     tr:nth-child(2n) {
       background: #fafafb;
     }
