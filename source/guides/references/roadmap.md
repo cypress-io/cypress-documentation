@@ -26,10 +26,11 @@ Feature | Status
 
 Feature | Status
 --- | ---
-{% issue 981 'Zapier Integration - #981' %} | In progress
+{% issue 1516 'Enterprise SSO - #1516' %} | In beta
+Open-source plan | In progress
 {% issue 981 'GitHub Integration - #981' %} | In progress
+{% issue 1691 'Run cancellation - #1691' %} | In progress
+{% issue 560 'IA refresh - #560' %} | In progress
+Integration with Visual Regression tools | No proposal yet
+Notification center | Proposal complete
 {% issue 448 'Capture Logs of Everything - #448' %} | Partially complete
-{% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
-{% issue 688 'Improve Failure Workflow - #688' %} | No proposal yet
-{% issue 689 'Analytics - #689' %} | No proposal yet
-On-Prem | No proposal yet
