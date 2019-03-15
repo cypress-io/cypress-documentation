@@ -243,6 +243,14 @@ To make a browser installed at a different path be auto-detected, create a symbo
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 
+## Chrome extension whitelisting
+
+Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company whitelist specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to whitelist the Cypress extension ID below:
+
+```sh
+caljajdfkjjjdehjdoimjkkakekklcck
+```
+
 ## Clear App Data
 
 Cypress maintains some local application data in order to save user preferences and more quickly start up. Sometimes this data can become corrupted. You may fix an issue you have by clearing this app data.
