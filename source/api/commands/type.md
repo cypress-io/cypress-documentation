@@ -39,13 +39,15 @@ Sequence | Notes
 `{% raw %}{{{% endraw %}}`| Types the literal `{` key
 `{backspace}` | Deletes character to the left of the cursor
 `{del}` | Deletes character to the right of the cursor
-`{downarrow}` | Fires down event but does **not** move the cursor
+`{downarrow}` | Moves cursor down
 `{enter}` | Types the Enter key
 `{esc}` | Types the Escape key
 `{leftarrow}` | Moves cursor left
 `{rightarrow}` | Moves cursor right
 `{selectall}` | Selects all text by creating a `selection range`
-`{uparrow}` | Fires up event but does **not** move the cursor
+`{uparrow}` | Moves cursor up
+`{home}` | Moves cursor to the start of the line
+`{end}` | Moves cursor to the end of the line
 
 Text passed to `.type()` may also include any of these modifier character sequences:
 
