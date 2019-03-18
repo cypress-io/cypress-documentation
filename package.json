@@ -111,7 +111,7 @@
     "sinon": "7.2.7",
     "sinon-chai": "3.3.0",
     "snap-shot-it": "6.2.10",
-    "start-server-and-test": "1.7.11",
+    "start-server-and-test": "1.7.12",
     "stop-only": "3.0.1",
     "textlint": "11.2.3",
     "textlint-filter-rule-comments": "1.2.2",
