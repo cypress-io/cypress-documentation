@@ -100,4 +100,4 @@ You can delete your Cypress account from {% url "your Dashboard profile" https:/
 
 Downgrading your account will **not** result in loss of access to your Dashboard.
 
-It will, however, make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and private test recordings to 500 per billing period.
+However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and private test recordings to 500 per billing period.
