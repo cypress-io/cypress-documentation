@@ -96,3 +96,8 @@ We are working on implementing run deletion. {% url "Track the issue." https://g
 
 You can delete your Cypress account from {% url "your Dashboard profile" https://dashboard.cypress.io/#/profile %}. Deleting your account cannot be undone! By deleting your Cypress account, all associated data in your account will be permanently deleted.
 
+## {% fa fa-angle-right %} What happens to my Dashboard if I downgrade my account?
+
+Downgrading your account will **not** result in loss of access to your Dashboard.
+
+However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and private test recordings to 500 per billing period.
