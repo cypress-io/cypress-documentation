@@ -63,6 +63,20 @@ cypress run --browser canary
 
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
 
+## Launching by a path
+
+You can launch any supported browser by specifying a path to the binary:
+
+```shell
+cypress run --browser /usr/bin/chromium
+# or
+cypress open --browser /usr/bin/chromium
+```
+
+Cypress will automatically detect the type of browser supplied and launch it for you.
+
+{% url 'See the Command Line guide for more information about the `--browser` arguments' command-line %}
+
 ## Unsupported Browsers
 
 Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
