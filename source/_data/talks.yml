@@ -1,5 +1,14 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: 'There and Back Again: e2e Testing React with Cypress'
+    url: https://www.youtube.com/watch?v=I3WJhutZovw
+    sourceName: Grow IT Conf
+    sourceUrl: https://2018.growit.events/
+    date: Jan 9, 2019
+    author: Nikola Duza
+    youtubeId: I3WJhutZovw
+    slides: https://slides.com/nikolalsvk/e2e-cypress
+
   - title: 'Cypress: The future of E2E testing'
     url: https://www.youtube.com/watch?v=pXyBligMMr0
     sourceName: NG-BE 2018

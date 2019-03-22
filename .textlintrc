@@ -56,6 +56,8 @@
 
         // Hyphenated
         ["end ?to ?end", "end-to-end"],
+        ["retryability", "retry-ability"],
+        ["retriability", "retry-ability"],
       ]
     }
   },

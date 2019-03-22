@@ -56,15 +56,15 @@ cy.on('page:start', (details) => {
 
 ```javascript
 it('can modify the window prior to page load on all pages', function () {
-  const stub = cy.stub()
+  const ga = cy.stub().as('ga')
 
   // prevent google analytics from loading and replace it with a stub before
   // every single page load including all new page navigations
   cy.on('page:start', ({ win }) => {
     Object.defineProperty(win, 'ga', {
       configurable: false,
-      writeable: false,
-      get: () => stub // always return the stub
+      get: () => ga, // always return the stub
+      set: () => {} // don't allow actual google analytics to overwrite this property
     })
   })
 

@@ -31,7 +31,7 @@ Option | Default | Description
 ## Timeouts
 
 {% note success Core Concept %}
-{% url 'Timeouts are a core concept' introduction-to-cypress#Default-Values %} you should understand well. The default values listed here are meaningful.
+{% url 'Timeouts are a core concept' introduction-to-cypress#Timeouts %} you should understand well. The default values listed here are meaningful.
 {% endnote %}
 
 Option | Default | Description
