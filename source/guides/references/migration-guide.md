@@ -85,7 +85,7 @@ If you listen for any of the following events in your test code, you'll need to 
 - Rename `window:alert` to `page:alert`
 - Rename `window:confirm` to `page:confirm`
 - Rename `window:before:load` to `page:start`
-- Rename `window:before:unload` to `before:window:unload`
+- Rename `window:before:unload` to `window:beforeunload`
 
 For example, in your test code...
 

@@ -39,6 +39,7 @@ Event                                                             | Description
 {% url `test:start` test-start-event %}                           | Fires before a test and all its **before** and **beforeEach** hooks run, with details about the test.
 {% url `uncaught:exception` uncaught-exception-event %}           | Fires after an uncaught exception occurs, with the error and the mocha runnable object.
 {% url `viewport:change` viewport-change-event %}                 | Fires after the viewport changes, with the new viewport dimensions.
+{% url `window:<event>` window-event %}                           | Fires when the specified window `<event>` fires.
 
 You can listen to browser events in your spec files or in your {% url "support file" writing-and-organizing-tests#Support-file %} via the `Cypress` and `cy` objects.
 

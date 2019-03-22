@@ -177,6 +177,7 @@ api:
     test-start-event: test-start-event.html
     uncaught-exception-event: uncaught-exception-event.html
     viewport-change-event: viewport-change-event.html
+    window-event: window-event.html
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html

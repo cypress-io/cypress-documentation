@@ -220,6 +220,7 @@ sidebar:
     page-confirm-event: page:confirm
     page-ready-event: page:ready
     page-end-event: page:end
+    window-event: window:&lt;event&gt;
   examples:
     examples: Examples
     recipes: Recipes
