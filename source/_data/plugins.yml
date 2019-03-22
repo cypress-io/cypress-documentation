@@ -30,6 +30,11 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
 
+    - name: cypress-select-tests
+      description: User space solution for grepping Cypress tests to run
+      link: https://github.com/bahmutov/cypress-select-tests
+      keywords: [browserify]
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
