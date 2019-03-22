@@ -109,14 +109,19 @@ describe('API', () => {
       })
 
       it('displays sidebar in mobile menu on click', () => {
+        const replaceHtmlEntities = (text) => {
+          return text.replace('&lt;', '<').replace('&gt;', '>')
+        }
+
         cy.get('#mobile-nav-toggle').click()
 
         cy.get('#mobile-nav-inner').should('be.visible')
         .find('.sidebar-li')
         .each(function (displayedLink, i) {
-          const englishLink = this.english.sidebar.api[this.sidebarLinkNames[i]]
+          const displayedLinkText = replaceHtmlEntities(displayedLink.text().trim())
+          const englishLink = replaceHtmlEntities(this.english.sidebar.api[this.sidebarLinkNames[i]])
 
-          expect(displayedLink.text().trim()).to.eq(englishLink)
+          expect(displayedLinkText).to.eq(englishLink)
         })
       })
     })
