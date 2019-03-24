@@ -275,3 +275,10 @@
       description: A simple tool which integrates Cypress with Slack to report failing tests.
       link: https://github.com/bdimitrovski/cypress-healthcheck
       keywords: [reporter, slack, healthcheck]
+
+- name: Fixture encoding
+  plugins:
+    - name: cypress-protobuf
+      description: Encode a fixture with Protocol Buffers.
+      link: https://github.com/NoriSte/cypress-protobuf
+      keywords: [encoding, protobuf]
