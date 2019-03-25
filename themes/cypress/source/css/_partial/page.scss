@@ -207,6 +207,10 @@ a.article-edit-link {
 
     td:last-child, th:last-child {
       width: 100%;
+
+      code {
+        white-space: normal;
+      }
     }
 
     tr:nth-child(2n) {
