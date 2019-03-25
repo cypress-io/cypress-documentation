@@ -30,11 +30,6 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
 
-    - name: cypress-select-tests
-      description: User space solution for grepping Cypress tests to run
-      link: https://github.com/bahmutov/cypress-select-tests
-      keywords: [browserify]
-
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
@@ -46,7 +41,7 @@
       description: Several color themes for Cypress test runner
       link: https://github.com/bahmutov/cypress-dark
       keywords: [theme]
-      
+
     - name: cypress-protobuf
       description: Encode a fixture with Protocol Buffers.
       link: https://github.com/NoriSte/cypress-protobuf
@@ -86,6 +81,11 @@
       description: Reloads Cypress when one of the watched files changes
       link: https://github.com/bahmutov/cypress-watch-and-reload
       keywords: [file-watcher]
+
+    - name: cypress-select-tests
+      description: User space solution for grepping Cypress tests to run
+      link: https://github.com/bahmutov/cypress-select-tests
+      keywords: [browserify]
 
 - name: Custom Commands
   plugins:
