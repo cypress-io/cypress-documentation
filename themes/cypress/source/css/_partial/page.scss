@@ -201,6 +201,10 @@ a.article-edit-link {
       line-height: 1.5em;
     }
 
+    td:not(:last-child), th:not(:last-child) {
+      white-space: nowrap;
+    }
+
     td:last-child, th:last-child {
       width: 100%;
     }
