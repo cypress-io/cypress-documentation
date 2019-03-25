@@ -41,6 +41,11 @@
       description: Several color themes for Cypress test runner
       link: https://github.com/bahmutov/cypress-dark
       keywords: [theme]
+      
+    - name: cypress-protobuf
+      description: Encode a fixture with Protocol Buffers.
+      link: https://github.com/NoriSte/cypress-protobuf
+      keywords: [encoding, protobuf]
 
     - name: Docker
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
