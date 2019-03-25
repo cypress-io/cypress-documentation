@@ -4,9 +4,9 @@ title: window:&lt;event&gt;
 
 You can use the `window:<event>` event to listen for arbitrary events on the page's `window`, where `<event>` is any event name that can be listened for on a page's `window`. This is the same as listening to the events with `window.addEventListener` with the following advantages:
 
-* You can listen before the page has loaded (before `cy.visit`) and the listener will be bound once the page loads
-* If the page changes or transitions, the listener will be re-bound when the new page loads
-* If you listen with `cy.on` (as opposed to `Cypress.on`), the listener will be unbound when the test ends
+* You can listen before the page has loaded (before {% url "`cy.visit()`" visit %}) and the listener will be bound once the page loads.
+* If the page changes or transitions, the listener will be re-bound when the new page loads.
+* If you listen with `cy.on` (as opposed to `Cypress.on`), the listener will be unbound when the test ends.
 
 There are a large number of events you can listen to. {% url "View this reference" https://developer.mozilla.org/en-US/docs/Web/Events %} for list of many of them.
 
