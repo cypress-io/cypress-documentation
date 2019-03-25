@@ -181,6 +181,11 @@
       link: https://github.com/lirantal/cypress-social-logins
       keywords: [authentication, login, social profiles, github, google]
 
+    - name: cypress-otp
+      description: Valid OTP token generation for Cypress
+      link: https://github.com/NoriSte/cypress-otp
+      keywords: [authentication, otp, 2fa, mfa]
+
 - name: Framework Tooling
   plugins:
     - name: Cypress Angular Schematic
