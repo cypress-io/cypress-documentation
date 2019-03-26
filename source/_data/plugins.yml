@@ -170,6 +170,7 @@
       keywords: [commands]
 
 - name: Authentication
+  description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
   plugins:
     - name: cypress-ntlm-auth
       description: NTLM authentication support for Cypress
