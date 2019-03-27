@@ -1,3 +1,4 @@
+{# a template to render plugins YAML file #}
 <div id="content-wrap" class="plugins">
   <div id="content" class="wrapper">
     <article itemscope itemtype="http://schema.org/Article">
@@ -10,7 +11,7 @@
         {% for pluginType in site.data.plugins %}
           <h2 id="{{ id(pluginType.name) }}"><a href="#{{ id(pluginType.name) }}">{{ pluginType.name }}</a></h2>
           {% if pluginType.description %}
-          <div class="plugin-type-description">{{ pluginType.description }}</div>
+          <div class="plugin-type-description">{% markdown %}{{ pluginType.description }}{% endmarkdown %}</div>
           {% endif %}
           <ul class="plugins-list">
             {% for plugin in order_by_name(pluginType.plugins) %}
