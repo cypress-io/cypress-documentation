@@ -8,6 +8,7 @@ Here's documentation for all the custom tags that we've created.
 
 - [Common Hexo tags](#common-hexo-tags)
   - [`img`](#img)
+  - [`markdown`](#markdown)
 - [Cypress custom tags](#cypress-custom-tags)
   - [`assertions`](#assertions)
   - [`changelog`](#changelog)
@@ -39,6 +40,14 @@ Insert the markup for an inline image.
 ```
 ```html
 <img src="/img/examples/name-of-file.jpg" alt="alt text describing img">
+```
+
+### `markdown`
+
+If you have text in YAML file with Markdown tags, and you want to render it from the SWIG template, use `{% markdown %}` tag:
+
+```text
+<div class="plugin-type-description">{% markdown %}{{ pluginType.description }}{% endmarkdown %}</div>
 ```
 
 ## Custom Cypress tags
@@ -230,7 +239,7 @@ Describe a timeout.
 </ul>
 ```
 
-Typically used inside the _Timeouts_ section when documenting a command. 
+Typically used inside the _Timeouts_ section when documenting a command.
 
 ```md
 ## Timeouts {% helper_icon timeout %}
@@ -351,7 +360,7 @@ Describe what a command yields.
 </ul>
 ```
 
-Typically used inside the _Yields_ section when documenting a command. 
+Typically used inside the _Yields_ section when documenting a command.
 
 ```md
 ## Yields {% helper_icon yields %}

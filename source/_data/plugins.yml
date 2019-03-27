@@ -42,6 +42,11 @@
       link: https://github.com/bahmutov/cypress-dark
       keywords: [theme]
 
+    - name: cypress-protobuf
+      description: Encode a fixture with Protocol Buffers.
+      link: https://github.com/NoriSte/cypress-protobuf
+      keywords: [encoding, protobuf]
+
     - name: Docker
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
       link: https://github.com/cypress-io/cypress-docker-images
@@ -76,6 +81,11 @@
       description: Reloads Cypress when one of the watched files changes
       link: https://github.com/bahmutov/cypress-watch-and-reload
       keywords: [file-watcher]
+
+    - name: cypress-select-tests
+      description: User space solution for grepping Cypress tests to run
+      link: https://github.com/bahmutov/cypress-select-tests
+      keywords: [browserify]
 
 - name: Custom Commands
   plugins:
@@ -160,6 +170,7 @@
       keywords: [commands]
 
 - name: Authentication
+  description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
   plugins:
     - name: cypress-ntlm-auth
       description: NTLM authentication support for Cypress
@@ -170,6 +181,11 @@
       description: Cypress authentication flows using social network providers
       link: https://github.com/lirantal/cypress-social-logins
       keywords: [authentication, login, social profiles, github, google]
+
+    - name: cypress-otp
+      description: Valid OTP token generation for Cypress
+      link: https://github.com/NoriSte/cypress-otp
+      keywords: [authentication, otp, 2fa, mfa]
 
 - name: Framework Tooling
   plugins:
