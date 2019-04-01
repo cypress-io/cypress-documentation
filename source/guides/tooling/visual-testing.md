@@ -46,3 +46,9 @@ cy.contains('.todo-list li', 'write tests')
 // now we can take the snapshot
 cy.mySnapshotCommand()
 ```
+
+- consider using visual diffing to check individual elements rather than the entire page. This will target the image comparison better to avoid the visual changes from breaking tests for the unrelated components.
+
+- you might want to look at the {% url "Component Testing plugins" plugins %} to load and test the individual components in addition to the regular end-to-end functional and visual tests.
+
+- consider the development costs of doing visual testing yourself vs using an external 3rd party provider. Storing, reviewing and analyzing image differences are non-trivial tasks, and they quickly becomes a chore when going with a DIY solution.
