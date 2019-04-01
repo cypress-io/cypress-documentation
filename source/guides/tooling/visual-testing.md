@@ -29,7 +29,7 @@ Luckily, Cypress gives a stable platform for writing plugins that _can perform v
 
 As a general rule we advise:
 
-- taking a snapshot for comparison after the page has performed the action. For example, if the snapshot command is `cy.mySnapshotCommand`:
+- to take a snapshot after the page has performed the action and we have confirmed this using an assertion. For example, if the snapshot command is `cy.mySnapshotCommand`:
 
 ```js
 // BAD - the web application might take longer
