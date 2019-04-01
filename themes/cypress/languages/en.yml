@@ -63,6 +63,7 @@ sidebar:
     assertions: Assertions
     creating-fixtures: Creating Fixtures
     best-practices: Best Practices
+    proxy-configuration: Proxy Configuration
     anti-patterns: Anti-patterns
     trade-offs: Trade-offs
     contributing: Contributing
