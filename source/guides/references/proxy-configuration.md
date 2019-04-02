@@ -67,6 +67,61 @@ Cypress automatically reads from your system's `HTTP_PROXY` environment variable
 
 To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied.
 
+If an uppercase and a lowercase version of the proxy settings are supplied (for example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable will be preferred.
+
+## View and set environment variables on Linux or macOS
+
+To set an environment variable for the current session, you can just use the `export` command:
+
+```shell
+export SOME_VARIABLE=some-value
+```
+
+To unset an environment variable, use the `unset` command:
+
+```shell
+unset SOME_VARIABLE
+echo $SOME_VARIABLE ## will print nothing
+```
+
+To see all the currently set environment variables, use `env`:
+
+```shell
+env ## prints all environment variables
+env | grep -i proxy ## prints all environment variables with `proxy` (case insensitive) in the name
+```
+
+## View and set environment variables on Windows
+
+Setting environment variables in Windows is different depending on if you're using command prompt or Powershell.
+
+To set an environment variable for the current session:
+
+```shell
+set SOME_VARIABLE=some-value  ## in command prompt
+$env:SOME_VARIABLE = "some-value"  ## in Powershell
+```
+
+To set it globally for all future sessions:
+
+```shell
+setx SOME_VARIABLE some-value
+```
+
+To unset an environment variable in the current session:
+
+```shell
+set SOME_VARIABLE=  ## in command prompt
+Remove-Item Env:\SOME_VARIABLE  ## in Powershell
+```
+
+To see all the currently set environment variables:
+
+```shell
+set  ## in command prompt
+Get-ChildItem Env:  ## in Powershell
+```
+
 # View proxy settings in Cypress
 
 Your current proxy settings can be viewed from within the Cypress Test Runner. Follow these steps:
