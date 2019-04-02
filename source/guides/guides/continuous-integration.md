@@ -118,7 +118,7 @@ cypress run --record --key=abc123
 
 ## Run tests in parallel
 
-Cypress can running tests in parallel across multiple machines.
+Cypress can run tests in parallel across multiple machines.
 
 You'll want to refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
 
