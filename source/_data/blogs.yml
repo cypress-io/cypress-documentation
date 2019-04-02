@@ -8,7 +8,7 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
- - title: "Testing an email workflow from end to end with Cypress"
+  - title: "Testing an email workflow from end to end with Cypress"
     url: https://humble.dev/testing-an-email-workflow-from-end-to-end-with-cypress
     sourceName: humbledev
     sourceUrl: https://humble.dev/
@@ -304,7 +304,7 @@ large:
     author: Kyle Galbraith
     img: /img/examples/kyle-galbraith-how-to-run.png
 
-  - title: “Spend more time coding, less time testing: Our Investment in Cypress.io”
+  - title: "Spend more time coding, less time testing: Our Investment in Cypress.io"
     url: https://www.linkedin.com/pulse/spend-more-time-coding-less-testing-our-investment-michael-droesch
     sourceName: LinkedIn Pulse
     sourceUrl:
@@ -376,7 +376,7 @@ large:
     author: Gil Tayar
     img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
 
-  - title: “Selenium vs. Cypress: Is WebDriver on Its Way Out?”
+  - title: "Selenium vs. Cypress: Is WebDriver on Its Way Out?"
     url: https://crossbrowsertesting.com/blog/test-automation/selenium-vs-cypress/
     sourceName: CrossBrowserTesting
     sourceUrl: https://crossbrowsertesting.com/blog/
@@ -424,8 +424,7 @@ large:
     author: Fabian Gosebrink
     img: /img/examples/e2e-with-angular-and-cypress.jpg
 
-  - title: "Testing React Apps with Cypress:
-  A brief guide on how to run End-To-End testing on React apps with Cypress."
+  - title: "Testing React Apps with Cypress: A brief guide on how to run End-To-End testing on React apps with Cypress."
     url: https://blog.bitsrc.io/testing-react-apps-with-cypress-658bc482678
     sourceName: Bits and Pieces
     sourceUrl: https://blog.bitsrc.io/
