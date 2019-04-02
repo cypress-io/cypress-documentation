@@ -87,6 +87,11 @@
       link: https://github.com/bahmutov/cypress-select-tests
       keywords: [browserify]
 
+    - name: cypress-autorecord
+      description: Simplify API mocking by auto-recording/stubbing HTTP interactions and automating the process of updating/deleting mocks.
+      link: https://github.com/Nanciee/cypress-autorecord
+      keywords: [mock, recording, http, integration test]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
