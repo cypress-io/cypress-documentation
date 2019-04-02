@@ -1,5 +1,14 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "How to write tests for your Gatsby sites and apps"
+    url: https://www.youtube.com/watch?v=BzRAYt7BHRw
+    sourceName: Youtube
+    sourceUrl: https://www.twitch.tv/jlengstorf
+    date: Mar 7, 2019
+    author: Jason Lengstorf & Kent C. Dodds
+    youtubeId: BzRAYt7BHRw
+    slides: https://github.com/kentcdodds/kentcdodds.com/pull/88
+
   - title: "My Cypress Workflow"
     url: https://www.youtube.com/watch?v=vBZaDqMmDH0
     sourceName: YouTube
