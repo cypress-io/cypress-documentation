@@ -67,6 +67,98 @@ Cypress automatically reads from your system's `HTTP_PROXY` environment variable
 
 To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied.
 
+If an uppercase and a lowercase version of the proxy settings are supplied (for example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable will be preferred.
+
+# View, unset, and set environment variables
+
+In order to properly configure your proxy configuration, it can be helpful to know how to view currently set environment variables, unset unwanted environment variables, and set environment variables depending on your operating system.
+
+## Linux or macOS
+
+### Set an environment variable for the current session
+
+```shell
+export SOME_VARIABLE=some-value
+```
+
+### Unset an environment variable
+
+```shell
+unset SOME_VARIABLE
+```
+
+`echo` will print nothing after `unset`:  
+
+```shell
+echo $SOME_VARIABLE
+```
+
+### See all the currently set environment variables
+
+Print all env vars:
+
+```shell
+env 
+```
+
+Print environment variables with `proxy` (case insensitive) in the name:
+
+```shell
+env | grep -i proxy
+```
+
+## Windows
+
+Setting environment variables in Windows is different depending on if you're using *command prompt* or *Powershell*.
+
+### Set an environment variable for the current session
+
+*Command prompt:*
+
+```shell
+set SOME_VARIABLE=some-value 
+```
+
+*Powershell:*
+
+```shell
+$env:SOME_VARIABLE = "some-value"
+```
+
+### Set environment variable globally for all future sessions
+
+```shell
+setx SOME_VARIABLE some-value
+```
+
+### Unset an environment variable in the current session
+
+*Command prompt:*
+
+```shell
+set SOME_VARIABLE=
+```
+
+*Powershell:*
+
+```shell
+Remove-Item Env:\SOME_VARIABLE
+```
+
+### See all the currently set environment variables
+
+*Command prompt:*
+
+```shell
+set  
+```
+
+*Powershell:*
+
+```shell
+Get-ChildItem Env:
+```
+
 # View proxy settings in Cypress
 
 Your current proxy settings can be viewed from within the Cypress Test Runner. Follow these steps:
