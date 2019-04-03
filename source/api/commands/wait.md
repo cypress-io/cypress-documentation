@@ -166,6 +166,29 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
 
 # Notes
 
+## Nesting
+
+Cypress automatically waits for the network call to complete before proceeding to the next command.
+
+```js
+// Anti-pattern: placing Cypress commands inside .then callbacks
+cy.wait('@alias')
+  .then(() => {
+    cy.get(...)
+  })
+
+// Recommended practice: write Cypress commands serially
+cy.wait('@alias')
+cy.get(...)
+
+// Example: assert response property before proceeding
+cy.wait('@alias').its('status').should('eq', 200)
+cy.get(...)
+```
+
+Read {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Commands-Run-Serially %}
+
+
 ## Timeouts
 
 ### `requestTimeout` and `responseTimeout`

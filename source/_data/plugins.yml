@@ -42,6 +42,11 @@
       link: https://github.com/bahmutov/cypress-dark
       keywords: [theme]
 
+    - name: cypress-protobuf
+      description: Encode a fixture with Protocol Buffers.
+      link: https://github.com/NoriSte/cypress-protobuf
+      keywords: [encoding, protobuf]
+
     - name: Docker
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
       link: https://github.com/cypress-io/cypress-docker-images
@@ -71,6 +76,21 @@
       description: A prototype of generating quicker project scaffolding for Cypress.
       link: https://github.com/bahmutov/cly
       keywords: [cypress cli,prototype,CLI,scaffolding]
+
+    - name: cypress-watch-and-reload
+      description: Reloads Cypress when one of the watched files changes
+      link: https://github.com/bahmutov/cypress-watch-and-reload
+      keywords: [file-watcher]
+
+    - name: cypress-select-tests
+      description: User space solution for grepping Cypress tests to run
+      link: https://github.com/bahmutov/cypress-select-tests
+      keywords: [browserify]
+
+    - name: cypress-autorecord
+      description: Simplify API mocking by auto-recording/stubbing HTTP interactions and automating the process of updating/deleting mocks.
+      link: https://github.com/Nanciee/cypress-autorecord
+      keywords: [mock, recording, http, integration test]
 
 - name: Custom Commands
   plugins:
@@ -114,11 +134,16 @@
       link: https://github.com/tgriesser/cypress-graphql-mock
       keywords: [graphql]
 
+    - name: cypress-jest-adapter
+      description: Add jest assertion style to Cypress expect command
+      link: https://github.com/phongnd39/cypress-jest-adapter
+      keywords: [jest]
+
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
       keywords: [ruby-rack, ruby-on-rails]
-    
+
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
@@ -149,17 +174,33 @@
       link: https://picklejs.com
       keywords: [cucumber, collection, actions, commands]
 
+    - name: cypress-plugin-tab
+      description: A Cypress plugin to add a tab command
+      link: https://github.com/Bkucera/cypress-plugin-tab
+      keywords: [commands]
+
+    - name: cypress-commands
+      description: A collection of Cypress commands to extend and compliment the defaults
+      link: https://github.com/Lakitna/cypress-commands
+      keywords: [commands]
+
 - name: Authentication
+  description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
   plugins:
     - name: cypress-ntlm-auth
       description: NTLM authentication support for Cypress
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
-      
+
     - name: cypress-social-logins
       description: Cypress authentication flows using social network providers
       link: https://github.com/lirantal/cypress-social-logins
       keywords: [authentication, login, social profiles, github, google]
+
+    - name: cypress-otp
+      description: Valid OTP token generation for Cypress
+      link: https://github.com/NoriSte/cypress-otp
+      keywords: [authentication, otp, 2fa, mfa]
 
 - name: Framework Tooling
   plugins:
@@ -260,3 +301,8 @@
       description: Merges multiple mochawesome JSON reports
       link: https://github.com/antontelesh/mochawesome-merge
       keywords: [reporter, mochawesome]
+
+    - name: cypress-slack-healthcheck
+      description: A simple tool which integrates Cypress with Slack to report failing tests.
+      link: https://github.com/bdimitrovski/cypress-healthcheck
+      keywords: [reporter, slack, healthcheck]

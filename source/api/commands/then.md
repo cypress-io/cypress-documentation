@@ -9,6 +9,10 @@ Enables you to work with the subject yielded from the previous command.
 **Note:** `.then()` assumes you are already familiar with core concepts such as {% url 'closures' variables-and-aliases#Closures %}.
 {% endnote %}
 
+{% note info %}
+**Note:** Prefer {% url '`.should()` with callback' should#Function %} over `.then()` for assertions as they are automatically rerun until no assertions throw within it but be aware of {% url 'differences' should#Differences %}.
+{% endnote %}
+
 # Syntax
 
 ```javascript

@@ -12,7 +12,7 @@ Just like the {% url "Command Line options" command-line %} for `cypress run`, y
 
 Option | Description
 ------ |  ---------
-`browser`  | Specify different browser to run tests in
+`browser`  | Specify different browser to run tests in, either by name or by filesystem path
 `ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
 `config`  | Specify configuration
 `env`  | Specify environment variables
@@ -109,6 +109,7 @@ Just like the {% url "Command Line options" command-line %}, you can pass option
 
 Option | Description
 ------ | ---------
+`browser` | Specify a filesystem path to a custom browser
 `config`  | Specify configuration
 `detached` | Open Cypress in detached mode
 `env`  | Specify environment variables
