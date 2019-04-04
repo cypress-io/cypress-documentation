@@ -8,6 +8,54 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Testing an email workflow from end to end with Cypress"
+    url: https://humble.dev/testing-an-email-workflow-from-end-to-end-with-cypress
+    sourceName: humbledev
+    sourceUrl: https://humble.dev/
+    author: Maxime Khoy
+    date: Mar 6, 2019
+    img: /img/examples/testing-email-workflow-with-cypress.png
+
+  - title: "Configuring Cypress in CI with Azure DevOps Pipelines"
+    url: https://mariocardinal.wordpress.com/2019/03/05/configuring-cypress-in-ci-with-azure-devops-pipelines/
+    sourceName: Mario Cardinal
+    sourceUrl: https://mariocardinal.wordpress.com/
+    author: Mario Cardinal
+    date: Mar 5, 2019
+    img: /img/examples/ci-with-azure-devops.png
+
+  - title: "How to poll a Gmail inbox using cypress.io"
+    url: https://medium.com/@levz0r/how-to-poll-a-gmail-inbox-in-cypress-io-a4286cfdb888
+    sourceName: Medium
+    sourceUrl: https://medium.com/@levz0r
+    author: Lev Gelfenbuim
+    date: Mar 4, 2019
+    img: /img/examples/poll-gmail-inbox-in-cypress.png    
+
+  - title: "Angular: Adding Cypress UI Tests to Your DevOps Pipeline"
+    url: https://medium.com/ngconf/angular-adding-cypress-ui-tests-to-your-devops-pipeline-c7613e67d37d
+    sourceName: Medium
+    sourceUrl: https://medium.com/ngconf
+    author: Justin James
+    date: Feb 20, 2019
+    img: /img/examples/angular-adding-cypress-ui-testing.png     
+
+  - title: "Running Cypress Tests in Parallel"
+    url: https://testdriven.io/blog/running-cypress-tests-in-parallel/
+    sourceName: TestDriven
+    sourceUrl: https://testdriven.io/
+    author: Michael Herman
+    date: Feb 19, 2019
+    img: /img/examples/running-cypress-tests-in-parallel.png 
+
+  - title: "I saw Jesse Sanders speak at AngularMN on Cypress testing on Wednesday night"
+    url: http://tom-jaeschke.blogspot.com/2019/02/i-saw-jesse-sanders-speak-at-angularmn.html
+    sourceName: Spaghetti Tom
+    sourceUrl: http://tom-jaeschke.blogspot.com/
+    author: Tom Jaeschke
+    date: Feb 10, 2019
+    img: /img/examples/jesse-sanders-at-angularmn-on-cypress.png 
+
   - title: "I'm so done with E2E Testing....Until Now"
     url: http://briebug.github.io/presentations/ng-meetup/2018/10/cypress/#/
     sourceName: Briebug
@@ -15,6 +63,22 @@ large:
     author: Jesse Sanders
     date: Feb 7, 2019
     img: /img/examples/Im-so-done.jpg
+
+  - title: "Modern Front-End Testing with Cypress"
+    url: https://testdriven.io/blog/modern-frontend-testing-with-cypress/
+    sourceName: TestDriven
+    sourceUrl: https://testdriven.io/
+    author: Michael Herman
+    date: Jan 31, 2019
+    img: /img/examples/modern-front-end-testing-with-cypress.png 
+
+  - title: "Tendências para a área de Quality Assurance em 2019"
+    url: https://medium.com/invillia-insights/tend%C3%AAncias-para-a-%C3%A1rea-de-quality-assurance-em-2019-51c61b36e955
+    sourceName: Medium
+    sourceUrl: https://medium.com/invillia-insights
+    author: Thiago Grespi
+    date: Jan 30, 2019
+    img: /img/examples/tendencias-quality-assurance.png
 
   - title: "Cypress com Cucumber nos testes E2E"
     url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
@@ -47,6 +111,14 @@ large:
     author: Cameron Choi
     date: Jan 18, 2019
     img: /img/examples/what-i-learned-cypress-3-weeks.jpg
+
+  - title: "Integrating Cypress.io into Solar Monkey's codebase"
+    url: http://engineering.solarmonkey.nl/blog/integrating-cypress-into-solar-monkey/
+    sourceName: Solar Monkey Engineering
+    sourceUrl: http://engineering.solarmonkey.nl/
+    author: Solar Monkey Engineering
+    date: Jan 18, 2019
+    img: /img/examples/cypress-into-solar-monkey-codebase.png
 
   - title: "Introducción a la automatización de tests E2E con Cypress.io"
     url: https://blog.irontec.com/introduccion-automatizacion-tests-e2e-cypress-io/
@@ -352,8 +424,7 @@ large:
     author: Fabian Gosebrink
     img: /img/examples/e2e-with-angular-and-cypress.jpg
 
-  - title: "Testing React Apps with Cypress:
-  A brief guide on how to run End-To-End testing on React apps with Cypress."
+  - title: "Testing React Apps with Cypress: A brief guide on how to run End-To-End testing on React apps with Cypress."
     url: https://blog.bitsrc.io/testing-react-apps-with-cypress-658bc482678
     sourceName: Bits and Pieces
     sourceUrl: https://blog.bitsrc.io/
@@ -726,6 +797,14 @@ large:
     date: Feb 21, 2017
     author: Kamil Ogórek
     img: /img/examples/corgibytes-cypress-browser-tests-graph.jpg
+
+  - title: "The Right Way to Test React Components"
+    url: https://medium.freecodecamp.org/the-right-way-to-test-react-components-548a4736ab22
+    sourceName: freeCodeCamp
+    sourceUrl: https://medium.freecodecamp.org/
+    author: Lily Scott
+    date: Feb 4, 2017
+    img: /img/examples/right-way-to-test-react-components.png
 
   - title: Cypress will change the way you develop
     url: https://hackernoon.com/cypress-will-change-the-way-you-develop-47a194d2a33f
