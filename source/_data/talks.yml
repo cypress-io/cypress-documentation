@@ -63,6 +63,15 @@ large:
     img: /img/examples/well-tested-software.jpg
     slides: https://slides.com/bahmutov/well-tested-software
 
+  - title: 'Automated testing for the modern web'
+    url: https://www.youtube.com/watch?v=ggJ1-ChxHrQ
+    sourceName: JSConf Colombia
+    sourceUrl: https://jsconf.co/
+    date: Nov 17, 2018
+    author: Jennifer Shehane
+    youtubeId: ggJ1-ChxHrQ
+    slides: https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web
+
   - title: Next Generation Web Application End to End Testing
     url: https://youtu.be/CkGQ0fFH3yE
     sourceName: Devoxx Belgium
