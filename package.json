@@ -122,7 +122,7 @@
     "yamljs": "0.3.0"
   },
   "dependencies": {
-    "bluebird": "3.5.3",
+    "bluebird": "3.5.4",
     "check-more-types": "2.24.0",
     "debug": "4.1.1",
     "docsearch.js": "2.6.2",
