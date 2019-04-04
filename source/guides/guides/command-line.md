@@ -56,13 +56,13 @@ When calling a command using `npm run`, you need to pass the command's arguments
 ...and want to run tests from a single spec file and record the results on the Dashboard, the command should be:
 
 ```shell
-npm run cy:run -- --record --spec "cypress/integration/my-spec.js"
+npm run cy:run -- --record --specs "cypress/integration/my-spec.js"
 ```
 
 If you are using the {% url npx https://github.com/zkat/npx %} tool, you can invoke the locally installed Cypress tool directly:
 
 ```shell
-npx cypress run --record --spec "cypress/integration/my-spec.js"
+npx cypress run --record --specs "cypress/integration/my-spec.js"
 ```
 
 # Commands
@@ -94,7 +94,7 @@ Option | Description
 `--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
-`--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
+`--specs`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
 
 ### `cypress run --browser <browser-name-or-path>`
 
@@ -165,11 +165,11 @@ cypress run --group develop-env
 You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --specs 'cypress/integration/admin/**/*
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --specs 'cypress/integration/user/**/*
 ```
 
 {% url "Read more about grouping." parallelization#Grouping-test-runs %}
@@ -266,24 +266,24 @@ You can specify reporter options using the `--reporter-options <reporter-options
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
 
-### `cypress run --spec <spec>`
+### `cypress run --specs <spec>`
 
 Run tests specifying a single test file to run instead of all tests.
 
 ```shell
-cypress run --spec "cypress/integration/examples/actions.spec.js"
+cypress run --specs "cypress/integration/examples/actions.spec.js"
 ```
 
 Run tests within the folder matching the glob *(Note: Using double quotes is strongly recommended)*.
 
 ```shell
-cypress run --spec "cypress/integration/login/**/*"
+cypress run --specs "cypress/integration/login/**/*"
 ```
 
 Run tests specifying multiple test files to run.
 
 ```shell
-cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
+cypress run --specs "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
 ```
 
 ## `cypress open`
