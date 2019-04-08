@@ -103,6 +103,7 @@ Get around the lack of a `.hover()` command.
 
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses mouse events.
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses drag events.
+- Use {% url "`cypress-file-upload`" https://github.com/abramenal/cypress-file-upload %} to test drag-n-drop that works with file uploads.
 
 ## [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify)
 
@@ -187,6 +188,7 @@ Get around the lack of a `.hover()` command.
 - Passing synthetic test file to upload via an {% url "`.trigger('change')`" trigger %} event
 - Stub remote server using {% url "`cy.route()`" route %}
 - Alternatively stub `axios.post` method using {% url "`cy.stub()`" stub %}
+- Alternatively, use {% url "`cypress-file-upload`" https://github.com/abramenal/cypress-file-upload %} to test file upload
 
 ## [Adding Chai Assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions)
 

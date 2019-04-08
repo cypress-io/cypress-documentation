@@ -1,5 +1,32 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: 'Cypress: testing without Selenium, part 1'
+    url: https://www.youtube.com/watch?v=hk4qtXgL12k
+    sourceName: Selenium Camp
+    sourceUrl: https://seleniumcamp.com
+    date: Mar 11, 2019
+    author: Gleb Bahmutov
+    youtubeId: hk4qtXgL12k
+    slides: https://seleniumcamp.com/talk/cypress-testing-without-selenium/
+
+  - title: 'Building Web Apps with Hyperapp'
+    url: https://www.youtube.com/watch?v=8pcx0XitUCc
+    sourceName: NERD Summit
+    sourceUrl: https://nerd.ngo/
+    date: Mar 10, 2019
+    author: Gleb Bahmutov
+    youtubeId: 8pcx0XitUCc
+    slides: https://slides.com/bahmutov/hyperapp-intro#/
+
+  - title: 'Less painful E2E tests with Cypress.io'
+    url: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/ 
+    sourceName: FOSDEM 2019
+    sourceUrl: https://fosdem.org/2019/schedule/event/keynotes_welcome/
+    date: Feb 3, 2019
+    author: Pavel Kruhlei
+    slides: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/attachments/slides/3010/export/events/attachments/e2e_tests_cypress/slides/3010/Slides.pdf 
+    img: /img/examples/painless-e2e-with-cypress.png  
+
   - title: 'There and Back Again: e2e Testing React with Cypress'
     url: https://www.youtube.com/watch?v=I3WJhutZovw
     sourceName: Grow IT Conf
@@ -35,6 +62,15 @@ large:
     author: Gleb Bahmutov
     img: /img/examples/well-tested-software.jpg
     slides: https://slides.com/bahmutov/well-tested-software
+
+  - title: 'Automated testing for the modern web'
+    url: https://www.youtube.com/watch?v=ggJ1-ChxHrQ
+    sourceName: JSConf Colombia
+    sourceUrl: https://jsconf.co/
+    date: Nov 17, 2018
+    author: Jennifer Shehane
+    youtubeId: ggJ1-ChxHrQ
+    slides: https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web
 
   - title: Next Generation Web Application End to End Testing
     url: https://youtu.be/CkGQ0fFH3yE
