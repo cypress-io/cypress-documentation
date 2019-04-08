@@ -37,9 +37,13 @@ To make these changes permanent, you can add these commands to your shell's `~/.
 
 # Set a proxy on Windows
 
-Cypress will attempt to load the proxy configured in the Windows registry by default. {% url "Learn how to set your proxy settings system-wide in Windows." https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/ %}
+When starting up after being installed, Cypress will attempt to load the proxy configured in the Windows registry by default. {% url "Learn how to set your proxy settings system-wide in Windows." https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/ %}
 
-You can override this behavior by setting proxy environment variables before running Cypress. In Command Prompt, it looks like this:
+{% note info %}
+When downloading Cypress for the first time, the `cypress` command line tool *does not* read proxy settings from the Windows registry. If you need to configure a proxy for the installation to work, you must set the appropriate environment variables as described below.
+{% endnote %}
+
+You can also set proxy environment variables before running Cypress to override the Windows registry. This is also the only way to define a proxy for `cypress install`. In Command Prompt, defining the required environment variables looks like this:
 
 ```shell
 set HTTP_PROXY=http://my-company-proxy.com
@@ -87,7 +91,7 @@ export SOME_VARIABLE=some-value
 unset SOME_VARIABLE
 ```
 
-`echo` will print nothing after `unset`:  
+`echo` will print nothing after `unset`:
 
 ```shell
 echo $SOME_VARIABLE
@@ -98,7 +102,7 @@ echo $SOME_VARIABLE
 Print all env vars:
 
 ```shell
-env 
+env
 ```
 
 Print environment variables with `proxy` (case insensitive) in the name:
@@ -116,7 +120,7 @@ Setting environment variables in Windows is different depending on if you're usi
 *Command prompt:*
 
 ```shell
-set SOME_VARIABLE=some-value 
+set SOME_VARIABLE=some-value
 ```
 
 *Powershell:*
@@ -150,7 +154,7 @@ Remove-Item Env:\SOME_VARIABLE
 *Command prompt:*
 
 ```shell
-set  
+set
 ```
 
 *Powershell:*
