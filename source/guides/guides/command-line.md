@@ -124,7 +124,7 @@ Typically, this is defined as an environment variable within your CI provider, d
 cypress run --ci-build-id BUILD_NUMBER
 ```
 
-Read our {% url "parallelization" parallelization %} documentation to learn more.
+Only valid when providing a `--group` or `--parallel` flag. Read our {% url "parallelization" parallelization %} documentation to learn more.
 
 ### `cypress run --config <config>`
 
@@ -171,6 +171,8 @@ cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
 ```shell
 cypress run --group user-tests --spec 'cypress/integration/user/**/*
 ```
+
+Specifying the `--ci-build-id` may also be necessary.
 
 {% url "Read more about grouping." parallelization#Grouping-test-runs %}
 
