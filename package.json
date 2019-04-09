@@ -69,7 +69,7 @@
     "@keyv/redis": "github:bahmutov/keyv-redis#b64f44cd1d1e87893d989b1469068af8292299d5",
     "@types/fluent-ffmpeg": "2.1.9",
     "@types/jest": "24.0.11",
-    "beeper": "1.1.1",
+    "beeper": "2.0.0",
     "bin-up": "1.1.0",
     "chai": "4.2.0",
     "chalk": "2.4.2",
