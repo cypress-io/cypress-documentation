@@ -299,7 +299,7 @@ By default, every user of Cypress is given a personal organization - named after
 
 ### Inviting users
 
-You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
+A user is anyone who logs in to the Dashboard Service. You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
 **To invite a user to an organization:**
 
