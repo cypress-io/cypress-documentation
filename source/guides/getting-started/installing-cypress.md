@@ -17,7 +17,7 @@ Cypress is a desktop application that is installed on your computer. The desktop
 
 - **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
 - **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
-- **Windows** 7+, only 32bit binaries are provided for Windows.
+- **Windows** 7+
 
 # Installing
 
