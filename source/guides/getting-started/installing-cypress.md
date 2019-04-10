@@ -247,7 +247,7 @@ The download server url is `https://download.cypress.io`.
 We currently have the following downloads available:
 
 * Windows 64-bit (`?platform=win32&arch=x64`)
-* Windows 32-bit (`?platform=win32&arch=ia32`, available since Cypress 3.3.0)
+* Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
 * Linux 64-bit (`?platform=linux`)
 * macOS 64-bit (`?platform=darwin`)
 
