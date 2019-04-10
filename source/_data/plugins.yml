@@ -306,3 +306,8 @@
       description: A simple tool which integrates Cypress with Slack to report failing tests.
       link: https://github.com/bdimitrovski/cypress-healthcheck
       keywords: [reporter, slack, healthcheck]
+
+    - name: cypress-slack-reporter
+      description: Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs
+      link: https://github.com/you54f/cypress-slack-reporter
+      keywords: [reporter, mochawesome, slack]
