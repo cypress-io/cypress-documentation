@@ -1,0 +1,36 @@
+---
+title: Roadmap
+---
+
+# Upcoming Features
+
+At any one time, our team is planning / working on really "big" upcoming features.
+
+Here is where Cypress is headed:
+
+## Test Runner
+
+Feature | Status
+--- | ---
+{% issue 310 'Cross Browser Support - #310' %} | In progress
+{% issue 687 'Full Network Layer Stubbing - #687' %} | In progress
+{% issue 1313 'Retries - #1313' %} | In progress
+{% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features
+{% issue 685 'Iframe Switching APIs - #685' %} | Partially complete
+{% issue 1469 'Better Corporate Proxy Support - #1469' %} | Proposal complete
+{% issue 686 'Lifecycle Events - #686' %} | Proposal complete
+{% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
+{% issue 311 'Native Events - #311' %} | No proposal yet
+
+## Dashboard Service
+
+Feature | Status
+--- | ---
+{% issue 1516 'Enterprise SSO - #1516' %} | In beta
+Open-source plan | In progress
+{% issue 981 'GitHub Integration - #981' %} | In progress
+{% issue 1691 'Run cancellation - #1691' %} | In progress
+{% issue 560 'IA refresh - #560' %} | In progress
+Integration with Visual Regression tools | No proposal yet
+Notification center | Proposal complete
+{% issue 448 'Capture Logs of Everything - #448' %} | Partially complete
