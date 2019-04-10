@@ -831,7 +831,7 @@ cy
   .should(($p) => {
     // massage our subject from a DOM element
     // into an array of texts from all of the p's
-    let texts = $p.map((i, el) => {
+    let texts = $p.map((el, i) => {
       return Cypress.$(el).text()
     })
 
