@@ -35,7 +35,9 @@ Videos are stored in the {% url `videosFolder` configuration#Videos %} which is 
 
 After `cypress run` completes, Cypress will automatically compress the video in order to save on file size. By default it compresses to a `32 CRF` but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
 
-By default, Cypress clears any existing videos before a `cypress run`. If do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
+By default, videos are processed and compressed after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the {% url `videoUploadOnPasses` configuration#Videos %} configuration option to `false`.
+
+By default, Cypress clears any existing videos before a `cypress run`. If you do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
 
 # Now What?
 

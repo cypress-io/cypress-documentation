@@ -25,12 +25,13 @@ Option | Default | Description
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
+`testFiles` | `**/*.*` | A String glob pattern of the test files to load
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
 ## Timeouts
 
 {% note success Core Concept %}
-{% url 'Timeouts are a core concept' introduction-to-cypress#Default-Values %} you should understand well. The default values listed here are meaningful.
+{% url 'Timeouts are a core concept' introduction-to-cypress#Timeouts %} you should understand well. The default values listed here are meaningful.
 {% endnote %}
 
 Option | Default | Description

@@ -8,6 +8,7 @@ describe('should-deploy', () => {
   describe('isRightBranch', () => {
     it('allows master branch to deploy to production', function () {
       sinon.stub(git, 'branchName').resolves('master')
+
       return api.isRightBranch('production').then((allowed) => {
         expect(allowed).to.equal(true)
       })
@@ -15,6 +16,7 @@ describe('should-deploy', () => {
 
     it('develop branch is NOT allowed to deploy to production', function () {
       sinon.stub(git, 'branchName').resolves('develop')
+
       return api.isRightBranch('production').then((allowed) => {
         expect(allowed).to.equal(false)
       })
@@ -22,6 +24,7 @@ describe('should-deploy', () => {
 
     it('develop branch is allowed to deploy to staging', function () {
       sinon.stub(git, 'branchName').resolves('develop')
+
       return api.isRightBranch('staging').then((allowed) => {
         expect(allowed).to.equal(true)
       })
@@ -29,6 +32,7 @@ describe('should-deploy', () => {
 
     it('random branch is allowed to deploy to staging', function () {
       sinon.stub(git, 'branchName').resolves('hot-fix-1')
+
       return api.isRightBranch('staging').then((allowed) => {
         expect(allowed).to.equal(true)
       })

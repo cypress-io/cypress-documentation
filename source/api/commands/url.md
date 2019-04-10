@@ -30,7 +30,7 @@ cy.url()    // Yields the current url as a string
 
 Pass in an options object to change the default behavior of `cy.url()`.
 
-**cy.hash( *options* )**
+**cy.url( *options* )**
 
 Option | Default | Description
 --- | --- | ---
@@ -94,7 +94,7 @@ Instead of hardcoding the URL you can use the `baseUrl` of the {% url 'Cypress c
 Given the remote URL, `http://localhost:8000/index.html`, these assertions are the same.
 
 ```javascript
-cy.url().should('eq', 'http://localhost:8000//index.html')
+cy.url().should('eq', 'http://localhost:8000/index.html')
 cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
 ```
 

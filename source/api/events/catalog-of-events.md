@@ -269,11 +269,8 @@ it('redirects to another page on click', function (done) {
 
 ```javascript
 it('can modify the window prior to page load on all pages', function () {
-  // this does the same thing as the onBeforeLoad callback for
-  // cy.visit()
-
   // create the stub here
-  const stub = cy.stub()
+  const ga = cy.stub().as('ga')
 
   // prevent google analytics from loading
   // and replace it with a stub before every
@@ -282,11 +279,10 @@ it('can modify the window prior to page load on all pages', function () {
   cy.on('window:before:load', (win) => {
     Object.defineProperty(win, 'ga', {
       configurable: false,
-      writeable: false,
-      get: () => stub // always return the stub
+      get: () => ga, // always return the stub
+      set: () => {} // don't allow actual google analytics to overwrite this property
     })
   })
-
 
   cy
     // window:before:load will be called here
@@ -299,7 +295,6 @@ it('can modify the window prior to page load on all pages', function () {
 
     // and here
     .get('a').click()
-
 })
 ```
 

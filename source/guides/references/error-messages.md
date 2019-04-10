@@ -359,7 +359,7 @@ Since no record key was passed, Cypress checks for any environment variable with
 
 You can get your project's record key by locating it in your settings tab in the Test Runner or in the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-Key %}.
+You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-tests %}.
 
 ## {% fa fa-exclamation-triangle red %} The `cypress ci` command has been deprecated
 
@@ -391,7 +391,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching-the-Cypress-binary %}, then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching %}, then bump the version of your CI cache to ensure a clean build.
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
@@ -415,7 +415,7 @@ You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} o
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#What-is-supported %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#Examples %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
 
 You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
 
@@ -449,7 +449,7 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 You passed the `--parallel` flag, but this run group was originally created without the `--parallel` flag.
 
-You can not use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
+You cannot use the {% url "`--parallel`" command-line#cypress-run-parallel %} flag with this group.
 
 Please review our {% url "grouping test runs" parallelization#Grouping-test-runs %} documentation to learn more.
 

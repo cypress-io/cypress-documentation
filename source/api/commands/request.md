@@ -60,12 +60,40 @@ A request `body` to be sent in the request. Cypress sets the `Accepts` request h
 
 **{% fa fa-angle-right %} method** ***(String)***
 
-Make a request using a specific method (`GET`, `POST`, `PUT`, etc). If no method is defined, Cypress uses the `GET` method by default.
+Make a request using a specific method. If no method is defined, Cypress uses the `GET` method by default.
+
+Supported methods include:
+
+* `GET`
+* `POST`
+* `PUT`
+* `DELETE`
+* `PATCH`
+* `HEAD`
+* `OPTIONS`
+* `TRACE`
+* `COPY`
+* `LOCK`
+* `MKCOL`
+* `MOVE`
+* `PURGE`
+* `PROPFIND`
+* `PROPPATCH`
+* `UNLOCK`
+* `REPORT`
+* `MKACTIVITY`
+* `CHECKOUT`
+* `MERGE`
+* `M-SEARCH`
+* `NOTIFY`
+* `SUBSCRIBE`
+* `UNSUBSCRIBE`
+* `SEARCH`
+* `CONNECT`
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to change the default behavior of `cy.request`.
-
 
 Option | Default | Description
 --- | --- | ---
@@ -245,7 +273,7 @@ Before sending the HTTP request, we automatically attach cookies that would have
 
 In other words, `cy.request()` transparently performs all of the underlying functions as if it came from the browser.
 
-## `cy.request()` can not be used to debug {% url `cy.server()` server %} and {% url `cy.route()` route %}
+## `cy.request()` cannot be used to debug {% url `cy.server()` server %} and {% url `cy.route()` route %}
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
@@ -285,6 +313,10 @@ The commands above will display in the Command Log as:
 When clicking on `request` within the command log, the console outputs the following:
 
 ![Console log request](/img/api/request/console-log-request-response-body-headers-status-url.png)
+
+{% history %}
+| 3.2.0 | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`.
+{% endhistory %}
 
 # See also
 

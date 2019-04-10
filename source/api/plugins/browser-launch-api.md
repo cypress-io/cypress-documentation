@@ -1,6 +1,5 @@
 ---
 title: Browser Launch API
-
 ---
 
 Before Cypress launches a browser, it gives you the ability to modify the arguments used to launch it.
@@ -11,18 +10,22 @@ The most common use case is adding your own chrome extension.
 
 # Usage
 
+## Modify args based on browser
+
 Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify the arguments based on the browser that Cypress is launching.
 
-{% note warning %}
-Sending {% url 'Chrome specific flags' "https://peter.sh/experiments/chromium-command-line-switches/" %} to the Electron browser (used in CI) does not currently work. See {% issue 1519 %}.
-{% endnote %}
+This event will yield you the `browser` as an object, and `args` which are the default arguments used to launch the browser. 
+
+`args` may be an array or an object (based on the type of browser we're launching). Whatever you return from this event will become the new args for launching the browser.
+
+Here are options for the currently supported browsers:
+
+* {% url 'Chrome' "https://peter.sh/experiments/chromium-command-line-switches/" %}
+* {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
 
 ```js
-// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, args) => {
-    console.log(browser, args) // see what all is in here!
-
     // browser will look something like this
     // {
     //   name: 'chrome',
@@ -32,11 +35,15 @@ module.exports = (on, config) => {
     //   majorVersion: '63'
     // }
 
-    // args are different based on the browser
-    // sometimes an array, sometimes an object
-
     if (browser.name === 'chrome') {
-      args.push('--load-extension=/path/to/my/extension')
+      args.push('--start-fullscreen')
+
+      // whatever you return here becomes the new args
+      return args
+    }
+
+    if (browser.name === 'electron') {
+      args['fullscreen'] = true
 
       // whatever you return here becomes the new args
       return args
@@ -45,10 +52,28 @@ module.exports = (on, config) => {
 }
 ```
 
-This event will yield you the `browser` as an object, and `args` which are the default arguments used to launch the browser.
+# Examples
 
-`args` may be an array or an object (based on the type of browser we're launching).
+## Use fake video for webcam testing
 
-Whatever you return from this event will become the new args for launching the browser.
+By default, Cypress passes the Chrome command line switch to enable a fake video for a media stream. This is to better enable testing webcam functionality without having to have the necessary hardware to test.
 
-Here is a list of {% url 'Chrome specific flags' "https://peter.sh/experiments/chromium-command-line-switches/" %} that may be useful to pass in.
+![](https://camo.githubusercontent.com/ff306c559c215e94f48b6546d861120b884641c3/687474703a2f2f672e7265636f726469742e636f2f6d4336336a794c6d6a6f2e676966)
+
+You can however send your own video file for testing by passing a Chrome command line switch pointing to a video file.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.name === 'chrome') {
+      // Mac/Linux
+      args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
+
+      // Windows
+      // args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+    }
+
+    return args
+  })
+}
+```
