@@ -450,6 +450,7 @@ When clicking on `type` within the command log, the console outputs the followin
 
 {% history %}
 | 3.2.0 | Added `{home}` and `{end}` character sequences
+| 3.3.0 | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% endhistory %}
 
 # See also
