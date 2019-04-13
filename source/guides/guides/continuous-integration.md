@@ -154,6 +154,38 @@ CI Provider | Example Project | Example Config
 
 
 
+## Azure DevOps
+
+### Passing environment variables to Cypress when running an NPM task
+
+Start of by creating two pipeline variables in the Variables section, for the sake of this example call them foo and bar.
+
+Since arguments can only be passed to the end of an NPM script we need a way of intercepting the arguments and passing them to the middle of the npm task. To do so create a new js file in your repo (e.g passArgs.js) and add a new script in your package.json called runTests:
+
+```json
+"runTests":"node passArgs"
+```
+
+Next, inside Tasks, add a new custom NPM task to execute the newly created script in your package.json and paste this under command and arguments:
+
+```javascript
+runTests --env --foo=$(foo) --bar=$(bar) etc...
+```
+
+Then in passArgs.js, grab the arguments and pass them along to Cypress:
+
+```javascript
+const execSync = require('child_process').execSync;
+const args = process.argv.splice(2, process.argv.length - 2).map(arg => arg.replace(/^--/, ''));
+execSync(`cross-env ./node_modules/.bin/cypress run --env ${args}`, { stdio: [0, 1, 2] });
+```
+
+Finally in Cypress, read the variables like you normally would:
+
+```javascript
+const { foo, bar } = Cypress.env();
+```
+
 ## Travis
 
 ### Example `.travis.yml` config file
