@@ -156,7 +156,7 @@ CI Provider | Example Project | Example Config
 
 ## Azure DevOps
 
-### Passing environment variables to Cypress when running an npm task
+### Passing environment variables to Cypress when running a custom npm task
 
 Start of by creating two pipeline variables in the Variables section, for the sake of this example call them foo and bar.
 
