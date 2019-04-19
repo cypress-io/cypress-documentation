@@ -40,6 +40,7 @@ alias:
   guides/network-requests-xhr/: guides/guides/network-requests.html
   guides/issuing-commands/: guides/core-concepts/introduction-to-cypress.html#Subject-Management
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
+  guides/core-concepts/aliases-and-references.html: guides/core-concepts/variables-and-aliases.html
   guides/core-concepts/overview-of-the-gui/: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-the-gui.html: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-test-runner.html: guides/core-concepts/test-runner.html
