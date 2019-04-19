@@ -13,10 +13,6 @@ title: Parallelization
 
 {% endnote %}
 
-{% note warning %}
-Parallelization is only available under certain {% url "pricing plans" https://www.cypress.io/pricing/ %}.
-{% endnote %}
-
 # Overview
 
 If your project has a large number of tests, it can take a long time for tests to complete running serially on one machine. Running tests in parallel across many virtual machines can save your team time and money when running tests in Continuous Integration (CI).
