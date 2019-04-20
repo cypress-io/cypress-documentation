@@ -1,10 +1,11 @@
 ## I'm submitting a...
 
-<pre><code>
-[ ] Bug report 
+```
+[ ] Bug report
 [ ] Content update
 [ ] Process update (build, deployment, ... )
-</code></pre>
+```
+
+## Type of bug / changes
 
 <!-- Please describe... (Add screenshot if needed) -->
-## Type of bug / changes

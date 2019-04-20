@@ -30,7 +30,7 @@ Recipe | Category | Description
 {% urlHash 'Stub methods called on `window`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` for methods called on `window`
 {% urlHash 'Stubbing Google Analytics' Stubbing-Google-Analytics %} | Stubbing, Spying | Use `cy.stub()` to test Google Analytics calls
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
-{% urlHash 'React with Enzyme' React-with-Enzyme %} | Unit Testing | Test your react components in isolation
+{% urlHash 'React' React %} | Unit Testing | Test your react components in isolation
 {% urlHash 'File Upload in React' File-Upload-in-React %} | Unit Testing | Test file upload in React application
 {% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
@@ -103,6 +103,7 @@ Get around the lack of a `.hover()` command.
 
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses mouse events.
 - Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses drag events.
+- Use {% url "`cypress-file-upload`" https://github.com/abramenal/cypress-file-upload %} to test drag-n-drop that works with file uploads.
 
 ## [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify)
 
@@ -176,17 +177,15 @@ Get around the lack of a `.hover()` command.
 - Test simple math functions.
 - Test the canonical *fizzbuzz* test.
 
-## [React with Enzyme](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react-enzyme)
-
-- Unit test a React JSX Component using {% url "Enzyme" http://airbnb.io/enzyme/ %}.
-- Import `enzyme` from `node_modules`.
-- Extend chai assertions with {% url "`chai-enzyme`" https://github.com/producthunt/chai-enzyme %}.
+## [React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react)
+- Unit test a React JSX Component using [Enzyme](http://airbnb.io/enzyme/), [react-testing-library](https://github.com/kentcdodds/react-testing-library) and [cypress-react-unit-test](https://github.com/bahmutov/cypress-react-unit-test) libraries.
 
 ## [File Upload in React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react)
 
 - Passing synthetic test file to upload via an {% url "`.trigger('change')`" trigger %} event
 - Stub remote server using {% url "`cy.route()`" route %}
 - Alternatively stub `axios.post` method using {% url "`cy.stub()`" stub %}
+- Alternatively, use {% url "`cypress-file-upload`" https://github.com/abramenal/cypress-file-upload %} to test file upload
 
 ## [Adding Chai Assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions)
 

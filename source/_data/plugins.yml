@@ -87,6 +87,11 @@
       link: https://github.com/bahmutov/cypress-select-tests
       keywords: [browserify]
 
+    - name: cypress-autorecord
+      description: Simplify API mocking by auto-recording/stubbing HTTP interactions and automating the process of updating/deleting mocks.
+      link: https://github.com/Nanciee/cypress-autorecord
+      keywords: [mock, recording, http, integration test]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -301,3 +306,8 @@
       description: A simple tool which integrates Cypress with Slack to report failing tests.
       link: https://github.com/bdimitrovski/cypress-healthcheck
       keywords: [reporter, slack, healthcheck]
+
+    - name: cypress-slack-reporter
+      description: Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs
+      link: https://github.com/you54f/cypress-slack-reporter
+      keywords: [reporter, mochawesome, slack]
