@@ -2,6 +2,8 @@
 title: Visual Testing
 ---
 
+## Functional vs visual testing
+
 Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, or an element is removed, or a CSS class is added. A typical Cypress test for example can check if the toggled Todo item gets a class name "completed":
 
 ```js
@@ -61,16 +63,26 @@ Like most image comparison tools, the plugin shows a difference view on mouse ho
 
 {% img /img/guides/visual-testing/diff-2.png "Highlighted changes" %}
 
-Our users have published several open source modules, listed in at {% url 'Visual Testing plugins' plugins %} section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner. Read the following tutorials to learn how to perform visual testing and diffing from your tests:
+## Tooling
+
+Our users have published several open source modules, listed on the [Visual Testing plugins](https://on.cypress.io/plugins#visual-testing) page, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner. Read the following tutorials to learn how to perform visual testing and diffing from your tests:
+
+### Applitools
 
 - {% url 'Testing a chart with Cypress and Applitools' https://glebbahmutov.com/blog/testing-a-chart/ %}
-- {% url 'Testing how an application renders a drawing with Cypress and Percy.io' https://glebbahmutov.com/blog/testing-visually/ %}
+- {% url 'Applitools Cypress documentation' https://applitools.com/cypress %}
+
+### Percy.io
+
+- {% url 'Cypress.io + Percy = End-to-end functional and visual testing for the web' https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} webinar blog post and watch the {% url 'webinar video' https://www.youtube.com/watch?v=MXfZeE9RQDw %}. The companion slides can be found {% url here https://slides.com/bahmutov/visual-testing-with-percy %}. You can find the entire project with tests and visual setup at {% url cypress-io/angular-pizza-creator https://github.com/cypress-io/angular-pizza-creator %}.
+- {% url 'Testing how an application renders a drawing with Cypress and Percy.io' https://glebbahmutov.com/blog/testing-visually/ %} blog post.
+- {% url 'Percy.io Cypress documentation' https://docs.percy.io/docs/cypress %}
 
 ## Best practices
 
 As a general rule we advise:
 
-- to take a snapshot after the page has performed the action. The test itself should confirm this using an assertion. For example, if the snapshot command is `cy.mySnapshotCommand`:
+- to take a snapshot after the page has finished changing after actions. The test itself should confirm this using an assertion. For example, if the snapshot command is `cy.mySnapshotCommand`:
 
 ```js
 // BAD - the web application might take longer
@@ -85,6 +97,28 @@ cy.get('.new-todo').type('write tests{enter}')
 cy.contains('.todo-list li', 'write tests')
 // great, the new item is displayed,
 // now we can take the snapshot
+cy.mySnapshotCommand()
+```
+
+- control the timestamp inside the application
+
+```js
+// GOOD - freeze the system time to Jan 1, 2018 using "cy.clock"
+const now = new Date(2018, 1, 1)
+
+cy.clock(now)
+// ... test
+cy.mySnapshotCommand()
+```
+
+- use {% url 'data fixtures' fixture %} and network mocking to set the application to the same state
+
+```js
+// GOOD - use stubbed network calls
+cy.server()
+cy.route('/api/users', 'fixture:users')
+cy.route('/api/items', 'fixture:items')
+// ... test
 cy.mySnapshotCommand()
 ```
 
