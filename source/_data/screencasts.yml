@@ -1,5 +1,22 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Automated and Manual Accessibility Testing with Marcy Sutton"
+    url: https://www.youtube.com/watch?v=IADSsClWVtA
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=IADSsClWVtA
+    date: Apr 19, 2019
+    author: Jason Lengstorf & Marcy Sutton
+    youtubeId: IADSsClWVtA
+    slides: https://github.com/jlengstorf/a11y-testing     
+
+  - title: "ngHouston - Intro to Cypress w/ Jesse Sanders"
+    url: https://www.youtube.com/watch?v=tM2KRTE3F6Y
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=tM2KRTE3F6Y
+    date: Mar 13, 2019
+    author: Bonnie Brennan, Jesse Sanders, Mike Brocchi, Amir Rustamzadeh
+    youtubeId: tM2KRTE3F6Y
+    
   - title: "How to write tests for your Gatsby sites and apps"
     url: https://www.youtube.com/watch?v=BzRAYt7BHRw
     sourceName: Youtube
