@@ -141,6 +141,24 @@ large:
     author: Hillary Bauer & Mark Faga
     slides: https://github.com/mjfaga/react-boston-2018-lunar-launch
 
+	- title: 'Changing the Game with Cypress'
+    url: https://www.youtube.com/watch?v=B7cUpqUlqsU
+    sourceName: NG-Talks
+    sourceUrl: https://ngtalks.io/
+    date: Aug 27, 2018
+    author: Dominic Elm
+    youtubeId: B7cUpqUlqsU
+    slides: https://speakerdeck.com/d3lm/changing-the-game-with-cypress
+
+	- title: "Frontend Development 2018 - What's in your stack?"
+    url: https://www.youtube.com/watch?v=88K8oO_dYbI
+    sourceName: NDC Conferences
+    sourceUrl: https://ndcconferences.com/
+    date: Jul 31, 2018
+    author: Stefan Judis
+    youtubeId: 88K8oO_dYbI
+    slides: https://speakerdeck.com/stefanjudis/frontend-development-2018-whats-in-your-stack
+
   - title: "Everything I know about writing quality software"
     url: https://www.youtube.com/watch?v=1PMxLTfh6lo
     sourceName: BuzzJS
