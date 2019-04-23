@@ -8,6 +8,62 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Pragmatic Front-End Testing Strategies (3)"
+    url: https://medium.com/@toastui/pragmatic-front-end-testing-strategies-3-969469349043
+    sourceName: Medium
+    sourceUrl: https://medium.com/@toastui
+    author: DongWoo Kim
+    date: Apr 19, 2019
+    img: /img/examples/pragmatic-front-end-testing-strategies-3.png
+
+	- title: "How We Enhanced Our End-to-End Testing with Cypress.io"
+    url: https://www.monterail.com/blog/end-to-end-testing-with-cypress
+    sourceName: Monterail
+    sourceUrl: https://www.monterail.com/blog/end-to-end-testing-with-cypress
+    author: Robert Gacek
+    date: Apr 12, 2019
+    img: /img/examples/enhanced-end-to-end-testing-with-cypress.png		
+
+	- title: "What Is Front End Testing in 2019?"
+    url: https://applitools.com/blog/what-is-front-end-testing-in-2019
+    sourceName: Applitools
+    sourceUrl: https://applitools.com/blog/
+    author: Michael Battat
+    date: Apr 9, 2019
+    img: /img/examples/whats-frontend-testing-applitools.png
+
+	- title: "Visual UI testing with Percy.io + Cypress (Graph, PDF, DOM UI changes can now be automated)"
+    url: https://medium.com/executeautomation/visual-ui-testing-with-percy-io-cypress-graph-pdf-dom-ui-changes-can-now-be-automated-186aafb53517
+    sourceName: Medium
+    sourceUrl: https://medium.com/executeautomation
+    author: Karthik kk
+    date: Apr 8, 2019
+    img: /img/examples/visual-ui-testing-percy-cypress.png
+
+	- title: "How to Create and Use Fixtures in Cypress Tests"
+    url: https://chipcullen.com/how-to-create-and-use-fixtures-in-cypress-tests/
+    sourceName: Chip Cullen
+    sourceUrl: https://chipcullen.com
+    author: Chip Cullen
+    date: Mar 28, 2019
+    img: /img/examples/create-use-fixtures-in-cypress.png
+
+	- title: "Cypress Parallelization — Case Study + Results"
+    url: https://valor-software.com/articles/cypress-parallelization-case-study-results.html
+    sourceName: Valor Software
+    sourceUrl: https://valor-software.com/articles/
+    author: Ludmila Nesvitiy
+    date: Mar 25, 2019
+    img: /img/examples/cypress-parallelization-case-study-results.png	
+
+  - title: "Cypress on AWS Lambda Part 1"
+    url: https://stuartsandine.com/cypress-on-aws-lambda-part-1/
+    sourceName: Stuart Sandine
+    sourceUrl: https://stuartsandine.com
+    author: Stuart Sandine
+    date: Mar 15, 2019
+    img: /img/examples/cypress-aws-lambda.png
+
   - title: "Testing an email workflow from end to end with Cypress"
     url: https://humble.dev/testing-an-email-workflow-from-end-to-end-with-cypress
     sourceName: humbledev
@@ -30,7 +86,15 @@ large:
     sourceUrl: https://medium.com/@levz0r
     author: Lev Gelfenbuim
     date: Mar 4, 2019
-    img: /img/examples/poll-gmail-inbox-in-cypress.png    
+    img: /img/examples/poll-gmail-inbox-in-cypress.png
+    
+  - title: "Cypress.io: A hands-on overview"
+    url: https://medium.com/@klmlfl/cypress-io-a-hands-on-overview-ad4d498944ee
+    sourceName: Medium
+    sourceUrl: https://medium.com/@klmlfl
+    author: Shaban Rahman
+    date: Mar 2, 2019
+    img: /img/examples/hands-on-overview-cypress.png   
 
   - title: "Angular: Adding Cypress UI Tests to Your DevOps Pipeline"
     url: https://medium.com/ngconf/angular-adding-cypress-ui-tests-to-your-devops-pipeline-c7613e67d37d
