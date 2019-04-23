@@ -172,9 +172,16 @@ Here you will see a section displaying **Access to Runs**. Choose the appropriat
 
 You can transfer projects that you own to another {% urlHash "organization" Organizations %} you are a part of or to another user in the organization. Projects can only be transferred from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-![Transfer Project dialog](/img/dashboard/transfer-ownership-of-project-dialog.png)
+1. Choose the {% url "organization" https://on.cypress.io/dashboard/organizations %} with the project you want to transfer.
+2. Click into the project and click on **Settings**.
+  {% img /img/dashboard/project-settings.png "project-settings" %}
+3. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
+4. Select the user or organization, then click **Transfer**.
+  {% img /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
 
-Upon transferring, you can cancel the transfer at any time by visiting the organization's projects and clicking 'Cancel Transfer'.
+### Cancel project transfer
+
+Upon transferring, you can cancel the transfer at any time by visiting the organization's projects and clicking **Cancel Transfer**.
 
 ![Cancel pending transfer of project](/img/dashboard/cancel-transfer-of-project.png)
 
@@ -328,34 +335,26 @@ You can delete organizations that you own as long as they do not have any projec
 
 ![Delete Organization](/img/dashboard/remove-organization-dialog.png)
 
-
 # Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
 
-- Your team or organization is a non-commercial entity
-- Source code is available in a public location with an [OSI-approved license](https://opensource.org/licenses)
+- Your project is a non-commercial entity
+- Source code for your project is available in a public location with an {% url "OSI-approved license" https://opensource.org/licenses %}
 
 ## Requesting OSS Plan for an Org
+
 Follow the following process to request an OSS plan for your project:
 
-1. [Login](https://dashboard.cypress.io) to the Cypress Dashboard, or [create an account](https://dashboard.cypress.io) if you are a new user.
-
-{% img 'no-border' /img/dashboard/oss-plan-1-login.png "Login or Create Account" %}
-
-2. Go the [Organizations page](https://dashboard.cypress.io/#/organizations) to select the organization you desire to associate with an OSS plan. If you have no organizations, you can create one by clicking the "+ Add Organization" button.
+1. {% url "Login" https://on.cypress.io/dashboard %} to the Cypress Dashboard, or {% url "create an account" https://on.cypress.io/dashboard %} if you are a new user.
+  {% img 'no-border' /img/dashboard/oss-plan-1-login.png "Login or Create Account" %}
+2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
-
-{% img 'no-border' /img/dashboard/oss-plan-2-select-org.png "Select or add organization" %}
-
-3. Go to the "Billing & Usage" section, and then click on the "Apply for an open source plan" link at the bottom of the page.
-
-{% img 'no-border' /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" %}
-
-4. Fill and submit the OSS plan request form.
-
-{% img 'no-border' /img/dashboard/oss-plan-4-apply.png "OSS plan request form" %}
-
-5. You'll receive an email confirming your request. The Cypress Team will review your request, and if approved, an OSS plan subscription will automatically start for your organization.
+  {% img 'no-border' /img/dashboard/oss-plan-2-select-org.png "Select or add organization" %}
+3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
+  {% img 'no-border' /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" %}
+4. Fill in and submit the OSS plan request form.
+  {% img 'no-border' /img/dashboard/oss-plan-4-apply.png "OSS plan request form" %}
+5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
 
 If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).
