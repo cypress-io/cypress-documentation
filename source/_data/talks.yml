@@ -17,6 +17,15 @@ large:
     author: Gleb Bahmutov
     youtubeId: 8pcx0XitUCc
     slides: https://slides.com/bahmutov/hyperapp-intro#/
+    
+  - title: 'Continuous Integration with GitLab CI'
+    url: https://youtu.be/EuwLdbCu3DE?t=1879
+    sourceName: NERD Summit
+    sourceUrl: https://nerd.ngo/
+    date: Mar 10, 2019
+    author: Pete Johanson
+    youtubeId: EuwLdbCu3DE
+    slides: https://petejohanson.gitlab.io/nerdsummit-2019-gitlab-ci-cd/#/	 
 
   - title: 'Less painful E2E tests with Cypress.io'
     url: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/ 
@@ -35,6 +44,14 @@ large:
     author: Nikola Duza
     youtubeId: I3WJhutZovw
     slides: https://slides.com/nikolalsvk/e2e-cypress
+
+	- title: 'Sleeping better at night with Cypress.io'
+    url: https://www.youtube.com/watch?v=-tE0SQ0cR4c
+    sourceName: React Day Berlin
+    sourceUrl: https://reactday.berlin/
+    date: Dec 20, 2018
+    author: Tomasz Łakomy
+    youtubeId: -tE0SQ0cR4c
 
   - title: 'Cypress: The future of E2E testing'
     url: https://www.youtube.com/watch?v=pXyBligMMr0
@@ -163,6 +180,14 @@ large:
     img: /img/examples/automated-testing-for-the-modern.png
     slides: https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web
 
+	- title: 'Next-Generation Frontend Testing with Cypress.io'
+    url: https://www.youtube.com/watch?v=UJICwHNb4BQ
+    sourceName: js.la
+    sourceUrl: https://js.la/
+    date: Jun 20, 2018
+    author: Amir Rustamzadeh
+    youtubeId: UJICwHNb4BQ
+    
   - title: "Cypress"
     url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
     sourceName: Bluesoft Labs

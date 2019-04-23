@@ -809,7 +809,7 @@ expect(true).to.be.true
 ```
 
 {% note info Did you know you can write Unit Tests in Cypress? %}
-Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#React-with-Enzyme %}.
+Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#React %}.
 {% endnote %}
 
 Explicit assertions are great when you want to:
@@ -831,7 +831,7 @@ cy
   .should(($p) => {
     // massage our subject from a DOM element
     // into an array of texts from all of the p's
-    let texts = $p.map((i, el) => {
+    let texts = $p.map((el, i) => {
       return Cypress.$(el).text()
     })
 
