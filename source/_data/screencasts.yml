@@ -27,12 +27,12 @@ large:
     slides: https://github.com/kentcdodds/kentcdodds.com/pull/88
 
   - title: "My Cypress Workflow"
-    url: https://www.youtube.com/watch?v=vBZaDqMmDH0
+    url: https://www.youtube.com/watch?v=5sXulBZe25Q
     sourceName: YouTube
     sourceUrl: https://www.youtube.com/channel/UCt7yOnL7bI7yCa1Xe_GTjJQ
-    date: Jan 28, 2019
+    date: Jan 31, 2019
     author: Michael Herman
-    youtubeId: vBZaDqMmDH0
+    youtubeId: 5sXulBZe25Q
 
   - title: "CircleCI + Cypress.io: End to end testing made easy"
     url: https://youtu.be/J-xbNtKgXfY
