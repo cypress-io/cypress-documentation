@@ -46,7 +46,8 @@ cy.task('pause', 1000)
 on('task', {
   pause (ms) {
     return new Promise((resolve) => {
-      setTimeout(resolve, ms)
+      // tasks should not resolve with undefined
+      setTimeout(() => resolve(null), ms)
     })
   }
 })
