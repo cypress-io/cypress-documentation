@@ -35,6 +35,23 @@ on('task', {
 })
 ```
 
+Return a Promise from asynchronous tasks
+
+```javascript
+// in test
+cy.task('pause', 1000)
+```
+```javascript
+// in plugins file
+on('task', {
+  pause (ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms)
+    })
+  }
+})
+```
+
 ## Arguments
 
 **{% fa fa-angle-right %} event** ***(String)***
