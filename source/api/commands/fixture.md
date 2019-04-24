@@ -183,6 +183,27 @@ cy.wait('@getUser').then((xhr)  => {
 })
 ```
 
+***Test context***
+
+If you store and access the fixture data using `this` test context object, make sure to use `function () { ... }` callbacks. Otherwise the test engine will NOT have `this` pointing at the test context.
+
+```javascript
+beforeEach(function () {
+  // "this" points at the test context object
+  cy.fixture('user')
+    .then(() => {
+      // "this" is still the test context object
+      this.user = user
+    })
+})
+
+// the test callback is in "function () { ... }" form
+it('has user', function () {
+  // this.user exists
+  expect(this.user.firstName).to.equal('Jane')
+})
+```
+
 # Notes
 
 ## Shortcuts
@@ -247,3 +268,4 @@ For other types of files, they will be read as `utf8` by default, unless specifi
 - {% url `cy.route()` route %}
 - {% url `.then()` then %}
 - {% url 'Recipe: Bootstrapping App Test Data' recipes#Bootstrapping-your-App %}
+- {% url 'Fixtures' https://github.com/cypress-io/testing-workshop-cypress#fixtures %} section of the Cypress Testing Workshop
