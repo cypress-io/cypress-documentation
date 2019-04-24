@@ -28,7 +28,6 @@ guides:
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
     web-security: web-security.html
-    dashboard-roles-and-permissions: dashboard-roles-and-permissions.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
     plugins-guide: plugins-guide.html
