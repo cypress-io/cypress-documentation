@@ -2,15 +2,15 @@
 title: Module API
 ---
 
-You can require Cypress as a Node module from your JavaScript applications. This can be useful when you want to use all test results after the run. For example you can:
+You can require Cypress as a Node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
 
-- send a notification about failing tests with included screenshot images
-- rerun a single failing spec
-- kick off other builds or scripts
+- Send a notification about failing tests with included screenshot images
+- Rerun a single failing spec file
+- Kick off other builds or scripts
 
 ## `cypress.run()`
 
-Runs Cypress tests and resolves with all test results. See {% url 'Cypress module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
+Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
 
 ### Options
 
@@ -105,7 +105,7 @@ cypress.run({
 }
 ```
 
-Find the TypeScript definition for the results object in {% url 'cypress/cli/types folder' https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
+Find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
 
 Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find  a module dependency. In that case, the `Promise` will be rejected with a detailed error.
 
