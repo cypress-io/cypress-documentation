@@ -325,7 +325,7 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-## User permissions 
+### User permissions 
 
 The permissions for each user role for the Dashboard Service.
 
