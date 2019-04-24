@@ -130,7 +130,7 @@
     "hexo": "3.8.0",
     "hexo-algoliasearch": "0.3.0",
     "hexo-cli": "1.1.0",
-    "hexo-filter-cleanup": "1.1.0",
+    "hexo-filter-cleanup": "1.2.0",
     "hexo-generator-alias": "0.1.3",
     "hexo-generator-seo-friendly-sitemap": "0.0.25",
     "hexo-prism-plugin": "2.3.0",
