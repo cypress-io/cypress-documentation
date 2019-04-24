@@ -53,7 +53,6 @@ sidebar:
     coming-from-selenium: Cypress vs Selenium
     custom-commands: Custom Commands
     web-security: Web Security
-    dashboard-roles-and-permissions: Dashboard Roles & Permissions
     how-cypress-really-works: How Cypress Really Works
     talking-to-your-backend: Talking to Your Backend
     spawning-processes: Spawning Processes
