@@ -325,6 +325,37 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
+## User permissions 
+
+The permissions for each user role for the Dashboard Service.
+
+| Permission                               | Member | Admin | Owner |   
+| ---                                      | ---    | ---   | ---   | 
+| See test recordings of private projects  | ✅     | ✅    |✅     |
+| See users invited to org                 |        | ✅    |✅     |
+| Resend invitation to invited user        |        | ✅    |✅     |
+| Invite member to Organization            |        | ✅    |✅     |
+| Invite admin to Organization             |        | ✅    |✅     |
+| Invite owner to Organization             |        | ✅    |✅     |
+| See requests from users to join org      |        | ✅    |✅     |
+| Accept requests from users to join org   |        | ✅    |✅     |
+| Remove member from org                   |        | ✅    |✅     |
+| Remove admin from org                    |        | ✅    |✅     |
+| Remove owner from org                    |        |       |✅     |
+| Edit member in org                       |        | ✅    |✅     | 
+| Edit admin in org                        |        | ✅    |✅     |
+| Edit owner in org                        |        |       |✅     |
+| Add, edit, delete member in default org  |        |       |✅     |
+| Access billing information               |        | ✅    |✅     |
+| Manage billing information               |        | ✅    |✅     |
+| Transfer project to another Organization |        |       |✅     |
+| Delete project                           |        |       |✅     |
+| Edit project name                        |        | ✅    |✅     |  
+| Edit project status (private/public}     |        | ✅    |✅     |
+| Add or delete record keys                |        | ✅    |✅     |
+| Edit org name                            |        |       |✅     |
+| Delete org when no projects              |        |       |✅     |
+
 ### User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
