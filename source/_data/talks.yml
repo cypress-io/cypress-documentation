@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+	- title: "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37"
+    sourceUrl: https://speakerdeck.com/mrcube42
+    url: https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37
+    sourceName: Speaker Deck
+    author: David Wurfel
+    date: Apr 04, 2019
+    img: /img/examples/next-level-e2e-testing-with-cypress.png
+    
   - title: 'Cypress: testing without Selenium, part 1'
     url: https://www.youtube.com/watch?v=hk4qtXgL12k
     sourceName: Selenium Camp

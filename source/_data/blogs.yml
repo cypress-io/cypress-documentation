@@ -39,14 +39,6 @@ large:
     author: Karthik kk
     date: Apr 8, 2019
     img: /img/examples/visual-ui-testing-percy-cypress.png
-		
-	- title: "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37"
-    sourceUrl: https://speakerdeck.com/mrcube42
-    url: https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37
-    sourceName: Speaker Deck
-    author: David Wurfel
-    date: Apr 04, 2019
-    img: /img/examples/next-level-e2e-testing-with-cypress.png
 
 	- title: "Testing using Cypress in JavaScript"
     url: https://confluence.xpand-it.com/display/public/XRAY/Testing+using+Cypress+in+JavaScript
