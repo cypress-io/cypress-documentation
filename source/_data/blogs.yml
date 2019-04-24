@@ -40,6 +40,14 @@ large:
     date: Apr 8, 2019
     img: /img/examples/visual-ui-testing-percy-cypress.png
 
+	- title: "Testing using Cypress in JavaScript"
+    url: https://confluence.xpand-it.com/display/public/XRAY/Testing+using+Cypress+in+JavaScript
+    sourceName: Confluence
+    sourceUrl: https://confluence.xpand-it.com/display/public/XRAY/Xray+Documentation+Home
+    author: Sergio Freire
+    date: Apr 01, 2019
+    img: /img/examples/testing-using-cypress-in-javascript.png	
+
 	- title: "How to Create and Use Fixtures in Cypress Tests"
     url: https://chipcullen.com/how-to-create-and-use-fixtures-in-cypress-tests/
     sourceName: Chip Cullen
@@ -63,6 +71,14 @@ large:
     author: Stuart Sandine
     date: Mar 15, 2019
     img: /img/examples/cypress-aws-lambda.png
+
+	- title: "Write tests without the pain"
+    url: https://slides.com/simonhen/cypress
+    sourceName: Slides
+    sourceUrl: https://simonhenrotte.com/
+    author: Simon Henrotte
+    date: Mar 7, 2019
+    img: /img/examples/write-tests-without-pain.png
 
   - title: "Testing an email workflow from end to end with Cypress"
     url: https://humble.dev/testing-an-email-workflow-from-end-to-end-with-cypress
