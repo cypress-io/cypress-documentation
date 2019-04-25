@@ -75,7 +75,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
   - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
-7. Click **Setup Project**.
+7. Click **Set up Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
