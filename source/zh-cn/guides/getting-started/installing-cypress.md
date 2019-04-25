@@ -104,46 +104,58 @@ Just manually unzip and double click. Cypress will run without needing to instal
 {% video local /img/snippets/installing-global.mp4 %}
 
 ## {% fa fa-refresh %} Continuous integration
+## {% fa fa-refresh %} 持续集成
 
 Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
+请阅读我们的{% url '持续集成' continuous-integration %} 文档从而在CI里面安装Cypress. 当在Linux中运行时你讲需要安装一些{% url '系统依赖' continuous-integration#Dependencies %}或者你也可以用我们的包含所有你需要的预置依赖的{% url 'Docker镜像' docker %}.
 
 # Opening Cypress
+# 打开Cypress
 
 If you used `npm` to install, Cypress has now been installed to your `./node_modules` directory, with its binary executable accessible from `./node_modules/.bin`.
+如果你用了`npm`安装, 则Cypress已经连同它的可执行二进制文件`./node_modules/.bin`一起被安装到你的`./node_modules`目录.
 
 Now you can open Cypress from your **project root** one of the following ways:
+现在你可以通过如下方法从你的项目根源打开Cypress:
 
 **The long way with the full path**
+**通过完整路径的常用方式**
 
 ```shell
 ./node_modules/.bin/cypress open
 ```
 
 **Or with the shortcut using `npm bin`**
+**或者通过快捷键`npm bin`**
 
 ```shell
 $(npm bin)/cypress open
 ```
 
 **Or by using `npx`**
+**或者用`npx`打开**
 
 **note**: {% url "npx" https://www.npmjs.com/package/npx %} is included with `npm > v5.2` or can be installed separately.
+**note**: {% url "npx" https://www.npmjs.com/package/npx %}是包含在大于v5.2的`npm >`版本中的, 或者你也能够被另外安装它.
 
 ```shell
 npx cypress open
 ```
 
 **Or by using `yarn`**
+**或者用`yarn`打开**
 
 ```shell
 yarn run cypress open
 ```
 
-After a moment, the Cypress Test Runner will launch.
+稍等一会儿, Cypress Test Runner就会运行.
 
 ## Adding npm scripts
+## 添加npm脚本
 
 While there's nothing wrong with writing out the full path to the Cypress executable each time, it's much easier and clearer to add Cypress commands to the `scripts` field in your `package.json` file.
+每一次都输入完整路径的执行语句去执行Cypress是完全没有问题的, 只不过有更容易的和清晰的方式是添加Cypress命令到`package.json`文件的`scripts`区域.
 
 ```javascript
 {
@@ -154,26 +166,34 @@ While there's nothing wrong with writing out the full path to the Cypress execut
 ```
 
 Now you can invoke the command from your project root like so:
+现在你可以像这样从你的项目根源去调用命令了:
 
 ```shell
 npm run cypress:open
 ```
 
 ...and Cypress will open right up for you.
+...然后Cypress就会为您开启.
 
 # CLI tools
+# CLI工具
 
 By installing Cypress through `npm` you also get access to many other CLI commands.
+通过`npm`安装Cypress, 您还可以访问许多其他CLI命令.
 
 As of version `0.20.0` Cypress is also a fully baked `node_module` you can require in your Node scripts.
+从版本`0.20.0`开始，Cypress也是一个完全出炉的`node_module`版本, 你可以调用你的Node脚本.
 
 You can {% url 'read more about the CLI here' command-line %}.
+你可以在{% url '这里阅读更多相关的CLI' command-line %}.
 
 # Advanced
+# 进阶
 
 ## Environment variables
+## 环境变量
 
-Name | Description
+Name名称 | Description描述
 ------ |  ---------
 `CYPRESS_INSTALL_BINARY` | {% urlHash "Destination of Cypress binary that's downloaded and installed" Install-binary %}
 `CYPRESS_DOWNLOAD_MIRROR` | {% urlHash "Downloads the Cypress binary though a mirror server"  Mirroring %}
@@ -183,8 +203,10 @@ Name | Description
 ~~CYPRESS_BINARY_VERSION~~ | {% badge danger removed %} use `CYPRESS_INSTALL_BINARY` instead
 
 ## Install binary
+## 安装二进制文件
 
 Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cypress is installed.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
+用`CYPRESS_INSTALL_BINARY`环境变量, 你可以控制Cypress的安装方式.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
 
 **This is helpful if you want to:**
 
