@@ -74,8 +74,8 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
-  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
-7. Click **Set up Project**.
+  - **A private project** restricts its access to *{% urlHash "only users you invite" Users %}*.
+7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
@@ -154,7 +154,7 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
-- **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+- **Private** means that only {% urlHash 'users' Users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ### To change project access
 
@@ -302,22 +302,28 @@ You can create an organization from within the {% url "Dashboard Service" https:
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
 
-## Manage users
+## Delete Org
 
-### Inviting users
+You can delete organizations that you own as long as they do not have any projects in the organization. You must first transfer ownership of your projects to another organization before you can delete the organization.
+
+![Delete Organization](/img/dashboard/remove-organization-dialog.png)
+
+# Users
+
+## Inviting users
 
 A user is anyone who logs in to the Dashboard Service. You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
-**To invite a user to an organization:**
+### To invite a user to an organization:
 
-1. Click into the organization you want the user to access.
-2. Click **Users**, then **Invite User**. *Note: you must have the role of 'owner' or 'admin' to invite users.*
-3. Fill in their email and select their role then click 'Invite User' *Note: only 'owners can give other user's 'owner' access.*
-4. The user will receive an invite email with a link to accept the invitation.
+1. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to invite a user to.
+2. Click **Users**, then **Invite User**. *Note: you must have the {% urlHash "role of 'owner' or 'admin'" User-roles %} to invite users.*
+3. Fill in their email and select their {% urlHash "role" User-roles %} then click **Invite User** *Note: only 'owners can give other user's 'owner' access.*
+4. The user will receive an invitation email with a link to accept the invitation.
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-### User roles
+## User roles
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -325,20 +331,43 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-### User requests
+The permissions for each user role for the Dashboard Service.
+
+| Permission                                         |  |  | |
+| ---------------------------------------------------|--------|-------|------|
+| See test recordings of private projects            | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
+| See record keys of projects                           | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
+| See billing and usage information                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit billing information                           |        | ✅ **Admin**    | ✅ **Owner** |
+| See users invited to organization                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Resend invitation to invited user                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Invite 'member' to organization                    |        | ✅ **Admin**    | ✅ **Owner** |
+| Invite 'admin' to organization                     |        | ✅ **Admin**    | ✅ **Owner** |
+| See user requests to join organization             |        | ✅ **Admin**    | ✅ **Owner** |
+| Accept user requests to join organization          |        | ✅ **Admin**    | ✅ **Owner** |
+| Remove 'member' from organization                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Remove 'admin' from organization                   |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit 'member' in organization                      |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit 'admin' in organization                       |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit project name                                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit project status (private/public}               |        | ✅ **Admin**    | ✅ **Owner** |
+| Add or delete record keys                          |        | ✅ **Admin**    | ✅ **Owner** |
+| Invite 'owner' to organization                     |        |        | ✅ **Owner** |
+| Edit 'owner' in organization                       |        |        | ✅ **Owner** |
+| Remove 'owner' from organization                   |        |        | ✅ **Owner** |
+| Add, edit, remove user in default organization |        |        | ✅ **Owner** |
+| Edit organization name                             |        |        | ✅ **Owner** |
+| Delete organization                                |        |        | ✅ **Owner** |
+| Transfer project to another organization           |        |        | ✅ **Owner** |
+| Delete project                                     |        |        | ✅ **Owner** |
+
+## User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
-
-## Delete Org
-
-You can delete organizations that you own as long as they do not have any projects in the organization. You must first transfer ownership of your projects to another organization before you can delete the organization.
-
-![Delete Organization](/img/dashboard/remove-organization-dialog.png)
 
 # Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
-
 - Your project is a non-commercial entity
 - Source code for your project is available in a public location with an {% url "OSI-approved license" https://opensource.org/licenses %}
 
