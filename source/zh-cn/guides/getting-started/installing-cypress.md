@@ -63,16 +63,23 @@ As of version `3.0`, the binary is downloaded to a global cache directory to be 
 {% endnote %}
 
 {% note success Best Practice %}
+最佳练习
+
 
 The recommended approach is to install Cypress with `npm` because :
+推荐的是方法是通过`npm`安装Cypress, 因为:
+
 
 - Cypress is versioned like any other dependency.
+- Cypress是和其他依赖一样通过版本区分的.
 - It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+- Cypress可在{% url '持续集成' continuous-integration %}环境中运行的更简化.
 {% endnote %}
 
 ## {% fa fa-terminal %} `yarn add`
 
 Installing Cypress via {% url "`yarn`" https://yarnpkg.com %}:
+通过{% url "`yarn`" https://yarnpkg.com %}安装Cypress:
 
 ```shell
 cd /your/project/path
@@ -83,12 +90,16 @@ yarn add cypress --dev
 ```
 
 ## {% fa fa-download %} Direct download
+## {% fa fa-download %} 直接下载
 
 If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
+如果你没有在你的项目中用Node.js或者`npm`或者你只是想快速的试着玩下Cypress, 你将总是能够{% url "直接通过CDN下载" http://download.cypress.io/desktop %}.
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
+直接下载将总是把最新的有效版本下下来. 并你的平台会自动被识别并分配对应的版本.
 
 Just manually unzip and double click. Cypress will run without needing to install any dependencies.
+只需手动解压然后双击app. Cypress就可以在不安装任何依赖的情况下运行.
 
 {% video local /img/snippets/installing-global.mp4 %}
 
