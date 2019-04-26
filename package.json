@@ -70,7 +70,7 @@
     "@types/fluent-ffmpeg": "2.1.9",
     "@types/jest": "24.0.11",
     "beeper": "2.0.0",
-    "bin-up": "1.1.0",
+    "bin-up": "1.2.0",
     "chai": "4.2.0",
     "chalk": "2.4.2",
     "cheerio": "1.0.0-rc.3",
