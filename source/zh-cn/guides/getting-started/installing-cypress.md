@@ -311,8 +311,10 @@ If you want to download a specific Cypress version for a given platform (Operati
 如果你想下载特定的可提供平台的Cypress版本(操作系统), 你可以从CDN得到它. 你可能也想自己托管一个本地的Cypress并为本地提供服务.
 
 The download server url is `https://download.cypress.io`.
+下载服务器的地址是`https://download.cypress.io`.
 
-See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
+请参阅{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}查看所有支持的平台.
+
 
  Method | Url                            | Description
  ------ | ------------------------------ | -------------------------------------------------------------------------
@@ -323,19 +325,24 @@ See {% url "https://download.cypress.io/desktop.json" https://download.cypress.i
  `GET`  | `/desktop/:version?platform=p` | Download Cypress with a specified version and platform
 
 **Example of downloading Cypress `3.0.0` for Windows platform:**
+**为Windows平台下载`3.0.0`的示例:**
 
 ```
 https://download.cypress.io/desktop/3.0.0?platform=win
 ```
 
 ## Mirroring
+## 镜像
 
 If you choose to mirror the entire Cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server url from `https://download.cypress.io` to your own mirror.
+如果你选择镜像整个Cypress的下载站点, 你可以指定`CYPRESS_DOWNLOAD_MIRROR`以此来把`https://download.cypress.io`的下载服务器替换为你自己的镜像下载点.
 
 For example:
+示例:
 
 ```shell
 CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
 Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
+Cypress将尝试通过如下格式下载二进制文件: `https://www.example.com/desktop/:version?platform=p`
