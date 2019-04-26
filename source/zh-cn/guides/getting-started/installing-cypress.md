@@ -209,41 +209,52 @@ Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cyp
 用`CYPRESS_INSTALL_BINARY`环境变量, 你可以控制Cypress的安装方式.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
 
 **This is helpful if you want to:**
+**下面的操作也会很有帮助:**
 
 - Install a version different than the default npm package.
+- 安装与默认npm包不同的版本.
     ```shell
 CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3
     ```
 - Specify an external URL (to bypass a corporate firewall).
+- 指定外部URL（绕过公司防火墙）.
     ```shell
 CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
     ```
 - Specify a file to install locally instead of using the internet.
+- 指定一个本地安装的文件来代替网络安装.
     ```shell
 CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
     ```
 
 In all cases, the fact that the binary was installed from a custom location *is not saved in your `package.json` file*. Every repeated installation needs to use the same environment variable to install the same binary.
+在各种情况下, 从自定义位置安装的二进制文件*不会保存在`package.json`文件中*. 每一次重复安装都将使用相同的环境变量去安装相同的二进制文件.
 
 ### Skipping installation
+### 跳过安装
 
 You can also force Cypress to skip the installation of the binary application by setting `CYPRESS_INSTALL_BINARY=0`. This could be useful if you want to prevent Cypress from downloading the Cypress binary at the time of `npm install`.
+你也可以通过设置`CYPRESS_INSTALL_BINARY=0`来强制Cypress跳过二进制程序的安装. 如果你想防止Cypress在`npm install`的时候下载Cypress的二进制文件的话, 这将是有用的.
 
 ```shell
 CYPRESS_INSTALL_BINARY=0 npm install
 ```
 
 Now Cypress will skip its install phase once the npm module is installed.
+现在, 一旦安装了npm模块, Cypress就将跳过其安装阶段.
 
 ## Binary cache
+## 二进制缓存
 
 As of version `3.0`, Cypress downloads the matching Cypress binary to the global system cache, so that the binary can be shared between projects. By default, global cache folders are:
+从`3.0`版本开始, Cypress下载对应的Cypress二进制文件到全局系统缓存中, 以便二进制文件能够在多个项目件共享. 默认情况下, 全局缓存文件夹是:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`
 - **Windows**: `/AppData/Local/Cypress/Cache`
 
 To override the default cache folder, set the environment variable `CYPRESS_CACHE_FOLDER`.
+要覆盖默认缓存文件夹, 请设置环境变量`CYPRESS_CACHE_FOLDER`.
 
 ```shell
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
@@ -254,16 +265,21 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
 See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
+你也可以参阅文档中的{% url '持续集成 - 缓存' continuous-integration#Caching %}部分.
 
 {% note warning %}
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
+每次cypress运行的时候`CYPRESS_CACHE_FOLDER`都需要存在. 为了确保这个情况, 考虑导出这个环境变量. 例如, 在`.bash_profile` (MacOS, Linux)中, 或使用 `RegEdit` (Windows).
 {% endnote %}
 
 ## Run binary
+## 运行二进制文件
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm module finds the Cypress binary.
+设置环境变量`CYPRESS_RUN_BINARY`来覆盖npm模块找到的Cypress二进制文件的所在位置.
 
 `CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable. The Cypress commands `open`, `run`, and `verify` will then launch the provided binary.
+`CYPRESS_RUN_BINARY`应该是一个已经解压的可执行二进制文件的路径. Cypress命令`open`, `run`, 和`verify`将执行被提供的二进制文件.
 
 ### Mac
 
@@ -285,11 +301,14 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 
 {% note warning %}
 We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, since it will affect every cypress module installed on your file system.
+我们推荐 **不要导出** `CYPRESS_RUN_BINARY`环境变量, 因为它会影响所有安装在你系统上的cypres模块.
 {% endnote %}
 
 ## Hosting
+## 托管
 
 If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN. You may also want to host Cypress yourself and serve it from a local network.
+如果你想下载特定的可提供平台的Cypress版本(操作系统), 你可以从CDN得到它. 你可能也想自己托管一个本地的Cypress并为本地提供服务.
 
 The download server url is `https://download.cypress.io`.
 
