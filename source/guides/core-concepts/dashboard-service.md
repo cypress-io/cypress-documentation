@@ -68,10 +68,10 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
 1. Click on the **Runs** tab of your project within the {% url "Test Runner" test-runner %}.
-2. You will need to log in to record your tests, so you may need to log in with GitHub here.
-3. Click **Setup Project to Record**.
+2. Click **Set up Project to Record**.
+3. You will need to log in to record your tests, so you will need to log in with GitHub here.
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
-5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
+5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
   - **A private project** restricts its access to *{% urlHash "only users you invite" Users %}*.
@@ -368,7 +368,6 @@ Users can "request" access to a given organization. If a developer on your team 
 # Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
-
 - Your project is a non-commercial entity
 - Source code for your project is available in a public location with an {% url "OSI-approved license" https://opensource.org/licenses %}
 
