@@ -1,18 +1,23 @@
 ---
-title: Writing Your First Test
+title: Writing Your First Test编写你的第一个测试
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将学到
 
 - How to start testing a new project in Cypress.
+- 如何在Cypress里面开始测试一个新的项目.
 - What passing and failing tests look like.
+- 通过的测试和失败的测试看起来如何.
 - Testing web navigation, DOM querying, and writing assertions.
+- 测试网页导航, DOM查询, 以及编写断言.
 {% endnote %}
 
 {% video vimeo 237115455 %}
 
 # Add a test file
+# 添加一个测试文件
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 
