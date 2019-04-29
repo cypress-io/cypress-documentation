@@ -110,7 +110,7 @@
     "request-promise": "4.2.4",
     "sinon": "7.3.2",
     "sinon-chai": "3.3.0",
-    "snap-shot-it": "6.3.3",
+    "snap-shot-it": "6.3.5",
     "start-server-and-test": "1.9.0",
     "stop-only": "3.0.1",
     "textlint": "11.2.3",
