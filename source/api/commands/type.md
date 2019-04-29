@@ -355,9 +355,9 @@ Any modifiers activated for the event are also listed in a `modifiers` column.
 
 ### Typing `tab` key does not work
 
-Tabbing will be implemented as part of our work on [Native Browser Events](https://github.com/cypress-io/cypress/issues/311) and will support things like multiple tabs, tabbing in reverse, or tabbing to a specific element.
+Tabbing will be implemented as part of our work on {% issue 311 "Native Browser Events" %} and will support things like multiple tabs, tabbing in reverse, or tabbing to a specific element.
 
-In the meantime, you can use the experimental [cypress-plugin-tab](https://github.com/Bkucera/cypress-plugin-tab) and can thumbs up {% issue 299 "this issue" %}.
+In the meantime, you can use the experimental {% url "cypress-plugin-tab" https://github.com/Bkucera/cypress-plugin-tab %} and can thumbs up {% issue 299 "this issue" %}.
 
 ## Modifiers
 
