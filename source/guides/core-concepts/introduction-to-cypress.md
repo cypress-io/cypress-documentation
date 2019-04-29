@@ -279,8 +279,6 @@ Some methods, such as {% url `cy.get()` get %} or {% url `cy.contains()` contain
 
 ### Some commands cannot be chained:
 - From `cy` only, meaning they do not operate on a subject: {% url `cy.clearCookies()` clearcookies %}.
-- From commands yielding particular kinds of subjects (like DOM elements): {% url `.type()` type %}.
-- From both `cy` *or* from a subject-yielding command: {% url `cy.contains()` contains %}.
 
 ### Some commands yield:
 - `null`, meaning no command can be chained after the command: {% url `cy.clearCookie()` clearcookie %}.
