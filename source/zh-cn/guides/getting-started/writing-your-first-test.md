@@ -20,12 +20,17 @@ title: Writing Your First Test编写你的第一个测试
 # 添加一个测试文件
 
 Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
+假设你已成功{% url "安装了测试运行器" installing-cypress#Installing %}并且{% url "打开了Cypress应用程序" installing-cypress#Opening-Cypress %}, 现在是时候写我们的第一个测试了. 我们将:
 
 1. Create a `sample_spec.js` file.
+1. 创建一个`sample_spec.js`文件.
 2. Watch Cypress update our list of specs.
+2. 查看Cypress更新我们的规格列表.
 3. Launch Cypress in interactive mode.
+3. 在交互模式下启动Cypress.
 
 Let's create a new file in the `cypress/integration` folder that was created for us:
+让我们在为我们准备的`cypress/integration`文件夹里面创建一个新文件:
 
 ```shell
 touch {your_project}/cypress/integration/sample_spec.js
