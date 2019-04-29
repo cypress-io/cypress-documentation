@@ -413,12 +413,12 @@ To illustrate this, let's revisit that list of actions and expose some of the hi
 1. Visit a URL
   ✨ **and wait for the page `load` event to fire after all external resources have loaded**✨
 2. Find an element by its selector
-  ✨ **and retry repeatedly until it is found in the DOM** ✨
+  ✨ **and {% url "retry" retry-ability %} until it is found in the DOM** ✨
 3. Perform a click action on that element
   ✨ **after we wait for the element to reach an {% url 'actionable state' interacting-with-elements %}** ✨
 4. Grab the URL and...
 5. Assert the URL to include a specific *string*
-  ✨ **and retry repeatedly until the assertion passes** ✨
+  ✨ **and {% url "retry" retry-ability %} until the assertion passes** ✨
 
 As you can see, Cypress does a lot of extra work to ensure the state of the application matches what our commands expect about it. Each command may resolve quickly (so fast you won't see them in a pending state) but others may take seconds, or even dozens of seconds to resolve.
 
@@ -667,7 +667,7 @@ Many commands have a default, built-in assertion, or rather have requirements th
 
 Certain commands may have a specific requirement that causes them to immediately fail without retrying: such as {% url `cy.request()` request %}.
 
-Others, such as DOM based commands will automatically retry and wait for their corresponding elements to exist before failing.
+Others, such as DOM based commands will automatically {% url "retry" retry-ability %} and wait for their corresponding elements to exist before failing.
 
 Even more - action commands will automatically wait for their element to reach an {% url 'actionable state' interacting-with-elements %} before failing.
 
@@ -852,7 +852,7 @@ cy
 ```
 
 {% note danger Make sure `.should()` is safe %}
-When using a callback function with {% url `.should()` should %}, be sure that the entire function can be executed multiple times without side effects. Cypress applies its retry logic to these functions: if there's a failure, it will repeatedly rerun the assertions until the timeout is reached. That means your code should be retry-safe. The technical term for this means your code must be **idempotent**.
+When using a callback function with {% url `.should()` should %}, be sure that the entire function can be executed multiple times without side effects. Cypress applies its {% url "retry" retry-ability %} logic to these functions: if there's a failure, it will repeatedly rerun the assertions until the timeout is reached. That means your code should be retry-safe. The technical term for this means your code must be **idempotent**.
 {% endnote %}
 
 # Timeouts
