@@ -283,7 +283,7 @@ The example below gets the text contained within one element and saves it in a c
 const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
 
 // will keep text from title element
-let text
+let titleText
 
 cy.get('.company-details')
   .find('.title')
