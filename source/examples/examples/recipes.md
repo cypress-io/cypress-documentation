@@ -208,12 +208,12 @@ Get around the lack of a `.hover()` command.
 
 ## [Environment Variables](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__env-variables)
 
-- Pass values via `env` object in `cypress.json`.
+- Pass values via an `env` object in your {% url "configuration" configuration %} file (`cypress.json`).
 - Pass any variable that starts with `CYPRESS_`.
 - Extract any other variable from `process.env` using `cypress/plugins/index.js` callback.
 
 ## [Cypress CircleCI Orb](https://github.com/cypress-io/cypress-example-circleci-orb)
 
-- Installs npm dependencies
+- Install npm dependencies
 - Run Cypress tests
 - Record the output to the Cypress Dashboard

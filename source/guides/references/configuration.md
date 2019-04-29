@@ -4,11 +4,9 @@ title: Configuration
 
 When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
 
-```json
-{
-  "projectId": "jd90q7"
-}
-```
+{% note warning Change Configuration File %}
+You can change the configuration file or turn off the use of a configuration file by using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
+{% endnote %}
 
 # Options
 
@@ -133,7 +131,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
-By default, any environment variable that matches a corresponding configuration key will override the `cypress.json` value.
+By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -250,4 +248,4 @@ You can turn this option off if the application or site you're testing **does no
 
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}

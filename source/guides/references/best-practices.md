@@ -577,7 +577,7 @@ We have {% url 'examples showing you how to start and stop your web server' cont
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your `cypress.json` file.
+{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your {% url "configuration file (`cypress.json` by default)" configuration %}.
 {% endnote %}
 
 Adding a {% url "`baseUrl`" configuration#Global %} in your configuration allows you to omit passing the `baseUrl` to commands like {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %}. Cypress assumes this is the url you want to use.
@@ -593,7 +593,8 @@ As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches
 
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
+
 ```json
 {
   "baseUrl": "http://localhost:8484"

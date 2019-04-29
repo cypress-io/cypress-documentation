@@ -96,8 +96,7 @@ If you've started your server, then you should see your application loaded and w
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 
-Open up `cypress.json`, which you will find in your project root (where you installed Cypress.) It starts out empty:
-
+Open up your configuration file (`cypress.json` by default). It starts out empty:
 
 ```json
 {}
@@ -114,7 +113,7 @@ Let's add the `baseUrl` option.
 This will automatically **prefix** {% url `cy.visit()` visit %} and {% url `cy.request()` request %} commands with this baseUrl.
 
 {% note info %}
-Whenever you modify `cypress.json`, Cypress will automatically reboot itself and kill any open browsers. This is normal. Just click on the spec file again to relaunch the browser.
+Whenever you modify your configuration file, Cypress will automatically reboot itself and kill any open browsers. This is normal. Just click on the spec file again to relaunch the browser.
 {% endnote %}
 
 We can now visit a relative path and omit the hostname and port.

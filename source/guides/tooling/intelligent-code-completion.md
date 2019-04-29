@@ -73,7 +73,7 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 
 ## Features
 
-When editing the {% url "`cypress.json`" configuration %} file, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
+When editing the {% url "configuration file (`cypress.json` by default)" configuration %}, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
 
 ### Property help when writing and hovering on configuration keys
 
@@ -88,7 +88,7 @@ When editing the {% url "`cypress.json`" configuration %} file, you can use our 
 
 Intelligent code completion using JSON schemas is supported by default in {% url "Visual Studio Code" https://code.visualstudio.com/ %} and {% url "Visual Studio" https://www.visualstudio.com/ %}. All other editors will require extra configuration or plugins for JSON schema support.
 
-To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property.
+To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property. Make sure to replace `cypress.json` with your configuration file if not the default.
 
 ```json
 {

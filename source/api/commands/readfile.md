@@ -26,7 +26,7 @@ cy.readFile('menu.json')
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
-A path to a file within the project root (the directory that contains `cypress.json`).
+A path to a file within the project root (the directory that contains the default `cypress.json` configuration file).
 
 **{% fa fa-angle-right %} encoding**  ***(String)***
 
@@ -189,7 +189,7 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 # Command Log
 
-***List the contents of cypress.json***
+***List the contents of default `cypress.json` configuration file***
 
 ```javascript
 cy.readFile('cypress.json')

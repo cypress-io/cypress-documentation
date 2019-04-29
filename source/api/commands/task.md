@@ -240,7 +240,7 @@ If multiple task objects use the same key, the later registration will overwrite
 
 # Command Log
 
-### List the contents of `cypress.json`
+### List the contents of the default `cypress.json` configuration file
 
 ```javascript
 cy.task('readJson', 'cypress.json')

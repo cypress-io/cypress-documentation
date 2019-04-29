@@ -1,6 +1,5 @@
 ---
 title: viewport
-
 ---
 
 Control the size and orientation of the screen for your application.
@@ -74,13 +73,13 @@ Option | Default | Description
 
 ## Width, Height
 
-***Resize the viewport to 1024px x 768px***
+### Resize the viewport to 1024px x 768px
 
 ```javascript
 cy.viewport(1024, 768)
 ```
 
-***Organize desktop vs mobile tests separately***
+### Organize desktop vs mobile tests separately
 
 ```javascript
 describe('Nav Menus', function () {
@@ -115,7 +114,7 @@ describe('Nav Menus', function () {
 })
 ```
 
-***Dynamically test multiple viewports***
+### Dynamically test multiple viewports
 
 ```javascript
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
@@ -137,11 +136,12 @@ describe('Logo', () => {
   })
 })
 ```
+
 ![Command Log of multiple viewports](/img/api/viewport/loop-through-an-array-of-multiple-viewports.png)
 
 ## Preset
 
-***Resize the viewport to iPhone 6 width and height***
+### Resize the viewport to iPhone 6 width and height
 
 ```javascript
 cy.viewport('iphone-6') // viewport will change to 414px x 736px
@@ -149,7 +149,7 @@ cy.viewport('iphone-6') // viewport will change to 414px x 736px
 
 ## Orientation
 
-***Change the orientation to landscape***
+### Change the orientation to landscape
 
 ```javascript
 // the viewport will now be changed to 736px x 414px
@@ -161,23 +161,23 @@ cy.viewport('iphone-6', 'landscape')
 
 ## devicePixelRatio
 
-***`devicePixelRatio` is not simulated***
+### `devicePixelRatio` is not simulated
 
 This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. {% open_an_issue %} if you need this to be fixed.
 
 ## Restores
 
-***Cypress will restore the viewport in the snapshot***
+### Cypress will restore the viewport in the snapshot
 
 When hovering over each command, Cypress will automatically display the snapshot in the viewport dimensions that existed when that command ran.
 
 ## Defaults
 
-***Default sizing***
+### Default sizing
 
 By default, until you issue a `cy.viewport()` command, Cypress sets the width to `1000px` and the height to `660px` by default.
 
-You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your `cypress.json`:
+You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -190,7 +190,7 @@ Additionally, Cypress automatically sets the viewport to its default size betwee
 
 ## Scaling
 
-***Auto Scaling***
+### Auto Scaling
 
 By default, if your screen is not large enough to display all of the current dimension's pixels, Cypress will scale and center your application within the Cypress runner to accommodate.
 

@@ -41,11 +41,9 @@ Set multiple configuration options with an object literal.
 
 ## No Arguments
 
-**Get all configuration options.**
+### Get all configuration options from {% url 'configuration' configuration %} file (`cypress.json` by default)
 
-```javascript
-// cypress.json
-
+```json
 {
   "defaultCommandTimeout": 10000
 }
@@ -60,11 +58,9 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ## Name
 
-**Return just a single configuration option value.**
+### Return a single configuration option from {% url 'configuration' configuration %} file (`cypress.json` by default)
 
-```javascript
-// cypress.json
-
+```json
 {
   "pageLoadTimeout": 60000
 }
@@ -76,15 +72,13 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 ## Name and Value
 
-**Cypress allows you to change the values of your configuration options from within your tests.**
+### Change the values of configuration options from configuration file (`cypress.json` by default) from within your tests
 
 {% note warning Scope %}
 Remember, any changes that you make to configuration using this API will only be in effect for the remainder of the tests _in the same spec file._
 {% endnote %}
 
-```javascript
-// cypress.json
-
+```json
 {
   "viewportWidth": 1280,
   "viewportHeight": 720
@@ -99,12 +93,9 @@ Cypress.config('viewportWidth') // => 800
 
 ## Object
 
-**You can set multiple values by passing an object literal.**
+### Override multiple options from configuration file (`cypress.json` by default) by passing an object literal
 
-
-```javascript
-// cypress.json
-
+```json
 {
   "defaultCommandTimeout": 4000,
   "pageLoadTimeout": 30000,
@@ -122,7 +113,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 # Notes
 
-**Why is it `Cypress.config` and not `cy.config`?**
+## Why is it `Cypress.config` and not `cy.config`?
 
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 

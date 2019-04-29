@@ -35,17 +35,15 @@ Say you have the following directory structure:
     - custom.js
 ```
 
-### To specify the path to your custom reporter:
+### Specify path in your configuration file (`cypress.json` by default) to your custom reporter
 
-```javascript
-// cypress.json
-
+```json
 {
   "reporter": "reporters/custom.js"
 }
 ```
 
-The path above is relative to where your `cypress.json` is located.
+The path above is relative to where your configuration file is located.
 
 ### Command line
 
@@ -57,11 +55,9 @@ We also support passing an absolute path to the reporter.
 
 ## npm Reporters
 
-If you installed a custom reporter through npm, specify the package name:
+### Specify package name in configuration file (`cypress.json` by default) when installing a custom reporter through npm
 
-```javascript
-// cypress.json
-
+```json
 {
   "reporter": "mochawesome"
 }
@@ -79,9 +75,7 @@ You need to install any peer dependencies the reporter requires, even if they're
 
 # Reporter Options
 
-Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
-
-***cypress.json***
+Some reporters accept options that customize their behavior. These can be specified in your configuration file (`cypress.json` by default) or via {% url "command line" command-line %} options:
 
 ```json
 {
@@ -185,7 +179,7 @@ We need to install several dependencies.
 npm install --save-dev mocha mochawesome mochawesome-merge mochawesome-report-generator
 ```
 
-We need to configure the reporter in `cypress.json` to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
+We need to configure the reporter in your {% url "configuration file (`cypress.json` by default)" configuration %} to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
 
 ```json
 {
