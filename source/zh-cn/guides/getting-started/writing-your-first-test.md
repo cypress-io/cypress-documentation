@@ -37,32 +37,44 @@ touch {your_project}/cypress/integration/sample_spec.js
 ```
 
 Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
+一旦我们创建了该文件，我们就会看到Cypress测试运行器立即将其显示在集成测试列表中. Cypress监控您的规格文件是否有任何变化，并自动显示任何变化。
 
 Even though we haven't written any tests yet - that's okay - let's click on `sample_spec.js` and watch Cypress launch your browser.
+即使我们还没有编写任何测试 - 也没关系 - 让我们点击`sample_spec.js`并观看Cypress启动您的浏览器。
 
 {% note info %}
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
+Cypress在您系统上安装的浏览器中打开测试. 您可以在{% url "启动浏览器" launching-browsers %}中详细了解我们如何执行此操作.
 {% endnote %}
 
 {% video local /img/snippets/empty-file-30fps.mp4 %}
 
 We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This is where we will spend the majority of your time testing.
+我们现在正式进入{% url 'Cypress测试运行器' test-runner %}. 这是我们将花费大部分时间用于测试的地方。
 
 {% note warning %}
 Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
+注意Cypress显示无法找到任何测试的信息. 这很正常 - 我们还没有写任何测试呢! 有时候如果解析测试文件出错, 你也需要看这些信息. 你始终可以打开**Dev Tools**来检查控制台是否存在任何阻止Cypress读取测试的语法或者解析错误.
 {% endnote %}
 
 # Write a simple test
+# 写一个简单的测试
 
 Now it's time to write our first test. We're going to:
+现在是时候编写我们的第一个测试了. 我们要:
 
 1. Write our first passing test.
+1. 编写我们的第一次通过考试.
 2. Write our first failing test.
+2. 编写我们的第一次失败测试.
 3. Watch Cypress reload in real time.
+3. 观察Cypress实时重装.
 
 As we continue to save our new test file we'll see the browser auto reloading in real time.
+当我们继续保存新的测试文件时, 我们会看到浏览器实时自动重新加载.
 
 Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
+打开你最喜欢的IDEA并将下面的代码添加到`sample spec.js`测试文件中.
 
 ```js
 describe('My First Test', function() {
@@ -73,15 +85,21 @@ describe('My First Test', function() {
 ```
 
 Once you save this file you should see the browser reload.
+一旦你保存这个文件, 你应该看到浏览器重新加载.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
+虽然它没干啥有用的事儿, 这依旧使我们第一个通过的测试哟! ✅
 
 Over in the {% url 'Command Log' test-runner#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
+在{% url '命令日志' test-runner#Command-Log %}中, 您将看到Cypress显示套件, 包含你的第一个测试和你的第一个断言(应该是以绿色通过的形式展示).
 
 {% img /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 
 {% note info %}
 Notice Cypress displays a message about this being the default page {% url "on the righthand side" test-runner#Application-Under-Test %}. Cypress assumes you'll want to go out and {% url "visit" visit %} a URL on the internet - but it can also work just fine without that.
+注意Cypress会以默认页面的形式{% url "在右手边" test-runner#Application-Under-Test %}显示这个信息. Cypress假设你将想要出去并且{% url "访问" visit %}互联网上的一个URL-同时你不这样做也没问题.
+
+# [上面+这一段翻译的有问题, 感觉需要大神]
 {% endnote %}
 
 Now let's write our first failing test.
