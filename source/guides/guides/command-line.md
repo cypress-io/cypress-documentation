@@ -143,7 +143,7 @@ You can specify a path to a JSON file where {% url 'configuration' configuration
 cypress run --config-file tests/cypress-config.json
 ```
 
-You can pass `false` to disable the user of a configuration file entirely.
+You can pass `false` to disable the use of a configuration file entirely.
 
 ```shell
 cypress run --config-file false
@@ -353,7 +353,7 @@ You can specify a path to a JSON file where {% url 'configuration' configuration
 cypress open --config-file tests/cypress-config.json
 ```
 
-You can pass `false` to disable the user of a configuration file entirely.
+You can pass `false` to disable the use of a configuration file entirely.
 
 ```shell
 cypress open --config-file false

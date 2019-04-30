@@ -157,7 +157,7 @@ A command must exit within the `execTimeout` or Cypress will kill the command's 
 
 # Command Log
 
-***List the contents of default `cypress.json` configuration file***
+***List the contents of the default `cypress.json` configuration file***
 
 ```javascript
 if (Cypress.platform === 'win32') {

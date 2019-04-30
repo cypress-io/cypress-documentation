@@ -189,7 +189,7 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 # Command Log
 
-***List the contents of default `cypress.json` configuration file***
+***List the contents of the default `cypress.json` configuration file***
 
 ```javascript
 cy.readFile('cypress.json')
