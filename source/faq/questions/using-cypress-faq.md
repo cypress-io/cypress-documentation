@@ -124,7 +124,7 @@ Please read our extensive {% url 'Conditional Testing Guide' conditional-testing
 ## {% fa fa-angle-right %} How can I make Cypress wait until something is visible in the DOM?
 
 {% note info Remember %}
- DOM based commands will automatically retry and wait for their corresponding elements to exist before failing.
+DOM based commands will automatically {% url "retry" retry-ability %} and wait for their corresponding elements to exist before failing.
 {% endnote %}
 
 Cypress offers you many robust ways to {% url 'query the DOM' introduction-to-cypress#Querying-Elements %}, all wrapped with retry-and-timeout logic.

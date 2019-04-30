@@ -216,6 +216,10 @@ cy.visit('index.html').then((contentWindow) => {
 })
 ```
 
+## User agent
+
+Trying to change the `User-Agent`? You can set the `userAgent` as a {% url "configuration value" configuration#Browser %} in your configuration file.
+
 ## Routing
 
 ### Prevent XHR / Ajax requests before a remote page initially loads
