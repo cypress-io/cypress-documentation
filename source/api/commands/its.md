@@ -148,7 +148,23 @@ const user = {
   }
 }
 
+
 cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
+```
+
+## Existence
+
+***Wait for some propery to exist on `window`***
+```javascript
+cy.window().its('globalProp').then((globalProp) => {
+  // do something now that window.globalProp exists
+})
+```
+
+
+***Assert that a propery does not exist on `window`***
+```javascript
+cy.window().its('evilProp').should('not.exist')
 ```
 
 # Rules
