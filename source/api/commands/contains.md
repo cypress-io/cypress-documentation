@@ -61,7 +61,7 @@ Option | Default | Description
 
 ## Content
 
-***Find the first element containing some text***
+### Find the first element containing some text
 
 ```html
 <ul>
@@ -76,7 +76,7 @@ Option | Default | Description
 cy.contains('apples')
 ```
 
-***Find the input[type='submit'] by value***
+### Find the `input[type='submit']` by value
 
 Get the form element and search in its descendants for the content "submit the form!"
 
@@ -103,7 +103,7 @@ cy.get('form').contains('submit the form!').click()
 
 ## Number
 
-***Find the first element containing a number***
+### Find the first element containing a number
 
 Even though the `<span>` is the deepest element that contains a "4", Cypress automatically yields `<button>` elements over spans because of its {% urlHash 'preferred element order' Preferences %}.
 
@@ -120,7 +120,7 @@ cy.contains(4)
 
 ## Regular Expression
 
-***Find the first element with text matching the regular expression***
+### Find the first element with text matching the regular expression
 
 ```html
 <ul>
@@ -137,7 +137,7 @@ cy.contains(/^b\w+/)
 
 ## Selector
 
-***Specify a selector to return a specific element***
+### Specify a selector to return a specific element
 
 Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example below all contain "apples".
 
@@ -162,7 +162,7 @@ To override the element that is yielded we can pass 'ul' as the selector.
 cy.contains('ul', 'apples')
 ```
 
-***Keeping the form as the subject***
+### Keep the form as the subject
 
 Here's an example that uses the selector to ensure that the `<form>` remains the {% url subject introduction-to-cypress#Subject-Management %} for future chaining.
 
@@ -190,7 +190,7 @@ Without the explicit selector the subject would change to be the `<button>`. Usi
 
 `.contains()` acts differently whether it's starting a series of commands or being chained off an existing series.
 
-***When starting a series of commands:***
+### When starting a series of commands:
 
 This queries the entire `document` for the content.
 
@@ -198,7 +198,7 @@ This queries the entire `document` for the content.
 cy.contains('Log In')
 ```
 
-***When chained to an existing series of commands:***
+### When chained to an existing series of commands
 
 This will query inside of the `<#checkout-container>` element.
 
@@ -206,7 +206,7 @@ This will query inside of the `<#checkout-container>` element.
 cy.get('#checkout-container').contains('Buy Now')
 ```
 
-***Be wary of chaining multiple contains***
+### Be wary of chaining multiple contains
 
 Let's imagine a scenario where you click a button to delete a user and a dialog appears asking you to confirm this deletion.
 
@@ -228,7 +228,7 @@ cy.contains('Yes, Delete!').click()
 
 ## Single Element
 
-***Only the *first* matched element will be returned***
+### Only the *first* matched element will be returned
 
 ```html
 <ul id="header">
@@ -259,7 +259,7 @@ cy.get('#main').contains('Jane Lane')
 
 ## Preferences
 
-***Element preference order***
+### Element preference order
 
 `.contains()` defaults to preferring elements higher in the tree when they are:
 
@@ -270,7 +270,7 @@ cy.get('#main').contains('Jane Lane')
 
 Cypress will ignore this element preference order if you pass a selector argument to `.contains()`.
 
-***Favor of `<button>` over other deeper elements***
+### Favor of `<button>` over other deeper elements
 
 Even though the `<span>` is the deepest element that contains "Search", Cypress yields `<button>` elements over spans.
 
@@ -288,7 +288,7 @@ Even though the `<span>` is the deepest element that contains "Search", Cypress 
 cy.contains('Search').children('i').should('have.class', 'fa-search')
 ```
 
-***Favor of `<a>` over other deeper elements***
+### Favor of `<a>` over other deeper elements
 
 Even though the `<span>` is the deepest element that contains "Sign Out", Cypress yields anchor elements over spans.
 
@@ -308,7 +308,7 @@ Even though the `<span>` is the deepest element that contains "Sign Out", Cypres
 cy.get('nav').contains('Sign Out').should('have.attr', 'href', '/signout')
 ```
 
-***Favor of `<label>` over other deeper elements***
+### Favor of `<label>` over other deeper elements
 
 Even though the `<span>` is the deepest element that contains "Age", Cypress yields `<label>` elements over `<span>`.
 
@@ -363,4 +363,6 @@ When clicking on the `contains` command within the command log, the console outp
 # See also
 
 - {% url `cy.get()` get %}
+- {% url `.invoke()` invoke %}
 - {% url `.within()` within %}
+- {% url "Retry-ability" retry-ability %}

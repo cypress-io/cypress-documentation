@@ -183,6 +183,11 @@
       description: A collection of Cypress commands to extend and compliment the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
+      
+    - name: cypress-wait-until
+      description: Add the Cypress waiting power to virtually everything 🎉
+      link: https://github.com/NoriSte/cypress-wait-until
+      keywords: [commands, wait, wait-until, recursive-promise, check-async-value, check-value, open-source-saturday]
 
 - name: Authentication
   description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
