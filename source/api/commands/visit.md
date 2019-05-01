@@ -50,6 +50,8 @@ Option | Default | Description
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.visit %}
+`retryOnStatusCodeFailure` | `false` | Whether Cypress should automatically retry status code errors under the hood
+`retryOnNetworkFailure` | `true` | Whether Cypress should automatically retry transient network errors under the hood
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in {% url 'configuration' configuration %}.
 
