@@ -162,6 +162,12 @@ CI Provider | Example Project | Example Config
 language: node_js
 node_js:
   - 10
+services:
+- xvfb
+addons:
+  apt:
+    packages:
+    - libgconf-2-4
 cache:
   # Caches $HOME/.npm when npm ci is default script command
   # Caches node_modules in all other cases
