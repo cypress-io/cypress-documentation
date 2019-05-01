@@ -60,33 +60,33 @@ Pass in an options object to change the default behavior of `cy.get()`.
 
 ## Selector
 
-**_Get the input element_**
+### Get the input element
 
 ```javascript
 cy.get('input').should('be.disabled')
 ```
 
-**_Find the first `li` descendent within a `ul`_**
+### Find the first `li` descendent within a `ul`
 
 ```javascript
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-**_Find the dropdown-menu and click it._**
+### Find the dropdown-menu and click it
 
 ```javascript
 cy.get('.dropdown-menu').click()
 ```
 
-**_Find 5 elements with the given data attribute_**
+### Find 5 elements with the given data attribute
 
 ```javascript
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
 ```
 
-## Get in Within
+## Get in `.within()`
 
-**_`cy.get()` in the {% url `.within()` within %} command_**
+### `cy.get()` in the {% url `.within()` within %} command
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a {% url "`.within()`" within %} command.
 
@@ -101,7 +101,7 @@ cy.get('form').within(() => {
 
 For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases#Aliases %}.
 
-**_Get the aliased 'todos' elements_**
+### Get the aliased 'todos' elements
 
 ```javascript
 cy.get('ul#todos').as('todos')
@@ -112,7 +112,7 @@ cy.get('ul#todos').as('todos')
 cy.get('@todos')
 ```
 
-**_Get the aliased 'submitBtn' element_**
+### Get the aliased 'submitBtn' element
 
 ```javascript
 beforeEach(function() {
@@ -124,7 +124,7 @@ it('disables on click', function() {
 })
 ```
 
-**_Get the aliased 'users' fixture_**
+### Get the aliased 'users' fixture
 
 ```javascript
 beforeEach(function() {
@@ -178,3 +178,4 @@ When clicking on the `get` command within the command log, the console outputs t
 - {% url `cy.contains()` contains %}
 - {% url `.find()` find %}
 - {% url `.within()` within %}
+- {% url "Retry-ability" retry-ability %}

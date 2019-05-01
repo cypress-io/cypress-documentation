@@ -2,35 +2,33 @@
 title: Roadmap
 ---
 
-# Upcoming Features
+# Upcoming features
 
-At any one time, our team is planning / working on really "big" upcoming features.
-
-Here is where Cypress is headed:
+Our team is always planning and working on really "big" upcoming features. Priorities can change as we move forward, but here is an outline of where Cypress is headed now.
 
 ## Test Runner
 
-Feature | Status
---- | ---
-{% issue 310 'Cross Browser Support - #310' %} | In progress
-{% issue 687 'Full Network Layer Stubbing - #687' %} | In progress
-{% issue 1313 'Retries - #1313' %} | In progress
-{% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features
-{% issue 685 'Iframe Switching APIs - #685' %} | Partially complete
-{% issue 1469 'Better Corporate Proxy Support - #1469' %} | Proposal complete
-{% issue 686 'Lifecycle Events - #686' %} | Proposal complete
-{% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
-{% issue 311 'Native Events - #311' %} | No proposal yet
+Status               | Feature                            |  Issue            | PR
+---------------------| -----------------------------------|-------------------|---
+*Pending release*    | **Better corporate proxy support** |  {% issue 1469 %} | {% PR 3531 %}
+*Needs review*       | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}
+*Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}
+*Work in progress*   | **Electron upgrade**               |  {% issue 3568 %} | {% PR 3569 %}
+*Work in progress*   | **Mocha, Chai, Sinon upgrade**     |  {% issue 2840 %} | {% PR 2880 %}
+*Work in progress*   | **Expose more events**             |  {% issue 2840 %} | {% PR 2880 %}
+*Work in progress*   | **Native events**                  |  {% issue 311 %}  |
+*Work in progress*   | **Cross browser support**          |  {% issue 310 %}  |
+*Partially complete* | **Full network layer stubbing**    |  {% issue 687 %}  |
+*Proposal complete*  | **Lifecycle events**               |  {% issue 686 %}  |
+*No proposal*        | **Screenshot Diffing**             |  {% issue 495  %} |
 
 ## Dashboard Service
 
-Feature | Status
---- | ---
-{% issue 1516 'Enterprise SSO - #1516' %} | In beta
-Open-source plan | In progress
-{% issue 981 'GitHub Integration - #981' %} | In progress
-{% issue 1691 'Run cancellation - #1691' %} | In progress
-{% issue 560 'IA refresh - #560' %} | In progress
-Integration with Visual Regression tools | No proposal yet
-Notification center | Proposal complete
-{% issue 448 'Capture Logs of Everything - #448' %} | Partially complete
+Status              | Feature              | Issue
+--------------------|----------------------|-----------------
+*In beta*           | GitHub integration   | {% issue 981 %}
+*In progress*       | Run cancellation     | {% issue 1691 %}
+*In progress*       | Test retries display | {% issue 1313 %}
+*In progress*       | Dashboard redesign   | {% issue 560 %}
+*Research & design* | Project analytics    |
+*Proposal complete* | Notification center  |
