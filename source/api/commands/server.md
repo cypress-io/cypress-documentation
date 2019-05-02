@@ -56,6 +56,9 @@ Option | Default | Description
 `force404` | `false` | forcibly send XHR's a 404 status when the XHR's do not match any existing route
 `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs
 `whitelist` | function | Callback function that whitelists requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
+`onAnyAbort` | `undefined` | callback function called when any XHR is aborted
+`onAnyRequest` | `undefined` | callback function called when any request is sent
+`onAnyResponse` | `undefined` | callback function called when any response is returned
 
 ## Yields {% helper_icon yields %}
 
