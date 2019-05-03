@@ -37,3 +37,11 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```
 
 The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since {% url "Chai" bundled-tools#Chai %} and {% url "jQuery" bundled-tools#Other-Library-Utilities %} are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
+
+## Types for custom commands
+
+When adding custom commands to the `cy` object, you should add their types to avoid TypeScript errors. You can find an example in {% url "cypress-example-todomvc Custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
+
+## Types for custom assertions
+
+If you extend Cypress assertions with custom ones, you should extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" https://github.com/cypress-io/cypress-example-recipes#adding-chai-assertions %} for instructions.
