@@ -224,6 +224,11 @@
       link: https://nrwl.io/nx/e2e-testing-with-cypress
       keywords: [angular, cli]
 
+    - name: Cypress Daywalker
+      description: Shadow Dom support for cypress
+      link: https://github.com/JaySunSyn/cypress-daywalker
+      keywords: [Polymer, lit-html, ShadowDom]
+
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
   plugins:
