@@ -75,7 +75,7 @@ cypress open --browser /usr/bin/chromium
 
 Cypress will automatically detect the type of browser supplied and launch it for you.
 
-{% url 'See the Command Line guide for more information about the `--browser` arguments' command-linel#cypress-run-browser-lt-browser-name-or-path-gt %}
+{% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
 
 ## Unsupported Browsers
 
