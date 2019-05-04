@@ -106,90 +106,31 @@ There are times when you will encounter errors or unexpected behavior with Cypre
 - If your organization signs up for one of our {% url "paid plans" https://www.cypress.io/pricing/ %}, you can get dedicated email support, which gives you one-on-one help from our team.
 - If you still haven't found a solution, {% url "open an issue" https://github.com/cypress-io/cypress/issues/new %} *with a reproducible example*.
 
-## Step through test commands
+## Isolate the Problem
 
-You can run the test command by command using the {% url `.pause()` pause %} command.
+When debugging a failing test, follow these general principles to isolate the problem:
 
-```javascript
-it('adds items', function () {
-  cy.pause()
-  cy.get('.new-todo')
-  // more commands
-})
-```
+- Look at the {% url "video recordings and screenshots" screenshots-and-videos %}.
+- Split large spec files into smaller ones.
+- Split long tests into smaller tests.
+- Run the same test using {% url '`--browser chrome`' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}. The problem might be isolated to the Electron browser.
+- If isolated to the Electron browser. Run the same tests in both Electron and Chrome, then compare the screenshots/videos. Look for and isolate any differences in the Command Log.
 
-This allows you to inspect the web application, the DOM, the network, and any storage after each command to make sure everything happens as expected.
+## Clear Cypress cache
 
-## Print DEBUG logs
+If you're having an issue during installation of Cypress. Try to clear the contents of the Cypress cache.
 
-Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on. **Note:** you will see a LOT of messages when running with `DEBUG=...` setting.
-
-**On Mac or Linux:**
+This will clear out all installed versions of Cypress that may be cached on your machine.
 
 ```shell
-DEBUG=cypress:* cypress open
+cypress cache clear
 ```
 
-**On Windows:**
+After running this command, you will need to run `cypress install` before running Cypress again.
 
 ```shell
-set DEBUG=cypress:*
+npm install cypress --save-dev
 ```
-
-```shell
-cypress open
-```
-
-Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.
-
-### Detailed Logs
-
-There are several levels of `DEBUG` messages
-
-```shell
-# prints very few top-level messages
-DEBUG=cypress:server ...
-# prints ALL messages from server package
-DEBUG=cypress:server* ...
-# prints messages only from config parsing
-DEBUG=cypress:server:config ...
-```
-
-This allows you to isolate the problem a little better
-
-### Debug logs in the browser
-
-If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's DevTools and set a `localStorage` property:
-
-```javascript
-localStorage.debug = 'cypress*'
-
-// to disable debug messages
-delete localStorage.debug
-```
-Reload the browser and see debug messages within the DevTools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
-
-![Console Log](/img/api/debug/debug-driver.jpg)
-
-## Log Cypress events
-
-In addition to the `DEBUG` messages, Cypress also emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
-
-{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
-
-## Run Cypress command outside the test
-
-If you need to run a Cypress command straight from the DevTools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
-
-```javascript
-cy.now('task', 123)
-  .then(console.log)
-// runs cy.task(123) and prints the resolved value
-```
-
-{% note warning %}
-The `cy.now()` command is an internal command and may change in the future.
-{% endnote %}
 
 ## Launching browsers
 
@@ -274,16 +215,93 @@ Cypress maintains some local application data in order to save user preferences 
 4. Delete everything in the `cy` folder
 5. Close Cypress and open it up again
 
+## Step through test commands
+
+You can run the test command by command using the {% url `.pause()` pause %} command.
+
+```javascript
+it('adds items', function () {
+  cy.pause()
+  cy.get('.new-todo')
+  // more commands
+})
+```
+
+This allows you to inspect the web application, the DOM, the network, and any storage after each command to make sure everything happens as expected.
+
+## Print DEBUG logs
+
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on. **Note:** you will see a LOT of messages when running with `DEBUG=...` setting.
+
+**On Mac or Linux:**
+
+```shell
+DEBUG=cypress:* cypress open
+```
+
+**On Windows:**
+
+```shell
+set DEBUG=cypress:*
+```
+
+```shell
+cypress open
+```
+
+Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.
+
+### Detailed Logs
+
+There are several levels of `DEBUG` messages
+
+```shell
+# prints very few top-level messages
+DEBUG=cypress:server ...
+# prints ALL messages from server package
+DEBUG=cypress:server* ...
+# prints messages only from config parsing
+DEBUG=cypress:server:config ...
+```
+
+This allows you to isolate the problem a little better
+
+### Debug logs in the browser
+
+If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's DevTools and set a `localStorage` property:
+
+```javascript
+localStorage.debug = 'cypress*'
+
+// to disable debug messages
+delete localStorage.debug
+```
+
+Reload the browser and see debug messages within the DevTools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
+
+![Console Log](/img/api/debug/debug-driver.jpg)
+
+## Log Cypress events
+
+In addition to the `DEBUG` messages, Cypress also emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
+
+{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
+
+## Run Cypress command outside the test
+
+If you need to run a Cypress command straight from the DevTools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
+
+```javascript
+cy.now('task', 123)
+  .then(console.log)
+// runs cy.task(123) and prints the resolved value
+```
+
+{% note warning %}
+The `cy.now()` command is an internal command and may change in the future.
+{% endnote %}
+
 ## Additional information
-
-### Isolate the Problem
-
-When debugging a failing test, follow these general principles to isolate the problem:
-
-- Look at the {% url "video recording and screenshots" screenshots-and-videos %}
-- Split large spec files into smaller ones
-- Split long tests into smaller tests
-- Run the same test using `--browser chrome`. The problem might be the Electron browser.
 
 ### Write command log to the terminal
 
