@@ -103,6 +103,7 @@ Notice Cypress displays a message about this being the default page {% url "on t
 {% endnote %}
 
 Now let's write our first failing test.
+现在来写我们的第一条失败测试.
 
 ```js
 describe('My First Test', function() {
@@ -113,10 +114,12 @@ describe('My First Test', function() {
 ```
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
+一旦你再次保存, 你将看到Cypress以红色显示失败的测试, 因为`true`与`false`不相等.
 
 {% img /img/guides/failing-test.png "Failing test" %}
 
 Cypress provides a nice {% url 'Test Runner' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
+Cypress提供了一个很好的{% url '测试运行器' test-runner %}, 它为你提供了一套可视化结构的测试和断言套件, 很快你也会看到命令, 页面事件, 网络请求等.
 
 {% video local /img/snippets/first-test-30fps.mp4 %}
 
@@ -129,8 +132,22 @@ All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cy
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
 
+{% note info 什么是describe, it, 和expect? %}
+所有这些功能都来自Cypress自带的{% url '捆绑工具' bundled-tools %}.
+
+- `describe`和`it`来自{% url 'Mocha' https://mochajs.org %}
+- `expect`来自{% url 'Chai' http://www.chaijs.com %}
+
+Cypress建立在这些你可能已经有一些熟悉和了解的流行的工具和框架之上*(希望你已经有所了解)*. 如果你还不了解的话, 也没问题.
+{% endnote %}
+
+
 {% note success Using ESlint? %}
 Check out our {% url "Cypress ESLint plugin" https://github.com/cypress-io/eslint-plugin-cypress %}.
+{% endnote %}
+
+{% note success 使用 ESlint? %}
+检验我们的{% url "Cypress ESLint插件" https://github.com/cypress-io/eslint-plugin-cypress %}.
 {% endnote %}
 
 # Write a *real* test
