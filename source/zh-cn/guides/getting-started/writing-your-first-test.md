@@ -151,25 +151,38 @@ Check out our {% url "Cypress ESLint plugin" https://github.com/cypress-io/eslin
 {% endnote %}
 
 # Write a *real* test
+# 写一个*真实的*测试
 
 **A solid test generally covers 3 phases:**
+**坚固的测试通常包括3个阶段:**
 
 1. Set up the application state.
+1. 设置应用程序状态.
 2. Take an action.
+2. 采取行动.
 3. Make an assertion about the resulting application state.
+3. 对应用程序的状态结果做断言.
 
 You might also see this phrased as "Given, When, Then", or "Arrange, Act, Assert". The idea is simple: first you put the application into a specific state, then you take some action in the application that causes it to change, and finally you check the resulting application state.
+你可能也会看到这样的措辞"Given, When, Then",或者 "Arrange, Act, Assert". 这个想法很简单: 首先你把应用程序置于某种特定状态, 然后你对应用程序执行一些会造成它改变的操作, 最后你检查应用程序的状态结果.
 
 Today, we'll take a narrow view of these steps and map them cleanly to Cypress commands:
+今天, 我们将从一个狭隘的视角对这些步骤进行观察并且把它们清楚地映射到Cypress对应的命令上:
 
 1. Visit a web page.
+1. 访问一个网页.
 2. Query for an element.
+2. 查询一个元素.
 3. Interact with that element.
+3. 与这个元素交互.
 4. Assert about the content on the page.
+4. 断言页面上的内容.
 
 ## {% fa fa-globe %} Step 1: Visit a page
+## {% fa fa-globe %} 步骤1: 访问页面
 
 First, let's visit a web page. We will visit our {% url 'Kitchen Sink' applications#Kitchen-Sink %} application in this example so that you can try Cypress out without needing to worry about finding a page to test.
+首先, 让我们来访问一个网页. 我们将在这个例子里面访问我们的{% url '厨房水槽' applications#Kitchen-Sink %}应用页面, 你可以在这个页面尝试Cypress, 而无需担心没有一个页面可以用来测试.
 
 Using {% url `cy.visit()` visit %} is easy, we just pass it the URL we want to visit. Let's replace our previous test with the one below that actually visits a page:
 
