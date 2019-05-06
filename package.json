@@ -97,7 +97,7 @@
     "human-interval": "0.1.6",
     "husky": "2.2.0",
     "inquirer": "6.3.1",
-    "jest": "24.7.1",
+    "jest": "24.8.0",
     "keyv": "3.1.0",
     "marked": "0.6.2",
     "minimist": "1.2.0",
