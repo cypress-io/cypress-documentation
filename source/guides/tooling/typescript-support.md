@@ -40,8 +40,8 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 
 ## Types for custom commands
 
-When adding custom commands to the `cy` object, you should add their types to avoid TypeScript errors. You can find an example in {% url "cypress-example-todomvc Custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
+When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
 
 ## Types for custom assertions
 
-If you extend Cypress assertions with custom ones, you should extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" https://github.com/cypress-io/cypress-example-recipes#adding-chai-assertions %} for instructions.
+If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" https://github.com/cypress-io/cypress-example-recipes#adding-chai-assertions %} for instructions.
