@@ -11,9 +11,9 @@ This repo holds various Docker images for running Cypress locally and in CI.
 
 There are Docker images:
 
-- `cypress/base:<Node version>` have the operating system dependencies required for Cypress to run.
-- `cypress/browsers:<tag>` extend the base images with pre-installed browsers.
-- `cypress/included:<Cypress version>` extend the base images with pre-installed Cypress.
+- `cypress/base:<Node version>` has the operating system dependencies required to run Cypress.
+- `cypress/browsers:<tag>` extends the base images with pre-installed browsers.
+- `cypress/included:<Cypress version>` extends the base images with pre-installed Cypress versions.
 
 # Examples
 
