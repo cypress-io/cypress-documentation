@@ -185,6 +185,7 @@ First, let's visit a web page. We will visit our {% url 'Kitchen Sink' applicati
 首先, 让我们来访问一个网页. 我们将在这个例子里面访问我们的{% url '厨房水槽' applications#Kitchen-Sink %}应用页面, 你可以在这个页面尝试Cypress, 而无需担心没有一个页面可以用来测试.
 
 Using {% url `cy.visit()` visit %} is easy, we just pass it the URL we want to visit. Let's replace our previous test with the one below that actually visits a page:
+使用{% url `cy.visit()` visit %}很简单, 我们把我们想访问的URL传进去就行. 让我们用下面这个真真正正访问页面的操作来替换掉我们之前的测试:
 
 ```js
 describe('My First Test', function() {
@@ -195,13 +196,19 @@ describe('My First Test', function() {
 ```
 
 Save the file and switch back over to the Cypress Test Runner. You might notice a few things:
+保存文件并且切换回到Cypress测试运行器. 你可能会注意到一些:
 
 1. The {% url 'Command Log' test-runner#Command-Log %} now shows the new `VISIT` action.
+1. {% url '命令日志' test-runner#Command-Log %}现在展示了新的`访问`动作.
 2. The Kitchen Sink application has been loaded into the {% url 'App Preview' test-runner#Overview %} pane.
+2. 厨房水槽应用程序已经加载到了{% url 'App预览' test-runner#Overview %}窗.
 3. The test is green, even though we made no assertions.
+3. 测试结果是绿色的(通过), 虽然我们没有写断言.
 4. The `VISIT` displays a **blue pending state** until the page finishes loading.
+4. `访问`将展示了一个**蓝色挂起状态**直到页面完成加载.
 
 Had this request come back with a non `2xx` status code such as `404` or `500`, or if there was a JavaScript error in the application's code, the test would have failed.
+如果请求返回了一个非`2xx`的状态码, 比如`404`或者`500`, 或者在代码里面有一个JavaScript错误的话, 测试将会失败.
 
 {% video local /img/snippets/first-test-visit-30fps.mp4 %}
 
@@ -218,13 +225,30 @@ The point of Cypress is to be a tool you use every day to build and test **your 
 Cypress is not a **general purpose** web automation tool. It is poorly suited for scripting live, production websites not under your control.
 {% endnote %}
 
+{% note danger 只测试你有所掌控的Apps%}
+虽然在这个向导里我们测试了我们的例子应用程序: {% url "`https://example.cypress.io`" https://example.cypress.io %} - 但你**不应该**测试你**没有掌控度**的应用程序. 为什么?
+
+- 他们很容易在任意时刻改变从而破坏掉测试.
+- 他们也许会做A/B测试, 这将导致获得一致的结果成为不可能.
+- 他们可能侦测到你的脚本, 从而把你加入黑名单(Google就做了这种事).
+- 他们可能有安全功能能够阻止Cypress运作.
+
+Cypress的核心点是作为一个你每天使用的工具来构建和测试**你自己的应用程序**.
+
+Cypress不是一个**通用目的**网页自动化工具. 它不太适合实时编写脚本, 以及测试不在你掌控下的网页产品.
+{% endnote %}
+
 ## {% fa fa-search %} Step 2: Query for an element
+## {% fa fa-search %} 步骤2: 查询一个元素
 
 Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
+现在我们可以加载一个页面了, 我们需要对它进行一个动作. 我们何不点击一个页面上的一个链接呢? 听起来足够简单呢, 让我们来找一个我们喜欢的链接... `type`元素怎么样?
 
 To find this element by its contents, we'll use {% url "`cy.contains()`" contains %}.
+通过这个元素的内容找到它, 我们将使用{% url "`cy.contains()`" contains %}.
 
 Let's add it to our test and see what happens:
+让我门把它加到我们的测试里面, 并看下会发生什么吧:
 
 ```js
 describe('My First Test', function() {
@@ -237,12 +261,16 @@ describe('My First Test', function() {
 ```
 
 Our test should now display `CONTAINS` in the {% url 'Command Log' test-runner#Command-Log %} and still be green.
+我们的测试现在应该在{% url '命令日志' test-runner#Command-Log %}里面展示`CONTAINS`并且依旧是绿色(通过的).
 
 Even without adding an assertion, we know that everything is okay! This is because many of Cypress' commands are built to fail if they don't find what they're expecting to find. This is known as a {% url 'Default Assertion' introduction-to-cypress#Default-Assertions %}.
+即使没有添加一个断言, 我们也知道一切都是OK的! 这是因为Cypress的许多命令都会被构建失败如果它们没有发现它们预期该发现的东西. 这叫做{% url '默认断言' introduction-to-cypress#Default-Assertions %}.
 
 To verify this, replace `type` with something not on the page, like `hype`. You'll notice the test goes red, but only after about 4 seconds!
+为了验证这个, 拿一个页面上不存在的元素来替换`type`元素, 比如`hype`元素. 你将注意到仅仅过了4秒钟测试显示为红色了!
 
 Can you see what Cypress is doing under the hood? It's automatically waiting and retrying because it expects the content to **eventually** be found in the DOM. It doesn't immediately fail!
+你能看到Cypress在幕后在做什么吗? 它自动的等待以及重试, 因为它预期着**最终**能在DOM里面发现内容. 它不会马上失败!
 
 {% img /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
@@ -250,13 +278,20 @@ Can you see what Cypress is doing under the hood? It's automatically waiting and
 We've taken care at Cypress to write hundreds of custom error messages that attempt to explain in simple terms what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
 {% endnote %}
 
+{% note warning '错误信息' %}
+我们在Cypress里精心编写了数百条定制错误消息，试图用简单的术语解释出错的原因. 在本例中Cypress尝试在整个页面去发现内容: `hype`, 但是**超时了**.
+{% endnote %}
+
 Before we add another command - let's get this test back to passing. Replace `hype` with `type`.
+在我们添加另一个命令之前 - 让我们先把这个测试设为通过. 把`hype`替换为`type`.
 
 {% video local /img/snippets/first-test-contains-30fps.mp4 %}
 
 ## {% fa fa-mouse-pointer %} Step 3: Click an element
+## {% fa fa-mouse-pointer %} 步骤3: 点击一个元素
 
 Ok, now we want to click on the link we found. How do we do that? You could almost guess this one: just add a {% url "`.click()`" click %} command to the end of the previous command, like so:
+好的, 现在我们想点击我们知道的链接. 我们该怎么做呢? 你几乎可以猜到哦: 添加一个{% url "`.click()`" click %}命令到之前的命令后面就可以了, 像这样:
 
 ```js
 describe('My First Test', function() {
