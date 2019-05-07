@@ -304,10 +304,13 @@ describe('My First Test', function() {
 ```
 
 You can almost read it like a little story! Cypress calls this "chaining" and we chain together commands to build tests that really express what the app does in a declarative way.
+你几乎可以把它当成一个小故事来读呢! Cypress称呼这个为"链接", 并且我们把命令链接起来构建测试, 这真的是通过一种声明的方式去表达app的动作呢.
 
 Also note that the {% url 'App Preview' test-runner#Overview %} pane has updated further after the click, following the link and showing the destination page:
+还请注意{% url 'App预览' test-runner#Overview %}窗在点击之后更新了, 跟随被点击的链接显示了目标页:
 
 Now we can assert something about this new page!
+现在我们可以对这个新页面做一下断言了!
 
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
 
@@ -315,11 +318,18 @@ Now we can assert something about this new page!
 {% fa fa-magic %} Seeing IntelliSense in your spec files is as easy as adding a single special comment line. Read about {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
 {% endnote %}
 
+{% note info %}
+{% fa fa-magic %} 在你的规格文件里面看智能感应管理器就是添加一个单条注释一样简单哦. 阅读{% url '智能代码补全' intelligent-code-completion#Triple-slash-directives %}了解更多.
+{% endnote %}
+
 ## {% fa fa-check-square-o %} Step 4: Make an assertion
+## {% fa fa-check-square-o %} 步骤4: 写断言
 
 Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with {% url "`.should()`" should %}.
+让我们对我们点进去的新页面上的某个元素写一个断言吧. 也许我们想确保一下新的URL是我们预期的URL. 我们可以通过{% url "`.should()`" should %}来链接一个断言, 来检查URL.
 
 Here's what that looks like:
+它看起来像这样子:
 
 ```js
 describe('My First Test', function() {
@@ -329,18 +339,23 @@ describe('My First Test', function() {
     cy.contains('type').click()
 
     // Should be on a new URL which includes '/commands/actions'
+    // 应该存在一个包含'/commands/actions'的新URL
     cy.url().should('include', '/commands/actions')
   })
 })
 ```
 
 ### Adding more commands and assertions
+### 添加更多的命令和断言
 
 We are not limited to a single interaction and assertion in a given test. In fact, many interactions in an application may require multiple steps and are likely to change your application state in more than one way.
+在给定的测试中我们不需要被单条的交互和断言所限制. 事实上, 一个应用程序中的许多交互可能都需要多个步骤并且有可能通过超过一种方式去改变你的应用程序状态.
 
 We can continue the interactions and assertions in this test by adding another chain to interact with and verify the behavior of elements on this new page.
+我们可以在这个测试里面继续交互和断言, 通过添加其他的链接来和新页面的元素进行交互和验证来做到.
 
 We can use {% url "`cy.get()`" get %} to select an element based on a CSS class. Then we can use the {% url "`.type()`" type %} command to enter text into the selected input. Finally, we can verify that the value of the input reflects the text that was typed with another {% url "`.should()`" should %}.
+我们可以用{% url "`cy.get()`" get %}继续CSS类来选择一个元素. 然后我们可以用{% url "`.type()`" type %}命令在选中输入框里面输入文本. 最后, 我们可以通过输入另一个{% url "`.should()`" should %}来验证输入框反映的文本值.
 
 ```js
 describe('My First Test', function() {
@@ -350,9 +365,11 @@ describe('My First Test', function() {
     cy.contains('type').click()
 
     // Should be on a new URL which includes '/commands/actions'
+    // 应该存在一个包含'/commands/actions'的新URL
     cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
+    // 获取一个输入, 输入进去并且验证文本值已经更新了
     cy.get('.action-email')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
@@ -361,17 +378,27 @@ describe('My First Test', function() {
 ```
 
 And there you have it: a simple test in Cypress that visits a page, finds and clicks a link, verifies the URL and then verifies the behavior of an element on the new page. If we read it out loud, it might sound like:
+就是这样: Cypress中的一个简单的访问页面的测试, 发现一个连接并点击它, 在新页面验证URL并且接着验证一个元素各种反应. 如果我们大声读出来, 它应该听起来像:
 
 > 1. Visit: `https://example.cypress.io`
+> 1. 访问: `https://example.cypress.io`
 > 2. Find the element with content: `type`
+> 2. 通过内容去找到一个元素: `type`
 > 3. Click on it
+> 3. 点击它
 > 4. Get the URL
+> 4. 获得URL
 > 5. Assert it includes: `/commands/actions`
+> 5. 断言它包含: `/commands/actions`
 > 6. Get the input with the `.actions-email` class
+> 6. 通过`.actions-email`类去获得输入值
 > 7. Type `fake@email.com` into the input
+> 7. 在输入框输入`fake@email.com`
 > 8. Assert the input reflects the new value
+> 8. 断言输入框反映了新的文本值
 
 Or in the Given, When, Then syntax:
+或者按如下的Given, When, Then语法:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
