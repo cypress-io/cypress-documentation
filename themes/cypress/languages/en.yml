@@ -1,3 +1,5 @@
+# Text labels for menu links
+
 menu:
   guides: Guides
   api: API
@@ -43,6 +45,7 @@ sidebar:
     guides: Guides
     command-line: Command Line
     continuous-integration: Continuous Integration
+    parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
     advanced-cypress: Advanced
@@ -72,9 +75,11 @@ sidebar:
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
+    module-api: Module API
+    retry-ability: Retry-ability
   api:
-    introduction: Introduction
     api: API
+    table-of-contents: Table of Contents
     commands: Commands
     and: and
     as: as
@@ -141,6 +146,7 @@ sidebar:
     spy: spy
     stub: stub
     submit: submit
+    task: task
     then: then
     tick: tick
     title: title
@@ -157,6 +163,8 @@ sidebar:
     writefile: writeFile
     events: Events
     catalog-of-events: Catalog of Events
+    assertions: Assertions
+    all-assertions: All Assertions
     on: on
     once: once
     removelistener: removeListener
@@ -183,8 +191,12 @@ sidebar:
     configuration-api: Configuration
     version: version
     arch: arch
+    browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
+    screenshot-api: Screenshot
+    after-screenshot-api: After Screenshot
+    spec: spec
   examples:
     examples: Examples
     recipes: Recipes
@@ -197,6 +209,7 @@ sidebar:
     screencasts-media: Screencasts
     blogs-media: Blogs
     extensions: Extensions
+    workshop: Workshop
   faq:
     questions: FAQ
     general-questions-faq: General Questions

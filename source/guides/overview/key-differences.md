@@ -1,10 +1,9 @@
 ---
 title: Key Differences
-comments: false
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - What makes Cypress unique
 - How its architecture differs from Selenium
@@ -69,7 +68,7 @@ Cypress takes snapshots of your application and enables you to time travel back 
 
 You can use the DevTools while your tests run, you can see every console message, every network request. You can inspect elements, and you can even use debugger statements in your spec code or your application code. There is no fidelity loss - you can use all the tools you're already comfortable with. This enables you to test and develop all at the same time.
 
-# Trade Offs
+# Trade offs
 
 While there are many new and powerful capabilities of Cypress - there are also important trade-offs that we've made in making this possible.
 

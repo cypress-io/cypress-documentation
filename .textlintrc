@@ -1,0 +1,70 @@
+{
+  "rules": {
+    "eslint": {
+      "configFile": ".eslintrc-textlint",
+      "ignoreParsingErrors": true
+    },
+    "terminology": {
+      "defaultTerms": false,
+      "terms": [
+        // Cypress product
+        ["the command log", "the Command Log"],
+        ["dashboard service", "Dashboard Service"],
+        ["test runner", "Test Runner"],
+
+        // "Brands"
+        "AppVeyor",
+        "BrowserStack",
+        "ESLint",
+        "GitHub",
+        "GraphQL",
+        "JavaScript",
+        "Lodash",
+        "TypeScript",
+        "YouTube",
+        "iOS",
+        "jQuery",
+        "npm",
+        ["React[ .]js", "React"],
+        ["SauceLabs", "Sauce Labs"],
+
+        // Abbreviations
+        "API",
+        "Ajax",
+        "CLI",
+        "CSS",
+        "gif",
+        ["API['’]?s", "APIs"],
+
+        // Words and phrases
+        ["\\(s\\)he", "they"],
+        ["he or she", "they"],
+        ["he/she", "they"],
+
+        // Single word
+        ["change[- ]log(s?)", "changelog$1"],
+        ["code[- ]base(es?)", "codebase$1"],
+        ["e[- ]mail(s?)", "email$1"],
+        ["end[- ]point(s?)", "endpoint$1"],
+        ["file[- ]name(s?)", "filename$1"],
+        ["can[- ]not", "cannot$1"],
+
+        // Multiple words
+        ["front-?end(s?)", "front end$1"],
+        ["open-?source(ed?)", "open source$1"],
+        ["web-?page(s?)", "web page$1"],
+
+        // Hyphenated
+        ["end ?to ?end", "end-to-end"],
+        ["retryability", "retry-ability"],
+        ["retriability", "retry-ability"],
+      ]
+    }
+  },
+    "filters": {
+      "comments": {
+        "enablingComment": "textlint-enable",
+        "disablingComment": "textlint-disable"
+      }
+    }
+}

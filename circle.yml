@@ -10,24 +10,15 @@ env_defaults: &env_defaults
   npm_config_unsafe-perm: true
 
 defaults: &defaults
-  parallelism: 1
   working_directory: ~/cypress-documentation
   docker:
     # the Docker image with Cypress dependencies
-    - image: cypress/base:8
+    # https://github.com/cypress-io/cypress-docker-images
+    - image: cypress/base:8.15.1
       environment:
         <<: *env_defaults
 
 jobs:
-  # job to update package-lock.json file using Greenkeeper
-  lockfile:
-    <<: *defaults
-    steps:
-      - checkout
-      - run: npm install -g greenkeeper-lockfile@1
-      - run: greenkeeper-lockfile-update
-      - run: greenkeeper-lockfile-upload
-
   ## code checkout and NPM installs
   build:
     <<: *defaults
@@ -37,8 +28,8 @@ jobs:
       ## make sure the TERM is set to 'xterm' in node
       ## else colors (and tests) will fail
       ## See the following information
-      ##   * http://andykdocs.de/development/Docker/Fixing+the+Docker+TERM+variable+issue
-      ##   * https://unix.stackexchange.com/questions/43945/whats-the-difference-between-various-term-variables
+      ##   - http://andykdocs.de/development/Docker/Fixing+the+Docker+TERM+variable+issue
+      ##   - https://unix.stackexchange.com/questions/43945/whats-the-difference-between-various-term-variables
       - run:
           name: Checking TERM is set
           command: |
@@ -46,52 +37,65 @@ jobs:
             node -e 'assert.equal(process.env.TERM, "xterm", "need TERM to be set for Docker to work")'
             node -e 'console.log("TERM %s stdout.isTTY?", process.env.TERM, process.stdout.isTTY)'
 
-      # need to restore a separate cache for each package.json
+      # need to restore previously caches files, if any to speed up the build
+      # we want to use new cache if package or circle files change
       - restore_cache:
-          key: v1-{{ .Branch }}-deps
+          key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
 
       - run: npm ci
-      - run: npm prune
-      # see if package-lock.json file has changed
-      # if yes, this means it is out of date
-      - run: git status
+      # run Cypress verify command to cache its status
+      - run: npm run cypress:verify
 
-      # save each node_modules folder per package
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
+
+      # cache NPM modules and folder with Cypress v3+ binary
+      # https://on.cypress.io/continuous-integration
+      # this ensures that this job can start quickly next time
       - save_cache:
-          key: v1-{{ .Branch }}-deps-{{ checksum "package.json" }}
+          key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
           paths:
-            - node_modules
+            - /root/.npm
+            - /root/.cache
 
-      ## save entire folder as artifact for other jobs to continue
-      ## hmm, do not see a good way to cache it, since all code
-      ## might change
-      - save_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - /root/cypress-documentation
-
-  "docs-tests":
-    <<: *defaults
-    steps:
-      - restore_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      #
+      # build the static content
+      #
       - run: ls -la
       - run: npm run deps
       - run: npm run lint
+      - run: npm run md-lint
+      - run: npm run stop-only
       - run: npm test
       - run: npm run build
+
+      ## save entire folder + Cypress binary as the workspace for other jobs to continue
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - cypress-documentation
+            - .cache/Cypress
+
+  "docs-tests":
+    <<: *defaults
+    parallelism: 4
+    steps:
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
       - run: ls -Rl themes/cypress/source/js
       - run:
           command: npm start
           background: true
       - run:
           name: Waiting for local server to start
-          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 180000
+          command: $(npm bin)/wait-on http://localhost:2222 --interval 1000 --timeout 360000
       - run:
           name: Running Cypress tests
           command: |
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "develop"
             else
               $(npm bin)/cypress run
             fi
@@ -99,13 +103,17 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
 
   "deploy-docs-staging":
     <<: *defaults
     steps:
-      - restore_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
       - run: npm ls || true
+      # need to build the app for STAGING environment
       - run: NODE_ENV=staging npm run build
       - run: ls -Rl themes/cypress/source/js
       - run: ls public
@@ -118,7 +126,7 @@ jobs:
           command: |
             export CYPRESS_baseUrl=https://docs-staging.cypress.io
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "staging" --ci-build-id $CIRCLE_WORKFLOW_ID-$CIRCLE_BUILD_NUM
             else
               $(npm bin)/cypress run
             fi
@@ -126,12 +134,16 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
 
   "deploy-docs-production":
     <<: *defaults
     steps:
-      - restore_cache:
-          key: cypress-documentation-{{ .Branch }}-{{ .Revision }}
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
+      # need to build the app for PRODUCTION environment
       - run: NODE_ENV=production npm run build
       # because we already built docs for production
       # use script that just deploys without rebuilding the production docs
@@ -142,11 +154,7 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      # disabled for now - needs GH_TOKEN with write permissions
-      # - lockfile
       - build
-          # requires:
-          #   - lockfile
       - docs-tests:
           requires:
             - build
@@ -160,7 +168,6 @@ workflows:
                 # and branches starting with special prefix
                 - develop
                 - /docs-.*/
-                - get-branch
           requires:
             - docs-tests
       - deploy-docs-production:

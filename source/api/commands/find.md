@@ -1,6 +1,6 @@
 ---
 title: find
-comments: false
+
 ---
 
 Get the descendent DOM elements of a specific selector.
@@ -90,7 +90,7 @@ cy.get('#parent').find('li')
 cy.get('.left-nav>.nav').find('>li')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log find](/img/api/find/find-li-of-uls-in-test.png)
 

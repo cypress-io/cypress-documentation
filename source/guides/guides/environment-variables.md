@@ -1,6 +1,5 @@
 ---
 title: Environment Variables
-comments: false
 ---
 
 Environment variables are useful when:
@@ -11,13 +10,13 @@ Environment variables are useful when:
 
 Environment variables can be changed easily - especially when running in CI.
 
-***Instead of hard coding this in your tests:***
+### Instead of hard coding this in your tests:
 
 ```javascript
 cy.request('https://api.acme.corp') // this will break on other environments
 ```
 
-***We can move this into an environment variable.***
+### We can move this into an environment variable.
 
 ```javascript
 cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
@@ -43,10 +42,11 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 
 ***To summarize you can:***
 
-- Set in `cypress.json`
-- Create a `cypress.env.json`
-- Export as `CYPRESS_*`
-- Pass in the CLI as `--env`
+- {% urlHash "Set in `cypress.json`" Option-1-cypress-json %}
+- {% urlHash "Create a `cypress.env.json`" Option-2-cypress-env-json %}
+- {% urlHash "Export as `CYPRESS_*`" Option-3-CYPRESS %}
+- {% urlHash "Pass in the CLI as `--env`" Option-4-env %}
+- {% urlHash "Set an environment variable within your plugins." Option-5-Plugins %}
 
 Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration %}.
 
@@ -58,7 +58,6 @@ Any key/value you set in your {% url 'configuration' configuration %} under the 
 
 ```javascript
 // cypress.json
-
 {
   "projectId": "128076ed-9868-4e98-9cef-98dd8b705d75",
   "env": {
@@ -68,15 +67,15 @@ Any key/value you set in your {% url 'configuration' configuration %} under the 
 }
 ```
 
-***Test file***
+### Test file
 
 ```javascript
-Cypress.env()       // {foo: "bar", some: "value"}
-Cypress.env("foo")  // "bar"
-Cypress.env("some") // "value"
+Cypress.env()       // {foo: 'bar', some: 'value'}
+Cypress.env('foo')  // 'bar'
+Cypress.env('some') // 'value'
 ```
 
-***Overview***
+### Overview
 
 {% note success Benefits %}
 - Great for values that need to be checked into source control and remain the same on all machines.
@@ -94,22 +93,21 @@ This strategy is useful because if you add `cypress.env.json` to your `.gitignor
 
 ```javascript
 // cypress.env.json
-
 {
   "host": "veronica.dev.local",
   "api_server": "http://localhost:8888/api/v1/"
 }
 ```
 
-***Test file***
+### Test file
 
 ```javascript
-Cypress.env()             // {host: "veronica.dev.local", api_server: "http://localhost:8888/api/v1"}
-Cypress.env("host")       // "veronica.dev.local"
-Cypress.env("api_server") // "http://localhost:8888/api/v1/"
+Cypress.env()             // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host')       // 'veronica.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-***Overview***
+### Overview
 
 {% note success Benefits %}
 - Dedicated file just for environment variables.
@@ -128,24 +126,27 @@ Any environment variable on your machine that starts with either `CYPRESS_` or `
 
 Conflicting values will override values from `cypress.json` and `cypress.env.json` files.
 
-Cypress will *strips off* the `CYPRESS_` when adding your environment variables.
+Cypress will *strip off* the `CYPRESS_` when adding your environment variables.
 
-***Export cypress env variables from the command line***
+### Export cypress env variables from the command line
 
 ```shell
 export CYPRESS_HOST=laura.dev.local
+```
+
+```shell
 export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
-***Test file***
+### Test file
 
 ```javascript
-Cypress.env()             // {HOST: "laura.dev.local", api_server: "http://localhost:8888/api/v1"}
-Cypress.env("HOST")       // "laura.dev.local"
-Cypress.env("api_server") // "http://localhost:8888/api/v1/"
+Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('HOST')       // 'laura.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-***Overview***
+### Overview
 
 {% note success Benefits %}
 - Quickly export some values.
@@ -170,21 +171,21 @@ You can use the `--env` argument for {% url '`cypress run`' command-line#cypress
 Multiple values must be separated by a comma, not a space.
 {% endnote %}
 
-***From the command line or CI***
+### From the command line or CI
 
 ```shell
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
-***Test file***
+### Test file
 
 ```javascript
-Cypress.env()             // {host: "kevin.dev.local", api_server: "http://localhost:8888/api/v1"}
-Cypress.env("host")       // "kevin.dev.local"
-Cypress.env("api_server") // "http://localhost:8888/api/v1/"
+Cypress.env()             // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host')       // 'kevin.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-***Overview***
+### Overview
 
 {% note success Benefits %}
 - Does not require any changes to files or configuration.
@@ -199,7 +200,7 @@ Cypress.env("api_server") // "http://localhost:8888/api/v1/"
 
 ## Option #5: Plugins
 
-Instead of setting environment variables in a file, you can use plugins to dynamically set them with `Node.js` code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node.js code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
@@ -209,16 +210,20 @@ While this may take a bit more work than other options - it yields you the most 
 
 If your environment variables match a standard configuration key, then instead of setting an `environment variable` they will instead override the configuration value.
 
-***Change the `baseUrl` configuration value / not set env var in `Cypress.env()`***
+### Change the `baseUrl` configuration value / not set env var in `Cypress.env()`
 
 ```shell
 export CYPRESS_BASE_URL=http://localhost:8080
 ```
 
-***'foo' does not match config / sets env var in `Cypress.env()`***
+### 'foo' does not match config / sets env var in `Cypress.env()`
 
 ```shell
 export CYPRESS_FOO=bar
 ```
 
 You can {% url 'read more about how environment variables can change configuration here' configuration %}.
+
+## See also
+
+- {% url "Environment Variables recipe" recipes#Environment-Variables %}

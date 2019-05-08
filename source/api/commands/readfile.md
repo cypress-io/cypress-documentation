@@ -1,6 +1,6 @@
 ---
 title: readFile
-comments: false
+
 ---
 
 Read a file and yield its contents.
@@ -19,7 +19,7 @@ cy.readFile(filePath, encoding, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.readFile('menu.json')    
+cy.readFile('menu.json')
 ```
 
 ## Arguments
@@ -100,14 +100,14 @@ cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 const YAML = require('yamljs')
 
 cy
-  .readFile("languages/en.yml")
+  .readFile('languages/en.yml')
   .then((str) => {
     // parse the string into object literal
     const english = YAML.parse(str)
 
     cy
-      .get("#sidebar")
-      .find(".sidebar-title")
+      .get('#sidebar')
+      .find('.sidebar-title')
       .each(($el, i) => {
         englishTitle = english.sidebar[i]
 
@@ -125,6 +125,17 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
   // logo will be encoded as base64
   // and should look something like this:
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
+})
+```
+
+## Playing MP3 file
+
+```javascript
+cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
+  const uri = 'data:audio/mp3;base64,' + mp3
+  const audio = new Audio(uri)
+
+  audio.play()
 })
 ```
 
@@ -158,7 +169,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 ```javascript
 // if this assertion fails cy.readFile will poll the file
-// until it eventually passes its assertions (or time out)
+// until it eventually passes its assertions (or times out)
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
@@ -184,7 +195,7 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 cy.readFile('cypress.json')
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log](/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png)
 
@@ -196,4 +207,5 @@ When clicking on the `readFile` command within the command log, the console outp
 
 - {% url `cy.exec()` exec %}
 - {% url `cy.fixture()` fixture %}
+- {% url `cy.task()` task %}
 - {% url `cy.writeFile()` writefile %}

@@ -1,12 +1,11 @@
 ---
 title: submit
-comments: false
 ---
 
 Submit a form.
 
 {% note warning %}
-This element must be an `<form>`.
+The {% url subject introduction-to-cypress#Subject-Management %} must be a `<form>`.
 {% endnote %}
 
 # Syntax
@@ -100,7 +99,7 @@ cy.route('POST', '/users', 'fixture:user').as('userSuccess')
 cy.get('form').submit()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/submit/form-submit-shows-in-command-log-of-cypress.png)
 

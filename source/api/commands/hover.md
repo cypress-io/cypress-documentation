@@ -1,6 +1,6 @@
 ---
 title: hover
-comments: false
+
 ---
 
 {% note danger %}

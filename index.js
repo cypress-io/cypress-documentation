@@ -5,8 +5,6 @@ process.on('unhandledRejection', function (reason, p) {
   process.exit(-1)
 })
 
-const fs = require('fs')
-const path = require('path')
 const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
@@ -101,22 +99,5 @@ function initHexo () {
 
 }
 
-// remove these files they are causing errors
-// https://github.com/cypress-io/cypress-documentation/issues/54
-const pathToBustedDjango = path.resolve('node_modules', 'prismjs', 'components', 'prism-django.js')
+initHexo()
 
-const pathToBustedDjangoMin = path.resolve('node_modules', 'prismjs', 'components', 'prism-django.min.js')
-
-try {
-  fs.unlinkSync(pathToBustedDjango)
-} catch (err) {
-  // noop
-}
-
-try {
-  fs.unlinkSync(pathToBustedDjangoMin)
-} catch (err) {
-  // noop
-}
-
-return initHexo()

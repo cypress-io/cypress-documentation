@@ -1,10 +1,8 @@
 ---
 title: scrollIntoView
-comments: false
 ---
 
 Scroll an element into view.
-
 
 # Syntax
 
@@ -36,9 +34,9 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
 `duration` | `0` | Scrolls over the duration (in ms)
 `easing` | `swing` | Will scroll with the easing animation
+`log` | `true` | {% usage_options log %}
 `offset` | `{top: 0, left: 0}` | Amount to scroll after the element has been scrolled into view
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .scrollIntoView %}
 
@@ -57,13 +55,13 @@ cy.get('button#checkout').scrollIntoView()
 
 ## Options
 
-***Use linear easing animation to scroll***
+### Use linear easing animation to scroll
 
 ```javascript
-cy.get('.next-page').scrollIntoView({ easing: 'linear' } )
+cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 ```
 
-***Scroll to element over 2000ms***
+### Scroll to element over 2000ms
 
 ```javascript
 cy.get('footer').scrollIntoView({ duration: 2000 })
@@ -73,7 +71,7 @@ cy.get('footer').scrollIntoView({ duration: 2000 })
 
 ## Snapshots
 
-***Snapshots do not reflect scroll behavior***
+### Snapshots do not reflect scroll behavior
 
 *Cypress does not reflect the accurate scroll positions of any elements within snapshots.* If you want to see the actual scrolling behavior in action, we recommend using {% url `.pause()` pause %} to walk through each command or {% url 'watching the video of the test run' screenshots-and-videos#Videos %}.
 
@@ -81,26 +79,26 @@ cy.get('footer').scrollIntoView({ duration: 2000 })
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements dom .scrollToIntoView %}
+{% requirements dom .scrollIntoView %}
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions wait .scrollToIntoView %}
+{% assertions wait .scrollIntoView %}
 
 ## Timeouts {% helper_icon timeout %}
 
-{% timeouts assertions .scrollToIntoView %}
+{% timeouts assertions .scrollIntoView %}
 
 # Command Log
 
-***Assert element is visible after scrolling it into view***
+### Assert element is visible after scrolling it into view
 
 ```javascript
 cy.get('#scroll-horizontal button').scrollIntoView()
   .should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 {% img /img/api/scrollintoview/command-log-for-scrollintoview.png "command log scrollintoview" %}
 

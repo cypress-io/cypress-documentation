@@ -1,14 +1,15 @@
 <div id="content-wrap" class="{{ page.containerClass }} toc-top">
   <div id="content" class="wrapper">
     <div id="content-inner">
-      <article class="article-container" itemscope itemtype="http://schema.org/Article">
-        <div class="article-inner">
-          <div class="article">
+      {{ partial('partial/sidebar') }}
+      <article class="article-wrapper">
+        <div id="article">
+          <div class="article" itemscope itemtype="http://schema.org/Article">
             <header class="article-header">
               <h1 class="article-title" itemprop="name">{{ page.title }}</h1>
               <a href="{{ raw_link(page.source) }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
-              {{ toc(page.content, {list_number: false}) }}
             </header>
+            {{ toc(page.content, {list_number: false, max_depth: 2}) }}
             <div class="article-content" itemprop="articleBody">
               {{ add_page_anchors(page.content) }}
             </div>
@@ -21,7 +22,6 @@
           </div>
         </div>
       </article>
-      {{ partial('partial/sidebar') }}
     </div>
   </div>
 </div>

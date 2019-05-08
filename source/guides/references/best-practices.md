@@ -1,6 +1,5 @@
 ---
 title: Best Practices
-comments: false
 layout: toc-top
 ---
 
@@ -14,7 +13,7 @@ layout: toc-top
 {% fa fa-check-circle green %} **Best Practice:** Test specs in isolation, programmatically log into your application, and take control of your application's state.
 {% endnote %}
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach writing fast, scalable tests.
+In February 2018 we gave a "Best Practices" conference talk at AssertJS. This video demonstrates how to approach writing fast, scalable tests.
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
@@ -41,7 +40,7 @@ Luckily, it is very easy to avoid both of these problems.
 2. Don't target elements that may change their `textContent`
 3. Add `data-*` attributes to make it easy to target elements
 
-***How It Works:***
+### How It Works:
 
 Given a button that we want to interact with:
 
@@ -79,11 +78,11 @@ When determining an unique selector it will automatically prefer elements with:
 
 {% endnote %}
 
-***Text Content:***
+### Text Content:
 
 After reading the above rules you may be wondering:
 
-> if I should always use data attributes, then when should I use `cy.contains()`?
+> If I should always use data attributes, then when should I use `cy.contains()`?
 
 A simple rule of thumb is to ask yourself this:
 
@@ -100,7 +99,7 @@ If we looked at the `<html>` of our button again...
 <button id="main" class="btn btn-large" data-cy="submit">Submit</button>
 ```
 
-The question is: how important is the `Submit` text content to your test? If the text changed from `Subject` to `Save` - would you want the test to fail?
+The question is: how important is the `Submit` text content to your test? If the text changed from `Submit` to `Save` - would you want the test to fail?
 
 If the answer is **yes** because the word `Submit` is critical and should not be changed - then use {% url `cy.contains()` contains %} to target the element. This way, if it is changed, the test will fail.
 
@@ -175,7 +174,7 @@ However, you should **never** use your UI or visit a 3rd party site when testing
 
 Let's look at a few strategies for dealing with these situations.
 
-***When logging in:***
+### When logging in:
 
 Many OAuth providers run A/B experiments, which means that their login screen is dynamically changing. This makes automated testing difficult.
 
@@ -193,7 +192,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 {% url "We have several examples of doing this in our logging in recipes." recipes %}
 {% endnote %}
 
-***3rd party servers:***
+### 3rd party servers:
 
 Sometimes actions that you take in your application **may** affect another 3rd party application. These situations are not that common, but it is possible. Imagine your application integrates with GitHub and by using your application you can change data inside of GitHub.
 
@@ -201,7 +200,7 @@ After running your test, instead of trying to {% url `cy.visit()` visit %} GitHu
 
 This avoids ever needing to touch the UI of another application.
 
-***Verifying sent emails:***
+### Verifying sent emails:
 
 Typically, when going through scenarios like user registration or forgotten passwords, your server schedules an email to be delivered.
 
@@ -265,7 +264,7 @@ If you were to put an `.only` on any of the last three tests, they would fail. E
 
 Here's 2 ways we can fix this:
 
-***1. Combine into one test***
+### 1. Combine into one test
 
 ```javascript
 // a bit better
@@ -287,7 +286,7 @@ describe('my form', function () {
 
 Now we can put an `.only` on this test and it will run successfully irrespective of any other test. The ideal Cypress workflow is writing and iterating on a single test at a time.
 
-***2. Run shared code before each test***
+### 2. Run shared code before each test
 
 ```javascript
 describe('my form', function () {
@@ -413,7 +412,7 @@ describe('logged in user', function () {
 
 Let's look at why this is not really necessary.
 
-***Dangling state is your friend:***
+### Dangling state is your friend:
 
 One of the **best** parts of Cypress is its emphasis on debuggability. Unlike other testing tools - when your tests end - you are left with your working application at the exact point where your test finished.
 
@@ -423,7 +422,7 @@ We have built Cypress to support this use case. In fact, Cypress **does not** cl
 
 If you remove your application's state after each test, then you instantly lose the ability to use your application in this mode. Logging out at the end would always leave you with the same login page at the end of the test. In order to debug your application or write a partial test, you would always be left commenting out your custom `cy.logout()` command.
 
-***It's all downside with no upside:***
+### It's all downside with no upside:
 
 For the moment, let's assume that for some reason your application desperately **needs** that last bit of `after` or `afterEach` code to run. Let's assume that if that code is not run - all is lost.
 
@@ -449,7 +448,7 @@ Why? Because if you refresh Cypress in the middle of the test - you will have bu
 
 If this state cleanup is **truly** required, then the next test will instantly fail. Why? Because resetting the state never happened when you refreshed Cypress.
 
-***State reset should go before each test:***
+### State reset should go before each test:
 
 The simplest solution here is to move your reset code to **before** the test runs.
 
@@ -471,7 +470,7 @@ beforeEach(function () {
 
 That's it! It couldn't be simpler!
 
-***Is resetting the state necessary?***
+### Is resetting the state necessary?
 
 One final question you should ask yourself is - is resetting the state even necessary? Remember, Cypress already automatically clears {% url "`localStorage`" clearlocalstorage %}, {% url "cookies" clearcookies %}, sessions, etc before each test. Make sure you are not trying to clean up state that is already cleaned up by Cypress automatically.
 
@@ -493,25 +492,25 @@ In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of 
 
 Let's imagine the following examples:
 
-***Unnecessary wait for `cy.request()`***
+### Unnecessary wait for `cy.request()`
 
 Waiting here is unnecessary since the {% url `cy.request()` request %} command will not resolve until it receives a response from your server. Adding the wait here only adds 5 seconds after the {% url `cy.request()` request %} has already resolved.
 
 ```javascript
-cy.request("http://localhost:8080/db/seed")
+cy.request('http://localhost:8080/db/seed')
 cy.wait(5000)     // <--- this is unnecessary
 ```
 
-***Unnecessary wait for `cy.visit()`***
+### Unnecessary wait for `cy.visit()`
 
 Waiting for this is unnecessary because the {% url '`cy.visit()`' visit %} resolves once the page fires its `load` event. By that time all of your assets have been loaded including javascript, stylesheets, and html.
 
 ```javascript
-cy.visit("http://localhost/8080")
+cy.visit('http://localhost/8080')
 cy.wait(5000)     // <--- this is unnecessary
 ```
 
-***Unnecessary wait for `cy.get()`***
+### Unnecessary wait for `cy.get()`
 
 Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy.get()` get %} automatically retries until the table's `tr` has a length of 2.
 
@@ -519,26 +518,26 @@ Whenever commands have an assertion they will not resolve until their associated
 
 ```javascript
 cy.server()
-cy.route("GET", /users/, [{"name": "Maggy"}, {"name": "Joan"}])
-cy.get("#fetch").click()
+cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
+cy.get('#fetch').click()
 cy.wait(4000)     // <--- this is unnecessary
-cy.get("table tr").should("have.length", 2)
+cy.get('table tr').should('have.length', 2)
 ```
 
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
 cy.server()
-cy.route("GET", /users/, [{"name": "Maggy"}, {"name": "Joan"}]).as("getUsers")
-cy.get("#fetch").click()
-cy.wait("@getUsers")     // <--- wait explicitly for this route to finish
-cy.get("table tr").should("have.length", 2)
+cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
+cy.get('#fetch').click()
+cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
+cy.get('table tr').should('have.length', 2)
 ```
 
 ## Web Servers
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %}.
+{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
 {% endnote %}
 
 {% note success %}
@@ -547,9 +546,9 @@ cy.get("table tr").should("have.length", 2)
 
 We do NOT recommend trying to start your backend web server from within Cypress.
 
-`cy.exec()` can only run commands which eventually exit.
+Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually. Otherwise, Cypress will not continue running any other commands.
 
-Trying to start a web server from `cy.exec()` causes all kinds of problems because:
+Trying to start a web server from {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} causes all kinds of problems because:
 
 - You have to background the process
 - You lose access to it via terminal
@@ -565,11 +564,11 @@ While working in the Cypress Test Runner you can always restart / refresh while 
 
 **What should I do then?**
 
-Simple. Start your web server before running Cypress and kill it after it completes.
+Start your web server before running Cypress and kill it after it completes.
 
 Are you trying to run in CI?
 
-We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Booting-Your-Server %}.
+We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Boot-your-server %}.
 
 ## Setting a global baseUrl
 
@@ -587,24 +586,24 @@ Adding a {% url "`baseUrl`" configuration#Global %} can also save some time duri
 
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
-***Without `baseUrl` set, Cypress loads main window in `localhost` + random port***
-{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png %}
+### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
+{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
 
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
 
-***cypress.json***
+### cypress.json
 ```json
 {
   "baseUrl": "http://localhost:8484"
 }
 ```
 
-***With `baseUrl` set, Cypress loads main window in `baseUrl`***
+### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png %}
+{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
 
-{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png %}
+{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" %}

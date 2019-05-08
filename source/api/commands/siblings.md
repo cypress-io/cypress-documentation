@@ -1,6 +1,6 @@
 ---
 title: siblings
-comments: false
+
 ---
 
 Get sibling DOM elements.
@@ -100,7 +100,7 @@ cy.get('li').siblings('.active')
 cy.get('.left-nav').find('li.active').siblings()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/siblings/find-siblings-of-dom-elements-to-test.png)
 

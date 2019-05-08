@@ -1,6 +1,6 @@
 ---
 title: exec
-comments: false
+
 ---
 
 Execute a system command.
@@ -23,7 +23,7 @@ cy.exec(command, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.exec('npm run build')    
+cy.exec('npm run build')
 ```
 
 ## Arguments
@@ -107,7 +107,7 @@ Cypress will *not* continue running any other commands until `cy.exec()` has fin
 
 ```javascript
 // will fail if script takes longer than 20 seconds to finish
-cy.exec('npm run build', { timeout: 20000 });
+cy.exec('npm run build', { timeout: 20000 })
 ```
 
 ***Choose to not fail on non-zero exit and assert on code and stderr***
@@ -160,10 +160,16 @@ A command must exit within the `execTimeout` or Cypress will kill the command's 
 ***List the contents of cypress.json***
 
 ```javascript
-cy.exec('cat cypress.json')
+if (Cypress.platform === 'win32') {
+  cy.exec('print cypress.json')
+    .its('stderr').should('be.empty')
+} else {
+  cy.exec('cat cypress.json')
+    .its('stderr').should('be.empty')
+}
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log exec](/img/api/exec/exec-cat-in-shell.png)
 

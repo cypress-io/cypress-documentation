@@ -1,6 +1,6 @@
 ---
 title: setCookie
-comments: false
+
 ---
 
 Set a browser cookie.
@@ -90,7 +90,7 @@ cy.setCookie('fakeCookie1', '123ABC')
 cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/setcookie/set-cookie-on-browser-for-testing.png)
 

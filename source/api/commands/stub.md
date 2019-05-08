@@ -1,6 +1,5 @@
 ---
 title: stub
-comments: false
 ---
 
 Replace a function, record its usage and control its behavior.
@@ -22,7 +21,7 @@ cy.stub(object, method, replacerFn)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.stub(user, 'addFriend')    
+cy.stub(user, 'addFriend')
 ```
 
 ## Arguments
@@ -43,13 +42,13 @@ The function used to replace the `method` on the `object`.
 
 Unlike most Cypress commands, `cy.stub()` is *synchronous* and returns a value (the stub) instead of a Promise-like chain-able object.
 
-`cy.stub()` returns a {% url "Sinon.js stub" http://sinonjs.org/%}. All methods found on {% url "Sinon.js" http://sinonjs.org %} spies and stubs are supported.
+`cy.stub()` returns a {% url "Sinon.js stub" http://sinonjs.org %}. All methods found on {% url "Sinon.js" http://sinonjs.org %} spies and stubs are supported.
 
 # Examples
 
 ## Method
 
-***Create a stub and manually replace a function***
+### Create a stub and manually replace a function
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -59,7 +58,7 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-***Replace a method with a stub***
+### Replace a method with a stub
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -69,7 +68,7 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-***Replace a method with a function***
+### Replace a method with a function
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -83,7 +82,7 @@ App.start()
 expect(listenersAdded).to.be.true
 ```
 
-***Specify the return value of a stubbed method***
+### Specify the return value of a stubbed method
 
 ```javascript
 // assume App.start calls util.addListeners, which returns a function
@@ -97,13 +96,14 @@ App.stop()
 expect(removeStub).to.be.called
 ```
 
-***Replace built-in window methods like prompt***
+### Replace built-in window methods like prompt
+
 ```javascript
 // assume App.start uses prompt to set the value of an element with class "name"
 cy.visit('http://localhost:3000', {
-    onBeforeLoad(win) {
-        cy.stub(win, 'prompt').returns('my custom message')
-    }
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').returns('my custom message')
+  }
 })
 
 App.start()
@@ -112,7 +112,7 @@ cy.window().its('prompt').should('be.called')
 cy.get('.name').should('have.value', 'my custom message')
 ```
 
-***Using cy.stub***
+### Using cy.stub
 
 {% note info %}
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
@@ -120,7 +120,7 @@ cy.get('.name').should('have.value', 'my custom message')
 
 ## Aliases
 
-Adding an alias using {% url `.as()` as %} to stubs makes them easier to identify in error messages and Cypress' command log.
+Adding an alias using {% url `.as()` as %} to stubs makes them easier to identify in error messages and Cypress's command log.
 
 ```javascript
 const obj = {
@@ -142,13 +142,13 @@ You will see the following in the command log:
 
 ## Restores
 
-***Automatic reset/restore between tests***
+### Automatic reset/restore between tests
 
 `cy.stub()` creates stubs in a {% url "sandbox" http://sinonjs.org/releases/v2.0.0/sandbox/ %}, so all stubs created are automatically reset/restored between tests without you having to explicitly reset/restore them.
 
 ## Differences
 
-***Difference between cy.spy() and cy.stub()***
+### Difference between cy.spy() and cy.stub()
 
 The main difference between `cy.spy()` and {% url `cy.stub()` stub %} is that `cy.spy()` does not replace the method, it only wraps it. So, while invocations are recorded, the original method is still called. This can be very useful when testing methods on native browser objects. You can verify a method is being called by your test and still have the original method action invoked.
 
@@ -175,11 +175,12 @@ const obj = {
   foo () {}
 }
 const stub = cy.stub(obj, 'foo').as('foo')
+
 obj.foo('foo', 'bar')
 expect(stub).to.be.called
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log](/img/api/stub/stub-in-command-log.png)
 
@@ -195,3 +196,4 @@ When clicking on the `(stub-1)` event within the command log, the console output
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
 - {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" recipes#Stubbing-window-fetch %}
 - {% url "Recipe: Unit Test - Stubbing Dependencies" recipes %}
+- {% url "Stub navigator API in end-to-end tests" https://glebbahmutov.com/blog/stub-navigator-api/ %}

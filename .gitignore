@@ -2,9 +2,12 @@ node_modules/
 db.json
 public/
 *.log
+.history
+.vscode
 .DS_Store
 .deploy*/
 support
+!cypress/support
 .idea/
 
 themes/cypress/source/css/vendor/

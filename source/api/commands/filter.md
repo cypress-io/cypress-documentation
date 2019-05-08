@@ -1,6 +1,6 @@
 ---
 title: filter
-comments: false
+
 ---
 
 Get the DOM elements that match a specific selector.
@@ -97,7 +97,7 @@ cy.get('ul').find('>li').filter('.active')
 cy.get('.left-nav>.nav').find('>li').filter('.active')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log filter](/img/api/filter/filter-el-by-selector.png)
 

@@ -1,6 +1,5 @@
 ---
 title: click
-comments: false
 ---
 
 Click a DOM element.
@@ -68,7 +67,7 @@ Option | Default | Description
 
 ## No Args
 
-***Click the button***
+### Click the button
 
 ```javascript
 cy.get('button').click()
@@ -76,7 +75,7 @@ cy.get('button').click()
 
 ## Position
 
-***Specify a corner of the element to click***
+### Specify a corner of the element to click
 
 Click the top right corner of the button.
 
@@ -86,7 +85,7 @@ cy.get('button').click('topRight')
 
 ## Coordinates
 
-***Specify explicit coordinates relative to the top left corner***
+### Specify explicit coordinates relative to the top left corner
 
 The click below will be issued inside of the element (15px from the left and 40px from the top).
 
@@ -96,7 +95,7 @@ cy.get('button').click(15, 40)
 
 ## Options
 
-***Force a click regardless of its actionable state***
+### Force a click regardless of its actionable state
 
 Forcing a click overrides the {% url 'actionable checks' interacting-with-elements#Forcing %} Cypress applies and will automatically fire the events.
 
@@ -104,19 +103,19 @@ Forcing a click overrides the {% url 'actionable checks' interacting-with-elemen
 cy.get('button').click({ force: true })
 ```
 
-***Force a click with position argument***
+### Force a click with position argument
 
 ```javascript
 cy.get('button').click('bottomLeft', { force: true })
 ```
 
-***Force a click with relative coordinates***
+### Force a click with relative coordinates
 
 ```javascript
 cy.get('button').click(5, 60, { force: true })
 ```
 
-***Click all buttons found on the page***
+### Click all buttons found on the page
 
 By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the {% url 'Command Log' test-runner#Command-Log %} multiple times.
 
@@ -124,17 +123,40 @@ By default, Cypress will error if you're trying to click multiple elements. By p
 cy.get('button').click({ multiple: true })
 ```
 
+## Click with key combinations
+
+The `.click()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while clicking, such as `ATL + click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+
+The following modifiers can be combined with `.click()`.
+
+Sequence | Notes
+--- | ---
+`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
+`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
+`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
+`{shift}` | Activates the `shiftKey` modifier.
+
+### Shift click
+
+```js
+// execute a SHIFT + click on the first <li>
+// {release: false} is necessary so that
+// SHIFT will not be released after the type command
+cy.get('body').type('{shift}', { release: false })
+  .get('li:first').click()
+```
+
 # Notes
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.click()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
 ## Events
 
-***Events that are fired:***
+### Events that are fired:
 
 ```javascript
 cy.get('button').click()
@@ -152,7 +174,7 @@ Additionally if the `mousedown` event causes the element to be removed from the 
 
 ## Focus
 
-***Focus is given to the first focusable element***
+### Focus is given to the first focusable element
 
 For example, clicking a `<span>` inside of a `<button>` gives the focus to the button, since that's what would happen in a real user scenario.
 
@@ -160,15 +182,15 @@ However, Cypress additionally handles situations where a child descendent is cli
 
 ## Cancellation
 
-***Mousedown cancellation will not cause focus***
+### Mousedown cancellation will not cause focus
 
 If the mousedown event has its default action prevented (`e.preventDefault()`) then the element will not receive focus as per the spec.
 
-***Element removal during `mousedown` or `mouseup`***
+### Element removal during `mousedown` or `mouseup`
 
 The spec states what should happen if the element clicked is removed from the DOM during `mousedown` or `mouseup`, but Cypress is not currently factoring this in. {% open_an_issue %} if you need this to be fixed.
 
-***pointer-events: none***
+### pointer-events: none
 
 Cypress does not currently factor in `pointer-events: none` in its clicking algorithm. {% open_an_issue %} if you need this to be fixed.
 
@@ -194,7 +216,7 @@ Cypress does not currently factor in `pointer-events: none` in its clicking algo
 cy.get('form').find('button').contains('Create User').click()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for click](/img/api/click/click-button-in-form-during-test.png)
 
@@ -208,3 +230,4 @@ When clicking on `click` within the command log, the console outputs the followi
 - {% url `.dblclick()` dblclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
+- {% url `.type()` type %}

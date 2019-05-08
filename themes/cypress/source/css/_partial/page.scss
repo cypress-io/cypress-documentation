@@ -1,10 +1,27 @@
-.article {
-  float: left;
+.article-wrapper {
+  position: relative;
+  margin: 60px ($sidebar-width + 40px) 60px ($sidebar-width + 40px);
+  display: flex;
+  flex-direction: row;
+}
+
+#article {
+  margin-right: 0;
   width: 100%;
-  padding: 0px 50px;
-  border: 1px solid #eee;
-  border-top: 0;
-  border-bottom: 0;
+
+  &.sidebar-fixed {
+    margin-right: $sidebar-width;
+  }
+}
+
+.article {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  left: 0;
 }
 
 .article-date {
@@ -17,12 +34,10 @@
   }
 
 }
-.article-edit-link {
-  float: right;
-  color: $color-link;
-  font-size: 14px;
+a.article-edit-link {
+  color: #616161;
+  font-size: 1em;
   text-decoration: none;
-  line-height: 50px;
   transition: 0.2s;
   display: none;
   &:hover {
@@ -43,18 +58,37 @@
   }
 }
 
-.article-anchor {
+.article-content a.article-anchor {
   margin-left: 10px;
   display: none;
   border: 0;
+  color: $color-link;
+
+  &:hover {
+    color: darken($color-link, 0.5%);
+  }
 
   &:before {
     content: "#";
   }
-
 }
-.article-content, .toc-top .article {
+.article-content, .toc-top .article-content {
   line-height: $line-height;
+
+  .api-toc, .api-links {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .api-li, .api-title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  // we don't want to show the first page we're on
+  .api-title:first-child {
+    display: none;
+  }
 
   hr {
     border: 0;
@@ -64,7 +98,7 @@
   }
 
   p {
-    margin: 15px 0;
+    margin: 25px 0;
     word-wrap: break-word;
     font-family: $font-sans;
   }
@@ -74,7 +108,7 @@
     padding-left: 30px;
     list-style: decimal;
 
-    li:not('.toc-item') {
+    li:not(.toc-item) {
       margin: 15px 0;
 
       p {
@@ -102,7 +136,7 @@
   }
 
   ul {
-    margin: 15px 0;
+    margin: 0;
     padding-left: 30px;
     list-style: disc;
 
@@ -139,9 +173,11 @@
   }
 
   table {
-    margin: 15px 0;
-    width: 100%;
     border: 1px solid #e8e8e8;
+    display: block;
+    margin: 15px 0;
+    overflow: auto;
+    width: 100%;
 
     code {
       white-space: nowrap;
@@ -149,10 +185,10 @@
 
     th {
       font-weight: 500;
-      padding: 2px 15px;
+      padding: 5px 10px;
       text-align: left;
       border-bottom: 1px solid #e8e8e8;
-      font-size: 0.9em;
+      font-size: 1em;
 
       &:empty {
         padding: 0;
@@ -160,13 +196,29 @@
     }
 
     td {
-      padding: 5px 15px;
-      font-size: 0.9em;
+      padding: 15px 10px;
+      font-size: 1em;
       line-height: 1.5em;
+    }
+
+    td:not(:last-child), th:not(:last-child) {
+      white-space: nowrap;
+    }
+
+    td:last-child, th:last-child {
+      width: 100%;
+
+      code {
+        white-space: normal;
+      }
     }
 
     tr:nth-child(2n) {
       background: #fafafb;
+    }
+
+    small {
+      font-size: small;
     }
   }
 
@@ -211,13 +263,24 @@
     margin: 1em 0;
   }
 
+  h1.article-title {
+    font-family: $font-title;
+    font-weight: bold;
+    text-decoration: none;
+    color: $color-default;
+    line-height: 1.7em;
+    color: #282C34;
+    font-size: 2.6em;
+  }
+
   h1 {
     font-size: 1.9em;
     line-height: 1.7em;
     font-weight: bold;
-    margin: 1.5em 0 15px 0;
+    margin: 2em 0 15px 0;
     font-family: $font-title;
     border-bottom: 1px solid #eee;
+    color: $color-default;
 
     &>a {
       font-weight: 500;
@@ -241,6 +304,7 @@
     margin: 1.5em 0 15px;
     font-family: $font-title;
     border-bottom: 1px solid #eee;
+    color: #282C34;
 
     &>a {
       &:hover {
@@ -291,11 +355,11 @@
   a {
     color: $color-link;
     text-decoration: none;
-    border-bottom: 1px dotted #bde1fd;
+    border-bottom: 1px dotted $color-link;
 
     &:hover {
       color: $color-link-hover;
-      border-bottom: 1px solid $color-link;
+      border-bottom: 1px solid $color-link-hover;
     }
   }
 
@@ -315,7 +379,6 @@
   strong>em {
     font-style: normal;
     font-weight: 500;
-    padding-bottom: 2px;
     font-size: 1.1em;
     border-bottom: 1px dotted #ccc;
   }
@@ -326,7 +389,7 @@
   }
 
   li {
-    margin: 10px;
+    margin: 15px 10px;
     line-height: 1.7em;
 
     p {
@@ -361,18 +424,18 @@
   video {
     max-width: 100%;
     border: 1px solid #ddd;
-    margin: 15px 0;
+    margin: 0;
   }
 
   .note {
-    font-weight: 200;
+    font-weight: 400;
     border: 0;
-    margin: 15px 0;
-    padding: 15px 25px;
+    margin: 25px 0;
+    padding: 20px 40px;
     position: relative;
     border-left: 5px solid $highlight-comment;
     font-style: normal;
-    font-size: 16px;
+    color: #45494c;
 
     footer {
       margin: 15px 0;
@@ -391,12 +454,17 @@
 
     &>h1, &>h2, &>h3 {
       margin-top: 15px;
-      padding-top: 0em;
+      padding-top: 0;
       border: 0;
     }
 
+    ul>li {
+      font-weight: 400;
+      color: #45494c;
+    }
+
     h1 {
-      font-size: 1em;
+      font-size: 1.2em;
     }
 
     p:first-of-type:last-of-type {
@@ -413,42 +481,64 @@
 
     &.warning {
       border-left-color: $color-orange;
-      background-color: #fcf8f2;
+      background-color: #fffbf5;
 
       .note-title {
         color: $color-orange;
       }
+
+      a {
+        color: #e4a23b;
+        border-bottom-color: #e4a23b;
+      }
     }
+
     &.info {
-      border-left-color: #5bc0de;
-      background-color: #f4f8fa;
+      border-left-color: #2a98b9;
+      background-color: #f2fafd;
+
+      a {
+        color: #2a98b9;
+        border-bottom-color: #2a98b9;
+      }
 
       .note-title {
-        color: #5bc0de;
+        color: #2a98b9;
       }
     }
     &.success {
-      border-left-color: #50af51;
-      background-color: #f3f8f3;
+      border-left-color: #00bf88;
+      background-color: #f1fdf9;
+
+      a {
+        color: #00bf88;
+        border-bottom-color: #00bf88;
+      }
 
       .note-title {
-        color: #50af51;
+        color: #00bf88;
       }
     }
+
     &.danger {
       border-left-color: #d9534f;
-      background-color: #fdf7f7;
+      background-color: #fff2f2;
 
       .note-title {
         color: #d9534f;
       }
-    }
 
+      a {
+        color: #de5e5a;
+        border-bottom-color: #de5e5a;
+      }
+    }
   }
+
   .note-title {
     margin: 0;
+    margin-bottom: 15px;
     display: block;
-    font-size: 1em;
     font-weight: 500;
     font-family: $font-title;
   }
@@ -460,7 +550,7 @@
   border-top: 1px solid $color-border;
   text-align: center;
   color: $color-gray;
-  line-height: 1em;
+  line-height: 1.2em;
   padding-top: 2em;
   position: relative;
   overflow: auto;
@@ -516,19 +606,22 @@
 }
 
 .article-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 0 15px 0;
   border-bottom: 1px solid #ddd;
-  @include clearfix;
 }
 
 .article-title {
-  float: left;
   font-family: $font-title;
-  font-size: 2.1em;
   font-weight: bold;
   text-decoration: none;
   color: $color-default;
   line-height: 1.7em;
+  color: #282C34;
+  font-size: 2.6em;
 }
 
 .article-inner {
@@ -557,4 +650,43 @@
 
 .tutorial .article-inner {
   margin-right: 0;
+}
+
+.history {
+  cursor: pointer;
+
+  thead, tbody, th, tr {
+    border-collapse: collapse;
+  }
+
+  summary {
+    color: transparent;
+    display: block;
+
+    h1.article-heading {
+      margin-top: 0;
+    }
+  }
+
+  th:last-child {
+    width: 100%;
+  }
+
+  .history-disclosure {
+    font-size: 0.7em;
+    padding-right: 0.5em;
+    transition: 0.3s;
+    transform-style: preserve-3d;
+    transform: rotateX(180deg);
+  }
+
+  &[open] .history-disclosure{
+    transform: rotateX(0deg);
+  }
+}
+
+.aliases {
+  display: inline-block;
+  line-height: 1.4em;
+  padding-top: 0.3em;
 }

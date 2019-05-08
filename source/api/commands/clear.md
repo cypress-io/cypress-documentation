@@ -1,6 +1,6 @@
 ---
 title: clear
-comments: false
+
 ---
 
 Clear the value of an `input` or `textarea`.
@@ -96,7 +96,7 @@ Please read the {% url `.type()` type %} documentation for more details.
 cy.get('input[name="name"]').clear().type('Jane Lane')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for clear](/img/api/clear/clear-input-in-cypress.png)
 

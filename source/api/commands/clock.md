@@ -1,6 +1,6 @@
 ---
 title: clock
-comments: false
+
 ---
 
 `cy.clock()` overrides native global functions related to time allowing them to be controlled synchronously via {% url `cy.tick()` tick %} or the yielded `clock` object. This includes controlling:
@@ -34,7 +34,7 @@ cy.clock()
 
 ## Arguments
 
-**{% fa fa-angle-right %} now** ***(Date)***
+**{% fa fa-angle-right %} now** ***(number)***
 
 A timestamp specifying where the clock should start.
 
@@ -72,7 +72,7 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 ```javascript
 // your app code
-const seconds = 0
+let seconds = 0
 
 setInterval(() => {
   $('#seconds-elapsed').text(++seconds + ' seconds')
@@ -148,11 +148,11 @@ $('#date').text(new Date().toJSON())
 ```
 
 ```javascript
-const now = new Date(2017, 3, 14).getTime() // March 14, 2017 timestamp
+const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
 
 cy.clock(now)
 cy.visit('/index.html')
-cy.get('#date').contains('2017-03-14')
+cy.get('#date').contains('2017-04-14')
 ```
 
 ## Function Names
@@ -163,6 +163,12 @@ This example below will only override `setTimeout` and `clearTimeout` and leave 
 
 ```javascript
 cy.clock(null, ['setTimeout', 'clearTimeout'])
+```
+
+Note that you must specify `Date` in order to override the current datetime. The example below just affects the current datetime without affecting scheduled timers.
+
+```javascript
+cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 ```
 
 ***Using cy.clock() and cy.tick()***
@@ -208,7 +214,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log clock](/img/api/clock/clock-displays-in-command-log.png)
 

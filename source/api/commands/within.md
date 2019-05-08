@@ -1,6 +1,6 @@
 ---
 title: within
-comments: false
+
 ---
 Scopes all subsequent cy commands to within this element. Useful when working within a particular group of elements such as a `<form>`.
 
@@ -92,7 +92,7 @@ cy.get('.query-form').within((el) => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/within/go-within-other-dom-elements.png)
 

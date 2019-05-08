@@ -1,6 +1,6 @@
 ---
 title: end
-comments: false
+
 ---
 
 End a chain of commands.
@@ -40,7 +40,7 @@ cy
   .contains('User: Charles').click()      // contains looks for content in document now
 ```
 
-Alternatively, you can always start a new chain of commands of of `cy`.
+Alternatively, you can always start a new chain of commands off of `cy`.
 
 
 ```javascript
@@ -64,7 +64,7 @@ cy.contains('User: Charles').click()  // contains looks for content in document 
 
 # Command Log
 
-- `.end()` does *not* log in the command log
+- `.end()` does *not* log in the Command Log
 
 # See also
 

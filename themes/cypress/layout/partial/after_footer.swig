@@ -4,10 +4,13 @@
 {{ js('js/lang_select') }}
 {{ js('js/vendor/scrollingelement') }}
 {{ js('js/vendor/menuspy') }}
+{{ js('js/vendor/yall-2.0.1.min.js') }}
 {{ js('js/toc') }}
+{{ js('js/sidebar_accordion') }}
 {{ js('js/mobile_nav') }}
 {{ js('js/ac_tracking') }}
 {{ js('js/form-ac') }}
+{{ js('js/yall-init.js') }}
 {% if config.algolia[page.lang] %}
   <!-- Algolia -->
   {{ js('js/vendor/docsearch') }}

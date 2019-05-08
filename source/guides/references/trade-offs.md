@@ -1,6 +1,5 @@
 ---
 title: Trade-offs
-comments: false
 containerClass: faq
 ---
 
@@ -10,7 +9,7 @@ In this guide we will lay out what some of the trade-offs are - and specifically
 
 While at first it may seem like these are strict limitations in Cypress - we think you will soon realize that many of these boundaries are actually **good** to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 
-***Permanent trade-offs:***
+### Permanent trade-offs:
 
 - Cypress is not a general purpose {% urlHash "automation tool" Automation-restrictions %}.
 - Cypress commands run {% urlHash "inside of a browser" Inside-the-browser %}.
@@ -18,7 +17,7 @@ While at first it may seem like these are strict limitations in Cypress - we thi
 - You cannot use Cypress to drive {% urlHash "two browsers at the same time" Multiple-browsers-open-at-the-same-time %}.
 - Each test is bound to a {% urlHash "single origin" Same-origin %}.
 
-***Temporary trade-offs:***
+### Temporary trade-offs:
 
 We have {% url 'open issues' 'https://github.com/cypress-io/cypress/issues' %} where you can find a full list of things Cypress will eventually address, we wanted to highlight some of the more important *temporary* restrictions that Cypress will eventually address. {% url "PRs are welcome ;-)" https://on.cypress.io/contributing %}
 
@@ -29,11 +28,10 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 311#issuecomment-339824191 "There is not any native or mobile events support." %}
 - {% issue 170#issuecomment-340012621 "Testing file uploads is application specific." %}
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
-- {% issue 181 "You can take screenshots, but diffing them needs work." %}
 - {% issue 685 "Iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
-- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/stubbing-spying__window-fetch/cypress/integration/spy-stub-clock-spec.js %}
-- {% issue 350 "When running headlessly on very long and memory intense applications, we are seeing renderer crashes with Docker. This issue describes exactly how to avoid this by adding a flag."%}
+- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %} See the implementation in {% url "this recipe." https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch/cypress/integration %}
+- {% issue 144 "There is no shadow DOM support, but there are workarounds." %} See {% url "this comment." https://github.com/cypress-io/cypress/issues/830#issuecomment-449411701 %}
 
 # Permanent trade-offs
 
@@ -54,11 +52,11 @@ The **sweet spot** of Cypress is to be used as a tool to test your own applicati
 
 In case you missed it before - Cypress tests run inside of the browser! This means we can do things nobody else can. There is no object serialization or JSON wire protocols. You have real, native access to everything in your application under test. It is impossible for Cypress to 'miss' elements and it always knows the moment your application fires any kind of event.
 
-But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in `Node.js`, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
+But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node.js, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 
-This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you will soon have the ability to use `Node.js` to import or talk directly to your backend scripts once {% issue 684 %} lands.
+This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node.js to import or talk directly to your backend scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
 
-To talk to your database or server you need to use the {% url `cy.exec()` exec %} or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than another testing tools written in your backend language.
+To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your backend language.
 
 The trade-off here is that doing everything in the browser (basically all of your tests) is a much better experience in Cypress. But doing things outside of the browser may take a little extra work.
 
@@ -98,7 +96,7 @@ Doing it this way can be faster, more accurate, and more scalable.
 
 While outside the scope of this article, you could test a chat application using the following principles. Each one will incrementally introduce more collaboration:
 
-***1. Use only the browser:***
+### 1. Use only the browser:
 
 ```text
     &downarrow;
@@ -110,7 +108,7 @@ Avoid the server, invoke your JavaScript callbacks manually thereby simulating w
 
 You can {% url "stub" stub %} everything and simulate every single scenario. Chat messages, offline messages, connections, reconnections, disconnections, group chat, etc.  Everything that happens inside of the browser can be fully tested. Requests leaving the browser could also be stubbed and you could assert that the request bodies were correct.
 
-***2. Stub the other connection:***
+### 2. Stub the other connection:
 
 ```text
 server &rightarrow; browser
@@ -126,7 +124,7 @@ Use your server to receive messages from the browser, and simulate "the other pa
 
 Typically this pattern enables you to avoid making a secondary WebSocket connection and yet still fulfills the bidirectional browser and server contract. This means you could also test edge cases (disconnections, etc) without actually handling real connections.
 
-***3: Introduce another connection:***
+### 3: Introduce another connection:
 
 ```text
 server &rightarrow; browser

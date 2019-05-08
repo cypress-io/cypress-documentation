@@ -1,6 +1,6 @@
 ---
 title: parent
-comments: false
+
 ---
 
 Get the parent DOM element of a set of DOM elements.
@@ -92,7 +92,7 @@ cy.get('li.active').parent('.nav')
 cy.get('li.active').parent().should('have.class', 'nav')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log parent](/img/api/parent/get-parent-element-just-like-jquery.png)
 

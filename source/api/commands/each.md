@@ -1,6 +1,6 @@
 ---
 title: each
-comments: false
+
 ---
 
 Iterate through an array like structure (arrays or objects with a `length` property).
@@ -85,7 +85,7 @@ cy
 If your callback function returns a `Promise`, it will be awaited before iterating over the next element in the collection.
 
 ```javascript
-cy.wrap([1,2,3]).each((num, i, array) => {
+cy.wrap([1, 2, 3]).each((num, i, array) => {
   return new Cypress.Promise((resolve) => {
     setTimeout(() => {
       resolve()
@@ -118,7 +118,7 @@ You can stop the `.each()` loop early by returning `false` in the callback funct
 
 # Command Log
 
-- `cy.each()` does *not* log in the command log
+- `cy.each()` does *not* log in the Command Log
 
 # See also
 

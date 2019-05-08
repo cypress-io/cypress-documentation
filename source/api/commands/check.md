@@ -1,6 +1,6 @@
 ---
 title: check
-comments: false
+
 ---
 
 Check checkbox(es) or radio(s).
@@ -139,7 +139,7 @@ cy.get('.action-checkboxes').should('not.be.visible') // Passes
 cy.get('form').find('[name="emailUser"]').check()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for check](/img/api/check/check-checkbox-in-cypress.png)
 

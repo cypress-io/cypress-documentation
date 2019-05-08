@@ -1,6 +1,6 @@
 ---
 title: Preprocessors API
-comments: false
+
 ---
 
 A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.
@@ -48,14 +48,14 @@ Are you looking to change the **default options** for Browserify?
 Changing the Browserify options lets you:
 
 - Add your own Babel plugins
-- Add support for Typescript
+- Add support for TypeScript
 - Add support for CoffeeScript `2.x.x`
 
 Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
 
 # Usage
 
-The use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
+To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
 
 ```javascript
 // plugins file
@@ -66,7 +66,7 @@ module.exports = (on, config) => {
 }
 ```
 
-***The callback function should return one of the following:***
+### The callback function should return one of the following:
 
 * A promise\* that eventually resolves the path to the **built file**\*\*.
 * A promise\* that eventually rejects with an error that occurred during processing.
@@ -95,18 +95,18 @@ Make sure not to start a new watcher each time it is called. Instead, cache the 
 The `file` object passed to the callback function has the following properties:
 
 Property | Description
---------- | ----------
+-------- | ----------
 `filePath` | The full path to the source file.
 `outputPath` | The suggested path for saving the preprocessed file to disk. This is unique to the source file. A preprocessor can choose to write the file elsewhere, but Cypress automatically provides you this value as a convenient default.
 `shouldWatch` | A boolean indicating whether the preprocessor should watch for file changes or not.
 
 # File events
 
-The `file` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
+The `file` object passed to the callback function is an {% url "Event Emitter" https://nodejs.org/api/events.html#events_class_eventemitter %}.
 
-***Receiving 'close' event***
+### Receiving 'close' event
 
-When the spec being run is closed or the project is closed, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
+When the running spec, the project, or the browser is closed while running tests, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript
 // example
@@ -117,7 +117,7 @@ file.on('close', () => {
 })
 ```
 
-***Sending 'rerun' event***
+### Sending 'rerun' event
 
 If watching for file changes, emit `rerun` after a file has finished being processed to let Cypress know to rerun the tests.
 
@@ -130,7 +130,7 @@ fs.watch(filePath, () => {
 
 # Publishing
 
-Publish preprocessors to [npm](https://www.npmjs.com/) with the naming convention `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor).
+Publish preprocessors to {% url "npm" https://www.npmjs.com/ %} with the naming convention `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor).
 
 Use the following npm keywords:
 

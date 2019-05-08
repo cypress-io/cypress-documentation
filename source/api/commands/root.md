@@ -1,6 +1,6 @@
 ---
 title: root
-comments: false
+
 ---
 
 Get the root DOM element.
@@ -88,7 +88,7 @@ cy.get('.query-ul').within(() => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log root](/img/api/root/find-root-element-and-assert.png)
 

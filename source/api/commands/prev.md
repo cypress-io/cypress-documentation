@@ -1,6 +1,6 @@
 ---
 title: prev
-comments: false
+
 ---
 
 Get the immediately preceding sibling of each element in a set of the elements.
@@ -114,7 +114,7 @@ cy.get('li').prev('.active')
 cy.get('.left-nav').find('li.active').prev()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log prev](/img/api/prev/find-prev-element-in-list-of-els.png)
 

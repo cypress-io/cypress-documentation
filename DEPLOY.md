@@ -53,3 +53,9 @@ You can see the latest deployed version, including deployment date at:
 | --- | ---- |
 | Master | [https://docs.cypress.io/build.json](https://docs.cypress.io/build.json) |
 | Staging | [https://docs-staging.cypress.io/build.json](https://docs-staging.cypress.io/build.json) |
+
+## Caching link checks
+
+We use a helper function to check that links used in the documentation are valid. The checks are using in-memory store, but if you have a Redis instance, you can run `REDIS_URL=...redis_url npm run build` to cache the checks for several hours. This will speed up the build a lot because the external pages will not be requested again.
+
+To see debug messages during the build, run with `DEBUG=docs` environment variable.

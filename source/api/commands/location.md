@@ -1,6 +1,6 @@
 ---
 title: location
-comments: false
+
 ---
 
 Get the global `window.location` object of the page that is currently active.
@@ -158,7 +158,7 @@ cy.location().should((loc) => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/location/make-assertion-about-location-url-in-tests.png)
 

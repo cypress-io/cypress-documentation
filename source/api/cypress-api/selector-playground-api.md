@@ -1,9 +1,9 @@
 ---
 title: Cypress.SelectorPlayground
-comments: false
+
 ---
 
-The Selector Playground exposes API's that enable you to:
+The {% url 'Selector Playground' test-runner#Selector-Playground %} exposes APIs that enable you to:
 
 - Change the default selector strategy
 - Override the selectors that are returned per element
@@ -19,7 +19,7 @@ Cypress.SelectorPlayground.getSelector($el)
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
-An object containing one or both of the following:
+An object containing any or all of the following options:
 
 Option | Accepts | Description
 --- | --- | ---
@@ -36,6 +36,10 @@ Option | Accepts | Description
 - `tag`
 - `attributes`
 - `nth-child`
+
+**{% fa fa-angle-right %} $el**  ***(Object)***
+
+The {% url 'jQuery element' http://api.jquery.com/Types/#jQuery %} that you want to get the selector value for.
 
 # Examples
 
@@ -67,13 +71,27 @@ Cypress.SelectorPlayground.defaults({
 
 ## Get Selector
 
-Returns you the selector value for a given element.
+Returns you the selector value for a given element as determined by the selector strategy.
+
+For example, consider this HTML fragment.
+
+```html
+<button id='bingo' class='number3'>Cup of tea</button>
+```
+
+With the default selector strategy, the selector value will be `'#bingo'` because IDs have priority over classes.
 
 ```js
-// query for a button
 const $el = Cypress.$('button')
+const selector = Cypress.SelectorPlayground.getSelector($el) // '#bingo'
+```
 
-// do something like console.log()
-const selector = Cypress.SelectorPlayground.getSelector($el)
+With a custom selector strategy that favours classes, the selector value will be `'.number3'`.
 
+```js
+Cypress.SelectorPlayground.defaults({
+  selectorPriority: ['class', 'id']
+})
+const $el = Cypress.$('button')
+const selector = Cypress.SelectorPlayground.getSelector($el) // '.number3'
 ```

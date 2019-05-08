@@ -1,6 +1,5 @@
 ---
 title: fixture
-comments: false
 ---
 
 Load a fixed set of data located in a file.
@@ -22,7 +21,7 @@ cy.fixture(filePath, encoding, options)
 cy.fixture('users').as('usersJson')  // load data from users.json
 cy.fixture('logo.png').then((logo) => {
   // load data from logo.png
-})  
+})
 ```
 
 ## Arguments
@@ -69,13 +68,13 @@ Option | Default | Description
 
 ## JSON
 
-***Load a `users.json` fixture***
+### Load a `users.json` fixture
 
 ```javascript
 cy.fixture('users.json').as('usersData')
 ```
 
-***Omit the fixture file's extension***
+### Omit the fixture file's extension
 
 When no extension is passed to `cy.fixture()`, Cypress will search for files with the specified name within the {% url `fixturesFolder` configuration#Folders-Files %} (which defaults to `cypress/fixtures`) and resolve the first one.
 
@@ -101,7 +100,7 @@ The example above would resolve in the following order:
 
 ## Images
 
-***Image fixtures are sent as `base64`***
+### Image fixtures are sent as `base64`
 
 ```javascript
 cy.fixture('images/logo.png').then((logo) => {
@@ -111,7 +110,7 @@ cy.fixture('images/logo.png').then((logo) => {
 })
 ```
 
-***Change encoding of Image fixture***
+### Change encoding of Image fixture
 
 ```javascript
 cy.fixture('images/logo.png', 'binary').then((logo) => {
@@ -121,24 +120,34 @@ cy.fixture('images/logo.png', 'binary').then((logo) => {
 })
 ```
 
-## Accessing Fixture Data
-
-***Using .then() to access fixture data***
+## Playing MP3 file
 
 ```javascript
-cy
-  .fixture('users').then((json) => {
-    cy.route('GET', '/users/**', json)
-  })
+cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
+  const uri = 'data:audio/mp3;base64,' + mp3
+  const audio = new Audio(uri)
+
+  audio.play()
+})
 ```
 
-***Using fixtures to bootstrap data***
+## Accessing Fixture Data
+
+### Using `.then()` to access fixture data
+
+```javascript
+cy.fixture('users').then((json) => {
+  cy.route('GET', '/users/**', json)
+})
+```
+
+### Using fixtures to bootstrap data
 
 {% note info %}
 {% url 'Check out our example recipe using `cy.fixture()` to bootstrap data for our application.' recipes#Bootstrapping-your-App %}
 {% endnote %}
 
-***Using an alias to access a fixture***
+### Using an alias to access a fixture
 
 You can make use of aliasing, {% url `.as()` as %}, instead of working directly with the yielded data.
 
@@ -148,7 +157,7 @@ Using an alias provides the benefit of terseness and readability. It also makes 
 cy.fixture('users').as('usersJSON')
 cy.route('GET', '/users/**', '@usersJSON')
 
-  // ...later on...
+// ...later on...
 
 cy.get('#email').then(() => {
   // we have access to this.usersJSON since it was aliased
@@ -156,7 +165,7 @@ cy.get('#email').then(() => {
 })
 ```
 
-***Modifying fixture data before using it***
+### Modifying fixture data before using it
 
 You can modify fixture data directly before passing it along to a route.
 
@@ -176,7 +185,7 @@ cy.wait('@getUser').then((xhr)  => {
 
 ## Shortcuts
 
-***Using `fixture` or `fx` shortcuts***
+### Using `fixture` or `fx` shortcuts
 
 Fixtures can also be referenced directly without using the `.fixture()` command by using the special keywords: `fixture:` or `fx:` within {% url `cy.route()` route %}.
 
@@ -187,13 +196,13 @@ cy.route('GET', '/users/**', 'fx:users')      // this also works
 
 ## Validation
 
-***Automated File Validation***
+### Automated File Validation
 
 Cypress automatically validates your fixtures. If your `.json`, `.js`, or `.coffee` files contain syntax errors, they will be shown in the Command Log.
 
 ## Encoding
 
-***Default Encoding***
+### Default Encoding
 
 Cypress automatically determines the encoding for the following file types:
 
@@ -213,6 +222,29 @@ Cypress automatically determines the encoding for the following file types:
 
 For other types of files, they will be read as `utf8` by default, unless specified in the second argument of `cy.fixture()`.
 
+## `this` context
+
+If you store and access the fixture data using `this` test context object, make sure to use `function () { ... }` callbacks. Otherwise the test engine will NOT have `this` pointing at the test context.
+
+```javascript
+describe('User page', () => {
+  beforeEach(function () {
+    // "this" points at the test context object
+    cy.fixture('user')
+      .then(() => {
+        // "this" is still the test context object
+        this.user = user
+      })
+  })
+
+  // the test callback is in "function () { ... }" form
+  it('has user', function () {
+    // this.user exists
+    expect(this.user.firstName).to.equal('Jane')
+  })
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -229,10 +261,11 @@ For other types of files, they will be read as `utf8` by default, unless specifi
 
 # Command Log
 
-- `cy.fixture()` does *not* log in the command log
+- `cy.fixture()` does *not* log in the Command Log
 
 # See also
 
 - {% url `cy.route()` route %}
 - {% url `.then()` then %}
 - {% url 'Recipe: Bootstrapping App Test Data' recipes#Bootstrapping-your-App %}
+- {% url 'Fixtures' https://github.com/cypress-io/testing-workshop-cypress#fixtures %} section of the Cypress Testing Workshop

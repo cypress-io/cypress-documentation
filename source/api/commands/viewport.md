@@ -1,6 +1,6 @@
 ---
 title: viewport
-comments: false
+
 ---
 
 Control the size and orientation of the screen for your application.
@@ -24,18 +24,18 @@ cy.viewport(preset, orientation, options)
 
 ```javascript
 cy.viewport(550, 750)    // Set viewport to 550px x 750px
-cy.viewport('iphone-6')  // Set viewport to 357px x 667px
+cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 ```
 
 ## Arguments
 
 **{% fa fa-angle-right %} width** ***(Number)***
 
-Width of viewport in pixels (must be between 200 and 3000).
+Width of viewport in pixels (must be between 20 and 3000).
 
 **{% fa fa-angle-right %} height** ***(Number)***
 
-Height of viewport in pixels (must be between 200 and 3000).
+Height of viewport in pixels (must be between 20 and 3000).
 
 **{% fa fa-angle-right %} preset** ***(String)***
 
@@ -46,8 +46,8 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `macbook-15`  | 1440  | 900    |
 | `macbook-13`  | 1280  | 800    |
 | `macbook-11`  | 1366  | 768    |
-| `ipad-2`      | 1024  | 768    |
-| `ipad-mini`   | 1024  | 768    |
+| `ipad-2`      | 768   | 1024    |
+| `ipad-mini`   | 768   | 1024    |
 | `iphone-6+`   | 414   | 736    |
 | `iphone-6`    | 375   | 667    |
 | `iphone-5`    | 320   | 568    |
@@ -114,6 +114,30 @@ describe('Nav Menus', function () {
   })
 })
 ```
+
+***Dynamically test multiple viewports***
+
+```javascript
+const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
+
+describe('Logo', () => {
+  sizes.forEach((size) => {
+    // make assertions on the logo using
+    // an array of different viewports
+    it(`Should display logo on ${size} screen`, () => {
+      if (Cypress._.isArray(size)) {
+        cy.viewport(size[0], size[1])
+      } else {
+        cy.viewport(size)
+      }
+
+      cy.visit('https://www.cypress.io')
+      cy.get('#logo').should('be.visible')
+    })
+  })
+})
+```
+![Command Log of multiple viewports](/img/api/viewport/loop-through-an-array-of-multiple-viewports.png)
 
 ## Preset
 
@@ -203,7 +227,7 @@ cy.get('.navbar-toggle').should('be.visible').click()
 cy.get('.nav').find('a').should('be.visible')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log viewport](/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png)
 
