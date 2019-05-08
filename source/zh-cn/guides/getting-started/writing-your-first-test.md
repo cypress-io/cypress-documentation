@@ -401,12 +401,18 @@ Or in the Given, When, Then syntax:
 或者按如下的Given, When, Then语法:
 
 > 1. Given a user visits `https://example.cypress.io`
+> 1. 给定一个用户的访问`https://example.cypress.io`
 > 2. When they click the link labeled `type`
+> 2. 当他们点击到标签为`type`的连接时
 > 3. And they type "fake@email.com" into the `.actions-email` input
+> 3. 并且他们是否在对类名为`.actions-email`的输入框输入"fake@email.com"
 > 3. Then the URL should include `/commands/actions`
+> 3. 然后这个URL应该包含`/commands/actions`
 > 4. And the `.actions-email` input has "fake@email.com" as its value
+> 4. 然后类名为`.actions-email`的输入框有"fake@email.com"作为它的文本值
 
 Even your non-technical collaborators can appreciate the way this reads!
+及时你的非技术合作伙伴也可以很好的欣赏你写的测试哦!
 
 And hey, this is a very clean test! We didn't have to say anything about *how* things work, just that we'd like to verify a particular series of events and outcomes.
 
