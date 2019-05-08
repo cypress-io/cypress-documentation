@@ -5,8 +5,8 @@ title: Installing Cypress
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to install Cypress via `npm`.
-- How to install Cypress via direct download.
+- How to install Cypress via `npm`
+- How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
 
 {% endnote %}
@@ -15,9 +15,9 @@ title: Installing Cypress
 
 Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
-- **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
-- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
-- **Windows** 7+, only 32bit binaries are provided for Windows.
+- **macOS** 10.9 and earlier *(64-bit only)*
+- **Linux** Ubuntu 12.04 and earlier, Fedora 21 and Debian 8 *(64-bit only)*
+- **Windows** 7 and earlier *(32-bit only)*
 
 # Installing
 
