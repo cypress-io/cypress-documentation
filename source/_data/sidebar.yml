@@ -160,6 +160,7 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
+    iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html
     spec: spec.html

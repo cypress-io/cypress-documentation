@@ -179,6 +179,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    iscy: isCy
     custom-commands: Commands
     cookies: Cookies
     dom: dom
