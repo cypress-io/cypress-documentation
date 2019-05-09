@@ -415,6 +415,7 @@ Even your non-technical collaborators can appreciate the way this reads!
 及时你的非技术合作伙伴也可以很好的欣赏你写的测试哦!
 
 And hey, this is a very clean test! We didn't have to say anything about *how* things work, just that we'd like to verify a particular series of events and outcomes.
+嘿, 这是一个非常干净的测试! 我们没有必要说出到底是*如何*工作起来的, 只是我们想验证一系列特定的事件和结果.
 
 {% video local /img/snippets/first-test-assertions-30fps.mp4 %}
 
@@ -437,19 +438,48 @@ In other words, based on the commands and the events happening, Cypress automati
 These various timeouts are defined in the {% url 'Configuration' configuration#Timeouts %} document.
 {% endnote %}
 
+{% note info '页面转变' %}
+值得注意的是, 这个测试在两个不同的页面上进行了转换.
+
+1. 一开始 {% url "`cy.visit()`" visit %}
+2. 然后{% url "`.click()`" click %}到了新的页面
+
+Cypress自动检测诸如`页面转换事件`这样的东西, 并且将自动**停止**运行命令, 直到下一个页面**完成**加载.
+
+如果**下一页**没有完成其加载阶段, Cypress将结束测试并呈现一个错误提示.
+
+在幕后 - 这意味着你不必须要担心命令意外的运行在了旧的页面上, 也不用担心命令对部分加载的页面起了作用.
+
+我们之前提到过, Cypress在超时发现一个DOM元素之前等待**4秒钟** - 但在这种情况下, 当Cypress侦测到`一个页面转变事件`时, 它会为一个单`页面加载`事件的超时时间增加到**60秒**.
+
+换句话说, 基于命令和事件的发生, Cypress自动根据网页应用程序的表现来改变它的预期超时时长.
+
+这些不同的超时时长被规定在{% url '配置' configuration#Timeouts %}文件中.
+{% endnote %}
+
 # Debugging
+# 调试
 
 Cypress comes with a host of debugging tools to help you understand a test.
+Cypress提供了调试工具来帮你理解一个测试.
 
 **We give you the ability to:**
+**我们给你能够做下面事情的能力:**
 
 - Travel back in time to each command's snapshot.
+- 适时的追溯每一个命令的快照.
 - See special `page events` that happened.
+- 查看发生的特殊的`页面事件`.
 - Receive additional output about each command.
+- 接收关于每个命令的额外输出.
 - Step forward / backward between multiple command snapshots.
+- 在多个命令间向前/后移动.
 - Pause commands and step through them iteratively.
+- 将命令暂停并且反复的单步调试它们.
 - Visualize when hidden or multiple elements are found.
+- 当发现隐藏的或者多个元素的时候可视化它们.
 
+Let's see some of this in action using our existing test code.
 Let's see some of this in action using our existing test code.
 
 ## Time travel
