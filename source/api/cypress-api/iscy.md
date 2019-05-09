@@ -7,7 +7,7 @@ title: Cypress.isCy
 # Syntax
 
 ```javascript
-Cypress.isCy(cy) // true
+Cypress.isCy(obj)
 ```
 
 ## Arguments
