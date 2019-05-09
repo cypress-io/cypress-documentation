@@ -58,7 +58,7 @@
       keywords: [eslint]
       
     - name: cypress-log-to-output
-      description: Plugin that sends all browser logs to the terminal. Useful for debugging browser issues in CI.
+      description: Plugin that sends all browser logs to the terminal. Useful for debugging browser issues in CI. Currently, only Chrome is supported.
       link: https://github.com/flotwig/cypress-log-to-output
       keywords: [logging]
 
