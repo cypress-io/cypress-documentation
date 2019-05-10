@@ -46,7 +46,7 @@ npm install cypress --save-dev
 ```
 
 This will install Cypress locally as a dev dependency for your project.
-这将把Cypress作为一个dev的本地依赖安装到你的项目中.
+这将把Cypress安装到本机, 来作为你项目的一个dev本地依赖.
 
 {% note info %}
 Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/cli/init %} or have a `node_modules` folder or `package.json` file in the root of your project to ensure cypress is installed in the correct directory.
@@ -71,7 +71,8 @@ The recommended approach is to install Cypress with `npm` because :
 
 
 - Cypress is versioned like any other dependency.
-- Cypress是和其他依赖一样通过版本区分的.
+- Cypress和其他依赖一样是分版本的.
+
 - It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
 - Cypress可在{% url '持续集成' continuous-integration %}环境中运行的更简化.
 {% endnote %}
@@ -93,10 +94,10 @@ yarn add cypress --dev
 ## {% fa fa-download %} 直接下载
 
 If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
-如果你没有在你的项目中用Node.js或者`npm`或者你只是想快速的试着玩下Cypress, 你将总是能够{% url "直接通过CDN下载" http://download.cypress.io/desktop %}.
+如果你没有在你的项目中用Node.js或者`npm`或者你只是想快速的试着玩下Cypress, 你可以{% url "随时通过CDN下载" http://download.cypress.io/desktop %}.
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
-直接下载将总是把最新的有效版本下下来. 并你的平台会自动被识别并分配对应的版本.
+直接下载会拖取可获得的最新版本. 并你的平台会自动被识别并分配对应的版本.
 
 Just manually unzip and double click. Cypress will run without needing to install any dependencies.
 只需手动解压然后双击app. Cypress就可以在不安装任何依赖的情况下运行.
@@ -107,7 +108,7 @@ Just manually unzip and double click. Cypress will run without needing to instal
 ## {% fa fa-refresh %} 持续集成
 
 Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
-请阅读我们的{% url '持续集成' continuous-integration %} 文档从而在CI里面安装Cypress. 当在Linux中运行时你讲需要安装一些{% url '系统依赖' continuous-integration#Dependencies %}或者你也可以用我们的包含所有你需要的预置依赖的{% url 'Docker镜像' docker %}.
+请阅读我们的{% url '持续集成' continuous-integration %} 文档, 以获取在CI里安装Cypress的帮助. 当在Linux中运行时, 你会需要安装一些{% url '系统依赖' continuous-integration#Dependencies %}, 或者你也可以使用我们的{% url 'Docker镜像' docker %}, 这里面包含你需要预置的所有东西.
 
 # Opening Cypress
 # 打开Cypress
@@ -136,7 +137,7 @@ $(npm bin)/cypress open
 **或者用`npx`打开**
 
 **note**: {% url "npx" https://www.npmjs.com/package/npx %} is included with `npm > v5.2` or can be installed separately.
-**note**: {% url "npx" https://www.npmjs.com/package/npx %}是包含在大于v5.2的`npm >`版本中的, 或者你也能够被另外安装它.
+**note**: 高于v5.2的版本中自带{% url "npx" https://www.npmjs.com/package/npx %}, 或者你也可以单独安装npx.
 
 ```shell
 npx cypress open
@@ -206,7 +207,7 @@ Name名称 | Description描述
 ## 安装二进制文件
 
 Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cypress is installed.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
-用`CYPRESS_INSTALL_BINARY`环境变量, 你可以控制Cypress的安装方式.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
+通过`CYPRESS_INSTALL_BINARY`环境变量, 你可以控制Cypress的安装方式.  来覆盖已经安装的内容, 你可以在`npm install`后边加上`CYPRESS_INSTALL_BINARY`命令来操作.
 
 **This is helpful if you want to:**
 **下面的操作也会很有帮助:**
