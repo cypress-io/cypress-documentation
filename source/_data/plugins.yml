@@ -56,6 +56,11 @@
       description: ESLint plugin that sets globals for writing tests in Cypress.
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
+      
+    - name: cypress-log-to-output
+      description: Plugin that sends all browser logs to the terminal. Useful for debugging browser issues in CI. Currently, only Chrome is supported.
+      link: https://github.com/flotwig/cypress-log-to-output
+      keywords: [logging]
 
     - name: Knapsack Pro Cypress
       description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.
