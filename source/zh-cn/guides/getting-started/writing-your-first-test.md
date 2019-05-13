@@ -480,78 +480,112 @@ Cypress提供了调试工具来帮你理解一个测试.
 - 当发现隐藏的或者多个元素的时候可视化它们.
 
 Let's see some of this in action using our existing test code.
-Let's see some of this in action using our existing test code.
+让我们使用现有的测试代码看看其中的一些实际操作.
 
 ## Time travel
+## 时间旅行
 
 Take your mouse and **hover over** the `CONTAINS` command in the Command Log.
+将鼠标**悬停**在命令日志中的`CONTAINS`命令上.
 
 Do you see what happened?
+你看到发生了什么吗?
 
 {% img /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
 
 Cypress automatically traveled back in time to a snapshot of when that command resolved. Additionally, since {% url `cy.contains()` contains %} finds DOM elements on the page, Cypress also highlights the element and scrolls it into view (to the top of the page).
+Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.contains()` contains %}在页面找到了DOM元素, Cypress还突出显示元素并将其滚动到视图中(到页面顶部).
 
 Now if you remember at the end of the test we ended up on a different URL:
+现在, 如果你记得在测试结束时我们最终得到了一个不同的URL:
 
 > https://example.cypress.io/commands/actions
 
 But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was present when our snapshot was taken.
+但是当我们把鼠标悬浮在`CONTAINS`上时, Cypress返回快照被记录时出现的URL.
 
 {% img /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
 
 ## Snapshots
+## 快照
 
 Commands are also interactive. Go ahead and click on the `CLICK` command.
+命令也是交互式的. 继续去点击一下`CLICK`命令.
 
 {% img /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
 
 Notice it highlights in purple. This did three things worth noting...
+注意到它高亮成紫色. 它做了三件值得注意的事...
 
 ### 1. Pinned snapshots
+### 1. 固定快照
 We have now **pinned** this snapshot. Hovering over other commands will not revert to them. This gives us a chance to manually inspect the DOM of our application under test at the time the snapshot was taken.
+我们现在已经**固定**了这个快照. 悬浮在其他命令之上将不会返回它们. 这给了我们机会去手动检查处于当时快照情况下的测试下的应用程序的DOM元素.
 
 ### 2. Event hitbox
+### 2. 事件hitbox
 Since {% url `.click()` click %} is an action command, that means we also see a red hitbox at the coordinates the event took place.
+因为{% url `.click()` click %}是一个动作命令, 这意味着我们还会在事件发生的坐标处看到一个红色的hitbox.
 
 ### 3. Snapshot menu panel
+### 3. 快照菜单面板
 There is also a new menu panel. Some commands (like action commands) will take multiple snapshots: **before** and **after**. We can now cycle through these.
+还有一个新的菜单面板. 某些命令(比如动作命令)将拍摄若干个快照: **之前**和**之后**. 我们现在可以在这些快照间来回切换.
 
 The **before** snapshot is taken prior to the click event firing. The **after** snapshot is taken immediately after the click event. Although this click event caused our browser to load a new page, it's not an instantaneous transition. Depending on how fast your page loaded, you may still see the same page, or a blank screen as the page is unloading and in transition.
+**之前**快照是在点击事件触发之前拍摄的. **之后**快照是在点击事件之后马上拍摄的. 虽然这个点击事件造成我们的浏览器加载一个新的页面, 它不是一个瞬间的转变. 它取决于你的页面加载的多快, 你可能仍然看到同样的页面, 或在页面卸载和转换时出现的空白屏幕.
 
 When a command causes an immediate visual change in our application, cycling between before and after will update our snapshot. We can see this in action by clicking the `TYPE` command in the Command Log. Now, clicking **before** will show us the input in a default state, showing the placeholder text. Click **after** will show us what the input looks like when the `TYPE` command has completed.
+当一个命令在我们的应用程序里面造成一个立即的视觉变化, 在之前和之后间切换将更新我们的快照. 我们可以通过在命令日志里面点击`TYPE`命令来查看这个动作. 现在, 点击**之前**将向我们展示默认状态下的输入值, 也就是占位符的文本. 点击**之后**将向我们展示完成了`TYPE`命令之后的情况(也就是我们输入在输入框中的值).
 
 ## Page events
+## 页面时间
 
 Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
+注意还有一个看起来很有趣的日志: `(PAGE LOAD)`后面紧跟着另一个入口`(NEW URL)`. 这些都不是我们发出的命令 - 相反, Cypress本身将在重要的事件发生的时候在你的应用程序注销(*****感觉这里翻译的有问题*****). 请注意它们会看起来不同(它们是灰色的, 并且没有数字).
 
 {% img /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
 
 **Cypress logs out page events for:**
+**Cypress注销页面事件:**
 
 - Network XHR Requests
+- 网络XHR请求
 - URL hash changes
+- URL哈希变化
 - Page Loads
+- 页面加载
 - Form Submissions
+- 表单提交
 
 ## Console output
+## 控制台输出
 
 Besides Commands being interactive, they also output additional debugging information to your console.
+除了命令是交互的, 它们也在你的控制台输出额外的调试信息.
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class selector.
+打开你的Dev Tools并且点击类名为`.action-email`的选择器的`GET`请求.
 
 {% img /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
 
 **We can see Cypress output additional information in the console:**
+**我们能够看到Cypress在控制台输出了额外的信息:**
 
 - Command (that was issued)
+- Command (that was issued)****这里改如何翻译???****
 - Yielded (what was returned by this command)
+- Yielded (被这个命令返回的东西)
 - Elements (the number of elements found)
+- Elements (发现的元素个数)
 - Selector (the argument we used)
+- Selector (我们用的参数)
 
 We can even expand what was returned and inspect each individual element or even right click and inspect them in the Elements panel!
+我们甚至可以把返回的东西展开并且检查每一个单独的元素, 或者我们甚至可以点击它们, 并在元素面板里面检查它们!
 
 ## Special commands
+## 特殊命令
 
 In addition to having a helpful UI, there are also special commands dedicated to the task of debugging.
 
