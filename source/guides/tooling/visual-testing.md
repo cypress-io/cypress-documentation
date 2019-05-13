@@ -11,8 +11,10 @@ it('completes todo', () => {
   // opens TodoMVC running at "baseUrl"
   cy.visit('/')
   cy.get('.new-todo').type('write tests{enter}')
-  cy.contains('.todo-list li', 'write tests').find('.toggle').check()
-  cy.contains('.todo-list li', 'write tests').should('have.class', 'completed')
+  cy.contains('.todo-list li', 'write tests')
+    .find('.toggle').check()
+  cy.contains('.todo-list li', 'write tests')
+    .should('have.class', 'completed')
 })
 ```
 
@@ -65,18 +67,23 @@ Like most image comparison tools, the plugin shows a difference view on mouse ho
 
 ## Tooling
 
-Our users have published several open source modules, listed on the [Visual Testing plugins](https://on.cypress.io/plugins#visual-testing) page, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner. Read the following tutorials to learn how to perform visual testing and diffing from your tests:
+Our users have published several open source modules, listed on the [Visual Testing plugins](https://on.cypress.io/plugins#visual-testing) page, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner.
 
-### Applitools
+### [Applitools](https://applitools.com/)
 
-- {% url 'Testing a chart with Cypress and Applitools' https://glebbahmutov.com/blog/testing-a-chart/ %}
-- {% url 'Applitools Cypress documentation' https://applitools.com/cypress %}
+- We have recorded the webinar {% url 'Creating a Flawless User Experience, End-to-End, Functional to Visual – Practical Hands-on Session' https://applitools.com/blog/cypress-applitools-end-to-end-testing %} together with Applitools
+- Read {% url 'Testing a chart with Cypress and Applitools' https://glebbahmutov.com/blog/testing-a-chart/ %} blog post
+- Read the official {% url 'Applitools Cypress documentation' https://applitools.com/cypress %}
 
-### Percy.io
+### [Percy.io](https://percy.io)
 
-- {% url 'Cypress.io + Percy = End-to-end functional and visual testing for the web' https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} webinar blog post and watch the {% url 'webinar video' https://www.youtube.com/watch?v=MXfZeE9RQDw %}. The companion slides can be found {% url here https://slides.com/bahmutov/visual-testing-with-percy %}. You can find the entire project with tests and visual setup at {% url cypress-io/angular-pizza-creator https://github.com/cypress-io/angular-pizza-creator %}.
-- {% url 'Testing how an application renders a drawing with Cypress and Percy.io' https://glebbahmutov.com/blog/testing-visually/ %} blog post.
-- {% url 'Percy.io Cypress documentation' https://docs.percy.io/docs/cypress %}
+- Read the {% url 'Cypress.io + Percy = End-to-end functional and visual testing for the web' https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} webinar blog post and watch the {% url 'webinar video' https://www.youtube.com/watch?v=MXfZeE9RQDw %}. The companion slides can be found {% url here https://slides.com/bahmutov/visual-testing-with-percy %}. You can find the entire project with tests and visual setup at {% url cypress-io/angular-pizza-creator https://github.com/cypress-io/angular-pizza-creator %}.
+- Read {% url 'Testing how an application renders a drawing with Cypress and Percy.io' https://glebbahmutov.com/blog/testing-visually/ %} blog post.
+- Read the official {% url 'Percy.io Cypress documentation' https://docs.percy.io/docs/cypress %}
+
+### Do It Yourself
+
+Even if you decide to skip 3rd party image storage and comparison services, you can still perform visual testing. Follow for example ["Visual Regression testing with Cypress.io and cypress-image-snapshot"](https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595) tutorial and do it all yourself.
 
 ## Best practices
 
@@ -122,7 +129,7 @@ cy.route('/api/items', 'fixture:items')
 cy.mySnapshotCommand()
 ```
 
-- consider using visual diffing to check individual elements rather than the entire page. This will target the image comparison better to avoid the visual change for component X from breaking tests for the unrelated components.
+- consider using visual diffing to check individual elements rather than the entire page. This will target the image comparison better to avoid a visual change in the component X from breaking tests for the unrelated components.
 
 - you might want to look at the {% url "Component Testing plugins" plugins %} to load and test the individual components in addition to the regular end-to-end functional and visual tests.
 
