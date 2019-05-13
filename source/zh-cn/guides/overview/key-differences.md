@@ -1,75 +1,75 @@
 ---
-title: Key Differences
+title: 与众不同
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %}从这篇文档您将会看到
 
-- What makes Cypress unique
-- How its architecture differs from Selenium
-- New testing approaches not possible before
+- 是什么造就了Cypress的与众不同
+- 它与Selenium架构上有何区别
+- 完成以前不可达到的全新的测试处理办法和理念
 
 {% endnote %}
 
-# Architecture
+# 架构
 
-Most testing tools (like Selenium) operate by running outside of the browser and executing remote commands across the network. *Cypress is the exact opposite.* Cypress is executed in the same run loop as your application.
+大多数测试工具（如Selenium）通过在浏览器外部运行并在网络上执行远程命令来运行。*Cypress恰恰相反。*Cypress在与您的应用程序相同的生命周期里执行。
 
-Behind Cypress is a Node.js server process. Cypress and the Node.js process constantly communicate, synchronize, and perform tasks on behalf of each other. Having access to both parts (front and back) gives us the ability to respond to your application's events in real time, while at the same time work outside of the browser for tasks that require a higher privilege.
+Cypress背后是Node.js服务器进程。 Cypress和Node.js进程不断进行通信，同步和执行任务。 访问这两个部分（前端和后端）使我们能够实时响应您的web应用程序的事件，与此同时在浏览器之外也能工作以完成需要更高权限的任务。
 
-Cypress also operates at the network layer by reading and altering web traffic on the fly. This enables Cypress to not only modify everything coming in and out of the browser, but also to change code that may interfere with its ability to automate the browser.
+Cypress还可以通过即时读取和更改网络流量工作在网络(请求)层。 这使得Cypress不仅可以修改进出浏览器的所有内容，还可以更改可能会影响自动化浏览器操作的代码。
 
-Cypress ultimately controls the entire automation process from top to bottom, which puts it in the unique position of being able to understand everything happening in and outside of the browser. This means Cypress is capable of delivering more consistent results than any other testing tool.
+Cypress从根本上自上而下地控制整个自动化的流程，这使得它具备清楚进出浏览器发生的所有事情，这也意味着它相对于其他测试工具可以提供稳定性更加可靠的结果。
 
-Because Cypress is {% url "installed locally" installing-cypress %} on your machine, it can additionally tap into the operating system for automation tasks. This makes performing tasks such as {% url "taking screenshots,  recording videos" screenshots-and-videos %}, general {% url "file system operations" exec %} and {% url "network operations" request %} possible.
+因为Cypress是本地{% url "安装" installing-cypress %}的, 它可以从系统层提供对自动化任务的服务. 也就是说，比如{% url "截图或录屏" screenshots-and-videos %}, 一般的{% url "命令执行" exec %}和{% url "请求" request %}成为可能.
 
-# Native access
+# 源生权限
 
-Because Cypress operates within your application, that means it has native access to every single object. Whether it is the `window`, the `document`, a DOM element, your application instance, a function, a timer, a service worker, or anything else - you have access to it in your Cypress tests. There is no object serialization, there is no over-the-wire protocol - you have access to everything. Your test code can access all the same objects that your application code can.
+因为Cypress是在应用的内部进行操作，所以它对任何一个对象都具有源生的访问权限。不管是`window`、`document`、一个DOM元素、您的web应用实例、一个函数、一个计时器(timer)、一个服务或者任何其他的东西，您都有权限进行访问。对于Cypress来说，不需要对象序列化，不需要线上协议 - 您可以访问所有内容。您的测试代码可以访问任何只要是您应用能访问的东西。
 
-# New kind of testing
+# 新理念
 
-Having ultimate control over your application, the network traffic, and native access to every host object unlocks a new way of testing that has never been possible before. Instead of being 'locked out' of your application and not being able to easily control it - Cypress instead lets you alter any aspect of how your application works. Instead of slow and expensive tests, such as creating the state required for a given situation, you can simply create these states artificially like you would in an unit test. For instance you can:
+对应用程序、网络请求/流量以及主机系统的最终控制权解锁了以前从未有过的全新测试。不再像旧的测试，被堵在应用之外，而且控制起来不那么容易 - Cypress让您有具备修改应用如何工作的任何能力；不再像旧测试代价高昂而且缓慢，比如创建一个指定的状态或前提条件之类，您可以轻而易举自然地创建这些状态就像在做单元测试一样。比如，您可以：
 
-- {% url "Stub" stub %} the browser or your application's functions and force them to behave as needed in your test case.
-- Expose data stores (like in Redux) so you can programmatically alter the state of your application directly from your test code.
-- Test edge cases like 'empty views' by forcing your server to send empty responses.
-- Test how your application responds to errors on your server by {% url "modifying response status codes to be 500" route %>.
-- Modify DOM elements directly - like forcing hidden elements to be shown.
-- Use 3rd party plugins programmatically. Instead of fussing with complex UI widgets like multi selects, autocompletes, drop downs, tree views or calendars, just call methods directly from your test code to control them.
-- <% url "Prevent Google Analytics from loading *before* any of your application code executes" configuration#blacklistHosts %> when testing.
-- Get synchronous notifications whenever your application transitions to a new page or when it begins to unload.
-- {% url "Control time by moving forward or backward" clock %} so that timers or polls automatically fire without having to wait for the required time in your tests.
-- Add your own event listeners to respond to your application. You could update your application code to behave differently when under tests in Cypress. You can control WebSocket messages from within Cypress, conditionally load 3rd party scripts, or call functions directly on your application.
+- {% url "存根" stub %}你的浏览器或应用的方法，强制它们做出你测试用例需要的表现。
+- 显式化数据存储(比如Redux——JavaScript状态容器，提供可预测化的状态管理)以便你能通过测试代码程序直接修改应用的状态信息。
+- 边缘测试用例等可以通过强制让服务器返回一个空的响应来完成，比如对空结果的测试等。
+- 通过{% url "修改响应状态码为500" route %}测试你的应用如何对错误做出响应的。
+- 直接修改DOM元素 - 比如强制某些隐藏的元素显示出来。
+- 代码化地使用第三方'插件'程序。 不再需要烦躁地使用复杂的UI控件，比如多选，自动填充，下拉，树形视图或者日历等，你可以直接从测试代码中调用方法来完成控制操作。
+- 测试时，还能{% url "在你的应用本身的任何代码运行*之前*，阻止Google分析加载" configuration#blacklistHosts %}。
+- 不管是应用在过渡到新页面还是卸载时都能同步获取到通知消息。
+- {% url "控制时间前进或后退" clock %}以便计时器马上跳到指定时刻或其他必须到某个时间才能触发的事件可以马上发生。
+- 还可以添加自定义的应用事件监听器。 在Cypress里，您可以更新应用代码以表现为测试所期望的行为。您可以控制比如WebSocket的消息，条件化地加载第三方脚本，直接调用应用方法函数等。
 
-# Shortcuts
+# 一点简述
 
-Trying to test hard to reach areas of your application? Don't like the side effects an action creates? Tired of repeating the same repetitive and slow actions over and over again? You can simply skip them for most test cases.
+绞尽脑汁地测试你的应用领域？ 不喜欢某些操作制造出来的副作用？ 厌倦了一遍又一遍地重复同样的、缓慢的操作？ 现在，您可以在大多数测试用例中轻易地跳过它们。
 
-Cypress prevents you from being forced to always 'act like a user' to generate the state of a given situation. With Cypress you can programmatically interact and control your application. You no longer have to use your UI to build up state.
+Cypress阻止您被迫总是“像用户一样”来生成给定情况的状态。 使用Cypress，您可以通过编程方式交互和控制应用程序。 您不再需要使用UI来构建状态。
 
-That means you do not have to visit a login page, type in a username and password and wait for the page to load and/or redirect for every test you run. Cypress gives you the ability to take shortcuts and programmatically log in. With commands like {% url `cy.request()` request %}, you can send HTTP requests directly, yet have those requests synchronized with the browser. Cookies are automatically sent and applied back. Worried about CORS? Don't be, it is completely bypassed. The power to choose when to test like a user and when to skip slow and repetitive parts is yours.
+这意味着您不必访问登录页面，输入用户名和密码，并等待页面加载和/或重定向到您运行的每个测试。 Cypress让您能够快捷方式并以编程方式登录。使用类似{% url `cy.request()` request %}的命令, 您可以直接发送HTTP请求，且让这些请求的响应同步到浏览器。 Cookie会自动发送并应用。 担心CORS(跨域资源共享问题)？ 不用的，它是完全被绕过的。 选择何时像用户一样进行测试以及何时跳过缓慢和重复的部分的权力是你的。
 
-# Flake resistant
+# 防碎片专家
 
-Cypress knows and understands everything that happens in your application synchronously. It is notified the moment the page loads and the moment the page unloads. It is impossible for Cypress to miss elements when it fires events. Cypress even knows how fast an element is animating and will {% url "wait for it to stop animating" interacting-with-elements#Animations %>. Additionally, it <% url "automatically waits for elements to become visible" interacting-with-elements#Visibility %>, to {% url "become enabled" interacting-with-elements#Disability %>, and to <% url "stop being covered" interacting-with-elements#Covering %>. When pages begin to transition, Cypress will pause command execution until the following page is fully loaded. You can even tell Cypress to {% url "wait" wait %} on specific network requests to finish.
+Cypress同步了解并理解应用程序中发生的所有事情。 它知道页面加载时到页面卸载的任何时刻发生的任何事情。 Cypress在发生事件时不可能错过元素。 它甚至知道元素动画的速度有多快，并且会{% url "等待动画渲染" interacting-with-elements#Animations %}直至对特定网络请求完成。此外，它会{% url "自动等待元素" interacting-with-elements#Visibility %}在特定网络请求上完成后直至{% url "显示出来" interacting-with-elements#Disability %}， {% url "揭开被覆盖的元素" interacting-with-elements#Covering %}等。当页面间开始过渡时，Cypress会自动暂停执行直至后一个页面完全加载完成。您甚至可以让Cypress{% url "等待" wait %}直至某些特定的请求完成。
 
-Cypress executes the vast majority of its commands inside the browser, so there is no network lag. Commands execute and drive your application as fast as it is capable of rendering. To deal with modern JavaScript frameworks with complex UI's, you use assertions to tell Cypress what the desired state of your application should be. Cypress will automatically wait for your application to reach this state before moving on. You are completely insulated from fussing with manual waits or retries. Cypress automatically waits for elements to exist and will never yield you stale elements that have been detached from the DOM.
+Cypress在浏览器中执行绝大多数命令，因此没有网络延迟。 命令以尽可能快的速度执行、驱动您的应用程序。 要处理具有复杂UI的现代JavaScript框架，您可以使用断言告诉Cypress您的应用程序应该处于什么状态。 在继续下一步之前，Cypress会自动等待您的应用程序达到此状态。 通过手动等待或重试，您可以完全避免烦恼。 赛普拉斯会自动等待元素直至存在，并且永远不会产生与DOM分离的陈旧元素。
 
-# Debuggability
+# 可调式能力
 
-Above all else Cypress has been built for usability.
+最重要的是Cypress是为了实用性而建造的。
 
-There are hundreds of custom error messages describing the exact reason Cypress failed your test.
+有数百条自定义错误消息描述Cypress未通过测试的确切原因。
 
-There is a rich UI which visually shows you the command execution, assertions, network requests, spies, stubs, page loads, or URL changes.
+有一个丰富的UI，可以直观地显示命令执行，断言，网络请求，侦探(spies)，存根(stub)，页面加载或URL更改。
 
-Cypress takes snapshots of your application and enables you to time travel back to the state it was in when commands ran.
+Cypress为您的应用程序拍摄截图，使您能够时间回到命令运行时的状态。
 
-You can use the DevTools while your tests run, you can see every console message, every network request. You can inspect elements, and you can even use debugger statements in your spec code or your application code. There is no fidelity loss - you can use all the tools you're already comfortable with. This enables you to test and develop all at the same time.
+您可以在测试运行时使用DevTools，您可以看到每个控制台消息，每个网络请求。 您可以检查元素，甚至可以在规范代码或应用程序代码中使用调试器语句。 不会有信息丢失 - 您可以使用您已经熟悉的所有工具。 这使您可以同时测试和开发所有内容。
 
-# Trade offs
+# 一些折衷
 
-While there are many new and powerful capabilities of Cypress - there are also important trade-offs that we've made in making this possible.
+虽然Cypress有许多新的强大功能，但我们在实现这一目标方面也做出了重要的权衡。
 
-If you're interested in understanding more, we've written {% url 'an entire guide' trade-offs %} on this topic.
+如果您有兴趣了解更多信息，我们已经就此主题编写了完整的指南。
