@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+	- title: "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37"
+    sourceUrl: https://speakerdeck.com/mrcube42
+    url: https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37
+    sourceName: Speaker Deck
+    author: David Wurfel
+    date: Apr 04, 2019
+    img: /img/examples/next-level-e2e-testing-with-cypress.png
+    
   - title: 'Cypress: testing without Selenium, part 1'
     url: https://www.youtube.com/watch?v=hk4qtXgL12k
     sourceName: Selenium Camp
@@ -17,6 +25,15 @@ large:
     author: Gleb Bahmutov
     youtubeId: 8pcx0XitUCc
     slides: https://slides.com/bahmutov/hyperapp-intro#/
+    
+  - title: 'Continuous Integration with GitLab CI'
+    url: https://youtu.be/EuwLdbCu3DE?t=1879
+    sourceName: NERD Summit
+    sourceUrl: https://nerd.ngo/
+    date: Mar 10, 2019
+    author: Pete Johanson
+    youtubeId: EuwLdbCu3DE
+    slides: https://petejohanson.gitlab.io/nerdsummit-2019-gitlab-ci-cd/#/	 
 
   - title: 'Less painful E2E tests with Cypress.io'
     url: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/ 
@@ -35,6 +52,14 @@ large:
     author: Nikola Duza
     youtubeId: I3WJhutZovw
     slides: https://slides.com/nikolalsvk/e2e-cypress
+
+	- title: 'Sleeping better at night with Cypress.io'
+    url: https://www.youtube.com/watch?v=-tE0SQ0cR4c
+    sourceName: React Day Berlin
+    sourceUrl: https://reactday.berlin/
+    date: Dec 20, 2018
+    author: Tomasz Łakomy
+    youtubeId: -tE0SQ0cR4c
 
   - title: 'Cypress: The future of E2E testing'
     url: https://www.youtube.com/watch?v=pXyBligMMr0
@@ -124,6 +149,24 @@ large:
     author: Hillary Bauer & Mark Faga
     slides: https://github.com/mjfaga/react-boston-2018-lunar-launch
 
+	- title: 'Changing the Game with Cypress'
+    url: https://www.youtube.com/watch?v=B7cUpqUlqsU
+    sourceName: NG-Talks
+    sourceUrl: https://ngtalks.io/
+    date: Aug 27, 2018
+    author: Dominic Elm
+    youtubeId: B7cUpqUlqsU
+    slides: https://speakerdeck.com/d3lm/changing-the-game-with-cypress
+
+	- title: "Frontend Development 2018 - What's in your stack?"
+    url: https://www.youtube.com/watch?v=88K8oO_dYbI
+    sourceName: NDC Conferences
+    sourceUrl: https://ndcconferences.com/
+    date: Jul 31, 2018
+    author: Stefan Judis
+    youtubeId: 88K8oO_dYbI
+    slides: https://speakerdeck.com/stefanjudis/frontend-development-2018-whats-in-your-stack
+
   - title: "Everything I know about writing quality software"
     url: https://www.youtube.com/watch?v=1PMxLTfh6lo
     sourceName: BuzzJS
@@ -163,6 +206,14 @@ large:
     img: /img/examples/automated-testing-for-the-modern.png
     slides: https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web
 
+	- title: 'Next-Generation Frontend Testing with Cypress.io'
+    url: https://www.youtube.com/watch?v=UJICwHNb4BQ
+    sourceName: js.la
+    sourceUrl: https://js.la/
+    date: Jun 20, 2018
+    author: Amir Rustamzadeh
+    youtubeId: UJICwHNb4BQ
+    
   - title: "Cypress"
     url: https://www.youtube.com/watch?v=GhyE3Y5oS_0
     sourceName: Bluesoft Labs

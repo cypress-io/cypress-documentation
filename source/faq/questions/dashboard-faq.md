@@ -27,7 +27,7 @@ Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more 
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
 
-**A private project** means that only {% url 'users' dashboard-service#Manage-users %} you explicitly invite to your {% url 'organization' dashboard-service#Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+**A private project** means that only {% url 'users' dashboard-service#Users %} you explicitly invite to your {% url 'organization' dashboard-service#Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ## {% fa fa-angle-right %} How is this different than CI?
 

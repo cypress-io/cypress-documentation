@@ -104,7 +104,7 @@ The above configuration will output the JUnit report to `STDOUT` and save it int
 
 ## Report per spec
 
-Starting with version 3 of Cypress, each spec is processed completely separately during `cypress run` execution. Thus each spec _overwrites_ the previous report file. To generate unique reports per spect, use the `[hash]` in the `mochaFile` filename.
+Starting with version 3 of Cypress, each spec is processed completely separately during `cypress run` execution. Thus each spec _overwrites_ the previous report file. To generate unique reports per spec, use the `[hash]` in the `mochaFile` filename.
 
 ```json
 {

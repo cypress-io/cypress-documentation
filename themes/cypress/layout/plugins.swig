@@ -8,7 +8,7 @@
       </header>
       <div class="article-content" itemprop="articleBody">
         {{ (page.content) }}
-        {% for pluginType in site.data.plugins %}
+        {% for pluginType in order_by_name(site.data.plugins) %}
           <h2 id="{{ id(pluginType.name) }}"><a href="#{{ id(pluginType.name) }}">{{ pluginType.name }}</a></h2>
           {% if pluginType.description %}
           <div class="plugin-type-description">{% markdown %}{{ pluginType.description }}{% endmarkdown %}</div>
