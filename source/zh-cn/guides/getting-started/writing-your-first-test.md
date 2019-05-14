@@ -588,13 +588,16 @@ We can even expand what was returned and inspect each individual element or even
 ## 特殊命令
 
 In addition to having a helpful UI, there are also special commands dedicated to the task of debugging.
+除了具有有用的UI之外, 还有专门用于调试任务的特殊命令.
 
 For instance there is:
+例如有:
 
 - {% url "`cy.pause()`" pause %}
 - {% url "`cy.debug()`" debug %}
 
 Let's add a {% url "`cy.pause()`" pause %} to our test code and see what happens.
+让我们添加一个{% url "`cy.pause()`" pause %}到我们的测试代码里面并且看下会发生什么.
 
 ```js
 describe('My First Test', function() {
@@ -606,9 +609,11 @@ describe('My First Test', function() {
     cy.contains('type').click()
 
     // Should be on a new URL which includes '/commands/actions'
+    // 应该在一个新的包含'/commands/actions'的URL上
     cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
+    // 获得一个输入框, 将输入值输入并且验证是否输入框有更新
     cy.get('.action-email')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
@@ -617,24 +622,33 @@ describe('My First Test', function() {
 ```
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.
+现在Cypress提供我们一个UI界面来在每个命令之间前进(类似于一个调试器).
 
 {% img /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
 ## In action
+## 运转示例
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
 <!-- ## Bonus Step: Refactor
+<!-- ## 奖金步骤: 重构
 
 Once we have a passing test that covers the system we're working on, we usually like to go one step further and make sure the test code itself is well-structured and maintainable. This is sometimes expressed in TDD circles as "Red, Green, Refactor", which means:
+一旦我们有了覆盖我们正在进行的系统的可通过的测试, 我们通常希望更进一步确保测试代码本身结构良好且可维护. 这有时在TDD生态圈中表示为“红色，绿色，重构”，这意味着：
 
 1. Write a failing test.
+1. 写一个失败测试.
 2. Write the code to make the test pass.
+2. 写代码保证测试通过.
 3. Clean up the code, keeping the test passing.
+3. 清理代码, 保持测试通过.
 
 Regardless of how you feel about writing tests first, the refactor step is very important! We want all of our code to be maintainable and extensible so that it lives a long and productive life, *including our test code*.
+不管你期初对于写测试代码是什么感觉, 总之重构这个步骤是非常重要的! 我们希望我们的代码都能够很好的被维护和延伸, 以便它能活得长久同时富有成效, *包括我们的测试代码*.
 
 To make this concrete, imagine we added a second, similar test to this suite:
+使之具体化, 假设我们向这个套件添加了第二个类似的测试:
 
 ```js
 describe('My First Test', function() {
@@ -657,6 +671,7 @@ describe('My First Test', function() {
 ```
 
 We've got some duplication here and could probably make a number of refactoring moves, but for this brief tutorial we'll do a simple and common one. Let's move that initial visit out into a `beforeEach()` block.
+我们在这里有一些重复, 可能会进行一些重构动作, 但是在这个简短的教程中, 我们将做一个简单而常见的. 让我们将初始化访问移动到`beforeEach()`块中.
 
 ```js
 describe('My First Test', function() {
@@ -679,13 +694,18 @@ describe('My First Test', function() {
 ```
 
 `beforeEach()` runs before each and every test in the same `describe()` block, so both of our tests in this case. Both tests still pass, and both are a bit shorter and easier to read.
+`beforeEach()`在同一个`describe()`中在每一个测试之前运行, 也就是我们的这个测试例子中的两个动作. 这两种测试都通过了, 而且都更短, 更容易阅读.
 
 -->
 
 # Next steps
+# 下一步
 
 - Start {% url 'testing your app' testing-your-app %}.
+- 开始{% url '测试你的app' testing-your-app %}.
 - Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
+- 为Cypress命令和断言设立{% url '智能代码补全' intelligent-code-completion %}.
 - Search Cypress's documentation to quickly find what you need.
+- 搜索Cypress的文档说明书来快速发现你需要的东西.
 
 {% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
