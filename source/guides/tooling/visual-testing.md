@@ -72,11 +72,11 @@ Like most image comparison tools, the plugin also shows a difference view on mou
 
 # Tooling
 
-There are several published, open source plugins, listed in the {% url "Visual Testing plugins" https://on.cypress.io/plugins#visual-testing %} section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner listed below.
+There are several published, open source plugins, listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner listed below.
 
 ## Open source
 
-Listed in the {% url "Visual Testing plugins" https://on.cypress.io/plugins#visual-testing %} section.
+Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
