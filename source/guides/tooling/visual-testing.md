@@ -2,9 +2,7 @@
 title: Visual Testing
 ---
 
-## Functional vs visual testing
-
-Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, or an element is removed, or a CSS class is added. A typical Cypress test for example can check if the toggled Todo item gets a class name "completed":
+Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, an element is removed, or a CSS class is added after the appropriate user action. A typical Cypress test, for example, can check if a toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
 ```js
 it('completes todo', () => {
@@ -18,30 +16,36 @@ it('completes todo', () => {
 })
 ```
 
-The test runs and passes
-
 {% img /img/guides/visual-testing/completed-test.gif "Passing Cypress functional test" %}
 
-Cypress does NOT check how the page looks though. For example, Cypress does care that the CSS class "completed" grays out the label element and adds a strike-through line.
+Cypress does NOT see how the page actually looks though. For example, Cypress will not see if the CSS class `completed` grays out the label element and adds a strike-through line.
 
 {% img /img/guides/visual-testing/completed-item.png "Completed item style" %}
 
-Someone could accidentally remove the CSS style ".todo-list li.completed label", changing the application and its usability - and the functional test would never warn you.
+You could technically write a functional test asserting the CSS properties using the {% url "`have.css` assertion" assertions#CSS %}, but these may quickly become cumbersome to write and maintain, especially when visual styles rely on a lot of CSS styles.
 
-Luckily, Cypress gives a stable platform for writing plugins that _can perform visual testing_. Typically such plugins take an image snapshot of the entire application or a specific element, and then compare the image to a previously approved baseline image. If the images are the same (within pixel tolerance), the web application looks the same to the user. If there are differences, then there is some change in the DOM layout, fonts, colors or other visual properties that needs to be investigated.
+```js
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
+```
 
-For example one can use {% url 'cypress-plugin-snapshots' https://github.com/meinaart/cypress-plugin-snapshots %} plugin and catch the following visual regression:
+Your visual styles may also rely on more than just CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
+
+Luckily, Cypress gives a stable platform for {% url "writing plugins" plugins-guide %} that _can perform visual testing_. 
+
+Typically such plugins take an image snapshot of the entire application under test or a specific element, and then compare the image to a previously approved baseline image. If the images are the same (within a set pixel tolerance), it is determined that the web application looks the same to the user. If there are differences, then there has been some change to the DOM layout, fonts, colors or other visual properties that needs to be investigated.
+
+For example, one can use the {% url 'cypress-plugin-snapshots' https://github.com/meinaart/cypress-plugin-snapshots %} plugin and catch the following visual regression:
 
 ```css
 .todo-list li.completed label {
-	color: #d9d9d9;
+  color: #d9d9d9;
   /* removed the line-through */
 }
 ```
 
 ```js
 it('completes todo', () => {
-  // opens TodoMVC running at "baseUrl"
   cy.visit('/')
   cy.get('.new-todo').type('write tests{enter}')
   cy.contains('.todo-list li', 'write tests')
@@ -49,6 +53,7 @@ it('completes todo', () => {
     .check()
   cy.contains('.todo-list li', 'write tests')
     .should('have.class', 'completed')
+  // run 'npm i cypress-plugin-snapshots -S'
   // capture the element screenshot and
   // compare to the baseline image
   cy.get('.todoapp').toMatchImageSnapshot({
@@ -57,48 +62,78 @@ it('completes todo', () => {
 })
 ```
 
-This open source plugin shows the baseline and the current images side by side if pixel difference is above the threshold; notice how the baseline image has the label text with line through, while the new image does not have it.
+This open source plugin compares the baseline and the current images side by side within the Cypress Test Runner if pixel difference is above the threshold; notice how the baseline image (*Expected result*) has the label text with the line through, while the new image (*Actual result*) does not have it.
 
 {% img /img/guides/visual-testing/diff.png "Baseline vs current image" %}
 
-Like most image comparison tools, the plugin shows a difference view on mouse hover:
+Like most image comparison tools, the plugin also shows a difference view on mouse hover:
 
 {% img /img/guides/visual-testing/diff-2.png "Highlighted changes" %}
 
-## Tooling
+# Tooling
 
-Our users have published several open source modules, listed on the [Visual Testing plugins](https://on.cypress.io/plugins#visual-testing) page, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner.
+There are several published, open source plugins, listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner listed below.
 
-### [Applitools](https://applitools.com/)
+## Open source
 
-- We have recorded the webinar {% url 'Creating a Flawless User Experience, End-to-End, Functional to Visual – Practical Hands-on Session' https://applitools.com/blog/cypress-applitools-end-to-end-testing %} together with Applitools
-- Read {% url 'Testing a chart with Cypress and Applitools' https://glebbahmutov.com/blog/testing-a-chart/ %} blog post
-- Read the official {% url 'Applitools Cypress documentation' https://applitools.com/cypress %}
+Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
-### [Percy.io](https://percy.io)
+## Applitools
 
-- Read the {% url 'Cypress.io + Percy = End-to-end functional and visual testing for the web' https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} webinar blog post and watch the {% url 'webinar video' https://www.youtube.com/watch?v=MXfZeE9RQDw %}. The companion slides can be found {% url here https://slides.com/bahmutov/visual-testing-with-percy %}. You can find the entire project with tests and visual setup at {% url cypress-io/angular-pizza-creator https://github.com/cypress-io/angular-pizza-creator %}.
-- Read {% url 'Testing how an application renders a drawing with Cypress and Percy.io' https://glebbahmutov.com/blog/testing-visually/ %} blog post.
-- Read the official {% url 'Percy.io Cypress documentation' https://docs.percy.io/docs/cypress %}
+{% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
 
-### Do It Yourself
+Resource |  Description
+------- |  ----
+{% url 'Official docs' https://applitools.com/cypress %} | Applitools's Cypress documentation
+{% url 'Webinar' https://applitools.com/blog/cypress-applitools-end-to-end-testing %} | *Creating a Flawless User Experience, End-to-End, Functional to Visual – Practical Hands-on Session*, a webinar recorded together with Cypress and Applitools
+{% url 'Blog' https://glebbahmutov.com/blog/testing-a-chart/ %} | Testing a chart with Cypress and Applitools
 
-Even if you decide to skip 3rd party image storage and comparison services, you can still perform visual testing. Follow for example ["Visual Regression testing with Cypress.io and cypress-image-snapshot"](https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595) tutorial and do it all yourself.
+## Percy
 
-## Best practices
+{% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
-As a general rule we advise:
+Resource |  Description
+------- |  ----
+{% url 'Official docs' https://docs.percy.io/docs/cypress %} | Percy's Cypress documentation
+{% url "Webinar" https://www.youtube.com/watch?v=MXfZeE9RQDw %} | *Cypress + Percy = End-to-end functional and visual testing for the web*, a webinar recorded together with Cypress and Percy.io
+{% url "Blog" https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} | The companion blog for the Cypress + Percy webinar
+{% url "Slides" https://slides.com/bahmutov/visual-testing-with-percy %} | The companion slides for the Cypress + Percy webinar
+{% url "Blog" https://glebbahmutov.com/blog/testing-visually/ %} | Testing how an application renders a drawing with Cypress and Percy
 
-- to take a snapshot after the page has finished changing after actions. The test itself should confirm this using an assertion. For example, if the snapshot command is `cy.mySnapshotCommand`:
+## Do It Yourself
+
+Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow the example {% url "Visual Regression testing with Cypress.io and cypress-image-snapshot" https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595 %} tutorial and do it all yourself.
+
+{% note warning %}
+You will want to consider the development costs of implementing a visual testing tool yourself versus using an external 3rd party provider. Storing, reviewing and analyzing image differences are non-trivial tasks and they can quickly become a chore when going with a DIY solution.
+{% endnote %}
+
+# Best practices
+
+As a general rule there are some best practices when visual testing.
+
+## DOM state
+
+
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Take a snapshot after you confirm the page is done changing.
+{% endnote %}
+
+For example, if the snapshot command is `cy.mySnapshotCommand`:
+
+**{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```js
-// BAD - the web application might take longer
-// to add the new item, thus sometimes
-// taking the snapshot BEFORE the new item appears
+// the web application takes time to add the new item,
+// sometimes it takes the snapshot BEFORE the new item appears
 cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
+```
 
-// GOOD - use a functional assertion to ensure
+**{% fa fa-check-circle green %} Correct Usage**
+
+```js
+// use a functional assertion to ensure
 // the web application has re-rendered the page
 cy.get('.new-todo').type('write tests{enter}')
 cy.contains('.todo-list li', 'write tests')
@@ -107,10 +142,15 @@ cy.contains('.todo-list li', 'write tests')
 cy.mySnapshotCommand()
 ```
 
-- control the timestamp inside the application
+## Timestamps
+
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Control the timestamp inside the application under test.
+{% endnote %}
+
+Below we freeze the operating system's time to `Jan 1, 2018` using {% url "`cy.clock()`" clock %} to ensure all images displaying dates and times match.
 
 ```js
-// GOOD - freeze the system time to Jan 1, 2018 using "cy.clock"
 const now = new Date(2018, 1, 1)
 
 cy.clock(now)
@@ -118,24 +158,41 @@ cy.clock(now)
 cy.mySnapshotCommand()
 ```
 
-- use {% url 'data fixtures' fixture %} and network mocking to set the application to the same state
+## Application state
+
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Use {% url "`cy.fixture()`" fixture %} and network mocking to set the application state.
+{% endnote %}
+
+Below we stub network calls using {% url "`cy.route()`" route %} to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
 
 ```js
-// GOOD - use stubbed network calls
 cy.server()
-cy.route('/api/users', 'fixture:users')
-cy.route('/api/items', 'fixture:items')
-// ... test
+cy.route('/api/items', 'fixture:items').as('getItems')
+// ... action
+cy.wait('@getUsers')
 cy.mySnapshotCommand()
 ```
 
-- consider using visual diffing to check individual elements rather than the entire page. This will target the image comparison better to avoid a visual change in the component X from breaking tests for the unrelated components.
+## Visual diff elements
 
-- you might want to look at the {% url "Component Testing plugins" plugins %} to load and test the individual components in addition to the regular end-to-end functional and visual tests.
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Use visual diffing to check individual DOM elements rather than the entire page.
+{% endnote %}
 
-- consider the development costs of implementing the visual testing yourself vs using an external 3rd party provider. Storing, reviewing and analyzing image differences are non-trivial tasks, and they quickly becomes a chore when going with a DIY solution.
+Targeting specific DOM element will help avoid visual changes from component "X" breaking tests in other unrelated components.
 
-## See also
+## Component testing
 
-- "Visual Testing" section in the {% url recipes recipes %} page
-- [`cy.screenshot`](https://on.cypress.io/screenshot)
+{% note success %}
+{% fa fa-check-circle green %} **Best Practice:** Use {% url "Component Testing plugins" plugins %} to test the individual components functionality in addition to end-to-end and visual tests.
+{% endnote %}
+
+# See also
+
+- {% url "After Screenshot API" after-screenshot-api %}
+- {% url "`cy.screenshot()`" screenshot %}
+- {% url "`Cypress.Screenshot`" screenshot-api %}
+- {% url "Plugins" plugins-guide %}
+- {% url "Visual Testing Plugins" plugins#visual-testing %}
+- {% url "Writing a Plugin" writing-a-plugin %}
