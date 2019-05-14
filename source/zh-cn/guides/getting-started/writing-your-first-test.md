@@ -706,6 +706,6 @@ describe('My First Test', function() {
 - Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
 - 为Cypress命令和断言设立{% url '智能代码补全' intelligent-code-completion %}.
 - Search Cypress's documentation to quickly find what you need.
-- 搜索Cypress的文档说明书来快速发现你需要的东西.
+- 搜索Cypress的文档说明书来更快的发现你需要的东西.
 
 {% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
