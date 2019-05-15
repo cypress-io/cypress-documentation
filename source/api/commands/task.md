@@ -148,6 +148,25 @@ module.exports = (on, config) => {
 }
 ```
 
+### Return a Promise from an asynchronous task
+
+```javascript
+// in test
+cy.task('pause', 1000)
+```
+
+```javascript
+// in plugins/index.js
+on('task', {
+  pause (ms) {
+    return new Promise((resolve) => {
+      // tasks should not resolve with undefined
+      setTimeout(() => resolve(null), ms)
+    })
+  }
+})
+```
+
 ## Options
 
 ### Change the timeout

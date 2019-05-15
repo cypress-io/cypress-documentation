@@ -31,11 +31,10 @@ cy.server()
 
 Pass in an options object to change the default behavior of `cy.server()`. These options are used for 2 different purposes:
 
-  - As defaults that are merged into {% url `cy.route()` route %}.
+- As defaults that are merged into {% url `cy.route()` route %}.
+- As configuration behavior for *all* requests.
 
-  - As configuration behavior for *all* requests.
-
-***The following options are merged in as default options to {% url `cy.route()` route %}***
+### The following options are merged in as default options to {% url `cy.route()` route %}
 
 Option | Default | Description
 --- | --- | ---
@@ -48,12 +47,15 @@ Option | Default | Description
 `response` | `null` | response body when stubbing routes
 `status` | `200` | response status code when stubbing routes
 
-***The following options control the behavior of the server affecting all requests:***
+### The following options control the behavior of the server affecting all requests
 
 Option | Default | Description
 --- | --- | ---
 `enable` | `true` | pass `false` to disable existing route stubs
 `force404` | `false` | forcibly send XHR's a 404 status when the XHR's do not match any existing route
+`onAnyAbort` | `undefined` | callback function called when any XHR is aborted
+`onAnyRequest` | `undefined` | callback function called when any request is sent
+`onAnyResponse` | `undefined` | callback function called when any response is returned
 `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs
 `whitelist` | function | Callback function that whitelists requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
 
@@ -65,7 +67,7 @@ Option | Default | Description
 
 ## No Args
 
-***After starting a server:***
+### After starting a server:
 
 - Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
 - Any request that matches the `options.whitelist` function will **NOT** be logged or stubbed. In other words it is "whitelisted" and ignored.
@@ -164,6 +166,16 @@ xhr.onload = function () {
 }
 
 xhr.send()
+```
+
+### Set a custom request header for all requests
+
+```js
+cy.server({
+  onAnyRequest: (route,  proxy) => {
+    proxy.xhr.setRequestHeader('CUSTOM-HEADER',  'Header value')
+  }
+})
 ```
 
 ### Change the default whitelisting
