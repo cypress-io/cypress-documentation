@@ -15,7 +15,7 @@ Cypress runs each spec file in isolation: the browser is exited between specs. C
 {% endnote %}
 
 {% note warning Note %}
-Not all configuration values can be changed during runtime. See {% urlHash Notes #Notes %} below for details.
+Not all configuration values can be changed during runtime. See {% urlHash "Notes" Notes %} below for details.
 {% endnote %}
 
 
