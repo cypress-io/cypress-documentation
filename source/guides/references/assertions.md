@@ -241,6 +241,18 @@ cy.get('#loading').should('not.exist')
 cy.get(':radio').should('be.checked')
 ```
 
+## CSS
+
+```javascript
+// retry until .completed has matching css
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+```
+
+```javascript
+// retry until .accordion css have display: none
+cy.get('#accordion').should('not.have.css', 'display', 'none')
+```
+
 # Should callback
 
 If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
