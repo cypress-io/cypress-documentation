@@ -15,7 +15,7 @@ Cypress runs each spec file in isolation: the browser is exited between specs. C
 {% endnote %}
 
 {% note warning Note %}
-Not all config values can be changed at all times. See {% url Notes #Notes %} below for details.
+Not all configuration values can be changed during runtime. See {% urlHash Notes #Notes %} below for details.
 {% endnote %}
 
 
@@ -129,7 +129,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 ## Not all config values can be changed at all times
 
-Some config values cannot be changed in the scope of running a test (inside a `describe()` block). Basically anything that's not directly under Cypress' control - like timeouts, `userAgent` or environment variables - will be ignored at run-time.
+Some configuration values cannot be changed while running a test. Anything that's not directly under Cypress's control - like timeouts, `userAgent`, or environment variables - will be ignored at run-time.
 
 ## Why is it `Cypress.config` and not `cy.config`?
 
