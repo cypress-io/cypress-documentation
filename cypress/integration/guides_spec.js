@@ -22,9 +22,10 @@ describe('Guides', () => {
   )
 
   context('Chinese', () => {
-    it.only('loads why Cypress', () => {
+    it('loads why Cypress', () => {
       cy.visit(`zh-cn${GUIDES_PATH}`)
       cy.contains('.article-title', '为什么选择 Cypress?').should('be.visible')
+      cy.screenshot()
     })
   })
 
