@@ -38,6 +38,7 @@
     "start": "npm run start-server -- --no-validate",
     "stop-only": "stop-only --folder cypress",
     "test-e2e": "start-server-and-test start http://localhost:2222 cypress:run",
+    "dev": "start-test 2222 cypress:open",
     "test-watch": "npm run test --silent -- --watch",
     "test": "jest",
     "warn-only": "stop-only --warn --folder cypress"

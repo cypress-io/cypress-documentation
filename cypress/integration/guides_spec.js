@@ -21,6 +21,14 @@ describe('Guides', () => {
     })
   )
 
+  context('Chinese', () => {
+    it('loads why Cypress', () => {
+      cy.visit(`zh-cn${GUIDES_PATH}`)
+      cy.contains('.article-title', '为什么选择 Cypress?').should('be.visible')
+      cy.screenshot()
+    })
+  })
+
   context('Header', () => {
     beforeEach(() => cy.visit(GUIDES_PATH))
 
