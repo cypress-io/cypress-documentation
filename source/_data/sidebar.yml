@@ -33,6 +33,7 @@ guides:
     plugins-guide: plugins-guide.html
     reporters: reporters.html
     typescript-support: typescript-support.html
+    visual-testing: visual-testing.html
 
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
@@ -161,6 +162,7 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
+    iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html
     spec: spec.html
