@@ -36,7 +36,7 @@ cy.Blob.method() // Errors, cannot be chained off 'cy'
 ```javascript
 // programmatically upload the logo
 cy.fixture('images/logo.png').as('logo')
-cy.get('input[type=file]').then(($input) => {
+cy.get('input[type=file]').then(function($input) {
 
   // convert the logo base64 string to a blob
   return Cypress.Blob.base64StringToBlob(this.logo, 'image/png')

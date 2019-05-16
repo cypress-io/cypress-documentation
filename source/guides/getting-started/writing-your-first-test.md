@@ -162,7 +162,7 @@ Cypress is not a **general purpose** web automation tool. It is poorly suited fo
 
 ## {% fa fa-search %} Step 2: Query for an element
 
-Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
+Now that we've got a page loaded, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
 
 To find this element by its contents, we'll use {% url "`cy.contains()`" contains %}.
 

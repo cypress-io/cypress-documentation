@@ -56,6 +56,11 @@
       description: ESLint plugin that sets globals for writing tests in Cypress.
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
+      
+    - name: cypress-log-to-output
+      description: Plugin that sends all browser logs to the terminal. Useful for debugging browser issues in CI. Currently, only Chrome is supported.
+      link: https://github.com/flotwig/cypress-log-to-output
+      keywords: [logging]
 
     - name: Knapsack Pro Cypress
       description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.
@@ -99,20 +104,10 @@
       link: https://github.com/andrewmcoupe/cy-view
       keywords: [viewports]
 
-    - name: cyphell
-      description: Converts WDIO automation tests to Cypress.
-      link: https://github.com/intuit/cyphfell
-      keywords: [wdio]
-
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
       link: https://github.com/avanslaars/cypress-axe
       keywords: [accessibility, a11y]
-
-    - name: cypress-capybara
-      description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
-      link: https://github.com/testdouble/cypress-capybara
-      keywords: [testing-library, capybara]
 
     - name: cypress-drag-drop
       description: Adds a cypress child command for drag'n'drop support.
@@ -133,16 +128,6 @@
       description: Adds commands for executing a mocked GraphQL server using only the client
       link: https://github.com/tgriesser/cypress-graphql-mock
       keywords: [graphql]
-
-    - name: cypress-jest-adapter
-      description: Add jest assertion style to Cypress expect command
-      link: https://github.com/phongnd39/cypress-jest-adapter
-      keywords: [jest]
-
-    - name: cypress-on-rails
-      description: Rubygem for using cypress.io with Ruby on Rails applications
-      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
-      keywords: [ruby-rack, ruby-on-rails]
 
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
@@ -169,11 +154,6 @@
       link: https://github.com/scottschafer/cypressautomocker
       keywords: [routing, mock]
 
-    - name: PickleJS
-      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
-      link: https://picklejs.com
-      keywords: [cucumber, collection, actions, commands]
-
     - name: cypress-plugin-tab
       description: A Cypress plugin to add a tab command
       link: https://github.com/Bkucera/cypress-plugin-tab
@@ -183,6 +163,33 @@
       description: A collection of Cypress commands to extend and compliment the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
+      
+    - name: cypress-wait-until
+      description: Add the Cypress waiting power to virtually everything 🎉
+      link: https://github.com/NoriSte/cypress-wait-until
+      keywords: [commands, wait, wait-until, recursive-promise, check-async-value, check-value, open-source-saturday]
+
+- name: Extending other testing frameworks
+  plugins:
+    - name: cyphell
+      description: Converts WDIO automation tests to Cypress.
+      link: https://github.com/intuit/cyphfell
+      keywords: [wdio]
+
+    - name: cypress-capybara
+      description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
+      link: https://github.com/testdouble/cypress-capybara
+      keywords: [testing-library, capybara]
+
+    - name: cypress-jest-adapter
+      description: Add jest assertion style to Cypress expect command
+      link: https://github.com/phongnd39/cypress-jest-adapter
+      keywords: [jest]
+
+    - name: PickleJS
+      description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
+      link: https://picklejs.com
+      keywords: [cucumber, collection, actions, commands]
 
 - name: Authentication
   description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
@@ -202,22 +209,32 @@
       link: https://github.com/NoriSte/cypress-otp
       keywords: [authentication, otp, 2fa, mfa]
 
-- name: Framework Tooling
+- name: Framework tooling
   plugins:
     - name: Cypress Angular Schematic
       description: Angular CLI addition that allows you to install Cypress E2E to an Angular CLI project
       link: https://github.com/briebug/cypress-schematic
       keywords: [angular, cli]
 
-    - name: Vue CLI
-      description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
-      link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
-      keywords: [vue.js, vue, cli]
+    - name: cypress-on-rails
+      description: Rubygem for using cypress.io with Ruby on Rails applications
+      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
+      keywords: [ruby-rack, ruby-on-rails]
 
     - name: Nx
       description: Nrwl Extensions for Angular
       link: https://nrwl.io/nx/e2e-testing-with-cypress
       keywords: [angular, cli]
+
+    - name: Cypress Daywalker
+      description: Shadow Dom support for cypress
+      link: https://github.com/JaySunSyn/cypress-daywalker
+      keywords: [Polymer, lit-html, ShadowDom]
+
+    - name: Vue CLI
+      description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
+      link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
+      keywords: [vue.js, vue, cli]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.

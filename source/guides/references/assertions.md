@@ -190,7 +190,7 @@ Because we are using `chai`, that means you can extend it however you'd like. Cy
 
 # Common Assertions
 
-Here is a list of common element assertions. Notice how we use these assertions (listed above) with {% url `.should()` should %}.
+Here is a list of common element assertions. Notice how we use these assertions (listed above) with {% url `.should()` should %}. You may also want to read about how Cypress {% url "retries" retry-ability %} assertions.
 
 ## Length
 
@@ -243,7 +243,7 @@ cy.get(':radio').should('be.checked')
 
 # Should callback
 
-If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically retry the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
+If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
 
 ```html
 <div class="main-abc123 heading-xyz987">Introduction</div>

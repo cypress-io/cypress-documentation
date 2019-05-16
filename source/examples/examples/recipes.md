@@ -30,7 +30,7 @@ Recipe | Category | Description
 {% urlHash 'Stub methods called on `window`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` for methods called on `window`
 {% urlHash 'Stubbing Google Analytics' Stubbing-Google-Analytics %} | Stubbing, Spying | Use `cy.stub()` to test Google Analytics calls
 {% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
-{% urlHash 'React with Enzyme' React-with-Enzyme %} | Unit Testing | Test your react components in isolation
+{% urlHash 'React' React %} | Unit Testing | Test your react components in isolation
 {% urlHash 'File Upload in React' File-Upload-in-React %} | Unit Testing | Test file upload in React application
 {% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
@@ -177,11 +177,8 @@ Get around the lack of a `.hover()` command.
 - Test simple math functions.
 - Test the canonical *fizzbuzz* test.
 
-## [React with Enzyme](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react-enzyme)
-
-- Unit test a React JSX Component using {% url "Enzyme" http://airbnb.io/enzyme/ %}.
-- Import `enzyme` from `node_modules`.
-- Extend chai assertions with {% url "`chai-enzyme`" https://github.com/producthunt/chai-enzyme %}.
+## [React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react)
+- Unit test a React JSX Component using [Enzyme](http://airbnb.io/enzyme/), [react-testing-library](https://github.com/kentcdodds/react-testing-library) and [cypress-react-unit-test](https://github.com/bahmutov/cypress-react-unit-test) libraries.
 
 ## [File Upload in React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react)
 

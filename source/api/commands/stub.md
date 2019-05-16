@@ -196,3 +196,4 @@ When clicking on the `(stub-1)` event within the command log, the console output
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
 - {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" recipes#Stubbing-window-fetch %}
 - {% url "Recipe: Unit Test - Stubbing Dependencies" recipes %}
+- {% url "Stub navigator API in end-to-end tests" https://glebbahmutov.com/blog/stub-navigator-api/ %}

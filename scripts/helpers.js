@@ -74,9 +74,11 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
     _.each(menu, function (link, text) {
       let href = [type, title, link].join('/')
+
       if (!isEnglish) {
         href = [lang, href].join('/')
       }
+
       let itemClass = `${className}-link`
       let currentlyActive = link === path
 
