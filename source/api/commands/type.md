@@ -38,7 +38,6 @@ Sequence | Notes
 --- | ---
 `{% raw %}{{{% endraw %}}`| Types the literal `{` key
 `{backspace}` | Deletes character to the left of the cursor
-`{insert}` | Inserts character to the right of the cursor
 `{del}` | Deletes character to the right of the cursor
 `{downarrow}` | Moves cursor down
 `{enter}` | Types the Enter key
@@ -49,8 +48,6 @@ Sequence | Notes
 `{uparrow}` | Moves cursor up
 `{home}` | Moves cursor to the start of the line
 `{end}` | Moves cursor to the end of the line
-`{pageup}` | Scrolls up
-`{pagedown}` | Scrolls down
 
 Text passed to `.type()` may also include any of these modifier character sequences:
 
@@ -452,7 +449,6 @@ When clicking on `type` within the command log, the console outputs the followin
 
 {% history %}
 | 3.2.0 | Added `{home}` and `{end}` character sequences
-| 3.3.0 | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% endhistory %}
 
 # See also
