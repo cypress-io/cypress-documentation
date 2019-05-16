@@ -101,6 +101,7 @@ describe('Guides', () => {
       beforeEach(() => {
         cy.get('#lang-select').select('zh-cn').should('have.value', 'zh-cn')
         cy.url().should('contain', 'zh-cn')
+        cy.visit(`zh-cn${GUIDES_PATH}`)
       })
 
       it('displays Chinese titles in sidebar', () =>
@@ -115,7 +116,7 @@ describe('Guides', () => {
 
       it('displays Chinese link names in sidebar', () =>
         cy.get('#sidebar')
-        .find('.mobile-nav-link').first()
+        .find('.sidebar-link').first()
         .each(function (displayedLink, i) {
           const chineseLink = this.chinese.sidebar.guides[this.sidebarLinkNames[i]]
 
@@ -125,7 +126,7 @@ describe('Guides', () => {
 
       it('displays Chinese links in sidebar', () =>
         cy.get('#sidebar')
-        .find('.mobile-nav-link')
+        .find('.sidebar-link')
         .each(function (displayedLink, i) {
           const sidebarLink = this.sidebarLinks[i]
 
@@ -144,9 +145,7 @@ describe('Guides', () => {
 
       describe('English', () => {
         it('displays sidebar in mobile menu on click', () => {
-          cy.get('#mobile-nav-toggle').click()
-          cy.get('#mobile-nav-inner').should('be.visible')
-          .find('.sidebar-li')
+          cy.get('.mobile-nav-link')
           .each(function (displayedLink, i) {
             const englishLink = this.english.sidebar.guides[this.sidebarLinkNames[i]]
 
@@ -159,12 +158,11 @@ describe('Guides', () => {
         beforeEach(() => {
           cy.get('#mobile-lang-select').select('zh-cn').should('have.value', 'zh-cn')
           cy.url().should('contain', 'zh-cn')
+          cy.visit(`zh-cn${GUIDES_PATH}`)
         })
 
         it('displays sidebar in mobile menu on click', () => {
-          cy.get('#mobile-nav-toggle').click()
-          cy.get('#mobile-nav-inner').should('be.visible')
-          .find('.sidebar-li')
+          cy.get('.mobile-nav-link')
           .each(function (displayedLink, i) {
             const chineseLink = this.chinese.sidebar.guides[this.sidebarLinkNames[i]]
 
