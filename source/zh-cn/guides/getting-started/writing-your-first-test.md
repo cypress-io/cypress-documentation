@@ -208,7 +208,7 @@ Save the file and switch back over to the Cypress Test Runner. You might notice 
 4. `访问`将展示了一个**蓝色挂起状态**直到页面完成加载.
 
 Had this request come back with a non `2xx` status code such as `404` or `500`, or if there was a JavaScript error in the application's code, the test would have failed.
-如果请求返回了一个非`2xx`的状态码, 比如`404`或者`500`, 或者在代码里面有一个JavaScript错误的话, 测试将会失败.
+如果请求返回了一个非`2xx`的状态码, 比如`404`或者`500`, 或者在代码的里面有一个JavaScript错误的话, 测试将会失败.
 
 {% video local /img/snippets/first-test-visit-30fps.mp4 %}
 
