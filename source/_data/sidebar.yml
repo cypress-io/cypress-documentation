@@ -33,6 +33,7 @@ guides:
     plugins-guide: plugins-guide.html
     reporters: reporters.html
     typescript-support: typescript-support.html
+    visual-testing: visual-testing.html
 
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
