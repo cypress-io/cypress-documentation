@@ -45,7 +45,6 @@ guides:
   references:
     assertions: assertions.html
     configuration: configuration.html
-    proxy-configuration: proxy-configuration.html
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
@@ -162,7 +161,6 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
-    iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html
     spec: spec.html

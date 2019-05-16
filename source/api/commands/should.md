@@ -125,15 +125,6 @@ cy.get('button').should('have.id', 'new-user').then(($button) => {
 cy.get('#header a').should('have.attr', 'href', '/users')
 ```
 
-## Focus
-
-### Assert an input is focused after button click
-
-```javascript
-cy.get('#btn-focuses-input').click()
-cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be.focused')
-```
-
 ## Function
 
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.

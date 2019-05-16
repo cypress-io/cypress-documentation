@@ -139,7 +139,6 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | hidden | `expect($el).to.be.hidden` |
 | selected | `expect($option).not.to.be.selected` |
 | checked | `expect($input).not.to.be.checked` |
-| focus[ed] | `expect($input).not.to.be.focused`<br>`expect($input).to.have.focus` |
 | enabled | `expect($input).to.be.enabled` |
 | disabled | `expect($input).to.be.disabled` |
 | empty | `expect($el).not.to.be.empty` |

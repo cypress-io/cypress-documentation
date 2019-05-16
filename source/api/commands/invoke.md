@@ -143,7 +143,7 @@ cy
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions invoke .invoke %}
+{% assertions retry .invoke %}
 
 ## Timeouts {% helper_icon timeout %}
 
