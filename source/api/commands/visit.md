@@ -285,7 +285,8 @@ When clicking on `visit` within the command log, the console outputs the followi
 ![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
 
 {% history %}
-| 3.2.0 | Added options `url`, `method`, `body`, and `headers`
+| 3.2.0 | Added options `url`, `method`, `body`, and `headers`.
+| 3.3.0 | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
 {% endhistory %}
 
 # See also
