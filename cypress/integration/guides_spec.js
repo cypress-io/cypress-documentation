@@ -103,7 +103,7 @@ describe('Guides', () => {
         cy.url().should('contain', 'zh-cn')
       })
 
-      it.only('displays Chinese titles in sidebar', () =>
+      it('displays Chinese titles in sidebar', () =>
         cy.get('#sidebar')
         .find('.sidebar-title strong')
         .each(function (displayedTitle, i) {
