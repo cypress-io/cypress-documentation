@@ -241,8 +241,8 @@ Cypress不是一个**通用目的**网页自动化工具. 它不太适合实时�
 ## {% fa fa-search %} Step 2: Query for an element
 ## {% fa fa-search %} 步骤2: 查询一个元素
 
-Now that we've got a page loading, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
-现在我们可以加载一个页面了, 我们需要对它进行一个动作. 我们何不点击一个页面上的一个链接呢? 听起来足够简单呢, 让我们来找一个我们喜欢的链接... `type`元素怎么样?
+Now that we've got a page loaded, we need to take some action on it. Why don't we click a link on the page? Sounds easy enough, let's go look for one we like... how about `type`?
+现在我们得到一个加载好的页面了, 我们需要对它进行一个动作. 我们何不点击一个页面上的一个链接呢? 听起来足够简单呢, 让我们来找一个我们喜欢的链接... `type`元素怎么样?
 
 To find this element by its contents, we'll use {% url "`cy.contains()`" contains %}.
 通过这个元素的内容找到它, 我们将使用{% url "`cy.contains()`" contains %}.
