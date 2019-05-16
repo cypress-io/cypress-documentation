@@ -45,6 +45,7 @@ guides:
   references:
     assertions: assertions.html
     configuration: configuration.html
+    proxy-configuration: proxy-configuration.html
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
