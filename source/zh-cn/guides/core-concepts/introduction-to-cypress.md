@@ -1,25 +1,26 @@
 ---
-title: Introduction to Cypress
+title: Cypress简介
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 从这篇文档您将会看到
 
-- How Cypress queries the DOM
-- How Cypress manages subjects and chains of commands
-- What assertions look like and how they work
-- How timeouts are applied to commands
+- Cypress如何查询DOM
+- Cypress如何管理主题及命令链
+- 断言是什么样的及它是如何工作的
+- 超时如何应用于命令
 {% endnote %}
 
-{% note success Important! %}
-**This is the single most important guide** for understanding how to test with Cypress. Read it. Understand it. Ask questions about it so that we can improve it.
+{% note success 重要说明! %}
 
-After you're done, we suggest watching some of our {% fa fa-video-camera %} {% url "Tutorial Videos" tutorials %}.
+这是了解关于如何使用Cypress进行测试的重要指南。阅读它,理解它。同时提出相关问题,以便我们改进它。
+完成后,我们建议您观看我们的相关 {% fa fa-video-camera %} {% url "教学视频" tutorials %}。
+
 {% endnote %}
 
-# Cypress Is Simple
+# Cypress是简单的
+简单的意思是用更少的输入完成更多的操作。让我们来看一个例子:
 
-Simplicity is all about getting more done with less typing. Let's look at an example:
 
 ```js
 describe('Post Resource', function() {
@@ -44,39 +45,40 @@ describe('Post Resource', function() {
 })
 ```
 
-Can you read this? If you did, it might sound something like this:
+你能读懂这个吗？如果你能，它可能听起来像这样:
 
-> 1. Visit the page at `/posts/new`.
-> 2. Find the `<input>` with class `post-title`.
-> 3. Type "My First Post" into it.
-> 4. Find the `<input>` with class `post-body`.
-> 5. Type "Hello, world!" into it.
-> 6. Find the element containing the text `Submit`.
-> 7. Click it.
-> 8. Grab the browser URL, ensure it includes `/posts/my-first-post`.
-> 9. Find the `h1` tag, ensure it contains the text "My First Post".
+> 1. 访问 `/posts/new` 页面.
+> 2. 找到类为 `post-title` 的输入框.
+> 3. 输入"My First Post".
+> 4. 找到类为 `post-body` 的输入框.
+> 5. 输入"Hello, world!".
+> 6. 找到含有 `Submit` 文本的元素.
+> 7. 点击.
+> 8. 获取浏览器地址，确保地址里含有 `/posts/my-first-post`.
+> 9. 找到 `h1` 标签, 确保内容里含有"My First Post".
 
-This is a relatively simple, straightforward test, but consider how much code has been covered by it, both on the client and the server!
 
-For the remainder of this guide, we'll explore the basics of Cypress that make this example work. We'll demystify the rules Cypress follows so you can productively test your application to act as much like a user as possible, as well as discuss how to take shortcuts when it's useful.
+这是一个相对简单，直接的测试，但要考虑它在客户端和服务器上覆盖了多少代码！
+对于本指南的其余部分，我们将一起探索Cypress使上述示例运行的基础知识。我们将带您揭开Cypress的神秘面纱，这样您就可以高效地测试您的应用程序，使其尽可能像用户真实操作一样，并讨论如何在有用时采用快捷方式。
 
-# Querying Elements
+# 查询元素
 
-## Cypress is Like jQuery
+## Cypress很像jQuery
 
-If you've used {% url 'jQuery' https://jquery.com/ %} before, you may be used to querying for elements like this:
+如果你之前使用过 {% url 'jQuery' https://jquery.com/ %} , 你可能习惯于这样查询元素:
 
 ```js
 $('.my-selector')
 ```
 
-In Cypress, querying elements is the same:
+在Cypress,查询元素的方式是相同的:
 
 ```js
 cy.get('.my-selector')
 ```
 
-In fact, Cypress {% url 'bundles jQuery' bundled-tools#Other-Library-Utilities %} and exposes many of its DOM traversal methods to you so you can work with complex HTML structures with ease using APIs you're already familiar with.
+事实上,Cypress {% url '捆绑了jQuery' bundled-tools#Other-Library-Utilities %}并向您公开其许多DOM遍历方法，以便您可以轻松使用您已熟悉的API来处理复杂的HTML结构。
+
 
 ```js
 // Each method is equivalent to its jQuery counterpart. Use what you know!
@@ -86,13 +88,13 @@ cy.get('#main-content')
   .first()
 ```
 
-{% note success Core Concept %}
-Cypress leverages jQuery's powerful selector engine to help make tests familiar and readable for modern web developers.
+{% note success 核心概念 %}
+Cypress利用jQuery强大的选择器引擎帮助现代Web开发人员熟悉和查找元素。
 
-Interested in the best practices for selecting elements? {% url 'Read here' best-practices#Selecting-Elements %}.
+对选择元素的最佳实践感兴趣？ {% url '阅读这里' best-practices#Selecting-Elements %}.
 {% endnote %}
 
-Accessing the DOM elements returned from the query works differently, however:
+但是，它们查询返回DOM元素的工作方式不同：
 
 ```js
 // This is fine, jQuery returns the element synchronously.
@@ -102,13 +104,14 @@ const $jqElement = $('.element')
 const $cyElement = cy.get('.element')
 ```
 
-Let's look at why this is...
+让我们来看看这是为什么...
 
-## Cypress is _Not_ Like jQuery
+## Cypress又不同于jQuery
 
-**Question:** What happens when jQuery can't find any matching DOM elements from its selector?
+**疑问:** 当jQuery无法从其选择器中找到任何匹配的DOM元素时会发生什么？
 
-**Answer:** *Oops!* It returns an empty jQuery collection. We've got a real object to work with, but it doesn't contain the element we wanted. So we start adding conditional checks and retrying our queries manually.
+**解答:** *糟糕！*它返回一个空的jQuery集合。我们有一个真正的对象可以使用，但它不包含我们想要的元素。
+所以我们需要添加检查条件并手动重试我们的查询。
 
 ```js
 // $() returns immediately with an empty collection.
@@ -121,11 +124,11 @@ if ($myElement.length) {
 }
 ```
 
-**Question:** What happens when Cypress can't find any matching DOM elements from its selector?
+**疑问:** 当Cypress无法从其选择器中找到任何匹配的DOM元素时会发生什么？
 
-**Answer:** *No big deal!* Cypress automatically retries the query until either:
+**解答:** *小问题!* Cypress将自动启用重查机制，直到:
 
-### 1. The element is found
+### 1. 元素被找到
 
 ```js
 cy
@@ -139,7 +142,7 @@ cy
   })
 ```
 
-### 2. A set timeout is reached
+### 2. 达到超时设置
 
 ```js
 cy
@@ -154,27 +157,27 @@ cy
   })
 ```
 
-This makes Cypress robust and immune to dozens of common problems that occur in other testing tools. Consider all the circumstances that could cause querying a DOM element to fail:
+这使Cypress更加健壮并且不受其他测试工具中出现的许多常见问题的影响。考虑可能导致查询DOM元素失败的所有情况，有:
+- DOM尚未完成加载。
+- 您的框架尚未完成引导。
+- 一个XHR请求尚未响应。
+- 一个动画尚未完成。
+- 等等...
 
-- The DOM has not loaded yet.
-- Your framework hasn't finished bootstrapping.
-- An XHR request hasn't responded.
-- An animation hasn't completed.
-- and on and on...
+在这之前，针对上述问题，您将被迫编写一些自定义代码，如:令人讨厌的各种等待组合，有条件的重试，为空检查等。当然，这些在Cypress是不需要的，通过内置的重试机制及{% url '可定制化的超时机制' configuration#Timeouts %}, Cypress回避了这些可恶的问题。
 
-Before, you'd be forced to write custom code to protect against any and all of these issues: a nasty mashup of arbitrary waits, conditional retries, and null checks littering your tests. Not in Cypress! With built-in retrying and {% url 'customizable timeouts' configuration#Timeouts %}, Cypress sidesteps all of these flaky issues.
-
-{% note success Core Concept %}
-Cypress wraps all DOM queries with robust retry-and-timeout logic that better suits how real web apps work. We trade a minor change in how we find DOM elements for a major stability upgrade to all of our tests. Banishing flake for good!
+{% note success 核心概念 %}
+为了升级整体测试的稳定性，我们对如何找到DOM元素进行微小的改变。那就是使用Cypress强大的重试和超时逻辑包装了所有DOM查询，当然这些逻辑更适合真正的Web应用程序的工作方式。效果很好！
 {% endnote %}
 
 {% note info %}
-In Cypress, when you want to interact with a DOM element directly, call {% url `.then()` then %} with a callback function that receives the element as its first argument. When you want to skip the retry-and-timeout functionality entirely and perform traditional synchronous work, use {% url `Cypress.$` $ %}.
+在Cypress,当你想直接与DOM元素进行交互时，可调用回调函数{% url `.then()` then %}并接收元素作为其第一个参数进行使用。
+当你想完全跳出重试和超时功能，使用传统的同步方法时，请使用{% url `Cypress.$` $ %}.
 {% endnote %}
 
-## Querying by Text Content
+## 通过文本内容查询
 
-Another way to locate things -- a more human way -- is to look them up by their content, by what the user would see on the page. For this, there's the handy {% url `cy.contains()` contains %} command, for example:
+另一种查找方式 -- 一种更人性化的方式 -- 通过文本内容进行查找, 即通过用户在页面上看到的内容. 为此, 有一个更方便的{% url `cy.contains()` contains %} 命令, 例如:
 
 ```js
 // Find an element in the document containing the text 'New Post'
