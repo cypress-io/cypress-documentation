@@ -49,6 +49,8 @@ Option | Default | Description
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
+`retryOnStatusCodeFailure` | `false` | Whether Cypress should automatically retry status code errors under the hood
+`retryOnNetworkFailure` | `true` | Whether Cypress should automatically retry transient network errors under the hood
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.visit %}
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in {% url 'configuration' configuration %}.
@@ -283,7 +285,8 @@ When clicking on `visit` within the command log, the console outputs the followi
 ![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
 
 {% history %}
-| 3.2.0 | Added options `url`, `method`, `body`, and `headers`
+| 3.2.0 | Added options `url`, `method`, `body`, and `headers`.
+| 3.3.0 | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
 {% endhistory %}
 
 # See also

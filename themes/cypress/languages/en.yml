@@ -58,6 +58,7 @@ sidebar:
     spawning-processes: Spawning Processes
     references: References
     configuration: Configuration
+    proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
     assertions: Assertions
@@ -180,6 +181,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    iscy: isCy
     custom-commands: Commands
     cookies: Cookies
     dom: dom
