@@ -58,12 +58,12 @@ sidebar:
     spawning-processes: Spawning Processes
     references: 参考
     configuration: 配置
+    proxy-configuration: Proxy Configuration
     error-messages: 错误消息
     bundled-tools: 捆绑工具
     assertions: 断言
     creating-fixtures: 创建夹具
     best-practices: 最佳实践
-    proxy-configuration: Proxy Configuration
     anti-patterns: Anti-patterns
     trade-offs: 一些取舍
     contributing: 贡献

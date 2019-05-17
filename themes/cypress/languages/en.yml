@@ -58,12 +58,12 @@ sidebar:
     spawning-processes: Spawning Processes
     references: References
     configuration: Configuration
+    proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
     assertions: Assertions
     creating-fixtures: Creating Fixtures
     best-practices: Best Practices
-    proxy-configuration: Proxy Configuration
     anti-patterns: Anti-patterns
     trade-offs: Trade-offs
     contributing: Contributing
