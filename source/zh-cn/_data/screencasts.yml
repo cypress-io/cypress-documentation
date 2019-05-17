@@ -1,0 +1,101 @@
+# large links with thumbnails, links, embedded video
+large:
+  - title: "Automated and Manual Accessibility Testing with Marcy Sutton"
+    url: https://www.youtube.com/watch?v=IADSsClWVtA
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=IADSsClWVtA
+    date: Apr 19, 2019
+    author: Jason Lengstorf & Marcy Sutton
+    youtubeId: IADSsClWVtA
+    slides: https://github.com/jlengstorf/a11y-testing     
+
+  - title: "ngHouston - Intro to Cypress w/ Jesse Sanders"
+    url: https://www.youtube.com/watch?v=tM2KRTE3F6Y
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=tM2KRTE3F6Y
+    date: Mar 13, 2019
+    author: Bonnie Brennan, Jesse Sanders, Mike Brocchi, Amir Rustamzadeh
+    youtubeId: tM2KRTE3F6Y
+    
+  - title: "How to write tests for your Gatsby sites and apps"
+    url: https://www.youtube.com/watch?v=BzRAYt7BHRw
+    sourceName: Youtube
+    sourceUrl: https://www.twitch.tv/jlengstorf
+    date: Mar 7, 2019
+    author: Jason Lengstorf & Kent C. Dodds
+    youtubeId: BzRAYt7BHRw
+    slides: https://github.com/kentcdodds/kentcdodds.com/pull/88
+
+  - title: "My Cypress Workflow"
+    url: https://www.youtube.com/watch?v=5sXulBZe25Q
+    sourceName: YouTube
+    sourceUrl: https://www.youtube.com/channel/UCt7yOnL7bI7yCa1Xe_GTjJQ
+    date: Jan 31, 2019
+    author: Michael Herman
+    youtubeId: 5sXulBZe25Q
+
+  - title: "CircleCI + Cypress.io: End to end testing made easy"
+    url: https://youtu.be/J-xbNtKgXfY
+    sourceName: CircleCI
+    sourceUrl: https://circleci.com/
+    date: Dec 10, 2018
+    author: Gleb Bahmutov & Eddie Webb
+    youtubeId: J-xbNtKgXfY
+    slides: https://slides.com/bahmutov/circleci-cypress-orb
+
+  - title: "Get the latest updates from Cypress"
+    url: https://www.youtube.com/watch?v=FfqD1ExUGlw
+    sourceName: Cypress.io
+    sourceUrl: https://slides.com/bahmutov/cy-parallelization
+    date: Oct 16, 2018
+    author: Brian Mann & Gleb Bahmutov
+    youtubeId: FfqD1ExUGlw
+    slides: https://slides.com/bahmutov/cy-parallelization
+
+  - title: "Cypress End-to-End Testing"
+    url: https://www.youtube.com/watch?v=7N63cMKosIE
+    sourceName: Angular Firebase
+    sourceUrl: https://angularfirebase.com/lessons/cypress-angular-testing-end-to-end/
+    date: Jun 22, 2018
+    author: Jeff Delaney
+    youtubeId: 7N63cMKosIE
+
+  - title: "Cypress.io React TodoMVC test"
+    url: https://youtu.be/nq_WRILIFTw
+    sourceName: Grafikart
+    sourceUrl: https://twitter.com/winkler1
+    date: Apr 5, 2018
+    author: Jeff Winkler
+    youtubeId: nq_WRILIFTw
+
+  - title: "Tests fonctionnels avec Cypress"
+    url: https://www.youtube.com/watch?v=CC-1i0bMIoA&feature=youtu.be
+    sourceName: Grafikart
+    sourceUrl: https://www.grafikart.fr/formations/javascript-unit-test/cypress
+    date: Mar 21, 2018
+    author: Jonathan Boyer
+    youtubeId: CC-1i0bMIoA
+
+  - title: "Testing hyperapp with Cypress"
+    url: https://www.youtube.com/watch?v=w8liCoPsDIU
+    sourceName: Hyperapp Cypress Demo
+    sourceUrl: https://github.com/LearnHyperapp/hyperapp-cypress-demo
+    date: Mar 17, 2018
+    author: Alex Barry
+    youtubeId: w8liCoPsDIU
+
+  - title: "Using Cypress for end-to-end testing with Gleb Bahmutov"
+    url: https://www.youtube.com/watch?v=zTHQqiu_y0Q
+    sourceName: stefan judis
+    sourceUrl: https://www.youtube.com/channel/UCLpT9xDn3WQ24wfVCkAZU6A
+    date: Feb 11, 2018
+    author: Stefan Judis
+    youtubeId: zTHQqiu_y0Q
+
+  - title: "Cypress.io - five-minute introduction"
+    url: https://youtu.be/AddBNz1T08U
+    sourceName: Gorrion
+    sourceUrl: https://gorrion.io/blog/getting-started-with-cypress-io/
+    date: Jan 31, 2018
+    author: Łukasz Wroński
+    youtubeId: AddBNz1T08U

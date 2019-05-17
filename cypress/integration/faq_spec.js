@@ -41,6 +41,11 @@ describe('FAQ', () => {
       .then(function (yamlString) {
         this.english = YAML.parse(yamlString)
       })
+
+      cy.readFile('themes/cypress/languages/zh-cn.yml')
+      .then(function (yamlString) {
+        this.chinese = YAML.parse(yamlString)
+      })
     })
 
     it('displays current page as highlighted', () =>
@@ -48,47 +53,106 @@ describe('FAQ', () => {
       .should('have.attr', 'href').and('include', `${FAQ_PATH}.html`)
     )
 
-    it('displays English titles in sidebar', () =>
-      cy.get('#sidebar')
-      .find('.sidebar-title strong').each(function (displayedTitle, i) {
-        const englishTitle = this.english.sidebar.faq[this.sidebarTitles[i]]
 
-        expect(displayedTitle.text()).to.eq(englishTitle)
-      })
-    )
+    context('English', () => {
+      it('displays English titles in sidebar', () =>
+        cy.get('#sidebar')
+        .find('.sidebar-title strong').each(function (displayedTitle, i) {
+          const englishTitle = this.english.sidebar.faq[this.sidebarTitles[i]]
 
-    it('displays English link names in sidebar', () =>
-      cy.get('#sidebar')
-      .find('.sidebar-link').first(5)
-      .each(function (displayedLink, i) {
-        const englishLink = this.english.sidebar.faq[this.sidebarLinkNames[i]]
+          expect(displayedTitle.text()).to.eq(englishTitle)
+        })
+      )
 
-        expect(displayedLink.text().trim()).to.eq(englishLink)
-      })
-    )
-
-    it('displays English links in sidebar', () =>
-      cy.get('#sidebar')
-      .find('.sidebar-link')
-      .each(function (displayedLink, i) {
-        const sidebarLink = this.sidebarLinks[i]
-
-        expect(displayedLink.attr('href')).to.include(sidebarLink)
-      })
-    )
-
-    context('mobile sidebar menu', () => {
-      beforeEach(() => cy.viewport('iphone-6'))
-
-      it('displays sidebar in mobile menu on click', () => {
-        cy.get('#mobile-nav-toggle').click()
-
-        cy.get('#mobile-nav-inner').should('be.visible')
-        .find('.sidebar-li')
+      it('displays English link names in sidebar', () =>
+        cy.get('#sidebar')
+        .find('.sidebar-link')
         .each(function (displayedLink, i) {
           const englishLink = this.english.sidebar.faq[this.sidebarLinkNames[i]]
 
           expect(displayedLink.text().trim()).to.eq(englishLink)
+        })
+      )
+
+      it('displays English links in sidebar', () =>
+        cy.get('#sidebar')
+        .find('.sidebar-link')
+        .each(function (displayedLink, i) {
+          const sidebarLink = this.sidebarLinks[i]
+
+          expect(displayedLink.attr('href')).to.include(sidebarLink)
+        })
+      )
+    })
+
+    context('Chinese', () => {
+      beforeEach(() => {
+        cy.visit(`zh-cn${FAQ_PATH}.html`)
+      })
+
+      it('displays titles in sidebar', () =>
+        cy.get('#sidebar')
+        .find('.sidebar-title strong').each(function (displayedTitle, i) {
+          const chineseTitle = this.chinese.sidebar.faq[this.sidebarTitles[i]]
+
+          expect(displayedTitle.text()).to.eq(chineseTitle)
+        })
+      )
+
+      it('displays link names in sidebar', () =>
+        cy.get('#sidebar')
+        .find('.sidebar-link')
+        .each(function (displayedLink, i) {
+          const chineseLink = this.chinese.sidebar.faq[this.sidebarLinkNames[i]]
+
+          expect(displayedLink.text().trim()).to.eq(chineseLink)
+        })
+      )
+
+      it('displays links in sidebar', () =>
+        cy.get('#sidebar')
+        .find('.sidebar-link')
+        .each(function (displayedLink, i) {
+          const sidebarLink = this.sidebarLinks[i]
+
+          expect(displayedLink.attr('href')).to.include(sidebarLink)
+        })
+      )
+    })
+
+
+    context('mobile sidebar menu', () => {
+      beforeEach(() => {
+        cy.viewport('iphone-6')
+        cy.get('#mobile-nav-toggle').click()
+        cy.get('#mobile-nav-inner').should('be.visible')
+      })
+
+      describe('English', () => {
+        it('displays sidebar in mobile menu on click', () => {
+          cy.get('.mobile-nav-link')
+          .each(function (displayedLink, i) {
+            const englishLink = this.english.sidebar.faq[this.sidebarLinkNames[i]]
+
+            expect(displayedLink.text().trim()).to.eq(englishLink)
+          })
+        })
+      })
+
+      describe('Chinese', () => {
+        beforeEach(() => {
+          cy.get('#mobile-lang-select').select('zh-cn').should('have.value', 'zh-cn')
+          cy.url().should('contain', 'zh-cn')
+          cy.visit(`zh-cn${FAQ_PATH}.html`)
+        })
+
+        it('displays sidebar in mobile menu on click', () => {
+          cy.get('.mobile-nav-link')
+          .each(function (displayedLink, i) {
+            const chineseLink = this.chinese.sidebar.faq[this.sidebarLinkNames[i]]
+
+            expect(displayedLink.text().trim()).to.eq(chineseLink)
+          })
         })
       })
     })
