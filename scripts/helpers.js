@@ -60,6 +60,8 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let self = this
   let prefix = `sidebar.${type}.`
   let expandAll = false
+  let lang = this.page.lang
+  let isEnglish = lang === 'en'
 
   // IF the sidebar's categories aren't that many,
   // just expand them all, since it's more of a hassle to expand one by one
@@ -72,6 +74,11 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
     _.each(menu, function (link, text) {
       let href = [type, title, link].join('/')
+
+      if (!isEnglish) {
+        href = [lang, href].join('/')
+      }
+
       let itemClass = `${className}-link`
       let currentlyActive = link === path
 

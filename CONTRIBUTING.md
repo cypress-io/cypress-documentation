@@ -97,6 +97,13 @@ To add a page such as a new guide or API documentation:
 * Build the documentation site locally so that you can visually inspect your new page and the links to it.
 * Submit a [pull request](#Pull-Requests) for your change.
 
+### Translating
+
+1. Add a new language folder in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder. (All lower case)
+2. Copy Markdown and template files in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder to the new language folder.
+3. Add the new language to [`source/_data/language.yml`](https://github.com/cypress-io/cypress-documentation/tree/develop/source/_data/language.yml).
+Copy `en.yml` in themes/cypress/languages and rename to the language name (all lower case).
+
 #### A Worked Example
 
 Let's imagine that the Cypress team have just added a new command called `privateState` and you've picked up the task to document it.

@@ -1,3 +1,6 @@
 en: English
 # ru:
 #   name: Русский
+zh-cn:
+  name: 简体中文
+  disqus_lang: zh
