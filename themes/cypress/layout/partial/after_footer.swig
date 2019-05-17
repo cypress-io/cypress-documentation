@@ -11,13 +11,13 @@
 {{ js('js/ac_tracking') }}
 {{ js('js/form-ac') }}
 {{ js('js/yall-init.js') }}
-{% if config.algolia[page.lang] %}
+{% if config.algolia.en %}
   <!-- Algolia -->
   {{ js('js/vendor/docsearch') }}
 {% endif %}
 <!-- endbuild -->
 
 <!-- Algolia -->
-{% if config.algolia[page.lang] %}
+{% if config.algolia.en %}
   {{ partial('docsearch') }}
 {% endif %}
