@@ -1,38 +1,38 @@
 ---
-title: Module API
+title: API模块
 ---
 
-You can require Cypress as a Node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
+您可以从您的测试应用程序中要求Cypress作为节点模块. 当你想在运行后直接访问测试结果时，这是非常有用的. 例如, 您可以使用此工作流:
 
-- Send a notification about failing tests with included screenshot images
-- Rerun a single failing spec file
-- Kick off other builds or scripts
+- 发送包含截图的失败测试通知
+- 重新运行一个失败的规范文件
+- 踢开其他的构建或脚本
 
 ## `cypress.run()`
 
-Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
+运行Cypress测试并且解决所有测试结果. 参考{% url 'Cypress的API模块食谱' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
 
-### Options
+### 可选参数
 
-Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
+正如`cypress run`的{% url "命令行选项" command-line %}, 您可以传递修改Cypress运行方式的选项.
 
-Option | Description
+选项 | 描述
 ------ |  ---------
-`browser`  | Specify different browser to run tests in, either by name or by filesystem path
-`ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
-`config`  | Specify configuration
-`env`  | Specify environment variables
-`group` | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
-`headed`  | Display the Electron browser instead of running headlessly
-`key`  | Specify your secret record key
-`noExit` | Keep Cypress open after all tests run
-`parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
-`port`  | Override default port
-`project` | Path to a specific project
-`record`  | Whether to record the test run
-`reporter`  | Specify a mocha reporter
-`reporterOptions`  | Specify mocha reporter options
-`spec`  | Specify the specs to run
+`browser`  | 通过名称或文件系统路径指定要在其中运行测试的不同浏览器
+`ciBuildId` | 指定要运行的唯一标识符, 通过启用{% url "分组" parallelization#Grouping-test-runs %}或者{% url "平行" parallelization %}
+`config`  | 指定配置
+`env`  | 指定环境变量
+`group` | 将记录的测试{% url "分组" parallelization#Grouping-test-runs %}到一起去运行
+`headed`  | 显示Electron浏览器而不是运行无头浏览器
+`key`  | 指定你的秘密记录密钥
+`noExit` | 在所有的测试都运行完后, 继续保持Cypress开着
+`parallel` | {% url "并行" parallelization %}多台机器运行已记录的规格
+`port`  | 覆盖缺省端口
+`project` | 指向特定项目的路径
+`record`  | 是否记录测试运行
+`reporter`  | 指定一个mocha报告期
+`reporterOptions`  | 指定mocha报告器选项
+`spec`  | 指定要运行的规格
 
 ```javascript
 const cypress = require('cypress')
@@ -51,9 +51,9 @@ cypress.run({
 })
 ```
 
-### Example
+### 例子
 
-Here is an example of programmatically running a spec file:
+下面是一个以编程方式运行规范文件的示例:
 
 ```js
 const cypress = require('cypress')
@@ -69,7 +69,7 @@ cypress.run({
 })
 ```
 
-`cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run could return something like this:
+`cypress.run()`返回一个使用包含测试结果的对象进行解析的`Promise`. 一个典型的运行可以返回类似这样的东西:
 
 ```json
 {
