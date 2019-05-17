@@ -70,6 +70,7 @@ If the triple slash directive does not work, please refer to your code editor in
 ### 通过`tsconfig`参考类型声明
 
 Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %} with the following configuration should get intelligent code completion working.
+在你的{% url "`cypress`文件夹" writing-and-organizing-tests#Folder-Structure %}中按照以下配置添加一个{% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %}文件, 应该可以使智能代码工作起来.
 
 ```json
 {
@@ -87,25 +88,33 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 ```
 
 # Configuration
+# 配置
 
 ## Features
+## 特征
 
 When editing the {% url "`cypress.json`" configuration %} file, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
+当编辑{% url "`cypress.json`" configuration %}文件, 你可以用我们的{% url "json模式文件" https://on.cypress.io/cypress.schema.json %}来在你的IDE中为每个配置属性获取智能工具提示.
 
 ### Property help when writing and hovering on configuration keys
+### 当编写和悬停在配置键上时的属性帮助
 
 {% video local /img/snippets/intellisense-cypress-config-tooltips.mp4 %}
 
 ### Properties list with intelligent defaults
+### 属性列表的智能默认填入值
 
 {% video local /img/snippets/intellisense-config-defaults.mp4 %}
 
 
 ## Set up in your Dev Environment
+## 在你的开发环境中设置
 
 Intelligent code completion using JSON schemas is supported by default in {% url "Visual Studio Code" https://code.visualstudio.com/ %} and {% url "Visual Studio" https://www.visualstudio.com/ %}. All other editors will require extra configuration or plugins for JSON schema support.
+智能代码补全使用JSON模式在{% url "Visual Studio Code" https://code.visualstudio.com/ %}和{% url "Visual Studio" https://www.visualstudio.com/ %}里面是被默认支持的. 所有其他的编辑器将需要额外的配置或者插件来支持JSON模式.
 
 To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property.
+要在{% url "Visual Studio Code" https://code.visualstudio.com/ %}里面设置, 你可以打开`Preferences / Settings / User Settings`并且添加`json.schemas`属性.
 
 ```json
 {
@@ -121,5 +130,7 @@ To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you c
 ```
 
 # See also
+# 参见
 
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
+- {% url '通过正确的TypeScript类型向全局`window`添加自定义属性' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
