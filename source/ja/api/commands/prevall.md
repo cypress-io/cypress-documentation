@@ -114,7 +114,7 @@ cy.get('li').prevAll('.selected')
 cy.get('.left-nav').find('li.active').prevAll()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/prevall/find-all-previous-elements-with-optional-selector.png)
 

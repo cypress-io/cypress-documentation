@@ -95,6 +95,7 @@ In this example, imagine there is a clock in your app showing the current time. 
 Cypress.Screenshot.defaults({
   onBeforeScreenshot ($el) {
     const $clock = $el.find('.clock')
+
     if ($clock) {
       $clock.hide()
     }
@@ -102,6 +103,7 @@ Cypress.Screenshot.defaults({
 
   onAfterScreenshot ($el, props) {
     const $clock = $el.find('.clock')
+
     if ($clock) {
       $clock.show()
     }

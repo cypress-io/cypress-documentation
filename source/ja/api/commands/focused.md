@@ -81,7 +81,7 @@ cy.focused().should('have.attr', 'name', 'username')
 cy.focused().should('have.attr', 'name').and('eq', 'num')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log focused](/img/api/focused/make-assertion-about-focused-element.png)
 

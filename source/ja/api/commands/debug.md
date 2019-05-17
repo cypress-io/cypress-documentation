@@ -73,10 +73,10 @@ cy.get('a').debug().should('have.attr', 'href')
 ***Log out the current subject for debugging***
 
 ```javascript
-cy.get(".ls-btn").click({ force: true }).debug()
+cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log debug](/img/api/debug/how-debug-displays-in-command-log.png)
 
@@ -89,4 +89,4 @@ When clicking on the `debug` command within the command log, the console outputs
 - {% url 'Dashboard' https://on.cypress.io/dashboard %}
 - {% url `.pause()` pause %}
 - {% url `cy.log()` log %}
-- {% url `.screenshot()` screenshot %}
+- {% url `cy.screenshot()` screenshot %}

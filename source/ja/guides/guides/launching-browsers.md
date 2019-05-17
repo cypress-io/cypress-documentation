@@ -1,12 +1,11 @@
 ---
 title: Launching Browsers
-
 ---
 
 When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 1. Create a clean, pristine testing environment.
-2. Access the privileged browser API's for automation.
+2. Access the privileged browser APIs for automation.
 
 # Browsers
 
@@ -32,7 +31,7 @@ By default, when running {% url '`cypress run`' command-line#cypress-run %} from
 
 ### You can also launch Electron headed:
 
-```bash
+```shell
 cypress run --headed
 ```
 
@@ -44,11 +43,39 @@ All Chrome* flavored browsers will be detected and are supported.
 
 ### You can launch Chrome browsers:
 
-```bash
+```shell
 cypress run --browser chrome
 ```
 
-To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+To use this command in CI, you need to install the browser you want - or use one of our {% url 'docker images' docker %}.
+
+You can also launch Chromium:
+
+```shell
+cypress run --browser chromium
+```
+
+Or Chrome Canary:
+
+```shell
+cypress run --browser canary
+```
+
+{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
+
+## Launching by a path
+
+You can launch any supported browser by specifying a path to the binary:
+
+```shell
+cypress run --browser /usr/bin/chromium
+# or
+cypress open --browser /usr/bin/chromium
+```
+
+Cypress will automatically detect the type of browser supplied and launch it for you.
+
+{% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
 
 ## Unsupported Browsers
 
@@ -93,18 +120,22 @@ Cypress automatically disables certain functionality in the Cypress launched bro
 - Disables restoring sessions.
 - Disables background network traffic.
 - Disables background and renderer throttling.
+- Disables prompts requesting permission to use devices like cameras or mics
+- Disables user gesture requirements for autoplaying videos.
+
+You can see all of the default chrome command line switches we send {% url "here" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.coffee#L18 %}.
 
 # Browser Icon
 
 You might notice that if you already have the browser open you will see two of the same browser icons in your Dock.
 
-![switching browsers](/img/guides/switching-between-cypress-and-other-chrome-browser.gif)
+{% video local /img/snippets/switching-between-cypress-and-other-chrome-browser.mp4 %}
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
 For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser and it'll be much easier to tell the difference. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
 
-![switch canary](/img/guides/switching-cypress-browser-and-canary-browser.gif)
+{% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
 Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 

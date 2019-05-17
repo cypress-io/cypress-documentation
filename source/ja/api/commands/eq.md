@@ -76,7 +76,7 @@ Option | Default | Description
 ```javascript
 cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
-***Make an assertion on the 2nd row of a table***
+***Make an assertion on the 3rd row of a table***
 
 ```html
 <table>
@@ -142,7 +142,7 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 cy.get('.left-nav.nav').find('>li').eq(3)
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log eq](/img/api/eq/find-element-at-index.png)
 

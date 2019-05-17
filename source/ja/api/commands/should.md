@@ -1,6 +1,5 @@
 ---
 title: should
-
 ---
 
 Create an assertion. Assertions are automatically retried until they pass or time out.
@@ -71,23 +70,23 @@ However, some chainers change the subject. In the example below, the second `.sh
 
 ```javascript
 cy
-  .get('nav')                       // yields <nav>
-  .should('be.visible')             // yields <nav>
-  .and('have.css', 'font-family')   // yields 'sans-serif'
-  .and('match', /serif/)            // yields 'sans-serif'
+  .get('nav')                          // yields <nav>
+  .should('be.visible')                // yields <nav>
+  .should('have.css', 'font-family')   // yields 'sans-serif'
+  .and('match', /serif/)               // yields 'sans-serif'
 ```
 
 # Examples
 
 ## Chainers
 
-***Assert the checkbox is disabled***
+### Assert the checkbox is disabled
 
 ```javascript
 cy.get(':checkbox').should('be.disabled')
 ```
 
-***The current DOM element is yielded***
+### The current DOM element is yielded
 
 ```javascript
 cy.get('option:first').should('be.selected').then(($option) => {
@@ -97,29 +96,29 @@ cy.get('option:first').should('be.selected').then(($option) => {
 
 ## Value
 
-***Assert the class is 'form-horizontal'***
+### Assert the class is 'form-horizontal'
 
 ```javascript
 cy.get('form').should('have.class', 'form-horizontal')
 ```
 
-***Assert the value is not 'Jane'***
+### Assert the value is not 'Jane'
 
 ```javascript
 cy.get('input').should('not.have.value', 'Jane')
 ```
 
-***The current subject is yielded***
+### The current subject is yielded
 
 ```javascript
-cy.get('button').should('have.id', 'new-user').then(($button) =>{
+cy.get('button').should('have.id', 'new-user').then(($button) => {
   // $button is yielded
 })
 ```
 
 ## Method and Value
 
-***Assert the href is equal to '/users'***
+### Assert the href is equal to '/users'
 
 ```javascript
 // have.attr comes from chai-jquery
@@ -128,11 +127,11 @@ cy.get('#header a').should('have.attr', 'href', '/users')
 
 ## Function
 
-***Verify length, content, and classes from multiple `<p>`***
-
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
 Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+
+### Verify length, content, and classes from multiple `<p>`
 
 ```html
 <div>
@@ -145,7 +144,7 @@ Just be sure *not* to include any code that has side effects in your callback fu
 ```javascript
 cy
   .get('p')
-  .should(($p) =>{
+  .should(($p) => {
     // should have found 3 elements
     expect($p).to.have.length(3)
 
@@ -167,20 +166,82 @@ cy
   })
 ```
 
-***Assert explicitly within `.should()`***
+{% note warning %}
+Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
 
-Any errors raised by failed assertions will immediately bubble up and cause the test to fail.
+```
+cy
+  .get('p')
+  .should(($p) => {
+    expect($p).to.have.length(3)
+
+    return 'foo'
+  })
+  .then(($p) => {
+    // the argument $p will be the 3 elements, not "foo"
+  })
+```
+{% endnote %}
+
+### Assert class name contains `heading-`
 
 ```html
-<div id="todos">
-  <li>Walk the dog</li>
-  <li>Feed the cat</li>
-  <li>Write JavaScript</li>
+<div class="docs-header">
+  <div class="main-abc123 heading-xyz987">Introduction</div>
 </div>
 ```
 
+```js
+cy.get('.docs-header')
+  .find('div')
+  // .should(cb) callback function will be retried
+  .should(($div) => {
+    expect($div).to.have.length(1)
+
+    const className = $div[0].className
+
+    expect(className).to.match(/heading-/)
+  })
+  // .then(cb) callback is not retried,
+  // it either passes or fails
+  .then(($div) => {
+    expect($div).to.have.text('Introduction')
+  })
+```
+
+You can even throw your own errors from the callback function.
+
+```js
+cy.get('.docs-header')
+  .find('div')
+  .should(($div) => {
+    if ($div.length !== 1) {
+      // you can throw your own errors
+      throw new Error('Did not find 1 element')
+    }
+
+    const className = $div[0].className
+
+    if (!className.match(/heading-/)) {
+      throw new Error(`No class "heading-" in ${className}`)
+    }
+  })
+```
+
+### Assert text contents of 3 elements
+
+Example below first asserts that there are 3 elements, and then checks the text contents of each one.
+
+```html
+<ul class="connectors-list">
+  <li>Walk the dog</li>
+  <li>Feed the cat</li>
+  <li>Write JavaScript</li>
+</ul>
+```
+
 ```javascript
-cy.get('#todos li').should(($lis) => {
+cy.get('.connectors-list > li').should(($lis) => {
   expect($lis).to.have.length(3)
   expect($lis.eq(0)).to.contain('Walk the dog')
   expect($lis.eq(1)).to.contain('Feed the cat')
@@ -188,9 +249,63 @@ cy.get('#todos li').should(($lis) => {
 })
 ```
 
+{% note info %}
+Read {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post to see more variations of the above example.
+{% endnote %}
+
+For clarity you can pass a string message as a second argument to any `expect` assertion, see {% url Chai#expect https://www.chaijs.com/guide/styles/#expect %}.
+
+```javascript
+cy.get('.connectors-list > li').should(($lis) => {
+  expect($lis, '3 items').to.have.length(3)
+  expect($lis.eq(0), 'first item').to.contain('Walk the dog')
+  expect($lis.eq(1), 'second item').to.contain('Feed the cat')
+  expect($lis.eq(2), 'third item').to.contain('Write JavaScript')
+})
+```
+
+These string messages will be shown in the Command Log giving each assertion more context.
+
+![Expect assertions with messages](/img/api/should/expect-with-message.png)
+
+### Compare text values of two elements
+
+The example below gets the text contained within one element and saves it in a closure variable. Then the test gets the text in another element and asserts that the two text values are the same after normalizing.
+
+```html
+<div class="company-details">
+  <div class="title">Acme Developers</div>
+  <div class="identifier">ACMEDEVELOPERS</div>
+</div>
+```
+
+```javascript
+const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+
+// will keep text from title element
+let titleText
+
+cy.get('.company-details')
+  .find('.title')
+  .then(($title) => {
+    // save text from the first element
+    titleText = normalizeText($title.text())
+  })
+
+cy.get('.company-details')
+  .find('.identifier')
+  .should(($identifier) => {
+    // we can massage text before comparing
+    const idText = normalizeText($identifier.text())
+
+    // text from the title element should already be set
+    expect(idText, 'ID').to.equal(titleText)
+  })
+```
+
 ## Multiple Assertions
 
-***Chaining multiple assertions***
+### Chaining multiple assertions
 
 Cypress makes it easy to chain assertions together.
 
@@ -225,21 +340,26 @@ cy.get('button').click()
 
 # Notes
 
+## Effect on default DOM assertions
+
+When you chain `.should()` on a DOM-based command, the default `.should('exist')` assertion is skipped. This may result in an unexpected behavior such as negative assertions passing even when the element doesn't exist in the DOM. See {% url 'Default Assertions' introduction-to-cypress#Default-Assertions %} for more.
+
 ## Subjects
 
-***How do I know which assertions change the subject and which keep it the same?***
+### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from {% url 'Chai' bundled-tools#Chai %} or {% url 'Chai-jQuery' bundled-tools#Chai-jQuery %} will always document what they return.
 
-***Using a callback function will not change what is yielded***
+### Using a callback function will not change what is yielded
 
 Whatever is returned in the function is ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
 
 ```javascript
 cy
-  .get('button').should(($button) =>{
-    expect({foo: 'bar'}).to.deep.eq({foo: 'bar'})
-    return {foo: 'bar'} // return is ignored, .should() yields <button>
+  .get('button').should(($button) => {
+    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+
+    return { foo: 'bar' } // return is ignored, .should() yields <button>
   })
   .then(($button) => {
     // do anything we want with <button>
@@ -261,15 +381,13 @@ cy
 {% timeouts timeouts .should %}
 
 ```javascript
-cy.get('input', {timeout: 10000}).should('have.value', '10')
-  //                    ↲
-  // timeout here will be passed down to the '.should()'
-  // and it will retry for up to 10 secs
+cy.get('input', { timeout: 10000 }).should('have.value', '10')
+// timeout here will be passed down to the '.should()'
+// and it will retry for up to 10 secs
 ```
 
 ```javascript
-cy.get('input', {timeout: 10000}).should(($input) => {
-  //                    ↲
+cy.get('input', { timeout: 10000 }).should(($input) => {
   // timeout here will be passed down to the '.should()'
   // unless an assertion throws earlier,
   // ALL of the assertions will retry for up to 10 secs
@@ -287,7 +405,7 @@ cy.get('input', {timeout: 10000}).should(($input) => {
 cy.get('.left-nav>.nav').children().should('have.length', 8)
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log should](/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png)
 
@@ -300,3 +418,4 @@ When clicking on `assert` within the command log, the console outputs the follow
 - {% url `.and()` and %}
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
 - {% url 'Reference: List of Assertions' assertions %}
+- {% url 'cypress-example-kitchensink Assertions' https://example.cypress.io/commands/assertions %}

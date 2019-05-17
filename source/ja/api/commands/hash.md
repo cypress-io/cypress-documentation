@@ -95,7 +95,7 @@ cy.hash().should('match', /users\/.+$/) // => true
 cy.hash().should('eq', '#users/new')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log for hash](/img/api/hash/test-url-hash-for-users-page.png)
 

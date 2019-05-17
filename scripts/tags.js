@@ -11,10 +11,14 @@ const requirements = require('../lib/tags/requirements')
 const assertions = require('../lib/tags/assertions')
 const timeouts = require('../lib/tags/timeouts')
 const usageOptions = require('../lib/tags/usage')
-const { issue, openAnIssue, user } = require('../lib/tags/issues')
+const { issue, PR, openAnIssue, user } = require('../lib/tags/github')
+const { badge } = require('../lib/tags/badge')
 const { url, urlHash } = require('../lib/tags/url')
 const { fa, helperIcon } = require('../lib/tags/icons')
 const video = require('../lib/tags/video')
+const changelog = require('../lib/tags/changelog')
+const history = require('../lib/tags/history')
+const aliases = require('../lib/tags/aliases')
 
 const tags = {
   // partials
@@ -23,7 +27,11 @@ const tags = {
   // issues
   open_an_issue: openAnIssue,
   issue: issue,
+  PR: PR,
   user: user,
+
+  // badge
+  badge: badge,
 
   // icons
   fa: fa,
@@ -50,12 +58,21 @@ const tags = {
 
   // video
   video: video,
+
+  // changelog
+  changelog: changelog,
+
+  // aliases
+  aliases: aliases,
 }
 
 // tags which require ending
 const endingTags = {
   // note
   note: note,
+
+  // history
+  history: history,
 }
 
 function promisify (fn) {

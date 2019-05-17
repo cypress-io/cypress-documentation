@@ -1,7 +1,6 @@
 ---
 layout: toc-top
 title: Dashboard
-
 containerClass: faq
 ---
 
@@ -22,17 +21,13 @@ After recording your tests, you will see them in the {% url 'Dashboard' https://
 
 ## {% fa fa-angle-right %} How much does it cost?
 
-Everything is free while we are in Beta.
-
-In the future, we will charge per month for private projects.
-
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
 
-**A private project** means that only {% url 'users' dashboard-service#Manage-users %} you explicitly invite to your {% url 'organization' dashboard-service#Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+**A private project** means that only {% url 'users' dashboard-service#Users %} you explicitly invite to your {% url 'organization' dashboard-service#Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ## {% fa fa-angle-right %} How is this different than CI?
 
@@ -73,18 +68,36 @@ We have already begun the implementation for capturing even more things from you
 
 These will be added in subsequent releases.
 
-<!-- ## How many recordings can I store? -->
+## {% fa fa-angle-right %} Why is test parallelization based on spec files and not on the individual functions?
 
-<!-- ## Can't I just record my app running, without the Cypress runner? -->
+Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the Test Runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
 
-<!-- ## Can I see the mouse movements in my recorded video? -->
+Spec file durations are also more meaningful and consistent than timings of individual tests, we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishing individual tests.
 
-<!-- ## Is there a way to see console logs or application errors in a recorded run? -->
+To better load balance the specs, thus you would want more spec files with approximately the same running duration. Otherwise, a single very long running test might limit how fast all your tests finish, and the run completes. Due to starting a new test execution context before each spec file and encoding and uploading video after, making spec files to run shorter than approximately 10 seconds would also be fruitless - because Cypress overhead would eat any time savings.
 
-<!-- ## Is it possible to transfer a project to an organization I'm not a member of? -->
+## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
-<!-- ## Why are my tests displaying a “still running”? -->
+Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration#Examples %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
 
-<!-- ## Is there any way to remove a run and the data from the Dashboard? -->
+```shell
+cypress run --record --parallel --ci-build-id $CI_RUN_ID
+```
 
-<!-- ## How secure is storing my test runs (videos and screenshots) on your servers? -->
+For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable than is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might just be good enough for the job.
+
+## {% fa fa-angle-right %} Can I delete a run from the Dashboard?
+
+We are working on implementing run deletion. {% url "Track the issue." https://github.com/cypress-io/cypress/issues/1839 %}
+
+**Note:** Deleting the recorded runs would have no effect on the amount of tests recorded and counted as your usage billed  for the month.
+
+## {% fa fa-angle-right %} Can I delete my Cypress account?
+
+You can delete your Cypress account from {% url "your Dashboard profile" https://dashboard.cypress.io/#/profile %}. Deleting your account cannot be undone! By deleting your Cypress account, all associated data in your account will be permanently deleted.
+
+## {% fa fa-angle-right %} What happens to my Dashboard if I downgrade my account?
+
+Downgrading your account will **not** result in loss of access to your Dashboard.
+
+However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and test recordings to 500 per billing period.

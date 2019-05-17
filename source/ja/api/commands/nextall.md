@@ -114,7 +114,7 @@ cy.get('li').nextAll('.selected')
 cy.get('.left-nav').find('li.active').nextAll()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log nextAll](/img/api/nextall/next-all-traversal-command-for-the-dom.png)
 

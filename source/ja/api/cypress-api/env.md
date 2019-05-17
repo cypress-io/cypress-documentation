@@ -1,12 +1,17 @@
 ---
 title: Cypress.env
-
 ---
 
 `get` and `set` environment variables *in your tests*.
 
 {% note info %}
-The {% url 'Environment Variable' environment-variables %} guide explains the 4 ways you can set them *outside of your tests*.
+The {% url 'Environment Variable' environment-variables %} guide explains the other ways you can set them *outside of your tests*.
+{% endnote %}
+
+{% note warning Scope %}
+Environment variables set using `Cypress.env` _are only in scope for the current spec file._
+
+Cypress runs each spec file in isolation: the browser is exited between specs. Environment variables added or changed in one spec won't be visible in other specs.
 {% endnote %}
 
 # Syntax
@@ -38,10 +43,8 @@ Set multiple environment variables with an object literal.
 
 **Get all environment variables.**
 
-
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -56,12 +59,10 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 ## Name
 
-**Return just a single environment variable value.**
-
+**Return a single environment variable value.**
 
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -71,22 +72,20 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 ```
 
 ```javascript
-Cypress.env("foo") // => bar
-Cypress.env("baz") // => quux
+Cypress.env('foo') // => bar
+Cypress.env('baz') // => quux
 ```
 
-# Name and Value
+## Name and Value
 
 **Cypress allows you to change the values of your environment variables from within your tests.**
 
-{% note warning  %}
-Any value you change will be permanently changed for the remainder of your tests.
+{% note warning Scope %}
+Remember, any changes that you make to environment variables using this API will only be in effect for the remainder of the tests _in the same spec file._
 {% endnote %}
-
 
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -96,19 +95,17 @@ Any value you change will be permanently changed for the remainder of your tests
 ```
 
 ```javascript
-Cypress.env("host", "http://server.dev.local")
+Cypress.env('host', 'http://server.dev.local')
 
-Cypress.env("host") // => http://server.dev.local
+Cypress.env('host') // => http://server.dev.local
 ```
 
 ## Object
 
 **You can set multiple values by passing an object literal.**
 
-
 ```javascript
 // cypress.json
-
 {
   "env": {
     "foo": "bar",
@@ -119,20 +116,47 @@ Cypress.env("host") // => http://server.dev.local
 
 ```javascript
 Cypress.env({
-  host: "http://server.dev.local",
-  foo: "foo"
+  host: 'http://server.dev.local',
+  foo: 'foo'
 })
 
 Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
 ```
 
+## From a plugin
+
+Here's an example that uses `Cypress.env` to access an environment variable that's been {% url 'dynamically set in a plugin' environment-variables#Option-5-Plugins %}.
+
+Use this approach to grab the value of an environment variable _once_ before any of the tests in your spec run.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+
+  config.env.sharedSecret = process.env.NODE_ENV === 'qa'
+    ? 'hoop brick tort'
+    : 'sushi cup lemon'
+
+  return config
+}
+```
+```js
+// cypress/integration/secrets_spec.js
+describe('Environment variable set in plugin', () => {
+
+  let sharedSecret
+
+  before(() => {
+    sharedSecret = Cypress.env('sharedSecret')
+  })
+
+  it.only('can be accessed within test.', () => {
+    cy.log(sharedSecret)
+  })
+})
+```
+
 # Notes
-
-**Why use `Cypress.env` instead of `cy.env`?**
-
-As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
-
-Methods on `cy` are local and specific to a single test. Side effects from `cy` methods are restored between each test. We chose to use `Cypress` because changes to your environment variables take effect for the remainder of **ALL** tests.
 
 **Why would I ever need to use environment variables?**
 
@@ -142,4 +166,15 @@ The {% url 'Environment Variables' environment-variables %} guide explains commo
 
 Yes. You can do that and much more.
 
-The {% url 'Environment Variables' environment-variables %} guide explains the 4 ways you can set environment variables for your tests.
+The {% url 'Environment Variables' environment-variables %} guide explains the other ways you can set environment variables for your tests.
+
+**Why is it `Cypress.env` and not `cy.env`?**
+
+As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
+
+Since the environment variables added or changed by `Cypress.env` are only in scope for the current spec file, you'd think that it should be `cy.env` and not `Cypress.env`&hellip; and you'd be right. The fact that `Cypress.env` affects local state is an artifact of the API evolving over time: `Cypress.env` used to affect global state&mdash;environment variables added in one test spec file were available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in {% url `3.0.0` changelog#3-0-0 %} and by that time `Cypress.env` was public API.
+
+# See also
+
+- The {% url 'Environment Variable' environment-variables %} guide
+- {% url 'configuration' configuration %}

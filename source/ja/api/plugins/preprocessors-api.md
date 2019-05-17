@@ -48,14 +48,14 @@ Are you looking to change the **default options** for Browserify?
 Changing the Browserify options lets you:
 
 - Add your own Babel plugins
-- Add support for Typescript
+- Add support for TypeScript
 - Add support for CoffeeScript `2.x.x`
 
 Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
 
 # Usage
 
-The use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
+To use a preprocessor, you should bind to the `file:preprocessor` event in your {% url "`pluginsFile`" configuration#Folders-Files %}:
 
 ```javascript
 // plugins file
@@ -95,14 +95,14 @@ Make sure not to start a new watcher each time it is called. Instead, cache the 
 The `file` object passed to the callback function has the following properties:
 
 Property | Description
---------- | ----------
+-------- | ----------
 `filePath` | The full path to the source file.
 `outputPath` | The suggested path for saving the preprocessed file to disk. This is unique to the source file. A preprocessor can choose to write the file elsewhere, but Cypress automatically provides you this value as a convenient default.
 `shouldWatch` | A boolean indicating whether the preprocessor should watch for file changes or not.
 
 # File events
 
-The `file` object passed to the callback function is an [Event Emitter](https://nodejs.org/api/events.html#events_class_eventemitter).
+The `file` object passed to the callback function is an {% url "Event Emitter" https://nodejs.org/api/events.html#events_class_eventemitter %}.
 
 ### Receiving 'close' event
 
@@ -130,7 +130,7 @@ fs.watch(filePath, () => {
 
 # Publishing
 
-Publish preprocessors to [npm](https://www.npmjs.com/) with the naming convention `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor).
+Publish preprocessors to {% url "npm" https://www.npmjs.com/ %} with the naming convention `cypress-*-preprocessor` (e.g. cypress-clojurescript-preprocessor).
 
 Use the following npm keywords:
 

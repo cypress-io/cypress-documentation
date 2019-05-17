@@ -34,6 +34,7 @@ function checkToken (token) {
 function getCircleCredentials () {
   const jsonFile = path.join('support', '.circle-credentials.json')
   const config = configFromEnvOrJsonFile(jsonFile)
+
   if (!config) {
     console.error('⛔️  Cannot find CircleCI credentials')
     console.error('Using @cypress/env-or-json-file module')
@@ -41,6 +42,7 @@ function getCircleCredentials () {
     console.error('from file path', jsonFile)
     throw new Error('Cannot load CircleCI credentials')
   }
+
   return config.token
 }
 

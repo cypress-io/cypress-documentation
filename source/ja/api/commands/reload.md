@@ -19,7 +19,7 @@ cy.reload(forceReload, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.reload()    
+cy.reload()
 ```
 
 ## Arguments
@@ -83,7 +83,7 @@ cy.reload(true)
 cy.reload()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/reload/test-page-after-reload-button.png)
 

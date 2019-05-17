@@ -1,6 +1,5 @@
 ---
 title: and
-
 ---
 
 Create an assertion. Assertions are automatically retried until they pass or time out.
@@ -27,11 +26,11 @@ An alias of {% url `.should()` should %}
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('.error').should('be.empty').and('be.hidden')  // Assert '.error' is empty and hidden
-cy.contains('Login').and('be.visible')                // Assert el is visible
+cy.get('.err').should('be.empty').and('be.hidden') // Assert '.err' is empty & hidden
+cy.contains('Login').and('be.visible')             // Assert el is visible
 cy.wrap({ foo: 'bar' })
-  .should('have.property', 'foo')                     // Assert the 'foo' property exists
-  .and('eq', 'bar')                                   // Assert the 'foo' property equals 'bar'
+  .should('have.property', 'foo')                  // Assert 'foo' property exists
+  .and('eq', 'bar')                                // Assert 'foo' property is 'bar'
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -82,7 +81,7 @@ cy
 
 ## Chainers
 
-***Chain assertions on the same subject***
+### Chain assertions on the same subject
 
 ```javascript
 cy.get('button').should('have.class', 'active').and('not.be.disabled')
@@ -90,7 +89,7 @@ cy.get('button').should('have.class', 'active').and('not.be.disabled')
 
 ## Value
 
-***Chain assertions when yield changes***
+### Chain assertions when yield changes
 
 ```html
 <!-- App Code -->
@@ -112,7 +111,7 @@ cy
 
 ## Method and Value
 
-***Assert the href is equal to '/users'***
+### Assert the href is equal to '/users'
 
 ```javascript
 cy
@@ -123,7 +122,7 @@ cy
 
 ## Function
 
-***Verify length, content, and classes from multiple `<p>`***
+### Verify length, content, and classes from multiple `<p>`
 
 Passing a function to `.and()` enables you to assert on the yielded subject. This gives you the opportunity to *massage* what you'd like to assert.
 
@@ -173,25 +172,25 @@ Using a callback function {% urlHash 'will not change the subject' Subjects %}
 
 ## Chai
 
-***Similarities to Chai***
+### Similarities to Chai
 
 If you've worked in {% url "Chai" http://chaijs.com/ %} before, you will recognize that `.and()` matches the same fluent assertion syntax.
 
 Take this *explicit* assertion for example:
 
 ```javascript
-expect({foo: 'bar'}).to.have.property('foo').and.eq('bar')
+expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 ```
 
 `.and()` reproduces this same assertion behavior.
 
 ## Subjects
 
-***How do I know which assertions change the subject and which keep it the same?***
+### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from {% url 'Chai' bundled-tools#Chai %} or {% url 'Chai-jQuery' bundled-tools#Chai-jQuery %} will always document what they return.
 
-***Using a callback function will not change what is yielded***
+### Using a callback function will not change what is yielded
 
 Whenever you use a callback function, its return value is always ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
 
@@ -200,8 +199,9 @@ cy
   .get('button')
   .should('be.active')
   .and(($button) => {
-    expect({foo: 'bar'}).to.deep.eq({foo: 'bar'})
-    return {foo: 'bar'} // return is ignored, .and() yields <button>
+    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
+
+    return { foo: 'bar' } // return is ignored, .and() yields <button>
   })
   .then(($button) => {
     // do anything we want with <button>
@@ -252,7 +252,7 @@ cy
     .and('not.be.disabled')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command log for assertions](/img/api/and/cypress-and-command-log.png)
 

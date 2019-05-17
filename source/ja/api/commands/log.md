@@ -23,7 +23,7 @@ cy.log('created new user')
 
 **{% fa fa-angle-right %} message** ***(String)***
 
-Message to be printed to Cypress Command Log.
+Message to be printed to Cypress Command Log. Accepts a Markdown formatted message.
 
 **{% fa fa-angle-right %} args...**
 
@@ -76,7 +76,7 @@ cy.log('log out any message we want here')
 cy.log('another message', ['one', 'two', 'three'])
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log log](/img/api/log/custom-command-log-with-any-message.png)
 

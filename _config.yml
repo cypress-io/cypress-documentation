@@ -9,6 +9,7 @@ description: Cypress is a test engine that runs unit and integration tests in yo
 author: Cypress.io
 language:
   - en
+  - zh-cn
   - ja
 
 # URL
@@ -42,15 +43,21 @@ alias:
   guides/network-requests-xhr/: guides/guides/network-requests.html
   guides/issuing-commands/: guides/core-concepts/introduction-to-cypress.html#Subject-Management
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
+  guides/core-concepts/aliases-and-references.html: guides/core-concepts/variables-and-aliases.html
   guides/core-concepts/overview-of-the-gui/: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-the-gui.html: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-test-runner.html: guides/core-concepts/test-runner.html
   guides/core-concepts/overview-of-test-runner/: guides/core-concepts/test-runner.html
-  guides/core-concepts/screenshots-and-videos: guides/guides/screenshots-and-videos.html
+  guides/core-concepts/screenshots-and-videos.html: guides/guides/screenshots-and-videos.html
+  guides/guides/reporters.html: guides/tooling/reporters.html
+  guides/guides/reporters/: guides/tooling/reporters.html
   overview-of-test-runner/: guides/core-concepts/test-runner.html
   why-cypress/: guides/overview/why-cypress.html
 
-  api/index.html: api/introduction/api.html
+  api/index.html: api/api/table-of-contents.html
+  api/commands/.html: api/api/table-of-contents.html
+  api/introduction/api.html: api/api/table-of-contents.html
+  api/assertions/assertions.html: guides/references/assertions.html
   api/commands/cypress-blob.html: api/utilities/blob.html
   api/commands/api-server.html: api/cypress-api/cypress-server.html
 
@@ -134,6 +141,9 @@ alias:
 
   continuous-integration.html: guides/guides/continuous-integration.html
 
+  # for chinese translation
+  zh-cn/: zh-cn/guides/overview/why-cypress.html
+
 
 # Include/Exclude Files/Folders
 include:
@@ -184,8 +194,8 @@ google:
   tag_manager_id: GTM-KNKBWLD
 
 # Crash reporting
-raygun:
-  apiKey: SG5ZJfQICgeechPbpRE1DQ==
+sentry:
+  dsn: https://b3169c504f3840d397b4987b3fd68697@sentry.io/1387466
 
 ## Algolia Search
 ## https://github.com/LouisBarranqueiro/hexo-algoliasearch

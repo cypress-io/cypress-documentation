@@ -75,9 +75,10 @@ Event | Description
 {% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
 {% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
 {% url `task` task %} | Occurs in conjunction with the `cy.task` command.
+{% url `after:screenshot` after-screenshot-api %} | Occurs after a screenshot is taken.
 
 {% note warning "More Coming Soon" %}
-The Plugins API is brand new.
+The Plugins API is relatively new.
 
 We have many new plugin events {% issue 684 'we are adding' %}.
 {% endnote %}
@@ -102,7 +103,7 @@ You can find the current Node version we use {% url 'here' https://github.com/cy
 
 {% endnote %}
 
-## NPM modules
+## npm modules
 
 When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any Node module** you have installed.
 

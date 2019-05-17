@@ -1,42 +1,75 @@
 ---
 title: Command Line
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress from the command line
 - How to specify which spec files to run
 - How to launch other browsers
-- How to record your tests
+- How to record your tests to the Dashboard
 {% endnote %}
 
 # Installation
 
-This Guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module.
+This guide assumes you've already read our {% url 'Installing Cypress' installing-cypress %} guide and installed Cypress as an `npm` module. After installing you'll be able to execute all of the commands in this document from your **project root**.
 
-After installing you'll be able to execute all of the following commands.
+# How to run commands
 
-{% note warning %}
-For brevity we've omitted the full path to the cypress executable in each command.
-
-You'll need to prefix each command with:
-
-- `$(npm bin)/cypress`
-- ...or...
-- `./node_modules/.bin/cypress`
-
-Or just add cypress commands to the `scripts` field in your `package.json` file.
+{% note info %}
+You can alternatively require and run Cypress as a node module using our {% url "Module API" module-api %}.
 {% endnote %}
+
+For brevity we've omitted the full path to the cypress executable in each command's documentation.
+
+To run a command, you'll need to prefix each command in order to properly locate the cypress executable.
+
+```shell
+$(npm bin)/cypress run
+```
+
+...or...
+
+```shell
+./node_modules/.bin/cypress run
+```
+
+...or... (requires npm@5.2.0 or greater)
+
+```shell
+npx cypress run
+```
+
+You may find it easier to add the cypress command to the `scripts` object in your `package.json` file and call it from an {% url "`npm run` script" https://docs.npmjs.com/cli/run-script.html %}.
+
+When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have  the following command defined in your `package.json`
+
+```json
+{
+  "scripts": {
+    "cy:run": "cypress run"
+  }
+}
+```
+
+...and want to run tests from a single spec file and record the results on the Dashboard, the command should be:
+
+```shell
+npm run cy:run -- --record --spec "cypress/integration/my-spec.js"
+```
+
+If you are using the {% url npx https://github.com/zkat/npx %} tool, you can invoke the locally installed Cypress tool directly:
+
+```shell
+npx cypress run --record --spec "cypress/integration/my-spec.js"
+```
 
 # Commands
 
 ## `cypress run`
 
-Runs Cypress to completion. By default will run all tests headlessly in the `Electron` browser.
-
-### Run tests
+Runs Cypress tests to completion. By default will run all tests headlessly in the `Electron` browser.
 
 ```shell
 cypress run [options]
@@ -46,34 +79,104 @@ cypress run [options]
 
 Option | Description
 ------ |  ---------
-`-b`, `--browser`  | Specify different browser to run tests in
-`-c`, `--config`  | Specify configuration
-`-e`, `--env`  | Specify environment variables
-`-h`, `--help`  | Output usage information
-`-k`, `--key`  | Specify your secret record key
-`-p`, `--port`  | Override default port
-`-P`, `--project` | Path to a specific project
-`-r`, `--reporter`  | Specify a mocha reporter
-`-o`, `--reporter-options`  | Specify mocha reporter options
-`-s`, `--spec`  | Specify the specs to run
-`--record`  | Whether to record the test run
-`--headed`  | Display the Electron browser instead of running headlessly
+`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-run-browser-lt-browser-name-or-path-gt %}
+`--ci-build-id` | {% urlHash "Specify a unique identifier for a run to enable grouping or parallelization." cypress-run-ci-build-id-lt-id-gt %}
+`--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
+`--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
+`--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
+`--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
+`--help`, `-h`  | Output usage information
+`--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
+`--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
+`--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
+`--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
+`--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
+`--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
+`--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
+`--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
+`--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
 
-### Run tests specifying browser
+### `cypress run --browser <browser-name-or-path>`
 
 ```shell
 cypress run --browser chrome
 ```
 
-{% note warning %}
-Cypress will attempt to find all supported browsers available on your system. If Cypress cannot find the browser you should turn on debugging for additional output.
-{% endnote %}
+The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+
+You can also choose a browser by supplying a path:
 
 ```shell
-DEBUG=cypress:launcher cypress run --browser chrome
+cypress run --browser /usr/bin/chromium
 ```
 
-### Run tests in Electron in headed mode
+Currently, only browsers in the Chrome family are supported.
+
+{% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
+
+### `cypress run --ci-build-id <id>`
+
+This value should be automatically detected for most CI providers and is unnecessary to define unless Cypress is unable to determine it.
+
+Typically, this is defined as an environment variable within your CI provider, defining a unique "build" or "run".
+
+```shell
+cypress run --ci-build-id BUILD_NUMBER
+```
+
+Only valid when providing a `--group` or `--parallel` flag. Read our {% url "parallelization" parallelization %} documentation to learn more.
+
+### `cypress run --config <config>`
+
+Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
+
+```shell
+cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+### `cypress run --env <env>`
+
+Pass a single string variable.
+
+```shell
+cypress run --env host=api.dev.local
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically converted from strings.
+
+```shell
+cypress run --env host=api.dev.local,port=4222
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress run --env flags='{"feature-a":true,"feature-b":false}'
+```
+
+### `cypress run --group <name>`
+
+{% url "Group recorded tests together" parallelization#Grouping-test-runs %} under a single run.
+
+```shell
+cypress run --group develop-env
+```
+
+You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
+
+```shell
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+```
+
+```shell
+cypress run --group user-tests --spec 'cypress/integration/user/**/*
+```
+
+Specifying the `--ci-build-id` may also be necessary.
+
+{% url "Read more about grouping." parallelization#Grouping-test-runs %}
+
+### `cypress run --headed`
 
 By default, Cypress will run tests in Electron headlessly.
 
@@ -83,57 +186,39 @@ Passing `--headed` will force Electron to be shown. This matches how you run Ele
 cypress run --headed
 ```
 
-### Run tests specifying configuration
+### `cypress run --no-exit`
 
-Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
+To prevent the Cypress Test Runner from exiting after running tests in a spec file, use `--no-exit`.
 
-```shell
-cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
-```
-
-### Run tests specifying environment variables
+You can pass `--headed --no-exit` in order to view the **command log** or have access to **developer tools** after a `spec` has run.
 
 ```shell
-cypress run --env host=api.dev.local
+cypress run --headed --no-exit
 ```
 
-### Run tests specifying a port
+### `cypress run --parallel`
+
+Run recorded specs in {% url "parallel" parallelization %} across multiple machines.
+
+```shell
+cypress run --record --parallel
+```
+
+You can additionally pass a `--group` flag so this shows up as a named {% url "group" parallelization#Grouping-test-runs %}.
+
+```shell
+cypress run --record --parallel --group e2e-staging-specs
+```
+
+Read our {% url "parallelization" parallelization %} documentation to learn more.
+
+### `cypress run --port <port>`
 
 ```shell
 cypress run --port 8080
 ```
 
-### Run tests specifying a mocha reporter
-
-```shell
-cypress run --reporter json
-```
-
-### Run tests specifying mochas reporter options
-
-```shell
-cypress run --reporter-options mochaFile=result.xml,toConsole=true
-```
-
-### Run tests specifying a single test file to run instead of all tests
-
-```shell
-cypress run --spec cypress/integration/app.spec.js
-```
-
-### Run tests specifying a glob of where to look for test files
-
-```shell
-cypress run --spec cypress/integration/login/**/*
-```
-
-### Run tests specifying multiple test files to run
-
-```shell
-cypress run --spec cypress/integration/filter.spec.js,cypress/integration/users.spec.js
-```
-
-### Run tests specifying a project
+### `cypress run --project <project-path>`
 
 By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
 
@@ -145,7 +230,7 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress run --project ./some/nested/folder
 ```
 
-### Run and record video of tests
+### `cypress run --record --key <record-key>`
 
 Record video of tests running after {% url 'setting up your project to record' dashboard-service#Setup %}. After setting up your project you will be given a **Record Key**.
 
@@ -169,11 +254,43 @@ cypress run --record
 
 You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
 
+### `cypress run --reporter <reporter>`
+
+You can tests specifying a specific {% url "Mocha reporter" reporters %}.
+
+```shell
+cypress run --reporter json
+```
+
+You can specify reporter options using the `--reporter-options <reporter-options>` flag.
+
+```shell
+cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
+```
+
+### `cypress run --spec <spec>`
+
+Run tests specifying a single test file to run instead of all tests.
+
+```shell
+cypress run --spec "cypress/integration/examples/actions.spec.js"
+```
+
+Run tests within the folder matching the glob *(Note: Using double quotes is strongly recommended)*.
+
+```shell
+cypress run --spec "cypress/integration/login/**/*"
+```
+
+Run tests specifying multiple test files to run.
+
+```shell
+cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
+```
+
 ## `cypress open`
 
 Opens the Cypress Test Runner in interactive mode.
-
-### Open Cypress
 
 ```shell
 cypress open [options]
@@ -181,42 +298,69 @@ cypress open [options]
 
 **Options**
 
-Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`
+Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`.
 
 Option | Description
 ------ | ---------
-`-c`, `--config`  | Specify configuration
-`-d`, `--detached` | Open Cypress in detached mode
-`-e`, `--env`  | Specify environment variables
-`-h`, `--help`  | Output usage information
-`-p`, `--port`  | Override default port
-`-P`, `--project` | Path to a specific project
-`--global` | Run in global mode
+`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-open-browser-lt-browser-path-gt %}
+`--config`, `-c`  | {% urlHash "Specify configuration" cypress-open-config-lt-config-gt %}
+`--detached`, `-d` | Open Cypress in detached mode
+`--env`, `-e`  | {% urlHash "Specify environment variables" cypress-open-env-lt-env-gt %}
+`--global` | {% urlHash "Run in global mode" cypress-open-global %}
+`--help`, `-h`  | Output usage information
+`--port`, `-p`  | {% urlHash "Override default port" cypress-open-port-lt-port-gt %}
+`--project`, `-P` | {% urlHash "Path to a specific project" cypress-open-project-lt-project-path-gt %}
 
-### Open Cypress projects specifying port
+### `cypress open --browser <browser-path>`
+
+By default, Cypress will automatically find and allow you to use the browsers installed on your system.
+
+The "browser" option allows you to specify the path to a custom browser to use with Cypress:
 
 ```shell
-cypress open --port 8080
+cypress open --browser /usr/bin/chromium
 ```
 
-### Open Cypress projects specifying configuration
+Currently, only browsers in the Chrome family are supported.
+
+{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+
+### `cypress open --config <config>`
 
 ```shell
 cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-### Open Cypress projects specifying environment variables
+### `cypress open --env <env>`
 
 ```shell
 cypress open --env host=api.dev.local
 ```
 
-### Open Cypress in global mode
+### `cypress open --global`
 
 Opening Cypress in global mode is useful if you have multiple nested projects but want to share a single global installation of Cypress. In this case you can add each nested project to the Cypress in global mode, thus giving you a nice UI to switch between them.
 
 ```shell
 cypress open --global
+```
+
+### `cypress open --port <port>`
+
+```shell
+cypress open --port 8080
+```
+
+### `cypress open --project <project-path>`
+
+By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
+
+This enables you to install Cypress in a top level `node_modules` folder but run Cypress in a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
+
+To see this in action we've set up an {% url 'example repo to demonstrate this here' https://github.com/cypress-io/cypress-test-nested-projects %}.
+
+```shell
+cypress open --project ./some/nested/folder
 ```
 
 ## `cypress verify`
@@ -225,132 +369,69 @@ Verify that Cypress is installed correctly and is executable.
 
 ```shell
 cypress verify
-```
-
-### Example Output
-
-```shell
-Cypress application is valid and should be okay to run: /Applications/Cypress.app
+✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
 ```
 
 ## `cypress version`
 
-Equivalent: `cypress --version`, `cypress -v`
-
-Output both the versions of the installed Cypress binary application and NPM module.
-In most cases they will be the same, but could be different if you have installed a different version of the NPM package and for some reason could not install the matching binary.
+Output both the versions of the installed Cypress binary application and the npm module.
+In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
 
 ```shell
 cypress version
+Cypress package version: 3.0.0
+Cypress binary version: 3.0.0
 ```
 
-### Example Output
+## `cypress cache [command]`
+
+Commands for managing the global Cypress cache. The Cypress cache applies to all installs of Cypress across your machine, global or not.
+
+### `cypress cache path`
+
+Print the `path` to the Cypress cache folder.
 
 ```shell
-Cypress package version: 0.20.0
-Cypress binary version: 0.20.0
+cypress cache path
+/Users/jane/Library/Caches/Cypress
 ```
 
-# Cypress Module API
+### `cypress cache list`
 
-You can use also require Cypress as a Node module.
+Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
 
-{% note warning %}
-The Cypress module is brand new and we are still adding more functionality to it. Its API may change in the future.
-{% endnote %}
-
-Here's an example of programmatically running a spec file:
-
-```js
-const cypress = require('cypress')
-
-cypress.run({
-  spec: './cypress/integration/a-spec.js'
-})
-.then((results) => {
-  console.log(results)
-})
-.catch((err) => {
-  console.error(err)
-})
+```shell
+cypress cache list
+3.0.0 3.0.1 3.0.2
 ```
 
-## `cypress.run()`
+### `cypress cache clear`
 
-`cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run with 2 passing tests could return something like this:
+Clear the contents of the Cypress cache. This is useful when you want Cypress to clear out all installed versions of Cypress that may be cached on your machine. After running this command, you will need to run `cypress install` before running Cypress again.
 
-```json
-{
-  "tests": 2,
-  "passes": 2,
-  "pending": 0,
-  "failures": 0,
-  "duration": "2 seconds",
-  "screenshots": 0,
-  "video": true,
-  "version": "0.20.0"
-}
+```shell
+cypress cache clear
 ```
 
-Even when tests fail, the `Promise` still resolves with the test results.
+# Debugging commands
 
-```json
-{
-  "tests": 2,
-  "passes": 1,
-  "pending": 0,
-  "failures": 1,
-  "duration": "2 seconds",
-  "screenshots": 1,
-  "video": true,
-  "version": "0.20.0"
-}
-```
-
-The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed. In that case, the `Promise` will be rejected with a detailed error.
-
-### Options
-
-Just like the CLI options above, you can pass options that modify how Cypress runs.
-
-```javascript
-const cypress = require('cypress')
-
-cypress.run({
-  reporter: 'junit',
-  browser: 'chrome',
-  config: {
-    baseUrl: 'http://localhost:8080',
-    chromeWebSecurity: false,
-  },
-  env: {
-    foo: 'bar',
-    baz: 'quux',
-  }
-})
-```
-
-# Debugging Commands
-
-Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on.
+Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
 **On Mac or Linux:**
+
 ```shell
 DEBUG=cypress:* cypress open
 ```
-
 ```shell
 DEBUG=cypress:* cypress run
 ```
+
 **On Windows:**
 
 ```shell
 set DEBUG=cypress:*
-cypress open
 ```
-
 ```shell
-set DEBUG=cypress:*
 cypress run
 ```
 
@@ -370,7 +451,4 @@ DEBUG=cypress:launcher cypress run
 
 ```shell
 DEBUG=cypress:server:project cypress run
-DEBUG=cypress:server:scaffold cypress run
-DEBUG=cypress:server:socket cypress run
-DEBUG=cypress:server:bundle cypress run
 ```

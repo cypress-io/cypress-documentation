@@ -1,6 +1,5 @@
 ---
 title: spy
-
 ---
 
 Wrap a method in a spy in order to record calls to and arguments of the function.
@@ -20,7 +19,7 @@ cy.spy(object, method)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.spy(user, 'addFriend')    
+cy.spy(user, 'addFriend')
 ```
 
 ## Arguments
@@ -37,13 +36,13 @@ The name of the `method` on the `object` to be wrapped.
 
 Unlike most Cypress commands, `cy.spy()` is *synchronous* and returns a value (the spy) instead of a Promise-like chain-able object.
 
-`cy.spy()` returns a [Sinon.js spy](http://sinonjs.org/docs/#spies). All [methods](http://sinonjs.org/docs/#spies-api) found on Sinon.JS spies are supported.
+`cy.spy()` returns a {% url "Sinon.js spy" https://sinonjs.org/releases/v6.1.5/spies/ %}. All methods found on Sinon.JS spies are supported.
 
 # Examples
 
 ## Method
 
-***Wrap a method with a spy***
+### Wrap a method with a spy
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -52,7 +51,7 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-***Using `cy.spy()`***
+### Using `cy.spy()`
 
 {% note info %}
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
@@ -68,6 +67,7 @@ const obj = {
 }
 const spy = cy.spy(obj, 'foo').as('anyArgs')
 const withFoo = spy.withArgs('foo').as('withFoo')
+
 obj.foo()
 expect(spy).to.be.called
 expect(withFoo).to.be.called // purposefully failing assertion
@@ -81,19 +81,19 @@ You will see the following in the command log:
 
 ## Restores
 
-***Automatic reset/restore between tests***
+### Automatic reset/restore between tests
 
-`cy.spy()` creates spies in a [sandbox](http://sinonjs.org/docs/#sandbox), so all spies created are automatically reset/restored between tests without you having to explicitly reset/restore them.
+`cy.spy()` creates spies in a {% url "sandbox" https://sinonjs.org/releases/v6.1.5/sandbox/ %}, so all spies created are automatically reset/restored between tests without you having to explicitly reset/restore them.
 
 ## Differences
 
-***Difference between cy.spy() and cy.stub()***
+### Difference between cy.spy() and cy.stub()
 
 The main difference between `cy.spy()` and {% url `cy.stub()` stub %} is that `cy.spy()` does not replace the method, it only wraps it. So, while invocations are recorded, the original method is still called. This can be very useful when testing methods on native browser objects. You can verify a method is being called by your test and still have the original method action invoked.
 
 ## Assertions
 
-***Assertion Support***
+### Assertion Support
 
 Cypress has also built-in {% url "sinon-chai" bundled-tools#Sinon-Chai %} support, so any {% url "assertions supported by `sinon-chai`" assertions#Sinon-Chai %} can be used without any configuration.
 
@@ -120,11 +120,12 @@ const obj = {
   foo () {}
 }
 const spy = cy.spy(obj, 'foo').as('foo')
+
 obj.foo('foo', 'bar')
 expect(spy).to.be.called
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log spy](/img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png)
 

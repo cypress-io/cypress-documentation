@@ -126,7 +126,7 @@ cy.login('admin') // can start a chain off of cy
 
 cy
   .get('button')
-  .login('user') // can also be chained but will not receive the previous subject
+  .login('user') // can be chained but will not receive the previous subject
 ```
 
 {% note info 'Command Log' %}
@@ -186,7 +186,7 @@ By setting the `{ prevSubject: true }`, our new `.console()` command will requir
 Invoking it like this would error:
 
 ```javascript
-cy.console() // detailed error about how you can't call console without a subject
+cy.console() // error about how you can't call console without a subject
 ```
 
 {% note info %}
@@ -209,7 +209,6 @@ Examples of dual commands:
 ### Custom Dual Command
 
 ```javascript
-// not a great example (WIP) :-)
 Cypress.Commands.add('dismiss', {
   prevSubject: 'optional'
 }, (subject, arg1, arg2) => {
@@ -243,7 +242,7 @@ You can also modify the behavior of existing Cypress commands. This is useful to
 
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
-  const domain = Cypress.env("BASE_DOMAIN") // assuming you care about this env var
+  const domain = Cypress.env('BASE_DOMAIN')
 
   if (domain === '...') {
     url = '...'
@@ -253,7 +252,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
     url = '...'
   }
 
-  // originalFn is the existing `visit` command that need to call
+  // originalFn is the existing `visit` command that you need to call
   // and it will receive whatever you pass in here.
   //
   // make sure to add a return here!
@@ -268,6 +267,28 @@ This is usually unnecessary because Cypress is already configured to swap out ba
 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
+
+### Overwrite `screenshot` command
+
+This example overwrites `screenshot` to always wait until a certain element is visible.
+
+```javascript
+Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
+
+  // call another command, no need to return as it is managed
+  cy.get('.app')
+    .should('be.visible')
+
+    // overwrite the default timeout, because screenshot does that internally
+    // otherwise the `then` is limited to the default command timeout
+    .then({ timeout: Cypress.config('responseTimeout') },
+      () => {
+
+        // return the original function so that cypress waits for it
+        return originalFn(subject, name, options)
+      })
+})
+```
 
 # Validations
 
@@ -292,7 +313,7 @@ Require subject be of type: `element`.
 Cypress.Commands.add('click', {
   prevSubject: 'element'
 }, (subject, options) => {
-  // receives the previous subject and its
+  // receives the previous subject and it's
   // guaranteed to be an element
 })
 ```
@@ -312,7 +333,7 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 ## Allow Multiple Types
 
-### Example 2: `.trigger()`
+### `.trigger()`
 
 Require subject be one of the following types: `element`, `document` or `window`
 
@@ -321,7 +342,7 @@ Require subject be one of the following types: `element`, `document` or `window`
 Cypress.Commands.add('trigger', {
   prevSubject: ['element', 'document', 'window']
 }, (subject, eventName, options) => {
-  // receives the previous subject and its
+  // receives the previous subject and it's
   // guaranteed to be an element, document, or window
 })
 ```
@@ -356,7 +377,7 @@ Cypress.Commands.add('contains', {
   // since it's optional.
   //
   // if it's present
-  // then its window, document, or element.
+  // then it's window, document, or element.
   // - when window or document we'll query the entire DOM.
   // - when element we'll query only inside of its children.
   if (subject) {
@@ -385,10 +406,6 @@ cy.wrap(null).contains() // has subject, but not `element`, will error
 
 # Notes
 
-## Retryability
-
-WIP
-
 ## Command Logging
 
 When creating your own custom command, you can control how it appears and behaves in the Command Log.
@@ -413,7 +430,7 @@ The answer is usually **yes**. Here's an example:
 // There's no reason to create something like a cy.search() custom
 // command because this behavior is only applicable to a single spec file
 //
-// Just us a regular ol' javascript function folks!
+// Just use a regular ol' javascript function folks!
 const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
@@ -484,7 +501,7 @@ it('paginates many search results', function () {
         }
       })
     })
-    .get('#pagination').should($pagination) => {
+    .get('#pagination').should(($pagination) => {
       // should offer to goto next page
       expect($pagination).to.contain('Next')
 
@@ -525,7 +542,12 @@ Custom commands are a great way to abstract away setup (specific to your app). W
 
 Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
+### 5. Write TypeScript definitions
+
+You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
+
 # See also
 
+- {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' recipes %}

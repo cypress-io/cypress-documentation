@@ -3,6 +3,7 @@
     a {
       text-decoration: none;
       border-bottom: 0;
+      font-size:.9em;
     }
   }
 
@@ -46,7 +47,7 @@
   }
 
   p {
-    font-size: 0.9em;
+    font-size: 1em;
     line-height: 1.5em;
     margin-top: 5px;
   }
@@ -54,4 +55,8 @@
   a.img-link, a.img-link:hover, a.img-link:focus, a.img-link:active {
     border-bottom: 0;
   }
+}
+
+.small-media {
+  margin-bottom: 100px;
 }

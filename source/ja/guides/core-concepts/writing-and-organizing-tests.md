@@ -1,10 +1,9 @@
 ---
 title: Writing and Organizing Tests
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to organize your test and support files.
 - What languages are supported in your test files.
@@ -57,25 +56,25 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-### Configuring Folder Structure
+***Configuring Folder Structure***
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
-You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration %} for more detail.
+You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
 {% note info "What files should I add to my '.gitignore file' ?" %}
-Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or `cypress.env.json`, these should also be ignored when you check into source control.  
+Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
 {% endnote %}
 
 ## Fixture Files
 
-Fixtures are used as external pieces of static data that can be used by your tests.
+Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in `cypress/fixtures` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory.
 
 You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
 
 ## Test files
 
-Test files may be written as:
+Test files are located in `cypress/integration` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory. Test files may be written as:
 
 - `.js`
 - `.jsx`
@@ -96,11 +95,15 @@ To start writing tests for your app, simply create a new file like `app_spec.js`
 
 By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
+The initial imported plugins file can be {% url 'configured to another file' configuration#Folders-Files %}. 
+
 {% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
 
 ## Support file
 
 By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+
+The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
 The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
 
@@ -108,7 +111,7 @@ You can define your behaviors in a `beforeEach` within any of the `cypress/suppo
 
 ```javascript
 beforeEach(function () {
-  cy.log("I run before every test in every spec file!!!!!!")
+  cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
 ![global hooks](/img/guides/global-hooks.png)
@@ -129,9 +132,7 @@ We automatically seed you an example support file, which has several commented o
 Our {% url 'Extending Cypress recipes' recipes#Node-Modules %} show you how to modify the support file.
 {% endnote %}
 
-
-
-# How to Write Tests
+# Writing tests
 
 Cypress is built on top of {% url 'Mocha' bundled-tools#Mocha %} and {% url 'Chai' bundled-tools#Chai %}. We support both Chai's `BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere to this style.
 
@@ -231,15 +232,15 @@ To run a specified suite or test, simply append `.only` to the function. All nes
 // -- Start: Our Application Code --
 function fizzbuzz (num) {
   if (num % 3 === 0 && num % 5 === 0) {
-    return "fizzbuzz"
+    return 'fizzbuzz'
   }
 
   if (num % 3 === 0) {
-    return "fizz"
+    return 'fizz'
   }
 
   if (num % 5 === 0) {
-    return "buzz"
+    return 'buzz'
   }
 }
 // -- End: Our Application Code --
@@ -255,15 +256,15 @@ describe('Unit Test FizzBuzz', function () {
   }
 
   it.only('returns "fizz" when number is multiple of 3', function () {
-    numsExpectedToEq([9, 12, 18], "fizz")
+    numsExpectedToEq([9, 12, 18], 'fizz')
   })
 
   it('returns "buzz" when number is multiple of 5', function () {
-    numsExpectedToEq([10, 20, 25], "buzz")
+    numsExpectedToEq([10, 20, 25], 'buzz')
   })
 
   it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
-    numsExpectedToEq([15, 30, 60], "fizzbuzz")
+    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
 
@@ -273,7 +274,7 @@ To skip a specified suite or test, simply append `.skip()` to the function. All 
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function () {
-  numsExpectedToEq([9, 12, 18], "fizz")
+  numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
 
@@ -318,3 +319,61 @@ it('can subtract numbers', function() {
   assert.equal(subtract(5, 12), -7, 'these numbers are equal')
 })
 ```
+
+# Watching tests
+
+When running in interactive mode using {% url "`cypress open`" command-line#cypress-open %} Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
+
+This makes for a productive development experience because you can add and edit tests as you're implementing a feature and the Cypress user interface will always reflect the results of your latest edits.
+
+{% note info %}
+Remember to use {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} to limit which tests are run: this can be especially useful when you've got a lot of tests in a single spec file that you're constantly editing; consider also splitting your tests into smaller files each dealing with logically related behavior.
+{% endnote %}
+
+## What is watched?
+
+**Files**
+
+* {% url `cypress.json` configuration %}
+* {% url `cypress.env.json` environment-variables %}
+
+**Folders**
+
+* `cypress/integration/`
+* `cypress/support/`
+* `cypress/plugins/`
+
+The folder, the files within the folder, and all child folders and their files (recursively) are watched.
+
+{% note info %}
+Those folder paths refer to the {% url 'default folder paths' configuration#Folders-Files %}. If you've configured Cypress to use different folder paths then the folders specific to your configuration will be watched.
+{% endnote %}
+
+## What isn't watched?
+
+Everything else; this includes, but isn't limited to, the following:
+
+* Your application code
+* `node_modules`
+* `cypress/fixtures/`
+
+If you're developing using a modern JS-based web application stack then you've likely got support for some form of hot module replacement which is responsible for watching your application code&mdash;HTML, CSS, JS, etc.&mdash;and transparently reloading your application in response to changes.
+
+## Configuration
+
+Set the {% url `watchForFileChanges` configuration#Global %} configuration property to `false` to disable file watching.
+
+{% note warning %}
+**Nothing** is watched during {% url "`cypress run`" command-line#cypress-run %}.
+
+The `watchForFileChanges` property is only in effect when running Cypress using {% url "`cypress open`" command-line#cypress-open %}.
+{% endnote %}
+
+The component responsible for the file-watching behavior in Cypress is the {% url 'Cypress Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is the default file-watcher packaged with Cypress.
+
+If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as _what_ is watched and the delay before emitting an "update" event after a change.
+
+Cypress also ships other {% url "file-watching preprocessors" plugins %}; you'll have to configure these explicitly if you want to use them.
+
+- {% url 'Cypress Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
+- {% url 'Cypress Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}

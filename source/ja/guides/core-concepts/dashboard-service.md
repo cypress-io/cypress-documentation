@@ -1,10 +1,9 @@
 ---
 title: Dashboard Service
-
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What You'll Learn
+# {% fa fa-graduation-cap %} What you'll learn
 
 - How to set up a project to have its tests recorded.
 - What you see in the Dashboard Service for recorded tests.
@@ -15,17 +14,21 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 # Overview
 
-### The Dashboard allows you to:
+***The Dashboard allows you to:***
 
-- See the number of failed, pending and passing tests.
+- See the number of failed, passing, pending and skipped tests.
 - Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail or when using {% url `.screenshot()` screenshot %}.
+- View screenshots taken when tests fail or when using {% url `cy.screenshot()` screenshot %}.
 - Watch a video of your entire test run or a video clip at the point of test failure.
+- See how fast your spec files ran within CI including whether they were run in parallel.
+- See related groupings of tests.
 - Manage who has access to your recorded test data.
+- See usage details for each organization.
+- Pay for your selected billing plan.
 
 {% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-### See Tests Runs in the Test Runner
+***See tests runs in the Test Runner***
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
@@ -35,7 +38,7 @@ Additionally we've integrated the tests run into the Cypress {% url 'Test Runner
 {% url "We have answered some common questions about the Dashboard Service in our FAQ." dashboard-faq %}.
 {% endnote %}
 
-## Example Projects
+## Example projects
 
 Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboard %} you can view any {% urlHash "public project" Public-vs-Private %}.
 
@@ -65,16 +68,16 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 ![Setup Project Screen](/img/dashboard/setup-to-record.gif)
 
 1. Click on the **Runs** tab of your project within the {% url "Test Runner" test-runner %}.
-2. You will need to log in to record your tests, so you may need to log in with GitHub here.
-3. Click **Setup Project to Record**.
+2. Click **Set up Project to Record**.
+3. You will need to log in to record your tests, so you will need to log in with GitHub here.
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
-5. Choose who owns the project. You can personally own it or select an organization you've created. Organizations work just like they do in Github. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
+5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
-  - **A private project** restricts its access to *{% urlHash "only users you invite" Manage-users %}*.
+  - **A private project** restricts its access to *{% urlHash "only users you invite" Users %}*.
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
-9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. You will want to check your `cypress.json` into source control.
+9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
@@ -97,11 +100,11 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 ## Identification
 
-### Project ID
+***Project ID***
 
 Once you set up your project to record, we generate a unique `projectId` for your project and automatically insert it into your `cypress.json` file.
 
-### The `projectId` is a 6 character string in your `cypress.json`:
+***The `projectId` is a 6 character string in your `cypress.json`:***
 
 ```json
 {
@@ -109,13 +112,19 @@ Once you set up your project to record, we generate a unique `projectId` for you
 }
 ```
 
-This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**. We recommend that you check your `cypress.json` including the `projectId` into source control.
+This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
-### Record Key {% fa fa-key %}
+If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable from your CI provider using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your CI provider but could be as simple as:
+
+```shell
+export CYPRESS_PROJECT_ID={projectId}
+```
+
+### Record key {% fa fa-key %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
 
-### A record key is a GUID that looks like this:
+***A record key is a GUID that looks like this:***
 
 ```text
 f4466038-70c2-4688-9ed9-106bf013cd73
@@ -125,7 +134,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 {% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
-### Authentication
+## Authentication
 
 Cypress uses your `projectId` and *Record Key* together to uniquely identify projects.
 
@@ -145,17 +154,51 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 - **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
-- **Private** means that only {% urlHash 'users' Manage-users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+- **Private** means that only {% urlHash 'users' Users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+
+### To change project access
+
+Click into the project you'd like to change access to, then click **Settings** in the top right corner.
+
+{% img /img/dashboard/project-settings.png "project-settings" %}
+
+Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+
+{% img /img/dashboard/access-to-runs.png "access-to-runs" %}
 
 ## Transfer ownership
 
+### Transfer project to other user or organization
+
 You can transfer projects that you own to another {% urlHash "organization" Organizations %} you are a part of or to another user in the organization. Projects can only be transferred from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-![Transfer Project dialog](/img/dashboard/transfer-ownership-of-project-dialog.png)
+1. Choose the {% url "organization" https://on.cypress.io/dashboard/organizations %} with the project you want to transfer.
+2. Click into the project and click on **Settings**.
+  {% img /img/dashboard/project-settings.png "project-settings" %}
+3. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
+4. Select the user or organization, then click **Transfer**.
+  {% img /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
+
+### Cancel project transfer
+
+Upon transferring, you can cancel the transfer at any time by visiting the organization's projects and clicking **Cancel Transfer**.
+
+![Cancel pending transfer of project](/img/dashboard/cancel-transfer-of-project.png)
+
+### Accept or reject transferred project
+
+When a project is transferred to you, you will receive an email notifying you. You will be able to accept or reject the transferred project by visiting your organization's projects and clicking 'Accept' or 'Reject'.
+
+![Accept or reject a transferred project](/img/dashboard/accept-or-reject-transfer-of-project.png)
 
 ## Delete
 
 You can delete projects you own. This will also delete all of their recorded test runs. Deleting projects can only be done from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
+
+1. Click into 'Runs' in the Dashboard.
+2. Click on the project you want to delete from the lefthand sidebar.
+3. On this page, to the far right, click on 'Settings'.
+4. At the very bottom of the Settings page click the 'Remove Project' button.
 
 ![Delete project dialog](/img/dashboard/remove-project-dialog.png)
 
@@ -169,29 +212,61 @@ If you haven't set up your project to record {% urlHash "read here" Setup %}.
 
 ## What is recorded?
 
-### Run Details
+### Run details
 
 Details of each run are displayed including:
 
 - The number of skipped, pending, passing, and failing tests.
-- The GitHub branch, author, commit sha and commit message associated with the run (if any)
-- The time the run started and ended.
-- What Continuous Integration the run ran in (if any)
+- The GitHub branch, pull request, author, commit sha and commit message associated with the run (if any)
+- The times the run, each spec file, and test started and ended.
+- What Continuous Integration the run ran in (if any) and its CI id and url.
 - The operating system and version
-- The browser and version 
+- The browser and version
 - The Cypress version
 
-![run details](/img/dashboard/run-details.png)
+{% img /img/dashboard/run-details.png "run-details" %}
 
-### {% fa fa-code fa-fw %} Standard Output
+### {% fa fa-file-code-o fa-fw %} Spec files
 
-Standard output includes details and summaries of your tests based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
 
-You will also see a summary at the bottom indicating the files, screenshots, or videos that were uploaded during the recording.
+***Timeline View***
 
-![output](/img/dashboard/standard-output-of-recorded-test-run.png)
+The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in {% url "parallel" parallelization %}.
 
-### {% fa fa-exclamation-triangle fa-fw %} Test Failures
+{% img /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
+
+***Bar Chart View***
+
+The Bar Chart View charts the lengths of each spec file. This view is helpful to determine which spec files or tests are running longer than others.
+
+{% img /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
+
+***Jump to failed tests***
+
+If you had any failed tests, you can hover over the spec chart and click on the link to the failed test to go directly to its error message and stack trace.
+
+{% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
+
+### {% fa fa-code fa-fw %} Standard output
+
+Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+
+You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
+
+{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output" %}
+
+***{% fa fa-picture-o fa-fw %} Screenshots***
+
+All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `cy.screenshot()` screenshot %} command will show up here.
+
+***{% fa fa-video-camera fa-fw %} Videos***
+
+The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
+
+{% img /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
+
+### {% fa fa-exclamation-triangle fa-fw %} Test failures
 
 Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
 
@@ -202,29 +277,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 - **Screenshot:** Any screenshots taken during the test.
 - **Video:** The recorded video scrubbed to the point of failure in the test.
 
-![failures](/img/dashboard/failures-of-recorded-run.png)
-
-### {% fa fa-picture-o fa-fw %} Screenshots
-
-All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the {% url `.screenshot()` screenshot %} command will show up here.
-
-### {% fa fa-video-camera fa-fw %} Videos
-
-The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
-
-![Video of tests](/img/dashboard/videos-of-recorded-test-run.png)
-
-### {% fa fa-file-code-o fa-fw %} Spec Files
-
-You can see the result of each spec file that ran within **Specs**.
-
-![Specs tab](/img/dashboard/spec-tab.png)
-
-### {% fa fa-clock-o fa-fw %} Spec & Test Durations
-
-The duration that each spec and test ran is displayed in **Insights**.
-
-![Insights tab](/img/dashboard/insights-spec-durations.png)
+{% img /img/dashboard/failures-of-recorded-run.png "failure tab" %}
 
 # Organizations
 
@@ -232,40 +285,45 @@ Organizations are used to group projects and manage access to those projects.
 
 ![Organizations](/img/dashboard/organizations-listed-in-dashboard.png)
 
-### With organizations you can:
+***With organizations you can:***
 
 - Create projects
 - Invite users
 - Transfer projects
+- Pay for all of your projects usage.
 
-Once out of beta, organizations will also display usage and allow you to handle billing.
-
-## Create
+## Create Org
 
 You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by going to the **Organizations** tab and clicking **{% fa fa-plus %} Add Organization**.
 
 ![Add Organization dialog](/img/dashboard/add-organization-dialog.png)
 
-## Personal orgs
+## Personal Orgs
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
 
-## Manage users
+## Delete Org
 
-### Inviting users
+You can delete organizations that you own as long as they do not have any projects in the organization. You must first transfer ownership of your projects to another organization before you can delete the organization.
 
-You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
+![Delete Organization](/img/dashboard/remove-organization-dialog.png)
 
-**To invite a user to an organization:**
+# Users
 
-1. Click into the organization you want the user to access.
-2. Click **Users**, then **Invite User**. *Note: you must have the role of 'owner' or 'admin' to invite users.*
-3. Fill in their email and select their role then click 'Invite User' *Note: only 'owners can give other user's 'owner' access.*
-4. The user will receive an invite email with a link to accept the invitation.
+## Inviting users
+
+A user is anyone who logs in to the Dashboard Service. You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
+
+### To invite a user to an organization:
+
+1. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to invite a user to.
+2. Click **Users**, then **Invite User**. *Note: you must have the {% urlHash "role of 'owner' or 'admin'" User-roles %} to invite users.*
+3. Fill in their email and select their {% urlHash "role" User-roles %} then click **Invite User** *Note: only 'owners can give other user's 'owner' access.*
+4. The user will receive an invitation email with a link to accept the invitation.
 
 ![Invite User dialog](/img/dashboard/invite-user-dialog.png)
 
-### User roles
+## User roles
 
 Users can be assigned roles that affect their access to certain features of the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
@@ -273,12 +331,59 @@ Users can be assigned roles that affect their access to certain features of the 
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the organization.
 
-### User requests
+The permissions for each user role for the Dashboard Service.
+
+| Permission                                         |  |  | |
+| ---------------------------------------------------|--------|-------|------|
+| See test recordings of private projects            | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
+| See record keys of projects                           | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
+| See billing and usage information                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit billing information                           |        | ✅ **Admin**    | ✅ **Owner** |
+| See users invited to organization                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Resend invitation to invited user                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Invite 'member' to organization                    |        | ✅ **Admin**    | ✅ **Owner** |
+| Invite 'admin' to organization                     |        | ✅ **Admin**    | ✅ **Owner** |
+| See user requests to join organization             |        | ✅ **Admin**    | ✅ **Owner** |
+| Accept user requests to join organization          |        | ✅ **Admin**    | ✅ **Owner** |
+| Remove 'member' from organization                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Remove 'admin' from organization                   |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit 'member' in organization                      |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit 'admin' in organization                       |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit project name                                  |        | ✅ **Admin**    | ✅ **Owner** |
+| Edit project status (private/public}               |        | ✅ **Admin**    | ✅ **Owner** |
+| Add or delete record keys                          |        | ✅ **Admin**    | ✅ **Owner** |
+| Invite 'owner' to organization                     |        |        | ✅ **Owner** |
+| Edit 'owner' in organization                       |        |        | ✅ **Owner** |
+| Remove 'owner' from organization                   |        |        | ✅ **Owner** |
+| Add, edit, remove user in default organization |        |        | ✅ **Owner** |
+| Edit organization name                             |        |        | ✅ **Owner** |
+| Delete organization                                |        |        | ✅ **Owner** |
+| Transfer project to another organization           |        |        | ✅ **Owner** |
+| Delete project                                     |        |        | ✅ **Owner** |
+
+## User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can simply request access and you can choose to accept or deny them access.
 
-## Delete Org
+# Open Source Plan
 
-You can delete organizations that you own as long as they do not have any projects in the organization. You must first transfer ownership of your projects to another organization before you can delete the organization.
+To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
+- Your project is a non-commercial entity
+- Source code for your project is available in a public location with an {% url "OSI-approved license" https://opensource.org/licenses %}
 
-![Delete Organization](/img/dashboard/remove-organization-dialog.png)
+## Requesting OSS Plan for an Org
+
+Follow the following process to request an OSS plan for your project:
+
+1. {% url "Login" https://on.cypress.io/dashboard %} to the Cypress Dashboard, or {% url "create an account" https://on.cypress.io/dashboard %} if you are a new user.
+  {% img 'no-border' /img/dashboard/oss-plan-1-login.png "Login or Create Account" %}
+2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
+> **Note**: Personal organizations cannot be used with an OSS plan.
+  {% img 'no-border' /img/dashboard/oss-plan-2-select-org.png "Select or add organization" %}
+3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
+  {% img 'no-border' /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" %}
+4. Fill in and submit the OSS plan request form.
+  {% img 'no-border' /img/dashboard/oss-plan-4-apply.png "OSS plan request form" %}
+5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
+
+If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).

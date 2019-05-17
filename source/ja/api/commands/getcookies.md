@@ -89,7 +89,7 @@ cy.getCookies().should('have.length', 1).then((cookies) => {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log](/img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png)
 

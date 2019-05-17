@@ -95,7 +95,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log](/img/api/tick/tick-machine-clock-1-second-in-time.png)
 

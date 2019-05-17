@@ -1,6 +1,5 @@
 ---
 title: Talks
-
 containerClass: examples
 layout: media
 dataType: talks

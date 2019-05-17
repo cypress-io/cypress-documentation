@@ -52,7 +52,7 @@ Option | Default | Description
 
 # Examples
 
-## No Args
+## Selector
 
 ***Find the closest element of the 'error' with the class 'banner'***
 
@@ -82,7 +82,7 @@ cy.get('p.error').closest('.banner')
 cy.get('li.active').closest('.nav')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log closest](/img/api/closest/find-closest-nav-element-in-test.png)
 

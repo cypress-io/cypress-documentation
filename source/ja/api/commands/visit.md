@@ -1,15 +1,21 @@
 ---
 title: visit
-
 ---
 
 Visit a remote URL.
+
+{% note warning 'Best Practice' %}
+We recommend setting a `baseUrl` when using `cy.visit()`.
+
+Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} here.
+{% endnote %}
 
 # Syntax
 
 ```javascript
 cy.visit(url)
 cy.visit(url, options)
+cy.visit(options)
 ```
 
 ## Usage
@@ -30,10 +36,14 @@ Cypress will prefix the URL with the `baseUrl` configured in your {% url 'networ
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
-Pass in an options object to change the default behavior of `cy.visit()`.
+Pass in an options object to control the behavior of `cy.visit()`.
 
 Option | Default | Description
 --- | --- | ---
+`url` | `null` | The URL to visit. Behaves the same as the `url` argument.
+`method` | `GET` | The HTTP method to use in the visit. Can be `GET` or `POST`.
+`body` | `null` | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header.
+`headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request.
 `log` | `true` | {% usage_options log %}
 `auth` | `null` | Adds Basic Authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
@@ -51,7 +61,7 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 
 ## Url
 
-***Visit a local server running on `http://localhost:8000`***
+### Visit a local server running on `http://localhost:8000`
 
 `cy.visit()` resolves when the remote page fires its `load` event.
 
@@ -61,14 +71,14 @@ cy.visit('http://localhost:8000')
 
 ## Options
 
-***Change the default timeout***
+### Change the default timeout
 
 ```javascript
 // Wait 30 seconds for page 'load' event
 cy.visit('/index.html', { timeout: 30000 })
 ```
 
-***Adding Basic Auth Headers***
+### Add basic auth headers
 
 Cypress will automatically apply the right authorization headers if you're attempting to visit an application that requires {% url 'Basic Authentication' https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication %}.
 
@@ -94,7 +104,7 @@ cy.visit('https://wile:coyote@www.acme.com')
 Cypress will automatically attach this header at the network proxy level, outside of the browser. Therefore you **will not** see this header in the Dev Tools.
 {% endnote %}
 
-***Provide an `onBeforeLoad` callback function***
+### Provide an `onBeforeLoad` callback function
 
 `onBeforeLoad` is called as soon as possible, before your page has loaded all of its resources. Your scripts will not be ready at this point, but it's a great hook to potentially manipulate the page.
 
@@ -106,8 +116,6 @@ cy.visit('http://localhost:3000/#dashboard', {
 })
 ```
 
-***Using onBeforeLoad***
-
 {% note info %}
 Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
   - {% url 'Bootstrap app data' recipes#Bootstrapping-your-App %}
@@ -115,7 +123,7 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
   - {% url 'Stub `window.fetch`' recipes#Stubbing-window-fetch %}
 {% endnote %}
 
-***Provide an `onLoad` callback function***
+### Provide an `onLoad` callback function
 
 `onLoad` is called once your page has fired its `load` event. All of the scripts, stylesheets, html and other resources are guaranteed to be available at this point.
 
@@ -130,22 +138,37 @@ cy.visit('http://localhost:3000/#/users', {
 })
 ```
 
+### Submit a form
+
+To send a request that looks like a user submitting an HTML form, use a `POST` method with a `body` containing the form values:
+
+```javascript
+cy.visit({
+  url: 'http://localhost:3000/cgi-bin/newsletterSignup',
+  method: 'POST',
+  body: {
+    name: 'George P. Burdell',
+    email: 'burdell@microsoft.com'
+  }
+})
+```
+
 # Notes
 
 ## Redirects
 
-***Visit will automatically follow redirects***
+### Visit will automatically follow redirects
 
 ```javascript
 // we aren't logged in, so our web server
 // redirected us to /login
-cy.visit('http://localhost3000/admin')
+cy.visit('http://localhost:3000/admin')
 cy.url().should('match', /login/)
 ```
 
 ## Protocol
 
-***Protocol can be omitted from common hosts***
+### Protocol can be omitted from common hosts
 
 Cypress automatically prepends the `http://` protocol to common hosts.  If you're not using one of these 3 hosts, then make sure to provide the protocol.
 
@@ -157,7 +180,7 @@ cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
 
 ## Web Server
 
-***Cypress can optionally act as your web server***
+### Cypress can optionally act as your web server
 
 Cypress will automatically attempt to serve your files if you don't provide a host. The path should be relative to your project's root folder (where `cypress.json` is located).
 
@@ -169,7 +192,7 @@ cy.visit('app/index.html')
 
 ## Prefixes
 
-***Visit is automatically prefixed with `baseUrl`.***
+### Visit is automatically prefixed with `baseUrl`.
 
 Configure `baseUrl` in the `cypress.json` file to prevent repeating yourself in every single `cy.visit()` command. Read more about {% url 'configuration' configuration %}.
 
@@ -185,7 +208,7 @@ cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 
 ## Window
 
-***Visit will always yield the remote page's window object when it resolves***
+### Visit will always yield the remote page's `window` object when it resolves
 
 ```javascript
 cy.visit('index.html').then((contentWindow) => {
@@ -193,11 +216,15 @@ cy.visit('index.html').then((contentWindow) => {
 })
 ```
 
+## User agent
+
+Trying to change the `User-Agent`? You can set the `userAgent` as a {% url "configuration value" configuration#Browser %} in your configuration file.
+
 ## Routing
 
-***Preventing XHR / AJAX requests before a remote page initially loads***
+### Prevent XHR / Ajax requests before a remote page initially loads
 
-One common scenario Cypress supports is visiting a remote page and also preventing any AJAX requests from immediately going out.
+One common scenario Cypress supports is visiting a remote page and also preventing any Ajax requests from immediately going out.
 
 You may think this works:
 
@@ -215,7 +242,7 @@ Many applications will have already begun routing, initialization, and requests 
 Luckily Cypress supports this use case. Simply reverse the order of the commands:
 
 ```javascript
-// this code is probably want you want
+// this code is probably what you want
 cy.server()
 cy.route('/users/**', {...})
 cy.visit('http://localhost:8000/#/app')
@@ -247,13 +274,17 @@ beforeEach(function () {
 })
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log visit](/img/api/visit/visit-example-page-in-before-each-of-test.png)
 
 When clicking on `visit` within the command log, the console outputs the following:
 
 ![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
+
+{% history %}
+| 3.2.0 | Added options `url`, `method`, `body`, and `headers`
+{% endhistory %}
 
 # See also
 

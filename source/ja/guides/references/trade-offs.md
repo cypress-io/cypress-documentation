@@ -1,6 +1,5 @@
 ---
 title: Trade-offs
-
 containerClass: faq
 ---
 
@@ -31,8 +30,8 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
 - {% issue 685 "Iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
-- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %}, also a {% url "recipe here." https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/stubbing-spying__window-fetch/cypress/integration/spy-stub-clock-spec.js %}
-- {% issue 350 "During `cypress run`, on very long and memory intense applications, we are seeing renderer crashes with Docker. This issue describes exactly how to avoid this by adding a flag."%}
+- {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %} See the implementation in {% url "this recipe." https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch/cypress/integration %}
+- {% issue 144 "There is no shadow DOM support, but there are workarounds." %} See {% url "this comment." https://github.com/cypress-io/cypress/issues/830#issuecomment-449411701 %}
 
 # Permanent trade-offs
 
@@ -55,7 +54,7 @@ In case you missed it before - Cypress tests run inside of the browser! This mea
 
 But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node.js, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 
-This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you will soon have the ability to use Node.js to import or talk directly to your backend scripts once {% issue 684 %} lands.
+This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node.js to import or talk directly to your backend scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
 
 To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your backend language.
 
@@ -201,22 +200,19 @@ This avoids ever needing a second open browser, but still gives you an end-to-en
 
 Each test is limited to only visiting a single superdomain.
 
-What is a superdomain?
+What is a superdomain? Given the urls below, all have the same superdomain of `cypress.io`.
 
-```js
-// examples of superdomains
-// given these origins below
-
-http://google.com       // superdomain is google.com
-https://google.com      // superdomain is google.com
-https://www.google.com  // superdomain is google.com
-https://mail.google.com // superdomain is google.com
-```
+- `http://cypress.io`
+- `https://cypress.io`
+- `https://www.cypress.io`
+- `https://docs.cypress.io`
+- `https://example.cypress.io/commands/querying`
 
 The rules are:
 
-- {% fa fa-warning %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
-- {% fa fa-check-circle %} But you **can** {% url "visit" visit %} different subdomains in the same test.
+- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different subdomains in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different superdomains in **different** tests.
 
 ```javascript
 cy.visit('https://www.cypress.io')

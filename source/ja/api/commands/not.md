@@ -60,8 +60,18 @@ Option | Default | Description
 
 ***Yield the elements that do not have class `active`.***
 
+```html
+<ul>
+  <li>Home</li>
+  <li class='active'>About</li>
+  <li>Services</li>
+  <li>Pricing</li>
+  <li>Contact</li>
+</ul>
+```
+
 ```javascript
-cy.get('.left-nav>li').not('.active').should('not.have.class', 'active') // true
+cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 
 # Rules
@@ -86,7 +96,7 @@ cy.get('.left-nav>li').not('.active').should('not.have.class', 'active') // true
 cy.get('form').find('button').not('[type="submit"]')
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log not](/img/api/not/filter-elements-with-not-and-optional-selector.png)
 

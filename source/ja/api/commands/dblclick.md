@@ -84,7 +84,7 @@ cy.get('a#nav1').dblclick() // yields the <a>
 cy.get('[data-schedule-id="4529114"]:first').dblclick()
 ```
 
-The commands above will display in the command log as:
+The commands above will display in the Command Log as:
 
 ![Command Log dblclick](/img/api/dblclick/double-click-in-testing.png)
 

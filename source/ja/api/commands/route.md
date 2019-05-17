@@ -8,6 +8,8 @@ Use `cy.route()` to manage the behavior of network requests.
 **Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
 {% endnote %}
 
+{% partial network_stubbing_warning %}
+
 # Syntax
 
 ```javascript
@@ -24,7 +26,7 @@ cy.route(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.route('/users/**')  
+cy.route('/users/**')
 ```
 
 ## Arguments
@@ -39,7 +41,11 @@ Supply a response `body` to *stub* in the matching route.
 
 **{% fa fa-angle-right %} method** ***(String)***
 
-Match the route to a specific method (`GET`, `POST`, `PUT`, etc). If no method is defined, Cypress will match `GET` requests by default.
+Match the route to a specific method (`GET`, `POST`, `PUT`, etc).
+
+{% note bolt %}
+If no method is defined Cypress will match `GET` requests by default.
+{% endnote %}
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
@@ -151,7 +157,7 @@ When passing a `string` as the `url`, the XHR's URL must match *exactly* what yo
 
 ```javascript
 cy.server()
-cy.route('https://localhost:7777/users', [{id: 1, name: 'Pat'}])
+cy.route('https://localhost:7777/users', [{ id: 1, name: 'Pat' }])
 ```
 
 ***`url` as a RegExp***
@@ -160,7 +166,7 @@ When passing a RegExp as the `url`, the XHR's url will be tested against the reg
 
 ```javascript
 cy.server()
-cy.route(/users\/\d+/, {id: 1, name: 'Phoebe'})
+cy.route(/users\/\d+/, { id: 1, name: 'Phoebe' })
 ```
 
 ```javascript
@@ -191,38 +197,18 @@ cy.route('POST', '**/comments', commentsResponse)
 
 Any request that matches the `method` and `url` of a route will be responded to based on the configuration of that route.
 
-If a request doesn't match any route, [it will automatically receive a 404](#Notes). For example, given we have the following routes:
+{% note bolt %}
+`GET` is the default HTTP method used to match routes. If you want to stub a route with another HTTP method such as `POST` then you {% urlHash 'must be explicit about the method' Arguments %}.
+{% endnote %}
 
-```javascript
-cy.server()
-cy.route('**/users', [
-  {id: 19, name: 'Laura'},
-  {id: 20, name: 'Jamie'}
-])
-cy.route('POST', '**/messages', {id: 123, message: 'Hi There!'})
-cy.get('form').submit()
-```
+{% note info %}
+If a request doesn't match any route then the behavior depends on the value of the `force404` option on the {% url `cy.server()` server %}:
 
-```javascript
-// Application Code
-// when our form is submitted
-$('form').submit(() => {
-  // send an AJAX to: GET /users
-  $.get('https://localhost:7777/users' )
+* if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
+* if `force404` is `true` then the response {% urlHash "will be a 404" Notes %}.
 
-  // send an AJAX to: POST /messages
-  $.post('https://localhost:7777/messages', {some: 'data'})
-
-  // send an AJAX to: GET /updates
-  $.get('https://localhost:7777/updates')
-})
-```
-
-**The above application code will issue 3 AJAX requests:**
-
-1. The `GET /users` will match our 1st route and respond with a `200` status code and the array of users.
-2. The `POST /messages` will match our 2nd route and respond with a `200` status code with the message object.
-3. The `GET /updates` did not match any routes and its response automatically sent back a `404` status code with an empty response body.
+You can {% url 'read more about this behavior here.' server#Options %}
+{% endnote %}
 
 ***Specify the method***
 
@@ -250,7 +236,7 @@ cy.wait('@getBeetles')
 cy.get('#beetle-results').should('be.empty')
 
 // now re-define the /beetles response
-cy.route('/beetles', [{name: 'Geotrupidae'}])
+cy.route('/beetles', [{ name: 'Geotrupidae' }])
 
 cy.get('#search').type('Geotrupidae')
 
@@ -260,8 +246,8 @@ cy.wait('@getBeetles')
 
 // we responded with 1 beetle item so now we should
 // have one result
-cy.get('#beetle-results').should('have.length', 1) 
-``` 
+cy.get('#beetle-results').should('have.length', 1)
+```
 
 ## Fixtures
 
@@ -342,7 +328,7 @@ cy.route({
 ***Setup route to error on POST to login***
 
 {% note info %}
-{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe using `cy.route()` to simulate a `503` on `POST` to login" recipes#XHR-Web-Forms %}
 {% endnote %}
 
 ***Change `headers`***
@@ -397,12 +383,12 @@ cy.route(() => {
 ```javascript
 cy.route(() => {
   // a silly example of async return
-  return new Cypress.Promise((resolve) =>{
+  return new Cypress.Promise((resolve) => {
     // resolve this promise after 1 second
     setTimeout(() => {
       resolve({
-        method: 'PUT'
-        url: '**/posts/**'
+        method: 'PUT',
+        url: '**/posts/**',
         response: '@postFixture'
       })
     }, 1000)
@@ -430,11 +416,11 @@ Cypress also logs whether the XHR was stubbed or not to the console when you cli
 
 Even the `Initiator` is included, which is a stack trace to what caused the XHR to be sent.
 
-## `cy.route()` can not be debugged using {% url `cy.request()` request %}
+## `cy.route()` cannot be debugged using {% url `cy.request()` request %}
 
 ***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the frontend application.
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 ## Matches
 
@@ -461,16 +447,10 @@ The following XHR's which were `xhr.open(...)` with these URLs would:
 
 ***Requests that don't match any routes***
 
-You can force routes that do not match a route to return `404`:
-
-Status | Body | Headers
---- | --- | ---
-`404` | "" | `null`
-
-If you'd like to enable this behavior you need to pass:
+You can force requests that do _not_ match a route to return a `404` status and an empty body by passing an option to the `cy.server()` like so:
 
 ```javascript
-cy.server({force404: true})
+cy.server({ force404: true })
 ```
 
 You can {% url 'read more about this here.' server#Options %}

@@ -10,6 +10,7 @@ guides:
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
+    retry-ability: retry-ability.html
     interacting-with-elements: interacting-with-elements.html
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
@@ -17,9 +18,11 @@ guides:
     dashboard-service: dashboard-service.html
   guides:
     command-line: command-line.html
+    module-api: module-api.html
     debugging: debugging.html
     network-requests: network-requests.html
     continuous-integration: continuous-integration.html
+    parallelization: parallelization.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     screenshots-and-videos: screenshots-and-videos.html
@@ -30,6 +33,7 @@ guides:
     plugins-guide: plugins-guide.html
     reporters: reporters.html
     typescript-support: typescript-support.html
+    visual-testing: visual-testing.html
 
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
@@ -41,8 +45,8 @@ guides:
   references:
     assertions: assertions.html
     configuration: configuration.html
-    error-messages: error-messages.html
     best-practices: best-practices.html
+    error-messages: error-messages.html
     bundled-tools: bundled-tools.html
     # creating-fixtures: creating-fixtures.html
     # cypress-api-design: cypress-api-design.html
@@ -50,13 +54,14 @@ guides:
     # contributing: contributing.html
     changelog: changelog.html
     roadmap: roadmap.html
-    # all-videos: all-videos.html
 
 api:
-  introduction:
-    api: api.html
+  api:
+    table-of-contents: table-of-contents.html
   events:
     catalog-of-events: catalog-of-events.html
+  assertions:
+    all-assertions: assertions.html
   commands:
     and: and.html
     as: as.html
@@ -152,17 +157,20 @@ api:
     selector-playground-api: selector-playground-api.html
     cypress-server: cypress-server.html
     arch: arch.html
+    browser: browser.html
     config: config.html
-    # dom: dom.html
+    dom: dom.html
     env: env.html
     cypress-log: cypress-log.html
     platform: platform.html
+    spec: spec.html
     version: version.html
   plugins:
     writing-a-plugin: writing-a-plugin.html
     configuration-api: configuration-api.html
     preprocessors-api: preprocessors-api.html
     browser-launch-api: browser-launch-api.html
+    after-screenshot-api: after-screenshot-api.html
 
 plugins:
   plugins: index.html
@@ -173,6 +181,7 @@ examples:
     tutorials: tutorials.html
     applications: applications.html
     docker: docker.html
+    workshop: workshop.html
   media:
     blogs-media: blogs-media.html
     talks-media: talks-media.html

@@ -29,6 +29,7 @@ cy.task('log', 'This will be output to the terminal')
 on('task', {
   log (message) {
     console.log(message)
+
     return null
   }
 })
@@ -42,7 +43,26 @@ An event name to be handled via the `task` event in the {% url "`pluginsFile`" c
 
 **{% fa fa-angle-right %} arg** ***(Object)***
 
-An argument to send along with the event. This can be any value that can be serialized by [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
+An argument to send along with the event. This can be any value that can be serialized by {% url "JSON.stringify()" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %}. Unserializable types such as functions, regular expressions, or symbols will be omitted to `null`.
+
+If you need to pass multiple arguments, use an object
+
+```javascript
+// in test
+cy.task('hello', { greeting: 'Hello', name: 'World' })
+```
+
+```javascript
+// in plugins/index.js
+on('task', {
+  // deconstruct the individual properties
+  hello ({ greeting, name }) {
+    console.log('%s, %s', greeting, name)
+
+    return null
+  }
+})
+```
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -64,35 +84,34 @@ Option | Default | Description
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
 - Seeding your test database.
-- Storing state in Node that you want persisted between tests.
+- Storing state in Node that you want persisted between spec files.
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled. 
+In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled.
 
 If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
 
-### Read a JSON file's contents
+### Read a file that might not exist
 
-Note: this serves as a demonstration only. We recommend using {% url "`cy.fixture()`" fixture %} or {% url "`cy.readFile()`" readfile %} for a more robust implementation of reading a file in your tests.
+Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you need to read a file that might not exist, use `cy.task`.
 
 ```javascript
 // in test
-cy.task('readJson', 'cypress.json').then((data) => {
-  // data equals:
-  // {
-  //   projectId: '12345',
-  //   ...
-  // }
-})
+cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
 ```javascript
-// in plugins/index.js file
+// in plugins/index.js
+const fs = require('fs')
+
 on('task', {
-  readJson () {
-    // reads the file relative to current working directory
-    return fsExtra.readJson(path.join(process.cwd(), arg)
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
   }
 })
 ```
@@ -115,7 +134,7 @@ describe('e2e', () => {
 ```
 
 ```javascript
-// in plugins/index.js file
+// in plugins/index.js
 // we require some code in our app that
 // is responsible for seeding our database
 const db = require('../../server/src/db')
@@ -129,6 +148,25 @@ module.exports = (on, config) => {
 }
 ```
 
+### Return a Promise from an asynchronous task
+
+```javascript
+// in test
+cy.task('pause', 1000)
+```
+
+```javascript
+// in plugins/index.js
+on('task', {
+  pause (ms) {
+    return new Promise((resolve) => {
+      // tasks should not resolve with undefined
+      setTimeout(() => resolve(null), ms)
+    })
+  }
+})
+```
+
 ## Options
 
 ### Change the timeout
@@ -139,7 +177,7 @@ Cypress will *not* continue running any other commands until `cy.task()` has fin
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
-cy.task('seedDatabase', null, { timeout: 20000 });
+cy.task('seedDatabase', null, { timeout: 20000 })
 ```
 
 # Notes
@@ -155,6 +193,36 @@ cy.task('seedDatabase', null, { timeout: 20000 });
 - Any process that needs to be manually interrupted to stop.
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
+
+## Tasks are merged automatically
+
+Sometimes you might be using plugins that export their tasks for registration. Cypress automatically merges `on('task')` objects for you. For example if you are using {% url 'cypress-skip-and-only-ui' https://github.com/bahmutov/cypress-skip-and-only-ui %} plugin and want to install your own task to read a file that might not exist:
+
+```javascript
+// in plugins/index.js file
+const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
+const fs = require('fs')
+const myTask = {
+  readFileMaybe (filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
+  }
+}
+
+// register plugin's task
+on('task', skipAndOnlyTask)
+// and register my own task
+on('task', myTask)
+```
+
+See {% issue 2284 '#2284' %} for implementation.
+
+{% note warning Duplicate task keys %}
+If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+{% endnote %}
 
 # Rules
 
@@ -178,7 +246,7 @@ A task must end within the `taskTimeout` or Cypress will fail the current test.
 cy.task('readJson', 'cypress.json')
 ```
 
-The command above will display in the command log as:
+The command above will display in the Command Log as:
 
 ![Command Log task](/img/api/task/task-read-cypress-json.png)
 
@@ -193,3 +261,5 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
 - {% url `cy.writeFile()` writefile %}
+- {% url "Blog: Incredibly Powerful cy.task()" https://glebbahmutov.com/blog/powerful-cy-task/ %}
+- {% url "Blog: Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %}
