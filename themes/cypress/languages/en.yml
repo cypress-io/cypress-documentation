@@ -63,6 +63,7 @@ sidebar:
     assertions: Assertions
     creating-fixtures: Creating Fixtures
     best-practices: Best Practices
+    proxy-configuration: Proxy Configuration
     anti-patterns: Anti-patterns
     trade-offs: Trade-offs
     contributing: Contributing
@@ -180,6 +181,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    iscy: isCy
     custom-commands: Commands
     cookies: Cookies
     dom: dom
