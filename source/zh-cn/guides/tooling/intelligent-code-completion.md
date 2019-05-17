@@ -67,6 +67,7 @@ If the triple slash directive does not work, please refer to your code editor in
 如果三斜杠指令不起作用, 请参考{% url "TypeScript的编辑器支持文档" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %}中的代码编辑器, 并且遵循你的IDE的指令去获得{% url "TypeScript支持" typescript-support %}并且首先在你的研发环境中配置智能代码补全. TypeScript是内置在{% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}和{% url "WebStorm" https://www.jetbrains.com/webstorm/ %}中的, 所有其他的编辑器需要额外设置智能代码补全功能.
 
 ### Reference type declarations via `tsconfig`
+### 通过`tsconfig`参考类型声明
 
 Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %} with the following configuration should get intelligent code completion working.
 
