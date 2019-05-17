@@ -1,40 +1,28 @@
 ---
-title: Installing Cypress安装Cypress
-
+title: 安装Cypress
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
 # {% fa fa-graduation-cap %} 你将学到
 
-- How to install Cypress via `npm`.
 - 如何通过`npm`来安装Cypress.
-- How to install Cypress via direct download.
 - 如何通过直接下载来安装Cypress.
-- How to version and run Cypress via `package.json`
 - 如何通过`package.json`来确认版本以及运行Cypress.
 
 {% endnote %}
 
-# System requirements
 # 系统必要条件
 
-Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 Cypress是一个被安装在你电脑上的桌面应用. 该桌面应用支持这些操作系统:
 
-- **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
 - **Mac OS** 10.9+ (Mavericks+), 仅提供64位二进制文件.
-- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
 - **Linux** Ubuntu 12.04+, Fedora 21, Debian 8的64位二进制文件
-- **Windows** 7+, only 32bit binaries are provided for Windows.
 - **Windows** 7+, 仅提供32位二进制文件.
 
-# Installing
 # 安装
 
 ## {% fa fa-terminal %} `npm install`
 
-Installing Cypress via `npm` is easy:
 通过`npm`来安装Cypress很容易:
 
 ```shell
@@ -45,18 +33,15 @@ cd /your/project/path
 npm install cypress --save-dev
 ```
 
-This will install Cypress locally as a dev dependency for your project.
 这将把Cypress作为一个dev的本地依赖安装到你的项目中.
 
 {% note info %}
-Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/cli/init %} or have a `node_modules` folder or `package.json` file in the root of your project to ensure cypress is installed in the correct directory.
 确保你已经运行了{% url "`npm init`" https://docs.npmjs.com/cli/init %}或者存在`node_modules`文件夹或者存在`package.json`文件在你项目的根目录下, 以此来确保cypress被安装到正确的路径下.
 {% endnote %}
 
 {% video local /img/snippets/installing-cli.mp4 %}
 
 {% note info %}
-Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
 注意Cypress的`npm`包是Cypress的二进制文件warpper. `npm` package的版本决定了二进制文件的下载版本.
 As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 截至`3.0`版, 二进制文件会被下载到全局缓存目录从而能够被跨项目使用.
@@ -254,11 +239,20 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, since it will affect every cypress module installed on your file system.
 {% endnote %}
 
-## Hosting
+## Download URLs
 
-If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN. You may also want to host Cypress yourself and serve it from a local network.
+If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN.
 
 The download server url is `https://download.cypress.io`.
+
+We currently have the following downloads available:
+
+* Windows 64-bit (`?platform=win32&arch=x64`)
+* Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
+* Linux 64-bit (`?platform=linux`)
+* macOS 64-bit (`?platform=darwin`)
+
+Here are the available download URLs:
 
 See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
 
@@ -266,14 +260,14 @@ See {% url "https://download.cypress.io/desktop.json" https://download.cypress.i
  ------ | ------------------------------ | -------------------------------------------------------------------------
  `GET`  | `/desktop                 `    | Download Cypress at latest version (platform auto-detected)
  `GET`  | `/desktop.json            `    | Returns JSON containing latest available CDN destinations
- `GET`  | `/desktop?platform=p      `    | Download Cypress for a specific platform
+ `GET`  | `/desktop?platform=p&arch=a  ` | Download Cypress for a specific platform and/or architecture
  `GET`  | `/desktop/:version`            | Download Cypress with a specified version
- `GET`  | `/desktop/:version?platform=p` | Download Cypress with a specified version and platform
+ `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture
 
-**Example of downloading Cypress `3.0.0` for Windows platform:**
+**Example of downloading Cypress `3.0.0` for Windows 64-bit:**
 
 ```
-https://download.cypress.io/desktop/3.0.0?platform=win
+https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
 ## Mirroring
