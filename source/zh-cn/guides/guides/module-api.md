@@ -105,27 +105,27 @@ cypress.run({
 }
 ```
 
-Find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
+在{% url "`cypress/cli/types`文件夹中" https://github.com/cypress-io/cypress/tree/develop/cli/types %}为结果对象集找到TypeScript定义.
 
-Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find  a module dependency. In that case, the `Promise` will be rejected with a detailed error.
+即使测试失败, `Promise`仍然使用测试结果解析. 如果Cypress因为某些原因跑不起来, `Promise`才会被拒绝; 例如, 如果没有安装某个二进制文件，或者无法找到某个模块依赖项. 在这种情况下, `Promise`将被拒绝, 并给出详细报错信息.
 
 ## `cypress.open()`
 
-### Options
+### 可选参数
 
-Just like the {% url "Command Line options" command-line %}, you can pass options that modify how Cypress runs.
+正如{% url "命令行选项" command-line %}, 您可以传递修改Cypress运行方式的选项.
 
-Option | Description
+选项 | 描述
 ------ | ---------
-`browser` | Specify a filesystem path to a custom browser
-`config`  | Specify configuration
-`detached` | Open Cypress in detached mode
-`env`  | Specify environment variables
-`global` | Run in global mode
-`port`  | Override default port
-`project` | Path to a specific project
+`browser` | 给自定义浏览器指定文件系统路径
+`config`  | 指定配置
+`detached` | 在分离模式中打开Cypress
+`env`  | 指定环境变量
+`global` | 全局模式下运行
+`port`  | 覆盖默认端口
+`project` | 指向特定项目的路径
 
-### Example
+### 例子
 
 ```javascript
 const cypress = require('cypress')
