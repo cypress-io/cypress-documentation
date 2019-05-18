@@ -1,13 +1,13 @@
 ---
-title: Debugging
+title: 调试工具
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将学到
 
-- How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
-- How Cypress embraces the standard DevTools
-- How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
+- Cypress如何在同一个事件循环中运行您的代码, 并且保持调试简单易懂
+- Cypress如何接受标准的开发工具
+- 如何以及何时使用`调试工具`已经{% url `.debug()` debug %}速记命令
 - How to troubleshoot issues with Cypress itself
 {% endnote %}
 
