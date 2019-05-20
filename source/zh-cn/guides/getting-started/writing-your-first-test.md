@@ -1,34 +1,34 @@
 ---
-title: Writing Your First Test
+title: 你将会学习到什么
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
-- How to start testing a new project in Cypress.
-- What passing and failing tests look like.
-- Testing web navigation, DOM querying, and writing assertions.
+- 如何使用Cypress开始测试.
+- 通过和失败的用例是怎样的.
+- 测试web导航、DOM查询和编写断言.
 {% endnote %}
 
 {% video vimeo 237115455 %}
 
-# Add a test file
+# 添加一个测试文件
 
-Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
+假设您已经成功地安装了 {% url "installed the Test Runner" installing-cypress#Installing %} 和 {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, 现在是编写第一个测试的时候了。我们要:
 
-1. Create a `sample_spec.js` file.
-2. Watch Cypress update our list of specs.
-3. Launch Cypress in interactive mode.
+1. 创建一个  `sample_spec.js` 文件.
+2. 查看 Cypress 更新后的测试列表.
+3. 以交互模式启动Cypress
 
-Let's create a new file in the `cypress/integration` folder that was created for us:
+让我们先在 `cypress/integration` 文件下创建一个文件:
 
 ```shell
 touch {your_project}/cypress/integration/sample_spec.js
 ```
 
-Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
+一旦我们创建好文件, 我们应该可以看到在Cypress Test Runner Integration Tests的列表中这份文件立即被呈现出来. 无论你的项目文件有任何改变Cypress都会自动检测且呈现出来.
 
-Even though we haven't written any tests yet - that's okay - let's click on `sample_spec.js` and watch Cypress launch your browser.
+虽然我们还没有写任何测试脚本- 让我们点击`sample_spec.js`  看看Cypress启动你的浏览器
 
 {% note info %}
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
