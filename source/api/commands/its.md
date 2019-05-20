@@ -1,12 +1,11 @@
 ---
 title: its
-
 ---
 
 Get a property's value on the previously yielded subject.
 
 {% note info %}
-If you want to call a function on the previously yielded subject, use {% url `.invoke()` invoke %}.
+If you want to call a `function` on the previously yielded subject, use {% url `.invoke()` invoke %}.
 {% endnote %}
 
 # Syntax
@@ -45,7 +44,7 @@ Name of property or nested properties (with dot notation) to get.
 
 ## Plain Objects
 
-***Get property***
+### Get property
 
 ```javascript
 cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
@@ -53,7 +52,7 @@ cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
 
 ## DOM Elements
 
-***Get the `length` property of a DOM element***
+### Get the `length` property of a DOM element
 
 ```javascript
 cy
@@ -65,7 +64,7 @@ cy
 
 ## Requests
 
-***Get the `user` object of the response's `body`***
+### Get the `user` object of the response's `body`
 
 ```javascript
 cy
@@ -85,7 +84,7 @@ cy
 
 ## Strings
 
-***Get `length` of title***
+### Get `length` of title
 
 ```javascript
 cy.title().its('length').should('eq', 24)
@@ -93,7 +92,7 @@ cy.title().its('length').should('eq', 24)
 
 ## Functions
 
-***Get function as property***
+### Get function as property
 
 ```javascript
 const fn = () => {
@@ -103,7 +102,7 @@ const fn = () => {
 cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 ```
 
-***Access function properties***
+### Access function properties
 
 You can access functions to then drill into their own properties instead of invoking them.
 
@@ -129,7 +128,7 @@ cy
   .invoke('create', 'arg')  // now invoke properties on it
 ```
 
-***Use `.its()` to test `window.fetch`***
+### Use `.its()` to test `window.fetch`
 
 {% note info %}
 {% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-window-fetch %}
@@ -149,6 +148,22 @@ const user = {
 }
 
 cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
+```
+
+## Existence
+
+### Wait for some propery to exist on `window`
+
+```javascript
+cy.window().its('globalProp').then((globalProp) => {
+  // do something now that window.globalProp exists
+})
+```
+
+### Assert that a propery does not exist on `window`
+
+```javascript
+cy.window().its('evilProp').should('not.exist')
 ```
 
 # Rules
