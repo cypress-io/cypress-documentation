@@ -129,11 +129,6 @@
       link: https://github.com/NicholasBoll/cypress-pipe
       keywords: [commands]
 
-    - name: cypress-plugin-snapshots
-      description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
-      link: https://github.com/meinaart/cypress-plugin-snapshots
-      keywords: [snapshot]
-
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library
@@ -281,6 +276,11 @@
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
       keywords: [screenshots, visual regression]
+      
+    - name: cypress-plugin-snapshots
+      description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
+      link: https://github.com/meinaart/cypress-plugin-snapshots
+      keywords: [snapshot]
 
     - name: Cypress Image Snapshot
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
