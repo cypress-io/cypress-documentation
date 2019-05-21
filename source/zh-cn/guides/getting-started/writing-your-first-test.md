@@ -31,28 +31,28 @@ touch {your_project}/cypress/integration/sample_spec.js
 虽然我们还没有写任何测试脚本- 让我们点击`sample_spec.js`  看看Cypress启动你的浏览器
 
 {% note info %}
-Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
+Cypress使用安装在系统上的浏览器打开测试。你可以阅读更多关于我们如何做到这一点{% url "Launching Browsers" launching-browsers %}.
 {% endnote %}
 
 {% video local /img/snippets/empty-file-30fps.mp4 %}
 
-We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This is where we will spend the majority of your time testing.
+现让我们正式进入 {% url 'Cypress Test Runner' test-runner %}. 这是我们花费大部分时间测试的地方。
 
 {% note warning %}
-Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
+请注意Cypress显示无法找到任何测试的信息。 这很正常 - 我们还没有写过任何测试！ 如果解析测试文件时出错，有时您也会看到此消息。 您可以打开** Dev Tools **来检查控制台是否存在阻止Cypress读取测试的任何语法或解析错误。
 {% endnote %}
 
-# Write a simple test
+# 写一个简单的例子
 
-Now it's time to write our first test. We're going to:
+现在是开始第一个测试的时候了，我们将会：
 
-1. Write our first passing test.
-2. Write our first failing test.
-3. Watch Cypress reload in real time.
+1. 写一个通过的测试
+2. 写一个失败的测试
+3. 观察Cypress实时的重新加载
 
-As we continue to save our new test file we'll see the browser auto reloading in real time.
+当我们继续保存我们的测试文件，我们会看到浏览器自动实时运行了我们的用例。
 
-Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
+打开你常用的IDE添加如下的代码在之前创建的 `sample_spec.js` 文件
 
 ```js
 describe('My First Test', function() {
@@ -62,19 +62,20 @@ describe('My First Test', function() {
 })
 ```
 
-Once you save this file you should see the browser reload.
+当你保存文件以后，你会看到浏览器重新加载了
 
-Although it doesn't do anything useful, this is our first passing test! ✅
+虽然我们并没有做任何有价值的事，但这是我们的第一个通过的测试 ✅
 
-Over in the {% url 'Command Log' test-runner#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
+在{% url 'Command Log' test-runner#Command-Log %} 你会看到你的测试和断言展示在测试组件中 (通过的话步骤会显示绿色).
 
 {% img /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 
 {% note info %}
-Notice Cypress displays a message about this being the default page {% url "on the righthand side" test-runner#Application-Under-Test %}. Cypress assumes you'll want to go out and {% url "visit" visit %} a URL on the internet - but it can also work just fine without that.
+请注意，Cypress会显示一条消息，指出这是右侧的默认页面{％url“”test-runner #Application-Under-Test％}。 Cypress假设你想去{％url'访问“访问％}一个互联网上的网址 - 但没有这个网址Cypress也可以正常工作。
+
 {% endnote %}
 
-Now let's write our first failing test.
+现在让我们来写一个失败的测试用例。
 
 ```js
 describe('My First Test', function() {
@@ -84,19 +85,17 @@ describe('My First Test', function() {
 })
 ```
 
-Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
+当你再次保存，你会看到Cypress用红色显示测试失败，因为`true` 不等于`false`。
 
 {% img /img/guides/failing-test.png "Failing test" %}
 
-Cypress provides a nice {% url 'Test Runner' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
-
+Cypress提供了一个很好的{％url'Test Runner'test-runner％}，它为您提供了套件，测试和断言的可视化结构。 很快你也会看到命令，页面事件，网络请求等。
 {% video local /img/snippets/first-test-30fps.mp4 %}
 
 {% note info What are describe, it, and expect? %}
-All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cypress bakes in.
-
-- `describe` and `it` come from {% url 'Mocha' https://mochajs.org %}
-- `expect` comes from {% url 'Chai' http://www.chaijs.com %}
+这些所有的功能都基于{% url 'Bundled Tools' bundled-tools %} 
+- `describe` 和 `it` 来自于 {% url 'Mocha' https://mochajs.org %}
+- `expect` 来自于 {% url 'Chai' http://www.chaijs.com %}
 
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
