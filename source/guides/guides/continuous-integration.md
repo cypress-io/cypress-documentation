@@ -162,6 +162,11 @@ CI Provider | Example Project | Example Config
 language: node_js
 node_js:
   - 10
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
 cache:
   # Caches $HOME/.npm when npm ci is default script command
   # Caches node_modules in all other cases

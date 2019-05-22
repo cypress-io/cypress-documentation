@@ -1,6 +1,5 @@
 ---
 title: request
-
 ---
 
 Make an HTTP request.
@@ -92,7 +91,7 @@ Supported methods include:
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
-Pass in an options object to change the default behavior of `cy.request`.
+Pass in an options object to change the default behavior of `cy.request()`.
 
 Option | Default | Description
 --- | --- | ---
@@ -107,9 +106,11 @@ Option | Default | Description
 `gzip` | `true` | Whether to accept the `gzip` encoding
 `headers` | `null` | Additional headers to send; Accepts object literal
 `qs` | `null` | Query parameters to append to the `url` of the request
+`retryOnStatusCodeFailure` | `false` | Whether Cypress should automatically retry status code errors under the hood
+`retryOnNetworkFailure` | `true` | Whether Cypress should automatically retry transient network errors under the hood
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.request %}
 
-You can also set options for `cy.request`'s `baseUrl` and `responseTimeout` globally in {% url 'configuration' configuration %}.
+You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` globally in {% url 'configuration' configuration %}.
 
 ## Yields {% helper_icon yields %}
 
@@ -315,6 +316,7 @@ When clicking on `request` within the command log, the console outputs the follo
 
 {% history %}
 | 3.2.0 | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`.
+| 3.3.0 | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
 {% endhistory %}
 
 # See also

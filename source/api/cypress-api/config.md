@@ -14,6 +14,11 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 Cypress runs each spec file in isolation: the browser is exited between specs. Configuration changed in one spec won't be visible in other specs.
 {% endnote %}
 
+{% note warning Note %}
+Not all configuration values can be changed during runtime. See {% urlHash "Notes" Notes %} below for details.
+{% endnote %}
+
+
 # Syntax
 
 ```javascript
@@ -112,6 +117,10 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 ```
 
 # Notes
+
+## Not all config values can be changed at all times
+
+Some configuration values cannot be changed while running a test. Anything that's not directly under Cypress's control - like timeouts, `userAgent`, or environment variables - will be ignored at run-time.
 
 ## Why is it `Cypress.config` and not `cy.config`?
 

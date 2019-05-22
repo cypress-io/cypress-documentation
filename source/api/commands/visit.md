@@ -43,12 +43,14 @@ Option | Default | Description
 `url` | `null` | The URL to visit. Behaves the same as the `url` argument.
 `method` | `GET` | The HTTP method to use in the visit. Can be `GET` or `POST`.
 `body` | `null` | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header.
-`headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request.
+`headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request. *Note:* `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.
 `log` | `true` | {% usage_options log %}
 `auth` | `null` | Adds Basic Authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
+`retryOnStatusCodeFailure` | `false` | Whether Cypress should automatically retry status code errors under the hood
+`retryOnNetworkFailure` | `true` | Whether Cypress should automatically retry transient network errors under the hood
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.visit %}
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in {% url 'configuration' configuration %}.
@@ -283,7 +285,8 @@ When clicking on `visit` within the command log, the console outputs the followi
 ![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
 
 {% history %}
-| 3.2.0 | Added options `url`, `method`, `body`, and `headers`
+| 3.2.0 | Added options `url`, `method`, `body`, and `headers`.
+| 3.3.0 | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
 {% endhistory %}
 
 # See also
