@@ -1,4 +1,3 @@
-import './commands'
 import './defaults'
 
 const resizeObserverLoopErrRe = /^ResizeObserver loop limit exceeded/
