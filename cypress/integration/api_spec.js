@@ -3,7 +3,7 @@ const API_PATH = '/api/api/table-of-contents'
 describe('API', () => {
   context('Catalog of events', () => {
     beforeEach(() => {
-      cy.visit(`${API_PATH}.html`)
+      cy.visit('/api/events/catalog-of-events.html')
     })
 
     it('loads catalog of events', () =>

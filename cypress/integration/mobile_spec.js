@@ -4,12 +4,10 @@ const _ = require('lodash')
 context('Mobile', () => {
   beforeEach(() => {
     cy.viewport('iphone-6')
-    cy.get('#mobile-nav-toggle').click()
-    cy.get('#mobile-nav-inner').should('be.visible')
   })
 
   describe('Sidebar', () => {
-    it('displays sidebar in mobile menu on click', () => {
+    it('displays sidebar in mobile menu on click', function () {
       cy.wrap(this.langValues).each((lang) => {
         let sidebarYaml = 'source/_data/sidebar.yml'
         let visitUrlPrefix = ''
@@ -32,6 +30,8 @@ context('Mobile', () => {
         })
 
         cy.visit(`${visitUrlPrefix}/guides/overview/why-cypress.html`)
+        cy.get('#mobile-nav-toggle').click()
+        cy.get('#mobile-nav-inner').should('be.visible')
         cy.get('.mobile-nav-link')
         .each(function (displayedLink, i) {
           const link = this[lang].sidebar.guides[this.sidebarLinkNames[i]]
