@@ -54,6 +54,7 @@ guides:
     trade-offs: trade-offs.html
     # contributing: contributing.html
     changelog: changelog.html
+    migration-guide: migration-guide.html
     roadmap: roadmap.html
 
 api:

@@ -66,6 +66,7 @@ sidebar:
     trade-offs: Trade-offs
     contributing: Contributing
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roadmap
     cypress-api-design: API Design
     all-videos: Videos
