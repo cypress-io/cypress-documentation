@@ -2,6 +2,15 @@
 title: Visual Testing
 ---
 
+{% note info %}
+# {% fa fa-graduation-cap %} What you'll learn
+
+- How visual testing complements functional testing
+- How to implement visual diffing yourself or using 3rd party service
+- How to ensure the application is in consistent state before capturing an image
+
+{% endnote %}
+
 # Functional vs visual testing
 
 Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, an element is removed, or a CSS class is added after the appropriate user action. A typical Cypress test, for example, can check if a toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
