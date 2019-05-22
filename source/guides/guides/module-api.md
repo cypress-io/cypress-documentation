@@ -17,22 +17,23 @@ Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Mo
 Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
 
 Option | Description
------- |  ---------
-`browser`  | Specify different browser to run tests in, either by name or by filesystem path
+------ | ---------
+`browser` | Specify different browser to run tests in, either by name or by filesystem path
 `ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
-`config`  | Specify configuration
-`env`  | Specify environment variables
+`config` | Specify configuration
+`configFile` | Path to the config file to be used. If `false` is passed, no config file will be used.
+`env` | Specify environment variables
 `group` | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
-`headed`  | Display the Electron browser instead of running headlessly
-`key`  | Specify your secret record key
+`headed` | Display the Electron browser instead of running headlessly
+`key` | Specify your secret record key
 `noExit` | Keep Cypress open after all tests run
 `parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
-`port`  | Override default port
+`port` | Override default port
 `project` | Path to a specific project
-`record`  | Whether to record the test run
-`reporter`  | Specify a mocha reporter
-`reporterOptions`  | Specify mocha reporter options
-`spec`  | Specify the specs to run
+`record` | Whether to record the test run
+`reporter` | Specify a mocha reporter
+`reporterOptions` | Specify mocha reporter options
+`spec` | Specify the specs to run
 
 ```javascript
 const cypress = require('cypress')
@@ -118,11 +119,12 @@ Just like the {% url "Command Line options" command-line %}, you can pass option
 Option | Description
 ------ | ---------
 `browser` | Specify a filesystem path to a custom browser
-`config`  | Specify configuration
+`config` | Specify configuration
+`configFile` | Path to the config file to be used. If `false` is passed, no config file will be used.
 `detached` | Open Cypress in detached mode
-`env`  | Specify environment variables
+`env` | Specify environment variables
 `global` | Run in global mode
-`port`  | Override default port
+`port` | Override default port
 `project` | Path to a specific project
 
 ### Example
