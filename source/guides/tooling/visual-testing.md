@@ -5,6 +5,7 @@ title: Visual Testing
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
+Test Runner
 
 - How visual testing complements functional testing
 - How to implement visual diffing yourself or using 3rd party service

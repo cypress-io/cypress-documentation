@@ -46,12 +46,12 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run warn-only && lint-staged",
-      "pre-push": "npm run lint && && npm run stop-only"
+      "pre-push": "npm run lint && npm run stop-only"
     }
   },
   "lint-staged": {
     "linters": {
-      "source/**/*.md": "textlint"
+      "source/**/*.md": ["textlint --fix", "git add"]
     }
   },
   "jest": {
