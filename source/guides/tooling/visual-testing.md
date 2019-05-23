@@ -5,6 +5,14 @@ title: Visual Testing
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
+
+
+```
+nnnn
+```
+
+
+
 - How visual testing complements functional testing
 - How to implement visual diffing yourself or using 3rd party service
 - How to ensure the application is in consistent state before capturing an image
