@@ -51,7 +51,8 @@ it('uses invokes done and returns promise', function (done) {
     // assertions
     done()
   })
-   return eventEmitter.doSomethingThatEmitsChange()
+
+  return eventEmitter.doSomethingThatEmitsChange()
 })
 ```
 
@@ -63,7 +64,7 @@ it('uses invokes done and returns promise', function (done) {
     // assertions
     done()
   })
-   eventEmitter.doSomethingThatEmitsChange()
+  eventEmitter.doSomethingThatEmitsChange()
 })
 ```
 
@@ -96,7 +97,7 @@ it('uses async/await', async function () {
 // These will throw errors:
 expect(null).to.be.within(0, 1)
 expect(null).to.be.above(10)
- // This will not:
+// This will not:
 expect('string').to.have.a.length.of.at.least(3)
 ```
 
@@ -126,4 +127,4 @@ Sinon has been upgraded to Sinon 7 with some [breaking changes](https://sinonjs.
 cy.stub(obj, 'nonExistingProperty')
 ```
 
- - `cy.spy.reset()` was replaced by `cy.spy.resetHistory()`.
+- `cy.spy.reset()` was replaced by `cy.spy.resetHistory()`.
