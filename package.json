@@ -51,7 +51,8 @@
   },
   "lint-staged": {
     "linters": {
-      "source/**/*.md": ["textlint --fix", "git add"]
+      "source/**/*.md": ["textlint --fix", "git add"],
+      "*.js": ["eslint --fix", "git add"]
     }
   },
   "jest": {
