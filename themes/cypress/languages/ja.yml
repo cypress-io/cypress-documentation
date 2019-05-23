@@ -66,6 +66,7 @@ sidebar:
     trade-offs: トレードオフ
     contributing: 寄与する
     changelog: 変更履歴
+    migration-guide: Migration Guide
     roadmap: ロードマップ
     cypress-api-design: APIデザイン
     all-videos: ビデオ

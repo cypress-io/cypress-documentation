@@ -68,6 +68,7 @@ sidebar:
     trade-offs: 一些取舍
     contributing: 贡献
     changelog: 更新日志
+    migration-guide: Migration Guide
     roadmap: 路线图
     cypress-api-design: API Design
     all-videos: Videos
