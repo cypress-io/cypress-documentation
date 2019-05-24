@@ -128,3 +128,23 @@ cy.stub(obj, 'nonExistingProperty')
 ```
 
 - `cy.spy.reset()` was replaced by `cy.spy.resetHistory()`.
+
+## Cypress no longer supports CJSX by default
+
+Cypress no longer supports CJSX (CoffeeScript + JSX), because the library used to transpile it is outdated and unmaintained.
+
+If you need CJSX support, you can use a pre-2.x version of the browserify preprocessor.
+
+```shell
+npm install @cypress/browserify-preprocessor@1.1.2
+```
+
+```javascript
+// In cypress/plugins/index.js
+
+const browserify = require('@cypress/browserify-preprocessor')
+
+module.exports = (on) => {
+  on('file:preprocessor', browserify())
+}
+```
