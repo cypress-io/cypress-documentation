@@ -42,17 +42,17 @@ CYPRESS_baseUrl=https://staging.app.com cypress run
 
 ***简而言之，您可以***
 
-- {% urlHash "在`cypress.json`文件中设置" Option-1-cypress-json %}
-- {% urlHash "创建一个`cypress.env.json`文件" Option-2-cypress-env-json %}
-- {% urlHash "导出为`CYPRESS_*`" Option-3-CYPRESS %}
-- {% urlHash "在CLI中传递为`--env`" Option-4-env %}
-- {% urlHash "在插件中设置一个环境变量。" Option-5-Plugins %}
+- {% urlHash "在`cypress.json`文件中设置" 选择-1-cypress-json %}
+- {% urlHash "创建一个`cypress.env.json`文件" 选择-2-cypress-env-json %}
+- {% urlHash "导出为`CYPRESS_*`" 选择-3-CYPRESS %}
+- {% urlHash "在CLI中传递为`--env`" 选择-4-env %}
+- {% urlHash "在插件中设置一个环境变量。" 选择-5-插件 %}
 
 不要认为只能选择一种方法。常见的做法是，使用一种策略进行本地开发，但在CI中运行时使用另一种策略。
 
 测试运行时，可以使用{% url `Cypress.env` env %}函数访问环境变量的值。
 
-## Option #1: `cypress.json`
+## 选择 #1: `cypress.json`
 
 在{% url '配置文件' configuration %}的`env`键下设置的任何键/值对都将成为环境变量。
 
@@ -85,7 +85,7 @@ Cypress.env('some') // 'value'
 - 只适用于所有计算机上应该相同的值。
 {% endnote %}
 
-## Option #2: `cypress.env.json`
+## 选择 #2: `cypress.env.json`
 
 您可以创建自己的`cypress.env.json`文件，Cypress将会自动检查它。这里的值会覆盖`cypress.json`中冲突的环境变量。
 
@@ -120,7 +120,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 - 过度干预1或2个环境变量
 {% endnote %}
 
-## Option #3: `CYPRESS_*`
+## 选择 #3: `CYPRESS_*`
 
 您的计算机中任何以`CYPRESS_`或`cypress_`开头的环境变量都将自动添加并提供给您。
 
@@ -159,7 +159,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 - 与其他选项相比，值从何而来并不明显。
 {% endnote %}
 
-## Option #4: `--env`
+## 选择 #4: `--env`
 
 最后，您可以在{% url '使用CLI工具' command-line#cypress-run %}时将环境变量作为选项传递进来。
 
@@ -198,7 +198,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 - 在使用Cypress的任何地方编写`--env`选项都很痛苦。
 {% endnote %}
 
-## Option #5: Plugins
+## 选择 #5: 插件
 
 您可以使用插件通过Node.js代码动态地设置环境变量，而不是在文件中设置环境变量。这使您可以执行诸如使用`fs`和读出配置值并动态更改它们之类的操作。
 

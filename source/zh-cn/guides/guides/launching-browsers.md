@@ -18,7 +18,7 @@ title: 启动浏览器
 
 Cypress会自动在您的操作系统中检测可用的浏览器。
 
-## Electron Browser
+## Electron浏览器
 
 除了在您的系统中找到的浏览器之外，您还会发现Electron也是可用的浏览器。Electron浏览器是Chromium的一个版本，附带{% url "Electron" https://electron.atom.io/ %}。
 
@@ -133,7 +133,7 @@ Cypress自动禁用Cypress启动的浏览器中的某些功能，这些功能往
 
 我们知道，当Cypress在它自己的配置文件中运行时，很难区分普通浏览器和Cypress之间的区别。
 
-因此，我们建议{% url "下载Chromium" https://www.chromium.org/Home %}或{% url "下载Canary" https://www.google.com/chrome/browser/canary.html %}。这两种浏览器的图标都与标准的Chrome浏览器不同，因此更容易区分。您还可以使用附带的{% urlHash "Electron浏览器" Electron-Browser %}，它没有Dock图标。
+因此，我们建议{% url "下载Chromium" https://www.chromium.org/Home %}或{% url "下载Canary" https://www.google.com/chrome/browser/canary.html %}。这两种浏览器的图标都与标准的Chrome浏览器不同，因此更容易区分。您还可以使用附带的{% urlHash "Electron浏览器" Electron浏览器 %}，它没有Dock图标。
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
