@@ -1,86 +1,86 @@
 menu:
   guides: Гайды
   api: API
-  plugins: Plugins
-  faq: FAQ
-  examples: Examples
-  dashboard: Dashboard
-  search: Search
+  plugins: Плагины
+  faq: ЧаВо
+  examples: Примеры
+  dashboard: Дашборд
+  search: Поиск
 
 index:
-  get-started: Get started
+  get-started: Быстрый старт
 
 page:
-  contents: Contents
-  back-to-top: Back to Top
-  improve: Improve this doc
-  prev: Prev
-  next: Next
-  last-updated: "Last updated: %s"
+  contents: Оглавление
+  back-to-top: Наверх
+  improve: Улучшить этот документ
+  prev: Назад
+  next: Вперёд
+  last-updated: "Последнее обновление: %s"
 
 sidebar:
   guides:
-    overview: Overview
-    why-cypress: Why Cypress?
-    getting-started: Getting Started
-    key-differences: Key Differences
-    installing-cypress: Installing Cypress
-    writing-your-first-test: Writing Your First Test
-    testing-your-app: Testing Your App
-    interacting-with-elements: Interacting with Elements
-    next-steps: Next Steps
-    core-concepts: Core Concepts
-    introduction-to-cypress: Introduction to Cypress
-    writing-and-organizing-tests: Writing and Organizing Tests
-    conditional-testing: Conditional Testing
-    test-runner: The Test Runner
-    dashboard-service: Dashboard Service
-    debugging: Debugging
-    variables-and-aliases: Variables and Aliases
-    stubs-spies-and-clocks: Stubs, Spies, and Clocks
-    network-requests: Network Requests
-    screenshots-and-videos: Screenshots and Videos
-    guides: Guides
-    command-line: Command Line
-    continuous-integration: Continuous Integration
-    parallelization: Parallelization
-    environment-variables: Environment Variables
-    launching-browsers: Launching Browsers
-    advanced-cypress: Advanced
-    the-cypress-workflow: The Cypress Workflow
-    coming-from-selenium: Cypress vs Selenium
-    custom-commands: Custom Commands
-    web-security: Web Security
-    how-cypress-really-works: How Cypress Really Works
-    talking-to-your-backend: Talking to Your Backend
-    spawning-processes: Spawning Processes
-    references: References
-    configuration: Configuration
-    proxy-configuration: Proxy Configuration
-    error-messages: Error Messages
-    bundled-tools: Bundled Tools
-    assertions: Assertions
-    creating-fixtures: Creating Fixtures
-    best-practices: Best Practices
-    anti-patterns: Anti-patterns
-    trade-offs: Trade-offs
-    contributing: Contributing
-    changelog: Changelog
-    roadmap: Roadmap
-    cypress-api-design: API Design
-    all-videos: Videos
-    tooling: Tooling
-    intelligent-code-completion: Intelligent Code Completion
-    plugins-guide: Plugins
-    reporters: Reporters
+    overview: Обзор
+    why-cypress: Почему Cypress?
+    getting-started: Быстрый Старт
+    key-differences: Ключевые Различия
+    installing-cypress: Установка Cypress
+    writing-your-first-test: Написание первого теста
+    testing-your-app: Тестирование вашего приложения
+    interacting-with-elements: Взаимодействие с элементами
+    next-steps: Следующие шаги
+    core-concepts: Основные понятия
+    introduction-to-cypress: Введение в Cypress
+    writing-and-organizing-tests: Написание и организация тестов
+    conditional-testing: Тестирование с условиями
+    test-runner: Запуск тестов
+    dashboard-service: Сервис Дашборд
+    debugging: Отладка
+    variables-and-aliases: Переменные и алиасы
+    stubs-spies-and-clocks: Stubs, Spies, и Clocks
+    network-requests: Сетевые запросы
+    screenshots-and-videos: Скриншоты и видео
+    guides: Гайды
+    command-line: Командная строка
+    continuous-integration: Непрерывная интеграция
+    parallelization: Параллелизация
+    environment-variables: Переменные среды
+    launching-browsers: Запуск браузеров
+    advanced-cypress: Продвинутые темы
+    the-cypress-workflow: Cypress, организация процесса
+    coming-from-selenium: Cypress против Selenium
+    custom-commands: Пользовательские команды
+    web-security: Web-безопасность
+    how-cypress-really-works: Как Cypress на самом деле работает
+    talking-to-your-backend: Обращение к Backend
+    spawning-processes: Порождение процессов
+    references: Ссылки
+    configuration: Конфигурация
+    proxy-configuration: Конфигурация прокси
+    error-messages: Сообщения об ошибках
+    bundled-tools: Встроенные инструменты
+    assertions: Ассерты
+    creating-fixtures: Создание fixtures
+    best-practices: Лучшие практики
+    anti-patterns: Антипаттерны
+    trade-offs: Компромиссы
+    contributing: Вклад в проект
+    changelog: Изменения в продукте
+    roadmap: Карта проекта
+    cypress-api-design: Дизайн API
+    all-videos: Видео
+    tooling: Утилиты
+    intelligent-code-completion: Интеллектуальное завершение кода
+    plugins-guide: Плагины
+    reporters: Отчёты
     typescript-support: TypeScript
-    module-api: Module API
-    retry-ability: Retry-ability
-    visual-testing: Visual Testing
+    module-api: Модульное API
+    retry-ability: Возможность перезапуска
+    visual-testing: Визуальное тестирование
   api:
     api: API
-    table-of-contents: Table of Contents
-    commands: Commands
+    table-of-contents: Оглавление
+    commands: Команды
     and: and
     as: as
     blur: blur
@@ -161,15 +161,15 @@ sidebar:
     within: within
     wrap: wrap
     writefile: writeFile
-    events: Events
-    catalog-of-events: Catalog of Events
-    assertions: Assertions
-    all-assertions: All Assertions
+    events: События
+    catalog-of-events: Каталог событий
+    assertions: Ассерты
+    all-assertions: Все ассерты
     on: on
     once: once
     removelistener: removeListener
     removealllisteners: removeAllListeners
-    utilities: Utilities
+    utilities: Утилиты
     _: _
     $: $
     minimatch: minimatch
@@ -185,35 +185,35 @@ sidebar:
     dom: dom
     cypress-log: log
     cypress-server: Server
-    plugins: Plugins
-    writing-a-plugin: Writing a Plugin
-    preprocessors-api: Preprocessors
-    browser-launch-api: Browser Launching
-    configuration-api: Configuration
+    plugins: Плагины
+    writing-a-plugin: Написание плагина
+    preprocessors-api: Препроцессоры
+    browser-launch-api: Запуск браузеров
+    configuration-api: Конфигурация
     version: version
     arch: arch
     browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
     screenshot-api: Screenshot
-    after-screenshot-api: After Screenshot
+    after-screenshot-api: После Screenshot
     spec: spec
   examples:
-    examples: Examples
-    recipes: Recipes
-    tutorials: Tutorial Videos
-    applications: Applications
+    examples: Примеры
+    recipes: Реценты
+    tutorials: Учебное видео
+    applications: Приложения
     docker: Docker
-    media: Media
-    talks-media: Talks
-    podcasts-media: Podcasts
-    screencasts-media: Screencasts
-    blogs-media: Blogs
-    extensions: Extensions
-    workshop: Workshop
+    media: Медиа
+    talks-media: Обсуждения
+    podcasts-media: Подкасты
+    screencasts-media: Скринкасты
+    blogs-media: Блоги
+    extensions: Расширения
+    workshop: Мастерская
   faq:
-    questions: FAQ
-    general-questions-faq: General Questions
-    using-cypress-faq: Using Cypress
-    dashboard-faq: Dashboard
-    company-faq: Company
+    questions: ЧаВо
+    general-questions-faq: Общие вопросы
+    using-cypress-faq: Использование Cypress
+    dashboard-faq: Дашборд
+    company-faq: Компания
