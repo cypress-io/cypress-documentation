@@ -97,13 +97,6 @@ To add a page such as a new guide or API documentation:
 * Build the documentation site locally so that you can visually inspect your new page and the links to it.
 * Submit a [pull request](#Pull-Requests) for your change.
 
-### Translating
-
-1. Add a new language folder in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder. (All lower case)
-2. Copy Markdown and template files in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder to the new language folder.
-3. Add the new language to [`source/_data/language.yml`](https://github.com/cypress-io/cypress-documentation/tree/develop/source/_data/language.yml).
-Copy `en.yml` in themes/cypress/languages and rename to the language name (all lower case).
-
 #### A Worked Example
 
 Let's imagine that the Cypress team have just added a new command called `privateState` and you've picked up the task to document it.
@@ -146,6 +139,13 @@ When adding to the Changelog, create a new file in `source/_changelogs` named as
 - **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
 - **Misc** - Not a feature or bugfix, but work that was done. May be internal work that was done and associated with an issue
 - **Documentation Changes** - our docs were updated based on behavior changes in release
+
+### Translating
+
+1. Add a new language folder in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php). 
+1. Add the new language to [`source/_data/language.yml`](/source/_data/language.yml).
+1. Copy Markdown and template files in [`source`](/source) folder to the new language folder.
+1. Copy `en.yml` in [`themes/cypress/languages`](/themes/cypress/languages) and rename to the abbreviated language name (all lower case).
 
 ## Committing Code
 
