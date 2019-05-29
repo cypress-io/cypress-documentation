@@ -16,11 +16,11 @@ it('completes todo', () => {
 })
 ```
 
-{% img /img/guides/visual-testing/completed-test.gif "Passing Cypress functional test" %}
+{% imgTag /img/guides/visual-testing/completed-test.gif "Passing Cypress functional test" %}
 
 Cypress does NOT see how the page actually looks though. For example, Cypress will not see if the CSS class `completed` grays out the label element and adds a strike-through line.
 
-{% img /img/guides/visual-testing/completed-item.png "Completed item style" %}
+{% imgTag /img/guides/visual-testing/completed-item.png "Completed item style" %}
 
 You could technically write a functional test asserting the CSS properties using the {% url "`have.css` assertion" assertions#CSS %}, but these may quickly become cumbersome to write and maintain, especially when visual styles rely on a lot of CSS styles.
 
@@ -64,11 +64,11 @@ it('completes todo', () => {
 
 This open source plugin compares the baseline and the current images side by side within the Cypress Test Runner if pixel difference is above the threshold; notice how the baseline image (*Expected result*) has the label text with the line through, while the new image (*Actual result*) does not have it.
 
-{% img /img/guides/visual-testing/diff.png "Baseline vs current image" %}
+{% imgTag /img/guides/visual-testing/diff.png "Baseline vs current image" %}
 
 Like most image comparison tools, the plugin also shows a difference view on mouse hover:
 
-{% img /img/guides/visual-testing/diff-2.png "Highlighted changes" %}
+{% imgTag /img/guides/visual-testing/diff-2.png "Highlighted changes" %}
 
 # Tooling
 

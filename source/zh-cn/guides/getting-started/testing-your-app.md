@@ -72,7 +72,7 @@ touch cypress/integration/home_page_spec.js
 
 Once that file is created, you should see it in the list of spec files.
 
-{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
 
 Now you'll need to add in the following code in your test file to visit your server:
 
@@ -88,7 +88,7 @@ Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 
-{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
+{% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 If you've started your server, then you should see your application loaded and working.
 

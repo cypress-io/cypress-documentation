@@ -68,7 +68,7 @@ describe('My First Test', function() {
 
 在{% url 'Command Log' test-runner#Command-Log %} 你会看到你的测试和断言展示在测试组件中 (通过的话步骤会显示绿色).
 
-{% img /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
+{% imgTag /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 
 {% note info %}
 请注意，Cypress会显示一条消息，指出这是右侧的默认页面{％url“”test-runner #Application-Under-Test％}。 Cypress假设你想去{％url'访问“访问％}一个互联网上的网址 - 但没有这个网址Cypress也可以正常工作。
@@ -87,7 +87,7 @@ describe('My First Test', function() {
 
 当你再次保存，你会看到Cypress用红色显示测试失败，因为`true` 不等于`false`。
 
-{% img /img/guides/failing-test.png "Failing test" %}
+{% imgTag /img/guides/failing-test.png "Failing test" %}
 
 Cypress提供了一个很好的{％url'Test Runner'test-runner％}，它为您提供了套件，测试和断言的可视化结构。 很快你也会看到命令，页面事件，网络请求等。
 {% video local /img/snippets/first-test-30fps.mp4 %}
@@ -185,7 +185,7 @@ To verify this, replace `type` with something not on the page, like `hype`. You'
 
 Can you see what Cypress is doing under the hood? It's automatically waiting and retrying because it expects the content to **eventually** be found in the DOM. It doesn't immediately fail!
 
-{% img /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
+{% imgTag /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning 'Error Messages' %}
 We've taken care at Cypress to write hundreds of custom error messages that attempt to explain in simple terms what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
@@ -331,7 +331,7 @@ Take your mouse and **hover over** the `CONTAINS` command in the Command Log.
 
 Do you see what happened?
 
-{% img /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
+{% imgTag /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
 
 Cypress automatically traveled back in time to a snapshot of when that command resolved. Additionally, since {% url `cy.contains()` contains %} finds DOM elements on the page, Cypress also highlights the element and scrolls it into view (to the top of the page).
 
@@ -341,13 +341,13 @@ Now if you remember at the end of the test we ended up on a different URL:
 
 But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was present when our snapshot was taken.
 
-{% img /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
+{% imgTag /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
 
 ## Snapshots
 
 Commands are also interactive. Go ahead and click on the `CLICK` command.
 
-{% img /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
+{% imgTag /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
 
 Notice it highlights in purple. This did three things worth noting...
 
@@ -368,7 +368,7 @@ When a command causes an immediate visual change in our application, cycling bet
 
 Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
 
-{% img /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
+{% imgTag /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
 
 **Cypress logs out page events for:**
 
@@ -383,7 +383,7 @@ Besides Commands being interactive, they also output additional debugging inform
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class selector.
 
-{% img /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
+{% imgTag /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
 
 **We can see Cypress output additional information in the console:**
 
@@ -427,7 +427,7 @@ describe('My First Test', function() {
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.
 
-{% img /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
+{% imgTag /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
 ## In action
 
@@ -497,4 +497,4 @@ describe('My First Test', function() {
 - Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
 - Search Cypress's documentation to quickly find what you need.
 
-{% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
+{% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}
