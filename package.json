@@ -6,7 +6,7 @@
     "version": "3.8.0"
   },
   "engines": {
-    "node": "^8.4.0"
+    "node": "^8.6.0"
   },
   "license": "MIT",
   "bugs": "https://github.com/cypress-io/cypress-documentation/issues",
@@ -51,8 +51,14 @@
   },
   "lint-staged": {
     "linters": {
-      "source/**/*.md": ["textlint --fix", "git add"],
-      "*.js": ["eslint --fix", "git add"]
+      "source/**/*.md": [
+        "textlint --fix",
+        "git add"
+      ],
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ]
     }
   },
   "jest": {

@@ -587,7 +587,7 @@ Adding a {% url "`baseUrl`" configuration#Global %} can also save some time duri
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
-{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
+{% imgTag https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
 
@@ -602,8 +602,8 @@ By setting the `baseUrl`, you can avoid this reload altogether. Cypress will loa
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
+{% imgTag  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
 
-{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" %}
+{% imgTag no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" %}

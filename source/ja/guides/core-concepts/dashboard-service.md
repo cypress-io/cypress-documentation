@@ -26,7 +26,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 - See usage details for each organization.
 - Pay for your selected billing plan.
 
-{% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
+{% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
 ***See tests runs in the Test Runner***
 
@@ -94,9 +94,9 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see them in the {% url "Dashboard" https://on.cypress.io/dashboard %} and in the Runs tab of the {% url "Test Runner" test-runner %}.
 
-{% img /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
+{% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-{% img /img/dashboard/runs-list-in-desktop-gui.png "Runs List" %}
+{% imgTag /img/dashboard/runs-list-in-desktop-gui.png "Runs List" %}
 
 ## Identification
 
@@ -132,13 +132,13 @@ f4466038-70c2-4688-9ed9-106bf013cd73
 
 You can create multiple Record Keys for a project, or delete existing ones from our {% url 'Dashboard' https://on.cypress.io/dashboard %}. You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-{% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
 ## Authentication
 
 Cypress uses your `projectId` and *Record Key* together to uniquely identify projects.
 
-{% img /img/dashboard/project-id-and-record-key-shown-in-dashboard.png "ProjectID and Record Keys in Dashboard" %}
+{% imgTag /img/dashboard/project-id-and-record-key-shown-in-dashboard.png "ProjectID and Record Keys in Dashboard" %}
 
 The record key is used to authenticate that your project is *allowed* to record. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
 
@@ -160,11 +160,11 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 Click into the project you'd like to change access to, then click **Settings** in the top right corner.
 
-{% img /img/dashboard/project-settings.png "project-settings" %}
+{% imgTag /img/dashboard/project-settings.png "project-settings" %}
 
 Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
 
-{% img /img/dashboard/access-to-runs.png "access-to-runs" %}
+{% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
 
 ## Transfer ownership
 
@@ -174,10 +174,10 @@ You can transfer projects that you own to another {% urlHash "organization" Orga
 
 1. Choose the {% url "organization" https://on.cypress.io/dashboard/organizations %} with the project you want to transfer.
 2. Click into the project and click on **Settings**.
-  {% img /img/dashboard/project-settings.png "project-settings" %}
+  {% imgTag /img/dashboard/project-settings.png "project-settings" %}
 3. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
 4. Select the user or organization, then click **Transfer**.
-  {% img /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
+  {% imgTag /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
 
 ### Cancel project transfer
 
@@ -224,7 +224,7 @@ Details of each run are displayed including:
 - The browser and version
 - The Cypress version
 
-{% img /img/dashboard/run-details.png "run-details" %}
+{% imgTag /img/dashboard/run-details.png "run-details" %}
 
 ### {% fa fa-file-code-o fa-fw %} Spec files
 
@@ -234,19 +234,19 @@ You can see the result of each spec file that ran within **Specs**. There is als
 
 The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in {% url "parallel" parallelization %}.
 
-{% img /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
+{% imgTag /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
 
 ***Bar Chart View***
 
 The Bar Chart View charts the lengths of each spec file. This view is helpful to determine which spec files or tests are running longer than others.
 
-{% img /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
+{% imgTag /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
 
 ***Jump to failed tests***
 
 If you had any failed tests, you can hover over the spec chart and click on the link to the failed test to go directly to its error message and stack trace.
 
-{% img /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
+{% imgTag /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
 
 ### {% fa fa-code fa-fw %} Standard output
 
@@ -254,7 +254,7 @@ Standard output includes details and summaries of your tests for each spec file 
 
 You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
-{% img /img/dashboard/standard-output-of-recorded-test-run.png "standard output" %}
+{% imgTag /img/dashboard/standard-output-of-recorded-test-run.png "standard output" %}
 
 ***{% fa fa-picture-o fa-fw %} Screenshots***
 
@@ -264,7 +264,7 @@ All screenshots taken during the test run can be found in the **Screenshots** of
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
-{% img /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
+{% imgTag /img/dashboard/videos-of-recorded-test-run.png "Video of test runs" %}
 
 ### {% fa fa-exclamation-triangle fa-fw %} Test failures
 
@@ -277,7 +277,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 - **Screenshot:** Any screenshots taken during the test.
 - **Video:** The recorded video scrubbed to the point of failure in the test.
 
-{% img /img/dashboard/failures-of-recorded-run.png "failure tab" %}
+{% imgTag /img/dashboard/failures-of-recorded-run.png "failure tab" %}
 
 # Organizations
 
@@ -376,14 +376,14 @@ To support the community, we provide the Open Source (OSS) plan for public proje
 Follow the following process to request an OSS plan for your project:
 
 1. {% url "Login" https://on.cypress.io/dashboard %} to the Cypress Dashboard, or {% url "create an account" https://on.cypress.io/dashboard %} if you are a new user.
-  {% img 'no-border' /img/dashboard/oss-plan-1-login.png "Login or Create Account" %}
+  {% imgTag 'no-border' /img/dashboard/oss-plan-1-login.png "Login or Create Account" %}
 2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
-  {% img 'no-border' /img/dashboard/oss-plan-2-select-org.png "Select or add organization" %}
+  {% imgTag 'no-border' /img/dashboard/oss-plan-2-select-org.png "Select or add organization" %}
 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
-  {% img 'no-border' /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" %}
+  {% imgTag 'no-border' /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" %}
 4. Fill in and submit the OSS plan request form.
-  {% img 'no-border' /img/dashboard/oss-plan-4-apply.png "OSS plan request form" %}
+  {% imgTag 'no-border' /img/dashboard/oss-plan-4-apply.png "OSS plan request form" %}
 5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
 
 If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).

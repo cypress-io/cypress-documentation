@@ -431,4 +431,4 @@ localStorage.debug = 'cypress:*'
 
 After you refresh the page you'll see something that looks like this in your console:
 
-{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
+{% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
