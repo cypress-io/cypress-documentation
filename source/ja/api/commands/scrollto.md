@@ -42,7 +42,7 @@ cy.title().scrollTo('My App')  // Errors, 'title' does not yield DOM element
 
 A specified position to scroll the window or element to. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-{% img /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
+{% imgTag /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
 
 **{% fa fa-angle-right %} x** ***(Number, String)***
 
@@ -170,11 +170,11 @@ cy.get('#scrollable-horizontal').scrollTo('right')
 
 The commands above will display in the Command Log as:
 
-{% img /img/api/scrollto/command-log-scrollto.png "command log for scrollTo" %}
+{% imgTag /img/api/scrollto/command-log-scrollto.png "command log for scrollTo" %}
 
 When clicking on `scrollTo` within the command log, the console outputs the following:
 
-{% img /img/api/scrollto/console-log-scrollto.png "console.log for scrollTo" %}
+{% imgTag /img/api/scrollto/console-log-scrollto.png "console.log for scrollTo" %}
 
 # See also
 

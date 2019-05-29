@@ -335,7 +335,7 @@ A *Record Key* is a GUID that's generated automatically by Cypress once you've {
 
 You can find your project's record key inside of the *Settings* tab in the Test Runner.
 
-{% img /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
 For further detail see the {% url Identification dashboard-service#Identification %} section of the {% url "Dashboard Service" dashboard-service %} docs.
 

@@ -71,7 +71,7 @@ We use Cypress itself to test the documentation. To start the server and run E2E
 
 ### Tags
 
-In addition to built-in Hexo tags (like `{% img ... %}`), we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
+In addition to built-in Hexo tags, we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
 
 ### Adding Examples
 
@@ -80,7 +80,7 @@ To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Reques
 Add an associated image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should have a resolution of **715×480**. Reference the image in the markdown document as follows:
 
 ```md
-{% img /img/examples/name-of-file.jpg "alt text describing img" %}
+{% imgTag /img/examples/name-of-file.jpg "alt text describing img" %}
 ```
 
 ### Adding Plugins

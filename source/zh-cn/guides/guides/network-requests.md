@@ -132,7 +132,7 @@ cy.route({
 
 When you start a {% url `cy.server()` server %} and define {% url `cy.route()` route %} commands, Cypress displays this under "Routes" in the Command Log.
 
-{% img /img/guides/server-routing-table.png "Routing Table" %}
+{% imgTag /img/guides/server-routing-table.png "Routing Table" %}
 
 Once you start a server with {% url `cy.server()` server %}, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.
 
@@ -283,7 +283,7 @@ In this example, there are many possible sources of failure. In most testing too
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
 
-{% img /img/guides/clear-source-of-failure.png "Wait Failure" %}
+{% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
 
