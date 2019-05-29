@@ -71,7 +71,7 @@ We use Cypress itself to test the documentation. To start the server and run E2E
 
 ### Tags
 
-In addition to built-in Hexo tags (like `{% img ... %}`), we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
+In addition to built-in Hexo tags, we have written several custom ones. They help us write consistent documentation, check referenced urls, etc. You can find the list of tags and examples in [TAGS.md](TAGS.md).
 
 ### Adding Examples
 
@@ -80,7 +80,7 @@ To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Reques
 Add an associated image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should have a resolution of **715×480**. Reference the image in the markdown document as follows:
 
 ```md
-{% img /img/examples/name-of-file.jpg "alt text describing img" %}
+{% imgTag /img/examples/name-of-file.jpg "alt text describing img" %}
 ```
 
 ### Adding Plugins
@@ -96,13 +96,6 @@ To add a page such as a new guide or API documentation:
 * Add translations for the sidebar link (for English, this is located in [`en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml)).
 * Build the documentation site locally so that you can visually inspect your new page and the links to it.
 * Submit a [pull request](#Pull-Requests) for your change.
-
-### Translating
-
-1. Add a new language folder in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder. (All lower case)
-2. Copy Markdown and template files in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder to the new language folder.
-3. Add the new language to [`source/_data/language.yml`](https://github.com/cypress-io/cypress-documentation/tree/develop/source/_data/language.yml).
-Copy `en.yml` in themes/cypress/languages and rename to the language name (all lower case).
 
 #### A Worked Example
 
@@ -146,6 +139,13 @@ When adding to the Changelog, create a new file in `source/_changelogs` named as
 - **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
 - **Misc** - Not a feature or bugfix, but work that was done. May be internal work that was done and associated with an issue
 - **Documentation Changes** - our docs were updated based on behavior changes in release
+
+### Translating
+
+1. Add a new language folder in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php). 
+1. Add the new language to [`source/_data/language.yml`](/source/_data/language.yml).
+1. Copy Markdown and template files in [`source`](/source) folder to the new language folder.
+1. Copy `en.yml` in [`themes/cypress/languages`](/themes/cypress/languages) and rename to the abbreviated language name (all lower case).
 
 ## Committing Code
 

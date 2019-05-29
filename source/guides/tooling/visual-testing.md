@@ -2,6 +2,17 @@
 title: Visual Testing
 ---
 
+{% note info %}
+# {% fa fa-graduation-cap %} What you'll learn
+
+- How visual testing complements functional testing
+- How to implement visual diffing yourself or using 3rd party service
+- How to ensure the application is in consistent state before capturing an image
+
+{% endnote %}
+
+# Functional vs visual testing
+
 Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, an element is removed, or a CSS class is added after the appropriate user action. A typical Cypress test, for example, can check if a toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
 ```js
@@ -16,11 +27,11 @@ it('completes todo', () => {
 })
 ```
 
-{% img /img/guides/visual-testing/completed-test.gif "Passing Cypress functional test" %}
+{% imgTag /img/guides/visual-testing/completed-test.gif "Passing Cypress functional test" %}
 
 Cypress does NOT see how the page actually looks though. For example, Cypress will not see if the CSS class `completed` grays out the label element and adds a strike-through line.
 
-{% img /img/guides/visual-testing/completed-item.png "Completed item style" %}
+{% imgTag /img/guides/visual-testing/completed-item.png "Completed item style" %}
 
 You could technically write a functional test asserting the CSS properties using the {% url "`have.css` assertion" assertions#CSS %}, but these may quickly become cumbersome to write and maintain, especially when visual styles rely on a lot of CSS styles.
 
@@ -64,11 +75,11 @@ it('completes todo', () => {
 
 This open source plugin compares the baseline and the current images side by side within the Cypress Test Runner if pixel difference is above the threshold; notice how the baseline image (*Expected result*) has the label text with the line through, while the new image (*Actual result*) does not have it.
 
-{% img /img/guides/visual-testing/diff.png "Baseline vs current image" %}
+{% imgTag /img/guides/visual-testing/diff.png "Baseline vs current image" %}
 
 Like most image comparison tools, the plugin also shows a difference view on mouse hover:
 
-{% img /img/guides/visual-testing/diff-2.png "Highlighted changes" %}
+{% imgTag /img/guides/visual-testing/diff-2.png "Highlighted changes" %}
 
 # Tooling
 
@@ -114,8 +125,20 @@ You will want to consider the development costs of implementing a visual testing
 
 As a general rule there are some best practices when visual testing.
 
-## DOM state
+## Recognize the need for visual testing
 
+**{% fa fa-exclamation-triangle red %} assertions that verify style properties**
+
+```js
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+  .and('have.css', 'color', 'rgb(217,217,217)')
+cy.get('.user-info').should('have.css', 'display', 'none')
+...
+```
+
+If your end-to-end tests become full of assertions checking visibility, color and other style properties, it might be time to start using visual diffing to verify the page appearance.
+
+## DOM state
 
 {% note success %}
 {% fa fa-check-circle green %} **Best Practice:** Take a snapshot after you confirm the page is done changing.
