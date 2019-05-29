@@ -1,5 +1,5 @@
 menu:
-  guides: Гайды
+  guides: Руководства
   api: API
   plugins: Плагины
   faq: ЧаВо
@@ -40,7 +40,7 @@ sidebar:
     stubs-spies-and-clocks: Stubs, Spies, и Clocks
     network-requests: Сетевые запросы
     screenshots-and-videos: Скриншоты и видео
-    guides: Гайды
+    guides: Руководства
     command-line: Командная строка
     continuous-integration: Непрерывная интеграция
     parallelization: Параллелизация
