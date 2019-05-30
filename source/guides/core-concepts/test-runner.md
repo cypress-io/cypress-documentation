@@ -13,7 +13,7 @@ title: The Test Runner
 
 Cypress runs tests in a unique interactive runner that allows you to see commands as they execute while also viewing the application under test.
 
-{% imgTag /img/guides/gui-diagram.png no-border "Cypress Test Runner" %}
+{% imgTag /img/guides/gui-diagram.png "Cypress Test Runner" "no-border" %}
 
 # Command Log
 
