@@ -21,7 +21,7 @@ Cypress can run recorded tests in parallel across multiple machines since versio
 
 This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
-{% imgTag 'no-border' /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" %}
+{% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
 # Splitting up your test suite
 
@@ -58,7 +58,7 @@ In short: each Test Runner sends a list of the spec files to the Dashboard Servi
 
 ## Parallelization process
 
-{% imgTag 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
+{% imgTag /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" "no-border" %}
 
 # Balance strategy
 
@@ -68,7 +68,7 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 
 ## Spec duration history analysis
 
-{% imgTag 'no-border' /img/guides/parallelization/load-balancing.png "Spec duration forecasting" %}
+{% imgTag /img/guides/parallelization/load-balancing.png "Spec duration forecasting" "no-border" %}
 
 With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
 
@@ -145,7 +145,7 @@ Multiple {% url "`cypress run`" command-line#cypress-run %} calls can be labeled
 For multiple runs to be grouped into a single run, it is required for CI machines to share a common CI build ID environment variable. Typically these CI machines will run in parallel or within the same build workflow or pipeline, but **it is not required to use Cypress parallelization to group runs**. Grouping of runs can be utilized independently of Cypress parallelization.
 {% endnote %}
 
-{% imgTag 'no-border' /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" %}
+{% imgTag /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" "no-border" %}
 
 ## Grouping by browser
 
@@ -169,7 +169,7 @@ You can test your application against different browsers and view the results un
   cypress run --record --group Linux/Electron
   ```
 
-{% imgTag 'no-border' /img/guides/parallelization/browser.png "browser" %}
+{% imgTag /img/guides/parallelization/browser.png "browser" "no-border" %}
 
 ## Grouping to label parallelization
 
@@ -219,7 +219,7 @@ cypress run --record --group package/customer --spec 'cypress/integration/packag
 cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
 ```
 
-{% imgTag 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %}
+{% imgTag /img/guides/parallelization/monorepo.png "monorepo" "no-border" %}
 
 This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
 
@@ -228,7 +228,7 @@ This pattern is especially useful for projects in a monorepo. Each segment of th
 
 A CI build ID is used to associate multiple CI machines to one test run. This identifier is based on environment variables that are unique to each CI build, and vary based on CI provider. Cypress has out-of-the-box support for most of the commonly-used CI providers, so you would typically not need to directly set the CI build ID via the {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
 
-{% imgTag 'no-border' /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" %}
+{% imgTag /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" "no-border" %}
 
 ## CI Build ID environment variables by provider
 
@@ -259,7 +259,7 @@ During parallelization mode or when grouping runs, Cypress will wait for a speci
 
 This waiting period is called the **run completion delay** and it begins after the last known CI machine has completed as shown in the diagram below:
 
-{% imgTag 'no-border' /img/guides/parallelization/run-completion-delay.png "Test run completion delay" %}
+{% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
 This **delay is 60 seconds by default**, but is configurable within the {% url "Dashboard" dashboard-service %} project settings page:
 

@@ -72,7 +72,7 @@ touch cypress/integration/home_page_spec.js
 
 Once that file is created, you should see it in the list of spec files.
 
-{% imgTag 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" "no-border" %}
 
 Now you'll need to add in the following code in your test file to visit your server:
 
