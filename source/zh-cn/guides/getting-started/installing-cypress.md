@@ -256,11 +256,11 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 
  方法 | Url                            | 描述
  ------ | ------------------------------ | -------------------------------------------------------------------------
- `GET`  | `/desktop                 `    | Download Cypress at latest version (platform auto-detected)
- `GET`  | `/desktop.json            `    | Returns JSON containing latest available CDN destinations
- `GET`  | `/desktop?platform=p      `    | Download Cypress for a specific platform
- `GET`  | `/desktop/:version`            | Download Cypress with a specified version
- `GET`  | `/desktop/:version?platform=p` | Download Cypress with a specified version and platform
+ `GET`  | `/desktop                 `    | 下载最近的Cypress版本(平台自动检测)
+ `GET`  | `/desktop.json            `    | 返回最新有效的包含CDN地址的JSON文件
+ `GET`  | `/desktop?platform=p      `    | 下载特定平台的Cypress
+ `GET`  | `/desktop/:version`            | 下载特定版本的Cypress
+ `GET`  | `/desktop/:version?platform=p` | 下载Cypress的特定平台和版本
 
 **为Windows平台下载`3.0.0`的示例:**
 
