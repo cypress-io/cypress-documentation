@@ -606,4 +606,4 @@ By setting the `baseUrl`, you can avoid this reload altogether. Cypress will loa
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
 
-{% imgTag no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" %}
+{% imgTag https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" "no-border" %}
