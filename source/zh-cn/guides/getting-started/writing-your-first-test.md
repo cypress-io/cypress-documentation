@@ -1,73 +1,53 @@
 ---
-title: Writing Your First Test编写你的第一个测试
+title: 编写你的第一个测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
 # {% fa fa-graduation-cap %} 你将学到
 
-- How to start testing a new project in Cypress.
 - 如何在Cypress里面开始测试一个新的项目.
-- What passing and failing tests look like.
 - 通过的测试和失败的测试看起来如何.
-- Testing web navigation, DOM querying, and writing assertions.
 - 测试网页导航, DOM查询, 以及编写断言.
 {% endnote %}
 
 {% video vimeo 237115455 %}
 
-# Add a test file
 # 添加一个测试文件
 
-Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
 假设你已成功{% url "安装了测试运行器" installing-cypress#Installing %}并且{% url "打开了Cypress应用程序" installing-cypress#Opening-Cypress %}, 现在是时候写我们的第一个测试了. 我们将:
 
-1. Create a `sample_spec.js` file.
 1. 创建一个`sample_spec.js`文件.
-2. Watch Cypress update our list of specs.
 2. 查看Cypress更新我们的规格列表.
-3. Launch Cypress in interactive mode.
 3. 在交互模式下启动Cypress.
 
-Let's create a new file in the `cypress/integration` folder that was created for us:
 让我们在为我们准备的`cypress/integration`文件夹里面创建一个新文件:
 
 ```shell
 touch {your_project}/cypress/integration/sample_spec.js
 ```
 
-Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
 一旦我们创建了该文件，我们就会看到Cypress测试运行器立即将其显示在集成测试列表中. Cypress监控您的规格文件是否有任何变化，并自动显示任何变化。
 
-Even though we haven't written any tests yet - that's okay - let's click on `sample_spec.js` and watch Cypress launch your browser.
 即使我们还没有编写任何测试 - 也没关系 - 让我们点击`sample_spec.js`并观看Cypress启动您的浏览器。
 
 {% note info %}
-Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
 Cypress在您系统上安装的浏览器中打开测试. 您可以在{% url "启动浏览器" launching-browsers %}中详细了解我们如何执行此操作.
 {% endnote %}
 
 {% video local /img/snippets/empty-file-30fps.mp4 %}
 
-We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This is where we will spend the majority of your time testing.
 我们现在正式进入{% url 'Cypress测试运行器' test-runner %}. 这是我们将花费大部分时间用于测试的地方。
 
 {% note warning %}
-Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
 注意Cypress显示无法找到任何测试的信息. 这很正常 - 我们还没有写任何测试呢! 有时候如果解析测试文件出错, 你也需要看这些信息. 你始终可以打开**Dev Tools**来检查控制台是否存在任何阻止Cypress读取测试的语法或者解析错误.
 {% endnote %}
 
-# Write a simple test
 # 写一个简单的测试
 
-Now it's time to write our first test. We're going to:
-现在是时候编写我们的第一个测试了. 我们要:
+现在是时候编写我们的第一个测试了. 我们将:
 
-1. Write our first passing test.
-1. 编写我们的第一次通过考试.
-2. Write our first failing test.
+1. 编写我们的第一次通过测试.
 2. 编写我们的第一次失败测试.
-3. Watch Cypress reload in real time.
 3. 观察Cypress实时重装.
 
 As we continue to save our new test file we'll see the browser auto reloading in real time.
