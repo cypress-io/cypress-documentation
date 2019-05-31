@@ -146,8 +146,9 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 
 #### Adding a new language
 
-1. Add a new language folder in [`source`](/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php). 
+1. Add a new language folder in [`source`](/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php).
 1. Add the new language to [`source/_data/languages.yml`](/source/_data/languages.yml).
+1. Add the new language to [`_config.yml`](/_config.yml#L10) under `language`.
 1. Copy Markdown and template files in [`source`](/source) folder to the new language folder.
 1. Copy `en.yml` in [`themes/cypress/languages`](/themes/cypress/languages) and rename to the abbreviated language name (all lower case).
 
