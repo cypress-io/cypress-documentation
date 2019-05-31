@@ -75,7 +75,7 @@ In addition to built-in Hexo tags, we have written several custom ones. They hel
 
 ### Adding Examples
 
-To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/blogs.yml), [talks.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/talks.yml), or [podcasts.yml](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/podcasts.yml) file.
+To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](/source/_data/blogs.yml), [talks.yml](/source/_data/talks.yml), or [podcasts.yml](/source/_data/podcasts.yml) file.
 
 Add an associated image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should have a resolution of **715×480**. Reference the image in the markdown document as follows:
 
@@ -85,51 +85,53 @@ Add an associated image with the example within the [`source/img/examples`](/sou
 
 ### Adding Plugins
 
-To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
+To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.yml`](/source/_data/plugins.yml) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
 
 ### Adding Pages
 
 To add a page such as a new guide or API documentation:
 
-* Add the new page to the relevant directory under [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source).
-* Link to your new page in the [`sidebar.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml).
-* Add translations for the sidebar link (for English, this is located in [`en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml)).
-* Build the documentation site locally so that you can visually inspect your new page and the links to it.
-* Submit a [pull request](#Pull-Requests) for your change.
+- Add the new page to the relevant directory under [`source`](/source).
+- Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
+- Add translations for the sidebar link (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- Build the documentation site locally so that you can visually inspect your new page and the links to it.
+- Copy over the new page to other language translations - Japanese docs in [`source/ja`](/source/ja), Chinese docs in [`source/zh-cn`](/source/zh-cn).
+- Submit a [pull request](#Pull-Requests) for your change.
 
 #### A Worked Example
 
-Let's imagine that the Cypress team have just added a new command called `privateState` and you've picked up the task to document it.
+Let's imagine that the Cypress team has just added a new command called `privateState` and you've picked up the task to document it.
 
-API documentation for commands is in the [`source/api/commands`](https://github.com/cypress-io/cypress-documentation/tree/develop/source/api/commands) directory. Add a file called `privatestate.md` to that directory. Look to the existing documentation to see how to structure the content.
+API documentation for commands is in the [`source/api/commands`](/source/api/commands) directory.
 
-Once you've written the documentation the next step is to link to it from the sidebar. Open the [`source/_data/sidebar.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/source/_data/sidebar.yml) file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api.commands` section.
-
-```yaml
-api:
-  commands:
-    and: and.html
-    as: as.html
-    blur: blur.html
-    # ...
-    privatestate: privatestate.html
-```
-
-Finally, open [`themes/cypress/languages/en.yml`](https://github.com/cypress-io/cypress-documentation/blob/develop/themes/cypress/languages/en.yml) and add an English translation for that sidebar link's title. In this example we're adding a command so we'll add the following text:
-
-```yaml
-sidebar:
+1. Add a file called `privatestate.md` to that directory.
+2. Write the document. Look to the existing documentation to see how to structure the content.
+3. Open the [`source/_data/sidebar.yml`](/source/_data/sidebar.yml) file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api.commands` section.
+  ```yaml
   api:
-    introduction: Introduction
-    api: API
-    commands: Commands
-    # ...
-    privatestate: privateState
-```
+    commands:
+      and: and.html
+      as: as.html
+      blur: blur.html
+      # ...
+      privatestate: privatestate.html
+  ```
+4. Open [`themes/cypress/languages/en.yml`](/themes/cypress/languages/en.yml) and add an English translation for that sidebar link's title. In this example we're adding a command so we'll add the following text:
+  ```yaml
+  sidebar:
+    api:
+      introduction: Introduction
+      api: API
+      commands: Commands
+      # ...
+      privatestate: privateState
+  ```
+5. Now, copy the new page to the other translated docs. Add a `privatestate.md` within [`source/ja/api/commands`](/source/ja/api/commands) and [`source/zh-cn/api/commands`](source/zh-cn/api/commands) with the same content as the original document. Repeat steps 3-4 within the translated directories.
+6. Submit a [pull request](#Pull-Requests) for your change.
 
 ### Writing the Changelog
 
-When adding to the Changelog, create a new file in `source/_changelogs` named as the version number. Be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes). Be aware that in development, only the five most recent entries will appear but the full changelog will be built in staging and production.
+When adding to the Changelog, create a new file in [`source/_changelogs`](/source/changelogs) named as the version number. Be sure to follow the category structure defined below (in this order). Each bullet point in the list should *always* be associated to an issue on the [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue (except for Documentation changes). Be aware that in development, only the five most recent entries will appear but the full changelog will be built in staging and production.
 
 #### Categories
 
@@ -142,10 +144,19 @@ When adding to the Changelog, create a new file in `source/_changelogs` named as
 
 ### Translating
 
-1. Add a new language folder in [`source`](https://github.com/cypress-io/cypress-documentation/tree/develop/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php). 
+#### Adding a new language
+
+1. Add a new language folder in [`source`](/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php).
 1. Add the new language to [`source/_data/languages.yml`](/source/_data/languages.yml).
+1. Add the new language to [`_config.yml`](/_config.yml#L10) under `language`.
 1. Copy Markdown and template files in [`source`](/source) folder to the new language folder.
 1. Copy `en.yml` in [`themes/cypress/languages`](/themes/cypress/languages) and rename to the abbreviated language name (all lower case).
+
+#### Translating existing docs
+
+Our currently supported languages can be found at [`/source/_data/languages.yml`](/source/_data/languages.yml). From here, find the corresponding directory within the [`/source`](/source) directory that matches the language you want to translate.
+
+Translate existing documentation then submit a [pull request](#Pull-Requests) for your change.
 
 ## Committing Code
 
