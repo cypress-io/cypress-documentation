@@ -31,20 +31,27 @@ hexo.extend.helper.register('page_nav', function () {
   let index = keys.indexOf(path)
   let result = ''
 
-  if (index > 0) {
+  const langString = this.page.lang !== 'en' ? this.page.lang : null
+
+  const shouldShowPrevArticle = index > 0
+  const shouldShowNextArticle = index < keys.length - 1
+
+  if (shouldShowPrevArticle) {
     const group = list[keys[index - 1]].group
     const page = keys[index - 1]
     const title = list[keys[index - 1]].title
-    const href = [type, group, page].join('/')
+    const hrefArr = langString ? [langString, type, group, page] : [type, group, page]
+    const href = hrefArr.join('/')
 
     result += `<a href="${this.config.root + href}" title="Prev Article" class="article-footer-prev"><i class="fa fa-chevron-left"></i><span>${this.__(prefix + title)}</span></a>`
   }
 
-  if (index < keys.length - 1) {
+  if (shouldShowNextArticle) {
     const group = list[keys[index + 1]].group
     const page = keys[index + 1]
     const title = list[keys[index + 1]].title
-    const href = [type, group, page].join('/')
+    const hrefArr = langString ? [langString, type, group, page] : [type, group, page]
+    const href = hrefArr.join('/')
 
     result += `<a href="${this.config.root + href}" title="Next Article" class="article-footer-next"><span>${this.__(prefix + title)}</span><i class="fa fa-chevron-right"></i></a>`
   }
