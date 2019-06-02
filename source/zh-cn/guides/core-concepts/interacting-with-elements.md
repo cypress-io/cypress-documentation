@@ -42,7 +42,7 @@ Cypress会在{% url `默认超时` configuration#Timeouts %} 期间等待元素�
 
 在上述任何步骤中失败，Cypress都无法与元素交互。您通常会得到一个错误，解释为什么找不到该元素是可操作的.
 
-## 可见性
+## Visibility
 
 Cypress会检查很多东西以确定元素的可见性.
 
@@ -69,13 +69,13 @@ Cypress会检查很多东西以确定元素的可见性.
 
 \***hides overflow** 意味着它有 `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
 
-## 失效性
+## Disability
 
 Cypress检查元素的 `disabled` 属性是否为`true`.
 
 我们没有检查元素是否有属性`readonly` (但我们可能应该). {% open_an_issue %} 如果你希望我们添加此问题.
 
-## 动画
+## Animations
 
 Cypress会自动确定一个元素是否是动画并等它停止.
 
@@ -87,7 +87,7 @@ Cypress会自动确定一个元素是否是动画并等它停止.
 
 你还可以在配置选项中关闭对动画的检查 {% url `动画等待` configuration#Animations %}.
 
-## 覆盖
+## Covering
 
 我们还确保我们尝试与之交互的元素不被父元素覆盖.
 
@@ -110,7 +110,7 @@ Cypress会自动确定一个元素是否是动画并等它停止.
 
 通常，`<i>` 或 `<span>` 元素会覆盖我们试图交互的确切坐标. 在这些情况下，事件会触发子元素. 我们甚至在{% url "命令日志" test-runner#Command-Log %}中为您注意到了这一点.
 
-## 滚动
+## Scrolling
 
 在与元素交互之前，我们会*始终*将其滚动到视图中（包括其任何父元素容器）. 即使元素在没有滚动的情况下也可见，我们依旧会执行滚动算法，以便在每次运行命令时重现相同的行为.
 
@@ -124,7 +124,7 @@ Cypress会自动确定一个元素是否是动画并等它停止.
 
 我们的算法*应*始终能够滚动，直到元素未被覆盖.
 
-## 坐标
+## Coordinates
 
 在我们验证元素是否可操作之后，Cypress将触发所有相应的事件和相应的默认操作. 通常这些事件的坐标是在元素的中心被触发的，但是大多数命令都可以让你改变它被触发的位置.
 
