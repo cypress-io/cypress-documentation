@@ -132,7 +132,7 @@ cy.route({
 
 当您启动一个{% url `cy.server()` server %}并定义{% url `cy.route()` route %}命令时，Cypress会在命令日志中的“Routes”下显示该命令。
 
-{% img /img/guides/server-routing-table.png "Routing Table" %}
+{% imgTag /img/guides/server-routing-table.png "Routing Table" %}
 
 只要使用{% url `cy.server()` server %}启动了服务器，测试剩余部分的所有请求都是可控的。当运行一个新的测试时，Cypress会恢复默认行为并且移除所有路由和存根。想要了解关于API和选项的完整介绍，参考各个命令的文档。
 
@@ -276,7 +276,7 @@ cy.get('#results')
 
 使用Cypress，通过添加一个{% url `cy.wait()` wait %}，您可以更容易地确定您的特定问题。如果响应没有返回，您将收到如下错误：
 
-{% img /img/guides/clear-source-of-failure.png "Wait Failure" %}
+{% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 现在我们明确知道为什么我们的测试失败了。它与DOM无关。相反，我们可以看到要么我们的请求从未发出，要么请求发出到错误的URL。
 
