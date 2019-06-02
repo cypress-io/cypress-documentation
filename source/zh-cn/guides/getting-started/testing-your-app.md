@@ -74,7 +74,7 @@ touch cypress/integration/home_page_spec.js
 
 一旦文件创建成功，您应该可以在测试文件列表里看到它：
 
-{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
 
 现在，添加如下代码到您的测试文件里：
 
@@ -90,7 +90,7 @@ describe('The Home Page', function() {
 
 如果您忘记了启动Cypress服务了，您将看到以下错误：
 
-{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
+{% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 如果您已经启动了Cypress服务，您将会看到应用启动并且开始工作了。
 
