@@ -40,14 +40,17 @@ Sequence | Notes
 `{backspace}` | Deletes character to the left of the cursor
 `{del}` | Deletes character to the right of the cursor
 `{downarrow}` | Moves cursor down
+`{end}` | Moves cursor to the end of the line
 `{enter}` | Types the Enter key
 `{esc}` | Types the Escape key
+`{home}` | Moves cursor to the start of the line
+`{insert}` | Inserts character to the right of the cursor
 `{leftarrow}` | Moves cursor left
+`{pagedown}` | Scrolls down
+`{pageup}` | Scrolls up
 `{rightarrow}` | Moves cursor right
 `{selectall}` | Selects all text by creating a `selection range`
 `{uparrow}` | Moves cursor up
-`{home}` | Moves cursor to the start of the line
-`{end}` | Moves cursor to the end of the line
 
 Text passed to `.type()` may also include any of these modifier character sequences:
 
@@ -449,6 +452,7 @@ When clicking on `type` within the command log, the console outputs the followin
 
 {% history %}
 | 3.2.0 | Added `{home}` and `{end}` character sequences
+| 3.3.0 | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% endhistory %}
 
 # See also

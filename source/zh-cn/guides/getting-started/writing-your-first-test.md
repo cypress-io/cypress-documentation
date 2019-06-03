@@ -68,7 +68,7 @@ describe('My First Test', function() {
 
 在{% url '命令日志' test-runner#Command-Log %}中, 您将看到Cypress显示套件, 包含你的第一个测试和你的第一个断言(应该是以绿色通过的形式展示).
 
-{% img /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
+{% imgTag /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 
 {% note info %}
 注意Cypress会以默认页面的形式{% url "页面的右侧" test-runner#Application-Under-Test %}显示这个信息. Cypress假设你将想要出去并且{% url "访问" visit %}互联网上的一个URL-同时你不这样做也没问题.
@@ -86,7 +86,7 @@ describe('My First Test', function() {
 
 一旦你再次保存, 你将看到Cypress以红色显示失败的测试, 因为`true`与`false`不相等.
 
-{% img /img/guides/failing-test.png "Failing test" %}
+{% imgTag /img/guides/failing-test.png "Failing test" %}
 
 Cypress提供了一个很好的{% url '测试运行器' test-runner %}, 它为你提供了一套可视化结构的测试和断言套件, 很快你也会看到命令, 页面事件, 网络请求等.
 
@@ -187,7 +187,7 @@ describe('My First Test', function() {
 
 你能看到Cypress在幕后在做什么吗? 它自动的等待以及重试, 因为它预期着**最终**能在DOM里面发现内容. 它不会马上失败!
 
-{% img /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
+{% imgTag /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning '错误信息' %}
 我们在Cypress里精心编写了数百条定制错误消息，试图用简单的术语解释出错的原因. 在本例中Cypress尝试在整个页面去发现内容: `hype`, 但是**超时了**.
@@ -333,7 +333,7 @@ Cypress提供了调试工具来帮你理解一个测试.
 
 你看到发生了什么吗?
 
-{% img /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
+{% imgTag /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
 
 Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.contains()` contains %}在页面找到了DOM元素, Cypress还突出显示元素并将其滚动到视图中(到页面顶部).
 
@@ -343,13 +343,13 @@ Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.c
 
 但是当我们把鼠标悬浮在`CONTAINS`上时, Cypress返回快照被记录时出现的URL.
 
-{% img /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
+{% imgTag /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
 
 ## 快照
 
 命令也是交互式的. 继续去点击一下`CLICK`命令.
 
-{% img /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
+{% imgTag /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
 
 注意到它高亮成紫色. 它做了三件值得注意的事...
 
@@ -370,7 +370,7 @@ Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.c
 
 注意还有一个看起来很有趣的日志: `(PAGE LOAD)`后面紧跟着另一个入口`(NEW URL)`. 这些都不是我们发出的命令 - 相反, Cypress本身将在重要的事件发生的时候在你的应用程序注销(*****感觉这里翻译的有问题*****). 请注意它们会看起来不同(它们是灰色的, 并且没有数字).
 
-{% img /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
+{% imgTag /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
 
 **Cypress注销页面事件:**
 
@@ -385,7 +385,7 @@ Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.c
 
 打开你的Dev Tools并且点击类名为`.action-email`的选择器的`GET`请求.
 
-{% img /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
+{% imgTag /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
 
 **我们能够看到Cypress在控制台输出了额外的信息:**
 
@@ -429,7 +429,7 @@ describe('My First Test', function() {
 
 现在Cypress提供我们一个UI界面来在每个命令之间前进(类似于一个调试器).
 
-{% img /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
+{% imgTag /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
 ## 运转示例
 
@@ -499,4 +499,4 @@ describe('My First Test', function() {
 - 为Cypress命令和断言设立{% url '智能代码补全' intelligent-code-completion %}.
 - 搜索Cypress的文档说明书来更快的发现你需要的东西.
 
-{% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
+{% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}

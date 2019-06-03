@@ -200,22 +200,19 @@ This avoids ever needing a second open browser, but still gives you an end-to-en
 
 Each test is limited to only visiting a single superdomain.
 
-What is a superdomain?
+What is a superdomain? Given the urls below, all have the same superdomain of `cypress.io`.
 
-```js
-// examples of superdomains
-// given these origins below
-
-http://google.com       // superdomain is google.com
-https://google.com      // superdomain is google.com
-https://www.google.com  // superdomain is google.com
-https://mail.google.com // superdomain is google.com
-```
+- `http://cypress.io`
+- `https://cypress.io`
+- `https://www.cypress.io`
+- `https://docs.cypress.io`
+- `https://example.cypress.io/commands/querying`
 
 The rules are:
 
-- {% fa fa-warning %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
-- {% fa fa-check-circle %} But you **can** {% url "visit" visit %} different subdomains in the same test.
+- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different subdomains in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different superdomains in **different** tests.
 
 ```javascript
 cy.visit('https://www.cypress.io')

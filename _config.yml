@@ -10,6 +10,7 @@ author: Cypress.io
 language:
   - en
   - zh-cn
+  - ja
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'

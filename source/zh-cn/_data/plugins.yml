@@ -56,11 +56,6 @@
       description: ESLint plugin that sets globals for writing tests in Cypress.
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
-      
-    - name: cypress-log-to-output
-      description: Plugin that sends all browser logs to the terminal. Useful for debugging browser issues in CI. Currently, only Chrome is supported.
-      link: https://github.com/flotwig/cypress-log-to-output
-      keywords: [logging]
 
     - name: Knapsack Pro Cypress
       description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.
@@ -133,11 +128,6 @@
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
       keywords: [commands]
-
-    - name: cypress-plugin-snapshots
-      description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
-      link: https://github.com/meinaart/cypress-plugin-snapshots
-      keywords: [snapshot]
 
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
@@ -286,6 +276,11 @@
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
       keywords: [screenshots, visual regression]
+      
+    - name: cypress-plugin-snapshots
+      description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
+      link: https://github.com/meinaart/cypress-plugin-snapshots
+      keywords: [snapshot]
 
     - name: Cypress Image Snapshot
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
@@ -308,6 +303,11 @@
       description: Saves the Cypress test command log as a JSON file if a test fails.
       link: https://github.com/bahmutov/cypress-failed-log
       keywords: [reporter]
+
+    - name: cypress-log-to-output
+      description: Plugin that prints all browser console logs to the terminal while running Cypress tests. Currently, only Chrome is supported.
+      link: https://github.com/flotwig/cypress-log-to-output
+      keywords: [logging]
 
     - name: cypress-testrail-reporter
       description: Custom reporter for publishing Cypress results to a TestRail test run.

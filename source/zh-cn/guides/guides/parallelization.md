@@ -21,7 +21,7 @@ title: 并行化
 
 这个指南假设您已经在持续集成中运行和{% url "记录" dashboard-service#Setup %}了项目。如果还您没有配置您的项目，请查看我们的{% url "持续集成指南" continuous-integration %}。
 
-{% img 'no-border' /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" %}
+{% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
 # 分割您的测试集
 
@@ -58,7 +58,7 @@ Cypress会根据我们的{% urlHash '平衡策略' 平衡策略 %}将每一个sp
 
 ## 并行化过程
 
-{% img 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
+{% imgTag /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" "no-border" %}
 
 # 平衡策略
 
@@ -68,7 +68,7 @@ Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress
 
 ## Spec历史持续时间分析
 
-{% img 'no-border' /img/guides/parallelization/load-balancing.png "Spec duration forecasting" %}
+{% imgTag /img/guides/parallelization/load-balancing.png "Spec duration forecasting" "no-border" %}
 
 通过对测试运行的每个spec文件的持续时间进行估计，Cypress可以按spec运行持续时间的降序将spec文件分发给可用的CI资源。通过这种方式，最耗时的spec首先启动，从而将整个测试运行持续时间最小化。
 
@@ -133,7 +133,7 @@ Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress
 
 当查看仪表盘上的{% urlHash "机器视图" 机器视图 %}时，运行时间和使用的机器之间的差异非常明显。注意，在两台机器上并行化的运行如何根据持续时间自动运行所有spec，而没有并行化的运行则不会。
 
-{% img /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
+{% imgTag /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
 
 在两台机器上并行化我们的测试节省了将近50%的总运行时间，并且我们可以通过添加更多的机器来进一步减少构建时间。
 
@@ -145,7 +145,7 @@ Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress
 为了将多个运行分组到单个运行中，CI机器需要共享一个公共的CI构建ID环境变量。通常，这些CI机器将并行运行，或者在相同的构建工作流或管道中运行，但是**不是必须使用Cypress并行化来对运行进行分组**。运行分组可以独立于Cypress并行化来使用。
 {% endnote %}
 
-{% img 'no-border' /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" %}
+{% imgTag /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" "no-border" %}
 
 ## 通过浏览器分组
 
@@ -169,7 +169,7 @@ Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress
   cypress run --record --group Linux/Electron
   ```
 
-{% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
+{% imgTag /img/guides/parallelization/browser.png "browser" "no-border" %}
 
 ## 分组以标签并行化
 
@@ -195,7 +195,7 @@ cypress run --record --group 4x-electron --parallel
 
 以这种方式标记这些组有助于我们之后在Cypress仪表盘中查看测试运行情况，如下所示：
 
-{% img /img/guides/parallelization/timeline-collapsed.png "Timeline view with grouping and parallelization" %}
+{% imgTag /img/guides/parallelization/timeline-collapsed.png "Timeline view with grouping and parallelization" %}
 
 ## 按照spec上下文分组
 
@@ -219,7 +219,7 @@ cypress run --record --group package/customer --spec 'cypress/integration/packag
 cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
 ```
 
-{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %}
+{% imgTag /img/guides/parallelization/monorepo.png "monorepo" "no-border" %}
 
 这种模式对于monorepo中的项目特别有用。monorepo的每个部分都可以分配自己的组，更大的部分可以并行以加快测试速度。
 
@@ -228,7 +228,7 @@ cypress run --record --group package/guest --spec 'cypress/integration/packages/
 
 CI构建ID用于将多个CI机器关联到一个测试运行。此标识符基于每个CI构建所特有的环境变量，并根据CI提供商的不同而变化。Cypress对大多数常用的CI供应商都提供开箱即用的支持，因此通常不需要通过{% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}直接设置CI构建ID。
 
-{% img 'no-border' /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" %}
+{% imgTag /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" "no-border" %}
 
 ## CI根据供应商构建ID环境变量
 
@@ -259,11 +259,11 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 这个等待期称为**运行完成延迟**，从最后一个已知的CI机器完成后开始，如下图所示：
 
-{% img 'no-border' /img/guides/parallelization/run-completion-delay.png "Test run completion delay" %}
+{% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
 这个**延迟默认为60秒**，但是可以在{% url "仪表盘" dashboard-service %}项目设置页面中配置：
 
-{% img /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
+{% imgTag /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
 
 # 在仪表盘中可视化并行和分组
 
@@ -273,19 +273,19 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 时间轴视图在您的spec文件相对运行时绘制它们的图表。当您想要可视化您的测试如何在所有可用的机器上按时间顺序运行时，这尤其有用。
 
-{% img /img/guides/parallelization/timeline-view-small.png "Timeline view with parallelization" %}
+{% imgTag /img/guides/parallelization/timeline-view-small.png "Timeline view with parallelization" %}
 
 ## 条形图视图
 
 条形图视图可视化了您的spec文件之间的**持续时间**。
 
-{% img /img/guides/parallelization/bar-chart-view.png "Bar Chart view with parallelization" %}
+{% imgTag /img/guides/parallelization/bar-chart-view.png "Bar Chart view with parallelization" %}
 
 ## 机器视图
 
 机器视图根据执行spec文件的机器来绘制它们的图表。这个视图让评估每台机器对整个测试运行的贡献变得很容易。
 
-{% img /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
+{% imgTag /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
 
 # 另请参阅
 

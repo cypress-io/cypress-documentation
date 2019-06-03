@@ -91,6 +91,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   position: relative;
   top: 62px;
   bottom: 334px;
+
+  &.rtl {
+    direction: rtl;
+  }
 }
 
 @media print {

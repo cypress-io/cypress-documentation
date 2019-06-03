@@ -71,7 +71,7 @@ it('let me debug like a fiend', function() {
 
 The current subject that is yielded by the {% url `cy.get()` get %} is exposed as the variable `subject` within your DevTools so that you can interact with it in the console.
 
-{% img /img/guides/debugging-subject.png "Debugging Subject" %}
+{% imgTag /img/guides/debugging-subject.png "Debugging Subject" %}
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that moment.
 
@@ -285,7 +285,7 @@ Reload the browser and see debug messages within the DevTools console. You will 
 
 In addition to the `DEBUG` messages, Cypress also emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
 
-{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
+{% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
 ## Run Cypress command outside the test
 

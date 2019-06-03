@@ -1,6 +1,5 @@
 ---
 title: 安装Cypress
-
 ---
 
 {% note info %}
@@ -244,15 +243,25 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 我们推荐 **不要导出** `CYPRESS_RUN_BINARY`环境变量, 因为它会影响所有安装在你系统上的cypres模块.
 {% endnote %}
 
-## Hosting
+## Download URLs
 ## 托管
 
 如果你想下载特定的可提供平台的Cypress版本(操作系统), 你可以从CDN得到它. 你可能也想自己托管一个本地的Cypress并为本地提供服务.
 
-下载服务器的地址是`https://download.cypress.io`.
 
 请参阅{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}查看所有支持的平台.
 
+
+We currently have the following downloads available:
+
+* Windows 64-bit (`?platform=win32&arch=x64`)
+* Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
+* Linux 64-bit (`?platform=linux`)
+* macOS 64-bit (`?platform=darwin`)
+
+Here are the available download URLs:
+
+See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
 
  方法 | Url                            | 描述
  ------ | ------------------------------ | -------------------------------------------------------------------------
@@ -265,7 +274,7 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 **为Windows平台下载`3.0.0`的示例:**
 
 ```
-https://download.cypress.io/desktop/3.0.0?platform=win
+https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
 ## Mirroring
