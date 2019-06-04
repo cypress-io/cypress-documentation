@@ -121,11 +121,11 @@ cy.url().should('contain', '#users/new')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/url/test-url-of-website-or-web-application.png)
+{% imgTag img/api/url/test-url-of-website-or-web-application.png "Command Log url" %}
 
 When clicking on URL within the command log, the console outputs the following:
 
-![Console Log](/img/api/url/console-log-of-browser-url-string.png)
+{% imgTag /img/api/url/console-log-of-browser-url-string.png "Console Log url" %}
 
 # See also
 

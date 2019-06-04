@@ -408,23 +408,23 @@ XHR's that display `(XHR STUB)` in the Command Log have been stubbed and their r
 
 XHR's that display `(XHR)` in the Command Log have *not* been stubbed and were passed directly through to a server.
 
-![XHR Command Log when not stubbed](/img/api/route/xhr-stub-versus-not-stubbed-routes-in-command-log.png)
+{% imgTag /img/api/route/xhr-stub-versus-not-stubbed-routes-in-command-log.png "XHR Command Log when not stubbed" %}
 
 Cypress also logs whether the XHR was stubbed or not to the console when you click on the command in the Command Log. It will indicate whether a request was stubbed, which url it matched or that it did not match any routes.
 
-![XHR Command Log stubbed](/img/api/route/console-log-shows-if-route-was-stubbed-also.png)
+{% imgTag /img/api/route/console-log-shows-if-route-was-stubbed-also.png "XHR Command Log stubbed" %}
 
 Even the `Initiator` is included, which is a stack trace to what caused the XHR to be sent.
 
 ## `cy.route()` cannot be debugged using {% url `cy.request()` request %}
 
-***`cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`***
+### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`
 
 The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 ## Matches
 
-***Matching origins and non origin URL's***
+### Matching origins and non origin URL's
 
 When Cypress matches up an outgoing XHR request to a `cy.route()`, it actually attempts to match it against both the fully qualified URL and then additionally without the URL's origin.
 
@@ -445,7 +445,7 @@ The following XHR's which were `xhr.open(...)` with these URLs would:
 
 ## No matches
 
-***Requests that don't match any routes***
+### Requests that don't match any routes
 
 You can force requests that do _not_ match a route to return a `404` status and an empty body by passing an option to the `cy.server()` like so:
 
@@ -480,15 +480,15 @@ cy.route(/teams/,   'fixtures:teams').as('teamsGet')
 
 Whenever you start a server and add routes, Cypress will display a new Instrument Log called *Routes*. It will list the routing table in the Instrument Log, including the `method`, `url`, `stubbed`, `alias` and number of matched requests:
 
-![Command Log routing table](/img/api/route/routing-table-displayed-in-command-log-for-cy-route.png)
+{% imgTag /img/api/route/routing-table-displayed-in-command-log-for-cy-route.png "Command Log routing table" %}
 
 When XHR's are made, Cypress will log them in the Command Log and indicate whether they matched a routing alias:
 
-![Command Log XHR alias route](/img/api/route/some-xhr-responses-including-200-and-500-status-codes.png)
+{% imgTag /img/api/route/some-xhr-responses-including-200-and-500-status-codes.png "Command Log XHR alias route" %}
 
 When clicking on `XHR Stub` within the Command Log, the console outputs the following:
 
-![Console Log](/img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png)
+{% imgTag /img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png "Console Log XHR alias route" %}
 
 # See also
 

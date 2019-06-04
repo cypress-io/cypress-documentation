@@ -278,11 +278,11 @@ beforeEach(function () {
 
 The commands above will display in the Command Log as:
 
-![Command Log visit](/img/api/visit/visit-example-page-in-before-each-of-test.png)
+{% imgTag /img/api/visit/visit-example-page-in-before-each-of-test.png "Command Log visit" %}
 
 When clicking on `visit` within the command log, the console outputs the following:
 
-![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
+{% imgTag /img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png "console Log visit" %}
 
 {% history %}
 {% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`

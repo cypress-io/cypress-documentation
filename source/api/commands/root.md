@@ -90,11 +90,11 @@ cy.get('.query-ul').within(() => {
 
 The commands above will display in the Command Log as:
 
-![Command Log root](/img/api/root/find-root-element-and-assert.png)
+{% imgTag /img/api/root/find-root-element-and-assert.png "Command Log root" %}
 
 When clicking on the `root` command within the command log, the console outputs the following:
 
-![Console Log root](/img/api/root/console-log-root-which-is-usually-the-main-document.png)
+{% imgTag /img/api/root/console-log-root-which-is-usually-the-main-document.png "Console Log root" %}
 
 # See also
 

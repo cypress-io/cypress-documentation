@@ -82,11 +82,11 @@ cy.getCookies().should('be.empty')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/clearcookies/clear-all-cookies-in-cypress-tests.png)
+{% imgTag /img/api/clearcookies/clear-all-cookies-in-cypress-tests.png "Command Log" %}
 
 When clicking on `clearCookies` within the command log, the console outputs the following:
 
-![Console Log](/img/api/clearcookies/inspect-cleared-cookies-in-console.png)
+{% imgTag /img/api/clearcookies/inspect-cleared-cookies-in-console.png "Console Log" %}
 
 # See also
 

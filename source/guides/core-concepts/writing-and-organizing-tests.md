@@ -114,7 +114,8 @@ beforeEach(function () {
   cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
-![global hooks](/img/guides/global-hooks.png)
+
+{% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
 **Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 

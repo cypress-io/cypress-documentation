@@ -155,11 +155,11 @@ cy.get('select').select('Homer Simpson')
 
 The commands above will display in the Command Log as:
 
-![Command Log select](/img/api/select/select-homer-option-from-browser-dropdown.png)
+{% imgTag /img/api/select/select-homer-option-from-browser-dropdown.png "Command Log select" %}
 
 When clicking on `select` within the command log, the console outputs the following:
 
-![Console Log select](/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png)
+{% imgTag /img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png "Console Log select" %}
 
 # See also
 

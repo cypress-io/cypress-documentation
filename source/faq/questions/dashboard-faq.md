@@ -6,7 +6,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} What is the Dashboard?
 
-![Dashboard Screenshot](/img/dashboard/dashboard-runs-list.png)
+{% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
 The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration %}. The Dashboard provides you insight into what happened during your tests run.
 

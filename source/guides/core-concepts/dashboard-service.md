@@ -32,7 +32,7 @@ The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service t
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
 
-![Runs List](/img/dashboard/runs-list-in-desktop-gui.png)
+{% imgTag /img/dashboard/runs-list-in-desktop-gui.png "Runs List" %}
 
 {% note info "Have a question you don't see answered here?"%}
 {% url "We have answered some common questions about the Dashboard Service in our FAQ." dashboard-faq %}.
@@ -65,7 +65,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 ### To set up a project to record:
 
-![Setup Project Screen](/img/dashboard/setup-to-record.gif)
+{% imgTag /img/dashboard/setup-to-record.gif "Setup Project Screen" %}
 
 1. Click on the **Runs** tab of your project within the {% url "Test Runner" test-runner %}.
 2. Click **Set up Project to Record**.
@@ -183,13 +183,13 @@ You can transfer projects that you own to another {% urlHash "organization" Orga
 
 Upon transferring, you can cancel the transfer at any time by visiting the organization's projects and clicking **Cancel Transfer**.
 
-![Cancel pending transfer of project](/img/dashboard/cancel-transfer-of-project.png)
+{% imgTag /img/dashboard/cancel-transfer-of-project.png "Cancel pending transfer of project" %}
 
 ### Accept or reject transferred project
 
 When a project is transferred to you, you will receive an email notifying you. You will be able to accept or reject the transferred project by visiting your organization's projects and clicking 'Accept' or 'Reject'.
 
-![Accept or reject a transferred project](/img/dashboard/accept-or-reject-transfer-of-project.png)
+{% imgTag /img/dashboard/accept-or-reject-transfer-of-project.png "Accept or reject a transferred project" %}
 
 ## Delete
 
@@ -200,7 +200,7 @@ You can delete projects you own. This will also delete all of their recorded tes
 3. On this page, to the far right, click on 'Settings'.
 4. At the very bottom of the Settings page click the 'Remove Project' button.
 
-![Delete project dialog](/img/dashboard/remove-project-dialog.png)
+{% imgTag /img/dashboard/remove-project-dialog.png "Delete project dialog" %}
 
 # Recorded runs
 
@@ -283,7 +283,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 
 Organizations are used to group projects and manage access to those projects.
 
-![Organizations](/img/dashboard/organizations-listed-in-dashboard.png)
+{% imgTag /img/dashboard/organizations-listed-in-dashboard.png "Organizations" %}
 
 ***With organizations you can:***
 
@@ -296,7 +296,7 @@ Organizations are used to group projects and manage access to those projects.
 
 You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by going to the **Organizations** tab and clicking **{% fa fa-plus %} Add Organization**.
 
-![Add Organization dialog](/img/dashboard/add-organization-dialog.png)
+{% imgTag /img/dashboard/add-organization-dialog.png "Add Organization dialog" %}
 
 ## Personal Orgs
 
@@ -306,7 +306,7 @@ By default, every user of Cypress is given a personal organization - named after
 
 You can delete organizations that you own as long as they do not have any projects in the organization. You must first transfer ownership of your projects to another organization before you can delete the organization.
 
-![Delete Organization](/img/dashboard/remove-organization-dialog.png)
+{% imgTag /img/dashboard/remove-organization-dialog.png "Delete Organization" %}
 
 # Users
 
@@ -321,7 +321,7 @@ A user is anyone who logs in to the Dashboard Service. You can invite users to C
 3. Fill in their email and select their {% urlHash "role" User-roles %} then click **Invite User** *Note: only 'owners can give other user's 'owner' access.*
 4. The user will receive an invitation email with a link to accept the invitation.
 
-![Invite User dialog](/img/dashboard/invite-user-dialog.png)
+{% imgTag /img/dashboard/invite-user-dialog.png "Invite User dialog" %}
 
 ## User roles
 

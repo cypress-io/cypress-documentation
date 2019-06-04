@@ -309,11 +309,11 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 
 The commands above will display in the Command Log as:
 
-![Command Log request](/img/api/request/testing-request-url-and-its-response-body-headers.png)
+{% imgTag /img/api/request/testing-request-url-and-its-response-body-headers.png "Command Log request" %}
 
 When clicking on `request` within the command log, the console outputs the following:
 
-![Console log request](/img/api/request/console-log-request-response-body-headers-status-url.png)
+{% imgTag /img/api/request/console-log-request-response-body-headers-status-url.png "Console Log request" %}
 
 {% history %}
 {% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.

@@ -84,11 +84,11 @@ cy.get('li.active').closest('.nav')
 
 The commands above will display in the Command Log as:
 
-![Command Log closest](/img/api/closest/find-closest-nav-element-in-test.png)
+{% imgTag /img/api/closest/find-closest-nav-element-in-test.png "Command Log closest" %}
 
 When clicking on the `closest` command within the command log, the console outputs the following:
 
-![console.log closest](/img/api/closest/closest-console-logs-elements-found.png)
+{% imgTag /img/api/closest/closest-console-logs-elements-found.png "console.log closest" %}
 
 # See also
 

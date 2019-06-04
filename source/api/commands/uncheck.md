@@ -119,11 +119,11 @@ cy.get('[data-js="choose-all"]').click()
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/uncheck/test-unchecking-a-checkbox.png)
+{% imgTag /img/api/uncheck/test-unchecking-a-checkbox.png "Command Log uncheck" %}
 
 When clicking on `uncheck` within the command log, the console outputs the following:
 
-![Console Log](/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png)
+{% imgTag /img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png "Console Log uncheck" %}
 
 {% history %}
 {% url "0.6.12" changelog#0-6-12 %} | Added option `force`

@@ -275,7 +275,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 
 These string messages will be shown in the Command Log giving each assertion more context.
 
-![Expect assertions with messages](/img/api/should/expect-with-message.png)
+{% imgTag /img/api/should/expect-with-message.png "Expect assertions with messages" %}
 
 ### Compare text values of two elements
 
@@ -416,11 +416,11 @@ cy.get('.left-nav>.nav').children().should('have.length', 8)
 
 The commands above will display in the Command Log as:
 
-![Command Log should](/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png)
+{% imgTag /img/api/should/should-command-shows-up-as-assert-for-each-assertion.png "Command Log should" %}
 
 When clicking on `assert` within the command log, the console outputs the following:
 
-![Console Log should](/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png)
+{% imgTag /img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png "Console Log should" %}
 
 # See also
 

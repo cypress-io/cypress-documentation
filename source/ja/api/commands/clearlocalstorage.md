@@ -94,11 +94,11 @@ cy.clearLocalStorage(/prop1|2/).then((ls) => {
 
 The commands above will display in the Command Log as:
 
-![Command log for clearLocalStorage](/img/api/clearlocalstorage/clear-ls-localstorage-in-command-log.png)
+{% imgTag /img/api/clearlocalstorage/clear-ls-localstorage-in-command-log.png "Command log for clearLocalStorage" %}
 
 When clicking on `clearLocalStorage` within the command log, the console outputs the following:
 
-![console.log for clearLocalStorage](/img/api/clearlocalstorage/local-storage-object-shown-in-console.png)
+{% imgTag /img/api/clearlocalstorage/local-storage-object-shown-in-console.png "console.log for clearLocalStorage" %}
 
 # See also
 

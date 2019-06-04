@@ -197,11 +197,11 @@ cy.readFile('cypress.json')
 
 The command above will display in the Command Log as:
 
-![Command Log](/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png)
+{% imgTag /img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png "Command Log readFile" %}
 
 When clicking on the `readFile` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png)
+{% imgTag /img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png "Console Log readFile" %}
 
 # See also
 
