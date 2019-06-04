@@ -77,6 +77,7 @@ sidebar:
     module-api: Module API
     retry-ability: Retry-ability
     visual-testing: Visual Testing
+    code-coverage: Code Coverage
   api:
     api: API
     table-of-contents: Table of Contents
