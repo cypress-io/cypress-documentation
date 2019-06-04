@@ -75,7 +75,109 @@ I can now serve the application using and get instrumented code without an inter
 
 A really nice feature of both [nyc][nyc] and [babel-plugin-istanbul][babel-plugin-istanbul] is that the source maps are generated automatically, allowing to collect code coverage information, yet to interact with the original, non-instrumented code in the DevTools debugger. In the screenshot above the bundle (green arrow) has coverage counters, but the source mapped files in the green rectangle show the original code.
 
+{% note info %}
+The `nyc` and `babel-plugin-istanbul` only instrument the application code and not 3rd party dependencies from `node_modules`.
+{% endnote %}
+
+# Code coverage from E2E tests
+
+To handle code coverage collected during each test, we have created Cypress plugin [@cypress/code-coverage][code-coverage]. It merges coverage from each test and saves the combined result. It also calls `nyc` (its peer dependency) to generate static HTML report for human consumption. To install the plugin use:
+
+```shell
+npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
+```
+
+Then add the plugin to the support file and the plugins file:
+
+```javascript
+// cypress/support/index.js
+import '@cypress/code-coverage/support'
+
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  on('task', require('@cypress/code-coverage/task'))
+}
+```
+
+When you run the Cypress tests now, you should see a few commands after the tests finish. I have highlighted these commands using green rectangle below.
+
+{% imgTag /img/guides/code-coverage/coverage-plugin-commands.png "coverage plugin commands" %}
+
+After the tests complete, the final code coverage is saved to the folder `.nyc_output`. It is a JSON file from which we can generate a report in a variety of formats. The `@cypress/code-coverage` plugin generates the HTML report automatically - you can open the `coverage/index.html` page locally after the tests finish. You can also call `nyc report` to generate other reports, for example for sending the coverage information to 3rd party services.
+
+To see the summary of the code coverage after the tests:
+
+```shell
+npx nyc report --reporter=text-summary
+
+========= Coverage summary =======
+Statements   : 76.3% ( 103/135 )
+Branches     : 65.31% ( 32/49 )
+Functions    : 64% ( 32/50 )
+Lines        : 81.42% ( 92/113 )
+==================================
+```
+
+{% note info %}
+**Tip:** store the `coverage` folder as a build artifact on your continuous integration server. Because the report is a static HTML page, some CIs can show it write from their web applications. The screenshot below shows the coverage report stored on CircleCI. Clicking on the `index.html` shows the report right in the browser.
+{% endnote %}
+
+{% imgTag /img/guides/code-coverage/circleci-coverage-report.png "coverage HTML report on CircleCI" %}
+
+# Code coverage as a guide
+
+Even a single end-to-end test can cover a lot of the application code. For example, let's run the following test that adds a few items, then marks one of them as completed.
+
+```javascript
+it('adds and completes todos', () => {
+  cy.visit('/')
+  cy.get('.new-todo')
+    .type('write code{enter}')
+    .type('write tests{enter}')
+    .type('deploy{enter}')
+  cy.get('.todo').should('have.length', 3)
+
+  cy.get('.todo')
+    .first()
+    .find('.toggle')
+    .check()
+  cy.get('.todo')
+    .first()
+    .should('have.class', 'completed')
+})
+```
+
+After running the test and opening the HTML report, we see 76% code coverage in our application.
+
+{% imgTag /img/guides/code-coverage/single-test.png "Coverage report after a single test" %}
+
+Even better, we can drill down into the individual source files to see the code we have missed. In our example application, the main state logic is in the "src/reducers/todos.js" file. Let us see the code coverage in this file:
+
+{% imgTag /img/guides/code-coverage/todos-coverage.png "Main application logic coverage" %}
+
+Notice how the "ADD_TODO" action was executed 3 times - because our test has added 3 todo items, and the "COMPLETE_TODO" action was executed just once - because our test has marked 1 todo item as completed. The sources line not covered: marked in yellow (the switch cases the test missed) and red (regular statements) are a great guide for writing more end-to-end tests. We need tests that delete todo items, edit them, mark all of them as completed at once and clear completed items. When we cover every switch statement in "src/reducers/todos.js" we probably will achieve code coverage close to 100%. Even more importantly, we will cover the main features of the application the user is expected to use.
+
+We can quickly write more E2E tests:
+
+{% imgTag /img/guides/code-coverage/more-tests.png "Cypress Test Runner passed more tests" %}
+
+The produced HTML report shows 99% code coverage
+
+{% imgTag /img/guides/code-coverage/almost-100.png "99 percent code coverage" %}
+
+Every source file but 1 is covered at 100%. We can have great confidence in our application, and safely refactor the code, knowing that we have a robust set of end-to-end tests. If possible, we advise to implement {% url 'visual testing' visual-testing %} in addition to Cypress functional tests to avoid CSS and visual regressions.
+
+# Combined E2E and unit coverage
+
+Let us look at the one file that has a "missed" line. It is file "src/selectors/index.js" shown below
+
+{% imgTag /img/guides/code-coverage/selectors.png "Selectors file with a line not covered by end-to-end tests" %}
+
+The source line not covered by the end-to-end tests shows an edge case NOT reachable from the UI. Yet this switch case is definitely worth testing - at least to avoid accidentally changing its behavior during refactoring.
+
+# See also
 
 [istanbul]: https://istanbul.js.org
 [nyc]: https://github.com/istanbuljs/nyc
 [babel-plugin-istanbul]: https://github.com/istanbuljs/babel-plugin-istanbul
+[code-coverage]: https://github.com/cypress-io/code-coverage

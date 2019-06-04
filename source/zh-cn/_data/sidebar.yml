@@ -34,6 +34,7 @@ guides:
     reporters: reporters.html
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
+    code-coverage: code-coverage.html
 
   # advanced-cypress:
     # the-cypress-workflow: the-cypress-workflow.html
