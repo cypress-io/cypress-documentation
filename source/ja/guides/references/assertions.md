@@ -124,6 +124,7 @@ These chainers are available when asserting about a DOM object.
 
 You will commonly use these chainers after using DOM commands like: {% url `cy.get()` get %}, {% url `cy.contains()` contains %}, etc.
 
+<!-- textlint-disable -->
 | Chainers | Assertion |
 | --- | --- |
 | attr(*name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
@@ -146,6 +147,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | match(*selector*) | `expect($emptyEl).to.match(':empty')` |
 | contain(*text*) | `expect($el).to.contain('text')` |
 | descendants(*selector*) | `expect($el).to.have.descendants('div')` |
+<!-- textlint-enable -->
 
 # Sinon-Chai
 

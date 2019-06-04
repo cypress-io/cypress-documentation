@@ -61,7 +61,7 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 
 # Examples
 
-## ^URL
+## URL
 
 ### Visit a local server running on `http://localhost:8000`
 

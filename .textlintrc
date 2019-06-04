@@ -34,6 +34,8 @@
         "CLI",
         "CSS",
         "gif",
+        ["^HTML", "HTML"],
+        ["^URL", "URL"],
         "Xvfb",
         ["API['’]?s", "APIs"],
 
