@@ -243,7 +243,7 @@ When clicking on `wait` within the command log, the console outputs the followin
 ![Console Log](/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png)
 
 {% history %}
-| 3.1.3 | Added `requestTimeout` and `responseTimout` option
+{% url "3.1.3" changelog#3-1-3 %} | Added `requestTimeout` and `responseTimout` option
 {% endhistory %}
 
 # See also

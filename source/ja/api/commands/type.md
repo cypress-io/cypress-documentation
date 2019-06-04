@@ -448,7 +448,8 @@ When clicking on `type` within the command log, the console outputs the followin
 ![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
 
 {% history %}
-| 3.2.0 | Added `{home}` and `{end}` character sequences
+{% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
+{% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
 {% endhistory %}
 
 # See also

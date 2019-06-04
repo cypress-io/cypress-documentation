@@ -316,8 +316,8 @@ When clicking on `request` within the command log, the console outputs the follo
 ![Console log request](/img/api/request/console-log-request-response-body-headers-status-url.png)
 
 {% history %}
-| 3.2.0 | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`.
-| 3.3.0 | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
+{% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
+{% url "3.2.0" changelog#3-2-0 %} | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`.
 {% endhistory %}
 
 # See also

@@ -180,8 +180,8 @@ When clicking on the `writeFile` command within the command log, the console out
 ![Console Log](/img/api/writefile/console-log-shows-contents-written-to-file.png)
 
 {% history %}
-| 3.1.1 | Added `flag` option and appending with `a+`
-| 1.0.0 | Introduced
+{% url "3.1.1" changelog#3-1-1 %} | Added `flag` option and appending with `a+`
+{% url "1.0.0" changelog#1.0.0 %} | `cy.writeFile()` command added
 {% endhistory %}
 
 # See also
