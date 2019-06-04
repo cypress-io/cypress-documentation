@@ -1,6 +1,5 @@
 ---
 title: url
-
 ---
 
 Get the current URL of the page that is currently active.
@@ -45,7 +44,7 @@ Option | Default | Description
 
 ## No Args
 
-***Assert the URL is `http://localhost:8000/users/1/edit`***
+### Assert the URL is `http://localhost:8000/users/1/edit`
 
 ```javascript
 // clicking the anchor causes the browser to follow the link
@@ -58,7 +57,7 @@ cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 
 ## Href Shorthand
 
-***Url is an alias for `cy.location('href')`***
+### ^URL is an alias for `cy.location('href')`
 
 `cy.url()` uses `href` under the hood.
 
@@ -69,7 +68,7 @@ cy.location('href')       // these yield the same string
 
 ## Differences
 
-***Url versus href***
+### ^URL versus href***
 
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
 

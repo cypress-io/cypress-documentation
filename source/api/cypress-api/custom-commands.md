@@ -1,6 +1,5 @@
 ---
 title: Custom Commands
-
 ---
 
 Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.
@@ -545,6 +544,10 @@ Having custom commands repeat the same UI actions over and over again is slow, a
 ### 5. Write TypeScript definitions
 
 You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
+
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | `Cypress.Commands` API added
+{% endhistory %}
 
 # See also
 

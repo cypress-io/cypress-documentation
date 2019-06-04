@@ -166,6 +166,11 @@ When clicking on `window` within the command log, the console outputs the follow
 
 ![Console Log](/img/api/window/console-shows-the-applications-window-object-being-tested.png)
 
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | Can call {% url "`.focus()`" focus %} and {% url "`.blur()`" blur %} on `cy.window()`
+{% url "0.11.6" changelog#0-11-6 %} | `cy.window()` logs to Command Log
+{% endhistory %}
+
 # See also
 
 - {% url `cy.visit()` visit %}

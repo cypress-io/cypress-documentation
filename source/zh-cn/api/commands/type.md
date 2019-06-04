@@ -265,10 +265,10 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ## Supported Elements
 
-* HTML `<body>` and `<textarea>` elements.
+* ^HTML `<body>` and `<textarea>` elements.
 * Elements with a defined `tabindex` attribute.
 * Elements with a defined `contenteditable` attribute.
-* HTML `<input>` elements with a defined `type` attribute of one of the following:
+* ^HTML `<input>` elements with a defined `type` attribute of one of the following:
   * `text`
   * `password`
   * `email`
@@ -453,6 +453,14 @@ When clicking on `type` within the command log, the console outputs the followin
 {% history %}
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
+{% url "0.20.0" changelog#0-20-0 %} | Supports for typing in inputs of type `date`, `time`, `month`, and `week`
+{% url "0.17.1" changelog#0-17-1 %} | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers
+{% url "0.16.3" changelog#0-16-3 %} | Supports for typing in elements with `tabindex` attribute
+{% url "0.16.2" changelog#0-16-2 %} | Added `{downarrow}` and `{uparrow}` character sequences
+{% url "0.8.0" changelog#0-8-0 %} | Outputs Key Events Table to console on click
+{% url "0.8.0" changelog#0-8-0 %} | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{% raw %}{{{% endraw %}}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences
+{% url "0.8.0" changelog#0-8-0 %} | Added small delay (10ms) between each keystroke during `cy.type()`
+{% url "0.6.12" changelog#0-6-12 %} | Added option `force`
 {% endhistory %}
 
 # See also

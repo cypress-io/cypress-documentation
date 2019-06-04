@@ -1,7 +1,7 @@
 ---
 title: within
-
 ---
+
 Scopes all subsequent cy commands to within this element. Useful when working within a particular group of elements such as a `<form>`.
 
 # Syntax
@@ -48,7 +48,7 @@ Option | Default | Description
 
 ## Forms
 
-***Get inputs within a form and submit the form***
+### Get inputs within a form and submit the form
 
 ```html
 <form>
@@ -99,6 +99,10 @@ The commands above will display in the Command Log as:
 When clicking on the `within` command within the command log, the console outputs the following:
 
 ![Console Log](/img/api/within/within-shows-its-yield-in-console-log.png)
+
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `.within()` command added
+{% endhistory %}
 
 # See also
 

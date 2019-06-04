@@ -244,6 +244,7 @@ When clicking on `wait` within the command log, the console outputs the followin
 
 {% history %}
 {% url "3.1.3" changelog#3-1-3 %} | Added `requestTimeout` and `responseTimout` option
+{% url "< 0.3.3" changelog#0.3.3 %} | `cy.wait()` command added
 {% endhistory %}
 
 # See also

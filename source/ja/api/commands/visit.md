@@ -61,7 +61,7 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 
 # Examples
 
-## Url
+## ^URL
 
 ### Visit a local server running on `http://localhost:8000`
 
@@ -285,8 +285,15 @@ When clicking on `visit` within the command log, the console outputs the followi
 ![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
 
 {% history %}
-{% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
-{% url "3.2.0" changelog#3-2-0 %} | Added options `url`, `method`, `body`, and `headers`.
+{% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`
+{% url "3.2.0" changelog#3-2-0 %} | Added options `url`, `method`, `body`, and `headers`
+{% url "1.1.3" changelog#1-1-3 %} | Added option `failOnStatusCode`
+{% url "0.18.2" changelog#0-18-2 %} | Automatically send `Accept: text/html,*/*` request header
+{% url "0.18.2" changelog#0-18-2 %} | Automatically send `User-Agent` header
+{% url "0.17.0" changelog#0-17-0 %} | Cannot `cy.visit()` two different super domains in a single test
+{% url "0.6.8" changelog#0-6-8 %} | Added option `log`
+{% url "0.4.3" changelog#0-4-3 %} | Added option `onBeforeLoad`
+{% url "< 0.3.3" changelog#0-3.3 %} | `cy.visit()` command added
 {% endhistory %}
 
 # See also
