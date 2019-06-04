@@ -19,6 +19,12 @@ Did you know that you can use {% urlHash 'multiple reporters' Multiple-Reporters
 This is especially useful when running in CI. Typically we see users using the default `spec` reporter to show up in `stdout` but then also generate an actual report file for `junit`.
 {% endnote %}
 
+{% note %}
+Once you've read through the documentation below, we invite you to experience the power of Cypress reporters via {% url Section 9 https://github.com/cypress-io/testing-workshop-cypress/blob/master/slides/09-reporters/PITCHME.md %} of our open source {% testing workshop for Cypress https://github.com/cypress-io/testing-workshop-cypress %}
+{% endnote %}
+
+
+
 # Reporter Options
 
 Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
