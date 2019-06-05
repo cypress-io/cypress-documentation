@@ -92,6 +92,11 @@
       link: https://github.com/Nanciee/cypress-autorecord
       keywords: [mock, recording, http, integration test]
 
+    - name: '@cypress/code-coverage'
+      description: Plugin to save code coverage collected during Cypress tests
+      link: https://github.com/cypress-io/code-coverage
+      keywords: [coverage]
+
 - name: Custom Commands
   plugins:
     - name: cy-view

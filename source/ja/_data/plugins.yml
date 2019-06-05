@@ -77,6 +77,11 @@
       link: https://github.com/Bkucera/cypress-plugin-retries
       keywords: [cypress-plugin-retries]
 
+    - name: '@cypress/code-coverage'
+      description: Plugin to save code coverage collected during Cypress tests
+      link: https://github.com/cypress-io/code-coverage
+      keywords: [coverage]
+
 - name: カスタムコマンド
   plugins:
     - name: cy-view
