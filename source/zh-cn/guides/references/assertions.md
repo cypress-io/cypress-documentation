@@ -1,24 +1,24 @@
 ---
-title: Assertions
+title: 断言
 ---
 
-Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, as well as helpful extensions for {% url 'Sinon' assertions#Sinon-Chai %} and {% url 'jQuery' assertions#Chai-jQuery %}, bringing you dozens of powerful assertions for free.
+Cypress绑定着流行的{% url 'Chai' assertions#Chai %}断言库，以及一些有帮助的{% url 'Sinon' assertions#Sinon-Chai %} 和 {% url 'jQuery' assertions#Chai-jQuery %}，为你带来免费的强大断言。
 
-{% note info "New to Cypress?" %}
-This document is only a reference to every assertion Cypress supports.
+{% note info "新Cypress？" %}
+本文档仅引用Cypress支持的所有断言。
 
-If you're looking to understand **how** to use these assertions please read about assertions in our {% url "Introduction to Cypress" introduction-to-cypress#Assertions guide %}.
+如果您想了解如何使用这些断言，请阅读我们的{% url "Cypress简介" introduction-to-cypress#Assertions guide %}断言部分。
 {% endnote %}
 
 # Chai
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai %}
 
-## BDD Assertions
+## BDD断言
 
-These chainers are available for BDD assertions (`expect`/`should`). Aliases listed can be used interchangeably with their original chainer. You can see the entire list of available BDD Chai assertions {% url "here" http://chaijs.com/api/bdd/ %}.
+These chainers are available for BDD assertions (`expect`/`should`). Aliases listed can be used interchangeably with their original chainer。您可以在{% url "这里" http://chaijs.com/api/bdd/ %}看到可用的BDD，Chai断言的完整列表。 
 
-| Chainer | Example |
+| Chainer | 例子 |
 | --- | --- |
 | not | `expect(name).to.not.equal('Jane')` |
 | deep | `expect(obj).to.deep.equal({ name: 'Jane' })` |
@@ -64,17 +64,17 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | increase(*function*) {% aliases increases %} | `expect(fn).to.increase(obj, 'val')` |
 | decrease(*function*) {% aliases decreases %} | `expect(fn).to.decrease(obj, 'val')` |
 
-These getters are also available for BDD assertions. They don't actually do anything, but they enable you to write simple, english sentences.
+这些getter也可用于BDD断言。实际上他们什么都不做，但他们能让你写出简单的判断。
 
 | Chainable getters |
 | --- |
 | `to`, `be`, `been`, `is`, `that`, `which`, `and`, `has`, `have`, `with`, `at`, `of`, `same` |
 
-## TDD Assertions
+## TDD断言
 
-These assertions are available for TDD assertions (`assert`). You can see the entire list of available Chai assertions {% url "here" http://chaijs.com/api/assert/ %}.
+这些断言可用于TDD断言（assert）。您可以在{% url "这里" http://chaijs.com/api/assert/ %}看到完整的可用chai断言列表。
 
-| Assertion | Example |
+| 断言 | 例子 |
 | --- | --- |
 | .isOk(*object*, *[message]*) | `assert.isOk('everything', 'everything is ok')` |
 | .isNotOk(*object*, *[message]*) | `assert.isNotOk(false, 'this will pass')` |
@@ -120,11 +120,11 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai-jquery %}
 
-These chainers are available when asserting about a DOM object.
+这些断言在声明DOM对象时可用。
 
-You will commonly use these chainers after using DOM commands like: {% url `cy.get()` get %}, {% url `cy.contains()` contains %}, etc.
+你在使用像{% url `cy.get()` get %}, {% url `cy.contains()` contains %}，etc等这些DOM命令后通常会使用这些chainers
 
-| Chainers | Assertion |
+| Chainers | 断言 |
 | --- | --- |
 | attr(*name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
 | prop(*name*, *[value]*) | `expect($el).to.have.prop('disabled', false)` |
@@ -152,7 +152,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 
 {% fa fa-github %} {% url https://github.com/domenic/sinon-chai %}
 
-These chainers are used on assertions with {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %}.
+这些chainers用于断言{% url `cy.stub()` stub %}和{% url `cy.spy()` spy %}.
 
 | Sinon.JS property/method | Assertion |
 | -- | -- |
@@ -178,20 +178,20 @@ These chainers are used on assertions with {% url `cy.stub()` stub %} and {% url
 | threw | `expect(spy).to.have.thrown(errorObjOrErrorTypeStringOrNothing)` |
 | alwaysThrew | `expect(spy).to.have.always.thrown(errorObjOrErrorTypeStringOrNothing)` |
 
-# Adding New Assertions
+# 添加新断言
 
-Because we are using `chai`, that means you can extend it however you'd like. Cypress will "just work" with new assertions added to `chai`. You can:
+因为我们使用的是`chai`，这意味着你可以扩展它。Cypress将“工作”与新的断言添加到`chai`。你可以：
 
-- Write your own `chai` assertions as {% url 'documented here' http://chaijs.com/api/plugins/ %}.
-- npm install any existing `chai` library and import into your test file or support file.
+- 在{% url '这里记录' http://chaijs.com/api/plugins/ %}你自己的`chai`断言。
+- npm install任何现有的`chai`库并导入到测试文件或支持文件中。
 
 {% note info %}
-{% url 'Check out our example recipe extending chai with new assertions.' recipes#Adding-Chai-Assertions %}
+{% url '点击查看我们的示例，使用新断言扩展chai。' recipes#Adding-Chai-Assertions %}
 {% endnote %}
 
-# Common Assertions
+# 常用断言
 
-Here is a list of common element assertions. Notice how we use these assertions (listed above) with {% url `.should()` should %}. You may also want to read about how Cypress {% url "retries" retry-ability %} assertions.
+下面是常见元素断言的列表。注意我们如何将这些断言（上面列出）与{% url `.should()` should %}一起使用。您可能还想了解Cypress如何{% url "重试" retry-ability %}断言。
 
 ## Length
 
@@ -256,7 +256,7 @@ cy.get('#accordion').should('not.have.css', 'display', 'none')
 
 # Should callback
 
-If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
+如果内置断言不够，你可以轻松地编写自己的断言函数，并将其作为回调传递给`.should()`命令。Cypress将自动{% url "retry" retry-ability %}回调函数，直到它通过或命令超时。请查看{% url `.should()` should#Function %}文档。
 
 ```html
 <div class="main-abc123 heading-xyz987">Introduction</div>
@@ -274,7 +274,7 @@ cy.get('div')
   })
 ```
 
-# See also
+# 请参阅
 
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
 - {% url 'cypress-example-kitchensink Assertions' https://example.cypress.io/commands/assertions %}
