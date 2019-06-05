@@ -1,5 +1,5 @@
 ---
-title: Recipes
+title: レシピ
 containerClass: examples
 ---
 

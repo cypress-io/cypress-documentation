@@ -1,5 +1,5 @@
 ---
-title: Key Differences
+title: 主な違い
 ---
 
 {% note info %}

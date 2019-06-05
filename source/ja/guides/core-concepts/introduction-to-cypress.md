@@ -1,5 +1,5 @@
 ---
-title: Introduction to Cypress
+title: Cypress入門
 ---
 
 {% note info %}

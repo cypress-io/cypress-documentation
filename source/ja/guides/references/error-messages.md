@@ -1,6 +1,6 @@
 ---
 layout: toc-top
-title: Error Messages
+title: エラーメッセージ
 ---
 
 # Test File Errors

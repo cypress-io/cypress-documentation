@@ -1,5 +1,5 @@
 ---
-title: Assertions
+title: アサーション
 ---
 
 Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, as well as helpful extensions for {% url 'Sinon' assertions#Sinon-Chai %} and {% url 'jQuery' assertions#Chai-jQuery %}, bringing you dozens of powerful assertions for free.

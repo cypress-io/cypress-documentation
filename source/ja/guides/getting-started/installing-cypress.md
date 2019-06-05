@@ -1,5 +1,5 @@
 ---
-title: Installing Cypress
+title: Cypressをインストール
 ---
 
 {% note info %}

@@ -1,6 +1,6 @@
 ---
 layout: toc-top
-title: General Questions
+title: 一般的な質問
 containerClass: faq
 ---
 

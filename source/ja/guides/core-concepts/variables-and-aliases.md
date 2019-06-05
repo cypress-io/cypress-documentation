@@ -1,5 +1,5 @@
 ---
-title: Variables and Aliases
+title: 変数と別名
 ---
 
 {% note info %}

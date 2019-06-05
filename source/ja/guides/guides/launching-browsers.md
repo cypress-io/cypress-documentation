@@ -1,5 +1,5 @@
 ---
-title: Launching Browsers
+title: ブラウザーを起動する
 ---
 
 When you run tests in Cypress, we launch a browser for you. This enables us to:

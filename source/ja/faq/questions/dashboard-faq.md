@@ -1,6 +1,6 @@
 ---
 layout: toc-top
-title: Dashboard
+title: ダッシュボードについての質問
 containerClass: faq
 ---
 

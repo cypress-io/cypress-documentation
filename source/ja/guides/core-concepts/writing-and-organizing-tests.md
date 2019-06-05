@@ -1,5 +1,5 @@
 ---
-title: Writing and Organizing Tests
+title: テストの書き方と整理の仕方
 ---
 
 {% note info %}

@@ -1,5 +1,5 @@
 ---
-title: Tutorial Videos
+title: チュートリアル
 containerClass: examples
 ---
 

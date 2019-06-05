@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration
+title: 継続的インテグレーション
 ---
 
 {% note info %}

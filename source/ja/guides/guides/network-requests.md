@@ -1,5 +1,5 @@
 ---
-title: Network Requests
+title: ネットワークリクエスト
 ---
 
 {% note info %}

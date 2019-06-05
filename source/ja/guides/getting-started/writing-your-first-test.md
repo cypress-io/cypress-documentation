@@ -1,5 +1,5 @@
 ---
-title: Writing Your First Test
+title: 初めてのテストを書く
 ---
 
 {% note info %}

@@ -1,5 +1,5 @@
 ---
-title: Dashboard Service
+title: ダッシュボードサービス
 ---
 
 {% note info %}

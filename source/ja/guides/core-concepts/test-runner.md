@@ -1,5 +1,5 @@
 ---
-title: The Test Runner
+title: テストランナー
 ---
 
 {% note info %}

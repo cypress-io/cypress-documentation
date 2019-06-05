@@ -1,5 +1,5 @@
 ---
-title: Why Cypress?
+title: なぜCypress?
 ---
 
 {% note info %}

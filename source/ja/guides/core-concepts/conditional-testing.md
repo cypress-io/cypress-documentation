@@ -1,5 +1,5 @@
 ---
-title: Conditional Testing
+title: 条件付きテスト
 ---
 
 {% note info %}

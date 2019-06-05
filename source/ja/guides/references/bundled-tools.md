@@ -1,5 +1,5 @@
 ---
-title: Bundled Tools
+title: バンドルツール
 ---
 
 {% note info %}

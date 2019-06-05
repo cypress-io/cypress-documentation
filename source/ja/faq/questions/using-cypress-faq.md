@@ -1,6 +1,6 @@
 ---
 layout: toc-top
-title: Using Cypress
+title: Cypressについての質問
 containerClass: faq
 ---
 

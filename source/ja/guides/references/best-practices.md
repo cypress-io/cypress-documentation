@@ -1,5 +1,5 @@
 ---
-title: Best Practices
+title: ベストプラクティス
 layout: toc-top
 ---
 

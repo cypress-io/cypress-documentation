@@ -1,5 +1,5 @@
 ---
-title: Catalog of Events
+title: イベントカタログ*
 
 ---
 

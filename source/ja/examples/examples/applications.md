@@ -1,5 +1,5 @@
 ---
-title: Applications
+title: アプリケーション
 containerClass: examples
 ---
 

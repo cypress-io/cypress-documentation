@@ -1,5 +1,5 @@
 ---
-title: Interacting with Elements
+title: エレメントを操作する*
 ---
 
 {% note info %}

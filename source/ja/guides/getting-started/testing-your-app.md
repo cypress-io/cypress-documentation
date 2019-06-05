@@ -1,5 +1,5 @@
 ---
-title: Testing Your App
+title: アプリをテストする
 ---
 
 {% note info %}
