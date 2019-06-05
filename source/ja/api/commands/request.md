@@ -254,7 +254,7 @@ cy
 
 Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress Test Runner (in Node.js). So, you won't see the request inside of your Developer Tools.
 
-## Cors
+## CORS
 
 ### CORS is bypassed
 

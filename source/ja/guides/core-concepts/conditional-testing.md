@@ -341,7 +341,7 @@ Cypress is built around creating **reliable tests**. The secret to writing good 
 
 Doing conditional testing adds a huge problem - that the test writer themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
 
-If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the DevTools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
+If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
 
 ```js
 Cypress._.times(100, (i) => {

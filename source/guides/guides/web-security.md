@@ -55,7 +55,7 @@ In each of these situations, Cypress will lose the ability to automate your appl
 
 Read on to learn about {% url "working around these common problems" web-security#Common-Workarounds %} or even {% url "disabling web security" web-security#Disabling-Web-Security %} altogether.
 
-## Cross Origin Iframes
+## Cross-origin Iframes
 
 If your site embeds an `<iframe>` that is a cross-origin frame, Cypress will not be able to automate or communicate with this `<iframe>`.
 
@@ -250,8 +250,8 @@ To start, you will need to understand that *not all browsers expose a way to tur
 **Setting `chromeWebSecurity` to `false` allows you to do the following:**
 
 - Display insecure content
-- Navigate to any superdomain without cross origin errors
-- Access cross origin iframes that are embedded in your application.
+- Navigate to any superdomain without cross-origin errors
+- Access cross-origin iframes that are embedded in your application.
 
 One thing you may notice though is that Cypress still enforces visiting a single superdomain with {% url `cy.visit()` visit %}, but there is an {% issue 944 'issue open' %} to change this restriction.
 

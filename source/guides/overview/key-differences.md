@@ -66,7 +66,7 @@ There is a rich UI which visually shows you the command execution, assertions, n
 
 Cypress takes snapshots of your application and enables you to time travel back to the state it was in when commands ran.
 
-You can use the DevTools while your tests run, you can see every console message, every network request. You can inspect elements, and you can even use debugger statements in your spec code or your application code. There is no fidelity loss - you can use all the tools you're already comfortable with. This enables you to test and develop all at the same time.
+You can use the Developer Tools while your tests run, you can see every console message, every network request. You can inspect elements, and you can even use debugger statements in your spec code or your application code. There is no fidelity loss - you can use all the tools you're already comfortable with. This enables you to test and develop all at the same time.
 
 # Trade offs
 

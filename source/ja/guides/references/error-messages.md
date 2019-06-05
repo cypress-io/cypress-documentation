@@ -479,7 +479,7 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 # Page Load Errors
 
-## {% fa fa-exclamation-triangle red %} Cypress detected a cross origin error happened on page load
+## {% fa fa-exclamation-triangle red %} Cypress detected a cross-origin error happened on page load
 
 {% note info %}
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
@@ -505,7 +505,7 @@ If you find yourself stuck and can't work around these issues you can just set t
 }
 ```
 
-## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross origin script.
+## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross-origin script.
 
 Check your Developer Tools Console for the actual error - it should be printed there.
 
