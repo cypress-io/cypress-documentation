@@ -1,6 +1,5 @@
 ---
 title: title
-
 ---
 
 Get the `document.title` property of the page that is currently active.
@@ -39,7 +38,7 @@ Option | Default | Description
 
 ## No Args
 
-***Assert that the document's title is "My Awesome Application"***
+### Assert that the document's title is "My Awesome Application"
 
 ```javascript
 cy.title().should('eq', 'My Awesome Application')

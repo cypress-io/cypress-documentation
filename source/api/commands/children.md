@@ -1,6 +1,5 @@
 ---
 title: children
-
 ---
 
 Get the children of each DOM element within a set of DOM elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the children of the "secondary-nav"***
+### Get the children of the `.secondary-nav`
 
 ```html
 <ul>
@@ -90,7 +89,7 @@ cy.get('ul.secondary-nav').children()
 
 ## Selector
 
-***Get the children with class 'active'***
+### Get the children with class `active`
 
 ```html
 <div>
@@ -124,7 +123,7 @@ cy.get('ul').children('.active')
 
 # Command Log
 
-**Assert that there should be 8 children elements in a nav**
+***Assert that there should be 8 children elements in a nav***
 
 ```javascript
 cy.get('.left-nav>.nav').children().should('have.length', 8)

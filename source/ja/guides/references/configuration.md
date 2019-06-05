@@ -179,7 +179,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
 
-![resolve-configuration](https://user-images.githubusercontent.com/1271364/26941279-e7903108-4c4b-11e7-8731-be118e2c30eb.jpg)
+{% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
 # Notes
 

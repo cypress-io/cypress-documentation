@@ -49,7 +49,7 @@ Option | Default | Description
 
 ## No Args
 
-***Submit can only be called on a single form.***
+### Submit can only be called on a single form
 
 ```html
 <form id="contact">
@@ -66,7 +66,7 @@ cy.get('#contact').submit()
 
 ## Actionability
 
-***Submit is not an action command***
+### Submit is not an action command
 
 `.submit()` is not implemented like other action commands, and does not follow the same rules of {% url 'waiting for actionability' interacting-with-elements %}.
 

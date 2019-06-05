@@ -134,11 +134,11 @@ cy.get('button').click({ position: 'topLeft' })
 
 The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner#Command-Log %}.
 
-![event coordinates](/img/guides/coords.png)
+{% imgTag /img/guides/coords.png "Event coordinates" %}
 
 Additionally we'll display a red "hitbox" - which is a dot indicating the coordinates of the event.
 
-![hitbox](/img/guides/hitbox.png)
+{% imgTag /img/guides/hitbox.png "Hitbox" %}
 
 # Debugging
 

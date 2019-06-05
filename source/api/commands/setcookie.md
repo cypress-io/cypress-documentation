@@ -1,6 +1,5 @@
 ---
 title: setCookie
-
 ---
 
 Set a browser cookie.
@@ -60,7 +59,7 @@ Option | Default | Description
 
 ## Name Value
 
-***Set a cookie***
+### Set a cookie
 
 ```javascript
 cy.getCookies().should('be.empty')

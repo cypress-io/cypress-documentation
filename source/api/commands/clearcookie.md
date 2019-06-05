@@ -1,6 +1,5 @@
 ---
 title: clearCookie
-
 ---
 
 Clear a specific browser cookie.
@@ -47,7 +46,7 @@ Option | Default | Description
 
 ## No Args
 
-***Clear a cookie after logging in***
+### Clear a cookie after logging in
 
 In this example, on first login, our server sends us back a session cookie. After invoking `cy.clearCookie('session_id')`, this clears the session cookie. Then upon navigating to an unauthorized page, we asset that our server has redirected us back to login.
 

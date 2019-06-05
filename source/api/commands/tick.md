@@ -1,6 +1,5 @@
 ---
 title: tick
-
 ---
 
 Move time after overriding a native time function with {% url `cy.clock()` clock %}.
@@ -47,7 +46,7 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 ## Milliseconds
 
-***Create a clock and move time to trigger a `setTimeout`***
+### Create a clock and move time to trigger a `setTimeout`
 
 ```javascript
 // app code loaded by index.html
@@ -66,7 +65,7 @@ cy.tick(500)
 cy.get('#header').should('have.text', 'Hello, World')
 ```
 
-***Using `cy.clock()` and `cy.tick()`***
+### Using `cy.clock()` with `cy.tick()`
 
 {% note info %}
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}

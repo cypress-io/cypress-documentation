@@ -91,7 +91,7 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 
 ### When clicking on `.type()` command, the Developer Tools console outputs the following:
 
-![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+{% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 # Troubleshooting Cypress
 
@@ -279,7 +279,7 @@ delete localStorage.debug
 
 Reload the browser and see debug messages within the Developer Tools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
 
-![Console Log](/img/api/debug/debug-driver.jpg)
+{% imgTag /img/api/debug/debug-driver.jpg "Debug logs in browser" %}
 
 ## Log Cypress events
 
@@ -307,4 +307,4 @@ The `cy.now()` command is an internal command and may change in the future.
 
 You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
 
-![cypress-failed-log terminal output](/img/api/debug/failed-log.png)
+{% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}

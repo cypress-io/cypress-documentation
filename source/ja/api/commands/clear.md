@@ -1,6 +1,5 @@
 ---
 title: clear
-
 ---
 
 Clear the value of an `input` or `textarea`.
@@ -54,7 +53,7 @@ Option | Default | Description
 
 ## No Args
 
-**Clear the input and type a new value.**
+### Clear the input and type a new value
 
 ```javascript
 cy.get('textarea').clear().type('Hello, World')
@@ -64,7 +63,7 @@ cy.get('textarea').clear().type('Hello, World')
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.clear()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
@@ -90,7 +89,7 @@ Please read the {% url `.type()` type %} documentation for more details.
 
 # Command Log
 
-**Clear the input and type a new value**
+***Clear the input and type a new value***
 
 ```javascript
 cy.get('input[name="name"]').clear().type('Jane Lane')

@@ -1,6 +1,5 @@
 ---
 title: setCookie
-
 ---
 
 Set a browser cookie.
@@ -60,7 +59,7 @@ Option | Default | Description
 
 ## Name Value
 
-***Set a cookie***
+### Set a cookie
 
 ```javascript
 cy.getCookies().should('be.empty')
@@ -92,11 +91,11 @@ cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/setcookie/set-cookie-on-browser-for-testing.png)
+{% imgTag /img/api/setcookie/set-cookie-on-browser-for-testing.png "Command Log setcookie" %}
 
 When clicking on `setCookie` within the command log, the console outputs the following:
 
-![Console Log](/img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png)
+{% imgTag /img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png "Console Log setcookie" %}
 
 # See also
 

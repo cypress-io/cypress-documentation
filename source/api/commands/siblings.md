@@ -1,6 +1,5 @@
 ---
 title: siblings
-
 ---
 
 Get sibling DOM elements.
@@ -53,7 +52,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the siblings of each li***
+### Get the siblings of each `li`
 
 ```html
 <ul>
@@ -71,7 +70,7 @@ cy.get('.active').siblings()
 
 ## Selector
 
-***Get siblings of element with class `active`***
+### Get siblings of element with class `active`
 
 ```javascript
 // yields <li class="active">Services</li>

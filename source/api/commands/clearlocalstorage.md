@@ -1,6 +1,5 @@
 ---
 title: clearLocalStorage
-
 ---
 
 Clear data in local storage for current domain and subdomain.
@@ -48,7 +47,7 @@ Option | Default | Description
 
 ## No Args
 
-**Clear all local storage**
+### Clear all local storage
 
 ```javascript
 cy.clearLocalStorage()
@@ -56,13 +55,13 @@ cy.clearLocalStorage()
 
 ## Specific Key
 
-***Clear local storage with key 'appName'***
+### Clear local storage with the key 'appName'
 
 ```javascript
 cy.clearLocalStorage('appName')
 ```
 
-***Clear all local storage matching /app-/***
+### Clear all local storage matching `/app-/` RegExp
 
 ```javascript
 cy.clearLocalStorage(/app-/)
