@@ -2,7 +2,7 @@
 title: clearLocalStorage
 ---
 
-Clear data in local storage for current domain and subdomain.
+Clear data in localStorage for current domain and subdomain.
 
 {% note warning %}
 Cypress automatically runs this command *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear localStorage inside a single test.
@@ -29,7 +29,7 @@ cy.clearLocalStorage()  // clear all local storage
 
 **{% fa fa-angle-right %} keys** ***(String, RegExp)***
 
-Specify key to be cleared in local storage.
+Specify key to be cleared in localStorage.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -47,7 +47,7 @@ Option | Default | Description
 
 ## No Args
 
-### Clear all local storage
+### Clear all localStorage
 
 ```javascript
 cy.clearLocalStorage()
@@ -55,13 +55,13 @@ cy.clearLocalStorage()
 
 ## Specific Key
 
-### Clear local storage with the key 'appName'
+### Clear localStorage with the key 'appName'
 
 ```javascript
 cy.clearLocalStorage('appName')
 ```
 
-### Clear all local storage matching `/app-/` RegExp
+### Clear all localStorage matching `/app-/` RegExp
 
 ```javascript
 cy.clearLocalStorage(/app-/)

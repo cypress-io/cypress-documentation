@@ -49,7 +49,7 @@ Recipe | Category | Description
 
 - Login when authentication is done on a 3rd party server.
 - Parse tokens using {% url `cy.request()` request %}.
-- Manually set tokens on local storage.
+- Manually set tokens on localStorage.
 - Map external hosts and point to local servers.
 
 ## [HTML Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms)
