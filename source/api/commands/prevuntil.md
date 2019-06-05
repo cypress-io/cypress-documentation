@@ -1,6 +1,5 @@
 ---
 title: prevUntil
-
 ---
 
 Get all previous siblings of each DOM element in a set of matched DOM elements up to, but not including, the element provided.
@@ -66,7 +65,7 @@ Option | Default | Description
 
 ## Selector
 
-***Find all of the element's siblings before `#nuts` until `#veggies`***
+### Find all of the element's siblings before `#nuts` until `#veggies`
 
 ```html
 <ul>

@@ -1,6 +1,5 @@
 ---
 title: readFile
-
 ---
 
 Read a file and yield its contents.
@@ -61,7 +60,7 @@ Option | Default | Description
 
 ## Text
 
-***Read a `txt` file***
+### Read a `.txt` file
 
 For any file other than JSON, the contents of the file are returned.
 
@@ -94,7 +93,7 @@ cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 
 ## YAML
 
-***Get translation data from Yaml file***
+### Get translation data from a YAML file
 
 ```javascript
 const YAML = require('yamljs')
@@ -118,7 +117,7 @@ cy
 
 ## Encoding
 
-***Specify the encoding with the second argument.***
+### Specify the encoding with the second argument
 
 ```javascript
 cy.readFile('path/to/logo.png', 'base64').then((logo) => {
@@ -143,7 +142,7 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 
 ## Existence
 
-***Default Assertions: file existence***
+### Default file existence assertion
 
 By default, `cy.readFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
 
@@ -152,7 +151,7 @@ By default, `cy.readFile()` asserts that the file exists and will fail if it doe
 cy.readFile('does-not-exist.yaml')
 ```
 
-***Asserting file non-existence***
+### Asserting file non-existence
 
 You can assert that a file does not exist like so:
 
@@ -163,7 +162,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 ## Retries
 
-***Automatic Retries***
+### Automatic retries
 
 `cy.readFile()` will continue to read the file until it passes all of its assertions.
 

@@ -1,6 +1,5 @@
 ---
 title: prevAll
-
 ---
 
 Get all previous siblings of each DOM element in a set of matched DOM elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Find all of the element's siblings before `.third`***
+### Find all of the element's siblings before `.third`
 
 ```html
 <ul>
@@ -75,7 +74,7 @@ cy.get('.third').prevAll()
 
 ## Selector
 
-***Find all of the previous siblings of each li. Keep only the ones with a class `selected`.***
+### Find all of the previous siblings of each `li`. Keep only the ones with a class `selected`
 
 ```html
 <ul>

@@ -1,6 +1,5 @@
 ---
 title: prev
-
 ---
 
 Get the immediately preceding sibling of each element in a set of the elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Find the previous element of the element with class of `active`***
+### Find the previous element of the element with class of `active`
 
 ```html
 <ul>
@@ -75,7 +74,7 @@ cy.get('.active').prev()
 
 ## Selector
 
-***Find the previous element with a class of `active`***
+### Find the previous element with a class of `active`
 
 ```html
 <ul>
