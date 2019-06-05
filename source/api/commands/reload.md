@@ -1,6 +1,5 @@
 ---
 title: reload
-
 ---
 
 Reload the page.
@@ -43,7 +42,7 @@ Option | Default | Description
 
 ## No Args
 
-***Reload the page as if the user clicked 'Refresh'***
+### Reload the page as if the user clicked 'Refresh'
 
 ```javascript
 cy.visit('http://localhost:3000/admin')
@@ -54,7 +53,7 @@ cy.get('#undo-btn').click().should('not.be.visible')
 
 ## Force Reload
 
-***Reload the page without using the cache***
+### Reload the page without using the cache
 
 ```javascript
 cy.visit('http://localhost:3000/admin')
