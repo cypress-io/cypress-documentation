@@ -153,7 +153,7 @@
       description: A collection of Cypress commands to extend and compliment the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
-      
+
     - name: cypress-wait-until
       description: Add the Cypress waiting power to virtually everything 🎉
       link: https://github.com/NoriSte/cypress-wait-until
@@ -226,6 +226,11 @@
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
 
+    - name: Aurelia CLI
+      description: The Aurelia CLI is the official command line tool for Aurelia.
+      link: https://aurelia.io/docs/cli
+      keywords: [aurelia, cli]
+
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
   plugins:
@@ -276,7 +281,7 @@
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
       keywords: [screenshots, visual regression]
-      
+
     - name: cypress-plugin-snapshots
       description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
       link: https://github.com/meinaart/cypress-plugin-snapshots
