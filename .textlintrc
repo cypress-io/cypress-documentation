@@ -14,7 +14,7 @@
 
         // Brands and Technologies
         "AppVeyor",
-        "Blob",
+        ["Blob(?! %)", "Blob"],
         "Browserify",
         "BrowserStack",
         ["^chai", "Chai"],
@@ -31,7 +31,7 @@
         "Lodash",
         "minimatch",
         "Mocha",
-        ["Moment", "Moment.js"],
+        ["Moment(?! %)", "Moment.js"],
         "npm",
         ["React[ .]js", "React"],
         "RegExp",
