@@ -173,9 +173,70 @@ Let us look at the one file that has a "missed" line. It is file "src/selectors/
 
 {% imgTag /img/guides/code-coverage/selectors.png "Selectors file with a line not covered by end-to-end tests" %}
 
-The source line not covered by the end-to-end tests shows an edge case NOT reachable from the UI. Yet this switch case is definitely worth testing - at least to avoid accidentally changing its behavior during refactoring.
+The source line not covered by the end-to-end tests shows an edge case NOT reachable from the UI. Yet this switch case is definitely worth testing - at least to avoid accidentally changing its behavior during refactoring. We can directly test this piece of code by importing the `getVisibleTodos` function from the Cypress spec file. In essense we are using the Cypress Test Runner as a unit testing tool (find more unit testing recipes {% url here" https://github.com/cypress-io/cypress-example-recipes#unit-testing %}). Here is our test to confirm that the error is thrown:
+
+```javascript
+// cypress/integration/selectors-spec.js
+import { getVisibleTodos } from '../../src/selectors'
+
+describe('getVisibleTodos', () => {
+  it('throws an error for unknown visibility filter', () => {
+    expect(() => {
+      getVisibleTodos({
+        todos: [],
+        visibilityFilter: 'unknown-filter'
+      })
+    }).to.throw()
+  })
+})
+```
+
+The test passes, even if the there is no web application visited.
+
+{% imgTag /img/guides/code-coverage/unit-test.png "Unit test for selector" %}
+
+Previously we have instrumented the application code (either using a build step, or inserting a plugin into the Babel pipeline). Now we are NOT loading an application, instead we are only running the test files by themselves. If we want to collect the code coverage from the unit tests, we need to instrument the source code of *our spec files*. The simplest way to do this is to use the same `.babelrc` with `babel-plugin-istanbul` and tell the Cypress built-in bundler to use `.babelrc` when bundling specs. One can use the `@cypress/code-coverage` again to do this:
+
+```javascript
+module.exports = (on, config) => {
+  on('task', require('@cypress/code-coverage/task'))
+  // tell Cypress to use .babelrc file
+  // and instrument the specs files
+  // only the extra application files will be instrumented
+  // not the spec files themselves
+  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+
+  return config
+}
+```
+
+For reference, the `.babelrc` file is shared between the example application and the spec files, thus Cypress tests are transpiled the same way as the application code is.
+
+```rc
+{
+  "presets": ["@babel/preset-react"],
+  "plugins": ["transform-class-properties", "istanbul"]
+}
+```
+
+When we run Cypress with `babel-plugin-istanbul` included and inspect the `window.__coverage__` object in the **spec iframe**, we should see the coverage information for the application source files.
+
+{% imgTag /img/guides/code-coverage/code-coverage-in-unit-test.png "Code coverage in the unit test" %}
+
+The code coverage information in unit tests and end-to-end tests has the same format; the `@cypress/code-coverage` plugin automatically grabs both and saves the combined report. Thus we can see the code coverage from the `cypress/integration/selectors-spec.js` file after running the test.
+
+{% imgTag /img/guides/code-coverage/unit-test-coverage.png "Selectors code coverage" %}
+
+Our unit test is hitting the line we could not reach from the end-to-end tests, and if we execute all spec files - we will get 100% code coverage.
+
+{% imgTag /img/guides/code-coverage/100percent.png "Full code coverage" %}
 
 # See also
+
+- The official [@cypress/code-coverage][code-coverage] plugin
+- {% url "Combined End-to-end and Unit Test Coverage" https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/ %}
+- {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
+- {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
 
 [istanbul]: https://istanbul.js.org
 [nyc]: https://github.com/istanbuljs/nyc
