@@ -55,6 +55,11 @@
         ["\\(s\\)he", "they"],
         ["he or she", "they"],
         ["he/she", "they"],
+        ["crazy", "complex"],
+        ["crazier", "more complex"],
+        ["craziest", "most complex"],
+        ["dumb", "unintended"],
+        ["insane", "outrageous"],
 
         // Single word
         ["change[- ]log(s?)", "changelog$1"],

@@ -119,7 +119,7 @@ cy.get('.todo-list li')     // command
 
 {% imgTag /img/guides/retry-ability/eq.gif "Retrying built-in assertion" %}
 
-Some commands that cannot be retried still have built-in _waiting_. For example, the {% url '.click()' click %} command will not "blindly" send a click event to an element. As described in the "Assertions" section of {% url "`.click()`" click %}, it waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
+Some commands that cannot be retried still have built-in _waiting_. For example, as described in the "Assertions" section of {% url "`.click()`" click %}, the `click()` command waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
 
 Cypress tries to act like a human user would using the browser.
 
