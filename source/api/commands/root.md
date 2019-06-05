@@ -1,6 +1,5 @@
 ---
 title: root
-
 ---
 
 Get the root DOM element.
@@ -44,7 +43,7 @@ The root element yielded is `<html>` by default. However, when calling `.root()`
 
 ## HTML
 
-***Get the root element***
+### Get the root element
 
 ```javascript
 cy.root() // yields <html>
@@ -52,7 +51,7 @@ cy.root() // yields <html>
 
 ## Within
 
-***Get the root element in a {% url `.within()` within %} callback function***
+### Get the root element in a {% url `.within()` within %} callback function
 
 ```javascript
 cy.get('form').within(($form) => {
@@ -78,7 +77,7 @@ cy.get('form').within(($form) => {
 
 # Command Log
 
-***Get root element***
+### Get root element
 
 ```javascript
 cy.root().should('match', 'html')
