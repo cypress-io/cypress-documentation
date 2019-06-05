@@ -265,7 +265,7 @@ cy.get('form').should('have.class', 'form-horizontal')
 cy.get('input').should('not.have.value', 'US')
 ```
 
-In each of these examples, it's important to note that Cypress will automatically *wait* until these assertions pass. This prevents you from having to know or care about the precise moment your elements eventually do reach this state.
+In each of these examples, it's important to note that Cypress will automatically *wait* until these assertions pass. This prevents you from having to know or care about the precise Moment.js your elements eventually do reach this state.
 
 We will learn more about {% urlHash 'assertions' Assertions %} later in this guide.
 
@@ -360,7 +360,7 @@ This lets us reuse our DOM queries for faster tests when the element is still in
 
 ## Commands Are Asynchronous
 
-It is very important to understand that Cypress commands don't do anything at the moment they are invoked, but rather enqueue themselves to be run later. This is what we mean when we say Cypress commands are asynchronous.
+It is very important to understand that Cypress commands don't do anything at the Moment.js they are invoked, but rather enqueue themselves to be run later. This is what we mean when we say Cypress commands are asynchronous.
 
 ### Take this simple test, for example:
 

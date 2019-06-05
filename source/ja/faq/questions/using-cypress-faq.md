@@ -502,7 +502,7 @@ No. You cannot add a `.catch` error handler to a failed command. {% url "Read mo
 
 ## {% fa fa-angle-right %} Is there a way to modify the screenshots/video resolution?
 
-Not at the moment. {% issue 587 "There is an open issue for this." %}
+Not at the Moment.js. {% issue 587 "There is an open issue for this." %}
 
 ## {% fa fa-angle-right %} Does Cypress support ES7?
 

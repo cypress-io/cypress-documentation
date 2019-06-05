@@ -242,7 +242,7 @@ it('but you can forcibly end the test early which does fail', function (done) {
 
 ### Complex Async Example
 
-What's happening in this example is that because we have *NOT* told mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
+What's happening in this example is that because we have *NOT* told Mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
 
 ```javascript
 describe('a complex example with async code', function() {

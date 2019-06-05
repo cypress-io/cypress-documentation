@@ -50,7 +50,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | ownProperty(*name*) {% aliases haveOwnProperty own.property %} | `expect('test').to.have.ownProperty('length')` |
 | ownPropertyDescriptor(*name*) {% aliases haveOwnPropertyDescriptor %} | `expect({a: 1}).to.have.ownPropertyDescriptor('a')` |
 | lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
-| match(*regexp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
+| match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
 | key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
 | throw(*constructor*) {% aliases throws Throw %} | `expect(fn).to.throw(Error)` |

@@ -73,7 +73,7 @@ The current subject that is yielded by the {% url `cy.get()` get %} is exposed a
 
 {% imgTag /img/guides/debugging-subject.png "Debugging Subject" %}
 
-Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that moment.
+Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that Moment.js.
 
 # Using the DevTools
 

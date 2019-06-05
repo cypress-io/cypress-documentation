@@ -23,7 +23,7 @@ These events come from the application currently under test (your application). 
 Event | Details
 --- | ---
 **Name:** | `uncaught:exception`
-**Yields:** | the error **(Object)**, mocha runnable **(Object)**
+**Yields:** | the error **(Object)**, Mocha runnable **(Object)**
 **Description:** | Fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you.
 
 Event | Details
@@ -75,7 +75,7 @@ These events come from Cypress as it issues commands and reacts to their state. 
 Event | Details
 --- | ---
 **Name:** | `fail`
-**Yields:** | the error **(Object)**, mocha runnable **(Object)**
+**Yields:** | the error **(Object)**, Mocha runnable **(Object)**
 **Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
 
 Event | Details
@@ -209,7 +209,7 @@ it('is doing something very important', function (done) {
 
 ## Catching Test Failures
 
-### Debug the moment a test fails
+### Debug the Moment.js a test fails
 
 ```javascript
 // if you want to debug when any test fails

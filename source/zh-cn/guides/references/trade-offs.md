@@ -50,7 +50,7 @@ The **sweet spot** of Cypress is to be used as a tool to test your own applicati
 
 ## Inside the browser
 
-In case you missed it before - Cypress tests run inside of the browser! This means we can do things nobody else can. There is no object serialization or JSON wire protocols. You have real, native access to everything in your application under test. It is impossible for Cypress to 'miss' elements and it always knows the moment your application fires any kind of event.
+In case you missed it before - Cypress tests run inside of the browser! This means we can do things nobody else can. There is no object serialization or JSON wire protocols. You have real, native access to everything in your application under test. It is impossible for Cypress to 'miss' elements and it always knows the Moment.js your application fires any kind of event.
 
 But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node.js, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 

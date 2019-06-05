@@ -111,7 +111,7 @@ See {% url '`cy.server()` options' server#Options %} and {% url '`cy.route()` op
 
 # Requests
 
-Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it's stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the moment the request is made and another snapshot at the moment the response returns.
+Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it's stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the Moment.js the request is made and another snapshot at the Moment.js the response returns.
 
 {% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
 

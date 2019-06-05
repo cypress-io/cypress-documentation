@@ -114,7 +114,8 @@ beforeEach(function () {
   cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
-![global hooks](/img/guides/global-hooks.png)
+
+{% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
 **Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 
@@ -376,4 +377,4 @@ If you need further control of the file-watching behavior you can configure this
 Cypress also ships other {% url "file-watching preprocessors" plugins %}; you'll have to configure these explicitly if you want to use them.
 
 - {% url 'Cypress Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
-- {% url 'Cypress Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+- {% url 'Cypress webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}

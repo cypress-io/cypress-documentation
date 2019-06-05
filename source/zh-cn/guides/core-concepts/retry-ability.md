@@ -206,7 +206,7 @@ Hover over the second "FIND label" command - something is wrong here. It found t
 
 ![Second item label](/img/guides/retry-ability/second-item-label.png)
 
-Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over the "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that moment.
+Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over the "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that Moment.js.
 
 ![Second get li](/img/guides/retry-ability/second-get-li.png)
 

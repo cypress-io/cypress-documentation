@@ -31,7 +31,7 @@ Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more 
 
 ## {% fa fa-angle-right %} How is this different than CI?
 
-Cypress is **complimentary** to your {% url "CI provider" continuous-integration %}, and plays a completely different role.
+Cypress is **complmentary** to your {% url "CI provider" continuous-integration %}, and plays a completely different role.
 
 It doesn't replace or change anything related to CI. You will simply run Cypress tests in your CI provider.
 

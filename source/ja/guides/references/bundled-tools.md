@@ -45,7 +45,7 @@ When writing integration tests, you will likely work a lot with the DOM. Cypress
 
 > {% fa fa-chevron-right  %} {% url "List of available Chai-jQuery Assertions" assertions#Chai-jQuery %}
 
-# Sinon
+# Sinon.JS
 
 {% fa fa-github %} {% url http://sinonjs.org/ %}
 
@@ -70,6 +70,6 @@ Cypress also bundles the following tools on the `Cypress` object. These can be u
 - {% url `Cypress._` _ %} (lodash)
 - {% url `Cypress.$` $ %} (jQuery)
 - {% url `Cypress.minimatch` minimatch %} (minimatch.js)
-- {% url `Cypress.moment` moment %} (moment.js)
-- {% url `Cypress.Blob` blob %} (blob utils)
+- {% url `Cypress.moment` Moment.js %} (moment.js)
+- {% url `Cypress.Blob` Blob %} (Blob utils)
 - {% url `Cypress.Promise` promise %} (Bluebird)
