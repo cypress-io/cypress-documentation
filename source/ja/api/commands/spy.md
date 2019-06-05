@@ -51,7 +51,18 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-### Using `cy.spy()`
+### Disable logging to Command Log
+
+You can chain a `.log(bool)` method to disable `cy.stub()` calls from being shown in the Command Log. This may be useful when your stubs are called an excessive number of times.
+
+```javascript
+const obj = {
+  foo () {}
+}
+const stub = cy.stub(obj, 'foo').log(false)
+```
+
+### More `cy.spy()` examples
 
 {% note info %}
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
@@ -132,6 +143,11 @@ The command above will display in the Command Log as:
 When clicking on the `spy-1` event within the command log, the console outputs the following:
 
 {% imgTag /img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png "Console Log spy" %}
+
+{% history %}
+{% url "0.20.0" changelog#0-20.0 %} | Added `.log(bool)` method
+{% url "0.18.8" changelog#0-18-8 %} | `cy.spy()` command added
+{% endhistory %}
 
 # See also
 

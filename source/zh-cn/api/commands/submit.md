@@ -107,6 +107,10 @@ When clicking on `submit` within the command log, the console outputs the follow
 
 {% imgTag /img/api/submit/console-shows-what-form-was-submitted.png "Console Log submit" %}
 
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `.submit()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `.click()` click %}

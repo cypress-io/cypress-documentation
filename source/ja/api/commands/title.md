@@ -74,6 +74,10 @@ When clicking on `title` within the command log, the console outputs the followi
 
 {% imgTag /img/api/title/see-the-string-yielded-in-the-console.png "Console Log title" %}
 
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `cy.title()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `cy.document()` document %}

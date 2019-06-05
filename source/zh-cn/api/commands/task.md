@@ -254,6 +254,10 @@ When clicking on the `task` command within the command log, the console outputs 
 
 {% imgTag /img/api/task/console-shows-task-result.png "Console Log task" %}
 
+{% history %}
+{% url "3.0.0" changelog#3-0-0 %} | `cy.task()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `cy.exec()` exec %}

@@ -256,6 +256,13 @@ You can {% url 'read more about XHR strategy here' network-requests %}.
 
 - `cy.server()` does *not* log in the Command Log
 
+{% history %}
+{% url "0.13.6" changelog#0-13-6 %} | Added `onAbort` callback option
+{% url "0.5.10" changelog#0-5-10 %} | Added `delay` option
+{% url "0.3.3" changelog#0-3-3 %} | Added `whitelist` option
+{% url "< 0.3.3" changelog#0-3-3 %} | `cy.server()` command added
+{% endhistory %}
+
 # See also
 
 - {% url 'Network Requests' network-requests %}

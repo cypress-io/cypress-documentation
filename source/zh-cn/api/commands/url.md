@@ -127,6 +127,11 @@ When clicking on URL within the command log, the console outputs the following:
 
 {% imgTag /img/api/url/console-log-of-browser-url-string.png "Console Log url" %}
 
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `cy.url()` command added
+{% endhistory %}
+
+
 # See also
 
 - {% url `cy.hash()` hash %}

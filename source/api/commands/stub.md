@@ -112,7 +112,18 @@ cy.window().its('prompt').should('be.called')
 cy.get('.name').should('have.value', 'my custom message')
 ```
 
-### Using cy.stub
+### Disable logging to Command Log
+
+You can chain a `.log(bool)` method to disable `cy.stub()` calls from being shown in the Command Log. This may be useful when your stubs are called an excessive number of times.
+
+```javascript
+const obj = {
+  foo () {}
+}
+const stub = cy.stub(obj, 'foo').log(false)
+```
+
+### More `cy.stub()` examples
 
 {% note info %}
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
@@ -187,6 +198,11 @@ The command above will display in the Command Log as:
 When clicking on the `(stub-1)` event within the command log, the console outputs the following:
 
 {% imgTag /img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png "Console Log stub" %}
+
+{% history %}
+{% url "0.20.0" changelog#0-20.0 %} | Added `.log(bool)` method
+{% url "0.18.8" changelog#0-18-8 %} | `cy.stub()` command added
+{% endhistory %}
 
 # See also
 

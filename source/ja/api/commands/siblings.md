@@ -107,6 +107,10 @@ When clicking on `siblings` within the command log, the console outputs the foll
 
 {% imgTag /img/api/siblings/console-log-of-sibling-elements.png "Console Log siblings" %}
 
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `.siblings()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `.prev()` prev %}

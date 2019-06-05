@@ -422,6 +422,11 @@ When clicking on `assert` within the command log, the console outputs the follow
 
 {% imgTag /img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png "Console Log should" %}
 
+{% history %}
+{% url "0.11.4" changelog#0-11-4 %} | Allows callback function argument
+{% url "< 0.3.3" changelog#0-3-3 %} | `.should()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `.and()` and %}

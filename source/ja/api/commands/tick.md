@@ -102,6 +102,10 @@ When clicking on the `tick` command within the command log, the console outputs 
 
 {% imgTag /img/api/tick/console-shows-same-clock-object-as-clock-command.png "Console Log tick" %}
 
+{% history %}
+{% url "0.18.8" changelog#0-18-8 %} | `cy.tick()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `cy.clock()` clock %}

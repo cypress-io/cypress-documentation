@@ -97,6 +97,10 @@ When clicking on `setCookie` within the command log, the console outputs the fol
 
 {% imgTag /img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png "Console Log setcookie" %}
 
+{% history %}
+{% url "0.16.0" changelog#0-16-0 %} | `cy.setCookie()` command added
+{% endhistory %}
+
 # See also
 
 - {% url `cy.clearCookie()` clearcookie %}
