@@ -150,7 +150,7 @@
       keywords: [commands]
 
     - name: cypress-commands
-      description: A collection of Cypress commands to extend and compliment the defaults
+      description: A collection of Cypress commands to extend and complement the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
       
