@@ -1,6 +1,5 @@
 ---
 title: dblclick
-
 ---
 
 Double-click a DOM element.
@@ -48,7 +47,7 @@ Option | Default | Description
 
 ## No Args
 
-***Double click an anchor link***
+### Double click an anchor link
 
 ```javascript
 cy.get('a#nav1').dblclick() // yields the <a>
@@ -58,7 +57,7 @@ cy.get('a#nav1').dblclick() // yields the <a>
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.dblclick()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 

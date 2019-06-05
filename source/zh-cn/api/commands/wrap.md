@@ -107,11 +107,11 @@ cy.wrap({ amount: 10 })
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/wrap/wrapped-object-in-cypress-tests.png)
+{% imgTag /img/api/wrap/wrapped-object-in-cypress-tests.png "Command Log wrap" %}
 
 When clicking on the `wrap` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/wrap/console-log-only-shows-yield-of-wrap.png)
+{% imgTag /img/api/wrap/console-log-only-shows-yield-of-wrap.png "Console Log wrap" %}
 
 {% history %}
 {% url "3.2.0" changelog#3-2-0 %} | Retry `cy.wrap()` if `undefined` when followed by {% url "`.should()`" should %}

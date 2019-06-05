@@ -441,7 +441,7 @@ describe('Logo', () => {
 })
 ```
 
-![Command Log multiple urls](/img/faq/questions/command-log-of-dynamic-url-test.png)
+{% imgTag /img/faq/questions/command-log-of-dynamic-url-test.png "Command Log multiple urls" %}
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
 

@@ -352,7 +352,7 @@ Additionally, events that cause a `change` event to fire (such as typing `{enter
 
 Any modifiers activated for the event are also listed in a `modifiers` column.
 
-![Cypress .type() key events table](/img/api/type/key-events-table-shown-in-console-for-testing-typing.png)
+{% imgTag /img/api/type/key-events-table-shown-in-console-for-testing-typing.png "Cypress .type() key events table" %}
 
 ## Tabbing
 
@@ -444,11 +444,11 @@ cy.get('input[name=firstName]').type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/type/type-in-input-shown-in-command-log.png)
+{% imgTag /img/api/type/type-in-input-shown-in-command-log.png "Command Log type" %}
 
 When clicking on `type` within the command log, the console outputs the following:
 
-![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+{% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences

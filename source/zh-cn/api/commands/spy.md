@@ -75,7 +75,7 @@ expect(withFoo).to.be.called // purposefully failing assertion
 
 You will see the following in the command log:
 
-![spies with aliases](https://cloud.githubusercontent.com/assets/1157043/22437291/805bd0d4-e6f5-11e6-99c5-bded81b9c42b.png)
+{% imgTag /img/api/spy/using-spy-with-alias.png "spies with aliases" %}
 
 # Notes
 
@@ -127,11 +127,11 @@ expect(spy).to.be.called
 
 The command above will display in the Command Log as:
 
-![Command Log spy](/img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png)
+{% imgTag /img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png "Command Log spy" %}
 
 When clicking on the `spy-1` event within the command log, the console outputs the following:
 
-![Command Log](/img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png)
+{% imgTag /img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png "Console Log spy" %}
 
 # See also
 

@@ -382,11 +382,11 @@ Typically you'd set this inside of your CI provider.
 
 ***CircleCI Environment Variable***
 
-![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
+{% imgTag /img/guides/cypress-record-key-as-environment-variable.png "Record key environment variable" %}
 
 ***TravisCI Environment Variable***
 
-![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
+{% imgTag /img/guides/cypress-record-key-as-env-var-travis.png "Travis key environment variable" %}
 
 ### Git information
 Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
