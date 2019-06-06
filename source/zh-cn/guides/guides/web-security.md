@@ -1,92 +1,93 @@
 ---
-title: Web Security
+title: Web安全
 ---
 
-Browsers adhere to a strict {% url "`same-origin policy`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}. This means that browsers restrict access between `<iframes>` when their origin policies do not match.
+浏览器坚持严格的{% url "`同源策略`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}
+这意味着当源策略不匹配时，浏览器会限制`<iframes>`之间的访问。
 
-Because Cypress works from within the browser, Cypress must be able to directly communicate with your remote application at all times. Unfortunately, browsers naturally try to prevent Cypress from doing this.
+因为Cypress在浏览器内工作，它必须能够随时和远程应用程序直接通信。不幸的是，浏览器自然会阻止Cypress这样做。
 
-To get around these restrictions, Cypress implements some strategies involving JavaScript code, the browser's internal APIs, and `network proxying` to *play by the rules* of `same-origin policy`. It is our goal to fully automate the application under test without you needing to modify your application's code - and we are *mostly* able to do this.
+为了绕过这些限制，Cypress实现一些策略，包括JavaScript代码、浏览器的内部API，以及`网络代理`，以遵循`同源策略`的规则。我们的目标是完全自动化测试中的应用程序，不需要您修改应用程序的代码——我们*基本上*能做到这一点。
 
-***Examples of what Cypress does under the hood:***
+***Cypress在底层做的事情示例：***
 
-  - Injects {% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %} into `text/html` pages.
-  - Proxies all `HTTP`/`HTTPS` traffic.
-  - Changes the hosted url to match that of the application under test.
-  - Uses the browser's internal APIs for network level traffic.
+  - 注入{% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %}到`text/html`页面。
+  - 代理所有的`HTTP`/`HTTPS`通信。
+  - 改变主机url以匹配被测试应用程序的url。
+  - 使用浏览器内部API进行网络层通信。
 
-When Cypress first loads, the internal Cypress web application is hosted on a random port: something like `http://localhost:65874/__/`.
+当Cypress首次加载时，内部Cypress web应用程序托管在一个随机端口上：类似于`http://localhost:65874/__/`。
 
-After the first {% url `cy.visit()` visit %} command is issued in a test, Cypress changes its URL to match the origin of your remote application, thereby solving the first major hurdle of `same-origin policy`. Your application's code executes the same as it does outside of Cypress, and everything works as expected.
+在测试中发出第一个{% url `cy.visit()` visit %}命令后，Cypress改变它的URL以匹配远程应用程序源，从而解决`同源策略`的第一个主要障碍。您的应用程序代码执行与在Cypress外部执行相同，并且一切都如预期的一样工作。
 
-{% note info How is HTTPS supported? %}
-Cypress does some pretty interesting things under the hood to make testing HTTPs sites work. Cypress enables you to control and stub at the network level. Therefore, Cypress must assign and manage browser certificates to be able to modify the traffic in real time. You'll notice Chrome display a warning that the 'SSL certificate does not match'. This is normal and correct. Under the hood we act as our own CA authority and issue certificates dynamically in order to intercept requests otherwise impossible to access. We only do this for the superdomain currently under test, and bypass other traffic. That's why if you open a tab in Cypress to another host, the certificates match as expected.
+{% note info 如何支持HTTPS %}
+Cypress在底层做了一些非常有趣的事情，使HTTPs站点测试能够正常工作。Cypress使您能够在网络层控制和打桩。因此，Cypress必须分配和管理浏览器证书，以便能够实时修改通信。您会注意到Chrome显示了一个警告，“SSL证书不匹配”。这是正常和正确的。在底层，我们充当自己的CA权威，动态地颁发证书，以便拦截无法访问的请求。我们只对当前正在测试的超域这样做，并绕过其他通信。这就是为什么如果您在Cypress中向另一个主机打开一个选项卡，证书将与预期匹配。
 {% endnote %}
 
-# Limitations
+# 局限性
 
-It's important to note that although we do our **very best** to ensure your application works normally inside of Cypress, there *are* some limitations you need to be aware of.
+需要注意的是，尽管我们尽了**最大努力**确保您的应用程序在Cypress内正常工作，但是您需要注意一些限制。
 
-## One Superdomain per Test
+## 每个测试一个超域
 
-Because Cypress changes its own host URL to match that of your applications, it requires that your application remain on the same superdomain for the entirety of a single test.
+因为Cypress会更改自己的主机URL以匹配您的应用程序的URL，所以它要求您的应用程序在整个测试期间保持在相同的超域中。
 
-If you attempt to visit two different superdomains, Cypress will error. Visiting subdomains works fine. You can visit different superdomains in *different* tests, just not the *same* test.
+如果您试图访问两个不同的超域，Cypress将出错。访问子域名工作正常。您可以在*不同*测试中访问不同的超域，而不是*同一个*测试。
 
 ```javascript
 cy.visit('https://www.cypress.io')
-cy.visit('https://docs.cypress.io') // yup all good
+cy.visit('https://docs.cypress.io') // 一切正常
 ```
 
 ```javascript
 cy.visit('https://apple.com')
-cy.visit('https://google.com')      // this will immediately error
+cy.visit('https://google.com')      // 这将立即出错
 ```
 
-Although Cypress tries to enforce this limitation, it is possible for your application to bypass Cypress's ability to detect this.
+尽管Cypress试图强制执行此限制，但您的应用程序可以绕过Cypress的检测功能。
 
-***Examples of test cases that will error due to superdomain limitations:***
+***由于超域限制而导致错误的测试用例示例：***
 
-1. {% url `.click()` click %} an `<a>` with an `href` to a different superdomain.
-2. {% url `.submit()` submit %} a `<form>` that causes your web server to redirect to you a different superdomain.
-3. Issue a JavaScript redirect in your application, such as `window.location.href = '...'`, to a different superdomain.
+1. {% url `.click()` click %}点击带有`href`指向不同超域的`<a>`。
+2. {% url `.submit()` submit %}提交`<form>`导致web服务器重定向到另一个超域。
+3. 在应用程序中发出JavaScript重定向，例如`window.location.href = '...'`，转到另一个超域。
 
-In each of these situations, Cypress will lose the ability to automate your application and will immediately error.
+在每一种情况下，Cypress都将失去自动操作应用程序的能力，并立即出现错误。
 
-Read on to learn about {% url "working around these common problems" web-security#Common-Workarounds %} or even {% url "disabling web security" web-security#Disabling-Web-Security %} altogether.
+继续阅读，了解如何{% url "处理这些常见问题" web-security#Common-Workarounds %}，甚至完全{% url "禁用web安全" web-security#Disabling-Web-Security %}。
 
-## Cross Origin Iframes
+## 跨域iframe
 
-If your site embeds an `<iframe>` that is a cross-origin frame, Cypress will not be able to automate or communicate with this `<iframe>`.
+如果您的站点嵌入了一个`<iframe>`，是一个跨域框架，那么Cypress将无法自动化或与这个`<iframe>`通信。
 
-***Examples of uses for cross-origin iframes:***
+***使用跨域iframe的例子：***
 
-- Embedding a Vimeo or YouTube video.
-- Displaying a credit card form from Stripe or Braintree.
-- Displaying an embedded login form from Auth0.
-- Showing comments from Disqus.
+- 嵌入Vimeo或优酷视频。
+- 显示来自Stripe或Braintree的信用卡表单。
+- 显示来自Auth0的嵌入式登录表单。
+- 显示来自Disqus的评论。
 
-It's actually *possible* for Cypress to accommodate these situations the same way Selenium does, but you will never have *native* access to these iframes from inside of Cypress.
+实际上，Cypress“可能”可以像Selenium一样适应这些情况，但是您永远无法从Cypress内部访问这些iframe。
 
-As a workaround, you may be able to use {% url "`window.postMessage`" https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage %} to directly communicate with these iframes and control them (if the 3rd party iframe supports it).
+有一种解决方案，您可以使用{% url "`window.postMessage`" https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage %}直接与这些iframe通信并控制它们(如果第三方iframe支持的话)。
 
-Other than that, you'll have to wait for us to implement APIs to support this (check our {% issue 136 'open issue' %}), or you can {% url "disable web security" web-security#Disabling-Web-Security %}.
+除此之外，您必须等待我们实现API来支持这一点(查看我们的{% issue 136 '开放问题' %})，或者您可以{% url "禁用web安全" web-security#Disabling-Web-Security %}。
 
-## Insecure Content
+## 不安全内容
 
-Because of the way Cypress is designed, if you are testing an `HTTPS` site, Cypress will error anytime you attempt to navigate back to an `HTTP` site. This behavior helps highlight a *pretty serious security problem* with your application.
+由于Cypress的设计方式，如果您正在测试一个`HTTPS`站点，那么当您试图导航回一个`HTTP`站点时，Cypress就会出错。这种行为有助于突出应用程序的*相当严重的安全问题*。
 
-***Example of accessing insecure content:***
+***访问不安全内容的例子：***
 
-***Test code***
+***测试代码***
 
 ```javascript
 cy.visit('https://app.corp.com')
 ```
 
-In your application code, you set `cookies` and store a session on the browser. Now let's imagine you have a single `insecure` link (or JavaScript redirect) in your application code.
+在应用程序代码中，设置`cookies`并在浏览器上存储会话。现在让我们假设您的应用程序代码中只有一个`不安全`链接(或JavaScript重定向)。
 
-***Application code***
+***应用程序代码***
 
 ```html
 <html>
@@ -94,40 +95,40 @@ In your application code, you set `cookies` and store a session on the browser. 
 </html>
 ```
 
-Cypress will immediately fail with the following test code:
+Cypress将立即失败，测试代码如下：
 
-***Test code***
+***测试代码***
 
 ```javascript
 cy.visit('https://app.corp.com')
-cy.get('a').click()               // will immediately fail
+cy.get('a').click()               // 将立即失败
 ```
 
-Browsers refuse to display insecure content on a secure page. Because Cypress initially changed its URL to match `https://app.corp.com` when the browser followed the `href` to `http://app.corp.com/page2`, the browser will refuse to display the contents.
+浏览器拒绝在安全页面上显示不安全的内容。因为Cypress最初将URL更改为与`https://app.corp.com`匹配，当浏览器跟随`href`到`http://app.corp.com/page2`时，浏览器将拒绝显示内容。
 
-Now you may be thinking, *This sounds like a problem with Cypress because when I work with my application outside of Cypress it works just fine.*😒
+现在您可能会想，*这听起来像是Cypress的问题，因为当我在Cypress之外处理我的应用程序时，它可以正常工作。*😒
 
-However, the truth is, Cypress is exposing a *security vulnerability* in your application, and you *want* it to fail in Cypress.
+然而，事实是，Cypress在您的应用程序中暴露了一个安全漏洞，您希望它在Cypress中失败。
 
-`cookies` that do not have their `secure` flag set to `true` will be sent as clear text to the insecure URL. This leaves your application vulnerable to session hijacking.
+没有将`secure`标志设置为`true`的`cookies`将作为明文发送到不安全的URL。这使得您的应用程序很容易受到会话劫持。
 
-This security vulnerability exists **even if** your web server forces a `301 redirect` back to the `HTTPS` site. The original `HTTP` request was still made once, exposing insecure session information.
+即使您的web服务器强制`301重定向`回`HTTPS`站点，此安全漏洞仍然存在。原始`HTTP`请求仍然发出一次，暴露了不安全的会话信息。
 
-***The Solution***
+***解决方法***
 
-Simply update your `HTML` or `JavaScript` code to not navigate to an insecure `HTTP` page and instead only use `HTTPS`. Additionally make sure that cookies have their `secure` flag set to `true`.
+只需更新`HTML`或`JavaScript`代码，不导航到不安全的`HTTP`页面，而是只使用`HTTPS`。另外，请确保cookie的`secure`标志设置为`true`。
 
-If you're in a situation where you don't control the code, or otherwise cannot work around this, you can bypass this restriction in Cypress by {% url "disabling web security" web-security#Disabling-Web-Security %}.
+如果您无法控制代码，或者无法解决这个问题，您可以通过{% url "禁用web安全" web-security#Disabling-Web-Security %}来绕过Cypress中的这个限制。
 
-# Common Workarounds
+# 常见的解决方法
 
-Let's investigate how you might encounter `cross origin` errors in your test code and break down how to work around them in Cypress.
+让我们研究一下您在测试代码中可能遇到的`跨域`错误，并分析一下如何在Cypress中解决这些错误。
 
-## External Navigation
+## 外部导航
 
-The most common situation where you might encounter this error is when you click on an `<a>` that navigates to another superdomain.
+您可能遇到此错误的最常见情况是，单击`<a>`导航到另一个超域。
 
-***Application code that is served at `localhost:8080`***
+***在`localhost:8080`上提供的应用程序代码***
 
 ```html
 <html>
@@ -135,43 +136,43 @@ The most common situation where you might encounter this error is when you click
 </html>
 ```
 
-***Test code***
+***测试代码***
 
 ```javascript
-cy.visit('http://localhost:8080') // where your web server + HTML is hosted
-cy.get('a').click()               // browser attempts to load google.com, Cypress errors
+cy.visit('http://localhost:8080') // 您的web服务器和HTML托管的地方
+cy.get('a').click()               // 浏览器试图加载google.com，Cypress出现错误
 ```
 
-There is essentially never any reason to visit a site that you don't control in your tests. It's prone to error and slow.
+基本上没有任何理由访问测试中无法控制的站点。它容易出错，速度很慢。
 
-Instead, all you need to test is that the `href` property is correct!
+相反，您只需要测试`href`属性是否正确！
 
 ```javascript
-// this is much easier to do and will run considerably faster
+// 这样做要容易得多，运行速度也会快得多
 cy.visit('http://localhost:8080')
-cy.get('a').should('have.attr', 'href', 'https://google.com') // no page load!
+cy.get('a').should('have.attr', 'href', 'https://google.com') // 没有页面被加载
 ```
 
-Okay but let's say you're worried about `google.com` serving up the right HTML content. How would you test that? Easy! Just make a {% url `cy.request()` request %} directly to it. {% url `cy.request()` request %} is *NOT bound to CORS or same-origin policy*.
+好吧，但假设您担心`google.com`提供正确的HTML内容。您会怎么测试呢？简单！只需直接向它发送一个{% url `cy.request()` request %}*不绑定到CORS或同源策略*。
 
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('a').then(($a) => {
-  // pull off the fully qualified href from the <a>
+  // 从<a>中取出完全限定的href
   const url = $a.prop('href')
 
-  // make a cy.request to it
+  // 向它发起cy.request
   cy.request(url).its('body').should('include', '</html>')
 })
 ```
 
-Still not satisfied? Do you really want to click through to another application? Okay then read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
+还不满意吗？您真的想点击进入另一个应用程序吗？好的，那么请阅读关于{% url "禁用web安全" web-security#Disabling-Web-Security %}的内容。
 
-## Form Submission Redirects
+## 表单提交重定向
 
-When you submit a regular HTML form, the browser will follow this `HTTP(s) request`.
+当您提交常规HTML表单时，浏览器将遵循此`HTTP(s)请求`。
 
-***Application code that is served at `localhost:8080`***
+***在`localhost:8080`上提供的应用程序代码***
 
 ```html
 <html>
@@ -184,80 +185,78 @@ When you submit a regular HTML form, the browser will follow this `HTTP(s) reque
 
 ```javascript
 cy.visit('http://localhost:8080')
-cy.get('form').submit()           // submit the form!
+cy.get('form').submit()           // 提交表单
 ```
 
-If your backend server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
+如果处理`/submit`路由的后端服务器将`30x`重定向到另一个超域，则会得到`跨域`错误。
 
 ```javascript
-// imagine this is some node / express code
-// on your localhost:8080 server
+//假设这是localhost:8080服务器上的某个node/express代码
 
 app.post('/submit', (req, res) => {
-  // redirect the browser to google.com
+  // 将浏览器重定向到google.com
   res.redirect('https://google.com')
 })
 ```
 
-A common use case for this is `Single sign-on (SSO)`. In that situation you may `POST` to a different server and are redirected elsewhere (typically with the session token in the URL).
+一个常见的用例是`单点登录(SSO)`。在这种情况下，您可以`POST`到不同的服务器，并被重定向到其他地方（通常在URL中使用会话令牌）。
 
-If that's the case, don't worry - you can work around it with {% url `cy.request()` request %}. {% url `cy.request()` request %} is special because it is **NOT bound to CORS or same-origin policy**.
+如果是这种情况，不要担心—您可以使用{% url `cy.request()` request %}绕过它。{% url `cy.request()` request %}很特殊，因为它*不绑定到CORS或同源策略*。
 
-In fact we can likely bypass the initial visit altogether and just `POST` directly to your `SSO` server.
+事实上，我们可以完全绕过最初的访问，直接`POST`到您的`SSO`服务器。
 
 ```javascript
 cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'bar' })
   .then((response) => {
-    // pull out the location redirect
+    // 取出location重定向
     const loc = response.headers['Location']
 
-    // parse out the token from the url (assuming its in there)
+    // 从url中解析出令牌(假设其中包含令牌)
     const token = parseOutMyToken(loc)
 
-    // do something with the token that your web application expects
-    // likely the same behavior as what your SSO does under the hood
-    // assuming it handles query string tokens like this
+    // 对web应用程序期望的令牌做些什么
+    // 其行为可能与SSO在底层执行的行为相同
+    // 假设它处理这样的查询字符串令牌
     cy.visit('http://localhost:8080?token=' + token)
 
-    // if you don't need to work with the token you can sometimes
-    // just visit the location header directly
+    // 如果不需要使用令牌，有时可以直接访问location头部
     cy.visit(loc)
   })
 ```
 
-Not working for you? Don't know how to set your token? If you still need to be able to be redirected to your SSO server, you can read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
+不适合您？不知道如何设置您的令牌？如果仍然需要重定向到SSO服务器，可以阅读关于{% url "禁用web安全" web-security#Disabling-Web-Security %}的内容。
 
-## JavaScript Redirects
+## JavaScript重定向
 
-When we say *JavaScript Redirects* we are talking about any kind of code that does something like this:
+当我们说*JavaScript重定向*时，我们谈论的是任何一种代码，它的功能是这样的：
 
 ```javascript
 window.location.href = 'http://some.superdomain.com'
 ```
 
-This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere? Perhaps you're using a `Single sign-on (SSO)` server and you just need to read the previous section about working around that?
+这可能是最难测试的情况，因为它通常是由于其他原因引起的。您需要找出JavaScript代码重定向的原因。也许您没有登录，需要在其他地方处理该设置？也许您正在使用`单点登录(SSO)`服务器，而您只需要阅读前面关于处理该问题的部分？
 
-If you can't figure out why your JavaScript code is redirecting you to a different superdomain, then you might want to just read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
+如果您不明白JavaScript代码为什么要将您重定向到另一个超域，那么您可能只想阅读有关{% url "禁用web安全" web-security#Disabling-Web-Security %}的内容。
 
-# Disabling Web Security
+# 禁用网络安全
 
-So if you cannot work around any of the issues using the suggested workarounds above, you may want to disable web security.
+因此，如果您无法使用上述建议的方案解决任何问题，您可能需要禁用web安全。
 
-One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to `cross origin` errors that can otherwise be fixed. If you think you're experiencing a bug, {% url "come into our chat" https://gitter.im/cypress-io/cypress %} or {% open_an_issue 'open an issue' %}.
+这里要考虑的最后一件事是，每隔一段时间，我们就会发现Cypress中的错误，这些错误会导致可以通过其他方法修复的跨域错误。如果您认为您正遇到错误，{% url "进入我们的聊天" https://gitter.im/cypress-io/cypress %}或{% open_an_issue '打开一个问题' %}。
 
-To start, you will need to understand that *not all browsers expose a way to turn off web security*. Some do, some don't. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
+首先，您需要了解*并非所有浏览器都提供关闭web安全的方法*。有些浏览器提供，有些不提供。如果您依赖于禁用web安全，您将无法在不支持此功能的浏览器上运行测试。
 
-**Setting `chromeWebSecurity` to `false` allows you to do the following:**
+**设置`chromeWebSecurity`为`false`允许您做以下事情：**
 
-- Display insecure content
-- Navigate to any superdomain without cross origin errors
-- Access cross origin iframes that are embedded in your application.
+- 显示不安全的内容
+- 导航到任何超域没有跨域错误
+- 访问嵌入到应用程序中的跨域iframe。
 
-One thing you may notice though is that Cypress still enforces visiting a single superdomain with {% url `cy.visit()` visit %}, but there is an {% issue 944 'issue open' %} to change this restriction.
+不过，您可能会注意到，Cypress仍然强制使用{% url `cy.visit()` visit %}访问单个超域，但是有一个{% issue 944 '开放问题' %}可以更改这个限制。
 
-Still here? That's cool, let's disable web security!
+还在这里吗？很酷，让我们禁用web安全吧！
 
-***Set `chromeWebSecurity` to `false` in `cypress.json` and we'll take care of the rest.***
+***在`cypress.json`中设置`chromeWebSecurity`为`false`，剩下的我们来处理。***
 
 ```json
 {
