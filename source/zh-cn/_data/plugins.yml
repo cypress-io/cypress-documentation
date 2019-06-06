@@ -99,6 +99,11 @@
       link: https://github.com/andrewmcoupe/cy-view
       keywords: [viewports]
 
+    - name: cypress-unfetch
+      description: 根据网络状态跟踪，测试和阻止代码执行。
+      link: https://github.com/RcKeller/cypress-unfetch
+      keywords: [commands, routing, networking]
+
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
       link: https://github.com/avanslaars/cypress-axe
