@@ -218,11 +218,11 @@ cy.get('form').find('button').contains('Create User').click()
 
 The commands above will display in the Command Log as:
 
-![Command log for click](/img/api/click/click-button-in-form-during-test.png)
+{% imgTag /img/api/click/click-button-in-form-during-test.png "Command log for click" %}
 
 When clicking on `click` within the command log, the console outputs the following:
 
-![console.log for click](/img/api/click/click-coords-and-events-in-console.png)
+{% imgTag /img/api/click/click-coords-and-events-in-console.png "console.log for click" %}
 
 # See also
 

@@ -23,7 +23,7 @@ Name | Description
 {% fa fa-github %} {% url 'CircleCI 2.0' https://github.com/cypress-io/cypress-example-docker-circle %} | Run Cypress tests in Docker on {% url 'Circle 2.0' https://circleci.com %}
 {% fa fa-github %} {% url 'CircleCI Workflows' https://github.com/cypress-io/cypress-example-docker-circle-workflows %} | Run Multiple Cypress tests in parallel with {% url 'Circle Workflows' https://circleci.com/docs/2.0/workflows/ %}
 {% fa fa-github %} {% url 'Codeship Pro' https://github.com/cypress-io/cypress-example-docker-codeship %} | Run Cypress tests in Docker on {% url 'Codeship Pro' https://codeship.com/ %}
-{% fa fa-github %} {% url 'demo-docker-cypress-included' https://github.com/cypress-io/demo-docker-cypress-included %} | Demo running the complete Docker image `cypress/included`
+{% fa fa-github %} {% url 'demo-docker-cypress-included' https://github.com/bahmutov/demo-docker-cypress-included %} | Demo running the complete Docker image `cypress/included`
 {% fa fa-github %} {% url 'cypress-example-docker-compose' https://github.com/cypress-io/cypress-example-docker-compose %} | Run Cypress tests using docker-compose on {% url 'CircleCI' https://circleci.com/ %}
 {% fa fa-github %} {% url 'cypress-open-from-docker-compose' https://github.com/bahmutov/cypress-open-from-docker-compose %} | Demo running application and Cypress tests using docker-compose
 

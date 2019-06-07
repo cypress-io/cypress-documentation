@@ -171,4 +171,4 @@ Your current proxy settings can be viewed from within the Cypress Test Runner. F
 2. Click the "Settings" tab.
 3. Click the "Proxy Settings" section to expand it and view the proxy settings that Cypress is currently using.
 
-![Proxy configuration in the Desktop app](/img/guides/proxy-configuration.png)
+{% imgTag /img/guides/proxy-configuration.png "Proxy configuration in the Desktop app" %}

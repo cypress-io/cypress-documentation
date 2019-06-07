@@ -1,5 +1,5 @@
 ---
-title: Screenshots and Videos
+title: スクリーンショットとビデオ
 ---
 
 {% note info %}

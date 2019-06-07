@@ -1,6 +1,5 @@
 ---
 title: getCookies
-
 ---
 
 Get all of the browser cookies.
@@ -47,7 +46,7 @@ Option | Default | Description
 
 ## Get Cookies
 
-***Get cookies after logging in***
+### Get cookies after logging in
 
 In this example, on first login our server sends us back a session cookie.
 
@@ -91,11 +90,11 @@ cy.getCookies().should('have.length', 1).then((cookies) => {
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png)
+{% imgTag /img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png "Command Log getcookies" %}
 
 When clicking on `getCookies` within the command log, the console outputs the following:
 
-![Console Log](/img/api/getcookies/test-application-cookies.png)
+{% imgTag /img/api/getcookies/test-application-cookies.png "Console Log getcookies" %}
 
 # See also
 

@@ -1,5 +1,5 @@
 ---
-title: Screencasts
+title: スクリーンキャスト
 containerClass: examples
 layout: media
 dataType: screencasts
