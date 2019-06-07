@@ -145,6 +145,7 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 
 - **Summary** - If it is a large release, you may write a summary explaining what the point of this release is (mostly used for breaking releases)
 - **Breaking Changes** - The users current implementation of Cypress may break after updating.
+- **Deprecations** - Features have been deprecated, but will not break after updating.
 - **Features** - A new feature
 - **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
 - **Misc** - Not a feature or bugfix, but work that was done. May be internal work that was done and associated with an issue

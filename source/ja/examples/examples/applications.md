@@ -1,5 +1,5 @@
 ---
-title: Applications
+title: アプリケーション
 containerClass: examples
 ---
 
@@ -25,7 +25,7 @@ This is an example app which is used to showcase every command available in Cypr
 - {% url "`cy.route()`" route %} network requests, {% url "`cy.wait()`" wait %} on responses, and stub response data using {% url "`cy.fixture()`" fixture %}.
 - Inspect and manipulate cookies and localStorage.
 
-![kitchensink running](/img/examples/public-project-kitchen-sink.png)
+{% imgTag /img/examples/public-project-kitchen-sink.png "kitchensink running" %}
 
 ## TodoMVC
 
@@ -38,7 +38,7 @@ This repo compares {% url "Cypress Tests" https://github.com/cypress-io/cypress-
 - Create a custom `cy.createTodo()` command to run multiple cy commands.
 - Click and double click elements using {% url "`cy.click()`" click %} and {% url "`cy.dblclick()`" dblclick %}.
 
-![todomvc-gif](/img/examples/public-project-todomvc.png)
+{% imgTag /img/examples/public-project-todomvc.png "TodoMvc testing in Cypress" %}
 
 ## Phonecat
 
@@ -49,7 +49,7 @@ This tests the {% url "original Angular Phonecat example app" https://github.com
 - Test redirect behavior of application using {% url "`.hash()`" hash %}.
 - Test loading behavior of app.
 
-![phonecat-angular-tutorial-app-tested-in-cypress 2d78065e](/img/examples/public-project-phone-cat.png)
+{% imgTag /img/examples/public-project-phone-cat.png "Phonecat Angular tutorial app tested in cypress" %}
 
 ## PieChopper
 
@@ -62,4 +62,4 @@ This is a single page application with a decent amount of features. The tests in
 - Check checkboxes using {% url `cy.check()` check %}
 - Stub responses from our backend using {% url `cy.route()` route %}
 
-![piechopper-gif](/img/examples/public-project-piechopper.png)
+{% imgTag /img/examples/public-project-piechopper.png "Piechopper app tested in cypress" %}

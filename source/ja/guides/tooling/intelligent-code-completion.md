@@ -1,5 +1,5 @@
 ---
-title: Intelligent Code Completion
+title: コード自動補完
 ---
 
 # Writing Tests

@@ -237,11 +237,11 @@ cy.screenshot('my-image')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png)
+{% imgTag /img/api/screenshot/command-log-shows-name-of-screenshot-taken.png "Command Log screenshot" %}
 
 When clicking on `screenshot` within the command log, the console outputs the following:
 
-![Console Log](/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png)
+{% imgTag /img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png "Console Log screenshot" %}
 
 # See also
 

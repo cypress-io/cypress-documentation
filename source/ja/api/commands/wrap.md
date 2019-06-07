@@ -1,6 +1,5 @@
 ---
 title: wrap
-
 ---
 
 Yield the object passed into `.wrap()`.
@@ -43,7 +42,7 @@ Option | Default | Description
 
 ## Objects
 
-***Invokes the function on the subject in wrap and returns the new value.***
+### Invoke the function on the subject in wrap and return the new value
 
 ```javascript
 const getName = () => {
@@ -55,7 +54,7 @@ cy.wrap({ name: getName }).invoke('name').should('eq', 'Jane Lane') // true
 
 ## Elements
 
-***Wrap elements to continue executing commands***
+### Wrap elements to continue executing commands
 
 ```javascript
 cy.get('form').within(($form) => {
@@ -65,7 +64,7 @@ cy.get('form').within(($form) => {
 })
 ```
 
-***Conditionally wrap elements***
+### Conditionally wrap elements
 
 ```javascript
 cy
@@ -108,15 +107,21 @@ cy.wrap({ amount: 10 })
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/wrap/wrapped-object-in-cypress-tests.png)
+{% imgTag /img/api/wrap/wrapped-object-in-cypress-tests.png "Command Log wrap" %}
 
 When clicking on the `wrap` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/wrap/console-log-only-shows-yield-of-wrap.png)
+{% imgTag /img/api/wrap/console-log-only-shows-yield-of-wrap.png "Console Log wrap" %}
+
+{% history %}
+{% url "3.2.0" changelog#3-2-0 %} | Retry `cy.wrap()` if `undefined` when followed by {% url "`.should()`" should %}
+{% url "0.4.5" changelog#0.4.5 %} | `cy.wrap()` command added
+{% endhistory %}
 
 # See also
 
 - {% url `.invoke()` invoke %}
 - {% url `.its()` its %}
+- {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}

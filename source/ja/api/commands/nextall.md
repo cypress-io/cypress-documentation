@@ -1,6 +1,5 @@
 ---
 title: nextAll
-
 ---
 
 Get all following siblings of each DOM element in a set of matched DOM elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Find all of the element's siblings following `.second`***
+### Find all of the element's siblings following `.second`
 
 ```html
 <ul>
@@ -75,7 +74,7 @@ cy.get('.second').nextAll()
 
 ## Selector
 
-***Find all of the following siblings of each li. Keep only the ones with a class `selected`.***
+### Find all of the following siblings of each li. Keep only the ones with a class `selected`
 
 ```html
 <ul>
@@ -116,11 +115,11 @@ cy.get('.left-nav').find('li.active').nextAll()
 
 The commands above will display in the Command Log as:
 
-![Command Log nextAll](/img/api/nextall/next-all-traversal-command-for-the-dom.png)
+{% imgTag /img/api/nextall/next-all-traversal-command-for-the-dom.png "Command Log nextAll" %}
 
 When clicking on `nextAll` within the command log, the console outputs the following:
 
-![Console log nextAll](/img/api/nextall/all-next-elements-are-logged-in-console.png)
+{% imgTag /img/api/nextall/all-next-elements-are-logged-in-console.png "Console Log nextAll" %}
 
 # See also
 
