@@ -54,3 +54,13 @@ it('has correct Chrome specific css property', function () {
   }
 })
 ```
+
+{% history %}
+{% url "3.0.2" changelog#3-0-2 %} | `Cypress.browser` introduced
+{% endhistory %}
+
+# See also
+
+- {% url "Launching Browsers" launching-browsers %}
+- {% url "Browser Launch API" browser-launch-api %}
+

@@ -6,7 +6,6 @@ guides:
     installing-cypress: installing-cypress.html
     writing-your-first-test: writing-your-first-test.html
     testing-your-app: testing-your-app.html
-    # next-steps: next-steps.html
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
@@ -35,13 +34,6 @@ guides:
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
 
-  # advanced-cypress:
-    # the-cypress-workflow: the-cypress-workflow.html
-    # coming-from-selenium: coming-from-selenium.html
-    # custom-commands: custom-commands.html
-    # how-cypress-really-works: how-cypress-really-works.html
-    # talking-to-your-backend: talking-to-your-backend.html
-    # spawning-processes: spawning-processes.html
   references:
     assertions: assertions.html
     configuration: configuration.html
@@ -49,10 +41,7 @@ guides:
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
-    # creating-fixtures: creating-fixtures.html
-    # cypress-api-design: cypress-api-design.html
     trade-offs: trade-offs.html
-    # contributing: contributing.html
     changelog: changelog.html
     roadmap: roadmap.html
 

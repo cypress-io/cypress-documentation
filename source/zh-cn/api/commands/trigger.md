@@ -1,6 +1,5 @@
 ---
 title: trigger
-
 ---
 
 Trigger an event on a DOM element.  
@@ -88,6 +87,7 @@ cy.get('.target').trigger('mousedown')
 cy.wait(1000)
 cy.get('.target').trigger('mouseleave')
 ```
+
 ### jQuery UI Sortable 
 
 To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
@@ -210,7 +210,7 @@ That means that your event listener callbacks will be invoked, but don't expect 
 
 # Command Log
 
-### Trigger a `change` event on input type='range'
+***Trigger a `change` event on input type='range'***
 
 ```javascript
 cy.get('.trigger-input-range')
@@ -225,6 +225,10 @@ The commands above will display in the Command Log as:
 When clicking on `trigger` within the command log, the console outputs the following:
 
 {% imgTag /img/api/trigger/console-log-trigger.png "console log trigger" %}
+
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | `.trigger()` command added
+{% endhistory %}
 
 # See also
 

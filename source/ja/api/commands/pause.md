@@ -1,6 +1,5 @@
 ---
 title: pause
-
 ---
 
 Stop `cy` commands from running and allow interaction with the application under test. You can then "resume" running all commands or choose to step through the "next" commands from the Command Log.
@@ -46,7 +45,7 @@ Option | Default | Description
 
 ## No Args
 
-**Pause after assertion**
+### Pause after assertion
 
 ```javascript
 cy.get('a').should('have.attr', 'href').and('match', /dashboard/).pause()
@@ -69,7 +68,7 @@ cy.get('button').should('not.be.disabled')
 
 # Command Log
 
-**Pause and step through each `.click()` command**
+## Pause and step through each `.click()` command
 
 ```javascript
 cy.get('#action-canvas')
@@ -85,33 +84,33 @@ cy.get('#action-canvas')
 
 The commands above will display in the Command Log as:
 
-![Pause command on intial pause](/img/api/pause/initial-pause-in-gui-highlights-the-pause-command.png)
+{% imgTag /img/api/pause/initial-pause-in-gui-highlights-the-pause-command.png "Pause command on intial pause" %}
 
 When clicking on "Next: 'click'" at the top of the Command Log, the Command Log will run only the next command and pause again.
 
-***Click "Next"***
+### Click "Next"
 
-![Pause command after clicking next](/img/api/pause/next-goes-on-to-next-command-during-pause.png)
+{% imgTag /img/api/pause/next-goes-on-to-next-command-during-pause.png "Pause command after clicking next" %}
 
-***Click "Next" again***
+### Click "Next" again
 
-![Continue to next command during pause](/img/api/pause/continue-in-pause-command-just-like-debugger.png)
+{% imgTag /img/api/pause/continue-in-pause-command-just-like-debugger.png "Continue to next command during pause" %}
 
-***Click "Next" again***
+### Click "Next" again
 
-![Pause command](/img/api/pause/pause-goes-to-show-next-click.png)
+{% imgTag /img/api/pause/pause-goes-to-show-next-click.png "Pause command" %}
 
-***Click "Next" again***
+### Click "Next" again
 
-![Pause command](/img/api/pause/clicking-on-canvas-continues-as-we-click-next.png)
+{% imgTag /img/api/pause/clicking-on-canvas-continues-as-we-click-next.png "Pause command" %}
 
-***Click "Next" again***
+### Click "Next" again
 
-![Pause command](/img/api/pause/last-next-click-before-out-test-is-finished.png)
+{% imgTag /img/api/pause/last-next-click-before-out-test-is-finished.png "Pause command" %}
 
-***Click "Next" again, then 'Resume'***
+### Click "Next" again, then 'Resume'
 
-![Pause command](/img/api/pause/next-then-resume-shows-our-test-has-ended.png)
+{% imgTag /img/api/pause/next-then-resume-shows-our-test-has-ended.png "Pause command" %}
 
 # See also
 

@@ -1,6 +1,5 @@
 ---
 title: debug
-
 ---
 
 Set a `debugger` and log what the previous command yields.
@@ -48,7 +47,7 @@ Option | Default | Description
 
 ## Debug
 
-***Pause with debugger after `.get()`***
+### Pause with debugger after `.get()`
 
 ```javascript
 cy.get('a').debug().should('have.attr', 'href')
@@ -78,11 +77,11 @@ cy.get('.ls-btn').click({ force: true }).debug()
 
 The commands above will display in the Command Log as:
 
-![Command Log debug](/img/api/debug/how-debug-displays-in-command-log.png)
+{% imgTag /img/api/debug/how-debug-displays-in-command-log.png "Command Log debug" %}
 
 When clicking on the `debug` command within the command log, the console outputs the following:
 
-![console.log debug](/img/api/debug/console-gives-all-debug-info-for-command.png)
+{% imgTag /img/api/debug/console-gives-all-debug-info-for-command.png "console.log debug" %}
 
 # See also
 

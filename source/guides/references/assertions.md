@@ -50,7 +50,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | ownProperty(*name*) {% aliases haveOwnProperty own.property %} | `expect('test').to.have.ownProperty('length')` |
 | ownPropertyDescriptor(*name*) {% aliases haveOwnPropertyDescriptor %} | `expect({a: 1}).to.have.ownPropertyDescriptor('a')` |
 | lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
-| match(*regexp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
+| match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
 | key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
 | throw(*constructor*) {% aliases throws Throw %} | `expect(fn).to.throw(Error)` |
@@ -124,6 +124,7 @@ These chainers are available when asserting about a DOM object.
 
 You will commonly use these chainers after using DOM commands like: {% url `cy.get()` get %}, {% url `cy.contains()` contains %}, etc.
 
+<!-- textlint-disable -->
 | Chainers | Assertion |
 | --- | --- |
 | attr(*name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
@@ -147,6 +148,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | match(*selector*) | `expect($emptyEl).to.match(':empty')` |
 | contain(*text*) | `expect($el).to.contain('text')` |
 | descendants(*selector*) | `expect($el).to.have.descendants('div')` |
+<!-- textlint-enable -->
 
 # Sinon-Chai
 

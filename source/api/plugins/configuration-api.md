@@ -15,7 +15,7 @@ How you choose to organize your configuration and environment variables is up to
 
 # Usage
 
-To modify configuration, you simply return an object from your plugins file exported function.
+To modify configuration, you return an object from your plugins file exported function.
 
 ```javascript
 // cypress/plugins/index.js

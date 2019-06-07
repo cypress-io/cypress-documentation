@@ -1,6 +1,5 @@
 ---
 title: parent
-
 ---
 
 Get the parent DOM element of a set of DOM elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the parent of the active li***
+### Get the parent of the active `li`
 
 ```javascript
 cy.get('li.active').parent()
@@ -64,7 +63,7 @@ cy.get('li.active').parent()
 
 ## Selector
 
-***Get the parent with class `nav` of the active li***
+### Get the parent with class `nav` of the active `li`
 
 ```javascript
 cy.get('li.active').parent('.nav')
@@ -94,11 +93,11 @@ cy.get('li.active').parent().should('have.class', 'nav')
 
 The commands above will display in the Command Log as:
 
-![Command Log parent](/img/api/parent/get-parent-element-just-like-jquery.png)
+{% imgTag /img/api/parent/get-parent-element-just-like-jquery.png "Command Log parent" %}
 
 When clicking on the `parent` command within the command log, the console outputs the following:
 
-![Console Log parent](/img/api/parent/parent-command-found-elements-for-console-log.png)
+{% imgTag /img/api/parent/parent-command-found-elements-for-console-log.png "Console Log parent" %}
 
 # See also
 
