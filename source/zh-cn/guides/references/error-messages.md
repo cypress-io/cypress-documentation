@@ -523,7 +523,6 @@ At the moment, we haven't implemented an automatic way to recover from them, but
 
 If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
 
-
 # Test Runner errors
 
 ## {% fa fa-exclamation-triangle red %} Cannot connect to API server
