@@ -27,7 +27,7 @@ Cypress does not instrument your code - you need to do it yourself. The golden s
 
 To instrument the application code located in your `src` folder and save it in an `instrumented` folder use the following command:
 
-```bash
+```shell
 npx nyc instrument --compact=false src instrumented
 ```
 
@@ -68,7 +68,7 @@ In green, we highlighted the 4 statements present in that file. The first three 
 
 Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} to instrument the code as part of its transpilation. Add this plugin to the `.babelrc` file.
 
-```rc
+```json
 {
   "presets": ["@babel/preset-react"],
   "plugins": ["transform-class-properties", "istanbul"]
@@ -91,7 +91,7 @@ To handle code coverage collected during each test, we created a {% url "`@cypre
 
 ## Install the plugin
 
-```bash
+```shell
 npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
 ```
 
@@ -119,7 +119,7 @@ After the tests complete, the final code coverage is saved to a `.nyc_output` fo
 
 To see the summary of the code coverage after tests run, run the command below.
 
-```bash
+```shell
 npx nyc report --reporter=text-summary
 
 ========= Coverage summary =======
@@ -235,7 +235,7 @@ module.exports = (on, config) => {
 
 For reference, the `.babelrc` file is shared between the example application and the spec files, thus Cypress tests are transpiled the same way the application code is transpiled.
 
-```rc
+```json
 {
   "presets": ["@babel/preset-react"],
   "plugins": ["transform-class-properties", "istanbul"]
