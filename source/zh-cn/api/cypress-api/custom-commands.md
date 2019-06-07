@@ -300,7 +300,7 @@ As noted in the {% urlHash 'Arguments' 'Arguments' %} above, you can also set `p
 When doing so Cypress will automatically validate your subject to ensure it conforms to one of those types.
 
 {% note info  %}
-Adding validations is optional. Simply passing `{ prevSubject: true }` will require a subject, but not validate its type.
+Adding validations is optional. Passing `{ prevSubject: true }` will require a subject, but not validate its type.
 {% endnote %}
 
 ## Require Element

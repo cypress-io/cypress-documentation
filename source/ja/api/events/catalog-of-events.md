@@ -209,7 +209,7 @@ it('is doing something very important', function (done) {
 
 ## Catching Test Failures
 
-### Debug the Moment.js a test fails
+### Debug the moment a test fails
 
 ```javascript
 // if you want to debug when any test fails

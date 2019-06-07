@@ -39,7 +39,7 @@ cy.get('.todo-list li')     // command
   .should('have.length', 2) // assertion
 ```
 
-Because nothing is synchronous in modern web applications, Cypress can't simply query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
+Because nothing is synchronous in modern web applications, Cypress can't query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
 
 - What if the application has not updated the DOM by the time these commands run?
 - What if the application is waiting for its backend to respond before populating the DOM element?
@@ -206,7 +206,7 @@ Hover over the second "FIND label" command - something is wrong here. It found t
 
 {% imgTag /img/guides/retry-ability/second-item-label.png "Second item label" %}
 
-Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over the "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that Moment.js.
+Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over the "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that moment.
 
 {% imgTag /img/guides/retry-ability/second-get-li.png "Second get li" %}
 

@@ -6,7 +6,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} How do I get an element's text contents?
 
-Cypress commands yield jQuery objects, so you can simply call methods on them.
+Cypress commands yield jQuery objects, so you can call methods on them.
 
 If you're just trying to assert on an element's text content:
 
@@ -56,7 +56,7 @@ This is the equivalent of Selenium's `getText()` method, which returns the inner
 
 ## {% fa fa-angle-right %} How do I get an input's value?
 
-Cypress yields you jQuery objects, so you can simply call methods on them.
+Cypress yields you jQuery objects, so you can call methods on them.
 
 If you're just trying to assert on an input's value:
 
@@ -447,7 +447,7 @@ describe('Logo', () => {
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with Babel and Browserify.
 
 Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
@@ -502,7 +502,7 @@ No. You cannot add a `.catch` error handler to a failed command. {% url "Read mo
 
 ## {% fa fa-angle-right %} Is there a way to modify the screenshots/video resolution?
 
-Not at the Moment.js. {% issue 587 "There is an open issue for this." %}
+Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 ## {% fa fa-angle-right %} Does Cypress support ES7?
 

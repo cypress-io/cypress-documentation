@@ -106,7 +106,7 @@ You can safely skip down to the bottom where we provide examples of conditional 
 
 ## Client side rendering
 
-However, in most modern applications these days - when the `load` event occurs, usually nothing has rendered on the screen. It is usually at this Moment.js that your scripts begin to load dynamic content and begin to render asynchronously.
+However, in most modern applications these days - when the `load` event occurs, usually nothing has rendered on the screen. It is usually at this moment that your scripts begin to load dynamic content and begin to render asynchronously.
 
 Unfortunately, it is not possible for you to use the DOM to do conditional testing. To do this would require you to know with 100% guarantee that your application has finished all asynchronous rendering and that there are no pending network requests, setTimeouts, intervals, postMessage, or async/await code.
 
@@ -261,7 +261,7 @@ cy.request('https://app.com/me')
   .click()     // more commands here
 ```
 
-Alternatively, if you are creating users, it might just be easier to create the user and simply set whether you want the wizard to be shown ahead of time. That would avoid this check later.
+Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
 ### Embed data in the DOM:
 
@@ -401,7 +401,7 @@ If you've been reading along, then you should already have a grasp on why trying
 
 You should think of failed commands in Cypress as akin to uncaught exceptions in server side code. It is not possible to try to recover in those scenarios because the system has transitioned to an unreliable state. Instead you generally always opt to crash and log. When Cypress fails the test - that is exactly what it is doing. Bailing out, skipping any remaining commands in the test, and logging out the failure.
 
-But... for the sake of the argument, let's imagine for a Moment.js you did have error handling in Cypress.
+But... for the sake of the argument, let's imagine for a moment you did have error handling in Cypress.
 
 Enabling this would mean that for every single command, it would recover from errors, but only after each applicable command timeout was reached. Since timeouts start at 4 seconds (and exceed from there), this means that it would only fail after a long, long time.
 
@@ -442,6 +442,6 @@ Even then, it's still possible a WebSocket message could come in... so 5 minutes
 
 Even then, not enough, it's possible a setTimeout could trigger... 60 minutes.
 
-Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a Moment.js away from happening. There is no way to prove or disprove that it *may* conditionally happen.
+Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
 You, the test writer must know ahead of time what your application is programmed to do - or have 100% confidence that the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.

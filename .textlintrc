@@ -8,13 +8,16 @@
       "defaultTerms": false,
       "terms": [
         // Cypress product
+        ["[^.]Cypress\.io", "Cypress"],
+        ["Cypress' ", "Cypress's "],
         ["the command log", "the Command Log"],
         ["dashboard service", "Dashboard Service"],
         ["test runner", "Test Runner"],
 
         // Brands and Technologies
         "AppVeyor",
-        ["Blob(?! %)", "Blob"],
+        "Babel",
+        ["^Blob(?! %)", "Blob"],
         "Browserify",
         "BrowserStack",
         ["^chai", "Chai"],
@@ -25,7 +28,7 @@
         "ESLint",
         "GitHub",
         "GraphQL",
-        "iframe",
+        ["iframe(s?)", "iframe$1"],
         "iOS",
         "JavaScript",
         "jQuery",
@@ -33,17 +36,18 @@
         "Lodash",
         "minimatch",
         "Mocha",
-        ["Moment(?! %)", "Moment.js"],
         "npm",
         ["React[ .]js", "React"],
         "RegExp",
         ["SauceLabs", "Sauce Labs"],
         ["session[ ]?storage", "sessionStorage"],
+        "Single sign-on",
         ["^Sinon", "Sinon.JS"],
         "Sinon–Chai",
         "TypeScript",
         "YouTube",
         "webpack",
+        ["WebSocket(s?)", "WebSocket$1"],
 
         // Abbreviations
         "API",
@@ -54,8 +58,11 @@
         "CORS",
         "gif",
         ["^HTML", "HTML"],
-        ["^URL", "URL"],
-        ["^XHR", "XHR"],
+        ["^URL(s?)", "URL$1"],
+        ["^HTTP", "HTTP"],
+        ["^HTTPS", "HTTPS"],
+        "SSO",
+        ["^XHR(s?)", "XHR$1"],
         ["^XHR['’]?s", "XHRs"],
         "Xvfb",
         "YAML",
@@ -69,6 +76,7 @@
         ["craziest", "most complex"],
         ["dumb", "unintended"],
         ["insane", "outrageous"],
+        ["simply", ""],
 
         // Single word
         ["change[- ]log(s?)", "changelog$1"],

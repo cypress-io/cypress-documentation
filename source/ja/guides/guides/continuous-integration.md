@@ -190,7 +190,7 @@ The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` fi
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
-A typical project can simply have:
+A typical project can have:
 
 ```yaml
 version: 2.1
@@ -427,7 +427,7 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 ## Module API
 
-Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
+Oftentimes it can be much easier to programmatically control and boot your servers with a Node script.
 
 If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
 

@@ -179,7 +179,7 @@ Is this worth trying to replicate when you're testing?
 
 Maybe not! For these scenarios  we give you a simple escape hatch to bypass all of the checks above and just force events to happen!
 
-You can simply pass `{ force: true }` to most action commands.
+You can pass `{ force: true }` to most action commands.
 
 ```js
 // force the click and all subsequent events

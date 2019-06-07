@@ -33,9 +33,9 @@ Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more 
 
 Cypress is **complementary** to your {% url "CI provider" continuous-integration %}, and plays a completely different role.
 
-It doesn't replace or change anything related to CI. You will simply run Cypress tests in your CI provider.
+It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
-The difference between our {% url 'Dashboard Service' dashboard-service %} and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's simply programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
+The difference between our {% url 'Dashboard Service' dashboard-service %} and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
 
 Our {% url 'Dashboard Service' dashboard-service %} provides you with the low level details of *what* happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
 
@@ -49,7 +49,7 @@ No, although we are looking to build an on-premise version of the Dashboard for 
 
 Of course. The Dashboard Service is a separate service from the Test Runner and will always remain optional. We hope you'll find a tremendous amount of value out of it, but it is not coupled to being able to run your tests.
 
-You can simply always run your tests in CI using {% url "`cypress run`" command-line#cypress-run %} without the `--record` flag which does not communicate with our external servers and will not record any test results.
+You can always run your tests in CI using {% url "`cypress run`" command-line#cypress-run %} without the `--record` flag which does not communicate with our external servers and will not record any test results.
 
 ## {% fa fa-angle-right %} What does Cypress record?
 

@@ -113,7 +113,7 @@ Status | Body | Headers
 --- | --- | ---
 `404` | "" | `null`
 
-Simply set `force404` to `true`.
+Set `force404` to `true`.
 
 ```javascript
 cy.server({ force404: true })

@@ -84,7 +84,7 @@ cy.visit('/index.html', { timeout: 30000 })
 
 Cypress will automatically apply the right authorization headers if you're attempting to visit an application that requires {% url 'Basic Authentication' https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication %}.
 
-Simply provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
+Provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
 
 ```javascript
 cy.visit('https://www.acme.com/', {
@@ -241,7 +241,7 @@ But if your app makes a request upon being initialized, *the above code will not
 
 Many applications will have already begun routing, initialization, and requests by the time the `cy.visit()` in the above code resolves. Therefore creating a {% url `cy.server()` server %} will happen too late, and Cypress will not process the requests.
 
-Luckily Cypress supports this use case. Simply reverse the order of the commands:
+Luckily Cypress supports this use case. Reverse the order of the commands:
 
 ```javascript
 // this code is probably what you want

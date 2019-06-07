@@ -33,7 +33,7 @@ cy.route('/users/**')
 
 **{% fa fa-angle-right %} url** ***(String, Glob, RegExp)***
 
-Set a route matching the specific `url`.
+Set a route matching the specific URL.
 
 **{% fa fa-angle-right %} response** ***(String, Object, Array)***
 

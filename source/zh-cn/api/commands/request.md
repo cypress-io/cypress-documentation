@@ -26,7 +26,7 @@ cy.request('http://dev.local/seed')
 
 **{% fa fa-angle-right %} url** ***(String)***
 
-The `url` to make the request to.
+The URL to make the request to.
 
 If you provide a non fully qualified domain name (FQDN), Cypress will make its best guess as to which host you want `cy.request()` to use in the url.
 
@@ -138,7 +138,7 @@ beforeEach(function () {
 
 ### Issue a simple HTTP request
 
-Sometimes it's quicker to simply test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resources to load.
+Sometimes it's quicker to test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resources to load.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')

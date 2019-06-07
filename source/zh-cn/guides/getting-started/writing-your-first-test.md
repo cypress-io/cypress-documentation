@@ -149,7 +149,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`, 
 {% note danger Only Test Apps You Control %}
 Although in this guide we are testing our example application: {% url "`https://example.cypress.io`" https://example.cypress.io %} - you **shouldn't** test applications you **don't control**. Why?
 
-- They are liable to change at any Moment.js which will break tests.
+- They are liable to change at any moment which will break tests.
 - They may do A/B testing which makes it impossible to get consistent results.
 - They may detect you are a script and block your access (Google does this).
 - They may have security features enabled which prevent Cypress from working.

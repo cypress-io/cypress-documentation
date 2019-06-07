@@ -89,7 +89,7 @@ Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Node-Mod
 
 To see an example of every command used in Cypress, open the {% url "`example` folder" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} within your `cypress/integration` folder.
 
-To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
+To start writing tests for your app, create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
 ## Plugin files
 
@@ -227,7 +227,7 @@ describe('Hooks', function() {
 
 ## Excluding and Including Tests
 
-To run a specified suite or test, simply append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
+To run a specified suite or test, append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
 
 ```javascript
 // -- Start: Our Application Code --
@@ -271,7 +271,7 @@ describe('Unit Test FizzBuzz', function () {
 
 ```
 
-To skip a specified suite or test, simply append `.skip()` to the function. All nested suites will also be skipped.
+To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function () {

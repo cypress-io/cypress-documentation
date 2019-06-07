@@ -81,7 +81,7 @@ The most common use case for preserving cookies is to prevent having to log in t
 
 You can use `Cypress.Cookies.preserveOnce()` to preserve cookies through multiple tests.
 
-There are *likely* better ways to do this, but this isn't well documented at the Moment.js. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
+There are *likely* better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
 
 ```javascript
 describe('Dashboard', function () {
