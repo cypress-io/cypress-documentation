@@ -30,6 +30,7 @@
         "GraphQL",
         ["iframe(s?)", "iframe$1"],
         "iOS",
+        "Istanbul",
         "JavaScript",
         "jQuery",
         ["local[ ]?storage", "localStorage"],
