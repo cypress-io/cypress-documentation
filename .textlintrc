@@ -76,6 +76,8 @@
         ["craziest", "most complex"],
         ["dumb", "unintended"],
         ["insane", "outrageous"],
+
+        // Words we would like to not use altogether
         ["simply", ""],
 
         // Single word
