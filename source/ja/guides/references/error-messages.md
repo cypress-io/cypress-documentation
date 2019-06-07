@@ -523,7 +523,6 @@ At the moment, we haven't implemented an automatic way to recover from them, but
 
 If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
 
-
 # Test Runner errors
 
 ## {% fa fa-exclamation-triangle red %} Cannot connect to API server
@@ -534,6 +533,29 @@ This error likely appeared because:
 
 1. You do not have internet. Please ensure you have connectivity then try again.
 2. You are a developer that has forked our codebase and do not have access to run our API locally. Please read more about this in our {% url "contributing doc" https://on.cypress.io/contributing %}.
+
+## <a id="bad-policy-settings"></a> {% fa fa-exclamation-triangle red %} Cypress detected policy settings on your computer that may cause issues
+
+When Cypress launches Chrome, it attempts to launch it with a custom proxy server and browser extension. Certain group policies (GPOs) on Windows can prevent this from working as intended, which can cause tests to break.
+
+If your administrator has set any of the following Chrome GPOs, it can prevent your tests from running in Chrome:
+
+- Proxy policies: `ProxySettings, ProxyMode, ProxyServerMode, ProxyServer, ProxyPacUrl, ProxyBypassList`
+- Extension policies: `ExtensionInstallBlacklist, ExtensionInstallWhitelist, ExtensionInstallForcelist, ExtensionInstallSources, ExtensionAllowedTypes, ExtensionAllowInsecureUpdates, ExtensionSettings, UninstallBlacklistedExtensions`
+
+Here are some potential workarounds:
+
+1. Ask your administrator to disable these policies so that you can use Cypress with Chrome.
+2. Use the built-in Electron browser for tests, since it is not affected by these policies. {% url 'See the guide to launching browsers for more information.' launching-browsers#Electron-Browser %}
+3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can [download the latest Chromium build here.](https://download-chromium.appspot.com/)
+4. If you have Local Administrator access to your computer, you may be able to delete the registry keys that are affecting Chrome. Here are some instructions:
+    1. Open up Registry Editor by pressing WinKey+R and typing `regedit.exe`
+    2. Look in the following locations for the policy settings listed above:
+        - `HKEY_LOCAL_MACHINE\Software\Policies\Google\Chrome`
+        - `HKEY_LOCAL_MACHINE\Software\Policies\Google\Chromium`
+        - `HKEY_CURRENT_USER\Software\Policies\Google\Chrome`
+        - `HKEY_CURRENT_USER\Software\Policies\Google\Chromium`
+    3. Delete or rename any policy keys found. *Make sure to back up your registry before making any changes.*
 
 ## {% fa fa-exclamation-triangle red %} Uncaught exceptions from your application
 
