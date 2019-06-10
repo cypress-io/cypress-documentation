@@ -73,7 +73,7 @@ I can now serve the application using and get instrumented code without an inter
 
 {% imgTag /img/guides/code-coverage/source-map.png "Bundled code and source mapped originals" %}
 
-A really nice feature of both [nyc][nyc] and [babel-plugin-istanbul][babel-plugin-istanbul] is that the source maps are generated automatically, allowing to collect code coverage information, yet to interact with the original, non-instrumented code in the DevTools debugger. In the screenshot above the bundle (green arrow) has coverage counters, but the source mapped files in the green rectangle show the original code.
+A really nice feature of both [nyc][nyc] and [babel-plugin-istanbul][babel-plugin-istanbul] is that the source maps are generated automatically, allowing to collect code coverage information, yet to interact with the original, non-instrumented code in the Developer Tools debugger. In the screenshot above the bundle (green arrow) has coverage counters, but the source mapped files in the green rectangle show the original code.
 
 {% note info %}
 The `nyc` and `babel-plugin-istanbul` only instrument the application code and not 3rd party dependencies from `node_modules`.
