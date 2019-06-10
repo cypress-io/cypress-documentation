@@ -11,7 +11,95 @@ title: Code Coverage
 
 {% endnote %}
 
-You can find what parts of your application code are covered by the Cypress tests and use it to optimize the test writing. The collected information can be sent to external services and help during pull request reviews.
+# Introduction
+
+As you write more and more end-to-end tests (hopefully you will find that Cypress Test Runner is making test writing perhaps too easy), you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too many times? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test needs to be added to cover them.
+
+Computing the source code lines that were executed during the test is done through code coverage, which requires inserting additional counters into your source code before running it. This step is called "instrumentation" and it takes your code that looks likes this:
+
+```javascript
+function add(a, b) {
+  return a + b
+}
+module.exports = { add }
+```
+
+and parses it to find all functions, all statements, all branches and inserts a bunch of counters. For the above code it might look likes this:
+
+```javascript
+// this object keeps number of times each function
+// and each statement were executed
+const c = window.__coverage__ = {
+  // "f" keeps count of times each function was called
+  // we only have a single function in the source code
+  // thus it starts with [0]
+  f: [0],
+  // "s" keeps count of times each statement was called
+  // we have 3 statements, and they all start with 0
+  s: [0, 0, 0]
+}
+
+// the original code + increment statements
+// uses "c" alias to "window.__coverage__" object
+// the first statement defines the function,
+// let's increment it
+c.s[0]++
+function add(a, b) {
+  // function is called and then the 2nd statement
+  c.f[0]++
+  c.s[1]++
+  return a + b
+}
+// 3rd statement is about to be called
+c.s[2]++
+module.exports = { add }
+```
+
+Imagine we load the above instrumented source file from the spec file. Immediately some counters will be incremented!
+
+```javascript
+const { add } = require('./add')
+// JavaScript engine has parsed and evaluated "add.js" source code
+// which ran some of the increment statements
+// __coverage__ has now
+// f: [0] - function "add" was NOT executed
+// s: [1, 0, 1] - first and third counters were incremented
+//    but the statement inside function "add" was NOT executed
+```
+
+We want to make sure every statement and function in the file "add.js" has been executed by our tests at least once. Thus we write a test:
+
+```javascript
+const { add } = require('./add')
+
+it('adds numbers', () => {
+  expect(add(2, 3)).to.equal(5)
+})
+```
+
+When the test calls `add(2, 3)`, the counter increments inside function "add" are executed, and the coverage object becomes:
+
+```javascript
+{
+  // "f" keeps count of times each function was called
+  // we only have a single function in the source code
+  // thus it starts with [0]
+  f: [1],
+  // "s" keeps count of times each statement was called
+  // we have 3 statements, and they all start with 0
+  s: [1, 1, 1]
+}
+```
+
+The single test has achieved 100% code coverage - every function and every statement has been executed at least once. Of course in the real world applications, achieving 100% code coverage requires multiple tests.
+
+Once the tests finish, the coverage object can be serialized and saved to disk and a human-friendly report can be generated. The collected coverage information can also be sent to the external services and help during pull request reviews.
+
+{% note info %}
+If you are unfamiliar with code coverage, take a look at the "Understanding JavaScript Code Coverage" blog post {% url "part 1" https://www.semantics3.com/blog/understanding-code-coverage-1074e8fccce0/ %} and {% url "part 2" https://www.semantics3.com/blog/understanding-javascript-code-coverage-part-2-9aedaa5119e5/ %}.
+{% endnote %}
+
+This guide explains how to instrument the application source code using commonly used tools. Then we show how to save the coverage information and generate reports using Cypress plugin [@cypress/code-coverage][code-coverage]. After reading this guide you should be able to better target your tests using the code coverage information.
 
 The full source code for this guide can be found in the repository {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %}.
 
