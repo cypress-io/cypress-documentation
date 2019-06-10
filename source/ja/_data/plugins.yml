@@ -56,7 +56,7 @@
       description: ESLint plugin that sets globals for writing tests in Cypress.
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
-      
+
     - name: cypress-log-to-output
       description: Plugin that sends all browser logs to the terminal. Useful for debugging browser issues in CI. Currently, only Chrome is supported.
       link: https://github.com/flotwig/cypress-log-to-output
@@ -76,6 +76,11 @@
       description: A Cypress plugin to retry failed tests.
       link: https://github.com/Bkucera/cypress-plugin-retries
       keywords: [cypress-plugin-retries]
+
+    - name: '@cypress/code-coverage'
+      description: Plugin to save code coverage collected during Cypress tests
+      link: https://github.com/cypress-io/code-coverage
+      keywords: [coverage]
 
 - name: カスタムコマンド
   plugins:
@@ -148,7 +153,7 @@
       description: A collection of Cypress commands to extend and complement the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
-      
+
     - name: cypress-wait-until
       description: Add the Cypress waiting power to virtually everything 🎉
       link: https://github.com/NoriSte/cypress-wait-until
@@ -220,6 +225,11 @@
       description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
+
+    - name: Aurelia CLI
+      description: The Aurelia CLI is the official command line tool for Aurelia.
+      link: https://aurelia.io/docs/cli
+      keywords: [aurelia, cli]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
