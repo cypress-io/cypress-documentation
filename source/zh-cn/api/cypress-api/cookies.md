@@ -1,6 +1,5 @@
 ---
 title: Cypress.Cookies
-
 ---
 
 `Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress' cookie behavior.
@@ -37,7 +36,7 @@ Set defaults for all cookies, such as whitelisting a set of cookies to bypass be
 
 ## Debug
 
-**Log out when cookie values are created, modified or deleted**
+### Log out when cookie values are created, modified or deleted
 
 By turning on debugging, Cypress will automatically log out to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
 
@@ -48,9 +47,9 @@ cy.clearCookie('foo')
 cy.setCookie('foo', 'bar')
 ```
 
-![Console log when debugging cookies](https://cloud.githubusercontent.com/assets/1268976/15457855/e2b6e99c-205f-11e6-8b25-ac6e0dcae9ce.png)
+{% imgTag /img/api/cookies/cookies-in-console-log.png "Console log when debugging cookies" %}
 
-**Turn off verbose debugging output**
+### Turn off verbose debugging output
 
 By default Cypress will log out the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
 
@@ -60,7 +59,7 @@ Cypress.Cookies.debug(true, { verbose: false })
 
 Now when Cypress logs cookies they will only include the `name` and `value`.
 
-![Console log cookies with debug](https://cloud.githubusercontent.com/assets/1268976/15457832/680bc71c-205f-11e6-9b8b-1c84380790e0.png)
+{% imgTag /img/api/cookies/debugger-console-log-of-cookies.png "Console log cookies with debug" %}
 
 Debugging will be turned on until you explicitly turn it off.
 
@@ -70,7 +69,7 @@ Cypress.Cookies.debug(false) // now debugging is turned off
 
 ## Preserve Once
 
-**Preserve cookies through multiple tests**
+### Preserve cookies through multiple tests
 
 Cypress gives you a simple interface to automatically preserve cookies for multiple tests. Cypress automatically clears all cookies before each new test starts by default.
 
@@ -120,7 +119,7 @@ describe('Dashboard', function () {
 
 ## Defaults
 
-**Set global default cookies**
+### Set global default cookies
 
 You can modify the global defaults and whitelist a set of Cookies which will always be preserved across tests.
 
@@ -130,14 +129,14 @@ Any change you make here will take effect immediately for the remainder of every
 A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
 {% endnote %}
 
-**Whitelist accepts:**
+### Whitelist accepts:
 
 - String
 - Array
 - RegExp
 - Function
 
-***Whitelist String***
+### Whitelist String
 
 ```javascript
 // now any cookie with the name 'session_id' will
@@ -147,7 +146,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-***Whitelist Array***
+### Whitelist Array
 
 ```javascript
 // now any cookie with the name 'session_id' or 'remember_token'
@@ -157,7 +156,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-***Whitelist RegExp***
+### Whitelist RegExp
 
 ```javascript
 // now any cookie that matches this RegExp
@@ -167,7 +166,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-***Whitelist Function***
+### Whitelist Function
 
 ```javascript
 Cypress.Cookies.defaults({
@@ -179,6 +178,12 @@ Cypress.Cookies.defaults({
   }
 })
 ```
+
+{% history %}
+{% url "0.16.1" changelog#0-16-1 %} | `{verbose: false}` option added
+{% url "0.16.0" changelog#0-16-0 %} | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove`
+{% url "0.12.4" changelog#0-12-4 %} | `Cypress.Cookies` API added
+{% endhistory %}
 
 # See also
 

@@ -30,8 +30,8 @@ Option | Description
 `port`  | Override default port
 `project` | Path to a specific project
 `record`  | Whether to record the test run
-`reporter`  | Specify a mocha reporter
-`reporterOptions`  | Specify mocha reporter options
+`reporter`  | Specify a Mocha reporter
+`reporterOptions`  | Specify Mocha reporter options
 `spec`  | Specify the specs to run
 
 ```javascript

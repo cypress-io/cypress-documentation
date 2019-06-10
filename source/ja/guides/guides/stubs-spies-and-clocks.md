@@ -1,5 +1,5 @@
 ---
-title: Stubs, Spies, and Clocks
+title: スタブ、スパイ、そしてクロック
 ---
 
 {% note info %}

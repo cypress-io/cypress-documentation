@@ -28,7 +28,6 @@ sidebar:
     writing-your-first-test: 初めてのテストを書く
     testing-your-app: アプリをテストする
     interacting-with-elements: エレメントを操作する*
-    next-steps: 次のステップ
     core-concepts: 主要コンセプト
     introduction-to-cypress: Cypress入門
     writing-and-organizing-tests: テストの書き方と整理の仕方
@@ -46,29 +45,18 @@ sidebar:
     parallelization: Parallelization
     environment-variables: 環境変数
     launching-browsers: ブラウザーを起動する
-    advanced-cypress: 上級者向け
-    the-cypress-workflow: Cypressのワークフロー
-    coming-from-selenium: CypressとSeleniumの違い
     custom-commands: カスタムコマンド
     web-security: ウェブセキュリティー
-    how-cypress-really-works: Cypressはどうやって動いているか
-    talking-to-your-backend: バックエンドと通信する
-    spawning-processes: プロセスを大量発生させる
     references: 参考
     configuration: 設定
     proxy-configuration: Proxy Configuration
     error-messages: エラーメッセージ
     bundled-tools: バンドルツール
     assertions: アサーション
-    creating-fixtures: フィクスチャーを作る
     best-practices: ベストプラクティス
-    anti-patterns: アンチパターン
     trade-offs: トレードオフ
-    contributing: 寄与する
     changelog: 変更履歴
     roadmap: ロードマップ
-    cypress-api-design: APIデザイン
-    all-videos: ビデオ
     tooling: ツール
     intelligent-code-completion: コード自動補完
     plugins-guide: プラグイン
@@ -196,7 +184,7 @@ sidebar:
     browser: browser
     platform: platform
     selector-playground-api: SelectorPlayground
-    screenshot-api: スクリーンショットAPI
+    screenshot-api: Screenshot
     after-screenshot-api: After Screenshot
     spec: spec
   examples:
@@ -210,7 +198,6 @@ sidebar:
     podcasts-media: ポッドキャスト
     screencasts-media: スクリーンキャスト
     blogs-media: ブログ
-    extensions: 拡張機能
     workshop: Workshop
   faq:
     questions: FAQ

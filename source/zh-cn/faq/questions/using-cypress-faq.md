@@ -6,7 +6,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} How do I get an element's text contents?
 
-Cypress commands yield jQuery objects, so you can simply call methods on them.
+Cypress commands yield jQuery objects, so you can call methods on them.
 
 If you're just trying to assert on an element's text content:
 
@@ -56,7 +56,7 @@ This is the equivalent of Selenium's `getText()` method, which returns the inner
 
 ## {% fa fa-angle-right %} How do I get an input's value?
 
-Cypress yields you jQuery objects, so you can simply call methods on them.
+Cypress yields you jQuery objects, so you can call methods on them.
 
 If you're just trying to assert on an input's value:
 
@@ -205,7 +205,7 @@ describe('The Document Metadata', () => {
 
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
-You can throttle your network connection by accessing your Chrome DevTools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
+You can throttle your network connection by accessing your Developer Tools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
 
 We do not currently offer any options to simulate this during `cypress run`.
 
@@ -441,13 +441,13 @@ describe('Logo', () => {
 })
 ```
 
-![Command Log multiple urls](/img/faq/questions/command-log-of-dynamic-url-test.png)
+{% imgTag /img/faq/questions/command-log-of-dynamic-url-test.png "Command Log multiple urls" %}
 
 ## {% fa fa-angle-right %} How do I require or import node modules in Cypress?
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can simply `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with Babel and Browserify.
 
 Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
@@ -526,11 +526,11 @@ Yes! Check out our {% url "ESLint plugin" https://github.com/cypress-io/eslint-p
 
 This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
 
-## {% fa fa-angle-right %} Is there an option to run Cypress in CI with DevTools open? We want to track network and console issues.
+## {% fa fa-angle-right %} Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
-No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress in `cypress run` with DevTools open.
+No. This is definitely the motivation behind {% issue 448 "this open issue" %}, but there is not a way to run Cypress in `cypress run` with Developer Tools open.
 
-You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that is as close as you will get with DevTools open and replicating the environment that was run during `cypress run`.
+You may try running the tests locally and {% url "select the Electron browser" launching-browsers#Electron-Browser %}, that is as close as you will get with Developer Tools open and replicating the environment that was run during `cypress run`.
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 

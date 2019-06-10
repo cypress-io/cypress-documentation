@@ -1,6 +1,5 @@
 ---
 title: prevUntil
-
 ---
 
 Get all previous siblings of each DOM element in a set of matched DOM elements up to, but not including, the element provided.
@@ -66,7 +65,7 @@ Option | Default | Description
 
 ## Selector
 
-***Find all of the element's siblings before `#nuts` until `#veggies`***
+### Find all of the element's siblings before `#nuts` until `#veggies`
 
 ```html
 <ul>
@@ -114,11 +113,11 @@ cy.get('#nuts').prevUntil('#veggies')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/prevuntil/prev-until-finding-elements-in-command-log.png)
+{% imgTag /img/api/prevuntil/prev-until-finding-elements-in-command-log.png "Command Log prevUntil" %}
 
 When clicking on `prevUntil` within the command log, the console outputs the following:
 
-![Console Log](/img/api/prevuntil/console-log-previous-elements-until-defined-el.png)
+{% imgTag /img/api/prevuntil/console-log-previous-elements-until-defined-el.png "Console Log prevUntil" %}
 
 # See also
 

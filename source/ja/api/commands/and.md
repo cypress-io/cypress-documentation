@@ -254,11 +254,11 @@ cy
 
 The commands above will display in the Command Log as:
 
-![Command log for assertions](/img/api/and/cypress-and-command-log.png)
+{% imgTag /img/api/and/cypress-and-command-log.png "Command log for assertions" %}
 
 When clicking on `assert` within the command log, the console outputs the following:
 
-![console.log for assertions](/img/api/and/cypress-assertions-console-log.png)
+{% imgTag /img/api/and/cypress-assertions-console-log.png "console.log for assertions" %}
 
 # See also
 

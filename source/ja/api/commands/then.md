@@ -1,6 +1,5 @@
 ---
 title: then
-
 ---
 
 Enables you to work with the subject yielded from the previous command.
@@ -59,7 +58,7 @@ We have several more examples in our {% url 'Core Concepts Guide' variables-and-
 
 ## DOM element
 
-***The element `input` is yielded***
+### The `input` element is yielded
 
 ```javascript
 cy.get('button').then(($btn) => {
@@ -71,7 +70,7 @@ cy.get('button').then(($btn) => {
 
 ## Change subject
 
-***The subject is changed by returning***
+### The subject is changed by returning
 
 ```javascript
 cy.wrap(null).then(() => {
@@ -83,7 +82,7 @@ cy.wrap(null).then(() => {
 })
 ```
 
-***Returning `null` or `undefined` will not modify the yielded subject***
+### Returning `undefined` will not modify the yielded subject
 
 ```javascript
 cy.get('form')
@@ -103,7 +102,7 @@ cy.get('form')
 
 Cypress waits for Promises to resolve before continuing
 
-***Example using Q***
+### Example using Q
 
 ```javascript
 cy.get('button').click().then(($button) => {
@@ -117,7 +116,7 @@ cy.get('button').click().then(($button) => {
 })
 ```
 
-***Example using bluebird***
+### Example using bluebird
 
 ```javascript
 cy.get('button').click().then(($button) => {
@@ -125,7 +124,7 @@ cy.get('button').click().then(($button) => {
 })
 ```
 
-***Example using jQuery deferred's***
+### Example using jQuery deferred's
 
 ```javascript
 cy.get('button').click().then(($button) => {
@@ -162,6 +161,11 @@ cy.get('button').click().then(($button) => {
 # Command Log
 
 - `.then()` does *not* log in the Command Log
+
+{% history %}
+{% url "0.14.0" changelog#0-14-0 %} | Added `timeout` option
+{% url "< 0.3.3" changelog#0-3-3 %} | `.then()` command added
+{% endhistory %}
 
 # See also
 

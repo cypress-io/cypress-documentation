@@ -1,5 +1,5 @@
 ---
-title: Launching Browsers
+title: ブラウザーを起動する
 ---
 
 When you run tests in Cypress, we launch a browser for you. This enables us to:
@@ -139,4 +139,4 @@ For this reason we recommend {% url "downloading Chromium" https://www.chromium.
 
 Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
-![Cypress Browser with darker chrome](/img/guides/cypress-browser-chrome.png)
+{% imgTag //img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}

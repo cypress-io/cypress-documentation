@@ -1,6 +1,5 @@
 ---
 title: parents
-
 ---
 
 Get the parent DOM elements of a set of DOM elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the parents of the active li***
+### Get the parents of the active li
 
 ```javascript
 cy.get('li.active').parents()
@@ -64,7 +63,7 @@ cy.get('li.active').parents()
 
 ## Selector
 
-***Get the parents with class `nav` of the active li***
+### Get the parents with class `nav` of the active li
 
 ```javascript
 cy.get('li.active').parents('.nav')
@@ -92,11 +91,11 @@ cy.get('li.active').parents('.nav')
 cy.get('li.active').parents()
 ```
 
-![Command Log parents](/img/api/parents/get-all-parents-of-a-dom-element.png)
+{% imgTag /img/api/parents/get-all-parents-of-a-dom-element.png "Command Log parents" %}
 
 When clicking on the `parents` command within the command log, the console outputs the following:
 
-![Console Log parents](/img/api/parents/parents-elements-displayed-in-devtools-console.png)
+{% imgTag /img/api/parents/parents-elements-displayed-in-devtools-console.png "Console Log parents" %}
 
 # See also
 
