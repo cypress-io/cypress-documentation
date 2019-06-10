@@ -48,6 +48,7 @@ function add(a, b) {
   // function is called and then the 2nd statement
   c.f[0]++
   c.s[1]++
+
   return a + b
 }
 // 3rd statement is about to be called
