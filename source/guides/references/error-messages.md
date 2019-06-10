@@ -9,7 +9,7 @@ title: Error Messages
 
 This message means that Cypress was unable to find tests in the specified file. You'll likely get this message if you have an empty test file and have not yet written any tests.
 
-{% img /img/guides/no-tests-found.png "No tests found" %}
+{% imgTag /img/guides/no-tests-found.png "No tests found" %}
 
 ## {% fa fa-exclamation-triangle red %} We found an error preparing your test file
 
@@ -60,7 +60,7 @@ Just like with your test files, the {% url `supportFile` configuration#Folders-F
 
 ## {% fa fa-exclamation-triangle red %} Cypress cannot execute commands outside a running test
 
-{% img /img/guides/cypress-cannot-execute.png "Cannot execute commands" %}
+{% imgTag /img/guides/cypress-cannot-execute.png "Cannot execute commands" %}
 
 This message means you tried to execute one or more Cypress commands outside of a currently running test. Cypress has to be able to associate commands to a specific test.
 
@@ -87,7 +87,7 @@ describe('Some Tests', function () {
 })
 ```
 
-Simply move those Cypress commands into an `it(...)` block and everything will work correctly.
+Move those Cypress commands into an `it(...)` block and everything will work correctly.
 
 If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the {% url "Examples" examples/examples/recipes %}, {% url "chat with someone in our chat" https://gitter.im/cypress-io/cypress %}, or {% open_an_issue %}.
 
@@ -95,7 +95,7 @@ If you are purposefully writing commands outside of a test, there is probably a 
 
 Getting this errors means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
 
-{% img /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
+{% imgTag /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
 
 Cypress errors because it can't interact with "dead" elements - just like a real user could not do this either. Understanding how this happens is very important - and it is often easy to prevent.
 
@@ -176,7 +176,7 @@ cy.get('[disabled]').click({force: true}).
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element is currently animating
 
-{% img /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
+{% imgTag /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
 
 By default Cypress detects if an element you're trying to interact with is animating. This check ensures that an element is not animating too quickly for a real user to interact with the element. This also prevents some edge cases where actions, such as {% url `.type()` type %} or {% url `.click()` click %}, happened too fast during a transition.
 
@@ -205,7 +205,7 @@ You can globally disable animation error checking, or increase the threshold by 
 
 Let's examine several different ways you may get this error message. In every situation, you'll need to change something in your test code to prevent the error.
 
-{% img /img/guides/the-test-has-finished.png "The test has finished but Cypress still has commands" %}
+{% imgTag /img/guides/the-test-has-finished.png "The test has finished but Cypress still has commands" %}
 
 {% note warning Flaky tests below! %}
 Several of these tests are dependent on race conditions. You may have to run these tests multiple times before they will actually fail. You can also try tweaking some of the delays.
@@ -242,7 +242,7 @@ it('but you can forcibly end the test early which does fail', function (done) {
 
 ### Complex Async Example
 
-What's happening in this example is that because we have *NOT* told mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
+What's happening in this example is that because we have *NOT* told Mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
 
 ```javascript
 describe('a complex example with async code', function() {
@@ -319,7 +319,7 @@ Please read our {% url "new documentation on writing custom commands" custom-com
 
 Because `cy` commands are asynchronous and are queued to be run later, it doesn't make sense to return anything else.
 
-For convenience, you can also simply omit any return value or return `undefined` and Cypress will not error.
+For convenience, you can also omit any return value or return `undefined` and Cypress will not error.
 
 In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically detected this and forced the `cy` commands to be returned. To make things less magical and clearer, we are now throwing an error.
 
@@ -327,7 +327,7 @@ In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically de
 
 Because cy commands are asynchronous and are queued to be run later, it doesn't make sense to return anything else.
 
-For convenience, you can also simply omit any return value or return `undefined` and Cypress will not error.
+For convenience, you can also omit any return value or return `undefined` and Cypress will not error.
 
 In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically detected this and forced the `cy` commands to be returned. To make things less magical and clearer, we are now throwing an error.
 
@@ -479,21 +479,21 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 # Page Load Errors
 
-## {% fa fa-exclamation-triangle red %} Cypress detected a cross origin error happened on page load
+## {% fa fa-exclamation-triangle red %} Cypress detected a cross-origin error happened on page load
 
 {% note info %}
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
 {% endnote %}
 
-This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's url to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
+This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 
 ### There are a few simple workarounds to these common situations:
 
-1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So simply make an assertion about that. You can see more strategies on testing anchor links {% url 'in our Example Recipe' recipes#Tab-Handling-and-Links %}.
+1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So make an assertion about that. You can see more strategies on testing anchor links {% url 'in our Example Recipe' recipes#Tab-Handling-and-Links %}.
 
-2. You are testing a page that uses `Single sign-on (SSO)`. In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
+2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
 If you find yourself stuck and can't work around these issues you can just set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
@@ -505,7 +505,7 @@ If you find yourself stuck and can't work around these issues you can just set t
 }
 ```
 
-## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross origin script.
+## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross-origin script.
 
 Check your Developer Tools Console for the actual error - it should be printed there.
 
@@ -517,7 +517,7 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 
 Browsers are enormously complex pieces of software, and from time to time they will inconsistently crash *for no good reason*. Crashes are just a part of running automated tests.
 
-{% img /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
+{% imgTag /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
 
 At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
 

@@ -1,5 +1,3 @@
-# Text labels for menu links
-
 menu:
   guides: Guides
   api: API
@@ -30,7 +28,6 @@ sidebar:
     writing-your-first-test: Writing Your First Test
     testing-your-app: Testing Your App
     interacting-with-elements: Interacting with Elements
-    next-steps: Next Steps
     core-concepts: Core Concepts
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
@@ -48,29 +45,18 @@ sidebar:
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
-    advanced-cypress: Advanced
-    the-cypress-workflow: The Cypress Workflow
-    coming-from-selenium: Cypress vs Selenium
     custom-commands: Custom Commands
     web-security: Web Security
-    how-cypress-really-works: How Cypress Really Works
-    talking-to-your-backend: Talking to Your Backend
-    spawning-processes: Spawning Processes
     references: References
     configuration: Configuration
     proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
     assertions: Assertions
-    creating-fixtures: Creating Fixtures
     best-practices: Best Practices
-    anti-patterns: Anti-patterns
     trade-offs: Trade-offs
-    contributing: Contributing
     changelog: Changelog
     roadmap: Roadmap
-    cypress-api-design: API Design
-    all-videos: Videos
     tooling: Tooling
     intelligent-code-completion: Intelligent Code Completion
     plugins-guide: Plugins
@@ -211,7 +197,6 @@ sidebar:
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     blogs-media: Blogs
-    extensions: Extensions
     workshop: Workshop
   faq:
     questions: FAQ

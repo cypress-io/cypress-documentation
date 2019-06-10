@@ -1,6 +1,5 @@
 ---
 title: trigger
-
 ---
 
 Trigger an event on a DOM element.  
@@ -41,7 +40,7 @@ The name of the `event` to be triggered on the DOM element.
 
 The position where the event should be triggered. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-{% img /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
+{% imgTag /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
 
 **{% fa fa-angle-right %} x** ***(Number)***
 
@@ -88,6 +87,7 @@ cy.get('.target').trigger('mousedown')
 cy.wait(1000)
 cy.get('.target').trigger('mouseleave')
 ```
+
 ### jQuery UI Sortable 
 
 To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
@@ -210,7 +210,7 @@ That means that your event listener callbacks will be invoked, but don't expect 
 
 # Command Log
 
-### Trigger a `change` event on input type='range'
+***Trigger a `change` event on input type='range'***
 
 ```javascript
 cy.get('.trigger-input-range')
@@ -220,11 +220,15 @@ cy.get('.trigger-input-range')
 
 The commands above will display in the Command Log as:
 
-{% img /img/api/trigger/command-log-trigger.png "command log trigger" %}
+{% imgTag /img/api/trigger/command-log-trigger.png "command log trigger" %}
 
 When clicking on `trigger` within the command log, the console outputs the following:
 
-{% img /img/api/trigger/console-log-trigger.png "console log trigger" %}
+{% imgTag /img/api/trigger/console-log-trigger.png "console log trigger" %}
+
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | `.trigger()` command added
+{% endhistory %}
 
 # See also
 

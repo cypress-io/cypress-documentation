@@ -1,58 +1,58 @@
 ---
-title: Writing Your First Test
+title: 编写第一个测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
-- How to start testing a new project in Cypress.
-- What passing and failing tests look like.
-- Testing web navigation, DOM querying, and writing assertions.
+- 如何使用Cypress开始测试.
+- 通过和失败的用例是怎样的.
+- 测试web导航、DOM查询和编写断言.
 {% endnote %}
 
 {% video vimeo 237115455 %}
 
-# Add a test file
+# 添加一个测试文件
 
-Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, now it's time to write our first test. We're going to:
+假设您已经成功地安装了 {% url "installed the Test Runner" installing-cypress#Installing %} 和 {% url "opened the Cypress app" installing-cypress#Opening-Cypress %}, 现在是编写第一个测试的时候了。我们要:
 
-1. Create a `sample_spec.js` file.
-2. Watch Cypress update our list of specs.
-3. Launch Cypress in interactive mode.
+1. 创建一个  `sample_spec.js` 文件.
+2. 查看 Cypress 更新后的测试列表.
+3. 以交互模式启动Cypress
 
-Let's create a new file in the `cypress/integration` folder that was created for us:
+让我们先在 `cypress/integration` 文件下创建一个文件:
 
 ```shell
 touch {your_project}/cypress/integration/sample_spec.js
 ```
 
-Once we've created that file, we should see the Cypress Test Runner immediately display it in the list of Integration Tests. Cypress monitors your spec files for any changes and automatically displays any changes.
+一旦我们创建好文件, 我们应该可以看到在Cypress Test Runner Integration Tests的列表中这份文件立即被呈现出来. 无论你的项目文件有任何改变Cypress都会自动检测且呈现出来.
 
-Even though we haven't written any tests yet - that's okay - let's click on `sample_spec.js` and watch Cypress launch your browser.
+虽然我们还没有写任何测试脚本- 让我们点击`sample_spec.js`  看看Cypress启动你的浏览器
 
 {% note info %}
-Cypress opens the test in a browser installed on your system. You can read more about how we do this in {% url "Launching Browsers" launching-browsers %}.
+Cypress使用安装在系统上的浏览器打开测试。你可以阅读更多关于我们如何做到这一点{% url "Launching Browsers" launching-browsers %}.
 {% endnote %}
 
 {% video local /img/snippets/empty-file-30fps.mp4 %}
 
-We are now officially in the {% url 'Cypress Test Runner' test-runner %}. This is where we will spend the majority of your time testing.
+现让我们正式进入 {% url 'Cypress Test Runner' test-runner %}. 这是我们花费大部分时间测试的地方。
 
 {% note warning %}
-Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
+请注意Cypress显示无法找到任何测试的信息。 这很正常 - 我们还没有写过任何测试！ 如果解析测试文件时出错，有时您也会看到此消息。 您可以打开** Dev Tools **来检查控制台是否存在阻止Cypress读取测试的任何语法或解析错误。
 {% endnote %}
 
-# Write a simple test
+# 写一个简单的例子
 
-Now it's time to write our first test. We're going to:
+现在是开始第一个测试的时候了，我们将会：
 
-1. Write our first passing test.
-2. Write our first failing test.
-3. Watch Cypress reload in real time.
+1. 写一个通过的测试
+2. 写一个失败的测试
+3. 观察Cypress实时的重新加载
 
-As we continue to save our new test file we'll see the browser auto reloading in real time.
+当我们继续保存我们的测试文件，我们会看到浏览器自动实时运行了我们的用例。
 
-Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
+打开你常用的IDE添加如下的代码在之前创建的 `sample_spec.js` 文件
 
 ```js
 describe('My First Test', function() {
@@ -62,19 +62,20 @@ describe('My First Test', function() {
 })
 ```
 
-Once you save this file you should see the browser reload.
+当你保存文件以后，你会看到浏览器重新加载了
 
-Although it doesn't do anything useful, this is our first passing test! ✅
+虽然我们并没有做任何有价值的事，但这是我们的第一个通过的测试 ✅
 
-Over in the {% url 'Command Log' test-runner#Command-Log %} you'll see Cypress display the suite, the test and your first assertion (which should be passing in green).
+在{% url 'Command Log' test-runner#Command-Log %} 你会看到你的测试和断言展示在测试组件中 (通过的话步骤会显示绿色).
 
-{% img /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
+{% imgTag /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 
 {% note info %}
-Notice Cypress displays a message about this being the default page {% url "on the righthand side" test-runner#Application-Under-Test %}. Cypress assumes you'll want to go out and {% url "visit" visit %} a URL on the internet - but it can also work just fine without that.
+请注意，Cypress会显示一条消息，指出这是右侧的默认页面{％url“”test-runner #Application-Under-Test％}。 Cypress假设你想去{％url'访问“访问％}一个互联网上的网址 - 但没有这个网址Cypress也可以正常工作。
+
 {% endnote %}
 
-Now let's write our first failing test.
+现在让我们来写一个失败的测试用例。
 
 ```js
 describe('My First Test', function() {
@@ -84,19 +85,17 @@ describe('My First Test', function() {
 })
 ```
 
-Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
+当你再次保存，你会看到Cypress用红色显示测试失败，因为`true` 不等于`false`。
 
-{% img /img/guides/failing-test.png "Failing test" %}
+{% imgTag /img/guides/failing-test.png "Failing test" %}
 
-Cypress provides a nice {% url 'Test Runner' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
-
+Cypress提供了一个很好的{％url'Test Runner'test-runner％}，它为您提供了套件，测试和断言的可视化结构。 很快你也会看到命令，页面事件，网络请求等。
 {% video local /img/snippets/first-test-30fps.mp4 %}
 
 {% note info What are describe, it, and expect? %}
-All of these functions come from {% url 'Bundled Tools' bundled-tools %} that Cypress bakes in.
-
-- `describe` and `it` come from {% url 'Mocha' https://mochajs.org %}
-- `expect` comes from {% url 'Chai' http://www.chaijs.com %}
+这些所有的功能都基于{% url 'Bundled Tools' bundled-tools %} 
+- `describe` 和 `it` 来自于 {% url 'Mocha' https://mochajs.org %}
+- `expect` 来自于 {% url 'Chai' http://www.chaijs.com %}
 
 Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
 {% endnote %}
@@ -186,7 +185,7 @@ To verify this, replace `type` with something not on the page, like `hype`. You'
 
 Can you see what Cypress is doing under the hood? It's automatically waiting and retrying because it expects the content to **eventually** be found in the DOM. It doesn't immediately fail!
 
-{% img /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
+{% imgTag /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning 'Error Messages' %}
 We've taken care at Cypress to write hundreds of custom error messages that attempt to explain in simple terms what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
@@ -332,7 +331,7 @@ Take your mouse and **hover over** the `CONTAINS` command in the Command Log.
 
 Do you see what happened?
 
-{% img /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
+{% imgTag /img/guides/first-test-hover-contains.png "Hovering over the contains tab highlights the dom element in the App in the Test Runner" %}
 
 Cypress automatically traveled back in time to a snapshot of when that command resolved. Additionally, since {% url `cy.contains()` contains %} finds DOM elements on the page, Cypress also highlights the element and scrolls it into view (to the top of the page).
 
@@ -342,13 +341,13 @@ Now if you remember at the end of the test we ended up on a different URL:
 
 But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was present when our snapshot was taken.
 
-{% img /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
+{% imgTag /img/guides/first-test-url-revert.png "The url address bar shows https://example.cypress.io/" %}
 
 ## Snapshots
 
 Commands are also interactive. Go ahead and click on the `CLICK` command.
 
-{% img /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
+{% imgTag /img/guides/first-test-click-revert.png "A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" %}
 
 Notice it highlights in purple. This did three things worth noting...
 
@@ -369,7 +368,7 @@ When a command causes an immediate visual change in our application, cycling bet
 
 Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
 
-{% img /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
+{% imgTag /img/guides/first-test-page-load.png "Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" %}
 
 **Cypress logs out page events for:**
 
@@ -384,7 +383,7 @@ Besides Commands being interactive, they also output additional debugging inform
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class selector.
 
-{% img /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
+{% imgTag /img/guides/first-test-console-output.png "Test Runner with get command pinned and console log open showing the yielded element" %}
 
 **We can see Cypress output additional information in the console:**
 
@@ -428,7 +427,7 @@ describe('My First Test', function() {
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.
 
-{% img /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
+{% imgTag /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
 ## In action
 
@@ -498,4 +497,4 @@ describe('My First Test', function() {
 - Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
 - Search Cypress's documentation to quickly find what you need.
 
-{% img /img/guides/search-box.png "Use the search box to find relevant documentation" %}
+{% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}

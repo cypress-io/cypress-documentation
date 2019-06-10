@@ -242,7 +242,7 @@ We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, si
 
 If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN.
 
-The download server url is `https://download.cypress.io`.
+The download server URL is `https://download.cypress.io`.
 
 We currently have the following downloads available:
 
@@ -255,7 +255,7 @@ Here are the available download URLs:
 
 See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
 
- Method | Url                            | Description
+ Method | URL                            | Description
  ------ | ------------------------------ | -------------------------------------------------------------------------
  `GET`  | `/desktop                 `    | Download Cypress at latest version (platform auto-detected)
  `GET`  | `/desktop.json            `    | Returns JSON containing latest available CDN destinations
@@ -271,7 +271,7 @@ https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 
 ## Mirroring
 
-If you choose to mirror the entire Cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server url from `https://download.cypress.io` to your own mirror.
+If you choose to mirror the entire Cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server URL from `https://download.cypress.io` to your own mirror.
 
 For example:
 

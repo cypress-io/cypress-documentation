@@ -38,7 +38,7 @@ cy.window().click()         // Errors, 'window' does not yield DOM element
 
 The position where the click should be issued. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-{% img /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
+{% imgTag "/img/api/coordinates-diagram.jpg" "cypress-command-positions-diagram" %}
 
 **{% fa fa-angle-right %} x** ***(Number)***
 
@@ -218,11 +218,11 @@ cy.get('form').find('button').contains('Create User').click()
 
 The commands above will display in the Command Log as:
 
-![Command log for click](/img/api/click/click-button-in-form-during-test.png)
+{% imgTag /img/api/click/click-button-in-form-during-test.png "Command log for click" %}
 
 When clicking on `click` within the command log, the console outputs the following:
 
-![console.log for click](/img/api/click/click-coords-and-events-in-console.png)
+{% imgTag /img/api/click/click-coords-and-events-in-console.png "console.log for click" %}
 
 # See also
 
