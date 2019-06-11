@@ -74,7 +74,7 @@ touch cypress/integration/home_page_spec.js
 
 一旦文件创建成功，您应该可以在测试文件列表里看到它：
 
-{% imgTag 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" "no-border" %}
 
 现在，添加如下代码到您的测试文件里：
 

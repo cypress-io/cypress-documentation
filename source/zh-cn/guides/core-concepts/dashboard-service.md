@@ -376,14 +376,14 @@ To support the community, we provide the Open Source (OSS) plan for public proje
 Follow the following process to request an OSS plan for your project:
 
 1. {% url "Login" https://on.cypress.io/dashboard %} to the Cypress Dashboard, or {% url "create an account" https://on.cypress.io/dashboard %} if you are a new user.
-  {% imgTag 'no-border' /img/dashboard/oss-plan-1-login.png "Login or Create Account" %}
+  {% imgTag /img/dashboard/oss-plan-1-login.png "Login or Create Account" "no-border" %}
 2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
-  {% imgTag 'no-border' /img/dashboard/oss-plan-2-select-org.png "Select or add organization" %}
+  {% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
-  {% imgTag 'no-border' /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" %}
+  {% imgTag /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" "no-border" %}
 4. Fill in and submit the OSS plan request form.
-  {% imgTag 'no-border' /img/dashboard/oss-plan-4-apply.png "OSS plan request form" %}
+  {% imgTag /img/dashboard/oss-plan-4-apply.png "OSS plan request form" "no-border" %}
 5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
 
 If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).

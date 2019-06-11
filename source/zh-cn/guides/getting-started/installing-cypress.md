@@ -15,9 +15,9 @@ title: 安装Cypress
 
 Cypress是一个被安装在你电脑上的桌面应用. 该桌面应用支持这些操作系统:
 
-- **Mac OS** 10.9+ (Mavericks+), 仅提供64位二进制文件.
+- **Mac OS** 10.9+ (Mavericks+), 仅提供64位二进制文件
 - **Linux** Ubuntu 12.04+, Fedora 21, Debian 8的64位二进制文件
-- **Windows** 7+, 仅提供32位二进制文件.
+- **Windows** 7+
 
 # 安装
 
@@ -157,8 +157,7 @@ npm run cypress:open
 ~~CYPRESS_SKIP_BINARY_INSTALL~~ | {% badge danger removed %} 使用`CYPRESS_INSTALL_BINARY=0`作为替代
 ~~CYPRESS_BINARY_VERSION~~ | {% badge danger removed %} 使用`CYPRESS_INSTALL_BINARY`作为替代
 
-## Install binary
-## 安装二进制
+## 通过二进制文件来安装
 
 通过`CYPRESS_INSTALL_BINARY`环境变量, 你可以控制Cypress的安装方式.  来覆盖已经安装的内容, 你可以在`npm install`后边加上`CYPRESS_INSTALL_BINARY`命令来操作.
 
@@ -189,7 +188,6 @@ CYPRESS_INSTALL_BINARY=0 npm install
 
 现在, 一旦安装了npm模块, Cypress就将跳过其安装阶段.
 
-## Binary cache
 ## 二进制缓存
 
 从`3.0`版本开始, Cypress下载对应的Cypress二进制文件到全局系统缓存中, 以便二进制文件能够在多个项目件共享. 默认情况下, 全局缓存文件夹是:
@@ -214,7 +212,6 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 每次cypress运行的时候`CYPRESS_CACHE_FOLDER`都需要存在. 为了确保这个情况, 考虑导出这个环境变量. 例如, 在`.bash_profile` (MacOS, Linux)中, 或使用 `RegEdit` (Windows).
 {% endnote %}
 
-## Run binary
 ## 运行二进制文件
 
 设置环境变量`CYPRESS_RUN_BINARY`来覆盖npm模块找到的Cypress二进制文件的所在位置.
@@ -243,23 +240,22 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 我们推荐 **不要导出** `CYPRESS_RUN_BINARY`环境变量, 因为它会影响所有安装在你系统上的cypres模块.
 {% endnote %}
 
-## Download URLs
-## 托管
+## 下载地址
 
-如果你想下载特定的可提供平台的Cypress版本(操作系统), 你可以从CDN得到它. 你可能也想自己托管一个本地的Cypress并为本地提供服务.
+如果你想下载特定的可提供平台的Cypress版本(操作系统), 你可以从CDN得到它.
 
 
 请参阅{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}查看所有支持的平台.
 
 
-We currently have the following downloads available:
+目前你可以从以下地址下载：
 
 * Windows 64-bit (`?platform=win32&arch=x64`)
 * Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
 * Linux 64-bit (`?platform=linux`)
 * macOS 64-bit (`?platform=darwin`)
 
-Here are the available download URLs:
+这里是可用的下载地址：
 
 See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
 
@@ -267,9 +263,9 @@ See {% url "https://download.cypress.io/desktop.json" https://download.cypress.i
  ------ | ------------------------------ | -------------------------------------------------------------------------
  `GET`  | `/desktop                 `    | 下载最近的Cypress版本(平台自动检测)
  `GET`  | `/desktop.json            `    | 返回最新有效的包含CDN地址的JSON文件
- `GET`  | `/desktop?platform=p      `    | 下载特定平台的Cypress
+ `GET`  | `/desktop?platform=p&arch=a   `| 下载特定平台的Cypress或压缩包
  `GET`  | `/desktop/:version`            | 下载特定版本的Cypress
- `GET`  | `/desktop/:version?platform=p` | 下载Cypress的特定平台和版本
+ `GET`  | `/desktop/:version?platform=p&arch=a` | 下载Cypress的特定平台和版本或压缩包
 
 **为Windows平台下载`3.0.0`的示例:**
 
@@ -277,7 +273,6 @@ See {% url "https://download.cypress.io/desktop.json" https://download.cypress.i
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
-## Mirroring
 ## 镜像
 
 如果你选择镜像整个Cypress的下载站点, 你可以指定`CYPRESS_DOWNLOAD_MIRROR`以此来把`https://download.cypress.io`的下载服务器替换为你自己的镜像下载点.
