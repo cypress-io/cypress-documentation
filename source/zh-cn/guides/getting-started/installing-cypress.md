@@ -150,10 +150,10 @@ npm run cypress:open
 
 名称 | 描述
 ------ |  ---------
-`CYPRESS_INSTALL_BINARY` | {% urlHash "下载并安装的Cypress二进制文件的目标位置" Install-binary %}
-`CYPRESS_DOWNLOAD_MIRROR` | {% urlHash "通过镜像服务器下载Cypress二进制文件"  Mirroring %}
-`CYPRESS_CACHE_FOLDER` | {% urlHash "更改Cypress二进制缓存位置" Binary-cache %}
-`CYPRESS_RUN_BINARY` | {% urlHash "Cypress二进制在运行时的位置" Run-binary %}
+`CYPRESS_INSTALL_BINARY` | {% urlHash "下载并安装的Cypress二进制文件的目标位置" 通过二进制文件来安装 %}
+`CYPRESS_DOWNLOAD_MIRROR` | {% urlHash "通过镜像服务器下载Cypress二进制文件"  镜像 %}
+`CYPRESS_CACHE_FOLDER` | {% urlHash "更改Cypress二进制缓存位置" 二进制缓存 %}
+`CYPRESS_RUN_BINARY` | {% urlHash "Cypress二进制在运行时的位置" 运行二进制文件 %}
 ~~CYPRESS_SKIP_BINARY_INSTALL~~ | {% badge danger removed %} 使用`CYPRESS_INSTALL_BINARY=0`作为替代
 ~~CYPRESS_BINARY_VERSION~~ | {% badge danger removed %} 使用`CYPRESS_INSTALL_BINARY`作为替代
 
@@ -272,7 +272,6 @@ See {% url "https://download.cypress.io/desktop.json" https://download.cypress.i
 ```
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
-
 ## 镜像
 
 如果你选择镜像整个Cypress的下载站点, 你可以指定`CYPRESS_DOWNLOAD_MIRROR`以此来把`https://download.cypress.io`的下载服务器替换为你自己的镜像下载点.
