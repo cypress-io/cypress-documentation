@@ -187,7 +187,7 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 cypress run --record --group 4x-electron --parallel
 ```
 
-The `1x`, `2x`, `4x` group prefix used here is simply an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
+The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
 
 {% note info %}
 The number of machines dedicated for each `cypress run` call is based on your CI configuration for the project.

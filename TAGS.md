@@ -163,8 +163,8 @@ Displays a collapsible table describing changes to the command from past Cypress
 
 ```md
 {% history %}
-| 2.0.0 | Foo deprecated, now use bar
-| 1.0.0 | Commmand introduced
+2.0.0 | Foo deprecated, now use bar
+1.0.0 | Commmand added
 {% endhistory %}
 ```
 

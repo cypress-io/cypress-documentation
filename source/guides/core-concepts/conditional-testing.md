@@ -261,7 +261,7 @@ cy.request('https://app.com/me')
   .click()     // more commands here
 ```
 
-Alternatively, if you are creating users, it might just be easier to create the user and simply set whether you want the wizard to be shown ahead of time. That would avoid this check later.
+Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
 ### Embed data in the DOM:
 
@@ -341,7 +341,7 @@ Cypress is built around creating **reliable tests**. The secret to writing good 
 
 Doing conditional testing adds a huge problem - that the test writer themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
 
-If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the DevTools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
+If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
 
 ```js
 Cypress._.times(100, (i) => {
@@ -440,8 +440,8 @@ You may think to yourself... okay fine, but 4 seconds - man that's not enough. N
 
 Even then, it's still possible a WebSocket message could come in... so 5 minutes!
 
-Even then, not enough, it's possible a setTimeout could trigger... 60 minutes.
+Even then, not enough, it's possible a `setTimeout` could trigger... 60 minutes.
 
-Continually raising the timeout only beleaguers the point. As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
+As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
 You, the test writer must know ahead of time what your application is programmed to do - or have 100% confidence that the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.

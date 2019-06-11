@@ -1,5 +1,5 @@
 ---
-title: Variables and Aliases
+title: 変数と別名
 ---
 
 {% note info %}
@@ -418,7 +418,7 @@ Aliases can also be used with {% url routes route %}. Aliasing your routes enabl
 - wait for your server to send the response
 - access the actual XHR object for assertions
 
-![alias-commands](/img/guides/aliasing-routes.jpg)
+{% imgTag /img/guides/aliasing-routes.jpg "Alias commands" %}
 
 Here's an example of aliasing a route and waiting on it to complete.
 

@@ -1,6 +1,5 @@
 ---
 title: eq
-
 ---
 
 Get A DOM element at a specific index in an array of elements.
@@ -61,7 +60,7 @@ Option | Default | Description
 
 ## Index
 
-***Find the 2nd element within the elements***
+### Find the 2nd element within the elements
 
 ```html
 <ul>
@@ -76,7 +75,8 @@ Option | Default | Description
 ```javascript
 cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
-***Make an assertion on the 3rd row of a table***
+
+### Make an assertion on the 3rd row of a table
 
 ```html
 <table>
@@ -104,7 +104,7 @@ cy.get('tr').eq(2).should('contain', 'Canada')  //true
 
 ## Index From End
 
-***Find the 2nd from the last element within the elements***
+### Find the 2nd from the last element within the elements
 
 ```html
 <ul>
@@ -144,11 +144,11 @@ cy.get('.left-nav.nav').find('>li').eq(3)
 
 The commands above will display in the Command Log as:
 
-![Command log eq](/img/api/eq/find-element-at-index.png)
+{% imgTag /img/api/eq/find-element-at-index.png "Command log eq" %}
 
 When clicking on the `eq` command within the command log, the console outputs the following:
 
-![console.log eq](/img/api/eq/see-element-and-list-when-using-eq.png)
+{% imgTag /img/api/eq/see-element-and-list-when-using-eq.png "console.log eq" %}
 
 # See also
 

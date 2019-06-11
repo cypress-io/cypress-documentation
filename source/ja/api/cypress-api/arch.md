@@ -1,6 +1,5 @@
 ---
 title: Cypress.arch
-
 ---
 
 `Cypress.arch` returns you the CPU architecture name of the underlying OS, as returned from Node's {% url "`os.arch()`" https://nodejs.org/api/os.html#os_os_arch %}.
@@ -34,3 +33,7 @@ it('does something differently', function () {
   }
 })
 ```
+
+{% history %}
+{% url "1.1.3" changelog#1-1-3 %} | `Cypress.arch` added
+{% endhistory %}
