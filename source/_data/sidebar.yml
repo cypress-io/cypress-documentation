@@ -33,6 +33,7 @@ guides:
     reporters: reporters.html
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
+    code-coverage: code-coverage.html
 
   references:
     assertions: assertions.html

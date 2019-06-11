@@ -139,4 +139,4 @@ For this reason we recommend {% url "downloading Chromium" https://www.chromium.
 
 Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
-{% imgTag //img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
+{% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
