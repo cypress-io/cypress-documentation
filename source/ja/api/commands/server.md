@@ -113,7 +113,7 @@ Status | Body | Headers
 --- | --- | ---
 `404` | "" | `null`
 
-Simply set `force404` to `true`.
+Set `force404` to `true`.
 
 ```javascript
 cy.server({ force404: true })
@@ -255,6 +255,13 @@ You can {% url 'read more about XHR strategy here' network-requests %}.
 # Command Log
 
 - `cy.server()` does *not* log in the Command Log
+
+{% history %}
+{% url "0.13.6" changelog#0-13-6 %} | Added `onAbort` callback option
+{% url "0.5.10" changelog#0-5-10 %} | Added `delay` option
+{% url "0.3.3" changelog#0-3-3 %} | Added `whitelist` option
+{% url "< 0.3.3" changelog#0-3-3 %} | `cy.server()` command added
+{% endhistory %}
 
 # See also
 

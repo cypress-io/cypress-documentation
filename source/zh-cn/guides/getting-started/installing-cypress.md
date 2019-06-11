@@ -245,7 +245,7 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 如果你想下载特定的可提供平台的Cypress版本(操作系统), 你可以从CDN得到它.
 
 
-请参阅{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}查看所有支持的平台.
+下载服务器的地址是：`https://download.cypress.io`。
 
 
 目前你可以从以下地址下载：
@@ -274,7 +274,7 @@ https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 ## 镜像
 
-如果你选择镜像整个Cypress的下载站点, 你可以指定`CYPRESS_DOWNLOAD_MIRROR`以此来把`https://download.cypress.io`的下载服务器替换为你自己的镜像下载点.
+如果你选择通过Cypress的镜像站点来下载, 那么你可以设置`CYPRESS_DOWNLOAD_MIRROR`的值为`https://download.cypress.io`。
 
 示例:
 

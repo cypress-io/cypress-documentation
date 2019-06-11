@@ -139,4 +139,4 @@ Cypress自动禁用Cypress启动的浏览器中的某些功能，这些功能往
 
 此外，我们还让Cypress生成的浏览器看起来与常规会话不同。您会在浏览器的chrome周围看到一个更暗的主题。你将能从视觉上分辨出来。
 
-![Cypress Browser with darker chrome](/img/guides/cypress-browser-chrome.png)
+{% imgTag //img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}

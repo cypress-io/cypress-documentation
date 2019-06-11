@@ -1,5 +1,5 @@
 ---
-title: Talks
+title: 講演
 containerClass: examples
 layout: media
 dataType: talks

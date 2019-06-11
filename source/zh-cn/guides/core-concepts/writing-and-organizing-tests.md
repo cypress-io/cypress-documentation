@@ -114,7 +114,8 @@ beforeEach(function () {
   cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
-![global hooks](/img/guides/global-hooks.png)
+
+{% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
 **Note:** 这个示例假设你已经熟悉 Mocha {% url '钩子' writing-and-organizing-tests#Hooks %}. 
@@ -376,4 +377,4 @@ it('can subtract numbers', function() {
 Cypress还发布了其它{% url "文件监视预处理器" plugins %}插件，如果你需要使用它们，必须明确的配置它们。
 
 - {% url 'Cypress Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
-- {% url 'Cypress Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+- {% url 'Cypress webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}

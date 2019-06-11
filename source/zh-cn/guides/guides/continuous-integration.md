@@ -190,7 +190,7 @@ Cypress CircleCI Orb是在`circle.yml`文件里的部分配置，可以帮助你
 
 完整的文档可以在{% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %}里找到。
 
-一个简单的典型示例：
+一个典型示例：
 
 ```yaml
 version: 2.1
@@ -382,11 +382,11 @@ cypress run --record
 
 ***CircleCI环境变量***
 
-![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
+{% imgTag /img/guides/cypress-record-key-as-environment-variable.png "Record key environment variable" %}
 
 ***TravisCI环境变量***
 
-![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
+{% imgTag /img/guides/cypress-record-key-as-env-var-travis.png "Travis key environment variable" %}
 
 ### 3.3.2 Git信息
 Cypress使用{% url 'commit-info' https://github.com/cypress-io/commit-info %}包来获取git信息并关联到运行时（比如分支信息、提交信息、作者等）。

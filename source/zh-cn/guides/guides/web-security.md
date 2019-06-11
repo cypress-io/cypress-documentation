@@ -9,10 +9,10 @@ title: Web安全
 
 为了绕过这些限制，Cypress实现一些策略，包括JavaScript代码、浏览器的内部API，以及`网络代理`，以遵循`同源策略`的规则。我们的目标是完全自动化测试中的应用程序，不需要您修改应用程序的代码——我们*基本上*能做到这一点。
 
-***Cypress在底层做的事情示例：***
+### Cypress在底层做的事情示例：
 
   - 注入{% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %}到`text/html`页面。
-  - 代理所有的`HTTP`/`HTTPS`通信。
+  - 代理所有的HTTP/HTTPS通信。
   - 改变主机url以匹配被测试应用程序的url。
   - 使用浏览器内部API进行网络层通信。
 
@@ -46,7 +46,7 @@ cy.visit('https://google.com')      // 这将立即出错
 
 尽管Cypress试图强制执行此限制，但您的应用程序可以绕过Cypress的检测功能。
 
-***由于超域限制而导致错误的测试用例示例：***
+### 由于超域限制而导致错误的测试用例示例：
 
 1. {% url `.click()` click %}点击带有`href`指向不同超域的`<a>`。
 2. {% url `.submit()` submit %}提交`<form>`导致web服务器重定向到另一个超域。
@@ -60,9 +60,9 @@ cy.visit('https://google.com')      // 这将立即出错
 
 如果您的站点嵌入了一个`<iframe>`，是一个跨域框架，那么Cypress将无法自动化或与这个`<iframe>`通信。
 
-***使用跨域iframe的例子：***
+### 使用跨域iframe的例子：
 
-- 嵌入Vimeo或优酷视频。
+- 嵌入Vimeo或YouTube视频。
 - 显示来自Stripe或Braintree的信用卡表单。
 - 显示来自Auth0的嵌入式登录表单。
 - 显示来自Disqus的评论。
@@ -75,21 +75,19 @@ cy.visit('https://google.com')      // 这将立即出错
 
 ## 不安全内容
 
-由于Cypress的设计方式，如果您正在测试一个`HTTPS`站点，那么当您试图导航回一个`HTTP`站点时，Cypress就会出错。这种行为有助于突出应用程序的*相当严重的安全问题*。
+由于Cypress的设计方式，如果您正在测试一个HTTPS站点，那么当您试图导航回一个HTTP站点时，Cypress就会出错。这种行为有助于突出应用程序的*相当严重的安全问题*。
 
-***访问不安全内容的例子：***
-
-***测试代码***
+### 访问不安全内容的例子：
 
 ```javascript
+// 测试代码
 cy.visit('https://app.corp.com')
 ```
 
 在应用程序代码中，设置`cookies`并在浏览器上存储会话。现在让我们假设您的应用程序代码中只有一个`不安全`链接(或JavaScript重定向)。
 
-***应用程序代码***
-
 ```html
+<!-- 应用程序代码 -->
 <html>
   <a href="http://app.corp.com/page2">Page 2</a>
 </html>
@@ -97,9 +95,8 @@ cy.visit('https://app.corp.com')
 
 Cypress将立即失败，测试代码如下：
 
-***测试代码***
-
 ```javascript
+// 测试代码
 cy.visit('https://app.corp.com')
 cy.get('a').click()               // 将立即失败
 ```
@@ -112,35 +109,34 @@ cy.get('a').click()               // 将立即失败
 
 没有将`secure`标志设置为`true`的`cookies`将作为明文发送到不安全的URL。这使得您的应用程序很容易受到会话劫持。
 
-即使您的web服务器强制`301重定向`回`HTTPS`站点，此安全漏洞仍然存在。原始`HTTP`请求仍然发出一次，暴露了不安全的会话信息。
 
-***解决方法***
+即使您的web服务器强制`301重定向`回HTTPS站点，此安全漏洞仍然存在。原始HTTP请求仍然发出一次，暴露了不安全的会话信息。
 
-只需更新`HTML`或`JavaScript`代码，不导航到不安全的`HTTP`页面，而是只使用`HTTPS`。另外，请确保cookie的`secure`标志设置为`true`。
+### 解决方法
+
+只需更新HTML或JavaScript代码，不导航到不安全的HTTP页面，而是只使用HTTPS。另外，请确保cookie的`secure`标志设置为`true`。
 
 如果您无法控制代码，或者无法解决这个问题，您可以通过{% url "禁用web安全" web-security#Disabling-Web-Security %}来绕过Cypress中的这个限制。
 
 # 常见的解决方法
 
-让我们研究一下您在测试代码中可能遇到的`跨域`错误，并分析一下如何在Cypress中解决这些错误。
+让我们研究一下您在测试代码中可能遇到的跨域错误，并分析一下如何在Cypress中解决这些错误。
 
 ## 外部导航
 
 您可能遇到此错误的最常见情况是，单击`<a>`导航到另一个超域。
 
-***在`localhost:8080`上提供的应用程序代码***
-
 ```html
+<!-- 在`localhost:8080`上提供的应用程序代码 -->
 <html>
   <a href="https://google.com">Google</a>
 </html>
 ```
 
-***测试代码***
-
 ```javascript
-cy.visit('http://localhost:8080') // 您的web服务器和HTML托管的地方
-cy.get('a').click()               // 浏览器试图加载google.com，Cypress出现错误
+// 测试代码
+cy.visit('http://localhost:8080') // where your web server + HTML is hosted
+cy.get('a').click()               // browser attempts to load google.com, Cypress errors
 ```
 
 基本上没有任何理由访问测试中无法控制的站点。它容易出错，速度很慢。
@@ -172,9 +168,9 @@ cy.get('a').then(($a) => {
 
 当您提交常规HTML表单时，浏览器将遵循此`HTTP(s)请求`。
 
-***在`localhost:8080`上提供的应用程序代码***
 
 ```html
+<!-- 在`localhost:8080`上提供的应用程序代码 -->
 <html>
   <form method="POST" action="/submit">
     <input type="text" name="email" />
@@ -199,7 +195,7 @@ app.post('/submit', (req, res) => {
 })
 ```
 
-一个常见的用例是`单点登录(SSO)`。在这种情况下，您可以`POST`到不同的服务器，并被重定向到其他地方（通常在URL中使用会话令牌）。
+一个常见的用例是单点登录(SSO)。在这种情况下，您可以`POST`到不同的服务器，并被重定向到其他地方（通常在URL中使用会话令牌）。
 
 如果是这种情况，不要担心—您可以使用{% url `cy.request()` request %}绕过它。{% url `cy.request()` request %}很特殊，因为它*不绑定到CORS或同源策略*。
 
@@ -234,7 +230,7 @@ cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'ba
 window.location.href = 'http://some.superdomain.com'
 ```
 
-这可能是最难测试的情况，因为它通常是由于其他原因引起的。您需要找出JavaScript代码重定向的原因。也许您没有登录，需要在其他地方处理该设置？也许您正在使用`单点登录(SSO)`服务器，而您只需要阅读前面关于处理该问题的部分？
+这可能是最难测试的情况，因为它通常是由于其他原因引起的。您需要找出JavaScript代码重定向的原因。也许您没有登录，需要在其他地方处理该设置？也许您正在使用单点登录(SSO)服务器，而您只需要阅读前面关于处理该问题的部分？
 
 如果您不明白JavaScript代码为什么要将您重定向到另一个超域，那么您可能只想阅读有关{% url "禁用web安全" web-security#Disabling-Web-Security %}的内容。
 
@@ -263,5 +259,3 @@ window.location.href = 'http://some.superdomain.com'
   "chromeWebSecurity": false
 }
 ```
-
-

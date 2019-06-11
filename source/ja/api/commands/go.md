@@ -1,10 +1,8 @@
 ---
 title: go
-
 ---
 
 Navigate back or forward to the previous or next URL in the browser's history.
-
 
 # Syntax
 
@@ -46,13 +44,13 @@ Option | Default | Description
 
 ## Direction
 
-***Go back in browser's history***
+### Go back in browser's history
 
 ```javascript
 cy.go('back')   // equivalent to clicking back button
 ```
 
-***Go forward in browser's history***
+### Go forward in browser's history
 
 ```javascript
 cy.go('forward') // equivalent to clicking forward button
@@ -60,13 +58,13 @@ cy.go('forward') // equivalent to clicking forward button
 
 ## Number
 
-***Go back in browser's history***
+### Go back in browser's history
 
 ```javascript
 cy.go(-1)       // equivalent to clicking back button
 ```
 
-***Go forward in browser's history***
+### Go forward in browser's history
 
 ```javascript
 cy.go(1)        // equivalent to clicking forward button
@@ -74,7 +72,7 @@ cy.go(1)        // equivalent to clicking forward button
 
 # Notes
 
-***Refreshing and loading the page***
+### Refreshing and loading the page
 
 If going forward or back causes a full page refresh, Cypress will wait for the new page to load before moving on to new commands.
 
@@ -106,11 +104,11 @@ cy
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/go/test-showing-go-back-browser-button.png)
+{% imgTag /img/api/go/test-showing-go-back-browser-button.png "Command Log go" %}
 
 When clicking on the `go` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/go/window-is-logged-when-go-back-in-browser-history.png)
+{% imgTag /img/api/go/window-is-logged-when-go-back-in-browser-history.png "console Log go" %}
 
 # See also
 

@@ -30,7 +30,7 @@ it('creates 2 items', function () {
 
 {% url "命令日志" test-runner#Command-Log %} 会显示命令和断言，测试通过的断言会显示为绿色。
 
-![Commands and assertions](/img/guides/retry-ability/commands-assertions.png)
+{% imgTag /img/guides/retry-ability/commands-assertions.png "ommands and assertions" %}
 
 让我们看看最后一个命令和断言：
 
@@ -39,7 +39,7 @@ cy.get('.todo-list li')     // command
   .should('have.length', 2) // assertion
 ```
 
-因为现代Web应用程序中没有任何内容是同步的，所以Cypress不能简单的在所有DOM元素里面去查找`todo-list`，并检查它们是否只有2个。有很多例子说明为什么这种方法效果不好。
+因为现代Web应用程序中没有任何内容是同步的，所以Cypress不能在所有DOM元素里面去查找`todo-list`，并检查它们是否只有2个。有很多例子说明为什么这种方法效果不好。
 
 - 如果应用程序在这些命令运行时没有更新DOM，我们该怎么办？
 - 如果应用程序在填充DOM元素之前等待其后端响应，我们该怎么办？
@@ -69,7 +69,7 @@ app.TodoModel.prototype.addTodo = function (title) {
 
 我的测试仍然能通过！最后的 `cy.get('.todo-list')` 和断言 `should('have.length', 2)`清晰的显示了旋转等待图标，这意味着Cypress正在重新查询它们。
 
-![Retrying finding 2 items](/img/guides/retry-ability/retry-2-items.gif)
+{% imgTag /img/guides/retry-ability/retry-2-items.gif "Retrying finding 2 items" %}
 
 在DOM更新后的几毫秒内，`cy.get()` 找到了两个元素并且 `should('have.length', 2)` 断言通过。
 
@@ -91,7 +91,7 @@ cy.get('.todo-list li')     // command
 
 因为第二个断言 `expect($li.get(0).textContent, 'first item').to.equal('todo a')` 失败，所以永远不会到达第三个断言。超时后命令失败，命令日志正确的显示了第一个遇到的断言`should('have.length', 2)`通过了，但是第二个断言和命令本身是失败的。
 
-![Retrying multiple assertions](/img/guides/retry-ability/second-assertion-fails.gif)
+{% imgTag /img/guides/retry-ability/second-assertion-fails.gif "Retrying multiple assertions" %}
 
 # 不是每个命令都被重试
 
@@ -117,9 +117,9 @@ cy.get('.todo-list li')     // command
   .eq(3)                    // command
 ```
 
-![Retrying built-in assertion](/img/guides/retry-ability/eq.gif)
+{% imgTag /img/guides/retry-ability/eq.gif "Retrying built-in assertion" %}
 
-一些无法重试的命令仍然具有内置的_等待_。例如：{% url '.click()' click %}命令不会“盲目的”向元素发送点击事件。正如“断言”部分所描述的那样，{% url "`.click()`" click %}会等待点击，直到该元素变为{% url "可操作" interacting-with-elements#Actionability %}。
+一些无法重试的命令仍然具有内置的_等待_。例如：正如“断言”部分所描述的那样，{% url "`.click()`" click %}会等待点击，直到该元素变为{% url "可操作" interacting-with-elements#Actionability %}。
 
 Cypress尝试像人类用户那样使用浏览器。
 
@@ -173,11 +173,11 @@ it('adds two items', function () {
 
 这个测试毫无疑问的在Cypress上通过。
 
-![Test passes](/img/guides/retry-ability/adds-two-items-passes.gif)
+{% imgTag /img/guides/retry-ability/adds-two-items-passes.gif "Test passes" %}
 
 但有时候测试会失败 - 通常本地不会测试失败 - 它几乎总是在我们的持续集成服务器上失败。当测试失败时，录制的视频和屏幕截图没有显示任何明显的问题！这是测试失败的视频：
 
-![Test fails](/img/guides/retry-ability/adds-two-items-fails.gif)
+{% imgTag /img/guides/retry-ability/adds-two-items-fails.gif "Test fails" %}
 
 问题看起来很奇怪 - 我可以清楚的看到列表中出现的标签“todo B”，那么为什么Cypress找不到它？这到底是怎么回事？
 
@@ -200,21 +200,21 @@ app.TodoModel.prototype.addTodo = function (title) {
 
 在失败的测试中，确实找到了第一个标签：
 
-![First item label](/img/guides/retry-ability/first-item-label.png)
+{% imgTag /img/guides/retry-ability/first-item-label.png "First item label" %}
 
 将鼠标悬停在第二个“FIND label”命令上 - 这里出了一点问题。它找到了 _第一个标签_，然后继续重新查找文本“todo B”，但是第一项仍然是“todo A”。
 
-![Second item label](/img/guides/retry-ability/second-item-label.png)
+{% imgTag /img/guides/retry-ability/second-item-label.png "Second item label" %}
 
 嗯，这确实很奇怪，为什么Cypress只看 _第一个_ 元素？让我们将鼠标悬停在“GET .todo-list li”命令上看看它 _找到了什么_ 。 哦，有趣的是 - 在那一刻只有一个元素。
 
-![Second get li](/img/guides/retry-ability/second-get-li.png)
+{% imgTag /img/guides/retry-ability/second-get-li.png "Second get li" %}
 
 在测试期间，`cy.get('.todo-list li')` 命令很快的找到了渲染的 `<li>` 元素 - 这是第一个也是唯一的一个“todo A”元素。我们的程序在等待了100ms后才把“todo B”元素附加到列表上。 当第二个元素被添加时，Cypress已经“完成了元素的查找”，它只使用第一个`<li>`元素。它只在第一个`<li>`元素中搜索`<label>`，完全忽略了新创建的第二个项目。
 
 为了确认这一点，让我们删除延迟代码，看看在测试通过的例子中发生了什么。
 
-![Two items](/img/guides/retry-ability/two-items.png)
+{% imgTag /img/guides/retry-ability/two-items.png "Two items" %}
 
 当应用程序没有延迟时，它会在Cypress命令`cy.get('.todo-list li')`运行之前将元素放入DOM中。`cy.get()`将会返回2个元素，`.find()` 命令将会找到正确的标签。非常棒。
 
@@ -251,7 +251,7 @@ it('adds two items', function () {
 
 为了显示重试次数，我将应用程序的人工延迟增加到500ms。现在测试总是通过， 因为重试了整个选择器。当第二个“todo B”元素添加到DOM时，它会找到包含2个元素的列表。
 
-![Combined selector](/img/guides/retry-ability/combined-selectors.gif)
+{% imgTag /img/guides/retry-ability/combined-selectors.gif "Combined selector" %}
 
 类似的，当使用{% url `.its()` its %} 命令处理深度嵌套的JavaScript属性时，尽量不要将它分割为多个调用。相反的，使用`.`分隔符将属性名称组合成一个调用：
 
@@ -294,7 +294,7 @@ it('adds two items', function () {
 })
 ```
 
-![Passing test](/img/guides/retry-ability/alternating.png)
+{% imgTag /img/guides/retry-ability/alternating.png "Passing test" %}
 
 测试通过了，因为第二个 `cy.get('.todo-list li')` 被自己的断言`.should('have.length', 2)`重试了。只有在成功找到2个 `<li>` 元素，`.find('label')`命令和对应的断言才开始，到现在为止，它能够正确查询了带有正确“todo B”标签的元素。
 

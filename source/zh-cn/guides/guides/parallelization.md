@@ -187,7 +187,7 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 cypress run --record --group 4x-electron --parallel
 ```
 
-这里使用的`1x`， `2x`， `4x`组的前缀只是一种被采用的约定，用于表示每次运行的并行度级别，并且*不是必须的或必要的*。
+这里使用的`1x`， `2x`， `4x`的前缀只是一种被采用的约定，用于表示每次运行的并行度级别，并且*不是必须的或必要的*。
 
 {% note info %}
 每个`cypress run`调用专用的机器数量取决于项目的CI配置。

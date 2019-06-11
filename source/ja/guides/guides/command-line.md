@@ -1,5 +1,5 @@
 ---
-title: Command Line
+title: コマンドライン
 ---
 
 {% note info %}

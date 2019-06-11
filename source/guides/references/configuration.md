@@ -18,7 +18,7 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 Option | Default | Description
 ----- | ---- | ----
-`baseUrl` | `null` | Url used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's url
+`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
 `env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
@@ -179,7 +179,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
 
-![resolve-configuration](https://user-images.githubusercontent.com/1271364/26941279-e7903108-4c4b-11e7-8731-be118e2c30eb.jpg)
+{% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
 # Notes
 
@@ -202,7 +202,7 @@ Not sure what a part of the URL a host is? {% url 'Use this guide as a reference
 When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
 {% endnote %}
 
-Given the following urls:
+Given the following URLs:
 
 ```text
 https://www.google-analytics.com/ga.js
