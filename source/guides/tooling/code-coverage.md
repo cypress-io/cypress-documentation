@@ -10,9 +10,101 @@ title: Code Coverage
 - How to use the code coverage reports to guide writing tests
 {% endnote %}
 
-Code coverage for unit tests has been a standard tool used to ensure your tests are properly testing every piece of code your application uses. But when it comes to end-to-end testing, how much of your application code is covered by your Cypress tests? How can you tell which parts and how much of your application code is covered?
+# Introduction
 
-This guide explains how to find what parts of your application code are covered by Cypress tests and so you can have 100% confidence that your tests aren't missing cruicial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
+As you write more and more end-to-end tests, you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too much? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test should be added to ensure that part of our application logic is tested.
+
+Computing the source code lines that were executed during the test is done through **code coverage**. Code coverage requires inserting additional counters into your source code before running it. This step is called **instrumentation**. Instrumentation takes code that looks likes this...
+
+```javascript
+// add.js
+function add(a, b) {
+  return a + b
+}
+module.exports = { add }
+```
+
+...and parses it to find all functions, statements, and branches and then inserts a **counters** into the code. For the above code it might look likes this:
+
+```javascript
+// this object counts the number of times each
+// function and each statement is executed
+const c = window.__coverage__ = {
+  // "f" counts the number of times each function is called
+  // we only have a single function in the source code
+  // thus it starts with [0]
+  f: [0],
+  // "s" counts the number of times each statement is called
+  // we have 3 statements and they all start with 0
+  s: [0, 0, 0]
+}
+
+// the original code + increment statements
+// uses "c" alias to "window.__coverage__" object
+// the first statement defines the function,
+// let's increment it
+c.s[0]++
+function add(a, b) {
+  // function is called and then the 2nd statement
+  c.f[0]++
+  c.s[1]++
+
+  return a + b
+}
+// 3rd statement is about to be called
+c.s[2]++
+module.exports = { add }
+```
+
+Imagine we load the above instrumented source file from our test spec file. Immediately some counters will be incremented!
+
+```javascript
+// add.spec.js
+const { add } = require('./add')
+// JavaScript engine has parsed and evaluated "add.js" source code
+// which ran some of the increment statements
+// __coverage__ has now
+// f: [0] - function "add" was NOT executed
+// s: [1, 0, 1] - first and third counters were incremented
+// but the statement inside function "add" was NOT executed
+```
+
+We want to make sure every statement and function in the file `add.js` has been executed by our tests at least once. Thus we write a test:
+
+```javascript
+// add.spec.js
+const { add } = require('./add')
+
+it('adds numbers', () => {
+  expect(add(2, 3)).to.equal(5)
+})
+```
+
+When the test calls `add(2, 3)`, the counter increments inside the "add" function are executed, and the coverage object becomes:
+
+```javascript
+{
+  // "f" keeps count of times each function was called
+  // we only have a single function in the source code
+  // thus it starts with [0]
+  f: [1],
+  // "s" keeps count of times each statement was called
+  // we have 3 statements, and they all start with 0
+  s: [1, 1, 1]
+}
+```
+
+This single test has achieved 100% code coverage - every function and every statement has been executed at least once. Of course in real world applications, achieving 100% code coverage requires multiple tests.
+
+Once the tests finish, the coverage object can be serialized and saved to disk so that a human-friendly report can be generated. The collected coverage information can also be sent to external services and help during pull request reviews.
+
+{% note info %}
+If you are unfamiliar with code coverage or want to learn more, take a look at the "Understanding JavaScript Code Coverage" blog post {% url "Part 1" https://www.semantics3.com/blog/understanding-code-coverage-1074e8fccce0/ %} and {% url "Part 2" https://www.semantics3.com/blog/understanding-javascript-code-coverage-part-2-9aedaa5119e5/ %}.
+{% endnote %}
+
+This guide explains how to instrument the application source code using common tools. Then we show how to save the coverage information and generate reports using the {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} Cypress plugin. After reading this guide you should be able to better target your tests using the code coverage information.
+
+This guide explains how to find what parts of your application code are covered by Cypress tests so you can have 100% confidence that your tests aren't missing cruicial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
 
 {% note info %}
 The full source code for this guide can be found in the {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} repository.
