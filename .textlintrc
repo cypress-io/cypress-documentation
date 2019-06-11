@@ -8,7 +8,7 @@
       "defaultTerms": false,
       "terms": [
         // Cypress product
-        ["[^.]Cypress\.io", "Cypress"],
+        ["^Cypress\.io", "Cypress"],
         ["Cypress' ", "Cypress's "],
         ["the command log", "the Command Log"],
         ["dashboard service", "Dashboard Service"],
@@ -30,6 +30,7 @@
         "GraphQL",
         ["iframe(s?)", "iframe$1"],
         "iOS",
+        "Istanbul",
         "JavaScript",
         "jQuery",
         ["local[ ]?storage", "localStorage"],
@@ -56,6 +57,7 @@
         "CLI",
         "CSS",
         "CORS",
+        ["^E2E", "E2E"],
         "gif",
         ["^HTML", "HTML"],
         ["^URL(s?)", "URL$1"],
