@@ -163,7 +163,7 @@ Get around the lack of a `.hover()` command.
 
 ## [Stubbing methods called on `window`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window)
 
-- Use {% url "`cy.spy()`" spy %} to test `window.open` behavior.
+- Use {% url "`cy.stub()`" stub %} to test `window.open` behavior.
 
 ## [Stubbing Google Analytics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics)
 
