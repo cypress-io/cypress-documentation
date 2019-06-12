@@ -2,24 +2,24 @@
 title: TypeScript
 ---
 
-Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript. All that is required is a little bit of configuration.
+Cypress使用{% url "TypeScript" https://www.typescriptlang.org/ %}作为{% url "官方类型定义" https://github.com/cypress-io/cypress/tree/develop/cli/types %}(语言包)。这意味着你可以使用TypeScript编写测试。所有这些只需要一点点的设置。
 
-## Transpiling TypeScript test files
+## 1. 源码转换TypeScript测试文件
 
-Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`file:preprocessor` event" preprocessors-api %} you can use to customize how your test code is transpiled and sent to the browser.
+你可能会想要直接在项目中写Typescript，那就必须处理源码转换问题。Cypress暴露一个{% url "`file:preprocessor` event" preprocessors-api %}以便你可以自定义你的源码是如何进行转换和发送到浏览器的。
 
-### Examples
+### 1.1 示例
 
 - {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
 - {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
 
-## Set up your dev environment
+## 2. 设置开发环境
 
-Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" intelligent-code-completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
+请参考自己的开发IDE在{% url "TypeScript's编辑器支持文档" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %}中的描述，并按照其指导在你的开发环境中集成TypeScript支持和{% url "代码智能提示" intelligent-code-completion %}。TypeScript在{% url "Visual Studio Code" https://code.visualstudio.com/ %}、{% url "Visual Studio" https://www.visualstudio.com/ %}和{% url "WebStorm" https://www.jetbrains.com/webstorm/ %}得到了源生支持 - 而其他所有的IDE需要额外的设置。
 
-## Configure tsconfig.json
+## 3. 配置tsconfig.json
 
-We recommend the following configuration in a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %}.
+我们建议在{% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %}文件夹下的{% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %}使用如下的配置：
 
 ```json
 {
@@ -36,12 +36,12 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 }
 ```
 
-The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since {% url "Chai" bundled-tools#Chai %} and {% url "jQuery" bundled-tools#Other-Library-Utilities %} are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
+其中`"types"`告诉TypeScript编译器仅导入Cypress相关的定义。这还将找到项目中使用`@types/chai`或`@types/jquery`的实例。因为{% url "Chai" bundled-tools#Chai %}和{% url "jQuery" bundled-tools#Other-Library-Utilities %}是命名空间(全局的)，不匹配的版本将导致包管理(`yarn`或`npm`)形成嵌套或包含多个不同的定义甚至冲突。
 
-## Types for custom commands
+## 4. 自定义命令类型
 
-When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
+当添加自定义命令给`cy`对象时，你可以添加上类型以避免TypeScript错误。有个示例供参考{% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %}。
 
-## Types for custom assertions
+## 5. 自定义断言类型
 
-If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" https://github.com/cypress-io/cypress-example-recipes#adding-chai-assertions %} for instructions.
+如果你想扩展Cypress断言，你可以扩展断言类型，让TypeScript编译器理解新的方法。参考断言{% url "Recipe: Adding Chai Assertions" https://github.com/cypress-io/cypress-example-recipes#adding-chai-assertions %}。
