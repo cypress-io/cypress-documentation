@@ -179,6 +179,7 @@ examples:
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html
     screencasts-media: screencasts-media.html
+    courses-media: courses-media.html
 
 faq:
   questions:
