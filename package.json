@@ -107,7 +107,7 @@
     "gulp-awspublish": "4.0.0",
     "gulp-clean": "0.4.0",
     "gulp-debug": "4.0.0",
-    "gulp-rev-all": "2.0.1",
+    "gulp-rev-all": "2.0.2",
     "human-interval": "0.1.6",
     "husky": "2.4.0",
     "inquirer": "6.3.1",
