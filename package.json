@@ -109,7 +109,7 @@
     "gulp-debug": "4.0.0",
     "gulp-rev-all": "2.0.1",
     "human-interval": "0.1.6",
-    "husky": "2.4.0",
+    "husky": "2.4.1",
     "inquirer": "6.3.1",
     "jest": "24.8.0",
     "keyv": "3.1.0",
