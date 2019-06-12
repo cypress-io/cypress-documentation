@@ -74,7 +74,7 @@ touch cypress/integration/home_page_spec.js
 
 一旦文件创建成功，您应该可以在测试文件列表里看到它：
 
-{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" "no-border" %}
 
 现在，添加如下代码到您的测试文件里：
 
@@ -90,7 +90,7 @@ describe('The Home Page', function() {
 
 如果您忘记了启动Cypress服务了，您将看到以下错误：
 
-{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
+{% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 如果您已经启动了Cypress服务，您将会看到应用启动并且开始工作了。
 
@@ -223,7 +223,7 @@ describe('The Home Page', function () {
 
 你可以**存根**来自server端的JSON响应，这样你在前端依然可以看到正常的HTML/JS/CSS等。
 
-这意味着，不是重置数据库，或者繁琐地“条件制造和清理”我们想要的状态，你可以简单地强制服务器响应**你想要的任何**样子。通过这种方式，我们不仅没有阻止服务器和浏览器之间的状态同步，还可以防止我们在测试时可能出现的状态异变。这意味着我们的测试不会建立可能影响其他测试的状态来。
+这意味着，不是重置数据库，或者繁琐地“条件制造和清理”我们想要的状态，你可以强制服务器响应**你想要的任何**样子。通过这种方式，我们不仅没有阻止服务器和浏览器之间的状态同步，还可以防止我们在测试时可能出现的状态异变。这意味着我们的测试不会建立可能影响其他测试的状态来。
 
 另一个好处是，这使您能够**构建您的应用程序**而不需要存在后端服务了！您可以按照希望构建数据的方式构建它，甚至可以测试所有边缘情况，而无需服务器。
 

@@ -213,6 +213,6 @@ npx mochawesome-report-generator mochawesome.json
 
 这样会生成一个如下所示的漂亮的独立的HTML报告`mochawesome-report/mochawesome.html`。你可以看到，所有的测试结果，时间信息，甚至测试代码信息等：
 
-{% img /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
+{% imgTag /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
 
 请参考{% url 'Integrating Mochawesome reporter with Cypress' http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}了解更多信息。
