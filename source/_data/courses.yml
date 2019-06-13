@@ -6,25 +6,37 @@
   author: Brett Cassette
   authorTwitter: brettcassette
   company: egghead.io
+  language: English
+
+- title: Curso de End to End Testing con Cypress
+  url: https://platzi.com/cursos/testing-cypress/
+  author: Adrián Estrada
+  authorTwitter: edsadr
+  company: platzi.com
+  language: Spanish
 
 - title: Automated Software Testing with Cypress
   url: https://www.udemy.com/automated-testing-with-cypress/
   author: Kaniel Outis
   company: Udemy
+  language: English
 
 - title: Testing JavaScript
   url: https://testingjavascript.com/
   author: Kent C. Dodds
   authorTwitter: kentcdodds
+  language: English
 
 - title: End to End testing with Cypress
   url: https://egghead.io/courses/end-to-end-testing-with-cypress
   author: Andy van Slaars
   authorTwitter: avanslaars
   company: egghead.io
+  language: English
 
 - title: Test a React Todo App
   url: https://on.cypress.io/tutorials#Test-a-React-Todo-App
   author: Andy van Slaars
   authorTwitter: avanslaars
   company: Cypress.io
+  language: English

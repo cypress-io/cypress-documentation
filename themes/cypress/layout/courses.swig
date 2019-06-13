@@ -30,6 +30,9 @@
                   {% if course.company %}
                     {{course.company}}
                   {% endif %}
+                  {% if course.language %}
+                    {{course.language}}
+                  {% endif %}
                   </p>
               </li>
             {% endfor %}
