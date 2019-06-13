@@ -15,6 +15,13 @@
   company: platzi.com
   language: Spanish
 
+- title: "ng-conf '19: Effective Automated Testing with Cypress.io"
+  url: https://www.pluralsight.com/courses/ng-conf-19-testing-cypress-io
+  author: Joe Eames
+  authorTwitter: josepheames
+  company: pluralsight.com
+  language: English
+
 - title: Automated Software Testing with Cypress
   url: https://www.udemy.com/automated-testing-with-cypress/
   author: Kaniel Outis
