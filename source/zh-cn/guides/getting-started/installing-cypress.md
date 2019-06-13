@@ -115,6 +115,14 @@ yarn run cypress open
 
 After a moment, the Cypress Test Runner will launch.
 
+## Switching browser
+
+Cypress Test Runner attempts to find all compatible browsers on the user's machine. The drop down to select a different browser is in the top right corner of the GUI.
+
+{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+
+Read {% url "Launching Browsers" launching-browsers %} for more information how Cypress controls a real browser during end-to-end tests.
+
 ## Adding npm scripts
 
 While there's nothing wrong with writing out the full path to the Cypress executable each time, it's much easier and clearer to add Cypress commands to the `scripts` field in your `package.json` file.
