@@ -194,10 +194,11 @@ sidebar:
     applications: アプリケーション
     docker: Docker
     media: 広報
+    courses-media: Courses
+    blogs-media: ブログ
     talks-media: 講演
     podcasts-media: ポッドキャスト
     screencasts-media: スクリーンキャスト
-    blogs-media: ブログ
     workshop: Workshop
   faq:
     questions: FAQ

@@ -194,12 +194,12 @@ sidebar:
     applications: Applications
     docker: Docker
     media: Media
+    courses-media: Courses
+    blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
-    blogs-media: Blogs
     workshop: Workshop
-    courses-media: Courses
   faq:
     questions: FAQ
     general-questions-faq: General Questions
