@@ -1,6 +1,13 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order 
 # listed here, so place most recent courses first
+- title: Test Automation using Cypress
+  url: https://training.xebia.com/quality-test-automation/test-automation-using-cypress
+  author: Xebia
+  authorTwitter: XebiaAcademy
+  sourceName: Xebia Academy
+  sourceUrl: https://training.xebia.com
+
 - title: Test Production Ready Apps with Cypress
   url: https://egghead.io/courses/test-production-ready-apps-with-cypress
   author: Brett Cassette
