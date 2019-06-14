@@ -50,7 +50,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | ownProperty(*name*) {% aliases haveOwnProperty own.property %} | `expect('test').to.have.ownProperty('length')` |
 | ownPropertyDescriptor(*name*) {% aliases haveOwnPropertyDescriptor %} | `expect({a: 1}).to.have.ownPropertyDescriptor('a')` |
 | lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
-| match(*regexp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
+| match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
 | key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
 | throw(*constructor*) {% aliases throws Throw %} | `expect(fn).to.throw(Error)` |
@@ -124,6 +124,7 @@ These chainers are available when asserting about a DOM object.
 
 You will commonly use these chainers after using DOM commands like: {% url `cy.get()` get %}, {% url `cy.contains()` contains %}, etc.
 
+<!-- textlint-disable -->
 | Chainers | Assertion |
 | --- | --- |
 | attr(*name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
@@ -139,6 +140,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | hidden | `expect($el).to.be.hidden` |
 | selected | `expect($option).not.to.be.selected` |
 | checked | `expect($input).not.to.be.checked` |
+| focus[ed] | `expect($input).not.to.be.focused`<br>`expect($input).to.have.focus` |
 | enabled | `expect($input).to.be.enabled` |
 | disabled | `expect($input).to.be.disabled` |
 | empty | `expect($el).not.to.be.empty` |
@@ -146,6 +148,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | match(*selector*) | `expect($emptyEl).to.match(':empty')` |
 | contain(*text*) | `expect($el).to.contain('text')` |
 | descendants(*selector*) | `expect($el).to.have.descendants('div')` |
+<!-- textlint-enable -->
 
 # Sinon-Chai
 
@@ -239,6 +242,18 @@ cy.get('#loading').should('not.exist')
 ```javascript
 // retry until our radio is checked
 cy.get(':radio').should('be.checked')
+```
+
+## CSS
+
+```javascript
+// retry until .completed has matching css
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+```
+
+```javascript
+// retry until .accordion css have display: none
+cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
 # Should callback

@@ -32,7 +32,6 @@ Cypress的默认行为可以通过提供以下任何配置选项来修改。下�
 
 {% note success 核心概念 %}
 {% url '超时' introduction-to-cypress#Timeouts %}应该是个很好理解的核心概念。这里列出的默认值是有意义的。
-{% endnote %}
 
 选项 | 默认值 | 描述
 ----- | ---- | ----
@@ -179,7 +178,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 当您打开Cypress项目时，单击*设置*选项卡将向您显示已解析的配置。这使得理解和查看不同的值从何而来变得很容易。
 
-![resolve-configuration](https://user-images.githubusercontent.com/1271364/26941279-e7903108-4c4b-11e7-8731-be118e2c30eb.jpg)
+{% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
 # 注解
 
@@ -234,7 +233,7 @@ localhost:1234
 
 当Cypress阻塞向匹配主机发出的请求时，它将自动发送一个`503`状态码。为了方便起见，它还设置了一个`x-cypress-blacklist-host`头，以便您可以看到它匹配了哪个规则。
 
-{% img /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
+{% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
 
 ## modifyObstructiveCode
 

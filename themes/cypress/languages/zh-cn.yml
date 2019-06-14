@@ -30,7 +30,6 @@ sidebar:
     writing-your-first-test: 编写第一个测试
     testing-your-app: 测试你的应用程序
     interacting-with-elements: 页面元素交互
-    next-steps: 下一步
     core-concepts: 核心概念
     introduction-to-cypress: Cypress简介
     writing-and-organizing-tests: 编写和组织测试
@@ -48,33 +47,24 @@ sidebar:
     parallelization: 并行
     environment-variables: 环境变量
     launching-browsers: 启动浏览器
-    advanced-cypress: 高级
-    the-cypress-workflow: Cypress工作流程
-    coming-from-selenium: Cypress 对比 Selenium
     custom-commands: 自定义命令
     web-security: Web安全
-    how-cypress-really-works: How Cypress Really Works
-    talking-to-your-backend: Talking to Your Backend
-    spawning-processes: Spawning Processes
     references: 参考
     configuration: 配置
+    proxy-configuration: Proxy Configuration
     error-messages: 错误消息
     bundled-tools: 捆绑工具
     assertions: 断言
-    creating-fixtures: 创建夹具
     best-practices: 最佳实践
-    anti-patterns: Anti-patterns
     trade-offs: 一些取舍
-    contributing: 贡献
     changelog: 更新日志
     roadmap: 路线图
-    cypress-api-design: API Design
-    all-videos: Videos
     tooling: 工具
     intelligent-code-completion: 代码自动填充
     plugins-guide: 插件
     reporters: Reporters
     typescript-support: TypeScript
+    visual-testing: Visual Testing
     module-api: 模块API
     retry-ability: 重试机制
   api:
@@ -179,6 +169,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    iscy: isCy
     custom-commands: Commands
     cookies: Cookies
     dom: dom
@@ -208,7 +199,6 @@ sidebar:
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     blogs-media: Blogs
-    extensions: Extensions
     workshop: Workshop
   faq:
     questions: FAQ

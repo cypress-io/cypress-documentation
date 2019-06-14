@@ -309,7 +309,7 @@ To work around the need to reference elements, Cypress has a feature {% url 'kno
 
 ### Using {% url `.then()` then %} To Act On A Subject
 
-Want to jump into the command flow and get your hands on the subject directly? No problem, simply add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
+Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
 
 If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a simple return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
 
