@@ -47,7 +47,7 @@ In other words, you can have confidence your server is sending the correct data 
 - Since no responses are stubbed, that means **your server has to actually send real responses**. This can be problematic because you may have to *seed a database* before every test to generate state. For instance, if you were testing *pagination*, you'd have to seed the database with every object that it takes to replicate this feature in your application.
 - Since real responses go through every single layer of your server (controllers, models, views, etc) the tests are often **much slower** than stubbed responses.
 
-If you are writing a traditional server-side application where most of the responses are `HTML` you will likely have few stubbed responses. However, most modern applications that serve `JSON` can take advantage of stubbing.
+If you are writing a traditional server-side application where most of the responses are HTML you will likely have few stubbed responses. However, most modern applications that serve JSON can take advantage of stubbing.
 
 {% note success Benefits %}
 - Guaranteed to work in production
@@ -113,7 +113,7 @@ See {% url '`cy.server()` options' server#Options %} and {% url '`cy.route()` op
 
 Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it's stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the moment the request is made and another snapshot at the moment the response returns.
 
-![snapshot_request](https://user-images.githubusercontent.com/1271364/26947393-930508b0-4c60-11e7-90a0-4d42ee3f24c0.gif)
+{% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
 
 By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
 
@@ -179,7 +179,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 /cypress/fixtures/images/birds.png
 ```
 
-To access the fixtures nested within the `images` folder, simply include the folder in your {% url `cy.fixture()` fixture %} command.
+To access the fixtures nested within the `images` folder, include the folder in your {% url `cy.fixture()` fixture %} command.
 
 ```javascript
 cy.fixture('images/dogs.png') //returns dogs.png as Base64

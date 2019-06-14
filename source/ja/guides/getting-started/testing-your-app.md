@@ -1,5 +1,5 @@
 ---
-title: Testing Your App
+title: アプリをテストする
 ---
 
 {% note info %}
@@ -221,7 +221,7 @@ Another valid approach opposed to seeding and talking to your server is to just 
 
 While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
 
-This means that instead of resetting the database, or seeding it with the state we want, you can simply just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
+This means that instead of resetting the database, or seeding it with the state we want, you can just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
 
 Another upside is that this enables you to **build out your application** without needing the *contract* of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
 

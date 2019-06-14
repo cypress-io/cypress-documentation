@@ -1,6 +1,5 @@
 ---
 title: next
-
 ---
 
 Get the immediately following sibling of each DOM element within a set of DOM elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Find the element next to `.second`***
+### Find the element next to `.second`
 
 ```html
 <ul>
@@ -73,7 +72,7 @@ cy.get('.second').next()
 
 ## Selector
 
-***Find the very next sibling of each li. Keep only the ones with a class `selected`.***
+### Find the very next sibling of each li. Keep only the ones with a class `selected`
 
 ```html
 <ul>
@@ -113,11 +112,11 @@ cy.get('.left-nav').find('li.active').next()
 
 The commands above will display in the Command Log as:
 
-![Command Log next](/img/api/next/find-next-element-when-testing-dom.png)
+{% imgTag /img/api/next/find-next-element-when-testing-dom.png "Command Log next" %}
 
 When clicking on `next` within the command log, the console outputs the following:
 
-![Console log next](/img/api/next/elements-next-command-applied-to.png)
+{% imgTag /img/api/next/elements-next-command-applied-to.png "Console Log next" %}
 
 # See also
 

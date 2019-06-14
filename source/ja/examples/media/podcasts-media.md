@@ -1,5 +1,5 @@
 ---
-title: Podcasts
+title: ポッドキャスト
 containerClass: examples
 layout: media
 dataType: podcasts

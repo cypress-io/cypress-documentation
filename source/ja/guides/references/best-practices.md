@@ -1,5 +1,5 @@
 ---
-title: Best Practices
+title: ベストプラクティス
 layout: toc-top
 ---
 
@@ -196,7 +196,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 
 Sometimes actions that you take in your application **may** affect another 3rd party application. These situations are not that common, but it is possible. Imagine your application integrates with GitHub and by using your application you can change data inside of GitHub.
 
-After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can simply use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
+After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
 
 This avoids ever needing to touch the UI of another application.
 
@@ -223,7 +223,7 @@ Nevertheless, if you **did** want to write a test in Cypress, you already have t
 
 You only need to do one thing to know whether you've coupled your tests incorrectly,  or if one test is relying on the state of a previous one.
 
-Simply put an `.only` on the test and refresh the browser.
+Put an `.only` on the test and refresh the browser.
 
 If this test can run **by itself** and pass - congratulations you have written a good test.
 
@@ -358,7 +358,7 @@ Why you shouldn't do this in Cypress:
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large test
 - Cypress runs a series of async lifecycle events that reset state between tests
-- Resetting tests is much slower than simply adding more assertions
+- Resetting tests is much slower than adding more assertions
 
 It is common for tests in Cypress to issue 30+ commands. Because nearly every command has a default assertion (and can therefore fail), even by limiting your assertions you're not saving yourself anything because **any single command could implicitly fail**.
 
@@ -514,7 +514,7 @@ cy.wait(5000)     // <--- this is unnecessary
 
 Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy.get()` get %} automatically retries until the table's `tr` has a length of 2.
 
-Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to simply describe the state of your application without having to worry about when it gets there.
+Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to  describe the state of your application without having to worry about when it gets there.
 
 ```javascript
 cy.server()

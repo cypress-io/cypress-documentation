@@ -1,5 +1,5 @@
 ---
-title: Blogs
+title: ブログ
 containerClass: examples
 layout: media
 dataType: blogs

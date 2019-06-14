@@ -57,7 +57,7 @@ npm start
 
 Visit [http://localhost:2222/](http://localhost:2222/).
 
-**Note:** If you need to debug the documentation build step, run it this way: 
+**Note:** If you need to debug the documentation build step, run it this way:
 
 ```
 DEBUG=docs npm run build
@@ -81,6 +81,14 @@ Add an associated image with the example within the [`source/img/examples`](/sou
 
 ```md
 {% imgTag /img/examples/name-of-file.jpg "alt text describing img" %}
+```
+
+### Using images
+
+If you are starting a new page and want to add images, add a new folder to "themes/cypress/source/img". For example when adding a new "Code Coverage" page to "guides/tooling", I have created new folder "themes/cypress/source/img/guides/code-coverage" and copied an image there called "coverage-object.png". From the page itself, I can include the image using `imgTag`.
+
+```md
+{% imgTag /img/guides/code-coverage/coverage-object.png "Code coverage object" %}
 ```
 
 ### Adding Plugins
@@ -137,6 +145,7 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 
 - **Summary** - If it is a large release, you may write a summary explaining what the point of this release is (mostly used for breaking releases)
 - **Breaking Changes** - The users current implementation of Cypress may break after updating.
+- **Deprecations** - Features have been deprecated, but will not break after updating.
 - **Features** - A new feature
 - **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
 - **Misc** - Not a feature or bugfix, but work that was done. May be internal work that was done and associated with an issue

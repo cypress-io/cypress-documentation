@@ -10,7 +10,6 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 Status               | Feature                            |  Issue            | PR
 ---------------------| -----------------------------------|-------------------|---
-*Pending release*    | **Better corporate proxy support** |  {% issue 1469 %} | {% PR 3531 %}
 *Needs review*       | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}
 *Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}
 *Work in progress*   | **Electron upgrade**               |  {% issue 3568 %} | {% PR 3569 %}
@@ -20,7 +19,6 @@ Status               | Feature                            |  Issue            | 
 *Work in progress*   | **Cross browser support**          |  {% issue 310 %}  |
 *Partially complete* | **Full network layer stubbing**    |  {% issue 687 %}  |
 *Proposal complete*  | **Lifecycle events**               |  {% issue 686 %}  |
-*No proposal*        | **Screenshot Diffing**             |  {% issue 495  %} |
 
 ## Dashboard Service
 

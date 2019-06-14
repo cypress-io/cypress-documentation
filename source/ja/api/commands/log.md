@@ -78,11 +78,11 @@ cy.log('another message', ['one', 'two', 'three'])
 
 The commands above will display in the Command Log as:
 
-![Command Log log](/img/api/log/custom-command-log-with-any-message.png)
+{% imgTag /img/api/log/custom-command-log-with-any-message.png "Command Log log" %}
 
 When clicking on `log` within the command log, the console outputs the following:
 
-![Console log log](/img/api/log/console-shows-logs-message-and-any-arguments.png)
+{% imgTag /img/api/log/console-shows-logs-message-and-any-arguments.png "Console Log log" %}
 
 # See also
 

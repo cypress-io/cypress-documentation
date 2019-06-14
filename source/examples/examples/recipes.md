@@ -14,12 +14,13 @@ Recipe | Category | Description
 {% urlHash 'HTML Web Forms' HTML-Web-Forms %} | Logging In | Log in with a basic HTML form
 {% urlHash 'XHR Web Forms' XHR-Web-Forms %} | Logging In | Log in using an XHR
 {% urlHash 'CSRF Tokens' CSRF-Tokens %} | Logging In | Log in with a required CSRF token
+{% url 'Json Web Tokens' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__jwt %} | Logging In | Log in using JWT
 {% urlHash 'Tab Handling and Links' Tab-Handling-and-Links %} | Testing the DOM | Links that open in a new tab
 {% urlHash 'Hover and Hidden Elements' Hover-and-Hidden-Elements %} | Testing the DOM | Test hidden elements requiring hover
 {% urlHash 'Form Interactions' Form-Interactions %} | Testing the DOM | Test form elements like input type `range`
 {% urlHash 'Drag and Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
-{% urlHash 'TypeScript with Browserify' TypeScript-with-Browserify %} | Preprocessors | Add TypeScript support with browserify
-{% urlHash 'TypeScript with Webpack' TypeScript-with-Webpack %} | Preprocessors | Add TypeScript support with webpack
+{% urlHash 'TypeScript with Browserify' TypeScript-with-Browserify %} | Preprocessors | Add TypeScript support with Browserify
+{% urlHash 'TypeScript with webpack' TypeScript-with-webpack %} | Preprocessors | Add TypeScript support with webpack
 {% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
 {% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
 {% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
@@ -36,7 +37,7 @@ Recipe | Category | Description
 {% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
 {% urlHash 'Seeding your Database in Node' Seeding-your-Database-in-Node %} | Server Communication | Seed your database with test data
 {% urlHash 'Environment Variables' Environment-Variables %} | Server Communication | Pass environment variables to your tests
-{% urlHash 'Cypress CircleCI Orb' Cypress-CircleCI-Orb %} | Continuous Integration | Install, cache and run Cypress.io tests on CircleCI with minimal configuration.
+{% urlHash 'Cypress CircleCI Orb' Cypress-CircleCI-Orb %} | Continuous Integration | Install, cache and run Cypress tests on CircleCI with minimal configuration.
 
 ## [Node Modules](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules)
 
@@ -49,7 +50,7 @@ Recipe | Category | Description
 
 - Login when authentication is done on a 3rd party server.
 - Parse tokens using {% url `cy.request()` request %}.
-- Manually set tokens on local storage.
+- Manually set tokens on localStorage.
 - Map external hosts and point to local servers.
 
 ## [HTML Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms)
@@ -109,7 +110,7 @@ Get around the lack of a `.hover()` command.
 
 - Use {% url "`@cypress/browserify-preprocessor`" https://github.com/cypress-io/cypress-browserify-preprocessor %} to write Cypress tests in TypeScript
 
-## [TypeScript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
+## [TypeScript with webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
 
 - Use {% url "`@cypress/webpack-preprocessor`" https://github.com/cypress-io/cypress-webpack-preprocessor %} to write Cypress tests in TypeScript
 - Lint TypeScript spec code against Cypress type definitions
@@ -163,7 +164,7 @@ Get around the lack of a `.hover()` command.
 
 ## [Stubbing methods called on `window`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window)
 
-- Use {% url "`cy.spy()`" spy %} to test `window.open` behavior.
+- Use {% url "`cy.stub()`" stub %} to test `window.open` behavior.
 
 ## [Stubbing Google Analytics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics)
 

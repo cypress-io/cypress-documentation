@@ -1,6 +1,5 @@
 ---
 title: title
-
 ---
 
 Get the `document.title` property of the page that is currently active.
@@ -39,7 +38,7 @@ Option | Default | Description
 
 ## No Args
 
-***Assert that the document's title is "My Awesome Application"***
+### Assert that the document's title is "My Awesome Application"
 
 ```javascript
 cy.title().should('eq', 'My Awesome Application')
@@ -69,11 +68,15 @@ cy.title().should('include', 'New User')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/title/test-title-of-website-or-webapp.png)
+{% imgTag /img/api/title/test-title-of-website-or-webapp.png "Command Log title" %}
 
 When clicking on `title` within the command log, the console outputs the following:
 
-![Console Log](/img/api/title/see-the-string-yielded-in-the-console.png)
+{% imgTag /img/api/title/see-the-string-yielded-in-the-console.png "Console Log title" %}
+
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `cy.title()` command added
+{% endhistory %}
 
 # See also
 

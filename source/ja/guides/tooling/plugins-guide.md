@@ -1,5 +1,5 @@
 ---
-title: Plugins
+title: プラグイン
 ---
 
 Plugins enable you to tap into, modify, or extend the internal behavior of Cypress.

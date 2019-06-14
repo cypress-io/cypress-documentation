@@ -1,19 +1,18 @@
 ---
-title: clearCookie
-
+title: clearCookies
 ---
 
-Clear a specific browser cookie.
+Clear all browser cookies for current domain and subdomain.
 
 {% note warning %}
-Cypress automatically clears all cookies *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear all cookies inside a single test.
+Cypress automatically clears all cookies *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear a specific cookie inside a single test.
 {% endnote %}
 
 # Syntax
 
 ```javascript
-cy.clearCookie(name)
-cy.clearCookie(name, options)
+cy.clearCookies()
+cy.clearCookies(options)
 ```
 
 ## Usage
@@ -21,41 +20,37 @@ cy.clearCookie(name, options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.clearCookie('authId')    // clear the 'authId' cookie
+cy.clearCookies()     // clear all cookies
 ```
 
 ## Arguments
 
-**{% fa fa-angle-right %} name** ***(String)***
-
-The name of the cookie to be cleared.
-
 **{% fa fa-angle-right %} options** ***(Object)***
 
-Pass in an options object to change the default behavior of `cy.clearCookie()`.
+Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
-`timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.clearCookie %}
+`timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.clearCookies %}
 
 ## Yields {% helper_icon yields %}
 
-{% yields null cy.clearCookie %}
+{% yields null cy.clearCookies %}
 
 # Examples
 
 ## No Args
 
-***Clear a cookie after logging in***
+### Clear all cookies after logging in
 
-In this example, on first login, our server sends us back a session cookie. After invoking `cy.clearCookie('session_id')`, this clears the session cookie. Then upon navigating to an unauthorized page, we asset that our server has redirected us back to login.
+In this example, on first login our server sends us back a session cookie. After invoking `cy.clearCookies()` this clears the session cookie, and upon navigating to an unauthorized page, our server should have redirected us back to login.
 
 ```javascript
 // assume we just logged in
 cy.contains('Login').click()
 cy.url().should('include', 'profile')
-cy.clearCookie('session_id')
+cy.clearCookies()
 cy.visit('/dashboard') // we should be redirected back to login
 cy.url().should('include', 'login')
 ```
@@ -64,38 +59,37 @@ cy.url().should('include', 'login')
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements parent cy.clearCookie %}
+{% requirements parent cy.clearCookies %}
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions none cy.clearCookie %}
+{% assertions none cy.clearCookies %}
 
 ## Timeouts {% helper_icon timeout %}
 
-{% timeouts automation cy.clearCookie %}
+{% timeouts automation cy.clearCookies %}
 
 # Command Log
 
-***Clearing a cookie after setting a cookie***
+***Clear cookies after getting cookies***
 
 ```javascript
-cy.setCookie('foo', 'bar')
-cy.clearCookie('foo')
-cy.getCookie('foo').should('be.null')
+cy.getCookies().should('have.length', 1)
+cy.clearCookies()
+cy.getCookies().should('be.empty')
 ```
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/clearcookie/clear-cookie-in-browser-tests.png)
+{% imgTag /img/api/clearcookies/clear-all-cookies-in-cypress-tests.png "Command Log" %}
 
-When clicking on `clearCookie` within the command log, the console outputs the following:
+When clicking on `clearCookies` within the command log, the console outputs the following:
 
-![Console Log](/img/api/clearcookie/cleared-cookie-shown-in-console.png)
+{% imgTag /img/api/clearcookies/inspect-cleared-cookies-in-console.png "Console Log" %}
 
 # See also
 
-- {% url `cy.clearCookies()` clearcookies %}
-- {% url `cy.clearLocalStorage()` clearlocalstorage %}
+- {% url `cy.clearCookie()` clearcookie %}
 - {% url 'Cypress Cookies API' cookies %}
 - {% url `cy.getCookie()` getcookie %}
 - {% url `cy.getCookies()` getcookies %}

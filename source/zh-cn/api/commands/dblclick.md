@@ -1,6 +1,5 @@
 ---
 title: dblclick
-
 ---
 
 Double-click a DOM element.
@@ -48,7 +47,7 @@ Option | Default | Description
 
 ## No Args
 
-***Double click an anchor link***
+### Double click an anchor link
 
 ```javascript
 cy.get('a#nav1').dblclick() // yields the <a>
@@ -58,7 +57,7 @@ cy.get('a#nav1').dblclick() // yields the <a>
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.dblclick()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
@@ -86,11 +85,11 @@ cy.get('[data-schedule-id="4529114"]:first').dblclick()
 
 The commands above will display in the Command Log as:
 
-![Command Log dblclick](/img/api/dblclick/double-click-in-testing.png)
+{% imgTag /img/api/dblclick/double-click-in-testing.png "Command Log dblclick" %}
 
 When clicking on `dblclick` within the command log, the console outputs the following:
 
-![console.log dblclick](/img/api/dblclick/element-double-clicked-on.png)
+{% imgTag /img/api/dblclick/element-double-clicked-on.png "console.log dblclick" %}
 
 # See also
 
