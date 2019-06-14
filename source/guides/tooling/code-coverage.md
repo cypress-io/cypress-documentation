@@ -271,7 +271,7 @@ The produced HTML report shows 99% code coverage
 
 {% imgTag /img/guides/code-coverage/almost-100.png "99 percent code coverage" %}
 
-Every source file but 1 is covered at 100%. We can have great confidence in our application, and safely refactor the code knowing that we have a robust set of end-to-end tests. 
+Every source file but 1 is covered at 100%. We can have great confidence in our application, and safely refactor the code knowing that we have a robust set of end-to-end tests.
 
 If possible, we advise implementing {% url 'visual testing' visual-testing %} in addition to Cypress functional tests to avoid CSS and visual regressions.
 
@@ -352,3 +352,4 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 - {% url "Combined End-to-end and Unit Test Coverage" https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/ %}
 - {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
 - {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
+- {% url "Code coverage using webpack-dev-server example" https://github.com/bahmutov/code-coverage-webpack-dev-server %}

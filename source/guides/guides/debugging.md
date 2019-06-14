@@ -301,6 +301,34 @@ cy.now('task', 123)
 The `cy.now()` command is an internal command and may change in the future.
 {% endnote %}
 
+## Hack the installed Cypress code
+
+The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command. 
+
+For example, on a Mac:
+
+```shell
+npx cypress cache path
+/Users/jane/Library/Caches/Cypress
+```
+
+Second, open the source code at the following path in any code editor. Make sure to substitute `3.3.1` for the desired version of the Test Runner you want to edit.
+
+```text
+/Users/jane/Library/Caches/Cypress/3.3.1/Cypress.app/Contents/Resources/app/packages/
+```
+
+You can change anything in the JavaScript code:
+
+{% imgTag /img/guides/source-code.png "Source code of the Test Runner in a text editor" %}
+
+When finished, if necessary, remove the edited Test Runner version and reinstall the Cypress official version to get back to the official released code.
+
+```shell
+rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
+npm install cypress@3.3.1
+```
+
 ## Additional information
 
 ### Write command log to the terminal

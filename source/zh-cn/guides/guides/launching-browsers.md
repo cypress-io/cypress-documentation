@@ -16,7 +16,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
 
-Cypress automatically detects available browsers on your OS.
+Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
+
+{% imgTag /img/guides/select-browser.png "Select a different browser" %}
 
 ## Electron Browser
 
