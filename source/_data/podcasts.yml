@@ -1,5 +1,13 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress.io Hot Seat Questions with Gleb Bahmutov"
+    url: https://www.joecolantonio.com/testtalks/256-gleb-bahmutov/
+    sourceName: TestTalks
+    sourceUrl: https://joecolantonio.com/testtalks/
+    date: June 9, 2019
+    author: Joe Calantonio and Gleb Bahmutov
+    img: /img/examples/cypress-hot-sear-questions-gleb-bahmutov-test-talks.jpg
+
   - title: "This.JavaScript: State of Testing"
     url: https://www.youtube.com/watch?v=iycQpCFBASE
     sourceName: This Dot
@@ -85,7 +93,7 @@ large:
     sourceName: Adventures in Angular
     sourceUrl: https://devchat.tv/adv-in-angular
     date: Sep 12, 2017
-    author: Gleb Bahmutov
+    author: Joe Eames, Lukas Ruebbelke, Charles Max Wood, and Gleb Bahmutov
     img: /img/examples/adventures-in-angular.jpg
 
   - title: Test all the things with Cypress
