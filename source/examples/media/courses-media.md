@@ -1,7 +1,7 @@
 ---
 title: Courses
 containerClass: examples
-layout: courses
+layout: media
 dataType: courses
 ---
 
