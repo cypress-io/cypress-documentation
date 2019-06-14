@@ -41,7 +41,7 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 
 ## Types for custom commands
 
-When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find the simplest implementation of Cypress and typescript in this {% url "repo example here" https://github.com/omerose/cypress-support %}.
+When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find the simplest implementation of Cypress and TypeScript in this {% url "repo example here" https://github.com/omerose/cypress-support %}.
 
 ## TODO MVC Example Repo
 You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
