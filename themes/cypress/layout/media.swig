@@ -10,9 +10,10 @@
               <a href="https://github.com/cypress-io/cypress-documentation/edit/develop/source/_data/{{ page.dataType }}.yml" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
             </header>
             <div class="article-content" itemprop="articleBody">
-              {% if site.data.courses %}
-                <ul>
-                  {% for course in site.data[page.dataType] %}
+              {% if page.dataType === 'courses' %}
+                <p>Online courses from that teach end-to-end testing with Cypress over multiple videos. <strong>Note:</strong> Some of the courses require payment from their website.</p>
+                <ul class="courses-list">
+                  {% for course in site.data.courses %}
                     <li>
                       <h3>
                         <a href="{{course.url}}" target="_blank" rel="noopener noreferrer">{{ course.title }}</a>

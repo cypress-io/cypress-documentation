@@ -21,13 +21,12 @@
   author: Joe Eames
   authorTwitter: josepheames
   company: pluralsight.com
-  language: English
 
 - title: End to End automation testing with Cypress
   url: https://www.udemy.com/e2e-cypress/
   author: Karthik KK
-  company: Udemy
-  language: English
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
 
 - title: Automated Software Testing with Cypress
   url: https://www.udemy.com/automated-testing-with-cypress/
