@@ -1,9 +1,9 @@
 ---
-title: Writing and Organizing Tests
+title: 编写和组织测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How to organize your test and support files.
 - What languages are supported in your test files.

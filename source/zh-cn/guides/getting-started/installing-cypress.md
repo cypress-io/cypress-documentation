@@ -3,7 +3,7 @@ title: 安装Cypress
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将学到
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - 如何通过`npm`来安装Cypress.
 - 如何通过直接下载来安装Cypress.

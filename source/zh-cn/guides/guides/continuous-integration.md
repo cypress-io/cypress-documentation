@@ -1,9 +1,9 @@
 ---
-title: Continuous Integration
+title: 持续集成
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How to run Cypress tests in Continuous Integration
 - How to configure Cypress in various CI Providers

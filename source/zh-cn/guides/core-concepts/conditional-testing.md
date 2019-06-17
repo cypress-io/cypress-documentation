@@ -1,9 +1,9 @@
 ---
-title: Conditional Testing
+title: 条件测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - When conditional testing is a good choice for your tests
 - Situations where conditional testing is impossible
