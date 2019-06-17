@@ -1,9 +1,9 @@
 ---
-title: Testing Your App
+title: 测试你的应用程序
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - The relationship between Cypress and your back-end
 - How to configure Cypress to fit your app

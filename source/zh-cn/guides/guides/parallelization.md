@@ -1,9 +1,9 @@
 ---
-title: Parallelization
+title: 并行
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How to parallelize test runs
 - How to group test runs

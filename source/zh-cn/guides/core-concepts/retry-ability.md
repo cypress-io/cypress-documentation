@@ -1,5 +1,5 @@
 ---
-title: Retry-ability
+title: 重试机制
 ---
 
 {% note info %}

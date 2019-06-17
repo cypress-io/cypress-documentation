@@ -1,9 +1,9 @@
 ---
-title: Introduction to Cypress
+title: Cypress简介
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How Cypress queries the DOM
 - How Cypress manages subjects and chains of commands

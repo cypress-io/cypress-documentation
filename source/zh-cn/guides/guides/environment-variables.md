@@ -1,5 +1,5 @@
 ---
-title: Environment Variables
+title: 环境变量
 ---
 
 Environment variables are useful when:

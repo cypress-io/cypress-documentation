@@ -1,9 +1,9 @@
 ---
-title: Debugging
+title: 调试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
 - How Cypress embraces the standard Developer Tools

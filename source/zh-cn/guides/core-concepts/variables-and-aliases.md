@@ -1,9 +1,9 @@
 ---
-title: Variables and Aliases
+title: 变量和别名
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How to deal with async commands
 - What Aliases are and how they simplify your code

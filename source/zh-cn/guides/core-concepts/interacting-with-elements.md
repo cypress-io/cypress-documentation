@@ -1,9 +1,9 @@
 ---
-title: Interacting with Elements
+title: 页面元素交互
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How Cypress calculates visibility
 - How Cypress ensures elements are actionable
