@@ -301,9 +301,78 @@ cy.now('task', 123)
 The `cy.now()` command is an internal command and may change in the future.
 {% endnote %}
 
+## Run the Cypress application by itself
+
+Cypress comes with npm CLI module that parses the arguments, starts Xvfb server if necessary, and then opens the Test Runner application built on top of {% url "Electron.js" https://electronjs.org/ %}. To see the raw output from the Test Runner application itself, you can launch it without the npm CLI module.
+
+First, find where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
+
+For example, on Linux machine:
+
+```shell
+npx cypress cache path
+/root/.cache/Cypress
+```
+
+Second, try a smoke test that verifies that the application has all its required dependencies present on the host machine:
+
+```shell
+/root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+101
+```
+
+If there is a missing dependency, the application should print an error message. You can see the Electron own verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
+
+```shell
+ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+[809:0617/151243.281369:ERROR:bus.cc(395)] Failed to connect to the bus: Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory
+101
+```
+
+If the smoke test fails to execute, check if a shared library is missing (a common problem on Linux machines without all Cypress dependencies present)
+
+```shell
+ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
+	linux-vdso.so.1 (0x00007ffe9eda0000)
+	libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
+	libgtk-3.so.0 => not found
+	libgdk-3.so.0 => not found
+  ...
+```
+
+**Tip:** use {% url "Cypress Docker image" docker %} or install dependencies by copying them from one of our official Docker images.
+
+**Note:** verbose Electron logging might show warnings that still allow Cypress to work normally. For example, Cypress GUI opens normally despite the scary output below:
+
+```shell
+ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
+[475:0617/150421.326986:ERROR:bus.cc(395)] Failed to connect to the bus: Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory
+[475:0617/150425.061526:ERROR:bus.cc(395)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[475:0617/150425.079819:ERROR:bus.cc(395)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[475:0617/150425.371013:INFO:CONSOLE(73292)] "%cDownload the React DevTools for a better development experience: https://fb.me/react-devtools
+You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
+```
+
+You can also see verbose Cypress logs when running the Test Runner binary
+
+```shell
+DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+cypress:ts Running without ts-node hook in environment "production" +0ms
+cypress:server:cypress starting cypress with argv [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
+cypress:server:args argv array: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
+cypress:server:args argv parsed: { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server' } +7ms
+cypress:server:args options { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server', config: {} } +2ms
+cypress:server:args argv options: { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server', config: {}, pong: 101 } +1ms
+cypress:server:appdata path: /root/.config/Cypress/cy/production +0ms
+cypress:server:cypress starting in mode smokeTest +356ms
+101
+cypress:server:cypress about to exit with code 0 +4ms
+```
+
 ## Hack the installed Cypress code
 
-The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command. 
+The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
 
 For example, on a Mac:
 
