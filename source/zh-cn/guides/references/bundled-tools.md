@@ -1,17 +1,16 @@
 ---
-title: Bundled Tools
+title: 捆绑的工具
 ---
 
 {% note info %}
-Cypress relies on many best-of-breed open source testing libraries to lend stability and familiarity to the platform from the get-go. If you've been testing in JavaScript, you'll recognize many old friends in this list. Understand how we exploit them and hit the ground running with Cypress!
-
+Cypress依赖于许多同类最佳的开源测试库，从一开始就为平台提供稳定性和熟悉感。如果你一直在使用JavaScript进行测试，那么你将在此列表中识别出许多老朋友。了解我们如何利用它们并使其与Cypress通力配合的！
 {% endnote %}
 
-# Mocha
+# 1. Mocha
 
 {% fa fa-github %} {% url http://mochajs.org/ %}
 
-Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both integration and unit testing. All of the tests you'll be writing sit on the fundamental harness Mocha provides, namely:
+Cypress采用了Mocha的`bdd`语法，因为它完美地适应了集成和单元测试。你将要编写的所有测试都依赖于Mocha提供的基本功能，即：
 
 * {% url '`describe()`' http://mochajs.org/#bdd %}
 * {% url '`context()`' http://mochajs.org/#bdd %}
@@ -23,49 +22,50 @@ Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both integra
 * {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
 * {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
 
-Additionally, Mocha gives us excellent {% url '`async` support' http://mochajs.org/#asynchronous-code %}. Cypress has extended Mocha, sanding off the rough edges, weird edge cases, bugs, and error messages. These fixes are all completely transparent.
+另外，Mocha提供了优秀的{% url '`async` 支持' http://mochajs.org/#asynchronous-code %}。Cypress扩展了Mocha，打磨了其粗糙的边缘，奇怪的边缘情况，bugs和错误消息。这些修复都是完全透明和简单易懂的。
 
 {% note info %}
-{% url "Check out our guide to writing and organizing tests." writing-and-organizing-tests %}
+{% url "请参阅编写和组织测试指南" writing-and-organizing-tests %}
 {% endnote %}
 
-# Chai
+# 2. Chai
 
 {% fa fa-github %} {% url http://chaijs.com/ %}
 
-While Mocha provides us a framework to structure our tests, Chai gives us the ability to easily write assertions. Chai gives us readable assertions with excellent error messages. Cypress extends this, fixes several common pitfalls, and wraps Chai's DSL using {% url 'subjects' introduction-to-cypress#Assertions %} and the {% url `.should()` should %} command.
+Mocha提供了我们组织用例的框架，Chai则提供了可以轻易书写断言的能力。Chai给了我们带有优秀错误信息的可读性强的断言。Cypress扩展了它，修复了一些常见陷阱，使用{% url 'subjects' introduction-to-cypress#Assertions %}和{% url `.should()` should %}指令封装了它的DSL。
 
-> {% fa fa-chevron-right  %} {% url "List of available Chai Assertions" assertions#Chai %}
+> {% fa fa-chevron-right  %} {% url "可用的Chai断言列表" assertions#Chai %}
 
-# Chai-jQuery
+# 3. Chai-jQuery
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai-jquery %}
 
-When writing integration tests, you will likely work a lot with the DOM. Cypress brings in Chai-jQuery, which automatically extends Chai with specific jQuery chainer methods.
+编写集成测试时，你可能会在DOM进行大量的工作。Cypress引入了Chai-jQuery，它使用特定的jQuery chainer方法自动扩展Chai。
 
-> {% fa fa-chevron-right  %} {% url "List of available Chai-jQuery Assertions" assertions#Chai-jQuery %}
+> {% fa fa-chevron-right  %} {% url "可用的Chai-jQuery断言列表" assertions#Chai-jQuery %}
 
-# Sinon.JS
+# 4. Sinon.JS
 
 {% fa fa-github %} {% url http://sinonjs.org/ %}
 
-When writing unit tests, or even in integration-like tests, you often need to ability to stub and spy methods. Cypress includes two methods, {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} that return Sinon stubs and spies, respectively.
+
+在编写单元测试时，甚至在类似集成的测试中，你经常需要能够stub和spy的方法。Cypress包括两个方法，{% url `cy.stub()` stub %} and {% url `cy.spy()` spy %}分别返回Sinon stubs和spies。
 
 {% note info %}
-{% url "Check out our guide for working with spies, stubs, and clocks." stubs-spies-and-clocks %}
+{% url "参阅我们关于spies，stubs和clocks的使用指南" stubs-spies-and-clocks %}
 {% endnote %}
 
-# Sinon-Chai
+# 5. Sinon-Chai
 
 {% fa fa-github %} {% url https://github.com/cypress-io/sinon-chai %}
 
-When working with `stubs` or `spies` you'll regularly want to use those when writing Chai assertions. Cypress bundles in Sinon-Chai which extends Chai allowing you to {% url 'write assertions' https://github.com/cypress-io/sinon-chai %} about `stubs` and `spies`.
+当使用`stubs`或`spies`时，你可能经常要用它们来写Chai断言。Cypress捆绑了Sinon-Chai，它扩展了Chai，允许你编写关于`stubs` and `spies`的{% url '断言' https://github.com/cypress-io/sinon-chai %}。
 
-> {% fa fa-chevron-right  %} {% url "List of available Sinon-Chai Assertions" assertions#Sinon-Chai %}
+> {% fa fa-chevron-right  %} {% url "可用的Sinon-Chai断言列表" assertions#Sinon-Chai %}
 
-# Other Library Utilities
+# 6. 其他基本库
 
-Cypress also bundles the following tools on the `Cypress` object. These can be used anywhere inside of your tests.
+Cypress也在`Cypress`对象上绑定了下列工具，可以用在测试的任何地方：
 
 - {% url `Cypress._` _ %} (lodash)
 - {% url `Cypress.$` $ %} (jQuery)
