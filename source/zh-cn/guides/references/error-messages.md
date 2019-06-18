@@ -49,7 +49,7 @@ it('uses modules', function () {
 
 在测试代码之前加载安装文件仍然有用。如果您正在设置Cypress缺省值或使用自定义Cypress命令，您可以使用{% url `supportFile` configuration#Folders-Files %}配置选项，而不需要在每个测试文件中使用import/require这些缺省值/命令。
 
-要在测试文件之前包含代码，请设置{% url `supportFile` configuration#Folders-Files %}路径。默认情况下，{% url `supportFile` configuration#Folders-Files %}被设置来查找以下文件之一:
+要在测试文件之前包含代码，请设置{% url `supportFile` configuration#Folders-Files %}路径。默认情况下，{% url `supportFile` configuration#Folders-Files %}被设置来查找以下文件之一：
 
 * `cypress/support/index.js`
 * `cypress/support/index.coffee`
@@ -78,7 +78,9 @@ describe('Some Tests', function () {
 
   context('some nested tests', function () {
     // 哎呀，您忘记在这里写it(…)了!
-    // 下面的cypress命令在测试之外运行，cypress抛出一个错误
+    // 下面的cypress命令
+    // 在测试之外运行，
+    // cypress抛出一个错误
     cy.visit('http://localhost:8080')
     cy.get('h1').should('contain', 'todos')
   })
@@ -113,8 +115,8 @@ Cypress错误是因为它不能与“死”元素交互——就像一个真正�
 
 ```javascript
 $('button').click(() => {
-  // 当<button>被点击，
-  // 将按钮从DOM中移除
+  // when the <button> is clicked
+  // we remove the button from the DOM
   $(this).remove()
 })
 ```
@@ -138,11 +140,11 @@ cy.get('#parent')
 
 上面的例子过于简单化了。让我们看一个更复杂的例子。
 
-在现代JavaScript框架中，DOM元素会经常重新呈现—这意味着旧元素会被丢弃，而新元素会取而代之。因为这发生得太快了，可能会*出现*似乎用户没有看到任何明显的变化。但是，如果您正在执行测试命令，那么与您交互的元素可能已经“死亡”。要处理这种情况，你必须：
+在现代JavaScript框架中，DOM元素会经常重新呈现—这意味着旧元素会被丢弃，而新元素会取而代之。因为这发生得太快了，可能会*出现*似乎用户没有看到任何明显的变化。但是，如果您正在执行测试命令，那么与您交互的元素可能已经“死亡”。要处理这种情况，您必须：
 
 - 了解应用程序何时重新呈现
 - 重新查询新添加的DOM元素
-- *防止* Cypress运行命令，直到满足特定条件
+- *防止*Cypress运行命令，直到满足特定条件
 
 当我们说“防止”时，这通常意味着：
 
@@ -151,20 +153,20 @@ cy.get('#parent')
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element cannot be interacted with
 
-你可能会看到这条消息有4个不同的原因：
+您可能会看到这条消息有4个不同的原因：
 
 1. 元素不可见
 2. 元素被另一个元素覆盖
 3. 元素的中心隐藏在视图之外
 4. 元素被禁用
 
-Cypress运行多次计算，确保可以像实际用户那样*真正地*与元素交互。如果您看到这个错误，解决方案通常是显而易见的。您可能需要“保护”您的命令(由于时间或动画问题)。
+Cypress运行多次计算，确保可以像实际用户那样*真正地*与元素交互。如果您看到这个错误，解决方案通常是显而易见的。您可能需要“保护”您的命令（由于时间或动画问题）。
 
 在某些情况下，Cypress无法正确地允许您与本该是可交互的元素交互。如果是这样，{% open_an_issue %}。
 
 如果希望覆盖这些内置检查，请为操作本身提供`{force: true}`选项。请参考每个命令的可用选项、附加用例和参数用法。
 
-### Ignore built-in error checking
+### 忽略内置错误检查
 
 ```javascript
 cy.get('[disabled]').click({force: true}).
@@ -178,7 +180,7 @@ cy.get('[disabled]').click({force: true}).
 
 默认情况下，Cypress检测您试图与之交互的元素是否正在动画化。此检查确保一个元素的动画不会太快，以致于实际用户无法与该元素交互。这还可以防止一些边缘情况，比如{% url `.type()` type %}或{% url `.click()` click %}等操作在转换期间发生得太快。
 
-Cypress将不断尝试与元素交互，直到它最终超时。如果你想强制Cypress与元素交互，有几个选项：
+Cypress将不断尝试与元素交互，直到它最终超时。如果您想强制Cypress与元素交互，有几个选项：
 
 - 传递`{force: true}`。这将禁用*所有*错误检查
 - 传递`{waitForAnimations: false}`以禁用动画错误检查
@@ -188,7 +190,7 @@ Cypress将不断尝试与元素交互，直到它最终超时。如果你想强�
 cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
-您可以全局禁用动画错误检查，或者通过修改{% url 'configuration' configuration %}中的{% url 'configuration' configuration %}来增加阈值。
+您可以全局禁用动画错误检查，或者通过修改您的{% url '配置文件' configuration %}中的{% url '配置' configuration %}来增加阈值。
 
 ### cypress.json
 
@@ -369,7 +371,7 @@ Cypress将使用最后一个Cypress命令生成的任何内容来解析您的命
 cypress ci abc-key-123
 ```
 
-你需要重写如下：
+您需要重写如下：
 
 ```shell
 cypress run --record --key abc-key-123
@@ -489,11 +491,11 @@ cypress run --record
 
 ### 对于这些常见的情况，有一些简单的解决方法：
 
-1. 不要在测试中点击导航到应用程序外部的`<a>`链接。无论如何，这都不值得测试。你应该问问自己：*点击进入另一个应用程序有什么意义？*可能您只关心`href`属性是否与您期望的匹配。所以简单地做一个断言即可。您可以{% url '在我们的示例方法' recipes#Tab-Handling-and-Links %}中看到更多关于测试锚链接的策略。
+1. 不要在测试中点击导航到应用程序外部的`<a>`链接。无论如何，这都不值得测试。您应该问问自己：*点击进入另一个应用程序有什么意义？*可能您只关心`href`属性是否与您期望的匹配。所以简单地做一个断言即可。您可以{% url '在我们的示例方法' recipes#Tab-Handling-and-Links %}中看到更多关于测试锚链接的策略。
 
 2. 您正在测试一个使用`单点登录（SSO）`的页面。在这种情况下，您的web服务器可能会在超域之间重定向您，因此您将收到此错误消息。您可以通过使用{% url `cy.request()` request %}手动处理会话来解决这个重定向问题。
 
-如果你发现自己陷入困境，无法解决这些问题，你可以把这个设置在你的`cypress.json`文件中。但在这样做之前，您应该真正理解和{% url '阅读这里的推理' web-security %}。
+如果您发现自己陷入困境，无法解决这些问题，您可以把这个设置在您的`cypress.json`文件中。但在这样做之前，您应该真正理解和{% url '阅读这里的推理' web-security %}。
 
 ```javascript
 // cypress.json
@@ -520,6 +522,7 @@ cypress run --record
 目前，我们还没有实现一种自动的方法来恢复浏览器，但是实际上我们可以这样做。我们有一个{% issue 349 '开放的问题记录了步骤' %}用于重启呈现器进程并继续运行。如果您看到一致的崩溃，并希望实现此功能，请在问题中留言。
 
 如果您正在运行`Docker`{% issue 350 '这里有个简单的一行代码来解决这个问题' %}
+
 
 # 测试运行器错误
 
