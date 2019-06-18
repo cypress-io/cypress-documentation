@@ -319,9 +319,12 @@ If you'd like to contribute directly to the Cypress code, we'd love to have your
 
 ## Run the Cypress app by itself
 
-Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. To see the raw output from the Test Runner application itself, you can launch it without the npm CLI module.
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. Some common situations on why you would want to do this are:
 
-First, find where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
+- debug Cypress not starting or hanging
+- debug problems related to the way CLI arguments are parsed by the npm CLI module
+
+Here is how you can launch Cypress application directly without the npm CLI module. First, find where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
 
 For example, on a Linux machine:
 
@@ -388,7 +391,13 @@ cypress:server:cypress about to exit with code 0 +4ms
 
 ## Edit the installed Cypress code
 
-The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
+The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. You might want to directly modify the installed Test Runner code to:
+
+- investigate a hard to recreate bug that happens on your machine
+- change the run-time behavior of Cypress before opening a pull request
+- have fun 🎉
+
+First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
 
 For example, on a Mac:
 
