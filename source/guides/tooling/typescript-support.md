@@ -12,6 +12,7 @@ Just as you would when writing TypeScript files in your project, you will have t
 
 - {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
 - {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
+- {% url "Simple Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
 
 ## Set up your dev environment
 
@@ -40,7 +41,10 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 
 ## Types for custom commands
 
-When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
+When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find the simplest implementation of Cypress and TypeScript in this {% url "repo example here" https://github.com/omerose/cypress-support %}.
+
+## TODO MVC Example Repo
+You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
 
 ## Types for custom assertions
 
