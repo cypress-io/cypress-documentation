@@ -11,7 +11,7 @@ We've also added the two most common 3rd party reporters for Mocha. These are bu
 * {% url "`teamcity`" https://github.com/cypress-io/mocha-teamcity-reporter %}
 * {% url "`junit`" https://github.com/michaelleeallen/mocha-junit-reporter %}
 
-Finally we support creating your own custom reporters or using any kind of 3rd party reporter.
+Finally, we support creating your own custom reporters or using any kind of 3rd party reporter.
 
 {% note success %}
 Did you know that you can use {% urlHash 'multiple reporters' Multiple-Reporters %} with Mocha?
@@ -20,7 +20,7 @@ This is especially useful when running in CI. Typically we see users using the d
 {% endnote %}
 
 {% note %}
-Once you've read through the documentation below, we invite you to experience the power of Cypress reporters via {% url Section 9 https://github.com/cypress-io/testing-workshop-cypress/blob/master/slides/09-reporters/PITCHME.md %} of our open source {% testing workshop for Cypress https://github.com/cypress-io/testing-workshop-cypress %}
+Once you've read through the documentation below, we invite you to experience the power of Cypress reporters via {% url "Section 9" https://github.com/cypress-io/testing-workshop-cypress/blob/master/slides/09-reporters/PITCHME.md %} of our open source {% url "testing workshop for Cypress" https://github.com/cypress-io/testing-workshop-cypress %}.
 {% endnote %}
 
 
