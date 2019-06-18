@@ -346,6 +346,12 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 
 {% imgTag /img/guides/code-coverage/100percent.png "Full code coverage" %}
 
+# Future work
+
+We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid "manual" instrumentation step using Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in {% url bahmutov/cypress-native-chrome-code-coverage-example https://github.com/bahmutov/cypress-native-chrome-code-coverage-example %} repository.
+
+Second, we would like to capture the code coverage from *the locally running backend server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of backend code.
+
 # See also
 
 - The official {% url "@cypress/code-coverage" https://github.com/cypress-io/code-coverage %} plugin
