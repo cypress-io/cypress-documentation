@@ -118,7 +118,7 @@ When debugging a failing test, follow these general principles to isolate the pr
 
 ## Clear Cypress cache
 
-If you're having an issue during installation of Cypress. Try to clear the contents of the Cypress cache.
+If you're having an issue during installation of Cypress, try removing the contents of the Cypress cache.
 
 This will clear out all installed versions of Cypress that may be cached on your machine.
 
