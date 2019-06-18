@@ -1,23 +1,23 @@
 ---
-title: Debugging
+title: 调试工具
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将学到
 
-- How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
-- How Cypress embraces the standard DevTools
-- How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
-- How to troubleshoot issues with Cypress itself
+- Cypress如何在同一个事件循环中运行您的代码, 并且保持调试简单易懂
+- Cypress如何接受标准的开发工具
+- 如何以及何时使用`调试工具`已经{% url `.debug()` debug %}速记命令
+- 如何解决Cypress本身的问题
 {% endnote %}
 
-# Using `debugger`
+# 使用`调试器`
 
-Your Cypress test code runs in the same run loop as your application. This means you have access to the code running on the page, as well as the things the browser makes available to you, like `document`, `window`, and, of course, `debugger`.
+你的Cypress测试代码运行在与应用程序相同的运行循环中.这意味着您可以访问页面上运行的代码, 以及浏览器为您提供的东西, 比如`document`, `window`等等, 当然也包括`调试器`.
 
-## Debug just like you always do
+## 像往常一样调试
 
-Based on those statements, you might be tempted to just throw a `debugger` into your test, like so:
+基于这些陈述, 您可能想在测试中添加一个`调试器`, 就像这样:
 
 ```js
 it('let me debug like a fiend', function() {
@@ -53,7 +53,7 @@ Now we're in business! The first time through, {% url `cy.visit()` visit %} and 
 1. The page is visited, and Cypress waits for it to load.
 2. The element is queried, and Cypress automatically waits and retries for a few moments if it isn't found immediately.
 3. The function passed to {% url `.then()` then %} is executed, with the found element yielded to it.
-4. Within the context of the {% url `.then()` then %} function, the `debugger` is called, halting the browser and calling focus to the DevTools.
+4. Within the context of the {% url `.then()` then %} function, the `debugger` is called, halting the browser and calling focus to the Developer Tools.
 5. You're in! Inspect the state of your application like you normally would if you'd dropped the `debugger` into your application code.
 
 ## Using {% url `.debug()` debug %}
@@ -69,15 +69,15 @@ it('let me debug like a fiend', function() {
 })
 ```
 
-The current subject that is yielded by the {% url `cy.get()` get %} is exposed as the variable `subject` within your DevTools so that you can interact with it in the console.
+The current subject that is yielded by the {% url `cy.get()` get %} is exposed as the variable `subject` within your Developer Tools so that you can interact with it in the console.
 
-{% img /img/guides/debugging-subject.png "Debugging Subject" %}
+{% imgTag /img/guides/debugging-subject.png "Debugging Subject" %}
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that moment.
 
-# Using the DevTools
+# Using the Developer Tools
 
-Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your application and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
+Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your application and your tests, there's no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
 {% note info %}
 ## {% fa fa-video-camera %} See it in action!
@@ -87,11 +87,11 @@ You can see a walk-through of debugging some application code from Cypress {% ur
 
 ## Get console logs for commands
 
-All of Cypress's commands, when clicked on within the {% url "Command Log" test-runner#Command-Log %}, print extra information about the command, its subject, and its yielded result. Try clicking around the Command Log with your DevTools open! You may find some useful information here.
+All of Cypress's commands, when clicked on within the {% url "Command Log" test-runner#Command-Log %}, print extra information about the command, its subject, and its yielded result. Try clicking around the Command Log with your Developer Tools open! You may find some useful information here.
 
-### When clicking on `.type()` command, the DevTools console outputs the following:
+### When clicking on `.type()` command, the Developer Tools console outputs the following:
 
-![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+{% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 # Troubleshooting Cypress
 
@@ -268,7 +268,7 @@ This allows you to isolate the problem a little better
 
 ### Debug logs in the browser
 
-If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's DevTools and set a `localStorage` property:
+If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's Developer Tools and set a `localStorage` property:
 
 ```javascript
 localStorage.debug = 'cypress*'
@@ -277,19 +277,19 @@ localStorage.debug = 'cypress*'
 delete localStorage.debug
 ```
 
-Reload the browser and see debug messages within the DevTools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
+Reload the browser and see debug messages within the Developer Tools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
 
-![Console Log](/img/api/debug/debug-driver.jpg)
+{% imgTag /img/api/debug/debug-driver.jpg "Debug logs in browser" %}
 
 ## Log Cypress events
 
 In addition to the `DEBUG` messages, Cypress also emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
 
-{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
+{% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
 ## Run Cypress command outside the test
 
-If you need to run a Cypress command straight from the DevTools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
+If you need to run a Cypress command straight from the Developer Tools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
 
 ```javascript
 cy.now('task', 123)
@@ -307,4 +307,4 @@ The `cy.now()` command is an internal command and may change in the future.
 
 You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
 
-![cypress-failed-log terminal output](/img/api/debug/failed-log.png)
+{% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}

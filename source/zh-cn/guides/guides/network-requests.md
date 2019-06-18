@@ -1,160 +1,160 @@
 ---
-title: Network Requests
+title: 网络请求
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 您将学习
 
-- How Cypress enables you to stub out the backend with {% url `cy.route()` route %}
-- What tradeoffs we make when we stub our network requests
-- How Cypress visualizes network management in the Command Log
-- How to use Fixtures to reuse XHR responses
-- How to use Aliases to refer back to XHR requests and wait on them
-- How to write declarative tests that resist flake
+- Cypress如何使用{% url `cy.route()` route %}来中断后端
+- 当打桩网络请求时，我们做出了哪些权衡
+- Cypress如何在命令日志中可视化网络管理
+- 如何使用固件去复用XHR响应
+- 如何使用别名去引用XHR请求并等待它们
+- 如何编写抵抗不稳定的声明式测试
 {% endnote %}
 
-# Testing Strategies
+# 测试策略
 
-Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
+Cypress使在应用程序内测试Ajax/XHR请求的整个生命周期变得更加容易。Cypress提供了对XHR对象的直接访问，允许您使用其属性进行断言。此外，您甚至可以打桩和模拟请求的响应。
 
 {% partial network_stubbing_warning %}
 
-***Common testing scenarios:***
+***常见的测试场景：***
 
-- Asserting on a request's body
-- Asserting on a request's url
-- Asserting on a request's headers
-- Stubbing a response's body
-- Stubbing a response's status code
-- Stubbing a response's headers
-- Delaying a response
-- Waiting for a response to happen
+- 对请求的主体进行断言
+- 对请求的url进行断言
+- 对请求的头部进行断言
+- 打桩响应的主体
+- 打桩响应的状态码
+- 打桩响应的头部
+- 延迟响应
+- 等待响应的发生
 
-Within Cypress, you have the ability to choose whether to stub responses or allow them to actually hit your server. You can also mix and match within the same test by choosing to stub certain requests, while allowing others to hit your server.
+在Cypress中，您可以选择是打桩响应，还是允许它们实际访问您的服务器。您还可以在同一个测试中通过选择打桩某些请求，同时允许其他请求访问您的服务器来进行混合搭配。
 
-Let's investigate both strategies, why you would use one versus the other, and why you should regularly use both.
+让我们来研究一下这两种策略：为什么您会使用其中一种而不是另一种，以及为什么您要经常使用这两种策略。
 
-## Don't Stub Responses
+## 不打桩响应
 
-Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end-to-end* tests. This means you are driving your application the same way a real user would.
+没有打桩的请求实际上会到达服务器。通过*不*打桩您的响应，您编写的才是真正的“端到端”测试。这意味着您以与真实用户相同的方式驱动应用程序。
 
-> When requests are not stubbed, this guarantees that the *contract* between your client and server is working correctly.
+> 当请求没有打桩时，这将确保客户端和服务器之间的*契约*正常工作。
 
-In other words, you can have confidence your server is sending the correct data in the correct structure to your client to consume. It is a good idea to have *end-to-end* tests around your application's *critical paths*. These typically include user login, signup, or other critical paths such as billing.
+换句话说，您可以确信您的服务器正在以正确的结构发送正确的数据供您的客户端使用。围绕应用程序的*关键路径*进行*端到端*测试是一个好主意。这些通常包含登录、注册，或其他关键路径，如计费。
 
-***There are downsides to not stubbing responses you should be aware of:***
+***您应该意识到不打桩响应的不足之处：***
 
-- Since no responses are stubbed, that means **your server has to actually send real responses**. This can be problematic because you may have to *seed a database* before every test to generate state. For instance, if you were testing *pagination*, you'd have to seed the database with every object that it takes to replicate this feature in your application.
-- Since real responses go through every single layer of your server (controllers, models, views, etc) the tests are often **much slower** than stubbed responses.
+- 因为没有打桩响应，这意味着 **您的服务器必须实际发送真实的响应**。这可能会有问题，因为您可能必须在每一个测试前*播种一个数据库*才能生成状态。例如，如果您要测试*分页*，您必须要为用于复制应用程序中此功能的每一个对象播种数据库。
+- 因为真实的响应要经过服务器的每一层（控制器、模型、视图等）所以测试通常比打桩响应*慢得多*。
 
-If you are writing a traditional server-side application where most of the responses are `HTML` you will likely have few stubbed responses. However, most modern applications that serve `JSON` can take advantage of stubbing.
+如果您正在写一个传统的服务器端应用程序，多数的响应是`HTML`，可能很少有桩响应。可是，大多数提供`JSON`服务的现代应用程序都可以利用打桩。
 
-{% note success Benefits %}
-- Guaranteed to work in production
-- Test coverage around server endpoints
-- Great for traditional server-side HTML rendering
+{% note success 优点 %}
+- 保证在生产中工作
+- 围绕服务器端点的测试覆盖率
+- 适用于传统服务器端的HTML渲染
 {% endnote %}
 
-{% note danger Downsides %}
-- Requires seeding data
-- Much slower
-- Harder to test edge cases
+{% note danger 缺点 %}
+- 需要播种数据
+- 慢得多
+- 难以测试边缘用例
 {% endnote %}
 
-{% note info Suggested Use %}
-- Use sparingly
-- Great for the *critical paths* of your application
-- Helpful to have one test around the *happy path* of a feature
+{% note info 使用建议 %}
+- 谨慎使用
+- 适用于应用程序的*关键路径*
+- 对某个功能的*适当路径*进行测试是有帮助的
 {% endnote %}
 
-## Stub Responses
+## 打桩响应
 
-Stubbing responses enables you to control every aspect of the response, including the response `body`, the `status`, `headers`, and even network `delay`. Stubbing is extremely fast, most responses will be returned in less than 20ms.
+打桩响应使您能够控制响应的各个方面，包括响应`body`、`status`、`headers`，甚至网络`delay`。桩速度非常快，大多数响应将在小于20毫秒内返回。
 
-> Stubbing responses is a great way to control the data that is returned to your client.
+> 打桩响应是一个控制返回客户端数据的好方法。
 
-You don't have to do any work on the server. Your application will have no idea its requests are being stubbed, so there are *no code changes* needed.
+您不需要在服务器上做任何操作。您的应用程序将不知道它的请求被打桩，因此*不需要更改代码*。
 
-{% note success Benefits %}
-- Easy control of response bodies, status, and headers
-- Can force responses to take longer to simulate network delay
-- No code changes to your server or client code
-- Fast, < 20ms response times
+{% note success 优点 %}
+- 易于控制响应主体、状态和头部
+- 可以强制响应花费更长的时间来模拟网络延迟
+- 不对服务器或客户端代码进行任何代码更改
+- 响应速度快，小于20毫秒
 {% endnote %}
 
-{% note danger Downsides %}
-- No guarantee your stubbed responses match the actual data the server sends
-- No test coverage on some server endpoints
-- Not as useful if you're using traditional server side HTML rendering
+{% note danger 缺点 %}
+- 不能保证您的打桩响应与服务器发送的实际数据相同
+- 某些服务器端点没有测试覆盖
+- 如果您正在使用传统的服务器端HTML渲染，则不太适用
 {% endnote %}
 
-{% note info Suggested Use %}
-- Use for the vast majority of tests
-- Mix and match, typically have one true end-to-end test, and then stub the rest
-- Perfect for JSON APIs
+{% note info 使用建议 %}
+- 用于绝大多数测试
+- 混合搭配，通常有一个真正的端到端测试，然后打桩其余的测试
+- 完美适用JSON接口
 {% endnote %}
 
-# Stubbing
+# 打桩
 
-Cypress makes it easy to stub a response and control the `body`, `status`, `headers`, or even delay.
+Cypress使打桩响应和控制响应的`body`、`status`、`headers`，甚至网络`delay`变得很容易。
 
-***To begin stubbing responses you need to do two things.***
+***要开始打桩响应，您需要做两件事。***
 
-1. Start a {% url `cy.server()` server %}
-2. Provide a {% url `cy.route()` route %}
+1. 启动一个 {% url `cy.server()` server %}
+2. 提供一个 {% url `cy.route()` route %}
 
-These two commands work together to control the behavior of your responses within the command's options. {% url `cy.server()` server %} enables stubbing, while {% url `cy.route()` route %} provides a routing table so Cypress understands which response should go with which request.
+这两个命令一起工作来控制命令选项中的响应行为。{% url `cy.server()` server %}能够打桩, 而{% url `cy.route()` route %}提供一个路由表以便于Cypress了解哪一个响应应该处理哪一个请求。
 
 {% note info %}
-See {% url '`cy.server()` options' server#Options %} and {% url '`cy.route()` options' route#Options %} for instructions on how to stub responses.
+关于如何打桩响应的使用说明，请查看{% url '`cy.server()`选项' server#Options %}和{% url '`cy.route()`选项' route#Options %}。
 {% endnote %}
 
-# Requests
+# 请求
 
-Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it's stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the moment the request is made and another snapshot at the moment the response returns.
+当应用程序中发生XHR请求时，Cypress会自动显示。这些会记录在命令日志中(不管它是否打桩)。Cypress显示请求何时启动和何时完成。此外，Cypress在发出请求时获取DOM快照，在响应返回时获取另一个快照。
 
-![snapshot_request](https://user-images.githubusercontent.com/1271364/26947393-930508b0-4c60-11e7-90a0-4d42ee3f24c0.gif)
+{% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
 
-By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
+默认情况下，Cypress被配置为*忽略*获取静态内容的请求，像`.js`或`.html`文件。这样可以减少命令日志的干扰。可以通过覆盖{% url '`cy.server()`选项' server#Options %}的默认白名单来更改此选项。
 
-Cypress automatically collects the request `headers` and the request `body` and will make this available to you.
+Cypress自动收集请求的`headers`和请求的`body`并将这些提供给您。
 
-# Routing
+# 路由选择
 
 ```javascript
-cy.server()           // enable response stubbing
+cy.server()           // 使响应打桩
 cy.route({
-  method: 'GET',      // Route all GET requests
-  url: '/users/*',    // that have a URL that matches '/users/*'
-  response: []        // and force the response to be: []
+  method: 'GET',      // 路由所有GET请求
+  url: '/users/*',    // url匹配'/users/*'
+  response: []        // 强制响应为：[]
 })
 ```
 
-When you start a {% url `cy.server()` server %} and define {% url `cy.route()` route %} commands, Cypress displays this under "Routes" in the Command Log.
+当您启动一个{% url `cy.server()` server %}并定义{% url `cy.route()` route %}命令时，Cypress会在命令日志中的“Routes”下显示该命令。
 
-{% img /img/guides/server-routing-table.png "Routing Table" %}
+{% imgTag /img/guides/server-routing-table.png "Routing Table" %}
 
-Once you start a server with {% url `cy.server()` server %}, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.
+只要使用{% url `cy.server()` server %}启动了服务器，测试剩余部分的所有请求都是可控的。当运行一个新的测试时，Cypress会恢复默认行为并且移除所有路由和桩。想要了解关于API和选项的完整介绍，参考各个命令的文档。
 
 - {% url `cy.server()` server %}
 - {% url `cy.route()` route %}
 
-# Fixtures
+# 固件
 
-A fixture is a fixed set of data located in a file that is used in your tests. The purpose of a test fixture is to ensure that there is a well known and fixed environment in which tests are run so that results are repeatable. Fixtures are accessed within tests by calling the {% url `cy.fixture()` fixture %} command.
+固件是用于测试的存储在文件中的一组固定数据。测试固件的目的是确保有一个公认且固定的环境来运行测试，以便结果是可重复的。通过调用{% url `cy.fixture()` fixture %}命令，可以在测试中访问固件。
 
-Cypress makes it easy to stub a network requests and have it respond instantly with fixture data.
+Cypress使打桩网络请求变得很容易，并让它立即响应固件数据。
 
-When stubbing a response, you typically need to manage potentially large and complex JSON objects. Cypress allows you to integrate fixture syntax directly into responses.
+当打桩响应时，通常需要管理潜在的大型复杂JSON对象。Cypress允许您将固件语法直接集成到响应中。
 
 ```javascript
 cy.server()
 
-// we set the response to be the activites.json fixture
+// 我们将响应设置为activite.json固件
 cy.route('GET', 'activities/*', 'fixture:activities.json')
 ```
 
-You can additionally reference {% url 'aliases' variables-and-aliases %} within responses. These aliases do not have to point to fixtures, but that is a common use case. Separating out a fixture enables you to work and mutate that object prior to handing it off to a response.
+您还可以在响应中引用{% url '别名' variables-and-aliases %}。这些别名不必指向固件，但这是一个常见的用例。分离固件使您能够在将该对象传递给响应之前对其进行操作和修改。
 
 ```javascript
 cy.server()
@@ -163,15 +163,15 @@ cy.fixture('activities.json').as('activitiesJSON')
 cy.route('GET', 'activities/*', '@activitiesJSON')
 ```
 
-## Organizing
+## 组织
 
-Cypress automatically scaffolds out a suggested folder structure for organizing your fixtures on every new project. By default it will create an `example.json` file when you add your project to Cypress.
+Cypress会自动搭建一个推荐的文件夹结构，用于在每个新项目中组织固件。默认情况下，当您将项目添加到Cypress时，会创建一个`example.json`文件。
 
 ```text
 /cypress/fixtures/example.json
 ```
 
-Your fixtures can be further organized within additional folders. For instance, you could create another folder called `images` and add images:
+固件可以在其他文件夹中进一步组织。例如，您可以创建另一个名为`images`的文件夹并添加图像：
 
 ```text
 /cypress/fixtures/images/cats.png
@@ -179,41 +179,38 @@ Your fixtures can be further organized within additional folders. For instance, 
 /cypress/fixtures/images/birds.png
 ```
 
-To access the fixtures nested within the `images` folder, simply include the folder in your {% url `cy.fixture()` fixture %} command.
+要访问`images`文件夹中嵌套的固件，只需在{% url `cy.fixture()` fixture %}命令中引入该文件夹。
 
 ```javascript
-cy.fixture('images/dogs.png') //returns dogs.png as Base64
+cy.fixture('images/dogs.png') //以base64编码方式返回dog.png
 ```
 
-# Waiting
+# 等待
 
-Whether or not you choose to stub responses, Cypress enables you to declaratively {% url `cy.wait()` wait %} for requests and their responses.
+无论您是否选择打桩响应，Cypress都允许您声明性地使用{% url `cy.wait()` wait %}来处理请求及其响应。
 
 {% note info %}
-This following section utilizes a concept known as {% url 'Aliasing' variables-and-aliases %}. If you're new to Cypress you might want to check that out first.
+下面的部分使用了一个{% url '别名' variables-and-aliases %}的概念。如果您是Cypress的新手，您最好先看看这个。
 {% endnote %}
 
-Here is an example of aliasing routes and then subsequently waiting on them:
+以下是别名路由再等待路由的示例：
 
 ```javascript
 cy.server()
 cy.route('activities/*', 'fixture:activities').as('getActivities')
 cy.route('messages/*', 'fixture:messages').as('getMessages')
 
-// visit the dashboard, which should make requests that match
-// the two routes above
+// 访问dashboard页面将发起与以上两条路由匹配的请求
 cy.visit('http://localhost:8888/dashboard')
 
-// pass an array of Route Aliases that forces Cypress to wait
-// until it sees a response for each request that matches
-// each of these aliases
+// 传递一个路由别名数组，迫使Cypress等待，直到它看到与每个别名匹配的请求的响应
 cy.wait(['@getActivities', '@getMessages'])
 
-// these commands will not run until the wait command resolves above
+// 在上面的wait命令解析之前，这些命令不会运行
 cy.get('h1').should('contain', 'Dashboard')
 ```
 
-If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
+如果希望检查别名路由的每个响应数据，可以使用多个`cy.wait()`调用。
 
 
 ```javascript
@@ -234,34 +231,30 @@ cy.wait('@apiCheck').then((xhr) => {
 })
 ```
 
-Waiting on an aliased route has big advantages:
+等待别名路由有很大的优势：
 
-1. Tests are more robust with much less flake.
-2. Failure messages are much more precise.
-3. You can assert about the underlying XHR object.
+1. 测试更加健壮，而不稳定性更少。
+2. 失败消息要精确得多。
+3. 可以断言底层XHR对象。
 
-Let's investigate each benefit.
+让我们分析一下每一个优势。
 
-## Flake
+## 不稳定性
 
-One advantage of declaratively waiting for responses is that it decreases test flake. You can think of {% url `cy.wait()` wait %} as a guard that indicates to Cypress when you expect a request to be made that matches a specific routing alias. This prevents the next commands from running until responses come back and it guards against situations where your requests are initially delayed.
+声明式等待响应的一个优点是它减少了测试不稳定性。您可以将{% url `cy.wait()` wait %}看作一个警卫，当您希望发出一个匹配特定路由别名的请求时，它会通知Cypress。这将阻止下一个命令在响应返回之前运行，并防止出现请求最初被延迟的情况。
 
-***Auto-complete Example:***
+***自动完成的例子：***
 
-What makes this example below so powerful is that Cypress will automatically wait for a request that matches the `getSearch` alias. Instead of forcing Cypress to test the *side effect* of a successful request (the display of the Book results), you can test the actual *cause* of the results.
+下面这个例子之所以如此强大，是因为Cypress将自动等待匹配`getSearch`别名的请求。您可以测试结果的实际原因，而不是强制Cypress测试成功请求的副作用(显示Book结果)。
 
 ```javascript
 cy.server()
 cy.route('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
-// our autocomplete field is throttled
-// meaning it only makes a request after
-// 500ms from the last keyPress
+// 我们的自动完成字段是节流的，这意味着从最后一次按键500毫秒后只发送一个请求
 cy.get('#autocomplete').type('Book')
 
-// wait for the request + response
-// thus insulating us from the
-// throttled request
+// 等待请求+响应，从而将我们与节流请求隔离开来
 cy.wait('@getSearch')
 
 cy.get('#results')
@@ -269,29 +262,29 @@ cy.get('#results')
   .and('contain', 'Book 2')
 ```
 
-## Failures
+## 失败
 
-In our example above, we added an assertion to the display of the search results.
+在上面的示例中，我们添加了一个断言来显示搜索结果。
 
-***The search results working are coupled to a few things in our application:***
+***搜索结果与我们的应用程序中的一些内容相关联：***
 
-1. Our application making a request to the correct URL.
-2. Our application correctly processing the response.
-3. Our application inserting the results into the DOM.
+1. 我们的应用程序向正确的URL发出请求。
+2. 我们的应用程序正确地处理了响应。
+3. 我们的应用程序将结果插入DOM。
 
-In this example, there are many possible sources of failure. In most testing tools, if our request failed to go out, we would normally only ever get an error once we attempt to find the results in the DOM and see that there is no matching element. This is problematic because it's unknown *why* the results failed to be displayed. Was there a problem with our rendering code? Did we modify or change an attribute such as an `id` or `class` on an element? Perhaps our server sent us different Book items.
+在这个例子中，有许多可能的失败原因。在大多数测试工具中，如果我们的请求未能通过，我们通常只会在尝试在DOM中找到结果却没有匹配元素时才会收到错误。这是有问题的，因为不知道*为什么*结果没有显示。我们的渲染代码有问题吗？我们是否修改或更改了元素的属性，如`id`或`class`？也许我们的服务器给我们发送了不同的Book条目。
 
-With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
+使用Cypress，通过添加一个{% url `cy.wait()` wait %}，您可以更容易地确定您的特定问题。如果响应没有返回，您将收到如下错误：
 
-{% img /img/guides/clear-source-of-failure.png "Wait Failure" %}
+{% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
-Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
+现在我们明确知道为什么我们的测试失败了。它与DOM无关。相反，我们可以看到要么我们的请求从未发出，要么请求发出到错误的URL。
 
-## Assertions
+## 断言
 
-Another benefit of using {% url `cy.wait()` wait %} on requests is that it allows you to access the actual `XHR` object. This is useful when you want to make assertions about this object.
+对请求使用{% url `cy.wait()` wait %}的另一个好处是，它允许您访问实际的`XHR`对象。当您想对这个对象进行断言时，这是非常有用的。
 
-In our example above we can assert about the request object to verify that it sent data as a query string in the URL. Although we're mocking the response, we can still verify that our application sends the correct request.
+在上面的示例中，我们可以对请求对象进行断言，以验证它是否以URL中查询字符串的形式发送了数据。尽管我们在模拟响应，但仍然可以验证应用程序是否发送了正确的请求。
 
 ```javascript
 cy.server()
@@ -299,8 +292,7 @@ cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 
-// this yields us the XHR object which includes
-// fields for request, response, url, method, etc
+// 这将生成XHR对象，其中包含请求、响应、url、方法等字段
 cy.wait('@getSearch')
   .its('url').should('include', '/search?query=Book')
 
@@ -309,16 +301,16 @@ cy.get('#results')
   .and('contain', 'Book 2')
 ```
 
-***The XHR object that {% url `cy.wait()` wait %} yields you has everything you need to make assertions including:***
+***{% url `cy.wait()` wait %}生成的XHR对象具有进行断言所需的一切内容，包括：***
 
 - URL
-- Method
-- Status Code
-- Request Body
-- Request Headers
-- Response Body
-- Response Headers
+- 方法
+- 状态码
+- 请求体
+- 请求头
+- 响应体
+- 响应头
 
-# See also
+# 另请参阅
 
-- {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
+- {% url "Kitchen Sink example中的网络请求" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}

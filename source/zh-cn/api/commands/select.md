@@ -1,6 +1,5 @@
 ---
 title: select
-
 ---
 
 Select an `<option>` within a `<select>`.
@@ -57,7 +56,7 @@ Option | Default | Description
 
 ## Text Content
 
-***Select the option with the text `apples`***
+### Select the `option` with the text `apples`
 
 ```html
 <select>
@@ -75,7 +74,7 @@ cy.get('select')
 
 ## Value
 
-***Select the option with the value "456"***
+### Select the `option` with the value "456"
 
 ```html
 <select>
@@ -93,7 +92,7 @@ cy.get('select')
 
 ## Select multiple options
 
-***Select the options with the texts "apples" and "bananas"***
+### Select the options with the texts "apples" and "bananas"
 
 ```html
 <select multiple>
@@ -109,7 +108,7 @@ cy.get('select')
   .should('deep.equal', ['456', '458'])
 ```
 
-***Select the options with the values "456" and "457"***
+### Select the options with the values "456" and "457"
 
 ```html
 <select multiple>
@@ -155,11 +154,11 @@ cy.get('select').select('Homer Simpson')
 
 The commands above will display in the Command Log as:
 
-![Command Log select](/img/api/select/select-homer-option-from-browser-dropdown.png)
+{% imgTag /img/api/select/select-homer-option-from-browser-dropdown.png "Command Log select" %}
 
 When clicking on `select` within the command log, the console outputs the following:
 
-![Console Log select](/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png)
+{% imgTag /img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png "Console Log select" %}
 
 # See also
 

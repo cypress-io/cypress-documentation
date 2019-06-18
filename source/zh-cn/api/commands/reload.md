@@ -1,6 +1,5 @@
 ---
 title: reload
-
 ---
 
 Reload the page.
@@ -43,7 +42,7 @@ Option | Default | Description
 
 ## No Args
 
-***Reload the page as if the user clicked 'Refresh'***
+### Reload the page as if the user clicked 'Refresh'
 
 ```javascript
 cy.visit('http://localhost:3000/admin')
@@ -54,7 +53,7 @@ cy.get('#undo-btn').click().should('not.be.visible')
 
 ## Force Reload
 
-***Reload the page without using the cache***
+### Reload the page without using the cache
 
 ```javascript
 cy.visit('http://localhost:3000/admin')
@@ -85,11 +84,11 @@ cy.reload()
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/reload/test-page-after-reload-button.png)
+{% imgTag /img/api/reload/test-page-after-reload-button.png "Command Log reload" %}
 
 When clicking on `reload` within the command log, the console outputs the following:
 
-![Console Log](/img/api/reload/command-log-for-reload-cypress.png)
+{% imgTag /img/api/reload/command-log-for-reload-cypress.png "Console Log reload" %}
 
 # See also
 

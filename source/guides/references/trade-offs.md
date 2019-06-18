@@ -28,7 +28,7 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 311#issuecomment-339824191 "There is not any native or mobile events support." %}
 - {% issue 170#issuecomment-340012621 "Testing file uploads is application specific." %}
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
-- {% issue 685 "Iframe support is somewhat limited, but does work." %}
+- {% issue 685 "iframe support is somewhat limited, but does work." %}
 - {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
 - {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %} See the implementation in {% url "this recipe." https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch/cypress/integration %}
 - {% issue 144 "There is no shadow DOM support, but there are workarounds." %} See {% url "this comment." https://github.com/cypress-io/cypress/issues/830#issuecomment-449411701 %}
@@ -200,22 +200,19 @@ This avoids ever needing a second open browser, but still gives you an end-to-en
 
 Each test is limited to only visiting a single superdomain.
 
-What is a superdomain?
+What is a superdomain? Given the urls below, all have the same superdomain of `cypress.io`.
 
-```js
-// examples of superdomains
-// given these origins below
-
-http://google.com       // superdomain is google.com
-https://google.com      // superdomain is google.com
-https://www.google.com  // superdomain is google.com
-https://mail.google.com // superdomain is google.com
-```
+- `http://cypress.io`
+- `https://cypress.io`
+- `https://www.cypress.io`
+- `https://docs.cypress.io`
+- `https://example.cypress.io/commands/querying`
 
 The rules are:
 
-- {% fa fa-warning %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
-- {% fa fa-check-circle %} But you **can** {% url "visit" visit %} different subdomains in the same test.
+- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different subdomains in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different superdomains in **different** tests.
 
 ```javascript
 cy.visit('https://www.cypress.io')
