@@ -32,6 +32,7 @@ Cypress的默认行为可以通过提供以下任何配置选项来修改。下�
 
 {% note success 核心概念 %}
 {% url '超时' introduction-to-cypress#Timeouts %}应该是个很好理解的核心概念。这里列出的默认值是有意义的。
+{% endnote %}
 
 选项 | 默认值 | 描述
 ----- | ---- | ----
