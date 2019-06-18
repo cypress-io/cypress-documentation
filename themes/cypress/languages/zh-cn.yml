@@ -29,7 +29,7 @@ sidebar:
     installing-cypress: 安装Cypress
     writing-your-first-test: 编写第一个测试
     testing-your-app: 测试你的应用程序
-    interacting-with-elements: 页面元素交互
+    interacting-with-elements: 元素交互
     core-concepts: 核心概念
     introduction-to-cypress: Cypress简介
     writing-and-organizing-tests: 编写和组织测试
