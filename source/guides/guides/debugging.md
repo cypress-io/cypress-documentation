@@ -301,13 +301,29 @@ cy.now('task', 123)
 The `cy.now()` command is an internal command and may change in the future.
 {% endnote %}
 
-## Run the Cypress application by itself
+## Additional information
 
-Cypress comes with npm CLI module that parses the arguments, starts Xvfb server if necessary, and then opens the Test Runner application built on top of {% url "Electron.js" https://electronjs.org/ %}. To see the raw output from the Test Runner application itself, you can launch it without the npm CLI module.
+### Write command log to the terminal
+
+You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
+
+{% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}
+
+# Hacking on Cypress
+
+If you want to dive into Cypress and edit the code yourself, you can do that. The Cypress code is open source and licensed under an {% url "MIT license" https://github.com/cypress-io/cypress/blob/develop/LICENSE %}. There are a few tips on getting started that we've outlined below.
+
+## Contribute
+
+If you'd like to contribute directly to the Cypress code, we'd love to have your help! Please check out our {% url "contributing guide" https://github.com/cypress-io/cypress/blob/develop/CONTRIBUTING.md %} to learn about the many ways you can contribute.
+
+## Run the Cypress app by itself
+
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. To see the raw output from the Test Runner application itself, you can launch it without the npm CLI module.
 
 First, find where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
 
-For example, on Linux machine:
+For example, on a Linux machine:
 
 ```shell
 npx cypress cache path
@@ -321,7 +337,7 @@ Second, try a smoke test that verifies that the application has all its required
 101
 ```
 
-If there is a missing dependency, the application should print an error message. You can see the Electron own verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
+If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
@@ -329,7 +345,7 @@ ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/C
 101
 ```
 
-If the smoke test fails to execute, check if a shared library is missing (a common problem on Linux machines without all Cypress dependencies present)
+If the smoke test fails to execute, check if a shared library is missing (a common problem on Linux machines without all of the Cypress dependencies present).
 
 ```shell
 ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
@@ -343,7 +359,7 @@ ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
 
 **Tip:** use {% url "Cypress Docker image" docker %} or install dependencies by copying them from one of our official Docker images.
 
-**Note:** verbose Electron logging might show warnings that still allow Cypress to work normally. For example, Cypress GUI opens normally despite the scary output below:
+**Note:** verbose Electron logging might show warnings that still allow Cypress to work normally. For example, the Cypress Test Runner opens normally despite the scary output below:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
@@ -370,7 +386,7 @@ cypress:server:cypress starting in mode smokeTest +356ms
 cypress:server:cypress about to exit with code 0 +4ms
 ```
 
-## Hack the installed Cypress code
+## Edit the installed Cypress code
 
 The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
 
@@ -397,11 +413,3 @@ When finished, if necessary, remove the edited Test Runner version and reinstall
 rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
 npm install cypress@3.3.1
 ```
-
-## Additional information
-
-### Write command log to the terminal
-
-You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
-
-{% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}
