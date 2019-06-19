@@ -1,9 +1,17 @@
+/// <reference types="cypress" />
 describe('i18n', () => {
   beforeEach(() => {
     cy.server()
     cy.visit('/')
 
     cy.url().should('contain', 'why-cypress')
+  })
+
+  it('uses English in Command Line guide', () => {
+    cy.visit('/guides/guides/command-line.html')
+    cy.document().its('documentElement.lang').should('equal', 'en')
+    cy.get('meta[property="og:title"]').invoke('attr', 'content').should('equal', 'Command Line')
+    cy.contains('h1', 'Command Line')
   })
 
   context('language select', () => {
@@ -29,6 +37,7 @@ describe('i18n', () => {
           .select(lang)
           .should('have.value', lang)
           cy.url().should('include', lang)
+          cy.document().its('documentElement.lang').should('equal', lang)
         })
       })
     })
