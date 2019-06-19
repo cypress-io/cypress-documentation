@@ -7,6 +7,8 @@ title: Cypress Documentation
 subtitle: Testing, the way it should be.
 description: Cypress is a test engine that runs unit and integration tests in your browser. It makes it easy to write and debug web application tests.
 author: Cypress.io
+
+# https://hexo.io/docs/internationalization.html
 language:
   - en
   - zh-cn
