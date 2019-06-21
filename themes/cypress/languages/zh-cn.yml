@@ -23,7 +23,7 @@ page:
 sidebar:
   guides:
     overview: 概述
-    why-cypress: 为什么选择Cypress？
+    why-cypress: 为什么选择Cypress?
     getting-started: 开始使用
     key-differences: 我们的优势
     installing-cypress: 安装Cypress
