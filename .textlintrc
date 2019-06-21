@@ -32,6 +32,7 @@
         "iOS",
         "Istanbul",
         "JavaScript",
+        "Jest",
         "jQuery",
         ["local[ ]?storage", "localStorage"],
         "Lodash",

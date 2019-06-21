@@ -40,7 +40,7 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since {% url "Chai" bundled-tools#Chai %} and {% url "jQuery" bundled-tools#Other-Library-Utilities %} are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
 {% note info %}
-Find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %}.
+You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %} repo.
 {% endnote %}
 
 ## Types for custom commands
@@ -48,6 +48,7 @@ Find an example of Jest and Cypress installed in the same project using a separa
 When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find the simplest implementation of Cypress and TypeScript in this {% url "repo example here" https://github.com/omerose/cypress-support %}.
 
 ## TODO MVC Example Repo
+
 You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
 
 ## Types for custom assertions
@@ -56,6 +57,6 @@ If you extend Cypress assertions, you can extend the assertion types to make the
 
 ## Additional information
 
-See the excellent advice on [setting Cypress using TypeScript](https://basarat.gitbooks.io/typescript/docs/testing/cypress.html) in [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/content/) e-book by [Basarat Syed](https://twitter.com/basarat).
+See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}.
 
-We have published a utility npm module [add-typescript-to-cypress](https://github.com/bahmutov/add-typescript-to-cypress) that sets TypeScript test transpilation for your with a single command.
+We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.
