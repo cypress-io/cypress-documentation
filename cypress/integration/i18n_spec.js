@@ -7,13 +7,6 @@ describe('i18n', () => {
     cy.url().should('contain', 'why-cypress')
   })
 
-  it('uses English in Command Line guide', () => {
-    cy.visit('/guides/guides/command-line.html')
-    cy.document().its('documentElement.lang').should('equal', 'en')
-    cy.get('meta[property="og:title"]').invoke('attr', 'content').should('equal', 'Command Line')
-    cy.contains('h1', 'Command Line')
-  })
-
   context('language select', () => {
     it('selects English by default', () => {
       cy.get('#lang-select').find('option')
