@@ -20,10 +20,6 @@ context('Sidebar', () => {
   })
 
   context('Titles and links', () => {
-    beforeEach(() => {
-
-    })
-
     it('displays titles and links in sidebar', function () {
       cy.wrap(this.langValues).each(function (lang) {
         let sidebarYaml = 'source/_data/sidebar.yml'
@@ -71,8 +67,6 @@ context('Sidebar', () => {
             })
           })
         })
-
-
       })
     })
   })
