@@ -165,7 +165,6 @@ It generates the beautiful standalone HTML report file `mochawesome-report/mocha
 
 For more information, see {% url 'Integrating Mochawesome reporter with Cypress's http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}
 
-
 # Custom Reporters
 
 Cypress supports custom reporters, whether local to your project or installed through {% url "npm" https://www.npmjs.com/ %}.
