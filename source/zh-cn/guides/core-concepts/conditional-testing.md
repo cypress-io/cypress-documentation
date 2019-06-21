@@ -1,100 +1,100 @@
 ---
-title: Conditional Testing
+title: 条件测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学到
 
-- When conditional testing is a good choice for your tests
-- Situations where conditional testing is impossible
-- Strategies to handle common scenarios of conditional testing
+- 条件测试时你测试的一个很好的选择
+- 无法进行条件测试的情况
+- 处理条件测试常见场景的策略
 {% endnote %}
 
-# Definition
+# 定义
 
-Conditional testing refers to the common programming pattern:
+条件测试是指常见的编程模式：
 
 > If X, then Y, else Z
 
-Many of our users ask how to accomplish this seemingly simple idiom in Cypress.
+我们许多用户都在询问如何在Cypress完成这个看似简单的常规用法。
 
-Here are some example use cases:
+以下是一些示例：
 
-- How do I do something different whether an element does or doesn't exist?
-- My application does A/B testing, how do I account for that?
-- My users receive a "welcome wizard", but existing ones don't. Can I always close the wizard in case it's shown, and ignore it when it's not?
-- Can I recover from failed Cypress commands like if a {% url "`cy.get()`" get %} doesn't find an element?
-- I am trying to write dynamic tests that do something different based on the text on the page.
-- I want to automatically find all `<a>` elements and based on which ones I find, I want to check that each link works.
+- 无论元素是否存在，我该如何做一些不同的事情？
+- 我的应用程序做 A/B测试，我该如何解释？
+- 我的用户收到“欢迎向导”，但是现有用户没有。我是否可以随时关闭向导，如果没有显示，请忽略它。
+- 我可以从Cypress失败的命令中恢复测试程序么？例如 {% url "`cy.get()`" get %} 找不到元素。
+- 我正在尝试编写动态测试，根据页面上的文本执行不同的操作。
+- 我想自动找到所有 `<a>` 元素，根据我找到的元素，我想检查每个链接是否有效。
 
-The problem is - while first appearing simple, writing tests in this fashion often leads to flaky tests, random failures, and difficult to track down edge cases.
+问题是 - 虽然上面的情况看起来很简单，但是以这种方式编写测试通常会导致测试不稳定，随机失败以及难以追踪边缘情况。
 
-Let's investigate why and how you can overcome these problems...
+让我们来研究为什么以及如何克服这些问题...
 
-# The problem
+# 问题
 
-These days modern JavaScript applications are highly dynamic and mutable. Their state and the DOM are continuously changing over a period of time.
+现代JavaScript应用程序具有高度动态性和可变性。他们的状态和DOM在一段时间内不断变化。
 
-The problem with **conditional testing** is that it can only be used when the state has stabilized. In modern day applications, knowing when state is stable is oftentimes impossible.
+**条件测试**的问题是它只能在状态稳定时使用。在现代应用中，了解状态何时稳定通常是不可能的。
 
-To a human - if something changes 10ms or 100ms from now, we may not even notice this change and assume the state was always the same.
+对于一个人 - 我们假设状态总是相同的，如果事情从现在开始变化10毫秒或100毫秒，我们甚至可能不会注意到这种变化。
 
-To a robot - even 10ms represents billions+ of clock cycles. The timescale difference is incredible.
+对于一个机器人 - 这10毫秒甚至代表了十亿多的时钟周期。时间尺度差异令人难以置信。
 
-A human also has intuition. If you click a button and see a loading spinner, you will assume the state is in flux and will automatically wait for it to finish.
+人类还有直觉。如果单击一个按钮并看到加载一个加载中的图片，那么你将假设该状态处于不稳定状态并将自动等待它完成。
 
-A robot has no intuition - it will do exactly as it is programmed to do.
+机器人没有直觉 - 它将完全按照程序设计来执行。
 
-To illustrate this, let's take a very simple example of trying to conditionally test unstable state.
+为了说明这点，让我们列举一个非常简单的例子来尝试有条件的测试不稳定状态。
 
-## The DOM is unstable
+## DOM不稳定
 
 ```js
-// your app code
+// 你的应用程序代码
 
-// random amount of time
+// 随机的时间
 const random = Math.random() * 100
 
-// create a <button> element
+// 创建一个 <button> 元素
 const btn = document.createElement('button')
 
-// attach it to the body
+// 把它附加到body元素上
 document.body.appendChild(btn)
 
 setTimeout(() => {
-  // add the class active after an indeterminate amount of time
+  // 在不确定的时间后把该按钮的class属性设置为active
   btn.setAttribute('class', 'active')
 }, random)
 ```
 
 ```js
-// your cypress test code
+// 你的Cypress测试代码
 it('does something different based on the class of the button', function () {
-  // RERUN THIS TEST OVER AND OVER AGAIN
-  // AND IT WILL SOMETIMES BE TRUE, AND
-  // SOMETIMES BE FALSE.
+  // 尝试重复执行这个测试
+  // 你将会发现这个测试有时候能通过测试
+  // 但是有时候却是不能通过测试
 
   cy.get('button').then(($btn) => {
     if ($btn.hasClass('active')) {
-      // do something if it's active
+      // 如果它是active我们做其它事情
     } else {
-      // do something else
+      // 做其它事情
     }
   })
 })
 ```
 
-Do you see the problem here? This test is non-deterministic. The `<button>` will sometimes have the class `active` and sometimes not. In **most** cases, you cannot rely on the state of the DOM to determine what you should conditionally do.
+你能看到这个问题吗？这个测试是不确定的。`<button>`有时候会有 `active` 而有时候又没有。在**大多数**情况下，你不能依赖DOM的状态来确定你应该有条件的做什么。
 
-This is the heart of flaky tests. At Cypress we have designed our API to combat this type of flakiness at every step.
+这就是片状测试的核心。在Cypress中，我们在设计API的时候就确保了每一步都能抵御这种类型的情况。
 
-# The situations
+# 目前的情况
 
-The **only** way to do conditional testing on the DOM is if you are 100% sure that the state has "settled" and there is no possible way for it to change.
+对DOM进行条件测试的**唯一**方法是，如果你100%确定状态已经“稳定”并且没有可能的方式进行更改。
 
-That is it! In any other circumstance you will have flaky tests if you try to rely on the state of the DOM for conditional testing.
+这就对了！在任何其他情况下，如果你尝试依赖DOM的状态进行条件测试，则会出现片状测试。
 
-Let's explore a few examples.
+我们来看几个例子。
 
 ## Server side rendering
 
