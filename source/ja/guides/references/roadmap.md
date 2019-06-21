@@ -1,5 +1,5 @@
 ---
-title: 路线图
+title: ロードマップ
 ---
 
 # Upcoming features
