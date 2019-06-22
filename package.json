@@ -95,7 +95,7 @@
     "cypress": "3.3.1",
     "dependency-check": "3.3.0",
     "deps-ok": "1.4.1",
-    "eslint": "5.16.0",
+    "eslint": "6.0.0",
     "eslint-plugin-cypress": "2.2.1",
     "eslint-plugin-cypress-dev": "2.1.0",
     "fluent-ffmpeg": "2.1.2",
