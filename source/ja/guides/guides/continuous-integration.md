@@ -360,7 +360,7 @@ You can set any configuration value as an environment variable. This overrides v
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
 
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+Refer to the {% url 'Environment Variables recipe' configuration#Environment-Variables %} for more examples.
 
 ***Record Key***
 

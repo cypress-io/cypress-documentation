@@ -81,6 +81,39 @@ cy
   })
 ```
 
+## Promises
+
+You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the {% url "Logging in using application code" recipes#Logging-In %} recipe for the full example.
+
+```javascript
+// import application code for logging in
+import { userService } from '../../src/_services/user.service'
+
+it('can assert against resolved object using .should', () => {
+  cy.log('user service login')
+  const username = Cypress.env('username')
+  const password = Cypress.env('password')
+
+  // wrap the promise returned by the application code
+  cy.wrap(userService.login(username, password))
+    // check the yielded object
+    .should('be.an', 'object')
+    .and('have.keys', ['firstName', 'lastName', 'username', 'id', 'token'])
+    .and('contain', {
+      username: 'test',
+      firstName: 'Test',
+      lastName: 'User'
+    })
+
+  // cy.visit command will wait for the promise returned from
+  // the "userService.login" to resolve. Then local storage item is set
+  // and the visit will immediately be authenticated and logged in
+  cy.visit('/')
+  // we should be logged in
+  cy.contains('Hi Test!').should('be.visible')
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -125,3 +158,4 @@ When clicking on the `wrap` command within the command log, the console outputs 
 - {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}
+- {% url "Logging in using application code" recipes#Logging-In %} recipe

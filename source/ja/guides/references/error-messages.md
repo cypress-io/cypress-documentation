@@ -491,7 +491,7 @@ When your application navigates to a superdomain outside of the current origin-p
 
 ### There are a few simple workarounds to these common situations:
 
-1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So make an assertion about that. You can see more strategies on testing anchor links {% url 'in our Example Recipe' recipes#Tab-Handling-and-Links %}.
+1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So make an assertion about that. You can see more strategies on testing anchor links {% url 'in our "Tab Handling and Links" example recipe' recipes#Testing-the-DOM %}.
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 

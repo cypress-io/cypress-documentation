@@ -187,7 +187,7 @@ When you open a Cypress project, clicking on the *Settings* tab will display the
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
-To see a working example of this please check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 To blacklist a host:
 
