@@ -3,7 +3,7 @@ title: 持续集成
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 从这篇文档您将会看到
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - 如何在持续集成模式下运行Cypress
 - 如何在众多的持续集成平台里完成Cypress配置

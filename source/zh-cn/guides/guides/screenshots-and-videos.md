@@ -3,7 +3,7 @@ title: 截图和视频
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 您将学习
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - Cypress如何自动捕捉测试失败的截图
 - 如何手工捕捉自己的截图

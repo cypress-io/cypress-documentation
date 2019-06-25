@@ -3,7 +3,7 @@ title: 变量和别名
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学到
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - 如何处理异步命令
 - 别名是什么以及它们如何简化你的代码
@@ -174,7 +174,7 @@ it('does not have access to text', function () {
 
 我们可以让我们的代码使用 `let` 进行一些丑陋的中转来访问它。
 
-{% note warning '不要这样做' %}
+{% note danger '不要这样做' %}
 以下代码仅供演示
 {% endnote %}
 
@@ -192,7 +192,9 @@ describe('a suite', function () {
   })
 
   it('does have access to text', function () {
-    text // 现在我们可以使用了
+    // 现在text可以使用了
+    // 但是这不是一个很好的解决方式 :(
+    text
   })
 })
 ```
@@ -254,7 +256,7 @@ describe('parent', function () {
 })
 ```
 
-***访问 Fixtures:***
+### 访问 Fixtures:
 
 共享上下文最常用的例子是处理 {% url `cy.fixture()` fixture %}时。
 
@@ -308,7 +310,7 @@ cy.fixture('users.json').then((users) => {
 })
 ```
 
-***避免使用`this`***
+### 避免使用`this`
 
 {% note warning '箭头功能' %}
 如果你使用{% url '箭头功能' https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions %}在你的测试或者钩子中，那么你通过`this.*`来访问别名的属性是不可以的。
@@ -370,7 +372,7 @@ cy.get('@rows').first().click()
 
 因为我们在{% url `cy.get()` get %}中使用了`@`字符，而不是查询DOM元素， {% url `cy.get()` get %} 寻找现有的别名为 `rows`的并返回引用（如果找到它）。
 
-***旧元素：***
+### 旧元素：
 
 在很多单页面JavaScript应用程序中，DOM不断地重新刷新应用程序的各个部分。如果你通过{% url `cy.get()` get %}来获取别名中的元素，但是这时DOM中的元素已经被删除了，那么Cypress将会重新查询DOM来再次查找这些元素。
 
@@ -435,3 +437,24 @@ cy.contains('Successfully created user: Brian')
 {% note info '初次使用Cypress？' %}
 {% url '我们有关于网络请求更加详细和全面的指南。' network-requests %}
 {% endnote %}
+
+## 请求
+
+别名同样可以在{% url requests request %} 中使用。
+
+下面是给请求取个别名并在后面访问其属性的例子。
+
+```js
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+// 在这里有其它的测试代码
+
+cy.get('@comments').should((response) => {
+  if (response.status === 200) {
+      expect(response).to.have.property('duration')
+    } else {
+      // 在这里你可以做任何你想做的判断
+    }
+  })
+})
+```

@@ -1,5 +1,5 @@
 ---
-title: 更新日志
+title: 変更履歴
 ---
 
 {% changelog %}

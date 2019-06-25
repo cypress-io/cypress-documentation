@@ -3,7 +3,9 @@ title: Cypress简介
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 从这篇文档您将会看到
+
+# {% fa fa-graduation-cap %} 从这篇文档你将会学习到
+
 
 - Cypress如何查询DOM
 - Cypress如何管理主题及命令链
@@ -14,7 +16,7 @@ title: Cypress简介
 {% note success 重要说明! %}
 
 这是了解关于如何使用Cypress进行测试的重要指南。阅读它,理解它。同时提出相关问题,以便我们改进它。
-完成后,我们建议您观看我们的相关 {% fa fa-video-camera %} {% url "教学视频" tutorials %}。
+完成后,我们建议你观看我们的相关 {% fa fa-video-camera %} {% url "教学视频" tutorials %}。
 
 {% endnote %}
 
@@ -59,7 +61,7 @@ describe('Post Resource', function() {
 
 
 这是一个相对简单，直接的测试，但要考虑它在客户端和服务器上覆盖了多少代码！
-对于本指南的其余部分，我们将一起探索Cypress使上述示例运行的基础知识。我们将带您揭开Cypress的神秘面纱，这样您就可以高效地测试您的应用程序，使其尽可能像用户真实操作一样，并讨论如何在有用时采用快捷方式。
+对于本指南的其余部分，我们将一起探索Cypress使上述示例运行的基础知识。我们将带你揭开Cypress的神秘面纱，这样你就可以高效地测试你的应用程序，使其尽可能像用户真实操作一样，并讨论如何在有用时采用快捷方式。
 
 # 查询元素
 
@@ -77,7 +79,7 @@ $('.my-selector')
 cy.get('.my-selector')
 ```
 
-事实上,Cypress {% url '捆绑了jQuery' bundled-tools#Other-Library-Utilities %}并向您公开其许多DOM遍历方法，以便您可以轻松使用您已熟悉的API来处理复杂的HTML结构。
+事实上,Cypress {% url '捆绑了jQuery' bundled-tools#Other-Library-Utilities %}并向你公开其许多DOM遍历方法，以便你可以轻松使用你已熟悉的API来处理复杂的HTML结构。
 
 
 ```js
@@ -159,12 +161,12 @@ cy
 
 这使Cypress更加健壮并且不受其他测试工具中出现的许多常见问题的影响。考虑可能导致查询DOM元素失败的所有情况，有:
 - DOM尚未完成加载。
-- 您的框架尚未完成引导。
+- 你的框架尚未完成引导。
 - 一个XHR请求尚未响应。
 - 一个动画尚未完成。
 - 等等...
 
-在这之前，针对上述问题，您将被迫编写一些自定义代码，如:令人讨厌的各种等待组合，有条件的重试，为空检查等。当然，这些在Cypress是不需要的，通过内置的重试机制及{% url '可定制化的超时机制' configuration#Timeouts %}, Cypress回避了这些可恶的问题。
+在这之前，针对上述问题，你将被迫编写一些自定义代码，如:令人讨厌的各种等待组合，有条件的重试，为空检查等。当然，这些在Cypress是不需要的，通过内置的重试机制及{% url '可定制化的超时机制' configuration#Timeouts %}, Cypress回避了这些可恶的问题。
 
 {% note success 核心概念 %}
 为了升级整体测试的稳定性，我们对如何找到DOM元素进行微小的改变。那就是使用Cypress强大的重试和超时逻辑包装了所有DOM查询，当然这些逻辑更适合真正的Web应用程序的工作方式。效果很好！

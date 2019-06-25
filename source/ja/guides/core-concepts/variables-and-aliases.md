@@ -174,7 +174,7 @@ How will we get access to `text`?
 
 We could make our code do some ugly backflips using `let` to get access to it.
 
-{% note warning 'Do not do this' %}
+{% note danger 'Do not do this' %}
 This code below is just for demonstration.
 {% endnote %}
 
@@ -192,7 +192,9 @@ describe('a suite', function () {
   })
 
   it('does have access to text', function () {
-    text // now this is available to us
+    // now text is available to us
+    // but this is not a great solution :(
+    text
   })
 })
 ```
@@ -254,7 +256,7 @@ describe('parent', function () {
 })
 ```
 
-***Accessing Fixtures:***
+### Accessing Fixtures:
 
 The most common use case for sharing context is when dealing with {% url `cy.fixture()` fixture %}.
 
@@ -309,7 +311,7 @@ cy.fixture('users.json').then((users) => {
 })
 ```
 
-***Avoiding the use of `this`***
+### Avoiding the use of `this`
 
 {% note warning 'Arrow Functions' %}
 Accessing aliases as properties with `this.*` will not work if you use {% url 'arrow functions' https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions %} for your tests or hooks.
@@ -371,7 +373,7 @@ cy.get('@rows').first().click()
 
 Because we've used the `@` character in {% url `cy.get()` get %}, instead of querying the DOM for elements, {% url `cy.get()` get %} looks for an existing alias called `rows` and returns the reference (if it finds it).
 
-***Stale Elements:***
+### Stale Elements:
 
 In many single-page JavaScript applications the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call {% url `cy.get()` get %} with the alias, Cypress automatically re-queries the DOM to find these elements again.
 
@@ -436,3 +438,24 @@ cy.contains('Successfully created user: Brian')
 {% note info 'New to Cypress?' %}
 {% url 'We have a much more detailed and comprehensive guide on routing Network Requests.' network-requests %}
 {% endnote %}
+
+## Requests
+
+Aliases can also be used with {% url requests request %}.
+
+Here's an example of aliasing a request and accessing its properties later.
+
+```js
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+// other test code here
+
+cy.get('@comments').should((response) => {
+  if (response.status === 200) {
+      expect(response).to.have.property('duration')
+    } else {
+      // whatever you want to check here
+    }
+  })
+})
+```

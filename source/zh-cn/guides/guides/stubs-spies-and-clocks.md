@@ -3,7 +3,8 @@ title: 桩、间谍和时钟
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 您将学习
+# {% fa fa-graduation-cap %} 你将会学习到什么
+
 
 - Cypress包含哪些库来提供典型的测试方法
 - 如何使用桩来断言调用了代码，但又阻止代码运行

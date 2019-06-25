@@ -3,7 +3,7 @@ title: 网络请求
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 您将学习
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - Cypress如何使用{% url `cy.route()` route %}来中断后端
 - 当打桩网络请求时，我们做出了哪些权衡
@@ -11,6 +11,7 @@ title: 网络请求
 - 如何使用固件去复用XHR响应
 - 如何使用别名去引用XHR请求并等待它们
 - 如何编写抵抗不稳定的声明式测试
+
 {% endnote %}
 
 # 测试策略
