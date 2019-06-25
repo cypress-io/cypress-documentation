@@ -164,11 +164,7 @@ Cypress.Commands.add('console', {
   // log the subject to the console
   console[method]('The subject is', subject)
 
-  // whatever we return becomes the new subject
-  //
-  // we don't want to change the subject so
-  // we return whatever was passed in
-  return subject
+  // we do not return anything: https://docs.cypress.io/guides/references/error-messages.html#Cypress-detected-that-you-invoked-one-or-more-cy-commands-in-a-custom-command-but-returned-a-different-value
 })
 ```
 
