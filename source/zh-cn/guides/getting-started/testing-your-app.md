@@ -3,7 +3,7 @@ title: 测试您的应用
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 从这篇文档您将会看到
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - Cypress与您后端的关系
 - 如何配置Cypress以适用您自己的应用

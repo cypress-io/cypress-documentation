@@ -82,6 +82,11 @@
       link: https://github.com/cypress-io/code-coverage
       keywords: [coverage]
 
+    - name: 'npm-cy'
+      description: This GitHub Action for npm enables arbitrary actions with the npm command-line client, including testing with cypress.io and publishing to a registry.
+      link: https://github.com/bartlett705/npm-cy
+      keywords: [github, actions, npm]
+
 - name: カスタムコマンド
   plugins:
     - name: cy-view

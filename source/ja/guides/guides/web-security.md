@@ -1,5 +1,5 @@
 ---
-title: Web Security
+title: ウェブセキュリティー
 ---
 
 Browsers adhere to a strict {% url "`same-origin policy`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}. This means that browsers restrict access between `<iframes>` when their origin policies do not match.

@@ -16,7 +16,9 @@ title: 启动浏览器
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
 
-Cypress会自动在您的操作系统中检测可用的浏览器。
+Cypress会自动在您的操作系统中检测可用的浏览器。你可以使用右上角的下拉菜单在测试执行器中切换浏览器：
+
+{% imgTag /img/guides/select-browser.png "Select a different browser" %}
 
 ## Electron浏览器
 
@@ -139,4 +141,4 @@ Cypress自动禁用Cypress启动的浏览器中的某些功能，这些功能往
 
 此外，我们还让Cypress生成的浏览器看起来与常规会话不同。您会在浏览器的chrome周围看到一个更暗的主题。你将能从视觉上分辨出来。
 
-{% imgTag //img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
+{% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}

@@ -36,7 +36,7 @@ context('Mobile', () => {
         .each(function (displayedLink, i) {
           const link = this[lang].sidebar.guides[this.sidebarLinkNames[i]]
 
-          expect(displayedLink.text().trim()).to.eq(link)
+          expect(displayedLink.text().trim(), `Sidebar link '${displayedLink.text()}' matches translated title in ${lang}.yml`).to.eq(link)
         })
       })
     })

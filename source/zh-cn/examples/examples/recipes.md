@@ -14,6 +14,7 @@ Recipe | Category | Description
 {% urlHash 'HTML Web Forms' HTML-Web-Forms %} | Logging In | Log in with a basic HTML form
 {% urlHash 'XHR Web Forms' XHR-Web-Forms %} | Logging In | Log in using an XHR
 {% urlHash 'CSRF Tokens' CSRF-Tokens %} | Logging In | Log in with a required CSRF token
+{% url 'Json Web Tokens' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__jwt %} | Logging In | Log in using JWT
 {% urlHash 'Tab Handling and Links' Tab-Handling-and-Links %} | Testing the DOM | Links that open in a new tab
 {% urlHash 'Hover and Hidden Elements' Hover-and-Hidden-Elements %} | Testing the DOM | Test hidden elements requiring hover
 {% urlHash 'Form Interactions' Form-Interactions %} | Testing the DOM | Test form elements like input type `range`

@@ -1,0 +1,63 @@
+# Online courses that teach end-to-end testing using Cypress.io
+# over multiple videos. The courses appear in the order 
+# listed here, so place most recent courses first
+- title: Test Automation using Cypress
+  url: https://training.xebia.com/quality-test-automation/test-automation-using-cypress
+  author: Xebia
+  authorTwitter: XebiaAcademy
+  sourceName: Xebia Academy
+  sourceUrl: https://training.xebia.com
+
+- title: Test Production Ready Apps with Cypress
+  url: https://egghead.io/courses/test-production-ready-apps-with-cypress
+  author: Brett Cassette
+  authorTwitter: brettcassette
+  sourceName: egghead.io
+  sourceUrl: https://egghead.io
+
+- title: Curso de End to End Testing con Cypress
+  url: https://platzi.com/cursos/testing-cypress/
+  author: Adrián Estrada
+  authorTwitter: edsadr
+  sourceName: Platzi
+  sourceUrl: https://platzi.com/
+  language: Spanish
+
+- title: "ng-conf '19: Effective Automated Testing with Cypress.io"
+  url: https://www.pluralsight.com/courses/ng-conf-19-testing-cypress-io
+  author: Joe Eames
+  authorTwitter: josepheames
+  company: pluralsight.com
+
+- title: End to End automation testing with Cypress
+  url: https://www.udemy.com/e2e-cypress/
+  author: Karthik KK
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+
+- title: Automated Software Testing with Cypress
+  url: https://www.udemy.com/automated-testing-with-cypress/
+  author: Kaniel Outis
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+
+- title: Testing JavaScript
+  url: https://testingjavascript.com/
+  author: Kent C. Dodds
+  authorTwitter: kentcdodds
+  sourceName: Testing JavaScript
+  sourceUrl: https://testingjavascript.com/
+
+- title: End to End testing with Cypress
+  url: https://egghead.io/courses/end-to-end-testing-with-cypress
+  author: Andy van Slaars
+  authorTwitter: avanslaars
+  sourceName: egghead.io
+  sourceUrl: https://egghead.io
+
+- title: Test a React Todo App
+  url: https://on.cypress.io/tutorials
+  author: Andy van Slaars
+  authorTwitter: avanslaars
+  sourceName: Cypress.io
+  sourceUrl: https://www.cypress.io

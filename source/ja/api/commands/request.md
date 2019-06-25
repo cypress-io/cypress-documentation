@@ -152,6 +152,18 @@ cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
 cy.request('DELETE', 'http://localhost:8888/users/827')
 ```
 
+### Alias the request using {% url "`.as()`" as %}
+
+```javascript
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+cy.get('@comments').should((response) => {
+  expect(response.body).to.have.length(500)
+  expect(response).to.have.property('headers')
+  expect(response).to.have.property('duration')
+})
+```
+
 ## Method, URL, and Body
 
 ### Send a `POST` request with a JSON body

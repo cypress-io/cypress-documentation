@@ -3,7 +3,7 @@ title: 条件测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学到
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - 条件测试时你测试的一个很好的选择
 - 无法进行条件测试的情况

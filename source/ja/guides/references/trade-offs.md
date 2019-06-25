@@ -1,5 +1,5 @@
 ---
-title: 一些取舍
+title: トレードオフ
 containerClass: faq
 ---
 

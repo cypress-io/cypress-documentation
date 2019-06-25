@@ -3,7 +3,7 @@ title: 与众不同
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %}从这篇文档您将会看到
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - 是什么造就了Cypress的与众不同
 - 它与Selenium架构上有何区别

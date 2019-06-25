@@ -3,7 +3,7 @@ title: 并行化
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %}  您将学习
+# {% fa fa-graduation-cap %}  你将会学习到什么
 
 - 如何并行化测试运行
 - 如何分组测试运行
