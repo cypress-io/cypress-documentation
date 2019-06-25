@@ -144,7 +144,7 @@ cy.fixture('users').then((json) => {
 ### Using fixtures to bootstrap data
 
 {% note info %}
-{% url 'Check out our example recipe using `cy.fixture()` to bootstrap data for our application.' recipes#Bootstrapping-your-App %}
+{% url 'Check out our example recipe using `cy.fixture()` to bootstrap data for our application.' recipes#Server-Communication %}
 {% endnote %}
 
 ### Using an alias to access a fixture
@@ -267,5 +267,5 @@ describe('User page', () => {
 
 - {% url `cy.route()` route %}
 - {% url `.then()` then %}
-- {% url 'Recipe: Bootstrapping App Test Data' recipes#Bootstrapping-your-App %}
+- {% url 'Recipe: Bootstrapping your App' recipes#Server-Communication %}
 - {% url 'Fixtures' https://github.com/cypress-io/testing-workshop-cypress#fixtures %} section of the Cypress Testing Workshop

@@ -226,4 +226,4 @@ You can {% url 'read more about how environment variables can change configurati
 
 ## See also
 
-- {% url "Environment Variables recipe" recipes#Environment-Variables %}
+- {% url "Environment Variables recipe" recipes#Server-Communication %}
