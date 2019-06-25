@@ -83,7 +83,7 @@ cy
 
 ## Promises
 
-You can wrap promises returned by the application code. Cypress test commands will automatically wait for the promise to resolve before continuing with the resolved value yielded to the next command or assertion. See {% url "Logging in using application code" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__using-app-code %} recipe for the full example.
+You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the {% url "Logging in using application code" recipes#Logging-In %} recipe for the full example.
 
 ```javascript
 // import application code for logging in
@@ -158,4 +158,4 @@ When clicking on the `wrap` command within the command log, the console outputs 
 - {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}
-- {% url "Logging in using application code" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__using-app-code %} recipe
+- {% url "Logging in using application code" recipes#Logging-In %} recipe
