@@ -66,7 +66,7 @@ In the future we **do** have plans to release backend adapters for other languag
 
 Because Cypress runs in the browser, it will never have multi-tabs support. We do have access to the browser automation APIs to actually switch tabs, but there is no reason for us to ever expose them.
 
-Most of the time this use case is needed when users click an `<a>` that opens a new tab. Users then want to switch to that tab to verify that the content loaded. But, you shouldn't need to do this. In fact we have {% url 'recipes of showing you how to test this without multiple tabs' recipes#Tab-Handling-and-Links %}.
+Most of the time this use case is needed when users click an `<a>` that opens a new tab. Users then want to switch to that tab to verify that the content loaded. But, you shouldn't need to do this. In fact we have {% url 'recipes of showing you how to test this without multiple tabs' recipes#Testing-the-DOM %}.
 
 To take this a step further - we don't believe there is any use case for testing the browser's native behavior. You should ask yourself why you are testing that clicking an `<a href="/foo" target="_blank">` opens a new tab. You already know that is what the browser is designed to do and you already know that it is triggered by the `target="_blank"` attribute.
 
@@ -236,4 +236,4 @@ We've written several other guides specifically about handling this situation.
 
 - {% url 'Best Practices: Visiting external sites' best-practices#Visiting-external-sites %}
 - {% url 'Web Security: Common Workarounds' web-security#Common-Workarounds %}
-- {% url 'Recipes: Logging In (Single Sign On)' recipes#Single-Sign-On %}
+- {% url 'Recipes: Logging In - Single Sign On' recipes#Logging-In %}
