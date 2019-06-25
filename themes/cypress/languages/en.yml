@@ -65,6 +65,7 @@ sidebar:
     module-api: Module API
     retry-ability: Retry-ability
     visual-testing: Visual Testing
+    code-coverage: Code Coverage
   api:
     api: API
     table-of-contents: Table of Contents
@@ -193,10 +194,11 @@ sidebar:
     applications: Applications
     docker: Docker
     media: Media
+    courses-media: Courses
+    blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
-    blogs-media: Blogs
     workshop: Workshop
   faq:
     questions: FAQ

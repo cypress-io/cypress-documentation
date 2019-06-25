@@ -23,7 +23,7 @@ page:
 sidebar:
   guides:
     overview: 概述
-    why-cypress: 为什么选择Cypress？
+    why-cypress: 为什么选择Cypress?
     getting-started: 开始使用
     key-differences: 我们的优势
     installing-cypress: 安装Cypress
@@ -64,9 +64,10 @@ sidebar:
     plugins-guide: 插件
     reporters: Reporters
     typescript-support: TypeScript
-    visual-testing: Visual Testing
     module-api: 模块API
     retry-ability: 重试机制
+    visual-testing: Visual Testing
+    code-coverage: Code Coverage
   api:
     api: API
     table-of-contents: Table of Contents
@@ -195,10 +196,11 @@ sidebar:
     applications: Applications
     docker: Docker
     media: Media
+    courses-media: Courses
+    blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
-    blogs-media: Blogs
     workshop: Workshop
   faq:
     questions: FAQ

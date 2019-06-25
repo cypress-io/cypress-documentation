@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('i18n', () => {
   beforeEach(() => {
     cy.server()
@@ -29,6 +30,7 @@ describe('i18n', () => {
           .select(lang)
           .should('have.value', lang)
           cy.url().should('include', lang)
+          cy.document().its('documentElement.lang').should('equal', lang)
         })
       })
     })

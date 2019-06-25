@@ -152,6 +152,18 @@ cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
 cy.request('DELETE', 'http://localhost:8888/users/827')
 ```
 
+### Alias the request using {% url "`.as()`" as %}
+
+```javascript
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+cy.get('@comments').should((response) => {
+  expect(response.body).to.have.length(500)
+  expect(response).to.have.property('headers')
+  expect(response).to.have.property('duration')
+})
+```
+
 ## Method, URL, and Body
 
 ### Send a `POST` request with a JSON body
@@ -171,7 +183,7 @@ cy
 
 To test the redirection behavior of a login without a session, `cy.request` can be used to check the `status` and `redirectedToUrl` property.
 
-The `redirectedToUrl` property is a special Cypress property that normalizes the `url` the browser would normally follow during a redirect.
+The `redirectedToUrl` property is a special Cypress property that normalizes the URL the browser would normally follow during a redirect.
 
 ```javascript
 cy.request({

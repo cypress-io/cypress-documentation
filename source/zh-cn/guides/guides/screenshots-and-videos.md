@@ -1,9 +1,9 @@
 ---
-title: Screenshots and Videos
+title: 截图和视频
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How Cypress captures screenshots of test failures automatically
 - How to manually capture your own screenshot

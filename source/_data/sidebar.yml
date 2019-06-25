@@ -33,6 +33,7 @@ guides:
     reporters: reporters.html
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
+    code-coverage: code-coverage.html
 
   references:
     assertions: assertions.html
@@ -174,6 +175,7 @@ examples:
     docker: docker.html
     workshop: workshop.html
   media:
+    courses-media: courses-media.html
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html

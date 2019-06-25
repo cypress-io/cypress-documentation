@@ -1,5 +1,5 @@
 ---
-title: Module API
+title: 模块API
 ---
 
 You can require Cypress as a Node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
