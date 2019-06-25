@@ -263,13 +263,13 @@ Yes. {% url "You can override this with `userAgent` in `cypress.json`." configur
 
 Yes. {% url "You can set this with `blacklistHosts` in `cypress.json`." configuration#Browser %}
 
-Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-Spying %}.
+Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 ## {% fa fa-angle-right %} How can I verify that calls to analytics like Google Analytics are being made correct?
 
 You can stub their functions and then ensure they're being called.
 
-Check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-Spying %}.
+Check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
