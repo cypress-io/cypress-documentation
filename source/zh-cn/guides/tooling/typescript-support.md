@@ -53,7 +53,7 @@ You can find an example in the {% url "cypress-example-todomvc custom commands" 
 
 ## Types for custom assertions
 
-If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" recipes#Extending-Cypress %} for instructions.
+If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" recipes#Fundamentals %} for instructions.
 
 ## Additional information
 
