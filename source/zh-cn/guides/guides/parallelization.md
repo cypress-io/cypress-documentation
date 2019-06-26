@@ -234,18 +234,19 @@ A CI build ID is used to associate multiple CI machines to one test run. This id
 
 Cypress currently uses the following CI environment variables to determine a CI build ID for a test run:
 
-| Provider  | Environment Variable  |
-|--|--|
-| AppVeyor  | `APPVEYOR_BUILD_NUMBER`  |
-| Bamboo  | `BAMBOO_BUILD_NUMBER`  |
-| Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER` |
-| Codeship  | `CI_BUILD_NUMBER`  |
-| Codeship Basic  | `CI_BUILD_NUMBER`  |
-| Codeship Pro  | `CI_BUILD_ID`  |
-| Drone  | `DRONE_BUILD_NUMBER`  |
-| Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`  |
-| Jenkins  | `BUILD_NUMBER`  |
-| Travis  | `TRAVIS_BUILD_ID`  |
+Provider  | Environment Variable
+--|--
+AppVeyor  | `APPVEYOR_BUILD_NUMBER`
+Bamboo  | `BAMBOO_BUILD_NUMBER`
+Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
+Codeship  | `CI_BUILD_NUMBER`
+Codeship Basic  | `CI_BUILD_NUMBER`
+Codeship Pro  | `CI_BUILD_ID`
+Drone  | `DRONE_BUILD_NUMBER`
+Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`
+Jenkins  | `BUILD_NUMBER`
+Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
+Travis  | `TRAVIS_BUILD_ID`
 
 You can pass a different value to link agents to the same run. For example, if you are using Jenkins and think the environment variable `BUILD_TAG` is more unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value via CLI {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
 
