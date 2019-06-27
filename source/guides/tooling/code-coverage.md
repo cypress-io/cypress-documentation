@@ -346,10 +346,20 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 
 {% imgTag /img/guides/code-coverage/100percent.png "Full code coverage" %}
 
+# Combined front and back code coverage
+
+# Examples
+
+You can find full examples showing different code coverage setups in the following repositories:
+
+- {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} is the example code used in this guide.
+- {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back- and front end code and merge it into a single report.
+- {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
+- {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
+
 # See also
 
 - The official {% url "@cypress/code-coverage" https://github.com/cypress-io/code-coverage %} plugin
 - {% url "Combined End-to-end and Unit Test Coverage" https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/ %}
 - {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
 - {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
-- {% url "Code coverage using webpack-dev-server example" https://github.com/bahmutov/code-coverage-webpack-dev-server %}
