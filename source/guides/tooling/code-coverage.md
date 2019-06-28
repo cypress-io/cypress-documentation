@@ -346,17 +346,19 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 
 {% imgTag /img/guides/code-coverage/100percent.png "Full code coverage" %}
 
-# Fullstack code coverage
+# Full stack code coverage
 
-A complex application might have Node.js backend with its own complex logic. The API calls from the front end web application go through the layers of code, and it would be nice to track what backend code has been exercised during Cypress end-to-end tests. Maybe our end-to-end tests that are so effective at covering the web application code are also covering the backend server code?
+A complex application might have a Node back end with its own complex logic. From the front end web application, the calls to the API go through layers of code. It would be nice to track what back end code has been exercised during Cypress end-to-end tests. 
 
-**Long story short: yes.** You can collect the code coverage from the backend, and let `@cypress/code-coverage` plugin merge it with the front end coverage, creating a single fullstack report.
+Are our end-to-end tests that are so effective at covering the web application code are also covering the back end server code?
+
+**Long story short: yes.** You can collect the code coverage from the back end, and let the `@cypress/code-coverage` plugin merge it with the front end coverage, creating a single full stack report.
 
 {% note info %}
 The full source code for this section can be found in the {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} repository.
 {% endnote %}
 
-You can run your Node.js server and instrument it using `nyc` on the fly. Instead of the "normal" server start command, you can run the command `npm run start:coverage` defined in `package.json` like this:
+You can run your Node server and instrument it using nyc on the fly. Instead of the "normal" server start command, you can run the command `npm run start:coverage` defined in the `package.json` like this:
 
 ```json
 {
@@ -367,7 +369,7 @@ You can run your Node.js server and instrument it using `nyc` on the fly. Instea
 }
 ```
 
-In your server, insert another middleware from `@cypress/code-coverage`. If you use Express.js server, include `middleware/express`:
+In your server, insert another middleware from `@cypress/code-coverage`. If you use an Express server, include `middleware/express`:
 
 ```javascript
 const express = require('express')
@@ -376,7 +378,7 @@ const app = express()
 require('@cypress/code-coverage/middleware/express')(app)
 ```
 
-If your server uses Hapi.js, include `middleware/hapi`
+If your server uses hapi, include `middleware/hapi`
 
 ```javascript
 if (global.__coverage__) {
@@ -384,7 +386,7 @@ if (global.__coverage__) {
 }
 ```
 
-**Tip:** you can conditionally register the endpoint only if there is a global code coverage object, and you can [exclude the middleware code from the coverage numbers](https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md):
+**Tip:** you can conditionally register the endpoint only if there is a global code coverage object, and you can {% url "exclude the middleware code from the coverage numbers" https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md %}:
 
 ```javascript
 /* istanbul ignore next */
@@ -393,7 +395,7 @@ if (global.__coverage__) {
 }
 ```
 
-For any other server type, define a `GET /__coverage__` endpoint and return the `global.__coverage__` object
+For any other server type, define a `GET /__coverage__` endpoint and return the `global.__coverage__` object.
 
 ```javascript
 if (global.__coverage__) {
@@ -403,7 +405,7 @@ if (global.__coverage__) {
 }
 ```
 
-In order for `@cypress/code-coverage` plugin to know that it should request the backend coverage, add the new endpoint to the `cypress.json` environment settings under `env.codeCoverage.url` key. For example, if the application backend is running at port 3000 and we are using the default "GET /__coverage__" endpoint, set the following:
+In order for the `@cypress/code-coverage` plugin to know that it should request the back end coverage, add the new endpoint to the `cypress.json` environment settings under `env.codeCoverage.url` key. For example, if the application back end is running at port 3000 and we are using the default "GET /__coverage__" endpoint, set the following:
 
 ```json
 {
@@ -415,18 +417,18 @@ In order for `@cypress/code-coverage` plugin to know that it should request the 
 }
 ```
 
-From now on, the front end code coverage collected during end-to-end tests will be merged with the code coverage from the instrumented backend code and saved in a single report. Here is an example report from {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %}:
+From now on, the front end code coverage collected during end-to-end tests will be merged with the code coverage from the instrumented back end code and saved in a single report. Here is an example report from the {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} example:
 
-{% imgTag /img/guides/code-coverage/full-coverage.png "Combined code coverage report from front- and back-end code" %}
+{% imgTag /img/guides/code-coverage/full-coverage.png "Combined code coverage report from front and back end code" %}
 
-You can explore the above combined full-stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
+You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
 
 # Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
 
 - {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} is the example code used in this guide.
-- {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back- and front end code and merge it into a single report.
+- {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
 - {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
 
