@@ -139,7 +139,7 @@ Easily: control which campaign gets sent, or provide a reliable means to know wh
 ### Use URL query params:
 
 ```js
-// tell your backend server which campaign you want sent
+// tell your back end server which campaign you want sent
 // so you can deterministically know what it is ahead of time
 cy.visit('https://app.com?campaign=A')
 
@@ -381,13 +381,14 @@ Many of our users ask how they can recover from failed commands.
 
 > If I had error handling, I could just try to find X and if X fails go find Y
 
-Because error handling is a common idiom in most programming languages, and especially in Node.js, it seems reasonable to expect to do that in Cypress.
+Because error handling is a common idiom in most programming languages, and especially in Node, it seems reasonable to expect to do that in Cypress.
 
 However, this is really the same question as asking to do conditional testing just wrapped up in a slightly different implementation detail.
 
 For instance you may want to do this:
 
 **The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+
 ```js
 cy.get('button').contains('hello')
   .catch((err) => {

@@ -68,7 +68,7 @@ yarn add cypress --dev
 
 ## {% fa fa-download %} Direct download
 
-If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
+If you're not using Node or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
