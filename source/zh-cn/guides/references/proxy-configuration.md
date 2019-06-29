@@ -1,111 +1,111 @@
 ---
-title: Proxy Configuration
+title: 代理配置
 ---
 
-Cypress needs Internet access to work. Many companies require the use of a corporate proxy to access the Internet. If your company does this, many functions of Cypress will not work until you've configured Cypress to use your proxy:
+Cypress需要访问网络才能工作。许多公司需要使用公司的代理来访问网络。如果你公司也需要这样做，那么Cypress的许多功能将不会起作用直到你配置好Cypress来使用你的代理：
 
-* Cypress won't be able to load web pages besides `localhost`.
-* Cypress won't be able to warn you if your {% url "`baseUrl`" configuration#Global %} isn't available.
-* Cypress won't be able to connect to the {% url "Dashboard Service" dashboard-service %} to log in or record test runs.
-* `npm install cypress` may fail while downloading the Cypress binary.
+* Cypress将不能加载除了`localhost`以外的网页。
+* Cypress将不能在你的{% url "`baseUrl`" configuration#Global %}不可用时警告你。
+* Cypress将不能连接到{% url "数据面板服务" dashboard-service %} 来登入或者记录测试运行。
+* `npm install cypress`可能在下载Cypress二进制文件时失败。
 
-If you are experiencing any or all of these issues, you may need to configure Cypress with your proxy. Instructions are available for {% urlHash "macOS" Set-a-proxy-on-Linux-or-macOS %}, {% urlHash "Linux" Set-a-proxy-on-Linux-or-macOS %}, and {% urlHash "Windows" Set-a-proxy-on-Windows %}.
+如果你正在经历部分或所有的这些问题，你可能需要配置Cypress的代理。相应的配置说明可查看{% urlHash "macOS" 在Linux或macOS上设置代理 %}，{% urlHash "Linux" 在Linux或macOS上设置代理 %}，和{% urlHash "Windows" 在Windows上设置代理 %}.
 
 {% note warning %}
-Proxy Auto-Configuration (PAC) files are not currently supported. If your organization uses a PAC file, contact a network administrator to ask what HTTP proxy you should be using to access the general Internet, then use that proxy with Cypress.
+目前不支持自动配置代理。如果你的组织使用代理自动配置文件，那么请联系公司的网络管理员并询问访问互联网应该使用的HTTP代理，然后在Cypress中使用那个代理。
 {% endnote %}
 
 {% note warning %}
-SOCKS proxies are not currently supported. A workaround is to set up an HTTP proxy locally that points to your SOCKS proxy, then using that HTTP proxy with Cypress. {% url "Read more about forwarding an HTTP proxy through SOCKS." https://superuser.com/questions/423563/convert-http-requests-to-socks5 %}
+目前不支持SOCKS代理。一个解决方案是在本地设置一个HTTP代理，该代理指向SOCKS代理，然后在Cypress中使用那个HTTP代理。 {% url "阅读更多关于如何通过SOCKS转发HTTP代理。" https://superuser.com/questions/423563/convert-http-requests-to-socks5 %}
 {% endnote %}
 
-# Set a proxy on Linux or macOS
+# 在Linux或macOS上设置代理
 
-To set your proxy on Linux or macOS, run the following command in a terminal before running Cypress:
+运行Cypress之前，在终端中运行如下命令以在Linux或者macOS上设置你的代理：
 
 ```shell
 export HTTP_PROXY=http://my-company-proxy.com
 ```
 
-You can also set `NO_PROXY` to bypass the proxy for certain domains (by default, only `localhost` will be bypassed):
+你也可以设置`NO_PROXY`来为某些域名绕过代理（默认情况下，只有`localhost`会被绕过）：
 
 ```shell
 export NO_PROXY=localhost,google.com,apple.com
 ```
 
-To make these changes permanent, you can add these commands to your shell's `~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every login.
+为了让这些改变永久生效，你可以将这些命令添加到你shell的`~/.profile`（`~/.zsh_profile`，`~/.bash_profile`等文件中。）以便在每次登录时运行它们。
 
-# Set a proxy on Windows
+# 在Windows上设置代理
 
-When starting up after being installed, Cypress will attempt to load the proxy configured in the Windows registry by default. {% url "Learn how to set your proxy settings system-wide in Windows." https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/ %}
+Cypress在安装后启动时，默认会尝试加载配置在Windows注册表中的代理。 {% url "学习如何在Windows系统中设置你的系统级代理。" https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/ %}
 
 {% note info %}
-When downloading Cypress for the first time, the `cypress` command line tool *does not* read proxy settings from the Windows registry. If you need to configure a proxy for the installation to work, you must set the appropriate environment variables as described below.
+当第一次下载Cypress时，`cypress`命令行工具*不会*从Windows注册表中读取代理设置。如果你需要为安装过程配置一个代理，你必须像下面描述的那样设置合适的环境变量。
 {% endnote %}
 
-You can also set proxy environment variables before running Cypress to override the Windows registry. This is also the only way to define a proxy for `cypress install`. In Command Prompt, defining the required environment variables looks like this:
+你也可以在运行Cypress之前设置代理环境变量来覆盖Windows注册表。这也是唯一为`cypress install`定义一个代理的方法。在命令行中可以使用下面的命令定义需要的环境变量：
 
 ```shell
 set HTTP_PROXY=http://my-company-proxy.com
 ```
 
-To accomplish the same thing in Powershell:
+使用下面的命令来在Powershell中完成同样的工作：
 
 ```shell
 $env:HTTP_PROXY = "http://my-company-proxy.com"
 ```
 
-To save the `HTTP_PROXY` variable and use your proxy for all new shells, use `setx`:
+使用`setx`来保存`HTTP_PROXY`变量并在所有新的shell中使用你的代理：
 
 ```shell
 setx HTTP_PROXY http://my-company-proxy.com
 ```
 
-# Proxy environment variables
+# 代理环境变量
 
 {% note warning %}
-This section refers to your operating system's environment variables, *not* {% url "Cypress environment variables" guides/guides/environment-variables %}
+本节讲述的是你操作系统的环境变量，*而不是* {% url "Cypress环境变量" guides/guides/environment-variables %}
 {% endnote %}
 
-Cypress automatically reads from your system's `HTTP_PROXY` environment variable and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY` environment variable is set, HTTPS traffic will use that proxy instead.
+Cypress自动读取你系统的`HTTP_PROXY`环境变量并将该代理用于所有的HTTP和HTTPS流量。但是如果你设置了环境变量`HTTPS_PROXY`，HTTPS流量则会使用该代理。
 
-To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied.
+为了绕过某些域名的代理，你可以设置环境变量`NO_PROXY`的值为一个以逗号分割的域名列表，这样这些域名的流量就不会被代理。默认情况下，`localhost`的流量不会被代理。
 
-If an uppercase and a lowercase version of the proxy settings are supplied (for example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable will be preferred.
+如果同时设置了一个大写版本和小写版本的代理（比如说，`HTTP_PROXY` 和 `http_proxy`都被设置了），则会优先使用小写的环境变量。
 
-# View, unset, and set environment variables
+# 查看，释放，以及设置环境变量
 
-In order to properly configure your proxy configuration, it can be helpful to know how to view currently set environment variables, unset unwanted environment variables, and set environment variables depending on your operating system.
+为了正确地配置代理，了解怎样查看当前设置的环境变量，怎样释放不想要的环境变量，以及怎样根据你的操作系统设置环境变量将是很有帮助的。
 
-## Linux or macOS
+## Linux或macOS
 
-### Set an environment variable for the current session
+### 为当前会话设置一个环境变量
 
 ```shell
 export SOME_VARIABLE=some-value
 ```
 
-### Unset an environment variable
+### 释放一个环境变量
 
 ```shell
 unset SOME_VARIABLE
 ```
 
-`echo` will print nothing after `unset`:
+使用`unset`命令释放环境变量后，再使用`echo`将不会打印出该环境变量的值：
 
 ```shell
 echo $SOME_VARIABLE
 ```
 
-### See all the currently set environment variables
+### 查看所有当前设置的环境变量
 
-Print all env vars:
+打印所有的环境变量：
 
 ```shell
 env
 ```
 
-Print environment variables with `proxy` (case insensitive) in the name:
+打印名称中带有`proxy`（不区分大小写）的环境变量：
 
 ```shell
 env | grep -i proxy
@@ -113,11 +113,11 @@ env | grep -i proxy
 
 ## Windows
 
-Setting environment variables in Windows is different depending on if you're using *command prompt* or *Powershell*.
+在Windows上设置环境变量的方法根据你是使用*命令提示符*还是*Powershell*而有所区别。
 
-### Set an environment variable for the current session
+### 为当前会话设置一个环境变量
 
-*Command prompt:*
+*命令提示符：*
 
 ```shell
 set SOME_VARIABLE=some-value
@@ -129,15 +129,15 @@ set SOME_VARIABLE=some-value
 $env:SOME_VARIABLE = "some-value"
 ```
 
-### Set environment variable globally for all future sessions
+### 为所有以后的会话设置全局的环境变量
 
 ```shell
 setx SOME_VARIABLE some-value
 ```
 
-### Unset an environment variable in the current session
+### 在当前会话中释放一个环境变量
 
-*Command prompt:*
+*命令提示符：*
 
 ```shell
 set SOME_VARIABLE=
@@ -149,9 +149,9 @@ set SOME_VARIABLE=
 Remove-Item Env:\SOME_VARIABLE
 ```
 
-### See all the currently set environment variables
+### 查看所有当前设置的环境变量
 
-*Command prompt:*
+*命令提示符：*
 
 ```shell
 set
@@ -163,12 +163,12 @@ set
 Get-ChildItem Env:
 ```
 
-# View proxy settings in Cypress
+# 查看Cypress中的代理设置
 
-Your current proxy settings can be viewed from within the Cypress Test Runner. Follow these steps:
+你可以在Cypress测试执行器中查看当前的代理设置。步骤如下：
 
-1. Open up your project in Cypress via `cypress open`.
-2. Click the "Settings" tab.
-3. Click the "Proxy Settings" section to expand it and view the proxy settings that Cypress is currently using.
+1. 通过运行`cypress open`命令在Cypress中打开你的项目。
+2. 点击“设置”标签。
+3. 点击“代理设置”将其展开，查看Cypress当前正在使用的代理。
 
-{% imgTag /img/guides/proxy-configuration.png "Proxy configuration in the Desktop app" %}
+{% imgTag /img/guides/proxy-configuration.png "桌面应用程序中的代理配置" %}
