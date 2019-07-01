@@ -123,7 +123,7 @@ To instrument the application code located in your `src` folder and save it in a
 npx nyc instrument --compact=false src instrumented
 ```
 
-We am passing the `--compact=false` flag to generate human-friendly output.
+We are passing the `--compact=false` flag to generate human-friendly output.
 
 The instrumentation takes your original code like this fragment...
 
@@ -205,7 +205,7 @@ When you run the Cypress tests now, you should see a few commands after the test
 
 {% imgTag /img/guides/code-coverage/coverage-plugin-commands.png "coverage plugin commands" %}
 
-After the tests complete, the final code coverage is saved to a `.nyc_output` folder. It is a JSON file from which we can generate a report in a variety of formats. The {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} plugin generates the HTML report automatically - you can open the `coverage/index.html` page locally after the tests finish. You can also call `nyc report` to generate other reports, for example,sending the coverage information to 3rd party services.
+After the tests complete, the final code coverage is saved to a `.nyc_output` folder. It is a JSON file from which we can generate a report in a variety of formats. The {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} plugin generates the HTML report automatically - you can open the `coverage/index.html` page locally after the tests finish. You can also call `nyc report` to generate other reports, for example, sending the coverage information to 3rd party services.
 
 ## See code coverage summary
 
@@ -223,7 +223,7 @@ Lines        : 81.42% ( 92/113 )
 ```
 
 {% note info %}
-**Tip:** store the `coverage` folder as a build artifact on your continuous integration server. Because the report is a static HTML page, some CIs can show it write from their web applications. The screenshot below shows the coverage report stored on CircleCI. Clicking on `index.html` shows the report right in the browser.
+**Tip:** store the `coverage` folder as a build artifact on your continuous integration server. Because the report is a static HTML page, some CIs can show it right from their web applications. The screenshot below shows the coverage report stored on CircleCI. Clicking on `index.html` shows the report right in the browser.
 {% endnote %}
 
 {% imgTag /img/guides/code-coverage/circleci-coverage-report.png "coverage HTML report on CircleCI" %}
@@ -261,7 +261,7 @@ Even better, we can drill down into the individual source files to see what code
 
 Notice how the **ADD_TODO** action was executed 3 times - because our test has added 3 todo items, and the **COMPLETE_TODO** action was executed just once - because our test has marked 1 todo item as completed.
 
-The sources line not covered marked in yellow (the switch cases the test missed) and red (regular statements) are a great guide for writing more end-to-end tests. We need tests that delete todo items, edit them, mark all of them as completed at once and clear completed items. When we cover every switch statement in "src/reducers/todos.js" we probably will achieve close to 100% code coverage. Even more importantly, we will cover the main features of the application the user is expected to use.
+The sources line not covered marked in yellow (the switch cases the test missed) and red (regular statements) are a great guide for writing more end-to-end tests. We need tests that delete todo items, edit them, mark all of them as completed at once and clear completed items. When we cover every switch statement in `src/reducers/todos.js` we probably will achieve close to 100% code coverage. Even more importantly, we will cover the main features of the application the user is expected to use.
 
 We can write more E2E tests.
 
@@ -271,7 +271,7 @@ The produced HTML report shows 99% code coverage
 
 {% imgTag /img/guides/code-coverage/almost-100.png "99 percent code coverage" %}
 
-Every source file but 1 is covered at 100%. We can have great confidence in our application, and safely refactor the code knowing that we have a robust set of end-to-end tests. 
+Every source file but 1 is covered at 100%. We can have great confidence in our application, and safely refactor the code knowing that we have a robust set of end-to-end tests.
 
 If possible, we advise implementing {% url 'visual testing' visual-testing %} in addition to Cypress functional tests to avoid CSS and visual regressions.
 
@@ -438,3 +438,4 @@ You can find full examples showing different code coverage setups in the followi
 - {% url "Combined End-to-end and Unit Test Coverage" https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/ %}
 - {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
 - {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
+- {% url "Code coverage using webpack-dev-server example" https://github.com/bahmutov/code-coverage-webpack-dev-server %}
