@@ -144,7 +144,7 @@ There are a myriad of other events Cypress fires to communicate with the Node se
 
 # Binding to Events
 
-Both the global `Cypress` and `cy` objects are standard `Node.js` event emitters. That means you can use the following methods to bind and unbind from events.
+Both the global `Cypress` and `cy` objects are standard Node event emitters. That means you can use the following methods to bind and unbind from events.
 
 - {% url 'on' https://nodejs.org/api/events.html#events_emitter_on_eventname_listener %}
 - {% url 'once' https://nodejs.org/api/events.html#events_emitter_once_eventname_listener %}
@@ -421,7 +421,7 @@ it('can assert on the alert text content', function () {
 
 ## Logging All Events
 
-Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node module for both the backend server process, and for everything running in the browser (called the driver).
+Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node module for both the back end server process, and for everything running in the browser (called the driver).
 
 If you'd like to see (the huge) stream of events that Cypress emits you can pop open your Dev Tools and write this line in the console.
 

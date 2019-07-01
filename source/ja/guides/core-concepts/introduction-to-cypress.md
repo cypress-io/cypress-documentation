@@ -519,7 +519,7 @@ None of the above commands are *idempotent*; they all cause side effects. Racing
 
 In real promises it's very easy to 'lose' a nested Promise if you don't return it or chain it correctly.
 
-Let's imagine the following Node.js code:
+Let's imagine the following Node code:
 
 ```js
 // assuming we've promisified our fs module

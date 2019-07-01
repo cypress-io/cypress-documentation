@@ -60,6 +60,6 @@ This is a single page application with a decent amount of features. The tests in
 - Test mobile responsive views using {% url `cy.viewport()` viewport %}
 - Test that the app scrolls correctly
 - Check checkboxes using {% url `cy.check()` check %}
-- Stub responses from our backend using {% url `cy.route()` route %}
+- Stub responses from our back end using {% url `cy.route()` route %}
 
 {% imgTag /img/examples/public-project-piechopper.png "Piechopper app tested in cypress" %}
