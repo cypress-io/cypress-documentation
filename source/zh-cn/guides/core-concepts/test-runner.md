@@ -3,7 +3,7 @@ title: 测试执行器
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - Cypress测试执行器的功能和目的
 - 如何使用选择定位器定位页面元素

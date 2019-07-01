@@ -6,7 +6,7 @@ title: 捆绑的工具
 Cypress依赖于许多同类最佳的开源测试库，从一开始就为平台提供稳定性和熟悉感。如果你一直在使用JavaScript进行测试，那么你将在此列表中识别出许多老朋友。了解我们如何利用它们并使其与Cypress通力配合的！
 {% endnote %}
 
-# 1. Mocha
+# Mocha
 
 {% fa fa-github %} {% url http://mochajs.org/ %}
 
@@ -28,7 +28,7 @@ Cypress采用了Mocha的`bdd`语法，因为它完美地适应了集成和单元
 {% url "请参阅编写和组织测试指南" writing-and-organizing-tests %}
 {% endnote %}
 
-# 2. Chai
+# Chai
 
 {% fa fa-github %} {% url http://chaijs.com/ %}
 
@@ -36,7 +36,7 @@ Mocha提供了我们组织用例的框架，Chai则提供了可以轻易书写�
 
 > {% fa fa-chevron-right  %} {% url "可用的Chai断言列表" assertions#Chai %}
 
-# 3. Chai-jQuery
+# Chai-jQuery
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai-jquery %}
 
@@ -44,7 +44,7 @@ Mocha提供了我们组织用例的框架，Chai则提供了可以轻易书写�
 
 > {% fa fa-chevron-right  %} {% url "可用的Chai-jQuery断言列表" assertions#Chai-jQuery %}
 
-# 4. Sinon.JS
+# Sinon.JS
 
 {% fa fa-github %} {% url http://sinonjs.org/ %}
 
@@ -55,7 +55,7 @@ Mocha提供了我们组织用例的框架，Chai则提供了可以轻易书写�
 {% url "参阅我们关于spies，stubs和clocks的使用指南" stubs-spies-and-clocks %}
 {% endnote %}
 
-# 5. Sinon-Chai
+# Sinon-Chai
 
 {% fa fa-github %} {% url https://github.com/cypress-io/sinon-chai %}
 
@@ -63,7 +63,7 @@ Mocha提供了我们组织用例的框架，Chai则提供了可以轻易书写�
 
 > {% fa fa-chevron-right  %} {% url "可用的Sinon-Chai断言列表" assertions#Sinon-Chai %}
 
-# 6. 其他基本库
+# 其他基本库
 
 Cypress也在`Cypress`对象上绑定了下列工具，可以用在测试的任何地方：
 

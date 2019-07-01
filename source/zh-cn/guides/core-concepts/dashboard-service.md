@@ -3,7 +3,7 @@ title: 数据面板服务
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 从这篇文档你将会看到
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 - 如何设置项目使其能录制测试过程
 - 你将在数据面板服务看到哪些被录制下来的信息
 - 如何在数据面板服务对组织、项目以及用户进行管理
@@ -11,7 +11,7 @@ title: 数据面板服务
 
 其实，{% url 'Cypress数据面板' https://on.cypress.io/dashboard %}是一个给予你可以对测试过程进行录制的工具 - 特别是当你在{% url 'CI提供商' continuous-integration %}平台进行Cypres测试时，数据面板可以让你对测试过程发生了什么一窥究竟。
 
-# 1. 概览
+# 概览
 
 ***数据面板可以让你：***
 
@@ -37,7 +37,7 @@ title: 数据面板服务
 {% url "我们已对部分普遍的疑问在FQA里进行了说明。" dashboard-faq %}.
 {% endnote %}
 
-## 1.1 示例项目
+## 示例项目
 
 一旦登录到{% url '数据面板服务' https://on.cypress.io/dashboard %}你就可以看到所有的{% urlHash "公共项目" 2-4-公有-vs-私有 %}。
 
@@ -48,13 +48,13 @@ title: 数据面板服务
 - [{% fa fa-folder-open-o %} cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
 - [{% fa fa-folder-open-o %} cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
 
-# 2. 项目
+# 项目
 
 利用Cypress，你就具备了录制项目用例的能力。
 
 典型情况下，你一般会想在 {% url '持续集成' continuous-integration %}运行测试的时候进行录制，但其实你也可以在本地调试的时候进行。
 
-## 2.1 设置
+## 设置
 
 {% note info %}
 想要设置项目进行录制，你必须使用{% url "Test Runner" test-runner %}。
@@ -62,7 +62,7 @@ title: 数据面板服务
 在此之前请确保你已经{% url "安装" installing-cypress %}和{% url "打开" installing-cypress#Opening-Cypress %}了Cypress。
 {% endnote %}
 
-### 2.1.1 按照下面的指示进行设置：
+### 按照下面的指示进行设置：
 
 {% imgTag /img/dashboard/setup-to-record.gif "Setup Project Screen" %}
 
@@ -99,7 +99,7 @@ title: 数据面板服务
 {% imgTag /img/dashboard/runs-list-in-desktop-gui.png "Runs List" %}
 
 
-## 2.2 标识符
+## 标识符
 
 ***项目ID***
 
@@ -121,7 +121,7 @@ title: 数据面板服务
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-### 2.2.1 录制秘钥 {% fa fa-key %}
+### 录制秘钥 {% fa fa-key %}
 
 一旦将项目设置为要录制，我们会自动为该项目生成一个*录制秘钥*。
 
@@ -135,7 +135,7 @@ f4466038-70c2-4688-9ed9-106bf013cd73
 
 {% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
 
-## 2.3 授权
+## 授权
 
 Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的项目。
 
@@ -152,13 +152,13 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 {% endnote %}
 
 
-## 2.4 公有 vs 私有
+## 公有 vs 私有
 
 - **公有** 意味着任何人都可以看到项目测试运行的录制。它类似于Github，Travis CI或CircleCI上的公共项目的处理方式。任何知道你`projectId`的人都能看到公共项目的运行录制。
 
 - **私有** 表示只有被邀请到你的{% urlHash '组织' 4-组织 %}的{% urlHash '用户' 5-成员 %}可以查看其录制的运行情况。即使有人知道你的`projectId`，除非你邀请他们，否则他们将无法访问你的运行。
 
-### 2.4.1 修改项目访问权
+### 修改项目访问权
 
 点击你要修改访问权的某个项目，然后点击右上角的**Settings**：
 
@@ -168,9 +168,9 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 {% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
 
-## 2.6 转让所有权
+## 转让所有权
 
-### 2.6.1 转让某个项目给其他人或组织
+### 转让某个项目给其他人或组织
 
 你可以将你拥有的项目转让给其他你所在的{% urlHash "组织" 4-组织 %}或此项目中的其他成员。项目只能在{% url '数据面板服务' https://on.cypress.io/dashboard %}里进行转让。
 
@@ -181,19 +181,19 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 4. 选择成员和组织，然后点击**Transfer**：
   {% imgTag /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
 
-### 2.6.2 取消项目转让
+### 取消项目转让
 
 开始转让后，你可以在任何时候，通过访问组织的项目并点击**Cancel Transfer**来取消转让：
 
 {% imgTag /img/dashboard/cancel-transfer-of-project.png "Cancel pending transfer of project" %}
 
-### 2.6.3 接受和拒绝项目转让
+### 接受和拒绝项目转让
 
 当一个项目转让给你时，你将收到一个通知邮件。你可以通过访问组织的项目并点击“Accept”或“Reject”来选择接受或拒绝该项目转让：
 
 {% imgTag /img/dashboard/accept-or-reject-transfer-of-project.png "Accept or reject a transferred project" %}
 
-## 2.7 删除
+## 删除
 
 你可以删除你拥有的项目。同时这将删除项目所有的录制。删除项目也只能在{% url '数据面板服务' https://on.cypress.io/dashboard %}里进行。
 
@@ -204,7 +204,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 {% imgTag /img/dashboard/remove-project-dialog.png "Delete project dialog" %}
 
-# 3. 录制的运行
+# 录制的运行
 
 录制的运行从你的测试运行里面抓取结果。
 
@@ -212,9 +212,9 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 如果你还没对项目进行录制设定，{% urlHash "参阅这里" 2-1-设置 %}。
 {% endnote %}
 
-## 3.1 什么是录制？
+## 什么是录制？
 
-### 3.1.1 运行详情
+### 运行详情
 
 每一次运行都会包含以下详情：
 
@@ -228,7 +228,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 {% imgTag /img/dashboard/run-details.png "run-details" %}
 
-### 3.1.2 {% fa fa-file-code-o fa-fw %} 规格文件
+### {% fa fa-file-code-o fa-fw %} 规格文件
 
 你可以查看不通规格吓的测试用例集的结果。也可以在 **时间轴视图** 和 **条形图视图** 间进行切换。
 
@@ -250,7 +250,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 {% imgTag /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
 
-### 3.1.3 {% fa fa-code fa-fw %} 标准输出
+### {% fa fa-code fa-fw %} 标准输出
 
 标准输出包括基于你设置的{% url '报告生成器' reporters %}的每个测试集的详细信息和摘要。默认情况下，它是`spec`报告生成器。
 
@@ -281,7 +281,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 {% imgTag /img/dashboard/failures-of-recorded-run.png "failure tab" %}
 
-# 4. 组织
+# 组织
 
 组织是用来分组化项目和对项目权限进行管理的。
 
@@ -294,29 +294,29 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 - 转让项目
 - 对使用后的项目进行支付
 
-## 4.1 创建组织
+## 创建组织
 
 你可以在{% url "数据面板服务" https://on.cypress.io/dashboard %}里的 **Organizations** 页签下，点击 **{% fa fa-plus %} Add Organization** 来创建组织。
 
 {% imgTag /img/dashboard/add-organization-dialog.png "Add Organization dialog" %}
 
-## 4.2 私人组织
+## 私人组织
 
 默认情况下，Cypres的每个用户都有一个以你命名的个人组织。你无法删除或编辑此默认组织的名称。
 
-## 4.3 删除组织
+## 删除组织
 
 只要组织中没有任何项目，你就可以删除你拥有的组织。你必须先将项目的所有权转移到另一个组织，然后才能删除该组织。
 
 {% imgTag /img/dashboard/remove-organization-dialog.png "Delete Organization" %}
 
-# 5. 成员
+# 成员
 
-## 5.1 邀请成员
+## 邀请成员
 
 用户是登录到数据面板服务的任何人。你可以通过{% url '数据面板服务' https://on.cypress.io/dashboard %}邀请用户加入Cypress。受邀成员将看到组织运行的所有项目和测试。
 
-### 5.2 邀请成员到组织：
+### 邀请成员到组织：
 
 1. 到{% url "组织页" https://on.cypress.io/dashboard/organizations %}选择你要邀请成员加入的组织；
 2. 点击 **Users** ，然后 **Invite User**。*注意：你必须具有{% urlHash "“owner”或“admin”的权限" 5-2-成员角色 %}才能进行邀请。*
@@ -325,7 +325,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 {% imgTag /img/dashboard/invite-user-dialog.png "Invite User dialog" %}
 
-## 5.2 成员角色
+## 成员角色
 
 成员可以被指定角色，该指定影响其在{% url '数据面板服务' https://on.cypress.io/dashboard %}里的功能权限。
 
@@ -363,17 +363,17 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 | 将项目转让到另一个组织     |        |        | ✅ **Owner** |
 | 删除项目     |        |        | ✅ **Owner** |
 
-## 5.3 成员请求
+## 成员请求
 
 成员可以“请求”访问给定的组织。如果你团队中的开发人员可以访问Cypress和你项目的源代码 - 他们可以请求获得对你组织的访问权限。这意味着你不必事先邀请团队成员，他们可以请求访问权限，你可以选择接受或拒绝他们访问。
 
-# 6. 开源计划
+# 开源计划
 
 为了支持Cypress社区，我们为公共项目提供开源（OSS）计划，以便利用我们的数据面板服务和无限制的测试执行。要获得资格，你的项目只需要达成两件事：
  - 你的项目是非商业实体的
  - 你的项目的源代码可在公共场所获得，而且包含{% url "OSI-approved license" https://opensource.org/licenses %}
  
-## 6.1 为组织请求参加OSS计划
+## 为组织请求参加OSS计划
 
 按照如下步骤来为你的项目申请参加OSS计划：
 

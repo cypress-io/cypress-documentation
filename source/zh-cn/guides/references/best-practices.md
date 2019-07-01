@@ -3,7 +3,7 @@ title: 最佳实践
 layout: toc-top
 ---
 
-## 1. 用例组织，登录，状态控制
+## 用例组织，登录，状态控制
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 共享页面对象，使用UI登录，不使用快捷方式。
@@ -17,7 +17,7 @@ layout: toc-top
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
-## 2. 元素选择
+## 元素选择
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 使用易变化的高脆性选择器。
@@ -40,7 +40,7 @@ layout: toc-top
 2. 不要使用可能会改变`textContent`的元素定位；
 3. 添加`data-*`属性来来定位元素更加容易。
 
-### 2.1 它是如何工作的？
+### 它是如何工作的？
 
 假设有一个我们想要进行交互的按钮：
 
@@ -78,7 +78,7 @@ CSS或JS行为的改变不会影响到`data-cy`属性，这意味着它不是与
 
 {% endnote %}
 
-### 2.2 文本内容：
+### 文本内容：
 
 当看过以上规则后你可能会好奇：
 
@@ -105,7 +105,7 @@ CSS或JS行为的改变不会影响到`data-cy`属性，这意味着它不是与
 
 如果答案是“否”，因为文本内容是允许改变的 - 那么请使用利用data属性的{% url `cy.get()` get %}。就算文本变成了`Save`也不会导致测试用例失败。
 
-## 3. 设置返回值
+## 设置返回值
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 希望通过`const`，`let`或`var`来设置指令的返回值。
@@ -143,7 +143,7 @@ button.click()
 
 如果要达成以上目的，请参阅我们的{% url '变量和别名指南' variables-and-aliases %}。
 
-## 4. 访问外部站点
+## 访问外部站点
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 尝试访问和你没控制的站点或服务器。
@@ -174,7 +174,7 @@ button.click()
 
 让我们看看处理这些情况的一些策略。
 
-### 4.1 如果登录：
+### 如果登录：
 
 许多OAuth提供商提供A/B竞制，这意味着它们的登录屏幕是动态改变的。也让自动化测试变得难起来。
 
@@ -192,7 +192,7 @@ button.click()
 {% url "我们在登录案例里有多个实例如何做到这些" recipes %}
 {% endnote %}
 
-### 4.2 第三方服务：
+### 第三方服务：
 
 有时你在应用中采取的行为**可能**会影响另一个第三方应用程序。这些情况并不常见，但有可能。想象一下，你的应用程序与GitHub集成，使用你的应用程序，你可以更改GitHub内的数据。
 
@@ -200,7 +200,7 @@ button.click()
 
 这避免了需要使用另一个应用程序的UI。
 
-### 4.3 邮件验证：
+### 邮件验证：
 
 通常，在进行用户注册或忘记密码等场景时，你的服务器会安排要发送的电子邮件。
 
@@ -211,7 +211,7 @@ button.click()
 1. 你可以使用`cy.request()`在一个后端节点请求获取哪些电子邮件已经在队列里或已发送。这将为你提供一种程序化的方式来知晓(已发生的流程)，而无需涉及UI。你的服务器必须公开此后端节点；
 2. 你还可以将`cy.request()`用于第三方服务器，该服务器公开API以读取电子邮件。然后，你将向服务器提供来自你应用的正确的身份验证凭据，或者你可以使用环境变量来完成。
 
-## 5. 前后用例的状态依赖
+## 前后用例的状态依赖
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 耦合多个用例在一起。
@@ -263,7 +263,7 @@ describe('my form', function () {
 
 为了解决这个问题有两种办法：
 
-### 5.1 合并成一个用例
+### 合并成一个用例
 
 ```javascript
 // 稍微修改后好了一点
@@ -285,7 +285,7 @@ describe('my form', function () {
 
 现在我们可以设置一个`.only`到这个测试用例上，它运行时将成功地与其他任何用例呈现无关性。理想的Cypress工作流是同一时间编写和与独立的用例互动。
 
-### 5.2 在每个测试用例开始前执行共享代码
+### 在每个测试用例开始前执行共享代码
 
 ```javascript
 describe('my form', function () {
@@ -311,7 +311,7 @@ describe('my form', function () {
 
 我们也在表单的“默认”状态基础上增加了新的前置，这使编写多个测试变得容易。这样每个测试都有所依赖，但每个测试都可以独立运行并通过。
 
-## 6. 创建仅有单一断言的“微”测试
+## 创建仅有单一断言的“微”测试
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 就好像在写单元测试。
@@ -379,7 +379,7 @@ describe('my form', function () {
 })
 ```
 
-## 7. 使用钩子`after`或`afterEach`
+## 使用钩子`after`或`afterEach`
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 使用`after`或`afterEach`钩子来清理环境状态。
@@ -411,7 +411,7 @@ describe('logged in user', function () {
 
 让我们来看看为什么这不是真的有必要。
 
-### 7.1 状态保存是你的朋友：
+### 状态保存是你的朋友：
 
 Cypress**最优秀**部分之一是强调可调试性。与其他测试工具不同 - 当你的测试结束时 - 你将在测试完成的确切位置留下你的应用程序的状态。
 
@@ -421,7 +421,7 @@ Cypress**最优秀**部分之一是强调可调试性。与其他测试工具不
 
 如果在每次测试后删除应用程序的状态，那么你将立即失去在此模式下使用应用程序继续调试的能力。在结束时注销登录，将始终在测试结束时为你提供相同的登录页面。为了调试你的应用程序或编写某个测试步骤，你将需要注释掉自定义的`cy.logout（）`命令。
 
-### 7.2 都是缺点，没有优点：
+### 都是缺点，没有优点：
 
 目前，我们假设由于某种原因，你的应用程序特别地**需要**运行最后的`after`或`afterEach`代码。让我们假设一下，如果该代码(因为某些异常)没有运行呢 - 所有的东西都将错乱。
 
@@ -441,13 +441,13 @@ afterEach(function () {
 
 问题就出在这里：**没有任何机制可以保证这些代码一定会运行**。
 
-假设您已编写此命令，因为它必须在下一次测试之前运行，那么绝对最糟糕的处理是把它放在在`after`或`afterEach`钩子中。
+假设你已编写此命令，因为它必须在下一次测试之前运行，那么绝对最糟糕的处理是把它放在在`after`或`afterEach`钩子中。
 
 为什么？因为如果你在测试过程中刷新了Cypress(因为某种原因) - 你将在数据库中建立破坏性的临时状态，你的自定义`cy.resetDb()`函数永远不会被调用。
 
 而因为你写的测试逻辑的原因，每一个用例又需要这种状态清理，那么下一次测试将立即失败。为什么？因为当你刷新了Cypress时，重置状态就不会发生了。
 
-### 7.3 状态重置应该在每个测试运行之前进行：
+### 状态重置应该在每个测试运行之前进行：
 
 最简单的解决方案就是把你的清理代码放到测试运行**之前**。
 
@@ -469,17 +469,17 @@ beforeEach(function () {
 
 就这么简单！
 
-### 7.4 状态的重置是必要的吗？
+### 状态的重置是必要的吗？
 
 你应该问自己的最后一个问题是 - 有必要重置状态吗？请记住，Cypress已经在每次测试前自动清除{% url "`localStorage`" clearlocalstorage %}，{% url "cookies" clearcookies %}，sessions等。确保你没有尝试清除已被Cypress自动清除的状态。
 
-如果你正试图清理的东西存在在服务器上 - 请务必清理它。你将需要按照常规的测试思想去运行和清理！但如果状态与您当前正在测试的(前端)应用程序相关 - 您甚至可能不需要清除它。
+如果你正试图清理的东西存在在服务器上 - 请务必清理它。你将需要按照常规的测试思想去运行和清理！但如果状态与你当前正在测试的(前端)应用程序相关 - 你甚至可能不需要清除它。
 
 *译者注（理解有误请提BUG）：这里可能主要考虑清理环境时，被清理的数据是在前端还是在后端。如果是前端数据，比如在localStorage、cookies或sessions里的，那么Cypress会自动帮你清理掉，所以不需要自己再去清理一遍；而如果是测试时对服务器的数据造成了影响，则一定要清理。*
 
-您唯一需要清理状态的时间是，如果一个测试运行的操作影响下游的另一个测试。只有那些情况下你需要进行状态清理。
+你唯一需要清理状态的时间是，如果一个测试运行的操作影响下游的另一个测试。只有那些情况下你需要进行状态清理。
 
-## 8. 不必要的等待
+## 不必要的等待
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 使用{% url `cy.wait(Number)` wait#Time %}等待一个武断的时间。
@@ -493,7 +493,7 @@ beforeEach(function () {
 
 比如我们假设有如下例子：
 
-### 8.1 在`cy.request()`后不必要的等待
+### 在`cy.request()`后不必要的等待
 
 在{% url `cy.request()` request %}指令下等待是不必要的，因为它本身就会一直等待直至收到一个服务器的响应。在{% url `cy.request()` request %}之后添加的5秒等待是无谓的。
 
@@ -502,7 +502,7 @@ cy.request('http://localhost:8080/db/seed')
 cy.wait(5000)     // <--- 这里是没必要的
 ```
 
-### 8.2 在`cy.visit()`后不必要的等待
+### 在`cy.visit()`后不必要的等待
 
 在{% url '`cy.visit()`' visit %}之后添加的等待是不必要的，因为本身它就会在页面的`load`事件产生(页面加载完成的标志)后才结束。在那个时候，所有页面的内容都加载了，包括Javascript、stylesheets和html代码。
 
@@ -535,7 +535,7 @@ cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
-## 9. Web服务
+## Web服务
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 想通过Cypress脚本{% url `cy.exec()` exec %}或{% url `cy.task()` task %}来启动web服务。
@@ -571,7 +571,7 @@ cy.get('table tr').should('have.length', 2)
 
 我们有{% url '你该如何启动和停止web服务示例' continuous-integration#Boot-your-server %}。
 
-## 10. 设置全局baseUrl
+## 设置全局baseUrl
 
 {% note danger %}
 {% fa fa-warning red %} **反面典型：** 跳过设置`baseUrl`而直接使用{% url "`cy.visit()`" visit %}。
@@ -585,14 +585,14 @@ cy.get('table tr').should('have.length', 2)
 
 添加{% url "`baseUrl`" configuration#Global %}还可以在Cypress测试的初始启动期间节省一些时间。
 
-当你开始运行测试时，Cypress不知道您计划测试的应用的网址。因此，Cypress初次会打开`https://localhost` + 一个随机端口。
+当你开始运行测试时，Cypress不知道你计划测试的应用的网址。因此，Cypress初次会打开`https://localhost` + 一个随机端口。
 
-### 10.1 没有设置`baseUrl`，Cypress在`localhost` + 随机端口加载主窗口
+### 没有设置`baseUrl`，Cypress在`localhost` + 随机端口加载主窗口
 {% imgTag /img/guides/cypress-loads-in-localhost-and-random-port.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 一旦遇到{% url "`cy.visit()`" visit %}，Cypress就会切换到主窗口的url到你访问中指定的url。当你的测试首次启动时，这可能会导致“闪烁”或“重新加载”。
 
-通过设置`baseUrl`，您可以完全避免重新加载。一旦测试开始，Cypress将在你指定的`baseUrl`中加载主窗口。
+通过设置`baseUrl`，你可以完全避免重新加载。一旦测试开始，Cypress将在你指定的`baseUrl`中加载主窗口。
 
 ### cypress.json
 
@@ -602,7 +602,7 @@ cy.get('table tr').should('have.length', 2)
 }
 ```
 
-### 10.2 通过设置`baseUrl`，Cypress会在主窗口加载`baseUrl`
+### 通过设置`baseUrl`，Cypress会在主窗口加载`baseUrl`
 
 {% imgTag /img/guides/cypress-loads-window-in-base-url-localhost.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 

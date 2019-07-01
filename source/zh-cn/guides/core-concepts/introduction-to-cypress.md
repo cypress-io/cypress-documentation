@@ -4,7 +4,7 @@ title: Cypress简介
 
 {% note info %}
 
-# {% fa fa-graduation-cap %} 从这篇文档你将会学习到
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 
 - Cypress如何查询DOM

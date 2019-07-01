@@ -3,7 +3,7 @@ title: 变量和别名
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 如何处理异步命令
 - 别名是什么以及它们如何简化你的代码

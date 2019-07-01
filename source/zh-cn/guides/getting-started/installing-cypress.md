@@ -3,7 +3,7 @@ title: 安装Cypress
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 如何通过`npm`来安装Cypress.
 - 如何通过直接下载来安装Cypress.
@@ -142,11 +142,11 @@ Read {% url "Launching Browsers" launching-browsers %} for more information on h
 npm run cypress:open
 ```
 
-...然后Cypress就会为您开启.
+...然后Cypress就会为你开启.
 
 # CLI工具
 
-通过`npm`安装Cypress, 您还可以访问许多其他CLI命令.
+通过`npm`安装Cypress, 你还可以访问许多其他CLI命令.
 
 从版本`0.20.0`开始，Cypress也是一个完全出炉的`node_module`版本, 你可以调用你的Node脚本.
 

@@ -10,11 +10,11 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 如果你正在寻找理解**如何**使用这些断言，请阅读我们的{% url "Cypress简介-断言指导" introduction-to-cypress#Assertions guide %}。
 {% endnote %}
 
-# 1. Chai
+# Chai
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai %}
 
-## 1.1 BDD断言
+## BDD断言
 
 以下是BDD可用的断言链（`expect`/`should`）。列出的别名可以与原始链互换使用。{% url "此处" http://chaijs.com/api/bdd/ %}有完整的可使用的BDD Chai断言列表。
 
@@ -70,7 +70,7 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 | --- |
 | `to`, `be`, `been`, `is`, `that`, `which`, `and`, `has`, `have`, `with`, `at`, `of`, `same` |
 
-## 1.2 TDD断言
+## TDD断言
 
 以下是TDD可用的断言的链（`assert`）。{% url "此处" http://chaijs.com/api/assert/ %}有完整的可使用的Chai断言列表。
 
@@ -116,7 +116,7 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 | .typeOf(*value*, *name*, *[message]*) | `assert.typeOf('e2e', 'string', 'val is string')` |
 | .notTypeOf(*value*, *name*, *[message]*) | `assert.notTypeOf('e2e', 'number', 'val not number')` |
 
-# 2. Chai-jQuery
+# Chai-jQuery
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai-jquery %}
 
@@ -147,7 +147,7 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 | contain(*text*) | `expect($el).to.contain('text')` |
 | descendants(*selector*) | `expect($el).to.have.descendants('div')` |
 
-# 3. Sinon-Chai
+# Sinon-Chai
 
 {% fa fa-github %} {% url https://github.com/domenic/sinon-chai %}
 
@@ -177,7 +177,7 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 | threw | `expect(spy).to.have.thrown(errorObjOrErrorTypeStringOrNothing)` |
 | alwaysThrew | `expect(spy).to.have.always.thrown(errorObjOrErrorTypeStringOrNothing)` |
 
-# 4. 添加新断言
+# 添加新断言
 
 因为我们使用的是`chai`，这意味着你可以任意地按喜欢的方式扩展它。Cypress将“仅”对新添加到`chai`的断言生效。你可以:
 
@@ -188,60 +188,60 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 {% url '参考我们的使用新断言扩展chai的示例' recipes#Adding-Chai-Assertions %}
 {% endnote %}
 
-# 5. 一般断言
+# 一般断言
 
 以下列出了一般元素断言。请注意我们如何是如何通过{% url `.should()` should %}使用（以上所列出的）断言的。你或许还想了解一下Cypress如何进行断言{% url "重试" retry-ability %}。
 
-## 5.1 长度
+## 长度
 
 ```javascript
 // 重试直至找到3个匹配的<li.selected>
 cy.get('li.selected').should('have.length', 3)
 ```
 
-## 5.2 类
+## 类
 
 ```javascript
 // 重试直至这个input不再有disabled的class
 cy.get('form').find('input').should('not.have.class', 'disabled')
 ```
 
-## 5.3 值
+## 值
 
 ```javascript
 // 重试直至这个textarea有正确的value
 cy.get('textarea').should('have.value', 'foo bar baz')
 ```
 
-## 5.4 文本内容
+## 文本内容
 
 ```javascript
 // 重试直至这个span不再包含'click me'
 cy.get('a').parent('span.help').should('not.contain', 'click me')
 ```
 
-## 5.5 可见性
+## 可见性
 
 ```javascript
 // 重试直至button可见
 cy.get('button').should('be.visible')
 ```
 
-## 5.6 存在性
+## 存在性
 
 ```javascript
 // 重试直至loading spinner不再存在
 cy.get('#loading').should('not.exist')
 ```
 
-## 5.7 状态
+## 状态
 
 ```javascript
 // 重试直至radio状态是checked
 cy.get(':radio').should('be.checked')
 ```
 
-# 6. Should回调
+# Should回调
 
 如果内建的断言不够使用，你可以轻易地写你自己的断言函数，将其作为一个回调以参数的形式传给`.should()`即可。Cypress会自动{% url "重试" retry-ability %}此回调直至通过或超时。请参考{% url `.should()` should#Function %}文档。
 
@@ -261,7 +261,7 @@ cy.get('div')
   })
 ```
 
-# 7. 其他参考
+# 其他参考
 
 - {% url '指导：Cypress简介' introduction-to-cypress#Assertions %}
 - {% url 'cypress示例之kitchensink断言' https://example.cypress.io/commands/assertions %}

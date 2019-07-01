@@ -3,7 +3,7 @@ title: 截图和视频
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - Cypress如何自动捕捉测试失败的截图
 - 如何手工捕捉自己的截图
@@ -13,7 +13,7 @@ title: 截图和视频
 
 # 截图
 
-Cypress自带截屏功能，无论您是在使用`cypress open`的交互模式下运行，还是在使用`cypress run`的运行模式下运行(可能是在CI中)。
+Cypress自带截屏功能，无论你是在使用`cypress open`的交互模式下运行，还是在使用`cypress run`的运行模式下运行(可能是在CI中)。
 
 要手动截屏，你可以使用{% url `cy.screenshot()` screenshot %}命令。
 
@@ -23,7 +23,7 @@ Cypress自带截屏功能，无论您是在使用`cypress open`的交互模式�
 
 截图存储在{% url `screenshotsFolder` configuration#Screenshots %}中，默认设置为`cypress/screenshots`。
 
-在`cypress run`之前，Cypress将清空任何现有的截图。如果您不想在运行前清空您的截图文件夹，您可以设置{% url `trashAssetsBeforeRuns` configuration#Screenshots %}为`false`。
+在`cypress run`之前，Cypress将清空任何现有的截图。如果你不想在运行前清空你的截图文件夹，你可以设置{% url `trashAssetsBeforeRuns` configuration#Screenshots %}为`false`。
 
 # 视频
 
@@ -41,20 +41,20 @@ Video recording is currently only supported when running Cypress from the Electr
 
 当使用`--record`来执行测试的时候，视频在每一个spec文件运行后都会被处理，压缩并且上传到{% url 'Dashboard Service' dashboard-service %}，不管成功与否。为了将这种行为改变为仅在测试失败的情况下才处理视频，请将{% url `videoUploadOnPasses` configuration#Videos %}配置项设置为`false`。
 
-在`cypress run`之前，Cypress清空现有的视频。如果您不想在运行前清空您的视频文件夹，您可以将{% url `trashAssetsBeforeRuns` configuration#Videos %}设置为`false`。
+在`cypress run`之前，Cypress清空现有的视频。如果你不想在运行前清空你的视频文件夹，你可以将{% url `trashAssetsBeforeRuns` configuration#Videos %}设置为`false`。
 
 # 现在该做什么呢？
 
-那么您正在测试运行中捕捉截图和录制视频，现在该做什么呢？
+那么你正在测试运行中捕捉截图和录制视频，现在该做什么呢？
 
-## 和您的团队一起分享
+## 和你的团队一起分享
 
-您现在可以利用的是{% url 'Cypress仪表盘服务' dashboard-service %}：我们的伙伴企业服务，它为您存储构件，并允许您从任何web浏览器查看它们，还可以与您的团队分享它们。
+你现在可以利用的是{% url 'Cypress仪表盘服务' dashboard-service %}：我们的伙伴企业服务，它为你存储构件，并允许你从任何web浏览器查看它们，还可以与你的团队分享它们。
 
 
 ## 视觉回归测试/截图差异
 
-另一种可能性是视觉回归测试：对比过去与现在的运行截图以确保没有任何改动。Cypress现在还没有内置这个功能，但是我们已经注意到了。如果您对这个功能的更新感兴趣，可以{% issue 495 '关注这个问题' %}，如果您想影响生成的功能，请留下您的评论，如果您想亲自处理它，请发起pull request！
+另一种可能性是视觉回归测试：对比过去与现在的运行截图以确保没有任何改动。Cypress现在还没有内置这个功能，但是我们已经注意到了。如果你对这个功能的更新感兴趣，可以{% issue 495 '关注这个问题' %}，如果你想影响生成的功能，请留下你的评论，如果你想亲自处理它，请发起pull request！
 
 # 更多参考
 

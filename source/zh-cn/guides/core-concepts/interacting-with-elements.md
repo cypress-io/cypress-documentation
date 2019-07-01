@@ -3,7 +3,7 @@ title: 元素交互
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - Cypress怎么计算可见性
 - Cypress怎么确保元素的可操作性
