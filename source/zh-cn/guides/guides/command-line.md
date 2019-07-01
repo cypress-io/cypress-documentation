@@ -3,7 +3,7 @@ title: 命令行
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 从这篇文档您将会看到
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 如何从命令行启动Cypress
 - 如何定义跑哪个测试文件
@@ -23,7 +23,7 @@ title: 命令行
 
 为简洁起见，我们在每个命令的文档中省略了cypress可执行文件的完整路径。
 
-要运行命令，您需要为每个命令添加前缀，以便正确定位cypress可执行文件。
+要运行命令，你需要为每个命令添加前缀，以便正确定位cypress可执行文件。
 
 ```shell
 $(npm bin)/cypress run
@@ -41,7 +41,7 @@ $(npm bin)/cypress run
 npx cypress run
 ```
 
-您可能会发现将cypress命令添加到`package.json`文件中的`scripts`里并从{% url "`npm run` 脚本" https://docs.npmjs.com/cli/run-script.html %}调用它更方便。
+你可能会发现将cypress命令添加到`package.json`文件中的`scripts`里并从{% url "`npm run` 脚本" https://docs.npmjs.com/cli/run-script.html %}调用它更方便。
 
 使用`npm run`调用命令时，需要使用`--`字符串传递命令的参数。 比如，假设在`package.json`中定义了以下命令：
 
@@ -353,7 +353,7 @@ cypress open --port 8080
 
 ### `cypress open --project <project-path>`
 
-默认情况下，Cypress希望在`package.json`所在的地方找到你的`cypress.json`。 但是，您可以指定Cypress在不同的位置运行。
+默认情况下，Cypress希望在`package.json`所在的地方找到你的`cypress.json`。 但是，你可以指定Cypress在不同的位置运行。
 
 这使你可以在顶级`node_modules`文件夹中安装Cypress，但在嵌套子文件夹中运行它。 如果你的仓库中有多个Cypress项目，这也很有用。
 
@@ -375,7 +375,7 @@ cypress verify
 ## `cypress version`
 
 输出已安装的Cypress二进制应用程序和npm模块的版本。
-在大多数情况下，它们将是相同的，但如果您安装了不同版本的npm软件包，并且由于某种原因无法安装匹配的二进制文件，它们可能会有所不同。
+在大多数情况下，它们将是相同的，但如果你安装了不同版本的npm软件包，并且由于某种原因无法安装匹配的二进制文件，它们可能会有所不同。
 
 ```shell
 cypress version
@@ -407,7 +407,7 @@ cypress cache list
 
 ### `cypress cache clear`
 
-清除cypress缓存的内容。当您希望cypress清除可能在您的计算机上所有已安装的缓存下来的cypress版本时，这非常有用。 运行此命令后，您需要在再次运行Cypress之前运行`cypress install`。
+清除cypress缓存的内容。当你希望cypress清除可能在你的计算机上所有已安装的缓存下来的cypress版本时，这非常有用。 运行此命令后，你需要在再次运行Cypress之前运行`cypress install`。
 
 ```shell
 cypress cache clear

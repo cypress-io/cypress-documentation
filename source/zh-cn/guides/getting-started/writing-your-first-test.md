@@ -3,7 +3,7 @@ title: 编写你的第一个测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将学到
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 如何在Cypress里面开始测试一个新的项目.
 - 通过的测试和失败的测试看起来如何.
@@ -26,12 +26,12 @@ title: 编写你的第一个测试
 touch {your_project}/cypress/integration/sample_spec.js
 ```
 
-一旦我们创建了该文件，我们就会看到Cypress测试运行器立即将其显示在集成测试列表中. Cypress监控您的规格文件是否有任何变化，并自动显示任何变化。
+一旦我们创建了该文件，我们就会看到Cypress测试运行器立即将其显示在集成测试列表中. Cypress监控你的规格文件是否有任何变化，并自动显示任何变化。
 
-即使我们还没有编写任何测试 - 也没关系 - 让我们点击`sample_spec.js`并观看Cypress启动您的浏览器。
+即使我们还没有编写任何测试 - 也没关系 - 让我们点击`sample_spec.js`并观看Cypress启动你的浏览器。
 
 {% note info %}
-Cypress在您系统上安装的浏览器中打开测试. 您可以在{% url "启动浏览器" launching-browsers %}中详细了解我们如何执行此操作.
+Cypress在你系统上安装的浏览器中打开测试. 你可以在{% url "启动浏览器" launching-browsers %}中详细了解我们如何执行此操作.
 {% endnote %}
 
 {% video local /img/snippets/empty-file-30fps.mp4 %}
@@ -66,7 +66,7 @@ describe('My First Test', function() {
 
 虽然它没干啥有用的事儿, 这依旧使我们第一个通过的测试哟! ✅
 
-在{% url '命令日志' test-runner#Command-Log %}中, 您将看到Cypress显示套件, 包含你的第一个测试和你的第一个断言(应该是以绿色通过的形式展示).
+在{% url '命令日志' test-runner#Command-Log %}中, 你将看到Cypress显示套件, 包含你的第一个测试和你的第一个断言(应该是以绿色通过的形式展示).
 
 {% imgTag /img/guides/first-test.png "My first test shown passing in the Test Runner" %}
 

@@ -3,7 +3,7 @@ title: 重试机制
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会了解到
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 - Cypress如何重试命令和断言
 - 命令在什么时候重试什么时候不重试
 - 如何解决一些片状测试的情况

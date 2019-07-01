@@ -3,7 +3,7 @@ title: 编写和组织测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 怎么组织你的测试和支持文件。
 - 测试文件支持哪些语言。

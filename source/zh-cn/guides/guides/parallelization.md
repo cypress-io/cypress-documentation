@@ -3,7 +3,7 @@ title: 并行化
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %}  你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 如何并行化测试运行
 - 如何分组测试运行
@@ -15,37 +15,37 @@ title: 并行化
 
 # 综述
 
-如果您的项目有大量的测试，那么在一台机器上串行地运行测试可能需要很长时间。在持续集成(CI)中运行测试时，在许多虚拟机上并行运行测试可以节省团队时间和金钱。
+如果你的项目有大量的测试，那么在一台机器上串行地运行测试可能需要很长时间。在持续集成(CI)中运行测试时，在许多虚拟机上并行运行测试可以节省团队时间和金钱。
 
-从{% url "3.1.0" changelog#3-1-0 %}版本开始，Cypress可以在多台机器上并行运行记录测试。虽然并行测试在技术上也可以在一台机器上运行，但我们不推荐，因为这台机器需要大量的资源才能有效地运行您的测试。
+从{% url "3.1.0" changelog#3-1-0 %}版本开始，Cypress可以在多台机器上并行运行记录测试。虽然并行测试在技术上也可以在一台机器上运行，但我们不推荐，因为这台机器需要大量的资源才能有效地运行你的测试。
 
-这个指南假设您已经在持续集成中运行和{% url "记录" dashboard-service#Setup %}了项目。如果还您没有配置您的项目，请查看我们的{% url "持续集成指南" continuous-integration %}。
+这个指南假设你已经在持续集成中运行和{% url "记录" dashboard-service#Setup %}了项目。如果还你没有配置你的项目，请查看我们的{% url "持续集成指南" continuous-integration %}。
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
-# 分割您的测试集
+# 分割你的测试集
 
-Cypress的并行化策略是基于文件的，所以为了使用并行化，您的测试需要分割成不同的文件。
+Cypress的并行化策略是基于文件的，所以为了使用并行化，你的测试需要分割成不同的文件。
 
 Cypress会根据我们的{% urlHash '平衡策略' 平衡策略 %}将每一个spec文件分配给一台可用的机器。由于这个平衡策略，在并行化时不能保证spec文件的运行顺序。
 
 # 开启并行化
 
-1. 参考您的CI提供者的文档，了解如何设置多个机器在CI环境运行。
+1. 参考你的CI提供者的文档，了解如何设置多个机器在CI环境运行。
 
-2. 一旦您的CI环境有多个机器是可用的，您就可以传递{% url "`--parallel`" command-line#cypress-run-parallel %}键给{% url "`cypress run`" command-line#cypress-run %}，使您记录的测试平行化。
+2. 一旦你的CI环境有多个机器是可用的，你就可以传递{% url "`--parallel`" command-line#cypress-run-parallel %}键给{% url "`cypress run`" command-line#cypress-run %}，使你记录的测试平行化。
 
   ```shell
   cypress run --record --key=abc123 --parallel
   ```
 
     {% note info %}
-   并行运行测试需要传递{% url "`--record`标志" command-line#cypress-run %}。这确保Cypress能够正确地收集并行化将来运行所需的数据。这也为您提供了在{% url "仪表盘服务" dashboard-service %}中查看并行测试结果的全部好处。如果您还没有设置要记录的项目，请查看我们的{% url "设置指南" dashboard-service#Setup %}。
+   并行运行测试需要传递{% url "`--record`标志" command-line#cypress-run %}。这确保Cypress能够正确地收集并行化将来运行所需的数据。这也为你提供了在{% url "仪表盘服务" dashboard-service %}中查看并行测试结果的全部好处。如果你还没有设置要记录的项目，请查看我们的{% url "设置指南" dashboard-service#Setup %}。
     {% endnote %}
 
 # CI并行交互
 
-在并行化模式下，Cypress{% url "仪表盘服务" dashboard-service %}与您的CI机器交互，通过下面的过程，跨可用CI机器的spec{% urlHash '负载平衡' 平衡策略 %}来协调测试运行的并行化：
+在并行化模式下，Cypress{% url "仪表盘服务" dashboard-service %}与你的CI机器交互，通过下面的过程，跨可用CI机器的spec{% urlHash '负载平衡' 平衡策略 %}来协调测试运行的并行化：
 
 1. CI机器与Cypres仪表盘服务联系，以指示在项目中运行哪些spec文件。
 2. 机器通过与Cypress联系，选择接收要运行的spec文件。
@@ -62,7 +62,7 @@ Cypress会根据我们的{% urlHash '平衡策略' 平衡策略 %}将每一个sp
 
 # 平衡策略
 
-Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress根据之前运行收集的数据计算要运行哪个spec文件。这确保您的spec文件运行得尽可能快，不需要手动配置。
+Cypress将自动在你的CI供应商中平衡可用机器的spec文件。Cypress根据之前运行收集的数据计算要运行哪个spec文件。这确保你的spec文件运行得尽可能快，不需要手动配置。
 
 随着越来越多的测试被记录到Cypress仪表盘上，Cypress可以更好地预测给定的spec文件运行所需的时间。为了防止不相关的数据影响持续时间预测，Cypress不使用与spec文件相关的旧历史运行数据。
 
@@ -78,7 +78,7 @@ Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress
 
 # 示例
 
-下面的示例来自我们{% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %}项目的运行。您可以在{% url "Cypress仪表盘" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}上看到运行的结果。
+下面的示例来自我们{% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %}项目的运行。你可以在{% url "Cypress仪表盘" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}上看到运行的结果。
 
 ## 没有并行化
 
@@ -149,7 +149,7 @@ Cypress将自动在您的CI供应商中平衡可用机器的spec文件。Cypress
 
 ## 通过浏览器分组
 
-您可以在不同的浏览器上测试您的应用程序，并在仪表盘中的单个运行下查看结果。下面，我们简单地将我们的组命名成与正在测试的浏览器相同的名称：
+你可以在不同的浏览器上测试你的应用程序，并在仪表盘中的单个运行下查看结果。下面，我们简单地将我们的组命名成与正在测试的浏览器相同的名称：
 
 - 第一个组叫做`Windows/Chrome 69`。
 
@@ -199,7 +199,7 @@ cypress run --record --group 4x-electron --parallel
 
 ## 按照spec上下文分组
 
-假设您有一个应用程序，其中有一个*面向客户的入口*、*一个面向访客的入口*和*一个面向管理的入口*。您可以在同一运行中组织和测试应用程序的这三个部分：
+假设你有一个应用程序，其中有一个*面向客户的入口*、*一个面向访客的入口*和*一个面向管理的入口*。你可以在同一运行中组织和测试应用程序的这三个部分：
 
 - 一个组叫做`package/admin`：
 
@@ -247,7 +247,7 @@ Cypress目前使用以下CI环境变量来确定测试运行的CI构建ID：
 | Jenkins  | `BUILD_NUMBER`  |
 | Travis  | `TRAVIS_BUILD_ID`  |
 
-您可以传递不同的值将代理链接到相同的运行。例如，如果您正在使用Jenkins，并且认为环境变量`BUILD_TAG`比环境变量`BUILD_NUMBER`更唯一，那么可以通过CLI {% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}传递`BUILD_TAG`值。
+你可以传递不同的值将代理链接到相同的运行。例如，如果你正在使用Jenkins，并且认为环境变量`BUILD_TAG`比环境变量`BUILD_NUMBER`更唯一，那么可以通过CLI {% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}传递`BUILD_TAG`值。
 
 ```shell
 cypress run --record --parallel --ci-build-id $BUILD_TAG
@@ -267,17 +267,17 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 # 在仪表盘中可视化并行和分组
 
-您可以在运行的**Specs**选项卡中看到在{% url "仪表盘服务" dashboard-service %}中运行的每个spec文件的结果。Specs在**时间轴**、**条形图**和**机器**视图中显示。
+你可以在运行的**Specs**选项卡中看到在{% url "仪表盘服务" dashboard-service %}中运行的每个spec文件的结果。Specs在**时间轴**、**条形图**和**机器**视图中显示。
 
 ## 时间轴视图
 
-时间轴视图在您的spec文件相对运行时绘制它们的图表。当您想要可视化您的测试如何在所有可用的机器上按时间顺序运行时，这尤其有用。
+时间轴视图在你的spec文件相对运行时绘制它们的图表。当你想要可视化你的测试如何在所有可用的机器上按时间顺序运行时，这尤其有用。
 
 {% imgTag /img/guides/parallelization/timeline-view-small.png "Timeline view with parallelization" %}
 
 ## 条形图视图
 
-条形图视图可视化了您的spec文件之间的**持续时间**。
+条形图视图可视化了你的spec文件之间的**持续时间**。
 
 {% imgTag /img/guides/parallelization/bar-chart-view.png "Bar Chart view with parallelization" %}
 
@@ -289,7 +289,7 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 # 另请参阅
 
-- {% url "博客：自动化测试并行化让您的端到端测试运行速度加快10倍" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
-- {% url "博客：以您想要的方式运行和分组测试" https://glebbahmutov.com/blog/run-and-group-tests/ %}
+- {% url "博客：自动化测试并行化让你的端到端测试运行速度加快10倍" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
+- {% url "博客：以你想要的方式运行和分组测试" https://glebbahmutov.com/blog/run-and-group-tests/ %}
 - {% url "在Kitchen Sink Example中的CI配置" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
 - 幻灯片{% url "Cypress测试并行化和分组" https://slides.com/bahmutov/cy-parallelization %}和{% url "网络研讨会视频" https://www.youtube.com/watch?v=FfqD1ExUGlw %}
