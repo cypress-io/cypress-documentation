@@ -42,7 +42,7 @@ cy.get('.todo-list li')     // command
 Because nothing is synchronous in modern web applications, Cypress can't query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
 
 - What if the application has not updated the DOM by the time these commands run?
-- What if the application is waiting for its backend to respond before populating the DOM element?
+- What if the application is waiting for its back end to respond before populating the DOM element?
 - What if the application does some intensive computation before showing the results in the DOM?
 
 Thus the Cypress {% url `cy.get` get %} command has to be smarter and expect the application to potentially update. The `cy.get()` queries the application's DOM, finds the elements that match the selector, and then tries the assertion that follows it (in our case `should('have.length', 2)`) against the list of found elements.
