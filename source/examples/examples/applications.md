@@ -45,12 +45,12 @@ This repo compares {% url "Cypress Tests" https://github.com/cypress-io/cypress-
 
 {% fa fa-github %} {% url https://github.com/cypress-io/cypress-example-realworld %}
 
-Shows a full blogging application "Conduit" with back end code and a database.
+Shows a full blogging application, "Conduit", with back end code and a database.
 
-- Create a test user from tests by running database commands via {% url "`cy.task()`" task %} command.
-- Log in using {% url "`cy.request()`" task %} and then setting the returned JWT token in `localStorage`
-- Test all aspects of writing blog posts, commenting, marking favorite posts.
-- Collect full stack code coverage using {% url '@cypress/code-coverage' https://github.com/cypress-io/code-coverage %}. Read the Cypress {% url "code coverage guide" code-coverage %} for details.
+- Create a test user from tests by running database commands via the {% url "`cy.task()`" task %} command.
+- Log in using {% url "`cy.request()`" request %} and then setting the returned JWT token in `localStorage`.
+- Test all aspects of writing blog posts, commenting, and marking favorite posts.
+- Collect full stack code coverage using {% url '@cypress/code-coverage' https://github.com/cypress-io/code-coverage %}. Read the Cypress {% url "code coverage guide" code-coverage %} for more details.
 
 {% imgTag /img/examples/realworld-app.png "Realworld test in Cypress" %}
 
