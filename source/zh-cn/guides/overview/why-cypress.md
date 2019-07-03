@@ -1,5 +1,5 @@
 ---
-title: 为什么选择 Cypress?
+title: 为什么选择Cypress?
 ---
 
 {% note info %}

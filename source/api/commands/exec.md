@@ -114,17 +114,15 @@ cy.exec('npm run build', { timeout: 20000 })
 ### Choose to not fail on non-zero exit and assert on code and stderr
 
 ```javascript
-cy
-  .exec('man bear pig', { failOnNonZeroExit: false })
-  .its('code').should('eq', 1)
-  .its('stderr').should('contain', 'No manual entry for bear')
+cy.exec('man bear pig', { failOnNonZeroExit: false }).then((obj) => {
+  expect(obj.code).to.eq(1)
+  expect(obj.stderr).to.contain('No manual entry for bear')
 ```
 
 ### Specify environment variables
 
 ```javascript
-cy
-  .exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
+cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
   .its('stdout').should('contain', 'johndoe')
 ```
 
@@ -182,4 +180,5 @@ When clicking on the `exec` command within the command log, the console outputs 
 
 - {% url `cy.readFile()` readfile %}
 - {% url `cy.request()` request %}
+- {% url `cy.task()` task %}
 - {% url `cy.writeFile()` writefile %}

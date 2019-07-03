@@ -1,9 +1,9 @@
 ---
-title: Continuous Integration
+title: 持续集成
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How to run Cypress tests in Continuous Integration
 - How to configure Cypress in various CI Providers
@@ -360,7 +360,7 @@ You can set any configuration value as an environment variable. This overrides v
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
 
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+Refer to the {% url 'Environment Variables recipe' configuration#Environment-Variables %} for more examples.
 
 ***Record Key***
 

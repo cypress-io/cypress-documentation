@@ -1,9 +1,9 @@
 ---
-title: Dashboard Service
+title: 数据面板服务
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How to set up a project to have its tests recorded.
 - What you see in the Dashboard Service for recorded tests.

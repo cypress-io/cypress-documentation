@@ -8,7 +8,7 @@
       "defaultTerms": false,
       "terms": [
         // Cypress product
-        ["[^.]Cypress\.io", "Cypress"],
+        ["^Cypress\.io", "Cypress"],
         ["Cypress' ", "Cypress's "],
         ["the command log", "the Command Log"],
         ["dashboard service", "Dashboard Service"],
@@ -26,16 +26,22 @@
         ["(Chrome ?)DevTools", "Developer Tools"],
         ["(?!^Chrome $)DevTools", "Developer Tools"],
         "ESLint",
+        ["Express.js", "Express"],
         "GitHub",
         "GraphQL",
+        ["Hapi.js", "hapi"],
         ["iframe(s?)", "iframe$1"],
         "iOS",
+        "Istanbul",
         "JavaScript",
+        "Jest",
         "jQuery",
         ["local[ ]?storage", "localStorage"],
         "Lodash",
         "minimatch",
         "Mocha",
+        ["node.js", "Node"],
+        "node module",
         "npm",
         ["React[ .]js", "React"],
         "RegExp",
@@ -46,6 +52,7 @@
         "Sinon–Chai",
         "TypeScript",
         "YouTube",
+        ["^Vue", "Vue.JS"],
         "webpack",
         ["WebSocket(s?)", "WebSocket$1"],
 
@@ -56,6 +63,7 @@
         "CLI",
         "CSS",
         "CORS",
+        ["^E2E", "E2E"],
         "gif",
         ["^HTML", "HTML"],
         ["^URL(s?)", "URL$1"],
@@ -89,7 +97,9 @@
         ["can[- ]not", "cannot$1"],
 
         // Multiple words
+        ["back-?end(s?)", "back end$1"],
         ["front-?end(s?)", "front end$1"],
+        ["full-?stack(s?)", "full stack$1"],
         ["open-?source(ed?)", "open source$1"],
         ["web-?page(s?)", "web page$1"],
 

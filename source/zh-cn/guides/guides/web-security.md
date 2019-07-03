@@ -1,5 +1,5 @@
 ---
-title: Web Security
+title: Web安全
 ---
 
 Browsers adhere to a strict {% url "`same-origin policy`" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}. This means that browsers restrict access between `<iframes>` when their origin policies do not match.
@@ -183,7 +183,7 @@ cy.visit('http://localhost:8080')
 cy.get('form').submit()           // submit the form!
 ```
 
-If your backend server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
+If your back end server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
 
 ```javascript
 // imagine this is some node / express code

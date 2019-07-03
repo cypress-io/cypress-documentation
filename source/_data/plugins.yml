@@ -11,7 +11,7 @@
       keywords: [file-watcher, cucumber]
 
     - name: cypress-app-watcher-preprocessor
-      description: Reruns Cypress tests when the backend server restarts
+      description: Reruns Cypress tests when the back end server restarts
       link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
       keywords: [file-watcher]
 
@@ -92,6 +92,16 @@
       link: https://github.com/Nanciee/cypress-autorecord
       keywords: [mock, recording, http, integration test]
 
+    - name: '@cypress/code-coverage'
+      description: Plugin to save code coverage collected during Cypress tests
+      link: https://github.com/cypress-io/code-coverage
+      keywords: [coverage]
+
+    - name: 'npm-cy'
+      description: This GitHub Action for npm enables arbitrary actions with the npm command-line client, including testing with cypress.io and publishing to a registry.
+      link: https://github.com/bartlett705/npm-cy
+      keywords: [github, actions, npm]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -158,7 +168,7 @@
       description: A collection of Cypress commands to extend and complement the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
-      
+
     - name: cypress-wait-until
       description: Add the Cypress waiting power to virtually everything 🎉
       link: https://github.com/NoriSte/cypress-wait-until
@@ -231,6 +241,11 @@
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
 
+    - name: Aurelia CLI
+      description: The Aurelia CLI is the official command line tool for Aurelia.
+      link: https://aurelia.io/docs/cli
+      keywords: [aurelia, cli]
+
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
   plugins:
@@ -281,7 +296,7 @@
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
       keywords: [screenshots, visual regression]
-      
+
     - name: cypress-plugin-snapshots
       description: Plugin for snapshot tests in Cypress. Same API as Jest, but with graphical interface for reviewing and approving changes.
       link: https://github.com/meinaart/cypress-plugin-snapshots
