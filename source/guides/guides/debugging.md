@@ -116,6 +116,8 @@ When debugging a failing test, follow these general principles to isolate the pr
 - Run the same test using {% url '`--browser chrome`' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}. The problem might be isolated to the Electron browser.
 - If isolated to the Electron browser. Run the same tests in both Electron and Chrome, then compare the screenshots/videos. Look for and isolate any differences in the Command Log.
 
+{% partial chromium_download %}
+
 ## Clear Cypress cache
 
 If you're having an issue during installation of Cypress, try removing the contents of the Cypress cache.
