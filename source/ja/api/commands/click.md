@@ -125,7 +125,7 @@ cy.get('button').click({ multiple: true })
 
 ## Click with key combinations
 
-The `.click()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while clicking, such as `ATL + click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.click()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while clicking, such as `ALT + click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
 
 The following modifiers can be combined with `.click()`.
 

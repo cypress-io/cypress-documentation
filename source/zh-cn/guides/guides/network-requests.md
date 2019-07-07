@@ -5,7 +5,7 @@ title: 网络请求
 {% note info %}
 # {% fa fa-graduation-cap %} 你将会学习到什么
 
-- How Cypress enables you to stub out the backend with {% url `cy.route()` route %}
+- How Cypress enables you to stub out the back end with {% url `cy.route()` route %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
 - How to use Fixtures to reuse XHR responses

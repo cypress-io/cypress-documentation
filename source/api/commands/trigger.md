@@ -102,7 +102,7 @@ cy.get('[data-cy=draggable]')
 ### Drag and Drop
 
 {% note info %}
-{% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' recipes#Drag-and-Drop %}
+{% url 'Check out our example recipe triggering mouse and drag events to test drag and drop' recipes#Testing-the-DOM %}
 {% endnote %}
 
 ## Change Event

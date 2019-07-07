@@ -1,5 +1,5 @@
 ---
-title: Testing Workshop
+title: Workshop
 containerClass: examples
 ---
 

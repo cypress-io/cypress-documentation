@@ -4,7 +4,7 @@ title: プラグイン
 
 Plugins enable you to tap into, modify, or extend the internal behavior of Cypress.
 
-Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node.js process that plugins can use.
+Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node process that plugins can use.
 
 > Plugins enable you to tap into the `node` process running outside of the browser.
 
@@ -72,7 +72,7 @@ Check out our {% url 'After Screenshot API docs' after-screenshot-api %} which d
 
 ## cy.task
 
-The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node.js to accomplish tasks that aren't possible in the browser.
+The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node to accomplish tasks that aren't possible in the browser.
 
 You can use the `task` event to do things like:
 

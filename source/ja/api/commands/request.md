@@ -221,7 +221,7 @@ cy.getCookie('cypress-session-cookie').should('exist')
 ### Using `cy.request()` for HTML Forms
 
 {% note info %}
-{% url "Check out our example recipe using `cy.request()` for HTML form submissions" recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe using `cy.request()` for HTML web form submissions" recipes#Logging-In %}
 {% endnote %}
 
 ## Request Polling
@@ -264,7 +264,7 @@ cy
 
 ### Request is not displayed in the Network Tab of Developer Tools
 
-Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress Test Runner (in Node.js). So, you won't see the request inside of your Developer Tools.
+Cypress does not *actually* make an XHR request from the browser. We are actually making the HTTP request from the Cypress Test Runner (in Node). So, you won't see the request inside of your Developer Tools.
 
 ## CORS
 
@@ -337,7 +337,7 @@ When clicking on `request` within the command log, the console outputs the follo
 - {% url `cy.exec()` exec %}
 - {% url `cy.task()` task %}
 - {% url `cy.visit()` visit %}
-- {% url "Recipe: Logging In - Single Sign on" recipes#Single-Sign-On %}
-- {% url "Recipe: Logging In - HTML Web Form" recipes#HTML-Web-Forms %}
-- {% url "Recipe: Logging In - XHR Web Form" recipes#XHR-Web-Forms %}
-- {% url "Recipe: Logging In - CSRF Tokens" recipes#CSRF-Tokens %}
+- {% url "Recipe: Logging In - Single Sign on" recipes#Logging-In %}
+- {% url "Recipe: Logging In - HTML Web Form" recipes#Logging-In %}
+- {% url "Recipe: Logging In - XHR Web Form" recipes#Logging-In %}
+- {% url "Recipe: Logging In - CSRF Tokens" recipes#Logging-In %}
