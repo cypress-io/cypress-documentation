@@ -4,11 +4,11 @@
     <article itemscope itemtype="http://schema.org/Article">
       <header class="article-header">
         <h1 class="article-title" itemprop="name">{{ page.title }}</h1>
-        <a href="{{ raw_link(page.source) }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
+        <a href="{{ raw_link() }}" class="article-edit-link"><i class="fa fa-pencil"></i> {{ __('page.improve') }}</a>
       </header>
       <div class="article-content" itemprop="articleBody">
         {{ (page.content) }}
-        {% for pluginType in site.data.plugins %}
+        {% for pluginType in order_by_name(site.data.plugins) %}
           <h2 id="{{ id(pluginType.name) }}"><a href="#{{ id(pluginType.name) }}">{{ pluginType.name }}</a></h2>
           {% if pluginType.description %}
           <div class="plugin-type-description">{% markdown %}{{ pluginType.description }}{% endmarkdown %}</div>

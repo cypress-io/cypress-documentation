@@ -20,14 +20,25 @@ const hexo = new Hexo(process.cwd(), args)
 function initHexo () {
   // defaults outside of _config.yml
   Object.assign(hexo.config, {
-    hfc_useref: { enable: true, concat: true, exclude: null },
-    hfc_html: { enable: false, exclude: null },
-    hfc_css: { enable: true, exclude: ['*.min.css'] },
-    hfc_favicons: { enable: false },
+    hfc_useref: {
+      enable: true,
+      concat: true,
+      exclude: null,
+    },
+    hfc_html: {
+      enable: false,
+      exclude: null,
+    },
+    hfc_css: {
+      enable: true,
+      exclude: ['*.min.css'],
+    },
+    hfc_favicons: {
+      enable: false,
+    },
     hfc_js: {
       enable: true,
       mangle: true,
-      output: {},
       compress: {},
       exclude: ['*.min.js'],
     },
@@ -51,7 +62,7 @@ function initHexo () {
 
   // hexo does this weird thing where it literally sets
   // an 'env' property on the 'env' object
-  // so we take that into account (and any other way its set)
+  // so we take that into account (and any other way it is set)
   const env = hexo.env.NODE_ENV || hexo.env.env || process.env.NODE_ENV || 'development'
 
   // https://github.com/mamboer/hexo-filter-cleanup

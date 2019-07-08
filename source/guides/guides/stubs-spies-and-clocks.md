@@ -33,7 +33,7 @@ You can refer to each of these libraries' documentation for more examples and ex
 # Common Scenarios
 
 {% note info Example test! %}
-{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-window-fetch %}
+{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Stubs
@@ -204,3 +204,8 @@ When you click on a stub or spy, we also output **remarkably** helpful debugging
 - The arguments, without transforming them (they are the real arguments)
 - The return value of the function
 - The context the function was invoked with
+
+# See also
+
+- ["Stub navigator API in end-to-end tests"](https://glebbahmutov.com/blog/stub-navigator-api/)
+- ["Shrink the Untestable Code With App Actions And Effects"](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)

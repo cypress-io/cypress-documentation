@@ -14,7 +14,8 @@ defaults: &defaults
   docker:
     # the Docker image with Cypress dependencies
     # https://github.com/cypress-io/cypress-docker-images
-    - image: cypress/base:8.15.1
+    # Note: the image needs to have fonts with Chinese characters
+    - image: cypress/base:8.16.0
       environment:
         <<: *env_defaults
 

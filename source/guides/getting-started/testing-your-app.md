@@ -5,7 +5,7 @@ title: Testing Your App
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- The relationship between Cypress and your back-end
+- The relationship between Cypress and your back end
 - How to configure Cypress to fit your app
 - Working with (or without!) your authentication mechanism
 - Effectively leveraging test data
@@ -72,7 +72,7 @@ touch cypress/integration/home_page_spec.js
 
 Once that file is created, you should see it in the list of spec files.
 
-{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" "no-border" %}
 
 Now you'll need to add in the following code in your test file to visit your server:
 
@@ -88,7 +88,7 @@ Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 
-{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
+{% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 If you've started your server, then you should see your application loaded and working.
 
@@ -160,7 +160,7 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 **While there is a lot more to this strategy, you generally have three ways to facilitate this with Cypress:**
 
 - {% url `cy.exec()` exec %} - to run system commands
-- {% url `cy.task()` task %} - to run code in Node.js via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.task()` task %} - to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.request()` request %} - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
@@ -221,7 +221,7 @@ Another valid approach opposed to seeding and talking to your server is to just 
 
 While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
 
-This means that instead of resetting the database, or seeding it with the state we want, you can simply just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
+This means that instead of resetting the database, or seeding it with the state we want, you can just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
 
 Another upside is that this enables you to **build out your application** without needing the *contract* of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
 

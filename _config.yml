@@ -7,7 +7,12 @@ title: Cypress Documentation
 subtitle: Testing, the way it should be.
 description: Cypress is a test engine that runs unit and integration tests in your browser. It makes it easy to write and debug web application tests.
 author: Cypress.io
-language: en
+
+# https://hexo.io/docs/internationalization.html
+language:
+  - en
+  - zh-cn
+  - ja
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -109,7 +114,8 @@ alias:
 
   faq/index.html: faq/questions/using-cypress-faq.html
 
-#from Google Search Console/Webmaster Tools since 7/3/2017 - https://docs.google.com/spreadsheets/d/1SHhjytMEzIxtdzFNXJHn_Q6p3xFFv_lFw0x_JtNtxt0/edit#gid=1581503717
+  #from Google Search Console/Webmaster Tools since 7/3/2017
+  # https://docs.google.com/spreadsheets/d/1SHhjytMEzIxtdzFNXJHn_Q6p3xFFv_lFw0x_JtNtxt0/edit#gid=1581503717
   v1.0/docs/promise/: api/utilities/promise.html
   v1.0/docs/getcookie/: api/commands/getcookie.html
   v1.0/docs/getcookies/: api/commands/getcookies.html
@@ -137,6 +143,9 @@ alias:
   docs/finding-elements/: guides/core-concepts/introduction-to-cypress.html#Querying-Elements
 
   continuous-integration.html: guides/guides/continuous-integration.html
+
+  # for chinese translation
+  zh-cn/: zh-cn/guides/overview/why-cypress.html
 
 
 # Include/Exclude Files/Folders

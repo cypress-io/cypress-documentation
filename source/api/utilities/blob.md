@@ -1,11 +1,10 @@
 ---
 title: Cypress.Blob
-
 ---
 
 Cypress automatically includes a {% url 'Blob' https://github.com/nolanlawson/blob-util %} library and exposes it as `Cypress.Blob`.
 
-Use `Cypress.Blob` to convert `base64` strings to `blob` objects. Useful for testing uploads.
+Use `Cypress.Blob` to convert `base64` strings to Blob objects. Useful for testing uploads.
 
 # Syntax
 

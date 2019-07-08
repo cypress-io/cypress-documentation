@@ -307,7 +307,7 @@ To work around the need to reference elements, Cypress has a feature {% url 'kno
 
 ### Using {% url `.then()` then %} To Act On A Subject
 
-Want to jump into the command flow and get your hands on the subject directly? No problem, simply add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
+Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
 
 If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a simple return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
 
@@ -411,12 +411,12 @@ To illustrate this, let's revisit that list of actions and expose some of the hi
 1. Visit a URL
   ✨ **and wait for the page `load` event to fire after all external resources have loaded**✨
 2. Find an element by its selector
-  ✨ **and retry repeatedly until it is found in the DOM** ✨
+  ✨ **and {% url "retry" retry-ability %} until it is found in the DOM** ✨
 3. Perform a click action on that element
   ✨ **after we wait for the element to reach an {% url 'actionable state' interacting-with-elements %}** ✨
 4. Grab the URL and...
 5. Assert the URL to include a specific *string*
-  ✨ **and retry repeatedly until the assertion passes** ✨
+  ✨ **and {% url "retry" retry-ability %} until the assertion passes** ✨
 
 As you can see, Cypress does a lot of extra work to ensure the state of the application matches what our commands expect about it. Each command may resolve quickly (so fast you won't see them in a pending state) but others may take seconds, or even dozens of seconds to resolve.
 
@@ -517,7 +517,7 @@ None of the above commands are *idempotent*; they all cause side effects. Racing
 
 In real promises it's very easy to 'lose' a nested Promise if you don't return it or chain it correctly.
 
-Let's imagine the following Node.js code:
+Let's imagine the following Node code:
 
 ```js
 // assuming we've promisified our fs module
@@ -665,7 +665,7 @@ Many commands have a default, built-in assertion, or rather have requirements th
 
 Certain commands may have a specific requirement that causes them to immediately fail without retrying: such as {% url `cy.request()` request %}.
 
-Others, such as DOM based commands will automatically retry and wait for their corresponding elements to exist before failing.
+Others, such as DOM based commands will automatically {% url "retry" retry-ability %} and wait for their corresponding elements to exist before failing.
 
 Even more - action commands will automatically wait for their element to reach an {% url 'actionable state' interacting-with-elements %} before failing.
 
@@ -753,7 +753,7 @@ cy.wrap(obj).its('foo')
 
 ## List of Assertions
 
-Cypress bundles {% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, and {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %} to provide built-in assertions. You can see a comprehensive list of them in {% url 'the list of assertions reference' assertions %}. You can also {% url "write your own assertions as Chai plugins" recipes#Adding-Chai-Assertions %} and use them in Cypress.
+Cypress bundles {% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, and {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %} to provide built-in assertions. You can see a comprehensive list of them in {% url 'the list of assertions reference' assertions %}. You can also {% url "write your own assertions as Chai plugins" recipes#Fundamentals %} and use them in Cypress.
 
 ## Writing Assertions
 
@@ -807,7 +807,7 @@ expect(true).to.be.true
 ```
 
 {% note info Did you know you can write Unit Tests in Cypress? %}
-Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#React %}.
+Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#Unit-Testing %}.
 {% endnote %}
 
 Explicit assertions are great when you want to:
@@ -850,7 +850,7 @@ cy
 ```
 
 {% note danger Make sure `.should()` is safe %}
-When using a callback function with {% url `.should()` should %}, be sure that the entire function can be executed multiple times without side effects. Cypress applies its retry logic to these functions: if there's a failure, it will repeatedly rerun the assertions until the timeout is reached. That means your code should be retry-safe. The technical term for this means your code must be **idempotent**.
+When using a callback function with {% url `.should()` should %}, be sure that the entire function can be executed multiple times without side effects. Cypress applies its {% url "retry" retry-ability %} logic to these functions: if there's a failure, it will repeatedly rerun the assertions until the timeout is reached. That means your code should be retry-safe. The technical term for this means your code must be **idempotent**.
 {% endnote %}
 
 # Timeouts
