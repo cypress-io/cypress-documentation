@@ -123,7 +123,7 @@ cypress run --record --config viewportWidth=1280,viewportHeight=720
 
 ## Plugins
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node.js code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
@@ -187,7 +187,7 @@ When you open a Cypress project, clicking on the *Settings* tab will display the
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
-To see a working example of this please check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 To blacklist a host:
 

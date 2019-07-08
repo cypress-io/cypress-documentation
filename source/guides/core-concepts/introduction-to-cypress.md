@@ -519,7 +519,7 @@ None of the above commands are *idempotent*; they all cause side effects. Racing
 
 In real promises it's very easy to 'lose' a nested Promise if you don't return it or chain it correctly.
 
-Let's imagine the following Node.js code:
+Let's imagine the following Node code:
 
 ```js
 // assuming we've promisified our fs module
@@ -755,7 +755,7 @@ cy.wrap(obj).its('foo')
 
 ## List of Assertions
 
-Cypress bundles {% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, and {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %} to provide built-in assertions. You can see a comprehensive list of them in {% url 'the list of assertions reference' assertions %}. You can also {% url "write your own assertions as Chai plugins" recipes#Adding-Chai-Assertions %} and use them in Cypress.
+Cypress bundles {% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, and {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %} to provide built-in assertions. You can see a comprehensive list of them in {% url 'the list of assertions reference' assertions %}. You can also {% url "write your own assertions as Chai plugins" recipes#Fundamentals %} and use them in Cypress.
 
 ## Writing Assertions
 
@@ -809,7 +809,7 @@ expect(true).to.be.true
 ```
 
 {% note info Did you know you can write Unit Tests in Cypress? %}
-Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#React %}.
+Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#Unit-Testing %}.
 {% endnote %}
 
 Explicit assertions are great when you want to:

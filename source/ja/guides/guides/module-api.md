@@ -2,7 +2,7 @@
 title: Module API
 ---
 
-You can require Cypress as a Node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
+You can require Cypress as a node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
 
 - Send a notification about failing tests with included screenshot images
 - Rerun a single failing spec file

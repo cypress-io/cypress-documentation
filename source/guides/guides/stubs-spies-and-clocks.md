@@ -33,7 +33,7 @@ You can refer to each of these libraries' documentation for more examples and ex
 # Common Scenarios
 
 {% note info Example test! %}
-{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-window-fetch %}
+{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Stubs

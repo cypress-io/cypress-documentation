@@ -68,7 +68,7 @@ yarn add cypress --dev
 
 ## {% fa fa-download %} Direct download
 
-If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
+If you're not using Node or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
@@ -288,6 +288,42 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
 Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
+
+## Opt out of sending exception data to Cypress
+
+When an exception is thrown regarding Cypress, we send along the exception data to `https://api.cypress.io`. We solely use this information to help develop a better product.
+
+If you would like to opt out of sending any exception data to Cypress, you can do so by setting `CYPRESS_CRASH_REPORTS=0` in your system environment variables.
+
+### Opt out on Linux or macOS
+
+To opt out of sending exception data on Linux or macOS, run the following command in a terminal before installing Cypress:
+
+```shell
+export CYPRESS_CRASH_REPORTS=0
+```
+
+To make these changes permanent, you can add this command to your shell's `~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every login.
+
+### Opt out on Windows
+
+To opt out of sending exception data on Windows, run the following command in the Command Prompt before installing Cypress:
+
+```shell
+set CYPRESS_CRASH_REPORTS=0
+```
+
+To accomplish the same thing in Powershell:
+
+```shell
+$env:CYPRESS_CRASH_REPORTS = "0"
+```
+
+To save the `CYPRESS_CRASH_REPORTS` variable for use in all new shells, use `setx`:
+
+```shell
+setx CYPRESS_CRASH_REPORTS 0
+```
 
 ## Install pre-release version
 

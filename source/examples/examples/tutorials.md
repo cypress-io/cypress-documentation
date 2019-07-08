@@ -122,7 +122,7 @@ We will test the application's footer behavior. First, we will ensure that our f
 
 ## 8. Full end-to-end tests part 1
 
-We will connect our back-end API to the front end we've been building. Once we have the back-end API connected, then we will create our first true end-to-end test. Using the back-end API, we will ensure a consistent starting state by deleting any existing data from the database. Then we will test that our application can create and save new todos without a stubbed back-end. We will also see how we can listen to and {% url `cy.wait()` wait %} for XHR responses in our tests to avoid flake caused by unpredictable response times.
+We will connect our back end API to the front end we've been building. Once we have the back end API connected, then we will create our first true end-to-end test. Using the back end API, we will ensure a consistent starting state by deleting any existing data from the database. Then we will test that our application can create and save new todos without a stubbed back end. We will also see how we can listen to and {% url `cy.wait()` wait %} for XHR responses in our tests to avoid flake caused by unpredictable response times.
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/08_smoke_1 %}
 
@@ -130,7 +130,7 @@ We will connect our back-end API to the front end we've been building. Once we h
 
 ## 9. Full end-to-end tests part 2
 
-We will continue building on our full end-to-end tests, this time seeding the database to test our application against a populated database. We will repeat the pattern of adding {% url `cy.wait()` wait %} commands to our tests to ensure our back-end has responded before moving on. Once we have tests for deleting and updating items against a real back-end, we will see how to run our Cypress tests using `cypress run`, giving us an ideal setup for running our tests in a CI environment.
+We will continue building on our full end-to-end tests, this time seeding the database to test our application against a populated database. We will repeat the pattern of adding {% url `cy.wait()` wait %} commands to our tests to ensure our back end has responded before moving on. Once we have tests for deleting and updating items against a real back end, we will see how to run our Cypress tests using `cypress run`, giving us an ideal setup for running our tests in a CI environment.
 
 {% fa fa-github %} {% url "Get the completed code for this lesson on GitHub" https://github.com/cypress-io/cypress-tutorial-build-todo/tree/09_smoke_2 %}
 

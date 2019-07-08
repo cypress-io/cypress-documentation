@@ -67,7 +67,7 @@ Cypress' API is written to be completely compatible for integration with Sauce L
 
 ## {% fa fa-angle-right %} Do you support X language or X framework?
 
-Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything that runs in the context of a browser. It is backend, front-end, language and framework agnostic.
+Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything that runs in the context of a browser. It is back end, front end, language and framework agnostic.
 
 You'll write your tests in JavaScript, but beyond that Cypress works everywhere.
 
@@ -94,7 +94,7 @@ No. In fact Cypress' architecture is very different from Selenium in a few criti
 
 Yes, technically; it's sandboxed and has to follow the same rules as every other browser. That's actually a good thing because it doesn't require a browser extension, and it naturally will work across all browsers (which enables cross-browser testing).
 
-But Cypress is actually way beyond just a basic JavaScript application running in the browser. It is also a desktop application and communicates with backend web services.
+But Cypress is actually way beyond just a basic JavaScript application running in the browser. It is also a desktop application and communicates with back end web services.
 
 All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work just fine, and already *does* work.
 
