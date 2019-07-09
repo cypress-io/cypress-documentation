@@ -544,7 +544,7 @@ cy.get('table tr').should('have.length', 2)
 {% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
 {% endnote %}
 
-We do NOT recommend trying to start your backend web server from within Cypress.
+We do NOT recommend trying to start your back end web server from within Cypress.
 
 Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually. Otherwise, Cypress will not continue running any other commands.
 

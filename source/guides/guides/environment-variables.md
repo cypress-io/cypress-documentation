@@ -200,7 +200,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ## Option #5: Plugins
 
-Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node.js code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
@@ -226,4 +226,4 @@ You can {% url 'read more about how environment variables can change configurati
 
 ## See also
 
-- {% url "Environment Variables recipe" recipes#Environment-Variables %}
+- {% url "Environment Variables recipe" recipes#Server-Communication %}

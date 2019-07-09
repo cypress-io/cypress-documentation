@@ -3,7 +3,7 @@ const GUIDES_PATH = '/guides/overview/why-cypress.html'
 const API_PATH = '/api/api/table-of-contents'
 
 describe('Table of Contents', () => {
-  beforeEach(() => {
+  beforeEach(function () {
     //# skip running this test if we are in interactive mode
     if (Cypress.config('isInteractive')) {
       this.skip()

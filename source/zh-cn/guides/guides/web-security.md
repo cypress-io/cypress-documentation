@@ -183,7 +183,7 @@ cy.visit('http://localhost:8080')
 cy.get('form').submit()           // submit the form!
 ```
 
-If your backend server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
+If your back end server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
 
 ```javascript
 // imagine this is some node / express code

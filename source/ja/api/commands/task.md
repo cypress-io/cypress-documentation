@@ -2,7 +2,7 @@
 title: task
 ---
 
-Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin event.
+Execute code in {% url "Node" https://nodejs.org %} via the `task` plugin event.
 
 {% note warning 'Anti-Pattern' %}
 We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
