@@ -123,7 +123,7 @@ cypress run --record --config viewportWidth=1280,viewportHeight=720
 
 ## 插件
 
-对于{% url `1.2.0` changelog#1-2-0 %}，你可以使用Node.js代码以编程方式修改配置值。这使你能够使用`fs`之类的操作，读取配置值并动态更改它们。
+对于{% url `1.2.0` changelog#1-2-0 %}，你可以使用Node代码以编程方式修改配置值。这使你能够使用`fs`之类的操作，读取配置值并动态更改它们。
 
 虽然这可能比其他选项需要更多的工作—它为你提供了最大的灵活性和管理配置的能力。
 
@@ -187,7 +187,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 通过传递字符串或字符串数组，可以阻止向一个或多个主机发出的请求。
 
-要查看这方面的使用示例，请查看{% url '谷歌解析方法' recipes#Stubbing-Google-Analytics %}。
+要查看这方面的使用示例，请查看{% url '谷歌解析方法' recipes#Stubbing-and-spying %}。
 
 将主机列入黑名单：
 

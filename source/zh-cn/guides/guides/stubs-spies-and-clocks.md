@@ -34,7 +34,7 @@ Cypress自动捆绑和包装这些库：
 # 常见的场景
 
 {% note info 示例测试！ %}
-{% url '查看我们的示例方法测试间谍、桩和时间' recipes#Stubbing-window-fetch %}
+{% url '查看我们的示例方法测试间谍、桩和时间' recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## 桩

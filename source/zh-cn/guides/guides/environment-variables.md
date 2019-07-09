@@ -200,7 +200,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ## 选择 #5: 插件
 
-你可以使用插件通过Node.js代码动态地设置环境变量，而不是在文件中设置环境变量。这使你可以执行诸如使用`fs`和读出配置值并动态更改它们之类的操作。
+你可以使用插件通过Node代码动态地设置环境变量，而不是在文件中设置环境变量。这使你可以执行诸如使用`fs`和读出配置值并动态更改它们之类的操作。
 
 虽然这可能比其他选项需要更多的操作—无论你想要什么，它都会给你提供了最大的灵活性和管理配置的能力。
 
@@ -226,4 +226,4 @@ export CYPRESS_FOO=bar
 
 ## 另请参阅
 
-- {% url "环境变量的设置方法" recipes#Environment-Variables %}
+- {% url "环境变量的设置方法" recipes#Server-Communication %}

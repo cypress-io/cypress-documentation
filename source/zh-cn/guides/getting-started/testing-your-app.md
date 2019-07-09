@@ -162,7 +162,7 @@ Cypress有许多配置选项可供你自定义其行为。 诸如测试文件所
 **包括但不限于以上的测试经验策略， 在Cypress里你可以通过以下3种方式轻易达成：**
 
 - {% url `cy.exec()` exec %} - 运行系统指令
-- {% url `cy.task()` task %} - 通过{% url "`pluginsFile`" configuration#Folders-Files %}在Node.js里运行代码
+- {% url `cy.task()` task %} - 通过{% url "`pluginsFile`" configuration#Folders-Files %}在Node里运行代码
 - {% url `cy.request()` request %} - 发起HTTP请求
 
 如果你启动了`node.js`服务，你可以添加钩子`before`或`beforeEach`来执行一个`npm`任务：

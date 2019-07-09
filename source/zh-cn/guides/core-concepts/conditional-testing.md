@@ -139,7 +139,7 @@ it('does something different based on the class of the button', function () {
 ### 使用URL查询参数：
 
 ```js
-// 告诉你的服务器你需要发送那个广告
+// 告诉你的服务器你需要发送哪个广告
 // 这样你就可以确定的知道它是什么了
 cy.visit('https://app.com?campaign=A')
 
@@ -377,13 +377,14 @@ cy.get('body').then(($body) => {
 
 > 如果我有错误处理，我可以尝试找到X，如果X失败，则取找Y。
 
-因为错误处理在大多数编程语言中是常见的用法，特别是在Node.js中，所以在Cypress中期望这样做似乎是合理的。
+因为错误处理在大多数编程语言中是常见的用法，特别是在Node中，所以在Cypress中期望这样做似乎是合理的。
 
 然而，这与要求进行条件测试的问题完全相同，只是稍微不同的实现细节。
 
 例如，你可能想要这样做：
 
 **以下代码无效，你无法在Cypress命令中添加错误处理。该代码仅用于演示。**
+
 ```js
 cy.get('button').contains('hello')
   .catch((err) => {

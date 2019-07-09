@@ -234,18 +234,19 @@ CI构建ID用于将多个CI机器关联到一个测试运行。此标识符基�
 
 Cypress目前使用以下CI环境变量来确定测试运行的CI构建ID：
 
-| Provider  | Environment Variable  |
-|--|--|
-| AppVeyor  | `APPVEYOR_BUILD_NUMBER`  |
-| Bamboo  | `BAMBOO_BUILD_NUMBER`  |
-| Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER` |
-| Codeship  | `CI_BUILD_NUMBER`  |
-| Codeship Basic  | `CI_BUILD_NUMBER`  |
-| Codeship Pro  | `CI_BUILD_ID`  |
-| Drone  | `DRONE_BUILD_NUMBER`  |
-| Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`  |
-| Jenkins  | `BUILD_NUMBER`  |
-| Travis  | `TRAVIS_BUILD_ID`  |
+Provider  | Environment Variable
+--|--
+AppVeyor  | `APPVEYOR_BUILD_NUMBER`
+Bamboo  | `BAMBOO_BUILD_NUMBER`
+Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
+Codeship  | `CI_BUILD_NUMBER`
+Codeship Basic  | `CI_BUILD_NUMBER`
+Codeship Pro  | `CI_BUILD_ID`
+Drone  | `DRONE_BUILD_NUMBER`
+Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`
+Jenkins  | `BUILD_NUMBER`
+Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
+Travis  | `TRAVIS_BUILD_ID`
 
 你可以传递不同的值将代理链接到相同的运行。例如，如果你正在使用Jenkins，并且认为环境变量`BUILD_TAG`比环境变量`BUILD_NUMBER`更唯一，那么可以通过CLI {% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}传递`BUILD_TAG`值。
 

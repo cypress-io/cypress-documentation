@@ -533,7 +533,7 @@ Cypress可以保证每次运行时能以明确的、相同的方式执行其所�
 
 在promises里，如果你不返回promise或命令链，就很容易"失去"一个嵌套的Promise。
 
-让我们猜想一下接下来的Node.js 代码:
+让我们猜想一下接下来的Node代码:
 
 ```js
 // 假设我们已经引入了我们的fs模块
@@ -690,7 +690,7 @@ cy.get('form')
 {% endnote %}
 
 {% note danger "否定DOM断言" %}
-如果你链接了`.should()`命令，则默认的`.should('exist')`不会断言。对于大多数 *正面* 断言,如`.should('have.class')`并不重要,因为这些断言首先意味着存在,但如果你链接 *否定* 断言,例如`.should('not.have.class')`,即使DOM元素不存在也会通过：
+如果你链接了`.should()`命令，则默认的`.should('exist')`不会断言。对于大多数 *正面* 断言,如`.should('have.class')`，因为这些断言首先意味着存在,但如果你链接 *否定* 断言,例如`.should('not.have.class')`,即使DOM元素不存在也会通过：
 
 ```
 cy.get('.does-not-exist').should('not.be.visible')         // 通过
@@ -701,8 +701,8 @@ cy.get('.does-not-exist').should('not.have.descendants')   // 通过
 
 ```
 // 通过,前提是回调本身已通过
-cy.get('.does-not-exist').should(($element) => {   
-  expect($element.find('input')).to.not.exist 
+cy.get('.does-not-exist').should(($element) => {
+  expect($element.find('input')).to.not.exist
 })
 ```
 
@@ -767,7 +767,7 @@ cy.wrap(obj).its('foo')
 
 ## 断言列表
 
-Cypress捆绑了{% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, 和 {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %}提供的内置断言。你可以在{% url '断言引用列表' assertions %}中看到它们的完整列表。您也可以{% url "编写自己的断言作为 Chai 插件" recipes#Adding-Chai-Assertions %},并在Cypress使用它们。
+Cypress捆绑了{% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, 和 {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %}提供的内置断言。你可以在{% url '断言引用列表' assertions %}中看到它们的完整列表。您也可以{% url "编写自己的断言作为 Chai 插件" recipes#Fundamentals %},并在Cypress使用它们。
 
 ## 编写断言
 
@@ -821,7 +821,7 @@ expect(true).to.be.true
 ```
 
 {% note info 你知道你能在Cypress中写单元测试吗? %}
-参考我们的例子 {% url '单元测试' recipes %} 和 {% url '反应单元测试的组件' recipes#React %}.
+参考我们的例子 {% url '单元测试' recipes %} 和 {% url '反应单元测试的组件' recipes#Unit-Testing %}.
 {% endnote %}
 
 当你需要的时候,显式断言很棒:

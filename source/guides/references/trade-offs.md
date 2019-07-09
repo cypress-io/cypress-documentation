@@ -52,21 +52,21 @@ The **sweet spot** of Cypress is to be used as a tool to test your own applicati
 
 In case you missed it before - Cypress tests run inside of the browser! This means we can do things nobody else can. There is no object serialization or JSON wire protocols. You have real, native access to everything in your application under test. It is impossible for Cypress to 'miss' elements and it always knows the moment your application fires any kind of event.
 
-But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node.js, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
+But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 
-This trade-off means it makes it a little bit harder to communicate with the backend - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node.js to import or talk directly to your backend scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
+This trade-off means it makes it a little bit harder to communicate with the back end - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node to import or talk directly to your back end scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
 
-To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your backend language.
+To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your back end language.
 
 The trade-off here is that doing everything in the browser (basically all of your tests) is a much better experience in Cypress. But doing things outside of the browser may take a little extra work.
 
-In the future we **do** have plans to release backend adapters for other languages.
+In the future we **do** have plans to release back end adapters for other languages.
 
 ## Multiple tabs
 
 Because Cypress runs in the browser, it will never have multi-tabs support. We do have access to the browser automation APIs to actually switch tabs, but there is no reason for us to ever expose them.
 
-Most of the time this use case is needed when users click an `<a>` that opens a new tab. Users then want to switch to that tab to verify that the content loaded. But, you shouldn't need to do this. In fact we have {% url 'recipes of showing you how to test this without multiple tabs' recipes#Tab-Handling-and-Links %}.
+Most of the time this use case is needed when users click an `<a>` that opens a new tab. Users then want to switch to that tab to verify that the content loaded. But, you shouldn't need to do this. In fact we have {% url 'recipes of showing you how to test this without multiple tabs' recipes#Testing-the-DOM %}.
 
 To take this a step further - we don't believe there is any use case for testing the browser's native behavior. You should ask yourself why you are testing that clicking an `<a href="/foo" target="_blank">` opens a new tab. You already know that is what the browser is designed to do and you already know that it is triggered by the `target="_blank"` attribute.
 
@@ -82,7 +82,7 @@ This principle applies to everything in Cypress. Do not test what does not need 
 
 Just like with multiple tabs - Cypress does not support controlling more than 1 open browser at a time.
 
-However it **is possible** to synchronize Cypress with another backend process - whether it is Selenium or Puppeteer to drive a 2nd open browser. We have actually seen this work together quite nicely!
+However it **is possible** to synchronize Cypress with another back end process - whether it is Selenium or Puppeteer to drive a 2nd open browser. We have actually seen this work together quite nicely!
 
 With that said, except in the most unusual and rare circumstances, you can still test most application behavior without opening multiple browsers at the same time.
 
@@ -236,4 +236,4 @@ We've written several other guides specifically about handling this situation.
 
 - {% url 'Best Practices: Visiting external sites' best-practices#Visiting-external-sites %}
 - {% url 'Web Security: Common Workarounds' web-security#Common-Workarounds %}
-- {% url 'Recipes: Logging In (Single Sign On)' recipes#Single-Sign-On %}
+- {% url 'Recipes: Logging In - Single Sign On' recipes#Logging-In %}

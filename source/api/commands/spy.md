@@ -65,7 +65,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 ### More `cy.spy()` examples
 
 {% note info %}
-{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Aliases
@@ -154,5 +154,5 @@ When clicking on the `spy-1` event within the command log, the console outputs t
 - {% url `.as()` as %}
 - {% url `cy.clock()` clock %}
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
-- {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" recipes#Stubbing-window-fetch %}
+- {% url "Recipe: Stubbing, Spying" recipes#Stubbing-and-spying %}
 - {% url `cy.stub()` stub %}

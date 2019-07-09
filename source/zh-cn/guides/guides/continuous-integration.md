@@ -360,7 +360,7 @@ apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 liba
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
 
-参考{% url '配置' configuration#Environment-Variables %}以了解更多示例。
+参考{% url '环境变量' configuration#Environment-Variables %}以了解更多示例。
 
 ***录制秘钥***
 

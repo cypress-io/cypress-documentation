@@ -20,6 +20,8 @@ Cypress会自动在你的操作系统中检测可用的浏览器。你可以使�
 
 {% imgTag /img/guides/select-browser.png "Select a different browser" %}
 
+{% partial chromium_download %}
+
 ## Electron浏览器
 
 除了在你的系统中找到的浏览器之外，你还会发现Electron也是可用的浏览器。Electron浏览器是Chromium的一个版本，附带{% url "Electron" https://electron.atom.io/ %}。

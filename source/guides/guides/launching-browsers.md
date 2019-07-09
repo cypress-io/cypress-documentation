@@ -20,6 +20,8 @@ Cypress automatically detects available browsers on your OS. You can switch the 
 
 {% imgTag /img/guides/select-browser.png "Select a different browser" %}
 
+{% partial chromium_download %}
+
 ## Electron Browser
 
 In addition to the browsers found on your system, you'll notice that Electron is an available browser. The Electron browser is a version of Chromium that comes with {% url "Electron" https://electron.atom.io/ %}.

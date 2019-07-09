@@ -11,7 +11,7 @@
       keywords: [file-watcher, cucumber]
 
     - name: cypress-app-watcher-preprocessor
-      description: Reruns Cypress tests when the backend server restarts
+      description: Reruns Cypress tests when the back end server restarts
       link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
       keywords: [file-watcher]
 

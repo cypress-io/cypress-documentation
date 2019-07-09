@@ -32,9 +32,9 @@ containerClass: faq
 - {% issue 95#issuecomment-281273126 "使用`window.fetch`时无法使用`cy.route()`但已有一个折中方案" %}，请参考{% url "此指导" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch/cypress/integration %}
 - {% issue 144 "没有对shadow DOM的支持，但已有一个折中方案" %}，请参考{% url "这个评论" https://github.com/cypress-io/cypress/issues/830#issuecomment-449411701 %}
 
-# 1. 将永久存在的“缺陷”
+# 将永久存在的“缺陷”
 
-## 1.1 自动化限制
+## 自动化限制
 
 Cypress是一个专业工具，可以很好地完成一件事：在开发过程中对Web应用程序进行端到端测试。你不应该将Cypress用于不适用的事情，例如：
 
@@ -47,13 +47,13 @@ Cypress是一个专业工具，可以很好地完成一件事：在开发过程�
 
 Cypress的**甜点**是，被用作测试你自己的应用程序的工具，**就像你在构建它时一样**。它专为开发人员和QA工程师而设计，而非手动测试人员或探索性测试。
 
-## 1.2 在浏览器内
+## 在浏览器内
 
 以防你之前错过了这点 - Cypress测试其实是在浏览器内运行！这意味着我们可以做其他工具无法做到的事情。不需要对象序列化或JSON有线协议。你可以对所测试的应用程序中的所有内容进行真正的本机访问。Cypress不可能“错过”元素，它总是知道你的应用程序触发任何类型的事件的那一刻。
 
 但这也意味着你的测试代码也会**在浏览器中运行**，测试代码不在Node.js或任何其他服务器端语言中运行。我们将支持的web的**唯一**语言是：JavaScript。
 
-这种权衡意味着它使得与后端进行通信变得更加困难 - 就像你的服务器或数据库一样。你将无法直接连接或导入这些服务器端库或模块。虽然你当然可以要求可以在浏览器中使用的`node_modules`包。此外，你可以使用{% url "our Plugins API" writing-a-plugin %}或{% url "`cy.task()`" task %}来使用Node.js导入或直接与你的后端脚本对话。
+这种权衡意味着它使得与后端进行通信变得更加困难 - 就像你的服务器或数据库一样。你将无法直接连接或导入这些服务器端库或模块。虽然你当然可以要求可以在浏览器中使用的`node_modules`包。此外，你可以使用{% url "our Plugins API" writing-a-plugin %}或{% url "`cy.task()`" task %}来使用Node导入或直接与你的后端脚本对话。
 
 要与你的数据库或服务器通信，你需要使用{% url `cy.exec()` exec %}，{% url `cy.task()` task %}或{% url `cy.request()` request %}指令。这意味着你需要公开初始化和设置数据库的方法。这真的不是那么难，但它可能需要比你的后端语言编写的其他测试工具更多的体力活儿。
 
@@ -61,11 +61,11 @@ Cypress的**甜点**是，被用作测试你自己的应用程序的工具，**�
 
 在未来，我们**确实**有计划发布基于其他语言的后端适配工具。
 
-## 1.3 多页签
+## 多页签
 
 由于Cypress在浏览器中运行，因此它永远不会支持多标签。我们当然可以使用浏览器自带的自动化API来实现切换标签，但我们没有理由进行兼容(意指这不是Cypress需要考虑的范畴)。
 
-大多数情况下，当用户单击打开新选项卡的`<a>`标签时，需要使用此情况。然后，用户希望切换到该选项卡以验证加载的内容。但是，你不应该这样做。事实上，我们有{% url '如何不通过多页签来测试这种情况的指南' recipes#Tab-Handling-and-Links %}。
+大多数情况下，当用户单击打开新选项卡的`<a>`标签时，需要使用此情况。然后，用户希望切换到该选项卡以验证加载的内容。但是，你不应该这样做。事实上，我们有{% url '如何不通过多页签来测试这种情况的指南' recipes#Testing-the-DOM %}。
 
 更进一步考虑 - 我们认为这属于浏览器本身行为，不应该考虑到测试用例里。你应该问问自己为什么要测试单击`<a href="/foo" target="_blank">`打开一个新选项卡。你已经知道这是浏览器原本的自身设计，你已经知道它就只是由`target="_blank"`属性触发的而已。
 
@@ -77,7 +77,7 @@ cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank') // 就这么简
 
 此种原则贯穿Cypress全部。不要测试不该测的东西。这样会慢、脆弱、无任何价值。只需要测试你关心的、带来这些行为的底层设计。
 
-## 1.4 同一时间打开多浏览器
+## 同一时间打开多浏览器
 
 就像多个选项卡一样 - Cypress不支持一次控制多个打开的浏览器。
 
@@ -95,7 +95,7 @@ cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank') // 就这么简
 
 虽然超出了本文的指南范围，但你可以使用以下原则测试聊天应用程序。其中每一个都会要求引入更多逻辑协作：
 
-### 1.4.1 仅使用浏览器:
+### 仅使用浏览器:
 
 ```text
     &downarrow;
@@ -107,7 +107,7 @@ cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank') // 就这么简
 
 你可以{% url "stub" stub %}任何东西或模拟任何单一场景。消息响应，离线消息，连接，重连，断开连接，聊天组等等。任何在浏览器内发生的事情都可以完整地测试。甚至关闭浏览器也可以被打桩，因为你可以断言请求体不正确。
 
-### 1.4.2 打桩其他连接：
+### 打桩其他连接：
 
 ```text
 server &rightarrow; browser
@@ -123,7 +123,7 @@ server &rightarrow; browser
 
 通常，此模式使你可以避免建立又一个WebSocket连接，但仍然可以实现浏览器和服务器的双向通信。这样一来你还可以测试边缘情况（断开连接等），而不必实际处理真实连接。
 
-### 1.4.3 新连接介绍:
+### 新连接介绍:
 
 ```text
 server &rightarrow; browser
@@ -195,7 +195,7 @@ app.listen(8081, () => {})
 
 这样可以避免打开新的浏览器，却可以给你足够的信心两个客户端100%的达到了端到端的连接通信。
 
-## 1.5 同域
+## 同域
 
 每一个测试都被限制在只能访问单个域名后缀。
 
@@ -235,4 +235,4 @@ cy.visit('https://google.com')      // 这将立即导致错误
 
 - {% url '最佳实践之访问外部站点' best-practices#Visiting-external-sites %}
 - {% url 'Web安全之通用折中方案' web-security#Common-Workarounds %}
-- {% url '指南：SSO登录(Single Sign On)' recipes#Single-Sign-On %}
+- {% url '指南：SSO登录 - Single Sign On' recipes#Logging-In %}

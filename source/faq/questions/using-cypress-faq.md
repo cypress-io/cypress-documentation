@@ -263,13 +263,13 @@ Yes. {% url "You can override this with `userAgent` in `cypress.json`." configur
 
 Yes. {% url "You can set this with `blacklistHosts` in `cypress.json`." configuration#Browser %}
 
-Also, check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 ## {% fa fa-angle-right %} How can I verify that calls to analytics like Google Analytics are being made correct?
 
-Easy - you stub their functions and then ensure they're being called.
+You can stub their functions and then ensure they're being called.
 
-Check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+Check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 ## {% fa fa-angle-right %} I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
@@ -361,7 +361,7 @@ cy.get('#list>li').should('have.length', 20)
 
 ## {% fa fa-angle-right %} How do I seed / reset my database?
 
-You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your backend to seed data.
+You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your back end to seed data.
 
 You could also just stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
 
@@ -415,7 +415,7 @@ Cypress does not and may never have multi-tab support for various reasons.
 
 Luckily there are lots of easy and safe workarounds that enable you to test this behavior in your application.
 
-{% url 'Read through this recipe to see how to test anchor links.' recipes#Tab-Handling-and-Links %}
+{% url 'Read through the recipe on tab handling and links to see how to test anchor links.' recipes#Testing-the-DOM %}
 
 ## {% fa fa-angle-right %} Can I dynamically test multiple viewports?
 
@@ -454,7 +454,7 @@ Cypress does not have direct access to Node or your file system. We recommend ut
 - {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.exec()` exec %} to execute a shell command
 
-{% url 'Check out this example recipe.' recipes#Node-Modules %}
+{% url 'Check out the "Node Modules" example recipe.' recipes#Fundamentals %}
 
 ## {% fa fa-angle-right %} Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 
@@ -569,5 +569,5 @@ If a test fails, Cypress takes a screenshot image, but does not print the list o
 
 Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to assert the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
 
-- see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Redux-Testing %} recipe.
-- see {% url "Testing Vue web applications with Vuex data store & REST backend" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Vue-Vuex-REST-Testing %} recipe.
+- see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Blogs %} recipe.
+- see {% url "Testing Vue web applications with Vuex data store & REST back end" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Blogs %} recipe.

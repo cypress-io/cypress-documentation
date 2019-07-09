@@ -84,7 +84,7 @@ Fixtures是测试过程中需要用到的外部静态数据。Fixture文件默�
 Cypress还支持开箱即用的 `ES2015` 。你可以使用 `ES2015 modules` 或 `CommonJS modules`。这意味着你可以 `import` 或 `require` **npm packages** 和 **local relative modules**。
 
 {% note info 示例 %}
-你可以参考我们的例子 {% url 'ES2015 and CommonJS modules' recipes#Node-Modules %}.
+你可以参考我们的例子 {% url 'ES2015 and CommonJS modules' recipes#Fundamentals %}。
 {% endnote %}
 
 要查看Cypress中每个命令的示例， 可以打开你的 `cypress/integration` 文件夹中的 {% url "`example` 目录" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} 。
@@ -130,7 +130,7 @@ beforeEach(function () {
 我们会自动为你提供一个示例支持文件，该文件中有几个注释掉的示例。
 
 {% note info 示例 %}
-我们的 {% url '扩展Cypress示例' recipes#Node-Modules %} 向你展示了如何修改支持文件。
+我们的 {% url 'Node模块' recipes#Fundamentals %} 向你展示了如何修改支持文件。
 {% endnote %}
 
 # 编写测试

@@ -131,7 +131,7 @@ cy
 ### Use `.its()` to test `window.fetch`
 
 {% note info %}
-{% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Nested Properties

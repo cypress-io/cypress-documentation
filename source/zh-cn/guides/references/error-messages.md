@@ -491,7 +491,7 @@ cypress run --record
 
 ### 对于这些常见的情况，有一些简单的解决方法：
 
-1. 不要在测试中点击导航到应用程序外部的`<a>`链接。无论如何，这都不值得测试。你应该问问自己：*点击进入另一个应用程序有什么意义？*可能你只关心`href`属性是否与你期望的匹配。所以简单地做一个断言即可。你可以{% url '在我们的示例方法' recipes#Tab-Handling-and-Links %}中看到更多关于测试锚链接的策略。
+1. 不要在测试中点击导航到应用程序外部的`<a>`链接。无论如何，这都不值得测试。你应该问问自己：*点击进入另一个应用程序有什么意义？*可能你只关心`href`属性是否与你期望的匹配。所以简单地做一个断言即可。你可以{% url '在我们的“标签处理和链接”示例方法' recipes#Testing-the-DOM %}中看到更多关于测试锚链接的策略。
 
 2. 你正在测试一个使用`单点登录（SSO）`的页面。在这种情况下，你的web服务器可能会在超域之间重定向你，因此你将收到此错误消息。你可以通过使用{% url `cy.request()` request %}手动处理会话来解决这个重定向问题。
 
@@ -523,7 +523,6 @@ cypress run --record
 
 如果你正在运行`Docker`{% issue 350 '这里有个简单的一行代码来解决这个问题' %}
 
-
 # 测试运行器错误
 
 ## {% fa fa-exclamation-triangle red %} Cannot connect to API server
@@ -534,6 +533,29 @@ cypress run --record
 
 1. 你没有网络。请确保已连接，然后重试。
 2. 你是一个开发人员，你已经克隆了我们的代码库，但没有权限在本地运行我们的API。请阅读我们的{% url "贡献文档" https://on.cypress.io/contributing %}。
+
+## {% fa fa-exclamation-triangle red %} Cypress detected policy settings on your computer that may cause issues
+
+When Cypress launches Chrome, it attempts to launch it with a custom proxy server and browser extension. Certain group policies (GPOs) on Windows can prevent this from working as intended, which can cause tests to break.
+
+If your administrator has set any of the following Chrome GPOs, it can prevent your tests from running in Chrome:
+
+- Proxy policies: `ProxySettings, ProxyMode, ProxyServerMode, ProxyServer, ProxyPacUrl, ProxyBypassList`
+- Extension policies: `ExtensionInstallBlacklist, ExtensionInstallWhitelist, ExtensionInstallForcelist, ExtensionInstallSources, ExtensionAllowedTypes, ExtensionAllowInsecureUpdates, ExtensionSettings, UninstallBlacklistedExtensions`
+
+Here are some potential workarounds:
+
+1. Ask your administrator to disable these policies so that you can use Cypress with Chrome.
+2. Use the built-in Electron browser for tests, since it is not affected by these policies. {% url 'See the guide to launching browsers for more information.' launching-browsers#Electron-Browser %}
+3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com/ %}
+4. If you have Local Administrator access to your computer, you may be able to delete the registry keys that are affecting Chrome. Here are some instructions:
+    1. Open up Registry Editor by pressing WinKey+R and typing `regedit.exe`
+    2. Look in the following locations for the policy settings listed above:
+        - `HKEY_LOCAL_MACHINE\Software\Policies\Google\Chrome`
+        - `HKEY_LOCAL_MACHINE\Software\Policies\Google\Chromium`
+        - `HKEY_CURRENT_USER\Software\Policies\Google\Chrome`
+        - `HKEY_CURRENT_USER\Software\Policies\Google\Chromium`
+    3. Delete or rename any policy keys found. *Make sure to back up your registry before making any changes.*
 
 ## {% fa fa-exclamation-triangle red %} Uncaught exceptions from your application
 
