@@ -69,7 +69,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 1. Click on the **Runs** tab of your project within the {% url "Test Runner" test-runner %}.
 2. Click **Set up Project to Record**.
-3. You will need to log in to record your tests, so you will need to log in with GitHub here.
+3. You will need to log in to record your tests, so you will need to log in to the Cypress Dashboard here.
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
 5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% urlHash 'Read more about organizations' Organizations %}.
 6. Choose whether this project is Public or Private.

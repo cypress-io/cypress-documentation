@@ -511,6 +511,10 @@ Check your Developer Tools Console for the actual error - it should be printed t
 
 It's possible to enable debugging these scripts by adding the `crossorigin` attribute and setting a `CORS` header.
 
+## {% fa fa-exclamation-triangle red %} CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+
+If you get this error in a case where the element is definitely visible in the DOM, your document might contain malformed HTML. In such cases, `document.querySelector()` will not find any elements that appear after the point where the HTML is malformed. Even if you feel certain your HTML is not malformed anywhere, check it anyway (line by line in the dev tools). Especially if you've exhausted all other possibilities.
+
 # Browser Errors
 
 ## {% fa fa-exclamation-triangle red %} The Chromium Renderer process just crashed
