@@ -39,7 +39,7 @@ title: 数据面板服务
 
 ## 示例项目
 
-一旦登录到{% url '数据面板服务' https://on.cypress.io/dashboard %}你就可以看到所有的{% urlHash "公共项目" 2-4-公有-vs-私有 %}。
+一旦登录到{% url '数据面板服务' https://on.cypress.io/dashboard %}你就可以看到所有的{% urlHash "公共项目" 公有-vs-私有 %}。
 
 **以下是部分我们的公共项目：**
 
@@ -71,14 +71,14 @@ title: 数据面板服务
 2. 单击**设置要录制的项目**；
 3. 你需要登录才能录制你的测试，因此你需要在此处使用GitHub登录；
 4. 填写项目名称（这仅用于显示目的，可以在以后更改）；
-5. 选择谁拥有该项目。你可以自己拥有它或选择你创建的组织。如果你没有任何组织，请单击**创建组织**。组织就像在GitHub中一样工作。它们使你能够区分开你个人和工作的项目 - {% urlHash '参阅更多关于组织的介绍' 4-组织 %}；
+5. 选择谁拥有该项目。你可以自己拥有它或选择你创建的组织。如果你没有任何组织，请单击**创建组织**。组织就像在GitHub中一样工作。它们使你能够区分开你个人和工作的项目 - {% urlHash '参阅更多关于组织的介绍' 组织 %}；
 6. 选择此项目是公共还是私有
    -  **公共项目** 可以被看到的*任何人*录制和运行。通常这些是开源项目；
-   -  **私有项目** 限制其仅能被*{% urlHash "你邀请的用户" 5-成员 %}*访问；
+   -  **私有项目** 限制其仅能被*{% urlHash "你邀请的用户" 成员 %}*访问；
 7. 单击** Setup Project **；
 8. 现在你应该看到一个视图，解释如何录制你的第一次运行；
-9. 在设置项目后，Cypress在你的`cypress.json`中插入了一个唯一的 {% urlHash "projectId" 2-2-标识符 %}。如果你正在使用源代码管理，我们建议你检查一下在源码管理中包含`projectId`的`cypress.json`；
-10. 在{% url 持续集成' continuous-integration %}平台里，或从本地计算机的终端，在运行{% url '`cypress run`' command-line#cypress-run %}命令时，传{% urlHash "Record Key" 2-2-标识符 %}参数：
+9. 在设置项目后，Cypress在你的`cypress.json`中插入了一个唯一的 {% urlHash "projectId" 标识符 %}。如果你正在使用源代码管理，我们建议你检查一下在源码管理中包含`projectId`的`cypress.json`；
+10. 在{% url 持续集成' continuous-integration %}平台里，或从本地计算机的终端，在运行{% url '`cypress run`' command-line#cypress-run %}命令时，传{% urlHash "Record Key" 标识符 %}参数：
   - 直接提供录制key：
     ```shell
     cypress run --record --key &lt;record key&gt;
@@ -156,7 +156,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 - **公有** 意味着任何人都可以看到项目测试运行的录制。它类似于Github，Travis CI或CircleCI上的公共项目的处理方式。任何知道你`projectId`的人都能看到公共项目的运行录制。
 
-- **私有** 表示只有被邀请到你的{% urlHash '组织' 4-组织 %}的{% urlHash '用户' 5-成员 %}可以查看其录制的运行情况。即使有人知道你的`projectId`，除非你邀请他们，否则他们将无法访问你的运行。
+- **私有** 表示只有被邀请到你的{% urlHash '组织' 组织 %}的{% urlHash '用户' 成员 %}可以查看其录制的运行情况。即使有人知道你的`projectId`，除非你邀请他们，否则他们将无法访问你的运行。
 
 ### 修改项目访问权
 
@@ -172,7 +172,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 ### 转让某个项目给其他人或组织
 
-你可以将你拥有的项目转让给其他你所在的{% urlHash "组织" 4-组织 %}或此项目中的其他成员。项目只能在{% url '数据面板服务' https://on.cypress.io/dashboard %}里进行转让。
+你可以将你拥有的项目转让给其他你所在的{% urlHash "组织" 组织 %}或此项目中的其他成员。项目只能在{% url '数据面板服务' https://on.cypress.io/dashboard %}里进行转让。
 
 1. 选择你想要转让的{% url "组织" https://on.cypress.io/dashboard/organizations %}的项目；
 2. 进入该项目然后点击**Settings**；
@@ -209,7 +209,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 录制的运行从你的测试运行里面抓取结果。
 
 {% note info %}
-如果你还没对项目进行录制设定，{% urlHash "参阅这里" 2-1-设置 %}。
+如果你还没对项目进行录制设定，{% urlHash "参阅这里" 设置 %}。
 {% endnote %}
 
 ## 什么是录制？
@@ -319,8 +319,8 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 ### 邀请成员到组织：
 
 1. 到{% url "组织页" https://on.cypress.io/dashboard/organizations %}选择你要邀请成员加入的组织；
-2. 点击 **Users** ，然后 **Invite User**。*注意：你必须具有{% urlHash "“owner”或“admin”的权限" 5-2-成员角色 %}才能进行邀请。*
-3. 填好被邀请成员的邮件地址，然后选好{% urlHash "角色" 5-2-成员角色 %}，之后点击 **Invite User**。 *注意：只有“owners”才能给予其他成员“owner”的权限*。
+2. 点击 **Users** ，然后 **Invite User**。*注意：你必须具有{% urlHash "“owner”或“admin”的权限" 成员角色 %}才能进行邀请。*
+3. 填好被邀请成员的邮件地址，然后选好{% urlHash "角色" 成员角色 %}，之后点击 **Invite User**。 *注意：只有“owners”才能给予其他成员“owner”的权限*。
 4. 被邀请成员将会收到一封带有可以接受该邀请的邮件。
 
 {% imgTag /img/dashboard/invite-user-dialog.png "Invite User dialog" %}

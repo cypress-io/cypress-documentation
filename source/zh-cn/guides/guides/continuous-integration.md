@@ -31,7 +31,7 @@ title: 持续集成
   cypress run
   ```
 
-取决于你在哪种CI平台下使用，你可能还需要一个配置文件。你需要参考你CI平台提供的文档，以了解在哪儿添加安装和运行命令。参考了解更多{% urlHash "示例" 2-示例 %}。
+取决于你在哪种CI平台下使用，你可能还需要一个配置文件。你需要参考你CI平台提供的文档，以了解在哪儿添加安装和运行命令。参考了解更多{% urlHash "示例" 示例 %}。
 
 ## 启动服务
 
@@ -364,7 +364,7 @@ apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 liba
 
 ***录制秘钥***
 
-如果你正在一个公共项目上{% urlHash '录制用例' 1-3-录制用例 %}，你可能会想保护你的录制秘钥。{% url '了解为什么。' dashboard-service#Identification %}
+如果你正在一个公共项目上{% urlHash '录制用例' 录制用例 %}，你可能会想保护你的录制秘钥。{% url '了解为什么。' dashboard-service#Identification %}
 
 在命令里写死秘钥值是不科学的：
 
