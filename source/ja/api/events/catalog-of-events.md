@@ -30,7 +30,7 @@ Event | Details
 --- | ---
 **Name:** | `window:confirm`
 **Yields:** | the confirmation text **(String)**
-**Description:** | Fires when your app calls the global `window.confirm()` method. Cypress will auto accept confirmations. Return `false` from this event and the confirmation will be cancelled.
+**Description:** | Fires when your app calls the global `window.confirm()` method. Cypress will auto accept confirmations. Return `false` from this event and the confirmation will be canceled.
 
 Event | Details
 --- | ---
