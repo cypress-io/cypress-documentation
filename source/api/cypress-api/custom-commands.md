@@ -300,7 +300,7 @@ As noted in the {% urlHash 'Arguments' 'Arguments' %} above, you can also set `p
 When doing so Cypress will automatically validate your subject to ensure it conforms to one of those types.
 
 {% note info  %}
-Adding validations is optional. Simply passing `{ prevSubject: true }` will require a subject, but not validate its type.
+Adding validations is optional. Passing `{ prevSubject: true }` will require a subject, but not validate its type.
 {% endnote %}
 
 ## Require Element
@@ -537,13 +537,17 @@ Try to add either zero or as few assertions as possible in your custom command. 
 
 ### 4. Skip your UI as much as possible
 
-Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use {% url `cy.request()` request %} to login, set cookies or local storage directly, stub and mock your applications functions, and / or trigger events programmatically.
+Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use {% url `cy.request()` request %} to login, set cookies or localStorage directly, stub and mock your applications functions, and / or trigger events programmatically.
 
 Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
 ### 5. Write TypeScript definitions
 
 You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
+
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | `Cypress.Commands` API added
+{% endhistory %}
 
 # See also
 

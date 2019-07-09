@@ -8,10 +8,10 @@ Because Cypress works from within the browser, Cypress must be able to directly 
 
 To get around these restrictions, Cypress implements some strategies involving JavaScript code, the browser's internal APIs, and `network proxying` to *play by the rules* of `same-origin policy`. It is our goal to fully automate the application under test without you needing to modify your application's code - and we are *mostly* able to do this.
 
-***Examples of what Cypress does under the hood:***
+### Examples of what Cypress does under the hood:
 
   - Injects {% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %} into `text/html` pages.
-  - Proxies all `HTTP`/`HTTPS` traffic.
+  - Proxies all HTTP / HTTPS traffic.
   - Changes the hosted url to match that of the application under test.
   - Uses the browser's internal APIs for network level traffic.
 
@@ -45,7 +45,7 @@ cy.visit('https://google.com')      // this will immediately error
 
 Although Cypress tries to enforce this limitation, it is possible for your application to bypass Cypress's ability to detect this.
 
-***Examples of test cases that will error due to superdomain limitations:***
+### Examples of test cases that will error due to superdomain limitations
 
 1. {% url `.click()` click %} an `<a>` with an `href` to a different superdomain.
 2. {% url `.submit()` submit %} a `<form>` that causes your web server to redirect to you a different superdomain.
@@ -55,11 +55,11 @@ In each of these situations, Cypress will lose the ability to automate your appl
 
 Read on to learn about {% url "working around these common problems" web-security#Common-Workarounds %} or even {% url "disabling web security" web-security#Disabling-Web-Security %} altogether.
 
-## Cross Origin Iframes
+## Cross-origin iframes
 
 If your site embeds an `<iframe>` that is a cross-origin frame, Cypress will not be able to automate or communicate with this `<iframe>`.
 
-***Examples of uses for cross-origin iframes:***
+### Examples of uses for cross-origin iframes
 
 - Embedding a Vimeo or YouTube video.
 - Displaying a credit card form from Stripe or Braintree.
@@ -74,21 +74,19 @@ Other than that, you'll have to wait for us to implement APIs to support this (c
 
 ## Insecure Content
 
-Because of the way Cypress is designed, if you are testing an `HTTPS` site, Cypress will error anytime you attempt to navigate back to an `HTTP` site. This behavior helps highlight a *pretty serious security problem* with your application.
+Because of the way Cypress is designed, if you are testing an HTTPS site, Cypress will error anytime you attempt to navigate back to an HTTP site. This behavior helps highlight a *pretty serious security problem* with your application.
 
-***Example of accessing insecure content:***
-
-***Test code***
+### Example of accessing insecure content
 
 ```javascript
+// Test code
 cy.visit('https://app.corp.com')
 ```
 
 In your application code, you set `cookies` and store a session on the browser. Now let's imagine you have a single `insecure` link (or JavaScript redirect) in your application code.
 
-***Application code***
-
 ```html
+<!-- Application code -->
 <html>
   <a href="http://app.corp.com/page2">Page 2</a>
 </html>
@@ -96,9 +94,8 @@ In your application code, you set `cookies` and store a session on the browser. 
 
 Cypress will immediately fail with the following test code:
 
-***Test code***
-
 ```javascript
+// Test code
 cy.visit('https://app.corp.com')
 cy.get('a').click()               // will immediately fail
 ```
@@ -111,33 +108,32 @@ However, the truth is, Cypress is exposing a *security vulnerability* in your ap
 
 `cookies` that do not have their `secure` flag set to `true` will be sent as clear text to the insecure URL. This leaves your application vulnerable to session hijacking.
 
-This security vulnerability exists **even if** your web server forces a `301 redirect` back to the `HTTPS` site. The original `HTTP` request was still made once, exposing insecure session information.
+This security vulnerability exists **even if** your web server forces a `301 redirect` back to the HTTPS site. The original HTTP request was still made once, exposing insecure session information.
 
-***The Solution***
+### The solution
 
-Simply update your `HTML` or `JavaScript` code to not navigate to an insecure `HTTP` page and instead only use `HTTPS`. Additionally make sure that cookies have their `secure` flag set to `true`.
+Update your HTML or JavaScript code to not navigate to an insecure HTTP page and instead only use HTTPS. Additionally make sure that cookies have their `secure` flag set to `true`.
 
 If you're in a situation where you don't control the code, or otherwise cannot work around this, you can bypass this restriction in Cypress by {% url "disabling web security" web-security#Disabling-Web-Security %}.
 
 # Common Workarounds
 
-Let's investigate how you might encounter `cross origin` errors in your test code and break down how to work around them in Cypress.
+Let's investigate how you might encounter cross-origin errors in your test code and break down how to work around them in Cypress.
 
 ## External Navigation
 
 The most common situation where you might encounter this error is when you click on an `<a>` that navigates to another superdomain.
 
-***Application code that is served at `localhost:8080`***
-
 ```html
+<!-- Application code that is served at `localhost:8080` -->
 <html>
   <a href="https://google.com">Google</a>
 </html>
 ```
 
-***Test code***
 
 ```javascript
+// Test code
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
 cy.get('a').click()               // browser attempts to load google.com, Cypress errors
 ```
@@ -171,9 +167,9 @@ Still not satisfied? Do you really want to click through to another application?
 
 When you submit a regular HTML form, the browser will follow this `HTTP(s) request`.
 
-***Application code that is served at `localhost:8080`***
 
 ```html
+<!-- Application code that is served at `localhost:8080`-->
 <html>
   <form method="POST" action="/submit">
     <input type="text" name="email" />
@@ -187,7 +183,7 @@ cy.visit('http://localhost:8080')
 cy.get('form').submit()           // submit the form!
 ```
 
-If your backend server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
+If your back end server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a `cross origin` error.
 
 ```javascript
 // imagine this is some node / express code
@@ -199,7 +195,7 @@ app.post('/submit', (req, res) => {
 })
 ```
 
-A common use case for this is `Single sign-on (SSO)`. In that situation you may `POST` to a different server and are redirected elsewhere (typically with the session token in the URL).
+A common use case for this is Single sign-on (SSO). In that situation you may `POST` to a different server and are redirected elsewhere (typically with the session token in the URL).
 
 If that's the case, don't worry - you can work around it with {% url `cy.request()` request %}. {% url `cy.request()` request %} is special because it is **NOT bound to CORS or same-origin policy**.
 
@@ -235,7 +231,7 @@ When we say *JavaScript Redirects* we are talking about any kind of code that do
 window.location.href = 'http://some.superdomain.com'
 ```
 
-This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere? Perhaps you're using a `Single sign-on (SSO)` server and you just need to read the previous section about working around that?
+This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere? Perhaps you're using a Single sign-on (SSO) server and you just need to read the previous section about working around that?
 
 If you can't figure out why your JavaScript code is redirecting you to a different superdomain, then you might want to just read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
 
@@ -250,8 +246,8 @@ To start, you will need to understand that *not all browsers expose a way to tur
 ## Setting `chromeWebSecurity` to `false` allows you to do the following:
 
 - Display insecure content
-- Navigate to any superdomain without cross origin errors
-- Access cross origin iframes that are embedded in your application.
+- Navigate to any superdomain without cross-origin errors
+- Access cross-origin iframes that are embedded in your application.
 
 One thing you may notice though is that Cypress still enforces visiting a single superdomain with {% url `cy.visit()` visit %}, but there is an {% issue 944 'issue open' %} to change this restriction.
 

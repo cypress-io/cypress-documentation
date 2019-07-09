@@ -1,9 +1,9 @@
 ---
-title: Interacting with Elements
+title: 页面元素交互
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How Cypress calculates visibility
 - How Cypress ensures elements are actionable
@@ -134,11 +134,11 @@ cy.get('button').click({ position: 'topLeft' })
 
 The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner#Command-Log %}.
 
-![event coordinates](/img/guides/coords.png)
+{% imgTag /img/guides/coords.png "Event coordinates" %}
 
 Additionally we'll display a red "hitbox" - which is a dot indicating the coordinates of the event.
 
-![hitbox](/img/guides/hitbox.png)
+{% imgTag /img/guides/hitbox.png "Hitbox" %}
 
 # Debugging
 
@@ -179,7 +179,7 @@ Is this worth trying to replicate when you're testing?
 
 Maybe not! For these scenarios  we give you a simple escape hatch to bypass all of the checks above and just force events to happen!
 
-You can simply pass `{ force: true }` to most action commands.
+You can pass `{ force: true }` to most action commands.
 
 ```js
 // force the click and all subsequent events

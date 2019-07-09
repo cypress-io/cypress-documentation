@@ -30,7 +30,7 @@ it('creates 2 items', function () {
 
 The {% url "Command Log" test-runner#Command-Log %} shows both commands and assertions with passing assertions showing in green.
 
-![Commands and assertions](/img/guides/retry-ability/commands-assertions.png)
+{% imgTag /img/guides/retry-ability/commands-assertions.png "ommands and assertions" %}
 
 Let's look at the last command and assertion pair:
 
@@ -39,10 +39,10 @@ cy.get('.todo-list li')     // command
   .should('have.length', 2) // assertion
 ```
 
-Because nothing is synchronous in modern web applications, Cypress can't simply query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
+Because nothing is synchronous in modern web applications, Cypress can't query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
 
 - What if the application has not updated the DOM by the time these commands run?
-- What if the application is waiting for its backend to respond before populating the DOM element?
+- What if the application is waiting for its back end to respond before populating the DOM element?
 - What if the application does some intensive computation before showing the results in the DOM?
 
 Thus the Cypress {% url `cy.get` get %} command has to be smarter and expect the application to potentially update. The `cy.get()` queries the application's DOM, finds the elements that match the selector, and then tries the assertion that follows it (in our case `should('have.length', 2)`) against the list of found elements.
@@ -69,7 +69,7 @@ app.TodoModel.prototype.addTodo = function (title) {
 
 My test still passes! The last `cy.get('.todo-list')` and the assertion `should('have.length', 2)` are clearly showing the spinning indicators, meaning Cypress is requerying for them.
 
-![Retrying finding 2 items](/img/guides/retry-ability/retry-2-items.gif)
+{% imgTag /img/guides/retry-ability/retry-2-items.gif "Retrying finding 2 items" %}
 
 Within a few milliseconds after the DOM updates, `cy.get()` finds two elements and the `should('have.length', 2)` assertion passes
 
@@ -91,7 +91,7 @@ cy.get('.todo-list li')     // command
 
 Because the second assertion `expect($li.get(0).textContent, 'first item').to.equal('todo a')` fails, the third assertion is never reached. The command fails after timing out, and the Command Log correctly shows that the first encountered assertion `should('have.length', 2)` passed, but the second assertion and the command itself failed.
 
-![Retrying multiple assertions](/img/guides/retry-ability/second-assertion-fails.gif)
+{% imgTag /img/guides/retry-ability/second-assertion-fails.gif "Retrying multiple assertions" %}
 
 # Not every command is retried
 
@@ -117,9 +117,9 @@ cy.get('.todo-list li')     // command
   .eq(3)                    // command
 ```
 
-![Retrying built-in assertion](/img/guides/retry-ability/eq.gif)
+{% imgTag /img/guides/retry-ability/eq.gif "Retrying built-in assertion" %}
 
-Some commands that cannot be retried still have built-in _waiting_. For example, the {% url '.click()' click %} command will not "blindly" send a click event to an element. As described in the "Assertions" section of {% url "`.click()`" click %}, it waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
+Some commands that cannot be retried still have built-in _waiting_. For example, as described in the "Assertions" section of {% url "`.click()`" click %}, the `click()` command waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
 
 Cypress tries to act like a human user would using the browser.
 
@@ -173,11 +173,11 @@ it('adds two items', function () {
 
 The test passes in Cypress without a hitch.
 
-![Test passes](/img/guides/retry-ability/adds-two-items-passes.gif)
+{% imgTag /img/guides/retry-ability/adds-two-items-passes.gif "Test passes" %}
 
 But sometimes the test fails - not usually locally, no - it almost always fails on our continuous integration server. When the test fails, the recorded video and screenshots are NOT showing any obvious problems! Here is the failing test video:
 
-![Test fails](/img/guides/retry-ability/adds-two-items-fails.gif)
+{% imgTag /img/guides/retry-ability/adds-two-items-fails.gif "Test fails" %}
 
 The problem looks weird - I can clearly see the label "todo B" present in the list, so why isn't Cypress finding it? What is going on?
 
@@ -200,21 +200,21 @@ This delay could be the source of our flaky tests when the application is runnin
 
 In the failing test, the first label was indeed found correctly:
 
-![First item label](/img/guides/retry-ability/first-item-label.png)
+{% imgTag /img/guides/retry-ability/first-item-label.png "First item label" %}
 
 Hover over the second "FIND label" command - something is wrong here. It found the _first label_, then kept requerying to find the text "todo B", but the first item always remains "todo A".
 
-![Second item label](/img/guides/retry-ability/second-item-label.png)
+{% imgTag /img/guides/retry-ability/second-item-label.png "Second item label" %}
 
 Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over the "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that moment.
 
-![Second get li](/img/guides/retry-ability/second-get-li.png)
+{% imgTag /img/guides/retry-ability/second-get-li.png "Second get li" %}
 
 During the test, the `cy.get('.todo-list li')` command quickly found the rendered `<li>` item - and that item was the first and only "todo A" item. Our application was waiting 100ms before appending the second item "todo B" to the list. By the time the second item was added, Cypress had already "moved on", working only with the first `<li>` element. It only searched for `<label>` inside the first `<li>` element, completely ignoring the newly created 2nd item.
 
 To confirm this, let's remove the artificial delay to see what's happening in the passing test.
 
-![Two items](/img/guides/retry-ability/two-items.png)
+{% imgTag /img/guides/retry-ability/two-items.png "Two items" %}
 
 When the web application runs without the delay, it gets its items into the DOM before the Cypress command `cy.get('.todo-list li')` runs. After the `cy.get()` returns 2 items, the `.find()` command just has to find the right label. Great.
 
@@ -251,7 +251,7 @@ it('adds two items', function () {
 
 To show the retries, I increased the application's artificial delay to 500ms. The test now always passes because the entire selector is retried. It finds 2 list elements when the second "todo B" is added to the DOM.
 
-![Combined selector](/img/guides/retry-ability/combined-selectors.gif)
+{% imgTag /img/guides/retry-ability/combined-selectors.gif "Combined selector" %}
 
 Similarly, when working with deeply nested JavaScript properties using the {% url `.its()` its %} command, try not to split it across multiple calls. Instead, combine property names into a single call using the `.` separator:
 
@@ -294,7 +294,7 @@ it('adds two items', function () {
 })
 ```
 
-![Passing test](/img/guides/retry-ability/alternating.png)
+{% imgTag /img/guides/retry-ability/alternating.png "Passing test" %}
 
 The test passes, because the second `cy.get('.todo-list li')` is retried with its own assertion now `.should('have.length', 2)`. Only after successfully finding two `<li>` elements, the command `.find('label')` and its assertion starts, and by now, the item with correct "todo B" label has been correctly queried.
 

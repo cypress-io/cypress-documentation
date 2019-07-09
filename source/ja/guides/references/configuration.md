@@ -1,5 +1,5 @@
 ---
-title: Configuration
+title: 設定
 ---
 
 When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
@@ -18,7 +18,7 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 Option | Default | Description
 ----- | ---- | ----
-`baseUrl` | `null` | Url used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's url
+`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
 `env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
@@ -123,7 +123,7 @@ cypress run --record --config viewportWidth=1280,viewportHeight=720
 
 ## Plugins
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node.js code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
@@ -179,7 +179,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
 
-![resolve-configuration](https://user-images.githubusercontent.com/1271364/26941279-e7903108-4c4b-11e7-8731-be118e2c30eb.jpg)
+{% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
 # Notes
 
@@ -187,7 +187,7 @@ When you open a Cypress project, clicking on the *Settings* tab will display the
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
-To see a working example of this please check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 To blacklist a host:
 
@@ -202,7 +202,7 @@ Not sure what a part of the URL a host is? {% url 'Use this guide as a reference
 When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
 {% endnote %}
 
-Given the following urls:
+Given the following URLs:
 
 ```text
 https://www.google-analytics.com/ga.js
@@ -234,7 +234,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
-{% img /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
+{% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
 
 ## modifyObstructiveCode
 

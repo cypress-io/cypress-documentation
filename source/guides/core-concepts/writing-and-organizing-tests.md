@@ -84,12 +84,12 @@ Test files are located in `cypress/integration` by default, but can be {% url 'c
 Cypress also supports `ES2015` out of the box. You can use either `ES2015 modules` or `CommonJS modules`. This means you can `import` or `require` both **npm packages** and **local relative modules**.
 
 {% note info Example Recipe %}
-Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Node-Modules %}.
+Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Fundamentals %}.
 {% endnote %}
 
 To see an example of every command used in Cypress, open the {% url "`example` folder" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} within your `cypress/integration` folder.
 
-To start writing tests for your app, simply create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
+To start writing tests for your app, create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
 
 ## Plugin files
 
@@ -114,7 +114,8 @@ beforeEach(function () {
   cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
-![global hooks](/img/guides/global-hooks.png)
+
+{% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
 **Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 
@@ -129,7 +130,7 @@ From your support file you should also `import` or `require` other files to keep
 We automatically seed you an example support file, which has several commented out examples.
 
 {% note info Example Recipe %}
-Our {% url 'Extending Cypress recipes' recipes#Node-Modules %} show you how to modify the support file.
+Our {% url '"Node Modules" recipes' recipes#Fundamentals %} show you how to modify the support file.
 {% endnote %}
 
 # Writing tests
@@ -226,7 +227,7 @@ describe('Hooks', function() {
 
 ## Excluding and Including Tests
 
-To run a specified suite or test, simply append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
+To run a specified suite or test, append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
 
 ```javascript
 // -- Start: Our Application Code --
@@ -270,7 +271,7 @@ describe('Unit Test FizzBuzz', function () {
 
 ```
 
-To skip a specified suite or test, simply append `.skip()` to the function. All nested suites will also be skipped.
+To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function () {
@@ -376,4 +377,4 @@ If you need further control of the file-watching behavior you can configure this
 Cypress also ships other {% url "file-watching preprocessors" plugins %}; you'll have to configure these explicitly if you want to use them.
 
 - {% url 'Cypress Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
-- {% url 'Cypress Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+- {% url 'Cypress webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}

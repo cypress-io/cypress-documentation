@@ -1,9 +1,9 @@
 ---
-title: Key Differences
+title: 我们的优势
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - What makes Cypress unique
 - How its architecture differs from Selenium
@@ -15,7 +15,7 @@ title: Key Differences
 
 Most testing tools (like Selenium) operate by running outside of the browser and executing remote commands across the network. *Cypress is the exact opposite.* Cypress is executed in the same run loop as your application.
 
-Behind Cypress is a Node.js server process. Cypress and the Node.js process constantly communicate, synchronize, and perform tasks on behalf of each other. Having access to both parts (front and back) gives us the ability to respond to your application's events in real time, while at the same time work outside of the browser for tasks that require a higher privilege.
+Behind Cypress is a Node server process. Cypress and the Node process constantly communicate, synchronize, and perform tasks on behalf of each other. Having access to both parts (front and back) gives us the ability to respond to your application's events in real time, while at the same time work outside of the browser for tasks that require a higher privilege.
 
 Cypress also operates at the network layer by reading and altering web traffic on the fly. This enables Cypress to not only modify everything coming in and out of the browser, but also to change code that may interfere with its ability to automate the browser.
 
@@ -29,7 +29,7 @@ Because Cypress operates within your application, that means it has native acces
 
 # New kind of testing
 
-Having ultimate control over your application, the network traffic, and native access to every host object unlocks a new way of testing that has never been possible before. Instead of being 'locked out' of your application and not being able to easily control it - Cypress instead lets you alter any aspect of how your application works. Instead of slow and expensive tests, such as creating the state required for a given situation, you can simply create these states artificially like you would in an unit test. For instance you can:
+Having ultimate control over your application, the network traffic, and native access to every host object unlocks a new way of testing that has never been possible before. Instead of being 'locked out' of your application and not being able to easily control it - Cypress instead lets you alter any aspect of how your application works. Instead of slow and expensive tests, such as creating the state required for a given situation, you can create these states artificially like you would in an unit test. For instance you can:
 
 - {% url "Stub" stub %} the browser or your application's functions and force them to behave as needed in your test case.
 - Expose data stores (like in Redux) so you can programmatically alter the state of your application directly from your test code.
@@ -44,7 +44,7 @@ Having ultimate control over your application, the network traffic, and native a
 
 # Shortcuts
 
-Trying to test hard to reach areas of your application? Don't like the side effects an action creates? Tired of repeating the same repetitive and slow actions over and over again? You can simply skip them for most test cases.
+Trying to test hard to reach areas of your application? Don't like the side effects an action creates? Tired of repeating the same repetitive and slow actions over and over again? You can skip them for most test cases.
 
 Cypress prevents you from being forced to always 'act like a user' to generate the state of a given situation. With Cypress you can programmatically interact and control your application. You no longer have to use your UI to build up state.
 
@@ -66,7 +66,7 @@ There is a rich UI which visually shows you the command execution, assertions, n
 
 Cypress takes snapshots of your application and enables you to time travel back to the state it was in when commands ran.
 
-You can use the DevTools while your tests run, you can see every console message, every network request. You can inspect elements, and you can even use debugger statements in your spec code or your application code. There is no fidelity loss - you can use all the tools you're already comfortable with. This enables you to test and develop all at the same time.
+You can use the Developer Tools while your tests run, you can see every console message, every network request. You can inspect elements, and you can even use debugger statements in your spec code or your application code. There is no fidelity loss - you can use all the tools you're already comfortable with. This enables you to test and develop all at the same time.
 
 # Trade offs
 

@@ -1,6 +1,5 @@
 ---
 title: invoke
-
 ---
 
 Invoke a function on the previously yielded subject.
@@ -46,7 +45,7 @@ Additional arguments to be given to the function call. There is no limit to the 
 
 ## Function
 
-***Assert on a function's return value***
+### Assert on a function's return value
 
 ```javascript
 const fn = () => {
@@ -56,13 +55,13 @@ const fn = () => {
 cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 ```
 
-***Use `.invoke()` to test HTML content***
+### Use `.invoke()` to test HTML content
 
 {% note info %}
-{% url "Check out our example recipe where we use `cy.invoke('text')` to test against HTML content" recipes#Bootstrapping-your-App %}
+{% url "Check out our example recipe where we use `cy.invoke('text')` to test against HTML content in 'Bootstrapping your App" recipes#Server-Communication %}
 {% endnote %}
 
-***Properties that are functions are invoked***
+### Properties that are functions are invoked
 
 In the example below, we use `.invoke()` to force a hidden div to be `'display: block'` so we can interact with its children elements.
 
@@ -74,15 +73,15 @@ cy.get('div.container').should('be.hidden') // true
     .find('input').type('Cypress is great')
 ```
 
-***Use `.invoke('show')` and `.invoke('trigger')`***
+### Use `.invoke('show')` and `.invoke('trigger')`
 
 {% note info %}
-{% url "Check out our example recipe where we use `cy.invoke('show')` and `cy.invoke('trigger')` to click an element that is only visible on hover" recipes#Hover-and-Hidden-Elements %}
+{% url "Check out our example recipe where we use `cy.invoke('show')` and `cy.invoke('trigger')` to click an element that is only visible on hover" recipes#Testing-the-DOM %}
 {% endnote %}
 
 ## Function with Arguments
 
-***Send specific arguments to the function***
+### Send specific arguments to the function
 
 ```javascript
 const fn = (a, b, c) => {
@@ -96,13 +95,13 @@ cy
     .and('be.lt', 20)    // true
 ```
 
-***Use `cy.invoke('removeAttr', 'target')` to get around new tab***
+### Use `cy.invoke('removeAttr', 'target')` to get around new tab
 
 {% note info %}
-{% url "Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab" recipes#Tab-Handling-and-Links %}
+{% url "Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab" recipes#Testing-the-DOM %}
 {% endnote %}
 
-***Arguments are automatically forwarded to the function***
+### Arguments are automatically forwarded to the function
 
 ```javascript
 cy
@@ -114,7 +113,7 @@ cy
 
 ## Third Party Plugins
 
-***Using a Kendo DropDown***
+### Using a Kendo DropDown
 
 If you are using `jQuery` then the `jQuery` wrapped elements will automatically have your 3rd party plugins available to be called.
 
@@ -143,7 +142,7 @@ cy
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions retry .invoke %}
+{% assertions invoke .invoke %}
 
 ## Timeouts {% helper_icon timeout %}
 
@@ -160,11 +159,11 @@ cy.get('.connectors-div').should('be.hidden')
 
 The commands above will display in the Command Log as:
 
-![Command Log invoke](/img/api/invoke/invoke-jquery-show-on-element-for-testing.png)
+{% imgTag /img/api/invoke/invoke-jquery-show-on-element-for-testing.png "Command Log for invoke" %}
 
 When clicking on `invoke` within the command log, the console outputs the following:
 
-![Console log invoke](/img/api/invoke/log-function-invoked-and-return.png)
+{% imgTag /img/api/invoke/log-function-invoked-and-return.png "Console Log for invoke" %}
 
 # See also
 

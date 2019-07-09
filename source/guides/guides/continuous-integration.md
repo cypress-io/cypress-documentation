@@ -190,7 +190,7 @@ The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` fi
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
-A typical project can simply have:
+A typical project can have:
 
 ```yaml
 version: 2.1
@@ -360,7 +360,7 @@ You can set any configuration value as an environment variable. This overrides v
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
 
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+Refer to the {% url 'Environment Variables recipe' configuration#Environment-Variables %} for more examples.
 
 ***Record Key***
 
@@ -382,11 +382,11 @@ Typically you'd set this inside of your CI provider.
 
 ***CircleCI Environment Variable***
 
-![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
+{% imgTag /img/guides/cypress-record-key-as-environment-variable.png "Record key environment variable" %}
 
 ***TravisCI Environment Variable***
 
-![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
+{% imgTag /img/guides/cypress-record-key-as-env-var-travis.png "Travis key environment variable" %}
 
 ### Git information
 Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
@@ -427,7 +427,7 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 ## Module API
 
-Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
+Oftentimes it can be much easier to programmatically control and boot your servers with a Node script.
 
 If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
 

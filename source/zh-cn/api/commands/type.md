@@ -90,7 +90,7 @@ cy.get('textarea').type('Hello world') // yields <textarea>
 ### Type into a login form
 
 {% note info %}
-{% url "Check out our example recipe of logging in by typing username and password" recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe of logging in by typing username and password in HTML web forms" recipes#Logging-In %}
 {% endnote %}
 
 ### Mimic user typing behavior
@@ -265,10 +265,10 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ## Supported Elements
 
-* HTML `<body>` and `<textarea>` elements.
+* ^HTML `<body>` and `<textarea>` elements.
 * Elements with a defined `tabindex` attribute.
 * Elements with a defined `contenteditable` attribute.
-* HTML `<input>` elements with a defined `type` attribute of one of the following:
+* ^HTML `<input>` elements with a defined `type` attribute of one of the following:
   * `text`
   * `password`
   * `email`
@@ -352,7 +352,7 @@ Additionally, events that cause a `change` event to fire (such as typing `{enter
 
 Any modifiers activated for the event are also listed in a `modifiers` column.
 
-![Cypress .type() key events table](/img/api/type/key-events-table-shown-in-console-for-testing-typing.png)
+{% imgTag /img/api/type/key-events-table-shown-in-console-for-testing-typing.png "Cypress .type() key events table" %}
 
 ## Tabbing
 
@@ -380,9 +380,9 @@ document.querySelector('input:first').addEventListener('keydown', (e) => {
 cy.get('input:first').type('{shift}a')
 ```
 
-In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or simply `.type('A')` if you don't care about the `shiftKey` property on any key events).
+In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
-This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but simply the letter `k`. {% open_an_issue %} if you need modifier effects to be implemented.
+This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but the letter `k`. {% open_an_issue %} if you need modifier effects to be implemented.
 
 ## Form Submission
 
@@ -444,15 +444,23 @@ cy.get('input[name=firstName]').type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/type/type-in-input-shown-in-command-log.png)
+{% imgTag /img/api/type/type-in-input-shown-in-command-log.png "Command Log type" %}
 
 When clicking on `type` within the command log, the console outputs the following:
 
-![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+{% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
-| 3.2.0 | Added `{home}` and `{end}` character sequences
-| 3.3.0 | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
+{% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
+{% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
+{% url "0.20.0" changelog#0-20-0 %} | Supports for typing in inputs of type `date`, `time`, `month`, and `week`
+{% url "0.17.1" changelog#0-17-1 %} | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers
+{% url "0.16.3" changelog#0-16-3 %} | Supports for typing in elements with `tabindex` attribute
+{% url "0.16.2" changelog#0-16-2 %} | Added `{downarrow}` and `{uparrow}` character sequences
+{% url "0.8.0" changelog#0-8-0 %} | Outputs Key Events Table to console on click
+{% url "0.8.0" changelog#0-8-0 %} | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{% raw %}{{{% endraw %}}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences
+{% url "0.8.0" changelog#0-8-0 %} | Added small delay (10ms) between each keystroke during `cy.type()`
+{% url "0.6.12" changelog#0-6-12 %} | Added option `force`
 {% endhistory %}
 
 # See also

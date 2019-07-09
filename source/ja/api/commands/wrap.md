@@ -1,6 +1,5 @@
 ---
 title: wrap
-
 ---
 
 Yield the object passed into `.wrap()`.
@@ -43,7 +42,7 @@ Option | Default | Description
 
 ## Objects
 
-***Invokes the function on the subject in wrap and returns the new value.***
+### Invoke the function on the subject in wrap and return the new value
 
 ```javascript
 const getName = () => {
@@ -55,7 +54,7 @@ cy.wrap({ name: getName }).invoke('name').should('eq', 'Jane Lane') // true
 
 ## Elements
 
-***Wrap elements to continue executing commands***
+### Wrap elements to continue executing commands
 
 ```javascript
 cy.get('form').within(($form) => {
@@ -65,7 +64,7 @@ cy.get('form').within(($form) => {
 })
 ```
 
-***Conditionally wrap elements***
+### Conditionally wrap elements
 
 ```javascript
 cy
@@ -80,6 +79,39 @@ cy
       // do something else
     }
   })
+```
+
+## Promises
+
+You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the {% url "Logging in using application code" recipes#Logging-In %} recipe for the full example.
+
+```javascript
+// import application code for logging in
+import { userService } from '../../src/_services/user.service'
+
+it('can assert against resolved object using .should', () => {
+  cy.log('user service login')
+  const username = Cypress.env('username')
+  const password = Cypress.env('password')
+
+  // wrap the promise returned by the application code
+  cy.wrap(userService.login(username, password))
+    // check the yielded object
+    .should('be.an', 'object')
+    .and('have.keys', ['firstName', 'lastName', 'username', 'id', 'token'])
+    .and('contain', {
+      username: 'test',
+      firstName: 'Test',
+      lastName: 'User'
+    })
+
+  // cy.visit command will wait for the promise returned from
+  // the "userService.login" to resolve. Then local storage item is set
+  // and the visit will immediately be authenticated and logged in
+  cy.visit('/')
+  // we should be logged in
+  cy.contains('Hi Test!').should('be.visible')
+})
 ```
 
 # Rules
@@ -108,15 +140,22 @@ cy.wrap({ amount: 10 })
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/wrap/wrapped-object-in-cypress-tests.png)
+{% imgTag /img/api/wrap/wrapped-object-in-cypress-tests.png "Command Log wrap" %}
 
 When clicking on the `wrap` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/wrap/console-log-only-shows-yield-of-wrap.png)
+{% imgTag /img/api/wrap/console-log-only-shows-yield-of-wrap.png "Console Log wrap" %}
+
+{% history %}
+{% url "3.2.0" changelog#3-2-0 %} | Retry `cy.wrap()` if `undefined` when followed by {% url "`.should()`" should %}
+{% url "0.4.5" changelog#0.4.5 %} | `cy.wrap()` command added
+{% endhistory %}
 
 # See also
 
 - {% url `.invoke()` invoke %}
 - {% url `.its()` its %}
+- {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}
+- {% url "Logging in using application code" recipes#Logging-In %} recipe

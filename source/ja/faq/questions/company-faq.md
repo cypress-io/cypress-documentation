@@ -1,6 +1,6 @@
 ---
 layout: toc-top
-title: Company
+title: 会社についての質問
 
 containerClass: faq
 ---

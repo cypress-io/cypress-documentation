@@ -2,7 +2,7 @@
 title: task
 ---
 
-Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin event.
+Execute code in {% url "Node" https://nodejs.org %} via the `task` plugin event.
 
 {% note warning 'Anti-Pattern' %}
 We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
@@ -240,7 +240,7 @@ If multiple task objects use the same key, the later registration will overwrite
 
 # Command Log
 
-### List the contents of `cypress.json`
+***List the contents of `cypress.json`***
 
 ```javascript
 cy.task('readJson', 'cypress.json')
@@ -248,11 +248,15 @@ cy.task('readJson', 'cypress.json')
 
 The command above will display in the Command Log as:
 
-![Command Log task](/img/api/task/task-read-cypress-json.png)
+{% imgTag /img/api/task/task-read-cypress-json.png "Command Log task" %}
 
 When clicking on the `task` command within the command log, the console outputs the following:
 
-![console.log task](/img/api/task/console-shows-task-result.png)
+{% imgTag /img/api/task/console-shows-task-result.png "Console Log task" %}
+
+{% history %}
+{% url "3.0.0" changelog#3-0-0 %} | `cy.task()` command added
+{% endhistory %}
 
 # See also
 

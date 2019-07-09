@@ -137,7 +137,7 @@ describe('Logo', () => {
 })
 ```
 
-![Command Log of multiple viewports](/img/api/viewport/loop-through-an-array-of-multiple-viewports.png)
+{% imgTag /img/api/viewport/loop-through-an-array-of-multiple-viewports.png "Command Log of multiple viewports" %}
 
 ## Preset
 
@@ -229,11 +229,15 @@ cy.get('.nav').find('a').should('be.visible')
 
 The commands above will display in the Command Log as:
 
-![Command Log viewport](/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png)
+{% imgTag /img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png "Command Log viewport" %}
 
 When clicking on `viewport` within the command log, the console outputs the following:
 
-![Console log viewport](/img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png)
+{% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
+
+{% history %}
+{% url "0.9.0" changelog#0-9-0 %} | `cy.viewport()` command added
+{% endhistory %}
 
 # See also
 

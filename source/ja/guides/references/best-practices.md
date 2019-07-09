@@ -1,5 +1,5 @@
 ---
-title: Best Practices
+title: ベストプラクティス
 layout: toc-top
 ---
 
@@ -196,7 +196,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 
 Sometimes actions that you take in your application **may** affect another 3rd party application. These situations are not that common, but it is possible. Imagine your application integrates with GitHub and by using your application you can change data inside of GitHub.
 
-After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can simply use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
+After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
 
 This avoids ever needing to touch the UI of another application.
 
@@ -223,7 +223,7 @@ Nevertheless, if you **did** want to write a test in Cypress, you already have t
 
 You only need to do one thing to know whether you've coupled your tests incorrectly,  or if one test is relying on the state of a previous one.
 
-Simply put an `.only` on the test and refresh the browser.
+Put an `.only` on the test and refresh the browser.
 
 If this test can run **by itself** and pass - congratulations you have written a good test.
 
@@ -358,7 +358,7 @@ Why you shouldn't do this in Cypress:
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large test
 - Cypress runs a series of async lifecycle events that reset state between tests
-- Resetting tests is much slower than simply adding more assertions
+- Resetting tests is much slower than adding more assertions
 
 It is common for tests in Cypress to issue 30+ commands. Because nearly every command has a default assertion (and can therefore fail), even by limiting your assertions you're not saving yourself anything because **any single command could implicitly fail**.
 
@@ -514,7 +514,7 @@ cy.wait(5000)     // <--- this is unnecessary
 
 Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy.get()` get %} automatically retries until the table's `tr` has a length of 2.
 
-Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to simply describe the state of your application without having to worry about when it gets there.
+Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to  describe the state of your application without having to worry about when it gets there.
 
 ```javascript
 cy.server()
@@ -544,7 +544,7 @@ cy.get('table tr').should('have.length', 2)
 {% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
 {% endnote %}
 
-We do NOT recommend trying to start your backend web server from within Cypress.
+We do NOT recommend trying to start your back end web server from within Cypress.
 
 Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually. Otherwise, Cypress will not continue running any other commands.
 
@@ -587,13 +587,14 @@ Adding a {% url "`baseUrl`" configuration#Global %} can also save some time duri
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
-{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
+{% imgTag /img/guides/cypress-loads-in-localhost-and-random-port.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
 
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
 
 ### cypress.json
+
 ```json
 {
   "baseUrl": "http://localhost:8484"
@@ -602,8 +603,12 @@ By setting the `baseUrl`, you can avoid this reload altogether. Cypress will loa
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
+{% imgTag /img/guides/cypress-loads-window-in-base-url-localhost.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 
-Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
+Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running during `cypress open` at the specified `baseUrl`.
 
-{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" %}
+{% imgTag /img/guides/cypress-ensures-baseUrl-server-is-running.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" "no-border" %}
+
+We also display an error if your server is not running at the specified `baseUrl` during `cypress run` after several retries.
+
+{% imgTag /img/guides/cypress-verifies-server-is-running-during-cypress-run.png "The terminal warns and retries when the url at your baseUrl is not running" %}

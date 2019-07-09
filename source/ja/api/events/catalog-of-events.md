@@ -1,5 +1,5 @@
 ---
-title: Catalog of Events
+title: イベントカタログ*
 
 ---
 
@@ -23,7 +23,7 @@ These events come from the application currently under test (your application). 
 Event | Details
 --- | ---
 **Name:** | `uncaught:exception`
-**Yields:** | the error **(Object)**, mocha runnable **(Object)**
+**Yields:** | the error **(Object)**, Mocha runnable **(Object)**
 **Description:** | Fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you.
 
 Event | Details
@@ -75,7 +75,7 @@ These events come from Cypress as it issues commands and reacts to their state. 
 Event | Details
 --- | ---
 **Name:** | `fail`
-**Yields:** | the error **(Object)**, mocha runnable **(Object)**
+**Yields:** | the error **(Object)**, Mocha runnable **(Object)**
 **Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
 
 Event | Details
@@ -144,7 +144,7 @@ There are a myriad of other events Cypress fires to communicate with the Node se
 
 # Binding to Events
 
-Both the global `Cypress` and `cy` objects are standard `Node.js` event emitters. That means you can use the following methods to bind and unbind from events.
+Both the global `Cypress` and `cy` objects are standard Node event emitters. That means you can use the following methods to bind and unbind from events.
 
 - {% url 'on' https://nodejs.org/api/events.html#events_emitter_on_eventname_listener %}
 - {% url 'once' https://nodejs.org/api/events.html#events_emitter_once_eventname_listener %}
@@ -421,7 +421,7 @@ it('can assert on the alert text content', function () {
 
 ## Logging All Events
 
-Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node module for both the backend server process, and for everything running in the browser (called the driver).
+Cypress uses the {% url `debug` https://github.com/visionmedia/debug %} node module for both the back end server process, and for everything running in the browser (called the driver).
 
 If you'd like to see (the huge) stream of events that Cypress emits you can pop open your Dev Tools and write this line in the console.
 
@@ -431,4 +431,4 @@ localStorage.debug = 'cypress:*'
 
 After you refresh the page you'll see something that looks like this in your console:
 
-{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
+{% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}

@@ -49,6 +49,10 @@ Cypress.Commands.add('myCustomCommand', (arg1, arg2) => {
 })
 ```
 
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | `Cypress.Log` renamed to `Cypress.log`
+{% endhistory %}
+
 # See also
 
 - {% url `Commands` custom-commands %}

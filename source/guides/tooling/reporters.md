@@ -11,12 +11,16 @@ We've also added the two most common 3rd party reporters for Mocha. These are bu
 * {% url "`teamcity`" https://github.com/cypress-io/mocha-teamcity-reporter %}
 * {% url "`junit`" https://github.com/michaelleeallen/mocha-junit-reporter %}
 
-Finally we support creating your own custom reporters or using any kind of 3rd party reporter.
+Finally, we support creating your own custom reporters or using any kind of 3rd party reporter.
 
 {% note success %}
 Did you know that you can use {% urlHash 'multiple reporters' Multiple-Reporters %} with Mocha?
 
 This is especially useful when running in CI. Typically we see users using the default `spec` reporter to show up in `stdout` but then also generate an actual report file for `junit`.
+{% endnote %}
+
+{% note %}
+Once you've read through the documentation below, we invite you to experience the power of Cypress reporters via {% url "Section 9" https://github.com/cypress-io/testing-workshop-cypress/blob/master/slides/09-reporters/PITCHME.md %} of our open source {% url "testing workshop for Cypress" https://github.com/cypress-io/testing-workshop-cypress %}.
 {% endnote %}
 
 # Custom Reporters
@@ -65,13 +69,7 @@ We also support passing an absolute path to the reporter.
 
 ### Command line
 
-```shell
-cypress run --reporter mochawesome
-```
 
-{% note info  %}
-You need to install any peer dependencies the reporter requires, even if they're bundled with Cypress. For example, {% url "mochawesome" https://github.com/adamgruber/mochawesome %} requires `mocha` as a peer dependency. You will need to install `mocha` as a dev dependency of your own project for it to work.
-{% endnote %}
 
 # Reporter Options
 
@@ -207,6 +205,65 @@ npx mochawesome-report-generator mochawesome.json
 
 It generates the beautiful standalone HTML report file `mochawesome-report/mochawesome.html` shown below. As you can see all test results, timing information, and even test bodies are included.
 
-{% img /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
+{% imgTag /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
 
-For more information, see {% url 'Integrating Mochawesome reporter with Cypress' http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}
+For more information, see {% url 'Integrating Mochawesome reporter with Cypress's http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}
+
+# Custom Reporters
+
+Cypress supports custom reporters, whether local to your project or installed through {% url "npm" https://www.npmjs.com/ %}.
+
+## Local Reporters
+
+Say you have the following directory structure:
+
+```txt
+> my-project
+  > cypress
+  > src
+  > reporters
+    - custom.js
+```
+
+### To specify the path to your custom reporter:
+
+```javascript
+// cypress.json
+
+{
+  "reporter": "reporters/custom.js"
+}
+```
+
+The path above is relative to where your `cypress.json` is located.
+
+### Command line
+
+```shell
+cypress run --reporter reporters/custom.js
+```
+
+We also support passing an absolute path to the reporter.
+
+## npm Reporters
+
+If you installed a custom reporter through npm, specify the package name:
+
+```javascript
+// cypress.json
+
+{
+  "reporter": "mochawesome"
+}
+```
+
+### Command line
+
+```shell
+cypress run --reporter mochawesome
+```
+
+{% note info  %}
+You need to install any peer dependencies the reporter requires, even if they're bundled with Cypress. For example, {% url "mochawesome" https://github.com/adamgruber/mochawesome %} requires `mocha` as a peer dependency. You will need to install `mocha` as a dev dependency of your own project for it to work.
+{% endnote %}
+

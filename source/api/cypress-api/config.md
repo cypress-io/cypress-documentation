@@ -18,7 +18,6 @@ Cypress runs each spec file in isolation: the browser is exited between specs. C
 Not all configuration values can be changed during runtime. See {% urlHash "Notes" Notes %} below for details.
 {% endnote %}
 
-
 # Syntax
 
 ```javascript
@@ -127,6 +126,10 @@ Some configuration values cannot be changed while running a test. Anything that'
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 
 Since the configuration added or changed by `Cypress.config` is only in scope for the current spec file, you'd think that it should be `cy.config` and not `Cypress.config`&hellip;and you'd be right. The fact that `Cypress.config` affects local state is an artifact of the API evolving over time: `Cypress.config` used to affect global state&mdash;configuration added in one test spec file was available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in {% url `3.0.0` changelog#3-0-0 %} and by that time `Cypress.config` was public API.
+
+{% history %}
+0.12.6 | `Cypress.config` added
+{% endhistory %}
 
 # See also
 

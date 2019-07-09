@@ -6,7 +6,7 @@ title: Debugging
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
-- How Cypress embraces the standard DevTools
+- How Cypress embraces the standard Developer Tools
 - How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
 - How to troubleshoot issues with Cypress itself
 {% endnote %}
@@ -53,7 +53,7 @@ Now we're in business! The first time through, {% url `cy.visit()` visit %} and 
 1. The page is visited, and Cypress waits for it to load.
 2. The element is queried, and Cypress automatically waits and retries for a few moments if it isn't found immediately.
 3. The function passed to {% url `.then()` then %} is executed, with the found element yielded to it.
-4. Within the context of the {% url `.then()` then %} function, the `debugger` is called, halting the browser and calling focus to the DevTools.
+4. Within the context of the {% url `.then()` then %} function, the `debugger` is called, halting the browser and calling focus to the Developer Tools.
 5. You're in! Inspect the state of your application like you normally would if you'd dropped the `debugger` into your application code.
 
 ## Using {% url `.debug()` debug %}
@@ -69,15 +69,15 @@ it('let me debug like a fiend', function() {
 })
 ```
 
-The current subject that is yielded by the {% url `cy.get()` get %} is exposed as the variable `subject` within your DevTools so that you can interact with it in the console.
+The current subject that is yielded by the {% url `cy.get()` get %} is exposed as the variable `subject` within your Developer Tools so that you can interact with it in the console.
 
-{% img /img/guides/debugging-subject.png "Debugging Subject" %}
+{% imgTag /img/guides/debugging-subject.png "Debugging Subject" %}
 
 Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your application during the test. You can attach it to any Cypress chain of commands to have a look at the system's state at that moment.
 
-# Using the DevTools
+# Using the Developer Tools
 
-Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your application and your tests, there's simply no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
+Though Cypress has built out {% url "an excellent Test Runner" test-runner %} to help you understand what is happening in your application and your tests, there's no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
 {% note info %}
 ## {% fa fa-video-camera %} See it in action!
@@ -87,11 +87,11 @@ You can see a walk-through of debugging some application code from Cypress {% ur
 
 ## Get console logs for commands
 
-All of Cypress's commands, when clicked on within the {% url "Command Log" test-runner#Command-Log %}, print extra information about the command, its subject, and its yielded result. Try clicking around the Command Log with your DevTools open! You may find some useful information here.
+All of Cypress's commands, when clicked on within the {% url "Command Log" test-runner#Command-Log %}, print extra information about the command, its subject, and its yielded result. Try clicking around the Command Log with your Developer Tools open! You may find some useful information here.
 
-### When clicking on `.type()` command, the DevTools console outputs the following:
+### When clicking on `.type()` command, the Developer Tools console outputs the following:
 
-![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+{% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 # Troubleshooting Cypress
 
@@ -116,9 +116,11 @@ When debugging a failing test, follow these general principles to isolate the pr
 - Run the same test using {% url '`--browser chrome`' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}. The problem might be isolated to the Electron browser.
 - If isolated to the Electron browser. Run the same tests in both Electron and Chrome, then compare the screenshots/videos. Look for and isolate any differences in the Command Log.
 
+{% partial chromium_download %}
+
 ## Clear Cypress cache
 
-If you're having an issue during installation of Cypress. Try to clear the contents of the Cypress cache.
+If you're having an issue during installation of Cypress, try removing the contents of the Cypress cache.
 
 This will clear out all installed versions of Cypress that may be cached on your machine.
 
@@ -268,7 +270,7 @@ This allows you to isolate the problem a little better
 
 ### Debug logs in the browser
 
-If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's DevTools and set a `localStorage` property:
+If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's Developer Tools and set a `localStorage` property:
 
 ```javascript
 localStorage.debug = 'cypress*'
@@ -277,19 +279,19 @@ localStorage.debug = 'cypress*'
 delete localStorage.debug
 ```
 
-Reload the browser and see debug messages within the DevTools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
+Reload the browser and see debug messages within the Developer Tools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
 
-![Console Log](/img/api/debug/debug-driver.jpg)
+{% imgTag /img/api/debug/debug-driver.jpg "Debug logs in browser" %}
 
 ## Log Cypress events
 
 In addition to the `DEBUG` messages, Cypress also emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
 
-{% img /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
+{% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
 ## Run Cypress command outside the test
 
-If you need to run a Cypress command straight from the DevTools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
+If you need to run a Cypress command straight from the Developer Tools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
 
 ```javascript
 cy.now('task', 123)
@@ -307,4 +309,118 @@ The `cy.now()` command is an internal command and may change in the future.
 
 You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
 
-![cypress-failed-log terminal output](/img/api/debug/failed-log.png)
+{% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}
+
+# Hacking on Cypress
+
+If you want to dive into Cypress and edit the code yourself, you can do that. The Cypress code is open source and licensed under an {% url "MIT license" https://github.com/cypress-io/cypress/blob/develop/LICENSE %}. There are a few tips on getting started that we've outlined below.
+
+## Contribute
+
+If you'd like to contribute directly to the Cypress code, we'd love to have your help! Please check out our {% url "contributing guide" https://github.com/cypress-io/cypress/blob/develop/CONTRIBUTING.md %} to learn about the many ways you can contribute.
+
+## Run the Cypress app by itself
+
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. Some common situations on why you would want to do this are:
+
+- debug Cypress not starting or hanging
+- debug problems related to the way CLI arguments are parsed by the npm CLI module
+
+Here is how you can launch Cypress application directly without the npm CLI module. First, find where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
+
+For example, on a Linux machine:
+
+```shell
+npx cypress cache path
+/root/.cache/Cypress
+```
+
+Second, try a smoke test that verifies that the application has all its required dependencies present on the host machine:
+
+```shell
+/root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+101
+```
+
+If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
+
+```shell
+ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+[809:0617/151243.281369:ERROR:bus.cc(395)] Failed to connect to the bus: Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory
+101
+```
+
+If the smoke test fails to execute, check if a shared library is missing (a common problem on Linux machines without all of the Cypress dependencies present).
+
+```shell
+ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
+	linux-vdso.so.1 (0x00007ffe9eda0000)
+	libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
+	libgtk-3.so.0 => not found
+	libgdk-3.so.0 => not found
+  ...
+```
+
+**Tip:** use {% url "Cypress Docker image" docker %} or install dependencies by copying them from one of our official Docker images.
+
+**Note:** verbose Electron logging might show warnings that still allow Cypress to work normally. For example, the Cypress Test Runner opens normally despite the scary output below:
+
+```shell
+ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
+[475:0617/150421.326986:ERROR:bus.cc(395)] Failed to connect to the bus: Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory
+[475:0617/150425.061526:ERROR:bus.cc(395)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[475:0617/150425.079819:ERROR:bus.cc(395)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[475:0617/150425.371013:INFO:CONSOLE(73292)] "%cDownload the React DevTools for a better development experience: https://fb.me/react-devtools
+You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
+```
+
+You can also see verbose Cypress logs when running the Test Runner binary
+
+```shell
+DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+cypress:ts Running without ts-node hook in environment "production" +0ms
+cypress:server:cypress starting cypress with argv [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
+cypress:server:args argv array: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
+cypress:server:args argv parsed: { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server' } +7ms
+cypress:server:args options { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server', config: {} } +2ms
+cypress:server:args argv options: { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server', config: {}, pong: 101 } +1ms
+cypress:server:appdata path: /root/.config/Cypress/cy/production +0ms
+cypress:server:cypress starting in mode smokeTest +356ms
+101
+cypress:server:cypress about to exit with code 0 +4ms
+```
+
+## Edit the installed Cypress code
+
+The installed Test Runner comes with the fully transpiled, unobfuscated JavaScript source code that you can hack on. You might want to directly modify the installed Test Runner code to:
+
+- investigate a hard to recreate bug that happens on your machine
+- change the run-time behavior of Cypress before opening a pull request
+- have fun 🎉
+
+First, print where the binary is installed using the {% url "`cypress cache path`" command-line#cypress-cache-path %} command.
+
+For example, on a Mac:
+
+```shell
+npx cypress cache path
+/Users/jane/Library/Caches/Cypress
+```
+
+Second, open the source code at the following path in any code editor. Make sure to substitute `3.3.1` for the desired version of the Test Runner you want to edit.
+
+```text
+/Users/jane/Library/Caches/Cypress/3.3.1/Cypress.app/Contents/Resources/app/packages/
+```
+
+You can change anything in the JavaScript code:
+
+{% imgTag /img/guides/source-code.png "Source code of the Test Runner in a text editor" %}
+
+When finished, if necessary, remove the edited Test Runner version and reinstall the Cypress official version to get back to the official released code.
+
+```shell
+rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
+npm install cypress@3.3.1
+```

@@ -1,5 +1,5 @@
 ---
-title: Screenshots and Videos
+title: スクリーンショットとビデオ
 ---
 
 {% note info %}
@@ -13,31 +13,35 @@ title: Screenshots and Videos
 
 # Screenshots
 
-Cypress comes with the ability to take screenshots, whether you are running in interactive mode using `cypress open` or run mode using `cypress run`, possibly in CI.
+Cypress comes with the ability to take screenshots, whether you are running in interactive mode using `cypress open` or run mode using `cypress run`, even in CI.
 
-To take a manual screenshot just use the {% url `cy.screenshot()` screenshot %} command.
+To take a manual screenshot you can use the {% url `cy.screenshot()` screenshot %} command.
 
 Additionally, Cypress will automatically capture screenshots when a failure happens during runs outside of interactive mode.
 
-This behavior can be turned off by setting `screenshotOnRunFailure` to `false` with {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
+This behavior can be turned off by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 Screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
 
-By default, Cypress clears any existing screenshots before `cypress run`. If you do not want to clear your screenshots folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Screenshots %} to `false`.
+Cypress clears any existing screenshots before `cypress run`. If you do not want to clear your screenshots folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Screenshots %} to `false`.
 
 # Videos
 
-Cypress also records videos when running from the CLI.
+Cypress also records videos when running tests.
 
-This behavior can be turned off by setting {% url `video` configuration#Videos %} to `false`.
+{% note warning %}
+Video recording is currently only supported when running Cypress from the Electron browser. {% issue 1767 "See this issue" %} for more information.
+{% endnote %}
+
+Video recording can be turned off entirely by setting {% url `video` configuration#Videos %} to `false` from within your configuration.
 
 Videos are stored in the {% url `videosFolder` configuration#Videos %} which is set to `cypress/videos` by default.
 
-After `cypress run` completes, Cypress will automatically compress the video in order to save on file size. By default it compresses to a `32 CRF` but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
+After `cypress run` completes, Cypress automatically compresses the video in order to save on file size. By default it compresses to a `32 CRF`, but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
 
-By default, videos are processed and compressed after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the {% url `videoUploadOnPasses` configuration#Videos %} configuration option to `false`.
+When using the `--record` flag while running your tests, videos are processed, compressed, and uploaded to the {% url 'Dashboard Service' dashboard-service %} after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the {% url `videoUploadOnPasses` configuration#Videos %} configuration option to `false`.
 
-By default, Cypress clears any existing videos before a `cypress run`. If you do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
+Cypress clears any existing videos before a `cypress run`. If you do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
 
 # Now What?
 
@@ -49,4 +53,12 @@ Something you can take advantage of today is the {% url 'Cypress Dashboard Servi
 
 ## Visual Regression Test / Screenshot Diffing
 
-Another possibility is visual regression testing: comparing screenshots of past runs with the current run to ensure that nothing changed. Cypress does not currently have this built-in, but it is on our radar. {% issue 495 'Follow this issue' %} if you are interested in being updated about this feature, leave comments if you would like to influence what gets built, and open a pull request if you would like to work on it yourself!
+Another possibility is visual regression testing: comparing screenshots of past runs with the current run to ensure that nothing changed. {% url "Read about how to implement visual testing." visual-testing %}
+
+# See also
+
+- {% url 'After Screenshot API' after-screenshot-api %}
+- {% url 'Cypress.Screenshot' screenshot-api %}
+- {% url 'Dashboard Service' dashboard-service %}
+- {% url `cy.screenshot()` screenshot %}
+- {% url 'Visual Testing' visual-testing %}

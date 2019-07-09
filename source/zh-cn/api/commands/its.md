@@ -131,7 +131,7 @@ cy
 ### Use `.its()` to test `window.fetch`
 
 {% note info %}
-{% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Nested Properties
@@ -196,11 +196,11 @@ cy.wait('@getComments').its('responseBody').should('deep.eq', [
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/its/xhr-response-its-response-body-for-testing.png)
+{% imgTag /img/api/its/xhr-response-its-response-body-for-testing.png "Command Log for its" %}
 
 When clicking on `its` within the command log, the console outputs the following:
 
-![Console Log](/img/api/its/response-body-yielded-with-its-command-log.png)
+{% imgTag /img/api/its/response-body-yielded-with-its-command-log.png "Console Log for its" %}
 
 # See also
 

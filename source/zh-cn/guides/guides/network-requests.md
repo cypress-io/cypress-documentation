@@ -1,11 +1,11 @@
 ---
-title: Network Requests
+title: 网络请求
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
-- How Cypress enables you to stub out the backend with {% url `cy.route()` route %}
+- How Cypress enables you to stub out the back end with {% url `cy.route()` route %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
 - How to use Fixtures to reuse XHR responses
@@ -113,7 +113,7 @@ See {% url '`cy.server()` options' server#Options %} and {% url '`cy.route()` op
 
 Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it's stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the moment the request is made and another snapshot at the moment the response returns.
 
-![snapshot_request](https://user-images.githubusercontent.com/1271364/26947393-930508b0-4c60-11e7-90a0-4d42ee3f24c0.gif)
+{% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
 
 By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
 
@@ -132,7 +132,7 @@ cy.route({
 
 When you start a {% url `cy.server()` server %} and define {% url `cy.route()` route %} commands, Cypress displays this under "Routes" in the Command Log.
 
-{% img /img/guides/server-routing-table.png "Routing Table" %}
+{% imgTag /img/guides/server-routing-table.png "Routing Table" %}
 
 Once you start a server with {% url `cy.server()` server %}, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.
 
@@ -179,7 +179,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 /cypress/fixtures/images/birds.png
 ```
 
-To access the fixtures nested within the `images` folder, simply include the folder in your {% url `cy.fixture()` fixture %} command.
+To access the fixtures nested within the `images` folder, include the folder in your {% url `cy.fixture()` fixture %} command.
 
 ```javascript
 cy.fixture('images/dogs.png') //returns dogs.png as Base64
@@ -283,7 +283,7 @@ In this example, there are many possible sources of failure. In most testing too
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
 
-{% img /img/guides/clear-source-of-failure.png "Wait Failure" %}
+{% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
 

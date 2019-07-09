@@ -1,6 +1,5 @@
 ---
 title: getCookie
-
 ---
 
 Get a browser cookie by its name.
@@ -47,7 +46,7 @@ Option | Default | Description
 - `secure`
 - `expiry`
 
-***When a cookie matching the name could not be found:***
+### When a cookie matching the name could not be found:
 
 `cy.getCookie()` yields `null`.
 
@@ -55,7 +54,7 @@ Option | Default | Description
 
 ## Session id
 
-***Get `session_id` cookie after logging in***
+### Get `session_id` cookie after logging in
 
 In this example, on first login, our server sends us back a session cookie.
 
@@ -104,10 +103,10 @@ cy.get('#submit')
   })
 ```
 
-***Using `cy.getCookie()` to test logging in***
+### Using `cy.getCookie()` to test logging in
 
 {% note info %}
-Check out our example recipes using `cy.getCookie()` to test {% url 'logging in using HTML web forms' recipes#HTML-Web-Forms %}, {% url 'logging in using XHR web forms' recipes#XHR-Web-Forms %} and {% url 'logging in with single sign on' recipes#Single-Sign-On %}
+Check out our example recipes using `cy.getCookie()` to test {% url 'logging in using HTML web forms' recipes#Logging-In %}, {% url 'logging in using XHR web forms' recipes#Logging-In %} and {% url 'logging in with single sign on' recipes#Logging-In %}
 {% endnote %}
 
 # Rules
@@ -132,11 +131,11 @@ cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png)
+{% imgTag /img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png "Command Log getcookie" %}
 
 When clicking on `getCookie` within the command log, the console outputs the following:
 
-![Console Log](/img/api/getcookie/inspect-cookie-object-properties-in-console.png)
+{% imgTag /img/api/getcookie/inspect-cookie-object-properties-in-console.png "Console Log getcookie" %}
 
 # See also
 

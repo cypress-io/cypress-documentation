@@ -1,9 +1,9 @@
 ---
-title: Introduction to Cypress
+title: Cypress简介
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 你将会学习到什么
 
 - How Cypress queries the DOM
 - How Cypress manages subjects and chains of commands
@@ -309,7 +309,7 @@ To work around the need to reference elements, Cypress has a feature {% url 'kno
 
 ### Using {% url `.then()` then %} To Act On A Subject
 
-Want to jump into the command flow and get your hands on the subject directly? No problem, simply add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
+Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
 
 If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a simple return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
 
@@ -519,7 +519,7 @@ None of the above commands are *idempotent*; they all cause side effects. Racing
 
 In real promises it's very easy to 'lose' a nested Promise if you don't return it or chain it correctly.
 
-Let's imagine the following Node.js code:
+Let's imagine the following Node code:
 
 ```js
 // assuming we've promisified our fs module
@@ -678,7 +678,7 @@ You don't need to write {% url "`.should('exist')`" should %} after a DOM based 
 {% endnote %}
 
 {% note danger "Negative DOM assertions" %}
-If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions ,such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
+If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions, such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
 
 ```
 cy.get('.does-not-exist').should('not.be.visible')         // passes
@@ -689,8 +689,8 @@ This also applies to custom assertions such as when passing a callback:
 
 ```
 // passes, provided the callback itself passes
-cy.get('.does-not-exist').should(($element) => {   
-  expect($element.find('input')).to.not.exist 
+cy.get('.does-not-exist').should(($element) => {
+  expect($element.find('input')).to.not.exist
 })
 ```
 
@@ -755,7 +755,7 @@ cy.wrap(obj).its('foo')
 
 ## List of Assertions
 
-Cypress bundles {% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, and {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %} to provide built-in assertions. You can see a comprehensive list of them in {% url 'the list of assertions reference' assertions %}. You can also {% url "write your own assertions as Chai plugins" recipes#Adding-Chai-Assertions %} and use them in Cypress.
+Cypress bundles {% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bundled-tools#Chai-jQuery %}, and {% url "`Sinon-Chai`" bundled-tools#Sinon-Chai %} to provide built-in assertions. You can see a comprehensive list of them in {% url 'the list of assertions reference' assertions %}. You can also {% url "write your own assertions as Chai plugins" recipes#Fundamentals %} and use them in Cypress.
 
 ## Writing Assertions
 
@@ -809,7 +809,7 @@ expect(true).to.be.true
 ```
 
 {% note info Did you know you can write Unit Tests in Cypress? %}
-Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#React %}.
+Check out our example recipes for {% url 'unit testing' recipes %} and {% url 'unit testing React components' recipes#Unit-Testing %}.
 {% endnote %}
 
 Explicit assertions are great when you want to:

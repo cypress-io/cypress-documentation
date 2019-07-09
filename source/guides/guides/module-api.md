@@ -2,7 +2,7 @@
 title: Module API
 ---
 
-You can require Cypress as a Node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
+You can require Cypress as a node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
 
 - Send a notification about failing tests with included screenshot images
 - Rerun a single failing spec file
@@ -30,10 +30,10 @@ Option | Description
 `parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
 `port` | Override default port
 `project` | Path to a specific project
-`record` | Whether to record the test run
-`reporter` | Specify a mocha reporter
-`reporterOptions` | Specify mocha reporter options
-`spec` | Specify the specs to run
+`record`  | Whether to record the test run
+`reporter`  | Specify a Mocha reporter
+`reporterOptions`  | Specify Mocha reporter options
+`spec`  | Specify the specs to run
 
 ```javascript
 const cypress = require('cypress')
