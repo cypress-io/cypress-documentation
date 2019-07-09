@@ -678,7 +678,7 @@ You don't need to write {% url "`.should('exist')`" should %} after a DOM based 
 {% endnote %}
 
 {% note danger "Negative DOM assertions" %}
-If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions ,such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
+If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions, such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
 
 ```
 cy.get('.does-not-exist').should('not.be.visible')         // passes
@@ -689,8 +689,8 @@ This also applies to custom assertions such as when passing a callback:
 
 ```
 // passes, provided the callback itself passes
-cy.get('.does-not-exist').should(($element) => {   
-  expect($element.find('input')).to.not.exist 
+cy.get('.does-not-exist').should(($element) => {
+  expect($element.find('input')).to.not.exist
 })
 ```
 

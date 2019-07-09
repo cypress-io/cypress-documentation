@@ -317,14 +317,14 @@ Events that should not fire on non input types such as elements with `tabindex` 
 
 The following rules have been implemented that match real browser behavior (and the spec):
 
-1. Cypress respects not firing subsequent events if previous ones were cancelled.
+1. Cypress respects not firing subsequent events if previous ones were canceled.
 2. Cypress will fire `keypress` *only* if that key is supposed to actually fire `keypress`.
 3. Cypress will fire `textInput` *only* if typing that key would have inserted an actual character.
 4. Cypress will fire `input` *only* if typing that key modifies or changes the value of the element.
 
 ### Event Cancellation
 
-Cypress respects all default browser behavior when events are cancelled.
+Cypress respects all default browser behavior when events are canceled.
 
 ```javascript
 // prevent the characters from being inserted
