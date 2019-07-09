@@ -51,6 +51,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
 | `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %} |
+| 'withinSubject' | null                                               | {% usage_options withinSubject %} |
 
 ## Yields {% helper_icon yields %}
 
