@@ -161,7 +161,7 @@ npx mochawesome-report-generator mochawesome.json
 
 {% imgTag /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
 
-请参考{% url 'Integrating Mochawesome reporter with Cypress' http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}了解更多信息。
+请参考{% url 'Integrating Mochawesome reporter with Cypress's http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}了解更多信息。
 
 # 自定义报告生成器
 

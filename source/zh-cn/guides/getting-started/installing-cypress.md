@@ -264,7 +264,7 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 
 查看所有可用的平台{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}。
 
- 方法 | Url                            | 描述
+ 方法 | URL                            | 描述
  ------ | ------------------------------ | -------------------------------------------------------------------------
  `GET`  | `/desktop                 `    | 下载最近的Cypress版本(平台自动检测)
  `GET`  | `/desktop.json            `    | 返回最新有效的包含CDN地址的JSON文件
