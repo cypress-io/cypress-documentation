@@ -4,6 +4,9 @@ title: parents
 
 Get the parent DOM elements of a set of DOM elements.
 
+Please note that `.parents()` travels multiple levels up the DOM tree as opposed to the {% url ".parent
+()" parent %} command which travels a single level up the DOM tree.
+
 {% note info %}
 The querying behavior of this command matches exactly how {% url `.parents()` http://api.jquery.com/parents %} works in jQuery.
 {% endnote %}
@@ -57,16 +60,31 @@ Option | Default | Description
 
 ### Get the parents of the active li
 
+```html
+<ul class='main-nav'>
+  <li>Overview</li>
+  <li>Getting started
+    <ul class='sub-nav'>
+      <li>Install</li>
+      <li class='active'>Build</li>
+      <li>Test</li>
+    </ul>
+  </li>
+</ul>
+```
+
 ```javascript
+// yields [.sub-nav, li, .main-nav]
 cy.get('li.active').parents()
 ```
 
 ## Selector
 
-### Get the parents with class `nav` of the active li
+### Get the parents with class `main-nav` of the active li
 
 ```javascript
-cy.get('li.active').parents('.nav')
+// yields [.main-nav]
+cy.get('li.active').parents('.main-nav')
 ```
 
 # Rules

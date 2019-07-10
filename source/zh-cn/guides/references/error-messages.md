@@ -349,6 +349,10 @@ Cypress将使用最后一个Cypress命令生成的任何内容来解析你的命
 
 你可以安全地移除：`{stub: false}`。
 
+## {% fa fa-exclamation-triangle red %} CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+
+如果在DOM中确定元素时可见的情况下出现此错误，则文档可能包含错误的HTML语法。在这种情况下，`document.querySelector()` 将找不到HTML格式错误之后出现的任何元素。即使你确定HTML没有任何的格式错误，但是无论如何你还要再次仔细检查（在开发工具中逐行检查）。特别是如果你已经花了很多时间去检查了所有的可能性时更加要仔细点。
+
 # CLI错误
 
 ## {% fa fa-exclamation-triangle red %} You passed the `--record` flag but did not provide us your Record Key.
