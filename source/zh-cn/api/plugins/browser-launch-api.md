@@ -36,8 +36,6 @@ module.exports = (on, config) => {
     // }
 
     if (browser.name === 'chrome') {
-      // `args` is an araay of all the arguments
-      // that will be passed to Chrome when it launchers
       args.push('--start-fullscreen')
 
       // whatever you return here becomes the new args
@@ -45,8 +43,6 @@ module.exports = (on, config) => {
     }
 
     if (browser.name === 'electron') {
-      // `args` is a `BrowserWindow` options object
-      // https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
       args['fullscreen'] = true
 
       // whatever you return here becomes the new args
