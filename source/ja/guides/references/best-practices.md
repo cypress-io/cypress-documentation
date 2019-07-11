@@ -236,7 +236,6 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-
 ```javascript
 // an example of what NOT TO DO
 describe('my form', function () {
@@ -587,6 +586,7 @@ Adding a {% url "`baseUrl`" configuration#Global %} can also save some time duri
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
+
 {% imgTag /img/guides/cypress-loads-in-localhost-and-random-port.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.

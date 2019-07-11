@@ -3,59 +3,59 @@ title: 截图和视频
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- How Cypress captures screenshots of test failures automatically
-- How to manually capture your own screenshot
-- How Cypress can record a video of the entire run
-- Some options of what to do with screenshot and video artifacts
+- Cypress如何自动捕捉测试失败的截图
+- 如何手工捕捉自己的截图
+- Cypress如何录制完整运行的视频
+- 一些如何处理截图和视频构件的选项
 {% endnote %}
 
-# Screenshots
+# 截图
 
-Cypress comes with the ability to take screenshots, whether you are running in interactive mode using `cypress open` or run mode using `cypress run`, even in CI.
+Cypress自带截屏功能，无论你是在使用`cypress open`的交互模式下运行，还是在使用`cypress run`的运行模式下运行(可能是在CI中)。
 
-To take a manual screenshot you can use the {% url `cy.screenshot()` screenshot %} command.
+要手动截屏，你可以使用{% url `cy.screenshot()` screenshot %}命令。
 
-Additionally, Cypress will automatically capture screenshots when a failure happens during runs outside of interactive mode.
+而且，在交互模式之外的运行过程中发生失败时，Cypress将自动捕捉屏幕截图。
 
-This behavior can be turned off by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
+可以通过{% url 'Cypress.Screenshot.defaults()' screenshot-api %}将`screenshotOnRunFailure`设置为`false`来关闭此行为。
 
-Screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
+截图存储在{% url `screenshotsFolder` configuration#Screenshots %}中，默认设置为`cypress/screenshots`。
 
-Cypress clears any existing screenshots before `cypress run`. If you do not want to clear your screenshots folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Screenshots %} to `false`.
+在`cypress run`之前，Cypress将清空任何现有的截图。如果你不想在运行前清空你的截图文件夹，你可以设置{% url `trashAssetsBeforeRuns` configuration#Screenshots %}为`false`。
 
-# Videos
+# 视频
 
-Cypress also records videos when running tests.
+Cypress还可以在运行时录制视频。
 
 {% note warning %}
 Video recording is currently only supported when running Cypress from the Electron browser. {% issue 1767 "See this issue" %} for more information.
 {% endnote %}
 
-Video recording can be turned off entirely by setting {% url `video` configuration#Videos %} to `false` from within your configuration.
+可以通过将{% url `video` configuration#Videos %}设置为`false`来关闭录制视频功能。
 
-Videos are stored in the {% url `videosFolder` configuration#Videos %} which is set to `cypress/videos` by default.
+视频存储在{% url `videosFolder` configuration#Videos %}中，默认设置为`cypress/videos`。
 
-After `cypress run` completes, Cypress automatically compresses the video in order to save on file size. By default it compresses to a `32 CRF`, but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
+当`cypress run`完成后，Cypress将自动压缩视频以节省文件大小。默认情况下，会压缩成`32 CRF`，但是这是可配置的{% url `videoCompression` configuration#Videos %}属性。
 
-When using the `--record` flag while running your tests, videos are processed, compressed, and uploaded to the {% url 'Dashboard Service' dashboard-service %} after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the {% url `videoUploadOnPasses` configuration#Videos %} configuration option to `false`.
+当使用`--record`来执行测试的时候，视频在每一个spec文件运行后都会被处理，压缩并且上传到{% url 'Dashboard Service' dashboard-service %}，不管成功与否。为了将这种行为改变为仅在测试失败的情况下才处理视频，请将{% url `videoUploadOnPasses` configuration#Videos %}配置项设置为`false`。
 
-Cypress clears any existing videos before a `cypress run`. If you do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
+在`cypress run`之前，Cypress清空现有的视频。如果你不想在运行前清空你的视频文件夹，你可以将{% url `trashAssetsBeforeRuns` configuration#Videos %}设置为`false`。
 
-# Now What?
+# 现在该做什么呢？
 
-So you are capturing screenshots and recording videos of your test runs, now what?
+那么你正在测试运行中捕捉截图和录制视频，现在该做什么呢？
 
-## Share Them With Your Team
+## 和你的团队一起分享
 
-Something you can take advantage of today is the {% url 'Cypress Dashboard Service' dashboard-service %}: our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
+你现在可以利用的是{% url 'Cypress仪表盘服务' dashboard-service %}：我们的伙伴企业服务，它为你存储构件，并允许你从任何web浏览器查看它们，还可以与你的团队分享它们。
 
-## Visual Regression Test / Screenshot Diffing
+## 视觉回归测试/截图差异
 
-Another possibility is visual regression testing: comparing screenshots of past runs with the current run to ensure that nothing changed. {% url "Read about how to implement visual testing." visual-testing %}
+另一种可能性是视觉回归测试：对比过去与现在的运行截图以确保没有任何改动: comparing screenshots of past runs with the current run to ensure that nothing changed. {% url "Read about how to implement visual testing." visual-testing %}
 
-# See also
+# 更多参考
 
 - {% url 'After Screenshot API' after-screenshot-api %}
 - {% url 'Cypress.Screenshot' screenshot-api %}

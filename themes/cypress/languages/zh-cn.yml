@@ -29,7 +29,7 @@ sidebar:
     installing-cypress: 安装Cypress
     writing-your-first-test: 编写第一个测试
     testing-your-app: 测试你的应用程序
-    interacting-with-elements: 页面元素交互
+    interacting-with-elements: 元素交互
     core-concepts: 核心概念
     introduction-to-cypress: Cypress简介
     writing-and-organizing-tests: 编写和组织测试
@@ -38,33 +38,33 @@ sidebar:
     dashboard-service: 数据面板服务
     debugging: 调试
     variables-and-aliases: 变量和别名
-    stubs-spies-and-clocks: 桩件, Spies, 和时钟
+    stubs-spies-and-clocks: 桩, Spies和时钟
     network-requests: 网络请求
     screenshots-and-videos: 截图和视频
     guides: 指南
     command-line: 命令行
     continuous-integration: 持续集成
-    parallelization: 并行
+    parallelization: 并行化
     environment-variables: 环境变量
     launching-browsers: 启动浏览器
     custom-commands: 自定义命令
     web-security: Web安全
     references: 参考
     configuration: 配置
-    proxy-configuration: Proxy Configuration
+    proxy-configuration: 代理配置
     error-messages: 错误消息
-    bundled-tools: 捆绑工具
+    bundled-tools: 捆绑的工具
     assertions: 断言
     best-practices: 最佳实践
-    trade-offs: 一些取舍
+    trade-offs: 取舍
     changelog: 更新日志
     roadmap: 路线图
     tooling: 工具
-    intelligent-code-completion: 代码自动填充
+    intelligent-code-completion: 代码智能补全
     plugins-guide: 插件
-    reporters: Reporters
+    reporters: 报告生成器
     typescript-support: TypeScript
-    module-api: 模块API
+    module-api: API模块
     retry-ability: 重试机制
     visual-testing: Visual Testing
     code-coverage: Code Coverage

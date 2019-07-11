@@ -98,7 +98,6 @@ If you think ahead, you'll quickly realize that you're going to be typing this U
 
 Open up `cypress.json`, which you will find in your project root (where you installed Cypress.) It starts out empty:
 
-
 ```json
 {}
 ```

@@ -1,113 +1,113 @@
 ---
-title: 桩件, Spies, 和时钟
+title: 桩, Spies和时钟
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- Which libraries Cypress includes to provide typical testing functionality
-- How to use stubs for asserting that code was called but preventing it from executing
-- How to use spies for asserting that code was called without interfering with its execution
-- How to control time for deterministically testing code that is time-dependent
-- How Cypress improves and extends the included libraries
+- Cypress包含哪些库来提供典型的测试方法
+- 如何使用桩来断言调用了代码，但又阻止代码运行
+- 如何使用间谍在不干扰代码执行的情况下断言代码被调用
+- 如何控制确定性测试代码的时间也就是时间依赖
+- Cypress如何改进和扩展所包含的库
 {% endnote %}
 
-# Capabilities
+# 功能
 
-Cypress comes built in with the ability to stub and spy with {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your application's time with {% url `cy.clock()` clock %} - which lets you manipulate `Date`, `setTimeout`, `setInterval`, amongst others.
+Cypress内嵌使用{% url `cy.stub()` stub %}、{% url `cy.spy()` spy %}进行打桩和监视的能力或使用{% url `cy.clock()` clock %}修改应用程序的时间-这允许你操作`Date`、`setTimeout`、`setInterval`等。
 
-These commands are useful when writing both **unit tests** and **integration tests**.
+当写**单元测试**和**集成测试**时，这些命令非常有用。
 
-# Libraries and Tools
+# 库和工具
 
-Cypress automatically bundles and wraps these libraries:
+Cypress自动捆绑和包装这些库：
 
-| Name | What it does |
+| 名称 | 作用 |
 | --- | ---- |
-| {% url "`sinon`" http://sinonjs.org %} | provides the {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} APIs |
-| {% url "`lolex`" https://github.com/sinonjs/lolex %} | provides the {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} APIs |
-| {% url "`sinon-chai`" https://github.com/domenic/sinon-chai %} | adds `chai` assertions for stubs and spies |
+| {% url "`sinon`" http://sinonjs.org %} | 提供{% url `cy.stub()` stub %}和{% url `cy.spy()` spy %}的API |
+| {% url "`lolex`" https://github.com/sinonjs/lolex %} | 提供{% url `cy.clock()` clock %}和{% url `cy.tick()` tick %}的API |
+| {% url "`sinon-chai`" https://github.com/domenic/sinon-chai %} | 添加`chai`断言给桩和间谍 |
 
-You can refer to each of these libraries' documentation for more examples and explanations.
+你可以参考这些库的各个文档来查看更多示例和说明。
 
-# Common Scenarios
+# 常见的场景
 
-{% note info Example test! %}
-{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-and-spying %}
+{% note info 示例测试！ %}
+{% url '查看我们的示例方法测试间谍、桩和时间' recipes#Stubbing-and-spying %}
 {% endnote %}
 
-## Stubs
+## 桩
 
-A stub is a way to modify a function and delegate control overs its behavior to you (the programmer).
+桩是一种修改函数并将它的行为控制权委托给你（程序员）的方法。
 
-A stub is most commonly used in a unit test but is still useful during some integration/e2e tests.
+桩是非常常见的单元测试，但在某些集成/端到端测试中仍然有用。
 
 ```javascript
-// create a standalone stub (generally for use in unit test)
+// 创建一个单独的桩（通常用于单元测试）
 cy.stub()
 
-// replace obj.method() with a stubbed function
+// 用一个桩函数代替obj.method()
 cy.stub(obj, 'method')
 
-// force obj.method() to return "foo"
+// 强制obj.method()返回"foo"
 cy.stub(obj, 'method').returns('foo')
 
-// force obj.method() when called with "bar" argument to return "foo"
+// 当调用"bar"参数时，强制obj.method()返回"foo"
 cy.stub(obj, 'method').withArgs('bar').returns('foo')
 
-// force obj.method() to return a promise which resolves to "foo"
+// 强制obj.method()返回一个解析为"foo"的promise
 cy.stub(obj, 'method').resolves('foo')
 
-// force obj.method() to return a promise rejected with an error
+// 强制obj.method()返回被拒绝带有错误的promise
 cy.stub(obj, 'method').rejects(new Error('foo'))
 ```
 
-You generally stub a function when it has side effects you are trying to control.
+当一个函数有你想要控制的副作用时，你通常会打桩函数。
 
-***Common Scenarios:***
+***场见的场景：***
 
-- You have a function that accepts a callback, and want to invoke the callback.
-- Your function returns a `Promise`, and you want to automatically resolve or reject it.
-- You have a function that wraps `window.location` and don't want your application to be navigated.
-- You're trying to test your application's "failure path" by forcing things to fail.
-- You're trying to test your application's "happy path" by forcing things to pass.
-- You want to "trick" your application into thinking it's logged in or logged out.
-- You're using `oauth` and want to stub login methods.
+- 你有一个接收回调并希望调用回调的函数。
+- 函数返回一个`Promise`，你希望自动解析或拒绝它。
+- 你有一个包装`window.location`且不希望你的应用程序被导航的函数。
+- 你试图通过强制某些东西失败来测试应用程序的"失败路径"。
+- 你试图通过强制某些东西成功来测试应用程序的"适当路径"。
+- 你试图"欺骗"应用程序，使其认为已登录或已退出。
+- 你正在使用`oauth`并希望打桩登录方法。
 
 {% note info cy.stub() %}
-{% url 'Read more about how to use `cy.stub()`' stub %}
+{% url '阅读更多关于如何使用`cy.stub()`的信息' stub %}
 {% endnote %}
 
-## Spies
+## 间谍
 
-A spy gives you the ability to "spy" on a function, by letting you capture and then assert that the function was called with the right arguments, or that the function was called a certain number of times, or even what the return value was or what context the function was called with.
+间谍使你能够监视一个函数，让你可以捕捉然后断言被调用函数带有正确的参数，或者函数被调用一定次数，甚至返回值是什么或被调用的函数的上下文是什么。
 
-A spy does **not** modify the behavior of the function - it is left perfectly intact. A spy is most useful when you are testing the contract between multiple functions and you don't care about the side effects the real function may create (if any).
+间谍**不**修改函数的行为-它原封不动。当你测试多函数之间的契约时，间谍是最有用的，你不用关心实际函数可能产生的副作用（如果有的话）。
 
 ```javascript
 cy.spy(obj, 'method')
 ```
 
 {% note info cy.spy() %}
-{% url 'Read more about how to use `cy.spy()`' spy %}
+{% url '阅读更多关于如何使用间谍`cy.spy()`' spy %}
 {% endnote %}
 
-## Clock
+## 时钟
 
-There are situations when it is useful to control your application's `date` and `time` in order to override its behavior or avoid slow tests.
+在某些情况下，控制应用程序的`date`和`time`以便覆盖应用程序的行为或避免缓慢的测试是非常有用的。
 
-{% url `cy.clock()` clock %} gives you the ability to control:
+{% url `cy.clock()` clock %} 给你能力来控制：
 
 - `Date`
 - `setTimeout`
 - `setInterval`
 
-***Common Scenarios***
+***常见的场景***
 
-- You're polling something in your application with `setInterval` and want to control that.
-- You have **throttled** or **debounced** functions which you want to control.
+- 你用`setInterval`轮询应用程序中的某些东西并想要控制它。
+- 你已经**节流**或**防抖**了要控制的函数。
 
-Once you've enabled {% url `cy.clock()` clock %} you can control time by **ticking** it ahead by milliseconds.
+一旦你启用了{% url `cy.clock()` clock %}你就可以通过**tick**以毫秒来控制时间。
 
 ```javascript
 cy.clock()
@@ -116,11 +116,11 @@ cy.get('#search').type('foobarbaz')
 cy.tick(1000)
 ```
 
-{% url `cy.clock()` clock %} is special in that it can be called **prior** to visiting your application, and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} + {% url `cy.route()` route %}.
+{% url `cy.clock()` clock %}很特殊，它可以在访问你的应用程序**之前**被调用，在下次访问时，我们将自动绑定它到应用程序。我们在应用程序被调用的任何计时器"之前"绑定。这个工作原理与{% url `cy.server()` server %} + {% url `cy.route()` route %}相同。
 
-## Assertions
+## 断言
 
-Once you have a `stub` or a `spy` in hand, you can then create assertions about them.
+一旦有`桩`或`间谍`在手，你就可以创建关于它们的断言。
 
 ```javascript
 const user = {
@@ -137,75 +137,75 @@ const user = {
   }
 }
 
-// force user.getName() to return "Jane"
+// 强制user.getName()返回"Jane"
 cy.stub(user, 'getName').returns('Jane Lane')
 
-// spy on updateEmail but do not change its behavior
+// 监视updateEmail但是不改变它的行为
 cy.spy(user, 'updateEmail')
 
-// spy on fail but do not change its behavior
+// 监视fail但不改变它的行为
 cy.spy(user, 'fail')
 
-// invoke getName
+// 调用getName
 const name  = user.getName(123)
 
-// invoke updateEmail
+// 调用updateEmail
 const email = user.updateEmail('jane@devs.com')
 
 try {
-  // invoke fail
+  // 调用fail
   user.fail()
 } catch (e) {
 
 }
 
-expect(name).to.eq('Jane Lane')                            // true
-expect(user.getName).to.be.calledOnce                      // true
-expect(user.getName).not.to.be.calledTwice                 // true
+expect(name).to.eq('Jane Lane')                            // 结果为真
+expect(user.getName).to.be.calledOnce                      // 结果为真
+expect(user.getName).not.to.be.calledTwice                 // 结果为真
 expect(user.getName).to.be.calledWith(123)
-expect(user.getName).to.be.calledWithExactly(123)          // true
-expect(user.getName).to.be.calledOn(user)                  // true
+expect(user.getName).to.be.calledWithExactly(123)          // 结果为真
+expect(user.getName).to.be.calledOn(user)                  // 结果为真
 
-expect(email).to.eq('jane@devs.com')                       // true
-expect(user.updateEmail).to.be.calledWith('jane@devs.com') // true
-expect(user.updateEmail).to.have.returned('jane@devs.com') // true
+expect(email).to.eq('jane@devs.com')                       // 结果为真
+expect(user.updateEmail).to.be.calledWith('jane@devs.com') // 结果为真
+expect(user.updateEmail).to.have.returned('jane@devs.com') // 结果为真
 
-expect(user.fail).to.have.thrown('Error')                  // true
+expect(user.fail).to.have.thrown('Error')                  // 结果为真
 ```
 
-# Integration and Extensions
+# 集成和扩展
 
-Beyond just integrating these tools together we have also extended and improved collaboration between these tools.
+除了将这些工具集成在一起，我们还扩展和改进了这些工具的协作。
 
-***Some examples:***
+***一些例子：***
 
-- We replaced Sinon's argument stringifier for a much less noisy, more performant, custom version.
-- We improved the `sinon-chai` assertion output by changing what is displayed during a passing vs. failing test.
-- We added aliasing support to `stub` and `spy` APIs.
-- We automatically restore and tear down `stub`, `spy`, and `clock` between tests.
+- 我们将Sinon's的参数stringifier替换为一个低噪音、高性能的自定义版本。
+- 我们改进了`sinon-chai`断言输出，方法是更改通过与失败测试期间显示的内容。
+- 我们在`桩`和`间谍`API中添加了别名支持。
+- 我们在测试之间自动还原和删除`桩`、`间谍`和`时钟`。
 
-We also integrated all of these APIs directly into the Command Log, so you can visually see what's happening in your application.
+我们也将所有这些API直接集成到命令日志中，所以你可以直观地看到应用程序中发生了什么。
 
-***We visually indicate when:***
+***我们直观地指出：***
 
-- A `stub` is called
-- A `spy` is called
-- A `clock` is ticked
+- 调用`桩`
+- 调用`间谍`
+- 调用`时钟`
 
-When you use aliasing with the {% url `.as()` as %} command, we also correlate those aliases with the calls. This works identically to aliasing a {% url `cy.route()` route %}.
+当你使用带有{% url `.as()` as %}命令的别名时，我们还将这些别名与调用关联起来。这与别名{% url `cy.route()` route %}的工作原理相同。
 
-When stubs are created by calling the method `.withArgs(...)` we also visually link these together.
+当通过调用方法`.withArgs(...)`创建桩时，我们可以将它们可视化地链接在一起。
 
-When you click on a stub or spy, we also output **remarkably** helpful debugging information.
+当你点击桩或间谍时，我们也会输出**非常**有用的调试信息。
 
-***For instance we automatically display:***
+***例如，我们自动显示：***
 
-- The call count (and total number of calls)
-- The arguments, without transforming them (they are the real arguments)
-- The return value of the function
-- The context the function was invoked with
+- 调用计数（和总调用数）
+- 参数，不转变它们（它们是实际的参数）
+- 函数返回值
+- 函数调用的上下文
 
-# See also
+# 另请参阅
 
-- ["Stub navigator API in end-to-end tests"](https://glebbahmutov.com/blog/stub-navigator-api/)
-- ["Shrink the Untestable Code With App Actions And Effects"](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)
+- ["端到端测试中的打桩导航API"](https://glebbahmutov.com/blog/stub-navigator-api/)
+- ["通过APP操作和效果减少不可测试代码"](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)

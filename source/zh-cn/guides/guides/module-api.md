@@ -1,38 +1,38 @@
 ---
-title: 模块API
+title: API模块
 ---
 
-You can require Cypress as a node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
+你可以从你的测试应用程序中要求Cypress作为Node的模块。当你想在运行后直接访问测试结果时，这是非常有用的. 例如, 你可以使用此工作流:
 
-- Send a notification about failing tests with included screenshot images
-- Rerun a single failing spec file
-- Kick off other builds or scripts
+- 发送包含截图的失败测试通知
+- 重新运行一个失败的规范文件
+- 踢开其他的构建或脚本
 
 ## `cypress.run()`
 
-Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
+运行Cypress测试并且解决所有测试结果. 参考{% url 'Cypress的API模块食谱' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
 
-### Options
+### 可选参数
 
-Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
+正如`cypress run`的{% url "命令行选项" command-line %}, 你可以传递修改Cypress运行方式的选项.
 
-Option | Description
+选项 | 描述
 ------ |  ---------
-`browser`  | Specify different browser to run tests in, either by name or by filesystem path
-`ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
-`config`  | Specify configuration
-`env`  | Specify environment variables
-`group` | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
-`headed`  | Display the Electron browser instead of running headlessly
-`key`  | Specify your secret record key
-`noExit` | Keep Cypress open after all tests run
-`parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
-`port`  | Override default port
-`project` | Path to a specific project
-`record`  | Whether to record the test run
-`reporter`  | Specify a Mocha reporter
-`reporterOptions`  | Specify Mocha reporter options
-`spec`  | Specify the specs to run
+`browser`  | 通过名称或文件系统路径指定要在其中运行测试的不同浏览器
+`ciBuildId` | 指定要运行的唯一标识符, 通过启用{% url "分组" parallelization#Grouping-test-runs %}或者{% url "平行" parallelization %}
+`config`  | 指定配置
+`env`  | 指定环境变量
+`group` | 将记录的测试{% url "分组" parallelization#Grouping-test-runs %}到一起去运行
+`headed`  | 显示Electron浏览器而不是运行无头浏览器
+`key`  | 指定你的秘密记录密钥
+`noExit` | 在所有的测试都运行完后, 继续保持Cypress开着
+`parallel` | {% url "并行" parallelization %}多台机器运行已记录的规格
+`port`  | 覆盖缺省端口
+`project` | 指向特定项目的路径
+`record`  | 是否记录测试运行
+`reporter`  | 指定一个mocha报告期
+`reporterOptions`  | 指定mocha报告器选项
+`spec`  | 指定要运行的规格
 
 ```javascript
 const cypress = require('cypress')
@@ -51,9 +51,9 @@ cypress.run({
 })
 ```
 
-### Example
+### 例子
 
-Here is an example of programmatically running a spec file:
+下面是一个以编程方式运行规范文件的示例:
 
 ```js
 const cypress = require('cypress')
@@ -69,7 +69,7 @@ cypress.run({
 })
 ```
 
-`cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run could return something like this:
+`cypress.run()`返回一个使用包含测试结果的对象进行解析的`Promise`. 一个典型的运行可以返回类似这样的东西:
 
 ```json
 {
@@ -105,27 +105,27 @@ cypress.run({
 }
 ```
 
-Find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
+在{% url "`cypress/cli/types`文件夹中" https://github.com/cypress-io/cypress/tree/develop/cli/types %}为结果对象集找到TypeScript定义.
 
-Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find  a module dependency. In that case, the `Promise` will be rejected with a detailed error.
+即使测试失败, `Promise`仍然使用测试结果解析. 如果Cypress因为某些原因跑不起来, `Promise`才会被拒绝; 例如, 如果没有安装某个二进制文件，或者无法找到某个模块依赖项. 在这种情况下, `Promise`将被拒绝, 并给出详细报错信息.
 
 ## `cypress.open()`
 
-### Options
+### 可选参数:
 
-Just like the {% url "Command Line options" command-line %}, you can pass options that modify how Cypress runs.
+正如{% url "命令行选项" command-line %}, 你可以传递修改Cypress运行方式的选项.
 
-Option | Description
+选项 | 描述
 ------ | ---------
-`browser` | Specify a filesystem path to a custom browser
-`config`  | Specify configuration
-`detached` | Open Cypress in detached mode
-`env`  | Specify environment variables
-`global` | Run in global mode
-`port`  | Override default port
-`project` | Path to a specific project
+`browser` | 给自定义浏览器指定文件系统路径
+`config`  | 指定配置
+`detached` | 在分离模式中打开Cypress
+`env`  | 指定环境变量
+`global` | 全局模式下运行
+`port`  | 覆盖默认端口
+`project` | 指向特定项目的路径
 
-### Example
+### 例子:
 
 ```javascript
 const cypress = require('cypress')
