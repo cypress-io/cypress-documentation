@@ -26,7 +26,7 @@ Cypress的一些命令可以用于和DOM进行交互，例如：
 
 这些命令模拟用户与应用程序交互。Cypress会触发浏览器的事件，进而触发应用程序绑定的事件。
 
-在发出任何命令之前，我们会检查DOM的当前状态并采取一些操作以确保DOM元素“准备好”接收操作。
+在发出任何命令之前，我们会检查DOM的当前状态并采取一些操作以确保DOM元素"准备好"接收操作。
 
 Cypress将在{% url `defaultCommandTimeout` configuration#Timeouts %}期间等待元素通过所有这些检查 （在 {% url 'Default Assertions' introduction-to-cypress#Default-Assertions %}核心概念中有详细描述）。
 
@@ -73,7 +73,7 @@ The following calculations factor in CSS translations and transforms.
 
 Cypress检查元素的 `disabled` 属性是否为 `true`。
 
-我们不会检查一个元素是否具有 `readonly` 属性 (但是我们应该需要检查)。如果你希望我们添加此内容，你可以 {% open_an_issue %} 
+我们不会检查一个元素是否具有 `readonly` 属性 (但是我们应该需要检查)。如果你希望我们添加此内容，你可以 {% open_an_issue %}
 
 ## 动画
 
@@ -83,7 +83,7 @@ Cypress将自动确定一个元素是否是动画并等到它停止。
 
 要计算元素是否为动画，我们检查元素本身的当前位置和之前位置。如果距离超过 {% url `animationDistanceThreshold` configuration#Animations %} 配置的值，那么我们将该元素视为动画。
 
-当确定这个值的时候，我们做了一些实验让用户“感觉”这个过程很快。你始终可以通过配置来 {% url "增加或减少这个值" configuration#Animations %}.
+当确定这个值的时候，我们做了一些实验让用户"感觉"这个过程很快。你始终可以通过配置来 {% url "增加或减少这个值" configuration#Animations %}.
 
 你还可以设置配置项{% url `waitForAnimations` configuration#Animations %}来关闭动画检查。
 
@@ -120,7 +120,7 @@ Cypress将自动确定一个元素是否是动画并等到它停止。
 
 滚动算法通过将我们发出命令的元素的顶部最左侧点滚动到其可滚动容器的顶部最左侧。
 
-在滚动元素后，如果我们确定它仍然被覆盖，我们将继续滚动并“轻推”页面，直到它变得可见。 当你有固定在页面顶部的 `position: fixed` 或者 `position: sticky`导航元素时，最常发生这种情况。
+在滚动元素后，如果我们确定它仍然被覆盖，我们将继续滚动并"轻推"页面，直到它变得可见。 当你有固定在页面顶部的 `position: fixed` 或者 `position: sticky`导航元素时，最常发生这种情况。
 
 我们的算法 *应该* 始终滚动元素直到它未被覆盖。
 
@@ -136,7 +136,7 @@ cy.get('button').click({ position: 'topLeft' })
 
 {% imgTag /img/guides/coords.png "Event coordinates" %}
 
-此外，我们将显示一个红色的“点击格“ - 这是一个指示时间坐标的点。
+此外，我们将显示一个红色的"点击格" - 这是一个指示时间坐标的点。
 
 {% imgTag /img/guides/hitbox.png "Hitbox" %}
 
@@ -154,11 +154,11 @@ cy.get('button').click({ position: 'topLeft' })
 
 换句话说，在查看之前的快照时，你无法正确显示Cypress"看到"的内容。
 
-如果你想“查看”并调试Cypress认为元素不可见的唯一方法是使用`debugger`语句。
+如果你想"查看"并调试Cypress认为元素不可见的唯一方法是使用`debugger`语句。
 
 我们建议在操作之前直接放置 `debugger` 或使用 {% url `.debug()` debug %} 命令.
 
-确保你的开发者工具处于打开状态，你可以非常接近的“看到”Cypress正在执行的计算。
+确保你的开发者工具处于打开状态，你可以非常接近的"看到"Cypress正在执行的计算。
 
 从`0.20.0`开始，你也可以通过{% url '绑定事件' catalog-of-events %}来触发它。Cypress在你的元素处理时会触发它。 使用带有这些事件的调试器将为你提供有关Cypress如何工作的更低级别视图。
 
@@ -171,7 +171,7 @@ cy.get('button').debug().click()
 
 虽然上述检查非常有助于找到阻止用户与元素交互的情况 - 但有时他们可能会妨碍我们！
 
-有时候让一个机器人“像一个真实用户”一样与元素进行交互式不值得的。
+有时候让一个机器人"像一个真实用户"一样与元素进行交互式不值得的。
 
 想象一下，你有一个嵌套的导航结构，用户必须将鼠标悬停在一个非常特定的模式中，才能达到所需的链接。
 

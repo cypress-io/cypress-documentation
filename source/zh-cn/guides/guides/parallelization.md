@@ -223,7 +223,6 @@ cypress run --record --group package/guest --spec 'cypress/integration/packages/
 
 这种模式对于monorepo中的项目特别有用。monorepo的每个部分都可以分配自己的组，更大的部分可以并行以加快测试速度。
 
-
 # 链接CI机器以进行并行化或分组
 
 CI构建ID用于将多个CI机器关联到一个测试运行。此标识符基于每个CI构建所特有的环境变量，并根据CI提供商的不同而变化。Cypress对大多数常用的CI供应商都提供开箱即用的支持，因此通常不需要通过{% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}直接设置CI构建ID。

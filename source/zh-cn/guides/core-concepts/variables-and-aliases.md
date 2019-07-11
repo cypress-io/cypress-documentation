@@ -318,7 +318,6 @@ cy.fixture('users.json').then((users) => {
 这就是为什么我们所有的例子都是使用常规的 `function () {}` 语法而不是lambda的箭头语法`() => {}`。
 {% endnote %}
 
-
 为了避免使用 `this.*` 语法，还有另一种方法来访问别名。
 
 在{% url `cy.get()` get %} 命令中能够使用`@`字符访问具有特殊语法的别名：
@@ -361,7 +360,7 @@ it('utilize users in some way', function () {
 cy.get('table').find('tr').as('rows')
 ```
 
-在内部，Cypress已经引用了作为别名“rows”返回的 `<tr>` 集合。要在以后引用这些相同的“rows”。你可以使用 {% url `cy.get()` get %} 命令。
+在内部，Cypress已经引用了作为别名"rows"返回的 `<tr>` 集合。要在以后引用这些相同的"rows"。你可以使用 {% url `cy.get()` get %} 命令。
 
 ```javascript
 // Cypress 返回 <tr> 的引用

@@ -115,7 +115,7 @@ env | grep -i proxy
 
 Setting environment variables in Windows is different depending on if you're using *command prompt* or *Powershell*.
 
-### Set an environment variable for the current session
+### Set an environment variable for current session
 
 *Command prompt:*
 
@@ -149,7 +149,7 @@ set SOME_VARIABLE=
 Remove-Item Env:\SOME_VARIABLE
 ```
 
-### See all the currently set environment variables
+### See all currently set environment variables
 
 *Command prompt:*
 

@@ -111,7 +111,7 @@ cypress.run({
 
 ## `cypress.open()`
 
-### 可选参数
+### 可选参数:
 
 正如{% url "命令行选项" command-line %}, 你可以传递修改Cypress运行方式的选项.
 
@@ -125,7 +125,7 @@ cypress.run({
 `port`  | 覆盖默认端口
 `project` | 指向特定项目的路径
 
-### 例子
+### 例子:
 
 ```javascript
 const cypress = require('cypress')

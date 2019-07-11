@@ -179,7 +179,7 @@ Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插�
 
 # 添加新断言
 
-因为我们使用的是`chai`，这意味着你可以任意地按喜欢的方式扩展它。Cypress将“仅”对新添加到`chai`的断言生效。你可以:
+因为我们使用的是`chai`，这意味着你可以任意地按喜欢的方式扩展它。Cypress将"仅"对新添加到`chai`的断言生效。你可以:
 
 - 按照{% url '此处的文档' http://chaijs.com/api/plugins/ %}添加你自己的`chai`断言；
 - 使用npm安装任何已经存在的`chai`库并在你的测试文件或支撑文件中导入它。

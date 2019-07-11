@@ -4,6 +4,7 @@ title: 重试机制
 
 {% note info %}
 # {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
+
 - Cypress如何重试命令和断言
 - 命令在什么时候重试什么时候不重试
 - 如何解决一些片状测试的情况
@@ -95,7 +96,7 @@ cy.get('.todo-list li')     // command
 
 # 不是每个命令都被重试
 
-Cypress只重试查询DOM结构的命令：{% url `cy.get()` get %}， {% url `.find()` find %}， {% url `.contains()` contains %}等等。你可以通过查看API文档中的“断言”部分来检查特定的命令是否会重试。例如：{% url `.first()` first %}的“断言部分”告诉我们这个命令会一直重试直到所有的断言都通过。
+Cypress只重试查询DOM结构的命令：{% url `cy.get()` get %}， {% url `.find()` find %}， {% url `.contains()` contains %}等等。你可以通过查看API文档中的"断言"部分来检查特定的命令是否会重试。例如：{% url `.first()` first %}的"断言部分"告诉我们这个命令会一直重试直到所有的断言都通过。
 
 {% assertions existence .first %}
 
@@ -104,7 +105,7 @@ Cypress只重试查询DOM结构的命令：{% url `cy.get()` get %}， {% url `.
 当命令可能会更改被测试应用程序的状态时，不会重试命令。例如：Cypress不会重试 {% url '.click()' click %} 命令，因为它可能会改变应用程序中的某些内容。
 
 {% note warning %}
-在很小的概率下你可能想重试`.click()`这样的命令。我们描述了一个案例，事件监听器需要在窗口弹出后一段时间才会生效，这样导致`.click()`命令无法按照预期来执行。在这种特殊情况下，你可能希望“不断点击”直到点击事件被注册，点击后对话框消失。更多详细信息可以参考我们的博客：{% url "在测试中什么时候可以点击？" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %}。
+在很小的概率下你可能想重试`.click()`这样的命令。我们描述了一个案例，事件监听器需要在窗口弹出后一段时间才会生效，这样导致`.click()`命令无法按照预期来执行。在这种特殊情况下，你可能希望"不断点击"直到点击事件被注册，点击后对话框消失。更多详细信息可以参考我们的博客：{% url "在测试中什么时候可以点击？" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %}。
 {% endnote %}
 
 # 内置断言
@@ -119,7 +120,7 @@ cy.get('.todo-list li')     // command
 
 {% imgTag /img/guides/retry-ability/eq.gif "Retrying built-in assertion" %}
 
-一些无法重试的命令仍然具有内置的_等待_。例如：正如“断言”部分所描述的那样，{% url "`.click()`" click %}会等待点击，直到该元素变为{% url "可操作" interacting-with-elements#Actionability %}。
+一些无法重试的命令仍然具有内置的_等待_。例如：正如"断言"部分所描述的那样，{% url "`.click()`" click %}会等待点击，直到该元素变为{% url "可操作" interacting-with-elements#Actionability %}。
 
 Cypress尝试像人类用户那样使用浏览器。
 
@@ -149,7 +150,7 @@ cy.get('.mobile-nav', { timeout: 10000 })
   .and('contain', 'Home')
 ```
 
-Cypress将重试最多10秒，以找到包含“Home”文本的 `mobile-nav` 类的可见元素。有关更多的示例，请参考“Cypress简介”中的{% url 'Timeouts' introduction-to-cypress#Timeouts %}部分。
+Cypress将重试最多10秒，以找到包含"Home"文本的 `mobile-nav` 类的可见元素。有关更多的示例，请参考"Cypress简介"中的{% url 'Timeouts' introduction-to-cypress#Timeouts %}部分。
 
 # 只有最后一个命令会被重试
 
@@ -179,7 +180,7 @@ it('adds two items', function () {
 
 {% imgTag /img/guides/retry-ability/adds-two-items-fails.gif "Test fails" %}
 
-问题看起来很奇怪 - 我可以清楚的看到列表中出现的标签“todo B”，那么为什么Cypress找不到它？这到底是怎么回事？
+问题看起来很奇怪 - 我可以清楚的看到列表中出现的标签"todo B"，那么为什么Cypress找不到它？这到底是怎么回事？
 
 还记得我们在应用程序代码中引入的延迟导致测试超时吗？在UI重新呈现之前，我们添加了100ms的延迟。
 
@@ -202,15 +203,15 @@ app.TodoModel.prototype.addTodo = function (title) {
 
 {% imgTag /img/guides/retry-ability/first-item-label.png "First item label" %}
 
-将鼠标悬停在第二个“FIND label”命令上 - 这里出了一点问题。它找到了 _第一个标签_，然后继续重新查找文本“todo B”，但是第一项仍然是“todo A”。
+将鼠标悬停在第二个"FIND label"命令上 - 这里出了一点问题。它找到了 _第一个标签_，然后继续重新查找文本"todo B"，但是第一项仍然是"todo A"。
 
 {% imgTag /img/guides/retry-ability/second-item-label.png "Second item label" %}
 
-嗯，这确实很奇怪，为什么Cypress只看 _第一个_ 元素？让我们将鼠标悬停在“GET .todo-list li”命令上看看它 _找到了什么_ 。 哦，有趣的是 - 在那一刻只有一个元素。
+嗯，这确实很奇怪，为什么Cypress只看 _第一个_ 元素？让我们将鼠标悬停在"GET .todo-list li"命令上看看它 _找到了什么_ 。 哦，有趣的是 - 在那一刻只有一个元素。
 
 {% imgTag /img/guides/retry-ability/second-get-li.png "Second get li" %}
 
-在测试期间，`cy.get('.todo-list li')` 命令很快的找到了渲染的 `<li>` 元素 - 这是第一个也是唯一的一个“todo A”元素。我们的程序在等待了100ms后才把“todo B”元素附加到列表上。 当第二个元素被添加时，Cypress已经“完成了元素的查找”，它只使用第一个`<li>`元素。它只在第一个`<li>`元素中搜索`<label>`，完全忽略了新创建的第二个项目。
+在测试期间，`cy.get('.todo-list li')` 命令很快的找到了渲染的 `<li>` 元素 - 这是第一个也是唯一的一个"todo A"元素。我们的程序在等待了100ms后才把"todo B"元素附加到列表上。 当第二个元素被添加时，Cypress已经"完成了元素的查找"，它只使用第一个`<li>`元素。它只在第一个`<li>`元素中搜索`<label>`，完全忽略了新创建的第二个项目。
 
 为了确认这一点，让我们删除延迟代码，看看在测试通过的例子中发生了什么。
 
@@ -249,7 +250,7 @@ it('adds two items', function () {
 })
 ```
 
-为了显示重试次数，我将应用程序的人工延迟增加到500ms。现在测试总是通过， 因为重试了整个选择器。当第二个“todo B”元素添加到DOM时，它会找到包含2个元素的列表。
+为了显示重试次数，我将应用程序的人工延迟增加到500ms。现在测试总是通过， 因为重试了整个选择器。当第二个"todo B"元素添加到DOM时，它会找到包含2个元素的列表。
 
 {% imgTag /img/guides/retry-ability/combined-selectors.gif "Combined selector" %}
 
@@ -296,7 +297,7 @@ it('adds two items', function () {
 
 {% imgTag /img/guides/retry-ability/alternating.png "Passing test" %}
 
-测试通过了，因为第二个 `cy.get('.todo-list li')` 被自己的断言`.should('have.length', 2)`重试了。只有在成功找到2个 `<li>` 元素，`.find('label')`命令和对应的断言才开始，到现在为止，它能够正确查询了带有正确“todo B”标签的元素。
+测试通过了，因为第二个 `cy.get('.todo-list li')` 被自己的断言`.should('have.length', 2)`重试了。只有在成功找到2个 `<li>` 元素，`.find('label')`命令和对应的断言才开始，到现在为止，它能够正确查询了带有正确"todo B"标签的元素。
 
 # 其它参考
 

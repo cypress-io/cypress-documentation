@@ -12,15 +12,15 @@ Cypress依赖于许多同类最佳的开源测试库，从一开始就为平台�
 
 Cypress采用了Mocha的`bdd`语法，因为它完美地适应了集成和单元测试。你将要编写的所有测试都依赖于Mocha提供的基本功能，即：
 
-* {% url '`describe()`' http://mochajs.org/#bdd %}
-* {% url '`context()`' http://mochajs.org/#bdd %}
-* {% url '`it()`' http://mochajs.org/#bdd %}
-* {% url '`before()`' http://mochajs.org/#hooks %}
-* {% url '`beforeEach()`' http://mochajs.org/#hooks %}
-* {% url '`afterEach()`' http://mochajs.org/#hooks %}
-* {% url '`after()`' http://mochajs.org/#hooks %}
-* {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
-* {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
+- {% url '`describe()`' http://mochajs.org/#bdd %}
+- {% url '`context()`' http://mochajs.org/#bdd %}
+- {% url '`it()`' http://mochajs.org/#bdd %}
+- {% url '`before()`' http://mochajs.org/#hooks %}
+- {% url '`beforeEach()`' http://mochajs.org/#hooks %}
+- {% url '`afterEach()`' http://mochajs.org/#hooks %}
+- {% url '`after()`' http://mochajs.org/#hooks %}
+- {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
+- {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
 
 另外，Mocha提供了优秀的{% url '`async` 支持' http://mochajs.org/#asynchronous-code %}。Cypress扩展了Mocha，打磨了其粗糙的边缘，奇怪的边缘情况，bugs和错误消息。这些修复都是完全透明和简单易懂的。
 
@@ -47,7 +47,6 @@ Mocha提供了我们组织用例的框架，Chai则提供了可以轻易书写�
 # Sinon.JS
 
 {% fa fa-github %} {% url http://sinonjs.org/ %}
-
 
 在编写单元测试时，甚至在类似集成的测试中，你经常需要能够stub和spy的方法。Cypress包括两个方法，{% url `cy.stub()` stub %} and {% url `cy.spy()` spy %}分别返回Sinon stubs和spies。
 

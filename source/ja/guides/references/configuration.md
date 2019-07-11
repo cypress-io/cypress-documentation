@@ -145,7 +145,7 @@ export CYPRESS_VIEWPORT_HEIGHT=600
 
 We automatically normalize both the key and the value. Cypress will *strip off* the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
 
-**Both options below are valid**
+### Both options below are valid
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000

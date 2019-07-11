@@ -4,6 +4,7 @@ title: Retry-ability
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
+
 - How Cypress retries commands and assertions
 - When commands are retried and when they are not
 - How to address some situations of flaky tests

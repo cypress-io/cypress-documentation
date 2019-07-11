@@ -95,7 +95,7 @@ To start writing tests for your app, create a new file like `app_spec.js` within
 
 By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
-The initial imported plugins file can be {% url 'configured to another file' configuration#Folders-Files %}. 
+The initial imported plugins file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
 {% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
 
@@ -118,11 +118,11 @@ beforeEach(function () {
 {% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
-**Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 
+**Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}.
 {% endnote %}
 
 {% note danger%}
-{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road. 
+{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road.
 {% endnote %}
 
 From your support file you should also `import` or `require` other files to keep things organized.
@@ -333,16 +333,16 @@ Remember to use {% url `.only` writing-and-organizing-tests#Excluding-and-Includ
 
 ## What is watched?
 
-**Files**
+### Files
 
-* {% url `cypress.json` configuration %}
-* {% url `cypress.env.json` environment-variables %}
+- {% url `cypress.json` configuration %}
+- {% url `cypress.env.json` environment-variables %}
 
-**Folders**
+### Folders
 
-* `cypress/integration/`
-* `cypress/support/`
-* `cypress/plugins/`
+- `cypress/integration/`
+- `cypress/support/`
+- `cypress/plugins/`
 
 The folder, the files within the folder, and all child folders and their files (recursively) are watched.
 
@@ -354,9 +354,9 @@ Those folder paths refer to the {% url 'default folder paths' configuration#Fold
 
 Everything else; this includes, but isn't limited to, the following:
 
-* Your application code
-* `node_modules`
-* `cypress/fixtures/`
+- Your application code
+- `node_modules`
+- `cypress/fixtures/`
 
 If you're developing using a modern JS-based web application stack then you've likely got support for some form of hot module replacement which is responsible for watching your application code&mdash;HTML, CSS, JS, etc.&mdash;and transparently reloading your application in response to changes.
 

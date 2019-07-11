@@ -99,7 +99,7 @@ Cypress.env('some') // 'value'
 }
 ```
 
-### 测试文件
+### 测试文件:
 
 ```javascript
 Cypress.env()             // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -107,7 +107,7 @@ Cypress.env('host')       // 'veronica.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### 综述
+### 综述:
 
 {% note success 优点 %}
 - 专用文件，只用于环境变量。
@@ -138,7 +138,7 @@ export CYPRESS_HOST=laura.dev.local
 export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
-### 测试文件
+### 测试文件-
 
 ```javascript
 Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -146,7 +146,7 @@ Cypress.env('HOST')       // 'laura.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### 综述
+### 综述-
 
 {% note success 优点 %}
 - 快速导出一些值。
@@ -177,7 +177,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
-### 测试文件
+### 测试文件 -
 
 ```javascript
 Cypress.env()             // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -185,7 +185,7 @@ Cypress.env('host')       // 'kevin.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### 综述
+### 综述 -
 
 {% note success 优点 %}
 - 不需要对文件或配置进行任何更改。
@@ -210,13 +210,13 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 如果你的环境变量与标准配置键匹配，那么它们将改为覆盖配置值，而不是设置`环境变量`。
 
-### 修改`baseUrl`配置值/不在`Cypress.env()`中设置环境变量
+***修改`baseUrl`配置值/不在`Cypress.env()`中设置环境变量***
 
 ```shell
 export CYPRESS_BASE_URL=http://localhost:8080
 ```
 
-### 'foo'不匹配配置/在`Cypress.env()`中设置环境变量
+***'foo'不匹配配置/在`Cypress.env()`中设置环境变量***
 
 ```shell
 export CYPRESS_FOO=bar

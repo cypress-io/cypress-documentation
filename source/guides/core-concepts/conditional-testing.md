@@ -263,7 +263,7 @@ cy.request('https://app.com/me')
 
 Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
-### Embed data in the DOM:
+### Embed data in DOM:
 
 Another valid strategy would be to embed data directly into the DOM but to do so in a way that the data is **always** present and query-able. The data would have to be present 100% of the time, otherwise this strategy would not work.
 
@@ -409,6 +409,7 @@ Enabling this would mean that for every single command, it would recover from er
 Let's reimagine our "Welcome Wizard" example from before.
 
 **The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+
 ```js
 // great error recovery code
 function keepCalmAndCarryOn () {

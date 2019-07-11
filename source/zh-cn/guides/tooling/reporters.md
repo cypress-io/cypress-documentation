@@ -39,7 +39,7 @@ Once you've read through the documentation below, we invite you to experience th
 }
 ```
 
-### 命令行
+***命令行***
 
 ```shell
 cypress run --reporter junit \
@@ -81,7 +81,7 @@ cypress run --reporter junit \
 
 ### 用例文件测试报告到标准输出`STDOUT`，保存JUnit XML文件
 
-我们想要输出一个测试用例“spec”报告到`STDOUT`，同时，保存Mochawesome JSON格式的所有报告并且合并到一个单独的报告文件里。
+我们想要输出一个测试用例"spec"报告到`STDOUT`，同时，保存Mochawesome JSON格式的所有报告并且合并到一个单独的报告文件里。
 
 我们需要安装额外的依赖，包括Mocha本身：
 
@@ -109,7 +109,7 @@ cypress run --reporter mocha-multi-reporters \
 
 注意：我们推荐在运行此指令前，删除`cypress/results`目录下所有的文件，因为每一次运行都会生成新的XML文件。比如，我们可以在`package.json`下面添加npm脚本指令：
 
-```
+```json
 {
   "scripts": {
     "delete:reports": "rm cypress/results/* || true",
@@ -211,7 +211,7 @@ cypress run --reporter reporters/custom.js
 }
 ```
 
-### 命令行
+### 命令行:
 
 ```shell
 cypress run --reporter mochawesome

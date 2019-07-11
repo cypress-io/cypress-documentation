@@ -152,8 +152,6 @@ CI提供商 | 示例项目 | 示例配置
 {% url "Solano" https://www.solanolabs.com/ %} | |
 {% url "TravisCI" https://travis-ci.org/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".travis.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml %}
 
-
-
 ## Travis
 
 ### 示例配置文件 `.travis.yml`
@@ -389,6 +387,7 @@ cypress run --record
 {% imgTag /img/guides/cypress-record-key-as-env-var-travis.png "Travis key environment variable" %}
 
 ### Git信息
+
 Cypress使用{% url 'commit-info' https://github.com/cypress-io/commit-info %}包来获取git信息并关联到运行时（比如分支信息、提交信息、作者等）。
 
 它默认有一个`.git`的目录，并使用Git命令去获取各个信息，比如`git show -s --pretty=%B`来获取提交信息，参考{% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}。
@@ -455,7 +454,7 @@ node scripts/run-cypress-tests.js
 
 # 已知问题
 
-## Docker
+## In Docker
 
 如果你是长期运行docker，你需要设置`ipc`为`host`模式，{% issue 350 'This issue' %}阐述了到底怎么做。
 

@@ -75,7 +75,7 @@ Runs Cypress tests to completion. By default will run all tests headlessly in th
 cypress run [options]
 ```
 
-**Options**
+### Options
 
 Option | Description
 ------ |  ---------
@@ -296,7 +296,7 @@ Opens the Cypress Test Runner in interactive mode.
 cypress open [options]
 ```
 
-**Options**
+### Options:
 
 Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`.
 
@@ -422,6 +422,7 @@ Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %
 ```shell
 DEBUG=cypress:* cypress open
 ```
+
 ```shell
 DEBUG=cypress:* cypress run
 ```
@@ -431,6 +432,7 @@ DEBUG=cypress:* cypress run
 ```shell
 set DEBUG=cypress:*
 ```
+
 ```shell
 cypress run
 ```

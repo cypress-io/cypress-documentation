@@ -11,17 +11,17 @@ title: Web安全
 
 ### Cypress在底层做的事情示例：
 
-  - 注入{% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %}到`text/html`页面。
-  - 代理所有的HTTP/HTTPS通信。
-  - 改变主机url以匹配被测试应用程序的url。
-  - 使用浏览器内部API进行网络层通信。
+- 注入{% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %}到`text/html`页面。
+- 代理所有的HTTP/HTTPS通信。
+- 改变主机url以匹配被测试应用程序的url。
+- 使用浏览器内部API进行网络层通信。
 
 当Cypress首次加载时，内部Cypress web应用程序托管在一个随机端口上：类似于`http://localhost:65874/__/`。
 
 在测试中发出第一个{% url `cy.visit()` visit %}命令后，Cypress改变它的URL以匹配远程应用程序源，从而解决`同源策略`的第一个主要障碍。你的应用程序代码执行与在Cypress外部执行相同，并且一切都如预期的一样工作。
 
 {% note info 如何支持HTTPS %}
-Cypress在底层做了一些非常有趣的事情，使HTTPs站点测试能够正常工作。Cypress使你能够在网络层控制和打桩。因此，Cypress必须分配和管理浏览器证书，以便能够实时修改通信。你会注意到Chrome显示了一个警告，“SSL证书不匹配”。这是正常和正确的。在底层，我们充当自己的CA权威，动态地颁发证书，以便拦截无法访问的请求。我们只对当前正在测试的超域这样做，并绕过其他通信。这就是为什么如果你在Cypress中向另一个主机打开一个选项卡，证书将与预期匹配。
+Cypress在底层做了一些非常有趣的事情，使HTTPs站点测试能够正常工作。Cypress使你能够在网络层控制和打桩。因此，Cypress必须分配和管理浏览器证书，以便能够实时修改通信。你会注意到Chrome显示了一个警告，"SSL证书不匹配"。这是正常和正确的。在底层，我们充当自己的CA权威，动态地颁发证书，以便拦截无法访问的请求。我们只对当前正在测试的超域这样做，并绕过其他通信。这就是为什么如果你在Cypress中向另一个主机打开一个选项卡，证书将与预期匹配。
 {% endnote %}
 
 # 局限性
@@ -67,7 +67,7 @@ cy.visit('https://google.com')      // 这将立即出错
 - 显示来自Auth0的嵌入式登录表单。
 - 显示来自Disqus的评论。
 
-实际上，Cypress“可能”可以像Selenium一样适应这些情况，但是你永远无法从Cypress内部访问这些iframe。
+实际上，Cypress"可能"可以像Selenium一样适应这些情况，但是你永远无法从Cypress内部访问这些iframe。
 
 有一种解决方案，你可以使用{% url "`window.postMessage`" https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage %}直接与这些iframe通信并控制它们(如果第三方iframe支持的话)。
 
@@ -108,7 +108,6 @@ cy.get('a').click()               // 将立即失败
 然而，事实是，Cypress在你的应用程序中暴露了一个安全漏洞，你希望它在Cypress中失败。
 
 没有将`secure`标志设置为`true`的`cookies`将作为明文发送到不安全的URL。这使得你的应用程序很容易受到会话劫持。
-
 
 即使你的web服务器强制`301重定向`回HTTPS站点，此安全漏洞仍然存在。原始HTTP请求仍然发出一次，暴露了不安全的会话信息。
 
@@ -167,7 +166,6 @@ cy.get('a').then(($a) => {
 ## 表单提交重定向
 
 当你提交常规HTML表单时，浏览器将遵循此`HTTP(s)请求`。
-
 
 ```html
 <!-- 在`localhost:8080`上提供的应用程序代码 -->

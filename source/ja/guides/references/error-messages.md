@@ -51,8 +51,8 @@ It's still useful to load a setup file before your test code. If you are setting
 
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
-* `cypress/support/index.js`
-* `cypress/support/index.coffee`
+- `cypress/support/index.js`
+- `cypress/support/index.coffee`
 
 Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
 

@@ -21,15 +21,15 @@ Cypress在一个独特的交互式运行器中运行测试，允许你崽执行�
 
 {% imgTag /img/guides/command-log.png 436 "Cypress Test Runner" %}
 
-### 悬停在命令上
+## 悬停在命令上
 
-当悬停在每个命令和断言上时，测试执行器会将正在测试的应用程序（右侧）恢复到执行该命令时的状态。这将会允许你在测试时通过“时间旅行”回到应用程序之前的状态。
+当悬停在每个命令和断言上时，测试执行器会将正在测试的应用程序（右侧）恢复到执行该命令时的状态。这将会允许你在测试时通过"时间旅行"回到应用程序之前的状态。
 
 {% note info  %}
 默认情况下，Cypress为时间旅行保留了50个测试快照和命令数据。如果你在浏览器中看到极高的内存消耗，则可能需要降低在 {% url 'configuration' configuration#Global %} 中的 `numTestsKeptInMemory` 配置项的值。
 {% endnote %}
 
-### 单击命令
+## 单击命令
 
 单击每个命令，断言或错误都会在开发工具控制台中显示额外的信息。当测试执行完毕后，单击命令也会让测试的应用程序（右侧）‘固定’在之前的状态。
 
@@ -39,15 +39,15 @@ Cypress在一个独特的交互式运行器中运行测试，允许你崽执行�
 
 对于某些命令，例如：{% url `cy.route()` route %}， {% url `cy.stub()` stub %}，和 {% url `cy.spy()` spy %}，这是一个额外的工具面板显示在测试上方，以提供有关测试状态的更多信息。
 
-### Routes:
+## Routes:
 
 {% imgTag /img/guides/instrument-panel-routes.png "Routes Instrument Panel" %}
 
-### Stubs:
+## Stubs:
 
 {% imgTag /img/guides/instrument-panel-stubs.png "Stubs Instrument Panel" %}
 
-### Spies:
+## Spies:
 
 {% imgTag /img/guides/instrument-panel-spies.png "Spies Instrument Panel" %}
 
@@ -83,9 +83,9 @@ AUT的当前大小和比例显示在窗口的右上角。
 
 选择定位器是一个互动功能，可以帮助你：
 
-* 确定元素的唯一选择器。
-* 查看哪些元素与给定的选择器匹配。
-* 查看哪个元素与一串文本匹配。
+- 确定元素的唯一选择器。
+- 查看哪些元素与给定的选择器匹配。
+- 查看哪个元素与一串文本匹配。
 
 {% video local /img/snippets/selector-playground.mp4 %}
 

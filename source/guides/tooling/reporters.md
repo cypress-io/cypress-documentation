@@ -23,8 +23,6 @@ This is especially useful when running in CI. Typically we see users using the d
 Once you've read through the documentation below, we invite you to experience the power of Cypress reporters via {% url "Section 9" https://github.com/cypress-io/testing-workshop-cypress/blob/master/slides/09-reporters/PITCHME.md %} of our open source {% url "testing workshop for Cypress" https://github.com/cypress-io/testing-workshop-cypress %}.
 {% endnote %}
 
-
-
 # Reporter Options
 
 Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
@@ -41,7 +39,7 @@ Some reporters accept options that customize their behavior. These can be specif
 }
 ```
 
-### Command line
+***Command line***
 
 ```shell
 cypress run --reporter junit \
@@ -111,7 +109,7 @@ cypress run --reporter mocha-multi-reporters \
 
 Note: we recommend deleting all files from the `cypress/results` folder before running this command, since each run will output new XML files. For example, we can add the npm script commands below to our `package.json`:
 
-```
+```json
 {
   "scripts": {
     "delete:reports": "rm cypress/results/* || true",
@@ -213,7 +211,7 @@ If you installed a custom reporter through npm, specify the package name:
 }
 ```
 
-### Command line
+### Command line:
 
 ```shell
 cypress run --reporter mochawesome
@@ -222,4 +220,3 @@ cypress run --reporter mochawesome
 {% note info  %}
 You need to install any peer dependencies the reporter requires, even if they're bundled with Cypress. For example, {% url "mochawesome" https://github.com/adamgruber/mochawesome %} requires `mocha` as a peer dependency. You will need to install `mocha` as a dev dependency of your own project for it to work.
 {% endnote %}
-

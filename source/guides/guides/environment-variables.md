@@ -99,7 +99,7 @@ This strategy is useful because if you add `cypress.env.json` to your `.gitignor
 }
 ```
 
-### Test file
+### From test file
 
 ```javascript
 Cypress.env()             // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -107,7 +107,7 @@ Cypress.env('host')       // 'veronica.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### Overview
+### An Overview
 
 {% note success Benefits %}
 - Dedicated file just for environment variables.
@@ -138,7 +138,7 @@ export CYPRESS_HOST=laura.dev.local
 export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
-### Test file
+### In test file
 
 ```javascript
 Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -146,7 +146,7 @@ Cypress.env('HOST')       // 'laura.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### Overview
+### Overview:
 
 {% note success Benefits %}
 - Quickly export some values.
@@ -177,7 +177,7 @@ Multiple values must be separated by a comma, not a space.
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
-### Test file
+### Test file:
 
 ```javascript
 Cypress.env()             // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -185,7 +185,7 @@ Cypress.env('host')       // 'kevin.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### Overview
+### Overview -
 
 {% note success Benefits %}
 - Does not require any changes to files or configuration.
@@ -210,13 +210,13 @@ While this may take a bit more work than other options - it yields you the most 
 
 If your environment variables match a standard configuration key, then instead of setting an `environment variable` they will instead override the configuration value.
 
-### Change the `baseUrl` configuration value / not set env var in `Cypress.env()`
+***Change the `baseUrl` configuration value / not set env var in `Cypress.env()`***
 
 ```shell
 export CYPRESS_BASE_URL=http://localhost:8080
 ```
 
-### 'foo' does not match config / sets env var in `Cypress.env()`
+***'foo' does not match config / sets env var in `Cypress.env()`***
 
 ```shell
 export CYPRESS_FOO=bar
