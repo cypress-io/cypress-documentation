@@ -2,59 +2,59 @@
 title: 环境变量
 ---
 
-Environment variables are useful when:
+环境变量在以下情况很有用：
 
-- Values are different across developer machines.
-- Values are different across multiple environments: *(dev, staging, qa, prod)*
-- Values change frequently and are highly dynamic.
+- 不同开发人员计算机中的值是不同的。
+- 不同环境下的值是不同的：*(dev, staging, qa, prod)*
+- 值频繁变化且高度动态。
 
-Environment variables can be changed easily - especially when running in CI.
+环境变量很容易更改—尤其是在CI中运行时。
 
-### Instead of hard coding this in your tests:
-
-```javascript
-cy.request('https://api.acme.corp') // this will break on other environments
-```
-
-### We can move this into an environment variable.
+### 不要在测试中对其进行硬编码：
 
 ```javascript
-cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
+cy.request('https://api.acme.corp') // 这将在其他环境中中断
 ```
 
-{% note info "Using 'baseUrl'" %}
-Environment variables are great at pointing to external services and servers, or storing password or other credentials.
+### 我们可以把它移到环境变量中。
 
-However, you **do not** need to use environment variables to point to the origin and domain under test. Use `baseUrl` instead of environment variables.
+```javascript
+cy.request(Cypress.env('EXTERNAL_API')) // 指向动态环境变量
+```
 
-{% url `cy.visit()` visit %} and {% url `cy.request()` request %} are automatically prefixed with this value - avoiding the need to specify them.
+{% note info "使用'baseUrl'" %}
+环境变量非常适用于指向外部服务和服务器，或者存储密码或其他证书。
 
-`baseUrl` can be set in your `cypress.json` - and then you can use an environment variable to override it.
+但是，你**不**需要使用环境变量来指向测试的原点和域名。使用`baseUrl`而不是环境变量。
+
+{% url `cy.visit()` visit %}和{% url `cy.request()` request %}自动以这个值作为前缀——不必去指定它们。
+
+可以在`cypress.json`中设置`baseUrl`——然后你可以使用环境变量来覆盖它。
 
 ```shell
 CYPRESS_baseUrl=https://staging.app.com cypress run
 ```
 {% endnote %}
 
-# Setting
+# 设置
 
-There are 5 different ways to set environment variables. Each has a slightly different use case.
+设置环境变量有5种不同的方法。每种都有一个稍微不同的使用示例。
 
-***To summarize you can:***
+***简而言之，你可以***
 
-- {% urlHash "Set in `cypress.json`" Option-1-cypress-json %}
-- {% urlHash "Create a `cypress.env.json`" Option-2-cypress-env-json %}
-- {% urlHash "Export as `CYPRESS_*`" Option-3-CYPRESS %}
-- {% urlHash "Pass in the CLI as `--env`" Option-4-env %}
-- {% urlHash "Set an environment variable within your plugins." Option-5-Plugins %}
+- {% urlHash "在`cypress.json`文件中设置" 选择-1-cypress-json %}
+- {% urlHash "创建一个`cypress.env.json`文件" 选择-2-cypress-env-json %}
+- {% urlHash "导出为`CYPRESS_*`" 选择-3-CYPRESS %}
+- {% urlHash "在CLI中传递为`--env`" 选择-4-env %}
+- {% urlHash "在插件中设置一个环境变量。" 选择-5-插件 %}
 
-Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration %}.
+不要认为只能选择一种方法。常见的做法是，使用一种策略进行本地开发，但在CI中运行时使用另一种策略。
 
-When your tests are running, you can use the {% url `Cypress.env` env %} function to access the values of your environment variables.
+测试运行时，可以使用{% url `Cypress.env` env %}函数访问环境变量的值。
 
-## Option #1: `cypress.json`
+## 选择 #1: `cypress.json`
 
-Any key/value you set in your {% url 'configuration' configuration %} under the `env` key will become an environment variable.
+在{% url '配置文件' configuration %}的`env`键下设置的任何键/值对都将成为环境变量。
 
 ```javascript
 // cypress.json
@@ -67,7 +67,7 @@ Any key/value you set in your {% url 'configuration' configuration %} under the 
 }
 ```
 
-### Test file
+### 测试文件
 
 ```javascript
 Cypress.env()       // {foo: 'bar', some: 'value'}
@@ -75,21 +75,21 @@ Cypress.env('foo')  // 'bar'
 Cypress.env('some') // 'value'
 ```
 
-### Overview
+### 综述
 
-{% note success Benefits %}
-- Great for values that need to be checked into source control and remain the same on all machines.
+{% note success 优点 %}
+- 非常适用于需要签入源代码管理并在所有计算机上保持相同的值。
 {% endnote %}
 
-{% note danger Downsides %}
-- Only works for values that should be the same on across all machines.
+{% note danger 缺点 %}
+- 只适用于所有计算机上应该相同的值。
 {% endnote %}
 
-## Option #2: `cypress.env.json`
+## 选择 #2: `cypress.env.json`
 
-You can create your own `cypress.env.json` file that Cypress will automatically check. Values in here will overwrite conflicting environment variables in `cypress.json`.
+你可以创建自己的`cypress.env.json`文件，Cypress将会自动检查它。这里的值会覆盖`cypress.json`中冲突的环境变量。
 
-This strategy is useful because if you add `cypress.env.json` to your `.gitignore` file, the values in here can be different for each developer machine.
+这个策略很有用，因为如果添加`cypress.env.json`到你的`.gitignore`文件，这里的值对于每个开发人员的计算机将会是不同的。
 
 ```javascript
 // cypress.env.json
@@ -99,7 +99,7 @@ This strategy is useful because if you add `cypress.env.json` to your `.gitignor
 }
 ```
 
-### Test file
+### 测试文件
 
 ```javascript
 Cypress.env()             // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -107,28 +107,28 @@ Cypress.env('host')       // 'veronica.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### Overview
+### 综述
 
-{% note success Benefits %}
-- Dedicated file just for environment variables.
-- Enables you to generate this file from other build processes.
-- Values can be different on each machine (if not checked into source control).
+{% note success 优点 %}
+- 专用文件，只用于环境变量。
+- 使你能够从其他构建过程生成此文件。
+- 每个计算机上的值可能不同（如果没有签入源代码控制）。
 {% endnote %}
 
-{% note danger Downsides %}
-- Another file you have to deal with.
-- Overkill for 1 or 2 environment variables.
+{% note danger 缺点 %}
+- 多一个需要处理的文件。
+- 过度干预1或2个环境变量
 {% endnote %}
 
-## Option #3: `CYPRESS_*`
+## 选择 #3: `CYPRESS_*`
 
-Any environment variable on your machine that starts with either `CYPRESS_` or `cypress_` will automatically be added and made available to you.
+你的计算机中任何以`CYPRESS_`或`cypress_`开头的环境变量都将自动添加并提供给你。
 
-Conflicting values will override values from `cypress.json` and `cypress.env.json` files.
+冲突值将覆盖来自`cypress.json`和`cypress.env.json`文件的值。
 
-Cypress will *strip off* the `CYPRESS_` when adding your environment variables.
+Cypress在添加环境变量时会*去掉* `CYPRESS_`。
 
-### Export cypress env variables from the command line
+### 从命令行导出cypress环境变量
 
 ```shell
 export CYPRESS_HOST=laura.dev.local
@@ -138,7 +138,7 @@ export CYPRESS_HOST=laura.dev.local
 export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
-### Test file
+### 测试文件
 
 ```javascript
 Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -146,38 +146,38 @@ Cypress.env('HOST')       // 'laura.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### Overview
+### 综述
 
-{% note success Benefits %}
-- Quickly export some values.
-- Can be stored in your `bash_profile`.
-- Allows for dynamic values between different machines.
-- Especially useful for CI environments.
+{% note success 优点 %}
+- 快速导出一些值。
+- 可以存储在你的`bash_profile`。
+- 允许不同机器之间的动态值。
+- 特别适用于CI环境。
 {% endnote %}
 
-{% note danger Downsides %}
-- Not as obvious where values come from versus the other options.
+{% note danger 缺点 %}
+- 与其他选项相比，值从何而来并不明显。
 {% endnote %}
 
-## Option #4: `--env`
+## 选择 #4: `--env`
 
-Lastly you can pass in environment variables as options when {% url 'using the CLI tool' command-line#cypress-run %}.
+最后，你可以在{% url '使用CLI工具' command-line#cypress-run %}时将环境变量作为选项传递进来。
 
-Values here will overwrite all other conflicting environment variables.
+这里的值将覆盖所有其他冲突的环境变量。
 
-You can use the `--env` argument for {% url '`cypress run`' command-line#cypress-run %}.
+你可以为{% url '`cypress run`' command-line#cypress-run %}使用`--env`参数。
 
 {% note warning  %}
-Multiple values must be separated by a comma, not a space.
+多个值之间必须用逗号分隔，而不是空格。
 {% endnote %}
 
-### From the command line or CI
+### 从命令行或CI
 
 ```shell
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
-### Test file
+### 测试文件
 
 ```javascript
 Cypress.env()             // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -185,45 +185,45 @@ Cypress.env('host')       // 'kevin.dev.local'
 Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
-### Overview
+### 综述
 
-{% note success Benefits %}
-- Does not require any changes to files or configuration.
-- Obvious where environment variables come from.
-- Allows for dynamic values between different machines.
-- Overwrites all other forms of setting env variables.
+{% note success 优点 %}
+- 不需要对文件或配置进行任何更改。
+- 环境变量的来源显而易见。
+- 允许不同机器之间的动态值。
+- 覆盖所有其他形式设置的env变量。
 {% endnote %}
 
-{% note danger Downsides %}
-- Pain to write the `--env` options everywhere you use Cypress.
+{% note danger 缺点 %}
+- 在使用Cypress的任何地方编写`--env`选项都很痛苦。
 {% endnote %}
 
-## Option #5: Plugins
+## 选择 #5: 插件
 
-Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+你可以使用插件通过Node代码动态地设置环境变量，而不是在文件中设置环境变量。这使你可以执行诸如使用`fs`和读出配置值并动态更改它们之类的操作。
 
-While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
+虽然这可能比其他选项需要更多的操作—无论你想要什么，它都会给你提供了最大的灵活性和管理配置的能力。
 
-{% url "We've fully documented how to do this here." configuration-api %}
+{% url "我们已经在这里完整地记录了如何做到这一点。" configuration-api %}
 
-# Overriding Configuration
+# 覆盖配置
 
-If your environment variables match a standard configuration key, then instead of setting an `environment variable` they will instead override the configuration value.
+如果你的环境变量与标准配置键匹配，那么它们将改为覆盖配置值，而不是设置`环境变量`。
 
-### Change the `baseUrl` configuration value / not set env var in `Cypress.env()`
+### 修改`baseUrl`配置值/不在`Cypress.env()`中设置环境变量
 
 ```shell
 export CYPRESS_BASE_URL=http://localhost:8080
 ```
 
-### 'foo' does not match config / sets env var in `Cypress.env()`
+### 'foo'不匹配配置/在`Cypress.env()`中设置环境变量
 
 ```shell
 export CYPRESS_FOO=bar
 ```
 
-You can {% url 'read more about how environment variables can change configuration here' configuration %}.
+你可以{% url '在这里阅读更多关于环境变量如何更改配置的信息' configuration %}
 
-## See also
+## 另请参阅
 
-- {% url "Environment Variables recipe" recipes#Server-Communication %}
+- {% url "环境变量的设置方法" recipes#Server-Communication %}

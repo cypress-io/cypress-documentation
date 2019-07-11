@@ -3,78 +3,80 @@ title: 测试你的应用程序
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- The relationship between Cypress and your back end
-- How to configure Cypress to fit your app
-- Working with (or without!) your authentication mechanism
-- Effectively leveraging test data
+- Cypress与你后端的关系
+- 如何配置Cypress以适用你自己的应用
+- 使用和不使用授权机制
+- 高效地使用测试数据
 {% endnote %}
 
 <!-- textlint-disable terminology -->
 {% video youtube 5XQOK0v_YRE %}
 <!-- textlint-enable -->
 
-# {% fa fa-terminal %} Step 1: Start your server
+# {% fa fa-terminal %} No.1: 启动服务
 
-Assuming you've successfully {% url "installed the Test Runner" installing-cypress#Installing %} and {% url "opened the Test Runner" installing-cypress#Opening-Cypress %} in your project, the first thing you'll want to do is start your local development server that hosts the application.
+假设你已经成功地在你的项目中{% url "安装Cypress" installing-cypress#Installing %}并且{% url "打开Cypress" installing-cypress#Opening-Cypress %}, 首先你要做的第一件事应该是你要做的第一件事是启动托管应用程序的本地开发服务器。
 
-It should look something like **http://localhost:8080**.
+比如类似这样**http://localhost:8080**的样子.
 
-{% note warning 'Anti-Pattern' %}
-Don't try to start a web server from within Cypress scripts. Read about {% url 'best practices' best-practices#Web-Servers %} here.
+{% note warning '警告' %}
+千万别试图从Cypress脚本里启动一个web服务。更新信息可以参考阅读{% url '最佳实践' best-practices#Web-Servers %}.
 {% endnote %}
 
-{% note info 'Why start a local development server?' %}
+{% note info '为什么要启动一个本机开发服务呢?' %}
 
-You may be wondering - why can't I just visit my application that's already in production?
+你也许会很奇怪 - 为什么我不能只访问已经投入生产的应用程序?
 
-While you certainly *can* test an application that's already deployed, that's not really the **sweet spot** of Cypress.
+毫无疑问，你当然*可以*测试已经部署的应用，但，这远不是Cypress所提倡的 *最佳选择*。
 
-Cypress is built, and optimized around being a tool for your daily local development. In fact, after you start using Cypress for awhile, we believe that you may find it useful to even do **all of your development** in it.
+Cypress的构建和优化使其成为你日常本地开发的工具。事实上，在你开始使用Cypress一段时间之后，我们相信你可能会发现甚至在 **所有开发过程中** 都很有用。
 
-Ultimately you'll not only be able to **test and develop** at the same time, but you'll actually be able to build your application **faster** while getting tests "for free".
+最终，你不仅可以同时进行测试和开发，而且你实际上可以更快地构建应用程序，当然进行测试是“免费”的。
 
-What's more - since Cypress enables you to do things like **stub network requests** you can build out your web application without even needing a server to provide valid JSON responses.
+更重要的是 - 由于Cypress使你能够执行诸如存根网络请求之类的操作，你甚至无需服务器提供有效的JSON响应即可构建你的Web应用程序。
 
-Last but not least - trying to shoehorn tests to an already built application is much more difficult than building it as you write tests. You'll likely encounter a series of initial up front challenges / hurdles that would have otherwise been avoided writing tests from the start.
+最后但同样重要的是 - 尝试对已经开发完毕的应用程序进行注入测试比在编写测试时构建它更加困难。你可能会遇到一系列初始的前期挑战/障碍(不熟悉前后端调用逻辑等)，最好是从开发一开始就编写测试(Cypress倡导TDD?)。
 
-The last, and probably most important reason why you want to test against local servers, is the ability to **control them**. When your application is running in production you can't control it.
+为什么要针对本地服务器进行测试的最后一个也许也是最重要的原因是，能够控制它们。当你的应用程序在生产中运行时，你无法控制它。
 
-When it's running in development you can easily:
+最后的最后，也许也是为什么要在本地创建servers并针对性地进行测试的最最重要的原因就是，你具有了完全控制它们的能力。当你的应用已经在生产环境时，你已经没办法完全控制它了。
 
-- take shortcuts
-- seed data by running executable scripts
-- expose test environment specific routes
-- disable security features which make automation difficult
-- reset state on the server / database
+当处于开发模式时，你可以轻松地：
 
-With that said - you still have the option to have it **both ways**.
+- 获取截图
+- 通过运行脚本看到所有数据的流转
+- 暴露出测试环境的所有对象的既定流程走向
+- 去化那些让自动化难以运行的安全功能
+- 重置服务或数据库的状态
 
-Many of our users run the *majority* of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
+话虽如此 - 你依然可以自己选择到底怎么做啦。
+
+许多Cypress的用户都选择在本地运行绝大多数的集成测试，而在生产环境上运行少数的冒烟测试。
 {% endnote %}
 
-# {% fa fa-globe %} Step 2: Visit your server
+# {% fa fa-globe %} No.2: 访问服务
 
-Once your server is running, it's time to visit it.
+一旦服务开始运行，我们就可以访问它啦！
 
-Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
+让我们首先删除Cypress为你默认创建的`examples`目录，因为我们在之前的文档中已经学习过了：
 
 ```shell
 rm cypress/integration/sample_spec.js
 ```
 
-Now let's create our own spec file called `home_page_spec.js`.
+现在让我们创建我们自己的测试文件`home_page_spec.js`：
 
 ```shell
 touch cypress/integration/home_page_spec.js
 ```
 
-Once that file is created, you should see it in the list of spec files.
+一旦文件创建成功，你应该可以在测试文件列表里看到它：
 
-{% imgTag 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" "no-border" %}
 
-Now you'll need to add in the following code in your test file to visit your server:
+现在，添加如下代码到你的测试文件里：
 
 ```js
 describe('The Home Page', function() {
@@ -84,26 +86,26 @@ describe('The Home Page', function() {
 })
 ```
 
-Now click on the `home_page_spec.js` file and watch Cypress open your browser.
+然后，点击 `home_page_spec.js` 然后见证Cypress打开你的浏览器吧！
 
-If you forgot to start your server you'll see the error below:
+如果你忘记了启动Cypress服务了，你将看到以下错误：
 
 {% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
-If you've started your server, then you should see your application loaded and working.
+如果你已经启动了Cypress服务，你将会看到应用启动并且开始工作了。
 
-# {% fa fa-cogs %} Step 3: Configure Cypress
+# {% fa fa-cogs %} No.3: Cypress配置
 
-If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
+试想，你将迅速意识到你可能会在很多地方需要输入URL，因为测试就是在你的应用中去访问不同的页面。万幸，Cypress提供了一个{% url "配置选项" configuration %}。让我们试试吧！
 
-Open up `cypress.json`, which you will find in your project root (where you installed Cypress.) It starts out empty:
+打开在你安装Cypress的项目的根目录下的`cypress.json`。默认这是一个空的json文件：
 
 
 ```json
 {}
 ```
 
-Let's add the `baseUrl` option.
+让我们添加一个`baseUrl`项：
 
 ```json
 {
@@ -111,13 +113,13 @@ Let's add the `baseUrl` option.
 }
 ```
 
-This will automatically **prefix** {% url `cy.visit()` visit %} and {% url `cy.request()` request %} commands with this baseUrl.
+这将为{% url `cy.visit()` visit %}和{% url `cy.request()` request %}添加一个默认baseUrl作为前缀。
 
 {% note info %}
-Whenever you modify `cypress.json`, Cypress will automatically reboot itself and kill any open browsers. This is normal. Just click on the spec file again to relaunch the browser.
+只要你修改了`cypress.json`, Cypress都将重启并关闭掉它打开的浏览器。这是正常的。要重新启动浏览器只要点击测试文件就好。
 {% endnote %}
 
-We can now visit a relative path and omit the hostname and port.
+现在我们可以访问一个相对地址啦，不再需要主机名或端口号了：
 
 ```js
 describe('The Home Page', function() {
@@ -127,43 +129,43 @@ describe('The Home Page', function() {
 })
 ```
 
-Great! Everything should still be green.
+漂亮！一切都应该是正常的。
 
-{% note info Configuration Options %}
-Cypress has many more configuration options you can use to customize its behavior. Things like where your tests live, default timeout periods, environment variables, which reporter to use, etc.
+{% note info 配置项 %}
+Cypress有许多配置选项可供你自定义其行为。 诸如测试文件所在的位置，默认超时时间，环境变量，要使用哪种报告等等。
 
-Check them out in {% url "Configuration" configuration %}!
+详见{% url "配置" configuration %}！
 {% endnote %}
 
-# Testing strategies
+# 测试策略
 
-You're about to embark on writing tests for your application, and only _you_ know your application, so we don't have a lot of specific advice to give you.
+你即将开始为你的应用程序编写测试，并且只有*你*知道你的应用程序，因此我们没有给你更多具体的建议。
 
-**What to test, where the edge cases and seams are, what regressions you're likely to run into, etc. are entirely up to you, your application, and your team.**
+**测试的内容，边界和集成情况，可能的回归等等完全取决于你，你的应用程序和你的团队。**
 
-That said, modern web testing has a few wrinkles that every team experiences, so here are some quick tips on common situations you're likely to run into.
+但是，现代web测试有一些每个团队都会经历的坑，所以这里有一些关于你可能遇到的常见情况的小小提示。
 
-## Seeding data
+## 1. 数据构造
 
-Depending on how your application is built - it's likely that your web application is going to be affected and controlled by the server.
+根据应用程序的构建方式 - 你的Web应用程序一般会受到服务器的影响和控制。
 
-Typically these days servers communicate with front end apps via JSON, but you could also be running a traditional server-side rendered HTML web application.
+通常，现在的服务器通过JSON与前端应用程序通信，但你也可能会面对传统的呈现的HTML Web应用程序的服务器端。
 
-Generally the server is responsible for sending responses that reflect some kind of **state** it holds - generally in a database.
+通常，服务器负责发送反映某种**状态**的响应 - 通常在数据库(或配置文件)中。
 
-Traditionally when writing `e2e` tests using Selenium, before you automate the browser you do some kind of **set up and tear down** on the server.
+传统上，在使用Selenium编写`e2e`测试时，在自动化浏览器之前，你需要进行某些**set up和tear down**。
 
-Perhaps you'll need to generate a user, and seed them with associations and records. You may be familiar with using things such as fixtures or factories.
+也许你需要生成一个用户，并利用它生成一些关联数据和记录。 你可能已经熟悉使用静态数据或工厂服务等。
 
-To test various page states - like an empty view, or a pagination view, you'd need to seed the server so that this state can be tested.
+要测试各种页面状态（如空视图或分页视图），你需要先在服务器创造好条件，以便可以测试这些状态。
 
-**While there is a lot more to this strategy, you generally have three ways to facilitate this with Cypress:**
+**包括但不限于以上的测试经验策略， 在Cypress里你可以通过以下3种方式轻易达成：**
 
-- {% url `cy.exec()` exec %} - to run system commands
-- {% url `cy.task()` task %} - to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
-- {% url `cy.request()` request %} - to make HTTP requests
+- {% url `cy.exec()` exec %} - 运行系统指令
+- {% url `cy.task()` task %} - 通过{% url "`pluginsFile`" configuration#Folders-Files %}在Node里运行代码
+- {% url `cy.request()` request %} - 发起HTTP请求
 
-If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
+如果你启动了`node.js`服务，你可以添加钩子`before`或`beforeEach`来执行一个`npm`任务：
 
 ```js
 describe('The Home Page', function () {
@@ -178,9 +180,9 @@ describe('The Home Page', function () {
 })
 ```
 
-Instead of just executing a system command, you may want more flexibility and could expose a series of routes only when running in a test environment.
+不仅仅是执行系统命令，你可能有需要更多的灵活性和只有在测试环境中运行时才会暴露一系列路由的需求等。
 
-**For instance, you could compose several requests together to tell your server exactly the state you want to create.**
+**例如，你想一次编写多个请求，以告诉你的服务器你要创建的状态：**
 
 ```js
 describe('The Home Page', function () {
@@ -209,53 +211,53 @@ describe('The Home Page', function () {
 })
 ```
 
-While there's nothing really *wrong* with this approach, it does add a lot of complexity. You will be battling synchronizing the state between your server and your browser - and you'll always need to set up / tear down this state before tests (which is slow).
+虽然以上做法没有什么所谓的*错误*，但它确实增加了很多复杂性。 你将挣扎于同步服务器和浏览器之间的状态 - 另外你将始终需要在测试过程中写setup/teardown（这很慢）。
 
-The good news is that we aren't Selenium, nor are we a traditional e2e testing tool. That means we're not bound to the same restrictions.
+好消息是我们不是Selenium，也不是传统的e2e测试工具。 这意味着我们不受此限制。
 
-**With Cypress, there are several other approaches that can offer an arguably better and faster experience.**
+**Cypress有其他几种办法，也许能让你有更好更快的体验。**
 
-## Stubbing the server
+## 2. 服务存根
 
-Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
+相对于“数据构造”，另一种合法的与服务后端“交互”的办法就是“绕过”它。简单得多！
 
-While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
+你可以**存根**来自server端的JSON响应，这样你在前端依然可以看到正常的HTML/JS/CSS等。
 
-This means that instead of resetting the database, or seeding it with the state we want, you can just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
+这意味着，不是重置数据库，或者繁琐地“条件制造和清理”我们想要的状态，你可以强制服务器响应**你想要的任何**样子。通过这种方式，我们不仅没有阻止服务器和浏览器之间的状态同步，还可以防止我们在测试时可能出现的状态异变。这意味着我们的测试不会建立可能影响其他测试的状态来。
 
-Another upside is that this enables you to **build out your application** without needing the *contract* of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
+另一个好处是，这使你能够**构建你的应用程序**而不需要存在后端服务了！你可以按照希望构建数据的方式构建它，甚至可以测试所有边缘情况，而无需服务器。
 
-However - there is likely still a balance here where **both** strategies are valid (and you should likely do them).
+然而 - 现在的情况时两种策略都是有效的，**你可能需要自己找到平衡**。
 
-While stubbing is great, it means that you don't have the guarantees that these response payloads actually match what the server will send. However, there are still many valid ways to get around this:
+虽然存根很棒，但这意味着你无法保证存根响应有效负载实际上与服务器将发送的内容相匹配。但是，依然有许多有效方法可以解决这个问题：
 
-### Generate the fixture stubs ahead of time
+### 2.1 提前生成固定数据
 
-You could have the server generate all of the fixture stubs for you ahead of time. This means their data will reflect what the server will actually send.
+你可以让server提前生成所有的固定数据，这样一来，这些data就能真正反映服务端将会产生的数据了。
 
-### Write a single e2e test without stubs, and then stub the rest
+### 2.2 先不用存根写一个单独的端到端测试，然后用存根方法写剩下的(用例)
 
-Another more balanced approach is just to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
+另一种更平衡的方法就是整合两种策略。 你可以拿一个单独的正常路径用例做完全真实的端到端测试。 它使用该功能真正的应用实现 - 包括通过真正的数据库设置数据和状态等。
 
-Once you've established it's working you can then use stubs to test all of the edge cases and additional scenarios. There are no benefits to using real data in the vast majority of cases. We recommend that the vast majority of tests use stub data. They will be orders of magnitude faster, and much less complex.
+一旦确定它是正常工作的了，你就可以使用存根来测试所有边缘情况和其他方案。 在绝大多数情况下使用真实数据没有任何好处。 我们建议绝大多数测试使用存根数据。 它们将快几个数量级，而且复杂程度要低得多。
 
-{% note info 'Guide: Network Requests' %}
-Please read our {% url 'Guide on Network Requests' network-requests %} for a much more thorough analysis and approach to accomplishing this.
+{% note info '指南：网络请求' %}
+请阅读我们的{% url '网络请求指南' network-requests %}，了解更多的如何通过分析和策略来达到以上目标。
 {% endnote %}
 
-## Logging in
+## 3. 登录
 
-One of the first (and arguably one of the hardest) hurdles you'll have to overcome is testing logging into your application.
+你必须克服的第一个（也可称是最困难的）障碍之一是测试登录到你的应用程序。
 
-Nothing slows a test suite down like having to log in, but all the good parts of your application most likely require an authenticated user! Here are some tips.
+没有什么比像登录更慢的测试套件，但应用程序的所有好部分很可能需要经过身份验证的用户！ 这里有一些技巧。
 
-### Fully test the login flow -- but only once!
+### 3.1 完全测试登录流程 - 但只有一次！
 
-It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
+将你的注册和登录流程置于测试覆盖范围内是一个好主意，因为它对所有用户都非常重要，而且你永远不希望它破坏。
 
-As we just mentioned, logging in is one of those features that are **mission critical** and should likely involve your server.  We recommend you test signup and login using your UI as a real user would:
+正如我们刚刚提到的，登录是**任务关键**的功能之一，应该可能涉及你的服务器。 我们建议你使用你的UI测试注册和登录，因为真实用户会！
 
-Here's an example alongside seeding your database:
+以下是从数据库构造数据开始的示例：
 
 ```js
 describe('The Login Page', function () {
@@ -293,50 +295,50 @@ describe('The Login Page', function () {
 })
 ```
 
-You'll likely also want to test your login UI for:
+你可能还会继续测试你的登录界面的以下情况，比如：
 
-- Invalid username / password
-- Username taken
-- Password complexity requirements
-- Edge cases like locked / deleted accounts
+- 非法的用户名/密码
+- 用户名已存在
+- 密码复杂度要求
+- 边缘用例，比如用户锁定或已删除
 
-Each of these likely requires a full blown e2e test.
+以上每一种情况都要求进行全面的测试。
 
-Now, once you have your login completely tested - you may be tempted to think:
+现在，当你的登录测试成功之后，你可能开始想：
 
-> "...okay great! Let's repeat this login process before every single test!"
+> "...好的，漂亮! 让我们在每一个测试用例中重复这些登录过程吧！"
 
-{% note danger 'No! Please don\'t.' %}
-Do not use **your UI** to login before each test.
+{% note danger '不! 千万别！' %}
+不要用UI登录来测试每一个用例。
 {% endnote %}
 
-Let's investigate and tease apart why.
+让我们来研究和展开一下原因。
 
-### Bypassing your UI
+### 3.2 绕过UI
 
-When you're writing tests for a very **specific feature**, you *should* use your UI to test it.
+当你为**非常具体**的功能编写测试时，你*应*使用你的UI进行测试。
 
-But when you're testing *another area of the system* that relies on a state from a previous feature: **do not use your UI to set up this state**.
+但是，当你在测试系统的另一个模块时，而它依赖于之前功能的状态时：**不要使用你的UI设置此状态**。
 
-Here's a more robust example:
+这是一个更具说服力的例子：
 
-Imagine you're testing the functionality of a **Shopping Cart**. To test this, you  need the ability to add products to that cart. Well where do the products come from? Should you use your UI to login to the admin area, and then create all of the products including their descriptions, categories, and images? Once that's done should you then visit each product and add each one to the shopping cart?
+想象一下，你正在测试**购物车**的功能。 要对此进行测试，你需要能够将商品添加到该购物车。 那么商品来自哪里？ 你是否应该使用UI登录管理区域，然后创建所有商品，包括其描述，类别和图像？ 完成后，你是否应该访问每个商品并将每个商品添加到购物车？
 
-No. You shouldn't do that.
+不，你不应该这样做。
 
-{% note warning 'Anti-Pattern' %}
-Don't use your UI to build up state! It's enormously slow, cumbersome, and unnecessary.
+{% note warning '警告' %}
+不要用你的UI去构建状态。这是非常缓慢，繁琐和不必要的。
 
-Read about {% url 'best practices' best-practices %} here.
+请阅读{% url '最佳实践' best-practices %}。
 {% endnote %}
 
-Using your UI to **log in** is the *exact same scenario* as what we just described above. Logging in is just a prerequisite of state that comes before all of your other tests.
+ **登录**与我们刚才描述的*完全相同的场景*。 登录只是在所有其他测试之前的先决状态条件。
 
-Because Cypress isn't Selenium, we can actually take a huge shortcut here and skip needing to use our UI by using {% url `cy.request()` request %}.
+因为Cypress不是Selenium，我们实际上可以在这里采取一个巨大的捷径，不需要使用UI而直接使用{% url `cy.request()` request %}。
 
-Because {% url `cy.request()` request %} automatically gets and sets cookies under the hood, we can actually use it to build up state without using your browser's UI, yet still have it perform exactly as if it came from the browser!
+因为{% url `cy.request()` request %}会自动获取并设置cookie，我们实际上可以使用它来构建状态而不使用浏览器的UI，但仍然可以使其完全像它来自浏览器一样！
 
-Let's revisit the example from above but assume we're testing some other part of the system.
+让我们重温上面的例子，但假设我们正在测试系统的其他部分。
 
 ```js
 describe('The Dashboard Page', function () {
@@ -374,28 +376,28 @@ describe('The Dashboard Page', function () {
 })
 ```
 
-Do you see the difference? We were able to login without needing to actually use our UI. This saves an enormous amount of time visiting the login page, filling out the username, password, and waiting for the server to redirect us *before every test*.
+你看得到差别吗？ 我们能够登录而无需实际使用我们的UI。 这节省了大量时间访问登录页面，填写用户名，密码，并等待服务器在*每次测试之前*(登录后)重定向。
 
-Because we previously tested the login system end-to-end without using any shortcuts, we already have 100% confidence it's working correctly.
+因为我们以前在不使用任何捷径方式的情况下端到端地测试了登录系统，所以我们已经100％有信心它正常工作。
 
-Use the methodology above when working with any area of your system that requires the state to be set up elsewhere. Just remember - don't use your UI!
+在处理系统的其他地方，那些需要设置状态的任何模块时，请使用上述方法。 请记住 - 不要使用你的用户界面！
 
-{% note info 'Authentication Recipes' %}
-Logging in can be more complex than what we've just covered.
+{% note info '授权图谱' %}
+某些登录可能比我们刚刚介绍的更复杂。
 
-We've created several recipes covering additional scenarios like dealing with CSRF tokens or testing XHR based login forms.
+我们已经创建了几个包含其他方案的方法，例如处理CSRF令牌或测试基于XHR的登录表单。
 
-Feel free to {% url 'explore these additional logging in' recipes %} recipes.
+请移步{% url '登录探索图谱' recipes %}查看。
 {% endnote %}
 
-# Get started
+# 正式开始
 
-Ok, we're done talking.  Now dive in and get started testing your app!
+好了，该说的都说完了。现在起探究Cypress和开始测试你的应用吧！
 
-From here you may want to explore some more of our guides:
+以下有我们的更多的指南：
 
-- {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
-- {% url "Cypress API" table-of-contents %} to learn what commands are available as you work
-- {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
-- {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
-- {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI
+- {% url "视频教程" tutorials %} - 一步一步教的视频教程；
+- {% url "Cypress API" table-of-contents %} - 可以学习Cypress有哪些可用的命令
+- {% url "Cypress介绍" introduction-to-cypress %} - 解释了Cypress到底是如何工作的
+- {% url '命令行' command-line %} - 介绍了如何在交互模式下运行你所有的测试
+- {% url '持续集成' continuous-integration %} - 如何持续集成Cypress

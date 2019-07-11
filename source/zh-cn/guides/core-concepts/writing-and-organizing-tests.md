@@ -3,23 +3,23 @@ title: 编写和组织测试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- How to organize your test and support files.
-- What languages are supported in your test files.
-- How Cypress handles unit tests vs integration tests.
-- How to group your tests.
+- 怎么组织你的测试和支持文件。
+- 测试文件支持哪些语言。
+- Cypress怎么处理单元测试与集成测试。
+- 如何对测试进行分组。
 {% endnote %}
 
-{% note success "Best Practices" %}
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach breaking down your application and organizing your tests.
+{% note success "最佳实践" %}
+我们最近在AssertJS(2018年2月）举行了“最佳实践”会议。该视频演示了如何分解应用程序和组织测试。
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 {% endnote %}
 
-# Folder Structure
+# 目录结构
 
-After adding a new project, Cypress will automatically scaffold out a suggested folder structure. By default it will create:
+在新建项目后，Cypress将自动创建标准文件夹结构，默认情况下，它将是这样：
 
 ```text
 /cypress
@@ -56,58 +56,58 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-***Configuring Folder Structure***
+***配置文件夹结构***
 
-While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
+虽然Cypress允许你自定义测试文件、fixtures和support文件夹位置，但如果你要开始第一个项目，我们建议你使用上面的标准结构。
 
-You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration#Folders-Files %} for more detail.
+你可以在`cypress.json`中修改文件夹的配置。有关更多详细信息，请参考{% url '配置' configuration#Folders-Files %}。
 
-{% note info "What files should I add to my '.gitignore file' ?" %}
-Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
+{% note info "我应该将哪些文件添加到'.gitignore 文件' ？" %}
+Cypress将会创建{% url `screenshotsFolder` configuration#Screenshots %} 和 {% url `videosFolder` configuration#Videos %}目录，用于保存在测试程序期间拍摄的屏幕截图和视频。许多用户会选择将这些文件夹添加到他们的 `.gitignore` 文件中. 另外，如果你将敏感环境变量存储在 `cypress.json` 或者 {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}中，那么当你使用源代码管理工具时也应该忽略这些文件。
 {% endnote %}
 
-## Fixture Files
+## Fixture 文件
 
-Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in `cypress/fixtures` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory.
+Fixtures是测试过程中需要用到的外部静态数据。Fixture文件默认存放在 `cypress/fixtures` 中，但它可以 {% url '配置' configuration#Folders-Files %} 到另外一个目录。
 
-You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
+你通常会将它们与 {% url `cy.fixture()` fixture %} 命令一起使用，并且最常用于存储 {% url '网络请求' network-requests %}。
 
-## Test files
+## 测试文件
 
-Test files are located in `cypress/integration` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory. Test files may be written as:
+测试文件默认位于 `cypress/integration` 中，但它可以 {% url '配置' configuration#Folders-Files %} 到另外一个目录。测试文件支持以下格式：
 
 - `.js`
 - `.jsx`
 - `.coffee`
 - `.cjsx`
 
-Cypress also supports `ES2015` out of the box. You can use either `ES2015 modules` or `CommonJS modules`. This means you can `import` or `require` both **npm packages** and **local relative modules**.
+Cypress还支持开箱即用的 `ES2015` 。你可以使用 `ES2015 modules` 或 `CommonJS modules`。这意味着你可以 `import` 或 `require` **npm packages** 和 **local relative modules**。
 
-{% note info Example Recipe %}
-Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Fundamentals %}.
+{% note info 示例 %}
+你可以参考我们的例子 {% url 'ES2015 and CommonJS modules' recipes#Fundamentals %}。
 {% endnote %}
 
-To see an example of every command used in Cypress, open the {% url "`example` folder" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} within your `cypress/integration` folder.
+要查看Cypress中每个命令的示例， 可以打开你的 `cypress/integration` 文件夹中的 {% url "`example` 目录" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} 。
 
-To start writing tests for your app, create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
+要开始为你的应用程序编写测试，只需要在 `cypress/integration` 文件夹中创建一个新文件，例如：`app_spec.js`。刷新Cypress测试执行程序中的测试列表，你新建的文件应该会出现在列表中。
 
-## Plugin files
+## 插件（Plugin）文件
 
-By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+默认情况下，Cypress将会在每个spec文件运行**之前**自动包含插件文件 `cypress/plugins/index.js`。我们这样做纯粹是想方便用户，因此你不必在每个spec中导入此文件。
 
-The initial imported plugins file can be {% url 'configured to another file' configuration#Folders-Files %}. 
+初始导入的插件文件可以 {% url '配置为另外一个文件' configuration#Folders-Files %}。 
 
-{% url "Read more about using plugins to extend Cypress behavior." plugins-guide %}
+{% url "了解有关更多使用插件来扩展Cypress的信息." plugins-guide %}
 
-## Support file
+## 支持（Support）文件
 
-By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+默认情况下，Cypress会自动包含支持文件 `cypress/support/index.js`。该文件在每个spec文件**之前**运行。 我们这样做纯粹是想方便用户，因此你不必在每个spec中导入此文件。
 
-The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
+初始导入的插件文件可以 {% url '配置为另外一个文件' configuration#Folders-Files %}.
 
-The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
+支持文件是存放可重用行为的好地方，例如你希望应用程序可用于所有文件的自定义命令或全局覆盖。
 
-You can define your behaviors in a `beforeEach` within any of the `cypress/support` files:
+你可以在任何 `cypress/support` 文件中的 `beforeEach` 中定义自己的行为：
 
 ```javascript
 beforeEach(function () {
@@ -118,32 +118,32 @@ beforeEach(function () {
 {% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
-**Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}. 
+**Note:** 这个示例假设你已经熟悉 Mocha {% url '钩子' writing-and-organizing-tests#Hooks %}. 
 {% endnote %}
 
 {% note danger%}
-{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road. 
+{% fa fa-warning %} 请记住，在全局钩子中设置某些内容会让其变得不那么灵活，无法进行更改以及测试其行为。 
 {% endnote %}
 
-From your support file you should also `import` or `require` other files to keep things organized.
+对于你的支持文件，你还是需要通过组织 `import` 或 `require` 来包含其它文件。
 
-We automatically seed you an example support file, which has several commented out examples.
+我们会自动为你提供一个示例支持文件，该文件中有几个注释掉的示例。
 
-{% note info Example Recipe %}
-Our {% url '"Node Modules" recipes' recipes#Fundamentals %} show you how to modify the support file.
+{% note info 示例 %}
+我们的 {% url 'Node模块' recipes#Fundamentals %} 向你展示了如何修改支持文件。
 {% endnote %}
 
-# Writing tests
+# 编写测试
 
-Cypress is built on top of {% url 'Mocha' bundled-tools#Mocha %} and {% url 'Chai' bundled-tools#Chai %}. We support both Chai's `BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere to this style.
+Cypress建立在{% url 'Mocha' bundled-tools#Mocha %} 和 {% url 'Chai' bundled-tools#Chai %}之上。我们支持Chai的 `BDD` 和 `TDD` 断言风格。你在Cypress中写的测试大部分都是这种风格。
 
-If you're familiar with writing tests in JavaScript, then writing tests in Cypress will be a breeze.
+如果你熟悉用JavaScript编写测试，那么在Cypress中编写测试将是轻而易举的事情。
 
-## Test Structure
+## 测试结构
 
-The test interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
+从 {% url 'Mocha' bundled-tools#Mocha %} 借鉴过来的测试接口提供了 `describe()`，`context()`，`it()`和`specify()`方法。
 
-`context()` is identical to `describe()` and `specify()` is identical to `it()`, so choose whatever terminology works best for you.
+`context()` 与 `describe()` 相同， `specify()` 与 `it()` 相同，所以选择最适合你的就行了。
 
 ```javascript
 // -- Start: Our Application Code --
@@ -187,11 +187,11 @@ describe('Unit test our math functions', function() {
 // -- End: Our Cypress Tests --
 ```
 
-## Hooks
+## 钩子
 
-Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}).
+Cypress还提供了钩子(从{% url 'Mocha' bundled-tools#Mocha %}借鉴过来)。
 
-These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
+这有助于你在一组测试运行之前或每次测试运行之前设置一些条件。它们也有助于在一系列测试后或每次测试后清理一些条件。
 
 ```javascript
 describe('Hooks', function() {
@@ -213,21 +213,21 @@ describe('Hooks', function() {
 })
 ```
 
-### The order of hook and test execution is as follows:
+### 钩子和测试执行的顺序如下：
 
-- All `before()` hooks run (once)
-- Any `beforeEach()` hooks run
-- Tests run
-- Any `afterEach()` hooks run
-- All `after()` hooks run (once)
+- 所有 `before()` 钩子 (只运行一次)
+- 任何 `beforeEach()` 钩子
+- 运行测试
+- 任何 `afterEach()` 钩子
+- 所有 `after()` 钩子 (只运行一次)
 
 {% note danger %}
-{% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our {% url "thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`" best-practices#Using-after-or-afterEach-hooks %}.
+{% fa fa-warning %} 在编写 `after()` 或 `afterEach()` 钩子时，请参考我们的 {% url "关于用 `after()` 或 `afterEach()` 来清理状态的一些想法" best-practices#Using-after-or-afterEach-hooks %}。
 {% endnote %}
 
-## Excluding and Including Tests
+## 排除和包括测试
 
-To run a specified suite or test, append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
+要运行指定的套件或测试，只需要将 `.only` 附件到该函数即可。所有嵌套的套件也将被执行。这使我们能够一次运行一个测试，并且这是编写测试套件的推荐方法。
 
 ```javascript
 // -- Start: Our Application Code --
@@ -271,7 +271,7 @@ describe('Unit Test FizzBuzz', function () {
 
 ```
 
-To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
+要跳过指定的套件或测试，只需要将 `.skip()` 附加到该函数即可。所有嵌套套件也将被跳过。
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', function () {
@@ -279,9 +279,9 @@ it.skip('returns "fizz" when number is multiple of 3', function () {
 })
 ```
 
-## Dynamically Generate Tests
+## 动态生成测试
 
-You can dynamically generate tests using JavaScript.
+你可以使用JavaScript来动态生成测试。
 
 ```javascript
 describe('if your app uses jQuery', function () {
@@ -297,7 +297,7 @@ describe('if your app uses jQuery', function () {
 })
 ```
 
-The code above will produce a suite with 4 tests:
+上面的代码将生成一个包含4个测试的套件。
 
 ```text
 > if your app uses jQuery
@@ -307,9 +307,9 @@ The code above will produce a suite with 4 tests:
   > triggers event: 'mouseleave'
 ```
 
-## Assertion Styles
+## 断言风格
 
-Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertions. {% url "Read more about assertions." assertions %}
+Cypress支持BDD (`expect`/`should`) 和 TDD (`assert`) 风格断言。 {% url "阅读更过断言的内容" assertions %}
 
 ```javascript
 it('can add numbers', function() {
@@ -321,60 +321,60 @@ it('can subtract numbers', function() {
 })
 ```
 
-# Watching tests
+# 监听测试文件
 
-When running in interactive mode using {% url "`cypress open`" command-line#cypress-open %} Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
+当使用 {% url "`cypress open`" command-line#cypress-open %}命令启动交互模式时，Cypress会监视spec文件的改动。添加或更新测试文件后，Cypress会重新加载并运行该spec文件中的所有测试。
 
-This makes for a productive development experience because you can add and edit tests as you're implementing a feature and the Cypress user interface will always reflect the results of your latest edits.
+这可以提供高效的开发体验，因为你可以在实现功能时添加和编辑测试，Cypress用户界面将始终反映最新编辑的结果。
 
 {% note info %}
-Remember to use {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} to limit which tests are run: this can be especially useful when you've got a lot of tests in a single spec file that you're constantly editing; consider also splitting your tests into smaller files each dealing with logically related behavior.
+请记住使用 {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} 来限制运行哪些测试：当你在一个测试中进行大量测试时，这会特别有用。你也可以考虑将spec文件拆分成较小的文件，每个文件处理逻辑相关的行为。
 {% endnote %}
 
-## What is watched?
+## 哪些内容被监听
 
-**Files**
+**文件**
 
 * {% url `cypress.json` configuration %}
 * {% url `cypress.env.json` environment-variables %}
 
-**Folders**
+**文件夹**
 
 * `cypress/integration/`
 * `cypress/support/`
 * `cypress/plugins/`
 
-The folder, the files within the folder, and all child folders and their files (recursively) are watched.
+上面的文件夹，文件夹中的文件以及所有子文件夹及其文件（递归）都将被监视。
 
 {% note info %}
-Those folder paths refer to the {% url 'default folder paths' configuration#Folders-Files %}. If you've configured Cypress to use different folder paths then the folders specific to your configuration will be watched.
+这些文件夹路径引用自 {% url '默认文件夹路径' configuration#Folders-Files %}。如果你已经将Cypress配置为使用不同的文件夹路径，那么就会监听你自己配置的文件夹。
 {% endnote %}
 
-## What isn't watched?
+## 哪些内容不被监听
 
-Everything else; this includes, but isn't limited to, the following:
+其它一切，这包括但不限于以下内容：
 
-* Your application code
+* 你应用程序的代码
 * `node_modules`
 * `cypress/fixtures/`
 
-If you're developing using a modern JS-based web application stack then you've likely got support for some form of hot module replacement which is responsible for watching your application code&mdash;HTML, CSS, JS, etc.&mdash;and transparently reloading your application in response to changes.
+如果你正在使用基于现代Web应用程序的技术栈进行开发，那么你可能会获得某种形式的热模块替换支持，这些替换负责监视你的应用程序代码 - HTML，CSS，JS，其它。- 如果有文件改动将会重新加载你的应用程序。
 
-## Configuration
+## 配置
 
-Set the {% url `watchForFileChanges` configuration#Global %} configuration property to `false` to disable file watching.
+设置 {% url `watchForFileChanges` configuration#Global %} 配置项为 `false` 将会禁用文件监视功能。
 
 {% note warning %}
-**Nothing** is watched during {% url "`cypress run`" command-line#cypress-run %}.
+在执行 {% url "`cypress run`" command-line#cypress-run %}命令期间，是不会监听**任何**内容。
 
-The `watchForFileChanges` property is only in effect when running Cypress using {% url "`cypress open`" command-line#cypress-open %}.
+只有在使用 {% url "`cypress open`" command-line#cypress-open %}命令时候，`watchForFileChanges` 属性才会生效。
 {% endnote %}
 
-The component responsible for the file-watching behavior in Cypress is the {% url 'Cypress Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is the default file-watcher packaged with Cypress.
+负责Cypress文件监视行为的组件是 {% url 'Cypress Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}。这是Cypress默认的文件监视器。
 
-If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as _what_ is watched and the delay before emitting an "update" event after a change.
+如果你需要进一步控制文件监视行为，可以显示的配置此预处理器：它公开了可以配置哪些选项，例如 _what_被监视以及更改后发出更新事件之前的延迟。
 
-Cypress also ships other {% url "file-watching preprocessors" plugins %}; you'll have to configure these explicitly if you want to use them.
+Cypress还发布了其它{% url "文件监视预处理器" plugins %}插件，如果你需要使用它们，必须明确的配置它们。
 
 - {% url 'Cypress Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 - {% url 'Cypress webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}

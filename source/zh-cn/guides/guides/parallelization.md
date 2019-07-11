@@ -1,88 +1,88 @@
 ---
-title: 并行
+title: 并行化
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- How to parallelize test runs
-- How to group test runs
-- Strategies for grouping test runs
-- How load-balancing of tests works
-- What test insights are available on the Dashboard
+- 如何并行化测试运行
+- 如何分组测试运行
+- 分组测试运行的策略
+- 测试负载平衡是如何工作的
+- 仪表盘上有哪些有效的测试结论
 
 {% endnote %}
 
-# Overview
+# 综述
 
-If your project has a large number of tests, it can take a long time for tests to complete running serially on one machine. Running tests in parallel across many virtual machines can save your team time and money when running tests in Continuous Integration (CI).
+如果你的项目有大量的测试，那么在一台机器上串行地运行测试可能需要很长时间。在持续集成(CI)中运行测试时，在许多虚拟机上并行运行测试可以节省团队时间和金钱。
 
-Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
+从{% url "3.1.0" changelog#3-1-0 %}版本开始，Cypress可以在多台机器上并行运行记录测试。虽然并行测试在技术上也可以在一台机器上运行，但我们不推荐，因为这台机器需要大量的资源才能有效地运行你的测试。
 
-This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+这个指南假设你已经在持续集成中运行和{% url "记录" dashboard-service#Setup %}了项目。如果还你没有配置你的项目，请查看我们的{% url "持续集成指南" continuous-integration %}。
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
-# Splitting up your test suite
+# 分割你的测试集
 
-Cypress' parallelization strategy is file-based, so in order to utilize parallelization, your tests will need to be split across separate files.
+Cypress的并行化策略是基于文件的，所以为了使用并行化，你的测试需要分割成不同的文件。
 
-Cypress will assign each spec file to an available machine based on our {% urlHash 'balance strategy' Balance-strategy %}. Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
+Cypress会根据我们的{% urlHash '平衡策略' 平衡策略 %}将每一个spec文件分配给一台可用的机器。由于这个平衡策略，在并行化时不能保证spec文件的运行顺序。
 
-# Turning on parallelization
+# 开启并行化
 
-1. Refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
+1. 参考你的CI提供者的文档，了解如何设置多个机器在CI环境运行。
 
-2. Once multiple machines are available within your CI environment, you can pass the {% url "`--parallel`" command-line#cypress-run-parallel %} key to {% url "`cypress run`" command-line#cypress-run %} to have your recorded tests parallelized.
+2. 一旦你的CI环境有多个机器是可用的，你就可以传递{% url "`--parallel`" command-line#cypress-run-parallel %}键给{% url "`cypress run`" command-line#cypress-run %}，使你记录的测试平行化。
 
   ```shell
   cypress run --record --key=abc123 --parallel
   ```
 
     {% note info %}
-    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+   并行运行测试需要传递{% url "`--record`标志" command-line#cypress-run %}。这确保Cypress能够正确地收集并行化将来运行所需的数据。这也为你提供了在{% url "仪表盘服务" dashboard-service %}中查看并行测试结果的全部好处。如果你还没有设置要记录的项目，请查看我们的{% url "设置指南" dashboard-service#Setup %}。
     {% endnote %}
 
-# CI parallelization interactions
+# CI并行交互
 
-During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-service %} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
+在并行化模式下，Cypress{% url "仪表盘服务" dashboard-service %}与你的CI机器交互，通过下面的过程，跨可用CI机器的spec{% urlHash '负载平衡' 平衡策略 %}来协调测试运行的并行化：
 
-1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-service %} to indicate which spec files to run in the project.
-2. A machine opts in to receiving a spec file to run by contacting Cypress.
-3. Upon receiving requests from a CI machines, Cypress calculates the estimated duration to test each spec file.
-4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
-5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
-6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.
+1. CI机器与Cypres仪表盘服务联系，以指示在项目中运行哪些spec文件。
+2. 机器通过与Cypress联系，选择接收要运行的spec文件。
+3. 收到CI机器的请求后，Cypress计算出测试每个spec文件的估计时间。
+4. 根据这些估算，Cypress将spec文件一个一个地分配（{% urlHash '负载平衡' 平衡策略 %}）每台可用的机器，以最小化总体测试运行时间。
+5. 当每台CI机器运行完分配给它的spec文件后，更多的spec文件被分配给它。这个过程会重复，直到所有spec文件都完成为止。
+6. 在完成所有spec文件之后，Cypress会{% urlHash '等待一段可配置的时间' 运行完成延迟 %}，然后才认为测试运行已经全部完成。这样做是为了更好地支持{% urlHash '运行分组' 分组测试运行 %}。
 
-In short: each Test Runner sends a list of the spec files to the Dashboard Service, and the service sends back one spec at a time to each Test Runner to run.
+简而言之：每个测试运行器向仪表盘服务发送一个spec文件列表，服务每次向每个测试运行器返回一个spec文件让它去运行。
 
-## Parallelization process
+## 并行化过程
 
 {% imgTag /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" "no-border" %}
 
-# Balance strategy
+# 平衡策略
 
-Cypress will automatically balance your spec files across the available machines in your CI provider. Cypress calculates which spec file to run based on the data collected from previous runs. This ensures that your spec files run as fast as possible, with no need for manual configuration.
+Cypress将自动在你的CI供应商中平衡可用机器的spec文件。Cypress根据之前运行收集的数据计算要运行哪个spec文件。这确保你的spec文件运行得尽可能快，不需要手动配置。
 
-As more and more tests are recorded to the Cypress Dashboard, Cypress can better predict how long a given spec file will take to run. To prevent irrelevant data from affecting the duration prediction, Cypress doesn't use old historical run data regarding the spec file.
+随着越来越多的测试被记录到Cypress仪表盘上，Cypress可以更好地预测给定的spec文件运行所需的时间。为了防止不相关的数据影响持续时间预测，Cypress不使用与spec文件相关的旧历史运行数据。
 
-## Spec duration history analysis
+## Spec历史持续时间分析
 
 {% imgTag /img/guides/parallelization/load-balancing.png "Spec duration forecasting" "no-border" %}
 
-With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
+通过对测试运行的每个spec文件的持续时间进行估计，Cypress可以按spec运行持续时间的降序将spec文件分发给可用的CI资源。通过这种方式，最耗时的spec首先启动，从而将整个测试运行持续时间最小化。
 
 {% note info %}
-Duration estimation is done separately for every browser the spec file was tested against. This is helpful since performance characteristics vary by browser, and therefore it is perfectly acceptable to see different duration estimates for each browser a spec file was tested against.
+对于测试了spec文件的每个浏览器，将分别进行持续时间估计。这是很有帮助的，因为性能特征因浏览器而异，因此每个浏览器测试spec文件的估计持续时间不同是完全可以接受的。
 {% endnote %}
 
-# Example
+# 示例
 
-The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
+下面的示例来自我们{% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %}项目的运行。你可以在{% url "Cypress仪表盘" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}上看到运行的结果。
 
-## Without parallelization
+## 没有并行化
 
-In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
+在本例中，一台机器运行一个名为`1x- electronic`的任务，该任务定义在项目的{%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}文件中。在这个任务中，Cypress按字母顺序依次运行所有19个spec文件。完成所有的测试需要**1:51**。
 
 ```text
 1x-electron, Machine #1
@@ -109,12 +109,12 @@ In this example, a single machine runs a job named `1x-electron`, defined in the
 ```
 
 {% note info %}
-Notice that when adding up the spec's run times (**0:55**), they add up to less than the total time for the run to complete (**1:51**) . There is extra time in the run for each spec: starting the browser, encoding and uploading the video to the dashboard, requesting the next spec to run.
+请注意，当将spec的运行时间(**0:55**)相加时，它们加起来小于运行完成所需的总时间(**1:51**)。每个spec的运行都有额外的时间：启动浏览器、编码并将视频上传到仪表板、请求运行下一个spec。
 {% endnote %}
 
-## With parallelization
+## 并行化
 
-When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file and it finished in **59 seconds**.
+当我们使用并行化运行相同的测试时，Cypress根据spec之前的运行历史使用{% urlHash "平衡策略" 平衡策略 %}来指定要运行的spec。在与上面相同的CI运行期间，我们再次运行*所有*测试，但这次是在两台机器上并行化。该任务名为`2x-electron`在项目的{%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}文件中，并在**59秒**内完成。
 
 ```text
 2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
@@ -131,39 +131,39 @@ When we run the same tests with parallelization, Cypress uses its {% urlHash "ba
                                           -- window.spec.js (1s)
 ```
 
-The difference in running times and machines used is very clear when looking at the {% urlHash "Machines View" Machines-View %} on the Dashboard. Notice how the run parallelized across 2 machines automatically ran all specs based on their duration, while the run without parallelization did not.
+当查看仪表盘上的{% urlHash "机器视图" 机器视图 %}时，运行时间和使用的机器之间的差异非常明显。注意，在两台机器上并行化的运行如何根据持续时间自动运行所有spec，而没有并行化的运行则不会。
 
 {% imgTag /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
 
-Parallelizing our tests across 2 machines saved us almost 50% of the total run time, and we can further decrease the build time by adding more machines.
+在两台机器上并行化我们的测试节省了将近50%的总运行时间，并且我们可以通过添加更多的机器来进一步减少构建时间。
 
-# Grouping test runs
+# 分组测试运行
 
-Multiple {% url "`cypress run`" command-line#cypress-run %} calls can be labeled and associated to a **single** run by passing in the {% url "`--group <name>` flag" command-line#cypress-run-group-lt-name-gt %}, where `name` is an arbitrary reference label. The group name must be unique within the associated test run.
+通过传递{% url "`--group <name>`标记" command-line#cypress-run-group-lt-name-gt %}，多个{% url "`cypress run`" command-line#cypress-run %}调用可以标记并关联到一个**单**运行，其中`name`是一个任意参考标签。组名在关联的测试运行中必须是唯一的。
 
 {% note info %}
-For multiple runs to be grouped into a single run, it is required for CI machines to share a common CI build ID environment variable. Typically these CI machines will run in parallel or within the same build workflow or pipeline, but **it is not required to use Cypress parallelization to group runs**. Grouping of runs can be utilized independently of Cypress parallelization.
+为了将多个运行分组到单个运行中，CI机器需要共享一个公共的CI构建ID环境变量。通常，这些CI机器将并行运行，或者在相同的构建工作流或管道中运行，但是**不是必须使用Cypress并行化来对运行进行分组**。运行分组可以独立于Cypress并行化来使用。
 {% endnote %}
 
 {% imgTag /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" "no-border" %}
 
-## Grouping by browser
+## 通过浏览器分组
 
-You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
+你可以在不同的浏览器上测试你的应用程序，并在仪表盘中的单个运行下查看结果。下面，我们简单地将我们的组命名成与正在测试的浏览器相同的名称：
 
-- The first group can be called `Windows/Chrome 69`.
+- 第一个组叫做`Windows/Chrome 69`。
 
   ```shell
   cypress run --record --group Windows/Chrome-69 --browser chrome
   ```
 
-- The second group can be called `Mac/Chrome 70`.
+- 第二个组叫做`Mac/Chrome 70`。
 
   ```shell
   cypress run --record --group Mac/Chrome-70 --browser chrome
   ```
 
-- The third group can be called `Linux/Electron`. *Electron is the default browser used in Cypress runs*.
+- 第三个组叫做`Linux/Electron`。 *Electron是Cypress运行中使用的默认浏览器*。
 
   ```shell
   cypress run --record --group Linux/Electron
@@ -171,9 +171,9 @@ You can test your application against different browsers and view the results un
 
 {% imgTag /img/guides/parallelization/browser.png "browser" "no-border" %}
 
-## Grouping to label parallelization
+## 分组以标签并行化
 
-We also have the power of Cypress parallelization with our groups. For the sake of demonstration, let's run a group to test against Chrome with 2 machines, a group to test against Electron with 4 machines, and another group to test against Electron again, but only with one machine:
+我们也有能力将Cypress与我们的分组并行化。为了演示，让我们运行一个组用2台Chrome机器进行测试，一个组用4台Electron机器进行测试，再运行一个组，用1台Electron机器进行测试：
 
 ```shell
 cypress run --record --group 1x-electron
@@ -187,33 +187,33 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 cypress run --record --group 4x-electron --parallel
 ```
 
-The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
+这里使用的`1x`， `2x`， `4x`的前缀只是一种被采用的约定，用于表示每次运行的并行度级别，并且*不是必须的或必要的*。
 
 {% note info %}
-The number of machines dedicated for each `cypress run` call is based on your CI configuration for the project.
+每个`cypress run`调用专用的机器数量取决于项目的CI配置。
 {% endnote %}
 
-Labeling these groups in this manner helps up later when we review our test runs in the Cypress Dashboard, as shown below:
+以这种方式标记这些组有助于我们之后在Cypress仪表盘中查看测试运行情况，如下所示：
 
 {% imgTag /img/guides/parallelization/timeline-collapsed.png "Timeline view with grouping and parallelization" %}
 
-## Grouping by spec context
+## 按照spec上下文分组
 
-Let's say you have an application that has a *customer facing portal*, *guest facing portal* and an *administration facing portal*. You could organize and test these three parts of your application within the same run:
+假设你有一个应用程序，其中有一个*面向客户的入口*、*一个面向访客的入口*和*一个面向管理的入口*。你可以在同一运行中组织和测试应用程序的这三个部分：
 
-- One group can be called `package/admin`:
+- 一个组叫做`package/admin`：
 
 ```shell
 cypress run --record --group package/admin --spec 'cypress/integration/packages/admin/**/*'
 ```
 
-- Another can be called `package/customer`:
+- 另一个组叫做`package/customer`：
 
 ```shell
 cypress run --record --group package/customer --spec 'cypress/integration/packages/customer/**/*'
 ```
 
-- The last group can be called `package/guest`:
+- 最后一组叫做`package/guest`：
 
 ```shell
 cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
@@ -221,18 +221,18 @@ cypress run --record --group package/guest --spec 'cypress/integration/packages/
 
 {% imgTag /img/guides/parallelization/monorepo.png "monorepo" "no-border" %}
 
-This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
+这种模式对于monorepo中的项目特别有用。monorepo的每个部分都可以分配自己的组，更大的部分可以并行以加快测试速度。
 
 
-# Linking CI machines for parallelization or grouping
+# 链接CI机器以进行并行化或分组
 
-A CI build ID is used to associate multiple CI machines to one test run. This identifier is based on environment variables that are unique to each CI build, and vary based on CI provider. Cypress has out-of-the-box support for most of the commonly-used CI providers, so you would typically not need to directly set the CI build ID via the {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+CI构建ID用于将多个CI机器关联到一个测试运行。此标识符基于每个CI构建所特有的环境变量，并根据CI提供商的不同而变化。Cypress对大多数常用的CI供应商都提供开箱即用的支持，因此通常不需要通过{% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}直接设置CI构建ID。
 
 {% imgTag /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" "no-border" %}
 
-## CI Build ID environment variables by provider
+## CI根据供应商构建ID环境变量
 
-Cypress currently uses the following CI environment variables to determine a CI build ID for a test run:
+Cypress目前使用以下CI环境变量来确定测试运行的CI构建ID：
 
 Provider  | Environment Variable
 --|--
@@ -248,49 +248,49 @@ Jenkins  | `BUILD_NUMBER`
 Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
 Travis  | `TRAVIS_BUILD_ID`
 
-You can pass a different value to link agents to the same run. For example, if you are using Jenkins and think the environment variable `BUILD_TAG` is more unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value via CLI {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+你可以传递不同的值将代理链接到相同的运行。例如，如果你正在使用Jenkins，并且认为环境变量`BUILD_TAG`比环境变量`BUILD_NUMBER`更唯一，那么可以通过CLI {% url "`--ci-build-id`标记" command-line#cypress-run-ci-build-id-lt-id-gt %}传递`BUILD_TAG`值。
 
 ```shell
 cypress run --record --parallel --ci-build-id $BUILD_TAG
 ```
 
-# Run completion delay
+# 运行完成延迟
 
-During parallelization mode or when grouping runs, Cypress will wait for a specified amount of time before completing the test run in case any more relevant work remains. This is to compensate for various scenarios where CI machines could be backed-up in a queue.
+在并行化模式下或分组运行时，Cypress将等待指定的时间才能完成测试运行，以防还有其他相关行为。这是为了补偿可以在队列中备份CI机器的各种情况。
 
-This waiting period is called the **run completion delay** and it begins after the last known CI machine has completed as shown in the diagram below:
+这个等待期称为**运行完成延迟**，从最后一个已知的CI机器完成后开始，如下图所示：
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-This **delay is 60 seconds by default**, but is configurable within the {% url "Dashboard" dashboard-service %} project settings page:
+这个**延迟默认为60秒**，但是可以在{% url "仪表盘" dashboard-service %}项目设置页面中配置：
 
 {% imgTag /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
 
-# Visualizing parallelization and groups in the Dashboard
+# 在仪表盘中可视化并行和分组
 
-You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-service %} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+你可以在运行的**Specs**选项卡中看到在{% url "仪表盘服务" dashboard-service %}中运行的每个spec文件的结果。Specs在**时间轴**、**条形图**和**机器**视图中显示。
 
-## Timeline View
+## 时间轴视图
 
-The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran chronologically across all available machines.
+时间轴视图在你的spec文件相对运行时绘制它们的图表。当你想要可视化你的测试如何在所有可用的机器上按时间顺序运行时，这尤其有用。
 
 {% imgTag /img/guides/parallelization/timeline-view-small.png "Timeline view with parallelization" %}
 
-## Bar Chart View
+## 条形图视图
 
-The Bar Chart View visualizes the **duration** of your spec files relative to each other.
+条形图视图可视化了你的spec文件之间的**持续时间**。
 
 {% imgTag /img/guides/parallelization/bar-chart-view.png "Bar Chart view with parallelization" %}
 
-## Machines View
+## 机器视图
 
-The Machines View charts spec files by the machines that executed them. This view makes it easy to evaluate the contribution of each machine to the overall test run.
+机器视图根据执行spec文件的机器来绘制它们的图表。这个视图让评估每台机器对整个测试运行的贡献变得很容易。
 
 {% imgTag /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
 
-# See also
+# 另请参阅
 
-- {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
-- {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
-- {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
-- Slides {% url "Cypress Test Parallelization and Grouping" https://slides.com/bahmutov/cy-parallelization %} and {% url "Webinar video" https://www.youtube.com/watch?v=FfqD1ExUGlw %}
+- {% url "博客：自动化测试并行化让你的端到端测试运行速度加快10倍" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
+- {% url "博客：以你想要的方式运行和分组测试" https://glebbahmutov.com/blog/run-and-group-tests/ %}
+- {% url "在Kitchen Sink Example中的CI配置" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}
+- 幻灯片{% url "Cypress测试并行化和分组" https://slides.com/bahmutov/cy-parallelization %}和{% url "网络研讨会视频" https://www.youtube.com/watch?v=FfqD1ExUGlw %}

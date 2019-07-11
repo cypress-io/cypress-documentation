@@ -2,31 +2,31 @@
 title: 路线图
 ---
 
-# Upcoming features
+# 即将推出的功能
 
-Our team is always planning and working on really "big" upcoming features. Priorities can change as we move forward, but here is an outline of where Cypress is headed now.
+我们的团队一直都在计划并且致力于即将推出的的真正的“大”功能。随着项目的进行，它们的优先级可能会改变。下面列出了Cypress目前正在做的事情的一个大纲。
 
-## Test Runner
+## 测试执行器
 
-Status               | Feature                            |  Issue            | PR
+特征                 | 功能                                |  问题             | PR
 ---------------------| -----------------------------------|-------------------|---
-*Needs review*       | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}
-*Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}
-*Work in progress*   | **Electron upgrade**               |  {% issue 3568 %} | {% PR 3569 %}
-*Work in progress*   | **Mocha, Chai, Sinon upgrade**     |  {% issue 2840 %} | {% PR 2880 %}
-*Work in progress*   | **Expose more events**             |  {% issue 2840 %} | {% PR 2880 %}
-*Work in progress*   | **Native events**                  |  {% issue 311 %}  |
-*Work in progress*   | **Cross browser support**          |  {% issue 310 %}  |
-*Partially complete* | **Full network layer stubbing**    |  {% issue 687 %}  |
-*Proposal complete*  | **Lifecycle events**               |  {% issue 686 %}  |
+*需要评审*           | **测试重试**                        |  {% issue 1313 %} | {% PR 3968 %}
+*进行中*             | **改进测试执行器的错误**             |  {% issue 3762 %} | {% PR 3930 %}
+*进行中*             | **Electron升级**                    |  {% issue 3568 %} | {% PR 3569 %}
+*进行中*             | **Mocha, Chai, Sinon 升级**         |  {% issue 2840 %} | {% PR 2880 %}
+*进行中*             | **暴露更多的事件**                   |  {% issue 2840 %} | {% PR 2880 %}
+*进行中*             | **原生事件**                        |  {% issue 311 %}  |
+*进行中*             | **跨浏览器支持**                    |  {% issue 310 %}  |
+*部分完成*           | **桩件，完全的网络层桩件**           |  {% issue 687 %}  |
+*完成提案*           | **生命周期事件**                     |  {% issue 686 %}  |
 
-## Dashboard Service
+## 数据面板服务
 
-Status              | Feature              | Issue
+状态                | 功能                  | 问题
 --------------------|----------------------|-----------------
-*In beta*           | GitHub integration   | {% issue 981 %}
-*In progress*       | Run cancellation     | {% issue 1691 %}
-*In progress*       | Test retries display | {% issue 1313 %}
-*In progress*       | Dashboard redesign   | {% issue 560 %}
-*Research & design* | Project analytics    |
-*Proposal complete* | Notification center  |
+*beta测试中*        | GitHub集成            | {% issue 981 %}
+*进行中*            | 取消运行              | {% issue 1691 %}
+*进行中*            | 测试重试显示           | {% issue 1313 %}
+*进行中*            | 重新设计数据面板       | {% issue 560 %}
+*研究&设计*         | 项目分析               |
+*完成提案*          | 通知中心               |
