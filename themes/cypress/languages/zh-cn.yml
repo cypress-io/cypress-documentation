@@ -64,7 +64,7 @@ sidebar:
     plugins-guide: 插件
     reporters: 报告生成器
     typescript-support: TypeScript
-    module-api: 模块API
+    module-api: API模块
     retry-ability: 重试机制
     visual-testing: Visual Testing
     code-coverage: Code Coverage
