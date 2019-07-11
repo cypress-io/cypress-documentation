@@ -51,10 +51,9 @@ Video recording is currently only supported when running Cypress from the Electr
 
 你现在可以利用的是{% url 'Cypress仪表盘服务' dashboard-service %}：我们的伙伴企业服务，它为你存储构件，并允许你从任何web浏览器查看它们，还可以与你的团队分享它们。
 
-
 ## 视觉回归测试/截图差异
 
-另一种可能性是视觉回归测试：对比过去与现在的运行截图以确保没有任何改动。Cypress现在还没有内置这个功能，但是我们已经注意到了。如果你对这个功能的更新感兴趣，可以{% issue 495 '关注这个问题' %}，如果你想影响生成的功能，请留下你的评论，如果你想亲自处理它，请发起pull request！
+另一种可能性是视觉回归测试：对比过去与现在的运行截图以确保没有任何改动: comparing screenshots of past runs with the current run to ensure that nothing changed. {% url "Read about how to implement visual testing." visual-testing %}
 
 # 更多参考
 

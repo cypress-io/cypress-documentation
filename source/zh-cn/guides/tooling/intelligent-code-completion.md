@@ -83,7 +83,7 @@ Cypress包含TypeScript{% url "类型声明" https://github.com/cypress-io/cypre
 
 {% video local /img/snippets/intellisense-config-defaults.mp4 %}
 
-## 在你的开发环境中设置
+## 在你的开发环境中设置:
 
 智能代码补全使用JSON模式在{% url "Visual Studio Code" https://code.visualstudio.com/ %}和{% url "Visual Studio" https://www.visualstudio.com/ %}里面是被默认支持的. 所有其他的编辑器将需要额外的配置或者插件来支持JSON模式.
 

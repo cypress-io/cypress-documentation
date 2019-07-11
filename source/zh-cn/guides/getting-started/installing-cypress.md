@@ -78,7 +78,6 @@ yarn add cypress --dev
 
 ## {% fa fa-refresh %} 持续集成
 
-
 请阅读我们的{% url '持续集成' continuous-integration %}文档，来帮助你在CI中安装cypress。在linux中运行时，您需要安装一些{% url '系统依赖' continuous-integration#Dependencies %}，或者你可以使用我们的{% url 'Docker镜像' docker %}，它包含了所有你需要预构建的内容。
 
 # 打开Cypress
@@ -255,33 +254,35 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 
 目前你可以从以下地址下载：
 
-* Windows 64位（`?platform=win32&arch=x64`）
-* Windows 32位（`?platform=win32&arch=ia32`，从{% url "Cypress 3.3.0" changelog#3-3-0 %}开始可用）
-* Linux 64位（`?platform=linux`）
-* macOS 64位（`?platform=darwin`）
+- Windows 64位（`?platform=win32&arch=x64`）
+- Windows 32位（`?platform=win32&arch=ia32`，从{% url "Cypress 3.3.0" changelog#3-3-0 %}开始可用）
+- Linux 64位（`?platform=linux`）
+- macOS 64位（`?platform=darwin`）
 
 这里是可用的下载地址：
 
 查看所有可用的平台{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}。
 
- 方法 | URL                            | 描述
- ------ | ------------------------------ | -------------------------------------------------------------------------
- `GET`  | `/desktop                 `    | 下载最近的Cypress版本(平台自动检测)
- `GET`  | `/desktop.json            `    | 返回最新有效的包含CDN地址的JSON文件
- `GET`  | `/desktop?platform=p&arch=a   `| 下载特定平台的Cypress或压缩包
- `GET`  | `/desktop/:version`            | 下载特定版本的Cypress
+ 方法    | URL                                   | 描述
+ ------ | --------------------------------------| -------------------------------------------------------------------------
+ `GET`  | `/desktop`                            | 下载最近的Cypress版本(平台自动检测)
+ `GET`  | `/desktop.json`                       | 返回最新有效的包含CDN地址的JSON文件
+ `GET`  | `/desktop?platform=p&arch=a`          | 下载特定平台的Cypress或压缩包
+ `GET`  | `/desktop/:version`                   | 下载特定版本的Cypress
  `GET`  | `/desktop/:version?platform=p&arch=a` | 下载Cypress的特定平台和版本或压缩包
 
 **例如，下载Windows 64位的Cypress `3.0.0`版本：**
 
-```
+```text
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
+
 ## 镜像
 
 如果你选择通过Cypress的镜像站点来下载, 那么你可以指定`CYPRESS_DOWNLOAD_MIRROR`将下载服务器网址从`https://download.cypress.io`设置为你自己的镜像地址。
 
 示例:
+
 ```shell
 CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
@@ -294,7 +295,7 @@ Cypress将尝试通过如下格式下载二进制文件: `https://www.example.co
 
 如果你想让Cypress不发送报错信息，可以通过在系统环境变量设置`CYPRESS_CRASH_REPORTS=0`来实现。
 
-### Linux 或 macOS
+### Opt out on Linux 或 macOS
 
 不想在Linux或macOS系统中发送报错信息，请在安装Cypress之前在终端运行下面的命令：
 
@@ -304,7 +305,7 @@ export CYPRESS_CRASH_REPORTS=0
 
 为了使这些更改永久存在，你可以将此命令添加到你的shell的`~/.profile`（`~/.zsh_profile`, `~/.bash_profile`等）文件中，以便每次登录时自动运行。
 
-### Windows
+### Opt out on Windows
 
 不想在Windows系统中发送，请在安装Cypress之前在命令提示符运行下面的命令：
 
@@ -326,7 +327,7 @@ setx CYPRESS_CRASH_REPORTS 0
 
 ## 安装Pre-release版本
 
-在极少数情况下，你可能需要安装pre-release版本的Cypress来验证{% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %}分支的修复情况，虽然该版本并未发布。 
+在极少数情况下，你可能需要安装pre-release版本的Cypress来验证{% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %}分支的修复情况，虽然该版本并未发布。
 
 {% note info %}
 你可以从{% url "这里" https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=label%3A%22stage%3A+pending+release%22+ %}预览pre-release版本中解决的所有问题。
@@ -354,7 +355,7 @@ export CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/darwin-x6
 npm install https://cdn.cypress.io/beta/npm/3.3.2/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-126013/cypress.tgz
 ```
 
-如果我的机器是Windows 64位，我会点击“Testing new win32 x64 ..."这个提交来运行下方的命令。
+如果我的机器是Windows 64位，我会点击"Testing new win32 x64 ..."这个提交来运行下方的命令。
 
 ```shell
 set CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/win32-x64/appveyor-develop-e5106d95f51eec477b8e66609939979fb87aab56-25451270/cypress.zip
@@ -364,7 +365,7 @@ set CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/win32-x64/ap
 npm install https://cdn.cypress.io/beta/npm/3.3.2/appveyor-develop-e5106d95f51eec477b8e66609939979fb87aab56-25451270/cypress.tgz
 ```
 
-在Linux CI中，你应该下载的提交是“Testing new linux x64 ...”。
+在Linux CI中，你应该下载的提交是"Testing new linux x64 ..."。
 
 ```shell
 export CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/linux-x64/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-125973/cypress.zip

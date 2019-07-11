@@ -71,7 +71,7 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 
 # Configuration
 
-## Features
+## Features:
 
 When editing the {% url "`cypress.json`" configuration %} file, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
 
@@ -83,8 +83,7 @@ When editing the {% url "`cypress.json`" configuration %} file, you can use our 
 
 {% video local /img/snippets/intellisense-config-defaults.mp4 %}
 
-
-## Set up in your Dev Environment
+## Set up in your Dev Environment:
 
 Intelligent code completion using JSON schemas is supported by default in {% url "Visual Studio Code" https://code.visualstudio.com/ %} and {% url "Visual Studio" https://www.visualstudio.com/ %}. All other editors will require extra configuration or plugins for JSON schema support.
 

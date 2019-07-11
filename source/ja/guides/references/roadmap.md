@@ -17,7 +17,7 @@ Status               | Feature                            |  Issue            | 
 *Work in progress*   | **Expose more events**             |  {% issue 2840 %} | {% PR 2880 %}
 *Work in progress*   | **Native events**                  |  {% issue 311 %}  |
 *Work in progress*   | **Cross browser support**          |  {% issue 310 %}  |
-*Partially complete* | **Full network layer stubbing**    |  {% issue 687 %}  |
+*Work in progress*   | **Full network layer stubbing**    |  {% issue 687 %}  |
 *Proposal complete*  | **Lifecycle events**               |  {% issue 686 %}  |
 
 ## Dashboard Service

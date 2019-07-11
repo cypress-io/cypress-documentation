@@ -204,7 +204,7 @@ Cypress maintains some local application data in order to save user preferences 
 2. Go to `File` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data is stored. If you cannot open Cypress, search your file system for a directory named `cy` whose content should look something like this:
 
-  ```
+  ```text
   📂 production
     📄 all.log
     📁 browsers
@@ -354,11 +354,11 @@ If the smoke test fails to execute, check if a shared library is missing (a comm
 
 ```shell
 ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
-	linux-vdso.so.1 (0x00007ffe9eda0000)
-	libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
-	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
-	libgtk-3.so.0 => not found
-	libgdk-3.so.0 => not found
+  linux-vdso.so.1 (0x00007ffe9eda0000)
+  libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
+  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
+  libgtk-3.so.0 => not found
+  libgdk-3.so.0 => not found
   ...
 ```
 
@@ -424,4 +424,3 @@ When finished, if necessary, remove the edited Test Runner version and reinstall
 rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
 npm install cypress@3.3.1
 ```
-

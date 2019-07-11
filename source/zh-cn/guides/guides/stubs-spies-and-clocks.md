@@ -5,7 +5,6 @@ title: 桩, Spies和时钟
 {% note info %}
 # {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-
 - Cypress包含哪些库来提供典型的测试方法
 - 如何使用桩来断言调用了代码，但又阻止代码运行
 - 如何使用间谍在不干扰代码执行的情况下断言代码被调用
@@ -70,9 +69,9 @@ cy.stub(obj, 'method').rejects(new Error('foo'))
 - 你有一个接收回调并希望调用回调的函数。
 - 函数返回一个`Promise`，你希望自动解析或拒绝它。
 - 你有一个包装`window.location`且不希望你的应用程序被导航的函数。
-- 你试图通过强制某些东西失败来测试应用程序的“失败路径”。
-- 你试图通过强制某些东西成功来测试应用程序的“适当路径”。
-- 你试图“欺骗”应用程序，使其认为已登录或已退出。
+- 你试图通过强制某些东西失败来测试应用程序的"失败路径"。
+- 你试图通过强制某些东西成功来测试应用程序的"适当路径"。
+- 你试图"欺骗"应用程序，使其认为已登录或已退出。
 - 你正在使用`oauth`并希望打桩登录方法。
 
 {% note info cy.stub() %}
@@ -117,7 +116,7 @@ cy.get('#search').type('foobarbaz')
 cy.tick(1000)
 ```
 
-{% url `cy.clock()` clock %}很特殊，它可以在访问你的应用程序**之前**被调用，在下次访问时，我们将自动绑定它到应用程序。我们在应用程序被调用的任何计时器“之前”绑定。这个工作原理与{% url `cy.server()` server %} + {% url `cy.route()` route %}相同。
+{% url `cy.clock()` clock %}很特殊，它可以在访问你的应用程序**之前**被调用，在下次访问时，我们将自动绑定它到应用程序。我们在应用程序被调用的任何计时器"之前"绑定。这个工作原理与{% url `cy.server()` server %} + {% url `cy.route()` route %}相同。
 
 ## 断言
 
@@ -208,5 +207,5 @@ expect(user.fail).to.have.thrown('Error')                  // 结果为真
 
 # 另请参阅
 
-- [“端到端测试中的打桩导航API”](https://glebbahmutov.com/blog/stub-navigator-api/)
-- [“通过APP操作和效果减少不可测试代码”](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)
+- ["端到端测试中的打桩导航API"](https://glebbahmutov.com/blog/stub-navigator-api/)
+- ["通过APP操作和效果减少不可测试代码"](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)

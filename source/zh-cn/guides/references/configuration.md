@@ -143,9 +143,9 @@ export CYPRESS_VIEWPORT_WIDTH=800
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
-我们自动对键和值进行标准化。Cypress将*剥去*`CYPRESS_`， 驼峰命名任意键，并自动将值转换为`Number`或`Boolean`。确保你的环境变量前缀为`CYPRESS_ `，否则它们将被忽略。
+我们自动对键和值进行标准化。Cypress将*剥去*`CYPRESS_`， 驼峰命名任意键，并自动将值转换为`Number`或`Boolean`。确保你的环境变量前缀为`CYPRESS_`，否则它们将被忽略。
 
-**下面的两个选项都是有效的**
+### 下面的两个选项都是有效的
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
@@ -222,7 +222,7 @@ localhost:1234
 
 因为`localhost:1234`使用的端口不是`80`和`443`，所以*必须包含*它。
 
-{% note warning “子域名” %}
+{% note warning "子域名" %}
 小心没有子域名的URL。
 
 例如给定一个URL：`https://google.com/search?q=cypress`

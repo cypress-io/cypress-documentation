@@ -10,10 +10,10 @@ To get around these restrictions, Cypress implements some strategies involving J
 
 ### Examples of what Cypress does under the hood:
 
-  - Injects {% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %} into `text/html` pages.
-  - Proxies all HTTP / HTTPS traffic.
-  - Changes the hosted url to match that of the application under test.
-  - Uses the browser's internal APIs for network level traffic.
+- Injects {% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %} into `text/html` pages.
+- Proxies all HTTP / HTTPS traffic.
+- Changes the hosted url to match that of the application under test.
+- Uses the browser's internal APIs for network level traffic.
 
 When Cypress first loads, the internal Cypress web application is hosted on a random port: something like `http://localhost:65874/__/`.
 
@@ -131,7 +131,6 @@ The most common situation where you might encounter this error is when you click
 </html>
 ```
 
-
 ```javascript
 // Test code
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
@@ -166,7 +165,6 @@ Still not satisfied? Do you really want to click through to another application?
 ## Form Submission Redirects
 
 When you submit a regular HTML form, the browser will follow this `HTTP(s) request`.
-
 
 ```html
 <!-- Application code that is served at `localhost:8080`-->

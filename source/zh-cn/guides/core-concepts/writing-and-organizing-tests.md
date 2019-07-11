@@ -12,7 +12,7 @@ title: 编写和组织测试
 {% endnote %}
 
 {% note success "最佳实践" %}
-我们最近在AssertJS(2018年2月）举行了“最佳实践”会议。该视频演示了如何分解应用程序和组织测试。
+我们最近在AssertJS(2018年2月）举行了"最佳实践"会议。该视频演示了如何分解应用程序和组织测试。
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 {% endnote %}
@@ -95,7 +95,7 @@ Cypress还支持开箱即用的 `ES2015` 。你可以使用 `ES2015 modules` 或
 
 默认情况下，Cypress将会在每个spec文件运行**之前**自动包含插件文件 `cypress/plugins/index.js`。我们这样做纯粹是想方便用户，因此你不必在每个spec中导入此文件。
 
-初始导入的插件文件可以 {% url '配置为另外一个文件' configuration#Folders-Files %}。 
+初始导入的插件文件可以 {% url '配置为另外一个文件' configuration#Folders-Files %}。
 
 {% url "了解有关更多使用插件来扩展Cypress的信息." plugins-guide %}
 
@@ -118,11 +118,11 @@ beforeEach(function () {
 {% imgTag /img/guides/global-hooks.png "Global hooks for tests" %}
 
 {% note info %}
-**Note:** 这个示例假设你已经熟悉 Mocha {% url '钩子' writing-and-organizing-tests#Hooks %}. 
+**Note:** 这个示例假设你已经熟悉 Mocha {% url '钩子' writing-and-organizing-tests#Hooks %}.
 {% endnote %}
 
 {% note danger%}
-{% fa fa-warning %} 请记住，在全局钩子中设置某些内容会让其变得不那么灵活，无法进行更改以及测试其行为。 
+{% fa fa-warning %} 请记住，在全局钩子中设置某些内容会让其变得不那么灵活，无法进行更改以及测试其行为。
 {% endnote %}
 
 对于你的支持文件，你还是需要通过组织 `import` 或 `require` 来包含其它文件。
@@ -333,16 +333,16 @@ it('can subtract numbers', function() {
 
 ## 哪些内容被监听
 
-**文件**
+### 文件
 
-* {% url `cypress.json` configuration %}
-* {% url `cypress.env.json` environment-variables %}
+- {% url `cypress.json` configuration %}
+- {% url `cypress.env.json` environment-variables %}
 
-**文件夹**
+### 文件夹
 
-* `cypress/integration/`
-* `cypress/support/`
-* `cypress/plugins/`
+- `cypress/integration/`
+- `cypress/support/`
+- `cypress/plugins/`
 
 上面的文件夹，文件夹中的文件以及所有子文件夹及其文件（递归）都将被监视。
 
@@ -354,9 +354,9 @@ it('can subtract numbers', function() {
 
 其它一切，这包括但不限于以下内容：
 
-* 你应用程序的代码
-* `node_modules`
-* `cypress/fixtures/`
+- 你应用程序的代码
+- `node_modules`
+- `cypress/fixtures/`
 
 如果你正在使用基于现代Web应用程序的技术栈进行开发，那么你可能会获得某种形式的热模块替换支持，这些替换负责监视你的应用程序代码 - HTML，CSS，JS，其它。- 如果有文件改动将会重新加载你的应用程序。
 

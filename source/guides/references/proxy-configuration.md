@@ -4,10 +4,10 @@ title: Proxy Configuration
 
 Cypress needs Internet access to work. Many companies require the use of a corporate proxy to access the Internet. If your company does this, many functions of Cypress will not work until you've configured Cypress to use your proxy:
 
-* Cypress won't be able to load web pages besides `localhost`.
-* Cypress won't be able to warn you if your {% url "`baseUrl`" configuration#Global %} isn't available.
-* Cypress won't be able to connect to the {% url "Dashboard Service" dashboard-service %} to log in or record test runs.
-* `npm install cypress` may fail while downloading the Cypress binary.
+- Cypress won't be able to load web pages besides `localhost`.
+- Cypress won't be able to warn you if your {% url "`baseUrl`" configuration#Global %} isn't available.
+- Cypress won't be able to connect to the {% url "Dashboard Service" dashboard-service %} to log in or record test runs.
+- `npm install cypress` may fail while downloading the Cypress binary.
 
 If you are experiencing any or all of these issues, you may need to configure Cypress with your proxy. Instructions are available for {% urlHash "macOS" Set-a-proxy-on-Linux-or-macOS %}, {% urlHash "Linux" Set-a-proxy-on-Linux-or-macOS %}, and {% urlHash "Windows" Set-a-proxy-on-Windows %}.
 
@@ -115,7 +115,7 @@ env | grep -i proxy
 
 Setting environment variables in Windows is different depending on if you're using *command prompt* or *Powershell*.
 
-### Set an environment variable for the current session
+### Set an environment variable for current session
 
 *Command prompt:*
 
@@ -149,7 +149,7 @@ set SOME_VARIABLE=
 Remove-Item Env:\SOME_VARIABLE
 ```
 
-### See all the currently set environment variables
+### See all currently set environment variables
 
 *Command prompt:*
 

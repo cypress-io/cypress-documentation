@@ -75,7 +75,7 @@ npx cypress run --record --spec "cypress/integration/my-spec.js"
 cypress run [可选项]
 ```
 
-**可选项**
+### 可选项
 
 选项 | 描述
 ------ |  ---------
@@ -116,9 +116,9 @@ cypress run --browser /usr/bin/chromium
 
 ### `cypress run --ci-build-id <id>`
 
-对绝大多数的CI提供者来说，这个<id>值一般是自动检测到的，并不需要自定义。除非Cypress已经决定不到它了。
+对绝大多数的CI提供者来说，这个`<id>`值一般是自动检测到的，并不需要自定义。除非Cypress已经决定不到它了。
 
-典型的情况是，这个<id>是CI提供者用来定义一个环境变量的，比如某一次构建或运行的编号。
+典型的情况是，这个`<id>`是CI提供者用来定义一个环境变量的，比如某一次构建或运行的编号。
 
 ```shell
 cypress run --ci-build-id BUILD_NUMBER
@@ -296,7 +296,7 @@ cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integra
 cypress open [options]
 ```
 
-**可选项**
+### 可选项:
 
 传给`cypress open`的可选项会自动应用到你打开的项目。这些配置项在所有项目中生效除非你关掉Cypress测试运行器。当然，这些选项可以在`cypress.json`里被重载掉。
 
@@ -315,7 +315,7 @@ cypress open [options]
 
 默认情况下，Cypress会自动查找你系统中可使用的浏览器。
 
-“browser”选项允许你通过浏览器所在的位置指定使用何种浏览器：
+"browser"选项允许你通过浏览器所在的位置指定使用何种浏览器：
 
 ```shell
 cypress open --browser /usr/bin/chromium
@@ -422,6 +422,7 @@ Cypress使用{% url 'debug' https://github.com/visionmedia/debug %}模块完成�
 ```shell
 DEBUG=cypress:* cypress open
 ```
+
 ```shell
 DEBUG=cypress:* cypress run
 ```
@@ -431,6 +432,7 @@ DEBUG=cypress:* cypress run
 ```shell
 set DEBUG=cypress:*
 ```
+
 ```shell
 cypress run
 ```

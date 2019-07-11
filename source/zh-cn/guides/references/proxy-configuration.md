@@ -115,7 +115,7 @@ env | grep -i proxy
 
 在Windows上设置环境变量的方法根据你是使用*命令提示符*还是*Powershell*而有所区别。
 
-### 为当前会话设置一个环境变量
+### 为当前会话设置一个环境变量:
 
 *命令提示符：*
 
@@ -149,7 +149,7 @@ set SOME_VARIABLE=
 Remove-Item Env:\SOME_VARIABLE
 ```
 
-### 查看所有当前设置的环境变量
+### 查看所有当前设置的环境变量:
 
 *命令提示符：*
 
@@ -168,7 +168,7 @@ Get-ChildItem Env:
 你可以在Cypress测试执行器中查看当前的代理设置。步骤如下：
 
 1. 通过运行`cypress open`命令在Cypress中打开你的项目。
-2. 点击“设置”标签。
-3. 点击“代理设置”将其展开，查看Cypress当前正在使用的代理。
+2. 点击"设置"标签。
+3. 点击"代理设置"将其展开，查看Cypress当前正在使用的代理。
 
 {% imgTag /img/guides/proxy-configuration.png "桌面应用程序中的代理配置" %}
