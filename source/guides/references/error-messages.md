@@ -51,8 +51,8 @@ It's still useful to load a setup file before your test code. If you are setting
 
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
-* `cypress/support/index.js`
-* `cypress/support/index.coffee`
+- `cypress/support/index.js`
+- `cypress/support/index.coffee`
 
 Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
 
@@ -348,6 +348,10 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
 You can safely remove: `{stub: false}`.
+
+## {% fa fa-exclamation-triangle red %} CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+
+If you get this error in a case where the element is definitely visible in the DOM, your document might contain malformed HTML. In such cases, `document.querySelector()` will not find any elements that appear after the point where the HTML is malformed. Even if you feel certain your HTML is not malformed anywhere, check it anyway (line by line in the dev tools). Especially if you've exhausted all other possibilities.
 
 # CLI Errors
 

@@ -12,7 +12,7 @@ You can require Cypress as a node module from your application under test. This 
 
 Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
 
-### Options
+### Options:
 
 Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
 
@@ -51,7 +51,7 @@ cypress.run({
 })
 ```
 
-### Example
+### Example:
 
 Here is an example of programmatically running a spec file:
 

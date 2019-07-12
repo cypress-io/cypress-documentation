@@ -85,6 +85,19 @@
         ["dumb", "unintended"],
         ["insane", "outrageous"],
 
+        // Prefer American spelling
+        ["behaviour", "behavior"],
+        ["cancelled", "canceled"],
+        ["cancelling", "canceling"],
+        ["centre", "center"],
+        ["colour", "color"],
+        ["customise", "customize"],
+        ["customisation", "customization"],
+        ["favourite", "favorite"],
+        ["labelled", "labeled"],
+        ["licence", "license"],
+        ["organise", "organize"],
+
         // Words we would like to not use altogether
         ["simply", ""],
 
