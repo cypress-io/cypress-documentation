@@ -8,6 +8,110 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Visual Testing with Cypress"
+    url: https://medium.com/briebug-blog/visual-testing-with-cypress-9a0b7443e427
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Jesse Sanders
+    date: May 30, 2019
+    img: /img/examples/briebug-visual-testing-with-cypress.png
+
+  - title: "End-To-End Testing React Applications With Cypress"
+    url: https://formidable.com/blog/2019/cypress/
+    sourceName: Formidable
+    sourceUrl: https://formidable.com/
+    author: Parker Ziegler
+    date: May 29, 2019
+    img: /img/examples/formidable-end-to-end-testing-react-apps-cypress.png
+
+  - title: "Cypress: Page Object Structure w/ Examples"
+    url: http://blerdeyeview.com/cypress-page-objects/
+    sourceName: Blerd Eye View
+    sourceUrl: http://blerdeyeview.com/
+    author: Courtney Hurt
+    date: May 24, 2019
+    img: /img/examples/page-object-structure-cypress.png    
+
+  - title: "Réaliser des tests fonctionnels avec Cypress"
+    url: https://blog.ineat-conseil.fr/2019/05/realiser-des-tests-fonctionnels-avec-cypress/
+    sourceName: Ineat Blog
+    sourceUrl: https://blog.ineat-conseil.fr/
+    author: Nicolas Fourré
+    date: May 24, 2019
+    img: /img/examples/ineat-blog-realiser-des-tests-fonctionnels-avec-cypress.png
+
+  - title: "Learning Visual Testing as a Junior Developer with Applitools and Cypress"
+    url: https://dev.to/megsachdev/learning-visual-testing-as-a-junior-developer-with-applitools-and-cypress-h3c
+    sourceName: DEV.to
+    sourceUrl: https://dev.to/
+    author: Megha Sachdev
+    date: May 23, 2019
+    img: /img/examples/devto-learn-visual-testing-applitools-cypress.png
+
+  - title: "Why we should start writing our visual unit tests with Cypress"
+    url: https://medium.com/razroo/visual-unit-tests-with-cypress-6f310095e10b
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Aphinya Dechalert 
+    date: May 20, 2019
+    img: /img/examples/razroo-visual-unit-tests-cypress.png
+
+  - title: "The new Chromium-based Microsoft Edge for Mac has been leaked — And it works with Cypress"
+    url: https://blog.you54f.com/2019/05/16/the-new-chromium-based-microsoft-edge-for-mac-has-been-leaked%e2%80%8a-%e2%80%8aand-it-works-with-cypress-and-now-you-can-test-it-too/
+    sourceName: YOU54F
+    sourceUrl: https://blog.you54f.com/
+    author: YOU54F
+    date: May 16, 2019
+    img: /img/examples/you54f-chromium-microsoft-edge-cypress.png
+
+  - title: "Gleb Bahmutov: When I First Saw the Cypress.io Test Runner, I Knew It Was Special"
+    url: https://medium.com/@amsterdamjs/gleb-bahmutov-when-i-first-saw-the-cypress-io-test-runner-i-knew-it-was-special-ae67615e0028
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Amsterdam JSNation
+    date: May 15, 2019
+    img: /img/examples/amsterdamjs-gleb-bahmutov-interview.png    
+
+  - title: "5 awesome tricks to turbocharge your React automated tests"
+    url: https://medium.com/craft-academy/5-awesome-tricks-to-turbocharge-your-react-automated-tests-147776289c55
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Aditya Naik
+    date: May 9, 2019
+    img: /img/examples/craft-academy-awesome-tricks-turbocharge-react-tests.png
+
+  - title: "How to hack log-in in React Automated testing"
+    url: https://medium.com/craft-academy/how-to-leverage-localstorage-in-cypress-testing-3fdc04628868
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Greg Kallai
+    date: May 6, 2019
+    img: /img/examples/craft-academy-hack-login-react-automated-testing.png    
+
+  - title: "End-to-End testing with Cypress"
+    url: https://medium.com/better-practices/end-to-end-testing-with-cypress-bfcd59633f1a
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Steve Fuller
+    date: May 3, 2019
+    img: /img/examples/better-practices-testing-with-cypress.png    
+
+  - title: "End-to-End Testing Web Apps: The Painless Way"
+    url: https://mtlynch.io/painless-web-app-testing/
+    sourceName: Michael Lynch
+    sourceUrl: https://mtlynch.io/
+    author: Michael Lynch
+    date: May 1, 2019
+    img: /img/examples/end-to-end-testing-apps-painless-way.png
+
+  - title: "How to test Vue apps with the popular Cypress framework"
+    url: https://dev.to/napoleon039/how-to-test-vue-apps-with-the-popular-cypress-framework-4jfg
+    sourceName: DEV.to
+    sourceUrl: https://dev.to
+    author: Nihar Raote
+    date: Apr 29, 2019
+    img: /img/examples/test-vue-apps-with-cypress.png 
+
   - title: "Pragmatic Front-End Testing Strategies (3)"
     url: https://medium.com/@toastui/pragmatic-front-end-testing-strategies-3-969469349043
     sourceName: Medium
@@ -72,7 +176,7 @@ large:
     date: Mar 15, 2019
     img: /img/examples/cypress-aws-lambda.png
 
-	- title: "Write tests without the pain"
+  - title: "Write tests without the pain"
     url: https://slides.com/simonhen/cypress
     sourceName: Slides
     sourceUrl: https://simonhenrotte.com/
