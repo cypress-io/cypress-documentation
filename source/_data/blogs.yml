@@ -36,7 +36,7 @@ large:
     url: https://blog.ineat-conseil.fr/2019/05/realiser-des-tests-fonctionnels-avec-cypress/
     sourceName: Ineat Blog
     sourceUrl: https://blog.ineat-conseil.fr/
-    author: Nicolas Fourré
+    author: "Nicolas Fourré"
     date: May 24, 2019
     img: /img/examples/ineat-blog-realiser-des-tests-fonctionnels-avec-cypress.png
 

@@ -5,7 +5,7 @@ large:
     sourceName: Youtube
     sourceUrl: https://www.youtube.com/watch?v=rA_1fPa38Tg
     date: May 29, 2019
-    author: KeepCoding, Kevin Julián Martínez Escobar
+    author: "KeepCoding, Kevin Julián Martínez Escobar"
     youtubeId: rA_1fPa38Tg
 
   - title: "TP Vlog 12 - Cypress io, instalacja, konfiguracja, pierwsze testy"
