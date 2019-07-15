@@ -1,5 +1,55 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Problemas, ventajas y retos del Test end to end con Cypress.io"
+    url: https://www.youtube.com/watch?v=rA_1fPa38Tg
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=rA_1fPa38Tg
+    date: May 29, 2019
+    author: "KeepCoding, Kevin Julián Martínez Escobar"
+    youtubeId: rA_1fPa38Tg
+
+  - title: "TP Vlog 12 - Cypress io, instalacja, konfiguracja, pierwsze testy"
+    url: https://www.youtube.com/watch?v=WvmGRZNw6j8&t=1s
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=WvmGRZNw6j8&t=1s
+    date: May 26, 2019
+    author: Bartosz Kita
+    youtubeId: WvmGRZNw6j8&t=1s   
+
+  - title: "Fun and Fast End to End Testing Using Cypress"
+    url: https://www.youtube.com/watch?v=zpn0f4sKUNw
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=zpn0f4sKUNw
+    date: May 18, 2019
+    author: Jesse Warden
+    youtubeId: zpn0f4sKUNw
+    slides: https://github.com/JesterXL/react-redux-async-types/tree/cypress    
+ 
+  - title: "Cypress: cómo mantener el amor tras las primeras citas"
+    url: https://www.youtube.com/watch?v=LlF6VhAAm7g
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=LlF6VhAAm7g 
+    date: May 2, 2019
+    author: Alberto Gualis
+    youtubeId: LlF6VhAAm7g
+   
+  - title: "End to End Testing a Web Application using Cypress"
+    url: https://www.youtube.com/watch?v=woI490HRM34
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=woI490HRM34
+    date: Apr 23, 2019
+    author: Code With Kris
+    youtubeId: woI490HRM34
+    slides: https://github.com/kriscfoster/end-to-end-testing-todo-app 
+
+  - title: "Working with XHR in Web app automation testing with Cypress.io"
+    url: https://www.youtube.com/watch?v=Q6em2Xv-6Ew
+    sourceName: Youtube
+    sourceUrl: https://www.udemy.com/e2e-cypress/
+    date: Apr 23, 2019
+    author: Execute Automation
+    youtubeId: Q6em2Xv-6Ew
+
   - title: "Automated and Manual Accessibility Testing with Marcy Sutton"
     url: https://www.youtube.com/watch?v=IADSsClWVtA
     sourceName: Youtube

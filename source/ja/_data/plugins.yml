@@ -236,6 +236,11 @@
       link: https://aurelia.io/docs/cli
       keywords: [aurelia, cli]
 
+    - name: WordPress ReactJS Boilerplate
+      description: Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.
+      link: https://github.com/matzeeable/wp-reactjs-starter
+      keywords: [wp, wordpress]
+
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
   plugins:
