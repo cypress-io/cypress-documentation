@@ -15,3 +15,4 @@
 <!-- endbuild -->
 
 {{ partial('docsearch') }}
+{{ partial('hs_tracking') }}
