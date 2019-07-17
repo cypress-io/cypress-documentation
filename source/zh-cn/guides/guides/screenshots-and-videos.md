@@ -43,6 +43,35 @@ Video recording is currently only supported when running Cypress from the Electr
 
 在`cypress run`之前，Cypress清空现有的视频。如果你不想在运行前清空你的视频文件夹，你可以将{% url `trashAssetsBeforeRuns` configuration#Videos %}设置为`false`。
 
+
+## Video encoding
+
+If your spec files have a long run duration, you might notice a time gap between a finished spec and a new spec starting during `cypress run`. During this time, Cypress is encoding the captured video and possibly uploading it to the Dashboard. 
+
+If the machine is encoding the video slowly (which is often the case for virtual machines that use a single core), the encoding might take a long time. In this case, you can modify the {% url `videoCompression` configuration#Videos %} configuration to make the encoding a little bit faster. Here are some common scenarios:
+
+**Use minimal compression**
+
+```json
+{
+  "videoCompression": 0
+}
+```
+
+The compression step will be skipped completely, so the video will be large, but the processing should be faster.
+
+**Disable compression**
+
+```json
+{
+  "videoCompression": false
+}
+```
+
+{% note info %}
+If you are an FFmpeg pro and want to see all the settings and debug messages during the encoding, run Cypress with the following environment variable: `DEBUG=cypress:server:video cypress run`
+{% endnote %}
+
 # 现在该做什么呢？
 
 那么你正在测试运行中捕捉截图和录制视频，现在该做什么呢？
