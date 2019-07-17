@@ -71,6 +71,7 @@ Option | Default | Description
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
 `release` | `true` | Keep a modifier activated between commands
+`disableSpecialCharSequences` | `false` | Determines whether strings such as `{backspace}` are typed literally or are treated as commands to type special characters
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
 
 ## Yields {% helper_icon yields %}
