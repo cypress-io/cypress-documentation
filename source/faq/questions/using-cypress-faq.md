@@ -143,7 +143,6 @@ We have seen many different iterations of this question. The answers can be vari
 
 When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
 
-
 **_In CI, how do I make sure my server has started?_**
 
 We recommend these great modules for this use case:
@@ -449,7 +448,7 @@ The code you write in Cypress is executed in the browser, so you can import or r
 
 You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
-Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
+We recommend utilizing one of the following to execute code outside of the browser. Furthermore, you can use your own Node version during code excecution by setting the {% url "`nodeVersion`" configuration#Node-version %} in your configuration.
 
 - {% url `cy.task()` task %} to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.exec()` exec %} to execute a shell command

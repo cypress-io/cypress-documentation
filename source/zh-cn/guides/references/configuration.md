@@ -101,7 +101,7 @@ Cypress的默认行为可以通过提供以下任何配置选项来修改。下�
 
 选项 | 默认值 | 描述
 ----- | ---- | ----
-`nodeVersion` | `bundled` | 如果设置为`system`，赛普拉斯将尝试在您的路径上找到`node`可执行文件，以便在执行{％ url plugins plugins-guide ％}时使用。 否则，赛普拉斯将使用与赛普拉斯捆绑的Node版本。
+`nodeVersion` | `bundled` | 如果设置为`system`，赛普拉斯将尝试在您的路径上找到 Node 可执行文件，以便在执行{％ url plugins plugins-guide ％}时使用。 否则，赛普拉斯将使用与赛普拉斯捆绑的Node版本。
 
 # 重写选项
 

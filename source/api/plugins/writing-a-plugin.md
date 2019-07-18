@@ -67,7 +67,7 @@ You can programmatically modify these values and Cypress will then respect these
 
 ## List of events
 
-***The following events are available:***
+### The following events are available:
 
 Event | Description
 --- | ---
@@ -90,16 +90,14 @@ Cypress does this by spawning an independent `child_process` which then `require
 
 You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local Node version, and not anything else under your control.
 
-Because of this, this global context and the version of Node is controlled by Cypress.
+Because of this, this global context and the version of Node is controlled under Cypress.
 
 {% note warning "Node version" %}
+Keep in mind - code executed in plugins **may** be executed by the Node version that comes bundled in Cypress itself.
 
-Keep in mind - code executed in plugins is executed **by the Node version** that comes bundled in Cypress itself.
+This version of Node has **nothing to do** with your locally installed versions. Therefore you may want to write Node code which is compatible with this version or document that the user of your plugin will need to set a specific {% url "`nodeVersion`" configuration#Node-version %} in their configuration.
 
-This version of Node has **nothing to do** with your locally installed versions. Therefore you have to write Node code which is compatible with this version.
-
-You can find the current Node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
-
+You can find the current Node version we use when the `nodeVersion` is set to the default `bundled` {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 {% endnote %}
 
 ## npm modules
@@ -139,9 +137,9 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 # Error handling
 
-Cypress spawns your `pluginsFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress' own execution in any way.
+Cypress spawns your `pluginsFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress's own execution in any way.
 
-If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
+If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, or a syntax error - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
 
 Errors from your plugins *will not crash* Cypress.
 

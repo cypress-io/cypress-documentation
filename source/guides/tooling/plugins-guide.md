@@ -6,9 +6,9 @@ Plugins enable you to tap into, modify, or extend the internal behavior of Cypre
 
 Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node process that plugins can use.
 
-> Plugins enable you to tap into the `node` process running outside of the browser.
+> Plugins enable you to tap into the Node process running outside of the browser.
 
-Plugins are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle.
+Plugins are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle. It also allows you to execute code within your own Node version when the {% url "`nodeVersion`" configuration#Node-version %} is set in your configuration.
 
 {% note info "This is a brief overview" %}
 If you want more details about how to write a plugin, we've written API docs that show you how to work with each plugin event.
@@ -52,7 +52,6 @@ The event `before:browser:launch` can be used to modify the launch arguments for
 You can use the `before:browser:launch` event to do things like:
 
 - Load a Chrome extension
-- Change print media
 - Enable or disable experimental chrome features
 - Control which Chrome components are loaded
 
@@ -72,7 +71,7 @@ Check out our {% url 'After Screenshot API docs' after-screenshot-api %} which d
 
 ## cy.task
 
-The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node to accomplish tasks that aren't possible in the browser.
+The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node to accomplish tasks that aren't possible in the browser. It also allows you to execute code within your own Node version when the {% url "`nodeVersion`" configuration#Node-version %} is set in your configuration.
 
 You can use the `task` event to do things like:
 
