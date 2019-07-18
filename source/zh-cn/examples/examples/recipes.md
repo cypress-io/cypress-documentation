@@ -25,6 +25,7 @@ Recipe  | Description
 {% url 'Hover and Hidden Elements' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__hover-hidden-elements %} | Test hidden elements requiring hover
 {% url 'Form Interactions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__form-interactions %} |  Test form elements like input type `range`
 {% url 'Drag and Drop' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop %} | Use `.trigger()` to test drag and drop
+{% url 'Shadow DOM' https://github.com/cypress-io/cypress-example-recipes/tree/master/testing-dom__shadow-dom %} | You need to use any of available custom commands
 
 ## Logging In 
 Recipe  | Description

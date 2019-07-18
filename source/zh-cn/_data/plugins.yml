@@ -144,6 +144,11 @@
       link: https://github.com/NicholasBoll/cypress-pipe
       keywords: [commands]
 
+    - name: cypress-shadow-dom
+      description: Custom commands for shadow DOM support
+      link: https://github.com/abramenal/cypress-shadow-dom
+      keywords: [shadow, shadow-dom, polymer, lit-html, commands]
+
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library

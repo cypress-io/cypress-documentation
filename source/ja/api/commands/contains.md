@@ -8,12 +8,14 @@ Get the DOM element containing the text. DOM elements can contain *more* than th
 
 ```javascript
 .contains(content)
+.contains(content, options)
 .contains(selector, content)
 .contains(selector, content, options)
 
 // ---or---
 
 cy.contains(content)
+cy.contains(content, options)
 cy.contains(selector, content)
 cy.contains(selector, content, options)
 ```
