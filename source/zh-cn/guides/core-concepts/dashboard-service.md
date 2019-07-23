@@ -367,6 +367,8 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 成员可以"请求"访问给定的组织。如果你团队中的开发人员可以访问Cypress和你项目的源代码 - 他们可以请求获得对你组织的访问权限。这意味着你不必事先邀请团队成员，他们可以请求访问权限，你可以选择接受或拒绝他们访问。
 
+{% imgTag /img/dashboard/request-access-to-organization.png "Request access to project" %}
+
 # 开源计划
 
 为了支持Cypress社区，我们为公共项目提供开源（OSS）计划，以便利用我们的数据面板服务和无限制的测试执行。要获得资格，你的项目只需要达成两件事：
