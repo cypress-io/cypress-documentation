@@ -130,7 +130,7 @@
     "stop-only": "3.0.1",
     "textlint": "11.3.0",
     "textlint-filter-rule-comments": "1.2.2",
-    "textlint-rule-eslint": "3.1.0",
+    "textlint-rule-eslint": "3.2.0",
     "textlint-rule-terminology": "1.1.30",
     "underscore.string": "3.3.5",
     "wait-on": "3.3.0",
