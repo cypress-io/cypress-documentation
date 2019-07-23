@@ -50,7 +50,7 @@ large:
 
   - title: "[2019 update] Using Cypress in GitLab CI"
     url: https://lcx.wien/blog/cypress-gitlab-ci/
-    sourceName: LcX.wien IT Solutions
+    sourceName: "LcX.wien IT Solutions"
     sourceUrl: https://lcx.wien/
     author: Cristian Livadaru
     date: Jul 11, 2019
