@@ -26,7 +26,7 @@
 }
 
 #article-toc-inner {
-  padding: 0 20px;
+  padding: 2.5em 20px;
   width: $sidebar-width;
 
   .sidebar-title {
@@ -88,9 +88,9 @@
   border-left-color: $color-green;
 }
 
-#article-toc-inner {
-  padding: 2.5em 20px;
-}
+//#article-toc-inner {
+//  padding: 2.5em 20px;
+//}
 
 .toc-top {
   .toc {

@@ -8,6 +8,11 @@ process.on('unhandledRejection', function (reason, p) {
 const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
+const Contentful = require('contentful')
+const moment = require('moment')
+const yaml = require('js-yaml')
+const fs = require('fs')
+const { documentToHtmlString } = require('@contentful/rich-text-html-renderer')
 
 // these are the args like --port
 const args = minimist(process.argv.slice(2))
@@ -86,16 +91,59 @@ function initHexo () {
   console.log('in environment %s site url is %s', env, url)
   hexo.config.url = url
 
-  // set this on both our process + hexo
+  // set this on both our process + Hexo
   process.env.NODE_ENV = hexo.env.NODE_ENV = env
 
   console.log('NODE_ENV is:', chalk.cyan(env))
 
-  return hexo.init()
-  .then(() => {
-    return hexo.call(cmd, args)
-  })
+  return new Promise((resolve, reject) => {
+    const space = hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID
+    const accessToken = hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN
 
+    if (typeof space === 'undefined' || typeof accessToken === 'undefined') {
+      return reject({
+        message: 'No Contentful space variables.',
+      })
+    }
+
+    return Contentful.createClient({ space, accessToken })
+    .getEntries({ content_type: 'topBanner' })
+    .then(({ items }) => {
+      const data = items.reduce((filtered, option) => {
+        if (moment(option.fields.endDate).isSameOrAfter(moment())) {
+          filtered.push({ ...option.fields, text: documentToHtmlString(option.fields.text) })
+        }
+
+        return filtered
+      }, [])
+
+      return new Promise((resolve, reject) => {
+        fs.writeFile(
+          `${__dirname}/source/_data/banners.yml`,
+          yaml.safeDump(data),
+          (error) => {
+            // log if writeFile ends with error, but don't block hexo init process
+            if (error) {
+              console.error(error)
+
+              return reject(error)
+            }
+
+            return resolve(error)
+          },
+        )
+      })
+    })
+  })
+  // start Hexo
+  .then(() => hexo.init().then(() => hexo.call(cmd, args)))
+  .catch((error) => {
+    // log error object
+    console.error(error)
+
+    // but start Hexo anyway
+    return hexo.init().then(() => hexo.call(cmd, args))
+  })
 }
 
 initHexo()
