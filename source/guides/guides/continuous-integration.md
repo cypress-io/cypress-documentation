@@ -93,6 +93,30 @@ Pass the command to boot your server, the url your server is hosted on and your 
 
 In the example above, the `cy:run` command will only be executed when the URL `http://localhost:3030` responds with an HTTP status code of 200. The server will also shut down when the tests complete.
 
+*Gotchas*
+
+When [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users) that does not respond to `HEAD` requests, use an explicit `GET` method to ping the server like this:
+
+```json
+{
+  "scripts": {
+    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
+  }
+}
+```
+
+When working with local `https` in webpack, set an environment variable to allow local certificate:
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030 --https",
+    "cy:run": "cypress run",
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+  }
+}
+```
+
 ## Record tests
 
 Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %}.
