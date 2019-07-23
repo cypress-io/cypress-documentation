@@ -95,18 +95,26 @@ In the example above, the `cy:run` command will only be executed when the URL `h
 
 *Gotchas*
 
-[Working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users):
-
-```
-    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
-```
-
-Working with `https` in webpack
+When [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users) that does not respond to `HEAD` requests, use an explicit `GET` method to ping the server like this:
 
 ```json
+{
+  "scripts": {
+    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
+  }
+}
+```
+
+When working with local `https` in webpack, set an environment variable to allow local certificate:
+
+```json
+{
+  "scripts": {
     "start": "my-server -p 3030 --https",
     "cy:run": "cypress run",
-    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run",
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+  }
+}
 ```
 
 ## Record tests
