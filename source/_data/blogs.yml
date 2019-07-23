@@ -73,7 +73,7 @@ large:
     img: /img/examples/watirmelon-thoughts-cypress.png
 
   - title: "Create Code Coverage Report from running End-to-End Test with Cypress.io"
-    url: https://medium.com/linedevth/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-code-coverage-report-%E0%B8%88%E0%B8%B2%E0%B8%81%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%99-e2e-test-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-cypress-io-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%94%E0%B8%B5%E0%B8%81%E0%B8%A7%E0%B9%88%E0%B8%B2-b046789c4ad1
+    url: https://medium.com/@nottyo/generate-a-beautiful-test-report-from-running-tests-on-cypress-io-371c00d7865a
     sourceName: Medium
     sourceUrl: https://medium.com
     author: Traitanit Huangsri
