@@ -1,5 +1,21 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress + Cucumber Automated Browser Testing stream 02"
+    url: https://www.youtube.com/watch?v=JNYia3gHCc4
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=JNYia3gHCc4
+    date: Jul 3, 2019
+    author: Code Mortals
+    youtubeId: JNYia3gHCc4
+  
+  - title: "Preparing Angular Cypress End to End Tests for Continuous Integration (CI)"
+    url: https://www.youtube.com/watch?v=WOCrIhqk7Js
+    sourceName: Youtube
+    sourceUrl: https://angular-university.io/course/angular-testing-course
+    date: Jun 13, 2019
+    author: Angular University
+    youtubeId: WOCrIhqk7Js
+
   - title: "Problemas, ventajas y retos del Test end to end con Cypress.io"
     url: https://www.youtube.com/watch?v=rA_1fPa38Tg
     sourceName: Youtube
