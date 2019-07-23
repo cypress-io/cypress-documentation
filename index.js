@@ -8,6 +8,18 @@ process.on('unhandledRejection', function (reason, p) {
 const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
+const Contentful = require('contentful')
+const moment = require('moment')
+const yaml = require('js-yaml')
+const fs = require('fs')
+const { documentToHtmlString } = require('@contentful/rich-text-html-renderer')
+
+// if there is a need to fetch data from our contentful acc
+const contentfulClient = Contentful.createClient({
+  space: 'o4py2sm8hjzh',
+  accessToken: '5f825d3030eacae24f803b789bde9347c42a4a988cfdaf10ea675a043addc149',
+  environment: 'stage',
+})
 
 // these are the args like --port
 const args = minimist(process.argv.slice(2))
@@ -91,11 +103,32 @@ function initHexo () {
 
   console.log('NODE_ENV is:', chalk.cyan(env))
 
-  return hexo.init()
-  .then(() => {
-    return hexo.call(cmd, args)
-  })
+  return contentfulClient
+  .getEntries({ content_type: 'topBanner' })
+  .then(({ items }) => {
+    const data = items.reduce((filtered, option) => {
+      if (moment(option.fields.endDate).isSameOrAfter(moment())) {
+        filtered.push({ ...option.fields, text: documentToHtmlString(option.fields.text) })
+      }
 
+      return filtered
+    }, [])
+
+    return new Promise((resolve) => {
+      fs.writeFile(
+        `${__dirname}/source/_data/banners.yml`,
+        yaml.safeDump(data),
+        (error) => {
+          // log if writeFile ends with error, but don't block hexo init process
+          if (error) console.error(error)
+
+          return resolve()
+        },
+      )
+    })
+  })
+  .catch((error) => console.error(error))
+  .finally(() => hexo.init().then(() => hexo.call(cmd, args)))
 }
 
 initHexo()

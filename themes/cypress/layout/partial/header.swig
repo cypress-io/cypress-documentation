@@ -1,4 +1,5 @@
 <header id="header" class="wrapper">
+  {{ partial('banners') }}
   <div id="header-inner" class="inner">
     <h1 id="logo-wrap">
       <a href="https://www.cypress.io" id="logo">
