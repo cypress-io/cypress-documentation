@@ -45,7 +45,7 @@ You can find an example of Jest and Cypress installed in the same project using 
 
 ## Types for custom commands
 
-When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors. 
+When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors.
 
 For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
