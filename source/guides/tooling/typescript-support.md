@@ -45,14 +45,18 @@ You can find an example of Jest and Cypress installed in the same project using 
 
 ## Types for custom commands
 
-When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. For example if you add method `cy.dataCy` in `cypress/support/index.js` like this:
+When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors. 
+
+For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
 ```javascript
 // cypress/support/index.js
-Cypress.Commands.add('dataCy', (value) => cy.get(`[data-cy=${value}]`))
+Cypress.Commands.add('dataCy', (value) => {
+  return cy.get(`[data-cy=${value}]`)
+})
 ```
 
-Then you can add the method `dataCy` to the global Cypress `Chainable` interface (so called because commands are chained together) by creating a file `cypress/support/index.d.ts`.
+Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your {% url "`supportFile`" configuration#Folders-Files %}, in this case at `cypress/support/index.d.ts`.
 
 ```typescript
 // in cypress/support/index.d.ts
@@ -71,22 +75,25 @@ declare namespace Cypress {
 ```
 
 {% note info %}
-A nice detailed JSDoc comment above the method type will be really appreciated by the users.
+A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
 {% endnote %}
 
-If your specs are coded in TypeScript, you should include `cypress/support/index.d.ts` file with the rest of the source files. Even if your project is JavaScript-only, the JS specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
+
+Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
 
 ```javascript
 // from your cypress/integration/spec.js
 /// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
-  // IntelliSense and TS compiler should not complain about unknown method
+  // IntelliSense and TS compiler should
+  // not complain about unknown method
   cy.dataCy('greeting')
 })
 ```
 
-### Examples
+### Examples:
 
 - See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
 - You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
