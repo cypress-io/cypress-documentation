@@ -46,6 +46,8 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 `.then()` is modeled identically to the way Promises work in JavaScript.  Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 
+Additionally, the last Cypress command in the callback function will be yielded as the new subject and flow into the next command if there is no `return`.
+
 When `undefined` is returned by the callback function, the subject will not be modified and will instead carry over to the next command.
 
 Just like Promises, you can return any compatible "thenable" (anything that has a `.then()` interface) and Cypress will wait for that to resolve before continuing forward through the chain of commands.
@@ -58,7 +60,7 @@ We have several more examples in our {% url 'Core Concepts Guide' variables-and-
 
 ## DOM element
 
-### The `input` element is yielded
+### The `button` element is yielded
 
 ```javascript
 cy.get('button').then(($btn) => {
@@ -69,6 +71,17 @@ cy.get('button').then(($btn) => {
 ```
 
 ## Change subject
+
+### The subject is changed with another command
+
+```javascript
+cy.get('button').then(($btn) => {
+  const cls = $btn.class()
+
+  cy.wrap($btn).click().should('not.have.class', cls)
+    .find('i')
+}).should('have.class', 'spin') // assert on i element
+```
 
 ### The subject is changed by returning
 
@@ -90,8 +103,7 @@ cy.get('form')
   console.log('form is:', $form)
   // undefined is returned here, but $form will be
   // yielded to allow for continued chaining
-})
-.find('input').then(($input) => {
+}).find('input').then(($input) => {
   // we have our $input element here since
   // our form element was yielded and we called
   // .find('input') on it
