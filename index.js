@@ -22,12 +22,12 @@ const cmd = args._.shift()
 
 const hexo = new Hexo(process.cwd(), args)
 
+console.log(process.env)
+
 // if there is a need to fetch data from our contentful acc
 const contentfulClient = Contentful.createClient({
-  space: hexo.env.GATSBY_CONTENTFUL_SPACE_ID ||
-    hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID,
-  accessToken: hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN ||
-    hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+  space: hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID,
+  accessToken: hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
 })
 
 function initHexo () {
