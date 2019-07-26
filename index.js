@@ -16,9 +16,10 @@ const { documentToHtmlString } = require('@contentful/rich-text-html-renderer')
 
 // if there is a need to fetch data from our contentful acc
 const contentfulClient = Contentful.createClient({
-  space: 'o4py2sm8hjzh',
-  accessToken: '5f825d3030eacae24f803b789bde9347c42a4a988cfdaf10ea675a043addc149',
-  environment: 'stage',
+  space: hexo.env.GATSBY_CONTENTFUL_SPACE_ID ||
+    hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID,
+  accessToken: hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN ||
+    hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
 })
 
 // these are the args like --port
