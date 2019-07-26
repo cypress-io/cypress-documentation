@@ -14,14 +14,6 @@ const yaml = require('js-yaml')
 const fs = require('fs')
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer')
 
-// if there is a need to fetch data from our contentful acc
-const contentfulClient = Contentful.createClient({
-  space: hexo.env.GATSBY_CONTENTFUL_SPACE_ID ||
-    hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID,
-  accessToken: hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN ||
-    hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
-})
-
 // these are the args like --port
 const args = minimist(process.argv.slice(2))
 
@@ -29,6 +21,14 @@ const args = minimist(process.argv.slice(2))
 const cmd = args._.shift()
 
 const hexo = new Hexo(process.cwd(), args)
+
+// if there is a need to fetch data from our contentful acc
+const contentfulClient = Contentful.createClient({
+  space: hexo.env.GATSBY_CONTENTFUL_SPACE_ID ||
+    hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID,
+  accessToken: hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN ||
+    hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+})
 
 function initHexo () {
   // defaults outside of _config.yml
