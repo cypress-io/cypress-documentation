@@ -46,7 +46,7 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 `.then()` is modeled identically to the way Promises work in JavaScript.  Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 
-Additionally, the last Cypress command in the callback function will be yielded as the new subject and flow into the next command if there is no `return`.
+Additionally, the result of the last Cypress command in the callback function will be yielded as the new subject and flow into the next command if there is no `return`.
 
 When `undefined` is returned by the callback function, the subject will not be modified and will instead carry over to the next command.
 
@@ -70,9 +70,17 @@ cy.get('button').then(($btn) => {
 })
 ```
 
+### The number is yielded
+
+```js
+cy.wrap(1).then((num) => {
+  cy.wrap(num)).should('equal', 1) // true
+}).should('equal', 1) // true
+```
+
 ## Change subject
 
-### The subject is changed with another command
+### The el subject is changed with another command
 
 ```javascript
 cy.get('button').then(($btn) => {
@@ -80,19 +88,27 @@ cy.get('button').then(($btn) => {
 
   cy.wrap($btn).click().should('not.have.class', cls)
     .find('i')
+    // since there is no explicit return
+    // the last Cypress command's yield is yielded
 }).should('have.class', 'spin') // assert on i element
 ```
 
-### The subject is changed by returning
+### The number subject is changed with another command
 
 ```javascript
-cy.wrap(null).then(() => {
-  return { id: 123 }
-})
-.then((obj) => {
-  // subject is now the obj {id: 123}
-  expect(obj.id).to.eq(123) // true
-})
+cy.wrap(1).then((num) => {
+  cy.wrap(num)).should('equal', 1) // true
+  cy.wrap(2)
+}).should('equal', 2) // true
+```
+
+### The number subject is changed by returning
+
+```javascript
+cy.wrap(1).then((num) => {
+  cy.wrap(num)).should('equal', 1) // true
+  return 2
+}).should('equal', 2) // true
 ```
 
 ### Returning `undefined` will not modify the yielded subject
