@@ -5,8 +5,9 @@
     "es6": false
   },
   "parserOptions": {
-    "ecmaVersion": 5
+    "ecmaVersion": 2015
   },
+  "extends": "eslint:recommended",
   "rules": {
     "no-var": 0,
     "prefer-template": 0
