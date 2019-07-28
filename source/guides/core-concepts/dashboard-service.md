@@ -367,6 +367,111 @@ Users can "request" access to a given organization. If a developer on your team 
 
 {% imgTag /img/dashboard/request-access-to-organization.png "Request access to project" %}
 
+# GitHub Integration
+
+The Cypress Dashboard tightly integrates your Cypress test runs with your GitHub workflow via commit {% urlHash 'status checks' Status-Checks %} and {% urlHash 'pull-request comments' Pull-Request-Comments %}.
+{% imgTag /img/dashboard/github-integration/pr-full.png "Cypress GitHub App PR" "no-border" %}
+> Note: GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but please feel free [contact us](mailto:hello@cypress.io) if you are facing GitHub integration issues with your CI setup.
+
+## Installing the Cypress GitHub App
+
+Before you can enable GitHub integration for your Cypress projects, you must first install the Cypress GitHub App. You start the GitHub App installation process via your Cypress organization's settings page or a project's settings page.
+
+### Install via Organization integration settings
+1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %}
+2. Select the organization you wish to integrate with a GitHub account or organization.
+{% imgTag /img/dashboard/github-integration/select-cypress-organization.png "Select an organization" "no-border" %}
+
+3. Visit the selected organization's "Integrations" page via the left-sidebar.
+4. Click the blue "Install the Cypress GitHub App" button.
+{% imgTag /img/dashboard/github-integration/install-from-org-settings.png "Select an organization" "no-border" %}
+
+### Install via Project settings
+1. Go to your organization's projects page.
+2. Select a project you wish to integrate with a GitHub repository.
+{% imgTag /img/dashboard/github-integration/select-cypress-project.png "Select a project" "no-border" %}
+
+3. Go to the project's settings page.
+{% imgTag /img/dashboard/github-integration/visit-project-settings.png "Visit project settings" "no-border" %}
+
+4. Scroll down to the "GitHub Integration" section.
+5. Click the blue "Install the Cypress GitHub App" button.
+{% imgTag /img/dashboard/github-integration/install-app-project-settings.png "Install GitHub App" "no-border" %}
+
+### Cypress GitHub App Installation process
+Once you've started the GitHub App installation process {% urlHash "via a Cypress organization's settings" Install-via-Organization-integration-settings %}  or {% urlHash "a project's settings" Install-via-Project-settings %}, you will directed to GitHub.com to complete the installation:
+
+1. Select the desired GitHub organization or account to integrate with your Cypress Dashboard organization.
+{% imgTag /img/dashboard/github-integration/select-gh-org.png "Select a GitHub organization" "no-border" %}
+
+2. Choose to associate all or specific GitHub repositories with your Cypress GitHub App installation. 
+    > **Note:** All current and future repositories will be included with this installation if you choose "All repositories." 
+
+{% imgTag /img/dashboard/github-integration/select-all-gh-repos.png "Select GitHub repositories" "no-border" %}
+
+{% imgTag /img/dashboard/github-integration/select-gh-repos.png "Select specific GitHub repositories" "no-border" %}
+
+3. Click the green "Install" button to complete the installation.
+
+## Enabling GitHub Integration for a project
+After completing the Cypress GitHub App installation for your organization you can enable GitHub Integration for any Cypress project.
+
+1. Visit a project's setting page, and scroll down to the GitHub Integration section.
+    > Note: You can quickly get to a project's GitHub Integrations settings, by clicking on the "Configure" link of the desired project within an organization's Integrations page:
+    {% imgTag /img/dashboard/github-integration/org-settings-with-no-enabled-projects.png "Org GitHub Integration settings" "no-border" %}
+
+2. Select a GitHub repository to associated with the project.
+
+{% imgTag /img/dashboard/github-integration/project-settings-repo-selection.png "Associate GitHub repo with Cypress project" "no-border" %}
+
+Once a GitHub repository is associated with a Cypress project GitHub Integration will be immediately enabled:
+{% imgTag /img/dashboard/github-integration/project-settings-selected-repo.png "GitHub integration enabled for Cypress project" "no-border" %}
+
+You can also see all GitHub Integration enabled Cypress projects within your organizations Integrations page:
+{% imgTag /img/dashboard/github-integration/org-settings-with-projects.png "Integrations page" "no-border" %}
+
+
+## Status Checks
+If status checks are enabled within a project's GitHub Integration settings, the Cypress Dashboard will report Cypress test run statuses to GitHub for related commits. {% url "Status checks" https://help.github.com/en/articles/about-status-checks %} help prevent merging a commit or pull-request into the rest of our codebase until all your Cypress tests have passed.
+
+The Cypress GitHub App reports commit status checks in two styles:
+- One check per {% url "run group" https://help.github.com/en/articles/about-status-checks %}.
+    {% imgTag /img/dashboard/github-integration/status-checks-per-group-failed.png "Status checks per group" "no-border" %}
+
+- Or one check per test spec file.
+    {% imgTag /img/dashboard/github-integration/status-checks-per-spec.png "Status checks per spec" "no-border" %}
+
+Each status check will report test failure or pass count, and the associated "Details" link will direct you to the test run's failure page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
+{% imgTag /img/dashboard/github-integration/dashboard-fail-tab.png "Cypress Dashboard failure tab" "no-border" %}
+
+GitHub status checks are optional, and can be disabled if not needed within a project's GitHub Integration settings:
+{% imgTag /img/dashboard/github-integration/status-check-settings.png "Status checks settings" "no-border" %}
+
+
+## Pull Request Comments
+The Cypress GitHub App can provide detailed test run information within pull-requests via comments that include:
+- Run statistics, such as tests passed, failed, skipped, and over-limit.
+- Run context details:
+  - Associated Cypress project
+  - Final run status
+  - Commit SHA linking to GitHub
+  - Run start and end timestamps
+  - Run duration
+  - Operating system and version
+  - Browser and version
+- Run failures
+  - First 10 failures are displayed.
+  - Each failed test links back to the associated failure within the Cypress Dashboard.
+  - Screenshot thumbnails are also provided with each failure to conveniently provide context.
+
+An example of a Cypress pull-request comment can be seen below: 
+{% imgTag /img/dashboard/github-integration/pr-comment-fail.png "Cypress GitHub App PR comment" "no-border" %}
+
+PR comments and failure screenshot thumbnails are optional, and can be disabled if not needed within a project's GitHub Integration settings:
+{% imgTag /img/dashboard/github-integration/pr-comments-settings.png "Status checks settings" "no-border" %}
+
+
+
 # Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
@@ -381,7 +486,8 @@ Follow the following process to request an OSS plan for your project:
   {% imgTag /img/dashboard/oss-plan-1-login.png "Login or Create Account" "no-border" %}
 2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
-  {% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
+
+{% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
   {% imgTag /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" "no-border" %}
 4. Fill in and submit the OSS plan request form.
