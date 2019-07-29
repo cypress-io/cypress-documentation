@@ -4,7 +4,6 @@ menu:
   plugins: プラグイン
   faq: FAQ
   examples: 例
-  dashboard: ダッシュボード
   search: 検索
 
 index:
@@ -33,7 +32,7 @@ sidebar:
     writing-and-organizing-tests: テストの書き方と整理の仕方
     conditional-testing: 条件付きテスト
     test-runner: テストランナー
-    dashboard: Dashboard
+    dashboard: ダッシュボード
     dashboard-introduction: Introduction
     projects: Projects
     runs: Runs
