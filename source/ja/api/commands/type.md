@@ -32,7 +32,11 @@ cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
 
 The text to be typed into the DOM element.
 
-Text passed to `.type()` may include any of these special character sequences:
+Text passed to `.type()` may include any of the special character sequences below.
+
+{% note info %}
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+{% endnote %}
 
 Sequence | Notes
 --- | ---
@@ -70,6 +74,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
+`parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
 
@@ -164,6 +169,10 @@ Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 ## Key Combinations
 
 When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL + R` or `SHIFT + ALT + Q`. The modifier(s) remain activated for the duration of the `.type()` command, and are released when all subsequent characters are typed, unless {% url '`{release: false}`' type#Options %} is passed as an {% url 'option' type#Key-Combinations %}. A `keydown` event is fired when a modifier is activated and a `keyup` event is fired when it is released.
+
+{% note info %}
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+{% endnote %}
 
 ### Type a key combination
 
