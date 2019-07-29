@@ -66,7 +66,6 @@ title: 数据面板服务
 
 {% imgTag /img/dashboard/setup-to-record.gif "Setup Project Screen" %}
 
-
 1. 在{% url "Test Runner" test-runner %}中单击项目的** Runs **选项卡；
 2. 单击**设置要录制的项目**；
 3. 你需要登录才能录制你的测试，因此你需要登录我们的Dashboard服务；
@@ -151,22 +150,24 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 如果你的录制秘钥意外暴露了，你应该删除它，并在{% url '数据面板服务' https://on.cypress.io/dashboard %}里生成一个新的。
 {% endnote %}
 
-
 ## 公有 vs 私有
 
-- **公有** 意味着任何人都可以看到项目测试运行的录制。它类似于Github，Travis CI或CircleCI上的公共项目的处理方式。任何知道你`projectId`的人都能看到公共项目的运行录制。
+- **公有** 意味着任何人都可以看到项目测试运行的录制。它类似于GitHub，Travis CI或CircleCI上的公共项目的处理方式。任何知道你`projectId`的人都能看到公共项目的运行录制。
 
 - **私有** 表示只有被邀请到你的{% urlHash '组织' 组织 %}的{% urlHash '用户' 成员 %}可以查看其录制的运行情况。即使有人知道你的`projectId`，除非你邀请他们，否则他们将无法访问你的运行。
 
 ### 修改项目访问权
 
-点击你要修改访问权的某个项目，然后点击右上角的**Settings**：
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
 
-{% imgTag /img/dashboard/project-settings.png "project-settings" %}
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's settings page.
 
-你将会看到一个 **Access to Runs**字段。选择你想为这个项目设置的某个适当的权限：
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
 
-{% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
+4. Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+  {% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
 
 ## 转让所有权
 
@@ -174,11 +175,14 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 你可以将你拥有的项目转让给其他你所在的{% urlHash "组织" 组织 %}或此项目中的其他成员。项目只能在{% url '数据面板服务' https://on.cypress.io/dashboard %}里进行转让。
 
-1. 选择你想要转让的{% url "组织" https://on.cypress.io/dashboard/organizations %}的项目；
-2. 进入该项目然后点击**Settings**；
-  {% imgTag /img/dashboard/project-settings.png "project-settings" %}
-3. 向下滑动到**Transfer Ownership**并点击它；
-4. 选择成员和组织，然后点击**Transfer**：
+1. Go to your organization's projects page.
+2. Select the project you wish to transfer.
+
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+4. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
+5. Select the user or organization, then click **Transfer**.
   {% imgTag /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
 
 ### 取消项目转让
@@ -200,6 +204,7 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 1. 在面板里点进'Runs'；
 2. 从左侧边栏里点击你想要的删除的项目；
 3. 在本页的右侧点击'Settings'；
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
 4. 在Settings页面的底部，点击"Remove Project"按钮
 
 {% imgTag /img/dashboard/remove-project-dialog.png "Delete project dialog" %}
@@ -368,6 +373,125 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 成员可以"请求"访问给定的组织。如果你团队中的开发人员可以访问Cypress和你项目的源代码 - 他们可以请求获得对你组织的访问权限。这意味着你不必事先邀请团队成员，他们可以请求访问权限，你可以选择接受或拒绝他们访问。
 
 {% imgTag /img/dashboard/request-access-to-organization.png "Request access to project" %}
+
+
+# GitHub integration
+
+The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull-request comments' Pull-request-comments %}.
+{% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
+
+{% note warning %}
+GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but please [contact us](mailto:hello@cypress.io) if you are facing GitHub integration issues with your CI setup.
+{% endnote %}
+
+## Install the Cypress GitHub app
+
+Before you can enable GitHub integration for your Cypress projects, you must first install the Cypress GitHub App. You can start the GitHub App installation process via your organization's settings page or a project's settings page in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+### Install via organization integration settings
+
+1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %}.
+2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
+  {% imgTag /img/dashboard/select-cypress-organization.jpg "Select an organization" %}
+3. Visit the selected organization's **Integrations** page via the side navigation.
+4. Click the **Install the Cypress GitHub App** button.
+  {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.jpg "Install Cypress GitHub App from Integrations" %}
+
+### Install via project settings
+
+1. Go to your organization's projects page.
+2. Select the project you wish to integrate with a GitHub repository.
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+4. Scroll down to the **GitHub Integration** section.
+5. Click the **Install the Cypress GitHub App** button.
+  {% imgTag /img/dashboard/github-integration/install-github-cypress-app-project-settings.jpg "Install GitHub Cypress App" %}
+
+### Cypress GitHub app installation process
+
+Once you've started the GitHub App installation process {% urlHash "via a Cypress organization's settings" Install-via-organization-integration-settings %} or {% urlHash "a project's settings" Install-via-project-settings %}, you will be directed to GitHub.com to complete the installation:
+
+1. Select the desired GitHub organization or account to integrate with your Cypress Dashboard organization.
+{% imgTag /img/dashboard/github-integration/select-gh-org.jpg "Select a GitHub organization"  %}
+
+2. Choose to associate **All repositories** or only select GitHub repositories with your Cypress GitHub App installation.
+
+  {% imgTag /img/dashboard/github-integration/select-all-gh-repos.jpg "Select All GitHub repositories" %}
+
+  {% note info %}
+  All current and *future* repositories will be included with this installation if you choose **All repositories**.
+  {% endnote %}
+
+  {% imgTag /img/dashboard/github-integration/select-gh-repos.jpg "Select specific GitHub repositories" %}
+
+3. Click the **Install** button to complete the installation.
+
+## Enabling GitHub integration for a project
+
+After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for *any* Cypress project.
+
+1. Visit a project's setting page, and scroll down to the GitHub Integration section.
+    {% note info %}
+    You can quickly get to a project's GitHub Integrations settings, by clicking on the **Configure** link of the desired project within an organization's Integrations page:
+    {% endnote %}
+
+    {% imgTag /img/dashboard/github-integration/org-settings-with-no-enabled-projects.png "Org GitHub Integration settings" "no-border" %}
+
+2. Select a GitHub repository to associated with the project.
+
+  {% imgTag /img/dashboard/github-integration/project-settings-repo-selection.png "Associate GitHub repo with Cypress project" "no-border" %}
+
+Once a GitHub repository is associated with a Cypress project, the GitHub integration will be immediately enabled:
+{% imgTag /img/dashboard/github-integration/project-settings-selected-repo.png "GitHub integration enabled for Cypress project" "no-border" %}
+
+You can also see all GitHub Integration enabled Cypress projects within your organizations **Integrations** page:
+{% imgTag /img/dashboard/github-integration/org-settings-with-projects.png "Integrations page" "no-border" %}
+
+## Status checks
+
+If status checks are enabled within a project's GitHub integration settings, the Cypress Dashboard will report Cypress test statuses to GitHub for related commits. {% url "Status checks" https://help.github.com/en/articles/about-status-checks %} help prevent merging a commit or pull-request into the rest of your codebase until all your Cypress tests have passed.
+
+The Cypress GitHub App reports commit status checks in two separate styles:
+
+- One check per {% url "run group" https://help.github.com/en/articles/about-status-checks %}.
+    {% imgTag /img/dashboard/github-integration/status-checks-per-group-failed.png "Status checks per group" "no-border" %}
+
+- Or one check per spec file.
+    {% imgTag /img/dashboard/github-integration/status-checks-per-spec.png "Status checks per spec" "no-border" %}
+
+Each status check will report the number of test failures or passes, and the associated **Details** link will direct you to the test run's page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
+{% imgTag /img/dashboard/dashboard-fail-tab.png "Cypress Dashboard failure tab" %}
+
+### Disable status checks
+
+GitHub status checks are optional, and can be disabled within a project's GitHub integration settings:
+{% imgTag /img/dashboard/github-integration/status-check-settings.png "Status checks settings" %}
+
+## Pull request comments
+
+The Cypress GitHub App can provide detailed test information within pull requests via comments that include:
+
+- Run statistics, such as tests passed, failed, skipped, and over-limit.
+- Run context details:
+  - The associated Cypress project
+  - Final run status (passed, failed, etc)
+  - Commit SHA linking to the GitHub commit
+  - The time the run started and finished as well as the duration.
+  - Operating system version and browser version.
+- Run failures:
+  - The first 10 failures are displayed with a link to more.
+  - Each failed test links back to the associated failure within the Cypress Dashboard.
+  - Screenshot thumbnails are also provided with each failure to conveniently provide context.
+
+An example of a Cypress pull-request comment can be seen below:
+
+{% imgTag /img/dashboard/github-integration/pr-comment-fail.jpg "Cypress GitHub App PR comment" %}
+
+### Disable PR comments
+
+PR comments and failure screenshot thumbnails are optional, and can be disabled if not needed within a project's GitHub Integration settings:
+{% imgTag /img/dashboard/github-integration/pr-comments-settings.png "Status checks settings" %}
 
 # 开源计划
 

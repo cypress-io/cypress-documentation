@@ -152,19 +152,22 @@ If your Record Key is accidentally exposed, you should remove it and generate a 
 
 ## Public vs Private
 
-- **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on Github, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
+- **Public** means that anyone can see the recorded test runs for the project. It is similar to how public projects on GitHub, Travis CI, or CircleCI are handled. Anyone who knows your `projectId` will be able to see the recorded runs for public projects.
 
 - **Private** means that only {% urlHash 'users' Users %} you invite to your {% urlHash 'organization' Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ### To change project access
 
-Click into the project you'd like to change access to, then click **Settings** in the top right corner.
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
 
-{% imgTag /img/dashboard/project-settings.png "project-settings" %}
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's settings page.
 
-Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
 
-{% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
+4. Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
+  {% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
 
 ## Transfer ownership
 
@@ -172,11 +175,14 @@ Here you will see a section displaying **Access to Runs**. Choose the appropriat
 
 You can transfer projects that you own to another {% urlHash "organization" Organizations %} you are a part of or to another user in the organization. Projects can only be transferred from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-1. Choose the {% url "organization" https://on.cypress.io/dashboard/organizations %} with the project you want to transfer.
-2. Click into the project and click on **Settings**.
-  {% imgTag /img/dashboard/project-settings.png "project-settings" %}
-3. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
-4. Select the user or organization, then click **Transfer**.
+1. Go to your organization's projects page.
+2. Select the project you wish to transfer.
+
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+4. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
+5. Select the user or organization, then click **Transfer**.
   {% imgTag /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
 
 ### Cancel project transfer
@@ -197,7 +203,8 @@ You can delete projects you own. This will also delete all of their recorded tes
 
 1. Click into 'Runs' in the Dashboard.
 2. Click on the project you want to delete from the lefthand sidebar.
-3. On this page, to the far right, click on 'Settings'.
+3. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
 4. At the very bottom of the Settings page click the 'Remove Project' button.
 
 {% imgTag /img/dashboard/remove-project-dialog.png "Delete project dialog" %}
@@ -310,7 +317,7 @@ You can delete organizations that you own as long as they do not have any projec
 
 # Users
 
-## Inviting users
+## Invite users
 
 A user is anyone who logs in to the Dashboard Service. You can invite users to Cypress from the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}. Invited users will see all projects and tests run for the organization.
 
@@ -367,13 +374,132 @@ Users can "request" access to a given organization. If a developer on your team 
 
 {% imgTag /img/dashboard/request-access-to-organization.png "Request access to project" %}
 
+# GitHub integration
+
+The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull-request comments' Pull-request-comments %}.
+{% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
+
+{% note warning %}
+GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but please [contact us](mailto:hello@cypress.io) if you are facing GitHub integration issues with your CI setup.
+{% endnote %}
+
+## Install the Cypress GitHub app
+
+Before you can enable GitHub integration for your Cypress projects, you must first install the Cypress GitHub App. You can start the GitHub App installation process via your organization's settings page or a project's settings page in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+### Install via organization integration settings
+
+1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %}.
+2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
+  {% imgTag /img/dashboard/select-cypress-organization.jpg "Select an organization" %}
+3. Visit the selected organization's **Integrations** page via the side navigation.
+4. Click the **Install the Cypress GitHub App** button.
+  {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.jpg "Install Cypress GitHub App from Integrations" %}
+
+### Install via project settings
+
+1. Go to your organization's projects page.
+2. Select the project you wish to integrate with a GitHub repository.
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+4. Scroll down to the **GitHub Integration** section.
+5. Click the **Install the Cypress GitHub App** button.
+  {% imgTag /img/dashboard/github-integration/install-github-cypress-app-project-settings.jpg "Install GitHub Cypress App" %}
+
+### Cypress GitHub app installation process
+
+Once you've started the GitHub App installation process {% urlHash "via a Cypress organization's settings" Install-via-organization-integration-settings %} or {% urlHash "a project's settings" Install-via-project-settings %}, you will be directed to GitHub.com to complete the installation:
+
+1. Select the desired GitHub organization or account to integrate with your Cypress Dashboard organization.
+{% imgTag /img/dashboard/github-integration/select-gh-org.jpg "Select a GitHub organization"  %}
+
+2. Choose to associate **All repositories** or only select GitHub repositories with your Cypress GitHub App installation.
+
+  {% imgTag /img/dashboard/github-integration/select-all-gh-repos.jpg "Select All GitHub repositories" %}
+
+  {% note info %}
+  All current and *future* repositories will be included with this installation if you choose **All repositories**.
+  {% endnote %}
+
+  {% imgTag /img/dashboard/github-integration/select-gh-repos.jpg "Select specific GitHub repositories" %}
+
+3. Click the **Install** button to complete the installation.
+
+## Enabling GitHub integration for a project
+
+After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for *any* Cypress project.
+
+1. Visit a project's setting page, and scroll down to the GitHub Integration section.
+    {% note info %}
+    You can quickly get to a project's GitHub Integrations settings, by clicking on the **Configure** link of the desired project within an organization's Integrations page:
+    {% endnote %}
+
+    {% imgTag /img/dashboard/github-integration/org-settings-with-no-enabled-projects.png "Org GitHub Integration settings" "no-border" %}
+
+2. Select a GitHub repository to associated with the project.
+
+  {% imgTag /img/dashboard/github-integration/project-settings-repo-selection.png "Associate GitHub repo with Cypress project" "no-border" %}
+
+Once a GitHub repository is associated with a Cypress project, the GitHub integration will be immediately enabled:
+{% imgTag /img/dashboard/github-integration/project-settings-selected-repo.png "GitHub integration enabled for Cypress project" "no-border" %}
+
+You can also see all GitHub Integration enabled Cypress projects within your organizations **Integrations** page:
+{% imgTag /img/dashboard/github-integration/org-settings-with-projects.png "Integrations page" "no-border" %}
+
+## Status checks
+
+If status checks are enabled within a project's GitHub integration settings, the Cypress Dashboard will report Cypress test statuses to GitHub for related commits. {% url "Status checks" https://help.github.com/en/articles/about-status-checks %} help prevent merging a commit or pull-request into the rest of your codebase until all your Cypress tests have passed.
+
+The Cypress GitHub App reports commit status checks in two separate styles:
+
+- One check per {% url "run group" https://help.github.com/en/articles/about-status-checks %}.
+    {% imgTag /img/dashboard/github-integration/status-checks-per-group-failed.png "Status checks per group" "no-border" %}
+
+- Or one check per spec file.
+    {% imgTag /img/dashboard/github-integration/status-checks-per-spec.png "Status checks per spec" "no-border" %}
+
+Each status check will report the number of test failures or passes, and the associated **Details** link will direct you to the test run's page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
+{% imgTag /img/dashboard/dashboard-fail-tab.png "Cypress Dashboard failure tab" %}
+
+### Disable status checks
+
+GitHub status checks are optional, and can be disabled within a project's GitHub integration settings:
+{% imgTag /img/dashboard/github-integration/status-check-settings.png "Status checks settings" %}
+
+## Pull request comments
+
+The Cypress GitHub App can provide detailed test information within pull requests via comments that include:
+
+- Run statistics, such as tests passed, failed, skipped, and over-limit.
+- Run context details:
+  - The associated Cypress project
+  - Final run status (passed, failed, etc)
+  - Commit SHA linking to the GitHub commit
+  - The time the run started and finished as well as the duration.
+  - Operating system version and browser version.
+- Run failures:
+  - The first 10 failures are displayed with a link to more.
+  - Each failed test links back to the associated failure within the Cypress Dashboard.
+  - Screenshot thumbnails are also provided with each failure to conveniently provide context.
+
+An example of a Cypress pull-request comment can be seen below:
+
+{% imgTag /img/dashboard/github-integration/pr-comment-fail.jpg "Cypress GitHub App PR comment" %}
+
+### Disable PR comments
+
+PR comments and failure screenshot thumbnails are optional, and can be disabled if not needed within a project's GitHub Integration settings:
+{% imgTag /img/dashboard/github-integration/pr-comments-settings.png "Status checks settings" %}
+
 # Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
+
 - Your project is a non-commercial entity
 - Source code for your project is available in a public location with an {% url "OSI-approved license" https://opensource.org/licenses %}
 
-## Requesting OSS Plan for an Org
+## Requesting OSS plan for an org
 
 Follow the following process to request an OSS plan for your project:
 
@@ -381,6 +507,7 @@ Follow the following process to request an OSS plan for your project:
   {% imgTag /img/dashboard/oss-plan-1-login.png "Login or Create Account" "no-border" %}
 2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
+
   {% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
   {% imgTag /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" "no-border" %}
