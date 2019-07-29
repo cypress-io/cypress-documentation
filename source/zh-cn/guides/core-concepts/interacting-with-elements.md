@@ -35,6 +35,7 @@ Cypress将在{% url `defaultCommandTimeout` configuration#Timeouts %}期间等�
 - {% urlHash '将元素滚动到视图中。' 滚动 %}
 - {% urlHash '确保元素未隐藏。' 可见性 %}
 - {% urlHash '确保元素未禁用。' 不可操作 %}
+- {% urlHash 'Ensure the element is not readonly.' Readonly %}
 - {% urlHash '确保元素不是动画。' 动画 %}
 - {% urlHash '确保元素没有被覆盖。' 覆盖 %}
 - {% urlHash '如果任然被具有固定位置的元素覆盖，则滚动页面。' 滚动 %}
@@ -73,7 +74,13 @@ The following calculations factor in CSS translations and transforms.
 
 Cypress检查元素的 `disabled` 属性是否为 `true`。
 
-我们不会检查一个元素是否具有 `readonly` 属性 (但是我们应该需要检查)。如果你希望我们添加此内容，你可以 {% open_an_issue %}
+## 不可操作
+
+Cypress检查元素的 `disabled` 属性是否为  is set.
+
+## Readonly
+
+Cypress checks whether an element's `readonly` property is set during {% url "`.type()`" type %}.
 
 ## 动画
 
