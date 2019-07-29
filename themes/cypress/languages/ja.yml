@@ -33,7 +33,13 @@ sidebar:
     writing-and-organizing-tests: テストの書き方と整理の仕方
     conditional-testing: 条件付きテスト
     test-runner: テストランナー
-    dashboard-service: ダッシュボードサービス
+    dashboard: Dashboard
+    dashboard-introduction: Introduction
+    projects: Projects
+    runs: Runs
+    organizations: Organizations
+    users: Users
+    github-integration: GitHub Integration
     debugging: デバッグする
     variables-and-aliases: 変数と別名
     stubs-spies-and-clocks: スタブ、スパイ、そしてクロック

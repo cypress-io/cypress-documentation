@@ -63,7 +63,7 @@ The properties will be merged into the screenshot details and passed to the `onA
 # See also
 
 - {% url "`cy.screenshot()`" screenshot %}
-- {% url 'Dashboard Service' dashboard-service %}
+- {% url 'Dashboard Service' dashboard-introduction%}
 - {% url "Plugins Guide" plugins-guide %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
 - {% url 'Visual Testing' visual-testing %}
