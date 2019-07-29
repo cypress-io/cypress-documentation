@@ -131,14 +131,14 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 
 ### To record tests:
 
-1. {% url 'Set up your project to record' dashboard-service#Setup %}
+1. {% url 'Set up your project to record' projects#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %} within CI.
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url 'Read the full guide on the Dashboard Service.' dashboard-service %}
+{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction%}
 
 ## Run tests in parallel
 
@@ -386,7 +386,7 @@ Refer to the {% url 'Environment Variables recipe' configuration#Environment-Var
 
 ***Record Key***
 
-If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' projects#Identification %}
 
 Instead of hard coding it into your run command like this:
 
