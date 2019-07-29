@@ -70,11 +70,11 @@ cy.get('button').then(($btn) => {
 })
 ```
 
-### The number is yielded
+### The number is yielded from previous command
 
 ```js
 cy.wrap(1).then((num) => {
-  cy.wrap(num)).should('equal', 1) // true
+  cy.wrap(num).should('equal', 1) // true
 }).should('equal', 1) // true
 ```
 
