@@ -2,7 +2,7 @@
 title: 配置
 ---
 
-当一个项目被添加到Cypress中时，项目中会创建`cypress.json`文件。这个文件用于存储`projectId`（{% url '在配置要记录的测试之后' dashboard-service#Setup %}）和你提供的任何配置值。
+当一个项目被添加到Cypress中时，项目中会创建`cypress.json`文件。这个文件用于存储`projectId`（{% url '在配置要记录的测试之后' projects#Setup %}）和你提供的任何配置值。
 
 ```json
 {
@@ -72,7 +72,7 @@ Cypress的默认行为可以通过提供以下任何配置选项来修改。下�
 `videoCompression` | `32` | 视频压缩的质量设置，以恒定速率系数(CRF)表示。该值可以是`false`以禁用压缩或`0`和`51`之间的值，其中较低的值会产生更好的质量（以更大的文件大小为代价）。
 `videosFolder`     | `cypress/videos` | 当通过`cypress run`运行测试时，Cypress会自动保存测试运行的视频。
 `video`     | `true`     | Cypress是否会捕捉通过`cypress run`运行的测试视频。
-`videoUploadOnPasses`     | `true`     | Cypress是否将处理、压缩和上传视频到{% url "仪表盘" dashboard-service %}，即使spec文件中的所有测试都通过了。这只适用于记录在仪表板上的运行。如果你只想在测试失败时上传spec文件的视频，请关闭此功能。
+`videoUploadOnPasses`     | `true`     | Cypress是否将处理、压缩和上传视频到{% url "仪表盘" dashboard-introduction%}，即使spec文件中的所有测试都通过了。这只适用于记录在仪表板上的运行。如果你只想在测试失败时上传spec文件的视频，请关闭此功能。
 
 ## 浏览器
 

@@ -39,7 +39,7 @@ Video recording is currently only supported when running Cypress from the Electr
 
 当`cypress run`完成后，Cypress将自动压缩视频以节省文件大小。默认情况下，会压缩成`32 CRF`，但是这是可配置的{% url `videoCompression` configuration#Videos %}属性。
 
-当使用`--record`来执行测试的时候，视频在每一个spec文件运行后都会被处理，压缩并且上传到{% url 'Dashboard Service' dashboard-service %}，不管成功与否。为了将这种行为改变为仅在测试失败的情况下才处理视频，请将{% url `videoUploadOnPasses` configuration#Videos %}配置项设置为`false`。
+当使用`--record`来执行测试的时候，视频在每一个spec文件运行后都会被处理，压缩并且上传到{% url 'Dashboard Service' dashboard-introduction%}，不管成功与否。为了将这种行为改变为仅在测试失败的情况下才处理视频，请将{% url `videoUploadOnPasses` configuration#Videos %}配置项设置为`false`。
 
 在`cypress run`之前，Cypress清空现有的视频。如果你不想在运行前清空你的视频文件夹，你可以将{% url `trashAssetsBeforeRuns` configuration#Videos %}设置为`false`。
 
@@ -78,7 +78,7 @@ If you are an FFmpeg pro and want to see all the settings and debug messages dur
 
 ## 和你的团队一起分享
 
-你现在可以利用的是{% url 'Cypress仪表盘服务' dashboard-service %}：我们的伙伴企业服务，它为你存储构件，并允许你从任何web浏览器查看它们，还可以与你的团队分享它们。
+你现在可以利用的是{% url 'Cypress仪表盘服务' dashboard-introduction%}：我们的伙伴企业服务，它为你存储构件，并允许你从任何web浏览器查看它们，还可以与你的团队分享它们。
 
 ## 视觉回归测试/截图差异
 
@@ -88,6 +88,6 @@ If you are an FFmpeg pro and want to see all the settings and debug messages dur
 
 - {% url 'After Screenshot API' after-screenshot-api %}
 - {% url 'Cypress.Screenshot' screenshot-api %}
-- {% url 'Dashboard Service' dashboard-service %}
+- {% url 'Dashboard Service' dashboard-introduction%}
 - {% url `cy.screenshot()` screenshot %}
 - {% url 'Visual Testing' visual-testing %}

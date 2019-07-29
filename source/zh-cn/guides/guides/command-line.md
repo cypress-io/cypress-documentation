@@ -232,7 +232,7 @@ cypress run --project ./some/nested/folder
 
 ### `cypress run --record --key <record-key>`
 
-测试过程{% url '设置项目自动录制' dashboard-service#Setup %}。项目设置好后，你将会得到一个**Record Key**.
+测试过程{% url '设置项目自动录制' projects#Setup %}。项目设置好后，你将会得到一个**Record Key**.
 
 ```shell
 cypress run --record --key <record_key>
@@ -252,7 +252,7 @@ export CYPRESS_RECORD_KEY=abc-key-123
 cypress run --record
 ```
 
-阅读{% url '更多关于录制运行' dashboard-service#Setup %}的内容。
+阅读{% url '更多关于录制运行' projects#Setup %}的内容。
 
 ### `cypress run --reporter <reporter>`
 
