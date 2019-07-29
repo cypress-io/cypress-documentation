@@ -129,6 +129,11 @@
       link: https://github.com/NicholasBoll/cypress-pipe
       keywords: [commands]
 
+    - name: cypress-downloadfile
+      description: A custom command to download different kinds of files and store them on your local machine
+      link: https://github.com/Xvier/cypress-downloadfile
+      keywords: [commands, downloading]
+
     - name: cypress-plugin-snapshots
       description: Plugin for snapshot tests in Cypress. Same API as Jest, but with graphical interface for reviewing and approving changes.
       link: https://github.com/meinaart/cypress-plugin-snapshots
