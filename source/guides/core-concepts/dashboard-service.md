@@ -508,7 +508,7 @@ Follow the following process to request an OSS plan for your project:
 2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
 
-{% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
+  {% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
   {% imgTag /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" "no-border" %}
 4. Fill in and submit the OSS plan request form.
