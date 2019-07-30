@@ -409,7 +409,7 @@ cypress run --record
 
 你传递了`--ci-build-id`、{% url "`--group`" command-line#cypress-run-group-lt-name-gt %}或{% url "`--parallel`" command-line#cypress-run-parallel %}标志，但没有同时传递`--record`标志。
 
-这些标志只能在记录到{% url "仪表板服务" dashboard-service %}时使用。
+这些标志只能在记录到{% url "仪表板服务" dashboard-introduction%}时使用。
 
 请查看我们的{% url "并行化" parallelization %}文档以了解更多信息。
 

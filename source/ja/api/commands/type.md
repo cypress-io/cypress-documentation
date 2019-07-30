@@ -286,7 +286,6 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
   * `week`
   * `month`
   * `time`
-  * `datetime`
   * `datetime-local`
   * `search`
   * `url`
