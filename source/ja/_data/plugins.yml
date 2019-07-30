@@ -251,6 +251,11 @@
       link: https://github.com/matzeeable/wp-reactjs-starter
       keywords: [wp, wordpress]
 
+    - name: Elm Batteries Included
+      description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
+      link: https://github.com/cedricss/elm-batteries
+      keywords: [elm, parcel, netlify]
+
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
   plugins:
