@@ -117,22 +117,20 @@ function initHexo () {
         return filtered
       }, [])
 
-      return new Promise((resolve, reject) => {
-        fs.writeFile(
-          `${__dirname}/source/_data/banners.yml`,
-          yaml.safeDump(data),
-          (error) => {
-            // log if writeFile ends with error, but don't block hexo init process
-            if (error) {
-              console.error(error)
+      fs.writeFile(
+        `${__dirname}/source/_data/banners.yml`,
+        yaml.safeDump(data),
+        (error) => {
+          // log if writeFile ends with error, but don't block hexo init process
+          if (error) {
+            console.warn(error)
 
-              return reject(error)
-            }
+            return reject(error)
+          }
 
-            return resolve(error)
-          },
-        )
-      })
+          return resolve()
+        },
+      )
     })
   })
   // start Hexo
