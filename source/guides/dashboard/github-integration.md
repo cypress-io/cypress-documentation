@@ -79,7 +79,7 @@ If status checks are enabled within a project's GitHub integration settings, the
 
 The Cypress GitHub App reports commit status checks in two separate styles:
 
-- One check per {% url "run group" https://help.github.com/en/articles/about-status-checks %}.
+- One check per {% url "run group" https://docs.cypress.io/guides/guides/parallelization.html#Grouping-test-runs %}.
     {% imgTag /img/dashboard/github-integration/status-checks-per-group-failed.png "Status checks per group" "no-border" %}
 
 - Or one check per spec file.
