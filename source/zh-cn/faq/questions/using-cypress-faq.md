@@ -203,6 +203,23 @@ describe('The Document Metadata', () => {
 })
 ```
 
+## {% fa fa-angle-right %} Can I check that a form's HTML form validation is shown when an input is invalid?
+
+You certainly can.
+
+```javascript
+it('check validation message on invalid input', () => {
+  cy.get('input:invalid').should('have.length', 0)
+  cy.get('[type="email"]').type('not_an_email')
+  cy.get('[type="submit"]').click()
+  cy.get('input:invalid').should('have.length', 1)
+  cy.get('[type="email"]').then(($input) => {
+    expect($input[0].validationMessage).to.eq('I expect an email!')
+  })
+})
+```
+
+
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
 You can throttle your network connection by accessing your Developer Tools Network panel. Additionally, you can add your own custom presets by selecting **Custom > Add** from the Network Conditions drawer.
@@ -447,7 +464,7 @@ describe('Logo', () => {
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can `require` or `import` them as you're accustomed to. We preprocess your spec files with Babel and Browserify.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
 
 Cypress does not have direct access to Node or your file system. We recommend utilizing one of the following to execute code outside of the browser:
 
