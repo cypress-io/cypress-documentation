@@ -107,14 +107,14 @@ Cypress可以录制测试用例，并且在{% url 'Cypress Dashboard' https://on
 
 ### 使用录制前你需要：
 
-1. {% url '设置录制项目' dashboard-service#Setup %}
+1. {% url '设置录制项目' projects#Setup %}
 2. 在使用CI的时候{% url '传`--record`参数给`cypress run`' command-line#cypress-run %}
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url '请在Dashboard Service里参考完整指导' dashboard-service %}
+{% url '请在Dashboard Service里参考完整指导' dashboard-introduction%}
 
 ## 测试并行执行
 
@@ -324,7 +324,7 @@ Error: the cypress binary is not installed
 如果你没有使用以上的CI提供商，那么请确保你的系统已经安装如下依赖：
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 ## 缓存
@@ -362,7 +362,7 @@ apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 liba
 
 ***录制秘钥***
 
-如果你正在一个公共项目上{% urlHash '录制用例' 录制用例 %}，你可能会想保护你的录制秘钥。{% url '了解为什么。' dashboard-service#Identification %}
+如果你正在一个公共项目上{% urlHash '录制用例' 录制用例 %}，你可能会想保护你的录制秘钥。{% url '了解为什么。' projects#Identification %}
 
 在命令里写死秘钥值是不科学的：
 

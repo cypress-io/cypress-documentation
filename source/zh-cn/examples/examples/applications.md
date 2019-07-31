@@ -41,6 +41,16 @@ This repo compares {% url "Cypress Tests" https://github.com/cypress-io/cypress-
 
 {% imgTag /img/examples/public-project-todomvc.png "TodoMvc testing in Cypress" %}
 
+## TodoMVC Redux
+
+{% fa fa-github %} {% url https://github.com/cypress-io/cypress-example-todomvc-redux %}
+
+A fork the {% url "official Redux TodoMVC example" https://github.com/reduxjs/redux/tree/master/examples/todomvc %}. Through a combination of end-to-end and unit tests shows how you can achieve 100% code coverage.
+
+- Instrument and collect code coverage following the Cypress {% url 'Code Coverage' code-coverage %} guide.
+
+{% imgTag /img/examples/todomvc-redux-100percent.png "TodoMVC Redux application code coverage report" %}
+
 ## Realworld
 
 {% fa fa-github %} {% url https://github.com/cypress-io/cypress-example-realworld %}

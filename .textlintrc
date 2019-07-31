@@ -37,6 +37,7 @@
         "JavaScript",
         "Jest",
         "jQuery",
+        "JSDoc",
         ["local[ ]?storage", "localStorage"],
         "Lodash",
         "minimatch",

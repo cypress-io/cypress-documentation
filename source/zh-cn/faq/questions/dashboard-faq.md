@@ -10,12 +10,12 @@ containerClass: faq
 
 The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration %}. The Dashboard provides you insight into what happened during your tests run.
 
-You can read more {% url 'here' dashboard-service %}.
+You can read more {% url 'here' dashboard-introduction%}.
 
 ## {% fa fa-angle-right %} How do I record my tests?
 
-1. First {% url 'set up the project to record' dashboard-service#Setup %}.
-2. Then {% url 'record your runs' dashboard-service#Recorded-runs %}.
+1. First {% url 'set up the project to record' projects#Setup %}.
+2. Then {% url 'record your runs' runs %}.
 
 After recording your tests, you will see them in the {% url 'Dashboard' https://on.cypress.io/dashboard %} and in the "Runs" tab of the Test Runner.
 
@@ -27,7 +27,7 @@ Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more 
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
 
-**A private project** means that only {% url 'users' dashboard-service#Users %} you explicitly invite to your {% url 'organization' dashboard-service#Organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
+**A private project** means that only {% url 'users' users %} you explicitly invite to your {% url 'organization' organizations %} can see its recorded runs. Even if someone knows your `projectId`, they will not have access to your runs unless you have invited them.
 
 ## {% fa fa-angle-right %} How is this different than CI?
 
@@ -35,9 +35,9 @@ Cypress is **complementary** to your {% url "CI provider" continuous-integration
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
-The difference between our {% url 'Dashboard Service' dashboard-service %} and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
+The difference between our {% url 'Dashboard Service' dashboard-introduction%} and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
 
-Our {% url 'Dashboard Service' dashboard-service %} provides you with the low level details of *what* happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
+Our {% url 'Dashboard Service' dashboard-introduction%} provides you with the low level details of *what* happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI provider's `stdout` output, you can log into the {% url 'Dashboard' https://on.cypress.io/dashboard %}, see the `stdout` as well as screenshots and video of the tests running. It should be instantly clear what the problem was.
 
