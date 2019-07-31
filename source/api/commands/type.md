@@ -170,15 +170,21 @@ Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL + R` or `SHIFT + ALT + Q`. The modifier(s) remain activated for the duration of the `.type()` command, and are released when all subsequent characters are typed, unless {% url '`{release: false}`' type#Options %} is passed as an {% url 'option' type#Key-Combinations %}. A `keydown` event is fired when a modifier is activated and a `keyup` event is fired when it is released.
 
-{% note info %}
-To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
-{% endnote %}
-
 ### Type a key combination
 
 ```javascript
 // this is the same as a user holding down SHIFT and ALT, then pressing Q
 cy.get('input').type('{shift}{alt}Q')
+```
+
+### Type literal `{` or `}` characters
+
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+
+```js
+cy.get('#code-input')
+  // will not escape { } characters
+  .type('function (num) {return num * num;}', { parseSpecialCharSequences: false })
 ```
 
 ### Hold down modifier key and type a word
@@ -239,8 +245,8 @@ cy.get('button').click()
 
 `.type()` requires a focusable element as the subject, since it's usually intended to type into something that's an input or textarea. Although there *are* a few cases where it's valid to "type" into something other than an input or textarea:
 
-* Keyboard shortcuts where the listener is on the `document` or `body`.
-* Holding modifier keys and clicking an arbitrary element.
+- Keyboard shortcuts where the listener is on the `document` or `body`.
+- Holding modifier keys and clicking an arbitrary element.
 
 To support this, the `body` can be used as the DOM element to type into (even though it's *not* a focusable element).
 
@@ -274,22 +280,22 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ## Supported Elements
 
-* ^HTML `<body>` and `<textarea>` elements.
-* Elements with a defined `tabindex` attribute.
-* Elements with a defined `contenteditable` attribute.
-* ^HTML `<input>` elements with a defined `type` attribute of one of the following:
-  * `text`
-  * `password`
-  * `email`
-  * `number`
-  * `date`
-  * `week`
-  * `month`
-  * `time`
-  * `datetime-local`
-  * `search`
-  * `url`
-  * `tel`
+- ^HTML `<body>` and `<textarea>` elements.
+- Elements with a defined `tabindex` attribute.
+- Elements with a defined `contenteditable` attribute.
+- ^HTML `<input>` elements with a defined `type` attribute of one of the following:
+  - `text`
+  - `password`
+  - `email`
+  - `number`
+  - `date`
+  - `week`
+  - `month`
+  - `time`
+  - `datetime-local`
+  - `search`
+  - `url`
+  - `tel`
 
 ## Actionability
 
@@ -459,6 +465,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
+{% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
 {% url "0.20.0" changelog#0-20-0 %} | Supports for typing in inputs of type `date`, `time`, `month`, and `week`
