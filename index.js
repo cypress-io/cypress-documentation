@@ -22,12 +22,6 @@ const cmd = args._.shift()
 
 const hexo = new Hexo(process.cwd(), args)
 
-// if there is a need to fetch data from our contentful acc
-const contentfulClient = Contentful.createClient({
-  space: hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID,
-  accessToken: hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
-})
-
 function initHexo () {
   // defaults outside of _config.yml
   Object.assign(hexo.config, {
@@ -97,42 +91,57 @@ function initHexo () {
   console.log('in environment %s site url is %s', env, url)
   hexo.config.url = url
 
-  // set this on both our process + hexo
+  // set this on both our process + Hexo
   process.env.NODE_ENV = hexo.env.NODE_ENV = env
 
   console.log('NODE_ENV is:', chalk.cyan(env))
 
-  return contentfulClient
-  .getEntries({ content_type: 'topBanner' })
-  .then(({ items }) => {
-    const data = items.reduce((filtered, option) => {
-      if (moment(option.fields.endDate).isSameOrAfter(moment())) {
-        filtered.push({ ...option.fields, text: documentToHtmlString(option.fields.text) })
-      }
+  return new Promise((resolve, reject) => {
+    const space = hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID
+    const accessToken = hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN
 
-      return filtered
-    }, [])
+    if (typeof space === 'undefined' || typeof accessToken === 'undefined') {
+      return reject({
+        message: 'No Contentful space variables.',
+      })
+    }
 
-    return new Promise((resolve) => {
+    return Contentful.createClient({ space, accessToken })
+    .getEntries({ content_type: 'topBanner' })
+    .then(({ items }) => {
+      const data = items.reduce((filtered, option) => {
+        if (moment(option.fields.endDate).isSameOrAfter(moment())) {
+          filtered.push({ ...option.fields, text: documentToHtmlString(option.fields.text) })
+        }
+
+        return filtered
+      }, [])
+
       fs.writeFile(
         `${__dirname}/source/_data/banners.yml`,
         yaml.safeDump(data),
         (error) => {
           // log if writeFile ends with error, but don't block hexo init process
-          if (error) console.error(error)
+          if (error) {
+            console.warn(error)
+
+            return reject(error)
+          }
 
           return resolve()
         },
       )
     })
   })
+  // start Hexo
   .then(() => hexo.init().then(() => hexo.call(cmd, args)))
   .catch((error) => {
+    // log error object
     console.error(error)
 
+    // but start Hexo anyway
     return hexo.init().then(() => hexo.call(cmd, args))
   })
 }
 
 initHexo()
-

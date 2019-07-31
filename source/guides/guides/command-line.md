@@ -232,7 +232,7 @@ cypress run --project ./some/nested/folder
 
 ### `cypress run --record --key <record-key>`
 
-Record video of tests running after {% url 'setting up your project to record' dashboard-service#Setup %}. After setting up your project you will be given a **Record Key**.
+Record video of tests running after {% url 'setting up your project to record' projects#Setup %}. After setting up your project you will be given a **Record Key**.
 
 ```shell
 cypress run --record --key <record_key>
@@ -252,7 +252,7 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
+You can {% url 'read more about recording runs here' projects#Setup %}.
 
 ### `cypress run --reporter <reporter>`
 

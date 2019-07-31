@@ -39,7 +39,7 @@ Videos are stored in the {% url `videosFolder` configuration#Videos %} which is 
 
 After `cypress run` completes, Cypress automatically compresses the video in order to save on file size. By default it compresses to a `32 CRF`, but this is configurable with the {% url `videoCompression` configuration#Videos %} property.
 
-When using the `--record` flag while running your tests, videos are processed, compressed, and uploaded to the {% url 'Dashboard Service' dashboard-service %} after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the {% url `videoUploadOnPasses` configuration#Videos %} configuration option to `false`.
+When using the `--record` flag while running your tests, videos are processed, compressed, and uploaded to the {% url 'Dashboard Service' dashboard-introduction%} after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the {% url `videoUploadOnPasses` configuration#Videos %} configuration option to `false`.
 
 Cypress clears any existing videos before a `cypress run`. If you do not want to clear your videos folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Videos %} to `false`.
 
@@ -77,7 +77,7 @@ So you are capturing screenshots and recording videos of your test runs, now wha
 
 ## Share Them With Your Team
 
-Something you can take advantage of today is the {% url 'Cypress Dashboard Service' dashboard-service %}: our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
+Something you can take advantage of today is the {% url 'Cypress Dashboard Service' dashboard-introduction%}: our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
 
 ## Visual Regression Test / Screenshot Diffing
 
@@ -87,6 +87,6 @@ Another possibility is visual regression testing: comparing screenshots of past 
 
 - {% url 'After Screenshot API' after-screenshot-api %}
 - {% url 'Cypress.Screenshot' screenshot-api %}
-- {% url 'Dashboard Service' dashboard-service %}
+- {% url 'Dashboard Service' dashboard-introduction%}
 - {% url `cy.screenshot()` screenshot %}
 - {% url 'Visual Testing' visual-testing %}

@@ -3,8 +3,13 @@ function setMyTimezoneToDate (date) {
 }
 
 function actualizePadding (padding) {
-  document.querySelector('#sidebar').style.paddingTop = padding.toString() + 'px'
-  document.querySelector('#article-toc-inner').style.paddingTop = padding.toString() + 'px'
+  if (document.querySelector('#sidebar')) {
+    document.querySelector('#sidebar').style.paddingTop = padding.toString() + 'px'
+  }
+
+  if (document.querySelector('#article-toc-inner')) {
+    document.querySelector('#article-toc-inner').style.paddingTop = padding.toString() + 'px'
+  }
 }
 
 function actualizeSidebarPosition () {

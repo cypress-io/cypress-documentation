@@ -6,7 +6,7 @@ Cypress需要访问网络才能工作。许多公司需要使用公司的代理�
 
 * Cypress将不能加载除了`localhost`以外的网页。
 * Cypress将不能在你的{% url "`baseUrl`" configuration#Global %}不可用时警告你。
-* Cypress将不能连接到{% url "数据面板服务" dashboard-service %} 来登入或者记录测试运行。
+* Cypress将不能连接到{% url "数据面板服务" dashboard-introduction%} 来登入或者记录测试运行。
 * `npm install cypress`可能在下载Cypress二进制文件时失败。
 
 如果你正在经历部分或所有的这些问题，你可能需要配置Cypress的代理。相应的配置说明可查看{% urlHash "macOS" 在Linux或macOS上设置代理 %}，{% urlHash "Linux" 在Linux或macOS上设置代理 %}，和{% urlHash "Windows" 在Windows上设置代理 %}.

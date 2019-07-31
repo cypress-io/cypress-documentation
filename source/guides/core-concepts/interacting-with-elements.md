@@ -35,6 +35,7 @@ Cypress will wait for the element to pass all of these checks for the duration o
 - {% urlHash 'Scroll the element into view.' Scrolling %}
 - {% urlHash 'Ensure the element is not hidden.' Visibility %}
 - {% urlHash 'Ensure the element is not disabled.' Disability %}
+- {% urlHash 'Ensure the element is not readonly.' Readonly %}
 - {% urlHash 'Ensure the element is not animating.' Animations %}
 - {% urlHash 'Ensure the element is not covered.' Covering %}
 - {% urlHash 'Scroll the page if still covered by an element with fixed position.' Scrolling %}
@@ -73,7 +74,9 @@ The following calculations factor in CSS translations and transforms.
 
 Cypress checks whether an element's `disabled` property is `true`.
 
-We don't look at whether an element has property `readonly` (but we probably should). {% open_an_issue %} if you'd like us to add this.
+## Readonly
+
+Cypress checks whether an element's `readonly` property is set during {% url "`.type()`" type %}.
 
 ## Animations
 
@@ -197,8 +200,8 @@ We will NOT perform these:
 
 - Scroll the element into view
 - Ensure it is visible
-- Ensure it is not readonly
 - Ensure it is not disabled
+- Ensure it is not readonly
 - Ensure it is not animating
 - Ensure it is not covered
 - Fire the event at a descendent
