@@ -154,3 +154,12 @@ Type in text to see which element it matches. Note that {% url `cy.contains()` c
 If you would like to interact with your app while the Selector Playground is open, the element highlighting might get in the way. Toggling the highlighting off will allow you to interact with your app more easily.
 
 {% imgTag /img/guides/test-runner/turn-off-highlight-in-selector-playground.gif "Turn off highlighting" %}
+
+### Shortcuts
+
+You can also stop, rerun and focus on the specs window all via keyboard shortcuts:
+
+Press R to rerun a test.
+Press S to stop a test.
+Press F to focus on the specs window.
+
