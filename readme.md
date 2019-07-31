@@ -16,6 +16,28 @@ please see our [Contributing Guideline](/CONTRIBUTING.md).
 
 Cypress is [first time OSS contributor friendly](http://www.firsttimersonly.com/). See [these issues](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) to contribute in a meaningful way.
 
+#### Contentful driven data:
+
+If you need any [Contentful](https://www.contentful.com/) driven data to be parsed before Hexo serve - you need to 
+declare Circle CI or/and bash. You may need [Contentful](https://www.contentful.com/) environment variables inside 
+your machine or container:
+
+- GATSBY_CONTENTFUL_SPACE_ID 
+
+    [Contentful](https://www.contentful.com/) 12 digit key. You can find it (if you have granted access) in 
+    [Contentful](https://www.contentful.com/) acc:
+    
+    Settings → API keys → Example key 1 → Space ID
+
+- GATSBY_CONTENTFUL_ACCESS_TOKEN
+
+    [Contentful](https://www.contentful.com/) 64 digit token. You can find it (if you have granted access) in
+    [Contentful](https://www.contentful.com/) acc:
+    
+    Settings → API keys → Example key 1 → Content Delivery API - access token
+    
+ P.S. If you don't have any of this - Hexo will build & serve as usual, but without any 
+ [Contentful](https://www.contentful.com/) driven data.
 ## Deploying
 
 See our [Deploy Guideline](DEPLOY.md).
