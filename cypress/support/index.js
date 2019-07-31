@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 import './defaults'
 
 const resizeObserverLoopErrRe = /^ResizeObserver loop limit exceeded/

@@ -1,3 +1,7 @@
+// loads Cypress types and any of our custom commands
+/// <reference path="../support/index.d.ts" />
+// @ts-check
+
 const GUIDES_PATH = '/guides/overview/why-cypress.html'
 
 describe('Main', () => {
@@ -25,7 +29,7 @@ describe('Main', () => {
 
     // only works in development environment where each CSS
     // file is separate
-    if (Cypress.env('NODE_ENV') === 'development') {
+    if (Cypress.isDevelopment()) {
       it('loads roboto', () => {
         cy.request('/fonts/vendor/roboto-fontface/css/roboto/roboto-fontface.css')
       })
