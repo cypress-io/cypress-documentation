@@ -93,6 +93,30 @@ Pass the command to boot your server, the url your server is hosted on and your 
 
 In the example above, the `cy:run` command will only be executed when the URL `http://localhost:3030` responds with an HTTP status code of 200. The server will also shut down when the tests complete.
 
+*Gotchas*
+
+When [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users) that does not respond to `HEAD` requests, use an explicit `GET` method to ping the server like this:
+
+```json
+{
+  "scripts": {
+    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
+  }
+}
+```
+
+When working with local `https` in webpack, set an environment variable to allow local certificate:
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030 --https",
+    "cy:run": "cypress run",
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+  }
+}
+```
+
 ## Record tests
 
 Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %}.
@@ -107,14 +131,14 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 
 ### To record tests:
 
-1. {% url 'Set up your project to record' dashboard-service#Setup %}
+1. {% url 'Set up your project to record' projects#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %} within CI.
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url 'Read the full guide on the Dashboard Service.' dashboard-service %}
+{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction%}
 
 ## Run tests in parallel
 
@@ -324,7 +348,7 @@ See our {% url 'examples' docker %} for additional information on our maintained
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 ## Caching
@@ -362,7 +386,7 @@ Refer to the {% url 'Environment Variables recipe' configuration#Environment-Var
 
 ***Record Key***
 
-If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' projects#Identification %}
 
 Instead of hard coding it into your run command like this:
 

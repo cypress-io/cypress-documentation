@@ -19,7 +19,7 @@ title: 并行化
 
 从{% url "3.1.0" changelog#3-1-0 %}版本开始，Cypress可以在多台机器上并行运行记录测试。虽然并行测试在技术上也可以在一台机器上运行，但我们不推荐，因为这台机器需要大量的资源才能有效地运行你的测试。
 
-这个指南假设你已经在持续集成中运行和{% url "记录" dashboard-service#Setup %}了项目。如果还你没有配置你的项目，请查看我们的{% url "持续集成指南" continuous-integration %}。
+这个指南假设你已经在持续集成中运行和{% url "记录" projects#Setup %}了项目。如果还你没有配置你的项目，请查看我们的{% url "持续集成指南" continuous-integration %}。
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
@@ -40,12 +40,12 @@ Cypress会根据我们的{% urlHash '平衡策略' 平衡策略 %}将每一个sp
   ```
 
     {% note info %}
-   并行运行测试需要传递{% url "`--record`标志" command-line#cypress-run %}。这确保Cypress能够正确地收集并行化将来运行所需的数据。这也为你提供了在{% url "仪表盘服务" dashboard-service %}中查看并行测试结果的全部好处。如果你还没有设置要记录的项目，请查看我们的{% url "设置指南" dashboard-service#Setup %}。
+   并行运行测试需要传递{% url "`--record`标志" command-line#cypress-run %}。这确保Cypress能够正确地收集并行化将来运行所需的数据。这也为你提供了在{% url "仪表盘服务" dashboard-introduction%}中查看并行测试结果的全部好处。如果你还没有设置要记录的项目，请查看我们的{% url "设置指南" projects#Setup %}。
     {% endnote %}
 
 # CI并行交互
 
-在并行化模式下，Cypress{% url "仪表盘服务" dashboard-service %}与你的CI机器交互，通过下面的过程，跨可用CI机器的spec{% urlHash '负载平衡' 平衡策略 %}来协调测试运行的并行化：
+在并行化模式下，Cypress{% url "仪表盘服务" dashboard-introduction%}与你的CI机器交互，通过下面的过程，跨可用CI机器的spec{% urlHash '负载平衡' 平衡策略 %}来协调测试运行的并行化：
 
 1. CI机器与Cypres仪表盘服务联系，以指示在项目中运行哪些spec文件。
 2. 机器通过与Cypress联系，选择接收要运行的spec文件。
@@ -261,13 +261,13 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-这个**延迟默认为60秒**，但是可以在{% url "仪表盘" dashboard-service %}项目设置页面中配置：
+这个**延迟默认为60秒**，但是可以在{% url "仪表盘" dashboard-introduction%}项目设置页面中配置：
 
 {% imgTag /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
 
 # 在仪表盘中可视化并行和分组
 
-你可以在运行的**Specs**选项卡中看到在{% url "仪表盘服务" dashboard-service %}中运行的每个spec文件的结果。Specs在**时间轴**、**条形图**和**机器**视图中显示。
+你可以在运行的**Specs**选项卡中看到在{% url "仪表盘服务" dashboard-introduction%}中运行的每个spec文件的结果。Specs在**时间轴**、**条形图**和**机器**视图中显示。
 
 ## 时间轴视图
 

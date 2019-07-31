@@ -4,7 +4,6 @@ menu:
   plugins: Plugins
   faq: FAQ
   examples: Examples
-  dashboard: Dashboard
   search: Search
 
 index:
@@ -33,7 +32,13 @@ sidebar:
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
-    dashboard-service: Dashboard Service
+    dashboard: Dashboard
+    dashboard-introduction: Introduction
+    projects: Projects
+    runs: Runs
+    organizations: Organizations
+    users: Users
+    github-integration: GitHub Integration
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
