@@ -115,7 +115,6 @@
     "ora": "3.4.0",
     "prompt-confirm": "2.0.4",
     "ramda": "0.26.1",
-    "remove": "0.1.5",
     "request-promise": "4.2.4",
     "sinon": "7.3.2",
     "sinon-chai": "3.3.0",
