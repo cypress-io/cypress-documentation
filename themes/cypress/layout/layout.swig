@@ -5,10 +5,10 @@
   {{ partial('partial/google-tag-manager-noscript')}}
 
   <div id="container">
-    {{ partial('partial/header', {}, { cache: true })  }}
+    {{ partial('partial/header', {})  }}
 
     <div>
-      {{ partial('partial/header', { className: 'header-top-hidden' }, { cache: true })  }}
+      {{ partial('partial/header', { className: 'header-top-hidden' })  }}
       {{ body }}
     </div>
   </div>
