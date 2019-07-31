@@ -5,6 +5,9 @@ title: GitHub Integration
 The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull-request comments' Pull-request-comments %}.
 {% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
 
+{% note info %}
+GitHub Enterprise is currently not supported. Please [contact us](mailto:hello@cypress.io) if you are interested in Enterprise integration.
+{% endnote %}
 {% note warning %}
 GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but please [contact us](mailto:hello@cypress.io) if you are facing GitHub integration issues with your CI setup.
 {% endnote %}
