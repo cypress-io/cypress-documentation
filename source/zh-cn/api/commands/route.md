@@ -33,7 +33,7 @@ cy.route('/users/**')
 
 **{% fa fa-angle-right %} url** ***(String, Glob, RegExp)***
 
-Set a route matching the specific `url`.
+Listen for a route matching the specific URL. 
 
 **{% fa fa-angle-right %} response** ***(String, Object, Array)***
 
@@ -153,11 +153,16 @@ If you pass a `response` to `cy.route()`, Cypress will stub the response in the 
 
 ### `url` as a string
 
-When passing a `string` as the `url`, the XHR's URL must match *exactly* what you've written.
+When passing a `string` as the `url`, the XHR's URL must match *exactly* what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
 
 ```javascript
 cy.server()
-cy.route('https://localhost:7777/users', [{ id: 1, name: 'Pat' }])
+cy.route('https://localhost:7777/surveys/customer?email=john@doe.com', [
+  {
+    id: 1,
+    name: 'john'
+  }
+])
 ```
 
 ### `url` as a RegExp
@@ -499,4 +504,4 @@ When clicking on `XHR Stub` within the Command Log, the console outputs the foll
 - {% url `cy.server()` server %}
 - {% url `cy.wait()` wait %}
 - {% url 'Guide: Network Requests' network-requests %}
-- {% url 'Recipe: Logging in - XHR Web Form' recipes#Logging-In %}
+- {% url 'Recipe: Logging in - XHR Web Forms' recipes#Logging-In %}
