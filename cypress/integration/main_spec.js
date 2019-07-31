@@ -5,6 +5,16 @@ describe('Main', () => {
     cy.server()
   })
 
+  context('robots.txt', () => {
+    if (!Cypress.isDevelopment()) {
+      it('has robots.txt', () => {
+        cy.request('/robots.txt').its('body')
+        .should('include', 'Disallow: /ja/')
+        .and('include', 'Disallow: /zh-cn/')
+      })
+    }
+  })
+
   context('CSS', () => {
     beforeEach(() => {
       cy.visit('/')
