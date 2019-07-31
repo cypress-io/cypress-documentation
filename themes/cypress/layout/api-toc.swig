@@ -1,4 +1,4 @@
-<div id="content-wrap" class="{{ page.containerClass }}">
+<div id="content-wrap"  class="{{ page.containerClass }}">
   <div id="content" class="wrapper">
     <div id="content-inner">
       {{ partial('partial/sidebar') }}

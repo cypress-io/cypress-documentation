@@ -1,6 +1,5 @@
 <!-- Scripts -->
 <!-- build:js /js/application.js -->
-{{ js('js/banners_actualization') }}
 {{ js('js/global_variable') }}
 {{ js('js/lang_select') }}
 {{ js('js/vendor/scrollingelement') }}
