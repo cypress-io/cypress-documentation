@@ -93,7 +93,6 @@
     "cypress": "3.4.1",
     "dependency-check": "3.4.1",
     "deps-ok": "1.4.1",
-    "emoji-strip": "1.0.1",
     "eslint": "6.1.0",
     "eslint-plugin-cypress": "2.6.0",
     "eslint-plugin-cypress-dev": "2.1.0",
@@ -115,7 +114,6 @@
     "ora": "3.4.0",
     "prompt-confirm": "2.0.4",
     "ramda": "0.26.1",
-    "remove": "0.1.5",
     "request-promise": "4.2.4",
     "sinon": "7.3.2",
     "sinon-chai": "3.3.0",
@@ -125,6 +123,7 @@
     "textlint-filter-rule-comments": "1.2.2",
     "textlint-rule-eslint": "3.2.0",
     "textlint-rule-terminology": "1.1.30",
+    "utf8": "3.0.0",
     "wait-on": "3.3.0",
     "yamljs": "0.3.0"
   },

@@ -18,4 +18,5 @@ cypress/screenshots
 cypress/videos
 
 # Dynamically parsed data
+
 source/_data/banners.yml

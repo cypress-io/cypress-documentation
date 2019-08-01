@@ -1,12 +1,12 @@
 const YAML = require('yamljs')
-const emojiStrip = require('emoji-strip')
+const utf8 = require('utf8')
 
 const allBannersYaml = 'source/_data/banners.yml'
 
 describe('Contentful driven banners', () => {
   it('displays all current banners with proper info', function () {
     cy.readFile(allBannersYaml)
-    .then((yamlString) => YAML.parse(yamlString.replace(/\\u[\dA-F]{8}/gi, '')))
+    .then((yamlString) => YAML.parse(yamlString))
     .then((banners) => {
       if (typeof banners === 'undefined' || !banners || !banners.length) return this.skip()
 
@@ -14,17 +14,33 @@ describe('Contentful driven banners', () => {
 
       cy.get('#header .top-banners_item')
       .each((banner, i) => {
-        const text = banner.children('.top-banners_item--body').html().trim()
-        const { startDate, endDate } = banner.data()
-        const btn = banner.children('.call-to-action')
-        const btnText = btn.text().trim()
-        const btnLink = btn.attr('href')
+        cy.wrap(banner)
+        .find('.top-banners_item--body')
+        .invoke('text').invoke('trim')
+        .should((bannerText) => {
+          const yamlText = Cypress.$(banners[i].text).text().trim()
 
-        expect(emojiStrip(text), `Banner #${i + 1} text is proper`).to.eq(banners[i].text.replace(/\r?\n|\r/g, ' '))
-        expect(startDate, `Banner #${i + 1} startDate is proper`).to.eq(banners[i].startDate)
-        expect(endDate, `Banner #${i + 1} endDate is proper`).to.eq(banners[i].endDate)
-        expect(btnText, `Banner #${i + 1} call-to-action text is proper`).to.eq(banners[i].buttonText.trim())
-        expect(btnLink, `Banner #${i + 1} call-to-action link is proper`).to.eq(banners[i].buttonLink)
+          expect(utf8.encode(bannerText), `Banner #${i + 1} text is proper`).to.eq(yamlText)
+        })
+
+        cy.wrap(banner)
+        .invoke('data').its('startDate')
+        .should('eq', banners[i].startDate)
+
+        cy.wrap(banner)
+        .invoke('data').its('endDate')
+        .should('eq', banners[i].endDate)
+
+        cy.wrap(banner)
+        .find('.call-to-action')
+        .invoke('text').invoke('trim')
+        .should('eq', banners[i].buttonText.trim())
+        // const btnLink = btn.attr('href')
+
+        cy.wrap(banner)
+        .find('.call-to-action')
+        .should('have.attr', 'href')
+        .and('eq', banners[i].buttonLink)
       })
     })
   })
