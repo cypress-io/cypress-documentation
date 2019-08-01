@@ -132,6 +132,11 @@ function initHexo () {
         },
       )
     })
+    .catch((err) => {
+      return reject({
+        message: err,
+      })
+    })
   })
   // start Hexo
   .then(() => hexo.init().then(() => hexo.call(cmd, args)))
