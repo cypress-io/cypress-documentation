@@ -45,7 +45,8 @@ Luckily, it is very easy to avoid both of these problems.
 Given a button that we want to interact with:
 
 ```html
-<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+<button id="main" class="btn btn-large" name="submission"
+  role="button" data-cy="submit">Submit</button>
 ```
 
 Let's investigate how we could target it:
@@ -55,6 +56,7 @@ Selector | Recommended | Notes
 `cy.get('button').click()` | {% fa fa-warning red %} Never | Worst - too generic, no context.
 `cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} Never | Bad. Coupled to styling. Highly subject to change.
 `cy.get('#main').click()` | {% fa fa-warning orange %} Sparingly | Better. But still coupled to styling or JS event listeners.
+`cy.get('[name=submission]').click()` | {% fa fa-warning orange %} Sparingly | Coupled to the `name` attribute which has HTML semantics.
 `cy.contains('Submit').click()` | {% fa fa-check-circle green %} Depends | Much better. But still coupled to text content that may change.
 `cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Insulated from all changes.
 
