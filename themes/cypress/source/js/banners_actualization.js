@@ -1,31 +1,31 @@
-function setMyTimezoneToDate (date) {
-  return new Date(Date.parse(date))
-}
-
-function actualizePadding (padding) {
-  if (document.querySelector('#sidebar')) {
-    document.querySelector('#sidebar').style.paddingTop = padding.toString() + 'px'
-  }
-
-  if (document.querySelector('#article-toc-inner')) {
-    document.querySelector('#article-toc-inner').style.paddingTop = padding.toString() + 'px'
-  }
-}
-
-function actualizeSidebarPosition () {
-  var header = document.querySelector('#header')
-
-  if (!header) return
-
-  actualizePadding(header.clientHeight)
-
-  window.addEventListener('resize', function () {
-    actualizePadding(header.clientHeight)
-  })
-}
-
 (function () {
   'use strict'
+
+  function setMyTimezoneToDate (date) {
+    return new Date(Date.parse(date))
+  }
+
+  function actualizeMargin (margin) {
+    if (document.querySelector('#sidebar')) {
+      document.querySelector('#sidebar').style.marginTop = margin.toString() + 'px'
+    }
+
+    if (document.querySelector('#article-toc')) {
+      document.querySelector('#article-toc').style.marginTop = margin.toString() + 'px'
+    }
+  }
+
+  function actualizeSidebarPosition () {
+    var header = document.querySelector('#header')
+
+    if (!header) return
+
+    actualizeMargin(header.clientHeight)
+
+    window.addEventListener('resize', function () {
+      actualizeMargin(header.clientHeight)
+    })
+  }
 
   var banners = document.querySelectorAll('.top-banners_item') || []
   var i

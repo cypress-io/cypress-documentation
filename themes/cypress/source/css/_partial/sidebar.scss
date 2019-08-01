@@ -8,7 +8,7 @@
   left: 0; 
   bottom: 0;
   border-right: 1px solid #f0f3f2;
-  padding-top: 60px;
+  padding-top: 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -107,8 +107,6 @@
       transform: rotateX(180deg);
     }
   }
-
-
 }
 
 #sidebar .sidebar-title:first-child {
