@@ -16,9 +16,11 @@ describe('Contentful driven banners', () => {
       .each((banner, i) => {
         cy.wrap(banner)
         .find('.top-banners_item--body')
-        .invoke('html').invoke('trim')
-        .should((bannerHTML) => {
-          expect(utf8.encode(bannerHTML), `Banner #${i + 1} text is proper`).to.eq(banners[i].text)
+        .invoke('text').invoke('trim')
+        .should((bannerText) => {
+          const yamlText = Cypress.$(banners[i].text).text().trim()
+
+          expect(utf8.encode(bannerText), `Banner #${i + 1} text is proper`).to.eq(yamlText)
         })
 
         cy.wrap(banner)
