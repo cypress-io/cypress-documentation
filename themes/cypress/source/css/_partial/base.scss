@@ -162,7 +162,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
 #container {
   transition: 0.4s;
   height: 100%;
-  overflow-x: hidden;
+
+  @media screen and (max-width:768px) {
+    overflow-x: hidden;
+  }
 }
 
 .not-found {
