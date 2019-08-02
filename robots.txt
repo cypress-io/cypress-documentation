@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /ja/
+Disallow: /zh-cn/
+Disallow: /fonts/
