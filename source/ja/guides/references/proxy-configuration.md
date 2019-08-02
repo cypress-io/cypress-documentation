@@ -69,7 +69,7 @@ This section refers to your operating system's environment variables, *not* {% u
 
 Cypress automatically reads from your system's `HTTP_PROXY` environment variable and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY` environment variable is set, HTTPS traffic will use that proxy instead.
 
-To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied.
+To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied. To make Cypress send traffic for `localhost` through the proxy, pass `<-loopback>` in `NO_PROXY`.
 
 If an uppercase and a lowercase version of the proxy settings are supplied (for example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable will be preferred.
 
