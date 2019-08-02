@@ -19,7 +19,7 @@
     if (typeof window.location.hash === 'undefined') return
 
     return setTimeout(function () {
-      window.scrollTo(0, window.pageYOffset - headerHeight + 59)
+      window.scrollTo(0, window.pageYOffset - headerHeight + 50)
     }, 0)
   }
 
