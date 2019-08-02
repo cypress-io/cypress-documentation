@@ -89,8 +89,9 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   background-color: white;
   margin: -1px 0;
   position: relative;
-  top: 62px;
-  bottom: 334px;
+  //top: 62px;
+  //bottom: 334px;
+  //overflow-y: hidden;
 
   &.rtl {
     direction: rtl;

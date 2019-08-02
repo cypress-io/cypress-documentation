@@ -9,7 +9,7 @@ describe('Changelog', () => {
     .should('be.visible')
   )
 
-  if (Cypress.env('NODE_ENV') === 'development') {
+  if (Cypress.isDevelopment()) {
     it('has a truncated table of contents', () => {
       cy.get('aside#article-toc')
       .should('be.visible')
