@@ -1,8 +1,27 @@
-const debug = require('debug')('copy-en-docs')
+// @ts-check
+
+const debug = require('debug')('copy-english-docs')
 const execa = require('execa')
 const R = require('ramda')
+const pluralize = require('pluralize')
+const fs = require('fs-extra')
+const Promise = require('bluebird')
+const path = require('path')
 
 // work in progress
+/* eslint-disable no-console */
+
+const getLanguageName = (short) => {
+  const names = {
+    ja: 'Japanese',
+  }
+
+  if (!names[short]) {
+    throw new Error(`Unknown language short name ${short}`)
+  }
+
+  return names[short]
+}
 
 const findFilesTrackedByGit = (folder) => {
   return execa('git', ['ls-files', folder]).then(R.prop('stdout')).then(R.split('\n'))
@@ -44,22 +63,42 @@ const findAllEnglishDocs = () => {
   return findAllDocs().then(translationsFilter).then(removePrefix('source'))
 }
 
-const findAllJapaneseDocs = () => {
-  return findFilesTrackedByGit('source/ja').then(removePrefix('source/ja'))
+/**
+ * @param {("ja" | "zh-cn")} shortName The short language name
+*/
+const findAllDocsFor = (shortName) => {
+  const relativeSourceFolder = `source/${shortName}`
+
+  return findFilesTrackedByGit(relativeSourceFolder).then(removePrefix(relativeSourceFolder))
 }
 
 const findAllEnglishDocsNotTranslatedToJapanese = () => {
+  const targetLanguage = 'ja'
+
   return Promise.all([
     findAllEnglishDocs(),
-    findAllJapaneseDocs(),
+    findAllDocsFor(targetLanguage),
   ]).then(([englishFiles, translatedFiles]) => {
-    // console.dir(englishFiles.slice(0, 10))
-    // console.dir(englishFiles)
-    // console.dir(translatedFiles.slice(0, 10))
     return R.difference(englishFiles, translatedFiles)
   })
-  // eslint-disable-next-line no-console
-  .then(console.dir)
+  .then((untransledEnglishFiles) => {
+    if (!untransledEnglishFiles.length) {
+      console.log('No untranslated English docs compared to %s', getLanguageName(targetLanguage))
+
+      return
+    }
+
+    console.log('Copying %s from English to %s',
+      pluralize('file', untransledEnglishFiles.length, true), getLanguageName(targetLanguage))
+    console.dir(untransledEnglishFiles)
+
+    return Promise.mapSeries(untransledEnglishFiles, (relativePathToEnglishFile) => {
+      const sourcePath = path.join('source', relativePathToEnglishFile)
+      const destinationPath = path.join('source', targetLanguage, relativePathToEnglishFile)
+
+      return fs.copyFile(sourcePath, destinationPath)
+    })
+  })
 }
 
 // findAllJapaneseDocs().then(console.table, console.error)
