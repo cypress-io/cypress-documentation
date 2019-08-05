@@ -324,7 +324,7 @@ Error: the cypress binary is not installed
 如果你没有使用以上的CI提供商，那么请确保你的系统已经安装如下依赖：
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 ## 缓存
