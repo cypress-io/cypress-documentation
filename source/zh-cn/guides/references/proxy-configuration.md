@@ -69,7 +69,7 @@ setx HTTP_PROXY http://my-company-proxy.com
 
 Cypress自动读取你系统的`HTTP_PROXY`环境变量并将该代理用于所有的HTTP和HTTPS流量。但是如果你设置了环境变量`HTTPS_PROXY`，HTTPS流量则会使用该代理。
 
-为了绕过某些域名的代理，你可以设置环境变量`NO_PROXY`的值为一个以逗号分割的域名列表，这样这些域名的流量就不会被代理。默认情况下，`localhost`的流量不会被代理。
+为了绕过某些域名的代理，你可以设置环境变量`NO_PROXY`的值为一个以逗号分割的域名列表，这样这些域名的流量就不会被代理。默认情况下，`localhost`的流量不会被代理。要让赛普拉斯通过代理为`localhost`发送流量，请在`NO_PROXY`中传递`<-loopback>`。
 
 如果同时设置了一个大写版本和小写版本的代理（比如说，`HTTP_PROXY` 和 `http_proxy`都被设置了），则会优先使用小写的环境变量。
 
