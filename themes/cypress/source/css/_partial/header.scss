@@ -16,12 +16,12 @@
 
 #header-inner,
 .header-inner {
-  display: box;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   position: relative;
 }
+
 @media screen and(max-width: 768px) {
   #header-inner,
   .header-inner {
