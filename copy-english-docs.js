@@ -42,11 +42,6 @@ const findAllDocs = () => {
   debug('finding all docs')
 
   const sourcesFolderName = 'source'
-  // const n = sourcesFolderName.length + 1 // source + "/"
-
-  // const removeSourcePrefix = (relativeFilename) => {
-  //   return R.startsWith('source', relativeFilename) ? relativeFilename.substr(n) : relativeFilename
-  // }
 
   return findFilesTrackedByGit(sourcesFolderName)
 }
@@ -76,7 +71,7 @@ const findAllDocsFor = (shortName) => {
 /**
  * @param {("ja" | "zh-cn")} targetLanguage
  */
-const findAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
+const copyAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
   return Promise.all([
     findAllEnglishDocs(),
     findAllDocsFor(targetLanguage),
@@ -108,7 +103,20 @@ const findAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
   })
 }
 
-findAllEnglishDocsNotTranslatedTo('ja')
-.then(() => {
-  findAllEnglishDocsNotTranslatedTo('zh-cn')
-})
+const copyUntranslatedDocs = () => {
+  return copyAllEnglishDocsNotTranslatedTo('ja')
+  .then(() => {
+    return copyAllEnglishDocsNotTranslatedTo('zh-cn')
+  })
+
+}
+
+// allow using module.parent
+// @ts-ignore
+if (!module.parent) {
+  copyUntranslatedDocs()
+} else {
+  module.exports = {
+    copyUntranslatedDocs,
+  }
+}
