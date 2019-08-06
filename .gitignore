@@ -28,6 +28,6 @@ source/_data/banners.yml
 # Thus when you add a new translation, add it to the source control
 # with "git add --force" command to override the folder.
 #
-# Japanese translation
 source/ja
+source/zh-cn
 

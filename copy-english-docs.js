@@ -14,6 +14,7 @@ const path = require('path')
 const getLanguageName = (short) => {
   const names = {
     ja: 'Japanese',
+    'zh-cn': 'Chinese',
   }
 
   if (!names[short]) {
@@ -65,16 +66,17 @@ const findAllEnglishDocs = () => {
 
 /**
  * @param {("ja" | "zh-cn")} shortName The short language name
-*/
+ */
 const findAllDocsFor = (shortName) => {
   const relativeSourceFolder = `source/${shortName}`
 
   return findFilesTrackedByGit(relativeSourceFolder).then(removePrefix(relativeSourceFolder))
 }
 
-const findAllEnglishDocsNotTranslatedToJapanese = () => {
-  const targetLanguage = 'ja'
-
+/**
+ * @param {("ja" | "zh-cn")} targetLanguage
+ */
+const findAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
   return Promise.all([
     findAllEnglishDocs(),
     findAllDocsFor(targetLanguage),
@@ -106,6 +108,7 @@ const findAllEnglishDocsNotTranslatedToJapanese = () => {
   })
 }
 
-// findAllJapaneseDocs().then(console.table, console.error)
-findAllEnglishDocsNotTranslatedToJapanese()
-// module.exports = {translationsFilter}
+findAllEnglishDocsNotTranslatedTo('ja')
+.then(() => {
+  findAllEnglishDocsNotTranslatedTo('zh-cn')
+})
