@@ -8,8 +8,9 @@ The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow
 {% note info %}
 GitHub Enterprise is currently not supported. Please [contact us](mailto:hello@cypress.io) if you are interested in Enterprise integration.
 {% endnote %}
+
 {% note warning %}
-GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but please [contact us](mailto:hello@cypress.io) if you are facing GitHub integration issues with your CI setup.
+GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following {% url "these guidelines" continuous-integration#Git-information %}. If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 {% endnote %}
 
 ## Install the Cypress GitHub app
