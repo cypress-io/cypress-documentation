@@ -90,7 +90,7 @@ const findAllEnglishDocsNotTranslatedToJapanese = () => {
 
     console.log('Copying %s from English to %s',
       pluralize('file', untransledEnglishFiles.length, true), getLanguageName(targetLanguage))
-    console.dir(untransledEnglishFiles)
+    console.table(untransledEnglishFiles)
 
     return Promise.mapSeries(untransledEnglishFiles, (relativePathToEnglishFile) => {
       const sourcePath = path.join('source', relativePathToEnglishFile)
