@@ -2,7 +2,7 @@
 large:
   - title: "Running Cypress.io off the Command Line"
     url: https://www.youtube.com/watch?v=Eprov0EKRfQ
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=Eprov0EKRfQ
     date: Jul 26, 2019
     author: Catherine Karena
@@ -10,7 +10,7 @@ large:
 
   - title: "GeeCON 2019: Dmitry Vinnik - Modern Web Testing: Going Beyond Selenium"
     url: https://www.youtube.com/watch?v=1m2AcmiEdpI
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=1m2AcmiEdpI
     date: Jul 24, 2019
     author: Dmitry Vinnik
@@ -18,7 +18,7 @@ large:
 
   - title: "Cypress.io - Automatización al siguiente nivel"
     url: https://www.youtube.com/watch?v=9IVA2HTtlL0
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=9IVA2HTtlL0
     date: Jul 24, 2019
     author: Didier Corrales
@@ -26,7 +26,7 @@ large:
     
   - title: "Cypress + Cucumber Automated Browser Testing stream 02"
     url: https://www.youtube.com/watch?v=JNYia3gHCc4
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=JNYia3gHCc4
     date: Jul 3, 2019
     author: Code Mortals
@@ -34,7 +34,7 @@ large:
   
   - title: "Preparing Angular Cypress End to End Tests for Continuous Integration (CI)"
     url: https://www.youtube.com/watch?v=WOCrIhqk7Js
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://angular-university.io/course/angular-testing-course
     date: Jun 13, 2019
     author: Angular University
@@ -42,7 +42,7 @@ large:
 
   - title: "Problemas, ventajas y retos del Test end to end con Cypress.io"
     url: https://www.youtube.com/watch?v=rA_1fPa38Tg
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=rA_1fPa38Tg
     date: May 29, 2019
     author: "KeepCoding, Kevin Julián Martínez Escobar"
@@ -50,11 +50,11 @@ large:
 
   - title: "TP Vlog 12 - Cypress io, instalacja, konfiguracja, pierwsze testy"
     url: https://www.youtube.com/watch?v=WvmGRZNw6j8&t=1s
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=WvmGRZNw6j8&t=1s
     date: May 26, 2019
     author: Bartosz Kita
-    youtubeId: WvmGRZNw6j8&t=1s   
+    youtubeId: WvmGRZNw6j8&t=1s
 
   - title: "Fun and Fast End to End Testing Using Cypress"
     url: https://www.youtube.com/watch?v=zpn0f4sKUNw
@@ -67,7 +67,7 @@ large:
  
   - title: "Cypress: cómo mantener el amor tras las primeras citas"
     url: https://www.youtube.com/watch?v=LlF6VhAAm7g
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=LlF6VhAAm7g 
     date: May 2, 2019
     author: Alberto Gualis
@@ -75,7 +75,7 @@ large:
    
   - title: "End to End Testing a Web Application using Cypress"
     url: https://www.youtube.com/watch?v=woI490HRM34
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=woI490HRM34
     date: Apr 23, 2019
     author: Code With Kris
@@ -84,7 +84,7 @@ large:
 
   - title: "Working with XHR in Web app automation testing with Cypress.io"
     url: https://www.youtube.com/watch?v=Q6em2Xv-6Ew
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.udemy.com/e2e-cypress/
     date: Apr 23, 2019
     author: Execute Automation
@@ -92,7 +92,7 @@ large:
 
   - title: "Automated and Manual Accessibility Testing with Marcy Sutton"
     url: https://www.youtube.com/watch?v=IADSsClWVtA
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=IADSsClWVtA
     date: Apr 19, 2019
     author: Jason Lengstorf & Marcy Sutton
@@ -101,7 +101,7 @@ large:
 
   - title: "ngHouston - Intro to Cypress w/ Jesse Sanders"
     url: https://www.youtube.com/watch?v=tM2KRTE3F6Y
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=tM2KRTE3F6Y
     date: Mar 13, 2019
     author: Bonnie Brennan, Jesse Sanders, Mike Brocchi, Amir Rustamzadeh
@@ -109,7 +109,7 @@ large:
     
   - title: "How to write tests for your Gatsby sites and apps"
     url: https://www.youtube.com/watch?v=BzRAYt7BHRw
-    sourceName: Youtube
+    sourceName: YouTube
     sourceUrl: https://www.twitch.tv/jlengstorf
     date: Mar 7, 2019
     author: Jason Lengstorf & Kent C. Dodds
