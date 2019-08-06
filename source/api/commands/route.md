@@ -348,16 +348,25 @@ cy.route({
 })
 ```
 
-### Use delays for responses
+### Use `onRequest` / `onResponse` for testing loading states
 
-You can pass in a `delay` option that causes a delay (in ms) to the `response` for matched requests. The example below will cause the response to be delayed by 3 secs. This can be useful for testing loading states, like loading spinners, in the DOM before the request responds.
+You can pass in a `onRequest` option that will fire when the route is requested by the browser and an `onResponse` option that fires when it is resolved. This can be useful for testing loading states, like loading spinners, in the DOM before the request responds.
+
+The example below will test that the `.spinner` is visible when the XHR is requested and is no longer shown when the request responds (much like a 'loading' button).
 
 ```javascript
 cy.route({
   method: 'PATCH',
   url: '**/activities/*',
   response: {},
-  delay: 3000
+  onRequest: () => {
+     // check spinner is visible when requested
+     cy.get('.spinner').should('be.visible')
+  }
+  onResponse: () => {
+    // check spinner is no longer visible once responded
+    cy.get('.spinner').should('not.be.visible')
+  }
 })
 ```
 
