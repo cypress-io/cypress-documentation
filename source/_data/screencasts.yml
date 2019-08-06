@@ -1,5 +1,29 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Running Cypress.io off the Command Line"
+    url: https://www.youtube.com/watch?v=Eprov0EKRfQ
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=Eprov0EKRfQ
+    date: Jul 26, 2019
+    author: Catherine Karena
+    youtubeId: Eprov0EKRfQ
+
+  - title: "GeeCON 2019: Dmitry Vinnik - Modern Web Testing: Going Beyond Selenium"
+    url: https://www.youtube.com/watch?v=1m2AcmiEdpI
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=1m2AcmiEdpI
+    date: Jul 24, 2019
+    author: Dmitry Vinnik
+    youtubeId: 1m2AcmiEdpI
+
+  - title: "Cypress.io - Automatización al siguiente nivel"
+    url: https://www.youtube.com/watch?v=9IVA2HTtlL0
+    sourceName: Youtube
+    sourceUrl: https://www.youtube.com/watch?v=9IVA2HTtlL0
+    date: Jul 24, 2019
+    author: Didier Corrales
+    youtubeId: 9IVA2HTtlL0
+    
   - title: "Cypress + Cucumber Automated Browser Testing stream 02"
     url: https://www.youtube.com/watch?v=JNYia3gHCc4
     sourceName: Youtube
