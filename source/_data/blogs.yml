@@ -8,6 +8,38 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "The concept of Monitoring Tests"
+    url: https://dev.to/noriste/the-concept-of-monitoring-tests-4l5j
+    sourceName: "DEV.to"
+    sourceUrl: https://dev.to/
+    author: Stefano Magni	
+    date: Jul 30, 2019
+    img: /img/examples/conio-devto-monitoring-tests.png        
+
+  - title: "Sleeping better at night with Cypress.io"
+    url: https://dev.to/tlakomy/sleeping-better-at-night-with-cypress-io-59m2
+    sourceName: "DEV.to"
+    sourceUrl: https://dev.to/
+    author: Tomasz Lakomy
+    date: Jul 29, 2019
+    img: /img/examples/devto-sleep-at-night-cypress.png
+
+  - title: "Cypress.io: the Selenium killer"
+    url: https://blog.logrocket.com/cypress-io-the-selenium-killer/
+    sourceName: LogRocket
+    sourceUrl: https://blog.logrocket.com
+    author: Paul Cowan
+    date: Jul 29, 2019
+    img: /img/examples/logrocket-selenium-cypress.png
+
+  - title: "Await, do not make your E2E tests sleep"
+    url: https://itnext.io/await-do-not-sleep-your-e2e-tests-df67e051b409
+    sourceName: ITNext
+    sourceUrl: https://itnext.io/
+    author: Stefano Magni
+    date: Jul 25, 2019
+    img: /img/examples/itnext-await-e2e-cypress.png 
+
   - title: "Cypress: A New Kid On The E2E Block"
     url: https://ordina-jworks.github.io/testing/2019/07/18/Cypress.html
     sourceName: JWorks Tech Blog
