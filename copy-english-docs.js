@@ -95,8 +95,13 @@ const findAllEnglishDocsNotTranslatedToJapanese = () => {
     return Promise.mapSeries(untransledEnglishFiles, (relativePathToEnglishFile) => {
       const sourcePath = path.join('source', relativePathToEnglishFile)
       const destinationPath = path.join('source', targetLanguage, relativePathToEnglishFile)
+      const destinationFolder = path.dirname(destinationPath)
 
-      return fs.copyFile(sourcePath, destinationPath)
+      return fs.ensureDir(destinationFolder)
+      .then(() => {
+        return fs.copyFile(sourcePath, destinationPath)
+      })
+
     })
   })
 }
