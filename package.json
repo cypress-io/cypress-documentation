@@ -130,7 +130,7 @@
   "dependencies": {
     "@contentful/rich-text-html-renderer": "13.1.0",
     "check-more-types": "2.24.0",
-    "contentful": "7.8.2",
+    "contentful": "7.9.0",
     "debug": "4.1.1",
     "docsearch.js": "2.6.3",
     "font-awesome": "4.7.0",
