@@ -425,7 +425,7 @@ Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` dir
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
 
-If the commit information is missing in the Dashboard run, GitHub Integration and other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
 
 ```shell
 DEBUG=commit-info,cypress:server:record
