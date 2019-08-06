@@ -350,7 +350,7 @@ cy.route({
 
 ### Use delays for responses
 
-You can pass in a `delay` option that causes a delay (in ms) to the `response` for matched requests. The example below will cause the response to be delayed by 3 secs.
+You can pass in a `delay` option that causes a delay (in ms) to the `response` for matched requests. The example below will cause the response to be delayed by 3 secs. This can be useful for testing loading states, like loading spinners, in the DOM before the request responds.
 
 ```javascript
 cy.route({

@@ -104,13 +104,13 @@ alias:
 
   plugins/: plugins/index.html
 
-  dashboard/index.html: guides/core-concepts/dashboard-service.html
-  dashboard/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/features-dashboard/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/features-dashboard.html: guides/core-concepts/dashboard-service.html
-  dashboard/overview/projects-dashboard.html: guides/core-concepts/dashboard-service.html
-  dashboard/overview/organizations-dashboard.html: guides/core-concepts/dashboard-service.html
+  dashboard/index.html: guides/dashboard/dashboard-introduction.html
+  dashboard/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/features-dashboard/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/features-dashboard.html: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/projects-dashboard.html: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/organizations-dashboard.html: guides/dashboard/dashboard-introduction.html
 
   faq/index.html: faq/questions/using-cypress-faq.html
 

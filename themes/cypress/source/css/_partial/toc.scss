@@ -8,7 +8,7 @@
   opacity: 0.8;
   justify-self: flex-end;
   position: fixed;
-  top: 60px;
+  top: 0;
   right: 0;
   bottom: 0;
   overflow-y: auto;
@@ -26,8 +26,8 @@
 }
 
 #article-toc-inner {
-  padding: 0 20px;
-  width: $sidebar-width;
+  padding: 2.5em 20px;
+  width: $sidebar-width - 40px;
 
   .sidebar-title {
     margin-top: 0;
@@ -88,9 +88,9 @@
   border-left-color: $color-green;
 }
 
-#article-toc-inner {
-  padding: 2.5em 20px;
-}
+//#article-toc-inner {
+//  padding: 2.5em 20px;
+//}
 
 .toc-top {
   .toc {

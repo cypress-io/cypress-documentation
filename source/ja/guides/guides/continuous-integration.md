@@ -107,14 +107,14 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 
 ### To record tests:
 
-1. {% url 'Set up your project to record' dashboard-service#Setup %}
+1. {% url 'Set up your project to record' projects#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %} within CI.
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url 'Read the full guide on the Dashboard Service.' dashboard-service %}
+{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction%}
 
 ## Run tests in parallel
 
@@ -324,7 +324,7 @@ See our {% url 'examples' docker %} for additional information on our maintained
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 ## Caching
@@ -362,7 +362,7 @@ Refer to the {% url 'Environment Variables recipe' configuration#Environment-Var
 
 ***Record Key***
 
-If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' projects#Identification %}
 
 Instead of hard coding it into your run command like this:
 
@@ -388,7 +388,7 @@ Typically you'd set this inside of your CI provider.
 
 ### Git information
 
-Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
+Cypress uses the {% url '@cypress/commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
 It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
@@ -400,6 +400,12 @@ Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` dir
 - Author: `COMMIT_INFO_AUTHOR`
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
+
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+
+```shell
+DEBUG=commit-info,cypress:server:record
+```
 
 ### Custom Environment Variables
 

@@ -144,6 +144,16 @@
       link: https://github.com/NicholasBoll/cypress-pipe
       keywords: [commands]
 
+    - name: cypress-downloadfile
+      description: A custom command to download different kinds of files and store them on your local machine
+      link: https://github.com/Xvier/cypress-downloadfile
+      keywords: [commands, downloading]
+
+    - name: cypress-shadow-dom
+      description: Custom commands for shadow DOM support
+      link: https://github.com/abramenal/cypress-shadow-dom
+      keywords: [shadow, shadow-dom, polymer, lit-html, commands]
+
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library
@@ -245,6 +255,16 @@
       description: The Aurelia CLI is the official command line tool for Aurelia.
       link: https://aurelia.io/docs/cli
       keywords: [aurelia, cli]
+
+    - name: WordPress ReactJS Boilerplate
+      description: Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.
+      link: https://github.com/matzeeable/wp-reactjs-starter
+      keywords: [wp, wordpress]
+
+    - name: Elm Batteries Included
+      description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
+      link: https://github.com/cedricss/elm-batteries
+      keywords: [elm, parcel, netlify]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.

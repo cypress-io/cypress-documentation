@@ -2,7 +2,6 @@
 
 const got = require('got')
 const git = require('ggit')
-const pluralize = require('pluralize')
 const debug = require('debug')('deploy')
 const { isEmpty, complement, tap, path, all, equals, T, values } = require('ramda')
 const la = require('lazy-ass')
@@ -127,7 +126,7 @@ const changedFilesSince = (branchName) => (sha) => {
   return git.changedFilesAfter(sha, branchName)
   .then(tap((list) => {
     debug('%s changed since last docs deploy in branch %s',
-      pluralize('file', list.length, true), branchName)
+      `${list.length} ${list.length === 1 ? 'file' : 'files'}`, branchName)
     debug(list.join('\n'))
   }))
 }
@@ -139,7 +138,7 @@ function docsFilesChangedSinceLastDeploy (env, branchName) {
     console.log('changed files')
     console.log(list.join('\n'))
     console.log('%d documentation %s changed since last doc deploy',
-      list.length, pluralize('file', list.length))
+      list.length, list.length === 1 ? 'file' : 'files')
     console.log('in branch %s against environment %s', branchName, env)
   }))
   .then(docsChanged)

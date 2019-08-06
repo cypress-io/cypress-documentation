@@ -6,7 +6,6 @@ menu:
   plugins: 插件
   faq: FAQ
   examples: 示例
-  dashboard: Dashboard
   search: 搜索
 
 index:
@@ -35,7 +34,13 @@ sidebar:
     writing-and-organizing-tests: 编写和组织测试
     conditional-testing: 条件测试
     test-runner: 测试执行器
-    dashboard-service: 数据面板服务
+    dashboard: Dashboard
+    dashboard-introduction: Introduction
+    projects: 项目
+    runs: 录制的运行
+    organizations: 组织
+    users: 成员
+    github-integration: GitHub Integration
     debugging: 调试
     variables-and-aliases: 变量和别名
     stubs-spies-and-clocks: 桩, Spies和时钟
