@@ -128,7 +128,7 @@
     "yamljs": "0.3.0"
   },
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "13.1.0",
+    "@contentful/rich-text-html-renderer": "13.4.0",
     "check-more-types": "2.24.0",
     "contentful": "7.9.0",
     "debug": "4.1.1",
