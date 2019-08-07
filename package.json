@@ -115,7 +115,7 @@
     "prompt-confirm": "2.0.4",
     "ramda": "0.26.1",
     "request-promise": "4.2.4",
-    "sinon": "7.4.0",
+    "sinon": "7.4.1",
     "sinon-chai": "3.3.0",
     "start-server-and-test": "1.9.2",
     "stop-only": "3.1.0",
@@ -130,7 +130,7 @@
   "dependencies": {
     "@contentful/rich-text-html-renderer": "13.4.0",
     "check-more-types": "2.24.0",
-    "contentful": "7.9.0",
+    "contentful": "7.9.1",
     "debug": "4.1.1",
     "docsearch.js": "2.6.3",
     "font-awesome": "4.7.0",
