@@ -167,6 +167,8 @@ Our currently supported languages can be found at [`/source/_data/languages.yml`
 
 Translate existing documentation then submit a [pull request](#Pull-Requests) for your change.
 
+If a page does not have a translation, then a pre-start step copies the English file to the language folder. These copies should NOT be committed into the source code. Only when the file has been translated you can add it to the source code with `git add --force source/<language>/.../file.md` and this file will not be overwritten by the English file.
+
 ## Committing Code
 
 ### Linting
