@@ -5,7 +5,7 @@
     return new Date(Date.parse(date))
   }
 
-  function actualizeMargin (margin) {
+  function actualizeSidebarsMarginTop (margin) {
     if (document.querySelector('#sidebar')) {
       document.querySelector('#sidebar').style.marginTop = margin.toString() + 'px'
     }
@@ -15,15 +15,28 @@
     }
   }
 
+  function actualizeScrollbar (headerHeight) {
+    if (typeof window.location.hash === 'undefined') return
+
+    return setTimeout(function () {
+      window.scrollTo(0, window.pageYOffset - headerHeight + 50)
+    }, 0)
+  }
+
   function actualizeSidebarPosition () {
     var header = document.querySelector('#header')
 
     if (!header) return
 
-    actualizeMargin(header.clientHeight)
-
+    // sidebar margins fix
+    actualizeSidebarsMarginTop(header.clientHeight)
     window.addEventListener('resize', function () {
-      actualizeMargin(header.clientHeight)
+      actualizeSidebarsMarginTop(header.clientHeight)
+    })
+    // anchor scroll-position fix
+    actualizeScrollbar(header.clientHeight)
+    window.addEventListener('popstate', function () {
+      actualizeScrollbar(header.clientHeight)
     })
   }
 
