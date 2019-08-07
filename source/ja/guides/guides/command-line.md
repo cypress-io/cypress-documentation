@@ -165,11 +165,11 @@ cypress run --group develop-env
 You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --spec 'cypress/integration/user/**/*'
 ```
 
 Specifying the `--ci-build-id` may also be necessary.
