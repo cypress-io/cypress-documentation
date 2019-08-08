@@ -412,7 +412,7 @@ Typically you'd set this inside of your CI provider.
 
 ### Git information
 
-Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
+Cypress uses the {% url '@cypress/commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
 It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
@@ -424,6 +424,12 @@ Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` dir
 - Author: `COMMIT_INFO_AUTHOR`
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
+
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+
+```shell
+DEBUG=commit-info,cypress:server:record
+```
 
 ### Custom Environment Variables
 

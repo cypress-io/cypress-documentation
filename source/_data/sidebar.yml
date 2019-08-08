@@ -182,6 +182,7 @@ examples:
     workshop: workshop.html
   media:
     courses-media: courses-media.html
+    webinars-media: webinars-media.html
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html
