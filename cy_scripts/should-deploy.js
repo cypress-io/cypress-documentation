@@ -10,7 +10,28 @@ const Promise = require('bluebird')
 
 const docsChanged = complement(isEmpty)
 
-const isForced = process.argv.some(equals('--force'))
+/**
+ * Checks if a given environment variable is present
+ * and has a string value that can be considered truthy, like
+ * "true", "TRUE", "on", "1", "yes"
+ *
+ * @param {string} name of the environment variable to check
+ * @returns boolean
+*/
+const isEnvVariableOn = (name) => {
+  const value = process.env[name]
+
+  if (!value) {
+    return false
+  }
+
+  return value === 'true'
+    || value === 'TRUE'
+    || value === 'on'
+    || value === '1'
+    || value === 'yes'
+}
+const isForced = process.argv.some(equals('--force')) || isEnvVariableOn('FORCE_DEPLOY')
 
 const isValidEnvironment = is.oneOf(['staging', 'production'])
 
