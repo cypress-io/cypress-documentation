@@ -51,11 +51,13 @@ title: 项目
 
 # 标识符
 
-***项目ID***
+Cypress uses your {% urlHash "`projectId`" 项目ID %} and {% urlHash "Record Key" 录制秘钥 %} together to uniquely identify projects.
+
+## 项目ID
 
 一旦将项目设置为要录制，我们会为你的项目生成一个唯一的`projectId`并自动插入到你的`cypress.json`配置文件里。
 
-***这个`projectId`是在你`cypress.json`里的，一个6位字符的字符串：***
+### 这个`projectId`是在你`cypress.json`里的，一个6位字符的字符串：
 
 ```json
 {
@@ -73,20 +75,6 @@ export CYPRESS_PROJECT_ID={projectId}
 
 ## 录制秘钥 {% fa fa-key %}
 
-一旦将项目设置为要录制，我们会自动为该项目生成一个*录制秘钥*。
-
-***一个录制秘钥就是类似下面的一个GUID（全局唯一标识符）：***
-
-```text
-f4466038-70c2-4688-9ed9-106bf013cd73
-```
-
-你可以为一个项目创建多个录制秘钥，或在我们的{% url '数据面板' https://on.cypress.io/dashboard %}删除某一部分。你也可以在Test Runner的*Settings*页签里找到你的录制秘钥：
-
-{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
-
-# 授权
-
 Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的项目。
 
 {% imgTag /img/dashboard/project-id-and-record-key-shown-in-dashboard.png "ProjectID and Record Keys in Dashboard" %}
@@ -101,6 +89,62 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 如果你的录制秘钥意外暴露了，你应该删除它，并在{% url '数据面板服务' https://on.cypress.io/dashboard %}里生成一个新的。
 {% endnote %}
 
+一旦将项目设置为要录制，我们会自动为该项目生成一个*录制秘钥*。
+
+### 一个录制秘钥就是类似下面的一个GUID（全局唯一标识符）:
+
+```text
+f4466038-70c2-4688-9ed9-106bf013cd73
+```
+
+你可以为一个项目创建多个录制秘钥，或在我们的{% url '数据面板' https://on.cypress.io/dashboard %}删除某一部分。你也可以在Test Runner的*Settings*页签里找到你的录制秘钥：
+
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+
+# Record keys
+
+See {% urlHash "Record key" Record-key %} for a full description of how the record keys are used.
+
+## Create new record key
+
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's **Settings** page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+4. Here you will see a **Record Keys** section
+  {% imgTag /img/dashboard/record-keys-in-project-settings-dashboard.jpg "Record keys in Dashboard" %}
+5. Click **Create New Key**. A new key will be automatically generated for your project.
+
+## Delete record key
+
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+3. Go to the project's **Settings** page.
+  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+4. Here you will see a **Record Keys** section
+  {% imgTag /img/dashboard/record-keys-in-project-settings-dashboard.jpg "Record keys in Dashboard" %}
+5. Click **Delete** beside the record key you want to delete.
+
+# Parallelization settings
+
+## Run completion delay
+
+You can edit the number of seconds that a run will wait for new groups to join before transitioning to 'completed'. See our {% url "parallelization guide" parallelization#Run-completion-delay %} to learn more.
+
+{% imgTag /img/dashboard/run-completion-delay.jpg "Run completion delay settings" %}
+
+# GitHub Integration
+
+You can integrate your project with GitHub and edit its settings from within the project settings page. 
+
+{% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+
+See our {% url "GitHub Integration guide" github-integration %} to learn more.
+
+# Access to Runs
+
 # 公有 vs 私有
 
 - **公有** 意味着任何人都可以看到项目测试运行的录制。它类似于GitHub，Travis CI或CircleCI上的公共项目的处理方式。任何知道你`projectId`的人都能看到公共项目的运行录制。
@@ -111,14 +155,11 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-
   {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
 3. Go to the project's settings page.
-
   {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
-
 4. Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
-  {% imgTag /img/dashboard/access-to-runs.png "access-to-runs" %}
+  {% imgTag /img/dashboard/access-to-runs.jpg "access-to-runs" %}
 
 # 转让所有权
 
@@ -128,11 +169,11 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 1. Go to your organization's projects page.
 2. Select the project you wish to transfer.
-
   {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
 3. Go to the project's settings page.
   {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
 4. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
+  {% imgTag /img/dashboard/transfer-ownership-button.jpg "Transfer ownership button" %}
 5. Select the user or organization, then click **Transfer**.
   {% imgTag /img/dashboard/transfer-ownership-of-project-dialog.png "Transfer Project dialog" %}
 
@@ -152,10 +193,11 @@ Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的�
 
 你可以删除你拥有的项目。同时这将删除项目所有的录制。删除项目也只能在{% url '数据面板服务' https://on.cypress.io/dashboard %}里进行。
 
-1. 在面板里点进'Runs'；
-2. 从左侧边栏里点击你想要的删除的项目；
+1. Go to your organization's projects page.
+2. Select the project you want to remove.
+  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
 3. 在本页的右侧点击'Settings'；
   {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
 4. 在Settings页面的底部，点击"Remove Project"按钮
-
-{% imgTag /img/dashboard/remove-project-dialog.png "Delete project dialog" %}
+  {% imgTag /img/dashboard/remove-project-dialog.png "Delete project dialog" %}
+5. Confirm that you want to delete the project by clicking **Yes, Remove Project**.
