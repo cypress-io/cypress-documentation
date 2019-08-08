@@ -19,11 +19,14 @@
                         <a href="{{course.url}}" target="_blank" rel="noopener noreferrer">{{ course.title }}</a>
                       </h3>
                       <p>
-                        Published on
-                        {% if course.sourceUrl %}
-                          <a href="{{ course.sourceUrl }}">{{ course.sourceName }}</a>
-                        {% else %}
-                          {{ course.sourceName }}
+                        Published 
+                        {% if course.sourceUrl or course.sourceName %}
+                          on
+                          {% if course.sourceUrl %}
+                            <a href="{{ course.sourceUrl }}">{{ course.sourceName }}</a>
+                          {% else %}
+                            {{ course.sourceName }}
+                          {% endif %}
                         {% endif %}
                         {% if course.author %}
                           by
@@ -71,14 +74,24 @@
                       </a>
                     {% endif %}
                     <p>
-                      Published on
-                      {% if media.sourceUrl %}
-                        <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
-                      {% else %}
-                        {{ media.sourceName }}
+                      Published 
+                      {% if media.sourceUrl or media.sourceName %}
+                        on
+                        {% if media.sourceUrl %}
+                          <a href="{{ media.sourceUrl }}">{{ media.sourceName }}</a>
+                        {% else %}
+                          {{ media.sourceName }}
+                        {% endif %}
                       {% endif %}
                       {% if media.author %}
-                        by {{ media.author }}
+                        by
+                        {% if media.authorTwitter %}
+                          <a href="https://twitter.com/{{media.authorTwitter}}" target="_blank" rel="noopener noreferrer">
+                            {{media.author}}
+                          </a>
+                        {% else %}
+                          {{media.author}}
+                        {% endif %}
                       {% endif %}
                       {% if media.date %}
                       <em>({{ media.date }}).</em>
