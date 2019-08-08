@@ -261,7 +261,7 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-这个**延迟默认为60秒**，but is {% url "configurable within the Dashboard" project settings page" project#Run-completion-delay %}.
+这个**延迟默认为60秒**，but is {% url "configurable within the Dashboard" project settings page" projects#Run-completion-delay %}.
 
 # 在仪表盘中可视化并行和分组
 

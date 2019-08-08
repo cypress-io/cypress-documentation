@@ -103,7 +103,7 @@ f4466038-70c2-4688-9ed9-106bf013cd73
 
 # Record keys
 
-See {% urlHash "Record key" Record-key %} for a full description of how the record keys are used.
+See {% urlHash "Record key" 录制秘钥 %} for a full description of how the record keys are used.
 
 ## Create new record key
 
