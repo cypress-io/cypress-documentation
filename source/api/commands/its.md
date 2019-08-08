@@ -20,7 +20,7 @@ If you want to call a `function` on the previously yielded subject, use {% url `
 
 ```javascript
 cy.wrap({ width: '50' }).its('width') // Get the 'width' property
-cy.window().its('angular')          // Get the 'angular' property
+cy.window().its('sessionStorage')     // Get the 'sessionStorage' property
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
