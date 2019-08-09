@@ -95,7 +95,7 @@
     "deps-ok": "1.4.1",
     "eslint": "6.1.0",
     "eslint-plugin-cypress": "2.6.1",
-    "eslint-plugin-cypress-dev": "2.1.0",
+    "eslint-plugin-cypress-dev": "3.0.2",
     "execa": "2.0.3",
     "fluent-ffmpeg": "2.1.2",
     "fs-extra": "8.1.0",
