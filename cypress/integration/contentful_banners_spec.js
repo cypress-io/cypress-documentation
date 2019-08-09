@@ -5,8 +5,12 @@ const allBannersYaml = 'source/_data/banners.yml'
 
 describe('Contentful driven banners', () => {
   it('displays all current banners with proper info', function () {
-    cy.readFile(allBannersYaml)
-    .then((yamlString) => YAML.parse(yamlString))
+    cy.task('readFileMaybe', allBannersYaml)
+    .then((yamlString) => {
+      if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
+
+      return YAML.parse(yamlString)
+    })
     .then((banners) => {
       if (typeof banners === 'undefined' || !banners || !banners.length) return this.skip()
 
