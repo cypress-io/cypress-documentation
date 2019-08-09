@@ -160,6 +160,10 @@ You can assert that a file does not exist like so:
 cy.readFile('does-not-exist.yaml').should('not.exist')
 ```
 
+### Read a file that might not exist
+
+{% url "See our example on using `cy.task()` to read a file that *may* not exist." task#Read-a-file-that-might-not-exist %}
+
 ## Retries
 
 ### Automatic retries
