@@ -9,6 +9,7 @@
   bottom: 0;
   border-right: 1px solid #f0f3f2;
   padding-top: 0;
+  transition: margin-top 0.2s linear;
 
   &::-webkit-scrollbar {
     display: none;

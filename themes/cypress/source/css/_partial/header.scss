@@ -1,5 +1,7 @@
 .main-header {
   background-color: #17202C;
+  transform-style: preserve-3d;
+  transition: all 0.2s linear;
 
   &#header {
     position: fixed;
@@ -14,20 +16,17 @@
   }
 }
 
-#header-inner,
 .header-inner {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   position: relative;
-}
 
-@media screen and(max-width: 768px) {
-  #header-inner,
-  .header-inner {
+  @media screen and(max-width: 768px) {
     justify-content: center;
   }
 }
+
 #logo-wrap,
 .logo-wrap {
   margin: 0 ($sidebar-width - 205px);
@@ -47,6 +46,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+
 
   ul {
     display: flex;
