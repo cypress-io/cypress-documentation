@@ -10,6 +10,7 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
+const fs = require('fs')
 
 const baseUrlEnvMap = {
   'https://docs-staging.cypress.io': 'staging',
@@ -26,6 +27,16 @@ module.exports = (on, config) => {
   // extract node env from environment variable
   // or base url or set as development by default
   config.env.NODE_ENV = getNodeEnv(config.baseUrl)
+
+  on('task', {
+    readFileMaybe (filename) {
+      if (fs.existsSync(filename)) {
+        return fs.readFileSync(filename, 'utf8')
+      }
+
+      return null
+    },
+  })
 
   return config
 }
