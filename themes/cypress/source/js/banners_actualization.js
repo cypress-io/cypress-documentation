@@ -55,7 +55,7 @@
     var startDate = setMyTimezoneToDate(banner.dataset.startDate)
     var endDate = setMyTimezoneToDate(banner.dataset.endDate)
 
-    if (startDate >= now && now <= endDate) {
+    if (startDate > now || now > endDate) {
       banner.remove()
     }
   }
