@@ -70,6 +70,10 @@ yarn add cypress --dev
 
 If you're not using Node or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
 
+{% note warning %}
+Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
+{% endnote %}
+
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
 Just manually unzip and double click. Cypress will run without needing to install any dependencies.
