@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Going Automotive: Increasing Quality"
+    url: https://blog.noredink.com/post/186956536122/going-automotive-increasing-quality-to-misquote
+    sourceName: "NoRedInk"
+    sourceUrl: https://blog.noredink.com/
+    author: Matt Charlton
+    date: Aug 12, 2019
+    img: /img/examples/no-red-ink-automating-with-cypress-tests-adnvantages.jpg    
+
   - title: "The concept of Monitoring Tests"
     url: https://dev.to/noriste/the-concept-of-monitoring-tests-4l5j
     sourceName: "DEV.to"
