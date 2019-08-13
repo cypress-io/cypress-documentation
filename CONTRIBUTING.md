@@ -75,7 +75,7 @@ In addition to built-in Hexo tags, we have written several custom ones. They hel
 
 ### Adding Examples
 
-To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](/source/_data/blogs.yml), [talks.yml](/source/_data/talks.yml), or [podcasts.yml](/source/_data/podcasts.yml) file.
+To add a course, blog, talk, podcast, or screencast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [courses.yml](/source/_data/courses.yml), [blogs.yml](/source/_data/blogs.yml), [talks.yml](/source/_data/talks.yml), [podcasts.yml](/source/_data/podcasts.yml) or [screencasts.yml](/source/_data/screencasts.yml) file.
 
 Add an associated image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should have a resolution of **715×480**. Reference the image in the markdown document as follows:
 
