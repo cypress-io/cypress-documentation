@@ -376,6 +376,14 @@ large:
     date: Apr 29, 2019
     img: /img/examples/test-vue-apps-with-cypress.png 
 
+  - title: "Testing with Cypress"
+    url: https://medium.com/@genedarocha/testing-with-cypress-8b62debe4ac6
+    sourceName: "Medium"
+    sourceUrl: https://medium.com/@genedarocha
+    author: Gene Da Rocha
+    date: Apr 27, 2019
+    img: /img/examples/testing-in-cypress-palm-trees.jpg
+
   - title: "Pragmatic Front-End Testing Strategies (3)"
     url: https://medium.com/@toastui/pragmatic-front-end-testing-strategies-3-969469349043
     sourceName: Medium
