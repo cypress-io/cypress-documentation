@@ -9,7 +9,18 @@ describe('Contentful driven banners', () => {
     .then((yamlString) => {
       if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
 
-      return YAML.parse(yamlString)
+      const yamlObject = YAML.parse(yamlString)
+
+      // remove all outdated or future banners
+      const setMyTimezoneToDate = (date) => new Date(Date.parse(date))
+
+      return yamlObject.filter((banner) => {
+        const now = new Date()
+        const startDate = setMyTimezoneToDate(banner.startDate)
+        const endDate = setMyTimezoneToDate(banner.endDate)
+
+        return startDate <= now && now <= endDate
+      })
     })
     .then((banners) => {
       if (typeof banners === 'undefined' || !banners || !banners.length) return this.skip()
