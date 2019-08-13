@@ -6,7 +6,7 @@
     {% endif %}
 >
   {{ partial('banners') }}
-  <div {% if not className %} id="header-inner" class="inner" {% else %} class="inner header-inner" {% endif %}>
+  <div {% if not className %} id="header-inner" {% endif %} class="inner header-inner">
     <h1 {% if not className %} id="logo-wrap" {% else %} class="logo-wrap" {% endif %}>
       <a href="https://www.cypress.io" {% if not className %} id="logo" {% else %} class="logo" {% endif %}>
         <img src="/{{ config.logo }}" alt="Cypress"/>

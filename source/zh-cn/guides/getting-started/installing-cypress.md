@@ -70,6 +70,10 @@ yarn add cypress --dev
 
 如果你没有在项目中使用Node或`npm`，又或者你只是想快速使用Cypress, 你可以{% url "直接从我们的CDN下载" http://download.cypress.io/desktop %}。
 
+{% note warning %}
+Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
+{% endnote %}
+
 它将自动识别你的平台，并直接下载最新的可用版本。
 
 只需手动解压然后双击app。 Cypress就可以在不安装任何依赖的情况下运行.

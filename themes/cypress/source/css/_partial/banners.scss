@@ -11,7 +11,11 @@
     background-color: $color-green;
     border-bottom: 1px solid $color-link;
     font-family: $font-title;
-    padding: 20px 30px;
+    padding: 6px 20px;
+
+    @media screen and(min-width: 768px) {
+      padding: 20px 30px;
+    }
 
     .top-banners_item--body {
       display: inline-flex;
