@@ -184,6 +184,11 @@
       link: https://github.com/NoriSte/cypress-wait-until
       keywords: [commands, wait, wait-until, recursive-promise, check-async-value, check-value, open-source-saturday]
 
+    - name: cypress-waitFor
+      description: A zero-dependency plugin for Cypress to wait for an element or a function.
+      link: https://github.com/dominikwilkowski/cypress-waitFor
+      keywords: [commands, wait, waitFor, loading, check-value, wait-for-element]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
