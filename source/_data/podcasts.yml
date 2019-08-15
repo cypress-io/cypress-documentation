@@ -9,7 +9,6 @@ large:
     img: /img/examples/cypress-hot-sear-questions-gleb-bahmutov-test-talks.jpg
 
   - title: "This.JavaScript: State of Testing"
-    url: https://www.youtube.com/watch?v=iycQpCFBASE
     sourceName: This Dot
     sourceUrl: https://www.thisdot.co/
     date: December 18, 2018
