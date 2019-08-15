@@ -1,7 +1,14 @@
 const YAML = require('yamljs')
-const utf8 = require('utf8')
 
 const allBannersYaml = 'source/_data/banners.yml'
+
+function emojiStrip (string, utf16Encoded = true) {
+  if (!utf16Encoded) {
+    return string.replace(/\\u[\dA-F]{8}/gi, '')
+  }
+
+  return string.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+}
 
 describe('Contentful driven banners', () => {
   it('displays all current banners with proper info', function () {
@@ -9,7 +16,7 @@ describe('Contentful driven banners', () => {
     .then((yamlString) => {
       if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
 
-      const yamlObject = YAML.parse(yamlString)
+      const yamlObject = YAML.parse(emojiStrip(yamlString, false))
 
       // remove all outdated or future banners
       const setMyTimezoneToDate = (date) => new Date(Date.parse(date))
@@ -35,7 +42,7 @@ describe('Contentful driven banners', () => {
         .should((bannerText) => {
           const yamlText = Cypress.$(banners[i].text).text().trim()
 
-          expect(utf8.encode(bannerText), `Banner #${i + 1} text is proper`).to.eq(yamlText)
+          expect(emojiStrip(bannerText), `Banner #${i + 1} text is proper`).to.eq(yamlText)
         })
 
         cy.wrap(banner)

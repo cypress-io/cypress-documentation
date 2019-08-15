@@ -63,7 +63,19 @@
               <div class="media-large">
                 {% for media in site.data[page.dataType].large %}
                   <div class="media">
-                    <h2><a href="{{ media.url }}">{{ media.title }}</a></h2>
+                    <h2>
+                    {% if media.youtubeId or media.url %}
+                      {% if media.youtubeId %}
+                        <a href="https://www.youtube.com/watch?v={{ media.youtubeId }}">
+                      {% else %}
+                        <a href="{{ media.url }}">
+                      {% endif %}
+                          {{ media.title }}
+                        </a>
+                    {% else %}
+                      {{ media.title }}
+                    {% endif %}
+                    </h2>
                     {% if media.youtubeId %}
                       <div class="embed-container">
                         <iframe src="https://www.youtube.com/embed/{{ media.youtubeId }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
