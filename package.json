@@ -96,7 +96,7 @@
     "eslint": "6.1.0",
     "eslint-plugin-cypress": "2.6.1",
     "eslint-plugin-cypress-dev": "2.1.0",
-    "execa": "2.0.3",
+    "execa": "2.0.4",
     "fluent-ffmpeg": "2.1.2",
     "fs-extra": "8.1.0",
     "ggit": "2.4.12",
