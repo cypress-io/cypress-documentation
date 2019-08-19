@@ -40,9 +40,10 @@ describe('Contentful driven banners', () => {
         .find('.top-banners_item--body')
         .invoke('text').invoke('trim')
         .should((bannerText) => {
+          const htmlText = emojiStrip(bannerText).replace(/^ /, '').replace(/ $/, '')
           const yamlText = Cypress.$(banners[i].text).text().trim()
 
-          expect(emojiStrip(bannerText), `Banner #${i + 1} text is proper`).to.eq(yamlText)
+          expect(htmlText, `Banner #${i + 1} text is proper`).to.eq(yamlText)
         })
 
         cy.wrap(banner)
