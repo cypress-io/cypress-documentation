@@ -25,7 +25,7 @@ Option | Type | Description
 `group` | *String* | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
 `headed` | *Boolean* | Display the Electron browser instead of running headlessly
 `key` | *String* | Specify your secret record key
-`noExit` | *Boolean* | Keep Cypress open after all tests run
+`exit` | *Boolean* | Whether to close Cypress after all tests run
 `parallel` | *Boolean* | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
 `port` | *Number* | Override default port
 `project` | *String* | Path to a specific project
