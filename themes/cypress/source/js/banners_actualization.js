@@ -7,11 +7,11 @@
 
   function actualizeSidebarsMarginTop (margin) {
     if (document.querySelector('#sidebar')) {
-      document.querySelector('#sidebar').style.marginTop = margin.toString() + 'px'
+      document.querySelector('#sidebar').style.marginTop = (margin - 60).toString() + 'px'
     }
 
     if (document.querySelector('#article-toc')) {
-      document.querySelector('#article-toc').style.marginTop = margin.toString() + 'px'
+      document.querySelector('#article-toc').style.marginTop = (margin - 60).toString() + 'px'
     }
   }
 
