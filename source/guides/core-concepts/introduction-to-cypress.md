@@ -143,7 +143,7 @@ cy
 
 ```js
 cy
-  // cy.get() looks for '#my-nonexistent-selector', repeating the query until...
+  // cy.get() looks for '#element-does-not-exist', repeating the query until...
   // ...it doesn't find the element before its timeout.
   // Cypress halts and fails the test.
   .get('#element-does-not-exist')
