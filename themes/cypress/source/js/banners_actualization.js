@@ -1,10 +1,6 @@
 (function () {
   'use strict'
 
-  function setMyTimezoneToDate (date) {
-    return new Date(Date.parse(date))
-  }
-
   function actualizeSidebarsMarginTop (margin) {
     if (document.querySelector('#sidebar')) {
       document.querySelector('#sidebar').style.marginTop = (margin - 60).toString() + 'px'
@@ -100,24 +96,12 @@
   }
 
   var banners = document.querySelectorAll('.top-banners_item') || []
-  var i
 
   if (
     typeof window === 'undefined' ||
     typeof document === 'undefined' ||
     !banners.length
   ) return
-
-  for (i = banners.length; i--;) {
-    var banner = banners[i]
-    var now = new Date()
-    var startDate = setMyTimezoneToDate(banner.dataset.startDate)
-    var endDate = setMyTimezoneToDate(banner.dataset.endDate)
-
-    if (startDate > now || now > endDate) {
-      banner.remove()
-    }
-  }
 
   actualizeSidebarPosition()
 })()

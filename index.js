@@ -107,12 +107,13 @@ function initHexo () {
       })
     }
 
-    return Contentful.createClient({ space, accessToken })
+    return Contentful.createClient({ space, accessToken, environment: 'stage' })
     .getEntries({ content_type: 'topBanner' })
     .then(({ items }) => {
-      const data = items.reduce((filtered, option) => {
-        if (moment(option.fields.endDate).isSameOrAfter(moment())) {
-          filtered.push({ ...option.fields, text: documentToHtmlString(option.fields.text) })
+      const data = items.reduce((filtered, { fields }) => {
+        // filter only actual banners for banners.yml file
+        if (moment(fields.startDate).isSameOrBefore(moment()) && moment(fields.endDate).isSameOrAfter(moment())) {
+          filtered.push({ ...fields, text: documentToHtmlString(fields.text) })
         }
 
         return filtered
