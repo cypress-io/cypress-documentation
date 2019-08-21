@@ -107,7 +107,7 @@ function initHexo () {
       })
     }
 
-    return Contentful.createClient({ space, accessToken, environment: 'stage' })
+    return Contentful.createClient({ space, accessToken })
     .getEntries({ content_type: 'topBanner' })
     .then(({ items }) => {
       const data = items.reduce((filtered, { fields }) => {
