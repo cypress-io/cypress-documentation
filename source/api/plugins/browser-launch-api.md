@@ -36,7 +36,7 @@ module.exports = (on, config) => {
     // }
 
     if (browser.name === 'chrome') {
-      // `args` is an araay of all the arguments
+      // `args` is an array of all the arguments
       // that will be passed to Chrome when it launchers
       args.push('--start-fullscreen')
 
