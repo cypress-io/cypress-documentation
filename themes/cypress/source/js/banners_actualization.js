@@ -38,7 +38,7 @@
   function mobileDeviceUXUpgrade () {
     var banners = document.querySelector('.top-banners_item')
 
-    if (typeof banners === 'undefined') return null
+    if (typeof banners === 'undefined' || !banners) return null
 
     var offset = document.querySelector('#container').scrollTop || window.pageYOffset
     var headerHeight = document.querySelector('#header').clientHeight
