@@ -14,7 +14,7 @@ containerClass: faq
 - Cypress不是一般的{% urlHash "自动化工具" 自动化限制 %}
 - Cypress命令{% urlHash "在浏览器内" 在浏览器内 %}运行
 - 永远不会支持{% urlHash "多页签浏览" 多页签 %}
-- 你无法使用Cypress同时驱动{% urlHash "两个浏览器在同一时间" 同一时间打开多浏览器 %}
+- 你无法使用 Cypress {% urlHash "同时驱动两个或以上浏览器" 同一时间打开多浏览器 %}
 - 每个测试都绑定到{% urlHash "单个域名后缀" 同域 %}
 
 ### 临时"缺陷":

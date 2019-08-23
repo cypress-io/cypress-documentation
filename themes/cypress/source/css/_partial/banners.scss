@@ -3,7 +3,6 @@
   flex-direction: column;
 
   .top-banners_item {
-    display: flex;
     align-self: stretch;
     justify-content: center;
     overflow-wrap: break-word;
@@ -12,6 +11,11 @@
     border-bottom: 1px solid $color-link;
     font-family: $font-title;
     padding: 6px 20px;
+    display: none;
+
+    &.visible {
+      display: flex;
+    }
 
     @media screen and(min-width: 768px) {
       padding: 20px 30px;
