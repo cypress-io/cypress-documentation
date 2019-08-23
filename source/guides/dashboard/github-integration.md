@@ -13,11 +13,11 @@ GitHub Enterprise is currently not supported. Please [contact us](mailto:hello@c
 GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following {% url "these guidelines" continuous-integration#Git-information %}. If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 {% endnote %}
 
-## Install the Cypress GitHub app
+# Install the Cypress GitHub app
 
 Before you can enable GitHub integration for your Cypress projects, you must first install the Cypress GitHub App. You can start the GitHub App installation process via your organization's settings page or a project's settings page in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 
-### Install via organization integration settings
+## Install via organization integration settings
 
 1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %}.
 2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
@@ -26,7 +26,7 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 4. Click the **Install the Cypress GitHub App** button.
   {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.jpg "Install Cypress GitHub App from Integrations" %}
 
-### Install via project settings
+## Install via project settings
 
 1. Go to your organization's projects page.
 2. Select the project you wish to integrate with a GitHub repository.
@@ -37,7 +37,7 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 5. Click the **Install the Cypress GitHub App** button.
   {% imgTag /img/dashboard/github-integration/install-github-cypress-app-project-settings.jpg "Install GitHub Cypress App" %}
 
-### Cypress GitHub app installation process
+## Cypress GitHub app installation process
 
 Once you've started the GitHub App installation process {% urlHash "via a Cypress organization's settings" Install-via-organization-integration-settings %} or {% urlHash "a project's settings" Install-via-project-settings %}, you will be directed to GitHub.com to complete the installation:
 
@@ -56,7 +56,7 @@ Once you've started the GitHub App installation process {% urlHash "via a Cypres
 
 3. Click the **Install** button to complete the installation.
 
-## Enabling GitHub integration for a project
+# Enabling GitHub integration for a project
 
 After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for *any* Cypress project.
 
@@ -77,7 +77,7 @@ Once a GitHub repository is associated with a Cypress project, the GitHub integr
 You can also see all GitHub Integration enabled Cypress projects within your organizations **Integrations** page:
 {% imgTag /img/dashboard/github-integration/org-settings-with-projects.png "Integrations page" "no-border" %}
 
-## Status checks
+# Status checks
 
 If status checks are enabled within a project's GitHub integration settings, the Cypress Dashboard will report Cypress test statuses to GitHub for related commits. {% url "Status checks" https://help.github.com/en/articles/about-status-checks %} help prevent merging a commit or pull-request into the rest of your codebase until all your Cypress tests have passed.
 
@@ -92,12 +92,12 @@ The Cypress GitHub App reports commit status checks in two separate styles:
 Each status check will report the number of test failures or passes, and the associated **Details** link will direct you to the test run's page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
 {% imgTag /img/dashboard/dashboard-fail-tab.png "Cypress Dashboard failure tab" %}
 
-### Disable status checks
+## Disable status checks
 
 GitHub status checks are optional, and can be disabled within a project's GitHub integration settings:
 {% imgTag /img/dashboard/github-integration/status-check-settings.png "Status checks settings" %}
 
-## Pull request comments
+# Pull request comments
 
 The Cypress GitHub App can provide detailed test information within pull requests via comments that include:
 
@@ -117,7 +117,7 @@ An example of a Cypress pull-request comment can be seen below:
 
 {% imgTag /img/dashboard/github-integration/pr-comment-fail.jpg "Cypress GitHub App PR comment" %}
 
-### Disable PR comments
+## Disable PR comments
 
 PR comments and failure screenshot thumbnails are optional, and can be disabled if not needed within a project's GitHub Integration settings:
 {% imgTag /img/dashboard/github-integration/pr-comments-settings.png "Status checks settings" %}
