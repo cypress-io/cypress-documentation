@@ -24,6 +24,7 @@ cy.visit(options)
 
 ```javascript
 cy.visit('http://localhost:3000')    // Yields the window of the remote page
+cy.visit('./pages/hello.html')
 ```
 
 ## Arguments
@@ -33,6 +34,9 @@ cy.visit('http://localhost:3000')    // Yields the window of the remote page
 The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
+
+You may also specify the relative path of an html file.  The path is relative to the root
+directory of the Cypress installation. Note that the `file://` prefix is not needed.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
