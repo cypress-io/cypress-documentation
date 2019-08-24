@@ -167,6 +167,12 @@ Name | Description
 ~~CYPRESS_SKIP_BINARY_INSTALL~~ | {% badge danger removed %} use `CYPRESS_INSTALL_BINARY=0` instead
 ~~CYPRESS_BINARY_VERSION~~ | {% badge danger removed %} use `CYPRESS_INSTALL_BINARY` instead
 
+
+
+All of these environment variables can have a suffix with a specific platform. If you want to specify a
+`CYPRESS_INSTALL_BINARY` only for Linux you can set a variable named `CYPRESS_INSTALL_BINARY___linux`.
+The suffix maps to the platforms found in NodeJS: https://nodejs.org/api/process.html#process_process_platform
+
 ## Install binary
 
 Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cypress is installed.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
