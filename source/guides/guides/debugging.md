@@ -321,7 +321,9 @@ If you'd like to contribute directly to the Cypress code, we'd love to have your
 
 ## Run the Cypress app by itself
 
-Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. Some common situations on why you would want to do this are:
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}.
+
+Some common situations on why you would want to run the Cypress app by itself are to:
 
 - debug Cypress not starting or hanging
 - debug problems related to the way CLI arguments are parsed by the npm CLI module
@@ -391,115 +393,46 @@ cypress:server:cypress starting in mode smokeTest +356ms
 cypress:server:cypress about to exit with code 0 +4ms
 ```
 
-## Patch Cypress CLI npm module
+## Patch Cypress
 
-As mentioned in the previous section, Cypress CLI npm module is the small module installed first when you do `npm i cypress` command. This module parses input arguments, starts Xvfb session if necessary and runs the Cypress Electron-based binary application. Sometimes the CLI module itself has a bug, which breaks your CI execution. For example, {% issue 2181 "dest.end error crash during run exit on GitLab CI / Windows" %} issue crashes the CLI when the child process exits on some versions of Windows. This error was apparently introduced in v3.0.0 frustrating many users. On Windows, to get the terminal colors to work, we needed to pipe input and output streams from the CLI process to the spawned Electron process. Thus the released CLI code has the following code fragment:
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}.
 
-```javascript
-function needsEverythingPipedDirectly() {
-  return isPlatform('win32')
-}
+If you're encountering a bug in the current version of Cypress, you can implementing a temporary fix by patching Cypress in your own project. Here is an example of how to do this.
 
-function getStdio(needsXvfb) {
-  if (needsEverythingPipedDirectly()) {
-    // hmm, maybe it should be "inherit"?!!
-    return 'pipe'
+1. Install {% url "patch-package" https://github.com/ds300/patch-package %}.
+2. Add a patch step to your CI configuration after installing your npm packages.
+
+  ```yaml
+  - run: npm ci
+  - run: npx patch-package
+  ```
+
+  Alternatively, you can apply the patch during a post-install phase. In your `package.json`, for example, you could add the following:
+
+  ```json
+  {
+    "scripts": {
+      "postinstall": "patch-package"
+    }
   }
+  ```
 
-  // a little bit more logic for Linux / Mac
-  // ...
-  return 'inherit'
-}
-```
+3. Edit the line causing the problem *in your local node_modules folder* within `node_modules/cypress`.
+4. Run the `npx patch-package cypress` command. This command will create a new file `patches/cypress+3.4.1.patch`.
 
-Imagine you are a user trying to run Cypress tests on Windows CI machine and hitting the error. All tests pass successfully and then ...
+  ```shell
+  npx patch-package cypress
+  patch-package 6.1.2
+  • Creating temporary folder
+  • Installing cypress@3.4.1 with npm
+  • Diffing your files with clean files
+  ✔ Created file patches/cypress+3.4.1.patch
+  ```
 
-```text
-_stream_readable.js:511
-    dest.end();
-         ^
-
-TypeError: dest.end is not a function
-    at Socket.onend (_stream_readable.js:511:10)
-    at Socket.g (events.js:292:16)
-    at emitNone (events.js:91:20)
-    at Socket.emit (events.js:185:7)
-    at endReadableNT (_stream_readable.js:974:12)
-    at _combinedTickCallback (internal/process/next_tick.js:80:11)
-    at process._tickCallback (internal/process/next_tick.js:104:9)
-```
-
-You suspect that switching from `pipe` to `inherit` would fix YOUR problem, but the Cypress team still has not implemented this fix; because each version of Cypress should work on a variety of platforms. What can you do meanwhile?
-
-You can patch Cypress CLI module in your own project, implementing a temporary fix! Here is how to do this.
-
-1. Install the {% url "patch-package" https://github.com/ds300/patch-package %} with
-
-```shell
-npm i -D patch-package
-```
-
-2. Add the patching step to your CI after `npm ci` step
-
-```yaml
-- run: npm ci
-# after installing NPM dependencies, patch any that need custom code
-- run: npx patch-package
-```
-
-Alternatively, you can apply the patch during the npm post-install phase. In your `package.json` add the following:
-
-```json
-{
-  "scripts": {
-    "postinstall": "patch-package"
-  }
-}
-```
-
-Now, let's edit the line causing the problem *in your local node_modules folder*.
-
-3. Open and edit the `node_modules/cypress/lib/exec/spawn.js` file
-
-```javascript
-if (needsEverythingPipedDirectly()) {
-  return 'inherit'; // changed from 'pipe'
-}
-```
-
-4. Run the `npx patch-package cypress` command.
-
-```text
-$ npx patch-package cypress
-patch-package 6.1.2
-• Creating temporary folder
-• Installing cypress@3.4.1 with npm
-• Diffing your files with clean files
-✔ Created file patches/cypress+3.4.1.patch
-```
-
-The above command has created a new file `patches/cypress+3.4.1.patch`
-
-```text
-$ cat patches/cypress+3.4.1.patch
-diff --git a/node_modules/cypress/lib/exec/spawn.js b/node_modules/cypress/lib/exec/spawn.js
-index ed13727..19c1fae 100644
---- a/node_modules/cypress/lib/exec/spawn.js
-+++ b/node_modules/cypress/lib/exec/spawn.js
-@@ -42,7 +42,7 @@ function needsEverythingPipedDirectly() {
-
- function getStdio(needsXvfb) {
-   if (needsEverythingPipedDirectly()) {
--    return 'pipe';
-+    return 'inherit';
-   }
-```
-
-5. Commit the new `patches` folder to Git and push to GitHub
-6. CI machine installs Cypress and other npm modules, then applies the patch and runs the tests. Everything is good now.
+5. Commit the new `patches` folder to git.
 
 {% note info %}
-If you find a patch for an error, please add a comment explaining your workaround to the relevant Cypress GitHub issue. It will help us release an official fix sooner.
+If you find a patch for an error, please add a comment explaining your workaround to the relevant Cypress GitHub issue. It will help us release an official fix faster.
 {% endnote %}
 
 ## Edit the installed Cypress code
