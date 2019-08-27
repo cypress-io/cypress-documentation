@@ -87,11 +87,15 @@
       transition: font-size 0.2s linear;
       display: none;
       position: absolute;
-      top: 15px;
+      top: 6px;
       right: 0;
 
       @media screen and (min-width: 768px) {
+        top: 20px;
         right: 15px;
+      }
+      @media screen and (min-width: 991px) {
+        top: 15px;
       }
 
       &:hover {

@@ -138,8 +138,17 @@
         // remember id
         localStorage.setItem('cypress_docs_closed_banners', JSON.stringify(closedBanners))
         // remove banner
-        document.querySelector('.top-banners_item[data-id="' + id + '"]') &&
-        document.querySelector('.top-banners_item[data-id="' + id + '"]').remove()
+        var allIdenticalBanners = document.querySelectorAll('.top-banners_item[data-id="' + id + '"]') || []
+
+        if (allIdenticalBanners.length > 0) {
+          var j
+
+          for (j = allIdenticalBanners.length; j--;) {
+            allIdenticalBanners[j].remove()
+          }
+
+          actualizeSidebarPosition()
+        }
       })
     }
   }
