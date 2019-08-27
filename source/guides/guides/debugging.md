@@ -403,7 +403,7 @@ function needsEverythingPipedDirectly() {
 function getStdio(needsXvfb) {
   if (needsEverythingPipedDirectly()) {
     // hmm, maybe it should be "inherit"?!!
-    return 'pipe';
+    return 'pipe'
   }
 
   // a little bit more logic for Linux / Mac
