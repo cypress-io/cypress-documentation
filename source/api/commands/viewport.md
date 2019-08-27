@@ -55,7 +55,7 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `iphone-4`    | 320   | 480    |
 | `iphone-3`    | 320   | 480    |
 | `samsung-s10` | 360   | 760    |
-| `samsung-note9` | 414 | 896    |
+| `samsung-note9` | 414 | 846    |
 
 **{% fa fa-angle-right %} orientation** ***(String)***
 
