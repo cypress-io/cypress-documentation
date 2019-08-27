@@ -119,6 +119,7 @@
     for (i = closeBtns.length; i--;) {
       // add event listener for each close btn`s
       closeBtns[i].addEventListener('click', function (e) {
+        e.preventDefault()
         var closedBanners = []
         var closedBannersString = localStorage.getItem('cypress_docs_closed_banners')
 

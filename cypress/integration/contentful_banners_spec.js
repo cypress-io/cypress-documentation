@@ -156,4 +156,29 @@ describe('Contentful driven banners', () => {
       })
     })
   })
+
+  it('closes banner with close button', function () {
+    cy.task('readFileMaybe', allBannersYaml)
+    .then((yamlString) => {
+      if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
+
+      const yamlArray = YAML.parse(yamlString) || []
+
+      return yamlArray[0]
+    })
+    .then((banner) => {
+      cy.get('#header')
+      .find(`.top-banners_item--btn-close[data-id="${banner.id}"]`)
+      .click()
+      .then(() => {
+        cy.get(`.top-banners_item[data-id="${banner.id}"]`).should('not.exist')
+
+        const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
+          JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
+          : []
+
+        expect(closedBanners).to.include(banner.id)
+      })
+    })
+  })
 })
