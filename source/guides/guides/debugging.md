@@ -321,7 +321,9 @@ If you'd like to contribute directly to the Cypress code, we'd love to have your
 
 ## Run the Cypress app by itself
 
-Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. Some common situations on why you would want to do this are:
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}.
+
+Some common situations on why you would want to run the Cypress app by itself are to:
 
 - debug Cypress not starting or hanging
 - debug problems related to the way CLI arguments are parsed by the npm CLI module
@@ -390,6 +392,48 @@ cypress:server:cypress starting in mode smokeTest +356ms
 101
 cypress:server:cypress about to exit with code 0 +4ms
 ```
+
+## Patch Cypress
+
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}.
+
+If you're encountering a bug in the current version of Cypress, you can implementing a temporary fix by patching Cypress in your own project. Here is an example of how to do this.
+
+1. Install {% url "patch-package" https://github.com/ds300/patch-package %}.
+2. Add a patch step to your CI configuration after installing your npm packages.
+
+  ```yaml
+  - run: npm ci
+  - run: npx patch-package
+  ```
+
+  Alternatively, you can apply the patch during a post-install phase. In your `package.json`, for example, you could add the following:
+
+  ```json
+  {
+    "scripts": {
+      "postinstall": "patch-package"
+    }
+  }
+  ```
+
+3. Edit the line causing the problem *in your local node_modules folder* within `node_modules/cypress`.
+4. Run the `npx patch-package cypress` command. This command will create a new file `patches/cypress+3.4.1.patch`.
+
+  ```shell
+  npx patch-package cypress
+  patch-package 6.1.2
+  • Creating temporary folder
+  • Installing cypress@3.4.1 with npm
+  • Diffing your files with clean files
+  ✔ Created file patches/cypress+3.4.1.patch
+  ```
+
+5. Commit the new `patches` folder to git.
+
+{% note info %}
+If you find a patch for an error, please add a comment explaining your workaround to the relevant Cypress GitHub issue. It will help us release an official fix faster.
+{% endnote %}
 
 ## Edit the installed Cypress code
 
