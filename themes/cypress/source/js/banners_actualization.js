@@ -103,8 +103,52 @@
     }
   }
 
+  // TODO: check if there's a better way to test ls
+  // vanilla ls test
+  function lsTest () {
+    return typeof window.localStorage !== 'undefined'
+  }
+
+  function addCloseButtonForBanners (lsAvailability) {
+    var closeBtns = document.querySelectorAll('.top-banners_item--btn-close')
+
+    if (!closeBtns || !closeBtns.length || !lsAvailability) return null
+
+    var i
+
+    for (i = closeBtns.length; i--;) {
+      // add event listener for each close btn`s
+      closeBtns[i].addEventListener('click', function (e) {
+        var closedBanners = []
+        var closedBannersString = localStorage.getItem('cypress_docs_closed_banners')
+
+        // get banner id
+        var id = e.target.dataset && e.target.dataset.id ? e.target.dataset.id : e.target.parentNode.dataset.id
+
+        // if localStorage have some banners closed
+        if (closedBannersString !== null) {
+          closedBanners = JSON.parse(closedBannersString)
+        }
+
+        // add if there is no such banner id
+        if (closedBanners.indexOf(id) < 0) {
+          closedBanners.push(id)
+        }
+
+        // remember id
+        localStorage.setItem('cypress_docs_closed_banners', JSON.stringify(closedBanners))
+        // remove banner
+        document.querySelector('.top-banners_item[data-id="' + id + '"]') &&
+        document.querySelector('.top-banners_item[data-id="' + id + '"]').remove()
+      })
+    }
+  }
+
+  var lsAvailability = lsTest()
   var banners = document.querySelectorAll('.top-banners_item') || []
   var i
+
+  window.ls_available = lsAvailability
 
   if (
     typeof window === 'undefined' ||
@@ -115,10 +159,15 @@
   for (i = banners.length; i--;) {
     var banner = banners[i]
     var now = new Date()
+    var id = banner.dataset.id
     var startDate = setMyTimezoneToDate(banner.dataset.startDate)
     var endDate = setMyTimezoneToDate(banner.dataset.endDate)
+    var closedBannersString = localStorage.getItem('cypress_docs_closed_banners')
+    var closedBanners = lsAvailability && closedBannersString ? JSON.parse(closedBannersString) : []
 
-    if (startDate < now && now < endDate) {
+    if (startDate < now && now < endDate && lsAvailability && closedBanners.indexOf(id) < 0) {
+      banner.classList.add('visible', 'can-close')
+    } else if (startDate < now && now < endDate && !lsAvailability && closedBanners.indexOf(id) < 0) {
       banner.classList.add('visible')
     } else {
       banner.remove()
@@ -126,6 +175,8 @@
   }
 
   if (!banners.length) return null
+
+  addCloseButtonForBanners(lsAvailability)
 
   actualizeSidebarPosition()
 })()

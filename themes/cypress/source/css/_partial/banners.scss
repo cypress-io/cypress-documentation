@@ -13,10 +13,6 @@
     padding: 6px 20px;
     display: none;
 
-    &.visible {
-      display: flex;
-    }
-
     @media screen and(min-width: 768px) {
       padding: 20px 30px;
     }
@@ -79,6 +75,37 @@
 
       &:hover {
         background-color: $color-link-hover;
+      }
+    }
+    .top-banners_item--btn-close {
+      color: $white;
+      background: transparent;
+      border: 0;
+      outline: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: font-size 0.2s linear;
+      display: none;
+      position: absolute;
+      top: 15px;
+      right: 0;
+
+      @media screen and (min-width: 768px) {
+        right: 15px;
+      }
+
+      &:hover {
+        color: $white-90;
+      }
+    }
+    // only for actual .top-banners_item
+    &.visible {
+      display: flex;
+    }
+    // only if browser have localStorage
+    &.can-close {
+      .top-banners_item--btn-close {
+        display: block;
       }
     }
   }
