@@ -159,7 +159,68 @@ describe('Contentful driven banners', () => {
     })
   })
 
+  it('Should close individual banner', function () {
+    cy.task('readFileMaybe', allBannersYaml)
+    .then((yamlString) => {
+      if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
+
+      const yamlArray = YAML.parse(yamlString) || []
+
+      // remove all outdated or future banners
+      const setMyTimezoneToDate = (date) => new Date(Date.parse(date))
+
+      return yamlArray.filter((banner) => {
+        const now = new Date()
+        const startDate = setMyTimezoneToDate(banner.startDate)
+        const endDate = setMyTimezoneToDate(banner.endDate)
+
+        return startDate <= now && now <= endDate
+      })
+    })
+    .then((banners) => {
+      if (typeof banners === 'undefined' || !banners || !banners.length) {
+        return this.skip()
+      }
+
+      const banner = banners[0]
+      const notUniquerBanner = banners.splice(1).map((b) => b.id)
+
+      cy.get(`.top-banners-item[data-id="${banner.id}"]`).should('exist')
+
+      cy.get(`.top-banners-item[data-id="${banner.id}"]`)
+      .find('.top-banners-item__btn_close')
+      .first()
+      .click()
+      .then(() => {
+        cy.get(`.top-banners_item[data-id="${banner.id}"]`).should('not.exist')
+
+        const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
+          JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
+          : []
+
+        expect(closedBanners).to.include(banner.id)
+
+        if (notUniquerBanner.length) {
+          expect(closedBanners).not.have.members(notUniquerBanner)
+
+          cy.get('#header')
+          .then((header) => {
+            const bannerItems = header.find('.top-banners-item')
+
+            cy.get(bannerItems).each(($banner) => {
+              notUniquerBanner.includes($banner.attr('id'))
+            })
+          })
+        }
+      })
+    })
+  })
+
   it('Should close each banner with it close button', function () {
+    window.localStorage.removeItem('cypress_docs_closed_banners')
+
+    cy.visit('/')
+
     cy.get('#header')
     .then((header) => {
       const bannerItems = header.find('.top-banners-item')
@@ -174,7 +235,7 @@ describe('Contentful driven banners', () => {
         cy.get('@closeBtn').click().then(() => {
           const id = $banner.data('id')
 
-          cy.get(`.top-banners_item[data-id="${id}"]`).should('not.exist')
+          cy.get(`.top-banners-item[data-id="${id}"]`).should('not.exist')
 
           const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
             JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))

@@ -26,12 +26,12 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      flex: 1;
 
       @media screen and (min-width: 530px) {
         flex-direction: row;
       }
       @media screen and (min-width: 768px) {
-        flex: 1;
         align-self: stretch;
       }
 
