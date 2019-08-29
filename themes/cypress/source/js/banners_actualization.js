@@ -144,11 +144,17 @@
         if (allIdenticalBanners.length > 0) {
           var j
 
+          // add animated class
           for (j = allIdenticalBanners.length; j--;) {
-            allIdenticalBanners[j].remove()
+            allIdenticalBanners[j].classList.add('is-closed')
           }
-
-          actualizeSidebarPosition()
+          // remove after animation
+          setTimeout(function () {
+            for (j = allIdenticalBanners.length; j--;) {
+              allIdenticalBanners[j].remove()
+            }
+            actualizeSidebarPosition()
+          }, 201)
         }
       })
     }
