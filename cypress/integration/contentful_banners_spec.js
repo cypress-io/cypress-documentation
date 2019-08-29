@@ -121,60 +121,71 @@ describe('Contentful driven banners', () => {
       })
     })
     .then((banners) => {
-      if (typeof banners === 'undefined' || !banners || !banners.length) return this.skip()
+      cy.get('#header').then((header) => {
+        const bannerItems = header.find('.top-banners-item')
 
-      cy.visit('/')
+        if (typeof banners === 'undefined' || !banners || !banners.length || !bannerItems.length) {
+          return this.skip()
+        }
 
-      cy.get('#header .top-banners-item')
-      .each((banner, i) => {
-        cy.wrap(banner)
-        .find('.top-banners-item__body__text')
-        .invoke('text').invoke('trim')
-        .should((bannerText) => {
-          const htmlText = removeNonAscii(regexpTrim(bannerText))
-          const yamlText = removeNonAscii(Cypress.$(banners[i].text).text().trim())
+        cy.get(bannerItems)
+        .each((banner, i) => {
+          cy.wrap(banner)
+          .find('.top-banners-item__body__text')
+          .invoke('text').invoke('trim')
+          .should((bannerText) => {
+            const htmlText = removeNonAscii(regexpTrim(bannerText))
+            const yamlText = removeNonAscii(Cypress.$(banners[i].text).text().trim())
 
-          expect(htmlText, `Banner #${i + 1} text is proper`).to.eq(yamlText)
+            expect(htmlText, `Banner #${i + 1} text is proper`).to.eq(yamlText)
+          })
+
+          cy.wrap(banner)
+          .invoke('data').its('startDate')
+          .should('eq', banners[i].startDate)
+
+          cy.wrap(banner)
+          .invoke('data').its('endDate')
+          .should('eq', banners[i].endDate)
+
+          cy.wrap(banner)
+          .find('.call-to-action')
+          .invoke('text').invoke('trim')
+          .should('eq', banners[i].buttonText.trim())
+          // const btnLink = btn.attr('href')
+
+          cy.wrap(banner)
+          .find('.call-to-action')
+          .should('have.attr', 'href')
+          .and('eq', banners[i].buttonLink)
         })
-
-        cy.wrap(banner)
-        .invoke('data').its('startDate')
-        .should('eq', banners[i].startDate)
-
-        cy.wrap(banner)
-        .invoke('data').its('endDate')
-        .should('eq', banners[i].endDate)
-
-        cy.wrap(banner)
-        .find('.call-to-action')
-        .invoke('text').invoke('trim')
-        .should('eq', banners[i].buttonText.trim())
-        // const btnLink = btn.attr('href')
-
-        cy.wrap(banner)
-        .find('.call-to-action')
-        .should('have.attr', 'href')
-        .and('eq', banners[i].buttonLink)
       })
     })
   })
 
   it('Should close each banner with it close button', function () {
     cy.get('#header')
-    .find('.top-banners-item')
-    .each(($banner) => {
-      cy.get($banner.find('.top-banners-item__btn_close')).as('closeBtn')
+    .then((header) => {
+      const bannerItems = header.find('.top-banners-item')
 
-      cy.get('@closeBtn').click().then(() => {
-        const id = $banner.data('id')
+      if (!bannerItems.length) {
+        return this.skip()
+      }
 
-        cy.get(`.top-banners_item[data-id="${id}"]`).should('not.exist')
+      cy.get(bannerItems).each(($banner) => {
+        cy.get($banner.find('.top-banners-item__btn_close')).as('closeBtn')
 
-        const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
-          JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
-          : []
+        cy.get('@closeBtn').click().then(() => {
+          const id = $banner.data('id')
 
-        expect(closedBanners).to.include(id)
+          cy.get(`.top-banners_item[data-id="${id}"]`).should('not.exist')
+
+          const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
+            JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
+            : []
+
+          expect(closedBanners).to.include(id)
+        })
       })
     })
   })
