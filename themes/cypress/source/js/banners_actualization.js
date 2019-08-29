@@ -36,7 +36,7 @@
   }
 
   function mobileDeviceUXUpgrade () {
-    var banners = document.querySelector('.top-banners_item')
+    var banners = document.querySelector('.top-banners-item')
 
     if (typeof banners === 'undefined' || !banners) return null
 
@@ -110,7 +110,7 @@
   }
 
   function addCloseButtonForBanners (lsAvailability) {
-    var closeBtns = document.querySelectorAll('.top-banners_item--btn-close')
+    var closeBtns = document.querySelectorAll('.top-banners-item__btn_close')
 
     if (!closeBtns || !closeBtns.length || !lsAvailability) return null
 
@@ -146,7 +146,7 @@
 
           // add animated class
           for (j = allIdenticalBanners.length; j--;) {
-            allIdenticalBanners[j].classList.add('is-closed')
+            allIdenticalBanners[j].classList.add('top-banners-item_is-closed')
           }
           // remove after animation
           setTimeout(function () {
@@ -161,7 +161,7 @@
   }
 
   var lsAvailability = lsTest()
-  var banners = document.querySelectorAll('.top-banners_item') || []
+  var banners = document.querySelectorAll('.top-banners-item') || []
   var i
 
   window.ls_available = lsAvailability
@@ -182,9 +182,9 @@
     var closedBanners = lsAvailability && closedBannersString ? JSON.parse(closedBannersString) : []
 
     if (startDate < now && now < endDate && lsAvailability && closedBanners.indexOf(id) < 0) {
-      banner.classList.add('visible', 'can-close')
+      banner.classList.add('top-banners-item_visible', 'top-banners-item_can-close')
     } else if (startDate < now && now < endDate && !lsAvailability && closedBanners.indexOf(id) < 0) {
-      banner.classList.add('visible')
+      banner.classList.add('top-banners-item_visible')
     } else {
       banner.remove()
     }
