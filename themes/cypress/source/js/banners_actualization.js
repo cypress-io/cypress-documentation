@@ -139,7 +139,7 @@
         // remember id
         localStorage.setItem('cypress_docs_closed_banners', JSON.stringify(closedBanners))
         // remove banner
-        var allIdenticalBanners = document.querySelectorAll('.top-banners_item[data-id="' + id + '"]') || []
+        var allIdenticalBanners = document.querySelectorAll('.top-banners-item[data-id="' + id + '"]') || []
 
         if (allIdenticalBanners.length > 0) {
           var j
