@@ -265,13 +265,25 @@ describe('Contentful driven banners', () => {
   })
 
   it('Collapse sidebar links', function () {
-    cy.get('#collapse-sidebar').click()
-    cy.get('.sidebar-title').each(($sidebar) => cy.get($sidebar).should('have.class', 'is-collapsed'))
+    cy.window().then((win) => {
+      if (win.innerWidth < 768) {
+        return this.skip()
+      }
+
+      cy.get('#collapse-sidebar').click()
+      cy.get('.sidebar-title').each(($sidebar) => cy.get($sidebar).should('have.class', 'is-collapsed'))
+    })
   })
 
   it('Expand sidebar links', function () {
-    cy.get('#expand-sidebar').click()
-    cy.get('.sidebar-title').each(($sidebar) => cy.get($sidebar).should('not.have.class', 'is-collapsed'))
+    cy.window().then((win) => {
+      if (win.innerWidth < 768) {
+        return this.skip()
+      }
+
+      cy.get('#expand-sidebar').click()
+      cy.get('.sidebar-title').each(($sidebar) => cy.get($sidebar).should('not.have.class', 'is-collapsed'))
+    })
   })
 
   after(() => window.localStorage.removeItem('cypress_docs_closed_banners'))
