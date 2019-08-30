@@ -185,15 +185,12 @@ describe('Contentful driven banners', () => {
       const banner = banners[0]
       const notUniquerBanner = banners.splice(1).map((b) => b.id)
 
-      cy.get(`.top-banners-item[data-id="${banner.id}"]`).should('exist')
-
       cy.get(`.top-banners-item[data-id="${banner.id}"]`)
       .find('.top-banners-item__btn_close')
       .first()
       .click()
-      .then(() => {
-        cy.get(`.top-banners_item[data-id="${banner.id}"]`).should('not.exist')
 
+      cy.get(`.top-banners_item[data-id="${banner.id}"]`).should('not.exist').then(() => {
         const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
           JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
           : []
@@ -202,21 +199,15 @@ describe('Contentful driven banners', () => {
 
         if (notUniquerBanner.length) {
           expect(closedBanners).not.have.members(notUniquerBanner)
-
-          cy.get('#header')
-          .then((header) => {
-            const bannerItems = header.find('.top-banners-item')
-
-            cy.get(bannerItems).each(($banner) => {
-              notUniquerBanner.includes($banner.attr('id'))
-            })
+          cy.get('#header').find('.top-banners-item:not(.top-banners-item_is-closed)').each(($banner) => {
+            expect(notUniquerBanner).have.members([$banner.data('id')])
           })
         }
       })
     })
   })
 
-  it('Should close each banner with it close button', function () {
+  it('Should close each banner with a close button', function () {
     window.localStorage.removeItem('cypress_docs_closed_banners')
 
     cy.visit('/')
