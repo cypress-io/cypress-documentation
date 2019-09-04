@@ -121,7 +121,7 @@ No. There are already lots of tools to do that. Using Cypress to test against a 
 
 ## {% fa fa-angle-right %} Is there code coverage?
 
-There is nothing currently built into Cypress to do this. Adding code coverage around end-to-end tests is much harder than unit tests and it may not be feasible to do in a generic way. You can read in more detail about code coverage {% issue 346 'here' %}. You may find some other coverage utilities useful when writing end-to-end tests like:
+Cypress supports code coverage via {% url "@cypress/code-coverage" https://github.com/cypress-io/code-coverage %} plugin. Read the official {% url "Cypress code coverage" code-coverage %} guide for details. We are also thinking how to go beyond code coverage, read the following blog posts:
 
 - {% url "element coverage" https://glebbahmutov.com/blog/element-coverage/ %}
 - {% url "application state coverage" https://glebbahmutov.com/blog/hyperapp-state-machine/ %}
