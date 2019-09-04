@@ -138,6 +138,8 @@ We have internally experimented at doing DOM based component unit testing in Cyp
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
 
+See examples of Cypress running unit tests in the section {% url "Unit Testing" https://github.com/cypress-io/cypress-example-recipes#unit-testing %} of example recipes repo.
+
 ## {% fa fa-angle-right %} When should I write a unit test and when should I write an end-to-end test?
 
 We believe unit tests and end-to-end tests have differences that should guide your choice.
@@ -154,7 +156,7 @@ In addition to the above differences, below are a few rules of thumb to decide w
 - If the code you are trying to test is called from other code, use a unit test.
 - If the code is going be called from the external system, like a browser, use an end-to-end test.
 - If a unit test requires a lot of mocking and you have to bring tools like `js-dom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
-- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewite it as a unit test
+- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewrite it as a unit test
 
 Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
 
@@ -163,4 +165,4 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Give you confidence to refactor code and add new features.
 - Are easy to run both locally and on a {% url "continuous integration" continuous-integration %} server.
 
-Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
+Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox. You can see examples of Cypress running unit tests in section {% url "Unit Testing" https://github.com/cypress-io/cypress-example-recipes#unit-testing %} of example recipes repo.
