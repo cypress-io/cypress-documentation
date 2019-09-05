@@ -98,7 +98,7 @@
       keywords: [coverage]
 
     - name: '@cypress/instrument-cra'
-      description: NPM odule for create-react-app applications to instrument source code without ejecting react-scripts
+      description: NPM module for create-react-app applications to instrument source code without ejecting react-scripts
       link: https://github.com/cypress-io/instrument-cra
       keywords: [coverage]
 
