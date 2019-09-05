@@ -121,3 +121,12 @@ An example of a Cypress pull-request comment can be seen below:
 
 PR comments and failure screenshot thumbnails are optional, and can be disabled if not needed within a project's GitHub Integration settings:
 {% imgTag /img/dashboard/github-integration/pr-comments-settings.png "Status checks settings" %}
+
+# Uninstall the Cypress GitHub app
+
+You can uninstall the Cypress GitHub app from GitHub by performing the following steps:
+
+1. Go into your organization's **Settings** from within GitHub.
+2. Click on **Installed GitHub Apps**.
+3. Click **Configure** beside the Cypress app.
+4. Click **Uninstall** below the "Uninstall Cypress" section.
