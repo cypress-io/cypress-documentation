@@ -60,11 +60,40 @@ Option | Default | Description
 
 ```javascript
 cy.get('form').within(($form) => {
+  // you have access to the found form via
+  // the jQuery object $form if you need it
+
   // cy.get() will only search for elements within form,
   // not within the entire document
   cy.get('input[name="email"]').type('john.doe@email.com')
   cy.get('input[name="password"]').type('password')
   cy.root().submit()
+})
+```
+
+## Tables
+
+### Find row with specific cell and confirm other cells in the row
+
+```html
+<table>
+  <tr>
+    <td>My first client</td>
+    <td>My first project</td>
+    <td>0</td>
+    <td>Active</td>
+    <td><button>Edit</button></td>
+  </tr>
+</table>
+```
+
+```javascript
+cy.contains('My first client').parent('tr').within(() => {
+  // all searches are automatically rooted to the found "TR" element
+  cy.get('td').eq(1).contains('My first project')
+  cy.get('td').eq(2).contains('0')
+  cy.get('td').eq(3).contains('Active')
+  cy.get('td').eq(4).contains('button', 'Edit').click()
 })
 ```
 
