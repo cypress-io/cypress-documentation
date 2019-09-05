@@ -89,7 +89,7 @@ cy.get('form').within(($form) => {
 
 ```javascript
 cy.contains('My first client').parent('tr').within(() => {
-  // all searches are automatically rooted to the found "TR" element
+  // all searches are automatically rooted to the found tr element
   cy.get('td').eq(1).contains('My first project')
   cy.get('td').eq(2).contains('0')
   cy.get('td').eq(3).contains('Active')
