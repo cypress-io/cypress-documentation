@@ -102,6 +102,11 @@
       link: https://github.com/cypress-io/instrument-cra
       keywords: [coverage]
 
+    - name: '@cypress/fiddle'
+      description: Quickly generates Cypress tests from HTML and JS code
+      link: https://github.com/cypress-io/cypress-fiddle
+      keywords: [prototype]
+
     - name: 'npm-cy'
       description: This GitHub Action for npm enables arbitrary actions with the npm command-line client, including testing with cypress.io and publishing to a registry.
       link: https://github.com/bartlett705/npm-cy

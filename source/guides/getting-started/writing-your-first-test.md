@@ -437,6 +437,10 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
+## Cypress fiddle
+
+While learning Cypress it is a good idea to quickly try small tests against simple HTML. We have written {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount given HTML and run Cypress test commands against it.
+
 <!-- ## Bonus Step: Refactor
 
 Once we have a passing test that covers the system we're working on, we usually like to go one step further and make sure the test code itself is well-structured and maintainable. This is sometimes expressed in TDD circles as "Red, Green, Refactor", which means:
