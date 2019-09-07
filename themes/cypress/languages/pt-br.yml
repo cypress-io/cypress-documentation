@@ -19,10 +19,10 @@ page:
 
 sidebar:
   guides:
-    overview: Overview
+    overview: Visão Geral
     why-cypress: Por que Cypress?
     getting-started: Introdução
-    key-differences: Key Differences
+    key-differences: Principais diferenças
     installing-cypress: Instalando o Cypress
     writing-your-first-test: Escrevendo seu primeiro teste
     testing-your-app: Testando sua Aplicação
@@ -30,51 +30,51 @@ sidebar:
     core-concepts: Principais Conceitos
     introduction-to-cypress: Introdução ao Cypress
     writing-and-organizing-tests: Escrevendo e Organizando seus Testes
-    conditional-testing: Conditional Testing
-    test-runner: The Test Runner
+    conditional-testing: Testes Condicionais
+    test-runner: O Test Runner
     dashboard: Dashboard
     dashboard-introduction: Introdução
-    projects: Projects
+    projects: Projetos
     runs: Runs
-    organizations: Organizations
+    organizations: Organizações
     users: Usuários
     github-integration: Integração com GitHub
-    debugging: Debugging
-    variables-and-aliases: Variables and Aliases
-    stubs-spies-and-clocks: Stubs, Spies, and Clocks
+    debugging: Debugando
+    variables-and-aliases: Variáveis e Aliases
+    stubs-spies-and-clocks: Stubs, Spies e Clocks
     network-requests: Network Requests
-    screenshots-and-videos: Screenshots and Videos
-    guides: Guides
-    command-line: Command Line
-    continuous-integration: Continuous Integration
-    parallelization: Parallelization
+    screenshots-and-videos: Screenshots e Vídeos
+    guides: Guias
+    command-line: Linha de Comando
+    continuous-integration: Integração Contínua
+    parallelization: Paralelização
     environment-variables: Variáveis de Ambiente
-    launching-browsers: Launching Browsers
-    custom-commands: Custom Commands
-    web-security: Web Security
+    launching-browsers: Iniciando navegadores
+    custom-commands: Comandos Customizados
+    web-security: Segurança Web
     references: Referências
     configuration: Configuração
     proxy-configuration: Configuração de Proxy
     error-messages: Mensagens de Erro
-    bundled-tools: Bundled Tools
-    assertions: Assertions
-    best-practices: Best Practices
+    bundled-tools: Ferramentas incluídas
+    assertions: Asserções
+    best-practices: Boas Práticas
     trade-offs: Trade-offs
     changelog: Changelog
-    roadmap: Roadmap
-    tooling: Tooling
-    intelligent-code-completion: Intelligent Code Completion
+    roadmap: Roteiro
+    tooling: Ferramentas
+    intelligent-code-completion: Conclusão Inteligente de Código
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
-    module-api: Module API
-    retry-ability: Retry-ability
-    visual-testing: Visual Testing
+    module-api: Módulo de API
+    retry-ability: Capacidade de repetição
+    visual-testing: Teste Visual
     code-coverage: Cobertura de Código
   api:
     api: API
-    table-of-contents: Table of Contents
-    commands: Commands
+    table-of-contents: Índice
+    commands: Comandos
     and: and
     as: as
     blur: blur
@@ -156,9 +156,9 @@ sidebar:
     wrap: wrap
     writefile: writeFile
     events: Events
-    catalog-of-events: Catalog of Events
-    assertions: Assertions
-    all-assertions: All Assertions
+    catalog-of-events: Catalogo de Eventos
+    assertions: Asserções
+    all-assertions: Todas Asserções
     on: on
     once: once
     removelistener: removeListener
@@ -180,10 +180,10 @@ sidebar:
     cypress-log: log
     cypress-server: Server
     plugins: Plugins
-    writing-a-plugin: Writing a Plugin
-    preprocessors-api: Preprocessors
+    writing-a-plugin: Escrevendo um Plugin
+    preprocessors-api: Pré-processadores
     browser-launch-api: Browser Launching
-    configuration-api: Configuration
+    configuration-api: Configuração
     version: version
     arch: arch
     browser: browser
@@ -193,22 +193,22 @@ sidebar:
     after-screenshot-api: After Screenshot
     spec: spec
   examples:
-    examples: Examples
-    recipes: Recipes
-    tutorials: Tutorial Videos
-    applications: Applications
+    examples: Exemplos
+    recipes: Tutoriais
+    tutorials: Tutoriais em Vídeo
+    applications: Aplicações
     docker: Docker
     media: Media
-    courses-media: Courses
+    courses-media: Cursos
     webinars-media: Webinars
     blogs-media: Blogs
-    talks-media: Talks
+    talks-media: Palestras
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     workshop: Workshop
   faq:
     questions: FAQ
-    general-questions-faq: General Questions
-    using-cypress-faq: Using Cypress
+    general-questions-faq: Perguntas gerais
+    using-cypress-faq: Usando Cypress
     dashboard-faq: Dashboard
-    company-faq: Company
+    company-faq: Empresa
