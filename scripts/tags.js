@@ -20,6 +20,7 @@ const imgTag = require('../lib/tags/image')
 const changelog = require('../lib/tags/changelog')
 const history = require('../lib/tags/history')
 const aliases = require('../lib/tags/aliases')
+const fiddle = require('../lib/tags/fiddle')
 
 const tags = {
   // aliases
@@ -68,6 +69,8 @@ const tags = {
 
   // yields
   yields: yields,
+
+  fiddle,
 }
 
 // tags which require ending

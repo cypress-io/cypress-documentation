@@ -25,6 +25,10 @@ An alias of {% url `.should()` should %}
 
 **{% fa fa-check-circle green %} Correct Usage**
 
+{% fiddle "and" "and.Usage" %}
+
+Hard-coded
+
 ```javascript
 cy.get('.err').should('be.empty').and('be.hidden') // Assert '.err' is empty & hidden
 cy.contains('Login').and('be.visible')             // Assert el is visible
