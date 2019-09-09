@@ -36,7 +36,7 @@
   }
 
   function mobileDeviceUXUpgrade () {
-    var banners = document.querySelector('.top-banners_item')
+    var banners = document.querySelector('.top-banners-item')
 
     if (typeof banners === 'undefined' || !banners) return null
 
@@ -103,8 +103,68 @@
     }
   }
 
-  var banners = document.querySelectorAll('.top-banners_item') || []
+  // TODO: check if there's a better way to test ls
+  // vanilla ls test
+  function lsTest () {
+    return typeof window.localStorage !== 'undefined'
+  }
+
+  function addCloseButtonForBanners (lsAvailability) {
+    var closeBtns = document.querySelectorAll('.top-banners-item__btn_close')
+
+    if (!closeBtns || !closeBtns.length || !lsAvailability) return null
+
+    var i
+
+    for (i = closeBtns.length; i--;) {
+      // add event listener for each close btn`s
+      closeBtns[i].addEventListener('click', function (e) {
+        e.preventDefault()
+        var closedBanners = []
+        var closedBannersString = localStorage.getItem('cypress_docs_closed_banners')
+
+        // get banner id
+        var id = e.target.dataset && e.target.dataset.id ? e.target.dataset.id : e.target.parentNode.dataset.id
+
+        // if localStorage have some banners closed
+        if (closedBannersString !== null) {
+          closedBanners = JSON.parse(closedBannersString)
+        }
+
+        // add if there is no such banner id
+        if (closedBanners.indexOf(id) < 0) {
+          closedBanners.push(id)
+        }
+
+        // remember id
+        localStorage.setItem('cypress_docs_closed_banners', JSON.stringify(closedBanners))
+        // remove banner
+        var allIdenticalBanners = document.querySelectorAll('.top-banners-item[data-id="' + id + '"]') || []
+
+        if (allIdenticalBanners.length > 0) {
+          var j
+
+          // add animated class
+          for (j = allIdenticalBanners.length; j--;) {
+            allIdenticalBanners[j].classList.add('top-banners-item_is-closed')
+          }
+          // remove after animation
+          setTimeout(function () {
+            for (j = allIdenticalBanners.length; j--;) {
+              allIdenticalBanners[j].remove()
+            }
+            actualizeSidebarPosition()
+          }, 201)
+        }
+      })
+    }
+  }
+
+  var lsAvailability = lsTest()
+  var banners = document.querySelectorAll('.top-banners-item') || []
   var i
+
+  window.ls_available = lsAvailability
 
   if (
     typeof window === 'undefined' ||
@@ -115,17 +175,24 @@
   for (i = banners.length; i--;) {
     var banner = banners[i]
     var now = new Date()
+    var id = banner.dataset.id
     var startDate = setMyTimezoneToDate(banner.dataset.startDate)
     var endDate = setMyTimezoneToDate(banner.dataset.endDate)
+    var closedBannersString = localStorage.getItem('cypress_docs_closed_banners')
+    var closedBanners = lsAvailability && closedBannersString ? JSON.parse(closedBannersString) : []
 
-    if (startDate < now && now < endDate) {
-      banner.classList.add('visible')
+    if (startDate < now && now < endDate && lsAvailability && closedBanners.indexOf(id) < 0) {
+      banner.classList.add('top-banners-item_visible', 'top-banners-item_can-close')
+    } else if (startDate < now && now < endDate && !lsAvailability && closedBanners.indexOf(id) < 0) {
+      banner.classList.add('top-banners-item_visible')
     } else {
       banner.remove()
     }
   }
 
   if (!banners.length) return null
+
+  addCloseButtonForBanners(lsAvailability)
 
   actualizeSidebarPosition()
 })()
