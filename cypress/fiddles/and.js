@@ -17,5 +17,34 @@ module.exports = {
           .and('eq', 'bar')                                // Assert 'foo' property is 'bar'
       `,
     },
+    Examples: {
+      chain: {
+        html: stripIndent`
+          <button class="active">Active button</button>
+        `,
+        test: stripIndent`
+          cy.get('button').should('have.class', 'active').and('not.be.disabled')
+        `,
+      },
+      value: {
+        only: true,
+        html: stripIndent`
+          <!-- App Code -->
+          <ul>
+            <li>
+              <a href="users/123/edit">Edit User</a>
+            </li>
+          </ul>
+        `,
+        test: stripIndent`
+          cy
+            .get('a')
+            .should('contain', 'Edit User') // yields <a>
+            .and('have.attr', 'href')       // yields string value of href
+            .and('match', /users/)          // yields string value of href
+            .and('not.include', '#')        // yields string value of href
+        `,
+      },
+    },
   },
 }

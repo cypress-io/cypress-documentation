@@ -118,6 +118,7 @@
     "prompt-confirm": "2.0.4",
     "ramda": "0.26.1",
     "request-promise": "4.2.4",
+    "require-and-forget": "1.0.0",
     "sinon": "7.4.1",
     "sinon-chai": "3.3.0",
     "start-server-and-test": "1.10.0",

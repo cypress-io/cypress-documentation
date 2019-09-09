@@ -77,9 +77,15 @@ cy
 
 ### Chain assertions on the same subject
 
+Instead of
+
 ```javascript
 cy.get('button').should('have.class', 'active').and('not.be.disabled')
 ```
+
+Just load test code from
+
+{% fiddle "and" "and.Examples.chain" %}
 
 ## Value
 
@@ -102,6 +108,9 @@ cy
   .and('match', /users/)          // yields string value of href
   .and('not.include', '#')        // yields string value of href
 ```
+
+{% fiddle "and" "and.Examples.value" "html" %}
+{% fiddle "and" "and.Examples.value" %}
 
 ## Method and Value
 
