@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import './defaults'
+import '@cypress/fiddle'
 
 const resizeObserverLoopErrRe = /^ResizeObserver loop limit exceeded/
 

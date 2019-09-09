@@ -79,6 +79,7 @@
   "devDependencies": {
     "@cypress/deploy-bits": "1.7.1",
     "@cypress/env-or-json-file": "2.0.0",
+    "@cypress/fiddle": "1.1.1",
     "@cypress/questions-remain": "1.0.1",
     "@keyv/redis": "github:bahmutov/keyv-redis#b64f44cd1d1e87893d989b1469068af8292299d5",
     "@types/fluent-ffmpeg": "2.1.10",
