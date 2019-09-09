@@ -588,3 +588,14 @@ Usually your end-to-end tests interact with the application through public brows
 
 - see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Blogs %} recipe.
 - see {% url "Testing Vue web applications with Vuex data store & REST back end" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Blogs %} recipe.
+
+## {% fa fa-angle-right %} Help, my tests pass locally, but fail in CI!
+
+There are a lot of reasons tests could fail in CI and pass locally.
+
+Some reasons this could happen:
+
+- Old Electron version. If you are executing tests using `cypress run`, it uses quite an old version of the Electron browser. While we are working on upgrading Electron, try running CI tests using Chrome browser.
+- Headless Electron mode. Even when using the default Electron browser, there are differences in its behavior between headless and headed modes. You can execute tests in CI in headed mode with `cypress run --headed`, which might avoid the failures.
+- Application build process. If there is a build process in between running tests locally and running in CI - sometimes Cypress test failures are highlighting a bug in the build process.
+- Race conditions in your application and tests that become noticeable in CI. If you have a test that will only pass when a network request finishes in 10ms (which happens every time on your local machine) and then that request takes 20ms on your CI machine (for whatever reason from that machine - location, CPU, etc slows it down) - this can cause some unexpected failures. You'll want to make sure to write assertions around the important steps that need to be reached before moving on to the next action in your tests. for example - ensuring a network request has finished before looking for the DOM element that relies on the data from that network request. We suggest reviewing the video of the test failures, looking at the timings of commands and actions in the Command Log, and comparing them to your local run's Command Log to highlight if this is the issue.
