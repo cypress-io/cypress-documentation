@@ -54,6 +54,7 @@
         "Sinon–Chai",
         "TypeScript",
         "YouTube",
+        ["VSCode", "VS Code"],
         ["^Vue", "Vue.JS"],
         "webpack",
         ["WebSocket(s?)", "WebSocket$1"],
