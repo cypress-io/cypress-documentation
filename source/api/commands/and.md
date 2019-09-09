@@ -55,21 +55,11 @@ Pass a function that can have any number of explicit assertions within it. Whate
 
 {% yields assertion_indeterminate .and %}
 
-```javascript
-cy
-  .get('nav')                       // yields <nav>
-  .should('be.visible')             // yields <nav>
-  .and('have.class', 'open')        // yields <nav>
-```
+{% fiddle "and" "and.Examples.yields1" %}
+
 However, some chainers change the subject. In the example below, `.and()` yields the string `sans-serif` because the chainer `have.css, 'font-family'` changes the subject.
 
-```javascript
-cy
-  .get('nav')                       // yields <nav>
-  .should('be.visible')             // yields <nav>
-  .and('have.css', 'font-family')   // yields 'sans-serif'
-  .and('match', /serif/)            // yields 'sans-serif'
-```
+{% fiddle "and" "and.Examples.yields2" %}
 
 # Examples
 
@@ -91,24 +81,6 @@ Just load test code from
 
 ### Chain assertions when yield changes
 
-```html
-<!-- App Code -->
-<ul>
-  <li>
-    <a href="users/123/edit">Edit User</a>
-  </li>
-</ul>
-```
-
-```javascript
-cy
-  .get('a')
-  .should('contain', 'Edit User') // yields <a>
-  .and('have.attr', 'href')       // yields string value of href
-  .and('match', /users/)          // yields string value of href
-  .and('not.include', '#')        // yields string value of href
-```
-
 {% fiddle "and" "and.Examples.value" "html" %}
 {% fiddle "and" "and.Examples.value" %}
 
@@ -116,12 +88,7 @@ cy
 
 ### Assert the href is equal to '/users'
 
-```javascript
-cy
-  .get('#header a')
-  .should('have.class', 'active')
-  .and('have.attr', 'href', '/users')
-```
+{% fiddle "and" "and.Examples.method and value" %}
 
 ## Function
 
@@ -133,39 +100,8 @@ Just be sure *not* to include any code that has side effects in your callback fu
 
 The callback function will be retried over and over again until no assertions within it throw.
 
-```html
-<div>
-  <p class="text-primary">Hello World</p>
-  <p class="text-danger">You have an error</p>
-  <p class="text-default">Try again later</p>
-</div>
-```
-
-```javascript
-cy
-  .get('p')
-  .should('not.be.empty')
-  .and(($p) => {
-    // should have found 3 elements
-    expect($p).to.have.length(3)
-
-    // make sure the first contains some text content
-    expect($p.first()).to.contain('Hello World')
-
-    // use jquery's map to grab all of their classes
-    // jquery's map returns a new jquery object
-    const classes = $p.map((i, el) => {
-      return Cypress.$(el).attr('class')
-    })
-
-    // call classes.get() to make this a plain array
-    expect(classes.get()).to.deep.eq([
-      'text-primary',
-      'text-danger',
-      'text-default'
-    ])
-  })
-```
+{% fiddle "and" "and.Examples.multiple p" "html" %}
+{% fiddle "and" "and.Examples.multiple p" %}
 
 {% note info %}
 Using a callback function {% urlHash 'will not change the subject' Subjects %}
