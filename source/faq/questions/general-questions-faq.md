@@ -164,3 +164,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Are easy to run both locally and on a {% url "continuous integration" continuous-integration %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
+
+## {% fa fa-angle-right %} How do I convince my company to use Cypress?
+
+First, be honest with yourself - is Cypress the right tool for your company and for a particular project? Implement a prototype to see how it feels to test a couple of common user stories, and if there are any technical blockers. Show the prototype to others before proceeding any further. We strongly believe that any new tools, like Cypress, spread faster by the "bottoms up" approach where people see how they solve their particular needs. If you show benefits of using Cypress to other engineers, if it truly is better than any other solution - then Cypress will be adopted and used widely.
