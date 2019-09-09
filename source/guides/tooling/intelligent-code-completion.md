@@ -52,7 +52,7 @@ If the triple slash directive does not work, please refer to your code editor in
 
 ### Reference type declarations via `jsconfig`
 
-Instead of adding triple slash directives to each JavaScript spec files, some IDEs (like VSCode) understand a common `jsconfig.json` file placed in the root of the repository. In that file include Cypress module and your test folders.
+Instead of adding triple slash directives to each JavaScript spec file, some IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the project. In that file, you can include the Cypress module and your test folders.
 
 ```json
 {
