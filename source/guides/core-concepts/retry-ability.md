@@ -154,6 +154,10 @@ Cypress will retry for up to 10 seconds to find a visible element of class `mobi
 
 # Only the last command is retried
 
+{% note warning %}
+Avoid using `cy.get().contains()` because only the `contains` will be retried once the `get` finds an element that is about to be replaced. Use `cy.get(selector).should('contain', text)` or `cy.contains(selector, text)`. 
+{% endnote %}
+
 Here is a short test that demonstrates some flake.
 
 ```javascript
