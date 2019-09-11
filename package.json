@@ -41,7 +41,8 @@
     "dev": "start-test 2222 cypress:open",
     "test-watch": "npm run test --silent -- --watch",
     "test": "jest",
-    "warn-only": "stop-only --warn --folder cypress"
+    "warn-only": "stop-only --warn --folder cypress",
+    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/cypress-documentation"
   },
   "husky": {
     "hooks": {
@@ -110,6 +111,7 @@
     "jest": "24.8.0",
     "keyv": "3.1.0",
     "lint-staged": "8.2.1",
+    "make-empty-github-commit": "1.2.0",
     "minimist": "1.2.0",
     "nock": "10.0.6",
     "ora": "3.4.0",
