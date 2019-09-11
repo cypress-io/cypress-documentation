@@ -1,4 +1,5 @@
-version: 2
+# let's try using orbs, jobs, commands
+version: 2.1
 
 env_defaults: &env_defaults
   ## this enables colors + fixes failing unit tests
@@ -159,8 +160,8 @@ workflows:
       - docs-tests:
           requires:
             - build
-      # we can deploy development docs in parallel with
-      # unit testining them.
+      # we can deploy development docs in parallel
+      # with unit testing them.
       - deploy-docs-staging:
           filters:
             branches:
