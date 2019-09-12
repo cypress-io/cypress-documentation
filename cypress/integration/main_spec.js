@@ -15,6 +15,7 @@ describe('Main', () => {
         cy.request('/robots.txt').its('body')
         .should('include', 'Disallow: /ja/')
         .and('include', 'Disallow: /zh-cn/')
+        .and('include', 'Disallow: /pt-br/')
       })
     }
   })
