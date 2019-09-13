@@ -17,7 +17,9 @@ Organizations are used to group projects and manage access to those projects.
 
 ## Create Org
 
-You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by going to the **Organizations** tab and clicking **{% fa fa-plus %} Add Organization**.
+You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by opening the organization switcher and clicking **{% fa fa-plus %} Create new organization**.
+
+{% imgTag /img/dashboard/create-org.png "Create new organization" %}
 
 {% imgTag /img/dashboard/add-organization-dialog.png "Add Organization dialog" %}
 
