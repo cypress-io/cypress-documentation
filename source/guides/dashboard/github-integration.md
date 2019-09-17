@@ -21,15 +21,15 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 
 1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %} or open the organization switcher.
 2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
-  {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" %}
+  {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
 3. Visit the selected organization's **Integrations** page via the side navigation.
-4. Click the **Install the Cypress GitHub App** button.
   {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.png "Install Cypress GitHub App from Integrations" %}
+4. Click the **Install the Cypress GitHub App** button.
 
 ## Install via project settings
 
 1. Select your organization in the organization switcher.
-  {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" %}
+  {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
 2. Select the project you wish to integrate with a GitHub repository.
   {% imgTag /img/dashboard/select-cypress-project.png "Select a project" %}
 3. Go to the project's settings page.

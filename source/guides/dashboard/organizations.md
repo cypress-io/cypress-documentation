@@ -4,7 +4,7 @@ title: Organizations
 
 Organizations are used to group projects and manage access to those projects.
 
-{% imgTag /img/dashboard/organizations-listed-in-dashboard.png "Organizations" %}
+{% imgTag /img/dashboard/organizations-listed-in-dashboard.png "Organizations"  width-600 %}
 
 # Features
 
@@ -19,9 +19,9 @@ Organizations are used to group projects and manage access to those projects.
 
 You can create an organization from within the {% url "Dashboard Service" https://on.cypress.io/dashboard %} by opening the organization switcher and clicking **{% fa fa-plus %} Create new organization**.
 
-{% imgTag /img/dashboard/create-org.png "Create new organization" %}
+{% imgTag /img/dashboard/create-org.png "Create new organization" width-600 %}
 
-{% imgTag /img/dashboard/add-organization-dialog.png "Add Organization dialog" %}
+{% imgTag /img/dashboard/add-organization-dialog.png "Add Organization dialog" width-600 %}
 
 ## Personal Orgs
 
@@ -51,11 +51,11 @@ Follow the following process to request an OSS plan for your project:
 2. Go the {% url "Organizations page" https://on.cypress.io/dashboard/organizations %} to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
 > **Note**: Personal organizations cannot be used with an OSS plan.
 
-  {% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border" %}
+  {% imgTag /img/dashboard/oss-plan-2-select-org.png "Select or add organization" "no-border width-600" %}
 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
   {% imgTag /img/dashboard/oss-plan-3-billing.png "Click Apply for an open source plan" "no-border" %}
 4. Fill in and submit the OSS plan request form.
-  {% imgTag /img/dashboard/oss-plan-4-apply.png "OSS plan request form" "no-border" %}
+  {% imgTag /img/dashboard/oss-plan-4-apply.png "OSS plan request form" "no-border width-600" %}
 5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
 
 If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).
