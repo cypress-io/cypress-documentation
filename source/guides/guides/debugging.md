@@ -95,7 +95,7 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 
 # Cypress fiddle
 
-While learning Cypress it is a good idea to quickly try small tests against simple HTML. We have written {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount given HTML and run Cypress test commands against it.
+While learning Cypress it may be a good idea to try small tests against some simple HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
 
 # Troubleshooting Cypress
 
