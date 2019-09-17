@@ -2,7 +2,7 @@
 title: GitHub Integration
 ---
 
-The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull-request comments' Pull-request-comments %}.
+The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull request comments' Pull-request-comments %}.
 {% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
 
 {% note info %}
@@ -19,23 +19,24 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 
 ## Install via organization integration settings
 
-1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %}.
+1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %} or open the organization switcher.
 2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
-  {% imgTag /img/dashboard/select-cypress-organization.jpg "Select an organization" %}
+  {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
 3. Visit the selected organization's **Integrations** page via the side navigation.
+  {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.png "Install Cypress GitHub App from Integrations" %}
 4. Click the **Install the Cypress GitHub App** button.
-  {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.jpg "Install Cypress GitHub App from Integrations" %}
 
 ## Install via project settings
 
-1. Go to your organization's projects page.
+1. Select your organization in the organization switcher.
+  {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
 2. Select the project you wish to integrate with a GitHub repository.
-  {% imgTag /img/dashboard/select-cypress-project.jpg "Select a project" %}
+  {% imgTag /img/dashboard/select-cypress-project.png "Select a project" %}
 3. Go to the project's settings page.
-  {% imgTag /img/dashboard/visit-project-settings.jpg "Visit project settings" %}
+  {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
 4. Scroll down to the **GitHub Integration** section.
 5. Click the **Install the Cypress GitHub App** button.
-  {% imgTag /img/dashboard/github-integration/install-github-cypress-app-project-settings.jpg "Install GitHub Cypress App" %}
+  {% imgTag /img/dashboard/github-integration/install-github-cypress-app-project-settings.png "Install GitHub Cypress App" %}
 
 ## Cypress GitHub app installation process
 

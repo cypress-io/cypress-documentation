@@ -102,6 +102,11 @@
       link: https://github.com/cypress-io/instrument-cra
       keywords: [coverage]
 
+    - name: '@cypress/fiddle'
+      description: Quickly generates Cypress tests from HTML and JS code
+      link: https://github.com/cypress-io/cypress-fiddle
+      keywords: [prototype]
+
     - name: 'npm-cy'
       description: This GitHub Action for npm enables arbitrary actions with the npm command-line client, including testing with cypress.io and publishing to a registry.
       link: https://github.com/bartlett705/npm-cy
@@ -270,6 +275,11 @@
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
       keywords: [elm, parcel, netlify]
+      
+    - name: cypress-rails
+      description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
+      link: https://github.com/testdouble/cypress-rails
+      keywords: [ruby, rails]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
