@@ -270,6 +270,11 @@
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
       keywords: [elm, parcel, netlify]
+      
+    - name: cypress-rails
+      description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
+      link: https://github.com/testdouble/cypress-rails
+      keywords: [ruby, rails]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
