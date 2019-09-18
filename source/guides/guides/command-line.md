@@ -156,7 +156,7 @@ cypress run --env flags='{"feature-a":true,"feature-b":false}'
 
 ### `cypress run --group <name>`
 
-{% url "Group recorded tests together" parallelization#Grouping-test-runs %} under a single run.
+Group recorded tests together under a single run.
 
 ```shell
 cypress run --group develop-env
