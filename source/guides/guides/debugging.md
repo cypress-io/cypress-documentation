@@ -242,7 +242,7 @@ Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %
 **On Mac or Linux:**
 
 ```shell
-DEBUG=cypress:* cypress open
+DEBUG=cypress:* cypress run
 ```
 
 **On Windows:**
@@ -252,7 +252,7 @@ set DEBUG=cypress:*
 ```
 
 ```shell
-cypress open
+cypress run
 ```
 
 Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.

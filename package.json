@@ -147,7 +147,7 @@
     "hexo-prism-plugin": "2.3.0",
     "hexo-renderer-marked": "0.3.2",
     "hexo-renderer-scss": "1.2.0",
-    "hexo-server": "0.3.3",
+    "hexo-server": "1.0.0",
     "js-yaml": "3.13.1",
     "lazy-ass": "1.6.0",
     "lodash": "4.17.15",
