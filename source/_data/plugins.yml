@@ -112,6 +112,11 @@
       link: https://github.com/bartlett705/npm-cy
       keywords: [github, actions, npm]
 
+    - name: 'vscode-cy-helper'
+      description: Visual Studio Code extension for cypress and cucumber preprocessor
+      link: https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper
+      keywords: [vscode, extension, intellisense]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
