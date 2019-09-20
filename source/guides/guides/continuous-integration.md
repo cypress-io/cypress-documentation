@@ -490,7 +490,7 @@ If you are running long runs on Docker, you need to set the `ipc` to `host` mode
 
 ## Xvfb
 
-When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can lock them all. In this case, you can start the X11 server just once yourself, then pass the server address to each Cypress instance using `DISPLAY` variable.
+When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
 
 First, spawn the X11 server in the background at some port, for example `:99`. If you have installed `xvfb` on Linux or if you are using one of our Docker images from {% url cypress-docker-images https://github.com/cypress-io/cypress-docker-images %}, the tools below should be available.
 
@@ -510,7 +510,7 @@ Start headless Cypress as usual
 npx cypress run
 ```
 
-After the tests finish, kill the Xvfb background process using `pkill`
+After all tests across all Cypress instances finish, kill the Xvfb background process using `pkill`
 
 ```shell
 pkill Xvfb
