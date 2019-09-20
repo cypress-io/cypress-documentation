@@ -93,6 +93,10 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
+# Cypress fiddle
+
+While learning Cypress it may be a good idea to try small tests against some simple HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
+
 # Troubleshooting Cypress
 
 There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking these support resources **first**.
@@ -238,7 +242,7 @@ Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %
 **On Mac or Linux:**
 
 ```shell
-DEBUG=cypress:* cypress open
+DEBUG=cypress:* cypress run
 ```
 
 **On Windows:**
@@ -248,7 +252,7 @@ set DEBUG=cypress:*
 ```
 
 ```shell
-cypress open
+cypress run
 ```
 
 Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.

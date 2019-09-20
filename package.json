@@ -41,7 +41,8 @@
     "dev": "start-test 2222 cypress:open",
     "test-watch": "npm run test --silent -- --watch",
     "test": "jest",
-    "warn-only": "stop-only --warn --folder cypress"
+    "warn-only": "stop-only --warn --folder cypress",
+    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/cypress-documentation"
   },
   "husky": {
     "hooks": {
@@ -110,6 +111,7 @@
     "jest": "24.8.0",
     "keyv": "3.1.0",
     "lint-staged": "8.2.1",
+    "make-empty-github-commit": "1.2.0",
     "minimist": "1.2.0",
     "nock": "10.0.6",
     "ora": "3.4.0",
@@ -119,7 +121,7 @@
     "request-promise": "4.2.4",
     "sinon": "7.4.2",
     "sinon-chai": "3.3.0",
-    "start-server-and-test": "1.10.0",
+    "start-server-and-test": "1.10.2",
     "stop-only": "3.1.0",
     "textlint": "11.3.1",
     "textlint-filter-rule-comments": "1.2.2",
@@ -132,7 +134,7 @@
   "dependencies": {
     "@contentful/rich-text-html-renderer": "13.4.0",
     "check-more-types": "2.24.0",
-    "contentful": "7.9.1",
+    "contentful": "7.10.0",
     "debug": "4.1.1",
     "docsearch.js": "2.6.3",
     "font-awesome": "4.7.0",
@@ -145,7 +147,7 @@
     "hexo-prism-plugin": "2.3.0",
     "hexo-renderer-marked": "0.3.2",
     "hexo-renderer-scss": "1.2.0",
-    "hexo-server": "0.3.3",
+    "hexo-server": "1.0.0",
     "js-yaml": "3.13.1",
     "lazy-ass": "1.6.0",
     "lodash": "4.17.15",
