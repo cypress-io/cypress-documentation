@@ -3,74 +3,76 @@ title: 最佳实践
 layout: toc-top
 ---
 
-## Organizing Tests, Logging In, Controlling State
+## 用例组织，登录，状态控制
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Sharing page objects, using your UI to log in, and not taking shortcuts.
+{% fa fa-warning red %} **反面典型：** 共享页面对象，使用UI登录，不使用快捷方式。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Test specs in isolation, programmatically log into your application, and take control of your application's state.
+{% fa fa-check-circle green %} **最佳实践：** 用例模块分离，程式化登录，控制应用状态。
 {% endnote %}
 
-In February 2018 we gave a "Best Practices" conference talk at AssertJS. This video demonstrates how to approach writing fast, scalable tests.
+在2018年2月，我们就"最佳实践"议题在AssertJS展开了一次讨论。以下视频展示了如何书写快速的、规模化的用例：
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
-## Selecting Elements
+## 元素选择
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Using highly brittle selectors that are subject to change.
+{% fa fa-warning red %} **反面典型：** 使用易变化的高脆性选择器。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Use `data-*` attributes to provide context to your selectors and insulate them from CSS or JS changes.
+{% fa fa-check-circle green %} **最佳实践：** 使用`data-*`属性来提供选择器上下文并将它们与CSS或JS更改隔离开来。
 {% endnote %}
 
-Every test you write will include selectors for elements. To save yourself a lot of headaches, you should write selectors that are resilient to changes.
+你编写的每个测试都将包含元素的选择器。为了避免许多麻烦，你应该编写对变化具有弹性的选择器。
 
-Oftentimes we see users run into problems targeting their elements because:
+我们经常看到用户遇到针对其元素的问题，因为：
 
-- Your application may use dynamic classes or ID's that change
-- Your selectors break from development changes to CSS styles or JS behavior
+- 你的应用程序可能使用动态类或更改的ID
+- 你的选择器可能从开发处成为变更的的CSS样式或JS行为
 
-Luckily, it is very easy to avoid both of these problems.
+有幸，要避免上述两种麻烦也是非常容易的：
 
-1. Don't target elements based on CSS attributes such as: `id`, `class`, `tag`
-2. Don't target elements that may change their `textContent`
-3. Add `data-*` attributes to make it easy to target elements
+1. 不要基于CSS属性，比如`id`，`class`，`tag`等来定位元素；
+2. 不要使用可能会改变`textContent`的元素定位；
+3. 添加`data-*`属性来来定位元素更加容易。
 
-### How It Works:
+### 它是如何工作的？
 
-Given a button that we want to interact with:
+假设有一个我们想要进行交互的按钮：
 
 ```html
-<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+<button id="main" class="btn btn-large" name="submission"
+  role="button" data-cy="submit">Submit</button>
 ```
 
-Let's investigate how we could target it:
+让我们来研究下如何定位它：
 
-Selector | Recommended | Notes
+选择器 | 推荐程度 | 备注
 --- | --- | ---
-`cy.get('button').click()` | {% fa fa-warning red %} Never | Worst - too generic, no context.
-`cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} Never | Bad. Coupled to styling. Highly subject to change.
-`cy.get('#main').click()` | {% fa fa-warning orange %} Sparingly | Better. But still coupled to styling or JS event listeners.
-`cy.contains('Submit').click()` | {% fa fa-check-circle green %} Depends | Much better. But still coupled to text content that may change.
-`cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Insulated from all changes.
+`cy.get('button').click()` | {% fa fa-warning red %} 绝不 | 最糟糕的方式 - 太泛了，没有上下文。
+`cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} 绝不 | 糟糕。高度耦合，太容易改变。
+`cy.get('#main').click()` | {% fa fa-warning orange %} 一般 | 稍好。但依然是耦合方式且绑定了JS事件监听器。
+`cy.get('[name=submission]').click()` | {% fa fa-warning orange %} Sparingly | Coupled to the `name` attribute which has HTML semantics.
+`cy.contains('Submit').click()` | {% fa fa-check-circle green %} 相对 | 好得多了，但依然绑定了可能改变的文本内容。
+`cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} 推荐 | 最好的，从所有可能的变化中分离开了。
 
-Targeting the element above by `tag`, `class` or `id` is very volatile and highly subject to change. You may swap out the element, you may refactor CSS and update ID's, or you may add or remove classes that affect the style of the element.
+用`tag`，`class`或`id`来定位上面的元素是非常不稳定的，并且很容易改变。应用可能会清理掉元素，可能会重构CSS并更新ID，或者还可能添加或删除影响元素样式的类。
 
-Instead, adding the `data-cy` attribute to the element gives us a targeted selector that's only used for testing.
+然而，添加`data-cy`属性到元素，给予了我们专用于测试的元素定位器。
 
-The `data-cy` attribute will not change from CSS style or JS behavioral changes, meaning it's not coupled to the **behavior** or **styling** of an element.
+CSS或JS行为的改变不会影响到`data-cy`属性，这意味着它不是与某个元素的**行为**或**风格**相绑定的。
 
-Additionally, it makes it clear to everyone that this element is used directly by test code.
+也就是说，它就是专用于测试代码运行的！
 
-{% note info "Did you know?" %}
+{% note info "你知道吗？" %}
 
-The {% url "Selector Playground" test-runner#Selector-Playground %} automatically follows these best practices.
+{% url "Selector Playground" test-runner#Selector-Playground %}自动遵循这些最佳实践原则。
 
-When determining an unique selector it will automatically prefer elements with:
+当决定一个唯一的定位器时，它会自动选择包含这些属性的元素：
 
 - `data-cy`
 - `data-test`
@@ -78,167 +80,165 @@ When determining an unique selector it will automatically prefer elements with:
 
 {% endnote %}
 
-### Text Content:
+### 文本内容：
 
-After reading the above rules you may be wondering:
+当看过以上规则后你可能会好奇：
 
-> If I should always use data attributes, then when should I use `cy.contains()`?
+> 如果我应该一直使用data属性定位的话，那什么时候用`cy.contains()`呢？
 
-A simple rule of thumb is to ask yourself this:
+一个简单的经验法则就是问问自己：
 
-If the content of the element **changed** would you want the test to fail?
+如果元素的内容发生**变化**，你希望当前测试失败吗？
 
-- If the answer is yes: then use {% url `cy.contains()` contains %}
-- If the answer is no: then use a data attribute.
+- 如果答案是肯定的：那么使用{% url `cy.contains()` contains %}；
+- 如果答案为否：则使用data属性。
 
-**Example:**
+**示例：**
 
-If we looked at the `<html>` of our button again...
+回顾关于按钮的`<html>`源码：
 
 ```html
 <button id="main" class="btn btn-large" data-cy="submit">Submit</button>
 ```
 
-The question is: how important is the `Submit` text content to your test? If the text changed from `Submit` to `Save` - would you want the test to fail?
+问题在于：`Submit`的文本内容重要程度如何？如果文本内容由`Submit`变成`Save` - 你希望此次测试的结果为失败吗？
 
-If the answer is **yes** because the word `Submit` is critical and should not be changed - then use {% url `cy.contains()` contains %} to target the element. This way, if it is changed, the test will fail.
+如果答案是"是"，因为`Submit`是非常重要的，不应该改变 - 那么请使用{% url `cy.contains()` contains %}来定位这个元素。这样一来，如果文本内容改变了，测试就失败了（问题就被发现了）。
 
-If the answer is **no** because the text could be changed - then use {% url `cy.get()` get %} with data attributes. Changing the text to `Save` would then not cause a test failure.
+如果答案是"否"，因为文本内容是允许改变的 - 那么请使用利用data属性的{% url `cy.get()` get %}。就算文本变成了`Save`也不会导致测试用例失败。
 
-## Assigning Return Values
+## 设置返回值
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to assign the return value of Commands with `const`, `let`, or `var`.
+{% fa fa-warning red %} **反面典型：** 希望通过`const`，`let`或`var`来设置指令的返回值。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Use {% url 'closures to access and store' variables-and-aliases %} what Commands yield you.
+{% fa fa-check-circle green %} **最佳实践：** 使用{% url 'closures to access and store' variables-and-aliases %}等指令回传给你。
 {% endnote %}
 
-Many first time users look at Cypress code and think it runs synchronously.
+许多新手看了Cypress的代码并认为它是同步机制的。
 
-We see new users commonly write code that looks like this:
+我们看到新手绝大多数会这样写代码：
 
 ```js
-// DONT DO THIS. IT DOES NOT WORK
-// THE WAY YOU THINK IT DOES.
+// 不要这样做，它是不会按你想的去运行的
 
 const button = cy.get('button')
 
 const form = cy.get('form')
 
-// nope, fails
+// 会失败
 button.click()
 ```
 
-{% note info 'Did you know?' %}
-You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, it's usually a sign you're doing it wrong.
+{% note info '你知道吗？' %}
+在Cypress里，你几乎用不着使用`const`，`let`或`var`。如果你用了，那只能说明你可能在用错误的办法。
 {% endnote %}
 
-If you are new to Cypress and wanting to better understand how Commands work - {% url 'please read our Introduction to Cypress guide' introduction-to-cypress#Chains-of-Commands %}.
+如果你是Cypress新手，想要更好的了解指令是如何运行的 - 请{% url '阅读我们的Cypress介绍 - 指令部分' introduction-to-cypress#Chains-of-Commands %}。
 
-If you're familiar with Cypress commands already, but find yourself using `const`, `let`, or `var` then you're typically trying to do one of two things:
+如果你已经熟悉了Cypress指令，但依然在使用`const`，`let`或`var`，那么你可能正在做这些事：
 
-- You're trying to **store and compare** values such as **text**, **classes**, **attributes**.
-- You're trying to share **values** between tests and hooks like `before` and `beforeEach`.
+- 你正在尝试"保存并对比"值，比如**text**，**classes**，**attributes**；
+- 你正在试着在不同的用例或前置`before`和`beforeEWach`之间"共享"值。
 
-For working with either of these patterns, please read our {% url 'Variables and Aliases guide' variables-and-aliases %}.
+如果要达成以上目的，请参阅我们的{% url '变量和别名指南' variables-and-aliases %}。
 
-## Visiting external sites
+## 访问外部站点
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to visit or interact with sites or servers you do not control.
+{% fa fa-warning red %} **反面典型：** 尝试访问和你没控制的站点或服务器。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Only test what you control. Try to avoid requiring a 3rd party server. When necessary, always use {% url `cy.request()` request %} to talk to 3rd party servers via their APIs.
+{% fa fa-check-circle green %} **最佳实践：** 只测试你可控的。尽量避免请求一个第三方的服务器。如果是必要的时候，使用{% url `cy.request()` request %}来与第三方的服务进行APIs对话。
 {% endnote %}
 
-One of the first things many of our users attempt to do is involve 3rd party servers in their tests.
+我们的许多使用者尝试做的第一件事就是在他们的测试中测试包含第三方的服务。
 
-You may want to access 3rd party servers in several situations:
+你可能希望在以下几种情况下访问第三方服务器：
 
-1. Testing log in when your app uses another provider via OAuth.
-2. Verifying your server updates a 3rd party server.
-3. Checking your email to see if your server sent a "forgot password" email.
+1.当你的应用通过OAuth使用其他提供商时，测试登录；
+2.验证服务器是否更新了第三方服务；
+3.检查你的电子邮件，看看你的服务器是否发送了"忘记密码"电子邮件。
 
-Initially you may be tempted to use {% url `cy.visit()` visit %} or use Cypress to traverse to the 3rd party login window.
+起初，你可能想要使用{% url `cy.visit()` visit %}或使用Cypress遍历第三方登录窗口。
 
-However, you should **never** use your UI or visit a 3rd party site when testing because:
+然而，你应该**绝不**使用你的UI访问第三方网站，因为：
 
-- It is incredibly time consuming and slows down your tests.
-- The 3rd party site may have changed or updated its content.
-- The 3rd party site may be having issues outside of your control.
-- The 3rd party site may detect you are testing via a script and block you.
-- The 3rd party site may be running A/B campaigns.
+- 这非常耗费时间并且减慢了测试速度；
+- 第三方网站可能已更改或更新其内容；
+- 第三方网站可能存在你无法控制的问题；
+- 第三方网站可能会检测到你正在通过脚本进行测试并阻止你；
+- 第三方网站可能正在运行A/B随机竞制。
 
-Let's look at a few strategies for dealing with these situations.
+让我们看看处理这些情况的一些策略。
 
-### When logging in:
+### 如果登录：
 
-Many OAuth providers run A/B experiments, which means that their login screen is dynamically changing. This makes automated testing difficult.
+许多OAuth提供商提供A/B竞制，这意味着它们的登录屏幕是动态改变的。也让自动化测试变得难起来。
 
-Many OAuth providers also throttle the number of web requests you can make to them. For instance, if you try to test Google, Google will **automatically** detect that you are not a human and instead of giving you an OAuth login screen, they will make you fill out a captcha.
+许多OAuth提供商也限制了web请求的可以发送的次数。比如，如果你测试一下Google，Google会**自动地**检测到你不是一个人类而给你一个代码验证码的登录屏幕。
 
-Additionally, testing through an OAuth provider is mutable - you will first need a real user on their service and then modifying anything on that user might affect other tests downstream.
+另外，测试OAuth提供商，变数是非常大的 - 你可能一开始就需要一个在它里面的真实用户，任何对此用户的修改将会影响下游的其它测试用例。
 
-**Here are potential solutions to alleviate these problems:**
+**以下是一些在一定程度上可以解决或缓和此类问题的办法：**
 
-1. {% url "Stub" stub %} out the OAuth provider and bypass using their UI altogether. You could just trick your application into believing the OAuth provider has passed its token to your application.
-2. If you **must** get a real token you can use {% url `cy.request()` request %} and use the **programmatic** API that your OAuth provider provides. These APIs likely change **more** infrequently and you avoid problems like throttling and A/B campaigns.
-3. Instead of having your test code bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that is the case, just use {% url `cy.request()` request %} to get the session directly from your server and bypass the provider altogether.
+1. {% url "Stub" stub %} OAuth提供程序并完全绕过他们的UI。你可以欺骗你的应用程序，使其相信OAuth提供程序已将其令牌传递给你的应用程序。
+2. 如果你**必须**获得真实令牌，你可以使用{% url `cy.request()` request %}并使用你的OAuth提供商提供的**程序化** API。这些API可能一般不会那么频繁地更改，一定程度上避免出现访问次数限制和A/B随机竞制问题。
+3. 你也可以向服务器寻求帮助，而不是让你的测试代码绕过OAuth。也许所有OAuth令牌都是在数据库中生成用户。通常，OAuth只是最初在你的服务器会与客户端建立自己的会话时有用。如果是这种情况，只需使用{% url `cy.request()` request %}直接从你的服务器获取会话并完全绕过程序。
 
-{% note info Recipes %}
-{% url "We have several examples of doing this in our logging in recipes." recipes %}
+{% note info 示例 %}
+{% url "我们在登录案例里有多个实例如何做到这些" recipes %}
 {% endnote %}
 
-### 3rd party servers:
+### 第三方服务：
 
-Sometimes actions that you take in your application **may** affect another 3rd party application. These situations are not that common, but it is possible. Imagine your application integrates with GitHub and by using your application you can change data inside of GitHub.
+有时你在应用中采取的行为**可能**会影响另一个第三方应用程序。这些情况并不常见，但有可能。想象一下，你的应用程序与GitHub集成，使用你的应用程序，你可以更改GitHub内的数据。
 
-After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
+在运行测试之后，你可以使用{% url `cy.request()` request %}直接以后台方式与GitHub的API进行交互，而不是尝试{% url `cy.visit()` visit %}GitHub。
 
-This avoids ever needing to touch the UI of another application.
+这避免了需要使用另一个应用程序的UI。
 
-### Verifying sent emails:
+### 邮件验证：
 
-Typically, when going through scenarios like user registration or forgotten passwords, your server schedules an email to be delivered.
+通常，在进行用户注册或忘记密码等场景时，你的服务器会安排要发送的电子邮件。
 
-The easiest way to check that this happened is likely with a unit or integration test at the server level and not at the end-to-end level. You generally do not need to test things only your server interacts with like side effects and services.
+检查发生这种情况的最简单方法可能是在服务器级别进行单元或集成测试，而不是在端到端级别。你通常不需要测试只有你的服务器参与的交互，比如边缘影响或其他类似服务。
 
-Nevertheless, if you **did** want to write a test in Cypress, you already have the tools to do this without involving the UI.
+然而，如果你**确实**想要在Cypress编写测试，那么你已经拥有了这样的工具来完成这项工作而不涉及UI。
 
-1. You could `cy.request()` an endpoint on your server that tells you what email has been queued or delivered. That would give you a programmatic way to know without involving the UI. Your server would have to expose this endpoint.
-2. You could also use `cy.request()` to a 3rd party server that exposes an API to read off emails. You will then need the proper authentication credentials, which your server could provide, or you could use environment variables.
+1. 你可以使用`cy.request()`在一个后端节点请求获取哪些电子邮件已经在队列里或已发送。这将为你提供一种程序化的方式来知晓(已发生的流程)，而无需涉及UI。你的服务器必须公开此后端节点；
+2. 你还可以将`cy.request()`用于第三方服务器，该服务器公开API以读取电子邮件。然后，你将向服务器提供来自你应用的正确的身份验证凭据，或者你可以使用环境变量来完成。
 
-## Having tests rely on the state of previous tests
+## 前后用例的状态依赖
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Coupling multiple tests together.
+{% fa fa-warning red %} **反面典型：** 耦合多个用例在一起。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Tests should always be able to be run independently from one another **and still pass**.
+{% fa fa-check-circle green %} **最佳实践：** 用例应该一直保持相互独立并各自运行通过。
 {% endnote %}
 
-You only need to do one thing to know whether you've coupled your tests incorrectly,  or if one test is relying on the state of a previous one.
+你只需要做一件事就可以知道你是否错误地耦合了测试，或者一个测试是否依赖于前一个测试的状态。
 
-Put an `.only` on the test and refresh the browser.
+在测试中放置一个`.only`并刷新浏览器。
 
-If this test can run **by itself** and pass - congratulations you have written a good test.
+如果这个测试可以自己运行并且通过 - 祝贺你写了一个很好的测试。
 
-If this is not the case, then you should refactor and change your approach.
+如果不是这种情况，那么你应该重构并改变你的方法。
 
-How to solve this:
+如何解决这个问题：
 
-- Move repeated code in previous tests to `before` or `beforeEach` hooks.
-- Combine multiple tests into one larger test.
+- 将先前测试中的重复代码移动到`before`或`beforeEach`钩子。
+- 将多个测试组合成一个更大的测试。
 
-Let's imagine the following test that is filling out the form.
-
+让我们看一下以下填写表单的测试：
 
 ```javascript
-// an example of what NOT TO DO
+// 一个错误的示范
 describe('my form', function () {
   it('visits the form', function () {
     cy.visit('/users/new')
@@ -258,35 +258,35 @@ describe('my form', function () {
 })
 ```
 
-What's wrong with the above tests? They are all coupled together!
+上面的测试有什么问题？它们全都被耦合在一起了！
 
-If you were to put an `.only` on any of the last three tests, they would fail. Each test requires the previous to run in a specific order in order to pass.
+如果你写一个`.only`到上面最后三个的任意一个用例上，它们的结果将是失败。因为为了运行成功，每一个测试用例都假设前面的用例是按顺序执行的。
 
-Here's 2 ways we can fix this:
+为了解决这个问题有两种办法：
 
-### 1. Combine into one test
+### 合并成一个用例
 
 ```javascript
-// a bit better
+// 稍微修改后好了一点
 describe('my form', function () {
   it('can submit a valid form', function () {
     cy.visit('/users/new')
 
-    cy.log('filling out first name') // if you really need this
+    cy.log('filling out first name') // 如果你业务确实需要这一步
     cy.get('#first').type('Johnny')
 
-    cy.log('filling out last name') // if you really need this
+    cy.log('filling out last name') // 如果你业务确实需要这一步
     cy.get('#last').type('Appleseed')
 
-    cy.log('submitting form') // if you really need this
+    cy.log('submitting form') // 如果你业务确实需要这一步
     cy.get('form').submit()
   })
 })
 ```
 
-Now we can put an `.only` on this test and it will run successfully irrespective of any other test. The ideal Cypress workflow is writing and iterating on a single test at a time.
+现在我们可以设置一个`.only`到这个测试用例上，它运行时将成功地与其他任何用例呈现无关性。理想的Cypress工作流是同一时间编写和与独立的用例互动。
 
-### 2. Run shared code before each test
+### 在每个测试用例开始前执行共享代码
 
 ```javascript
 describe('my form', function () {
@@ -297,7 +297,7 @@ describe('my form', function () {
   })
 
   it('displays form validation', function () {
-    cy.get('#first').clear() // clear out first name
+    cy.get('#first').clear() // 清除名字
     cy.get('form').submit()
     cy.get('#errors').should('contain', 'First name is required')
   })
@@ -308,21 +308,21 @@ describe('my form', function () {
 })
 ```
 
-This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
+上面的示例是理想的，因为现在我们正在重置每个测试之间的状态，并确保先前测试中没有任何内容泄漏到后续测试中。
 
-We're also paving the way to make it easy to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
+我们也在表单的"默认"状态基础上增加了新的前置，这使编写多个测试变得容易。这样每个测试都有所依赖，但每个测试都可以独立运行并通过。
 
-## Creating "tiny" tests with a single assertion
+## 创建仅有单一断言的"微"测试
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Acting like you're writing unit tests.
+{% fa fa-warning red %} **反面典型：** 就好像在写单元测试。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Add multiple assertions and don't worry about it
+{% fa fa-check-circle green %} **最佳实践：** 别担心，多添加点断言。
 {% endnote %}
 
-We've seen many users writing this kind of code:
+我们已经见识过许多使用者像这样写代码：
 
 ```javascript
 describe('my form', function () {
@@ -345,24 +345,24 @@ describe('my form', function () {
 })
 ```
 
-While technically this runs fine - this is really excessive, and not performant.
+首先，技术上来说这肯定是能通过的 - 但这样太极端了，不够高效。
 
-Why you did this pattern in unit tests:
+为什么在单元测试中才使用此模式：
 
-- When assertions failed you relied on the test's title to know what failed
-- You were told that adding multiple assertions was bad and accepted this as truth
-- There was no performance penalty splitting up multiple tests because they run really fast
+- 当断言失败时，你依靠测试的标题来知道失败的原因
+- 你被告知添加多个断言很糟糕并且接受这是真理
+- 拆分的多个测试没有性能损失因为它们运行得非常快
 
-Why you shouldn't do this in Cypress:
+为什么你不应该在Cypress里这样做：
 
-- Writing integration tests is not the same as unit tests
-- You will always know (and can visually see) which assertion failed in a large test
-- Cypress runs a series of async lifecycle events that reset state between tests
-- Resetting tests is much slower than adding more assertions
+- 编写集成测试与单元测试不同
+- 你将始终知道（并且可以直观地看到）在大型测试中哪个断言失败
+- Cypress运行一系列异步的生命周期事件，在测试之间会重置状态
+- 重置测试比添加更多断言要慢得多
 
-It is common for tests in Cypress to issue 30+ commands. Because nearly every command has a default assertion (and can therefore fail), even by limiting your assertions you're not saving yourself anything because **any single command could implicitly fail**.
+Cypress的测试通常会发出30多个命令。因为几乎每个命令都有一个默认断言（因此可能会失败），即使通过限制断言数，你也不会自己节省出任何东西，因为**任何单个的命令都可能隐式的失败**。
 
-How you should rewrite those tests:
+你应该如何重写这些测试：
 
 ```javascript
 describe('my form', function () {
@@ -380,19 +380,19 @@ describe('my form', function () {
 })
 ```
 
-## Using `after` or `afterEach` hooks
+## 使用钩子`after`或`afterEach`
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Using `after` or `afterEach` hooks to clean up state.
+{% fa fa-warning red %} **反面典型：** 使用`after`或`afterEach`钩子来清理环境状态。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Clean up state **before** tests run.
+{% fa fa-check-circle green %} **最佳实践：**在**测试**运行前，就清理环境状态。
 {% endnote %}
 
-We see many of our users adding code to an `after` or `afterEach` hook in order to clean up the state generated by the current test(s).
+我们看到许多使用者添加代码到`after`或`afterEach`钩子里，以便清理因当前测试造成的环境状态变化。
 
-We most often see test code that like this:
+我们看到的大多数这样的代码会这样写：
 
 ```js
 describe('logged in user', function () {
@@ -410,29 +410,29 @@ describe('logged in user', function () {
 })
 ```
 
-Let's look at why this is not really necessary.
+让我们来看看为什么这不是真的有必要。
 
-### Dangling state is your friend:
+### 状态保存是你的朋友：
 
-One of the **best** parts of Cypress is its emphasis on debuggability. Unlike other testing tools - when your tests end - you are left with your working application at the exact point where your test finished.
+Cypress**最优秀**部分之一是强调可调试性。与其他测试工具不同 - 当你的测试结束时 - 你将在测试完成的确切位置留下你的应用程序的状态。
 
-This is an **excellent** opportunity for you to **use** your application in the state the tests finished! This enables you to write **partial tests** that drive your application step by step, writing your test and application code at the same time.
+这是一个**非常好的**让你在测试完成后可以继续**使用**你的应用程序的机会！这使你能够一步一步地编写**多步骤测试**，逐步地驱动你的应用程序，边编写测试边调试应用程序代码。
 
-We have built Cypress to support this use case. In fact, Cypress **does not** clean up its own internal state when the test ends. We **want** you to have dangling state at the end of the test! Things like {% url "`stubs`" stub %}, {% url "`spies`" spy %}, even {% url "`routes`" route %} are **not** removed at the end of the test. This means your application will behave identically while it is running Cypress commands or when you manually work with it after a test ends.
+我们已经让Cypress支持这种情况。事实上，Cypress在测试结束时**不会**清理自己的内部状态。我们**希望**你在测试结束时保存测试状态！像{% url "`stubs`" stub %}，{% url "`spies`" spy %}甚至{% url "`routes`" route %}这样的东西都**不会**在测试结束时被删除。这意味着你的应用程序在运行Cypress命令期间和在测试结束后手动使用它时的行为相同。
 
-If you remove your application's state after each test, then you instantly lose the ability to use your application in this mode. Logging out at the end would always leave you with the same login page at the end of the test. In order to debug your application or write a partial test, you would always be left commenting out your custom `cy.logout()` command.
+如果在每次测试后删除应用程序的状态，那么你将立即失去在此模式下使用应用程序继续调试的能力。在结束时注销登录，将始终在测试结束时为你提供相同的登录页面。为了调试你的应用程序或编写某个测试步骤，你将需要注释掉自定义的`cy.logout（）`命令。
 
-### It's all downside with no upside:
+### 都是缺点，没有优点：
 
-For the moment, let's assume that for some reason your application desperately **needs** that last bit of `after` or `afterEach` code to run. Let's assume that if that code is not run - all is lost.
+目前，我们假设由于某种原因，你的应用程序特别地**需要**运行最后的`after`或`afterEach`代码。让我们假设一下，如果该代码(因为某些异常)没有运行呢 - 所有的东西都将错乱。
 
-That is fine - but even if this is the case, it should not go in an `after` or `afterEach` hook. Why? So far we have been talking about logging out, but let's use a different example. Let's use the pattern of needing to reset your database.
+这很好 - 但即使是这种情况，它也不应该进入`after`或`afterEach`钩子。为什么？到目前为止，我们一直在谈论退出登录，但让我们使用一个不同的例子。让我们使用需要重置数据库的例子吧。
 
-**The idea goes like this:**
+**事情是这样的：**
 
-> After each test I want to ensure the database is reset back to 0 records so when the next test runs, it is run with a clean state.
+>在每次测试之后，我想确保数据库重置为0记录，因此当下一个测试运行时，它将以干净状态运行。
 
-**With that in mind you write something like this:**
+**考虑到这一点你将写这样的东西：**
 
 ```js
 afterEach(function () {
@@ -440,91 +440,93 @@ afterEach(function () {
 })
 ```
 
-Here is the problem: **there is no guarantee that this code will run.**
+问题就出在这里：**没有任何机制可以保证这些代码一定会运行**。
 
-If, hypothetically, you have written this command because it **has** to run before the next test does, then the absolute **worst place** to put it is in an `after` or `afterEach` hook.
+假设你已编写此命令，因为它必须在下一次测试之前运行，那么绝对最糟糕的处理是把它放在在`after`或`afterEach`钩子中。
 
-Why? Because if you refresh Cypress in the middle of the test - you will have built up partial state in the database, and your custom `cy.resetDb()` function **will never get called**.
+为什么？因为如果你在测试过程中刷新了Cypress(因为某种原因) - 你将在数据库中建立破坏性的临时状态，你的自定义`cy.resetDb()`函数永远不会被调用。
 
-If this state cleanup is **truly** required, then the next test will instantly fail. Why? Because resetting the state never happened when you refreshed Cypress.
+而因为你写的测试逻辑的原因，每一个用例又需要这种状态清理，那么下一次测试将立即失败。为什么？因为当你刷新了Cypress时，重置状态就不会发生了。
 
-### State reset should go before each test:
+### 状态重置应该在每个测试运行之前进行：
 
-The simplest solution here is to move your reset code to **before** the test runs.
+最简单的解决方案就是把你的清理代码放到测试运行**之前**。
 
-Code put in a `before` or `beforeEach` hook will **always** run prior to the test - even if you refreshed Cypress in the middle of an existing one!
+放到`before`或`beforeEach`钩子里的代码**总**会先于测试代码运行 - 哪怕你在某个测试运行中期刷新了Cypress。
 
-This is also a great opportunity to use {%url 'root level hooks in mocha' https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks %}. A perfect place to put these is in the {% url "`cypress/support/index.js` file" writing-and-organizing-tests#Support-file %} because it is always evaluated before any test code from your spec files.
+这同样是一个使用{%url 'root level hooks in mocha' https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks %}的绝好时机。{% url "`cypress/support/index.js` file" writing-and-organizing-tests#Support-file %}是放置这些的完美地点，因为它总是率先于所有的测试文件做检测。
 
-**Hooks you add to the root will always run on all suites!**
+**添加到root的钩子总是会在所有测试集里运行！**
 
 ```js
 // cypress/support/index.js
 
 beforeEach(function () {
-  // now this runs prior to every test
+  // 现在，不管怎样，这个将优先于所有测试文件的所有测试用例运行
   // across all files no matter what
   cy.resetDb()
 })
 ```
 
-That's it! It couldn't be simpler!
+就这么简单！
 
-### Is resetting the state necessary?
+### 状态的重置是必要的吗？
 
-One final question you should ask yourself is - is resetting the state even necessary? Remember, Cypress already automatically clears {% url "`localStorage`" clearlocalstorage %}, {% url "cookies" clearcookies %}, sessions, etc before each test. Make sure you are not trying to clean up state that is already cleaned up by Cypress automatically.
+你应该问自己的最后一个问题是 - 有必要重置状态吗？请记住，Cypress已经在每次测试前自动清除{% url "`localStorage`" clearlocalstorage %}，{% url "cookies" clearcookies %}，sessions等。确保你没有尝试清除已被Cypress自动清除的状态。
 
-If the state you are trying to clean lives on the server - by all means, clean that state. You will need to run these types of routines! But if the state is related to your application currently under test - you likely do not even need to clear it.
+如果你正试图清理的东西存在在服务器上 - 请务必清理它。你将需要按照常规的测试思想去运行和清理！但如果状态与你当前正在测试的(前端)应用程序相关 - 你甚至可能不需要清除它。
 
-The only times you **ever** need to clean up state, is if the operations that one test runs affects another test downstream. In only those cases do you need state cleanup.
+*译者注（理解有误请提BUG）：这里可能主要考虑清理环境时，被清理的数据是在前端还是在后端。如果是前端数据，比如在localStorage、cookies或sessions里的，那么Cypress会自动帮你清理掉，所以不需要自己再去清理一遍；而如果是测试时对服务器的数据造成了影响，则一定要清理。*
 
-## Unnecessary Waiting
+你唯一需要清理状态的时间是，如果一个测试运行的操作影响下游的另一个测试。只有那些情况下你需要进行状态清理。
+
+## 不必要的等待
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Waiting for arbitrary time periods using {% url `cy.wait(Number)` wait#Time %}.
+{% fa fa-warning red %} **反面典型：** 使用{% url `cy.wait(Number)` wait#Time %}等待一个武断的时间。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Use route aliases or assertions to guard Cypress from proceeding until an explicit condition is met.
+{% fa fa-check-circle green %} **最佳实践：** 使用路由别名或断言来监听Cypress运行，直到一个明确的条件达成。
 {% endnote %}
 
-In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of time. If you are finding yourself doing this, there is likely a much better, simpler way.
+在Cypress，你机会用不到`cy.wait()`来等待一个武断的时间段。如果你发现自己正在这么做，那么应该有更好的、更简单方法来达成你的需求。
 
-Let's imagine the following examples:
+比如我们假设有如下例子：
 
-### Unnecessary wait for `cy.request()`
+### 在`cy.request()`后不必要的等待
 
-Waiting here is unnecessary since the {% url `cy.request()` request %} command will not resolve until it receives a response from your server. Adding the wait here only adds 5 seconds after the {% url `cy.request()` request %} has already resolved.
+在{% url `cy.request()` request %}指令下等待是不必要的，因为它本身就会一直等待直至收到一个服务器的响应。在{% url `cy.request()` request %}之后添加的5秒等待是无谓的。
 
 ```javascript
 cy.request('http://localhost:8080/db/seed')
-cy.wait(5000)     // <--- this is unnecessary
+cy.wait(5000)     // <--- 这里是没必要的
 ```
 
-### Unnecessary wait for `cy.visit()`
+### 在`cy.visit()`后不必要的等待
 
-Waiting for this is unnecessary because the {% url '`cy.visit()`' visit %} resolves once the page fires its `load` event. By that time all of your assets have been loaded including javascript, stylesheets, and html.
+在{% url '`cy.visit()`' visit %}之后添加的等待是不必要的，因为本身它就会在页面的`load`事件产生(页面加载完成的标志)后才结束。在那个时候，所有页面的内容都加载了，包括Javascript、stylesheets和html代码。
 
 ```javascript
 cy.visit('http://localhost/8080')
-cy.wait(5000)     // <--- this is unnecessary
+cy.wait(5000)     // <--- 这里是没必要的
 ```
 
-### Unnecessary wait for `cy.get()`
+### 在`cy.get()`前不必要的等待
 
-Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy.get()` get %} automatically retries until the table's `tr` has a length of 2.
+在{% url `cy.get()` get %}之前添加的等待是不必要的，因为{% url `cy.get()` get %}会自动重试直至table的`tr`的长度为2。
 
-Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
+任何时候，只要指令后跟了断言，那么它会自动重试直至断言通过。这使得你不必担心没法描述什么时候应用到达了什么状态。
 
 ```javascript
 cy.server()
 cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
 cy.get('#fetch').click()
-cy.wait(4000)     // <--- this is unnecessary
+cy.wait(4000)     // <--- 这里是没必要的
 cy.get('table tr').should('have.length', 2)
 ```
 
-Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
+另一种更好的办法是使用route别名进行显示等待：
 
 ```javascript
 cy.server()
@@ -534,64 +536,65 @@ cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
-## Web Servers
+## Web服务
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
+{% fa fa-warning red %} **反面典型：** 想通过Cypress脚本{% url `cy.exec()` exec %}或{% url `cy.task()` task %}来启动web服务。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
+{% fa fa-check-circle green %} **最佳实践：** 在Test Runner或无头模式下，先于运行Cypress之前启动web服务。
 {% endnote %}
 
-We do NOT recommend trying to start your back end web server from within Cypress.
+我们不建议你在Cypres里启动一个后台服务。
 
-Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually. Otherwise, Cypress will not continue running any other commands.
+任何通过{% url "`cy.exec()`" exec %}或{% url "`cy.task()`" task %}启动的指令最终都必须要退出。否则的话，Cypress将不会继续执行下一个指令。
 
-Trying to start a web server from {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} causes all kinds of problems because:
+想通过{% url "`cy.exec()`" exec %}或{% url "`cy.task()`" task %}来启动web服务会带来很多问题，因为：
 
-- You have to background the process
-- You lose access to it via terminal
-- You don't have access to its `stdout` or logs
-- Every time your tests run, you'd have to work out the complexity around starting an already running web server.
-- You would likely encounter constant port conflicts
+- 你必须把进程置于后台
+- 你失去了通过终端控制的权利
+- 你失去了它的`stdout`或日志记录
+- 每一次测试运行，你会纠结在让一个已经运行的web服务重新启动的复杂事务里
+- 你可能陷于端口冲突的问题里
 
-**Why can't I shut down the process in an `after` hook?**
+**为什么我不能在`after`钩子中关闭进程？**
 
-Because there is no guarantee that code running in an `after` will always run.
+因为无法保证在`after`中的代码始终会运行。
 
-While working in the Cypress Test Runner you can always restart / refresh while in the middle of a test. When that happens, code in an `after` won't execute.
+在Cypress测试运行器中工作时，你始终可以在测试过程中重新启动/刷新。当发生这种情况时，`after`中的代码将不会执行。
 
-**What should I do then?**
+**那我该怎么办？**
 
-Start your web server before running Cypress and kill it after it completes.
+在运行Cypress之前启动你的Web服务器，并在完成后将其终止。
 
-Are you trying to run in CI?
+你想在CI中运行吗？
 
-We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Boot-your-server %}.
+我们有{% url '你该如何启动和停止web服务示例' continuous-integration#Boot-your-server %}。
 
-## Setting a global baseUrl
+## 设置全局baseUrl
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Using {% url "`cy.visit()`" visit %} without setting a `baseUrl`.
+{% fa fa-warning red %} **反面典型：** 跳过设置`baseUrl`而直接使用{% url "`cy.visit()`" visit %}。
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your `cypress.json` file.
+{% fa fa-check-circle green %} **最佳实践：**在`cypress.json`文件里设置`baseUrl`。
 {% endnote %}
 
-Adding a {% url "`baseUrl`" configuration#Global %} in your configuration allows you to omit passing the `baseUrl` to commands like {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %}. Cypress assumes this is the url you want to use.
+在配置中添加{% url "`baseUrl`" configuration#Global %}可以省略将`baseUrl`传递给{% url "`cy.visit()`" visit %}和{% url "`cy.request()`" request %}。Cypress默认认为这是你要使用的url。
 
-Adding a {% url "`baseUrl`" configuration#Global %} can also save some time during the initial startup of your Cypress tests.
+添加{% url "`baseUrl`" configuration#Global %}还可以在Cypress测试的初始启动期间节省一些时间。
 
-When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
+当你开始运行测试时，Cypress不知道你计划测试的应用的网址。因此，Cypress初次会打开`https://localhost` + 一个随机端口。
 
-### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
+### 没有设置`baseUrl`，Cypress在`localhost` + 随机端口加载主窗口
+
 {% imgTag /img/guides/cypress-loads-in-localhost-and-random-port.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
-As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
+一旦遇到{% url "`cy.visit()`" visit %}，Cypress就会切换到主窗口的url到你访问中指定的url。当你的测试首次启动时，这可能会导致"闪烁"或"重新加载"。
 
-By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
+通过设置`baseUrl`，你可以完全避免重新加载。一旦测试开始，Cypress将在你指定的`baseUrl`中加载主窗口。
 
 ### cypress.json
 
@@ -601,14 +604,14 @@ By setting the `baseUrl`, you can avoid this reload altogether. Cypress will loa
 }
 ```
 
-### With `baseUrl` set, Cypress loads main window in `baseUrl`
+### 通过设置`baseUrl`，Cypress会在主窗口加载`baseUrl`
 
 {% imgTag /img/guides/cypress-loads-window-in-base-url-localhost.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 
-Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running during `cypress open` at the specified `baseUrl`.
+通过设置`baseUrl`，让你可以看到服务端是否在我们使用`cypress open`打开指定的`baseUrl`时停止了运行：
 
 {% imgTag /img/guides/cypress-ensures-baseUrl-server-is-running.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" "no-border" %}
 
-We also display an error if your server is not running at the specified `baseUrl` during `cypress run` after several retries.
+我们还会在尝试使用`cypress run`运行一个指定的`baseUrl`数次失败后，展示一个服务端未运行的错误：
 
 {% imgTag /img/guides/cypress-verifies-server-is-running-during-cypress-run.png "The terminal warns and retries when the url at your baseUrl is not running" %}

@@ -50,6 +50,21 @@ See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-e
 
 If the triple slash directive does not work, please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get {% url "TypeScript support" typescript-support %} and intelligent code completion configured in your developer environment first. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
+### Reference type declarations via `jsconfig`
+
+Instead of adding triple slash directives to each JavaScript spec file, some IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the project. In that file, you can include the Cypress module and your test folders.
+
+```json
+{
+  "include": [
+    "./node_modules/cypress",
+    "cypress/**/*.js"
+  ]
+}
+```
+
+The Intelligent Code Completion should now show help for `cy` commands inside regular JavaScript spec files.
+
 ### Reference type declarations via `tsconfig`
 
 Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %} with the following configuration should get intelligent code completion working.
@@ -71,7 +86,7 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 
 # Configuration
 
-## Features
+## Features:
 
 When editing the {% url "`cypress.json`" configuration %} file, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
 
@@ -83,8 +98,7 @@ When editing the {% url "`cypress.json`" configuration %} file, you can use our 
 
 {% video local /img/snippets/intellisense-config-defaults.mp4 %}
 
-
-## Set up in your Dev Environment
+## Set up in your Dev Environment:
 
 Intelligent code completion using JSON schemas is supported by default in {% url "Visual Studio Code" https://code.visualstudio.com/ %} and {% url "Visual Studio" https://www.visualstudio.com/ %}. All other editors will require extra configuration or plugins for JSON schema support.
 

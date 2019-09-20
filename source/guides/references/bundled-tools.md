@@ -13,15 +13,15 @@ Cypress relies on many best-of-breed open source testing libraries to lend stabi
 
 Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both integration and unit testing. All of the tests you'll be writing sit on the fundamental harness Mocha provides, namely:
 
-* {% url '`describe()`' http://mochajs.org/#bdd %}
-* {% url '`context()`' http://mochajs.org/#bdd %}
-* {% url '`it()`' http://mochajs.org/#bdd %}
-* {% url '`before()`' http://mochajs.org/#hooks %}
-* {% url '`beforeEach()`' http://mochajs.org/#hooks %}
-* {% url '`afterEach()`' http://mochajs.org/#hooks %}
-* {% url '`after()`' http://mochajs.org/#hooks %}
-* {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
-* {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
+- {% url '`describe()`' http://mochajs.org/#bdd %}
+- {% url '`context()`' http://mochajs.org/#bdd %}
+- {% url '`it()`' http://mochajs.org/#bdd %}
+- {% url '`before()`' http://mochajs.org/#hooks %}
+- {% url '`beforeEach()`' http://mochajs.org/#hooks %}
+- {% url '`afterEach()`' http://mochajs.org/#hooks %}
+- {% url '`after()`' http://mochajs.org/#hooks %}
+- {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
+- {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
 
 Additionally, Mocha gives us excellent {% url '`async` support' http://mochajs.org/#asynchronous-code %}. Cypress has extended Mocha, sanding off the rough edges, weird edge cases, bugs, and error messages. These fixes are all completely transparent.
 

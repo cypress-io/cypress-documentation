@@ -3,7 +3,7 @@ title: 安装Cypress
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 如何通过`npm`来安装Cypress.
 - 如何通过直接下载来安装Cypress.
@@ -15,15 +15,15 @@ title: 安装Cypress
 
 Cypress是一个被安装在你电脑上的桌面应用. 该桌面应用支持这些操作系统:
 
-- **Mac OS** 10.9+ (Mavericks+), 仅提供64位二进制文件.
+- **Mac OS** 10.9+ (Mavericks+), 仅提供64位二进制文件
 - **Linux** Ubuntu 12.04+, Fedora 21, Debian 8的64位二进制文件
-- **Windows** 7+, 仅提供32位二进制文件.
+- **Windows** 7+
 
 # 安装
 
 ## {% fa fa-terminal %} `npm install`
 
-通过`npm`来安装Cypress很容易:
+通过`npm`来安装Cypress非常简单:
 
 ```shell
 cd /your/project/path
@@ -33,7 +33,7 @@ cd /your/project/path
 npm install cypress --save-dev
 ```
 
-这将把Cypress作为一个dev的本地依赖安装到你的项目中.
+将Cypress作为你项目的一个dev本地依赖安装到本地.
 
 {% note info %}
 确保你已经运行了{% url "`npm init`" https://docs.npmjs.com/cli/init %}或者存在`node_modules`文件夹或者存在`package.json`文件在你项目的根目录下, 以此来确保cypress被安装到正确的路径下.
@@ -48,15 +48,15 @@ npm install cypress --save-dev
 
 {% note success 最佳实践 %}
 
-推荐的方式是使用`npm`来安装cypress， 原因是：
+推荐的方式是使用`npm`来安装Cypress， 原因是：
 
-- 可以和其它任何依赖项一样控制cypress的版本。
-- 它简化了在 {% url '持续集成' continuous-integration %}中运行cypress的过程。
+- 可以和其它任何依赖项一样控制Cypress的版本。
+- 它简化了在 {% url '持续集成' continuous-integration %}中运行Cypress的过程。
 {% endnote %}
 
 ## {% fa fa-terminal %} `yarn add`
 
-通过{% url "`yarn`" https://yarnpkg.com %}来安装cypress：
+通过{% url "`yarn`" https://yarnpkg.com %}来安装Cypress：
 
 ```shell
 cd /your/project/path
@@ -68,10 +68,15 @@ yarn add cypress --dev
 
 ## {% fa fa-download %} 直接下载
 
-如果你没有在项目中使用Node或npm，又或者你只是想快速使用cypress, 你可以{% url "直接从我们的CDN下载" http://download.cypress.io/desktop %}。
+如果你没有在项目中使用Node或`npm`，又或者你只是想快速使用Cypress, 你可以{% url "直接从我们的CDN下载" http://download.cypress.io/desktop %}。
+
+{% note warning %}
+Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
+{% endnote %}
 
 它将自动识别你的平台，并直接下载最新的可用版本。
-只需手动解压并双击打开，无需再安装任何依赖。
+
+只需手动解压然后双击app。 Cypress就可以在不安装任何依赖的情况下运行.
 
 {% video local /img/snippets/installing-global.mp4 %}
 
@@ -99,7 +104,7 @@ $(npm bin)/cypress open
 
 **使用`npx`**
 
-**注意**: `npm > v5.2`的版本自带{% url "npx" https://www.npmjs.com/package/npx %}，或者你可以单独安装。
+**note**: npm高于v5.2的版本中自带{% url "npx" https://www.npmjs.com/package/npx %}, 或者你也可以单独安装npx.
 
 ```shell
 npx cypress open
@@ -111,7 +116,7 @@ npx cypress open
 yarn run cypress open
 ```
 
-稍等一会，Cypress测试执行器会被打开.
+稍等一会，Cypress测试执行器会运行。
 
 ## 切换浏览器
 
@@ -121,9 +126,9 @@ Cypress测试执行器会尝试在用户的机器上找到所有兼容的浏览�
 
 阅读{% url "启动浏览器" launching-browsers %}，了解Cypress是如何在端对端测试中控制一个真实的浏览器。
 
-## 添加 npm scripts
+## 添加npm脚本
 
-虽然每次写Cypress主程序的完整路径并没有什么问题，但将Cypress的执行命令添加到`package.json`文件的`scripts`字段中会更加简单明了一些。
+每一次都输入完整路径的执行语句去执行Cypress是完全没有问题的, 只不过有更容易的和清晰的方式是添加Cypress命令到`package.json`文件的`scripts`区域.
 
 ```javascript
 {
@@ -139,69 +144,69 @@ Cypress测试执行器会尝试在用户的机器上找到所有兼容的浏览�
 npm run cypress:open
 ```
 
-然后Cypress就会被打开。
+...然后Cypress就会为你开启.
 
-# CLI 工具
+# CLI工具
 
-通过`npm`安装的Cypress，你还可以获得许多其他的CLI命令。
+通过`npm`安装Cypress, 你还可以访问许多其他CLI命令.
 
-从`0.20.0`版本开始， Cypress也是一个完成好的`node_module`，你可以在Node scripts中引用。
+从`0.20.0`版本开始，Cypress也是一个完整的`node_module`，你可以在Node脚本中调用。
 
-查看{% url '更多关于CLI信息' command-line %}。
+你可以在{% url '这里阅读更多CLI相关的内容' command-line %}。
 
-# 高级选项
+# 进阶
 
 ## 环境变量
 
-变量名 | 描述
+名称 | 描述
 ------ |  ---------
-`CYPRESS_INSTALL_BINARY` | {% urlHash "下载并安装需要的Cypress程序版本" 安装程序 %}
-`CYPRESS_DOWNLOAD_MIRROR` | {% urlHash "通过镜像服务器来下载Cypress程序"  镜像 %}
-`CYPRESS_CACHE_FOLDER` | {% urlHash "更改Cypress程序的缓存目录" 程序缓存 %}
-`CYPRESS_RUN_BINARY` | {% urlHash "运行Cypress程序的位置" 运行程序 %}
-~~CYPRESS_SKIP_BINARY_INSTALL~~ | {% badge danger 移除 %} 使用 `CYPRESS_INSTALL_BINARY=0` 代替
-~~CYPRESS_BINARY_VERSION~~ | {% badge danger 移除 %} 使用 `CYPRESS_INSTALL_BINARY` 代替
+`CYPRESS_INSTALL_BINARY` | {% urlHash "下载并安装的Cypress二进制文件的目标位置" 通过二进制文件来安装 %}
+`CYPRESS_DOWNLOAD_MIRROR` | {% urlHash "通过镜像服务器下载Cypress二进制文件"  镜像 %}
+`CYPRESS_CACHE_FOLDER` | {% urlHash "更改Cypress二进制缓存位置" 二进制缓存 %}
+`CYPRESS_RUN_BINARY` | {% urlHash "Cypress二进制在运行时的位置" 运行二进制文件 %}
+~~CYPRESS_SKIP_BINARY_INSTALL~~ | {% badge danger removed %} 使用`CYPRESS_INSTALL_BINARY=0`作为替代
+~~CYPRESS_BINARY_VERSION~~ | {% badge danger removed %} 使用`CYPRESS_INSTALL_BINARY`作为替代
 
-## 安装程序
+## 通过二进制文件来安装
 
-你可以使用`CYPRESS_INSTALL_BINARY`环境变量来控制Cypress的安装方式。要覆盖已安装的程序，请在`npm install`命令前设置`CYPRESS_INSTALL_BINARY`。
+通过`CYPRESS_INSTALL_BINARY`环境变量, 你可以控制Cypress的安装方式。来覆盖已经安装的内容, 你可以在`npm install`后边加上`CYPRESS_INSTALL_BINARY`命令来操作.
 
-**下面这些应该对你有所帮助：**
+**下面的操作对你会很有帮助：**
 
-- 安装不同于npm包的版本。
+- 安装与默认npm包不同的版本.
     ```shell
 CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3
     ```
-- 指定外部的地址（绕过公司的防火墙）。
+- 指定外部URL（绕过公司防火墙）.
     ```shell
 CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
     ```
-- 指定一个本地文件安装，而不是使用网络
+- 指定一个本地安装的文件来代替网络安装.
     ```shell
 CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
     ```
 
-在所有的情况下, 从自定义位置安装的程序实际上*并不会保存在你的`package.json`文件中*。所以每次重复安装都需要使用相同的环境变量来安装相同的程序。
+在所有情况下, 从自定义位置安装的二进制文件*不会保存在`package.json`文件中*。每一次重复安装都将使用相同的环境变量去安装相同的二进制文件。
 
 ### 跳过安装
 
-你也可以通过设置`CYPRESS_INSTALL_BINARY=0`来强制要求Cypress跳过程序的安装。这对于你想在执行`npm install`时避免下载Cypress程序很有用。
+你也可以通过设置`CYPRESS_INSTALL_BINARY=0`来强制Cypress跳过二进制程序的安装。这对于你想在执行`npm install`时避免下载Cypress程序很有用。
 
 ```shell
 CYPRESS_INSTALL_BINARY=0 npm install
 ```
 
-现在一旦安装npm module，Cypress就会跳过程序的安装阶段。
+现在, 一旦安装了npm模块, Cypress就将跳过其安装阶段.
 
-## 程序缓存
+## 二进制缓存
 
-从`3.0`版本开始，Cypress会将符合的程序下载到系统全局缓存中，以便所有项目都能使用。默认的全局缓存目录是：
+从`3.0`版本开始, Cypress下载对应的Cypress二进制文件到全局系统缓存中, 以便二进制文件能够在多个项目件共享. 默认情况下, 全局缓存文件夹是:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`
 - **Windows**: `/AppData/Local/Cypress/Cache`
 
-要覆盖默认的缓存目录，请设置环境变量`CYPRESS_CACHE_FOLDER`。
+要覆盖默认缓存文件夹, 请设置环境变量`CYPRESS_CACHE_FOLDER`.
 
 ```shell
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
@@ -211,17 +216,17 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
-也可以看文档{% url '持续集成 - 缓存' continuous-integration#Caching %}的部分。
+你也可以参阅文档中的{% url '持续集成 - 缓存' continuous-integration#Caching %}部分.
 
 {% note warning %}
-每次运行Cypress时，都需要`CYPRESS_CACHE_FOLDER`。 为了确保它存在，可以考虑导出这个环境变量。例如，在`.bash_profile`文件中（MacOS, Linux），或使用`注册表编辑器`（Windows）。
+每次Cypress运行的时候`CYPRESS_CACHE_FOLDER`都需要存在. 为了确保它存在，可以考虑导出这个环境变量。例如, 在`.bash_profile` (MacOS, Linux)中, 或使用 `RegEdit` (Windows)。
 {% endnote %}
 
-## 运行程序
+## 运行二进制文件
 
-设置环境变量`CYPRESS_RUN_BINARY`会覆盖npm module找到Cypress程序的位置。
+设置环境变量`CYPRESS_RUN_BINARY`来覆盖npm模块找到的Cypress二进制文件的所在位置.
 
-`CYPRESS_RUN_BINARY`应当被指向一个已经解压的可执行文件的路径。Cypress的命令`open`，`run`，和 `verify`将启动所提供的文件。
+`CYPRESS_RUN_BINARY`应该是一个已经解压的可执行二进制文件的路径. Cypress命令`open`, `run`, 和`verify`将执行被提供的二进制文件.
 
 ### Mac
 
@@ -242,51 +247,51 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 ```
 
 {% note warning %}
-我们建议**不要导出**环境变量`CYPRESS_RUN_BINARY`到全局，因为它会影响安装在文件系统里的每个Cyresss模块。
+我们推荐 **不要导出** `CYPRESS_RUN_BINARY`环境变量, 因为它会影响所有安装在你系统上的cypres模块.
 {% endnote %}
 
 ## 下载地址
 
-如果你想为一个给定的平台（操作系统）下载指定的Cyrpess版本，你可以从我们的CDN获取它。
+如果你想下载特定平台的Cypress版本(操作系统), 你可以从CDN得到它.
 
-下载地址：`https://download.cypress.io`
+下载服务器的地址是：`https://download.cypress.io`。
 
-我们目前有以下可用的下载：
+目前你可以从以下地址下载：
 
-* Windows 64位（`?platform=win32&arch=x64`）
-* Windows 32位（`?platform=win32&arch=ia32`，从{% url "Cypress 3.3.0" changelog#3-3-0 %}开始可用）
-* Linux 64位（`?platform=linux`）
-* macOS 64位（`?platform=darwin`）
+- Windows 64位（`?platform=win32&arch=x64`）
+- Windows 32位（`?platform=win32&arch=ia32`，从{% url "Cypress 3.3.0" changelog#3-3-0 %}开始可用）
+- Linux 64位（`?platform=linux`）
+- macOS 64位（`?platform=darwin`）
 
-下面是有效的下载地址
+这里是可用的下载地址：
 
 查看所有可用的平台{% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %}。
 
- 方法 | 地址                          | 描述
- ------ | ------------------------------ | -------------------------------------------------------------------------
- `GET`  | `/desktop                 `    | 下载最新的版本 (自动检测平台)
- `GET`  | `/desktop.json            `    | 返回包含最新CDN地址的JSON
- `GET`  | `/desktop?platform=p&arch=a  ` | 下载指定平台、架构的cypress
- `GET`  | `/desktop/:version`            | 下载指定版本的cypress
- `GET`  | `/desktop/:version?platform=p&arch=a` | 下载指定版本、平台、架构的cypress
+ 方法    | URL                                   | 描述
+ ------ | --------------------------------------| -------------------------------------------------------------------------
+ `GET`  | `/desktop`                            | 下载最近的Cypress版本(平台自动检测)
+ `GET`  | `/desktop.json`                       | 返回最新有效的包含CDN地址的JSON文件
+ `GET`  | `/desktop?platform=p&arch=a`          | 下载特定平台的Cypress或压缩包
+ `GET`  | `/desktop/:version`                   | 下载特定版本的Cypress
+ `GET`  | `/desktop/:version?platform=p&arch=a` | 下载Cypress的特定平台和版本或压缩包
 
 **例如，下载Windows 64位的Cypress `3.0.0`版本：**
 
-```
+```text
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
 ## 镜像
 
-如果你选择镜像整个Cypress的下载站点，你可以指定`CYPRESS_DOWNLOAD_MIRROR`将下载服务器网址从`https://download.cypress.io`设置为你自己的镜像地址。
+如果你选择通过Cypress的镜像站点来下载, 那么你可以指定`CYPRESS_DOWNLOAD_MIRROR`将下载服务器网址从`https://download.cypress.io`设置为你自己的镜像地址。
 
-例如：
+示例:
 
 ```shell
 CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
-然后，Cypress会尝试请求这个地址进行下载：`https://www.example.com/desktop/:version?platform=p`
+Cypress将尝试通过如下格式下载二进制文件: `https://www.example.com/desktop/:version?platform=p`
 
 ## 选择不发送异常数据给Cypress
 
@@ -294,7 +299,7 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 
 如果你想让Cypress不发送报错信息，可以通过在系统环境变量设置`CYPRESS_CRASH_REPORTS=0`来实现。
 
-### Linux 或 macOS
+### Opt out on Linux 或 macOS
 
 不想在Linux或macOS系统中发送报错信息，请在安装Cypress之前在终端运行下面的命令：
 
@@ -304,7 +309,7 @@ export CYPRESS_CRASH_REPORTS=0
 
 为了使这些更改永久存在，你可以将此命令添加到你的shell的`~/.profile`（`~/.zsh_profile`, `~/.bash_profile`等）文件中，以便每次登录时自动运行。
 
-### Windows
+### Opt out on Windows
 
 不想在Windows系统中发送，请在安装Cypress之前在命令提示符运行下面的命令：
 
@@ -326,7 +331,7 @@ setx CYPRESS_CRASH_REPORTS 0
 
 ## 安装Pre-release版本
 
-在极少数情况下，你可能需要安装pre-release版本的Cypress来验证{% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %}分支的修复情况，虽然该版本并未发布。 
+在极少数情况下，你可能需要安装pre-release版本的Cypress来验证{% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %}分支的修复情况，虽然该版本并未发布。
 
 {% note info %}
 你可以从{% url "这里" https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=label%3A%22stage%3A+pending+release%22+ %}预览pre-release版本中解决的所有问题。
@@ -354,7 +359,7 @@ export CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/darwin-x6
 npm install https://cdn.cypress.io/beta/npm/3.3.2/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-126013/cypress.tgz
 ```
 
-如果我的机器是Windows 64位，我会点击“Testing new win32 x64 ..."这个提交来运行下方的命令。
+如果我的机器是Windows 64位，我会点击"Testing new win32 x64 ..."这个提交来运行下方的命令。
 
 ```shell
 set CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/win32-x64/appveyor-develop-e5106d95f51eec477b8e66609939979fb87aab56-25451270/cypress.zip
@@ -364,7 +369,7 @@ set CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/win32-x64/ap
 npm install https://cdn.cypress.io/beta/npm/3.3.2/appveyor-develop-e5106d95f51eec477b8e66609939979fb87aab56-25451270/cypress.tgz
 ```
 
-在Linux CI中，你应该下载的提交是“Testing new linux x64 ...”。
+在Linux CI中，你应该下载的提交是"Testing new linux x64 ..."。
 
 ```shell
 export CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/linux-x64/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-125973/cypress.zip

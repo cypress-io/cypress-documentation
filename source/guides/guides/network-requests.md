@@ -215,7 +215,6 @@ cy.get('h1').should('contain', 'Dashboard')
 
 If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
 
-
 ```javascript
 cy.server()
 cy.route({

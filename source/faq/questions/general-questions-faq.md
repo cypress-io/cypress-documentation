@@ -6,7 +6,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} Is Cypress free and open source?
 
-The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-service %} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
+The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-introduction%} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
@@ -164,3 +164,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Are easy to run both locally and on a {% url "continuous integration" continuous-integration %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
+
+## {% fa fa-angle-right %} How do I convince my company to use Cypress?
+
+First, be honest with yourself - {% url "is Cypress the right tool" why-cypress %} for your company and your project? We believe that the best approach is a "bottoms up" approach, where you can demonstrate how Cypress solves your company's particular needs. Implement a prototype with your project to see how it feels. Test a couple of common user stories. Identify if there are any technical blockers. Show the prototype to others before proceeding any further. If you can demonstrate the benefits of using Cypress as a developer tool for your project to other engineers, then Cypress will likely be more quickly adopted.

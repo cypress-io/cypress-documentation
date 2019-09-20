@@ -27,6 +27,7 @@
         ["(?!^Chrome $)DevTools", "Developer Tools"],
         "ESLint",
         ["Express.js", "Express"],
+        "FFmpeg",
         "GitHub",
         "GraphQL",
         ["Hapi.js", "hapi"],
@@ -36,6 +37,7 @@
         "JavaScript",
         "Jest",
         "jQuery",
+        "JSDoc",
         ["local[ ]?storage", "localStorage"],
         "Lodash",
         "minimatch",
@@ -52,6 +54,7 @@
         "Sinon–Chai",
         "TypeScript",
         "YouTube",
+        ["VSCode", "VS Code"],
         ["^Vue", "Vue.JS"],
         "webpack",
         ["WebSocket(s?)", "WebSocket$1"],
@@ -84,6 +87,19 @@
         ["craziest", "most complex"],
         ["dumb", "unintended"],
         ["insane", "outrageous"],
+
+        // Prefer American spelling
+        ["behaviour", "behavior"],
+        ["cancelled", "canceled"],
+        ["cancelling", "canceling"],
+        ["centre", "center"],
+        ["colour", "color"],
+        ["customise", "customize"],
+        ["customisation", "customization"],
+        ["favourite", "favorite"],
+        ["labelled", "labeled"],
+        ["licence", "license"],
+        ["organise", "organize"],
 
         // Words we would like to not use altogether
         ["simply", ""],

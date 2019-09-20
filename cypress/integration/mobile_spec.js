@@ -40,5 +40,7 @@ context('Mobile', () => {
         })
       })
     })
+
+    require('./contentful_banners_spec')
   })
 })
