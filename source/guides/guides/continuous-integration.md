@@ -482,7 +482,7 @@ return server.start()
 node scripts/run-cypress-tests.js
 ```
 
-# Known Issues
+# Common problems and solutions
 
 ## In Docker
 
