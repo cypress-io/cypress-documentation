@@ -30,21 +30,21 @@ You can see the result of each spec file that ran within **Specs**. There is als
 
 The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran in {% url "parallel" parallelization %}.
 
-{% imgTag /img/dashboard/specs-timeline-view.jpg "Specs tab with timeline view" %}
+{% imgTag /img/dashboard/specs-timeline-view.png "Specs tab with timeline view" %}
 
 ## Bar Chart View
 
 The Bar Chart View charts the lengths of each spec file. This view is helpful to determine which spec files or tests are running longer than others.
 
-{% imgTag /img/dashboard/specs-barchart-view.jpg "Specs tab with bar chart view" %}
+{% imgTag /img/dashboard/specs-barchart-view.png "Specs tab with bar chart view" %}
 
 ## Jump to failed tests
 
 If you had any failed tests, you can hover over the spec chart and click on the link to the failed test to go directly to its error message and stack trace.
 
-{% imgTag /img/dashboard/specs-failures-popup.png "Failures popup on spec hover %}
+{% imgTag /img/dashboard/specs-failures-popup.png "Failures popup on spec hover" %}
 
-# {% fa fa-code fa-fw %} Standard output
+## {% fa fa-code fa-fw %} Standard output
 
 Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
