@@ -322,7 +322,7 @@ You can read more about parallelization {% issue 64 'here' %}.
 
 ## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
 
-Our goal is to offer full integration with Sauce Labs and BrowserStack in the future, however, complete integration is not yet available.
+Our goal is to offer full integration with Sauce Labs and BrowserStack in the future; however, complete integration is not yet available.
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
@@ -404,7 +404,7 @@ Cypress.Cookies.defaults({
 
 You **cannot** currently preserve localStorage across tests and can read more {% issue '461#issuecomment-325402086' 'here' %}.
 
-## {% fa fa-angle-right %} Some of my elements animate in, how do I work around that?
+## {% fa fa-angle-right %} Some of my elements animate in; how do I work around that?
 
 Oftentimes you can usually account for animation by asserting {% url "`.should('be.visible')`" should %} or {% url "another assertion" introduction-to-cypress#Assertions %} on one of the elements you expect to be animated in.
 
@@ -570,7 +570,7 @@ That being said, we use Cypress to test our own Desktop app's front end - by stu
 We see organizations _starting_ with Cypress by placing end-to-end tests in a separate repo. This is a great practice that allows someone on the team to prototype a few tests and evaluate Cypress within minutes. As the time passes and the number of tests grows, we _strongly suggest_ moving end-to-end tests to live right alongside your front end code. This brings many benefits:
 
 - engages developers in writing end-to-end tests sooner
-- keeps tests and the features they tests in sync
+- keeps tests and the features they test in sync
 - tests can be run every time the code changes
 - allows code sharing between the application code and the tests (like selectors)
 
@@ -584,7 +584,7 @@ If a test fails, Cypress takes a screenshot image, but does not print the list o
 
 ## {% fa fa-angle-right %} Can my tests interact with Redux / Vuex data store?
 
-Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to assert the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
+Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to make assertions against the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
 
 - see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Blogs %} recipe.
 - see {% url "Testing Vue web applications with Vuex data store & REST back end" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Blogs %} recipe.

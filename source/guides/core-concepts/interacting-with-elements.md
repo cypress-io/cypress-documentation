@@ -59,7 +59,7 @@ The following calculations factor in CSS translations and transforms.
 ### Additionally an element is considered hidden if:
 
 - Any of its ancestors **hides overflow**\*
-  - AND that ancestor has `width` or `height` of `0`
+  - AND that ancestor has a `width` or `height` of `0`
   - AND an element between that ancestor and the element is `position: absolute`
 - Any of its ancestors **hides overflow**\*
   - AND that ancestor or an ancestor between it and that ancestor is its offset parent
