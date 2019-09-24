@@ -145,6 +145,29 @@ cy.visit('http://localhost:3000/#/users', {
 })
 ```
 
+### Add query paramaters
+
+You can provide query parameters as an object to `cy.visit()` by passing `qs` to `options`.
+
+```js
+// visits http://localhost:3500/users?page=1&role=admin
+cy.visit('http://localhost:3500/users', {
+  qs: {
+    page: '1',
+    role: 'admin'
+  }
+})
+```
+
+The parameters passed to `qs` will be merged into existing query parameters on the `url`.
+
+```js
+// visits http://example.com/users?page=1&admins
+cy.visit('http://example.com/users?page=1', {
+  qs: { 'admins' }
+})
+```
+
 ### Submit a form
 
 To send a request that looks like a user submitting an HTML form, use a `POST` method with a `body` containing the form values:
