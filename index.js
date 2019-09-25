@@ -109,7 +109,7 @@ function initHexo () {
     }
 
     return Contentful.createClient({ space, accessToken, environment })
-    .getEntries({ content_type: 'topBanner' })
+    .getEntries({ content_type: 'docsTopBanner' })
     .then(({ items }) => {
       const data = items.reduce((filtered, { sys: { id }, fields }) => {
         if (moment(fields.endDate).isSameOrAfter(moment())) {
