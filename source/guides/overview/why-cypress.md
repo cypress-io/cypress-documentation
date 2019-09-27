@@ -10,6 +10,10 @@ title: Why Cypress?
 - Key Cypress features
 {% endnote %}
 
+<!-- textlint-disable -->
+{% video youtube LcGHiFnBh3Y %}
+<!-- textlint-enable -->
+
 # In a nutshell
 
 Cypress is a next generation front end testing tool built for the modern web. We address the key pain points developers and QA engineers face when testing modern applications.
