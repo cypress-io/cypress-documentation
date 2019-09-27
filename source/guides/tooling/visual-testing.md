@@ -91,6 +91,8 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
+{% video YouTube qVRjhABuyG0 %}
+
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
 
 Resource |  Description
