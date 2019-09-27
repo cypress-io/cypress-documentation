@@ -459,3 +459,16 @@ cy.get('@comments').should((response) => {
   })
 })
 ```
+We can access a particular instance of the request by its index.  We can access all 
+requests without knowing how many of them will be made ahead of them.
+```js
+cy.route('https://jsonplaceholder.cypress.io/posts').as('posts')
+// Visit a page that fetches selected posts
+cy.get('@posts.2').then((xhr) => {
+  expect(xhr.url).to.include('2')
+})
+cy.get('@posts.all').then((xhrs) => {
+  expect(xhrs).to.be.an('array')
+  expect(xhrs[2].url).to.include('posts')
+})
+```
