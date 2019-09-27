@@ -112,4 +112,4 @@ In order to avoid any interruption in service, we recommend that you review your
 2. Select your organization
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage
-5. Scroll down and select “Upgrade” under your plan of choice
+5. Scroll down and select *Upgrade* under your plan of choice
