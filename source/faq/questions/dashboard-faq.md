@@ -102,7 +102,14 @@ Downgrading your account will **not** result in loss of access to your Dashboard
 
 However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and test recordings to 500 per billing period.
 
-## {% fa fa-angle-right %} What happens once I reach the test recording limit? 
-After the limit is reached on the free plan, any test run with the `--record` flag will error and not complete. You could turn off the `--record` and run your tests locally, but the results will not be sent to the Dashboard.
+## {% fa fa-angle-right %} What happens once I reach the test recording limit?
 
-For paid plans, once the limit is reached, any test run with the `--record` flag will run to completion, but the run results will not be viewable in the Dashboard. You will be able to see the run results after upgrading. Additionally, parallelization is disabled until after upgrading or until the end of the billing period. 
+After exceeding 100% of your plan’s test recording limit, parallelization will be disabled and new test recordings will be hidden from the dashboard.
+
+In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
+
+1. Logging into the Dashboard
+2. Select your organization
+3. Navigate to the Billing and Usage tab
+4. Review your organization’s usage
+5. Scroll down and select “Upgrade” under your plan of choice
