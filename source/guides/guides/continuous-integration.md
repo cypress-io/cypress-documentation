@@ -15,6 +15,8 @@ title: Continuous Integration
 
 # Setting up CI
 
+{% video YouTube saYovXS9Llk %}
+
 ## Basics
 
 Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:
