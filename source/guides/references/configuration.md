@@ -2,7 +2,7 @@
 title: Configuration
 ---
 
-When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
+When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' projects#Setup %}) and any configuration values you supply.
 
 {% note warning Change Configuration File %}
 You can change the configuration file or turn off the use of a configuration file by using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
@@ -70,7 +70,7 @@ Option | Default | Description
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
-`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-service %} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction%} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
 
 ## Browser
 
@@ -143,7 +143,7 @@ export CYPRESS_VIEWPORT_HEIGHT=600
 
 We automatically normalize both the key and the value. Cypress will *strip off* the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
 
-**Both options below are valid**
+### Both options below are valid
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000

@@ -75,7 +75,7 @@ Runs Cypress tests to completion. By default will run all tests headlessly in th
 cypress run [options]
 ```
 
-**Options**
+### Options
 
 Option | Description
 ------ |  ---------
@@ -171,7 +171,7 @@ cypress run --env flags='{"feature-a":true,"feature-b":false}'
 
 ### `cypress run --group <name>`
 
-{% url "Group recorded tests together" parallelization#Grouping-test-runs %} under a single run.
+Group recorded tests together under a single run.
 
 ```shell
 cypress run --group develop-env
@@ -243,7 +243,7 @@ cypress run --project ./some/nested/folder
 
 ### `cypress run --record --key <record-key>`
 
-Record video of tests running after {% url 'setting up your project to record' dashboard-service#Setup %}. After setting up your project you will be given a **Record Key**.
+Record video of tests running after {% url 'setting up your project to record' projects#Setup %}. After setting up your project you will be given a **Record Key**.
 
 ```shell
 cypress run --record --key <record_key>
@@ -263,7 +263,7 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can {% url 'read more about recording runs here' dashboard-service#Setup %}.
+You can {% url 'read more about recording runs here' projects#Setup %}.
 
 ### `cypress run --reporter <reporter>`
 
@@ -307,7 +307,7 @@ Opens the Cypress Test Runner in interactive mode.
 cypress open [options]
 ```
 
-**Options**
+### Options:
 
 Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in your configuration file (`cypress.json` by default).
 
@@ -460,6 +460,7 @@ Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %
 ```shell
 DEBUG=cypress:* cypress open
 ```
+
 ```shell
 DEBUG=cypress:* cypress run
 ```
@@ -469,6 +470,7 @@ DEBUG=cypress:* cypress run
 ```shell
 set DEBUG=cypress:*
 ```
+
 ```shell
 cypress run
 ```

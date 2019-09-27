@@ -263,7 +263,7 @@ cy.request('https://app.com/me')
 
 Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
-### Embed data in the DOM:
+### Embed data in DOM:
 
 Another valid strategy would be to embed data directly into the DOM but to do so in a way that the data is **always** present and query-able. The data would have to be present 100% of the time, otherwise this strategy would not work.
 
@@ -339,7 +339,7 @@ We will reiterate one more time. Had the `<input>` or the `<textarea>` been rend
 
 Cypress is built around creating **reliable tests**. The secret to writing good tests is to provide as much "state" and "facts" to Cypress and to "guard it" from issuing new commands until your application has reached the desired state it needs to proceed.
 
-Doing conditional testing adds a huge problem - that the test writer themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
+Doing conditional testing adds a huge problem - that the test writers themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
 
 If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
 
@@ -409,6 +409,7 @@ Enabling this would mean that for every single command, it would recover from er
 Let's reimagine our "Welcome Wizard" example from before.
 
 **The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+
 ```js
 // great error recovery code
 function keepCalmAndCarryOn () {
@@ -445,4 +446,4 @@ Even then, not enough, it's possible a `setTimeout` could trigger... 60 minutes.
 
 As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it *may* conditionally happen.
 
-You, the test writer must know ahead of time what your application is programmed to do - or have 100% confidence that the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.
+You, the test writer, must know ahead of time what your application is programmed to do - or have 100% confidence that the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.

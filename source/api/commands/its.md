@@ -20,7 +20,7 @@ If you want to call a `function` on the previously yielded subject, use {% url `
 
 ```javascript
 cy.wrap({ width: '50' }).its('width') // Get the 'width' property
-cy.window().its('angular')          // Get the 'angular' property
+cy.window().its('sessionStorage')     // Get the 'sessionStorage' property
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -152,7 +152,7 @@ cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
 
 ## Existence
 
-### Wait for some propery to exist on `window`
+### Wait for some property to exist on `window`
 
 ```javascript
 cy.window().its('globalProp').then((globalProp) => {
@@ -160,7 +160,7 @@ cy.window().its('globalProp').then((globalProp) => {
 })
 ```
 
-### Assert that a propery does not exist on `window`
+### Assert that a property does not exist on `window`
 
 ```javascript
 cy.window().its('evilProp').should('not.exist')

@@ -143,7 +143,7 @@ cy
 
 ```js
 cy
-  // cy.get() looks for '#my-nonexistent-selector', repeating the query until...
+  // cy.get() looks for '#element-does-not-exist', repeating the query until...
   // ...it doesn't find the element before its timeout.
   // Cypress halts and fails the test.
   .get('#element-does-not-exist')
@@ -278,11 +278,13 @@ Some methods yield `null` and thus cannot be chained, such as {% url `cy.clearCo
 Some methods, such as {% url `cy.get()` get %} or {% url `cy.contains()` contains %}, yield a DOM element, allowing further commands to be chained onto them (assuming they expect a DOM subject) like {% url `.click()` click %} or even {% url `cy.contains()` contains %} again.
 
 ### Some commands cannot be chained:
+
 - From `cy` only, meaning they do not operate on a subject: {% url `cy.clearCookies()` clearcookies %}.
 - From commands yielding particular kinds of subjects (like DOM elements): {% url `.type()` type %}.
 - From both `cy` *or* from a subject-yielding command: {% url `cy.contains()` contains %}.
 
 ### Some commands yield:
+
 - `null`, meaning no command can be chained after the command: {% url `cy.clearCookie()` clearcookie %}.
 - The same subject they were originally yielded: {% url `.click()` click %}.
 - A new subject, as appropriate for the command {% url `.wait()` wait %}.
@@ -680,17 +682,17 @@ You don't need to write {% url "`.should('exist')`" should %} after a DOM based 
 {% note danger "Negative DOM assertions" %}
 If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions ,such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
 
-```
+```js
 cy.get('.does-not-exist').should('not.be.visible')         // passes
 cy.get('.does-not-exist').should('not.have.descendants')   // passes
 ```
 
 This also applies to custom assertions such as when passing a callback:
 
-```
+```js
 // passes, provided the callback itself passes
-cy.get('.does-not-exist').should(($element) => {   
-  expect($element.find('input')).to.not.exist 
+cy.get('.does-not-exist').should(($element) => {
+  expect($element.find('input')).to.not.exist
 })
 ```
 
@@ -796,8 +798,9 @@ cy.get('tbody tr:first').should(($tr) => {
 The implicit form is much shorter! So when would you want to use the explicit form?
 
 Typically when you want to:
-  - Assert multiple things about the same subject
-  - Massage the subject in some way prior to making the assertion
+
+- Assert multiple things about the same subject
+- Massage the subject in some way prior to making the assertion
 
 ## Explicit Subjects
 
@@ -927,22 +930,9 @@ Cypress offers several different timeout values based on the type of command.
 We've set their default timeout durations based on how long we expect certain actions to take.
 
 For instance:
+
 - {% url `cy.visit()` visit %} loads a remote page and does not resolve *until all of the external resources complete their loading phase*. This may take awhile, so its default timeout is set to `60000ms`.
 - {% url `cy.exec()` exec %} runs a system command such as *seeding a database*. We expect this to potentially take a long time, and its default timeout is set to `60000ms`.
 - {% url `cy.wait()` wait %} actually uses 2 different timeouts. When waiting for a {% url 'routing alias' variables-and-aliases#Routes %}, we wait for a matching request for `5000ms`, and then additionally for the server's response for `30000ms`. We expect your application to make a matching request quickly, but we expect the server's response to potentially take much longer.
 
 That leaves most other commands including all DOM based commands to time out by default after 4000ms.
-
-<!-- ***Why only 4 seconds? That sounds low!***
-
-If you've used other testing frameworks, you might wonder why this value is so low. In fact we regularly see our some users initially increasing it sometimes up to 25x!
-
-You shouldn't need to wait for your application to render DOM elements for more than 4 seconds!
-
-Let's look at why you're likely wanting to increase this, and some best practices.
-
-The most common scenario is that DOM elements render *after* a series of network requests. The network requests themselves must go over the internet, leaving them susceptible to be potentially slow.
-
-One of the typical anti-patterns we see is not properly
-
-One of the typical hurdles you will need to overcome is *slow tests*. -->

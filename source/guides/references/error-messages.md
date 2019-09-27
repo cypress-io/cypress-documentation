@@ -51,8 +51,8 @@ It's still useful to load a setup file before your test code. If you are setting
 
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
-* `cypress/support/index.js`
-* `cypress/support/index.coffee`
+- `cypress/support/index.js`
+- `cypress/support/index.coffee`
 
 Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
 
@@ -349,6 +349,10 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 
 You can safely remove: `{stub: false}`.
 
+## {% fa fa-exclamation-triangle red %} CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+
+If you get this error in a case where the element is definitely visible in the DOM, your document might contain malformed HTML. In such cases, `document.querySelector()` will not find any elements that appear after the point where the HTML is malformed. Even if you feel certain your HTML is not malformed anywhere, check it anyway (line by line in the dev tools). Especially if you've exhausted all other possibilities.
+
 # CLI Errors
 
 ## {% fa fa-exclamation-triangle red %} You passed the `--record` flag but did not provide us your Record Key.
@@ -405,7 +409,7 @@ Check out our {% url "guide on parallelizing runs" parallelization %} and when t
 
 You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
+These flags can only be used when recording to the {% url "Dashboard Service" dashboard-introduction%}.
 
 Please review our {% url "parallelization" parallelization %} documentation to learn more.
 
@@ -463,11 +467,17 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
-You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+This error is thrown when you are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that Cypress detected was completed over 24 hours ago.
 
-You cannot run tests on a run that has been complete for that long.
+In order to uniquely identify each run during `cypress run`, Cypress attempts to read a unique identifier from your CI provider as described in our {% url "parallelization doc" parallelization#CI-Build-ID-environment-variables-by-provider %}.
 
-Please review our {% url "parallelization" parallelization %} documentation to learn more.
+You may encounter this error if Cypress is detecting the exact same CI Build ID matching a previous CI Build ID in a run that was completed over 24 hours ago. You cannot run tests on a run that has been complete for that long.
+​
+​You can see the CI Build ID that is detected for each completed run by looking at the details section at the top of your run in the {% url "Dashboard" https://on.cypress.io/dashboard %}.
+​
+​You can generate and pass in your own unique CI Build ID per run as described {% url "here" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+Please also review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
 
@@ -485,7 +495,7 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
 {% endnote %}
 
-This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
+This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypass all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 

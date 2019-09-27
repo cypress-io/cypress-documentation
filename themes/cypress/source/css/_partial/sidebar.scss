@@ -3,11 +3,16 @@
   background-color: #f9fcfb;
   position: fixed;
   overflow-y: auto;
-  top: 60px;
-  padding-bottom: 60px;
+  top: 0;
+  padding-bottom: 0;
   left: 0; 
   bottom: 0;
   border-right: 1px solid #f0f3f2;
+  padding-top: 60px;
+
+  @media screen and (min-width: 768px) and (max-width: 991px){
+    transition: margin-top 0.2s linear;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -19,7 +24,6 @@
     overflow-y: auto;
     margin-top: 1.5em;
   }
-
 }
 
 .toggle-sidebar-btns {
@@ -106,8 +110,6 @@
       transform: rotateX(180deg);
     }
   }
-
-
 }
 
 #sidebar .sidebar-title:first-child {

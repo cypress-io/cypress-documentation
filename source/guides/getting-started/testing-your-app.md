@@ -96,7 +96,7 @@ If you've started your server, then you should see your application loaded and w
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 
-Open up your configuration file (`cypress.json` by default). It starts out empty:
+Open up your {% url "configuration file" configuration %} (`cypress.json` in your project directory, by default) It starts out empty:
 
 ```json
 {}

@@ -2,74 +2,74 @@
 title: 启动浏览器
 ---
 
-When you run tests in Cypress, we launch a browser for you. This enables us to:
+当你在Cypress中运行测试时，我们将为你启动浏览器。这使我们能够：
 
-1. Create a clean, pristine testing environment.
-2. Access the privileged browser APIs for automation.
+1. 创建一个干净、原始的测试环境。
+2. 访问享有特权的浏览器API以实现自动化。
 
-# Browsers
+# 浏览器
 
-When Cypress is initially run from the Test Runner, you can choose to run Cypress in a select number of browsers including:
+当Cypress开始在测试运行器中运行时，你可以选择在特定的浏览器中运行Cypress，可选的浏览器包括：
 
 - {% url "Canary" https://www.google.com/chrome/browser/canary.html %}
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
 
-Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
+Cypress会自动在你的操作系统中检测可用的浏览器。你可以使用右上角的下拉菜单在测试执行器中切换浏览器：
 
 {% imgTag /img/guides/select-browser.png "Select a different browser" %}
 
 {% partial chromium_download %}
 
-## Electron Browser
+## Electron浏览器
 
-In addition to the browsers found on your system, you'll notice that Electron is an available browser. The Electron browser is a version of Chromium that comes with {% url "Electron" https://electron.atom.io/ %}.
+除了在你的系统中找到的浏览器之外，你还会发现Electron也是可用的浏览器。Electron浏览器是Chromium的一个版本，附带{% url "Electron" https://electron.atom.io/ %}。
 
-The Electron browser has two unique advantages:
+Electron浏览器有两个独特的优势：
 
-1. It can be run headlessly.
-2. It comes baked into Cypress and does not need to be installed separately.
+1. 它可以无头运行。
+2. 它内嵌在Cypress中，无需单独安装。
 
-By default, when running {% url '`cypress run`' command-line#cypress-run %} from the CLI, we will launch Electron headlessly.
+默认情况下，当从CLI中运行{% url '`cypress run`' command-line#cypress-run %}，将会无头启动Electron。
 
-### You can also launch Electron headed:
+### 你也可以启动Electron头：
 
 ```shell
 cypress run --headed
 ```
 
-Because Electron is the default browser - it is typically run in CI. If you are seeing failures in CI, to easily debug them you may want to run locally with the `--headed` option.
+因为Electron是默认的浏览器，它通常在CI中运行。如果你在CI中看到运行失败，为了方便地调试，你可能需要使用`—-headed`选项在本地运行。
 
-## Chrome Browsers
+## Chrome浏览器
 
-All Chrome* flavored browsers will be detected and are supported.
+所有Chrome*风格的浏览器都将被检测并支持。
 
-### You can launch Chrome browsers:
+### 你可以启动Chrome浏览器：
 
 ```shell
 cypress run --browser chrome
 ```
 
-To use this command in CI, you need to install the browser you want - or use one of our {% url 'docker images' docker %}.
+要在CI中使用这个命令，你需要安装你想要的浏览器，或者使用我们的{% url 'docker镜像' docker %}中的一种。
 
-You can also launch Chromium:
+你也可以启动Chromium：
 
 ```shell
 cypress run --browser chromium
 ```
 
-Or Chrome Canary:
+或者Chrome Canary：
 
 ```shell
 cypress run --browser canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
+{% url '启动已安装的浏览器出现问题？请阅读关于调试浏览器启动的详细信息' debugging#Launching-browsers %}
 
-## Launching by a path
+## 通过路径启动
 
-You can launch any supported browser by specifying a path to the binary:
+你可以通过指定二进制文件的路径来启动任何受支持的浏览器：
 
 ```shell
 cypress run --browser /usr/bin/chromium
@@ -77,70 +77,70 @@ cypress run --browser /usr/bin/chromium
 cypress open --browser /usr/bin/chromium
 ```
 
-Cypress will automatically detect the type of browser supplied and launch it for you.
+Cypress将自动检测所提供的浏览器类型并为你启动它。
 
-{% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
+{% url '有关`--浏览器`参数的更多信息，请参阅命令行指南' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
 
-## Unsupported Browsers
+## 不受支持的浏览器
 
-Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
+目前很多浏览器不受支持，例如Firefox、Safari、IE。支持更多的浏览器正在我们的规划中。你可以在{% issue 310 '这里' %}阅读关于我们未来跨浏览器测试策略的详细说明。
 
-# Browser Environment
+# 浏览器环境
 
-Cypress launches the browser in a way that's different from a regular browser environment. But it launches in a way that we believe makes testing *more reliable* and *accessible*.
+Cypress启动浏览器的方式与常规浏览器环境不同。但我们相信，它是以一种让测试更可靠、更容易上手的方式启动。
 
-## Launching Browsers
+## 启动浏览器
 
-When Cypress goes to launch your browser it will give you an opportunity to modify the arguments used to launch the browser.
+当Cypress启动你的浏览器时，它将为你提供机会去修改启动浏览器的参数。
 
-This enables you to do things like:
+这使你可以做以下事情：
 
-- Load your own chrome extension
-- Enable or disable experimental chrome features
+- 加载你自己的chrome扩展
+- 启用或禁用实验性chrome功能
 
-{% url 'This part of the API is documented here.' browser-launch-api %}
+{% url '这部分API记录在这里' browser-launch-api %}
 
-## Cypress Profile
+## Cypress配置
 
-Cypress generates its own isolated profile apart from your normal browser profile. This means things like `history` entries, `cookies`, and `3rd party extensions` from your regular browsing session will not affect your tests in Cypress.
+除了正常的浏览器配置文件外，Cypress还生成自己的独立配置文件。这意味着`历史记录`条目、`cookie`和来自常规浏览会话的`第三方扩展`不会影响你在Cypress中的测试。
 
-{% note warning Wait, I need my developer extensions! %}
-That's no problem - you just have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
+{% note warning 等等，我需要开发人员扩展！%}
+没问题-你只需要在Cypress启动的浏览器中重新安装**一次**。我们将在后续的启动中继续使用这个Cypress测试配置文件，以便保留你的所有配置。
 {% endnote %}
 
-## Disabled Barriers
+## 禁用障碍
 
-Cypress automatically disables certain functionality in the Cypress launched browser that tend to get in the way of automated testing.
+Cypress自动禁用Cypress启动的浏览器中的某些功能，这些功能往往会妨碍自动化测试。
 
-### The Cypress launched browser automatically:
+### Cypress自动启动浏览器：
 
-- Ignores certificate errors.
-- Allows blocked pop-ups.
-- Disables 'Saving passwords'.
-- Disables 'Autofill forms and passwords'.
-- Disables asking to become your primary browser.
-- Disables device discovery notifications.
-- Disables language translations.
-- Disables restoring sessions.
-- Disables background network traffic.
-- Disables background and renderer throttling.
-- Disables prompts requesting permission to use devices like cameras or mics
-- Disables user gesture requirements for autoplaying videos.
+- 忽略证书错误。
+- 允许阻止弹出窗口。
+- 禁用"保存密码"。
+- 禁用"自动填写表单和密码"
+- 禁止请求成为你的主浏览器。
+- 禁用设备发现通知。
+- 禁用语言翻译。
+- 禁用恢复会话。
+- 禁用后台网络流量。
+- 禁用背景和渲染器节流。
+- 禁用提示请求使用相机或麦克风等设备的许可。
+- 禁用自动播放视频的用户手势要求。
 
-You can see all of the default chrome command line switches we send {% url "here" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.coffee#L18 %}.
+你可以看到我们在{% url "这里" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.coffee#L18 %}存放的所有默认chrome命令行开关。
 
-# Browser Icon
+# 浏览器图标
 
-You might notice that if you already have the browser open you will see two of the same browser icons in your Dock.
+你可能会注意到，如果你已经打开了浏览器，你将在Dock中看到两个相同的浏览器图标。
 
 {% video local /img/snippets/switching-between-cypress-and-other-chrome-browser.mp4 %}
 
-We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
+我们知道，当Cypress在它自己的配置文件中运行时，很难区分普通浏览器和Cypress之间的区别。
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser and it'll be much easier to tell the difference. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+因此，我们建议{% url "下载Chromium" https://www.chromium.org/Home %}或{% url "下载Canary" https://www.google.com/chrome/browser/canary.html %}。这两种浏览器的图标都与标准的Chrome浏览器不同，因此更容易区分。你还可以使用附带的{% urlHash "Electron浏览器" Electron浏览器 %}，它没有Dock图标。
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
-Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
+此外，我们还让Cypress生成的浏览器看起来与常规会话不同。你会在浏览器的chrome周围看到一个更暗的主题。你将能从视觉上分辨出来。
 
-{% imgTag //img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
+{% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
