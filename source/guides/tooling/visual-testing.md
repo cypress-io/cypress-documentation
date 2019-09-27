@@ -104,6 +104,8 @@ Resource |  Description
 
 ## Percy
 
+{% video YouTube MXfZeE9RQDw %}
+
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
 Resource |  Description
