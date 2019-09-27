@@ -10,6 +10,8 @@ title: Code Coverage
 - How to use the code coverage reports to guide writing tests
 {% endnote %}
 
+{% video YouTube C8g5X4vCZJA %}
+
 # Introduction
 
 As you write more and more end-to-end tests, you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too much? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test should be added to ensure that part of our application logic is tested.
