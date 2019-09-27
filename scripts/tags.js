@@ -10,6 +10,7 @@ const yields = require('../lib/tags/yields')
 const requirements = require('../lib/tags/requirements')
 const assertions = require('../lib/tags/assertions')
 const timeouts = require('../lib/tags/timeouts')
+const typedoc = require('../lib/tags/typedoc')
 const usageOptions = require('../lib/tags/usage')
 const { issue, PR, openAnIssue, user } = require('../lib/tags/github')
 const { badge } = require('../lib/tags/badge')
@@ -22,61 +23,52 @@ const history = require('../lib/tags/history')
 const aliases = require('../lib/tags/aliases')
 
 const tags = {
-  // aliases
-  aliases: aliases,
+  aliases,
 
-  // assertions
-  assertions: assertions,
+  assertions,
 
-  // badge
-  badge: badge,
+  badge,
 
-  // changelog
-  changelog: changelog,
+  changelog,
 
   // icons
-  fa: fa,
+  fa,
   helper_icon: helperIcon,
-
+  
   // images
-  imgTag: imgTag,
+  imgTag,
 
   // github links
-  issue: issue,
+  issue,
   open_an_issue: openAnIssue,
-  PR: PR,
-  user: user,
+  PR,
+  user,
 
-  // partials
-  partial: partial,
+  partial,
 
-  // requirements
-  requirements: requirements,
+  requirements,
 
-  // timeouts
-  timeouts: timeouts,
+  timeouts,
+
+  typedoc,
 
   // url
-  url: url,
-  urlHash: urlHash,
+  url,
+  urlHash,
 
-  // usage_options
   usage_options: usageOptions,
 
   // video
-  video: video,
+  video,
 
-  // yields
-  yields: yields,
+  yields,
 }
 
 // tags which require ending
 const endingTags = {
-  // history
-  history: history,
+  history,
 
-  // note
-  note: note,
+  note,
 }
 
 function promisify (fn) {

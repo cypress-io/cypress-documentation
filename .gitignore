@@ -20,6 +20,7 @@ cypress/videos
 # Dynamically parsed data
 
 source/_data/banners.yml
+source/_data/cypress-typedoc.json
 
 # Translations
 # By default we ignore each translation folder like "source/ja",

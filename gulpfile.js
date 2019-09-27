@@ -1,5 +1,7 @@
+const execa = require('execa')
 const gulp = require('gulp')
 const RevAll = require('gulp-rev-all')
+const typedoc = require('gulp-typedoc')
 const clean = require('gulp-clean')
 
 const revisionOpts = {
@@ -99,6 +101,26 @@ gulp.task('move:robots.txt:to:public', function () {
   .pipe(gulp.dest('public'))
 })
 
+gulp.task('clone:cypress', function () {
+  // TODO: control branch name?
+  return execa.command('git clone --depth 1 --single-branch --branch master https://github.com/cypress-io/cypress.git ./tmp/cypress')
+})
+
+gulp.task('run:typedoc', function () {
+  return gulp.src(['./tmp/cypress/cli/types/index.d.ts'])
+  .pipe(typedoc({
+    entryPoint: 'Cypress',
+    // drastically reduces output size - but we don't get docs for included packages
+    excludeExternals: true,
+    ignoreCompilerErrors: true,
+    includeDeclarations: true,
+    json: './source/_data/cypress-typedoc.json',
+    logger: 'console',
+    mode: 'file',
+    tsconfig: './tmp/cypress/packages/ts/tsconfig.json',
+  }))
+})
+
 gulp.task('clean:non:application:js', () => {
   return remove('public/js/!(application).js')
 })
@@ -127,7 +149,9 @@ gulp.task('clean:public', () => {
 
 gulp.task('copy:static:assets', gulp.parallel('move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:yall:js', 'move:doc:search:css', 'move:roboto:fonts', 'move:font:awesome:fonts'))
 
-gulp.task('pre:build', gulp.parallel('copy:static:assets'))
+gulp.task('generate:typedoc', gulp.series('clone:cypress', 'run:typedoc'))
+
+gulp.task('pre:build', gulp.parallel('generate:typedoc', 'copy:static:assets'))
 
 gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'revision', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))
 
