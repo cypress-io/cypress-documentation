@@ -15,7 +15,9 @@ title: Continuous Integration
 
 # Setting up CI
 
-{% video YouTube saYovXS9Llk %}
+<!-- textlint-disable -->
+{% video youtube saYovXS9Llk %}
+<!-- textlint-enable -->
 
 ## Basics
 
@@ -208,7 +210,9 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 
-{% video YouTube J-xbNtKgXfY %}
+<!-- textlint-disable -->
+{% video youtube J-xbNtKgXfY %}
+<!-- textlint-enable -->
 
 ### {% badge success New %} Example CircleCI Orb
 

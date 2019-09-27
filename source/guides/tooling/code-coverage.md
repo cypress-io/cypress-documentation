@@ -10,7 +10,9 @@ title: Code Coverage
 - How to use the code coverage reports to guide writing tests
 {% endnote %}
 
-{% video YouTube C8g5X4vCZJA %}
+<!-- textlint-disable -->
+{% video youtube C8g5X4vCZJA %}
+<!-- textlint-enable -->
 
 # Introduction
 

@@ -10,7 +10,9 @@ title: Why Cypress?
 - Key Cypress features
 {% endnote %}
 
-{% video YouTube LcGHiFnBh3Y %}
+<!-- textlint-disable -->
+{% video youtube LcGHiFnBh3Y %}
+<!-- textlint-enable -->
 
 # In a nutshell
 

@@ -91,7 +91,9 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
-{% video YouTube qVRjhABuyG0 %}
+<!-- textlint-disable -->
+{% video youtube qVRjhABuyG0 %}
+<!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
 
@@ -104,7 +106,9 @@ Resource |  Description
 
 ## Percy
 
-{% video YouTube MXfZeE9RQDw %}
+<!-- textlint-disable -->
+{% video youtube MXfZeE9RQDw %}
+<!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
