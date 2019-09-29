@@ -85,7 +85,7 @@ cy.get('.dropdown-menu').click()
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
 ```
 
-### Find all of the requests that match the name
+### Find all of the requests that match the URL
 ```javascript
 cy.route('https://jsonplaceholder.cypress.io/posts').as('posts')
 cy.get('@posts.all').should('not.be.null')
