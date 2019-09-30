@@ -93,26 +93,15 @@ cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 
 ## YAML
 
-### Get translation data from a YAML file
+For YAML, the contents yielded are parsed into JavaScript and returned.
+
+```yaml
+name: "Eliza"
+email: "eliza@example.com"
+```
 
 ```javascript
-const YAML = require('yamljs')
-
-cy
-  .readFile('languages/en.yml')
-  .then((str) => {
-    // parse the string into object literal
-    const english = YAML.parse(str)
-
-    cy
-      .get('#sidebar')
-      .find('.sidebar-title')
-      .each(($el, i) => {
-        englishTitle = english.sidebar[i]
-
-        expect($el.text()).to.eq(englishTitle)
-      })
-  })
+cy.readFile('path/to/data.yml').its('name').should('eq', 'Eliza')
 ```
 
 ## Encoding
