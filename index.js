@@ -100,6 +100,7 @@ function initHexo () {
   return new Promise((resolve, reject) => {
     const space = hexo.env.GATSBY_CONTENTFUL_SPACE_ID || process.env.GATSBY_CONTENTFUL_SPACE_ID
     const accessToken = hexo.env.GATSBY_CONTENTFUL_ACCESS_TOKEN || process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN
+    const environment = hexo.env.GATSBY_CONTENTFUL_ENVIRONMENT || process.env.GATSBY_CONTENTFUL_ENVIRONMENT || 'master'
 
     if (typeof space === 'undefined' || typeof accessToken === 'undefined') {
       return reject({
@@ -107,12 +108,12 @@ function initHexo () {
       })
     }
 
-    return Contentful.createClient({ space, accessToken })
-    .getEntries({ content_type: 'topBanner' })
+    return Contentful.createClient({ space, accessToken, environment })
+    .getEntries({ content_type: 'docsTopBanner' })
     .then(({ items }) => {
-      const data = items.reduce((filtered, option) => {
-        if (moment(option.fields.endDate).isSameOrAfter(moment())) {
-          filtered.push({ ...option.fields, text: documentToHtmlString(option.fields.text) })
+      const data = items.reduce((filtered, { sys: { id }, fields }) => {
+        if (moment(fields.endDate).isSameOrAfter(moment())) {
+          filtered.push({ id, ...fields, text: documentToHtmlString(fields.text) })
         }
 
         return filtered

@@ -49,7 +49,7 @@ Using {% url "Protractor" http://www.protractortest.org/ %} provides a nice Prom
 
 Cypress replaces Protractor because it does all of these things and much more. One major difference is that Cypress enables you to write your unit tests and integration tests in the same tool, as opposed to splitting up this work across both Karma and Protractor.
 
-Also, Protractor is very much focused on `AngularJS`, whereas Cypress is designed to work with any JavaScript framework. Protractor, because it's based on Selenium, is still pretty slow, and is prohibitive when trying to TDD your application. Cypress, on the other hand, runs at the speed your browser and application are capable of serving and rendering, there is no additional bloat.
+Also, Protractor is very much focused on `AngularJS`, whereas Cypress is designed to work with any JavaScript framework. Protractor, because it's based on Selenium, is still pretty slow, and is prohibitive when trying to TDD your application. Cypress, on the other hand, runs at the speed your browser and application are capable of serving and rendering; there is no additional bloat.
 
 ### Sauce Labs
 
@@ -59,10 +59,10 @@ Sauce Labs also has a `manual testing` mode, where you can remotely control brow
 
 Ultimately Sauce Labs and Cypress offer very different value propositions. Sauce Labs doesn't help you write your tests, it takes your existing tests and runs them across different browsers and aggregates the results for you.
 
-Cypress on the other hand **helps** you write your tests. You would use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
+Cypress on the other hand **helps** you write your tests. You can use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
 
 {% note info A note about Cypress and Sauce Labs %}
-Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future, however, complete integration is not yet available.
+Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future; however, complete integration is not yet available.
 {% endnote %}
 
 ## {% fa fa-angle-right %} Do you support X language or X framework?
@@ -87,7 +87,7 @@ No. But if you're wanting to test parts of your application that are not easily 
 
 No. In fact Cypress' architecture is very different from Selenium in a few critical ways:
 
-- Cypress runs in the context of the browser. With Cypress it's easier to inspect what is running in the browser, but harder to talk to the outside world. In Selenium it's the exact opposite. Selenium runs outside of the browser where your application is running. Although Cypress is adding more commands every day that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}.
+- Cypress runs in the context of the browser. With Cypress it's easier to inspect what is running in the browser, but harder to talk to the outside world. In Selenium it's the exact opposite. Selenium runs outside of the browser where your application is running (though Cypress is adding more commands every day that give you access to the outside world - like {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, and {% url `cy.task()` task %}).
 - With Selenium you get either 100% simulated events (with Selenium RC) or 100% native events (with Selenium WebDriver). With Cypress, you get both. For the most part we use simulated events. However we do use automation APIs for things like Cookies where we extend outside of the JavaScript sandbox and interact with the underlying browser APIs. This gives us flexibility to determine which type of event to use in specific situations. Native event support is on our {% url "roadmap" roadmap %}.
 
 ## {% fa fa-angle-right %} If Cypress runs in the browser, doesn't that mean it's sandboxed?
@@ -98,11 +98,11 @@ But Cypress is actually way beyond just a basic JavaScript application running i
 
 All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work just fine, and already *does* work.
 
-## {% fa fa-angle-right %} We use WebSockets, will Cypress work with that?
+## {% fa fa-angle-right %} We use WebSockets; will Cypress work with that?
 
 Yes.
 
-## {% fa fa-angle-right %} We have the most complex most outrageous authentication system ever, will Cypress work with that?
+## {% fa fa-angle-right %} We have the most complex most outrageous authentication system ever; will Cypress work with that?
 
 If you're using some complex thumb-print, retinal-scan, time-based, key-changing, microphone, audial, decoding mechanism to log in your users, then no, Cypress won't work with that.  But seriously, Cypress is a *development* tool, which makes it easy to test your web applications. If your application is doing 100x things to make it extremely difficult to access, Cypress won't magically make it any easier.
 
@@ -134,7 +134,7 @@ Cypress does *not* utilize WebDriver for testing, so it does not use or have any
 
 Unit tests are not something we are really trying to solve right now. Most of the `cy` API commands are useless in unit tests. The biggest benefit of writing unit tests in Cypress is that they run in a browser, which has debugger support built in.
 
-We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing, it just remains a thing that's possible if we wanted to go down that route.
+We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing; it just remains a thing that's possible if we wanted to go down that route.
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
 
@@ -153,7 +153,7 @@ In addition to the above differences, below are a few rules of thumb to decide w
 
 - If the code you are trying to test is called from other code, use a unit test.
 - If the code is going be called from the external system, like a browser, use an end-to-end test.
-- If a unit test requires a lot of mocking and you have to bring tools like `js-dom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
+- If a unit test requires a lot of mocking and you have to bring tools like `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
 - If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewite it as a unit test
 
 Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
@@ -164,3 +164,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Are easy to run both locally and on a {% url "continuous integration" continuous-integration %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
+
+## {% fa fa-angle-right %} How do I convince my company to use Cypress?
+
+First, be honest with yourself - {% url "is Cypress the right tool" why-cypress %} for your company and your project? We believe that the best approach is a "bottoms up" approach, where you can demonstrate how Cypress solves your company's particular needs. Implement a prototype with your project to see how it feels. Test a couple of common user stories. Identify if there are any technical blockers. Show the prototype to others before proceeding any further. If you can demonstrate the benefits of using Cypress as a developer tool for your project to other engineers, then Cypress will likely be more quickly adopted.

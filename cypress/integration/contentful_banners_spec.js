@@ -14,7 +14,7 @@ function removeNonAscii (string) {
   .replace(/  +/gim, ' ')
 }
 
-describe('stripEmoji is working', () => {
+describe('removeNonAscii is working', () => {
   const allEmoji = `
   😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹️ 🙁 😖 😞 😟 😤 😢 😭 😦 😧 😨 😩 🤯 😬 😰 😱 🥵 🥶 😳 🤪 😵 😡 😠 🤬 😷 🤒 🤕 🤢 🤮 🤧 😇 🤠 🤡 🥳 🥴 🥺 🤥 🤫 🤭 🧐 🤓 😈 👿 👹 👺 💀 👻 👽 🤖 💩 😺 😸 😹 😻 😼 😽 🙀 😿 😾
   People and Fantasy
@@ -100,17 +100,19 @@ describe('stripEmoji is working', () => {
 })
 
 describe('Contentful driven banners', () => {
-  it('displays all current banners with proper info', function () {
+  before(() => cy.visit('/'))
+
+  it('Should display all current banners with proper info', function () {
     cy.task('readFileMaybe', allBannersYaml)
     .then((yamlString) => {
       if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
 
-      const yamlObject = YAML.parse(yamlString)
+      const yamlArray = YAML.parse(yamlString) || []
 
       // remove all outdated or future banners
       const setMyTimezoneToDate = (date) => new Date(Date.parse(date))
 
-      return yamlObject.filter((banner) => {
+      return yamlArray.filter((banner) => {
         const now = new Date()
         const startDate = setMyTimezoneToDate(banner.startDate)
         const endDate = setMyTimezoneToDate(banner.endDate)
@@ -119,14 +121,14 @@ describe('Contentful driven banners', () => {
       })
     })
     .then((banners) => {
-      if (typeof banners === 'undefined' || !banners || !banners.length) return this.skip()
+      if (typeof banners === 'undefined' || !banners || !banners.length) {
+        return this.skip()
+      }
 
-      cy.visit('/')
-
-      cy.get('#header .top-banners_item')
+      cy.get('#header').find('.top-banners-item')
       .each((banner, i) => {
         cy.wrap(banner)
-        .find('.top-banners_item--body')
+        .find('.top-banners-item__body__text')
         .invoke('text').invoke('trim')
         .should((bannerText) => {
           const htmlText = removeNonAscii(regexpTrim(bannerText))
@@ -156,4 +158,133 @@ describe('Contentful driven banners', () => {
       })
     })
   })
+
+  it('Should close individual banner', function () {
+    cy.task('readFileMaybe', allBannersYaml)
+    .then((yamlString) => {
+      if (typeof yamlString === 'undefined' || yamlString === null) return this.skip()
+
+      const yamlArray = YAML.parse(yamlString) || []
+
+      // remove all outdated or future banners
+      const setMyTimezoneToDate = (date) => new Date(Date.parse(date))
+
+      return yamlArray.filter((banner) => {
+        const now = new Date()
+        const startDate = setMyTimezoneToDate(banner.startDate)
+        const endDate = setMyTimezoneToDate(banner.endDate)
+
+        return startDate <= now && now <= endDate
+      })
+    })
+    .then((banners) => {
+      if (typeof banners === 'undefined' || !banners || !banners.length) {
+        return this.skip()
+      }
+
+      const banner = banners[0]
+      const notUniquerBanner = banners.splice(1).map((b) => b.id)
+
+      cy.get(`.top-banners-item[data-id="${banner.id}"]`)
+      .find('.top-banners-item__btn_close')
+      .first()
+      .click()
+
+      cy.get(`.top-banners_item[data-id="${banner.id}"]`).should('not.exist').then(() => {
+        const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
+          JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
+          : []
+
+        expect(closedBanners).to.include(banner.id)
+
+        if (notUniquerBanner.length) {
+          expect(closedBanners).not.have.members(notUniquerBanner)
+          cy.get('#header').find('.top-banners-item:not(.top-banners-item_is-closed)').each(($banner) => {
+            expect(notUniquerBanner).have.members([$banner.data('id')])
+          })
+        }
+      })
+    })
+  })
+
+  it('Should close each banner with a close button', function () {
+    window.localStorage.removeItem('cypress_docs_closed_banners')
+
+    cy.visit('/')
+
+    cy.get('#header')
+    .then((header) => {
+      const bannerItems = header.find('.top-banners-item')
+
+      if (!bannerItems.length) {
+        return this.skip()
+      }
+
+      cy.get(bannerItems).each(($banner) => {
+        cy.get($banner.find('.top-banners-item__btn_close')).as('closeBtn')
+
+        cy.get('@closeBtn').click().then(() => {
+          const id = $banner.data('id')
+
+          cy.get(`.top-banners-item[data-id="${id}"]`).should('not.exist')
+
+          const closedBanners = window.localStorage.getItem('cypress_docs_closed_banners') !== null ?
+            JSON.parse(window.localStorage.getItem('cypress_docs_closed_banners'))
+            : []
+
+          expect(closedBanners).to.include(id)
+        })
+      })
+    })
+  })
+
+  it('Displays Algolia dropdown on focus after close all banners', function () {
+    cy.server()
+
+    cy.route({
+      method: 'POST',
+      url: /algolia/,
+      response: {
+        'results': [
+          {
+            'hits': [
+              {
+                'hierarchy': { 'lvl2': null, 'lvl3': null, 'lvl0': 'Known Issues', 'lvl1': null, 'lvl6': null, 'lvl4': null, 'lvl5': null },
+                'url': 'https://docs-staging.cypress.io/guides/appendices/known-issues.html#content-inner', 'content': 'cy.get', 'anchor': 'content-inner', 'objectID': '15872310', '_snippetResult': { 'content': { 'value': 'to implement in Cypress.  Right <span class="algolia-docsearch-suggestion--highlight">click Issue #53</span>  Workaround  Oftentimes', 'matchLevel': 'full' } }, '_highlightResult': { 'hierarchy': { 'lvl0': { 'value': 'Known Issues', 'matchLevel': 'none', 'matchedWords': [] } }, 'content': { 'value': 'cy.get', 'matchLevel': 'full', 'fullyHighlighted': false, 'matchedWords': ['click', 'issue', '53'] }, 'hierarchy_camel': [{ 'lvl0': { 'value': 'Known Issues', 'matchLevel': 'none', 'matchedWords': [] } }] },
+              },
+            ], 'nbHits': 1, 'page': 0, 'nbPages': 1, 'hitsPerPage': 5, 'processingTimeMS': 1, 'exhaustiveNbHits': true, 'query': '"click Issue #53" ', 'params': 'query=%22click%20Issue%20%2353%22%20&hitsPerPage=5', 'index': 'cypress',
+          },
+        ],
+      },
+    }).as('postAlgolia')
+
+    cy.get('.ds-dropdown-menu').should('not.be.visible')
+    cy.get('#search-input').type('g')
+    cy.wait('@postAlgolia')
+    cy.get('.ds-dropdown-menu').should('be.visible')
+  })
+
+  it('Collapse sidebar links', function () {
+    cy.window().then((win) => {
+      if (win.innerWidth < 768) {
+        return this.skip()
+      }
+
+      cy.get('#collapse-sidebar').click()
+      cy.get('.sidebar-title').each(($sidebar) => cy.get($sidebar).should('have.class', 'is-collapsed'))
+    })
+  })
+
+  it('Expand sidebar links', function () {
+    cy.window().then((win) => {
+      if (win.innerWidth < 768) {
+        return this.skip()
+      }
+
+      cy.get('#expand-sidebar').click()
+      cy.get('.sidebar-title').each(($sidebar) => cy.get($sidebar).should('not.have.class', 'is-collapsed'))
+    })
+  })
+
+  after(() => window.localStorage.removeItem('cypress_docs_closed_banners'))
 })

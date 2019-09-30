@@ -467,11 +467,17 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
-You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+This error is thrown when you are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that Cypress detected was completed over 24 hours ago.
 
-You cannot run tests on a run that has been complete for that long.
+In order to uniquely identify each run during `cypress run`, Cypress attempts to read a unique identifier from your CI provider as described in our {% url "parallelization doc" parallelization#CI-Build-ID-environment-variables-by-provider %}.
 
-Please review our {% url "parallelization" parallelization %} documentation to learn more.
+You may encounter this error if Cypress is detecting the exact same CI Build ID matching a previous CI Build ID in a run that was completed over 24 hours ago. You cannot run tests on a run that has been complete for that long.
+​
+​You can see the CI Build ID that is detected for each completed run by looking at the details section at the top of your run in the {% url "Dashboard" https://on.cypress.io/dashboard %}.
+​
+​You can generate and pass in your own unique CI Build ID per run as described {% url "here" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+Please also review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
 
@@ -489,7 +495,7 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
 {% endnote %}
 
-This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
+This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypass all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 

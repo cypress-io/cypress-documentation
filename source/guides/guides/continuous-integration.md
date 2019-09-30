@@ -15,6 +15,10 @@ title: Continuous Integration
 
 # Setting up CI
 
+<!-- textlint-disable -->
+{% video youtube saYovXS9Llk %}
+<!-- textlint-enable -->
+
 ## Basics
 
 Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:
@@ -205,6 +209,10 @@ script:
 Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
+
+<!-- textlint-disable -->
+{% video youtube J-xbNtKgXfY %}
+<!-- textlint-enable -->
 
 ### {% badge success New %} Example CircleCI Orb
 
@@ -482,11 +490,39 @@ return server.start()
 node scripts/run-cypress-tests.js
 ```
 
-# Known Issues
+# Common problems and solutions
 
 ## In Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
+
+## Xvfb
+
+When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
+
+First, spawn the X11 server in the background at some port, for example `:99`. If you have installed `xvfb` on Linux or if you are using one of our Docker images from {% url cypress-docker-images https://github.com/cypress-io/cypress-docker-images %}, the tools below should be available.
+
+```shell
+Xvfb :99 &
+```
+
+Second, set the X11 address in an environment variable
+
+```shell
+export DISPLAY=:99
+```
+
+Start headless Cypress as usual
+
+```shell
+npx cypress run
+```
+
+After all tests across all Cypress instances finish, kill the Xvfb background process using `pkill`
+
+```shell
+pkill Xvfb
+```
 
 # See also
 

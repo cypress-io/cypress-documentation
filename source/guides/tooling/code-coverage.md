@@ -10,6 +10,10 @@ title: Code Coverage
 - How to use the code coverage reports to guide writing tests
 {% endnote %}
 
+<!-- textlint-disable -->
+{% video youtube C8g5X4vCZJA %}
+<!-- textlint-enable -->
+
 # Introduction
 
 As you write more and more end-to-end tests, you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too much? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test should be added to ensure that part of our application logic is tested.
@@ -422,6 +426,12 @@ From now on, the front end code coverage collected during end-to-end tests will 
 {% imgTag /img/guides/code-coverage/full-coverage.png "Combined code coverage report from front and back end code" %}
 
 You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
+
+# Future work
+
+We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid "manual" instrumentation step using Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in {% url bahmutov/cypress-native-chrome-code-coverage-example https://github.com/bahmutov/cypress-native-chrome-code-coverage-example %} repository.
+
+Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of back end code.
 
 # Examples
 
