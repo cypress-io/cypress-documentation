@@ -47,7 +47,7 @@ No, although we are looking to build an on-premise version of the Dashboard for 
 
 ## {% fa fa-angle-right %} Can I choose not to use the Dashboard?
 
-Of course. The Dashboard Service is a separate service from the Test Runner and will always remain optional. We hope you'll find a tremendous amount of value out of it, but it is not coupled to being able to run your tests.
+Of course. The Dashboard Service is a separate service from the Test Runner and will always remain optional. We hope you'll find a tremendous amount of value in it, but it is not coupled to being able to run your tests.
 
 You can always run your tests in CI using {% url "`cypress run`" command-line#cypress-run %} without the `--record` flag which does not communicate with our external servers and will not record any test results.
 
@@ -72,9 +72,9 @@ These will be added in subsequent releases.
 
 Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the Test Runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
 
-Spec file durations are also more meaningful and consistent than timings of individual tests, we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishing individual tests.
+Spec file durations are also more meaningful and consistent than timings of individual tests, we can order specs by the moving average of the previously recorded durations. This would be much less useful when load balancing quickly finishes individual tests.
 
-To better load balance the specs, thus you would want more spec files with approximately the same running duration. Otherwise, a single very long running test might limit how fast all your tests finish, and the run completes. Due to starting a new test execution context before each spec file and encoding and uploading video after, making spec files to run shorter than approximately 10 seconds would also be fruitless - because Cypress overhead would eat any time savings.
+Thus, to better load balance the specs, you would want more spec files with approximately the same running duration. Otherwise, a single very long running test might limit how fast all your tests finish, and how fast the run completes. Due to starting a new test execution context before each spec file and encoding and uploading video after, making spec files run shorter than approximately 10 seconds would also be fruitless - because Cypress overhead would eat any time savings.
 
 ## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
@@ -84,7 +84,7 @@ Even if your CI setup is very different from the {% url "CI examples we have" co
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
 ```
 
-For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable than is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might just be good enough for the job.
+For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might just be good enough for the job.
 
 ## {% fa fa-angle-right %} Can I delete a run from the Dashboard?
 

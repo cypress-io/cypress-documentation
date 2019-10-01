@@ -15,6 +15,10 @@ title: Continuous Integration
 
 # Setting up CI
 
+<!-- textlint-disable -->
+{% video youtube saYovXS9Llk %}
+<!-- textlint-enable -->
+
 ## Basics
 
 Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:
@@ -205,6 +209,10 @@ script:
 Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
+
+<!-- textlint-disable -->
+{% video youtube J-xbNtKgXfY %}
+<!-- textlint-enable -->
 
 ### {% badge success New %} Example CircleCI Orb
 

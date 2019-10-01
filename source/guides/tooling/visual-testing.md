@@ -91,6 +91,10 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
+<!-- textlint-disable -->
+{% video youtube qVRjhABuyG0 %}
+<!-- textlint-enable -->
+
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
 
 Resource |  Description
@@ -101,6 +105,10 @@ Resource |  Description
 {% url 'Blog' https://glebbahmutov.com/blog/testing-a-chart/ %} | Testing a chart with Cypress and Applitools
 
 ## Percy
+
+<!-- textlint-disable -->
+{% video youtube MXfZeE9RQDw %}
+<!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
