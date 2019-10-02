@@ -181,7 +181,7 @@ When hovering over each command, Cypress will automatically display the snapshot
 
 By default, until you issue a `cy.viewport()` command, Cypress sets the width to `1000px` and the height to `660px` by default.
 
-You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your `cypress.json`:
+You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your configuration file (`cypress.json` by default):
 
 ```json
 {

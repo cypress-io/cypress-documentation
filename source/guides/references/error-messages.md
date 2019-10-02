@@ -190,9 +190,9 @@ Cypress will continuously attempt to interact with the element until it eventual
 cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
-You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
+You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %}.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
 
 ```json
 {
@@ -505,11 +505,9 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can just set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
-```javascript
-// cypress.json
-
+```json
 {
   "chromeWebSecurity": false
 }
