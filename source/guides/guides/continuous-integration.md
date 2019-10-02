@@ -15,6 +15,10 @@ title: Continuous Integration
 
 # Setting up CI
 
+<!-- textlint-disable -->
+{% video youtube saYovXS9Llk %}
+<!-- textlint-enable -->
+
 ## Basics
 
 Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:
@@ -93,6 +97,30 @@ Pass the command to boot your server, the url your server is hosted on and your 
 
 In the example above, the `cy:run` command will only be executed when the URL `http://localhost:3030` responds with an HTTP status code of 200. The server will also shut down when the tests complete.
 
+*Gotchas*
+
+When [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users) that does not respond to `HEAD` requests, use an explicit `GET` method to ping the server like this:
+
+```json
+{
+  "scripts": {
+    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
+  }
+}
+```
+
+When working with local `https` in webpack, set an environment variable to allow local certificate:
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030 --https",
+    "cy:run": "cypress run",
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+  }
+}
+```
+
 ## Record tests
 
 Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %}.
@@ -107,14 +135,14 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 
 ### To record tests:
 
-1. {% url 'Set up your project to record' dashboard-service#Setup %}
+1. {% url 'Set up your project to record' projects#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %} within CI.
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url 'Read the full guide on the Dashboard Service.' dashboard-service %}
+{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction%}
 
 ## Run tests in parallel
 
@@ -181,6 +209,10 @@ script:
 Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
+
+<!-- textlint-disable -->
+{% video youtube J-xbNtKgXfY %}
+<!-- textlint-enable -->
 
 ### {% badge success New %} Example CircleCI Orb
 
@@ -324,7 +356,7 @@ See our {% url 'examples' docker %} for additional information on our maintained
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 ## Caching
@@ -349,7 +381,7 @@ You can set various environment variables to modify how Cypress runs.
 
 ### Configuration Values
 
-You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+You can set any configuration value as an environment variable. This overrides values in your configuration file (`cypress.json` by default).
 
 ***Typical use cases would be modifying things like:***
 
@@ -362,7 +394,7 @@ Refer to the {% url 'Environment Variables recipe' configuration#Environment-Var
 
 ***Record Key***
 
-If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' projects#Identification %}
 
 Instead of hard coding it into your run command like this:
 
@@ -388,7 +420,7 @@ Typically you'd set this inside of your CI provider.
 
 ### Git information
 
-Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
+Cypress uses the {% url '@cypress/commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
 It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
@@ -400,6 +432,12 @@ Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` dir
 - Author: `COMMIT_INFO_AUTHOR`
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
+
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+
+```shell
+DEBUG=commit-info,cypress:server:record
+```
 
 ### Custom Environment Variables
 
@@ -452,11 +490,39 @@ return server.start()
 node scripts/run-cypress-tests.js
 ```
 
-# Known Issues
+# Common problems and solutions
 
 ## In Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
+
+## Xvfb
+
+When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
+
+First, spawn the X11 server in the background at some port, for example `:99`. If you have installed `xvfb` on Linux or if you are using one of our Docker images from {% url cypress-docker-images https://github.com/cypress-io/cypress-docker-images %}, the tools below should be available.
+
+```shell
+Xvfb :99 &
+```
+
+Second, set the X11 address in an environment variable
+
+```shell
+export DISPLAY=:99
+```
+
+Start headless Cypress as usual
+
+```shell
+npx cypress run
+```
+
+After all tests across all Cypress instances finish, kill the Xvfb background process using `pkill`
+
+```shell
+pkill Xvfb
+```
 
 # See also
 

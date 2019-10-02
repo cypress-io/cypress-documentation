@@ -262,7 +262,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 {% note info %}
 We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Just set the `baseUrl` config property in `cypress.json` and override it with environment variable `CYPRESS_BASE_URL`.
+This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Set the `baseUrl` configuration property in your {% url "configuration" configuration %} file (`cypress.json` by default) and override it with environment variable `CYPRESS_BASE_URL`.
 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}

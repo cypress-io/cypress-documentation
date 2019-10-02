@@ -19,7 +19,7 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
@@ -40,14 +40,14 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-introduction%}. If you have not set up your project to record, check out our {% url "setup guide" projects#Setup %}.
     {% endnote %}
 
 # CI parallelization interactions
 
-During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-service %} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
+During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-introduction%} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
 
-1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-service %} to indicate which spec files to run in the project.
+1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction%} to indicate which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
 3. Upon receiving requests from a CI machines, Cypress calculates the estimated duration to test each spec file.
 4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
@@ -261,13 +261,11 @@ This waiting period is called the **run completion delay** and it begins after t
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-This **delay is 60 seconds by default**, but is configurable within the {% url "Dashboard" dashboard-service %} project settings page:
-
-{% imgTag /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
+This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard" project settings page" projects#Run-completion-delay %}.
 
 # Visualizing parallelization and groups in the Dashboard
 
-You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-service %} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-introduction%} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ## Timeline View
 

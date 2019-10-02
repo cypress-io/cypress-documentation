@@ -10,6 +10,10 @@ title: Code Coverage
 - How to use the code coverage reports to guide writing tests
 {% endnote %}
 
+<!-- textlint-disable -->
+{% video youtube C8g5X4vCZJA %}
+<!-- textlint-enable -->
+
 # Introduction
 
 As you write more and more end-to-end tests, you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too much? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test should be added to ensure that part of our application logic is tested.
@@ -348,7 +352,7 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 
 # Full stack code coverage
 
-A complex application might have a Node back end with its own complex logic. From the front end web application, the calls to the API go through layers of code. It would be nice to track what back end code has been exercised during Cypress end-to-end tests. 
+A complex application might have a Node back end with its own complex logic. From the front end web application, the calls to the API go through layers of code. It would be nice to track what back end code has been exercised during Cypress end-to-end tests.
 
 Are our end-to-end tests that are so effective at covering the web application code are also covering the back end server code?
 
@@ -423,6 +427,12 @@ From now on, the front end code coverage collected during end-to-end tests will 
 
 You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
 
+# Future work
+
+We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid "manual" instrumentation step using Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in {% url bahmutov/cypress-native-chrome-code-coverage-example https://github.com/bahmutov/cypress-native-chrome-code-coverage-example %} repository.
+
+Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of back end code.
+
 # Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
@@ -431,6 +441,8 @@ You can find full examples showing different code coverage setups in the followi
 - {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
 - {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
+- {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for React App that uses TypeScript.
+- {% url 'bahmutov/cypress-and-jest' https://github.com/bahmutov/cypress-and-jest %} shows how to run Jest unit tests and Cypress unit tests, collecting code coverage from both test runners, and then produce merged report.
 
 # See also
 

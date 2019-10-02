@@ -107,14 +107,14 @@ Cypress可以录制测试用例，并且在{% url 'Cypress Dashboard' https://on
 
 ### 使用录制前你需要：
 
-1. {% url '设置录制项目' dashboard-service#Setup %}
+1. {% url '设置录制项目' projects#Setup %}
 2. 在使用CI的时候{% url '传`--record`参数给`cypress run`' command-line#cypress-run %}
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url '请在Dashboard Service里参考完整指导' dashboard-service %}
+{% url '请在Dashboard Service里参考完整指导' dashboard-introduction%}
 
 ## 测试并行执行
 
@@ -324,7 +324,7 @@ Error: the cypress binary is not installed
 如果你没有使用以上的CI提供商，那么请确保你的系统已经安装如下依赖：
 
 ```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 ```
 
 ## 缓存
@@ -362,7 +362,7 @@ apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 liba
 
 ***录制秘钥***
 
-如果你正在一个公共项目上{% urlHash '录制用例' 录制用例 %}，你可能会想保护你的录制秘钥。{% url '了解为什么。' dashboard-service#Identification %}
+如果你正在一个公共项目上{% urlHash '录制用例' 录制用例 %}，你可能会想保护你的录制秘钥。{% url '了解为什么。' projects#Identification %}
 
 在命令里写死秘钥值是不科学的：
 
@@ -388,7 +388,7 @@ cypress run --record
 
 ### Git信息
 
-Cypress使用{% url 'commit-info' https://github.com/cypress-io/commit-info %}包来获取git信息并关联到运行时（比如分支信息、提交信息、作者等）。
+Cypress使用{% url '@cypress/commit-info' https://github.com/cypress-io/commit-info %}包来获取git信息并关联到运行时（比如分支信息、提交信息、作者等）。
 
 它默认有一个`.git`的目录，并使用Git命令去获取各个信息，比如`git show -s --pretty=%B`来获取提交信息，参考{% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}。
 
@@ -400,6 +400,12 @@ Cypress使用{% url 'commit-info' https://github.com/cypress-io/commit-info %}�
 - Author: `COMMIT_INFO_AUTHOR`
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
+
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+
+```shell
+DEBUG=commit-info,cypress:server:record
+```
 
 ### 自定义环境变量
 

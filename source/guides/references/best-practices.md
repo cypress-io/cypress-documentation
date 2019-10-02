@@ -45,7 +45,8 @@ Luckily, it is very easy to avoid both of these problems.
 Given a button that we want to interact with:
 
 ```html
-<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+<button id="main" class="btn btn-large" name="submission"
+  role="button" data-cy="submit">Submit</button>
 ```
 
 Let's investigate how we could target it:
@@ -55,6 +56,7 @@ Selector | Recommended | Notes
 `cy.get('button').click()` | {% fa fa-warning red %} Never | Worst - too generic, no context.
 `cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} Never | Bad. Coupled to styling. Highly subject to change.
 `cy.get('#main').click()` | {% fa fa-warning orange %} Sparingly | Better. But still coupled to styling or JS event listeners.
+`cy.get('[name=submission]').click()` | {% fa fa-warning orange %} Sparingly | Coupled to the `name` attribute which has HTML semantics.
 `cy.contains('Submit').click()` | {% fa fa-check-circle green %} Depends | Much better. But still coupled to text content that may change.
 `cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Insulated from all changes.
 
@@ -576,7 +578,7 @@ We have {% url 'examples showing you how to start and stop your web server' cont
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your `cypress.json` file.
+{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your {% url "configuration file (`cypress.json` by default)" configuration %}.
 {% endnote %}
 
 Adding a {% url "`baseUrl`" configuration#Global %} in your configuration allows you to omit passing the `baseUrl` to commands like {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %}. Cypress assumes this is the url you want to use.
@@ -593,7 +595,7 @@ As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches
 
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
 
 ```json
 {

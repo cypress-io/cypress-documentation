@@ -190,9 +190,9 @@ Cypress will continuously attempt to interact with the element until it eventual
 cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
-You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
+You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %}.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
 
 ```json
 {
@@ -409,7 +409,7 @@ Check out our {% url "guide on parallelizing runs" parallelization %} and when t
 
 You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
+These flags can only be used when recording to the {% url "Dashboard Service" dashboard-introduction%}.
 
 Please review our {% url "parallelization" parallelization %} documentation to learn more.
 
@@ -467,11 +467,17 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
-You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+This error is thrown when you are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that Cypress detected was completed over 24 hours ago.
 
-You cannot run tests on a run that has been complete for that long.
+In order to uniquely identify each run during `cypress run`, Cypress attempts to read a unique identifier from your CI provider as described in our {% url "parallelization doc" parallelization#CI-Build-ID-environment-variables-by-provider %}.
 
-Please review our {% url "parallelization" parallelization %} documentation to learn more.
+You may encounter this error if Cypress is detecting the exact same CI Build ID matching a previous CI Build ID in a run that was completed over 24 hours ago. You cannot run tests on a run that has been complete for that long.
+​
+​You can see the CI Build ID that is detected for each completed run by looking at the details section at the top of your run in the {% url "Dashboard" https://on.cypress.io/dashboard %}.
+​
+​You can generate and pass in your own unique CI Build ID per run as described {% url "here" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+Please also review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
 
@@ -489,7 +495,7 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
 {% endnote %}
 
-This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
+This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypass all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 
@@ -499,11 +505,9 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can just set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
-```javascript
-// cypress.json
-
+```json
 {
   "chromeWebSecurity": false
 }

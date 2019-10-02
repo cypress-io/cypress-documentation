@@ -241,7 +241,7 @@ One last thing to consider here is that every once in a while we discover bugs i
 
 To start, you will need to understand that *not all browsers expose a way to turn off web security*. Some do, some don't. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
 
-**Setting `chromeWebSecurity` to `false` allows you to do the following:**
+## Setting `chromeWebSecurity` to `false` allows you to do the following:
 
 - Display insecure content
 - Navigate to any superdomain without cross-origin errors
@@ -251,7 +251,7 @@ One thing you may notice though is that Cypress still enforces visiting a single
 
 Still here? That's cool, let's disable web security!
 
-***Set `chromeWebSecurity` to `false` in `cypress.json` and we'll take care of the rest.***
+### Set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %}` and we'll take care of the rest
 
 ```json
 {

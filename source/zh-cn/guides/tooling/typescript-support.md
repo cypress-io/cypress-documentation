@@ -45,11 +45,59 @@ You can find an example of Jest and Cypress installed in the same project using 
 
 ## Types for custom commands
 
-When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find the simplest implementation of Cypress and TypeScript in this {% url "repo example here" https://github.com/omerose/cypress-support %}.
+When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors.
 
-## TODO MVC Example Repo
+For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
-You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
+```javascript
+// cypress/support/index.js
+Cypress.Commands.add('dataCy', (value) => {
+  return cy.get(`[data-cy=${value}]`)
+})
+```
+
+Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your {% url "`supportFile`" configuration#Folders-Files %}, in this case at `cypress/support/index.d.ts`.
+
+```typescript
+// in cypress/support/index.d.ts
+// load type definitions that come with Cypress module
+/// <reference types="cypress" />
+
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * Custom command to select DOM element by data-cy attribute.
+     * @example cy.dataCy('greeting')
+    */
+    dataCy(value: string): Chainable<Element>
+  }
+}
+```
+
+{% note info %}
+A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
+{% endnote %}
+
+If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
+
+Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+
+```javascript
+// from your cypress/integration/spec.js
+/// <reference path="../support/index.d.ts" />
+it('works', () => {
+  cy.visit('/')
+  // IntelliSense and TS compiler should
+  // not complain about unknown method
+  cy.dataCy('greeting')
+})
+```
+
+### Examples:
+
+- See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
+- You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
+- Example project {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} uses custom commands to avoid boilerplate code.
 
 ## Types for custom assertions
 

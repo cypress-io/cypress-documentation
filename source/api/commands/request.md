@@ -37,11 +37,10 @@ cy.visit('http://localhost:8080/app')
 cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
   ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of `cypress.json`.
+2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of of your {% url "configuration file" configuration %}.
 
   ```json
   // cypress.json
-
   {
     "baseUrl": "http://localhost:1234"
   }
@@ -107,8 +106,8 @@ Option | Default | Description
 `gzip` | `true` | Whether to accept the `gzip` encoding
 `headers` | `null` | Additional headers to send; Accepts object literal
 `qs` | `null` | Query parameters to append to the `url` of the request
-`retryOnStatusCodeFailure` | `false` | Whether Cypress should automatically retry status code errors under the hood
-`retryOnNetworkFailure` | `true` | Whether Cypress should automatically retry transient network errors under the hood
+`retryOnStatusCodeFailure` | `false` | {% usage_options retryOnStatusCodeFailure cy.request %}
+`retryOnNetworkFailure` | `true` | {% usage_options retryOnNetworkFailure cy.request %}
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.request %}
 
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` globally in {% url 'configuration' configuration %}.
