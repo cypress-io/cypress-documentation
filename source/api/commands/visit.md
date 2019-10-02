@@ -24,6 +24,7 @@ cy.visit(options)
 
 ```javascript
 cy.visit('http://localhost:3000')    // Yields the window of the remote page
+cy.visit('./pages/hello.html')
 ```
 
 ## Arguments
@@ -33,6 +34,9 @@ cy.visit('http://localhost:3000')    // Yields the window of the remote page
 The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
+
+You may also specify the relative path of an html file.  The path is relative to the root
+directory of the Cypress installation. Note that the `file://` prefix is not needed.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -44,6 +48,7 @@ Option | Default | Description
 `method` | `GET` | The HTTP method to use in the visit. Can be `GET` or `POST`.
 `body` | `null` | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header.
 `headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request. *Note:* `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.
+`qs` | `null` | Query parameters to append to the `url` of the request
 `log` | `true` | {% usage_options log %}
 `auth` | `null` | Adds Basic Authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
@@ -137,6 +142,29 @@ cy.visit('http://localhost:3000/#/users', {
       // do something
     }
   }
+})
+```
+
+### Add query paramaters
+
+You can provide query parameters as an object to `cy.visit()` by passing `qs` to `options`.
+
+```js
+// visits http://localhost:3500/users?page=1&role=admin
+cy.visit('http://localhost:3500/users', {
+  qs: {
+    page: '1',
+    role: 'admin'
+  }
+})
+```
+
+The parameters passed to `qs` will be merged into existing query parameters on the `url`.
+
+```js
+// visits http://example.com/users?page=1&admins
+cy.visit('http://example.com/users?page=1', {
+  qs: { 'admins' }
 })
 ```
 
