@@ -16,7 +16,7 @@ title: Variables and Aliases
 New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs.
 
 {% note success 'Do not worry!' %}
-There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
+There are many ways to reference, compare and utilize the objects that Cypress commands yield you.
 
 Once you get the hang of async code you'll realize you can do everything you could do synchronously, without your code doing any backflips.
 

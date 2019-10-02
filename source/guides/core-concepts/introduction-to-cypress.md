@@ -17,7 +17,7 @@ title: Introduction to Cypress
 After you're done, we suggest watching some of our {% fa fa-video-camera %} {% url "Tutorial Videos" tutorials %}.
 {% endnote %}
 
-# Cypress Is Simple
+# Cypress Can Be Simple (Sometimes)
 
 Simplicity is all about getting more done with less typing. Let's look at an example:
 
@@ -56,7 +56,7 @@ Can you read this? If you did, it might sound something like this:
 > 8. Grab the browser URL, ensure it includes `/posts/my-first-post`.
 > 9. Find the `h1` tag, ensure it contains the text "My First Post".
 
-This is a relatively simple, straightforward test, but consider how much code has been covered by it, both on the client and the server!
+This is a relatively straightforward test, but consider how much code has been covered by it, both on the client and the server!
 
 For the remainder of this guide, we'll explore the basics of Cypress that make this example work. We'll demystify the rules Cypress follows so you can productively test your application to act as much like a user as possible, as well as discuss how to take shortcuts when it's useful.
 
@@ -313,7 +313,7 @@ To work around the need to reference elements, Cypress has a feature {% url 'kno
 
 Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
 
-If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a simple return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
+If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
 
 ### Let's look at an example:
 
@@ -364,7 +364,7 @@ This lets us reuse our DOM queries for faster tests when the element is still in
 
 It is very important to understand that Cypress commands don't do anything at the moment they are invoked, but rather enqueue themselves to be run later. This is what we mean when we say Cypress commands are asynchronous.
 
-### Take this simple test, for example:
+### Take this short test, for example:
 
 ```js
 it('changes the URL when "awesome" is clicked', function() {

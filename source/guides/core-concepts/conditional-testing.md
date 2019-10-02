@@ -45,7 +45,7 @@ A human also has intuition. If you click a button and see a loading spinner, you
 
 A robot has no intuition - it will do exactly as it is programmed to do.
 
-To illustrate this, let's take a very simple example of trying to conditionally test unstable state.
+To illustrate this, let's take a straightforward example of trying to conditionally test unstable state.
 
 ## The DOM is unstable
 
@@ -98,7 +98,7 @@ Let's explore a few examples.
 
 ## Server side rendering
 
-If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can easily do conditional testing on the DOM!
+If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can do conditional testing on the DOM!
 
 Why? Because if the DOM is not going to change after the `load` event occurs, then it can accurately represent a stable state of truth.
 
@@ -134,7 +134,7 @@ Let's explore some examples of conditional testing that will pass or fail 100% o
 
 In this example let's assume you visit your website and the content will be different based on which A/B campaign your server decides to send. Perhaps it is based on geo-location, IP address, time of day, locale, or other factors that are difficult to control. How can you write tests in this manner?
 
-Easily: control which campaign gets sent, or provide a reliable means to know which one it is.
+Control which campaign gets sent, or provide a reliable means to know which one it is.
 
 ### Use URL query params:
 
@@ -341,7 +341,7 @@ Cypress is built around creating **reliable tests**. The secret to writing good 
 
 Doing conditional testing adds a huge problem - that the test writers themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
 
-If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
+If you are not sure if you have written a potentially flaky test, there is a way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
 
 ```js
 Cypress._.times(100, (i) => {

@@ -136,7 +136,7 @@ beforeEach(function () {
 })
 ```
 
-### Issue a simple HTTP request
+### Issue an HTTP request
 
 Sometimes it's quicker to test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resources to load.
 
