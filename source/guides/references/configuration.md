@@ -95,6 +95,12 @@ Option | Default | Description
 `animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
 `waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
 
+## Node version
+
+Option | Default | Description
+----- | ---- | ----
+`nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your {% url plugins plugins-guide %}. Otherwise, Cypress will use the Node version bundled with Cypress.
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
@@ -249,3 +255,7 @@ You can turn this option off if the application or site you're testing **does no
 ## Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+
+{% history %}
+{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% endhistory %}
