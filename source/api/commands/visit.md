@@ -162,9 +162,9 @@ cy.visit('http://localhost:3500/users', {
 The parameters passed to `qs` will be merged into existing query parameters on the `url`.
 
 ```js
-// visits http://example.com/users?page=1&admins
+// visits http://example.com/users?page=1&admin=true
 cy.visit('http://example.com/users?page=1', {
-  qs: { 'admins' }
+  qs: { admin: true }
 })
 ```
 
