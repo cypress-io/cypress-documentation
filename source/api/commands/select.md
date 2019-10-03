@@ -32,11 +32,11 @@ cy.location().select()   // Errors, 'location' does not yield <select> element
 
 **{% fa fa-angle-right %} value**  ***(String)***
 
-The `value` or text content of the `<option>` to be selected.
+The `value` or text content of the `<option>` to be selected. An empty string (`''`) will clear the current selection.
 
 **{% fa fa-angle-right %} values**  ***(Array)***
 
-An array of `values` or text contents of the `<option>`s to be selected.
+An array of `values` or text contents of the `<option>`s to be selected. An empty array (`[]`) will clear the current selections.
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
@@ -90,6 +90,22 @@ cy.get('select')
   .select('456').should('have.value', '456')
 ```
 
+## Clear single selection
+
+```html
+<select>
+  <option value="456" selected>apples</option>
+  <option value="457">oranges</option>
+  <option value="458">bananas</option>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select('').invoke('val')
+  .should('be.null')
+```
+
 ## Select multiple options
 
 ### Select the options with the texts "apples" and "bananas"
@@ -122,6 +138,22 @@ cy.get('select')
 cy.get('select')
   .select(['456', '457']).invoke('val')
   .should('deep.equal', ['456', '457'])
+```
+
+## Clear multiple selections
+
+```html
+<select multiple>
+  <option value="456" selected>apples</option>
+  <option value="457">oranges</option>
+  <option value="458" selected>bananas</option>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select([]).invoke('val')
+  .should('deep.equal', [])
 ```
 
 # Notes
