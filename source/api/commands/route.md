@@ -31,15 +31,15 @@ cy.route('/users/**')
 
 ## Arguments
 
-**{% fa fa-angle-right %} url** ***(String, Glob, RegExp)***
+**{% fa fa-angle-right %} url** **_(String, Glob, RegExp)_**
 
 Set a route matching the specific URL.
 
-**{% fa fa-angle-right %} response** ***(String, Object, Array)***
+**{% fa fa-angle-right %} response** **_(String, Object, Array)_**
 
-Supply a response `body` to *stub* in the matching route.
+Supply a response `body` to _stub_ in the matching route.
 
-**{% fa fa-angle-right %} method** ***(String)***
+**{% fa fa-angle-right %} method** **_(String)_**
 
 Match the route to a specific method (`GET`, `POST`, `PUT`, etc).
 
@@ -47,26 +47,26 @@ Match the route to a specific method (`GET`, `POST`, `PUT`, etc).
 If no method is defined Cypress will match `GET` requests by default.
 {% endnote %}
 
-**{% fa fa-angle-right %} callbackFn** ***(Function)***
+**{% fa fa-angle-right %} callbackFn** **_(Function)_**
 
 Set a route by returning an object literal from a callback function. Functions that return a `Promise` will automatically be awaited.
 
-**{% fa fa-angle-right %} options** ***(Object)***
+**{% fa fa-angle-right %} options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.route()`. By default `cy.route()` inherits its options from {% url `cy.server()` server %}.
 
-Option | Default | Description
---- | --- | ---
-`delay` | `0` | Delay for stubbed responses (in ms)
-`force404` | `false` | Forcibly send XHR's a 404 status when the XHR's do not match any existing {% url `cy.route()` route %}.
-`headers` | `null` | Response headers for stubbed routes
-`method` | `GET` | Method to match against requests
-`onAbort` | `null` | Callback function which fires anytime an XHR is aborted
-`onRequest` | `null` | Callback function when a request is sent
-`onResponse` | `null` | Callback function when a response is returned
-`response` | `null` | Response body when stubbing routes
-`status` | `200` | Response status code when stubbing routes
-`url`    | `null` | String or RegExp url to match against request urls
+| Option       | Default | Description                                                                                             |
+| ------------ | ------- | ------------------------------------------------------------------------------------------------------- |
+| `delay`      | `0`     | Delay for stubbed responses (in ms)                                                                     |
+| `force404`   | `false` | Forcibly send XHR's a 404 status when the XHR's do not match any existing {% url `cy.route()` route %}. |
+| `headers`    | `null`  | Response headers for stubbed routes                                                                     |
+| `method`     | `GET`   | Method to match against requests                                                                        |
+| `onAbort`    | `null`  | Callback function which fires anytime an XHR is aborted                                                 |
+| `onRequest`  | `null`  | Callback function when a request is sent                                                                |
+| `onResponse` | `null`  | Callback function when a response is returned                                                           |
+| `response`   | `null`  | Response body when stubbing routes                                                                      |
+| `status`     | `200`   | Response status code when stubbing routes                                                               |
+| `url`        | `null`  | String or RegExp url to match against request urls                                                      |
 
 You can also set options for all {% url `cy.wait()` wait %}'s `requestTimeout` and `responseTimeout` globally in {% url 'configuration' configuration %} to control how long to wait for the request and response of a supplied route.
 
@@ -105,11 +105,27 @@ cy.wait('@postUser')
 {% url "Check out our example recipe using `cy.route()` to POST for login in HTML web forms" recipes#Logging-In %}
 {% endnote %}
 
+### `url` as a RegExp
+
+When passing a RegExp as the `url`, the XHR's url will be tested against the regular expression and will apply if it passes.
+
+```javascript
+cy.server()
+cy.route(/users\/\d+/, { id: 1, name: 'Phoebe' })
+```
+
+```javascript
+// Application Code
+$.get('https://localhost:7777/users/1337', (data) => {
+  console.log(data) // => {id: 1, name: "Phoebe"}
+})
+```
+
 ### Wait on `url` matching glob
 
 Under the hood Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} to match glob patterns of `url`.
 
-This means you can take advantage of `*` and `**` glob support. This makes it *much* easier to route against dynamic segments without having to build up a complex `RegExp`.
+This means you can take advantage of `*` and `**` glob support. This makes it _much_ easier to route against dynamic segments without having to build up a complex `RegExp`.
 
 We expose {% url `Cypress.minimatch` minimatch %} as a function that you can use in your console to test routes.
 
@@ -153,7 +169,7 @@ If you pass a `response` to `cy.route()`, Cypress will stub the response in the 
 
 ### `url` as a string
 
-When passing a `string` as the `url`, the XHR's URL must match *exactly* what you've written.
+When passing a `string` as the `url`, the XHR's URL must match _exactly_ what you've written.
 
 ```javascript
 cy.server()
@@ -186,7 +202,7 @@ Functions that return a `Promise` will automatically be awaited.
 const commentsResponse = (routeData) => {
   //routeData is a reference to the current route's information
   return {
-    data: someOtherFunction(routeData)
+    data: someOtherFunction(routeData),
   }
 }
 
@@ -204,8 +220,8 @@ Any request that matches the `method` and `url` of a route will be responded to 
 {% note info %}
 If a request doesn't match any route then the behavior depends on the value of the `force404` option on the {% url `cy.server()` server %}:
 
-* if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
-* if `force404` is `true` then the response {% urlHash "will be a 404" Notes %}.
+- if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
+- if `force404` is `true` then the response {% urlHash "will be a 404" Notes %}.
 
 You can {% url 'read more about this behavior here.' server#Options %}
 {% endnote %}
@@ -291,11 +307,11 @@ cy.route({
   url: '**/user/*',
   status: 412,
   response: {
-    rolesCount: 2
+    rolesCount: 2,
   },
   delay: 500,
   headers: {
-    'X-Token': null
+    'X-Token': null,
   },
   onRequest: (xhr) => {
     // do something with the
@@ -306,7 +322,7 @@ cy.route({
     // do something with the
     // raw XHR object when the
     // response comes back
-  }
+  },
 })
 ```
 
@@ -320,8 +336,8 @@ cy.route({
   url: '**/login',
   response: {
     // simulate a redirect to another page
-    redirect: '/error'
-  }
+    redirect: '/error',
+  },
 })
 ```
 
@@ -357,7 +373,7 @@ cy.route({
   method: 'PATCH',
   url: '**/activities/*',
   response: {},
-  delay: 3000
+  delay: 3000,
 })
 ```
 
@@ -373,7 +389,7 @@ cy.route(() => {
   return {
     method: 'POST',
     url: '**/users/*/comments',
-    response: this.commentsFixture
+    response: this.commentsFixture,
   }
 })
 ```
@@ -389,7 +405,7 @@ cy.route(() => {
       resolve({
         method: 'PUT',
         url: '**/posts/**',
-        response: '@postFixture'
+        response: '@postFixture',
       })
     }, 1000)
   })
@@ -406,7 +422,7 @@ Cypress indicates whether an XHR sent back a stubbed response or actually went o
 
 XHR's that display `(XHR STUB)` in the Command Log have been stubbed and their response, status, headers, and delay have been controlled by your matching `cy.route()`.
 
-XHR's that display `(XHR)` in the Command Log have *not* been stubbed and were passed directly through to a server.
+XHR's that display `(XHR)` in the Command Log have _not_ been stubbed and were passed directly through to a server.
 
 {% imgTag /img/api/route/xhr-stub-versus-not-stubbed-routes-in-command-log.png "XHR Command Log when not stubbed" %}
 
@@ -477,10 +493,10 @@ You can {% url 'read more about this here.' server#Options %}
 cy.server()
 cy.route(/accounts/).as('accountsGet')
 cy.route(/company/, 'fixtures:company').as('companyGet')
-cy.route(/teams/,   'fixtures:teams').as('teamsGet')
+cy.route(/teams/, 'fixtures:teams').as('teamsGet')
 ```
 
-Whenever you start a server and add routes, Cypress will display a new Instrument Log called *Routes*. It will list the routing table in the Instrument Log, including the `method`, `url`, `stubbed`, `alias` and number of matched requests:
+Whenever you start a server and add routes, Cypress will display a new Instrument Log called _Routes_. It will list the routing table in the Instrument Log, including the `method`, `url`, `stubbed`, `alias` and number of matched requests:
 
 {% imgTag /img/api/route/routing-table-displayed-in-command-log-for-cy-route.png "Command Log routing table" %}
 
