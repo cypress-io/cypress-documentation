@@ -49,7 +49,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | deep.property(*name*, *[value]*) | `expect(deepObj).to.have.deep.property('tests[1]', 'e2e')` |
 | ownProperty(*name*) {% aliases haveOwnProperty own.property %} | `expect('test').to.have.ownProperty('length')` |
 | ownPropertyDescriptor(*name*) {% aliases haveOwnPropertyDescriptor %} | `expect({a: 1}).to.have.ownPropertyDescriptor('a')` |
-| lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
+| lengthOf(*value*) | `expect('test').to.have.lengthOf(4)` |
 | match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
 | key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
