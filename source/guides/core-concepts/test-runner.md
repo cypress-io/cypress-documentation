@@ -157,10 +157,17 @@ If you would like to interact with your app while the Selector Playground is ope
 
 # Keyboard Shortcuts
 
-We've added some handy keyboard shortcuts to help quickly run, stop and inspect your tests while using the Test Runner
+There are keyboard shortcuts to quickly perform common actions from within the Test Runner.
 
 | Key      | Action |
 | ----------- | ----------- |
-| r      | Rerun tests       |
-| s      | Stop tests        |
-| f      | Bring focus to 'specs' window        |
+| `r`      | Rerun tests       |
+| `s`      | Stop tests        |
+| `f`      | Bring focus to 'specs' window  |
+
+{% imgTag /img/guides/test-runner/keyboard-shortcuts.png "Tooltips show keyboard shortcuts" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added keyboard shortcuts to Test Runner
+{% url "1.3.0" changelog#1-3-0 %} | Added Selector Playground
+{% endhistory %}
