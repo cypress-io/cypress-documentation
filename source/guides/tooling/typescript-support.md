@@ -43,6 +43,16 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %} repo.
 {% endnote %}
 
+{% note warning %}
+You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
+
+VS Code (within a .ts file):
+* Open the command palette (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
+* Type "restart ts" and select the "TypeScript: Restart TS server." option
+
+If that does not work, try restarting the IDE.
+{% endnote %}
+
 ## Types for custom commands
 
 When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors.
