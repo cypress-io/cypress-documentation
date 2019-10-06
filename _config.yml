@@ -149,6 +149,9 @@ alias:
   # for chinese translation
   zh-cn/: zh-cn/guides/overview/why-cypress.html
 
+  # obsolete content
+  dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html
+
 
 # Include/Exclude Files/Folders
 include:
