@@ -164,6 +164,7 @@ Cypress should run on **all** CI providers. We have provided some example projec
 
 CI Provider | Example Project | Example Config
 ----------- | --------------- | --------------
+{% url "AWS Amplify Console" https://aws.amazon.com/amplify/console %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "amplify.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml %}
 {% url "AppVeyor" https://appveyor.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "appveyor.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml %}
 {% url "Azure DevOps / VSTS CI / TeamFoundation" https://dev.azure.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
@@ -322,6 +323,90 @@ jobs:
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
+
+### Example `amplify.yml`
+
+```yaml
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: app
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  artifacts:
+    baseDirectory: cypress
+    configFilePath: "**/mochawesome.json"
+    files:
+      - "**/*.png"
+      - "**/*.mp4"
+  phases:
+    preTest:
+      commands:
+        - npm install
+        - npm install wait-on
+        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - "npm start & npx wait-on http://127.0.0.1:8080"
+    test:
+      commands:
+        - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+    postTest:
+      commands:
+        - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
+```
+
+### Example `amplify.yml` v2 with --record for Cypress Dashboard
+
+Add `CYPRESS_RECORD_KEY` Enviroment Variable in [Amplify Console](https://aws.amazon.com/amplify/console/).
+
+```yaml
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: app
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  artifacts:
+    baseDirectory: cypress
+    configFilePath: "**/mochawesome.json"
+    files:
+      - "**/*.png"
+      - "**/*.mp4"
+  phases:
+    preTest:
+      commands:
+        - npm install
+        - npm install wait-on
+        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - "npm start & npx wait-on http://127.0.0.1:8080"
+    test:
+      commands:
+        - 'npx cypress run --record --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+    postTest:
+      commands:
+        - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
+```
 
 ## Docker
 
