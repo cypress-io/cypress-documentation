@@ -40,9 +40,10 @@ alias:
   index.html: guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
-  guides.html/: guides/overview/why-cypress.html
+  guides.html: guides/overview/why-cypress.html
   guides/references/type/: api/commands/type.html
-  guides/integrating-cypress/features.html/: guides/guides/continuous-integration.html
+  guides/references/known-issues.html: 404.html
+  guides/integrating-cypress/features.html: guides/guides/continuous-integration.html
   guides/network-requests-xhr/: guides/guides/network-requests.html
   guides/issuing-commands/: guides/core-concepts/introduction-to-cypress.html#Subject-Management
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
@@ -147,6 +148,9 @@ alias:
 
   # for chinese translation
   zh-cn/: zh-cn/guides/overview/why-cypress.html
+
+  # obsolete content
+  dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html
 
 
 # Include/Exclude Files/Folders
