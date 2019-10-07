@@ -46,7 +46,7 @@ You can find an example of Jest and Cypress installed in the same project using 
 {% note warning %}
 You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
 
-VS Code (within a .ts file):
+VS Code (within a .ts or .js file):
 * Open the command palette (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
 * Type "restart ts" and select the "TypeScript: Restart TS server." option
 
