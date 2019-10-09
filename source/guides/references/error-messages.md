@@ -97,7 +97,7 @@ Getting this errors means you've tried to interact with a "dead" DOM element - m
 
 {% imgTag /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
 
-Cypress errors because it can't interact with "dead" elements - just like a real user could not do this either. Understanding how this happens is very important - and it is often easy to prevent.
+Cypress errors because it can't interact with "dead" elements - much like a real user could not do this either. Understanding how this happens is very important - and it is often preventable.
 
 Let's take a look at an example below.
 
@@ -160,7 +160,7 @@ You may see a variation of this message for 4 different reasons:
 3. The element's center is hidden from view
 4. The element is disabled
 
-Cypress runs several calculations to ensure an element can *actually* be interacted with like a real user would. If you're seeing this error, the solution is often obvious. You may need to *guard* your commands (due to a timing or an animation issue).
+Cypress runs several calculations to ensure an element can *actually* be interacted with like a real user would. If you're seeing this error, you may need to *guard* your commands (due to a timing or an animation issue).
 
 There have been situations where Cypress does not correctly allow you to interact with an element that should be interactable. If that's the case, {% open_an_issue %}.
 
@@ -211,7 +211,7 @@ Let's examine several different ways you may get this error message. In every si
 Several of these tests are dependent on race conditions. You may have to run these tests multiple times before they will actually fail. You can also try tweaking some of the delays.
 {% endnote %}
 
-### Simple Example
+### Short Example
 
 This first test below will pass and shows you that Cypress tries to prevent leaving commands behind in the queue in every test.
 
@@ -499,13 +499,13 @@ This error means that your application navigated to a superdomain that Cypress w
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 
-### There are a few simple workarounds to these common situations:
+### There are a few workarounds to these common situations:
 
 1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So make an assertion about that. You can see more strategies on testing anchor links {% url 'in our "Tab Handling and Links" example recipe' recipes#Testing-the-DOM %}.
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can just set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
 ```javascript
 // cypress.json
@@ -531,7 +531,7 @@ Browsers are enormously complex pieces of software, and from time to time they w
 
 At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
 
-If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
+If you are running `Docker` {% issue 350 'there is a one line fix for this problem documented here' %}.
 
 # Test Runner errors
 

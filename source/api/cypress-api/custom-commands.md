@@ -235,7 +235,7 @@ cy.get('#dialog').dismiss() // with subject
 
 ## Overwrite Existing Commands
 
-You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up just using the original.
+You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up using the original.
 
 ### Overwrite `visit` command
 
@@ -262,7 +262,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 {% note info %}
 We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Just set the `baseUrl` config property in `cypress.json` and override it with environment variable `CYPRESS_BASE_URL`.
+This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Set the `baseUrl` config property in `cypress.json` and override it with environment variable `CYPRESS_BASE_URL`.
 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
@@ -417,11 +417,11 @@ Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're iss
 
 Custom commands work well when you're needing to describe behavior that's desirable across **all of your tests**. Examples would be a `cy.setup()` or `cy.login()` or extending your application's behavior like `cy.get('.dropdown').dropdown('Apples')`. These are specific to your application and can be used everywhere.
 
-However, this pattern can be used and abused. Let's not forget - writing Cypress tests is just **JavaScript**, and it's often much easier just to write a simple function for repeatable behavior that's specific to only **a single spec file**.
+However, this pattern can be used and abused. Let's not forget - writing Cypress tests is **JavaScript**, and it's often more efficient to write a function for repeatable behavior that's specific to only **a single spec file**.
 
 If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself:
 
-> Can this just be written as a simple function?
+> Can this be written as a function?
 
 The answer is usually **yes**. Here's an example:
 
@@ -429,7 +429,7 @@ The answer is usually **yes**. Here's an example:
 // There's no reason to create something like a cy.search() custom
 // command because this behavior is only applicable to a single spec file
 //
-// Just use a regular ol' javascript function folks!
+// Use a regular ol' javascript function folks!
 const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
@@ -494,7 +494,7 @@ it('paginates many search results', function () {
       search('cypress.io', {
         fixture: 'list',
         headers: {
-          // just trick our app into thinking
+          // trick our app into thinking
           // there's a bunch of pages
           'x-pagination-total': 3,
         }
@@ -521,13 +521,13 @@ Don't do things like:
 - **{% fa fa-exclamation-triangle red %}** `cy.clickButton(selector)`
 - **{% fa fa-exclamation-triangle red %}** `.shouldBeVisible()`
 
-This first custom command is really just wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
+This first custom command is should be wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
 
-The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when it's already as simple as typing: `.should('be.visible')`
+The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when you can already use: `.should('be.visible')`
 
 Testing in Cypress is all about **readability** and **simplicity**. You don't have to do that much actual programming to get a lot done. You also don't need to worry about keeping your code as DRY as possible. Test code serves a different purpose than app code. Understandability and debuggability should be prioritized above all else.
 
-Try not to overcomplicate things and create too many abstractions. When in doubt, just use a regular function for individual spec files.
+Try not to overcomplicate things and create too many abstractions. When in doubt, use a regular function for individual spec files.
 
 ### 3. Don't do too much in a single command
 

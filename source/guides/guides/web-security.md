@@ -31,7 +31,7 @@ It's important to note that although we do our **very best** to ensure your appl
 
 Because Cypress changes its own host URL to match that of your applications, it requires that your application remain on the same superdomain for the entirety of a single test.
 
-If you attempt to visit two different superdomains, Cypress will error. Visiting subdomains works fine. You can visit different superdomains in *different* tests, just not the *same* test.
+If you attempt to visit two different superdomains, Cypress will error. Visiting subdomains works fine. You can visit different superdomains in *different* tests, but not in the *same* test.
 
 ```javascript
 cy.visit('https://www.cypress.io')
@@ -147,7 +147,7 @@ cy.visit('http://localhost:8080')
 cy.get('a').should('have.attr', 'href', 'https://google.com') // no page load!
 ```
 
-Okay but let's say you're worried about `google.com` serving up the right HTML content. How would you test that? Easy! Just make a {% url `cy.request()` request %} directly to it. {% url `cy.request()` request %} is *NOT bound to CORS or same-origin policy*.
+Okay but let's say you're worried about `google.com` serving up the right HTML content. How would you test that? We can make a {% url `cy.request()` request %} directly to it. {% url `cy.request()` request %} is *NOT bound to CORS or same-origin policy*.
 
 ```javascript
 cy.visit('http://localhost:8080')
@@ -197,7 +197,7 @@ A common use case for this is Single sign-on (SSO). In that situation you may `P
 
 If that's the case, don't worry - you can work around it with {% url `cy.request()` request %}. {% url `cy.request()` request %} is special because it is **NOT bound to CORS or same-origin policy**.
 
-In fact we can likely bypass the initial visit altogether and just `POST` directly to your `SSO` server.
+In fact we can likely bypass the initial visit altogether and `POST` directly to your `SSO` server.
 
 ```javascript
 cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'bar' })
@@ -214,7 +214,7 @@ cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'ba
     cy.visit('http://localhost:8080?token=' + token)
 
     // if you don't need to work with the token you can sometimes
-    // just visit the location header directly
+    // visit the location header directly
     cy.visit(loc)
   })
 ```
@@ -229,9 +229,9 @@ When we say *JavaScript Redirects* we are talking about any kind of code that do
 window.location.href = 'http://some.superdomain.com'
 ```
 
-This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere? Perhaps you're using a Single sign-on (SSO) server and you just need to read the previous section about working around that?
+This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere? Perhaps you're using a Single sign-on (SSO) server and you need to read the previous section about working around that?
 
-If you can't figure out why your JavaScript code is redirecting you to a different superdomain, then you might want to just read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
+If you can't figure out why your JavaScript code is redirecting you to a different superdomain, then you might want to read about {% url "disabling web security" web-security#Disabling-Web-Security %}.
 
 # Disabling Web Security
 

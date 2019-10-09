@@ -84,7 +84,7 @@ Even if your CI setup is very different from the {% url "CI examples we have" co
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
 ```
 
-For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might just be good enough for the job.
+For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might be good enough for the job.
 
 ## {% fa fa-angle-right %} Can I delete a run from the Dashboard?
 

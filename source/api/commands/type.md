@@ -432,7 +432,7 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 3. Submits a form, but does not fire synthetic `click` event, if there is 1 `input` and no `submit` button
 4. Submits form and fires a synthetic `click` event to the `submit` when it exists.
 
-Of course if the form's `submit` event is `preventedDefault` the form will not actually be submitted.
+If the form's `submit` event is `preventedDefault` the form will not actually be submitted.
 
 # Rules
 

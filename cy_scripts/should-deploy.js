@@ -47,7 +47,7 @@ function isRightBranch (env) {
   la(is.unemptyString(env), 'expected environment name', env)
 
   // allow multiple branches to deploy to staging environment,
-  // just add to the keys in this object
+  // add to the keys in this object
   // "my-fix-branch": "staging"
   const branchToEnv = {
     develop: 'staging',

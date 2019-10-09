@@ -62,7 +62,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ## Name
 
-### Return just a single configuration option value
+### Return a single configuration option value
 
 ```json
 {

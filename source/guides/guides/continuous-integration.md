@@ -410,7 +410,7 @@ test:
 
 ## Docker
 
-We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
+We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
 
 ```text
 FROM cypress/base
@@ -549,9 +549,9 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 ## Module API
 
-Oftentimes it can be much easier to programmatically control and boot your servers with a Node script.
+Oftentimes it can be less complex to programmatically control and boot your servers with a Node script.
 
-If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
+If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus, you can work with the results and do other things.
 
 ```js
 // scripts/run-cypress-tests.js
