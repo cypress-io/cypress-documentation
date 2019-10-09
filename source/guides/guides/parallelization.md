@@ -149,7 +149,7 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 ## Grouping by browser
 
-You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
+You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we name our groups the same name as the browser being tested:
 
 - The first group can be called `Windows/Chrome 69`.
 
@@ -281,7 +281,7 @@ The Bar Chart View visualizes the **duration** of your spec files relative to ea
 
 ## Machines View
 
-The Machines View charts spec files by the machines that executed them. This view makes it easy to evaluate the contribution of each machine to the overall test run.
+The Machines View charts spec files by the machines that executed them. This view enables you to evaluate the contribution of each machine to the overall test run.
 
 {% imgTag /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
 

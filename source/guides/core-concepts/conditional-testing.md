@@ -114,7 +114,7 @@ This is difficult to do (if not impossible) without making changes to your appli
 
 In other words, you cannot do conditional testing safely if you want your tests to run 100% consistently.
 
-But do not fret - there are better workarounds to still achieve conditional testing **without** relying on the DOM. You just have to *anchor* yourself to another piece of truth that is not mutable.
+But do not fret - there are better workarounds to still achieve conditional testing **without** relying on the DOM. You have to *anchor* yourself to another piece of truth that is not mutable.
 
 # The strategies
 
@@ -156,7 +156,7 @@ Now there is not even a need to do conditional testing since you are able to kno
 
 ### Use the server:
 
-Alternatively, if your server saves the campaign with a session, you could just ask your server to tell you which campaign you are on.
+Alternatively, if your server saves the campaign with a session, you could ask your server to tell you which campaign you are on.
 
 ```js
 // this sends us the session cookies
@@ -175,7 +175,7 @@ cy.request('https://app.com/me')
 
 ### Use session cookies:
 
-Perhaps an even easier way to test this is if your server sent the campaign in a session cookie that you could read off.
+Another way to test this is if your server sent the campaign in a session cookie that you could read off.
 
 ```js
 cy.visit('https://app.com')
@@ -220,7 +220,7 @@ cy.visit('https://app.com?wizard=0')
 cy.visit('https://app.com?wizard=1')
 ```
 
-We would likely just need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
+We would likely need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
 
 ### Use Cookies to know ahead of time:
 
@@ -243,7 +243,7 @@ cy.getCookie('showWizard')
 
 ### Use your server or database:
 
-If you store and/or persist whether to show the wizard on the server, then just ask it.
+If you store and/or persist whether to show the wizard on the server, then ask it.
 
 ```js
 cy.visit('https://app.com')
@@ -261,7 +261,7 @@ cy.request('https://app.com/me')
   .click()     // more commands here
 ```
 
-Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
+Alternatively, if you are creating users, it might take less time to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
 ### Embed data in DOM:
 
@@ -379,11 +379,11 @@ cy.get('body').then(($body) => {
 
 Many of our users ask how they can recover from failed commands.
 
-> If I had error handling, I could just try to find X and if X fails go find Y
+> If I had error handling, I could try to find X and if X fails go find Y
 
 Because error handling is a common idiom in most programming languages, and especially in Node, it seems reasonable to expect to do that in Cypress.
 
-However, this is really the same question as asking to do conditional testing just wrapped up in a slightly different implementation detail.
+However, this is really the same question as asking to do conditional testing, but wrapped up in a slightly different implementation detail.
 
 For instance you may want to do this:
 

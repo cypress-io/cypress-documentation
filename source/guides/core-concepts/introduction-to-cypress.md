@@ -184,7 +184,7 @@ cy.contains('New Post')
 cy.get('.main').contains('New Post')
 ```
 
-This is helpful when writing tests from the perspective of a user interacting with your app. They just know they want to click the button labeled "Submit", they have no idea that it has a `type` attribute of `submit`, or a CSS class of `my-submit-button`.
+This is helpful when writing tests from the perspective of a user interacting with your app. They only know that they want to click the button labeled "Submit". They have no idea that it has a `type` attribute of `submit`, or a CSS class of `my-submit-button`.
 
 {% note warning Internationalization %}
 If your app is translated into multiple languages for i18n, make sure you consider the implications of using user-facing text to find DOM elements!
@@ -219,7 +219,7 @@ It's very important to understand the mechanism Cypress uses to chain commands t
 
 ## Interacting With Elements
 
-As we saw in the initial example, Cypress makes it easy to click on and type into elements on the page by using {% url `.click()` click %} and {% url `.type()` type %} commands with a {% url `cy.get()` get %} or {% url `cy.contains()` contains %} command. This is a great example of chaining in action. Let's see it again:
+As we saw in the initial example, Cypress allows you to click on and type into elements on the page by using {% url `.click()` click %} and {% url `.type()` type %} commands with a {% url `cy.get()` get %} or {% url `cy.contains()` contains %} command. This is a great example of chaining in action. Let's see it again:
 
 ```js
 cy.get('textarea.post-body')
@@ -255,7 +255,7 @@ Cypress provides a simple but powerful algorithm when {% url " interacting with 
 
 ## Asserting About Elements
 
-Assertions let you do things like ensuring an element is visible or has a particular attribute, CSS class, or state. Assertions are just commands that enable you to describe the *desired* state of your application. Cypress will automatically wait until your elements reach this state, or fail the test if the assertions don't pass.  Here's a quick look at assertions in action:
+Assertions let you do things like ensuring an element is visible or has a particular attribute, CSS class, or state. Assertions are commands that enable you to describe the *desired* state of your application. Cypress will automatically wait until your elements reach this state, or fail the test if the assertions don't pass.  Here's a quick look at assertions in action:
 
 ```js
 cy.get(':checkbox').should('be.disabled')
@@ -558,7 +558,7 @@ You might be wondering:
 
 The problem with this question is that this type of conditional control flow ends up being non-deterministic. This means it's impossible for a script (or robot), to follow it 100% consistently.
 
-In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually just asking for another `if/else` control flow.
+In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually the same as asking for another `if/else` control flow.
 
 With that said, as long as you are aware of the potential pitfalls with control flow, it is possible to do this in Cypress!
 
@@ -714,7 +714,7 @@ cy
   .click()
 ```
 
-Cypress will automatically *wait* for elements to pass their default assertions. Just like with explicit assertions you've added, all of these assertions share the *same* timeout values.
+Cypress will automatically *wait* for elements to pass their default assertions. Like with the explicit assertions you've added, all of these assertions share the *same* timeout values.
 
 ### Example #2: Reversing the Default Assertion
 
@@ -776,7 +776,7 @@ Using {% url `.should()` should %} or {% url `.and()` and %} commands is the pre
 cy.get('tbody tr:first').should('have.class', 'active')
 ```
 
-You can chain multiple assertions together using {% url `.and()` and %}, which is just another name for {% url `.should()` should %} that makes things more readable:
+You can chain multiple assertions together using {% url `.and()` and %}, which is another name for {% url `.should()` should %} that makes things more readable:
 
 ```js
 cy.get('#header a')
@@ -820,7 +820,7 @@ Explicit assertions are great when you want to:
 - Perform custom logic prior to making the assertion.
 - Make multiple assertions against the same subject.
 
-The {% url `.should()` should %} command allows us to pass a callback function that takes the yielded subject as its first argument. This works just like {% url `.then()` then %}, except Cypress automatically **waits and retries** for everything inside of the callback function to pass.
+The {% url `.should()` should %} command allows us to pass a callback function that takes the yielded subject as its first argument. This works like {% url `.then()` then %}, except Cypress automatically **waits and retries** for everything inside of the callback function to pass.
 
 {% note info 'Complex Assertions' %}
 The example below is a use case where we are asserting across multiple elements. Using a {% url `.should()` should %} callback function is a great way to query from a **parent** into multiple children elements and assert something about their state.
@@ -839,7 +839,7 @@ cy
     })
 
     // jQuery map returns jQuery object
-    // and .get() converts this to a simple array
+    // and .get() converts this to an array
     texts = texts.get()
 
     // array should have length of 3

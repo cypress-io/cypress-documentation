@@ -5,7 +5,7 @@ title: Debugging
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
+- How Cypress runs in the same event loop with your code, keeping debugging less demanding and more understandable
 - How Cypress embraces the standard Developer Tools
 - How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
 - How to troubleshoot issues with Cypress itself
@@ -13,11 +13,11 @@ title: Debugging
 
 # Using `debugger`
 
-Your Cypress test code runs in the same run loop as your application. This means you have access to the code running on the page, as well as the things the browser makes available to you, like `document`, `window`, and, of course, `debugger`.
+Your Cypress test code runs in the same run loop as your application. This means you have access to the code running on the page, as well as the things the browser makes available to you, like `document`, `window`, and `debugger`.
 
 ## Debug just like you always do
 
-Based on those statements, you might be tempted to just throw a `debugger` into your test, like so:
+Based on those statements, you might be tempted to throw a `debugger` into your test, like so:
 
 ```js
 it('let me debug like a fiend', function() {
@@ -95,7 +95,7 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 
 # Cypress fiddle
 
-While learning Cypress it may be a good idea to try small tests against some simple HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
+While learning Cypress it may be a good idea to try small tests against some HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
 
 # Troubleshooting Cypress
 

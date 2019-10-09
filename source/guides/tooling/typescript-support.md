@@ -12,7 +12,7 @@ Just as you would when writing TypeScript files in your project, you will have t
 
 - {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
 - {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Simple Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+- {% url "Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
 
 ## Set up your dev environment
 
@@ -106,7 +106,7 @@ it('works', () => {
 ### Examples:
 
 - See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
-- You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
+- You can find an example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
 - Example project {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} uses custom commands to avoid boilerplate code.
 
 ## Types for custom assertions

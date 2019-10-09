@@ -45,7 +45,7 @@ Oftentimes Capybara begins to not work as well in complex JavaScript application
 
 ### Protractor
 
-Using {% url "Protractor" http://www.protractortest.org/ %} provides a nice Promise-based interface on top of Selenium, which makes it easy to deal with asynchronous code. Protractor comes with all of the features of Capybara and essentially suffers from the same problems.
+Using {% url "Protractor" http://www.protractortest.org/ %} provides a nice Promise-based interface on top of Selenium, which makes it less complicated to deal with asynchronous code. Protractor comes with all of the features of Capybara and essentially suffers from the same problems.
 
 Cypress replaces Protractor because it does all of these things and much more. One major difference is that Cypress enables you to write your unit tests and integration tests in the same tool, as opposed to splitting up this work across both Karma and Protractor.
 
@@ -94,9 +94,9 @@ No. In fact Cypress' architecture is very different from Selenium in a few criti
 
 Yes, technically; it's sandboxed and has to follow the same rules as every other browser. That's actually a good thing because it doesn't require a browser extension, and it naturally will work across all browsers (which enables cross-browser testing).
 
-But Cypress is actually way beyond just a basic JavaScript application running in the browser. It is also a desktop application and communicates with back end web services.
+But Cypress is actually way beyond a basic JavaScript application running in the browser. It is also a desktop application and communicates with back end web services.
 
-All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work just fine, and already *does* work.
+All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work fine, and already *does* work.
 
 ## {% fa fa-angle-right %} We use WebSockets; will Cypress work with that?
 
@@ -104,13 +104,13 @@ Yes.
 
 ## {% fa fa-angle-right %} We have the most complex most outrageous authentication system ever; will Cypress work with that?
 
-If you're using some complex thumb-print, retinal-scan, time-based, key-changing, microphone, audial, decoding mechanism to log in your users, then no, Cypress won't work with that.  But seriously, Cypress is a *development* tool, which makes it easy to test your web applications. If your application is doing 100x things to make it extremely difficult to access, Cypress won't magically make it any easier.
+If you're using some complex thumb-print, retinal-scan, time-based, key-changing, microphone, audial, decoding mechanism to log in your users, then no, Cypress won't work with that.  But seriously, Cypress is a *development* tool, which helps you test your web applications. If your application is doing 100x things to make it extremely difficult to access, Cypress won't magically make it any easier.
 
 Because Cypress is a development tool, you can always make your application more accessible while in your development environment. If you want, disable complex steps in your authentication systems while you're in your testing environment. After all, that's why we have different environments! Normally you already have a development environment, a testing environment, a staging environment, and a production environment.  So expose the parts of your system you want accessible in each appropriate environment.
 
-In doing so, Cypress may not be able to give you 100% coverage without you changing anything, but that's okay. Just use different tools to test the crazier, less accessible parts of your application, and let Cypress test the other 99%.
+In doing so, Cypress may not be able to give you 100% coverage without you changing anything, but that's okay. Use different tools to test the less accessible parts of your application, and let Cypress test the other 99%.
 
-Just remember, Cypress won't make a non-testable application suddenly testable. It's on your shoulders to architect your code in an accessible manner.
+Remember, Cypress won't make a non-testable application suddenly testable. It's on your shoulders to architect your code in an accessible manner.
 
 ## {% fa fa-angle-right %} Is it possible to use cypress on `.jspa`?
 Yes. Cypress works on anything rendered to a browser.
@@ -134,7 +134,7 @@ Cypress does *not* utilize WebDriver for testing, so it does not use or have any
 
 Unit tests are not something we are really trying to solve right now. Most of the `cy` API commands are useless in unit tests. The biggest benefit of writing unit tests in Cypress is that they run in a browser, which has debugger support built in.
 
-We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing; it just remains a thing that's possible if we wanted to go down that route.
+We have internally experimented at doing DOM based component unit testing in Cypress - and that has the possibility of being an excellent "sweet spot" for unit tests. You'd get full DOM support, screenshot support, snapshot testing, and you could then use other `cy` commands (if need be). But as I mentioned this isn't something we're actively pushing; it remains a thing that's possible if we wanted to go down that route.
 
 With that said - we actually believe the best form of testing in Cypress is a combination of a "unit test" mixed with an "e2e test". We don't believe in a "hands off" approach. We want you to modify the state of your application, take shortcuts as much as possible (because you have native access to all objects including your app). In other words, we want you to think in unit tests while you write integration tests.
 
@@ -158,10 +158,10 @@ In addition to the above differences, below are a few rules of thumb to decide w
 
 Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
 
-- Focus on and test just one thing.
+- Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are easy to run both locally and on a {% url "continuous integration" continuous-integration %} server.
+- Are able to run both locally and on a {% url "continuous integration" continuous-integration %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 

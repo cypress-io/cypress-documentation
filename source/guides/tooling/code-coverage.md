@@ -98,7 +98,7 @@ When the test calls `add(2, 3)`, the counter increments inside the "add" functio
 }
 ```
 
-This single test has achieved 100% code coverage - every function and every statement has been executed at least once. Of course in real world applications, achieving 100% code coverage requires multiple tests.
+This single test has achieved 100% code coverage - every function and every statement has been executed at least once. But, in real world applications, achieving 100% code coverage requires multiple tests.
 
 Once the tests finish, the coverage object can be serialized and saved to disk so that a human-friendly report can be generated. The collected coverage information can also be sent to external services and help during pull request reviews.
 

@@ -157,7 +157,7 @@ It's important to understand why you'd want to bind to either `Cypress` or `cy`.
 
 Cypress is a global object that persists for the entirety of all of your tests. Any events you bind to Cypress will apply to all tests, and will not be unbound unless you manually unbind them.
 
-This is useful when you're debugging and just want to add a single "catch-all" event to track down things like test failures, or uncaught exceptions from your application.
+This is useful when you're debugging and want to add a single "catch-all" event to track down things like test failures, or uncaught exceptions from your application.
 
 ## cy
 
