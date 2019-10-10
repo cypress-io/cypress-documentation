@@ -22,3 +22,8 @@ The repository {% url "cypress-io/testing-workshop-cypress" https://github.com/c
 We hope this testing workshop proves itself useful in teaching developers and testers good Cypress practices.
 
 {% fa fa-github %} {% url https://github.com/cypress-io/testing-workshop-cypress %}
+---
+title: ReactJSDay 2019 Testing Course
+---
+{% fas fa-link %} {% url https://noriste.github.io/reactjsday-2019-testing-course %}
+Published on Github by [Stefano Magni] (https://twitter.com/NoriSte)
