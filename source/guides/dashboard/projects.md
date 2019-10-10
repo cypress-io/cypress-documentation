@@ -67,7 +67,7 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
-If you're using source control, we recommend that you check your `cypress.json`, including the `projectId`, into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your system but could be as simple as:
+If you're using source control, we recommend that you check your `cypress.json`, including the `projectId`, into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your system but could be something like:
 
 ```shell
 export CYPRESS_PROJECT_ID={projectId}

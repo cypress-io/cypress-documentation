@@ -16,7 +16,7 @@ title: Variables and Aliases
 New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs.
 
 {% note success 'Do not worry!' %}
-There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
+There are many ways to reference, compare and utilize the objects that Cypress commands yield you.
 
 Once you get the hang of async code you'll realize you can do everything you could do synchronously, without your code doing any backflips.
 
@@ -199,12 +199,12 @@ describe('a suite', function () {
 })
 ```
 
-Fortunately, you don't have to make your code do backflips. Cypress makes it easy to handle these situations.
+Fortunately, you don't have to make your code do backflips. With Cypress, we can better handle these situations.
 
 {% note success 'Introducing Aliases' %}
 Aliases are a powerful construct in Cypress that have many uses. We'll explore each of their capabilities below.
 
-At first, we'll use them to make it easy to share objects between your hooks and your tests.
+At first, we'll use them to share objects between your hooks and your tests.
 {% endnote %}
 
 ## Sharing Context
@@ -303,7 +303,7 @@ The same principles we introduced many times before apply to this situation. If 
 // yup all good
 cy.fixture('users.json').then((users) => {
   // now we can avoid the alias altogether
-  // and just use a callback function
+  // and use a callback function
   const user = users[0]
 
   // passes
@@ -401,7 +401,7 @@ cy.get('@firstTodo').should('have.class', 'editing')
 
 When we reference `@firstTodo`, Cypress checks to see if all of the elements it is referencing are still in the DOM. If they are, it returns those existing elements. If they aren't, Cypress replays the commands leading up to the alias definition.
 
-In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything just works because the new `<li>` is found.
+In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything works because the new `<li>` is found.
 
 {% note warning  %}
 *Usually*, replaying previous commands will return what you expect, but not always. It is recommended that you **alias elements as soon as possible** instead of further down a chain of commands.

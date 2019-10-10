@@ -37,7 +37,7 @@ You can delete organizations that you own as long as they do not have any projec
 
 ## Open Source Plan
 
-To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs just two things:
+To support the community, we provide the Open Source (OSS) plan for public projects to take advantage of our Dashboard Service with unlimited test runs. To qualify, your project needs two things:
 
 - Your project is a non-commercial entity
 - Source code for your project is available in a public location with an {% url "OSI-approved license" https://opensource.org/licenses %}

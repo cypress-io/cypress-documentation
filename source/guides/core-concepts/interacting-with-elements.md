@@ -153,11 +153,11 @@ When you use the {% url "Command Log" test-runner#Command-Log %} to hover over a
 
 In fact we only ever scroll elements into view when actionable commands are running using the above algorithms. We *do not* scroll elements into view on regular DOM commands like {% url `cy.get()` get %} or {% url `.find()` find %}.
 
-The reason we scroll an element into view when hovering over a snapshot is just to help you to see which element(s) were found by that corresponding command. It's a purely visual feature and does not necessarily reflect what your page looked like when the command ran.
+The reason we scroll an element into view when hovering over a snapshot is to help you to see which element(s) were found by that corresponding command. It's a purely visual feature and does not necessarily reflect what your page looked like when the command ran.
 
 In other words, you cannot get a correct visual representation of what Cypress "saw" when looking at a previous snapshot.
 
-The only way for you to easily "see" and debug why Cypress thought an element was not visible is to use a `debugger` statement.
+The only way for you to "see" and debug why Cypress thought an element was not visible is to use a `debugger` statement.
 
 We recommend placing `debugger` or using the {% url `.debug()` debug %} command directly BEFORE the action.
 
@@ -180,7 +180,7 @@ Imagine you have a nested navigation structure where the user must hover over an
 
 Is this worth trying to replicate when you're testing?
 
-Maybe not! For these scenarios  we give you a simple escape hatch to bypass all of the checks above and just force events to happen!
+Maybe not! For these scenarios, we give you an escape hatch to bypass all of the checks above and force events to happen!
 
 You can pass `{ force: true }` to most action commands.
 

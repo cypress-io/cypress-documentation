@@ -36,7 +36,7 @@ Having ultimate control over your application, the network traffic, and native a
 - Test edge cases like 'empty views' by forcing your server to send empty responses.
 - Test how your application responds to errors on your server by {% url "modifying response status codes to be 500" route %>.
 - Modify DOM elements directly - like forcing hidden elements to be shown.
-- Use 3rd party plugins programmatically. Instead of fussing with complex UI widgets like multi selects, autocompletes, drop downs, tree views or calendars, just call methods directly from your test code to control them.
+- Use 3rd party plugins programmatically. Instead of fussing with complex UI widgets like multi selects, autocompletes, drop downs, tree views or calendars, you can call methods directly from your test code to control them.
 - <% url "Prevent Google Analytics from loading *before* any of your application code executes" configuration#blacklistHosts %> when testing.
 - Get synchronous notifications whenever your application transitions to a new page or when it begins to unload.
 - {% url "Control time by moving forward or backward" clock %} so that timers or polls automatically fire without having to wait for the required time in your tests.

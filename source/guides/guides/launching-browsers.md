@@ -105,7 +105,7 @@ This enables you to do things like:
 Cypress generates its own isolated profile apart from your normal browser profile. This means things like `history` entries, `cookies`, and `3rd party extensions` from your regular browsing session will not affect your tests in Cypress.
 
 {% note warning Wait, I need my developer extensions! %}
-That's no problem - you just have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
+That's no problem - you have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
 {% endnote %}
 
 ## Disabled Barriers
@@ -137,7 +137,7 @@ You might notice that if you already have the browser open you will see two of t
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser and it'll be much easier to tell the difference. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
