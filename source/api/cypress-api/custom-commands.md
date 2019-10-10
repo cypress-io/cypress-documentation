@@ -14,7 +14,6 @@ A great place to define or overwrite commands is in your `cypress/support/comman
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
 Cypress.Commands.overwrite(name, callbackFn)
-Cypress.Commands.overwrite(name, options, callbackFn)
 ```
 
 ## Usage
@@ -39,6 +38,10 @@ Pass a function that receives the arguments passed to the command.
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to define the implicit behavior of the custom command.
+
+{% note warning %}
+`options` is only supported for use in `Cypress.Commands.add()` and not supported for use in `Cypress.Commands.overwrite()`
+{% endnote %}
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
