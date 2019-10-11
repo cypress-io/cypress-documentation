@@ -79,7 +79,7 @@ cypress run [options]
 
 Option | Description
 ------ |  ---------
-`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-run-browser-lt-browser-name-or-path-gt %}
+`--browser`, `-b`  | {% urlHash "Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path." cypress-run-browser-lt-browser-name-or-path-gt %}
 `--ci-build-id` | {% urlHash "Specify a unique identifier for a run to enable grouping or parallelization." cypress-run-ci-build-id-lt-id-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
@@ -103,7 +103,7 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you. 
 
 You can also choose a browser by supplying a path:
 
@@ -313,7 +313,7 @@ Options passed to `cypress open` will automatically be applied to the project yo
 
 Option | Description
 ------ | ---------
-`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-open-browser-lt-browser-path-gt %}
+`--browser`, `-b`  | {% urlHash "Path to a custom browser to be added to the list of available browsers in Cypress" cypress-open-browser-lt-browser-path-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-open-config-lt-config-gt %}
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-open-config-file-lt-config-file-gt %}
 `--detached`, `-d` | Open Cypress in detached mode
@@ -332,6 +332,8 @@ The "browser" option allows you to specify the path to a custom browser to use w
 ```shell
 cypress open --browser /usr/bin/chromium
 ```
+
+If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
 Currently, only browsers in the Chrome family are supported.
 

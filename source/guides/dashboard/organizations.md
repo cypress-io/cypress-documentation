@@ -25,7 +25,7 @@ You can create an organization from within the {% url "Dashboard Service" https:
 
 ## Personal Orgs
 
-By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this default organization.
+By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this personal organization.
 
 ## Delete Org
 
