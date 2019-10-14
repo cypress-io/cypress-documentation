@@ -20,14 +20,25 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 1. Click on the **Runs** tab of your project within the {% url "Test Runner" test-runner %}.
 2. Click **Set up Project to Record**.
+{% imgTag /img/dashboard/project-set-up.png "Setup Project Screen" %}
 3. You will need to log in to record your tests, so you will need to log in to the Cypress Dashboard here.
+{% imgTag /img/dashboard/project-login.png "Login with GitHub Screen" %}
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
-5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% url 'Read more about organizations' organizations %}.
+{% imgTag /img/dashboard/project-name.png "Name Project Screen" %}
+5. Choose who owns the project. 
+- **A personal project**
+{% imgTag /img/dashboard/project-owner-me.png "Set Owner as Me Project Screen" %}
+- **Create organization** appears if you do not have any organizations. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. {% url 'Read more about organizations' organizations %}.
+{% imgTag /img/dashboard/project-owner-organization-new.png "Set Owner as New Organization Project Screen" %}
+- **Select organization** to add the project to an existing organization.
+{% imgTag /img/dashboard/project-owner-organization-select.png "Set Owner as Organization Project Screen" %}
 6. Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
   - **A private project** restricts its access to *{% url "only users you invite" users %}*.
+  {% imgTag /img/dashboard/project-public-private.png "Set Public/Private Project Screen" %}
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
+  {% imgTag /img/dashboard/project-record-first-run.png "Record First Run Project Screen" %}
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
