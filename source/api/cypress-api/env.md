@@ -61,12 +61,17 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 **Return a single environment variable value.**
 
+{% note warning Boolean %}
+We automatically normalize both the key and the value. Cypress will automatically convert values into Number or Boolean.
+{% endnote %}
+
 ```javascript
 // cypress.json
 {
   "env": {
     "foo": "bar",
-    "baz": "quux"
+    "baz": "quux",
+    "bool": true,
   }
 }
 ```
@@ -74,6 +79,7 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 ```javascript
 Cypress.env('foo') // => bar
 Cypress.env('baz') // => quux
+Cypress.env('bool') // => 1
 ```
 
 ## Name and Value
