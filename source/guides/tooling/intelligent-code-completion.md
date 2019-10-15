@@ -117,7 +117,7 @@ To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you c
 }
 ```
 
-Or you can directly add a `$schema` key to the cypress config, which is also a way of sharing this setting with collaborators. 
+Or you can directly add a `$schema` key to your Cypress configuration file, which is a great way to share the schema with all collaborators of the project.
 
 ```json
 "$schema": "https://on.cypress.io/cypress.schema.json",
