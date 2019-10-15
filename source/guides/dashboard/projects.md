@@ -83,6 +83,14 @@ Think of your record key as the key that enables you to *write and create* runs.
 
 {% note warning  %}
 If your Record Key is accidentally exposed, you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new one" Create-new-record-key %}.
+
+Anyone that has access to both the `projectId` and the record `key` of your project will be able to record runs to your organization in the Dashboard.
+
+Typically, you would not want people outside of your team running tests for a few reasons:
+
+1. This could drive up the number of tests you've run. Since Cypress bills based on the number of tests - this would mean they could use up all allotted tests and there would be consequences to that.
+2. They can write any data they want to your Cypress Dashboard. They could edit the test suite so that the tests that are recorded record very different things than the original project's tests. This could including visiting different websites and generating videos of visiting those websites, for example.
+If a record key was exposed you can delete and regenerate a new record key. Deleted keys will be invalid and if the project is run with a deleted key, it will no longer be able to record.
 {% endnote %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
