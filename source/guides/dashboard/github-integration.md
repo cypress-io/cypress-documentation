@@ -6,7 +6,7 @@ The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow
 {% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
 
 {% note info %}
-GitHub Enterprise is currently not supported. Please [contact us](mailto:hello@cypress.io) if you are interested in Enterprise integration.
+GitHub Enterprise Server is currently not supported. Please [contact us](mailto:hello@cypress.io) if you are interested in an integration with GitHub Enterprise's On-premise platform.
 {% endnote %}
 
 {% note warning %}
