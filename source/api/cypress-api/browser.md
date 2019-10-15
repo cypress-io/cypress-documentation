@@ -65,7 +65,7 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
     return originalFn(subject, name, options)
   }
 
-  return cy.log('No screenshot taken when headless')
+  return cy.log('No screenshot taken when headed')
 })
 
 // only takes in headless environment
