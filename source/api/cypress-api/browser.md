@@ -55,6 +55,23 @@ it('has correct Chrome specific css property', function () {
 })
 ```
 
+### Screenshot only in headless environment
+
+```javascript
+Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
+  // only take screenshots in headless environment
+  if (Cypress.browser.isHeadless) {
+    // return the original screenshot function
+    return originalFn(subject, name, options)
+  }
+
+  return cy.log('No screenshot taken when headless')
+})
+
+// only takes in headless environment
+cy.screenshot()
+```
+
 {% history %}
 {% url "3.0.2" changelog#3-0-2 %} | `Cypress.browser` introduced
 {% endhistory %}
