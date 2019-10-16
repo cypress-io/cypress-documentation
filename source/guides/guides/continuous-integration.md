@@ -577,6 +577,24 @@ node scripts/run-cypress-tests.js
 
 # Common problems and solutions
 
+## Missing binary
+
+When npm or yarn install the `cypress` package, a `postinstall` hook is executed that downloads the platform-specific Cypress binary. If the hook is skipped for any reason the Cypress binary will be missing (unless it was already cached).
+
+To better diagnose the error, add {% url "commands to get information about the Cypress cache" command-line#cypress-cache-command %} to your CI setup. This will print where the binary is located and what versions are already present.
+
+```shell
+npx cypress cache path
+npx cypress cache list
+```
+
+If the required binary version is not found in the cache, you can try the following:
+
+1. Clean your CI's cache using your CI's settings to force a clean `npm install` on the next build.
+2. Run the binary install yourself by adding the command `npx cypress install` to your CI script. If there is a binary already present, it should finish quickly.
+
+See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-cache %} for an example that runs the `npx cypress install` command to ensure the Cypress binary is always present before the tests begin.
+
 ## In Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.

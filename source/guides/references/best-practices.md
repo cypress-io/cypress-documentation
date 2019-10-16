@@ -124,17 +124,16 @@ We see new users commonly write code that looks like this:
 ```js
 // DONT DO THIS. IT DOES NOT WORK
 // THE WAY YOU THINK IT DOES.
+const a = cy.get('a')
 
-const button = cy.get('button')
-
-const form = cy.get('form')
+cy.visit('https://example.cypress.io')
 
 // nope, fails
-button.click()
+a.first().click()
 ```
 
 {% note info 'Did you know?' %}
-You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, it's usually a sign you're doing it wrong.
+You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, you will want to do some refactoring.
 {% endnote %}
 
 If you are new to Cypress and wanting to better understand how Commands work - {% url 'please read our Introduction to Cypress guide' introduction-to-cypress#Chains-of-Commands %}.
