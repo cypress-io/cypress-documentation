@@ -34,15 +34,10 @@ The first and most important concept you should recognize is...
 {% endnote %}
 
 ```js
-// ...this won't work...
-
-// nope
+// this won't work the way you think it does
 const button = cy.get('button')
-
-// nope
 const form = cy.get('form')
 
-// nope
 button.click()
 ```
 
