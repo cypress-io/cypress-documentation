@@ -43,7 +43,6 @@ You can find more examples with links to related demo projects from
 http://cypress.io
 
 ## .focus() To focus on a DOM element, use the .focus() command.
-.. code:: cypress
 
     cy.get('.action-focus').focus()
     .should('have.class', 'focus')
