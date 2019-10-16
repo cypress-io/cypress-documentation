@@ -35,6 +35,20 @@ If you need any [Contentful](https://www.contentful.com/) driven data to be pars
  P.S. If you don't have any of this - Hexo will build & serve as usual, but without any 
  [Contentful](https://www.contentful.com/) driven data.
 
+Example
+-------
+
+Below is a simple example test case for testing login to some system.
+You can find more examples with links to related demo projects from
+http://cypress.io
+
+## .focus() To focus on a DOM element, use the .focus() command.
+.. code:: cypress
+
+    cy.get('.action-focus').focus()
+    .should('have.class', 'focus')
+    .prev().should('have.attr', 'style', 'color: orange;')
+
 ## Deploying
 
 See our [Deploy Guideline](DEPLOY.md).
