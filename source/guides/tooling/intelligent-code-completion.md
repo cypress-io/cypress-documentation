@@ -117,6 +117,12 @@ To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you c
 }
 ```
 
+Or you can directly add a `$schema` key to your Cypress configuration file, which is a great way to share the schema with all collaborators of the project.
+
+```json
+"$schema": "https://on.cypress.io/cypress.schema.json",
+```
+
 # See also
 
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
