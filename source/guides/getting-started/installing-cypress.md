@@ -216,6 +216,13 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
+Cypress will automatically replace `~` with the user's home directory, thus you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for example
+
+```yaml
+environment:
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
+```
+
 See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
 
 {% note warning %}
@@ -331,7 +338,7 @@ setx CYPRESS_CRASH_REPORTS 0
 
 ## Install pre-release version
 
-In very rare cases you might want to install the pre-release version of Cypress to verify a fix from the {% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %} branch, that has not been published yet.  
+In very rare cases you might want to install the pre-release version of Cypress to verify a fix from the {% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %} branch, that has not been published yet.
 
 {% note info %}
 You can preview all issues addressed from a pre-release version {% url "here" https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=label%3A%22stage%3A+pending+release%22+ %}.
