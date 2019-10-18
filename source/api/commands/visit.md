@@ -45,7 +45,7 @@ Option | Default | Description
 `body` | `null` | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header.
 `headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request. *Note:* `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.
 `log` | `true` | {% usage_options log %}
-`auth` | `null` | Adds Basic Authorization headers
+`auth` | `null` | Adds authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
@@ -80,9 +80,15 @@ cy.visit('http://localhost:8000')
 cy.visit('/index.html', { timeout: 30000 })
 ```
 
-### Add basic auth headers
+### Add auth headers
 
-Cypress will automatically apply the right authorization headers if you're attempting to visit an application that requires {% url 'Basic Authentication' https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication %}.
+Cypress will automatically apply the right authorization headers if you're attempting to visit an application that requires {% url 'Basic Authentication' https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication %} or 'Bearer Authentication'.
+
+{% note info %}
+Cypress will automatically attach this header at the network proxy level, outside of the browser. Therefore you **will not** see this header in the Dev Tools.
+{% endnote %}
+
+#### Basic auth
 
 Provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
 
@@ -102,9 +108,17 @@ You can also provide the username and password directly in the URL.
 cy.visit('https://wile:coyote@www.acme.com')
 ```
 
-{% note info %}
-Cypress will automatically attach this header at the network proxy level, outside of the browser. Therefore you **will not** see this header in the Dev Tools.
-{% endnote %}
+#### Bearer auth
+
+Provide the `bearer` in the `auth` object. Then all subsequent requests matching the origin you're testing will have that attached at the network level.
+
+```javascript
+cy.visit('https://www.acme.com/', {
+  auth: {
+    bearer: 'asd586KHK54'
+  }
+})
+```
 
 ### Provide an `onBeforeLoad` callback function
 
