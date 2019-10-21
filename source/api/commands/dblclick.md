@@ -30,6 +30,20 @@ cy.window().dblclick()         // Errors, 'window' does not yield DOM element
 
 ## Arguments
 
+**{% fa fa-angle-right %} position** ***(String)***
+
+The position where the double click should be issued. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
+
+{% imgTag "/img/api/coordinates-diagram.jpg" "cypress-command-positions-diagram" %}
+
+**{% fa fa-angle-right %} x** ***(Number)***
+
+The distance in pixels from the element's left to issue the double click.
+
+**{% fa fa-angle-right %} y** ***(Number)***
+
+The distance in pixels from the element's top to issue the double click.
+
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to change the default behavior of `.dblclick()`.
@@ -37,6 +51,8 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
+`force` | `false` | {% usage_options force dblclick %}
+`multiple` | `false` | {% usage_options multiple dblclick %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .dblclick %}
 
 ## Yields {% helper_icon yields %}
@@ -90,6 +106,12 @@ The commands above will display in the Command Log as:
 When clicking on `dblclick` within the command log, the console outputs the following:
 
 {% imgTag /img/api/dblclick/element-double-clicked-on.png "console.log dblclick" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added support for `position`, `x`, and `y` arguments.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for options `force` and `multiple`.
+{% url "3.5.0" changelog#3-5-0 %} | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()`.
+{% endhistory %}
 
 # See also
 
