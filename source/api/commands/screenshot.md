@@ -250,6 +250,10 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 
 {% imgTag /img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png "Console Log screenshot" %}
 
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added support for option `padding`.
+{% endhistory %}
+
 # See also
 
 - {% url 'After Screenshot API' after-screenshot-api %}
