@@ -9,6 +9,10 @@ Double-click a DOM element.
 ```javascript
 .dblclick()
 .dblclick(options)
+.dblclick(position)
+.dblclick(position, options)
+.dblclick(x, y)
+.dblclick(x, y, options)
 ```
 
 ## Usage
@@ -52,7 +56,7 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force dblclick %}
-`multiple` | `false` | {% usage_options multiple dblclick %}
+`multiple` | `true` | {% usage_options multiple dblclick %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .dblclick %}
 
 ## Yields {% helper_icon yields %}
@@ -67,6 +71,81 @@ Option | Default | Description
 
 ```javascript
 cy.get('a#nav1').dblclick() // yields the <a>
+```
+
+## Position
+
+### Specify a position of the element to double click
+
+Click the bottom center of the button.
+
+```javascript
+cy.get('button').dblclick('bottom')
+```
+
+## Coordinates
+
+### Specify coordinates relative to the top left corner
+
+The double click below will be issued inside of the element (30px from the left and 10px from the top).
+
+```javascript
+cy.get('button').dblclick(30, 10)
+```
+
+## Options
+
+### Force a double click regardless of its actionable state
+
+Forcing a double click overrides the {% url 'actionable checks' interacting-with-elements#Forcing %} Cypress applies and will automatically fire the events.
+
+```javascript
+cy.get('button').dblclick({ force: true })
+```
+
+### Force a double click with position argument
+
+```javascript
+cy.get('button').dblclick('topRight', { force: true })
+```
+
+### Force a double click with relative coordinates
+
+```javascript
+cy.get('button').dblclick(60, 60, { force: true })
+```
+
+### Double click all buttons found on the page
+
+By default, Cypress will iteratively apply the double click to each element and will also log to the {% url 'Command Log' test-runner#Command-Log %} multiple times.
+
+You can turn this off by passing `multiple: false` to `.dblclick()`.
+
+```javascript
+cy.get('button').dblclick({ multiple: false })
+```
+
+## Double click with key combinations
+
+The `.dblclick()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while double clicking, such as `SHIFT + double click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+
+The following modifiers can be combined with `.dblclick()`.
+
+Sequence | Notes
+--- | ---
+`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
+`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
+`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
+`{shift}` | Activates the `shiftKey` modifier.
+
+### Alt click
+
+```js
+// execute a ALT + dblclick on the first <li>
+// { release: false } is necessary so that
+// ALT will not be released after the type command
+cy.get('body').type('{alt}', { release: false })
+cy.get('li:first').dblclick()
 ```
 
 # Notes
@@ -93,7 +172,7 @@ cy.get('a#nav1').dblclick() // yields the <a>
 
 # Command Log
 
-***Double click on a calendar schedule***
+***Double click on a div***
 
 ```javascript
 cy.get('.action-div').dblclick()

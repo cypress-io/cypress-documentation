@@ -140,7 +140,7 @@ Sequence | Notes
 
 ```js
 // execute a SHIFT + click on the first <li>
-// {release: false} is necessary so that
+// { release: false } is necessary so that
 // SHIFT will not be released after the type command
 cy.get('body').type('{shift}', { release: false })
 cy.get('li:first').click()
