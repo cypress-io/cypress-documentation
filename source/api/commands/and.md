@@ -130,6 +130,7 @@ Be sure *not* to include any code that has side effects in your callback functio
 
 The callback function will be retried over and over again until no assertions within it throw.
 
+<!-- fiddle Multiple p -->
 ```html
 <div>
   <p class="text-primary">Hello World</p>
@@ -163,6 +164,7 @@ cy
     ])
   })
 ```
+<!-- fiddle-end -->
 
 {% note info %}
 Using a callback function {% urlHash 'will not change the subject' Subjects %}

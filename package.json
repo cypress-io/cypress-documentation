@@ -42,7 +42,8 @@
     "test-watch": "npm run test --silent -- --watch",
     "test": "jest",
     "warn-only": "stop-only --warn --folder cypress",
-    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/cypress-documentation"
+    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/cypress-documentation",
+    "test-markdown": "cypress open --config='integrationFolder=source/api/commands'"
   },
   "husky": {
     "hooks": {

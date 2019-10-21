@@ -57,6 +57,7 @@ Option | Default | Description
 
 ### Get the children of the `.secondary-nav`
 
+<!-- fiddle Children example -->
 ```html
 <ul>
   <li>About</li>
@@ -86,11 +87,13 @@ Option | Default | Description
 // ]
 cy.get('ul.secondary-nav').children()
 ```
+<!-- fiddle-end -->
 
 ## Selector
 
 ### Get the children with class `active`
 
+<!-- fiddle selector -->
 ```html
 <div>
   <ul>
@@ -106,6 +109,7 @@ cy.get('ul.secondary-nav').children()
 // ]
 cy.get('ul').children('.active')
 ```
+<!-- fiddle-end -->
 
 # Rules
 
