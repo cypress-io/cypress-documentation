@@ -318,7 +318,7 @@ For those wanting to use page objects, we've highlighted the {% url 'best practi
 
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
-You can read more about parallelization {% issue 64 'here' %}.
+You can read more about parallelization {% url 'here' parallelization %}.
 
 ## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
 
