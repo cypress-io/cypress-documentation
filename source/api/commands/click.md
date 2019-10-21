@@ -228,6 +228,7 @@ When clicking on `click` within the command log, the console outputs the followi
 
 - {% url `.check()` check %}
 - {% url `.dblclick()` dblclick %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
 - {% url `.type()` type %}

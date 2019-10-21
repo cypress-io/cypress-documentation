@@ -128,6 +128,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
