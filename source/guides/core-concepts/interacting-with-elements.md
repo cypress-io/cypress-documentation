@@ -35,6 +35,7 @@ Cypress will wait for the element to pass all of these checks for the duration o
 - {% urlHash 'Scroll the element into view.' Scrolling %}
 - {% urlHash 'Ensure the element is not hidden.' Visibility %}
 - {% urlHash 'Ensure the element is not disabled.' Disability %}
+- {% urlHash 'Ensure the element is not detached.' Detached %}
 - {% urlHash 'Ensure the element is not readonly.' Readonly %}
 - {% urlHash 'Ensure the element is not animating.' Animations %}
 - {% urlHash 'Ensure the element is not covered.' Covering %}
@@ -73,6 +74,12 @@ The following calculations factor in CSS translations and transforms.
 ## Disability
 
 Cypress checks whether an element's `disabled` property is `true`.
+
+## Detached
+
+When many applications rerender the DOM, they actually remove the DOM element and insert a new DOM element in its place with the newly change attributes.
+
+Cypress checks whether an element you are making assertions is detached from the DOM. This checks that the element is still within the `document` of the application under test.
 
 ## Readonly
 
