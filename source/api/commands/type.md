@@ -307,8 +307,6 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 If the element is currently not in focus, before issuing any keystrokes Cypress will first issue a {% url `.click()` click %} to the element to bring it into focus.
 
-All of {% url 'the normal events' click#Events %} documented on {% url `.click()` click %} will fire.
-
 ### Events that fire
 
 Once the element is in focus, Cypress will begin firing keyboard events.
