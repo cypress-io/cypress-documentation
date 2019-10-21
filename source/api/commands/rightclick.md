@@ -74,7 +74,7 @@ Option | Default | Description
 ### Right click the menu
 
 ```javascript
-cy.get('#context-menu').rightclick()
+cy.get('#open-menu').rightclick()
 ```
 
 ## Position
@@ -84,7 +84,7 @@ cy.get('#context-menu').rightclick()
 Right click the top right corner of the DOM element.
 
 ```javascript
-cy.get('#context-menu').rightclick('topRight')
+cy.get('#open-menu').rightclick('topRight')
 ```
 
 ## Coordinates
@@ -94,7 +94,7 @@ cy.get('#context-menu').rightclick('topRight')
 The right click below will be issued inside of the element (15px from the left and 40px from the top).
 
 ```javascript
-cy.get('#context-menu').rightclick(15, 40)
+cy.get('#open-menu').rightclick(15, 40)
 ```
 
 ## Options
@@ -104,19 +104,19 @@ cy.get('#context-menu').rightclick(15, 40)
 Forcing a right click overrides the {% url 'actionable checks' interacting-with-elements#Forcing %} Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get('#context-menu').rightclick({ force: true })
+cy.get('#open-menu').rightclick({ force: true })
 ```
 
 ### Force a right click with position argument
 
 ```javascript
-cy.get('#context-menu').rightclick('bottomLeft', { force: true })
+cy.get('#open-menu').rightclick('bottomLeft', { force: true })
 ```
 
 ### Force a right click with relative coordinates
 
 ```javascript
-cy.get('#context-menu').rightclick(5, 60, { force: true })
+cy.get('#open-menu').rightclick(5, 60, { force: true })
 ```
 
 ### Right click all buttons found on the page
@@ -124,7 +124,7 @@ cy.get('#context-menu').rightclick(5, 60, { force: true })
 By default, Cypress will error if you're trying to right click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the right click to each element and will also log to the {% url 'Command Log' test-runner#Command-Log %} multiple times.
 
 ```javascript
-cy.get('.context-menu').rightclick({ multiple: true })
+cy.get('.open-menu').rightclick({ multiple: true })
 ```
 
 ## Right click with key combinations
