@@ -5,7 +5,7 @@ title: rightclick
 Right click a DOM element.
 
 {% note warning %}
-`.rightclick()` will not open context menus native to the browser. `.rightclick()` should be used to test the behavior of an application where a user would right click a mouse.
+`.rightclick()` will not open context menus native to the browser. `.rightclick()` should be used to test your app's handling of right click related events such as `contextmenu`.
 {% endnote %}
 
 # Syntax
