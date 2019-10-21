@@ -216,6 +216,13 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
+Cypress will automatically replace the `~` with the user's home directory. So you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for example:
+
+```yml
+environment:
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
+```
+
 See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
 
 {% note warning %}
