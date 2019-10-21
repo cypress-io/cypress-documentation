@@ -227,6 +227,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 {% imgTag /img/api/trigger/console-log-trigger.png "console log trigger" %}
 
 {% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added `screenX` and `screenY` properties to events
 {% url "0.20.0" changelog#0-20-0 %} | `.trigger()` command added
 {% endhistory %}
 
