@@ -184,10 +184,10 @@ If the mousedown event has its default action prevented (`e.preventDefault()`) t
 
 # Command Log
 
-***Click the button in the form that has text "Create User"***
+***Click the button***
 
 ```javascript
-cy.get('form').find('button').contains('Create User').click()
+cy.get('.action-btn').click()
 ```
 
 The commands above will display in the Command Log as:

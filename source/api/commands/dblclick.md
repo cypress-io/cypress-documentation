@@ -96,7 +96,7 @@ cy.get('a#nav1').dblclick() // yields the <a>
 ***Double click on a calendar schedule***
 
 ```javascript
-cy.get('[data-schedule-id="4529114"]:first').dblclick()
+cy.get('.action-div').dblclick()
 ```
 
 The commands above will display in the Command Log as:
@@ -108,9 +108,9 @@ When clicking on `dblclick` within the command log, the console outputs the foll
 {% imgTag /img/api/dblclick/element-double-clicked-on.png "console.log dblclick" %}
 
 {% history %}
-{% url "3.5.0" changelog#3-5-0 %} | Added support for `position`, `x`, and `y` arguments.
 {% url "3.5.0" changelog#3-5-0 %} | Added support for options `force` and `multiple`.
-{% url "3.5.0" changelog#3-5-0 %} | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()`.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for `position`, `x`, and `y` arguments.
+{% url "3.5.0" changelog#3-5-0 %} | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`.
 {% endhistory %}
 
 # See also

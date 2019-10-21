@@ -174,10 +174,10 @@ cy.get('.menu-item').rightclick()
 
 # Command Log
 
-***Right click the button in the form that has text "Create User"***
+***Right click the DOM element***
 
 ```javascript
-cy.get('form').find('button').contains('Create User').rightclick()
+cy.get('.rightclick-action-div').rightclick()
 ```
 
 The commands above will display in the Command Log as:
