@@ -17,6 +17,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 
 - {% url `.click()` click %}
 - {% url `.dblclick()` dblclick %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.type()` type %}
 - {% url `.clear()` clear %}
 - {% url `.check()` check %}

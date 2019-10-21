@@ -237,6 +237,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 - {% url `.check()` check %}
 - {% url `.click()` click %}
 - {% url `.focus()` focus %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
 - {% url `.type()` type %}

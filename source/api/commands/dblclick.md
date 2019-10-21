@@ -116,3 +116,4 @@ When clicking on `dblclick` within the command log, the console outputs the foll
 # See also
 
 - {% url `.click()` click %}
+- {% url `.rightclick()` rightclick %}
