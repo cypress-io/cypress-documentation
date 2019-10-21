@@ -199,7 +199,7 @@ You should push your local changes to your forked GitHub repository and then ope
 
 We use a [`cla-assistant.io`](https://cla-assistant.io/) web hook to make sure every contributor assigns the rights of their contribution to Cypress.io. If you want to read the CLA agreement, its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
 
-After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Just click on the link and accept the CLA. That's it!
+After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Click on the link and accept the CLA. That's it!
 
 ## Deployment
 

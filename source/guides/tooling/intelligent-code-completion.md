@@ -28,7 +28,7 @@ Cypress comes with TypeScript {% url "type declarations" https://github.com/cypr
 
 ### Triple slash directives
 
-The simplest way to see IntelliSense when typing a Cypress command or assertion is to add a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file. This will turn the IntelliSense on a per file basis. Just copy the comment line below and paste it into your spec file.
+The simplest way to see IntelliSense when typing a Cypress command or assertion is to add a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file. This will turn the IntelliSense on a per file basis. Copy the comment line below and paste it into your spec file.
 
 ```js
 /// <reference types="Cypress" />
@@ -115,6 +115,12 @@ To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you c
     }
   ]
 }
+```
+
+Or you can directly add a `$schema` key to your Cypress configuration file, which is a great way to share the schema with all collaborators of the project.
+
+```json
+"$schema": "https://on.cypress.io/cypress.schema.json",
 ```
 
 # See also

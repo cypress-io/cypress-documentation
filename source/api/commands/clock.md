@@ -164,7 +164,7 @@ This example below will only override `setTimeout` and `clearTimeout` and leave 
 cy.clock(null, ['setTimeout', 'clearTimeout'])
 ```
 
-Note that you must specify `Date` in order to override the current datetime. The example below just affects the current datetime without affecting scheduled timers.
+Note that you must specify `Date` in order to override the current datetime. The example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
 cy.clock(Date.UTC(2018, 10, 30), ['Date'])

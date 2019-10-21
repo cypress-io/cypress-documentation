@@ -188,7 +188,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 {% note success Benefits %}
 - Does not require any changes to files or configuration.
-- Obvious where environment variables come from.
+- More clear where environment variables come from.
 - Allows for dynamic values between different machines.
 - Overwrites all other forms of setting env variables.
 {% endnote %}

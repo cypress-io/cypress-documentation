@@ -166,7 +166,7 @@ CI Provider | Example Project | Example Config
 ----------- | --------------- | --------------
 {% url "AWS Amplify Console" https://aws.amazon.com/amplify/console %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "amplify.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml %}
 {% url "AppVeyor" https://appveyor.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "appveyor.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml %}
-{% url "Azure DevOps / VSTS CI / TeamFoundation" https://dev.azure.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
+{% url "Azure DevOps / VSTS CI / TeamFoundation" https://dev.azure.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "azure-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
 {% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
 {% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
@@ -410,7 +410,7 @@ test:
 
 ## Docker
 
-We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
+We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
 
 ```text
 FROM cypress/base
@@ -549,9 +549,9 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 ## Module API
 
-Oftentimes it can be much easier to programmatically control and boot your servers with a Node script.
+Oftentimes it can be less complex to programmatically control and boot your servers with a Node script.
 
-If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
+If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus, you can work with the results and do other things.
 
 ```js
 // scripts/run-cypress-tests.js
@@ -576,6 +576,24 @@ node scripts/run-cypress-tests.js
 ```
 
 # Common problems and solutions
+
+## Missing binary
+
+When npm or yarn install the `cypress` package, a `postinstall` hook is executed that downloads the platform-specific Cypress binary. If the hook is skipped for any reason the Cypress binary will be missing (unless it was already cached).
+
+To better diagnose the error, add {% url "commands to get information about the Cypress cache" command-line#cypress-cache-command %} to your CI setup. This will print where the binary is located and what versions are already present.
+
+```shell
+npx cypress cache path
+npx cypress cache list
+```
+
+If the required binary version is not found in the cache, you can try the following:
+
+1. Clean your CI's cache using your CI's settings to force a clean `npm install` on the next build.
+2. Run the binary install yourself by adding the command `npx cypress install` to your CI script. If there is a binary already present, it should finish quickly.
+
+See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-cache %} for an example that runs the `npx cypress install` command to ensure the Cypress binary is always present before the tests begin.
 
 ## In Docker
 

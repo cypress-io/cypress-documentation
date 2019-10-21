@@ -109,7 +109,7 @@ cy.location('pathname').should('eq', '/login')
 
 ### No need to use `window.location`
 
-Cypress automatically normalizes the `cy.location()` command and strips out extraneous values and properties found in `window.location`. Also, the object literal yielded by `cy.location()` is just a basic object literal, not the special `window.location` object.
+Cypress automatically normalizes the `cy.location()` command and strips out extraneous values and properties found in `window.location`. Also, the object literal yielded by `cy.location()` is a basic object literal, not the special `window.location` object.
 
 When changing properties on the real `window.location` object, it forces the browser to navigate away. In Cypress, the object yielded is a plain object, so changing its properties will have no effect on navigation.
 

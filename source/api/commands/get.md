@@ -85,6 +85,12 @@ cy.get('.dropdown-menu').click()
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
 ```
 
+### Find the link with an href attribute containing the word "questions" and click it
+
+```javascript
+cy.get('a[href*="questions"]').click()
+```
+
 ## Get in `.within()`
 
 ### `cy.get()` in the {% url `.within()` within %} command

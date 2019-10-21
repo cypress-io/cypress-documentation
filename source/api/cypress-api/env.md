@@ -60,18 +60,18 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 ### Return a single environment variable from configuration file (`cypress.json` by default)
 
-```json
-{
-  "env": {
-    "foo": "bar",
-    "baz": "quux"
-  }
-}
+{% note warning Boolean %}
+We automatically normalize both the key and the value when passed via the command line. Cypress will automatically convert values into Number or Boolean.
+{% endnote %}
+
+```javascript
+CYPRESS_HOST=laura.dev CYPRESS_IS_CI=true CYPRESS_MY_ID=123 cypress run
 ```
 
 ```javascript
-Cypress.env('foo') // => bar
-Cypress.env('baz') // => quux
+Cypress.env('HOST')  // => "laura.dev"
+Cypress.env('IS_CI') // => true
+Cypress.env('MY_ID') // => 123
 ```
 
 ## Name and Value

@@ -88,7 +88,7 @@ Cypress maintains an official list of plugins created by us and the community. Y
 
 # Installing plugins
 
-Plugins from our {% url 'official list' plugins %} are just npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
+Plugins from our {% url 'official list' plugins %} are npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
 
 You can install any published plugin using NPM:
 
@@ -98,14 +98,14 @@ npm install &lt;plugin name&gt; --save-dev
 
 # Using a plugin
 
-Whether you install an npm module, or just want to write your own code - you should do all of that in this file:
+Whether you install an npm module, or want to write your own code - you should do all of that in this file:
 
 ```text
 cypress/plugins/index.js
 ```
 
 {% note info %}
-By default Cypress seeds this file for new projects, but if you have an existing project just create this file yourself.
+By default Cypress seeds this file for new projects, but if you have an existing project create this file yourself.
 {% endnote %}
 
 Inside of this file, you will export a function. Cypress will call this function, pass you the project's configuration, and enable you to bind to the events exposed.

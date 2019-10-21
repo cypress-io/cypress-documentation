@@ -8,7 +8,7 @@ containerClass: faq
 
 Cypress commands yield jQuery objects, so you can call methods on them.
 
-If you're just trying to assert on an element's text content:
+If you're trying to assert on an element's text content:
 
 ```javascript
 cy.get('div').should('have.text', 'foobarbaz')
@@ -58,7 +58,7 @@ This is the equivalent of Selenium's `getText()` method, which returns the inner
 
 Cypress yields you jQuery objects, so you can call methods on them.
 
-If you're just trying to assert on an input's value:
+If you're trying to assert on an input's value:
 
 ```javascript
 // make an assertion on the value
@@ -107,7 +107,7 @@ For examples how to do this, please read our {% url 'Variables and Aliases guide
 
 ## {% fa fa-angle-right %} How do I get the native DOM reference of an element found using Cypress?
 
-Cypress wraps elements in jQuery so you'd just get the native element from there within a {% url "`.then()`" then %} command.
+Cypress wraps elements in jQuery so you'd get the native element from there within a {% url "`.then()`" then %} command.
 
 ```javascript
 cy.get('button').then(($el) => {
@@ -141,7 +141,7 @@ We have seen many different iterations of this question. The answers can be vari
 
 **_How do I know if my page is done loading?_**
 
-When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. It is really this easy. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
 
@@ -238,7 +238,7 @@ If you're curious please read:
 
 ## {% fa fa-angle-right %} How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
 
-Easy - you don't use classes or ID's. You add `data-*` attributes to your elements and target them that way.
+Don't use classes or ID's. You add `data-*` attributes to your elements and target them that way.
 
 Read more about the {% url 'best practices for selecting elements here' best-practices#Selecting-Elements %}.
 
@@ -311,13 +311,13 @@ The page object pattern isn't actually anything "special". If you're coming from
 
 The "Page Object Pattern" should really be renamed to: "Using functions and creating custom commands".
 
-If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also just use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
+If you're looking to abstract behavior or roll up a series of actions you can create reusable {% url 'Custom Commands with our API' custom-commands %}. You can also use regular ol' JavaScript functions without any of the ceremony typical with "Page Objects".
 
 For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
 
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
-You can read more about parallelization {% issue 64 'here' %}.
+You can read more about parallelization {% url 'here' parallelization %}.
 
 ## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
 
@@ -379,7 +379,7 @@ cy.get('#list>li').should('have.length', 20)
 
 You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your back end to seed data.
 
-You could also just stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
+You could also stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
 
 ## {% fa fa-angle-right %} How do I test elements inside an iframe?
 
@@ -429,7 +429,7 @@ However, most of the time you don't even have to worry about animations. Why not
 
 Cypress does not and may never have multi-tab support for various reasons.
 
-Luckily there are lots of easy and safe workarounds that enable you to test this behavior in your application.
+Luckily there are lots of clear and safe workarounds that enable you to test this behavior in your application.
 
 {% url 'Read through the recipe on tab handling and links to see how to test anchor links.' recipes#Testing-the-DOM %}
 
@@ -480,7 +480,7 @@ No, Cypress modifies network traffic in real time and therefore must sit between
 
 You can check for the existence of `window.Cypress`, in your **application code**.
 
-Here's a simple example:
+Here's an example:
 
 ```javascript
 if (window.Cypress) {
@@ -508,9 +508,9 @@ There are a lot of ways to test this, so it depends. You'll need to be aware of 
 
 If your server sends specific disposition headers which cause a browser to prompt for download, you can figure out what URL this request is made to, and use {% url "cy.request()" request %} to hit that directly. Then you can test that the server send the right response headers.
 
-If it's just an anchor that initiates the download, you could just test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, there's nothing else to test for.
+If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, there's nothing else to test for.
 
-In the end, it's up to you to know your implementation and to test just enough to cover everything.
+In the end, it's up to you to know your implementation and to test enough to cover everything.
 
 ## {% fa fa-angle-right %} Is it possible to catch the promise chain in Cypress?
 
@@ -583,7 +583,7 @@ If a test fails, Cypress takes a screenshot image, but does not print the list o
 
 ## {% fa fa-angle-right %} Can my tests interact with Redux / Vuex data store?
 
-Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to make assertions against the data held inside the application's data store. Cypress makes it simple. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
+Usually your end-to-end tests interact with the application through public browser APIs: DOM, network, storage, etc. But sometimes you might want to make assertions against the data held inside the application's data store. Cypress helps you do this. Tests run right in the same browser instance and can reach into the application's context using {% url `cy.window` window %}. By conditionally exposing the application reference and data store from the application's code, you can allow the tests to make assertions about the data store, and even drive the application via Redux actions.
 
 - see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Blogs %} recipe.
 - see {% url "Testing Vue web applications with Vuex data store & REST back end" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Blogs %} recipe.

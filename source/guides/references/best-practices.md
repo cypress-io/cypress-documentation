@@ -34,11 +34,11 @@ Oftentimes we see users run into problems targeting their elements because:
 - Your application may use dynamic classes or ID's that change
 - Your selectors break from development changes to CSS styles or JS behavior
 
-Luckily, it is very easy to avoid both of these problems.
+Luckily, it is possible to avoid both of these problems.
 
 1. Don't target elements based on CSS attributes such as: `id`, `class`, `tag`
 2. Don't target elements that may change their `textContent`
-3. Add `data-*` attributes to make it easy to target elements
+3. Add `data-*` attributes to make it easier to target elements
 
 ### How It Works:
 
@@ -86,7 +86,7 @@ After reading the above rules you may be wondering:
 
 > If I should always use data attributes, then when should I use `cy.contains()`?
 
-A simple rule of thumb is to ask yourself this:
+A rule of thumb is to ask yourself this:
 
 If the content of the element **changed** would you want the test to fail?
 
@@ -124,17 +124,16 @@ We see new users commonly write code that looks like this:
 ```js
 // DONT DO THIS. IT DOES NOT WORK
 // THE WAY YOU THINK IT DOES.
+const a = cy.get('a')
 
-const button = cy.get('button')
-
-const form = cy.get('form')
+cy.visit('https://example.cypress.io')
 
 // nope, fails
-button.click()
+a.first().click()
 ```
 
 {% note info 'Did you know?' %}
-You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, it's usually a sign you're doing it wrong.
+You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, you will want to do some refactoring.
 {% endnote %}
 
 If you are new to Cypress and wanting to better understand how Commands work - {% url 'please read our Introduction to Cypress guide' introduction-to-cypress#Chains-of-Commands %}.
@@ -186,9 +185,9 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 
 **Here are potential solutions to alleviate these problems:**
 
-1. {% url "Stub" stub %} out the OAuth provider and bypass using their UI altogether. You could just trick your application into believing the OAuth provider has passed its token to your application.
+1. {% url "Stub" stub %} out the OAuth provider and bypass using their UI altogether. You could trick your application into believing the OAuth provider has passed its token to your application.
 2. If you **must** get a real token you can use {% url `cy.request()` request %} and use the **programmatic** API that your OAuth provider provides. These APIs likely change **more** infrequently and you avoid problems like throttling and A/B campaigns.
-3. Instead of having your test code bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that is the case, just use {% url `cy.request()` request %} to get the session directly from your server and bypass the provider altogether.
+3. Instead of having your test code bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that is the case, use {% url `cy.request()` request %} to get the session directly from your server and bypass the provider altogether.
 
 {% note info Recipes %}
 {% url "We have several examples of doing this in our logging in recipes." recipes %}
@@ -311,7 +310,7 @@ describe('my form', function () {
 
 This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
 
-We're also paving the way to make it easy to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
+We're also paving the way to make it less complicated to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
 
 ## Creating "tiny" tests with a single assertion
 
@@ -469,7 +468,7 @@ beforeEach(function () {
 })
 ```
 
-That's it! It couldn't be simpler!
+That's it!
 
 ### Is resetting the state necessary?
 
@@ -489,7 +488,7 @@ The only times you **ever** need to clean up state, is if the operations that on
 {% fa fa-check-circle green %} **Best Practice:** Use route aliases or assertions to guard Cypress from proceeding until an explicit condition is met.
 {% endnote %}
 
-In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of time. If you are finding yourself doing this, there is likely a much better, simpler way.
+In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of time. If you are finding yourself doing this, there is likely a much simpler way.
 
 Let's imagine the following examples:
 

@@ -15,7 +15,7 @@ title: Network Requests
 
 # Testing Strategies
 
-Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
+Cypress helps you test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
 {% partial network_stubbing_warning %}
 
@@ -76,7 +76,7 @@ Stubbing responses enables you to control every aspect of the response, includin
 You don't have to do any work on the server. Your application will have no idea its requests are being stubbed, so there are *no code changes* needed.
 
 {% note success Benefits %}
-- Easy control of response bodies, status, and headers
+- Control of response bodies, status, and headers
 - Can force responses to take longer to simulate network delay
 - No code changes to your server or client code
 - Fast, < 20ms response times
@@ -96,7 +96,7 @@ You don't have to do any work on the server. Your application will have no idea 
 
 # Stubbing
 
-Cypress makes it easy to stub a response and control the `body`, `status`, `headers`, or even delay.
+Cypress enables you to stub a response and control the `body`, `status`, `headers`, or even delay.
 
 ***To begin stubbing responses you need to do two things.***
 
@@ -143,7 +143,7 @@ Once you start a server with {% url `cy.server()` server %}, all requests will b
 
 A fixture is a fixed set of data located in a file that is used in your tests. The purpose of a test fixture is to ensure that there is a well known and fixed environment in which tests are run so that results are repeatable. Fixtures are accessed within tests by calling the {% url `cy.fixture()` fixture %} command.
 
-Cypress makes it easy to stub a network requests and have it respond instantly with fixture data.
+With Cypress, you can stub network requests and have it respond instantly with fixture data.
 
 When stubbing a response, you typically need to manage potentially large and complex JSON objects. Cypress allows you to integrate fixture syntax directly into responses.
 
