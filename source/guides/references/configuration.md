@@ -121,6 +121,10 @@ cypress run --config integrationFolder=tests,fixturesFolder=false
 cypress run --record --config viewportWidth=1280,viewportHeight=720
 ```
 
+```shell
+cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffee"]
+```
+
 ## Plugins
 
 As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
