@@ -51,6 +51,7 @@ Option | Default | Description
 
 ### Get the last list item in a list
 
+<!-- fiddle Last item in the a list -->
 ```html
 <ul>
   <li class="one">Knick knack on my thumb</li>
@@ -63,7 +64,10 @@ Option | Default | Description
 ```javascript
 // yields <li class="four">Knick knack on my door</li>
 cy.get('li').last()
+  .should('have.class', 'four')
+  .and('have.text', 'Knick knack on my door')
 ```
+<!-- fiddle-end -->
 
 # Rules
 
