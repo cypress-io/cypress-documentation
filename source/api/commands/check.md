@@ -105,7 +105,7 @@ You can ignore Cypress' default behavior of checking that the element is visible
 
 ```javascript
 cy.get('.action-checkboxes').should('not.be.visible') // Passes
-  .check({ force: true }).should('be.checked')        // Passes
+cy.get('.action-checkboxes').check({ force: true }).should('be.checked')        // Passes
 ```
 
 # Notes
