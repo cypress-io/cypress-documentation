@@ -29,7 +29,7 @@ cy.exec('npm run build')
 
 **{% fa fa-angle-right %} command** ***(String)***
 
-The system command to be executed from the project root (the directory that contains `cypress.json`).
+The system command to be executed from the project root (the directory that contains the default `cypress.json` configuration file).
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -156,7 +156,7 @@ A command must exit within the `execTimeout` or Cypress will kill the command's 
 
 # Command Log
 
-***List the contents of cypress.json***
+***List the contents of the default `cypress.json` configuration file***
 
 ```javascript
 if (Cypress.platform === 'win32') {

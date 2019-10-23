@@ -41,10 +41,9 @@ Set multiple environment variables with an object literal.
 
 ## No Arguments
 
-**Get all environment variables.**
+### Get all environment variables from configuration file (`cypress.json` by default)
 
-```javascript
-// cypress.json
+```json
 {
   "env": {
     "foo": "bar",
@@ -59,7 +58,7 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 ## Name
 
-**Return a single environment variable value.**
+### Return a single environment variable from configuration file (`cypress.json` by default)
 
 {% note warning Boolean %}
 We automatically normalize both the key and the value when passed via the command line. Cypress will automatically convert values into Number or Boolean.
@@ -77,14 +76,13 @@ Cypress.env('MY_ID') // => 123
 
 ## Name and Value
 
-**Cypress allows you to change the values of your environment variables from within your tests.**
+### Change environment variables from configuration file (`cypress.json` by default) from within your tests
 
 {% note warning Scope %}
 Remember, any changes that you make to environment variables using this API will only be in effect for the remainder of the tests _in the same spec file._
 {% endnote %}
 
-```javascript
-// cypress.json
+```json
 {
   "env": {
     "foo": "bar",
@@ -101,7 +99,7 @@ Cypress.env('host') // => http://server.dev.local
 
 ## Object
 
-**You can set multiple values by passing an object literal.**
+### Override multiple values from configuration file (`cypress.json` by default) by passing an object literal.
 
 ```javascript
 // cypress.json
@@ -139,6 +137,7 @@ module.exports = (on, config) => {
   return config
 }
 ```
+
 ```js
 // cypress/integration/secrets_spec.js
 describe('Environment variable set in plugin', () => {
@@ -157,17 +156,17 @@ describe('Environment variable set in plugin', () => {
 
 # Notes
 
-**Why would I ever need to use environment variables?**
+## Why would I ever need to use environment variables?
 
 The {% url 'Environment Variables' environment-variables %} guide explains common use cases.
 
-**Can I pass in environment variables from the command line?**
+## Can I pass in environment variables from the command line?
 
 Yes. You can do that and much more.
 
 The {% url 'Environment Variables' environment-variables %} guide explains the other ways you can set environment variables for your tests.
 
-**Why is it `Cypress.env` and not `cy.env`?**
+## Why is it `Cypress.env` and not `cy.env`?
 
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 

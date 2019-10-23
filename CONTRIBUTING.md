@@ -101,9 +101,9 @@ To add a page such as a new guide or API documentation:
 
 - Add the new page to the relevant directory under [`source`](/source).
 - Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
-- Add translations for the sidebar link (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- Add translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
-- Copy over the new page to other language translations - Japanese docs in [`source/ja`](/source/ja), Chinese docs in [`source/zh-cn`](/source/zh-cn).
+- Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
 
 #### A Worked Example
@@ -166,6 +166,8 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 Our currently supported languages can be found at [`/source/_data/languages.yml`](/source/_data/languages.yml). From here, find the corresponding directory within the [`/source`](/source) directory that matches the language you want to translate.
 
 Translate existing documentation then submit a [pull request](#Pull-Requests) for your change.
+
+**Note:** When adding a new doc file to the English source, the English file will need to be commited to git before the translated file is auto-generated.
 
 If a page does not have a translation, then a pre-start step copies the English file to the language folder. These copies should NOT be committed into the source code. Only when the file has been translated you can add it to the source code with `git add --force source/<language>/.../file.md` and this file will not be overwritten by the English file.
 
