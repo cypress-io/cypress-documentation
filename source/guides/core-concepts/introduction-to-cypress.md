@@ -237,6 +237,7 @@ Here are even more action commands Cypress provides to interact with your app:
 - {% url `.uncheck()` uncheck %} - Uncheck checkbox(es).
 - {% url `.select()` select %} - Select an `<option>` within a `<select>`.
 - {% url `.dblclick()` dblclick %} - Double-click a DOM element.
+- {% url `.rightclick()` rightclick %} - Right-click a DOM element.
 
 These commands ensure {% url "some guarantees" interacting-with-elements %} about what the state of the elements should be prior to performing their actions.
 

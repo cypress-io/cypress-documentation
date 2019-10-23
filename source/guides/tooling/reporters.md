@@ -25,9 +25,31 @@ Once you've read through the documentation below, we invite you to experience th
 
 # Reporter Options
 
-Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
+### Command line
 
-***cypress.json***
+```shell
+cypress run --reporter reporters/custom.js
+```
+
+We also support passing an absolute path to the reporter.
+
+## npm Reporters
+
+### Specify package name in configuration file (`cypress.json` by default) when installing a custom reporter through npm
+
+```json
+{
+  "reporter": "mochawesome"
+}
+```
+
+### Command line
+
+
+
+# Reporter Options
+
+Some reporters accept options that customize their behavior. These can be specified in your configuration file (`cypress.json` by default) or via {% url "command line" command-line %} options:
 
 ```json
 {
@@ -131,7 +153,7 @@ We need to install several dependencies.
 npm install --save-dev mocha mochawesome mochawesome-merge mochawesome-report-generator
 ```
 
-We need to configure the reporter in `cypress.json` to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
+We need to configure the reporter in your {% url "configuration file (`cypress.json` by default)" configuration %} to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
 
 ```json
 {

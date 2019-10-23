@@ -43,7 +43,7 @@ When a run happens and a test fails - instead of going and inspecting your CI pr
 
 ## {% fa fa-angle-right %} Can I host the Dashboard data myself?
 
-No, although we are looking to build an on-premise version of the Dashboard for use in private clouds. If you're interested in our on-premise version, [let us know](mailto:hello@cypress.io)!
+No, although we are looking to build an on-premise version of the Dashboard for use in private clouds. If you're interested in our on-premise version, please add your interest to our {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}!
 
 ## {% fa fa-angle-right %} Can I choose not to use the Dashboard?
 
