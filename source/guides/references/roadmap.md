@@ -22,11 +22,4 @@ Status               | Feature                            |  Issue            | 
 
 ## Dashboard Service
 
-Status              | Feature              | Issue
---------------------|----------------------|-----------------
-*In beta*           | GitHub integration   | {% issue 981 %}
-*In progress*       | Run cancellation     | {% issue 1691 %}
-*In progress*       | Test retries display | {% issue 1313 %}
-*In progress*       | Dashboard redesign   | {% issue 560 %}
-*Research & design* | Project analytics    |
-*Proposal complete* | Notification center  |
+Please see our official % url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}.
