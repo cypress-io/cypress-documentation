@@ -106,6 +106,21 @@ Each keypress is delayed 10ms by default in order to simulate how a very fast us
 cy.get('[contenteditable]').type('some text!')
 ```
 
+### 'Selecting' an option from datalist
+For 'selecting' an option, just type it into the input.
+```html
+<input list="fruit" />
+<datalist id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cantaloupe</option>
+</datalist>
+```
+
+```javascript
+cy.get('input').type('Apple')
+```
+
 ## Tabindex
 
 ### Type into a non-input or non-textarea element with `tabindex`

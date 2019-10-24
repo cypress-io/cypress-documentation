@@ -22,4 +22,4 @@ Status               | Feature                            |  Issue            | 
 
 ## Dashboard Service
 
-Please see our official % url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}.
+Please see our official {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}.
