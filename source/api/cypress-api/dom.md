@@ -28,6 +28,26 @@ cy.get('button').then(($el) => {
 })
 ```
 
+## Is document
+
+**Returns a boolean indicating whether a node is of document type.**
+
+```javascript
+cy.get('p').then(($el) => {
+  Cypress.dom.isDocument($el) // false
+})
+```
+
+## Is DOM
+
+**Returns a boolean indicating whether an object is a DOM object.**
+
+```javascript
+cy.get('body').then(($el) => {
+  Cypress.dom.isDom($el) // true
+})
+```
+
 ## Is focusable
 
 **Returns a boolean indicating whether an element can receive focus.**

@@ -111,6 +111,7 @@ api:
     readfile: readfile.html
     reload: reload.html
     request: request.html
+    rightclick: rightclick.html
     root: root.html
     route: route.html
     screenshot: screenshot.html
