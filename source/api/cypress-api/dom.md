@@ -18,6 +18,26 @@ Cypress.dom.isHidden(element)
 
 # Examples
 
+## Is attached
+
+**Returns a boolean indicating whether an element is attached to the DOM.**
+
+```javascript
+cy.get('button').then(($el) => {
+  Cypress.dom.isAttached($el) // true
+})
+```
+
+## Is descendent
+
+**Returns a boolean indicating whether an element is a descendent of another element.**
+
+```javascript
+cy.get('div').then(($el) => {
+  Cypress.dom.isDescendent($el.parent(), $el) // true
+})
+```
+
 ## Is detached
 
 **Returns a boolean indicating whether an element is detached from the DOM.**
@@ -48,6 +68,16 @@ cy.get('body').then(($el) => {
 })
 ```
 
+## Is element
+
+**Returns a boolean indicating whether an object is a DOM element.**
+
+```javascript
+cy.get('p').then(($el) => {
+  Cypress.dom.isElement($el) // true
+})
+```
+
 ## Is focusable
 
 **Returns a boolean indicating whether an element can receive focus.**
@@ -60,6 +90,16 @@ cy.get('input').then(($el) => {
 })
 ```
 
+## Is focused
+
+**Returns a boolean indicating whether an element currently has focus.**
+
+```javascript
+cy.get('button').then(($el) => {
+  Cypress.dom.isFocused($el)
+})
+```
+
 ## Is hidden
 
 **Returns a boolean indicating whether an element is hidden.**
@@ -69,6 +109,16 @@ Cypress internally uses this method *everywhere* to figure out whether an elemen
 ```javascript
 cy.get('p').then(($el) => {
   Cypress.dom.isHidden($el) // false
+})
+```
+
+## Is jQuery
+
+**Returns a boolean indicating whether an object is a jQuery object.**
+
+```javascript
+cy.get('input').then(($el) => {
+  Cypress.dom.isJquery($el)
 })
 ```
 
@@ -94,3 +144,12 @@ cy.get('img').then(($el) => {
 })
 ```
 
+## Is window
+
+**Returns a boolean indicating whether an object is a window object.**
+
+```javascript
+cy.get(window).then(($el) => {
+  Cypress.dom.isWindow($el) // true
+})
+```
