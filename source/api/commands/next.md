@@ -70,6 +70,23 @@ Option | Default | Description
 cy.get('.second').next()
 ```
 
+### Testing a datalist
+```html
+<input list="fruit" />
+<datalist id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cantaloupe</option>
+</datalist>
+```
+
+```javascript
+cy.get('#fruit option')
+  .first().should('have.text', 'Apple')
+  .next().should('have.text', 'Banana')
+  .next().should('have.text', 'Cantaloupe')
+```
+
 ## Selector
 
 ### Find the very next sibling of each li. Keep only the ones with a class `selected`
