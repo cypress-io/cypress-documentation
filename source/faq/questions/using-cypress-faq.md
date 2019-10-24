@@ -589,7 +589,7 @@ Usually your end-to-end tests interact with the application through public brows
 - see {% url "Testing Redux Store" https://www.cypress.io/blog/2018/11/14/testing-redux-store/ %} blog post and {% url "Redux Testing" recipes#Blogs %} recipe.
 - see {% url "Testing Vue web applications with Vuex data store & REST back end" https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/ %} blog post and {% url 'Vue + Vuex + REST Testing' recipes#Blogs %} recipe.
 
-## {% fa fa-angle-right %} How to I spy on console.log?
+## {% fa fa-angle-right %} How do I spy on console.log?
 
 To spy on ```console.log``` you should use {% url "`cy.stub()`" stub %}.
 
@@ -603,3 +603,4 @@ cy.visit('/', {
 cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
 
+Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spying %}.
