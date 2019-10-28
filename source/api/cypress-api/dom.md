@@ -153,3 +153,23 @@ cy.get(window).then(($el) => {
   Cypress.dom.isWindow($el) // true
 })
 ```
+
+## Unwrap
+
+**Returns an array of raw elements pulled out from a jQuery object.**
+
+```javascript
+cy.get('body').then(($el) => {
+  Cypress.dom.unwrap($el)
+})
+```
+
+## Wrap
+
+**Returns a jQuery object obtained by wrapping an object in jQuery.**
+
+```javascript
+cy.get('p').then(($el) => {
+  Cypress.dom.wrap($el)
+})
+```
