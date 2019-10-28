@@ -313,6 +313,7 @@ When clicking on `visit` within the command log, the console outputs the followi
 {% imgTag /img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png "console Log visit" %}
 
 {% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added support for options `qs`
 {% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`
 {% url "3.2.0" changelog#3-2-0 %} | Added options `url`, `method`, `body`, and `headers`
 {% url "1.1.3" changelog#1-1-3 %} | Added option `failOnStatusCode`
