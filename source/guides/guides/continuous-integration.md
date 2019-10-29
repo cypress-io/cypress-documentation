@@ -627,6 +627,14 @@ After all tests across all Cypress instances finish, kill the Xvfb background pr
 pkill Xvfb
 ```
 
+## Color Issue
+
+If you are running into issues with the forced color, you can use the `NO_COLOR` environment variable to manage it:
+```shell
+NO_COLOR=1 cypress run
+```
+
+
 # See also
 
 - {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
