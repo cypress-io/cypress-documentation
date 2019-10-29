@@ -12,7 +12,10 @@ If you want to get a property that is not a function on the previously yielded s
 
 ```javascript
 .invoke(functionName)
+.invoke(options, functionName)
 .invoke(functionName, args...)
+.invoke(options, functionName, args...)
+
 ```
 
 ## Usage
@@ -36,6 +39,15 @@ cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 **{% fa fa-angle-right %} functionName**  ***(String)***
 
 Name of function to be invoked.
+
+
+**{% fa fa-angle-right %} options** **_(Object)_**
+
+Pass in an options object to change the default behavior of `.invoke()`.
+
+| Option    | Default                                                  | Description                        |
+| --------- | -------------------------------------------------------- | ---------------------------------- |
+| `log`     | `true`                                                   | {% usage_options log %}            |
 
 **{% fa fa-angle-right %} args...**
 
