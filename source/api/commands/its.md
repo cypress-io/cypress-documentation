@@ -12,6 +12,7 @@ If you want to call a `function` on the previously yielded subject, use {% url `
 
 ```javascript
 .its(propertyName)
+.its(propertyName, options)
 ```
 
 ## Usage
@@ -35,6 +36,14 @@ cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 **{% fa fa-angle-right %} propertyName**  ***(String)***
 
 Name of property or nested properties (with dot notation) to get.
+
+**{% fa fa-angle-right %} options** **_(Object)_**
+
+Pass in an options object to change the default behavior of `.its()`.
+
+| Option    | Default                                                  | Description                        |
+| --------- | -------------------------------------------------------- | ---------------------------------- |
+| `log`     | `true`                                                   | {% usage_options log %}            |
 
 ## Yields {% helper_icon yields %}
 
