@@ -657,35 +657,8 @@ a.article-edit-link {
 }
 
 .history {
-  cursor: pointer;
-
-  thead, tbody, th, tr {
-    border-collapse: collapse;
-  }
-
-  summary {
-    color: transparent;
-    display: block;
-
-    h1.article-heading {
-      margin-top: 0;
-    }
-  }
-
   th:last-child {
     width: 100%;
-  }
-
-  .history-disclosure {
-    font-size: 0.7em;
-    padding-right: 0.5em;
-    transition: 0.3s;
-    transform-style: preserve-3d;
-    transform: rotateX(180deg);
-  }
-
-  &[open] .history-disclosure{
-    transform: rotateX(0deg);
   }
 }
 
