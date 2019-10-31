@@ -12,7 +12,7 @@ Read more about the reasoning in [this issue](https://github.com/cypress-io/cypr
 
 ## Changes related to mocha upgrade
 
-Mocha has been upgraded to Mocha 6.
+Mocha has been upgraded to Mocha 7.
 
 Starting with [mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31), invoking a `done` callback *and* returning a promise in a test results in an error.
 
