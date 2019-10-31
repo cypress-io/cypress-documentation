@@ -6,19 +6,19 @@ title: Migration Guide
 
 Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, which themselves have breaking changes. This guide details the changes and how to change your code to migrate to Cypress 4.0.
 
-## Cypress no longer supports Node.js 6 or earlier
+## Cypress no longer supports Node 6 or earlier
 
 Read more about the reasoning in [this issue](https://github.com/cypress-io/cypress/issues/4200).
 
-## Changes related to mocha upgrade
+## Changes related to Mocha upgrade
 
 Mocha has been upgraded to Mocha 7.
 
-Starting with [mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31), invoking a `done` callback *and* returning a promise in a test results in an error.
+Starting with [Mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31), invoking a `done` callback *and* returning a promise in a test results in an error.
 
 This error originates from mocha and is discussed at length [here](https://github.com/mochajs/mocha/pull/1320) and [here](https://github.com/mochajs/mocha/issues/2407).
 
-The reason is that using two different ways to signal that a test is finished is usually a mistake, and there is always a way to only use one. There is a [proposal to handle this situation without erroring](https://github.com/mochajs/mocha/issues/2509) that may be released in a future version of mocha.
+The reason is that using two different ways to signal that a test is finished is usually a mistake, and there is always a way to only use one. There is a [proposal to handle this situation without erroring](https://github.com/mochajs/mocha/issues/2509) that may be released in a future version of Mocha.
 
 In the meantime, you can fix the error by choosing one way or the other to signal the end of your test's execution.
 
@@ -116,9 +116,9 @@ expect(function() {}).to.be.empty
 expect(true).to.be.ture
 ```
 
-## Changes related to Sinon upgrade
+## Changes related to Sinon.JS upgrade
 
-Sinon has been upgraded to Sinon 7 with some [breaking changes](https://sinonjs.org/releases/v7.1.1/#migration-guides), including:
+Sinon.JS has been upgraded to Sinon.JS 7 with some [breaking changes](https://sinonjs.org/releases/v7.1.1/#migration-guides), including:
 
 - An error will throw when trying to stub a non-existent property.
 
@@ -146,7 +146,7 @@ stub.resetHistory()
 
 Cypress no longer supports CJSX (CoffeeScript + JSX), because the library used to transpile it is outdated and unmaintained.
 
-If you need CJSX support, you can use a pre-2.x version of the browserify preprocessor.
+If you need CJSX support, you can use a pre-2.x version of the Browserify preprocessor.
 
 ```shell
 npm install @cypress/browserify-preprocessor@1.1.2
