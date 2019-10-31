@@ -148,3 +148,18 @@ module.exports = (on) => {
   on('file:preprocessor', browserify())
 }
 ```
+
+- For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
+
+```javascript
+const spy = cy.spy()
+const stub = cy.stub()
+
+// Old, no longer works
+spy.reset()
+stub.reset()
+
+// Update to this
+spy.resetHistory()
+stub.resetHistory()
+```
