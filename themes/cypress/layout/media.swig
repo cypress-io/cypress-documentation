@@ -18,7 +18,7 @@
                       <h3>
                         <a href="{{course.url}}" target="_blank" rel="noopener noreferrer">{{ course.title }}</a>
                         {% if course.free %}
-                        <span class="free-course">FREE</span>
+                          <span class="badge badge-pill badge-primary">Free</span>
                         {% endif %}
                       </h3>
                       <p>
