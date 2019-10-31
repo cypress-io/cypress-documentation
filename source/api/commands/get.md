@@ -51,6 +51,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
 | `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %} |
+| 'withinSubject' | null                                               | {% usage_options withinSubject %} |
 
 ## Yields {% helper_icon yields %}
 
@@ -82,6 +83,12 @@ cy.get('.dropdown-menu').click()
 
 ```javascript
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
+```
+
+### Find the link with an href attribute containing the word "questions" and click it
+
+```javascript
+cy.get('a[href*="questions"]').click()
 ```
 
 ## Get in `.within()`
@@ -166,11 +173,11 @@ cy.get('input[name="firstName"]').should('have.value', 'Homer')
 
 The commands above will display in the Command Log as:
 
-![Command Log get](/img/api/get/get-element-and-make-an-assertion.png)
+{% imgTag /img/api/get/get-element-and-make-an-assertion.png "Command Log get" %}
 
 When clicking on the `get` command within the command log, the console outputs the following:
 
-![Console Log get](/img/api/get/console-log-get-command-and-elements-found.png)
+{% imgTag /img/api/get/console-log-get-command-and-elements-found.png "Console Log get" %}
 
 # See also
 

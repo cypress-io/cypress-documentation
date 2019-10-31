@@ -16,7 +16,7 @@ title: Variables and Aliases
 New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs.
 
 {% note success 'Do not worry!' %}
-There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
+There are many ways to reference, compare and utilize the objects that Cypress commands yield you.
 
 Once you get the hang of async code you'll realize you can do everything you could do synchronously, without your code doing any backflips.
 
@@ -34,15 +34,10 @@ The first and most important concept you should recognize is...
 {% endnote %}
 
 ```js
-// ...this won't work...
-
-// nope
+// this won't work the way you think it does
 const button = cy.get('button')
-
-// nope
 const form = cy.get('form')
 
-// nope
 button.click()
 ```
 
@@ -174,7 +169,7 @@ How will we get access to `text`?
 
 We could make our code do some ugly backflips using `let` to get access to it.
 
-{% note warning 'Do not do this' %}
+{% note danger 'Do not do this' %}
 This code below is just for demonstration.
 {% endnote %}
 
@@ -192,17 +187,19 @@ describe('a suite', function () {
   })
 
   it('does have access to text', function () {
-    text // now this is available to us
+    // now text is available to us
+    // but this is not a great solution :(
+    text
   })
 })
 ```
 
-Fortunately, you don't have to make your code do backflips. Cypress makes it easy to handle these situations.
+Fortunately, you don't have to make your code do backflips. With Cypress, we can better handle these situations.
 
 {% note success 'Introducing Aliases' %}
 Aliases are a powerful construct in Cypress that have many uses. We'll explore each of their capabilities below.
 
-At first, we'll use them to make it easy to share objects between your hooks and your tests.
+At first, we'll use them to share objects between your hooks and your tests.
 {% endnote %}
 
 ## Sharing Context
@@ -254,7 +251,7 @@ describe('parent', function () {
 })
 ```
 
-***Accessing Fixtures:***
+### Accessing Fixtures:
 
 The most common use case for sharing context is when dealing with {% url `cy.fixture()` fixture %}.
 
@@ -301,7 +298,7 @@ The same principles we introduced many times before apply to this situation. If 
 // yup all good
 cy.fixture('users.json').then((users) => {
   // now we can avoid the alias altogether
-  // and just use a callback function
+  // and use a callback function
   const user = users[0]
 
   // passes
@@ -309,7 +306,7 @@ cy.fixture('users.json').then((users) => {
 })
 ```
 
-***Avoiding the use of `this`***
+### Avoiding the use of `this`
 
 {% note warning 'Arrow Functions' %}
 Accessing aliases as properties with `this.*` will not work if you use {% url 'arrow functions' https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions %} for your tests or hooks.
@@ -371,7 +368,7 @@ cy.get('@rows').first().click()
 
 Because we've used the `@` character in {% url `cy.get()` get %}, instead of querying the DOM for elements, {% url `cy.get()` get %} looks for an existing alias called `rows` and returns the reference (if it finds it).
 
-***Stale Elements:***
+### Stale Elements:
 
 In many single-page JavaScript applications the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call {% url `cy.get()` get %} with the alias, Cypress automatically re-queries the DOM to find these elements again.
 
@@ -399,7 +396,7 @@ cy.get('@firstTodo').should('have.class', 'editing')
 
 When we reference `@firstTodo`, Cypress checks to see if all of the elements it is referencing are still in the DOM. If they are, it returns those existing elements. If they aren't, Cypress replays the commands leading up to the alias definition.
 
-In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything just works because the new `<li>` is found.
+In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything works because the new `<li>` is found.
 
 {% note warning  %}
 *Usually*, replaying previous commands will return what you expect, but not always. It is recommended that you **alias elements as soon as possible** instead of further down a chain of commands.
@@ -418,7 +415,7 @@ Aliases can also be used with {% url routes route %}. Aliasing your routes enabl
 - wait for your server to send the response
 - access the actual XHR object for assertions
 
-![alias-commands](/img/guides/aliasing-routes.jpg)
+{% imgTag /img/guides/aliasing-routes.jpg "Alias commands" %}
 
 Here's an example of aliasing a route and waiting on it to complete.
 
@@ -436,3 +433,24 @@ cy.contains('Successfully created user: Brian')
 {% note info 'New to Cypress?' %}
 {% url 'We have a much more detailed and comprehensive guide on routing Network Requests.' network-requests %}
 {% endnote %}
+
+## Requests
+
+Aliases can also be used with {% url requests request %}.
+
+Here's an example of aliasing a request and accessing its properties later.
+
+```js
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+// other test code here
+
+cy.get('@comments').should((response) => {
+  if (response.status === 200) {
+      expect(response).to.have.property('duration')
+    } else {
+      // whatever you want to check here
+    }
+  })
+})
+```

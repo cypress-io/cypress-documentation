@@ -4,7 +4,6 @@ menu:
   plugins: Plugins
   faq: FAQ
   examples: Examples
-  dashboard: Dashboard
   search: Search
 
 index:
@@ -28,13 +27,18 @@ sidebar:
     writing-your-first-test: Writing Your First Test
     testing-your-app: Testing Your App
     interacting-with-elements: Interacting with Elements
-    next-steps: Next Steps
     core-concepts: Core Concepts
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
-    dashboard-service: Dashboard Service
+    dashboard: Dashboard
+    dashboard-introduction: Introduction
+    projects: Projects
+    runs: Runs
+    organizations: Organizations
+    users: Users
+    github-integration: GitHub Integration
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -46,30 +50,19 @@ sidebar:
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
-    advanced-cypress: Advanced
-    the-cypress-workflow: The Cypress Workflow
-    coming-from-selenium: Cypress vs Selenium
     custom-commands: Custom Commands
     web-security: Web Security
-    how-cypress-really-works: How Cypress Really Works
-    talking-to-your-backend: Talking to Your Backend
-    spawning-processes: Spawning Processes
     references: References
     configuration: Configuration
     proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
     assertions: Assertions
-    creating-fixtures: Creating Fixtures
     best-practices: Best Practices
-    anti-patterns: Anti-patterns
     trade-offs: Trade-offs
-    contributing: Contributing
     changelog: Changelog
     migration-guide: Migration Guide
     roadmap: Roadmap
-    cypress-api-design: API Design
-    all-videos: Videos
     tooling: Tooling
     intelligent-code-completion: Intelligent Code Completion
     plugins-guide: Plugins
@@ -78,6 +71,7 @@ sidebar:
     module-api: Module API
     retry-ability: Retry-ability
     visual-testing: Visual Testing
+    code-coverage: Code Coverage
   api:
     api: API
     table-of-contents: Table of Contents
@@ -133,6 +127,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -206,11 +201,12 @@ sidebar:
     applications: Applications
     docker: Docker
     media: Media
+    courses-media: Courses
+    webinars-media: Webinars
+    blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
-    blogs-media: Blogs
-    extensions: Extensions
     workshop: Workshop
   faq:
     questions: FAQ

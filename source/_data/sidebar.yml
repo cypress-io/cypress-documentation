@@ -6,7 +6,6 @@ guides:
     installing-cypress: installing-cypress.html
     writing-your-first-test: writing-your-first-test.html
     testing-your-app: testing-your-app.html
-    # next-steps: next-steps.html
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
@@ -15,7 +14,13 @@ guides:
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
     test-runner: test-runner.html
-    dashboard-service: dashboard-service.html
+  dashboard:
+    dashboard-introduction: introduction.html
+    projects: projects.html
+    runs: runs.html
+    organizations: organizations.html
+    users: users.html
+    github-integration: github-integration.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
@@ -34,14 +39,8 @@ guides:
     reporters: reporters.html
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
+    code-coverage: code-coverage.html
 
-  # advanced-cypress:
-    # the-cypress-workflow: the-cypress-workflow.html
-    # coming-from-selenium: coming-from-selenium.html
-    # custom-commands: custom-commands.html
-    # how-cypress-really-works: how-cypress-really-works.html
-    # talking-to-your-backend: talking-to-your-backend.html
-    # spawning-processes: spawning-processes.html
   references:
     assertions: assertions.html
     configuration: configuration.html
@@ -49,10 +48,7 @@ guides:
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
-    # creating-fixtures: creating-fixtures.html
-    # cypress-api-design: cypress-api-design.html
     trade-offs: trade-offs.html
-    # contributing: contributing.html
     changelog: changelog.html
     migration-guide: migration-guide.html
     roadmap: roadmap.html
@@ -116,6 +112,7 @@ api:
     readfile: readfile.html
     reload: reload.html
     request: request.html
+    rightclick: rightclick.html
     root: root.html
     route: route.html
     screenshot: screenshot.html
@@ -186,6 +183,8 @@ examples:
     docker: docker.html
     workshop: workshop.html
   media:
+    courses-media: courses-media.html
+    webinars-media: webinars-media.html
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html

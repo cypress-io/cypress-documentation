@@ -32,7 +32,11 @@ cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
 
 The text to be typed into the DOM element.
 
-Text passed to `.type()` may include any of these special character sequences:
+Text passed to `.type()` may include any of the special character sequences below.
+
+{% note info %}
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+{% endnote %}
 
 Sequence | Notes
 --- | ---
@@ -70,6 +74,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
+`parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
 
@@ -90,7 +95,7 @@ cy.get('textarea').type('Hello world') // yields <textarea>
 ### Type into a login form
 
 {% note info %}
-{% url "Check out our example recipe of logging in by typing username and password" recipes#HTML-Web-Forms %}
+{% url "Check out our example recipe of logging in by typing username and password in HTML web forms" recipes#Logging-In %}
 {% endnote %}
 
 ### Mimic user typing behavior
@@ -99,6 +104,21 @@ Each keypress is delayed 10ms by default in order to simulate how a very fast us
 
 ```javascript
 cy.get('[contenteditable]').type('some text!')
+```
+
+### 'Selecting' an option from datalist
+For 'selecting' an option, just type it into the input.
+```html
+<input list="fruit" />
+<datalist id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cantaloupe</option>
+</datalist>
+```
+
+```javascript
+cy.get('input').type('Apple')
 ```
 
 ## Tabindex
@@ -172,6 +192,16 @@ When using special character sequences, it's possible to activate modifier keys 
 cy.get('input').type('{shift}{alt}Q')
 ```
 
+### Type literal `{` or `}` characters
+
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+
+```js
+cy.get('#code-input')
+  // will not escape { } characters
+  .type('function (num) {return num * num;}', { parseSpecialCharSequences: false })
+```
+
 ### Hold down modifier key and type a word
 
 ```javascript
@@ -230,8 +260,8 @@ cy.get('button').click()
 
 `.type()` requires a focusable element as the subject, since it's usually intended to type into something that's an input or textarea. Although there *are* a few cases where it's valid to "type" into something other than an input or textarea:
 
-* Keyboard shortcuts where the listener is on the `document` or `body`.
-* Holding modifier keys and clicking an arbitrary element.
+- Keyboard shortcuts where the listener is on the `document` or `body`.
+- Holding modifier keys and clicking an arbitrary element.
 
 To support this, the `body` can be used as the DOM element to type into (even though it's *not* a focusable element).
 
@@ -265,23 +295,22 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ## Supported Elements
 
-* HTML `<body>` and `<textarea>` elements.
-* Elements with a defined `tabindex` attribute.
-* Elements with a defined `contenteditable` attribute.
-* HTML `<input>` elements with a defined `type` attribute of one of the following:
-  * `text`
-  * `password`
-  * `email`
-  * `number`
-  * `date`
-  * `week`
-  * `month`
-  * `time`
-  * `datetime`
-  * `datetime-local`
-  * `search`
-  * `url`
-  * `tel`
+- ^HTML `<body>` and `<textarea>` elements.
+- Elements with a defined `tabindex` attribute.
+- Elements with a defined `contenteditable` attribute.
+- ^HTML `<input>` elements with a defined `type` attribute of one of the following:
+  - `text`
+  - `password`
+  - `email`
+  - `number`
+  - `date`
+  - `week`
+  - `month`
+  - `time`
+  - `datetime-local`
+  - `search`
+  - `url`
+  - `tel`
 
 ## Actionability
 
@@ -292,8 +321,6 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 ### When element is not in focus
 
 If the element is currently not in focus, before issuing any keystrokes Cypress will first issue a {% url `.click()` click %} to the element to bring it into focus.
-
-All of {% url 'the normal events' click#Events %} documented on {% url `.click()` click %} will fire.
 
 ### Events that fire
 
@@ -317,14 +344,14 @@ Events that should not fire on non input types such as elements with `tabindex` 
 
 The following rules have been implemented that match real browser behavior (and the spec):
 
-1. Cypress respects not firing subsequent events if previous ones were cancelled.
+1. Cypress respects not firing subsequent events if previous ones were canceled.
 2. Cypress will fire `keypress` *only* if that key is supposed to actually fire `keypress`.
 3. Cypress will fire `textInput` *only* if typing that key would have inserted an actual character.
 4. Cypress will fire `input` *only* if typing that key modifies or changes the value of the element.
 
 ### Event Cancellation
 
-Cypress respects all default browser behavior when events are cancelled.
+Cypress respects all default browser behavior when events are canceled.
 
 ```javascript
 // prevent the characters from being inserted
@@ -352,7 +379,7 @@ Additionally, events that cause a `change` event to fire (such as typing `{enter
 
 Any modifiers activated for the event are also listed in a `modifiers` column.
 
-![Cypress .type() key events table](/img/api/type/key-events-table-shown-in-console-for-testing-typing.png)
+{% imgTag /img/api/type/key-events-table-shown-in-console-for-testing-typing.png "Cypress .type() key events table" %}
 
 ## Tabbing
 
@@ -380,9 +407,9 @@ document.querySelector('input:first').addEventListener('keydown', (e) => {
 cy.get('input:first').type('{shift}a')
 ```
 
-In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or simply `.type('A')` if you don't care about the `shiftKey` property on any key events).
+In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
-This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but simply the letter `k`. {% open_an_issue %} if you need modifier effects to be implemented.
+This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but the letter `k`. {% open_an_issue %} if you need modifier effects to be implemented.
 
 ## Form Submission
 
@@ -418,7 +445,7 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 3. Submits a form, but does not fire synthetic `click` event, if there is 1 `input` and no `submit` button
 4. Submits form and fires a synthetic `click` event to the `submit` when it exists.
 
-Of course if the form's `submit` event is `preventedDefault` the form will not actually be submitted.
+If the form's `submit` event is `preventedDefault` the form will not actually be submitted.
 
 # Rules
 
@@ -444,15 +471,24 @@ cy.get('input[name=firstName]').type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/type/type-in-input-shown-in-command-log.png)
+{% imgTag /img/api/type/type-in-input-shown-in-command-log.png "Command Log type" %}
 
 When clicking on `type` within the command log, the console outputs the following:
 
-![Console Log](/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png)
+{% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
-| 3.2.0 | Added `{home}` and `{end}` character sequences
-| 3.3.0 | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
+{% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
+{% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
+{% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
+{% url "0.20.0" changelog#0-20-0 %} | Supports for typing in inputs of type `date`, `time`, `month`, and `week`
+{% url "0.17.1" changelog#0-17-1 %} | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers
+{% url "0.16.3" changelog#0-16-3 %} | Supports for typing in elements with `tabindex` attribute
+{% url "0.16.2" changelog#0-16-2 %} | Added `{downarrow}` and `{uparrow}` character sequences
+{% url "0.8.0" changelog#0-8-0 %} | Outputs Key Events Table to console on click
+{% url "0.8.0" changelog#0-8-0 %} | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{% raw %}{{{% endraw %}}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences
+{% url "0.8.0" changelog#0-8-0 %} | Added small delay (10ms) between each keystroke during `cy.type()`
+{% url "0.6.12" changelog#0-6-12 %} | Added option `force`
 {% endhistory %}
 
 # See also

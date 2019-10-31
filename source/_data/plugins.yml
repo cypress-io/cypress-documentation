@@ -11,7 +11,7 @@
       keywords: [file-watcher, cucumber]
 
     - name: cypress-app-watcher-preprocessor
-      description: Reruns Cypress tests when the backend server restarts
+      description: Reruns Cypress tests when the back end server restarts
       link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
       keywords: [file-watcher]
 
@@ -92,12 +92,42 @@
       link: https://github.com/Nanciee/cypress-autorecord
       keywords: [mock, recording, http, integration test]
 
+    - name: '@cypress/code-coverage'
+      description: Plugin to save code coverage collected during Cypress tests
+      link: https://github.com/cypress-io/code-coverage
+      keywords: [coverage]
+
+    - name: '@cypress/instrument-cra'
+      description: NPM module for create-react-app applications to instrument source code without ejecting react-scripts
+      link: https://github.com/cypress-io/instrument-cra
+      keywords: [coverage]
+
+    - name: '@cypress/fiddle'
+      description: Quickly generates Cypress tests from HTML and JS code
+      link: https://github.com/cypress-io/cypress-fiddle
+      keywords: [prototype]
+
+    - name: 'npm-cy'
+      description: This GitHub Action for npm enables arbitrary actions with the npm command-line client, including testing with cypress.io and publishing to a registry.
+      link: https://github.com/bartlett705/npm-cy
+      keywords: [github, actions, npm]
+
+    - name: 'vscode-cy-helper'
+      description: Visual Studio Code extension for cypress and cucumber preprocessor
+      link: https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper
+      keywords: [vscode, extension, intellisense]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
       description: Run tests on multiple URLs at various viewport sizes.
       link: https://github.com/andrewmcoupe/cy-view
       keywords: [viewports]
+
+    - name: cypress-unfetch
+      description: Track, test, and block code execution based on network state.
+      link: https://github.com/RcKeller/cypress-unfetch
+      keywords: [commands, routing, networking]
 
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
@@ -129,6 +159,16 @@
       link: https://github.com/NicholasBoll/cypress-pipe
       keywords: [commands]
 
+    - name: cypress-downloadfile
+      description: A custom command to download different kinds of files and store them on your local machine
+      link: https://github.com/Xvier/cypress-downloadfile
+      keywords: [commands, downloading]
+
+    - name: cypress-shadow-dom
+      description: Custom commands for shadow DOM support
+      link: https://github.com/abramenal/cypress-shadow-dom
+      keywords: [shadow, shadow-dom, polymer, lit-html, commands]
+
     - name: cypress-testing-library
       description: 🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.
       link: https://github.com/kentcdodds/cypress-testing-library
@@ -150,10 +190,10 @@
       keywords: [commands]
 
     - name: cypress-commands
-      description: A collection of Cypress commands to extend and compliment the defaults
+      description: A collection of Cypress commands to extend and complement the defaults
       link: https://github.com/Lakitna/cypress-commands
       keywords: [commands]
-      
+
     - name: cypress-wait-until
       description: Add the Cypress waiting power to virtually everything 🎉
       link: https://github.com/NoriSte/cypress-wait-until
@@ -226,41 +266,61 @@
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
 
+    - name: Aurelia CLI
+      description: The Aurelia CLI is the official command line tool for Aurelia.
+      link: https://aurelia.io/docs/cli
+      keywords: [aurelia, cli]
+
+    - name: WordPress ReactJS Boilerplate
+      description: Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.
+      link: https://github.com/matzeeable/wp-reactjs-starter
+      keywords: [wp, wordpress]
+
+    - name: Elm Batteries Included
+      description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
+      link: https://github.com/cedricss/elm-batteries
+      keywords: [elm, parcel, netlify]
+      
+    - name: cypress-rails
+      description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
+      link: https://github.com/testdouble/cypress-rails
+      keywords: [ruby, rails]
+
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
   plugins:
     - name: cypress-angularjs-unit-test
-      description: Unit test Angularjs code using Cypress.io test runner
+      description: Unit test Angularjs code using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-angularjs-unit-test
       keywords: [component, angular.js]
 
     - name: cypress-angular-unit-test
-      description: Test Angular component using Cypress.io test runner
+      description: Test Angular component using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-angular-unit-test
       keywords: [component, angular]
 
     - name: cypress-cycle-unit-test
-      description: Test Cycle.js components using Cypress.io test runner
+      description: Test Cycle.js components using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-cycle-unit-test
       keywords: [component, cycle.js]
 
     - name: cypress-react-unit-test
-      description: Test React components using Cypress.io test runner
+      description: Test React components using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-react-unit-test
       keywords: [component, react]
 
     - name: cypress-hyperapp-unit-test
-      description: Test Hyperapp components and applications using Cypress.io test runner
+      description: Test Hyperapp components and applications using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-hyperapp-unit-test
       keywords: [component, hyperapp]
 
     - name: cypress-svelte-unit-test
-      description: Test Svelte components using Cypress.io test runner
+      description: Test Svelte components using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-svelte-unit-test
       keywords: [component, svelte]
 
     - name: cypress-vue-unit-test
-      description: Test Vue.js components using Cypress.io test runner
+      description: Test Vue.js components using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-vue-unit-test
       keywords: [component, vue, vue.js]
 
@@ -276,9 +336,9 @@
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
       keywords: [screenshots, visual regression]
-      
+
     - name: cypress-plugin-snapshots
-      description: Plugin for snapshot tests in Cypress.io. Same API as Jest, but with graphical interface for reviewing and approving changes.
+      description: Plugin for snapshot tests in Cypress. Same API as Jest, but with graphical interface for reviewing and approving changes.
       link: https://github.com/meinaart/cypress-plugin-snapshots
       keywords: [snapshot]
 

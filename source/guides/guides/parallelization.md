@@ -19,9 +19,9 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and {% url "recording" dashboard-service#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
 
-{% img 'no-border' /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" %}
+{% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
 # Splitting up your test suite
 
@@ -40,14 +40,14 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-service %}. If you have not set up your project to record, check out our {% url "setup guide" dashboard-service#Setup %}.
+    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-introduction%}. If you have not set up your project to record, check out our {% url "setup guide" projects#Setup %}.
     {% endnote %}
 
 # CI parallelization interactions
 
-During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-service %} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
+During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-introduction%} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
 
-1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-service %} to indicate which spec files to run in the project.
+1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction%} to indicate which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
 3. Upon receiving requests from a CI machines, Cypress calculates the estimated duration to test each spec file.
 4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
@@ -58,7 +58,7 @@ In short: each Test Runner sends a list of the spec files to the Dashboard Servi
 
 ## Parallelization process
 
-{% img 'no-border' /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" %}
+{% imgTag /img/guides/parallelization/parallelization-overview.png "Parallelization Overview" "no-border" %}
 
 # Balance strategy
 
@@ -68,7 +68,7 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 
 ## Spec duration history analysis
 
-{% img 'no-border' /img/guides/parallelization/load-balancing.png "Spec duration forecasting" %}
+{% imgTag /img/guides/parallelization/load-balancing.png "Spec duration forecasting" "no-border" %}
 
 With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
 
@@ -133,7 +133,7 @@ When we run the same tests with parallelization, Cypress uses its {% urlHash "ba
 
 The difference in running times and machines used is very clear when looking at the {% urlHash "Machines View" Machines-View %} on the Dashboard. Notice how the run parallelized across 2 machines automatically ran all specs based on their duration, while the run without parallelization did not.
 
-{% img /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
+{% imgTag /img/guides/parallelization/1-vs-2-machines.png "Without parallelization vs parallelizing across 2 machines" %}
 
 Parallelizing our tests across 2 machines saved us almost 50% of the total run time, and we can further decrease the build time by adding more machines.
 
@@ -145,11 +145,11 @@ Multiple {% url "`cypress run`" command-line#cypress-run %} calls can be labeled
 For multiple runs to be grouped into a single run, it is required for CI machines to share a common CI build ID environment variable. Typically these CI machines will run in parallel or within the same build workflow or pipeline, but **it is not required to use Cypress parallelization to group runs**. Grouping of runs can be utilized independently of Cypress parallelization.
 {% endnote %}
 
-{% img 'no-border' /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" %}
+{% imgTag /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" "no-border" %}
 
 ## Grouping by browser
 
-You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we simple name our groups the same name as the browser being tested:
+You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we name our groups the same name as the browser being tested:
 
 - The first group can be called `Windows/Chrome 69`.
 
@@ -169,7 +169,7 @@ You can test your application against different browsers and view the results un
   cypress run --record --group Linux/Electron
   ```
 
-{% img 'no-border' /img/guides/parallelization/browser.png "browser" %}
+{% imgTag /img/guides/parallelization/browser.png "browser" "no-border" %}
 
 ## Grouping to label parallelization
 
@@ -187,7 +187,7 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 cypress run --record --group 4x-electron --parallel
 ```
 
-The `1x`, `2x`, `4x` group prefix used here is simply an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
+The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
 
 {% note info %}
 The number of machines dedicated for each `cypress run` call is based on your CI configuration for the project.
@@ -195,7 +195,7 @@ The number of machines dedicated for each `cypress run` call is based on your CI
 
 Labeling these groups in this manner helps up later when we review our test runs in the Cypress Dashboard, as shown below:
 
-{% img /img/guides/parallelization/timeline-collapsed.png "Timeline view with grouping and parallelization" %}
+{% imgTag /img/guides/parallelization/timeline-collapsed.png "Timeline view with grouping and parallelization" %}
 
 ## Grouping by spec context
 
@@ -219,33 +219,33 @@ cypress run --record --group package/customer --spec 'cypress/integration/packag
 cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
 ```
 
-{% img 'no-border' /img/guides/parallelization/monorepo.png "monorepo" %}
+{% imgTag /img/guides/parallelization/monorepo.png "monorepo" "no-border" %}
 
 This pattern is especially useful for projects in a monorepo. Each segment of the monorepo can be assigned its own group, and larger segments can be parallelized to speed up their testing.
-
 
 # Linking CI machines for parallelization or grouping
 
 A CI build ID is used to associate multiple CI machines to one test run. This identifier is based on environment variables that are unique to each CI build, and vary based on CI provider. Cypress has out-of-the-box support for most of the commonly-used CI providers, so you would typically not need to directly set the CI build ID via the {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
 
-{% img 'no-border' /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" %}
+{% imgTag /img/guides/parallelization/ci-build-id.png "CI Machines linked by ci-build-id" "no-border" %}
 
 ## CI Build ID environment variables by provider
 
 Cypress currently uses the following CI environment variables to determine a CI build ID for a test run:
 
-| Provider  | Environment Variable  |
-|--|--|
-| AppVeyor  | `APPVEYOR_BUILD_NUMBER`  |
-| Bamboo  | `BAMBOO_BUILD_NUMBER`  |
-| Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER` |
-| Codeship  | `CI_BUILD_NUMBER`  |
-| Codeship Basic  | `CI_BUILD_NUMBER`  |
-| Codeship Pro  | `CI_BUILD_ID`  |
-| Drone  | `DRONE_BUILD_NUMBER`  |
-| Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`  |
-| Jenkins  | `BUILD_NUMBER`  |
-| Travis  | `TRAVIS_BUILD_ID`  |
+Provider  | Environment Variable
+--|--
+AppVeyor  | `APPVEYOR_BUILD_NUMBER`
+Bamboo  | `BAMBOO_BUILD_NUMBER`
+Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
+Codeship  | `CI_BUILD_NUMBER`
+Codeship Basic  | `CI_BUILD_NUMBER`
+Codeship Pro  | `CI_BUILD_ID`
+Drone  | `DRONE_BUILD_NUMBER`
+Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`
+Jenkins  | `BUILD_NUMBER`
+Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
+Travis  | `TRAVIS_BUILD_ID`
 
 You can pass a different value to link agents to the same run. For example, if you are using Jenkins and think the environment variable `BUILD_TAG` is more unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value via CLI {% url "`--ci-build-id` flag" command-line#cypress-run-ci-build-id-lt-id-gt %}.
 
@@ -259,33 +259,31 @@ During parallelization mode or when grouping runs, Cypress will wait for a speci
 
 This waiting period is called the **run completion delay** and it begins after the last known CI machine has completed as shown in the diagram below:
 
-{% img 'no-border' /img/guides/parallelization/run-completion-delay.png "Test run completion delay" %}
+{% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-This **delay is 60 seconds by default**, but is configurable within the {% url "Dashboard" dashboard-service %} project settings page:
-
-{% img /img/guides/parallelization/project-run-delay-setting.png "Dashboard project run completion delay setting" %}
+This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard" project settings page" projects#Run-completion-delay %}.
 
 # Visualizing parallelization and groups in the Dashboard
 
-You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-service %} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-introduction%} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ## Timeline View
 
 The Timeline View charts your spec files as they ran relative to each other. This is especially helpful when you want to visualize how your tests ran chronologically across all available machines.
 
-{% img /img/guides/parallelization/timeline-view-small.png "Timeline view with parallelization" %}
+{% imgTag /img/guides/parallelization/timeline-view-small.png "Timeline view with parallelization" %}
 
 ## Bar Chart View
 
 The Bar Chart View visualizes the **duration** of your spec files relative to each other.
 
-{% img /img/guides/parallelization/bar-chart-view.png "Bar Chart view with parallelization" %}
+{% imgTag /img/guides/parallelization/bar-chart-view.png "Bar Chart view with parallelization" %}
 
 ## Machines View
 
-The Machines View charts spec files by the machines that executed them. This view makes it easy to evaluate the contribution of each machine to the overall test run.
+The Machines View charts spec files by the machines that executed them. This view enables you to evaluate the contribution of each machine to the overall test run.
 
-{% img /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
+{% imgTag /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
 
 # See also
 

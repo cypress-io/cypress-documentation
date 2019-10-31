@@ -138,7 +138,7 @@ cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be
 
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
-Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+Be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
 
 ### Verify length, content, and classes from multiple `<p>`
 
@@ -275,7 +275,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 
 These string messages will be shown in the Command Log giving each assertion more context.
 
-![Expect assertions with messages](/img/api/should/expect-with-message.png)
+{% imgTag /img/api/should/expect-with-message.png "Expect assertions with messages" %}
 
 ### Compare text values of two elements
 
@@ -316,7 +316,7 @@ cy.get('.company-details')
 
 ### Chaining multiple assertions
 
-Cypress makes it easy to chain assertions together.
+Cypress makes it easier to chain assertions together.
 
 In this example we use {% url `.and()` and %} which is identical to `.should()`.
 
@@ -416,11 +416,16 @@ cy.get('.left-nav>.nav').children().should('have.length', 8)
 
 The commands above will display in the Command Log as:
 
-![Command Log should](/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png)
+{% imgTag /img/api/should/should-command-shows-up-as-assert-for-each-assertion.png "Command Log should" %}
 
 When clicking on `assert` within the command log, the console outputs the following:
 
-![Console Log should](/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png)
+{% imgTag /img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png "Console Log should" %}
+
+{% history %}
+{% url "0.11.4" changelog#0-11-4 %} | Allows callback function argument
+{% url "< 0.3.3" changelog#0-3-3 %} | `.should()` command added
+{% endhistory %}
 
 # See also
 

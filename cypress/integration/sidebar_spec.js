@@ -54,7 +54,7 @@ context('Sidebar', () => {
             .each(function (displayedTitle, i) {
               const title = this[lang].sidebar[this.navName][this.sidebarTitles[i]]
 
-              expect(displayedTitle.text()).to.eq(title)
+              expect(displayedTitle.text(), `Sidebar heading '${displayedTitle.text()}' matches translated title in ${lang}.yml`).to.eq(title)
             })
 
             cy.get('.sidebar-link')
@@ -62,13 +62,11 @@ context('Sidebar', () => {
               const link = this[lang].sidebar[this.navName][this.sidebarLinkNames[i]]
               const sidebarLink = this.sidebarLinks[i]
 
-              expect(displayedLink.text().trim()).to.eq(link)
-              expect(displayedLink.attr('href')).to.include(sidebarLink)
+              expect(displayedLink.text().trim(), `Sidebar link text '${displayedLink.text()}' matches translated title in ${lang}.yml`).to.eq(link)
+              expect(displayedLink.attr('href'), `Sidebar link href '${displayedLink.attr('href')}' has correct link ${sidebarLink} for language: ${lang}`).to.include(sidebarLink)
             })
           })
         })
-
-
       })
     })
   })

@@ -20,7 +20,7 @@ If you want to call a `function` on the previously yielded subject, use {% url `
 
 ```javascript
 cy.wrap({ width: '50' }).its('width') // Get the 'width' property
-cy.window().its('angular')          // Get the 'angular' property
+cy.window().its('sessionStorage')     // Get the 'sessionStorage' property
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -131,7 +131,7 @@ cy
 ### Use `.its()` to test `window.fetch`
 
 {% note info %}
-{% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe on testing `window.fetch` using `.its()`" recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Nested Properties
@@ -152,7 +152,7 @@ cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
 
 ## Existence
 
-### Wait for some propery to exist on `window`
+### Wait for some property to exist on `window`
 
 ```javascript
 cy.window().its('globalProp').then((globalProp) => {
@@ -160,7 +160,7 @@ cy.window().its('globalProp').then((globalProp) => {
 })
 ```
 
-### Assert that a propery does not exist on `window`
+### Assert that a property does not exist on `window`
 
 ```javascript
 cy.window().its('evilProp').should('not.exist')
@@ -196,11 +196,11 @@ cy.wait('@getComments').its('responseBody').should('deep.eq', [
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/its/xhr-response-its-response-body-for-testing.png)
+{% imgTag /img/api/its/xhr-response-its-response-body-for-testing.png "Command Log for its" %}
 
 When clicking on `its` within the command log, the console outputs the following:
 
-![Console Log](/img/api/its/response-body-yielded-with-its-command-log.png)
+{% imgTag /img/api/its/response-body-yielded-with-its-command-log.png "Console Log for its" %}
 
 # See also
 

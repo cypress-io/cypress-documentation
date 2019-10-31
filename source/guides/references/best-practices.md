@@ -34,18 +34,19 @@ Oftentimes we see users run into problems targeting their elements because:
 - Your application may use dynamic classes or ID's that change
 - Your selectors break from development changes to CSS styles or JS behavior
 
-Luckily, it is very easy to avoid both of these problems.
+Luckily, it is possible to avoid both of these problems.
 
 1. Don't target elements based on CSS attributes such as: `id`, `class`, `tag`
 2. Don't target elements that may change their `textContent`
-3. Add `data-*` attributes to make it easy to target elements
+3. Add `data-*` attributes to make it easier to target elements
 
 ### How It Works:
 
 Given a button that we want to interact with:
 
 ```html
-<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+<button id="main" class="btn btn-large" name="submission"
+  role="button" data-cy="submit">Submit</button>
 ```
 
 Let's investigate how we could target it:
@@ -55,6 +56,7 @@ Selector | Recommended | Notes
 `cy.get('button').click()` | {% fa fa-warning red %} Never | Worst - too generic, no context.
 `cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} Never | Bad. Coupled to styling. Highly subject to change.
 `cy.get('#main').click()` | {% fa fa-warning orange %} Sparingly | Better. But still coupled to styling or JS event listeners.
+`cy.get('[name=submission]').click()` | {% fa fa-warning orange %} Sparingly | Coupled to the `name` attribute which has HTML semantics.
 `cy.contains('Submit').click()` | {% fa fa-check-circle green %} Depends | Much better. But still coupled to text content that may change.
 `cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Insulated from all changes.
 
@@ -84,7 +86,7 @@ After reading the above rules you may be wondering:
 
 > If I should always use data attributes, then when should I use `cy.contains()`?
 
-A simple rule of thumb is to ask yourself this:
+A rule of thumb is to ask yourself this:
 
 If the content of the element **changed** would you want the test to fail?
 
@@ -122,17 +124,16 @@ We see new users commonly write code that looks like this:
 ```js
 // DONT DO THIS. IT DOES NOT WORK
 // THE WAY YOU THINK IT DOES.
+const a = cy.get('a')
 
-const button = cy.get('button')
-
-const form = cy.get('form')
+cy.visit('https://example.cypress.io')
 
 // nope, fails
-button.click()
+a.first().click()
 ```
 
 {% note info 'Did you know?' %}
-You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, it's usually a sign you're doing it wrong.
+You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, you will want to do some refactoring.
 {% endnote %}
 
 If you are new to Cypress and wanting to better understand how Commands work - {% url 'please read our Introduction to Cypress guide' introduction-to-cypress#Chains-of-Commands %}.
@@ -184,9 +185,9 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 
 **Here are potential solutions to alleviate these problems:**
 
-1. {% url "Stub" stub %} out the OAuth provider and bypass using their UI altogether. You could just trick your application into believing the OAuth provider has passed its token to your application.
+1. {% url "Stub" stub %} out the OAuth provider and bypass using their UI altogether. You could trick your application into believing the OAuth provider has passed its token to your application.
 2. If you **must** get a real token you can use {% url `cy.request()` request %} and use the **programmatic** API that your OAuth provider provides. These APIs likely change **more** infrequently and you avoid problems like throttling and A/B campaigns.
-3. Instead of having your test code bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that is the case, just use {% url `cy.request()` request %} to get the session directly from your server and bypass the provider altogether.
+3. Instead of having your test code bypass OAuth, you could also ask your server for help. Perhaps all an OAuth token does is generate a user in your database. Oftentimes OAuth is only useful initially and your server establishes its own session with the client. If that is the case, use {% url `cy.request()` request %} to get the session directly from your server and bypass the provider altogether.
 
 {% note info Recipes %}
 {% url "We have several examples of doing this in our logging in recipes." recipes %}
@@ -196,7 +197,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 
 Sometimes actions that you take in your application **may** affect another 3rd party application. These situations are not that common, but it is possible. Imagine your application integrates with GitHub and by using your application you can change data inside of GitHub.
 
-After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can simply use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
+After running your test, instead of trying to {% url `cy.visit()` visit %} GitHub, you can use {% url `cy.request()` request %} to programmatically interact with GitHub's APIs directly.
 
 This avoids ever needing to touch the UI of another application.
 
@@ -223,7 +224,7 @@ Nevertheless, if you **did** want to write a test in Cypress, you already have t
 
 You only need to do one thing to know whether you've coupled your tests incorrectly,  or if one test is relying on the state of a previous one.
 
-Simply put an `.only` on the test and refresh the browser.
+Put an `.only` on the test and refresh the browser.
 
 If this test can run **by itself** and pass - congratulations you have written a good test.
 
@@ -235,7 +236,6 @@ How to solve this:
 - Combine multiple tests into one larger test.
 
 Let's imagine the following test that is filling out the form.
-
 
 ```javascript
 // an example of what NOT TO DO
@@ -310,7 +310,7 @@ describe('my form', function () {
 
 This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
 
-We're also paving the way to make it easy to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
+We're also paving the way to make it less complicated to write multiple tests against the "default" state of the form. That way each test stays lean but each can be run independently and pass.
 
 ## Creating "tiny" tests with a single assertion
 
@@ -358,7 +358,7 @@ Why you shouldn't do this in Cypress:
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large test
 - Cypress runs a series of async lifecycle events that reset state between tests
-- Resetting tests is much slower than simply adding more assertions
+- Resetting tests is much slower than adding more assertions
 
 It is common for tests in Cypress to issue 30+ commands. Because nearly every command has a default assertion (and can therefore fail), even by limiting your assertions you're not saving yourself anything because **any single command could implicitly fail**.
 
@@ -468,7 +468,7 @@ beforeEach(function () {
 })
 ```
 
-That's it! It couldn't be simpler!
+That's it!
 
 ### Is resetting the state necessary?
 
@@ -488,7 +488,7 @@ The only times you **ever** need to clean up state, is if the operations that on
 {% fa fa-check-circle green %} **Best Practice:** Use route aliases or assertions to guard Cypress from proceeding until an explicit condition is met.
 {% endnote %}
 
-In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of time. If you are finding yourself doing this, there is likely a much better, simpler way.
+In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of time. If you are finding yourself doing this, there is likely a much simpler way.
 
 Let's imagine the following examples:
 
@@ -514,7 +514,7 @@ cy.wait(5000)     // <--- this is unnecessary
 
 Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy.get()` get %} automatically retries until the table's `tr` has a length of 2.
 
-Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to simply describe the state of your application without having to worry about when it gets there.
+Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
 
 ```javascript
 cy.server()
@@ -544,7 +544,7 @@ cy.get('table tr').should('have.length', 2)
 {% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
 {% endnote %}
 
-We do NOT recommend trying to start your backend web server from within Cypress.
+We do NOT recommend trying to start your back end web server from within Cypress.
 
 Any command run by {% url "`cy.exec()`" exec %} or {% url "`cy.task()`" task %} has to exit eventually. Otherwise, Cypress will not continue running any other commands.
 
@@ -577,7 +577,7 @@ We have {% url 'examples showing you how to start and stop your web server' cont
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your `cypress.json` file.
+{% fa fa-check-circle green %} **Best Practice:** Set a `baseUrl` in your {% url "configuration file (`cypress.json` by default)" configuration %}.
 {% endnote %}
 
 Adding a {% url "`baseUrl`" configuration#Global %} in your configuration allows you to omit passing the `baseUrl` to commands like {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %}. Cypress assumes this is the url you want to use.
@@ -587,13 +587,15 @@ Adding a {% url "`baseUrl`" configuration#Global %} can also save some time duri
 When you start running your tests, Cypress does not know the url of the app you plan to test. So, Cypress initially opens on `https://localhost` + a random port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
-{% img https://user-images.githubusercontent.com/1271364/36610803-7b340a68-189f-11e8-8dc4-d915250bba69.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
+
+{% imgTag /img/guides/cypress-loads-in-localhost-and-random-port.png "Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" %}
 
 As soon as it encounters a {% url "`cy.visit()`" visit %}, Cypress then switches to the url of the main window to the url specified in your visit. This can result in a 'flash' or 'reload' when your tests first start.
 
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
+
 ```json
 {
   "baseUrl": "http://localhost:8484"
@@ -602,8 +604,12 @@ By setting the `baseUrl`, you can avoid this reload altogether. Cypress will loa
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-{% img  https://user-images.githubusercontent.com/1271364/36610763-5cd9adde-189f-11e8-88ef-2a4b42b781ea.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
+{% imgTag /img/guides/cypress-loads-window-in-base-url-localhost.png "Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" %}
 
-Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running at the specified `baseUrl` when you open Cypress.
+Having a `baseUrl` set gives you the added bonus of seeing an error if your server is not running during `cypress open` at the specified `baseUrl`.
 
-{% img no-border https://user-images.githubusercontent.com/1271364/37180921-d44b42ca-22f8-11e8-80d3-bc4bf3232f69.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" %}
+{% imgTag /img/guides/cypress-ensures-baseUrl-server-is-running.png "Test Runner with warning about how Cypress could not verify server set as the baseUrl is running" "no-border" %}
+
+We also display an error if your server is not running at the specified `baseUrl` during `cypress run` after several retries.
+
+{% imgTag /img/guides/cypress-verifies-server-is-running-during-cypress-run.png "The terminal warns and retries when the url at your baseUrl is not running" %}

@@ -38,7 +38,7 @@ cy.window().click()         // Errors, 'window' does not yield DOM element
 
 The position where the click should be issued. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-{% img /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
+{% imgTag "/img/api/coordinates-diagram.jpg" "cypress-command-positions-diagram" %}
 
 **{% fa fa-angle-right %} x** ***(Number)***
 
@@ -125,7 +125,7 @@ cy.get('button').click({ multiple: true })
 
 ## Click with key combinations
 
-The `.click()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while clicking, such as `ATL + click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.click()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while clicking, such as `ALT + click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
 
 The following modifiers can be combined with `.click()`.
 
@@ -140,10 +140,10 @@ Sequence | Notes
 
 ```js
 // execute a SHIFT + click on the first <li>
-// {release: false} is necessary so that
+// { release: false } is necessary so that
 // SHIFT will not be released after the type command
 cy.get('body').type('{shift}', { release: false })
-  .get('li:first').click()
+cy.get('li:first').click()
 ```
 
 # Notes
@@ -153,24 +153,6 @@ cy.get('body').type('{shift}', { release: false })
 ### The element must first reach actionability
 
 `.click()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
-
-## Events
-
-### Events that are fired:
-
-```javascript
-cy.get('button').click()
-// mousedown
-// focus
-// mouseup
-// click
-```
-
-The events are fired to spec, including the coordinates of where the event took place.
-
-At the moment, `mouseover` and `mouseout` events are *not* fired. {% open_an_issue %} if you need this to be fixed.
-
-Additionally if the `mousedown` event causes the element to be removed from the DOM, the remaining events should continue to be fired, but to the resulting element left below the removed element. This has also not been implemented. {% open_an_issue %} if you need this to be fixed.
 
 ## Focus
 
@@ -185,14 +167,6 @@ However, Cypress additionally handles situations where a child descendent is cli
 ### Mousedown cancellation will not cause focus
 
 If the mousedown event has its default action prevented (`e.preventDefault()`) then the element will not receive focus as per the spec.
-
-### Element removal during `mousedown` or `mouseup`
-
-The spec states what should happen if the element clicked is removed from the DOM during `mousedown` or `mouseup`, but Cypress is not currently factoring this in. {% open_an_issue %} if you need this to be fixed.
-
-### pointer-events: none
-
-Cypress does not currently factor in `pointer-events: none` in its clicking algorithm. {% open_an_issue %} if you need this to be fixed.
 
 # Rules
 
@@ -210,24 +184,29 @@ Cypress does not currently factor in `pointer-events: none` in its clicking algo
 
 # Command Log
 
-***Click the button in the form that has text "Create User"***
+***Click the button***
 
 ```javascript
-cy.get('form').find('button').contains('Create User').click()
+cy.get('.action-btn').click()
 ```
 
 The commands above will display in the Command Log as:
 
-![Command log for click](/img/api/click/click-button-in-form-during-test.png)
+{% imgTag /img/api/click/click-button-in-form-during-test.png "Command log for click" %}
 
 When clicking on `click` within the command log, the console outputs the following:
 
-![console.log for click](/img/api/click/click-coords-and-events-in-console.png)
+{% imgTag /img/api/click/click-coords-and-events-in-console.png "console.log for click" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()`
+{% endhistory %}
 
 # See also
 
 - {% url `.check()` check %}
 - {% url `.dblclick()` dblclick %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
 - {% url `.type()` type %}

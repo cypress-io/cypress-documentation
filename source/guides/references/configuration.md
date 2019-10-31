@@ -2,13 +2,11 @@
 title: Configuration
 ---
 
-When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
+When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' projects#Setup %}) and any configuration values you supply.
 
-```json
-{
-  "projectId": "jd90q7"
-}
-```
+{% note warning Change Configuration File %}
+You can change the configuration file or turn off the use of a configuration file by using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
+{% endnote %}
 
 # Options
 
@@ -18,7 +16,7 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 Option | Default | Description
 ----- | ---- | ----
-`baseUrl` | `null` | Url used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's url
+`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
 `env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
@@ -72,7 +70,7 @@ Option | Default | Description
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
-`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-service %} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction%} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
 
 ## Browser
 
@@ -96,6 +94,12 @@ Option | Default | Description
 ----- | ---- | ----
 `animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
 `waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
+
+## Node version
+
+Option | Default | Description
+----- | ---- | ----
+`nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your {% url plugins plugins-guide %}. Otherwise, Cypress will use the Node version bundled with Cypress.
 
 # Overriding Options
 
@@ -123,7 +127,7 @@ cypress run --record --config viewportWidth=1280,viewportHeight=720
 
 ## Plugins
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node.js code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
@@ -133,7 +137,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
-By default, any environment variable that matches a corresponding configuration key will override the `cypress.json` value.
+By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -145,7 +149,7 @@ export CYPRESS_VIEWPORT_HEIGHT=600
 
 We automatically normalize both the key and the value. Cypress will *strip off* the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
 
-**Both options below are valid**
+### Both options below are valid
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
@@ -177,9 +181,9 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 # Resolved Configuration
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
+When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from.
 
-![resolve-configuration](https://user-images.githubusercontent.com/1271364/26941279-e7903108-4c4b-11e7-8731-be118e2c30eb.jpg)
+{% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
 # Notes
 
@@ -187,7 +191,7 @@ When you open a Cypress project, clicking on the *Settings* tab will display the
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
-To see a working example of this please check out our {% url 'Google Analytics Recipe' recipes#Stubbing-Google-Analytics %}.
+To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
 To blacklist a host:
 
@@ -202,7 +206,7 @@ Not sure what a part of the URL a host is? {% url 'Use this guide as a reference
 When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
 {% endnote %}
 
-Given the following urls:
+Given the following URLs:
 
 ```text
 https://www.google-analytics.com/ga.js
@@ -234,7 +238,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
-{% img /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
+{% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
 
 ## modifyObstructiveCode
 
@@ -250,4 +254,8 @@ You can turn this option off if the application or site you're testing **does no
 
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+
+{% history %}
+{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% endhistory %}

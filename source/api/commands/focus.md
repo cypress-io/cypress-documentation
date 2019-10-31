@@ -1,6 +1,5 @@
 ---
 title: focus
-
 ---
 
 Focus on a DOM element.
@@ -46,13 +45,13 @@ Option | Default | Description
 
 ## No Args
 
-***Focus on an input***
+### Focus on an input
 
 ```javascript
 cy.get('[type="input"]').focus()
 ```
 
-***Focus, type, and blur a textarea***
+### Focus, type, and blur a textarea
 
 ```javascript
 // yields the <textarea> for further chaining
@@ -63,31 +62,31 @@ cy.get('textarea').focus().type('Nice Product!').blur()
 
 ## Actionability
 
-***Focus is not an action command***
+### Focus is not an action command
 
 `.focus()` is not implemented like other action commands, and does not follow the same rules of {% url 'waiting for actionability' interacting-with-elements %}.
 
-`.focus()` is just a helpful command which is a simple shortcut. Normally there's no way for a user to simply "focus" an element without causing another action or side effect. Typically the user would have to click or tab to this element.
+`.focus()` is a helpful command used as a shortcut. Normally there's no way for a user to "focus" an element without causing another action or side effect. Typically the user would have to click or tab to this element.
 
-Oftentimes it's much simpler and conveys what you're trying to test by just using `.focus()` directly.
+Oftentimes using `.focus()` directly is more concise and conveys what you're trying to test.
 
 If you want the other guarantees of waiting for an element to become actionable, you should use a different command like {% url `.click()` click %}.
 
 ## Blur Events
 
-***Cypress blurs other focused elements first***
+### Cypress blurs other focused elements first
 
 If there is currently a different DOM element with focus, Cypress issues a `blur` event to that element before running the `.focus()` command.
 
 ## Focusable
 
-***Can only be called on a valid focusable element.***
+### Can only be called on a valid focusable element
 
 Ensure the element you are trying to call `.focus()` on is a {% url 'focusable element' https://www.w3.org/TR/html5/editing.html#focusable %}.
 
 ## Timeouts
 
-***Can time out because your browser did not receive any focus events.***
+### Can time out because your browser did not receive any focus events
 
 If you see this error, you may want to ensure that the main browser window is currently focused. This means not being focused in debugger or any other window when the command is run.
 
@@ -117,11 +116,11 @@ cy.get('[name="comment"]').focus()
 
 The commands above will display in the Command Log as:
 
-![Command Log focus](/img/api/focus/get-input-then-focus.png)
+{% imgTag /img/api/focus/get-input-then-focus.png "Command Log focus" %}
 
 When clicking on the `focus` command within the command log, the console outputs the following:
 
-![console.log focus](/img/api/focus/console-log-textarea-that-was-focused-on.png)
+{% imgTag /img/api/focus/console-log-textarea-that-was-focused-on.png "console.log focus" %}
 
 # See also
 

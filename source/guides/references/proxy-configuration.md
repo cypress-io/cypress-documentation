@@ -4,10 +4,10 @@ title: Proxy Configuration
 
 Cypress needs Internet access to work. Many companies require the use of a corporate proxy to access the Internet. If your company does this, many functions of Cypress will not work until you've configured Cypress to use your proxy:
 
-* Cypress won't be able to load web pages besides `localhost`.
-* Cypress won't be able to warn you if your {% url "`baseUrl`" configuration#Global %} isn't available.
-* Cypress won't be able to connect to the {% url "Dashboard Service" dashboard-service %} to log in or record test runs.
-* `npm install cypress` may fail while downloading the Cypress binary.
+- Cypress won't be able to load web pages besides `localhost`.
+- Cypress won't be able to warn you if your {% url "`baseUrl`" configuration#Global %} isn't available.
+- Cypress won't be able to connect to the {% url "Dashboard Service" dashboard-introduction%} to log in or record test runs.
+- `npm install cypress` may fail while downloading the Cypress binary.
 
 If you are experiencing any or all of these issues, you may need to configure Cypress with your proxy. Instructions are available for {% urlHash "macOS" Set-a-proxy-on-Linux-or-macOS %}, {% urlHash "Linux" Set-a-proxy-on-Linux-or-macOS %}, and {% urlHash "Windows" Set-a-proxy-on-Windows %}.
 
@@ -69,7 +69,7 @@ This section refers to your operating system's environment variables, *not* {% u
 
 Cypress automatically reads from your system's `HTTP_PROXY` environment variable and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY` environment variable is set, HTTPS traffic will use that proxy instead.
 
-To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied.
+To bypass the proxy for certain domains, a `NO_PROXY` environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to `localhost` will not be proxied. To make Cypress send traffic for `localhost` through the proxy, pass `<-loopback>` in `NO_PROXY`.
 
 If an uppercase and a lowercase version of the proxy settings are supplied (for example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable will be preferred.
 
@@ -115,7 +115,7 @@ env | grep -i proxy
 
 Setting environment variables in Windows is different depending on if you're using *command prompt* or *Powershell*.
 
-### Set an environment variable for the current session
+### Set an environment variable for current session
 
 *Command prompt:*
 
@@ -149,7 +149,7 @@ set SOME_VARIABLE=
 Remove-Item Env:\SOME_VARIABLE
 ```
 
-### See all the currently set environment variables
+### See all currently set environment variables
 
 *Command prompt:*
 
@@ -171,4 +171,4 @@ Your current proxy settings can be viewed from within the Cypress Test Runner. F
 2. Click the "Settings" tab.
 3. Click the "Proxy Settings" section to expand it and view the proxy settings that Cypress is currently using.
 
-![Proxy configuration in the Desktop app](/img/guides/proxy-configuration.png)
+{% imgTag /img/guides/proxy-configuration.png "Proxy configuration in the Desktop app" %}

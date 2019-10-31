@@ -126,7 +126,7 @@ cy
 
 Passing a function to `.and()` enables you to assert on the yielded subject. This gives you the opportunity to *massage* what you'd like to assert.
 
-Just be sure *not* to include any code that has side effects in your callback function.
+Be sure *not* to include any code that has side effects in your callback function.
 
 The callback function will be retried over and over again until no assertions within it throw.
 
@@ -254,11 +254,11 @@ cy
 
 The commands above will display in the Command Log as:
 
-![Command log for assertions](/img/api/and/cypress-and-command-log.png)
+{% imgTag /img/api/and/cypress-and-command-log.png "Command log for assertions" %}
 
 When clicking on `assert` within the command log, the console outputs the following:
 
-![console.log for assertions](/img/api/and/cypress-assertions-console-log.png)
+{% imgTag /img/api/and/cypress-assertions-console-log.png "console.log for assertions" %}
 
 # See also
 

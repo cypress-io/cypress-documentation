@@ -15,7 +15,7 @@ How you choose to organize your configuration and environment variables is up to
 
 # Usage
 
-To modify configuration, you simply return an object from your plugins file exported function.
+To modify configuration, you return an object from your plugins file exported function.
 
 ```javascript
 // cypress/plugins/index.js
@@ -40,7 +40,7 @@ If you don't return an object, then configuration will not be modified.
 
 Resolved values will show up in your Settings tab.
 
-{% img /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
+{% imgTag /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
 
 ## Promises
 
@@ -138,6 +138,6 @@ This would enable you to do things like this:
 
 ## Notes
 
-These are just simple examples. Remember - you have the full power of `Node.js` at your disposal.
+These are less complicated examples. Remember - you have the full power of Node at your disposal.
 
 How you choose to organize multiple configurations and sets of environment variables is up to you. You don't even have to read off of the file system - you could store them all in memory inside of your `pluginsFile` if you wanted to.

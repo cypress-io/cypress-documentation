@@ -8,12 +8,14 @@ Get the DOM element containing the text. DOM elements can contain *more* than th
 
 ```javascript
 .contains(content)
+.contains(content, options)
 .contains(selector, content)
 .contains(selector, content, options)
 
 // ---or---
 
 cy.contains(content)
+cy.contains(content, options)
 cy.contains(selector, content)
 cy.contains(selector, content, options)
 ```
@@ -354,11 +356,11 @@ cy.get('h1').contains('New User')
 
 The commands above will display in the Command Log as:
 
-![Command Log contains](/img/api/contains/find-el-that-contains-text.png)
+{% imgTag /img/api/contains/find-el-that-contains-text.png "Command Log contains" %}
 
 When clicking on the `contains` command within the command log, the console outputs the following:
 
-![console.log contains](/img/api/contains/see-elements-found-from-contains-in-console.png)
+{% imgTag /img/api/contains/see-elements-found-from-contains-in-console.png "console.log contains" %}
 
 # See also
 

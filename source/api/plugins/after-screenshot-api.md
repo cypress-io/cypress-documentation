@@ -59,3 +59,12 @@ You can return an object or a promise that resolves an object from the callback 
 If you change any of those properties of the image, you should include the new values in the returned object, so that the details are correctly reported in the test results. For example, if you crop the image, return the new size and dimensions of the image.
 
 The properties will be merged into the screenshot details and passed to the `onAfterScreenshot` callback (if defined with {% url 'Cypress.Screenshot.defaults()' screenshot-api %} and/or {% url 'cy.screenshot()' screenshot %}). Any other properties besides *path*, *size*, and *dimensions* will be ignored.
+
+# See also
+
+- {% url "`cy.screenshot()`" screenshot %}
+- {% url 'Dashboard Service' dashboard-introduction%}
+- {% url "Plugins Guide" plugins-guide %}
+- {% url 'Screenshots and Videos' screenshots-and-videos %}
+- {% url 'Visual Testing' visual-testing %}
+- {% url "Writing a Plugin" writing-a-plugin %}

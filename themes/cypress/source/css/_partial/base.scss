@@ -25,6 +25,14 @@ body {
   color: $color-default;
   text-size-adjust: 100%;
   overflow-x: hidden;
+
+  &.mobile-nav-on {
+    position: fixed;
+
+    #container {
+      overflow-y: auto;
+    }
+  }
 }
 
 a {
@@ -89,8 +97,13 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   background-color: white;
   margin: -1px 0;
   position: relative;
-  top: 62px;
-  bottom: 334px;
+  //top: 62px;
+  //bottom: 334px;
+  //overflow-y: hidden;
+
+  &.rtl {
+    direction: rtl;
+  }
 }
 
 @media print {
@@ -149,6 +162,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
 #container {
   transition: 0.4s;
   height: 100%;
+
+  @media screen and (max-width:768px) {
+    overflow-x: hidden;
+  }
 }
 
 .not-found {

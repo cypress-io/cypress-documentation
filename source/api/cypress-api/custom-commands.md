@@ -1,6 +1,5 @@
 ---
 title: Custom Commands
-
 ---
 
 Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.
@@ -15,7 +14,6 @@ A great place to define or overwrite commands is in your `cypress/support/comman
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
 Cypress.Commands.overwrite(name, callbackFn)
-Cypress.Commands.overwrite(name, options, callbackFn)
 ```
 
 ## Usage
@@ -40,6 +38,10 @@ Pass a function that receives the arguments passed to the command.
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to define the implicit behavior of the custom command.
+
+{% note warning %}
+`options` is only supported for use in `Cypress.Commands.add()` and not supported for use in `Cypress.Commands.overwrite()`
+{% endnote %}
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
@@ -236,7 +238,7 @@ cy.get('#dialog').dismiss() // with subject
 
 ## Overwrite Existing Commands
 
-You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up just using the original.
+You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up using the original.
 
 ### Overwrite `visit` command
 
@@ -263,7 +265,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 {% note info %}
 We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Just set the `baseUrl` config property in `cypress.json` and override it with environment variable `CYPRESS_BASE_URL`.
+This is usually unnecessary because Cypress is already configured to swap out a `baseUrl` that both `cy.visit()` and `cy.request()` use. Set the `baseUrl` configuration property in your {% url "configuration" configuration %} file (`cypress.json` by default) and override it with the `CYPRESS_BASE_URL` environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
@@ -301,7 +303,7 @@ As noted in the {% urlHash 'Arguments' 'Arguments' %} above, you can also set `p
 When doing so Cypress will automatically validate your subject to ensure it conforms to one of those types.
 
 {% note info  %}
-Adding validations is optional. Simply passing `{ prevSubject: true }` will require a subject, but not validate its type.
+Adding validations is optional. Passing `{ prevSubject: true }` will require a subject, but not validate its type.
 {% endnote %}
 
 ## Require Element
@@ -418,11 +420,11 @@ Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're iss
 
 Custom commands work well when you're needing to describe behavior that's desirable across **all of your tests**. Examples would be a `cy.setup()` or `cy.login()` or extending your application's behavior like `cy.get('.dropdown').dropdown('Apples')`. These are specific to your application and can be used everywhere.
 
-However, this pattern can be used and abused. Let's not forget - writing Cypress tests is just **JavaScript**, and it's often much easier just to write a simple function for repeatable behavior that's specific to only **a single spec file**.
+However, this pattern can be used and abused. Let's not forget - writing Cypress tests is **JavaScript**, and it's often more efficient to write a function for repeatable behavior that's specific to only **a single spec file**.
 
 If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself:
 
-> Can this just be written as a simple function?
+> Can this be written as a function?
 
 The answer is usually **yes**. Here's an example:
 
@@ -430,7 +432,7 @@ The answer is usually **yes**. Here's an example:
 // There's no reason to create something like a cy.search() custom
 // command because this behavior is only applicable to a single spec file
 //
-// Just use a regular ol' javascript function folks!
+// Use a regular ol' javascript function folks!
 const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
@@ -495,7 +497,7 @@ it('paginates many search results', function () {
       search('cypress.io', {
         fixture: 'list',
         headers: {
-          // just trick our app into thinking
+          // trick our app into thinking
           // there's a bunch of pages
           'x-pagination-total': 3,
         }
@@ -522,13 +524,13 @@ Don't do things like:
 - **{% fa fa-exclamation-triangle red %}** `cy.clickButton(selector)`
 - **{% fa fa-exclamation-triangle red %}** `.shouldBeVisible()`
 
-This first custom command is really just wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
+This first custom command is should be wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
 
-The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when it's already as simple as typing: `.should('be.visible')`
+The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when you can already use: `.should('be.visible')`
 
 Testing in Cypress is all about **readability** and **simplicity**. You don't have to do that much actual programming to get a lot done. You also don't need to worry about keeping your code as DRY as possible. Test code serves a different purpose than app code. Understandability and debuggability should be prioritized above all else.
 
-Try not to overcomplicate things and create too many abstractions. When in doubt, just use a regular function for individual spec files.
+Try not to overcomplicate things and create too many abstractions. When in doubt, use a regular function for individual spec files.
 
 ### 3. Don't do too much in a single command
 
@@ -538,13 +540,17 @@ Try to add either zero or as few assertions as possible in your custom command. 
 
 ### 4. Skip your UI as much as possible
 
-Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use {% url `cy.request()` request %} to login, set cookies or local storage directly, stub and mock your applications functions, and / or trigger events programmatically.
+Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use {% url `cy.request()` request %} to login, set cookies or localStorage directly, stub and mock your applications functions, and / or trigger events programmatically.
 
 Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
 
 ### 5. Write TypeScript definitions
 
 You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense %} repository for a working example.
+
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | `Cypress.Commands` API added
+{% endhistory %}
 
 # See also
 

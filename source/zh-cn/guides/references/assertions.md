@@ -1,24 +1,24 @@
 ---
-title: Assertions
+title: 断言
 ---
 
-Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, as well as helpful extensions for {% url 'Sinon' assertions#Sinon-Chai %} and {% url 'jQuery' assertions#Chai-jQuery %}, bringing you dozens of powerful assertions for free.
+Cypress绑定了流行的{% url 'Chai' assertions#Chai %}断言库，扩展插件{% url 'Sinon' assertions#Sinon-Chai %}以及{% url 'jQuery' assertions#Chai-jQuery %}，为你带来强大又免费的断言处理。
 
 {% note info "New to Cypress?" %}
-This document is only a reference to every assertion Cypress supports.
+本文档仅是Cypress支持的断言的一个引述。
 
-If you're looking to understand **how** to use these assertions please read about assertions in our {% url "Introduction to Cypress" introduction-to-cypress#Assertions guide %}.
+如果你正在寻找理解**如何**使用这些断言，请阅读我们的{% url "Cypress简介-断言指导" introduction-to-cypress#Assertions guide %}。
 {% endnote %}
 
 # Chai
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai %}
 
-## BDD Assertions
+## BDD断言
 
-These chainers are available for BDD assertions (`expect`/`should`). Aliases listed can be used interchangeably with their original chainer. You can see the entire list of available BDD Chai assertions {% url "here" http://chaijs.com/api/bdd/ %}.
+以下是BDD可用的断言链（`expect`/`should`）。列出的别名可以与原始链互换使用。{% url "此处" http://chaijs.com/api/bdd/ %}有完整的可使用的BDD Chai断言列表。
 
-| Chainer | Example |
+| 链 | 示例 |
 | --- | --- |
 | not | `expect(name).to.not.equal('Jane')` |
 | deep | `expect(obj).to.deep.equal({ name: 'Jane' })` |
@@ -50,7 +50,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | ownProperty(*name*) {% aliases haveOwnProperty own.property %} | `expect('test').to.have.ownProperty('length')` |
 | ownPropertyDescriptor(*name*) {% aliases haveOwnPropertyDescriptor %} | `expect({a: 1}).to.have.ownPropertyDescriptor('a')` |
 | lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
-| match(*regexp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
+| match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
 | key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
 | throw(*constructor*) {% aliases throws Throw %} | `expect(fn).to.throw(Error)` |
@@ -64,15 +64,15 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | increase(*function*) {% aliases increases %} | `expect(fn).to.increase(obj, 'val')` |
 | decrease(*function*) {% aliases decreases %} | `expect(fn).to.decrease(obj, 'val')` |
 
-These getters are also available for BDD assertions. They don't actually do anything, but they enable you to write simple, english sentences.
+以下getters对BDD断言也是可用的。它们实际上什么事都不会做，但可以让你写简单的英语句子。
 
 | Chainable getters |
 | --- |
 | `to`, `be`, `been`, `is`, `that`, `which`, `and`, `has`, `have`, `with`, `at`, `of`, `same` |
 
-## TDD Assertions
+## TDD断言
 
-These assertions are available for TDD assertions (`assert`). You can see the entire list of available Chai assertions {% url "here" http://chaijs.com/api/assert/ %}.
+以下是TDD可用的断言的链（`assert`）。{% url "此处" http://chaijs.com/api/assert/ %}有完整的可使用的Chai断言列表。
 
 | Assertion | Example |
 | --- | --- |
@@ -120,11 +120,11 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 
 {% fa fa-github %} {% url https://github.com/chaijs/chai-jquery %}
 
-These chainers are available when asserting about a DOM object.
+这些断言可以使用在判断一个DOM对象的时候。
 
-You will commonly use these chainers after using DOM commands like: {% url `cy.get()` get %}, {% url `cy.contains()` contains %}, etc.
+在使用完DOM指令，如：{% url `cy.get()` get %}, {% url `cy.contains()` contains %}等等的时候，你可以频繁地使用这些链：
 
-| Chainers | Assertion |
+| 链 | 断言 |
 | --- | --- |
 | attr(*name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
 | prop(*name*, *[value]*) | `expect($el).to.have.prop('disabled', false)` |
@@ -132,14 +132,13 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 | data(*name*, *[value]*) | `expect($el).to.have.data('foo', 'bar')` |
 | class(*className*) | `expect($el).to.have.class('foo')` |
 | id(*id*) | `expect($el).to.have.id('foo')` |
-| html(*html*)  | `expect($el).to.have.html('I love testing')` |
+| html(*HTML*)  | `expect($el).to.have.html('I love testing')` |
 | text(*text*) | `expect($el).to.have.text('I love testing')` |
 | value(*value*) | `expect($el).to.have.value('test@dev.com')` |
 | visible | `expect($el).to.be.visible` |
 | hidden | `expect($el).to.be.hidden` |
 | selected | `expect($option).not.to.be.selected` |
 | checked | `expect($input).not.to.be.checked` |
-| focus[ed] | `expect($input).not.to.be.focused`<br>`expect($input).to.have.focus` |
 | enabled | `expect($input).to.be.enabled` |
 | disabled | `expect($input).to.be.disabled` |
 | empty | `expect($el).not.to.be.empty` |
@@ -152,7 +151,7 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 
 {% fa fa-github %} {% url https://github.com/domenic/sinon-chai %}
 
-These chainers are used on assertions with {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %}.
+这些链断言可以与{% url `cy.stub()` stub %}和{% url `cy.spy()` spy %}一起使用：
 
 | Sinon.JS property/method | Assertion |
 | -- | -- |
@@ -178,85 +177,73 @@ These chainers are used on assertions with {% url `cy.stub()` stub %} and {% url
 | threw | `expect(spy).to.have.thrown(errorObjOrErrorTypeStringOrNothing)` |
 | alwaysThrew | `expect(spy).to.have.always.thrown(errorObjOrErrorTypeStringOrNothing)` |
 
-# Adding New Assertions
+# 添加新断言
 
-Because we are using `chai`, that means you can extend it however you'd like. Cypress will "just work" with new assertions added to `chai`. You can:
+因为我们使用的是`chai`，这意味着你可以任意地按喜欢的方式扩展它。Cypress将"仅"对新添加到`chai`的断言生效。你可以:
 
-- Write your own `chai` assertions as {% url 'documented here' http://chaijs.com/api/plugins/ %}.
-- npm install any existing `chai` library and import into your test file or support file.
+- 按照{% url '此处的文档' http://chaijs.com/api/plugins/ %}添加你自己的`chai`断言；
+- 使用npm安装任何已经存在的`chai`库并在你的测试文件或支撑文件中导入它。
 
 {% note info %}
-{% url 'Check out our example recipe extending chai with new assertions.' recipes#Adding-Chai-Assertions %}
+{% url '参考我们的使用新断言扩展chai的示例' recipes#Fundamentals %}
 {% endnote %}
 
-# Common Assertions
+# 一般断言
 
-Here is a list of common element assertions. Notice how we use these assertions (listed above) with {% url `.should()` should %}. You may also want to read about how Cypress {% url "retries" retry-ability %} assertions.
+以下列出了一般元素断言。请注意我们如何是如何通过{% url `.should()` should %}使用（以上所列出的）断言的。你或许还想了解一下Cypress如何进行断言{% url "重试" retry-ability %}。
 
-## Length
+## 长度
 
 ```javascript
-// retry until we find 3 matching <li.selected>
+// 重试直至找到3个匹配的<li.selected>
 cy.get('li.selected').should('have.length', 3)
 ```
 
-## Class
+## 类
 
 ```javascript
-// retry until this input does not have class disabled
+// 重试直至这个input不再有disabled的class
 cy.get('form').find('input').should('not.have.class', 'disabled')
 ```
 
-## Value
+## 值
 
 ```javascript
-// retry until this textarea has the correct value
+// 重试直至这个textarea有正确的value
 cy.get('textarea').should('have.value', 'foo bar baz')
 ```
 
-## Text Content
+## 文本内容
 
 ```javascript
-// retry until this span does not contain 'click me'
+// 重试直至这个span不再包含'click me'
 cy.get('a').parent('span.help').should('not.contain', 'click me')
 ```
 
-## Visibility
+## 可见性
 
 ```javascript
-// retry until this button is visible
+// 重试直至button可见
 cy.get('button').should('be.visible')
 ```
 
-## Existence
+## 存在性
 
 ```javascript
-// retry until loading spinner no longer exists
+// 重试直至loading spinner不再存在
 cy.get('#loading').should('not.exist')
 ```
 
-## State
+## 状态
 
 ```javascript
-// retry until our radio is checked
+// 重试直至radio状态是checked
 cy.get(':radio').should('be.checked')
 ```
 
-## CSS
+# Should回调
 
-```javascript
-// retry until .completed has matching css
-cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
-```
-
-```javascript
-// retry until .accordion css have display: none
-cy.get('#accordion').should('not.have.css', 'display', 'none')
-```
-
-# Should callback
-
-If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
+如果内建的断言不够使用，你可以轻易地写你自己的断言函数，将其作为一个回调以参数的形式传给`.should()`即可。Cypress会自动{% url "重试" retry-ability %}此回调直至通过或超时。请参考{% url `.should()` should#Function %}文档。
 
 ```html
 <div class="main-abc123 heading-xyz987">Introduction</div>
@@ -274,8 +261,8 @@ cy.get('div')
   })
 ```
 
-# See also
+# 其他参考
 
-- {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
-- {% url 'cypress-example-kitchensink Assertions' https://example.cypress.io/commands/assertions %}
-- {% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post
+- {% url '指导：Cypress简介' introduction-to-cypress#Assertions %}
+- {% url 'cypress示例之kitchensink断言' https://example.cypress.io/commands/assertions %}
+- {% url 'Cypress Should回调' https://glebbahmutov.com/blog/cypress-should-callback/ %}博客
