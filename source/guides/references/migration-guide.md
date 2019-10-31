@@ -127,7 +127,20 @@ Sinon has been upgraded to Sinon 7 with some [breaking changes](https://sinonjs.
 cy.stub(obj, 'nonExistingProperty')
 ```
 
-- `cy.spy.reset()` was replaced by `cy.spy.resetHistory()`.
+- For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
+
+```javascript
+const spy = cy.spy()
+const stub = cy.stub()
+
+// Old, no longer works
+spy.reset()
+stub.reset()
+
+// Update to this
+spy.resetHistory()
+stub.resetHistory()
+```
 
 ## Cypress no longer supports CJSX by default
 
@@ -147,19 +160,4 @@ const browserify = require('@cypress/browserify-preprocessor')
 module.exports = (on) => {
   on('file:preprocessor', browserify())
 }
-```
-
-- For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
-
-```javascript
-const spy = cy.spy()
-const stub = cy.stub()
-
-// Old, no longer works
-spy.reset()
-stub.reset()
-
-// Update to this
-spy.resetHistory()
-stub.resetHistory()
 ```
