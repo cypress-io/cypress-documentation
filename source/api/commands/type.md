@@ -106,6 +106,21 @@ Each keypress is delayed 10ms by default in order to simulate how a very fast us
 cy.get('[contenteditable]').type('some text!')
 ```
 
+### 'Selecting' an option from datalist
+For 'selecting' an option, just type it into the input.
+```html
+<input list="fruit" />
+<datalist id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cantaloupe</option>
+</datalist>
+```
+
+```javascript
+cy.get('input').type('Apple')
+```
+
 ## Tabindex
 
 ### Type into a non-input or non-textarea element with `tabindex`
@@ -306,8 +321,6 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 ### When element is not in focus
 
 If the element is currently not in focus, before issuing any keystrokes Cypress will first issue a {% url `.click()` click %} to the element to bring it into focus.
-
-All of {% url 'the normal events' click#Events %} documented on {% url `.click()` click %} will fire.
 
 ### Events that fire
 

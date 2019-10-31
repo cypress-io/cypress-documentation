@@ -25,9 +25,31 @@ Once you've read through the documentation below, we invite you to experience th
 
 # Reporter Options
 
-Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
+### Command line
 
-***cypress.json***
+```shell
+cypress run --reporter reporters/custom.js
+```
+
+We also support passing an absolute path to the reporter.
+
+## npm Reporters
+
+### Specify package name in configuration file (`cypress.json` by default) when installing a custom reporter through npm
+
+```json
+{
+  "reporter": "mochawesome"
+}
+```
+
+### Command line
+
+
+
+# Reporter Options
+
+Some reporters accept options that customize their behavior. These can be specified in your configuration file (`cypress.json` by default) or via {% url "command line" command-line %} options:
 
 ```json
 {
@@ -71,7 +93,7 @@ The solution here is to use multiple reporters. You will have the benefit of bot
 
 We suggest using the excellent npm module:
 
-{% fa fa-github %} {% url 'https://github.com/stanleyhlng/mocha-multi-reporters' %}
+{% fa fa-github %} {% url 'https://github.com/you54f/cypress-multi-reporters' %}
 
 We use multiple reporters for every single one of our internal projects.
 
@@ -86,7 +108,7 @@ We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON rep
 We need to install additional dependencies including Mocha itself.
 
 ```shell
-npm install --save-dev mocha mocha-multi-reporters mocha-junit-reporter
+npm install --save-dev mocha cypress-multi-reporters mocha-junit-reporter
 ```
 
 Then add a separate `reporter-config.json` file that enables `spec` and `junit` reporters and directs the `junit` reporter to save a separate XML files.
@@ -100,10 +122,10 @@ Then add a separate `reporter-config.json` file that enables `spec` and `junit` 
 }
 ```
 
-The CLI command tells Cypress to use the `mocha-multi-reporters` module and points at the config file.
+The CLI command tells Cypress to use the `cypress-multi-reporters` module and points at the config file.
 
 ```shell
-cypress run --reporter mocha-multi-reporters \
+cypress run --reporter cypress-multi-reporters \
   --reporter-options configFile=reporter-config.json
 ```
 
@@ -114,7 +136,7 @@ Note: we recommend deleting all files from the `cypress/results` folder before r
   "scripts": {
     "delete:reports": "rm cypress/results/* || true",
     "prereport": "npm run delete:reports",
-    "report": "cypress run"
+    "report": "cypress run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json"
   }
 }
 ```
@@ -131,7 +153,7 @@ We need to install several dependencies.
 npm install --save-dev mocha mochawesome mochawesome-merge mochawesome-report-generator
 ```
 
-We need to configure the reporter in `cypress.json` to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
+We need to configure the reporter in your {% url "configuration file (`cypress.json` by default)" configuration %} to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
 
 ```json
 {
