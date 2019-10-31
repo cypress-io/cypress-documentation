@@ -7,6 +7,7 @@
   authorTwitter: giltayar
   sourceName: Test Automation University
   sourceUrl: https://testautomationu.applitools.com/
+  free: true
 
 - title: Test Automation using Cypress
   url: https://training.xebia.com/quality-test-automation/test-automation-using-cypress
@@ -68,3 +69,4 @@
   authorTwitter: avanslaars
   sourceName: Cypress.io
   sourceUrl: https://www.cypress.io
+  free: true

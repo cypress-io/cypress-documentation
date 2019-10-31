@@ -524,7 +524,7 @@ Don't do things like:
 - **{% fa fa-exclamation-triangle red %}** `cy.clickButton(selector)`
 - **{% fa fa-exclamation-triangle red %}** `.shouldBeVisible()`
 
-This first custom command is should be wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
+This first custom command is wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
 
 The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when you can already use: `.should('be.visible')`
 
