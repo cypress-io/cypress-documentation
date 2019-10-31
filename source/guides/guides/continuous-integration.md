@@ -627,9 +627,10 @@ After all tests across all Cypress instances finish, kill the Xvfb background pr
 pkill Xvfb
 ```
 
-## Color Issue
+## Colors
 
-If you are running into issues with the forced color, you can use the `NO_COLOR` environment variable to manage it:
+If you want colors to be disabled, you can pass the `NO_COLOR` environment variable to disable colors. You may want to do this if ASCII characters or colors are not properly formatted in your CI.
+
 ```shell
 NO_COLOR=1 cypress run
 ```
