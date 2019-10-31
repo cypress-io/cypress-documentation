@@ -50,7 +50,7 @@ Option | Default | Description
 `pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
-`testFiles` | `**/*.*` | A String glob pattern of the test files to load
+`testFiles` | `**/*.*` | A String or Array of glob patterns of the test files to load
 `videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
 
 ## Screenshots
@@ -123,6 +123,10 @@ cypress run --config integrationFolder=tests,fixturesFolder=false
 
 ```shell
 cypress run --record --config viewportWidth=1280,viewportHeight=720
+```
+
+```shell
+cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffee"]
 ```
 
 ## Plugins
