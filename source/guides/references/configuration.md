@@ -18,12 +18,10 @@ Option | Default | Description
 ----- | ---- | ----
 `baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
 `env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
-`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
-`testFiles` | `**/*.*` | A String glob pattern of the test files to load
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
 ## Timeouts
@@ -47,10 +45,12 @@ Option | Default | Description
 ----- | ---- | ----
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
+`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
 `pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
+`testFiles` | `**/*.*` | A String glob pattern of the test files to load
 `videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
 
 ## Screenshots
