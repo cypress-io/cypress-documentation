@@ -17,9 +17,12 @@
                     <li>
                       <h3>
                         <a href="{{course.url}}" target="_blank" rel="noopener noreferrer">{{ course.title }}</a>
+                        {% if course.free %}
+                          <span class="badge badge-pill badge-primary">Free</span>
+                        {% endif %}
                       </h3>
                       <p>
-                        Published 
+                        Published
                         {% if course.sourceUrl or course.sourceName %}
                           on
                           {% if course.sourceUrl %}
@@ -46,7 +49,7 @@
                   {% endfor %}
                 </ul>
               {% endif %}
-              
+
               {% if site.data[page.dataType].small %}
                 <div class="small-media">
                   <ul>
@@ -86,7 +89,7 @@
                       </a>
                     {% endif %}
                     <p>
-                      Published 
+                      Published
                       {% if media.sourceUrl or media.sourceName %}
                         on
                         {% if media.sourceUrl %}

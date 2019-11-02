@@ -1,5 +1,21 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: 'Automated testing made easy with Cypress.io'
+    url: https://www.youtube.com/watch?v=oriFMIb5pb8
+    sourceName: Ember London
+    sourceUrl: http://emberlondon.com/
+    date: Sep 13, 2019
+    author: Sam de Maeyer
+    youtubeId: oriFMIb5pb8
+
+  - title: "Componentizing end-to-end tests"
+    url: https://www.youtube.com/watch?v=Pv2YHXQOEJY
+    sourceName: JSConf US 2019
+    sourceUrl: https://2019.jsconf.us/
+    date: Sept 11, 2019
+    author: Nicholas Boll 
+    youtubeId: Pv2YHXQOEJY	
+    
 	- title: "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37"
     sourceUrl: https://speakerdeck.com/mrcube42
     url: https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37
