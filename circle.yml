@@ -66,9 +66,8 @@ jobs:
       #
       - run: ls -la
       - run: npm run deps
-      - run: npm run lint
+      - run: npm run lint -- --max-warnings=0
       - run: npm run md-lint
-      - run: npm run stop-only
       - run: npm test
       - run: npm run build
 
