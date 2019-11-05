@@ -98,7 +98,7 @@ Cypress will automatically detect the type of browser supplied and launch it for
 
 ## Unsupported Browsers
 
-Many browsers such as Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
+Many browsers such as Safari and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an explanation about our future cross browser roadmap {% issue 310 'here' %}.
 
 # Browser Environment
 

@@ -29,7 +29,6 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 170#issuecomment-340012621 "Testing file uploads is application specific." %}
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
 - {% issue 685 "iframe support is somewhat limited, but does work." %}
-- {% issue 310 "There is no cross browser support other than Chrome and Electron." %}
 - {% issue 95#issuecomment-281273126 "You cannot use `cy.route()` on `window.fetch` but there is a workaround." %} See the implementation in {% url "this recipe." https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch/cypress/integration %}
 - {% issue 144 "There is no shadow DOM support, but there are workarounds." %} See {% url "this comment." https://github.com/cypress-io/cypress/issues/830#issuecomment-449411701 %}
 
