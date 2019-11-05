@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "cypress"
+    "cypress",
+    "no-only-tests"
   ],
   "extends": [
     "plugin:cypress-dev/general",
@@ -10,5 +11,8 @@
     "es6": true,
     "node": true,
     "cypress/globals": true
+  },
+  "rules": {
+    "no-only-tests/no-only-tests": "warn"
   }
 }
