@@ -6,7 +6,7 @@ Before Cypress launches a browser, it gives you the ability to modify the argume
 
 This is helpful to modify, remove, or add your own arguments.
 
-The most common use case is adding your own chrome extension.
+The most common use case is adding your own extension.
 
 # Usage
 
@@ -21,6 +21,7 @@ This event will yield you the `browser` as an object, and `args` which are the d
 Here are options for the currently supported browsers:
 
 * {% url 'Chrome, Chromium, or Canary' "https://peter.sh/experiments/chromium-command-line-switches/" %}
+* {% url 'Firefox' "http://kb.mozillazine.org/About:config_entries" %}
 * {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
 
 ```js
@@ -42,6 +43,11 @@ module.exports = (on, config) => {
 
       // whatever you return here becomes the new args
       return args
+    }
+
+    if (browser.name === 'firefox') {
+      args.extensions.push('/path/to/my/extension')
+      args.preferences['browser.blink_allowed'] = true
     }
 
     if (browser.name === 'electron') {

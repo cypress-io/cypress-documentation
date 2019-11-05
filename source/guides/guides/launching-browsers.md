@@ -15,6 +15,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
+- {% url "Firefox" https://www.mozilla.org/firefox/ %}
+- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
+- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
 
@@ -67,6 +70,18 @@ cypress run --browser canary
 
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
 
+## Firefox Browsers
+
+All Firefox* flavored browsers will be detected and are supported.
+
+### You can launch Firefox browsers:
+
+```bash
+cypress run --browser firefox
+```
+
+To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+
 ## Launching by a path
 
 You can launch any supported browser by specifying a path to the binary:
@@ -83,7 +98,7 @@ Cypress will automatically detect the type of browser supplied and launch it for
 
 ## Unsupported Browsers
 
-Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
+Many browsers such as Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
 
 # Browser Environment
 
@@ -95,8 +110,8 @@ When Cypress goes to launch your browser it will give you an opportunity to modi
 
 This enables you to do things like:
 
-- Load your own chrome extension
-- Enable or disable experimental chrome features
+- Load your own extension
+- Enable or disable experimental features
 
 {% url 'This part of the API is documented here.' browser-launch-api %}
 
@@ -137,10 +152,10 @@ You might notice that if you already have the browser open you will see two of t
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %}, {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}, {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}, or {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}. These browsers both have different icons from the standard Chrome browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
-Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
+Additionally, in Chrome-based browsers, we've made the browser spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
 {% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
