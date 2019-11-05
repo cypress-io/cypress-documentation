@@ -176,6 +176,8 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
+    isbrowsertype: isBrowserType
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

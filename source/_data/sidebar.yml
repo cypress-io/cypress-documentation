@@ -159,6 +159,8 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
+    isbrowser: isbrowser.html
+    isbrowsertype: isbrowsertype.html
     iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html
