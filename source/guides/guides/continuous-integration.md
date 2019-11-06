@@ -324,6 +324,8 @@ jobs:
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
 
+## AWS Amplify
+
 ### Example `amplify.yml`
 
 ```yaml
