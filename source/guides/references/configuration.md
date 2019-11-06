@@ -14,27 +14,19 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 ## Global
 
-Option | Default | Description
------ | ---- | ----
-`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
-`env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
-`numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
-`port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
-`reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
-`reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
-`watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
+The following options affect the running Cypresss instance globally. Refer to the examples below for different ways to apply these options. 
 
 ## `baseUrl`
 URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
 
-**Default value:** null
+**Default value:** `null`
 
-**Example:** pass staging url during tests
+**Example:** pass staging url during tests by overriding ENV variable
 ```shell
 CYPRESS_baseUrl=https://staging.company.com npx cypress run
 ```
 
-**Example:** override local url using config option
+**Example:** override local url using `--config` option
 ```shell
 npx cypress run --config baseUrl=http://localhost:444
 ```
@@ -42,9 +34,14 @@ npx cypress run --config baseUrl=http://localhost:444
 ## `env`
 Any values to be set as {% url 'environment variables' environment-variables %}
 
-**Default value:** {}
+**Default value:** `{}`
 
-**Example:** override any environment variable using env option
+**Example:** override an environment variable using `--env` option
+```shell
+npx cypress run --env=host=local.dev
+```
+
+**Example:** override multiple environment variables using `--env` optiom
 ```shell
 npx cypress run --env=host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
@@ -52,11 +49,52 @@ npx cypress run --env=host=kevin.dev.local,api_server=http://localhost:8888/api/
 ## `numTestsKeptInMemory`
 The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
 
-**Default value:** 50
+**Default value:** `50`
 
-**Example:** reduce this value to reduce memory consumption
+**Example:** reduce this value to reduce memory consumption using `--config` option
 ```shell
 npx cypress run --config --numTestsKeptInMemory=25
+```
+
+## `port`
+Port used to host Cypress. Normally this is a randomly generated port.
+
+**Default value:** `null`
+
+**Example:** provide a static port to host Cypress using `--port` option
+```shell
+npx cypress run --port=9000
+```
+
+## `reporter`
+The {% url 'reporter' reporters %} used during `cypress run`
+
+**Default value:** `spec`
+
+**Example:** provide a different reporter  using `--reporter` option
+```shell
+npx cypress run --reporter=junit
+```
+
+## `reporterOptions`
+The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
+
+**Default value:** `null`
+
+**Example:** provide options for a specific reporter using `--reporter-options` option
+```shell
+npx cypress run --reporter=junit \
+ --reporter-options=mochaFile=results/my-test-output.xml,toConsole=true
+```
+
+## `watchForFileChanges`
+Whether Cypress will watch and restart tests on test file changes
+
+**Default value:** `true`
+
+**Example:** disable file watching using `--config` option
+```shell
+npx cypress run --config watchForFileChanges=false
 ```
 
 ## Timeouts
