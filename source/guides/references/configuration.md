@@ -24,6 +24,41 @@ Option | Default | Description
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
+## `baseUrl`
+URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
+
+**Default value:** null
+
+**Example:** pass staging url during tests
+```shell
+CYPRESS_baseUrl=https://staging.company.com npx cypress run
+```
+
+**Example:** override local url using config option
+```shell
+npx cypress run --config baseUrl=http://localhost:444
+```
+
+## `env`
+Any values to be set as {% url 'environment variables' environment-variables %}
+
+**Default value:** {}
+
+**Example:** override any environment variable using env option
+```shell
+npx cypress run --env=host=kevin.dev.local,api_server=http://localhost:8888/api/v1
+```
+
+## `numTestsKeptInMemory`
+The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
+
+**Default value:** 50
+
+**Example:** reduce this value to reduce memory consumption
+```shell
+npx cypress run --config --numTestsKeptInMemory=25
+```
+
 ## Timeouts
 
 {% note success Core Concept %}
