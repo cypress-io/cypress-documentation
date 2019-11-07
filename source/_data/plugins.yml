@@ -204,6 +204,11 @@
       link: https://github.com/FlorianGoussin/cypress-cy-select
       keywords: [commands, shorthand]
 
+    - name: '@cypress/skip-test'
+      description: Simple commands to skip a test based on platform, browser or an url
+      link: https://github.com/cypress-io/cypress-skip-test
+      keywords: [commands]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
