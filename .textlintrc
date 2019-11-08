@@ -23,8 +23,6 @@
         ["^chai", "Chai"],
         ["^chai-jquery", "chai-jquery"],
         ["cross origin", "cross-origin"],
-        ["(Chrome ?)DevTools", "Developer Tools"],
-        ["(?!^Chrome $)DevTools", "Developer Tools"],
         "ESLint",
         ["Express.js", "Express"],
         "FFmpeg",
