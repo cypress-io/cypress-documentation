@@ -6,9 +6,9 @@ title: Migration Guide
 
 Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, which themselves have breaking changes. This guide details the changes and how to change your code to migrate to Cypress 4.0.
 
-## Cypress no longer supports Node 6 or earlier
+## Cypress supports Node 8+
 
-Node 4 reached its end of life on April 30, 2018 and Node 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node versions will no longer be supported.
+Node 4 reached its end of life on April 30, 2018 and Node 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node versions will no longer be supported. The minimum Node version supported by Cypress is Node 8.
 
 ## Changes related to Mocha upgrade
 
