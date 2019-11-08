@@ -13,4 +13,4 @@ jobs:
       - uses: maxkomarychev/merge-pal-action@v0.3.0
         if: github.event.pull_request.head.ref == 'develop'
         with:
-          token: ${{ secrets.GH_TOKEN}}
+          token: ${{ secrets.GH_TOKEN }}
