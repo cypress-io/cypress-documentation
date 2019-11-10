@@ -119,28 +119,28 @@ Note: `.wrap()` will not synchronise asynchronous function calls for you. For ex
 - You need to make sure `foo()` has resolved first before invoking `bar()`
 - However, to complicate things, you need to call a bunch of Cypress commands in between those two to create some data that `bar()` uses.
 
-If you simply wrap them in `cy.wrap()`, then an issue may occur where `bar()` could be called prematurely before the required data is available:
+If you wrap them in `cy.wrap()`, then an issue may occur where `bar()` could be called prematurely before the required data is available:
 
 ```javascript
-cy.wrap(foo());
+cy.wrap(foo())
 
-cy.get('some-button').click();
-cy.get('some-input').type(someValue);
-cy.get('some-submit-button').click();
+cy.get('some-button').click()
+cy.get('some-input').type(someValue)
+cy.get('some-submit-button').click()
 
 // this will execute `bar()` straight away to get the Promise without waiting
 // for other cy.get(...) functions to complete
-cy.wrap(bar()); 
+cy.wrap(bar())
 
 // ... other Cypress commands to be executed after bar() resolves
 ```
 
-This behaviour is due to the function invocation `foo()` and `bar()`, which call the functions straight away to return a Promise. If you really want `bar()` to execute after `foo()` as well as the final `cy.get()` function, the easiest (but maybe not the cleanest) solution is to chain that off the final command:
+This behavior is due to the function invocation `foo()` and `bar()`, which call the functions straight away to return a Promise. If you really want `bar()` to execute after `foo()` as well as the final `cy.get()` function, the easiest (but maybe not the cleanest) solution is to chain that off the final command:
 
 ```javascript
 // ...
 
-cy.get('some-submit-button').click().then(() => cy.wrap(bar()));
+cy.get('some-submit-button').click().then(() => cy.wrap(bar()))
 
 // ... other Cypress commands to be executed after bar() resolves
 ```
