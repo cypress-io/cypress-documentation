@@ -35,6 +35,7 @@
     "predeploy": "NODE_ENV=production npm run build",
     "scrape": "node ./cy_scripts/scrape.js",
     "start-server": "node --stack-size=8192 ./index.js server --port 2222",
+    "prestart": "gulp pre:build",
     "start": "npm run start-server -- --no-validate",
     "test-e2e": "start-server-and-test start http://localhost:2222 cypress:run",
     "dev": "start-test 2222 cypress:open",
