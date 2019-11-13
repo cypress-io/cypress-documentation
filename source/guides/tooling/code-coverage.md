@@ -446,7 +446,7 @@ You can find full examples showing different code coverage setups in the followi
 - {% url 'rootstrap/react-redux-base' https://github.com/rootstrap/react-redux-base %} shows an example with a realistic Webpack config. Instruments the source code using `babel-plugin-istanbul` during tests.
 - {% url 'skylock/cypress-angular-coverage-example' https://github.com/skylock/cypress-angular-coverage-example %} shows Angular 8 + TypeScript application with instrumentation done using `ngx-build-plus`.
 - {% url 'bahmutov/testing-react' https://github.com/bahmutov/testing-react %} shows how to get code coverage for a React application created using `CRA v3` without ejecting `react-scripts`.
-- {% url 'bahmutov/next-and-cypress-example' https://github.com/bahmutov/next-and-cypress-example %} shows how to get backend and fronend coverage for a Next.js project. `middleware/nextjs.js`.
+- {% url 'bahmutov/next-and-cypress-example' https://github.com/bahmutov/next-and-cypress-example %} shows how to get backend and frontend coverage for a Next.js project. `middleware/nextjs.js`.
 
 # See also
 
