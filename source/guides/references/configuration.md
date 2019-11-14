@@ -14,7 +14,7 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 ## Global
 
-The following options affect the running Cypresss instance globally. Refer to the examples below for different ways to apply these options. 
+The following options affect running Cypress when installed via {% url "direct download" https://on.cypress.io/installing-cypress#Direct-download %}. Refer to the examples below for different ways to apply these options.
 
 ## `baseUrl`
 URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
