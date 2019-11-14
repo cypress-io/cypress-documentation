@@ -41,7 +41,7 @@ Any values to be set as {% url 'environment variables' environment-variables %}
 npx cypress run --env=host=local.dev
 ```
 
-**Example:** override multiple environment variables using `--env` optiom
+**Example:** override multiple environment variables using `--env` option
 ```shell
 npx cypress run --env=host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
