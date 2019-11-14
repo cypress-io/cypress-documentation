@@ -146,7 +146,9 @@ Cypress attempts to {% url 'automatically find installed Chrome versions for you
 You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
 {% endnote %}
 
-To see debug logs from the browser launcher, run Cypress with the `DEBUG` environment variable set to `cypress:launcher`.
+You can see the full list of found browsers and their properties within the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
+
+Another way to log what is found by Cypress is to run Cypress with the {% urlHash "DEBUG environment variable" Print-DEBUG-logs %} set to `cypress:launcher`. This will print information about the found browsers and their properties to the terminal.
 
 ### Mac
 
