@@ -41,7 +41,11 @@ Additionally, Cypress will respect and await promises you return. This enables y
 
 ## Customize available browsers
 
-The configuration includes the list of browsers found on your system that are available to Cypress.
+The configuration includes the list of browsers found on your system that are available to Cypress. 
+
+{% note info %}
+Read our full guide on {% url "Launching Browsers" launching-browsers %} for more information on how this works.
+{% endnote %}
 
 In the plugins file, you can filter the list of browsers passed inside the `config` object and return the list of browsers you want available for selection during `cypress open`.
 
