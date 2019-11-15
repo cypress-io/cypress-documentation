@@ -121,7 +121,7 @@ Option |  Type | Description
 ------ | ---- | ---------
 `browser` | *string* | Specify a filesystem path to a custom browser
 `config` | *object* | Specify {% url "configuration" configuration %}
-`configFile` | *string | boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
 `detached` | *boolean* | Open Cypress in detached mode
 `env` | *object* | Specify {% url "environment variables" environment-variables %}
 `global` | *boolean* | Run in global mode
