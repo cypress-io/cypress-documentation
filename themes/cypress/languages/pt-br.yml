@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizações
     users: Usuários
     github-integration: Integração com GitHub
+    analytics: Analytics
     debugging: Debugando
     variables-and-aliases: Variáveis e Aliases
     stubs-spies-and-clocks: Stubs, Spies e Clocks
