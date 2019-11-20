@@ -12,6 +12,10 @@ The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service t
 
 You can read more {% url 'here' dashboard-introduction%}.
 
+## {% fa fa-angle-right %} What is a test recording? 
+
+A test recording occurs when `cypress run`  is called with the `--record` flag. When a record `--key` is also supplied this will result in {% url "test run data" runs %} being "recorded" to the Dashboard. This data includes test output, screenshots and video ({% url "if configured" configuration#Screenshots %}) and test results. 
+
 ## {% fa fa-angle-right %} How do I record my tests?
 
 1. First {% url 'set up the project to record' projects#Setup %}.
