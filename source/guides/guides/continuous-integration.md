@@ -617,7 +617,7 @@ Second, set the X11 address in an environment variable
 export DISPLAY=:99
 ```
 
-Start headless Cypress as usual
+Start Cypress as usual
 
 ```shell
 npx cypress run

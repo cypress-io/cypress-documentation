@@ -295,6 +295,11 @@
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
+      
+    - name: cypress-laravel
+      description: Add commands and hooks to test Laravel applications
+      link: https://github.com/noeldemartin/cypress-laravel
+      keywords: [php, laravel]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
