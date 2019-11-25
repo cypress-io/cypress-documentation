@@ -1,0 +1,16 @@
+name: Merge PR - develop -> master
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  merge-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: maxkomarychev/merge-pal-action@v0.3.0
+        if: github.event.pull_request.head.ref == 'develop'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
