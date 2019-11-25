@@ -163,7 +163,7 @@ If you modify the list of browsers, you can see the {% url "resolved configurati
 
 ## Unsupported Browsers
 
-Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. While it may be possible to modify the list of browsers found and run Cypress within them - we do not gaurantee full functionality. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
+Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. While it may be possible to modify the list of browsers found and run Cypress within them - we do not guarantee full functionality. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
 
 # Browser Environment
 
