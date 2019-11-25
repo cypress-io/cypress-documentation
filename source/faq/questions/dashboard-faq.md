@@ -12,10 +12,6 @@ The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service t
 
 You can read more {% url 'here' dashboard-introduction%}.
 
-## {% fa fa-angle-right %} What is a test recording? 
-
-A test recording occurs when `cypress run`  is called with the `--record` flag. When a record `--key` is also supplied this will result in {% url "test run data" runs %} being "recorded" to the Dashboard. This data includes test output, screenshots and video ({% url "if configured" configuration#Screenshots %}) and test results. 
-
 ## {% fa fa-angle-right %} How do I record my tests?
 
 1. First {% url 'set up the project to record' projects#Setup %}.
@@ -26,6 +22,16 @@ After recording your tests, you will see them in the {% url 'Dashboard' https://
 ## {% fa fa-angle-right %} How much does it cost?
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
+
+## {% fa fa-angle-right %} What counts as a test recording?
+
+Which {% url 'pricing tier' https://www.cypress.io/pricing %} is best for you depends on the number of test you record each month in your organization.
+
+Tests are recorded when {% url "`cypress run`" command-line#cypress-run %} is called with the `--record` flag while supplying the record `--key`. This means your {% url "test run data" runs %} is being "recorded" to the Dashboard.
+
+We consider each time the `it()` function is called to be a single test. So you will generally have several tests recorded within each spec file and likely several spec files within a single run.
+
+You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
 
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
