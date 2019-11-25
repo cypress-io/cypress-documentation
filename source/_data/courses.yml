@@ -1,6 +1,20 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
+
+- title: "Cypress.io - End to End Testing Framework"
+  url: https://www.youtube.com/watch?v=IMx7Ng-T2mw&list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0
+  author: Bushra Alam
+  authorTwitter: imBushraAlam 
+  sourceName: QAMilestone Academy
+  sourceUrl:  https://www.qamilestone.com
+  free: true
+
+- title: "Cypress-Modern Automation Testing from Scratch + Framework"
+  url: https://www.udemy.com/course/cypress-tutorial/?LSNPUBID=hh*FqEN*ZGw&ranEAID=hh*FqEN*ZGw&ranMID=39197&ranSiteID=hh.FqEN.ZGw-3od9TEk.GmnZ.QA2DzTmFA
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com/
+  
 - title: Introduction to Cypress
   url: https://testautomationu.applitools.com/cypress-tutorial/
   author: Gil Tayar

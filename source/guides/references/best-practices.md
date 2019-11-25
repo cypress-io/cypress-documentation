@@ -541,7 +541,7 @@ cy.get('table tr').should('have.length', 2)
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
+{% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress.
 {% endnote %}
 
 We do NOT recommend trying to start your back end web server from within Cypress.

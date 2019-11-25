@@ -21,7 +21,7 @@ Option | Type | Description
 `browser` | *string* | Specify different browser to run tests in, either by name or by filesystem path
 `ciBuildId` | *string* | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
 `config` | *object* | Specify {% url "configuration" configuration %}
-`configFile` | *string | boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
 `env` | *object* | Specify {% url "environment variables" environment-variables %}
 `group` | *string* | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
 `headed` | *boolean* | Display the Electron browser instead of running headlessly
@@ -121,7 +121,7 @@ Option |  Type | Description
 ------ | ---- | ---------
 `browser` | *string* | Specify a filesystem path to a custom browser
 `config` | *object* | Specify {% url "configuration" configuration %}
-`configFile` | *string | boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
 `detached` | *boolean* | Open Cypress in detached mode
 `env` | *object* | Specify {% url "environment variables" environment-variables %}
 `global` | *boolean* | Run in global mode
