@@ -443,6 +443,10 @@ You can find full examples showing different code coverage setups in the followi
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
 - {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for React App that uses TypeScript.
 - {% url 'bahmutov/cypress-and-jest' https://github.com/bahmutov/cypress-and-jest %} shows how to run Jest unit tests and Cypress unit tests, collecting code coverage from both test runners, and then produce merged report.
+- {% url 'rootstrap/react-redux-base' https://github.com/rootstrap/react-redux-base %} shows an example with a realistic webpack config. Instruments the source code using `babel-plugin-istanbul` during tests.
+- {% url 'skylock/cypress-angular-coverage-example' https://github.com/skylock/cypress-angular-coverage-example %} shows Angular 8 + TypeScript application with instrumentation done using `ngx-build-plus`.
+- {% url 'bahmutov/testing-react' https://github.com/bahmutov/testing-react %} shows how to get code coverage for a React application created using `CRA v3` without ejecting `react-scripts`.
+- {% url 'bahmutov/next-and-cypress-example' https://github.com/bahmutov/next-and-cypress-example %} shows how to get back end and front end coverage for a Next.js project. `middleware/nextjs.js`.
 
 # See also
 

@@ -615,7 +615,7 @@ Second, set the X11 address in an environment variable
 export DISPLAY=:99
 ```
 
-Start headless Cypress as usual
+Start Cypress as usual
 
 ```shell
 npx cypress run
@@ -626,6 +626,15 @@ After all tests across all Cypress instances finish, kill the Xvfb background pr
 ```shell
 pkill Xvfb
 ```
+
+## Colors
+
+If you want colors to be disabled, you can pass the `NO_COLOR` environment variable to disable colors. You may want to do this if ASCII characters or colors are not properly formatted in your CI.
+
+```shell
+NO_COLOR=1 cypress run
+```
+
 
 # See also
 

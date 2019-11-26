@@ -23,6 +23,16 @@ After recording your tests, you will see them in the {% url 'Dashboard' https://
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
+## {% fa fa-angle-right %} What counts as a test recording?
+
+Which {% url 'pricing tier' https://www.cypress.io/pricing %} is best for you depends on the number of test you record each month in your organization.
+
+Tests are recorded when {% url "`cypress run`" command-line#cypress-run %} is called with the `--record` flag while supplying the record `--key`. This means your {% url "test run data" runs %} is being "recorded" to the Dashboard.
+
+We consider each time the `it()` function is called to be a single test. So you will generally have several tests recorded within each spec file and likely several spec files within a single run.
+
+You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
+
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
