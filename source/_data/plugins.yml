@@ -199,6 +199,16 @@
       link: https://github.com/NoriSte/cypress-wait-until
       keywords: [commands, wait, wait-until, recursive-promise, check-async-value, check-value, open-source-saturday]
 
+    - name: cypress-cy-select
+      description: data-cy shorthand notation for cypress get and find functions
+      link: https://github.com/FlorianGoussin/cypress-cy-select
+      keywords: [commands, shorthand]
+
+    - name: '@cypress/skip-test'
+      description: Simple commands to skip a test based on platform, browser or a url
+      link: https://github.com/cypress-io/cypress-skip-test
+      keywords: [commands]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -280,11 +290,16 @@
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
       keywords: [elm, parcel, netlify]
-      
+
     - name: cypress-rails
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
+      
+    - name: cypress-laravel
+      description: Add commands and hooks to test Laravel applications
+      link: https://github.com/noeldemartin/cypress-laravel
+      keywords: [php, laravel]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
