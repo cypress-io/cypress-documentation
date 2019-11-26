@@ -33,7 +33,7 @@ cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 
 ## Arguments
 
-**{% fa fa-angle-right %} functionName**  ***(String)***
+**{% fa fa-angle-right %} functionName**  ***(String, Number)***
 
 Name of function to be invoked.
 
