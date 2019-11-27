@@ -209,6 +209,11 @@
       link: https://github.com/cypress-io/cypress-skip-test
       keywords: [commands]
 
+    - name: '@bahmutov/cy-api'
+      description: Cypress custom command "cy.api" for HTTP API testing with server logs
+      link: https://github.com/bahmutov/cy-api
+      keywords: [api]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -295,7 +300,7 @@
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
-      
+
     - name: cypress-laravel
       description: Add commands and hooks to test Laravel applications
       link: https://github.com/noeldemartin/cypress-laravel
