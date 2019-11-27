@@ -209,6 +209,11 @@
       link: https://github.com/cypress-io/cypress-skip-test
       keywords: [commands]
 
+    - name: cypress-websocket-testing
+      description: Test WebSocket connections with Cypress
+      link: https://github.com/lensesio/cypress-websocket-testing
+      keywords: [commands, websocket]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell

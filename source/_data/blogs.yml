@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Testing WebSocket connections with Cypress"
+    url: "https://medium.com/@SebDragomir/testing-websocket-connections-with-cypress-2100ab369945"
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Sebastian Dragomir
+    date: Nov 25, 2019
+    img: /img/examples/cypress-websocket-testing.png
+
   - title: "I did a Cypress workshop and this is what I learned"
     url: https://medium.com/@filiphric/i-did-a-cypress-workshop-and-this-is-what-i-learned-8de28b2fbaeb
     sourceName: Medium
