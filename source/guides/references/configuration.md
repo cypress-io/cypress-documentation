@@ -131,7 +131,10 @@ cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffe
 
 ## Plugins
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
+
+- Use `fs` and read off configuration values and dynamically change them.
+- Edit the list of browsers found by default by Cypress
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
