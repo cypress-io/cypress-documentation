@@ -27,6 +27,7 @@ This enables you to do things like:
 - Use multiple environments with their own configurations
 - Swap out environment variables based on an environment
 - Read in configuration files using the built in `fs` lib
+- Change the list of browsers used for testing
 - Write your configuration in `yml`
 
 Check out our {% url 'Configuration API docs' configuration-api %} which describe how to use this event.
