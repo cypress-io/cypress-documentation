@@ -89,7 +89,7 @@
     "cheerio": "1.0.0-rc.3",
     "coffee-react": "5.0.1",
     "common-tags": "1.8.0",
-    "cypress": "3.6.0",
+    "cypress": "3.6.1",
     "dependency-check": "3.4.1",
     "deps-ok": "1.4.1",
     "eslint": "6.1.0",
