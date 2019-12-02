@@ -15,4 +15,4 @@ jobs:
         uses: repo-sync/pull-request@v2
         if: github.event.pull_request.merged == true
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

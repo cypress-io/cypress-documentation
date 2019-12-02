@@ -32,9 +32,9 @@ cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 
 ## Arguments
 
-**{% fa fa-angle-right %} propertyName**  ***(String)***
+**{% fa fa-angle-right %} propertyName**  ***(String, Number)***
 
-Name of property or nested properties (with dot notation) to get.
+Index, name of property or name of nested properties (with dot notation) to get.
 
 ## Yields {% helper_icon yields %}
 
@@ -42,12 +42,20 @@ Name of property or nested properties (with dot notation) to get.
 
 # Examples
 
-## Plain Objects
+## Objects
 
 ### Get property
 
 ```javascript
 cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
+```
+
+## Arrays
+
+### Get index
+
+```javascript
+cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 ```
 
 ## DOM Elements

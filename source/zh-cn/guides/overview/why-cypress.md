@@ -42,7 +42,7 @@ Cypress可以测试任何在浏览器中运行的内容。
 Cypress包含免费的, {% url "开源的" https://github.com/cypress-io/cypress %}, {% url "可本地安装的" installing-cypress %} Test Runner **和** 能够 {% url '记录你测试' dashboard-introduction%} 的控制面板服务.
 
 - ***首先:*** Cypress可以让你每天在本地构建应用程序时很轻松的设置和开始编写测试代码。*TDD是最好的*
-- ***然后:*** 在建立了一套测试代码和整合了CI来做 {% url "集成测试" continuous-integration %} 后, 我们的 {% url '控制面板服务' dashboard-introduction%} 可以记录你所执行的测试。 你永远不会想知道：*为什么这会失败？*
+- ***然后:*** 在建立了一套测试代码和整合了CI来做 {% url "集成测试" continuous-integration %} 后, 我们的 {% url '控制面板服务' dashboard-introduction%} 可以记录你所执行的测试。 你再也不用为寻找测试失败原因而操心了！
 
 # 我们的目标
 
@@ -88,6 +88,6 @@ Cypress的运行速度与浏览器的渲染速度一样的快。你可以在开�
 
 ## {% fa fa-bug %} 调试测试
 
-可读的错误消息能够帮助你快递调试程序。你还可以访问你熟悉和喜爱的所有开发者工具。
+可读的错误消息能够帮助你快速调试程序。你还可以访问你熟悉和喜爱的所有开发者工具。
 
 {% video local /img/snippets/debugging.mp4 %}

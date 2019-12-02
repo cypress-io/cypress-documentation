@@ -2,7 +2,7 @@
 
 The code for Cypress Documentation including Guides, API, Examples, Dashboard & FAQ found at https://docs.cypress.io.
 
-![Cypress Documentation Preview](https://user-images.githubusercontent.com/1271364/32280553-aa89695e-bef2-11e7-9cea-c2e99406eed0.png)
+![Cypress Documentation Preview](https://user-images.githubusercontent.com/5605406/69174503-f6012680-0acf-11ea-933e-6fc2d3a5841c.png)
 
 ## CI status
 
