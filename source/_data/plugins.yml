@@ -214,6 +214,11 @@
       link: https://github.com/cypress-io/cypress-skip-test
       keywords: [commands]
 
+    - name: cypress-websocket-testing
+      description: Test WebSocket connections with Cypress
+      link: https://github.com/lensesio/cypress-websocket-testing
+      keywords: [commands, websocket]
+
     - name: '@bahmutov/cy-api'
       description: Cypress custom command "cy.api" for HTTP API testing with server logs
       link: https://github.com/bahmutov/cy-api
