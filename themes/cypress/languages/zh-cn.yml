@@ -41,6 +41,7 @@ sidebar:
     organizations: 组织
     users: 成员
     github-integration: GitHub Integration
+    analytics: 分析工具
     debugging: 调试
     variables-and-aliases: 变量和别名
     stubs-spies-and-clocks: 桩, Spies和时钟
