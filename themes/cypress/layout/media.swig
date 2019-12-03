@@ -58,7 +58,7 @@
                       <h3>
                         <a href="{{project.url}}" target="_blank" rel="noopener noreferrer">{{ project.name }}</a>
                       </h3>
-                      <p>{{ course.description }}</p>
+                      <p>{{ project.description }}</p>
                     </li>
                   {% endfor %}
                 </ul>
