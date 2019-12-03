@@ -8,7 +8,7 @@
   description: "Generation of diagram and flowchart from text in a similar manner as markdown"
   url: https://github.com/mermaid-js/mermaid
 
-- name: WithSpectrum
+- name: Spectrum
   description: "Simple, powerful online communities at spectrum.chat"
   url: https://github.com/withspectrum/spectrum
 
