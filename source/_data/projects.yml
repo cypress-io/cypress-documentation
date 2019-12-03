@@ -26,8 +26,12 @@
 
 - name: "octokit/rest.js"
   description: GitHub REST API client for JavaScript
-  url: https://github.com/octokit/rest.js/tree/master/test
+  url: https://github.com/octokit/rest.js
 
 - name: "For All Beautiful Earth"
   description: End-to-end browser tests for fab.earth using Cypress.io test runner
   url: https://github.com/forallabeautifulearth/fabe-browser-tests
+
+- name: GraphiQL
+  description: A graphical interactive in-browser GraphQL IDE
+  url: https://github.com/graphql/graphiql/tree/master/packages/graphiql
