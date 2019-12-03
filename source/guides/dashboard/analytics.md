@@ -3,11 +3,15 @@ title: Analytics
 ---
 The Cypress Dashboard provides Analytics to offer insight into metrics like runs over time, run duration and visibility into tests suite size over time.
 
+{% imgTag /img/dashboard/analytics/dashboard-analytics-overview.png "Dashboard Analytics Screenshot" %}
+
 {% note info %}
 Dashboard Analytics is currently in Beta.
 {% endnote %}
 
-{% imgTag /img/dashboard/analytics/dashboard-analytics-overview.png "Dashboard Analytics Screenshot" %}
+To enabled Dashboard Analytics, visit **Organization Settings** and enabled the "Project Analytics" setting under **Cypress Labs**.
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-cypress-labs-project-analytics.png "Organization Settings Project Analytics Screenshot" %}
 
 # Usage
 
