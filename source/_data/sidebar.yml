@@ -182,6 +182,7 @@ examples:
     applications: applications.html
     docker: docker.html
     workshop: workshop.html
+    projects-media: projects-media.html
   media:
     courses-media: courses-media.html
     webinars-media: webinars-media.html
