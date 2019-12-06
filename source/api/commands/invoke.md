@@ -40,7 +40,6 @@ cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 
 Name of function to be invoked.
 
-
 **{% fa fa-angle-right %} options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.invoke()`.
@@ -188,6 +187,11 @@ The commands above will display in the Command Log as:
 When clicking on `invoke` within the command log, the console outputs the following:
 
 {% imgTag /img/api/invoke/log-function-invoked-and-return.png "Console Log for invoke" %}
+
+{% history %}
+{% url "3.8.0" changelog#3-8-0 %} | Added support for `options` argument
+{% url "3.7.0" changelog#3-7-0 %} | Added support for arguments of type Number for `functionName`
+{% endhistory %}
 
 # See also
 

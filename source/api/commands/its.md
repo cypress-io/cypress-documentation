@@ -219,6 +219,11 @@ When clicking on `its` within the command log, the console outputs the following
 
 {% imgTag /img/api/its/response-body-yielded-with-its-command-log.png "Console Log for its" %}
 
+{% history %}
+{% url "3.8.0" changelog#3-8-0 %} | Added support for `options` argument
+{% url "3.7.0" changelog#3-7-0 %} | Added support for arguments of type Number for `propertyName`
+{% endhistory %}
+
 # See also
 
 - {% url `.invoke()` invoke %}
