@@ -34,6 +34,7 @@ Option | Type | Description
 `reporter` | *string* | Specify a {% url "Mocha reporter" reporters %}
 `reporterOptions` | *object* | Specify {% url "Mocha reporter" reporters %} options
 `spec` | *string* | Specify the specs to run
+`tag` | *string* | Identify a run with a tag or tags
 
 ```javascript
 const cypress = require('cypress')
