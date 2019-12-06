@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Testing WebSocket connections with Cypress"
+    url: "https://medium.com/@SebDragomir/testing-websocket-connections-with-cypress-2100ab369945"
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Sebastian Dragomir
+    date: Nov 25, 2019
+    img: /img/examples/cypress-websocket-testing.png
+
   - title: "I did a Cypress workshop and this is what I learned"
     url: https://medium.com/@filiphric/i-did-a-cypress-workshop-and-this-is-what-i-learned-8de28b2fbaeb
     sourceName: Medium
@@ -116,7 +124,7 @@ large:
     url: https://blog.you54f.com/2019/09/30/dynamically-generate-data-in-cypress-from-csv-xlsx/
     sourceName: You54f
     sourceUrl: https://blog.you54f.com/
-    author: Yousef
+    author: Yousaf
     date: Sep 30,2019
     img: /img/examples/dynamically-generate-data-in-cypress-from-csv.png
 
@@ -140,7 +148,7 @@ large:
     url: https://blog.you54f.com/2019/09/23/configuring-cypress-to-work-with-iframes-cross-origin-sites
     sourceName: You54f
     sourceUrl: https://blog.you54f.com
-    author: Yousef
+    author: Yousaf
     date: Sep 23, 2019
     img: /img/examples/configuring-cypress-to-work-with-iframes.png
 

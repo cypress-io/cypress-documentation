@@ -99,6 +99,9 @@
         ["licence", "license"],
         ["organise", "organize"],
 
+        // Common misspellings
+        ["gaurantee", "guarantee"],
+
         // Words we would like to not use altogether
         ["simply", ""],
 

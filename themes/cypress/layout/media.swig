@@ -50,6 +50,20 @@
                 </ul>
               {% endif %}
 
+              {% if page.dataType === 'projects' %}
+                <p>Open source projects that use Cypress to run their end-to-end tests.</p>
+                <ul class="projects-list">
+                  {% for project in site.data.projects %}
+                    <li>
+                      <h3>
+                        <a href="{{project.url}}" target="_blank" rel="noopener noreferrer">{{ project.name }}</a>
+                      </h3>
+                      <p>{{ project.description }}</p>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
               {% if site.data[page.dataType].small %}
                 <div class="small-media">
                   <ul>
