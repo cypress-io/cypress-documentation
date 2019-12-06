@@ -96,6 +96,7 @@ Option | Description
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
 `--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
+`--tag`, `-t`  | {% urlHash "Identify a run with a tag or tags" cypress-run-spec-lt-spec-gt %}
 
 ### `cypress run --browser <browser-name-or-path>`
 
@@ -103,7 +104,7 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you. 
+The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
 
 You can also choose a browser by supplying a path:
 
@@ -298,6 +299,24 @@ Run tests specifying multiple test files to run.
 ```shell
 cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
 ```
+
+### `cypress run --tag <tag>`
+
+Add a tag or tags to the recorded run. This can be used to help identify separate run when displayed in the Dashboard.
+
+```shell
+cypress run  --record --tag "staging"
+```
+
+Give a run multiple tags.
+
+```shell
+cypress run --record --tag "production,nightly"
+```
+
+The Dashboard will display any tags sent with the appropriate run. 
+
+{% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
 ## `cypress open`
 
