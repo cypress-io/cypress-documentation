@@ -30,11 +30,11 @@ cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 
 **{% fa fa-angle-right %} width** ***(Number)***
 
-Width of viewport in pixels (must be between 20 and 4000).
+Width of viewport in pixels (must be any non-negative, finite number).
 
 **{% fa fa-angle-right %} height** ***(Number)***
 
-Height of viewport in pixels (must be between 20 and 4000).
+Height of viewport in pixels (must be any non-negative, finite number).
 
 **{% fa fa-angle-right %} preset** ***(String)***
 
