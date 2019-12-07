@@ -35,3 +35,7 @@
 - name: GraphiQL
   description: A graphical interactive in-browser GraphQL IDE
   url: https://github.com/graphql/graphiql/tree/master/packages/graphiql
+
+- name: What Got Done
+  description: An easy, lightweight tool for sharing your weekly progress reports.
+  url: https://github.com/mtlynch/whatgotdone
