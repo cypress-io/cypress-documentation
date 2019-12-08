@@ -16,6 +16,14 @@ large:
     author: Nicholas Boll 
     youtubeId: Pv2YHXQOEJY	
     
+  - title: "Documenting application behaviours with E2E tests"
+    url: https://www.youtube.com/watch?v=3oCDjj_AtaE
+    sourceName: HolyJS 2019
+    sourceUrl: https://holyjs.ru/en/
+    date: Aug 28, 2019
+    author: Basarat Ali Syed 
+    youtubeId: 3oCDjj_AtaE
+    
 	- title: "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37"
     sourceUrl: https://speakerdeck.com/mrcube42
     url: https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37
