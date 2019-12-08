@@ -121,6 +121,8 @@ Cypress does not instrument your code - you need to do it yourself. The golden s
 - Using the {% url "nyc" https://github.com/istanbuljs/nyc %} module - a command-line interface for the {% url "Istanbul" https://istanbul.js.org %} library
 - As part of your code transpilation pipeline using the {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} tool.
 
+## Instrumenting code: Using NYC
+
 To instrument the application code located in your `src` folder and save it in an `instrumented` folder use the following command:
 
 ```shell
@@ -162,6 +164,8 @@ If we drill into the coverage object to see the statements executed in each file
 
 In green, we highlighted the 4 statements present in that file. The first three statements were each executed once and the last statement was never executed (it probably was inside an `if` statement). By using the application, we can both increment the counters and flip some of the zero counters into positive numbers.
 
+## Instrumenting code: Using code transpilation pipeline
+
 Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} to instrument the code as part of its transpilation. Add this plugin to the `.babelrc` file.
 
 ```json
@@ -172,6 +176,23 @@ Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-
 ```
 
 We can now serve the application and get instrumented code without an intermediate folder, but the result is the same instrumented code loaded by the browser, with the same `window.__coverage__` object keeping track of the original statements.
+
+If you're using `create-react-app` serving the instrumented application is super easy: 
+
+First, install the [inst](https://github.com/cypress-io/instrument-cra) module, 
+Then, change your `npm start` script to require the module before starting the dev server, in `package.json`: 
+
+```json
+{
+  ...
+  "scripts":{
+    ...
+    "start": "react-scripts -r @cypress/instrument-cra start"
+  }
+}
+```
+
+Then you should see the coverage information `window.__coverage__` which `nyc` takes and makes into pretty reports. 
 
 {% imgTag /img/guides/code-coverage/source-map.png "Bundled code and source mapped originals" %}
 
