@@ -177,22 +177,9 @@ Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-
 
 We can now serve the application and get instrumented code without an intermediate folder, but the result is the same instrumented code loaded by the browser, with the same `window.__coverage__` object keeping track of the original statements.
 
-If you're using `create-react-app` serving the instrumented application is super easy: 
-
-First, install the [inst](https://github.com/cypress-io/instrument-cra) module, 
-Then, change your `npm start` script to require the module before starting the dev server, in `package.json`: 
-
-```json
-{
-  ...
-  "scripts":{
-    ...
-    "start": "react-scripts -r @cypress/instrument-cra start"
-  }
-}
-```
-
-Then you should see the coverage information `window.__coverage__` which `nyc` takes and makes into pretty reports. 
+{% note info %}
+Check out {% url "`@cypress/code-coverage#examples`" https://github.com/cypress-io/code-coverage#examples %} for full example projects showing different code coverage setups.
+{% endnote %}
 
 {% imgTag /img/guides/code-coverage/source-map.png "Bundled code and source mapped originals" %}
 
