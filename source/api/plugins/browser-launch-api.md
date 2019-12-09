@@ -69,6 +69,12 @@ npx cypress open|run
 
 Cypress code already sets some of the Electron command line switches, see file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. Unfortunately, there is no way to see all currently set switches after Electron's launch.
 
+## See all Chrome browser switches
+
+If you are running Cypress tests using Chrome browser, you can see ALL currently set command line switches and the browser version information by opening a new tab and typing `chrome://version` url.
+
+{% imgTag /img/api/chrome-switches.png "See all Chrome switches" %}
+
 # Examples
 
 ## Use fake video for webcam testing
