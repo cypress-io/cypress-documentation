@@ -38,7 +38,7 @@ Cypress将在{% url `defaultCommandTimeout` configuration#Timeouts %}期间等�
 - {% urlHash 'Ensure the element is not readonly.' Readonly %}
 - {% urlHash '确保元素不是动画。' 动画 %}
 - {% urlHash '确保元素没有被覆盖。' 覆盖 %}
-- {% urlHash '如果任然被具有固定位置的元素覆盖，则滚动页面。' 滚动 %}
+- {% urlHash '如果仍然被具有固定位置的元素覆盖，则滚动页面。' 滚动 %}
 - {% urlHash '在所需坐标处触发事件。'  坐标 %}
 
 每当Cypress无法与元素交互时，它可能会在上述任何步骤中失败。你通常会得到一个错误，解释为什么找不到该元素时可操作的。
@@ -78,9 +78,9 @@ Cypress检查元素的 `disabled` 属性是否为 `true`。
 
 Cypress检查元素的 `disabled` 属性是否为  is set.
 
-## Readonly
+## 只读
 
-Cypress checks whether an element's `readonly` property is set during {% url "`.type()`" type %}.
+Cypress 会在运行{% url "`.type()`" type %}命令期间检查一个元素是否设置了只读属性。
 
 ## 动画
 
@@ -151,7 +151,7 @@ cy.get('button').click({ position: 'topLeft' })
 
 当Cypress认为元素不可操作时，可能很难调试这个问题。
 
-虽然你*应该*看到一个很好的错误信息，但没有什么能够在视觉上检查并自己查看DOM以了解其原因来的直接。
+虽然你*应该*会看到一个很好的错误信息，但没有什么是能够在视觉上检查并自己查看DOM以了解其原因来的直接的。
 
 当你使用 {% url "Command Log" test-runner#Command-Log %} 将鼠标悬停在命令上时，你会注意到我们始终将应用该命令的元素滚动到视图中。 请注意这里使用的算法和上面的*不*一样。
 
@@ -178,7 +178,7 @@ cy.get('button').debug().click()
 
 虽然上述检查非常有助于找到阻止用户与元素交互的情况 - 但有时他们可能会妨碍我们！
 
-有时候让一个机器人"像一个真实用户"一样与元素进行交互式不值得的。
+有时候让一个机器人"像一个真实用户"一样与元素进行交互是不值得的。
 
 想象一下，你有一个嵌套的导航结构，用户必须将鼠标悬停在一个非常特定的模式中，才能达到所需的链接。
 
