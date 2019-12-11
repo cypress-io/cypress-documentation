@@ -51,6 +51,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
+    cross-browser: Cross Browser
     custom-commands: Custom Commands
     web-security: Web Security
     references: References

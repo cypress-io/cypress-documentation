@@ -33,6 +33,7 @@ guides:
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
+    cross-browser: cross-browser.html
     web-security: web-security.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
