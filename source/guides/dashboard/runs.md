@@ -8,9 +8,13 @@ Recorded runs capture the results from your test runs.
 If you haven't set up your project to record {% url "read here" projects#Setup %}.
 {% endnote %}
 
-# Run details
+# Run
 
-Details of each run are displayed including:
+A single run displays the results of all the tests that were run during `cypress run` while recording. 
+
+## Details
+
+When clicking into a run, details of each run are displayed including:
 
 - The number of skipped, pending, passing, and failing tests.
 - The GitHub branch, pull request, author, commit sha and commit message associated with the run (if any)
@@ -21,6 +25,18 @@ Details of each run are displayed including:
 - The Cypress version
 
 {% imgTag /img/dashboard/run-details.png "run-details" %}
+
+## Delete run
+
+You may want to delete a run if there was sensitive data exposed in your run data that you'd like deleted or if you just want to clean up your runs list.
+
+When you delete a run, all of the test results, screenshots, and videos stored with it will also be deleted. You cannot recover these artifacts after deleting the run. The deleted run will also not be included in any project analytics.
+
+{% note warning %}
+Deleted runs will still apply to your monthly usage limits. You cannot lower your monthly usage by deleting runs.
+{% endnote %}
+
+{% imgTag /img/dashboard/delete-run.png "Delete run data in Cypress" %}
 
 # {% fa fa-file-code-o fa-fw %} Spec files
 
