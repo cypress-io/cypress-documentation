@@ -96,6 +96,86 @@ Cypress will automatically detect the type of browser supplied and launch it for
 
 {% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
 
+## Customize available browsers
+
+Sometimes you might want to modify the list of browsers found before running tests.
+
+For example, your web application might *only* be designed to work in a Chrome browser, and not inside the Electron browser.
+
+In the plugins file, you can filter the list of browsers passed inside the `config` object and return the list of browsers you want available for selection during `cypress open`.
+
+```javascript
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  // inside config.browsers array each object has information like
+  // {
+  //   name: 'canary',
+  //   family: 'chrome',
+  //   displayName: 'Canary',
+  //   version: '80.0.3966.0',
+  //   path:
+  //    '/Applications/Canary.app/Contents/MacOS/Canary',
+  //   majorVersion: 80
+  // }
+  return {
+    browsers: config.browsers.filter((b) => b.family === 'chrome')
+  }
+}
+```
+
+When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
+
+{% imgTag /img/guides/plugins/chrome-browsers-only.png "Filtered list of Chrome browsers" %}
+
+{% note info %}
+If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
+{% endnote %}
+
+If you have installed a Chromium-based browser like {% url Brave https://brave.com/ %}, {% url Vivaldi https://vivaldi.com/ %} and even the new {% url "Microsoft Edge Beta" https://www.microsoftedgeinsider.com/en-us/ %} you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
+
+```javascript
+// cypress/plugins/index.js
+const execa = require('execa')
+const findBrowser = () => {
+  // the path is hard-coded for simplicity
+  const browserPath =
+    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
+
+  return execa(browserPath, ['--version']).then((result) => {
+    // STDOUT will be like "Brave Browser 77.0.69.135"
+    const [, version] = /Brave Browser (\d+\.\d+\.\d+\.\d+)/.exec(
+      result.stdout
+    )
+    const majorVersion = parseInt(version.split('.')[0])
+
+    return {
+      name: 'Brave',
+      family: 'chrome',
+      displayName: 'Brave',
+      version,
+      path: browserPath,
+      majorVersion
+    }
+  })
+}
+
+module.exports = (on, config) => {
+  return findBrowser().then((browser) => {
+    return {
+      browsers: config.browsers.concat(browser)
+    }
+  })
+}
+```
+
+{% imgTag /img/guides/plugins/brave-browser.png "List of browsers includes Brave browser" %}
+
+Once selected, the Brave browser is detected using the same approach as any other browser of the `chrome` family.
+
+{% imgTag /img/guides/plugins/brave-running-tests.png "Brave browser executing end-to-end tests" %}
+
+If you modify the list of browsers, you can see the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
+
 ## Unsupported Browsers
 
 Many browsers such as Safari and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an explanation about our future cross browser roadmap {% issue 310 'here' %}.

@@ -21,6 +21,7 @@ guides:
     organizations: organizations.html
     users: users.html
     github-integration: github-integration.html
+    analytics: analytics.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
@@ -183,6 +184,7 @@ examples:
     applications: applications.html
     docker: docker.html
     workshop: workshop.html
+    projects-media: projects-media.html
   media:
     courses-media: courses-media.html
     webinars-media: webinars-media.html

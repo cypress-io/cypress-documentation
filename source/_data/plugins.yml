@@ -117,6 +117,11 @@
       link: https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper
       keywords: [vscode, extension, intellisense]
 
+    - name: 'cypress-dotenv'
+      description: Cypress plugin that enables compatability with dotenv.
+      link: https://github.com/morficus/cypress-dotenv
+      keywords: [dotenv, env, environment, env var]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -204,6 +209,21 @@
       link: https://github.com/FlorianGoussin/cypress-cy-select
       keywords: [commands, shorthand]
 
+    - name: '@cypress/skip-test'
+      description: Simple commands to skip a test based on platform, browser or a url
+      link: https://github.com/cypress-io/cypress-skip-test
+      keywords: [commands]
+
+    - name: cypress-websocket-testing
+      description: Test WebSocket connections with Cypress
+      link: https://github.com/lensesio/cypress-websocket-testing
+      keywords: [commands, websocket]
+
+    - name: '@bahmutov/cy-api'
+      description: Cypress custom command "cy.api" for HTTP API testing with server logs
+      link: https://github.com/bahmutov/cy-api
+      keywords: [api]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -290,6 +310,11 @@
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
+
+    - name: cypress-laravel
+      description: Add commands and hooks to test Laravel applications
+      link: https://github.com/noeldemartin/cypress-laravel
+      keywords: [php, laravel]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
