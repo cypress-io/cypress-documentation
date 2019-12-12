@@ -60,7 +60,7 @@ module.exports = (on, config) => {
 
 Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://electronjs.org/docs/api/chrome-command-line-switches/history %}.
 
-Unfortunately, because one needs to pass these switches before the Cypress itself loads, you cannot use the plugins file. Instead you need to use an environment variable `ELECTRON_EXTRA_LAUNCH_ARGS`. For example, to disable HTTP browser cache and ignore certificate errors, open or run the Cypress Test Runner like this:
+You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, open or run the Cypress Test Runner like this:
 
 ```shell
 export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
