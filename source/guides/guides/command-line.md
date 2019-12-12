@@ -69,7 +69,7 @@ npx cypress run --record --spec "cypress/integration/my-spec.js"
 
 ## `cypress run`
 
-Runs Cypress tests to completion. By default will run all tests headlessly in the `Electron` browser.
+Runs Cypress tests to completion. By default, `cypress run` will run all tests headlessly in the `Electron` browser.
 
 ```shell
 cypress run [options]
@@ -85,7 +85,8 @@ Option | Description
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
 `--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
-`--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
+`--headed`  | {% urlHash "Displays the browser instead of running headlessly (defaults to true for Chrome-family browsers)" cypress-run-headed %}
+`--headless` | {% urlHash "Hide the browser instead of running headed (defaults to true for Electron)" cypress-run-headless %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
@@ -200,6 +201,16 @@ Passing `--headed` will force Electron to be shown. This matches how you run Ele
 
 ```shell
 cypress run --headed
+```
+
+### `cypress run --headless`
+
+For backwards-compatibility reasons, when using Chrome, Cypress will run tests in headed mode by default.
+
+Passing `--headless` will force Chrome to be hidden.
+
+```shell
+cypress run --headless --browser chrome
 ```
 
 ### `cypress run --no-exit`
@@ -368,7 +379,7 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 ### `cypress open --config-file <config-file>`
 
-You can specify a path to a JSON file where {% url 'configuration' configuration %} values are set. This defaults to `cypress.json`. 
+You can specify a path to a JSON file where {% url 'configuration' configuration %} values are set. This defaults to `cypress.json`.
 
 ```shell
 cypress open --config-file tests/cypress-config.json
