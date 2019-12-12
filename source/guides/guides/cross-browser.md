@@ -12,7 +12,7 @@ Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser 
 
 {% imgTag /img/guides/cross-browser/cypress-browser-selector.png "Cypress Test Runner with Firefox selected as the browser" "no-border" %}
 
-The desired browser can also specified via the {% url `--browser` command-line#Options %} flag when using {% url `open` command-line#cypress-open %} or {% url `run` command-line#cypress-run %} commands to launch Cypress. For example, to run Cypress tests in Firefox:
+The desired browser can also specified via the {% url `--browser` command-line#Options %} flag when using {% url `run` command-line#cypress-run %} command to launch Cypress. For example, to run Cypress tests in Firefox:
 
 ```shell
 cypress run --browser firefox
@@ -22,8 +22,6 @@ To make launching of Cypress with a specific browser even more convenient, npm s
 
 ```json
 "scripts": {
-  "cy:open:chrome": "cypress open --browser chrome",
-  "cy:open:firefox": "cypress open --browser firefox",
   "cy:run:chrome": "cypress run --browser chrome",
   "cy:run:firefox": "cypress run --browser firefox"
 }
