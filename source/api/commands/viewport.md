@@ -30,11 +30,11 @@ cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 
 **{% fa fa-angle-right %} width** ***(Number)***
 
-Width of viewport in pixels (must be between 20 and 4000).
+Width of viewport in pixels.
 
 **{% fa fa-angle-right %} height** ***(Number)***
 
-Height of viewport in pixels (must be between 20 and 4000).
+Height of viewport in pixels.
 
 **{% fa fa-angle-right %} preset** ***(String)***
 
@@ -240,7 +240,9 @@ When clicking on `viewport` within the command log, the console outputs the foll
 {% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
 
 {% history %}
-{% url "3.5.0" changelog#0-9-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
+{% url "3.8.0" changelog#3-8-0 %} | Removed max viewport size and lowered min viewport size to `0`.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
+{% url "3.5.0" changelog#3-5-0 %} | Increased max viewport size to `4000`
 {% url "0.9.0" changelog#0-9-0 %} | `cy.viewport()` command added
 {% endhistory %}
 
