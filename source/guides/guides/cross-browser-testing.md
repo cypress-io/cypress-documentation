@@ -1,5 +1,5 @@
 ---
-title: Cross Browser
+title: Cross Browser Testing
 ---
 
 Cypress has the capability to run tests across multiple browsers. Currently, Cypress supports Firefox and {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron).
@@ -10,7 +10,7 @@ Tests that require the {% url "`chromeWebSecurity` configuration option to be di
 
 Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.
 
-{% imgTag /img/guides/cross-browser/cypress-browser-selector.png "Cypress Test Runner with Firefox selected as the browser" "no-border" %}
+{% imgTag /img/guides/cross-browser-testing/cypress-browser-selector.png "Cypress Test Runner with Firefox selected as the browser" "no-border" %}
 
 The desired browser can also specified via the {% url `--browser` command-line#Options %} flag when using {% url `run` command-line#cypress-run %} command to launch Cypress. For example, to run Cypress tests in Firefox:
 
