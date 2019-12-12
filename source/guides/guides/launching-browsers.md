@@ -29,10 +29,7 @@ Cypress automatically detects available browsers on your OS. You can switch the 
 
 In addition to the browsers found on your system, you'll notice that Electron is an available browser. The Electron browser is a version of Chromium that comes with {% url "Electron" https://electron.atom.io/ %}.
 
-The Electron browser has two unique advantages:
-
-1. It can be run headlessly.
-2. It comes baked into Cypress and does not need to be installed separately.
+The Electron browser has the advantage of coming baked into Cypress and does not need to be installed separately.
 
 By default, when running {% url '`cypress run`' command-line#cypress-run %} from the CLI, we will launch Electron headlessly.
 
@@ -55,6 +52,8 @@ cypress run --browser chrome
 ```
 
 To use this command in CI, you need to install the browser you want - or use one of our {% url 'docker images' docker %}.
+
+By default, we will launch Chrome in headed mode. To run Chrome headlessly, you can pass the `--headless` argument to `cypress run`.
 
 You can also launch Chromium:
 
