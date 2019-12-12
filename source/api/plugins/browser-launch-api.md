@@ -67,7 +67,7 @@ export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-erro
 npx cypress open|run
 ```
 
-Cypress code already sets some of the Electron command line switches, see file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. Unfortunately, there is no way to see all currently set switches after Electron's launch.
+Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. There is no way to see all currently set switches after Electron's launch.
 
 ## See all Chrome browser switches
 
