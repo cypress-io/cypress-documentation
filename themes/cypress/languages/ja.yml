@@ -51,6 +51,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: 環境変数
     launching-browsers: ブラウザーを起動する
+    cross-browser-testing: クロスブラウザテスト
     custom-commands: カスタムコマンド
     web-security: ウェブセキュリティー
     references: 参考
