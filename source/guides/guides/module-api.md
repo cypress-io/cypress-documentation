@@ -2,7 +2,7 @@
 title: Module API
 ---
 
-You can require Cypress as a Node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
+You can require Cypress as a node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
 
 - Send a notification about failing tests with included screenshot images
 - Rerun a single failing spec file
@@ -12,27 +12,30 @@ You can require Cypress as a Node module from your application under test. This 
 
 Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
 
-### Options
+### Options:
 
 Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
 
-Option | Description
------- |  ---------
-`browser`  | Specify different browser to run tests in, either by name or by filesystem path
-`ciBuildId` | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
-`config`  | Specify configuration
-`env`  | Specify environment variables
-`group` | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
-`headed`  | Display the Electron browser instead of running headlessly
-`key`  | Specify your secret record key
-`noExit` | Keep Cypress open after all tests run
-`parallel` | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
-`port`  | Override default port
-`project` | Path to a specific project
-`record`  | Whether to record the test run
-`reporter`  | Specify a mocha reporter
-`reporterOptions`  | Specify mocha reporter options
-`spec`  | Specify the specs to run
+Option | Type | Description
+------ | ---- | ---------
+`browser` | *string* | Specify different browser to run tests in, either by name or by filesystem path
+`ciBuildId` | *string* | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
+`config` | *object* | Specify {% url "configuration" configuration %}
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`env` | *object* | Specify {% url "environment variables" environment-variables %}
+`group` | *string* | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
+`headed` | *boolean* | Displays the browser instead of running headlessly (defaults to true for Chrome-family browsers)
+`headless` | *boolean* | Hide the browser instead of running headed (defaults to true for Electron)
+`key` | *string* | Specify your secret record key
+`exit` | *boolean* | Whether to close Cypress after all tests run
+`parallel` | *boolean* | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
+`port` | *number* | Override default port
+`project` | *string* | Path to a specific project
+`record` | *boolean* | Whether to record the test run
+`reporter` | *string* | Specify a {% url "Mocha reporter" reporters %}
+`reporterOptions` | *object* | Specify {% url "Mocha reporter" reporters %} options
+`spec` | *string* | Specify the specs to run
+`tag` | *string* | Identify a run with a tag or tags
 
 ```javascript
 const cypress = require('cypress')
@@ -43,6 +46,7 @@ cypress.run({
   config: {
     baseUrl: 'http://localhost:8080',
     chromeWebSecurity: false,
+    video: true,
   },
   env: {
     foo: 'bar',
@@ -51,7 +55,7 @@ cypress.run({
 })
 ```
 
-### Example
+### Example:
 
 Here is an example of programmatically running a spec file:
 
@@ -115,15 +119,16 @@ Even when tests fail, the `Promise` still resolves with the test results. The `P
 
 Just like the {% url "Command Line options" command-line %}, you can pass options that modify how Cypress runs.
 
-Option | Description
------- | ---------
-`browser` | Specify a filesystem path to a custom browser
-`config`  | Specify configuration
-`detached` | Open Cypress in detached mode
-`env`  | Specify environment variables
-`global` | Run in global mode
-`port`  | Override default port
-`project` | Path to a specific project
+Option |  Type | Description
+------ | ---- | ---------
+`browser` | *string* | Specify a filesystem path to a custom browser
+`config` | *object* | Specify {% url "configuration" configuration %}
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`detached` | *boolean* | Open Cypress in detached mode
+`env` | *object* | Specify {% url "environment variables" environment-variables %}
+`global` | *boolean* | Run in global mode
+`port` | *number* | Override default port
+`project` | *string* | Path to a specific project
 
 ### Example
 

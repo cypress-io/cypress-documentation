@@ -37,7 +37,7 @@ Option | Default | Description
 
 ## Blackout elements before screenshot
 
-Elements that match the specified selectors will be blacked out from the screenshot, but only when the `capture` option is `viewport`. `blackout` is ignored is `capture` is `runner`.
+Elements that match the specified selectors will be blacked out from the screenshot, but only when the `capture` option is `viewport`. `blackout` is ignored if `capture` option is `runner`.
 
 ```javascript
 Cypress.Screenshot.defaults({
@@ -143,5 +143,6 @@ A great place to put this configuration is in your {% url "`cypress/support/inde
 # See also
 
 - {% url "`cy.screenshot()`" screenshot %}
-- {% url 'Dashboard Service' dashboard-service %}
+- {% url 'Dashboard Service' dashboard-introduction%}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
+- {% url 'Visual Testing' visual-testing %}

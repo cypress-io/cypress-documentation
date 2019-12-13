@@ -24,6 +24,7 @@ cy.visit(options)
 
 ```javascript
 cy.visit('http://localhost:3000')    // Yields the window of the remote page
+cy.visit('./pages/hello.html')
 ```
 
 ## Arguments
@@ -33,6 +34,9 @@ cy.visit('http://localhost:3000')    // Yields the window of the remote page
 The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
+
+You may also specify the relative path of an html file.  The path is relative to the root
+directory of the Cypress installation. Note that the `file://` prefix is not needed.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -44,13 +48,14 @@ Option | Default | Description
 `method` | `GET` | The HTTP method to use in the visit. Can be `GET` or `POST`.
 `body` | `null` | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header.
 `headers` | `{}` | An object that maps HTTP header names to values to be sent along with the request. *Note:* `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.
+`qs` | `null` | Query parameters to append to the `url` of the request
 `log` | `true` | {% usage_options log %}
 `auth` | `null` | Adds Basic Authorization headers
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `onBeforeLoad` | `function` | Called before your page has loaded all of its resources.
 `onLoad` | `function` | Called once your page has fired its load event.
-`retryOnStatusCodeFailure` | `false` | Whether Cypress should automatically retry status code errors under the hood
-`retryOnNetworkFailure` | `true` | Whether Cypress should automatically retry transient network errors under the hood
+`retryOnStatusCodeFailure` | `false` | {% usage_options retryOnStatusCodeFailure cy.visit %}
+`retryOnNetworkFailure` | `true` | {% usage_options retryOnNetworkFailure cy.visit %}
 `timeout` | {% url `pageLoadTimeout` configuration#Timeouts %} | {% usage_options timeout cy.visit %}
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in {% url 'configuration' configuration %}.
@@ -61,7 +66,7 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 
 # Examples
 
-## Url
+## URL
 
 ### Visit a local server running on `http://localhost:8000`
 
@@ -84,7 +89,7 @@ cy.visit('/index.html', { timeout: 30000 })
 
 Cypress will automatically apply the right authorization headers if you're attempting to visit an application that requires {% url 'Basic Authentication' https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication %}.
 
-Simply provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
+Provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
 
 ```javascript
 cy.visit('https://www.acme.com/', {
@@ -120,9 +125,9 @@ cy.visit('http://localhost:3000/#dashboard', {
 
 {% note info %}
 Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
-  - {% url 'Bootstrap app data' recipes#Bootstrapping-your-App %}
-  - {% url 'Set a token to `localStorage` for login' recipes#Single-Sign-On %}
-  - {% url 'Stub `window.fetch`' recipes#Stubbing-window-fetch %}
+  - {% url 'Bootstraping your App' recipes#Server-Communication %}
+  - {% url 'Set a token to `localStorage` for login during Single Sign On' recipes#Logging-In %}
+  - {% url 'Stub `window.fetch`' recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ### Provide an `onLoad` callback function
@@ -137,6 +142,29 @@ cy.visit('http://localhost:3000/#/users', {
       // do something
     }
   }
+})
+```
+
+### Add query paramaters
+
+You can provide query parameters as an object to `cy.visit()` by passing `qs` to `options`.
+
+```js
+// visits http://localhost:3500/users?page=1&role=admin
+cy.visit('http://localhost:3500/users', {
+  qs: {
+    page: '1',
+    role: 'admin'
+  }
+})
+```
+
+The parameters passed to `qs` will be merged into existing query parameters on the `url`.
+
+```js
+// visits http://example.com/users?page=1&admin=true
+cy.visit('http://example.com/users?page=1', {
+  qs: { admin: true }
 })
 ```
 
@@ -184,9 +212,9 @@ cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
 
 ### Cypress can optionally act as your web server
 
-Cypress will automatically attempt to serve your files if you don't provide a host. The path should be relative to your project's root folder (where `cypress.json` is located).
+Cypress will automatically attempt to serve your files if you don't provide a host. The path should be relative to your project's root folder (where the `cypress.json` file is generated by default).
 
-Having Cypress serve your files is useful in simple projects and example apps, but isn't recommended for real apps.  It is always better to run your own server and provide the url to Cypress.
+Having Cypress serve your files is useful in smaller projects and example apps, but isn't recommended for production apps.  It is always better to run your own server and provide the url to Cypress.
 
 ```javascript
 cy.visit('app/index.html')
@@ -194,9 +222,9 @@ cy.visit('app/index.html')
 
 ## Prefixes
 
-### Visit is automatically prefixed with `baseUrl`.
+### Visit is automatically prefixed with `baseUrl`
 
-Configure `baseUrl` in the `cypress.json` file to prevent repeating yourself in every single `cy.visit()` command. Read more about {% url 'configuration' configuration %}.
+Configure `baseUrl` in the your {% url 'configuration' configuration %} file (`cypress.json` by default) to prevent repeating yourself in every `cy.visit()` command.
 
 ```json
 {
@@ -241,7 +269,7 @@ But if your app makes a request upon being initialized, *the above code will not
 
 Many applications will have already begun routing, initialization, and requests by the time the `cy.visit()` in the above code resolves. Therefore creating a {% url `cy.server()` server %} will happen too late, and Cypress will not process the requests.
 
-Luckily Cypress supports this use case. Simply reverse the order of the commands:
+Luckily Cypress supports this use case. Reverse the order of the commands:
 
 ```javascript
 // this code is probably what you want
@@ -278,15 +306,23 @@ beforeEach(function () {
 
 The commands above will display in the Command Log as:
 
-![Command Log visit](/img/api/visit/visit-example-page-in-before-each-of-test.png)
+{% imgTag /img/api/visit/visit-example-page-in-before-each-of-test.png "Command Log visit" %}
 
 When clicking on `visit` within the command log, the console outputs the following:
 
-![Console log visit](/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png)
+{% imgTag /img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png "console Log visit" %}
 
 {% history %}
-| 3.2.0 | Added options `url`, `method`, `body`, and `headers`.
-| 3.3.0 | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for options `qs`
+{% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`
+{% url "3.2.0" changelog#3-2-0 %} | Added options `url`, `method`, `body`, and `headers`
+{% url "1.1.3" changelog#1-1-3 %} | Added option `failOnStatusCode`
+{% url "0.18.2" changelog#0-18-2 %} | Automatically send `Accept: text/html,*/*` request header
+{% url "0.18.2" changelog#0-18-2 %} | Automatically send `User-Agent` header
+{% url "0.17.0" changelog#0-17-0 %} | Cannot `cy.visit()` two different super domains in a single test
+{% url "0.6.8" changelog#0-6-8 %} | Added option `log`
+{% url "0.4.3" changelog#0-4-3 %} | Added option `onBeforeLoad`
+{% url "< 0.3.3" changelog#0-3.3 %} | `cy.visit()` command added
 {% endhistory %}
 
 # See also
@@ -294,6 +330,6 @@ When clicking on `visit` within the command log, the console outputs the followi
 - {% url `cy.go()` go %}
 - {% url `cy.reload()` reload %}
 - {% url `cy.request()` request %}
-- {% url "Recipe: Bootstrapping App Test Data" recipes#Bootstrapping-your-App %}
-- {% url "Recipe: Logging In - Single Sign on" recipes#Single-Sign-On %}
-- {% url "Recipe: Stubbing `window.fetch`" recipes#Stubbing-window-fetch %}
+- {% url "Recipe: Bootstrapping your App" recipes#Server-Communication %}
+- {% url "Recipe: Logging In - Single Sign on" recipes#Logging-In %}
+- {% url "Recipe: Stubbing `window.fetch`" recipes#Stubbing-and-spying %}

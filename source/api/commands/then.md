@@ -1,6 +1,5 @@
 ---
 title: then
-
 ---
 
 Enables you to work with the subject yielded from the previous command.
@@ -47,6 +46,8 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 `.then()` is modeled identically to the way Promises work in JavaScript.  Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 
+Additionally, the result of the last Cypress command in the callback function will be yielded as the new subject and flow into the next command if there is no `return`.
+
 When `undefined` is returned by the callback function, the subject will not be modified and will instead carry over to the next command.
 
 Just like Promises, you can return any compatible "thenable" (anything that has a `.then()` interface) and Cypress will wait for that to resolve before continuing forward through the chain of commands.
@@ -59,7 +60,7 @@ We have several more examples in our {% url 'Core Concepts Guide' variables-and-
 
 ## DOM element
 
-***The element `input` is yielded***
+### The `button` element is yielded
 
 ```javascript
 cy.get('button').then(($btn) => {
@@ -69,21 +70,48 @@ cy.get('button').then(($btn) => {
 })
 ```
 
-## Change subject
+### The number is yielded from previous command
 
-***The subject is changed by returning***
-
-```javascript
-cy.wrap(null).then(() => {
-  return { id: 123 }
-})
-.then((obj) => {
-  // subject is now the obj {id: 123}
-  expect(obj.id).to.eq(123) // true
-})
+```js
+cy.wrap(1).then((num) => {
+  cy.wrap(num).should('equal', 1) // true
+}).should('equal', 1) // true
 ```
 
-***Returning `null` or `undefined` will not modify the yielded subject***
+## Change subject
+
+### The el subject is changed with another command
+
+```javascript
+cy.get('button').then(($btn) => {
+  const cls = $btn.class()
+
+  cy.wrap($btn).click().should('not.have.class', cls)
+    .find('i')
+    // since there is no explicit return
+    // the last Cypress command's yield is yielded
+}).should('have.class', 'spin') // assert on i element
+```
+
+### The number subject is changed with another command
+
+```javascript
+cy.wrap(1).then((num) => {
+  cy.wrap(num)).should('equal', 1) // true
+  cy.wrap(2)
+}).should('equal', 2) // true
+```
+
+### The number subject is changed by returning
+
+```javascript
+cy.wrap(1).then((num) => {
+  cy.wrap(num)).should('equal', 1) // true
+  return 2
+}).should('equal', 2) // true
+```
+
+### Returning `undefined` will not modify the yielded subject
 
 ```javascript
 cy.get('form')
@@ -91,8 +119,7 @@ cy.get('form')
   console.log('form is:', $form)
   // undefined is returned here, but $form will be
   // yielded to allow for continued chaining
-})
-.find('input').then(($input) => {
+}).find('input').then(($input) => {
   // we have our $input element here since
   // our form element was yielded and we called
   // .find('input') on it
@@ -103,7 +130,7 @@ cy.get('form')
 
 Cypress waits for Promises to resolve before continuing
 
-***Example using Q***
+### Example using Q
 
 ```javascript
 cy.get('button').click().then(($button) => {
@@ -117,7 +144,7 @@ cy.get('button').click().then(($button) => {
 })
 ```
 
-***Example using bluebird***
+### Example using bluebird
 
 ```javascript
 cy.get('button').click().then(($button) => {
@@ -125,7 +152,7 @@ cy.get('button').click().then(($button) => {
 })
 ```
 
-***Example using jQuery deferred's***
+### Example using jQuery deferred's
 
 ```javascript
 cy.get('button').click().then(($button) => {
@@ -162,6 +189,11 @@ cy.get('button').click().then(($button) => {
 # Command Log
 
 - `.then()` does *not* log in the Command Log
+
+{% history %}
+{% url "0.14.0" changelog#0-14-0 %} | Added `timeout` option
+{% url "< 0.3.3" changelog#0-3-3 %} | `.then()` command added
+{% endhistory %}
 
 # See also
 

@@ -24,7 +24,7 @@ cy.writeFile('menu.json')
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
-A path to a file within the project root (the directory that contains `cypress.json`).
+A path to a file within the project root (the directory that contains the default `cypress.json`).
 
 **{% fa fa-angle-right %} contents** ***(String, Array, or Object)***
 
@@ -62,7 +62,7 @@ To use encoding with other options, have your options object be your third param
 
 ## Yields {% helper_icon yields %}
 
-{% yields null cy.writeFile %}
+{% yields sets_subject cy.writeFile 'yields the value of the <code>contents</code> argument' %}
 
 # Examples
 
@@ -173,15 +173,15 @@ cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 
 The command above will display in the Command Log as:
 
-![Command Log](/img/api/writefile/write-data-to-system-file-for-testing.png)
+{% imgTag /img/api/writefile/write-data-to-system-file-for-testing.png "Command Log writeFile" %}
 
 When clicking on the `writeFile` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/writefile/console-log-shows-contents-written-to-file.png)
+{% imgTag /img/api/writefile/console-log-shows-contents-written-to-file.png "Console Log writeFile" %}
 
 {% history %}
-| 3.1.1 | Added `flag` option and appending with `a+`
-| 1.0.0 | Introduced
+{% url "3.1.1" changelog#3-1-1 %} | Added `flag` option and appending with `a+`
+{% url "1.0.0" changelog#1.0.0 %} | `cy.writeFile()` command added
 {% endhistory %}
 
 # See also

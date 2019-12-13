@@ -18,7 +18,6 @@ Cypress runs each spec file in isolation: the browser is exited between specs. C
 Not all configuration values can be changed during runtime. See {% urlHash "Notes" Notes %} below for details.
 {% endnote %}
 
-
 # Syntax
 
 ```javascript
@@ -46,11 +45,9 @@ Set multiple configuration options with an object literal.
 
 ## No Arguments
 
-**Get all configuration options.**
+### Get all configuration options from {% url 'configuration' configuration %} file (`cypress.json` by default)
 
-```javascript
-// cypress.json
-
+```json
 {
   "defaultCommandTimeout": 10000
 }
@@ -65,11 +62,9 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ## Name
 
-**Return just a single configuration option value.**
+### Return a single configuration option from {% url 'configuration' configuration %} file (`cypress.json` by default)
 
-```javascript
-// cypress.json
-
+```json
 {
   "pageLoadTimeout": 60000
 }
@@ -81,15 +76,13 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 ## Name and Value
 
-**Cypress allows you to change the values of your configuration options from within your tests.**
+### Change the values of configuration options from configuration file (`cypress.json` by default) from within your tests
 
 {% note warning Scope %}
 Remember, any changes that you make to configuration using this API will only be in effect for the remainder of the tests _in the same spec file._
 {% endnote %}
 
-```javascript
-// cypress.json
-
+```json
 {
   "viewportWidth": 1280,
   "viewportHeight": 720
@@ -104,12 +97,9 @@ Cypress.config('viewportWidth') // => 800
 
 ## Object
 
-**You can set multiple values by passing an object literal.**
+### Override multiple options from configuration file (`cypress.json` by default) by passing an object literal
 
-
-```javascript
-// cypress.json
-
+```json
 {
   "defaultCommandTimeout": 4000,
   "pageLoadTimeout": 30000,
@@ -136,6 +126,10 @@ Some configuration values cannot be changed while running a test. Anything that'
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 
 Since the configuration added or changed by `Cypress.config` is only in scope for the current spec file, you'd think that it should be `cy.config` and not `Cypress.config`&hellip;and you'd be right. The fact that `Cypress.config` affects local state is an artifact of the API evolving over time: `Cypress.config` used to affect global state&mdash;configuration added in one test spec file was available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in {% url `3.0.0` changelog#3-0-0 %} and by that time `Cypress.config` was public API.
+
+{% history %}
+0.12.6 | `Cypress.config` added
+{% endhistory %}
 
 # See also
 

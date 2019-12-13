@@ -1,0 +1,37 @@
+# large links with thumbnails, links, embedded video
+large:
+  - title: "From Zero to Hero with Cypress: Slido’s journey of creating E2E tests without JS experience"
+    date: Aug 7, 2019
+    author: Cypress & sli.do with Filip Hric, Lubo Droby, & Steven Yi
+    youtubeId: Vnlwy-qF90c
+
+  - title: "Complete Code Coverage with Cypress"
+    date: Jul 31, 2019
+    author: Cypress with Amir Rustamzadeh and Gleb Bahmutov
+    youtubeId: C8g5X4vCZJA
+
+  - title: "Cypress in a Nutshell"
+    date: Jul 18, 2019
+    author: Cypress with Amir Rustamzadeh
+    youtubeId: LcGHiFnBh3Y
+
+  - title: "SaltStack’s QA Turnaround Using Cypress.io"
+    date: May 22, 2019
+    author: Cypress & Saltstack with Steve Yi & Nate Watts
+    youtubeId: 8iBna-2gIzM
+
+  - title: "Cypress.io + Percy = End-to-end functional and visual testing for the web"
+    date: Apr 10, 2019
+    author: Cypress & Percy with Mike Fotinakis & Gleb Bahmutov 
+    youtubeId: MXfZeE9RQDw
+
+  - title: "How GoDaddy Created A Culture of Quality Through Test Automation with Cypress"
+    date: Mar 28, 2019
+    author: Cypress & GoDaddy with Pablo Velasquez, Kolya Venturi, Stephen Commisso & Steve Yi
+    youtubeId: ZSbNT-Fff9A
+
+  - title: "Get the latest updates from Cypress"
+    date: Oct 16, 2018
+    author: Cypress with Gleb Bahmutov & Brian Mann
+    youtubeId: FfqD1ExUGlw
+    slides: https://slides.com/bahmutov/cy-parallelization

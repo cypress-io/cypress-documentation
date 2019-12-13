@@ -6,7 +6,6 @@ menu:
   plugins: 插件
   faq: FAQ
   examples: 示例
-  dashboard: Dashboard
   search: 搜索
 
 index:
@@ -23,62 +22,58 @@ page:
 sidebar:
   guides:
     overview: 概述
-    why-cypress: 为什么选择Cypress？
+    why-cypress: 为什么选择Cypress?
     getting-started: 开始使用
     key-differences: 我们的优势
     installing-cypress: 安装Cypress
     writing-your-first-test: 编写第一个测试
     testing-your-app: 测试你的应用程序
-    interacting-with-elements: 页面元素交互
-    next-steps: 下一步
+    interacting-with-elements: 元素交互
     core-concepts: 核心概念
     introduction-to-cypress: Cypress简介
     writing-and-organizing-tests: 编写和组织测试
     conditional-testing: 条件测试
     test-runner: 测试执行器
-    dashboard-service: 数据面板服务
+    dashboard: Dashboard
+    dashboard-introduction: Introduction
+    projects: 项目
+    runs: 录制的运行
+    organizations: 组织
+    users: 成员
+    github-integration: GitHub Integration
+    analytics: 分析工具
     debugging: 调试
     variables-and-aliases: 变量和别名
-    stubs-spies-and-clocks: 桩件, Spies, 和时钟
+    stubs-spies-and-clocks: 桩, Spies和时钟
     network-requests: 网络请求
     screenshots-and-videos: 截图和视频
     guides: 指南
     command-line: 命令行
     continuous-integration: 持续集成
-    parallelization: 并行
+    parallelization: 并行化
     environment-variables: 环境变量
     launching-browsers: 启动浏览器
-    advanced-cypress: 高级
-    the-cypress-workflow: Cypress工作流程
-    coming-from-selenium: Cypress 对比 Selenium
     custom-commands: 自定义命令
     web-security: Web安全
-    how-cypress-really-works: How Cypress Really Works
-    talking-to-your-backend: Talking to Your Backend
-    spawning-processes: Spawning Processes
     references: 参考
     configuration: 配置
-    proxy-configuration: Proxy Configuration
+    proxy-configuration: 代理配置
     error-messages: 错误消息
-    bundled-tools: 捆绑工具
+    bundled-tools: 捆绑的工具
     assertions: 断言
-    creating-fixtures: 创建夹具
     best-practices: 最佳实践
-    anti-patterns: Anti-patterns
-    trade-offs: 一些取舍
-    contributing: 贡献
+    trade-offs: 取舍
     changelog: 更新日志
     roadmap: 路线图
-    cypress-api-design: API Design
-    all-videos: Videos
     tooling: 工具
-    intelligent-code-completion: 代码自动填充
+    intelligent-code-completion: 代码智能补全
     plugins-guide: 插件
-    reporters: Reporters
+    reporters: 报告生成器
     typescript-support: TypeScript
-    visual-testing: Visual Testing
-    module-api: 模块API
+    module-api: API模块
     retry-ability: 重试机制
+    visual-testing: Visual Testing
+    code-coverage: Code Coverage
   api:
     api: API
     table-of-contents: Table of Contents
@@ -134,6 +129,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -207,12 +203,14 @@ sidebar:
     applications: Applications
     docker: Docker
     media: Media
+    courses-media: Courses
+    webinars-media: Webinars
+    blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
-    blogs-media: Blogs
-    extensions: Extensions
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: General Questions

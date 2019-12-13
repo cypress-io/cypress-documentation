@@ -1,6 +1,5 @@
 ---
 title: nextUntil
-
 ---
 
 Get all following siblings of each DOM element in a set of matched DOM elements up to, but not including, the element provided.
@@ -66,7 +65,7 @@ Option | Default | Description
 
 ## Selector
 
-***Find all of the element's siblings following `#veggies` until `#nuts`***
+### Find all of the element's siblings following `#veggies` until `#nuts`
 
 ```html
 <ul>
@@ -114,11 +113,11 @@ cy.get('#veggies').nextUntil('#nuts')
 
 The commands above will display in the Command Log as:
 
-![Command Log nextUntil](/img/api/nextuntil/find-next-elements-until-selector.png)
+{% imgTag /img/api/nextuntil/find-next-elements-until-selector.png "Command Log nextUntil" %}
 
 When clicking on `nextUntil` within the command log, the console outputs the following:
 
-![Console Log nextUntil](/img/api/nextuntil/console-log-of-next-elements-until.png)
+{% imgTag /img/api/nextuntil/console-log-of-next-elements-until.png "Console Log nextUntil" %}
 
 # See also
 

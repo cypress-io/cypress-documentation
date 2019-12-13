@@ -1,9 +1,9 @@
 ---
-title: 为什么选择 Cypress?
+title: 为什么选择Cypress?
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - 什么是 Cypress ？你为什么需要使用它
 - 我们的目标以及我们的追求
@@ -39,10 +39,10 @@ Cypress可以测试任何在浏览器中运行的内容。
 
 # Cypress的生态系统
 
-Cypress包含免费的, {% url "开源的" https://github.com/cypress-io/cypress %}, {% url "可本地安装的" installing-cypress %} Test Runner **和** 能够 {% url '记录你测试' dashboard-service %} 的控制面板服务.
+Cypress包含免费的, {% url "开源的" https://github.com/cypress-io/cypress %}, {% url "可本地安装的" installing-cypress %} Test Runner **和** 能够 {% url '记录你测试' dashboard-introduction%} 的控制面板服务.
 
 - ***首先:*** Cypress可以让你每天在本地构建应用程序时很轻松的设置和开始编写测试代码。*TDD是最好的*
-- ***然后:*** 在建立了一套测试代码和整合了CI来做 {% url "集成测试" continuous-integration %} 后, 我们的 {% url '控制面板服务' dashboard-service %} 可以记录你所执行的测试。 你永远不会想知道：*为什么这会失败？*
+- ***然后:*** 在建立了一套测试代码和整合了CI来做 {% url "集成测试" continuous-integration %} 后, 我们的 {% url '控制面板服务' dashboard-introduction%} 可以记录你所执行的测试。 你再也不用为寻找测试失败原因而操心了！
 
 # 我们的目标
 
@@ -52,7 +52,7 @@ Cypress包含免费的, {% url "开源的" https://github.com/cypress-io/cypress
 
 我们希望帮助开发人员更快、更好的构建现代应用程序的测试，而不会出现与测试管理相关的压力和焦虑。
 
-我们知道，为了能让我们成功，我们必须创造和培养一个蓬勃发展的开源生态系统。每行测试代码都是对您**代码库**的投资，这永远都不需要给我们或者相关公司支付费用。测试代码将能够**始终**独立的执行。
+我们知道，为了能让我们成功，我们必须创造和培养一个蓬勃发展的开源生态系统。每行测试代码都是对你**代码库**的投资，这永远都不需要给我们或者相关公司支付费用。测试代码将能够**始终**独立的执行。
 
 我们相信测试需要许多 {% fa fa-heart %} ，我们在这里建立一个工具、服务和社区，每个人都可以学习并从中受益。我们正在解决互联网开发者分享的最难的痛点问题。我们相信这个使命并且希望你能够加入我们，让Cypress成为一个持续发展的生态系统，让每个人都能享受快乐。
 
@@ -88,6 +88,6 @@ Cypress的运行速度与浏览器的渲染速度一样的快。你可以在开�
 
 ## {% fa fa-bug %} 调试测试
 
-可读的错误消息能够帮助你快递调试程序。你还可以访问你熟悉和喜爱的所有开发者工具。
+可读的错误消息能够帮助你快速调试程序。你还可以访问你熟悉和喜爱的所有开发者工具。
 
 {% video local /img/snippets/debugging.mp4 %}

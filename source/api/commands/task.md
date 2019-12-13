@@ -2,7 +2,7 @@
 title: task
 ---
 
-Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin event.
+Execute code in {% url "Node" https://nodejs.org %} via the `task` plugin event.
 
 {% note warning 'Anti-Pattern' %}
 We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
@@ -24,15 +24,18 @@ cy.task(event, arg, options)
 // in test
 cy.task('log', 'This will be output to the terminal')
 ```
+
 ```javascript
 // in plugins file
-on('task', {
-  log (message) {
-    console.log(message)
+module.exports = (on, config) => {
+  on('task', {
+    log (message) {
+      console.log(message)
 
-    return null
-  }
-})
+      return null
+    }
+  })
+}
 ```
 
 ## Arguments
@@ -54,14 +57,16 @@ cy.task('hello', { greeting: 'Hello', name: 'World' })
 
 ```javascript
 // in plugins/index.js
-on('task', {
-  // deconstruct the individual properties
-  hello ({ greeting, name }) {
-    console.log('%s, %s', greeting, name)
+module.exports = (on, config) => {
+  on('task', {
+    // deconstruct the individual properties
+    hello ({ greeting, name }) {
+      console.log('%s, %s', greeting, name)
 
-    return null
-  }
-})
+      return null
+    }
+  })
+}
 ```
 
 **{% fa fa-angle-right %} options** ***(Object)***
@@ -105,15 +110,17 @@ cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 // in plugins/index.js
 const fs = require('fs')
 
-on('task', {
-  readFileMaybe (filename) {
-    if (fs.existsSync(filename)) {
-      return fs.readFileSync(filename, 'utf8')
-    }
+module.exports = (on, config) => {
+  on('task', {
+    readFileMaybe (filename) {
+      if (fs.existsSync(filename)) {
+        return fs.readFileSync(filename, 'utf8')
+      }
 
-    return null
-  }
-})
+      return null
+    }
+  })
+}
 ```
 
 ### Seed a database
@@ -157,14 +164,16 @@ cy.task('pause', 1000)
 
 ```javascript
 // in plugins/index.js
-on('task', {
-  pause (ms) {
-    return new Promise((resolve) => {
-      // tasks should not resolve with undefined
-      setTimeout(() => resolve(null), ms)
-    })
-  }
-})
+module.exports = (on, config) => {
+  on('task', {
+    pause (ms) {
+      return new Promise((resolve) => {
+        // tasks should not resolve with undefined
+        setTimeout(() => resolve(null), ms)
+      })
+    }
+  })
+}
 ```
 
 ## Options
@@ -221,7 +230,7 @@ on('task', myTask)
 See {% issue 2284 '#2284' %} for implementation.
 
 {% note warning Duplicate task keys %}
-If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
 
 # Rules
@@ -240,7 +249,7 @@ If multiple task objects use the same key, the later registration will overwrite
 
 # Command Log
 
-### List the contents of `cypress.json`
+### List the contents of the default `cypress.json` configuration file
 
 ```javascript
 cy.task('readJson', 'cypress.json')
@@ -248,11 +257,15 @@ cy.task('readJson', 'cypress.json')
 
 The command above will display in the Command Log as:
 
-![Command Log task](/img/api/task/task-read-cypress-json.png)
+{% imgTag /img/api/task/task-read-cypress-json.png "Command Log task" %}
 
 When clicking on the `task` command within the command log, the console outputs the following:
 
-![console.log task](/img/api/task/console-shows-task-result.png)
+{% imgTag /img/api/task/console-shows-task-result.png "Console Log task" %}
+
+{% history %}
+{% url "3.0.0" changelog#3-0-0 %} | `cy.task()` command added
+{% endhistory %}
 
 # See also
 

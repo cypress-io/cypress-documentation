@@ -51,10 +51,21 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-### Using `cy.spy()`
+### Disable logging to Command Log
+
+You can chain a `.log(bool)` method to disable `cy.stub()` calls from being shown in the Command Log. This may be useful when your stubs are called an excessive number of times.
+
+```javascript
+const obj = {
+  foo () {}
+}
+const stub = cy.stub(obj, 'foo').log(false)
+```
+
+### More `cy.spy()` examples
 
 {% note info %}
-{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Aliases
@@ -75,7 +86,7 @@ expect(withFoo).to.be.called // purposefully failing assertion
 
 You will see the following in the command log:
 
-![spies with aliases](https://cloud.githubusercontent.com/assets/1157043/22437291/805bd0d4-e6f5-11e6-99c5-bded81b9c42b.png)
+{% imgTag /img/api/spy/using-spy-with-alias.png "spies with aliases" %}
 
 # Notes
 
@@ -127,16 +138,21 @@ expect(spy).to.be.called
 
 The command above will display in the Command Log as:
 
-![Command Log spy](/img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png)
+{% imgTag /img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png "Command Log spy" %}
 
 When clicking on the `spy-1` event within the command log, the console outputs the following:
 
-![Command Log](/img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png)
+{% imgTag /img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png "Console Log spy" %}
+
+{% history %}
+{% url "0.20.0" changelog#0-20.0 %} | Added `.log(bool)` method
+{% url "0.18.8" changelog#0-18-8 %} | `cy.spy()` command added
+{% endhistory %}
 
 # See also
 
 - {% url `.as()` as %}
 - {% url `cy.clock()` clock %}
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
-- {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" recipes#Stubbing-window-fetch %}
+- {% url "Recipe: Stubbing, Spying" recipes#Stubbing-and-spying %}
 - {% url `cy.stub()` stub %}

@@ -40,7 +40,7 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
 ```
 
-Your visual styles may also rely on more than just CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
+Your visual styles may also rely on more than CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
 
 Luckily, Cypress gives a stable platform for {% url "writing plugins" plugins-guide %} that _can perform visual testing_.
 
@@ -91,6 +91,10 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
+<!-- textlint-disable -->
+{% video youtube qVRjhABuyG0 %}
+<!-- textlint-enable -->
+
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
 
 Resource |  Description
@@ -101,6 +105,10 @@ Resource |  Description
 {% url 'Blog' https://glebbahmutov.com/blog/testing-a-chart/ %} | Testing a chart with Cypress and Applitools
 
 ## Percy
+
+<!-- textlint-disable -->
+{% video youtube MXfZeE9RQDw %}
+<!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
@@ -115,7 +123,7 @@ Resource |  Description
 
 ## Do It Yourself
 
-Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow the example {% url "Visual Regression testing with Cypress.io and cypress-image-snapshot" https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595 %} tutorial and do it all yourself.
+Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow the example {% url "Visual Regression testing with Cypress and cypress-image-snapshot" https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595 %} tutorial and do it all yourself.
 
 {% note warning %}
 You will want to consider the development costs of implementing a visual testing tool yourself versus using an external 3rd party provider. Storing, reviewing and analyzing image differences are non-trivial tasks and they can quickly become a chore when going with a DIY solution.

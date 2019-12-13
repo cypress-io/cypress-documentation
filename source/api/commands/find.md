@@ -1,6 +1,5 @@
 ---
 title: find
-
 ---
 
 Get the descendent DOM elements of a specific selector.
@@ -54,7 +53,7 @@ Option | Default | Description
 
 ## Selector
 
-***Get li's within parent***
+### Get li's within parent
 
 ```html
 <ul id="parent">
@@ -92,11 +91,11 @@ cy.get('.left-nav>.nav').find('>li')
 
 The commands above will display in the Command Log as:
 
-![Command Log find](/img/api/find/find-li-of-uls-in-test.png)
+{% imgTag /img/api/find/find-li-of-uls-in-test.png "Command Log find" %}
 
 When clicking on the `find` command within the command log, the console outputs the following:
 
-![console.log find](/img/api/find/find-in-console-shows-list-and-yields.png)
+{% imgTag /img/api/find/find-in-console-shows-list-and-yields.png "console.log find" %}
 
 # See also
 

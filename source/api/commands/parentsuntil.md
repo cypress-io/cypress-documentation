@@ -1,6 +1,5 @@
 ---
 title: parentsUntil
-
 ---
 
 Get all ancestors of each DOM element in a set of matched DOM elements up to, but not including, the element provided.
@@ -66,7 +65,7 @@ Option | Default | Description
 
 ## Selector
 
-***Find all of the `.active` element's ancestors until `.nav`***
+### Find all of the `.active` element's ancestors until `.nav`
 
 ```html
 <ul class="nav">
@@ -113,11 +112,11 @@ cy.get('.active').parentsUntil('.nav')
 
 The commands above will display in the Command Log as:
 
-![Command Log parentsUntil](/img/api/parentsuntil/get-all-parents-until-nav-selector.png)
+{% imgTag /img/api/parentsuntil/get-all-parents-until-nav-selector.png "Command Log parentsUntil" %}
 
 When clicking on `parentsUntil` within the command log, the console outputs the following:
 
-![Console Log parentsUntil](/img/api/parentsuntil/show-parents-until-nav-in-console.png)
+{% imgTag /img/api/parentsuntil/show-parents-until-nav-in-console.png "Console Log parentsUntil" %}
 
 # See also
 

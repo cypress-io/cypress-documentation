@@ -16,16 +16,17 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Electron" https://electron.atom.io/ %}
 
-Cypress automatically detects available browsers on your OS.
+Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
+
+{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+
+{% partial chromium_download %}
 
 ## Electron Browser
 
 In addition to the browsers found on your system, you'll notice that Electron is an available browser. The Electron browser is a version of Chromium that comes with {% url "Electron" https://electron.atom.io/ %}.
 
-The Electron browser has two unique advantages:
-
-1. It can be run headlessly.
-2. It comes baked into Cypress and does not need to be installed separately.
+The Electron browser has the advantage of coming baked into Cypress and does not need to be installed separately.
 
 By default, when running {% url '`cypress run`' command-line#cypress-run %} from the CLI, we will launch Electron headlessly.
 
@@ -48,6 +49,8 @@ cypress run --browser chrome
 ```
 
 To use this command in CI, you need to install the browser you want - or use one of our {% url 'docker images' docker %}.
+
+By default, we will launch Chrome in headed mode. To run Chrome headlessly, you can pass the `--headless` argument to `cypress run`.
 
 You can also launch Chromium:
 
@@ -77,9 +80,89 @@ Cypress will automatically detect the type of browser supplied and launch it for
 
 {% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
 
+## Customize available browsers
+
+Sometimes you might want to modify the list of browsers found before running tests.
+
+For example, your web application might *only* be designed to work in a Chrome browser, and not inside the Electron browser.
+
+In the plugins file, you can filter the list of browsers passed inside the `config` object and return the list of browsers you want available for selection during `cypress open`.
+
+```javascript
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  // inside config.browsers array each object has information like
+  // {
+  //   name: 'canary',
+  //   family: 'chrome',
+  //   displayName: 'Canary',
+  //   version: '80.0.3966.0',
+  //   path:
+  //    '/Applications/Canary.app/Contents/MacOS/Canary',
+  //   majorVersion: 80
+  // }
+  return {
+    browsers: config.browsers.filter((b) => b.family === 'chrome')
+  }
+}
+```
+
+When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
+
+{% imgTag /img/guides/plugins/chrome-browsers-only.png "Filtered list of Chrome browsers" %}
+
+{% note info %}
+If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
+{% endnote %}
+
+If you have installed a Chromium-based browser like {% url Brave https://brave.com/ %}, {% url Vivaldi https://vivaldi.com/ %} and even the new {% url "Microsoft Edge Beta" https://www.microsoftedgeinsider.com/en-us/ %} you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
+
+```javascript
+// cypress/plugins/index.js
+const execa = require('execa')
+const findBrowser = () => {
+  // the path is hard-coded for simplicity
+  const browserPath =
+    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
+
+  return execa(browserPath, ['--version']).then((result) => {
+    // STDOUT will be like "Brave Browser 77.0.69.135"
+    const [, version] = /Brave Browser (\d+\.\d+\.\d+\.\d+)/.exec(
+      result.stdout
+    )
+    const majorVersion = parseInt(version.split('.')[0])
+
+    return {
+      name: 'Brave',
+      family: 'chrome',
+      displayName: 'Brave',
+      version,
+      path: browserPath,
+      majorVersion
+    }
+  })
+}
+
+module.exports = (on, config) => {
+  return findBrowser().then((browser) => {
+    return {
+      browsers: config.browsers.concat(browser)
+    }
+  })
+}
+```
+
+{% imgTag /img/guides/plugins/brave-browser.png "List of browsers includes Brave browser" %}
+
+Once selected, the Brave browser is detected using the same approach as any other browser of the `chrome` family.
+
+{% imgTag /img/guides/plugins/brave-running-tests.png "Brave browser executing end-to-end tests" %}
+
+If you modify the list of browsers, you can see the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
+
 ## Unsupported Browsers
 
-Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
+Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. While it may be possible to modify the list of browsers found and run Cypress within them - we do not guarantee full functionality. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
 
 # Browser Environment
 
@@ -101,7 +184,7 @@ This enables you to do things like:
 Cypress generates its own isolated profile apart from your normal browser profile. This means things like `history` entries, `cookies`, and `3rd party extensions` from your regular browsing session will not affect your tests in Cypress.
 
 {% note warning Wait, I need my developer extensions! %}
-That's no problem - you just have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
+That's no problem - you have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
 {% endnote %}
 
 ## Disabled Barriers
@@ -133,10 +216,10 @@ You might notice that if you already have the browser open you will see two of t
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser and it'll be much easier to tell the difference. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
 Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
-![Cypress Browser with darker chrome](/img/guides/cypress-browser-chrome.png)
+{% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
