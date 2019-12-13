@@ -42,7 +42,7 @@ The CI configuration examples within this guide use {% url "Cypress's Docker ima
 Generally, it is desired to run tests with each pushed commit, but it may not be necessary to do so for all browsers. For example, we can choose to run tests within Chrome for each commit, but only run Firefox on a periodic basis (i.e. nightly). The periodic frequency will depend on the scheduling of your project releases, so consider a test run frequency that is appropriate for the release schedule of your project.
 
 {% note info 'Cron Scheduling' %}
-Typically CI providers allow for the scheduling of CI jobs via {% url "cron expressions" https://en.wikipedia.org/wiki/Cron %}. For example, the expression `0 0 * * *` translates to "everyday at midnight" or nightly. Helpful {% url "online utilities" https://crontab.guru/ %} are avaialble to assist with creation and translation of cron expressions.
+Typically CI providers allow for the scheduling of CI jobs via {% url "cron expressions" https://en.wikipedia.org/wiki/Cron %}. For example, the expression `0 0 * * *` translates to "everyday at midnight" or nightly. Helpful {% url "online utilities" https://crontab.guru/ %} are available to assist with creation and translation of cron expressions.
 {% endnote %}
 
 The following example demonstrates a nightly CI schedule against production (`master` branch) for Firefox:
