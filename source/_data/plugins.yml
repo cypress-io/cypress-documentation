@@ -139,6 +139,11 @@
       link: https://github.com/RcKeller/cypress-unfetch
       keywords: [commands, routing, networking]
 
+    - name: cypress-redux
+      description: Run assertions against Redux stores.
+      link: https://github.com/RcKeller/cypress-redux
+      keywords: [commands, redux]
+
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
       link: https://github.com/avanslaars/cypress-axe
