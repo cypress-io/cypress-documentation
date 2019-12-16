@@ -555,7 +555,7 @@ Here are some potential workarounds:
 
 1. Ask your administrator to disable these policies so that you can use Cypress with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by these policies. {% url 'See the guide to launching browsers for more information.' launching-browsers#Electron-Browser %}
-3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com/ %}
+3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com %}
 4. If you have Local Administrator access to your computer, you may be able to delete the registry keys that are affecting Chrome. Here are some instructions:
     1. Open up Registry Editor by pressing WinKey+R and typing `regedit.exe`
     2. Look in the following locations for the policy settings listed above:
