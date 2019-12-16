@@ -100,7 +100,7 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 Resource |  Description
 ------- |  ----
 {% url 'Official docs' https://applitools.com/cypress %} | Applitools' Cypress documentation
-{% url 'Tutorial' https://applitools.com/tutorials/cypress.html#how-it-works %} | Applitools' Cypress tutorial
+{% url 'Tutorial' https://applitools.com/tutorials/cypress.html %} | Applitools' Cypress tutorial
 {% url 'Webinar' https://applitools.com/blog/cypress-applitools-end-to-end-testing %} | *Creating a Flawless User Experience, End-to-End, Functional to Visual – Practical Hands-on Session*, a webinar recorded together with Cypress and Applitools
 {% url 'Blog' https://glebbahmutov.com/blog/testing-a-chart/ %} | Testing a chart with Cypress and Applitools
 
@@ -117,7 +117,7 @@ Resource |  Description
 {% url 'Official docs' https://docs.percy.io/docs/cypress %} | Percy's Cypress documentation
 {% url 'Tutorial'  https://docs.percy.io/docs/cypress-tutorial %} | Percy's Cypress tutorial
 {% url "Webinar" https://www.youtube.com/watch?v=MXfZeE9RQDw %} | *Cypress + Percy = End-to-end functional and visual testing for the web*, a webinar recorded together with Cypress and Percy.io
-{% url "Blog" https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} | The companion blog for the Cypress + Percy webinar
+{% url "Blog" https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-io-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} | The companion blog for the Cypress + Percy webinar
 {% url "Slides" https://slides.com/bahmutov/visual-testing-with-percy %} | The companion slides for the Cypress + Percy webinar
 {% url "Blog" https://glebbahmutov.com/blog/testing-visually/ %} | Testing how an application renders a drawing with Cypress and Percy
 
