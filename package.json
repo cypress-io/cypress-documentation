@@ -123,7 +123,7 @@
     "start-server-and-test": "1.10.6",
     "textlint": "11.5.0",
     "textlint-filter-rule-comments": "1.2.2",
-    "textlint-rule-eslint": "3.2.0",
+    "textlint-rule-eslint": "3.2.1",
     "textlint-rule-terminology": "1.1.30",
     "utf8": "3.0.0",
     "wait-on": "3.3.0",
