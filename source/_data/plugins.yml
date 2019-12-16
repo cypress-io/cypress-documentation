@@ -122,6 +122,11 @@
       link: https://github.com/morficus/cypress-dotenv
       keywords: [dotenv, env, environment, env var]
 
+    - name: 'cypress-har-generator'
+      description: Generate HTTP Archive (HAR) while running tests.
+      link: https://github.com/NeuraLegion/cypress-har-generator
+      keywords: [har, http-archive, http, websocket, recording, chrome]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
