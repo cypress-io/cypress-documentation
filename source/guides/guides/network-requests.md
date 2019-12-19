@@ -329,8 +329,9 @@ cy.route('POST', '/users').as('new-user')
 // trigger network calls by manipulating web app's user interface, then
 cy.wait('@new-user')
   .should('have.property', 'status', 201)
-// we can grab the XHR object again to run more assertions
-cy.wait('@new-user') // yields XHR object
+// we can grab the completed XHR object again to run more assertions
+// using cy.get(<alias>)
+cy.get('@new-user') // yields the same XHR object
   .its('request.body')
   .should('deep.equal', {
     id: '101',
@@ -338,7 +339,7 @@ cy.wait('@new-user') // yields XHR object
     lastName: 'Black'
   })
 // and we can place multiple assertions in a single "should" callback
-cy.wait('@new-user')
+cy.get('@new-user')
   .should((xhr) => {
     expect(xhr.url).to.match(/\/users$/)
     expect(xhr.method).to.equal('POST')
