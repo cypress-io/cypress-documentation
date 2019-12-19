@@ -294,6 +294,8 @@ In our example above we can assert about the request object to verify that it se
 
 ```javascript
 cy.server()
+// any request to "search/*" endpoint will automatically receive
+// an array with two book objects
 cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
@@ -317,6 +319,48 @@ cy.get('#results')
 - Request Headers
 - Response Body
 - Response Headers
+
+**Examples**
+
+```javascript
+cy.server()
+// spy on POST requests to /users endpoint
+cy.route('POST', '/users').as('new-user')
+// trigger network calls by manipulating web app's user interface, then
+cy.wait('@new-user')
+  .should('have.property', 'status', 201)
+// we can grab the completed XHR object again to run more assertions
+// using cy.get(<alias>)
+cy.get('@new-user') // yields the same XHR object
+  .its('request.body')
+  .should('deep.equal', {
+    id: '101',
+    firstName: 'Joe',
+    lastName: 'Black'
+  })
+// and we can place multiple assertions in a single "should" callback
+cy.get('@new-user')
+  .should((xhr) => {
+    expect(xhr.url).to.match(/\/users$/)
+    expect(xhr.method).to.equal('POST')
+    // it is a good practice to add assertion messages
+    // as the 2nd argument to expect()
+    expect(xhr.response.headers, 'response headers').to.include({
+      'cache-control': 'no-cache',
+      expires: '-1',
+      'content-type': 'application/json; charset=utf-8',
+      location: '<domain>/users/101'
+    })
+  })
+```
+
+**Tip:** you can inspect the full XHR object by logging it to the console
+
+```javascript
+cy.wait('@new-user').then(console.log)
+```
+
+You can find more examples in our {% url "XHR Assertions" https://github.com/cypress-io/cypress-example-recipes#server-communication %} recipe.
 
 # See also
 
