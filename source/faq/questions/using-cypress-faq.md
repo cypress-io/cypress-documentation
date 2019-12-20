@@ -598,6 +598,7 @@ cy.visit('/', {
     cy.stub(win.console, 'log').as('consoleLog')
   }
 })
+
 //...
 cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```

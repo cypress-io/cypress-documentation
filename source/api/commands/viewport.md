@@ -112,6 +112,7 @@ describe('Nav Menus', function () {
       cy.get('nav .mobile-menu')
         .should('be.visible')
         .find('i.hamburger').click()
+
       cy.get('ul.slideout-menu').should('be.visible')
     })
   })

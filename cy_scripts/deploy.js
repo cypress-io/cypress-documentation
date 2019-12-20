@@ -106,6 +106,7 @@ function doDeploy (env) {
   .then((branch) => {
     console.log('deploying branch %s to environment %s',
       chalk.green(branch), chalk.blue(env))
+
     la(is.unemptyString(branch), 'invalid branch name', branch)
 
     return deployEnvironmentBranch(env, branch)

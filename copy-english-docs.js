@@ -89,6 +89,7 @@ const copyAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
 
     console.log('Copying %s from English to %s',
       pluralize('file', untransledEnglishFiles.length, true), getLanguageName(targetLanguage))
+
     console.table(untransledEnglishFiles)
 
     return Promise.mapSeries(untransledEnglishFiles, (relativePathToEnglishFile) => {

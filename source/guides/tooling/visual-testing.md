@@ -22,6 +22,7 @@ it('completes todo', () => {
   cy.get('.new-todo').type('write tests{enter}')
   cy.contains('.todo-list li', 'write tests')
     .find('.toggle').check()
+
   cy.contains('.todo-list li', 'write tests')
     .should('have.class', 'completed')
 })
@@ -62,8 +63,10 @@ it('completes todo', () => {
   cy.contains('.todo-list li', 'write tests')
     .find('.toggle')
     .check()
+
   cy.contains('.todo-list li', 'write tests')
     .should('have.class', 'completed')
+
   // run 'npm i cypress-plugin-snapshots -S'
   // capture the element screenshot and
   // compare to the baseline image
