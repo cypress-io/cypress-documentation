@@ -75,9 +75,9 @@ cy.get('input:first').blur({ force: true })
 
 `.blur()` is not implemented like other action commands, and does not follow the same rules of {% url 'waiting for actionability' interacting-with-elements %}.
 
-`.blur()` is just a helpful command which is a simple shortcut. Normally there's no way for a user to "blur" an element. Typically the user would have to perform **another** action like clicking or tabbing to a different element. Needing to perform a separate action like this is very indirect.
+`.blur()` is a helpful command used as a shortcut. Normally there's no way for a user to "blur" an element. Typically the user would have to perform **another** action like clicking or tabbing to a different element. Needing to perform a separate action like this is very indirect.
 
-Therefore it's oftentimes much easier and simpler to test the blur behavior directly with `.blur()`.
+Therefore it's often much more efficient to test the blur behavior directly with `.blur()`.
 
 ## Timeouts
 

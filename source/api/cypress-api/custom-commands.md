@@ -5,7 +5,7 @@ title: Custom Commands
 Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.
 
 {% note info  %}
-A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated via an import statement in cypress/support/index.js.
+A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated via an import statement in your {% url "`supportFile`" configuration#Folders-Files %} (`cypress/support/index.js` by default).
 {% endnote %}
 
 # Syntax
@@ -14,7 +14,6 @@ A great place to define or overwrite commands is in your `cypress/support/comman
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
 Cypress.Commands.overwrite(name, callbackFn)
-Cypress.Commands.overwrite(name, options, callbackFn)
 ```
 
 ## Usage
@@ -39,6 +38,10 @@ Pass a function that receives the arguments passed to the command.
 **{% fa fa-angle-right %} options** ***(Object)***
 
 Pass in an options object to define the implicit behavior of the custom command.
+
+{% note warning %}
+`options` is only supported for use in `Cypress.Commands.add()` and not supported for use in `Cypress.Commands.overwrite()`
+{% endnote %}
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
@@ -72,7 +75,91 @@ Examples of parent commands:
 - {% url `cy.exec()` exec %}
 - {% url `cy.route()` route %}
 
-### Custom `login` command
+### Click link containing text
+
+```js
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+```js
+cy.clickLink('Buy Now')
+```
+
+### Check a token
+
+```js
+Cypress.Commands.add('checkToken', (token) => {
+  cy.window()
+    .its('localStorage.token')
+    .should('eq', token)
+})
+```
+
+```js
+cy.checkToken('abc123')
+```
+
+### Download a file
+
+Originally used in {% url "cypress-downloadfile" https://github.com/Xvier/cypress-downloadfile %}, this command calls other Cypress commands.
+
+```javascript
+Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
+  return cy.getCookies().then((cookies) => {
+    return cy.task('downloadFile', {
+      url,
+      directory,
+      cookies,
+      fileName,
+    })
+  })
+})
+```
+
+```js
+cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
+```
+
+### Commands to work with `sessionStorage`
+
+```js
+Cypress.Commands.add('getSessionStorage', (key) => {
+  cy.window().then((window) => {
+    window.sessionStorage.getItem(key)
+  })
+})
+
+Cypress.Commands.add('setSessionStorage', (key, value) => {
+  cy.window().then((window) => {
+    window.sessionStorage.setItem(key, value)
+  })
+})
+```
+
+```js
+cy.setSessionStorage('token', 'abc123')
+cy.getSessionStorage('token').should('eq', 'abc123')
+```
+
+### Log in command using UI
+
+```js
+Cypress.Commands.add('typeLogin', (user) => {
+  cy.get('input[name=email]')
+    .type(user.email)
+
+  cy.get('input[name=password]')
+    .type(user.password)
+})
+```
+
+```js
+cy.typeLogin({ email: 'fake@email.com', password: 'Secret1' })
+```
+
+### Log in command using request
 
 ```javascript
 Cypress.Commands.add('login', (userType, options = {}) => {
@@ -118,14 +205,66 @@ Cypress.Commands.add('login', (userType, options = {}) => {
 })
 ```
 
-### Usage
-
 ```javascript
-cy.login('admin') // can start a chain off of cy
+// can start a chain off of cy
+cy.login('admin')
 
-cy
-  .get('button')
-  .login('user') // can be chained but will not receive the previous subject
+// can be chained but will not receive the previous subject
+cy.get('button').login('user')
+```
+
+### Log out command using UI
+
+```js
+Cypress.Commands.add('logout', () => {
+  cy.contains('Login').should('not.exist')
+  cy.get('.avatar').click()
+  cy.contains('Logout').click()
+})
+```
+
+### Log out command using `localStorage`
+
+```js
+Cypress.Commands.add('logout', () => {
+  cy.window().its('localStorage')
+    .invoke('removeItem', 'session')
+
+  cy.visit('/login')
+})
+```
+
+```js
+cy.logout()
+```
+
+### Create a user
+
+```js
+Cypress.Commands.add('createUser', (user) => {
+  cy.request({
+    method: 'POST',
+    url: 'https://www.example.com/tokens',
+    body: {
+      email: 'admin_username'),
+      password: 'admin_password')
+    }
+  }).then((resp) => {
+      cy.request({
+          method: 'POST',
+          url: 'https://www.example.com/users',
+          headers: ({ Authorization: 'Bearer ' + resp.body.token }),
+          body: user
+      })
+  })
+})
+```
+
+```js
+cy.createUser({
+  id: 123,
+  name: 'Jane Lane'
+})
 ```
 
 {% note info 'Command Log' %}
@@ -172,8 +311,6 @@ Cypress.Commands.add('console', {
 })
 ```
 
-### Usage
-
 ```javascript
 cy.get('button').console('info').then(($button) => {
   // subject is still $button
@@ -189,7 +326,7 @@ cy.console() // error about how you can't call console without a subject
 ```
 
 {% note info %}
-Whenever you're using a child command you likely want to use `cy.wrap()` on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.
+Whenever you're using a child command you likely want to use {% url "`cy.wrap()`" wrap %} on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.
 {% endnote %}
 
 ## Dual Commands
@@ -226,8 +363,6 @@ Cypress.Commands.add('dismiss', {
 })
 ```
 
-### Usage
-
 ```javascript
 cy.dismiss() // no subject
 cy.get('#dialog').dismiss() // with subject
@@ -235,7 +370,7 @@ cy.get('#dialog').dismiss() // with subject
 
 ## Overwrite Existing Commands
 
-You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up just using the original.
+You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up using the original.
 
 ### Overwrite `visit` command
 
@@ -262,7 +397,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 {% note info %}
 We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out baseUrl's that both `cy.visit()` and `cy.request()` use. Just set the `baseUrl` config property in `cypress.json` and override it with environment variable `CYPRESS_BASE_URL`.
+This is usually unnecessary because Cypress is already configured to swap out a `baseUrl` that both {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %} use. Set the `baseUrl` configuration property in your {% url "configuration" configuration %} file (`cypress.json` by default) and override it with the `CYPRESS_BASE_URL` environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
@@ -417,11 +552,11 @@ Take advantage of the {% url `Cypress.log()` cypress-log %} API. When you're iss
 
 Custom commands work well when you're needing to describe behavior that's desirable across **all of your tests**. Examples would be a `cy.setup()` or `cy.login()` or extending your application's behavior like `cy.get('.dropdown').dropdown('Apples')`. These are specific to your application and can be used everywhere.
 
-However, this pattern can be used and abused. Let's not forget - writing Cypress tests is just **JavaScript**, and it's often much easier just to write a simple function for repeatable behavior that's specific to only **a single spec file**.
+However, this pattern can be used and abused. Let's not forget - writing Cypress tests is **JavaScript**, and it's often more efficient to write a function for repeatable behavior that's specific to only **a single spec file**.
 
 If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself:
 
-> Can this just be written as a simple function?
+> Can this be written as a function?
 
 The answer is usually **yes**. Here's an example:
 
@@ -429,7 +564,7 @@ The answer is usually **yes**. Here's an example:
 // There's no reason to create something like a cy.search() custom
 // command because this behavior is only applicable to a single spec file
 //
-// Just use a regular ol' javascript function folks!
+// Use a regular ol' javascript function folks!
 const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
@@ -494,7 +629,7 @@ it('paginates many search results', function () {
       search('cypress.io', {
         fixture: 'list',
         headers: {
-          // just trick our app into thinking
+          // trick our app into thinking
           // there's a bunch of pages
           'x-pagination-total': 3,
         }
@@ -521,13 +656,13 @@ Don't do things like:
 - **{% fa fa-exclamation-triangle red %}** `cy.clickButton(selector)`
 - **{% fa fa-exclamation-triangle red %}** `.shouldBeVisible()`
 
-This first custom command is really just wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
+This first custom command is wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
 
-The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when it's already as simple as typing: `.should('be.visible')`
+The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when you can already use: `.should('be.visible')`
 
 Testing in Cypress is all about **readability** and **simplicity**. You don't have to do that much actual programming to get a lot done. You also don't need to worry about keeping your code as DRY as possible. Test code serves a different purpose than app code. Understandability and debuggability should be prioritized above all else.
 
-Try not to overcomplicate things and create too many abstractions. When in doubt, just use a regular function for individual spec files.
+Try not to overcomplicate things and create too many abstractions. When in doubt, use a regular function for individual spec files.
 
 ### 3. Don't do too much in a single command
 
@@ -551,6 +686,7 @@ You can describe the method signature for your custom command, allowing IntelliS
 
 # See also
 
+- {% url "Plugins using custom commands" plugins#custom-commands %}
 - {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' recipes %}

@@ -4,11 +4,9 @@ title: Configuration
 
 When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' projects#Setup %}) and any configuration values you supply.
 
-```json
-{
-  "projectId": "jd90q7"
-}
-```
+{% note warning Change Configuration File %}
+You can change the configuration file or turn off the use of a configuration file by using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
+{% endnote %}
 
 # Options
 
@@ -20,12 +18,10 @@ Option | Default | Description
 ----- | ---- | ----
 `baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
 `env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
-`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
-`testFiles` | `**/*.*` | A String glob pattern of the test files to load
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
 ## Timeouts
@@ -49,10 +45,12 @@ Option | Default | Description
 ----- | ---- | ----
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
+`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
 `pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
+`testFiles` | `**/*.*` | A String or Array of glob patterns of the test files to load
 `videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
 
 ## Screenshots
@@ -97,6 +95,12 @@ Option | Default | Description
 `animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
 `waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
 
+## Node version
+
+Option | Default | Description
+----- | ---- | ----
+`nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your {% url plugins plugins-guide %}. Otherwise, Cypress will use the Node version bundled with Cypress.
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
@@ -121,9 +125,16 @@ cypress run --config integrationFolder=tests,fixturesFolder=false
 cypress run --record --config viewportWidth=1280,viewportHeight=720
 ```
 
+```shell
+cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffee"]
+```
+
 ## Plugins
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
+
+- Use `fs` and read off configuration values and dynamically change them.
+- Edit the list of browsers found by default by Cypress
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
@@ -133,7 +144,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
-By default, any environment variable that matches a corresponding configuration key will override the `cypress.json` value.
+By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -177,7 +188,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 # Resolved Configuration
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
+When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from.
 
 {% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
@@ -250,4 +261,8 @@ You can turn this option off if the application or site you're testing **does no
 
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+
+{% history %}
+{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% endhistory %}

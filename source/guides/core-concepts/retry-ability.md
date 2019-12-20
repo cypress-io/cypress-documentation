@@ -21,9 +21,11 @@ it('creates 2 items', function () {
   cy.visit('/')                       // command
   cy.focused()                        // command
     .should('have.class', 'new-todo') // assertion
+
   cy.get('.new-todo')                 // command
     .type('todo A{enter}')            // command
     .type('todo B{enter}')            // command
+
   cy.get('.todo-list li')             // command
     .should('have.length', 2)         // assertion
 })
@@ -49,7 +51,7 @@ Because nothing is synchronous in modern web applications, Cypress can't query a
 Thus the Cypress {% url `cy.get` get %} command has to be smarter and expect the application to potentially update. The `cy.get()` queries the application's DOM, finds the elements that match the selector, and then tries the assertion that follows it (in our case `should('have.length', 2)`) against the list of found elements.
 
 - ✅ If the assertion that follows the `cy.get()` command passes, then the command finishes successfully.
-- 🚨 If the assertion that follows the `cy.get()` command fails, then the `cy.get()` command will requery the application's DOM again. Then Cypress will try the assertion against the elements yielded from `cy.get()`. If the assertion still fails, `cy.get()` will try requery the DOM again, and so on until the `cy.get()` command timeout is reached.
+- 🚨 If the assertion that follows the `cy.get()` command fails, then the `cy.get()` command will requery the application's DOM again. Then Cypress will try the assertion against the elements yielded from `cy.get()`. If the assertion still fails, `cy.get()` will try requerying the DOM again, and so on until the `cy.get()` command timeout is reached.
 
 The retry-ability allows the tests to complete each command as soon as the assertion passes, without hard-coding waits. If your application takes a few milliseconds or even seconds to render each DOM element - no big deal, the test does not have to change at all. For example, let's introduce an artificial delay of 3 seconds when refreshing the application's UI below in an example TodoMVC model code:
 
@@ -105,7 +107,7 @@ Cypress only retries commands that query the DOM: {% url `cy.get()` get %}, {% u
 Commands are not retried when they could potentially change the state of the application under test. For example, Cypress will not retry the {% url '.click()' click %} command, because it could change something in the application.
 
 {% note warning %}
-Very rarely you may want to retry a command like `.click()`. We describe one case like that where the event listeners are attached to a modal popup only after a delay, the causing default events fired during `.click()` to not register. In this special case you may want to "keep clicking" until the event registers, and the dialog disappears. Read about it in the {% url "When Can the Test Click?" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %} blog post.
+Very rarely you may want to retry a command like `.click()`. We describe one case like that where the event listeners are attached to a modal popup only after a delay, thus causing default events fired during `.click()` to not register. In this special case you may want to "keep clicking" until the event registers, and the dialog disappears. Read about it in the {% url "When Can the Test Click?" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %} blog post.
 {% endnote %}
 
 # Built-in assertions
@@ -191,6 +193,7 @@ app.TodoModel.prototype.addTodo = function (title) {
     title: title,
     completed: false
   })
+
   setTimeout(() => {
     this.inform()
   }, 100)
@@ -297,10 +300,10 @@ it('adds two items', function () {
 
 {% imgTag /img/guides/retry-ability/alternating.png "Passing test" %}
 
-The test passes, because the second `cy.get('.todo-list li')` is retried with its own assertion now `.should('have.length', 2)`. Only after successfully finding two `<li>` elements, the command `.find('label')` and its assertion starts, and by now, the item with correct "todo B" label has been correctly queried.
+The test passes, because the second `cy.get('.todo-list li')` is retried with its own assertion now `.should('have.length', 2)`. Only after successfully finding two `<li>` elements, the command `.find('label')` and its assertion starts, and by now, the item with the correct "todo B" label has been correctly queried.
 
 # See also
 
-- You can add retry-ability to your own {% url "custom commands" custom-commands %}, see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
+- You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
 - You can retry any function with attached assertions using this 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
 - See retry-ability examples in the {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.

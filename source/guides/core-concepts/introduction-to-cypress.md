@@ -17,7 +17,7 @@ title: Introduction to Cypress
 After you're done, we suggest watching some of our {% fa fa-video-camera %} {% url "Tutorial Videos" tutorials %}.
 {% endnote %}
 
-# Cypress Is Simple
+# Cypress Can Be Simple (Sometimes)
 
 Simplicity is all about getting more done with less typing. Let's look at an example:
 
@@ -56,7 +56,7 @@ Can you read this? If you did, it might sound something like this:
 > 8. Grab the browser URL, ensure it includes `/posts/my-first-post`.
 > 9. Find the `h1` tag, ensure it contains the text "My First Post".
 
-This is a relatively simple, straightforward test, but consider how much code has been covered by it, both on the client and the server!
+This is a relatively straightforward test, but consider how much code has been covered by it, both on the client and the server!
 
 For the remainder of this guide, we'll explore the basics of Cypress that make this example work. We'll demystify the rules Cypress follows so you can productively test your application to act as much like a user as possible, as well as discuss how to take shortcuts when it's useful.
 
@@ -143,7 +143,7 @@ cy
 
 ```js
 cy
-  // cy.get() looks for '#my-nonexistent-selector', repeating the query until...
+  // cy.get() looks for '#element-does-not-exist', repeating the query until...
   // ...it doesn't find the element before its timeout.
   // Cypress halts and fails the test.
   .get('#element-does-not-exist')
@@ -184,7 +184,7 @@ cy.contains('New Post')
 cy.get('.main').contains('New Post')
 ```
 
-This is helpful when writing tests from the perspective of a user interacting with your app. They just know they want to click the button labeled "Submit", they have no idea that it has a `type` attribute of `submit`, or a CSS class of `my-submit-button`.
+This is helpful when writing tests from the perspective of a user interacting with your app. They only know that they want to click the button labeled "Submit". They have no idea that it has a `type` attribute of `submit`, or a CSS class of `my-submit-button`.
 
 {% note warning Internationalization %}
 If your app is translated into multiple languages for i18n, make sure you consider the implications of using user-facing text to find DOM elements!
@@ -219,7 +219,7 @@ It's very important to understand the mechanism Cypress uses to chain commands t
 
 ## Interacting With Elements
 
-As we saw in the initial example, Cypress makes it easy to click on and type into elements on the page by using {% url `.click()` click %} and {% url `.type()` type %} commands with a {% url `cy.get()` get %} or {% url `cy.contains()` contains %} command. This is a great example of chaining in action. Let's see it again:
+As we saw in the initial example, Cypress allows you to click on and type into elements on the page by using {% url `.click()` click %} and {% url `.type()` type %} commands with a {% url `cy.get()` get %} or {% url `cy.contains()` contains %} command. This is a great example of chaining in action. Let's see it again:
 
 ```js
 cy.get('textarea.post-body')
@@ -237,6 +237,7 @@ Here are even more action commands Cypress provides to interact with your app:
 - {% url `.uncheck()` uncheck %} - Uncheck checkbox(es).
 - {% url `.select()` select %} - Select an `<option>` within a `<select>`.
 - {% url `.dblclick()` dblclick %} - Double-click a DOM element.
+- {% url `.rightclick()` rightclick %} - Right-click a DOM element.
 
 These commands ensure {% url "some guarantees" interacting-with-elements %} about what the state of the elements should be prior to performing their actions.
 
@@ -255,7 +256,7 @@ Cypress provides a simple but powerful algorithm when {% url " interacting with 
 
 ## Asserting About Elements
 
-Assertions let you do things like ensuring an element is visible or has a particular attribute, CSS class, or state. Assertions are just commands that enable you to describe the *desired* state of your application. Cypress will automatically wait until your elements reach this state, or fail the test if the assertions don't pass.  Here's a quick look at assertions in action:
+Assertions let you do things like ensuring an element is visible or has a particular attribute, CSS class, or state. Assertions are commands that enable you to describe the *desired* state of your application. Cypress will automatically wait until your elements reach this state, or fail the test if the assertions don't pass.  Here's a quick look at assertions in action:
 
 ```js
 cy.get(':checkbox').should('be.disabled')
@@ -313,7 +314,7 @@ To work around the need to reference elements, Cypress has a feature {% url 'kno
 
 Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
 
-If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a simple return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
+If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
 
 ### Let's look at an example:
 
@@ -364,7 +365,7 @@ This lets us reuse our DOM queries for faster tests when the element is still in
 
 It is very important to understand that Cypress commands don't do anything at the moment they are invoked, but rather enqueue themselves to be run later. This is what we mean when we say Cypress commands are asynchronous.
 
-### Take this simple test, for example:
+### Take this short test, for example:
 
 ```js
 it('changes the URL when "awesome" is clicked', function() {
@@ -558,7 +559,7 @@ You might be wondering:
 
 The problem with this question is that this type of conditional control flow ends up being non-deterministic. This means it's impossible for a script (or robot), to follow it 100% consistently.
 
-In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually just asking for another `if/else` control flow.
+In general, there are only a handful of very specific situations where you *can* create control flow. Asking to recover from errors is actually the same as asking for another `if/else` control flow.
 
 With that said, as long as you are aware of the potential pitfalls with control flow, it is possible to do this in Cypress!
 
@@ -714,7 +715,7 @@ cy
   .click()
 ```
 
-Cypress will automatically *wait* for elements to pass their default assertions. Just like with explicit assertions you've added, all of these assertions share the *same* timeout values.
+Cypress will automatically *wait* for elements to pass their default assertions. Like with the explicit assertions you've added, all of these assertions share the *same* timeout values.
 
 ### Example #2: Reversing the Default Assertion
 
@@ -776,7 +777,7 @@ Using {% url `.should()` should %} or {% url `.and()` and %} commands is the pre
 cy.get('tbody tr:first').should('have.class', 'active')
 ```
 
-You can chain multiple assertions together using {% url `.and()` and %}, which is just another name for {% url `.should()` should %} that makes things more readable:
+You can chain multiple assertions together using {% url `.and()` and %}, which is another name for {% url `.should()` should %} that makes things more readable:
 
 ```js
 cy.get('#header a')
@@ -820,7 +821,7 @@ Explicit assertions are great when you want to:
 - Perform custom logic prior to making the assertion.
 - Make multiple assertions against the same subject.
 
-The {% url `.should()` should %} command allows us to pass a callback function that takes the yielded subject as its first argument. This works just like {% url `.then()` then %}, except Cypress automatically **waits and retries** for everything inside of the callback function to pass.
+The {% url `.should()` should %} command allows us to pass a callback function that takes the yielded subject as its first argument. This works like {% url `.then()` then %}, except Cypress automatically **waits and retries** for everything inside of the callback function to pass.
 
 {% note info 'Complex Assertions' %}
 The example below is a use case where we are asserting across multiple elements. Using a {% url `.should()` should %} callback function is a great way to query from a **parent** into multiple children elements and assert something about their state.
@@ -839,7 +840,7 @@ cy
     })
 
     // jQuery map returns jQuery object
-    // and .get() converts this to a simple array
+    // and .get() converts this to an array
     texts = texts.get()
 
     // array should have length of 3

@@ -11,6 +11,7 @@
     navToggle.addEventListener('click', function (e) {
       e.preventDefault()
       e.stopPropagation()
+      document.querySelector('#container').scrollTo(0, 0)
       body.classList.toggle(CLASS_NAME)
     })
   }

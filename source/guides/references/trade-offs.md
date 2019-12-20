@@ -54,7 +54,7 @@ In case you missed it before - Cypress tests run inside of the browser! This mea
 
 But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 
-This trade-off means it makes it a little bit harder to communicate with the back end - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node to import or talk directly to your back end scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
+This trade-off means it makes it a little bit harder to communicate with the back end - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node to import or talk directly to your back end scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
 
 To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your back end language.
 
@@ -70,10 +70,10 @@ Most of the time this use case is needed when users click an `<a>` that opens a 
 
 To take this a step further - we don't believe there is any use case for testing the browser's native behavior. You should ask yourself why you are testing that clicking an `<a href="/foo" target="_blank">` opens a new tab. You already know that is what the browser is designed to do and you already know that it is triggered by the `target="_blank"` attribute.
 
-Since that is the case, just test **the thing** triggering the browser to perform this behavior - as opposed to testing the behavior itself.
+Since that is the case, test **the thing** triggering the browser to perform this behavior - as opposed to testing the behavior itself.
 
 ```js
-cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank') // so simple
+cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank')
 ```
 
 This principle applies to everything in Cypress. Do not test what does not need testing. It is slow, brittle, and adds zero value. Only test the underlying thing that causes the behavior you care about testing.
@@ -140,7 +140,7 @@ server &rightarrow; browser
 
 To do this - you would need a background process outside of the browser to make the underlying WebSocket connection that you can then communicate with and control.
 
-You can do this in many ways and here is a simple example of using an HTTP server to act as the client and exposing a REST interface that enables us to control it.
+You can do this in many ways and here is an example of using an HTTP server to act as the client and exposing a REST interface that enables us to control it.
 
 ```js
 // Cypress tests

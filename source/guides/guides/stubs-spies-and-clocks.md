@@ -175,7 +175,7 @@ expect(user.fail).to.have.thrown('Error')                  // true
 
 # Integration and Extensions
 
-Beyond just integrating these tools together we have also extended and improved collaboration between these tools.
+Beyond integrating these tools together, we have also extended and improved collaboration between these tools.
 
 ***Some examples:***
 

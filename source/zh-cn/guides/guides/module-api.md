@@ -16,23 +16,23 @@ title: API模块
 
 正如`cypress run`的{% url "命令行选项" command-line %}, 你可以传递修改Cypress运行方式的选项.
 
-选项 | 描述
------- |  ---------
-`browser`  | 通过名称或文件系统路径指定要在其中运行测试的不同浏览器
-`ciBuildId` | 指定要运行的唯一标识符, 通过启用{% url "分组" parallelization#Grouping-test-runs %}或者{% url "平行" parallelization %}
-`config`  | 指定配置
-`env`  | 指定环境变量
-`group` | 将记录的测试{% url "分组" parallelization#Grouping-test-runs %}到一起去运行
-`headed`  | 显示Electron浏览器而不是运行无头浏览器
-`key`  | 指定你的秘密记录密钥
-`noExit` | 在所有的测试都运行完后, 继续保持Cypress开着
-`parallel` | {% url "并行" parallelization %}多台机器运行已记录的规格
-`port`  | 覆盖缺省端口
-`project` | 指向特定项目的路径
-`record`  | 是否记录测试运行
-`reporter`  | 指定一个mocha报告期
-`reporterOptions`  | 指定mocha报告器选项
-`spec`  | 指定要运行的规格
+选项 | Type |描述
+------ | ---- | ---------
+`browser` | *String*  | 通过名称或文件系统路径指定要在其中运行测试的不同浏览器
+`ciBuildId` | *String* | 指定要运行的唯一标识符, 通过启用{% url "分组" parallelization#Grouping-test-runs %}或者{% url "平行" parallelization %}
+`config` | *Object* | {% url "指定配置" configuration %}
+`env` | *Object* | {% url "指定环境变量" environment-variables %}
+`group` | *String* | 将记录的测试{% url "分组" parallelization#Grouping-test-runs %}到一起去运行
+`headed` | *Boolean* | 显示Electron浏览器而不是运行无头浏览器
+`key` | *String* | 指定你的秘密记录密钥
+`noExit` | *Boolean* | 在所有的测试都运行完后, 继续保持Cypress开着
+`parallel` | *Boolean* | {% url "并行" parallelization %}多台机器运行已记录的规格
+`port` | *Number* | 覆盖缺省端口
+`project` | *String* | 指向特定项目的路径
+`record` | *Boolean* | 是否记录测试运行
+`reporter` | *String* | 指定一个 {% url "mocha报告期" reporters %}
+`reporterOptions` | *Object* | 指定{% url "mocha报告器选项" reporters %}
+`spec` | *String* | 指定要运行的规格
 
 ```javascript
 const cypress = require('cypress')
@@ -117,13 +117,13 @@ cypress.run({
 
 选项 | 描述
 ------ | ---------
-`browser` | 给自定义浏览器指定文件系统路径
-`config`  | 指定配置
-`detached` | 在分离模式中打开Cypress
-`env`  | 指定环境变量
-`global` | 全局模式下运行
-`port`  | 覆盖默认端口
-`project` | 指向特定项目的路径
+`browser` | *String* | 给自定义浏览器指定文件系统路径
+`config` | *Options* | {% url "指定配置" configuration %}
+`detached` | *Boolean* | 在分离模式中打开Cypress
+`env` | *Object* | {% url "指定环境变量" environment-variables %}
+`global` | *Boolean* | 全局模式下运行
+`port` | *Number* | 覆盖默认端口
+`project` | *String* | 指向特定项目的路径
 
 ### 例子:
 

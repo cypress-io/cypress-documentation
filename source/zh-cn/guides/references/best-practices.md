@@ -45,7 +45,8 @@ layout: toc-top
 假设有一个我们想要进行交互的按钮：
 
 ```html
-<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+<button id="main" class="btn btn-large" name="submission"
+  role="button" data-cy="submit">Submit</button>
 ```
 
 让我们来研究下如何定位它：
@@ -55,6 +56,7 @@ layout: toc-top
 `cy.get('button').click()` | {% fa fa-warning red %} 绝不 | 最糟糕的方式 - 太泛了，没有上下文。
 `cy.get('.btn.btn-large').click()` | {% fa fa-warning red %} 绝不 | 糟糕。高度耦合，太容易改变。
 `cy.get('#main').click()` | {% fa fa-warning orange %} 一般 | 稍好。但依然是耦合方式且绑定了JS事件监听器。
+`cy.get('[name=submission]').click()` | {% fa fa-warning orange %} Sparingly | Coupled to the `name` attribute which has HTML semantics.
 `cy.contains('Submit').click()` | {% fa fa-check-circle green %} 相对 | 好得多了，但依然绑定了可能改变的文本内容。
 `cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} 推荐 | 最好的，从所有可能的变化中分离开了。
 

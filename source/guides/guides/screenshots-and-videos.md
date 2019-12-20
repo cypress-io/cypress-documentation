@@ -29,10 +29,6 @@ Cypress clears any existing screenshots before `cypress run`. If you do not want
 
 Cypress also records videos when running tests.
 
-{% note warning %}
-Video recording is currently only supported when running Cypress from the Electron browser. {% issue 1767 "See this issue" %} for more information.
-{% endnote %}
-
 Video recording can be turned off entirely by setting {% url `video` configuration#Videos %} to `false` from within your configuration.
 
 Videos are stored in the {% url `videosFolder` configuration#Videos %} which is set to `cypress/videos` by default.
@@ -45,7 +41,7 @@ Cypress clears any existing videos before a `cypress run`. If you do not want to
 
 ## Video encoding
 
-If your spec files have a long run duration, you might notice a time gap between a finished spec and a new spec starting during `cypress run`. During this time, Cypress is encoding the captured video and possibly uploading it to the Dashboard. 
+If your spec files have a long run duration, you might notice a time gap between a finished spec and a new spec starting during `cypress run`. During this time, Cypress is encoding the captured video and possibly uploading it to the Dashboard.
 
 If the machine is encoding the video slowly (which is often the case for virtual machines that use a single core), the encoding might take a long time. In this case, you can modify the {% url `videoCompression` configuration#Videos %} configuration to make the encoding a little bit faster. Here are some common scenarios:
 

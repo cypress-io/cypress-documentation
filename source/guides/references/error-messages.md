@@ -97,7 +97,7 @@ Getting this errors means you've tried to interact with a "dead" DOM element - m
 
 {% imgTag /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
 
-Cypress errors because it can't interact with "dead" elements - just like a real user could not do this either. Understanding how this happens is very important - and it is often easy to prevent.
+Cypress errors because it can't interact with "dead" elements - much like a real user could not do this either. Understanding how this happens is very important - and it is often preventable.
 
 Let's take a look at an example below.
 
@@ -160,7 +160,7 @@ You may see a variation of this message for 4 different reasons:
 3. The element's center is hidden from view
 4. The element is disabled
 
-Cypress runs several calculations to ensure an element can *actually* be interacted with like a real user would. If you're seeing this error, the solution is often obvious. You may need to *guard* your commands (due to a timing or an animation issue).
+Cypress runs several calculations to ensure an element can *actually* be interacted with like a real user would. If you're seeing this error, you may need to *guard* your commands (due to a timing or an animation issue).
 
 There have been situations where Cypress does not correctly allow you to interact with an element that should be interactable. If that's the case, {% open_an_issue %}.
 
@@ -190,9 +190,9 @@ Cypress will continuously attempt to interact with the element until it eventual
 cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
-You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
+You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %}.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
 
 ```json
 {
@@ -211,7 +211,7 @@ Let's examine several different ways you may get this error message. In every si
 Several of these tests are dependent on race conditions. You may have to run these tests multiple times before they will actually fail. You can also try tweaking some of the delays.
 {% endnote %}
 
-### Simple Example
+### Short Example
 
 This first test below will pass and shows you that Cypress tries to prevent leaving commands behind in the queue in every test.
 
@@ -467,11 +467,17 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
-You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+This error is thrown when you are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that Cypress detected was completed over 24 hours ago.
 
-You cannot run tests on a run that has been complete for that long.
+In order to uniquely identify each run during `cypress run`, Cypress attempts to read a unique identifier from your CI provider as described in our {% url "parallelization doc" parallelization#CI-Build-ID-environment-variables-by-provider %}.
 
-Please review our {% url "parallelization" parallelization %} documentation to learn more.
+You may encounter this error if Cypress is detecting the exact same CI Build ID matching a previous CI Build ID in a run that was completed over 24 hours ago. You cannot run tests on a run that has been complete for that long.
+​
+​You can see the CI Build ID that is detected for each completed run by looking at the details section at the top of your run in the {% url "Dashboard" https://on.cypress.io/dashboard %}.
+​
+​You can generate and pass in your own unique CI Build ID per run as described {% url "here" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+Please also review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
 
@@ -489,21 +495,19 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
 {% endnote %}
 
-This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
+This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypass all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 
-### There are a few simple workarounds to these common situations:
+### There are a few workarounds to these common situations:
 
 1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So make an assertion about that. You can see more strategies on testing anchor links {% url 'in our "Tab Handling and Links" example recipe' recipes#Testing-the-DOM %}.
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can just set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
-```javascript
-// cypress.json
-
+```json
 {
   "chromeWebSecurity": false
 }
@@ -525,7 +529,7 @@ Browsers are enormously complex pieces of software, and from time to time they w
 
 At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
 
-If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
+If you are running `Docker` {% issue 350 'there is a one line fix for this problem documented here' %}.
 
 # Test Runner errors
 
@@ -551,7 +555,7 @@ Here are some potential workarounds:
 
 1. Ask your administrator to disable these policies so that you can use Cypress with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by these policies. {% url 'See the guide to launching browsers for more information.' launching-browsers#Electron-Browser %}
-3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com/ %}
+3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com %}
 4. If you have Local Administrator access to your computer, you may be able to delete the registry keys that are affecting Chrome. Here are some instructions:
     1. Open up Registry Editor by pressing WinKey+R and typing `regedit.exe`
     2. Look in the following locations for the policy settings listed above:

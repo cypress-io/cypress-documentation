@@ -388,7 +388,7 @@ cypress run --record
 
 ### Git信息
 
-Cypress使用{% url 'commit-info' https://github.com/cypress-io/commit-info %}包来获取git信息并关联到运行时（比如分支信息、提交信息、作者等）。
+Cypress使用{% url '@cypress/commit-info' https://github.com/cypress-io/commit-info %}包来获取git信息并关联到运行时（比如分支信息、提交信息、作者等）。
 
 它默认有一个`.git`的目录，并使用Git命令去获取各个信息，比如`git show -s --pretty=%B`来获取提交信息，参考{% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}。
 
@@ -400,6 +400,12 @@ Cypress使用{% url 'commit-info' https://github.com/cypress-io/commit-info %}�
 - Author: `COMMIT_INFO_AUTHOR`
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
+
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+
+```shell
+DEBUG=commit-info,cypress:server:record
+```
 
 ### 自定义环境变量
 

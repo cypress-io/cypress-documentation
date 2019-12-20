@@ -6,9 +6,9 @@ Plugins enable you to tap into, modify, or extend the internal behavior of Cypre
 
 Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node process that plugins can use.
 
-> Plugins enable you to tap into the `node` process running outside of the browser.
+> Plugins enable you to tap into the Node process running outside of the browser.
 
-Plugins are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle.
+Plugins are a "seam" for you to write your own custom code that executes during particular stages of the Cypress lifecycle. It also allows you to execute code within your own Node version when the {% url "`nodeVersion`" configuration#Node-version %} is set in your configuration.
 
 {% note info "This is a brief overview" %}
 If you want more details about how to write a plugin, we've written API docs that show you how to work with each plugin event.
@@ -20,13 +20,14 @@ You can {% url "check out the API docs here" writing-a-plugin %}.
 
 ## Configuration
 
-With plugins, you can programmatically alter the resolved configuration and environment variables that come from `cypress.json`, {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, the CLI, or system environment variables.
+With plugins, you can programmatically alter the resolved configuration and environment variables that come from {% url "your configuration file (`cypress.json` by default)" configuration %}, {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, the {% url "command line" command-line %}, or system environment variables.
 
 This enables you to do things like:
 
 - Use multiple environments with their own configurations
 - Swap out environment variables based on an environment
 - Read in configuration files using the built in `fs` lib
+- Change the list of browsers used for testing
 - Write your configuration in `yml`
 
 Check out our {% url 'Configuration API docs' configuration-api %} which describe how to use this event.
@@ -52,7 +53,6 @@ The event `before:browser:launch` can be used to modify the launch arguments for
 You can use the `before:browser:launch` event to do things like:
 
 - Load a Chrome extension
-- Change print media
 - Enable or disable experimental chrome features
 - Control which Chrome components are loaded
 
@@ -72,7 +72,7 @@ Check out our {% url 'After Screenshot API docs' after-screenshot-api %} which d
 
 ## cy.task
 
-The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node to accomplish tasks that aren't possible in the browser.
+The event `task` is used in conjunction with the {% url `cy.task()` task %} command. It allows you to write arbitrary code in Node to accomplish tasks that aren't possible in the browser. It also allows you to execute code within your own Node version when the {% url "`nodeVersion`" configuration#Node-version %} is set in your configuration.
 
 You can use the `task` event to do things like:
 
@@ -89,7 +89,7 @@ Cypress maintains an official list of plugins created by us and the community. Y
 
 # Installing plugins
 
-Plugins from our {% url 'official list' plugins %} are just npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
+Plugins from our {% url 'official list' plugins %} are npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
 
 You can install any published plugin using NPM:
 
@@ -99,14 +99,14 @@ npm install &lt;plugin name&gt; --save-dev
 
 # Using a plugin
 
-Whether you install an npm module, or just want to write your own code - you should do all of that in this file:
+Whether you install an npm module, or want to write your own code - you should do all of that in this file:
 
 ```text
 cypress/plugins/index.js
 ```
 
 {% note info %}
-By default Cypress seeds this file for new projects, but if you have an existing project just create this file yourself.
+By default Cypress seeds this file for new projects, but if you have an existing project create this file yourself.
 {% endnote %}
 
 Inside of this file, you will export a function. Cypress will call this function, pass you the project's configuration, and enable you to bind to the events exposed.

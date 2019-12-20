@@ -33,7 +33,7 @@ cy.route('/users/**')
 
 **{% fa fa-angle-right %} url** ***(String, Glob, RegExp)***
 
-Set a route matching the specific URL.
+Listen for a route matching the specific URL.
 
 **{% fa fa-angle-right %} response** ***(String, Object, Array)***
 
@@ -49,7 +49,7 @@ If no method is defined Cypress will match `GET` requests by default.
 
 **{% fa fa-angle-right %} callbackFn** ***(Function)***
 
-Set a route by returning an object literal from a callback function. Functions that return a `Promise` will automatically be awaited.
+Listen for a route matching a returned object literal from a callback function. Functions that return a `Promise` will automatically be awaited.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -153,11 +153,16 @@ If you pass a `response` to `cy.route()`, Cypress will stub the response in the 
 
 ### `url` as a string
 
-When passing a `string` as the `url`, the XHR's URL must match *exactly* what you've written.
+When passing a `string` as the `url`, the XHR's URL must match *exactly* what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
 
 ```javascript
 cy.server()
-cy.route('https://localhost:7777/users', [{ id: 1, name: 'Pat' }])
+cy.route('https://localhost:7777/surveys/customer?email=john@doe.com', [
+  {
+    id: 1,
+    name: 'john'
+  }
+])
 ```
 
 ### `url` as a RegExp
@@ -269,6 +274,7 @@ cy.fixture('user').then((user) => {
 
   cy.route('GET', '**/user/123', user)
 })
+
 cy.visit('/users')
 cy.get('.user').should('include', 'Jane')
 ```

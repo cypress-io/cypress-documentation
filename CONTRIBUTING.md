@@ -75,7 +75,7 @@ In addition to built-in Hexo tags, we have written several custom ones. They hel
 
 ### Adding Examples
 
-To add a blog, talk or podcast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [blogs.yml](/source/_data/blogs.yml), [talks.yml](/source/_data/talks.yml), or [podcasts.yml](/source/_data/podcasts.yml) file.
+To add a course, blog, talk, podcast, or screencast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [courses.yml](/source/_data/courses.yml), [blogs.yml](/source/_data/blogs.yml), [talks.yml](/source/_data/talks.yml), [podcasts.yml](/source/_data/podcasts.yml) or [screencasts.yml](/source/_data/screencasts.yml) file.
 
 Add an associated image with the example within the [`source/img/examples`](/source/img/examples) directory. Each image should have a resolution of **715×480**. Reference the image in the markdown document as follows:
 
@@ -101,9 +101,9 @@ To add a page such as a new guide or API documentation:
 
 - Add the new page to the relevant directory under [`source`](/source).
 - Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
-- Add translations for the sidebar link (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- Add translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
-- Copy over the new page to other language translations - Japanese docs in [`source/ja`](/source/ja), Chinese docs in [`source/zh-cn`](/source/zh-cn).
+- Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
 
 #### A Worked Example
@@ -167,6 +167,10 @@ Our currently supported languages can be found at [`/source/_data/languages.yml`
 
 Translate existing documentation then submit a [pull request](#Pull-Requests) for your change.
 
+**Note:** When adding a new doc file to the English source, the English file will need to be commited to git before the translated file is auto-generated.
+
+If a page does not have a translation, then a pre-start step copies the English file to the language folder. These copies should NOT be committed into the source code. Only when the file has been translated you can add it to the source code with `git add --force source/<language>/.../file.md` and this file will not be overwritten by the English file.
+
 ## Committing Code
 
 ### Linting
@@ -195,8 +199,20 @@ You should push your local changes to your forked GitHub repository and then ope
 
 We use a [`cla-assistant.io`](https://cla-assistant.io/) web hook to make sure every contributor assigns the rights of their contribution to Cypress.io. If you want to read the CLA agreement, its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
 
-After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Just click on the link and accept the CLA. That's it!
+After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Click on the link and accept the CLA. That's it!
 
 ## Deployment
 
 We will try to review and merge pull requests as fast as possible. After merging, we will deploy it to the staging environment, run E2E tests (using Cypress itself of course!), and then merge it into `master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io) website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md).
+
+### Trigger workflow build
+
+Due to CircleCI API limitations (even after 2 years), you cannot trigger a workflow build using the API. Thus if you need to build, test and deploy `develop` branch for example, your best bet is to create an empty GitHub commit in the [cypress-io/cypress-documentation](https://github.com/cypress-io/cypress-documentation) repository in the `develop` branch. We have added [make-empty-github-commit](https://github.com/bahmutov/make-empty-github-commit) as a dev dependency and set it as `make-empty-commit` NPM script in the [package.json](package.json).
+
+To trigger production rebuild and redeploy, use personal GitHub token and run:
+
+```shell
+GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch master
+```
+
+As always, using [as-a](https://github.com/bahmutov/as-a) is recommended for storing and using sensitive environment variables.

@@ -14,7 +14,7 @@ The most common use case is adding your own chrome extension.
 
 Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify the arguments based on the browser that Cypress is launching.
 
-This event will yield you the `browser` as an object, and `args` which are the default arguments used to launch the browser. 
+This event will yield you the `browser` as an object, and `args` which are the default arguments used to launch the browser.
 
 `args` may be an array or an object (based on the type of browser we're launching). Whatever you return from this event will become the new args for launching the browser.
 
@@ -36,7 +36,7 @@ module.exports = (on, config) => {
     // }
 
     if (browser.name === 'chrome') {
-      // `args` is an araay of all the arguments
+      // `args` is an array of all the arguments
       // that will be passed to Chrome when it launchers
       args.push('--start-fullscreen')
 
@@ -55,6 +55,25 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+## Modify Electron app switches
+
+Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://electronjs.org/docs/api/chrome-command-line-switches/history %}.
+
+You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, open or run the Cypress Test Runner like this:
+
+```shell
+export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+npx cypress open|run
+```
+
+Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. There is no way to see all currently set switches after Electron's launch.
+
+## See all Chrome browser switches
+
+If you are running Cypress tests using Chrome browser, you can see ALL currently set command line switches and the browser version information by opening a new tab and typing `chrome://version` url.
+
+{% imgTag /img/api/chrome-switches.png "See all Chrome switches" %}
 
 # Examples
 
