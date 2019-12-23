@@ -336,7 +336,7 @@ cy.wait('@new-user')
 // we can grab the completed XHR object again to run more assertions
 // using cy.get(<alias>)
 cy.get('@new-user') // yields the same XHR object
-  .its('request.body')
+  .its('requestBody')
   .should('deep.equal', {
     id: '101',
     firstName: 'Joe',
