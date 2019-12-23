@@ -149,6 +149,7 @@ cy.getSessionStorage('token').should('eq', 'abc123')
 Cypress.Commands.add('typeLogin', (user) => {
   cy.get('input[name=email]')
     .type(user.email)
+
   cy.get('input[name=password]')
     .type(user.password)
 })
@@ -228,6 +229,7 @@ Cypress.Commands.add('logout', () => {
 Cypress.Commands.add('logout', () => {
   cy.window().its('localStorage')
     .invoke('removeItem', 'session')
+
   cy.visit('/login')
 })
 ```

@@ -274,6 +274,7 @@ cy.fixture('user').then((user) => {
 
   cy.route('GET', '**/user/123', user)
 })
+
 cy.visit('/users')
 cy.get('.user').should('include', 'Jane')
 ```
