@@ -88,6 +88,9 @@ Anyone that has access to both the `projectId` and the record key of a project c
 2. **They can write any data they want to your Cypress Dashboard.** They could edit the test suite so that recorded tests record different things than the project's original intent. This could including visiting different websites and generating videos of visiting those websites, for example.
 
 If a record key is exposed you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new record key" Create-new-record-key %}. Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
+
+You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration.html#Environment-variables %} 
+
 {% endnote %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
