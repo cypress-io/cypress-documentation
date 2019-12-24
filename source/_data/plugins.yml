@@ -117,6 +117,16 @@
       link: https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper
       keywords: [vscode, extension, intellisense]
 
+    - name: 'cypress-dotenv'
+      description: Cypress plugin that enables compatability with dotenv.
+      link: https://github.com/morficus/cypress-dotenv
+      keywords: [dotenv, env, environment, env var]
+
+    - name: 'cypress-har-generator'
+      description: Generate HTTP Archive (HAR) while running tests.
+      link: https://github.com/NeuraLegion/cypress-har-generator
+      keywords: [har, http-archive, http, websocket, recording, chrome]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -128,6 +138,11 @@
       description: Track, test, and block code execution based on network state.
       link: https://github.com/RcKeller/cypress-unfetch
       keywords: [commands, routing, networking]
+
+    - name: cypress-redux
+      description: Run assertions against Redux stores.
+      link: https://github.com/RcKeller/cypress-redux
+      keywords: [commands, redux]
 
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
@@ -208,6 +223,21 @@
       description: Simple commands to skip a test based on platform, browser or a url
       link: https://github.com/cypress-io/cypress-skip-test
       keywords: [commands]
+
+    - name: cypress-websocket-testing
+      description: Test WebSocket connections with Cypress
+      link: https://github.com/lensesio/cypress-websocket-testing
+      keywords: [commands, websocket]
+
+    - name: '@bahmutov/cy-api'
+      description: Cypress custom command "cy.api" for HTTP API testing with server logs
+      link: https://github.com/bahmutov/cy-api
+      keywords: [api]
+
+    - name: cy-spok
+      description: Adds assertions from Spok library for easy schema and value validations
+      link: https://github.com/bahmutov/cy-spok
+      keywords: [assertions]
 
 - name: Extending other testing frameworks
   plugins:
@@ -295,7 +325,7 @@
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
-      
+
     - name: cypress-laravel
       description: Add commands and hooks to test Laravel applications
       link: https://github.com/noeldemartin/cypress-laravel

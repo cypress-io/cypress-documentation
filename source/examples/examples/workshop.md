@@ -42,7 +42,7 @@ The repository aims to be consumed through {% url "the compiled GitBook" https:/
 Requisites to run the project and the tests on your local machine:
 
 - Node 10+
-- {% url "MongoDB" https://docs.mongodb.com/manual/installation/#tutorials %}
+- {% url "MongoDB" https://docs.mongodb.com/manual/installation/ %}
 - {% url "Docker" https://docs.docker.com/install/ %}
 
 ### License

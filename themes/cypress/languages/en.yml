@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    analytics: Analytics
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -208,6 +209,7 @@ sidebar:
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: General Questions

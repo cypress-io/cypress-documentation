@@ -121,6 +121,8 @@ Cypress does not instrument your code - you need to do it yourself. The golden s
 - Using the {% url "nyc" https://github.com/istanbuljs/nyc %} module - a command-line interface for the {% url "Istanbul" https://istanbul.js.org %} library
 - As part of your code transpilation pipeline using the {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} tool.
 
+## Using NYC
+
 To instrument the application code located in your `src` folder and save it in an `instrumented` folder use the following command:
 
 ```shell
@@ -162,6 +164,8 @@ If we drill into the coverage object to see the statements executed in each file
 
 In green, we highlighted the 4 statements present in that file. The first three statements were each executed once and the last statement was never executed (it probably was inside an `if` statement). By using the application, we can both increment the counters and flip some of the zero counters into positive numbers.
 
+## Using code transpilation pipeline
+
 Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} to instrument the code as part of its transpilation. Add this plugin to the `.babelrc` file.
 
 ```json
@@ -172,6 +176,10 @@ Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-
 ```
 
 We can now serve the application and get instrumented code without an intermediate folder, but the result is the same instrumented code loaded by the browser, with the same `window.__coverage__` object keeping track of the original statements.
+
+{% note info %}
+Check out {% url "`@cypress/code-coverage#examples`" https://github.com/cypress-io/code-coverage#examples %} for full example projects showing different code coverage setups.
+{% endnote %}
 
 {% imgTag /img/guides/code-coverage/source-map.png "Bundled code and source mapped originals" %}
 
@@ -243,12 +251,14 @@ it('adds and completes todos', () => {
     .type('write code{enter}')
     .type('write tests{enter}')
     .type('deploy{enter}')
+
   cy.get('.todo').should('have.length', 3)
 
   cy.get('.todo')
     .first()
     .find('.toggle')
     .check()
+
   cy.get('.todo')
     .first()
     .should('have.class', 'completed')

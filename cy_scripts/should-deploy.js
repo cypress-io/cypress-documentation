@@ -148,6 +148,7 @@ const changedFilesSince = (branchName) => (sha) => {
   .then(tap((list) => {
     debug('%s changed since last docs deploy in branch %s',
       `${list.length} ${list.length === 1 ? 'file' : 'files'}`, branchName)
+
     debug(list.join('\n'))
   }))
 }
@@ -160,6 +161,7 @@ function docsFilesChangedSinceLastDeploy (env, branchName) {
     console.log(list.join('\n'))
     console.log('%d documentation %s changed since last doc deploy',
       list.length, list.length === 1 ? 'file' : 'files')
+
     console.log('in branch %s against environment %s', branchName, env)
   }))
   .then(docsChanged)

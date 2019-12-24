@@ -20,16 +20,16 @@ Click a DOM element.
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('button').click()          // Click on button
-cy.focused().click()              // Click on el with focus
-cy.contains('Welcome').click()    // Click on first el containing 'Welcome'
+cy.get('.btn').click()          // Click on button
+cy.focused().click()            // Click on el with focus
+cy.contains('Welcome').click()  // Click on first el containing 'Welcome'
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.click('button')          // Errors, cannot be chained off 'cy'
-cy.window().click()         // Errors, 'window' does not yield DOM element
+cy.click('.btn')          // Errors, cannot be chained off 'cy'
+cy.window().click()       // Errors, 'window' does not yield DOM element
 ```
 
 ## Arguments
@@ -67,10 +67,10 @@ Option | Default | Description
 
 ## No Args
 
-### Click the button
+### Click a link in a nav
 
 ```javascript
-cy.get('button').click()
+cy.get('.nav > a').click()
 ```
 
 ## Position
@@ -80,7 +80,7 @@ cy.get('button').click()
 Click the top right corner of the button.
 
 ```javascript
-cy.get('button').click('topRight')
+cy.get('img').click('topRight')
 ```
 
 ## Coordinates
@@ -90,7 +90,7 @@ cy.get('button').click('topRight')
 The click below will be issued inside of the element (15px from the left and 40px from the top).
 
 ```javascript
-cy.get('button').click(15, 40)
+cy.get('#top-banner').click(15, 40)
 ```
 
 ## Options
@@ -100,27 +100,28 @@ cy.get('button').click(15, 40)
 Forcing a click overrides the {% url 'actionable checks' interacting-with-elements#Forcing %} Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get('button').click({ force: true })
+cy.get('.close').as('closeBtn')
+cy.get('@closeBtn').click({ force: true })
 ```
 
 ### Force a click with position argument
 
 ```javascript
-cy.get('button').click('bottomLeft', { force: true })
+cy.get('#collapse-sidebar').click('bottomLeft', { force: true })
 ```
 
 ### Force a click with relative coordinates
 
 ```javascript
-cy.get('button').click(5, 60, { force: true })
+cy.get('#footer .next').click(5, 60, { force: true })
 ```
 
-### Click all buttons found on the page
+### Click all elements with id starting with 'btn'
 
 By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the {% url 'Command Log' test-runner#Command-Log %} multiple times.
 
 ```javascript
-cy.get('button').click({ multiple: true })
+cy.get('[id^=btn]').click({ multiple: true })
 ```
 
 ## Click with key combinations
@@ -205,8 +206,10 @@ When clicking on `click` within the command log, the console outputs the followi
 # See also
 
 - {% url `.check()` check %}
+- {% url "`.click()` examples in kitchensink app" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/actions.spec.js#L66 } %}
 - {% url `.dblclick()` dblclick %}
 - {% url `.rightclick()` rightclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
 - {% url `.type()` type %}
+- {% url "'When can the test click?' blog" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %}
