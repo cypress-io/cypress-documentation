@@ -4,7 +4,6 @@ menu:
   plugins: Плагины
   faq: ЧаВо
   examples: Примеры
-  dashboard: Дашборд
   search: Поиск
 
 index:
@@ -28,15 +27,21 @@ sidebar:
     writing-your-first-test: Написание первого теста
     testing-your-app: Тестирование вашего приложения
     interacting-with-elements: Взаимодействие с элементами
-    next-steps: Следующие шаги
     core-concepts: Основные понятия
     introduction-to-cypress: Введение в Cypress
     writing-and-organizing-tests: Написание и организация тестов
     conditional-testing: Тестирование с условиями
     test-runner: Запуск тестов
-    dashboard-service: Сервис Дашборд
+    dashboard: Дашборд
+    dashboard-introduction: Введение
+    projects: Проекты
+    runs: Запуски
+    organizations: Организации
+    users: Пользователи
+    github-integration: Интеграция с GitHub
+    analytics: Аналитика
     debugging: Отладка
-    variables-and-aliases: Переменные и алиасы
+    variables-and-aliases: Переменные и Алиасы
     stubs-spies-and-clocks: Stubs, Spies, и Clocks
     network-requests: Сетевые запросы
     screenshots-and-videos: Скриншоты и видео
@@ -46,37 +51,27 @@ sidebar:
     parallelization: Параллелизация
     environment-variables: Переменные среды
     launching-browsers: Запуск браузеров
-    advanced-cypress: Продвинутые темы
-    the-cypress-workflow: Cypress, организация процесса
-    coming-from-selenium: Cypress против Selenium
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
-    how-cypress-really-works: Как Cypress на самом деле работает
-    talking-to-your-backend: Обращение к Backend
-    spawning-processes: Порождение процессов
     references: Ссылки
     configuration: Конфигурация
     proxy-configuration: Конфигурация прокси
     error-messages: Сообщения об ошибках
     bundled-tools: Встроенные инструменты
     assertions: Ассерты
-    creating-fixtures: Создание fixtures
     best-practices: Лучшие практики
-    anti-patterns: Антипаттерны
     trade-offs: Компромиссы
-    contributing: Вклад в проект
     changelog: Изменения в продукте
     roadmap: Карта проекта
-    cypress-api-design: Дизайн API
-    all-videos: Видео
     tooling: Утилиты
     intelligent-code-completion: Интеллектуальное завершение кода
     plugins-guide: Плагины
-    reporters: Отчёты
+    reporters: Репортеры
     typescript-support: TypeScript
     module-api: Модульное API
     retry-ability: Возможность перезапуска
     visual-testing: Визуальное тестирование
+    code-coverage: Покрытие кода
   api:
     api: API
     table-of-contents: Оглавление
@@ -132,6 +127,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -205,12 +201,14 @@ sidebar:
     applications: Приложения
     docker: Docker
     media: Медиа
+    courses-media: Курсы
+    webinars-media: Вебинары
+    blogs-media: Блоги
     talks-media: Обсуждения
     podcasts-media: Подкасты
     screencasts-media: Скринкасты
-    blogs-media: Блоги
-    extensions: Расширения
     workshop: Мастерская
+    projects-media: Проекты
   faq:
     questions: ЧаВо
     general-questions-faq: Общие вопросы

@@ -6,9 +6,13 @@ title: Почему Cypress?
 # {% fa fa-graduation-cap %} Что вы узнаете
 
 - Что такое Cypress и почему вам нужно его использовать
-- Нашу миссию и во что мы верим
+- О нашей миссии и во что мы верим
 - Ключевые возможности Cypress
 {% endnote %}
+
+<!-- textlint-disable -->
+{% video youtube LcGHiFnBh3Y %}
+<!-- textlint-enable -->
 
 # В двух словах
 
