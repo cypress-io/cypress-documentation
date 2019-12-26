@@ -221,13 +221,16 @@ cy.route({
   method: 'POST',
   url: '/myApi',
 }).as('apiCheck')
+
 cy.visit('/')
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '1st API call has data')
 })
+
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '2nd API call has data')
 })
+
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '3rd API call has data')
 })
@@ -329,6 +332,7 @@ cy.route('POST', '/users').as('new-user')
 // trigger network calls by manipulating web app's user interface, then
 cy.wait('@new-user')
   .should('have.property', 'status', 201)
+
 // we can grab the completed XHR object again to run more assertions
 // using cy.get(<alias>)
 cy.get('@new-user') // yields the same XHR object
@@ -338,6 +342,7 @@ cy.get('@new-user') // yields the same XHR object
     firstName: 'Joe',
     lastName: 'Black'
   })
+
 // and we can place multiple assertions in a single "should" callback
 cy.get('@new-user')
   .should((xhr) => {
