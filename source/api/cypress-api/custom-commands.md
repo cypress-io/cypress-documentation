@@ -126,9 +126,7 @@ cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 
 ```js
 Cypress.Commands.add('getSessionStorage', (key) => {
-  cy.window().then((window) => {
-    window.sessionStorage.getItem(key)
-  })
+  cy.window().then((window) => window.sessionStorage.getItem(key))
 })
 
 Cypress.Commands.add('setSessionStorage', (key, value) => {
