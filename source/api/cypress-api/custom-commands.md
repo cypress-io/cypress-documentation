@@ -45,7 +45,7 @@ Pass in an options object to define the implicit behavior of the custom command.
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
-`prevSubject` | `String` or `Array` | `false` | how to handle the previously yielded subject.
+`prevSubject` | `Boolean`, `String` or `Array` | `false` | how to handle the previously yielded subject.
 
 The `prevSubject` accepts the following values:
 
