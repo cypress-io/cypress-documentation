@@ -13,8 +13,8 @@ language:
   - en
   - zh-cn
   - ja
-  - ru
   - pt-br
+  - ru
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
