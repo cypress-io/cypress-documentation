@@ -90,7 +90,7 @@
     "coffee-react": "5.0.1",
     "common-tags": "1.8.0",
     "cypress": "3.8.1",
-    "dependency-check": "3.4.1",
+    "dependency-check": "4.1.0",
     "deps-ok": "1.4.1",
     "eslint": "6.1.0",
     "eslint-plugin-cypress": "2.8.1",
