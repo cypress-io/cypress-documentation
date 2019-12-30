@@ -261,7 +261,7 @@ This waiting period is called the **run completion delay** and it begins after t
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard" project settings page" projects#Run-completion-delay %}.
+This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard project settings page" projects#Run-completion-delay %}.
 
 # Visualizing parallelization and groups in the Dashboard
 

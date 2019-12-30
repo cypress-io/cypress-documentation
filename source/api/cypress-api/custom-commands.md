@@ -45,7 +45,7 @@ Pass in an options object to define the implicit behavior of the custom command.
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
-`prevSubject` | `String` or `Array` | `false` | how to handle the previously yielded subject.
+`prevSubject` | `Boolean`, `String` or `Array` | `false` | how to handle the previously yielded subject.
 
 The `prevSubject` accepts the following values:
 
@@ -126,9 +126,7 @@ cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 
 ```js
 Cypress.Commands.add('getSessionStorage', (key) => {
-  cy.window().then((window) => {
-    window.sessionStorage.getItem(key)
-  })
+  cy.window().then((window) => window.sessionStorage.getItem(key))
 })
 
 Cypress.Commands.add('setSessionStorage', (key, value) => {
