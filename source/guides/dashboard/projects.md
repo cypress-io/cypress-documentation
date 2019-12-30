@@ -89,7 +89,7 @@ Anyone that has access to both the `projectId` and the record key of a project c
 
 If a record key is exposed you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new record key" Create-new-record-key %}. Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
 
-You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration.html#Environment-variables %}.
+You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration#Environment-variables %}.
 
 {% endnote %}
 
