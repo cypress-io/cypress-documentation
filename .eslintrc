@@ -1,6 +1,7 @@
 {
   "plugins": [
     "cypress",
+    "@cypress/dev",
     "no-only-tests"
   ],
   "extends": [
