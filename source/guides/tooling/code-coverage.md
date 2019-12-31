@@ -414,8 +414,9 @@ For any other server type, define a `GET /__coverage__` endpoint and return the 
 ```javascript
 if (global.__coverage__) {
   // handle "GET __coverage__" requests
-  onRequest = (response) =>
+  onRequest = (response) => {
     response.sendJSON({ coverage: global.__coverage__ })
+  }
 }
 ```
 
