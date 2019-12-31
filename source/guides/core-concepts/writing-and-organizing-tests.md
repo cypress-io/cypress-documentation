@@ -101,7 +101,7 @@ The initial imported plugins file can be {% url 'configured to another file' con
 
 ## Support file
 
-By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
 The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
