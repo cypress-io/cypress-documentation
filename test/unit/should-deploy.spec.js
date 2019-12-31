@@ -39,4 +39,3 @@ describe('should-deploy', () => {
     })
   })
 })
-

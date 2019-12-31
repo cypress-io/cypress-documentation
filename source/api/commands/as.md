@@ -101,7 +101,6 @@ Here are some further examples of using `.as()` that illustrate the asynchronous
 
 ```javascript
 describe('A fixture', () => {
-
   describe('alias can be accessed', () => {
     it('via get().', () => {
       cy.fixture('admin-users.json').as('admins')
