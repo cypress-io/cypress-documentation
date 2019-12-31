@@ -268,7 +268,6 @@ describe('Unit Test FizzBuzz', function () {
     numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
-
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.

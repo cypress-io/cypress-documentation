@@ -101,7 +101,6 @@ const copyAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
       .then(() => {
         return fs.copyFile(sourcePath, destinationPath)
       })
-
     })
   })
 }
@@ -113,7 +112,6 @@ const copyUntranslatedDocs = () => {
   }).then(() => {
     return copyAllEnglishDocsNotTranslatedTo('pt-br')
   })
-
 }
 
 // allow using module.parent

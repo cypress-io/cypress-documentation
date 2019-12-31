@@ -15,11 +15,11 @@ describe('Main Nav', () => {
       })
     })
 
-    it('displays link to github repo', () =>
-      cy.get('.main-nav-link').find('.fa-github').parent()
+    it('displays link to github repo', () => {
+      return cy.get('.main-nav-link').find('.fa-github').parent()
       .should('have.attr', 'href')
       .and('eq', 'https://github.com/cypress-io/cypress')
-    )
+    })
 
     it('highlights main page links when navigated to', function () {
       cy.wrap(this.MAIN_NAV).each((nav) => {

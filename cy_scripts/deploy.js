@@ -78,7 +78,6 @@ function scrapeDocs (env, branch) {
       return scrape()
     }
   })
-
 }
 
 function deployEnvironmentBranch (env, branch) {
