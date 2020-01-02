@@ -56,7 +56,6 @@ gulp.task('move:roboto:fonts:folder', function () {
   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto-fontface/fonts'))
 })
 
-
 gulp.task('move:roboto:css', function () {
   return gulp
   .src('./node_modules/roboto-fontface/css/**')
@@ -130,4 +129,3 @@ gulp.task('copy:static:assets', gulp.parallel('move:menu:spy:js', 'move:scrollin
 gulp.task('pre:build', gulp.parallel('copy:static:assets'))
 
 gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'revision', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))
-
