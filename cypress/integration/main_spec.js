@@ -16,6 +16,7 @@ describe('Main', () => {
         .should('include', 'Disallow: /ja/')
         .and('include', 'Disallow: /zh-cn/')
         .and('include', 'Disallow: /pt-br/')
+        .and('include', 'Disallow: /ru/')
       })
     }
   })
