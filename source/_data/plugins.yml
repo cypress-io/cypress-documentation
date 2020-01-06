@@ -239,6 +239,11 @@
       link: https://github.com/bahmutov/cy-spok
       keywords: [assertions]
 
+    - name: cypress-localstorage-commands
+      description: Custom commands for localStorage. Allows preserving localStorage between tests
+      link: https://github.com/javierbrea/cypress-localstorage-commands
+      keywords: [commands, localstorage, persistence]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
