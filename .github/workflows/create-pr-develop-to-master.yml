@@ -14,8 +14,8 @@ jobs:
       steps:
       # https://github.com/actions/checkout#fetch-all-branches
       - uses: actions/checkout@v2
-      - run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+        with:
+          ref: develop
 
       # https://github.com/repo-sync/pull-request
       # if the pull request has been successfully merged, then create
