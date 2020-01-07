@@ -1,5 +1,7 @@
 name: Create PR - develop -> master
 
+# run this workflow only
+# when a pull request to "develop" branch is closed
 on:
   pull_request:
     types: [closed]
@@ -10,9 +12,17 @@ jobs:
     pull-request:
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/checkout@master
+      # https://github.com/actions/checkout#fetch-all-branches
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+
+      # https://github.com/repo-sync/pull-request
+      # if the pull request has been successfully merged, then create
+      # a PR to "master" branch
       - name: pull-request
         uses: repo-sync/pull-request@v2
         if: github.event.pull_request.merged == true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: "master"
