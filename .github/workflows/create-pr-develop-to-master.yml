@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: develop
+      - run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
       # https://github.com/repo-sync/pull-request
       # if the pull request has been successfully merged, then create
