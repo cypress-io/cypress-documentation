@@ -184,7 +184,6 @@ describe('The Document Metadata', () => {
     // if you click on DOCUMENT from the command log,
     // it will output the entire #document to the console
     cy.document()
-
   })
 
   // or make assertions on any of the metadata in the head element
@@ -198,7 +197,6 @@ describe('The Document Metadata', () => {
     cy.get('head meta[name="description"]')
       .should('have.attr', 'content', 'This description is so meta')
   })
-
 })
 ```
 
@@ -420,7 +418,6 @@ cy.get('button', { timeout: 10000 }) // wait up to 10 seconds for this 'button' 
 
 cy.get('.element').click({ timeout: 10000 }).should('not.have.class', 'animating')
 // wait up to 10 seconds for the .element to not have 'animating' class
-
 ```
 
 However, most of the time you don't even have to worry about animations. Why not?  Cypress will {% url "automatically wait" interacting-with-elements %} for elements to stop animating prior to interacting with them via action commands like `.click()` or `.type()`.
@@ -442,7 +439,6 @@ Yes, you can. We provide an {% url 'example here' viewport#Width-Height %}.
 Yes. In this example, we loop through an array of urls and make assertions on the logo.
 
 ```javascript
-
 const urls = ['https://docs.cypress.io', 'https://www.cypress.io']
 
 describe('Logo', () => {

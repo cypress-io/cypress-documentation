@@ -14,7 +14,6 @@ Promise.config({
 
 const start = (argv) => {
   return Promise.try(() => {
-
     program
     .option('-d, --debug', 'enable debugging')
     .option('-y, --yes', 'auto agree')
@@ -24,7 +23,6 @@ const start = (argv) => {
     if (program.args.length !== 1) {
       return throwKnownError(errors.badArgs(program.args.length))
     }
-
 
     if (program.debug) {
       debug.enabled = true
@@ -37,7 +35,6 @@ const start = (argv) => {
 
     return Promise.all([fs.pathExists(inputFile), fs.pathExists(outFile)])
     .spread((inExists, outExists) => {
-
       if (!inExists) {
         debug('file provided was invalid:', inputFile)
 
@@ -61,8 +58,6 @@ const start = (argv) => {
   })
 
   .catch(handleKnownErrors)
-
-
 }
 
 const handleKnownErrors = (err) => {
@@ -102,7 +97,6 @@ const log = {
     console.log(chalk.red(`${msg}`))
   },
 }
-
 
 module.exports = {
   start,

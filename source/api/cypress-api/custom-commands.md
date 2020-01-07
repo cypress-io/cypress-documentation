@@ -45,7 +45,7 @@ Pass in an options object to define the implicit behavior of the custom command.
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
-`prevSubject` | `String` or `Array` | `false` | how to handle the previously yielded subject.
+`prevSubject` | `Boolean`, `String` or `Array` | `false` | how to handle the previously yielded subject.
 
 The `prevSubject` accepts the following values:
 
@@ -126,9 +126,7 @@ cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 
 ```js
 Cypress.Commands.add('getSessionStorage', (key) => {
-  cy.window().then((window) => {
-    window.sessionStorage.getItem(key)
-  })
+  cy.window().then((window) => window.sessionStorage.getItem(key))
 })
 
 Cypress.Commands.add('setSessionStorage', (key, value) => {
@@ -408,7 +406,6 @@ This example overwrites `screenshot` to always wait until a certain element is v
 
 ```javascript
 Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
-
   // call another command, no need to return as it is managed
   cy.get('.app')
     .should('be.visible')
@@ -417,7 +414,6 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
     // otherwise the `then` is limited to the default command timeout
     .then({ timeout: Cypress.config('responseTimeout') },
       () => {
-
         // return the original function so that cypress waits for it
         return originalFn(subject, name, options)
       })
