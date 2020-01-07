@@ -223,7 +223,7 @@ cypress run --reporter mochawesome \
 Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. Then we can combine them using the {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.
 
 ```shell
-npx mochawesome-merge cypress/results > mochawesome.json
+npx mochawesome-merge "cypress/results/*.json" > mochawesome.json
 ```
 
 We can now generate a combined HTML report from the `mochawesome.json` file using the {% url https://github.com/adamgruber/mochawesome-report-generator %}:
