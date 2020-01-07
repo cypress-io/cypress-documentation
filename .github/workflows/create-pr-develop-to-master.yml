@@ -12,12 +12,10 @@ jobs:
     pull-request:
       runs-on: ubuntu-latest
       steps:
-      # https://github.com/actions/checkout#fetch-all-branches
-      - uses: actions/checkout@v2
-        with:
-          ref: develop
-      - run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+      # using v1 as repo-sync/pull-request recommends
+      # https://github.com/repo-sync/pull-request/issues/14
+      # https://github.com/actions/checkout
+      - uses: actions/checkout@v1
 
       # https://github.com/repo-sync/pull-request
       # if the pull request has been successfully merged, then create
