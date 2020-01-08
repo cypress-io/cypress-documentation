@@ -127,6 +127,11 @@
       link: https://github.com/NeuraLegion/cypress-har-generator
       keywords: [har, http-archive, http, websocket, recording, chrome]
 
+    - name: cypress-expect-n-assertions
+      description: Cypress helper that checks number of expected and actual assertions in the test
+      link: https://github.com/bahmutov/cypress-expect-n-assertions
+      keywords: [test, assertion]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
