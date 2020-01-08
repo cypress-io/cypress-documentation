@@ -198,21 +198,25 @@ This avoids ever needing a second open browser, but still gives you an end-to-en
 
 ## Same-origin
 
-Each test is limited to only visiting a single superdomain.
+Each test is limited to only visiting a domains that are determined to be of the same-origin.
 
-What is a superdomain? Given the urls below, all have the same superdomain of `cypress.io`.
+What is same-origin? Two URLs have the same origin if the protocol, port (if specified), and host are the same for both. You can read more about same-origin in general {% url "here" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}.
 
-- `http://cypress.io`
-- `https://cypress.io`
+Given the URLs below, all have the same-origin compared to `https://cypress.io`.
+
 - `https://www.cypress.io`
 - `https://docs.cypress.io`
 - `https://example.cypress.io/commands/querying`
 
+The URLs below, however, all have the different origins compared to `https://cypress.io`.
+
+- `http://cypress.io` (Different protocol)
+- `https://www.cypress.io:81` (Different port)
+
 The rules are:
 
-- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
-- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different subdomains in the same test.
-- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different superdomains in **different** tests.
+- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two domains of different origin in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} two or more domains if different origin in **different** tests.
 
 ```javascript
 cy.visit('https://www.cypress.io')
