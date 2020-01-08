@@ -25,4 +25,9 @@ jobs:
         if: github.event.pull_request.merged == true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # be explicit about branches
+          source_branch: "develop"
           destination_branch: "master"
+          pr_title: "develop to master auto PR"
+          pr_body: ":robot: Automated PR from **develop** to **master**"
+          pr_label: "auto-pr"
