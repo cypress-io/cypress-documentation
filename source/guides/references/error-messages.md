@@ -307,6 +307,10 @@ it('does not forget to return a promise', function () {
 
 See our {% url "Web Security" web-security#Limitations %} documentation.
 
+## {% fa fa-exclamation-triangle red %} `cy.visit()` failed because you are attempting to visit a different origin domain
+
+See our {% url "Web Security" web-security#Limitations %} documentation.
+
 ## {% fa fa-exclamation-triangle red %} `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
 In version {% url "`0.20.0`" changelog %}, we removed the commands for adding custom commands and replaced them with, what we believe to be, a simpler interface.
