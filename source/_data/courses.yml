@@ -84,3 +84,26 @@
   sourceName: Cypress.io
   sourceUrl: https://www.cypress.io
   free: true
+
+- title: Test Automation with Cypress basic
+  url: http://udemy.com/course/test-automation-with-cypress-basic
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+  
+- title: Testes Automatizados com Cypress (básico)
+  url: http://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-basico
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Coursify.me
+  sourceUrl: http://coursify.me
+  language: Portuguese
+  
+- title: Testes Automatizados com Cypress (intermediário)
+  url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-intermediario#
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Coursify.me
+  sourceUrl: http://coursify.me
+  language: Portuguese
