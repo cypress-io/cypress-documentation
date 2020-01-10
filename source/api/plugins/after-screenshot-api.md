@@ -25,7 +25,7 @@ module.exports = (on, config) => {
     //   dimensions: { width: 1000, height: 660 }
     //   multipart: false
     //   pixelRatio: 1
-    //   name: 'my-screenshot'
+    //   name: 'my-screenshot.png'
     //   specName: 'integration/my-spec.js'
     //   testFailure: true
     //   path: '/path/to/my-screenshot.png'
