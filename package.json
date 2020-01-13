@@ -120,7 +120,7 @@
     "ramda": "0.26.1",
     "request-promise": "4.2.4",
     "sinon": "7.5.0",
-    "sinon-chai": "3.3.0",
+    "sinon-chai": "3.4.0",
     "start-server-and-test": "1.10.6",
     "textlint": "11.5.0",
     "textlint-filter-rule-comments": "1.2.2",
