@@ -109,7 +109,7 @@
     "husky": "3.1.0",
     "inquirer": "6.5.0",
     "jest": "24.8.0",
-    "keyv": "3.1.0",
+    "keyv": "4.0.0",
     "lint-staged": "8.2.1",
     "make-empty-github-commit": "1.2.0",
     "minimist": "1.2.0",
