@@ -86,7 +86,7 @@
     "beeper": "2.0.0",
     "bluebird": "3.7.2",
     "chai": "4.2.0",
-    "chalk": "2.4.2",
+    "chalk": "3.0.0",
     "cheerio": "1.0.0-rc.3",
     "coffee-react": "5.0.1",
     "common-tags": "1.8.0",
