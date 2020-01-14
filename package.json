@@ -118,7 +118,7 @@
     "pluralize": "8.0.0",
     "prompt-confirm": "2.0.4",
     "ramda": "0.26.1",
-    "request-promise": "4.2.4",
+    "request-promise": "4.2.5",
     "sinon": "7.5.0",
     "sinon-chai": "3.4.0",
     "start-server-and-test": "1.10.6",
