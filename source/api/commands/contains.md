@@ -52,6 +52,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 Option | Default | Description
 --- | --- | ---
+`matchCase` | `true` | Check case sensitivity
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .contains %}
 
