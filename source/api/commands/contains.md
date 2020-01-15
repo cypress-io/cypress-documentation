@@ -189,7 +189,7 @@ Without the explicit selector the subject would change to be the `<button>`. Usi
 
 ## Case Sensitivity
 
-Here's an example about `matchCase` option to ignore case sensitivity.
+Here's an example using the `matchCase` option to ignore case sensitivity.
 
 ```html
 <div>Capital Sentence</div>
@@ -244,7 +244,7 @@ cy.contains('Yes, Delete!').click()
 
 ## Leading, trailing, duplicate whitespaces aren't ignored in `<pre>` tag
 
-Unlike other tags, `<pre>` doesn't ignore leading, trailing, duplicate whitespaces like below:
+Unlike other tags, `<pre>` doesn't ignore leading, trailing, or duplicate whitespaces as shown below:
 
 ```html
 <!--Code for test-->
