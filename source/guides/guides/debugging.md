@@ -325,7 +325,7 @@ cypress ...
 
 In the resulting output, processes are grouped by the first word of their name.
 
-By default, the interval at which process information is collected and summarized is once every ten seconds. You can override this by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
+By default, the interval at which process information is collected and summarized is once every 10 seconds. You can override this by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
 
 You can also obtain even more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
