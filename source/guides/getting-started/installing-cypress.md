@@ -133,7 +133,7 @@ While there's nothing wrong with writing out the full path to the Cypress execut
 ```javascript
 {
   "scripts": {
-    "cypress:open": "cypress open"
+    "cypress:open": "npx cypress open"
   }
 }
 ```
