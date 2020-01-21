@@ -64,6 +64,12 @@ Or Chrome Canary:
 cypress run --browser canary
 ```
 
+Or the new Microsoft Edge:
+
+```shell
+cypress run --browser edge
+```
+
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
 
 ## Launching by a path
