@@ -6,7 +6,7 @@ Before Cypress launches a browser, it gives you the ability to modify the argume
 
 This is helpful to modify, remove, or add your own arguments.
 
-The most common use case is adding your own chrome extension.
+The most common use case is adding your own chrome extension; read [How to load the React DevTools extension in Cypress](https://www.cypress.io/blog/2020/01/07/how-to-load-the-react-devtools-extension-in-cypress/) blog post for example.
 
 # Usage
 
