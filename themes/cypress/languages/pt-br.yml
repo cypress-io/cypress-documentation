@@ -56,6 +56,7 @@ sidebar:
     references: Referências
     configuration: Configuração
     proxy-configuration: Configuração de Proxy
+    file-opener-preference: File Opener Preference
     error-messages: Mensagens de Erro
     bundled-tools: Ferramentas incluídas
     assertions: Asserções

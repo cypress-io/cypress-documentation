@@ -56,6 +56,7 @@ sidebar:
     references: 参考
     configuration: 設定
     proxy-configuration: Proxy Configuration
+    file-opener-preference: File Opener Preference
     error-messages: エラーメッセージ
     bundled-tools: バンドルツール
     assertions: アサーション

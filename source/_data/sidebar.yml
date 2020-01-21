@@ -46,6 +46,7 @@ guides:
     assertions: assertions.html
     configuration: configuration.html
     proxy-configuration: proxy-configuration.html
+    file-opener-preference: file-opener-preference.html
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html

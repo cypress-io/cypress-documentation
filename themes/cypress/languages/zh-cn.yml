@@ -58,6 +58,7 @@ sidebar:
     references: 参考
     configuration: 配置
     proxy-configuration: 代理配置
+    file-opener-preference: File Opener Preference
     error-messages: 错误消息
     bundled-tools: 捆绑的工具
     assertions: 断言
