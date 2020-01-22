@@ -14,4 +14,4 @@ After setting your file opener preference, when you click on a file path again, 
 
 If you wish to change your selection, you can do so in the **Settings** tab of the Cypress Test Runner.
 
-{% imgTag /img/guides/file-opener-preference-settings-tab.png "screenshot of test runner settings tab with file opener preference panel" %}
+{% imgTag /img/guides/file-opener-preference-settings-tab.png "screenshot of Test Runner settings tab with file opener preference panel" %}
