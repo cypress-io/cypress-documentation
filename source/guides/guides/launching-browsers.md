@@ -14,6 +14,7 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Canary" https://www.google.com/chrome/browser/canary.html %}
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
+- {% url "Edge" https://www.microsoft.com/edge %}
 - {% url "Electron" https://electron.atom.io/ %}
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
@@ -64,7 +65,7 @@ Or Chrome Canary:
 cypress run --browser canary
 ```
 
-Or the new Microsoft Edge:
+Or Microsoft Edge:
 
 ```shell
 cypress run --browser edge
