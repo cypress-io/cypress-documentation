@@ -121,7 +121,7 @@
     "request-promise": "4.2.5",
     "sinon": "8.1.0",
     "sinon-chai": "3.4.0",
-    "start-server-and-test": "1.10.6",
+    "start-server-and-test": "1.10.7",
     "textlint": "11.6.1",
     "textlint-filter-rule-comments": "1.2.2",
     "textlint-rule-eslint": "3.2.1",
