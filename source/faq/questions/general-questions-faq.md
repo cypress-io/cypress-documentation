@@ -154,7 +154,7 @@ In addition to the above differences, below are a few rules of thumb to decide w
 - If the code you are trying to test is called from other code, use a unit test.
 - If the code is going be called from the external system, like a browser, use an end-to-end test.
 - If a unit test requires a lot of mocking and you have to bring tools like `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
-- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewite it as a unit test
+- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewrite it as a unit test
 
 Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
 

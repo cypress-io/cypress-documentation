@@ -143,7 +143,7 @@ Using `.type()` on a date input (`<input type="date">`) requires specifying a va
 
 - `yyyy-MM-dd` (e.g. `1999-12-31`)
 
-This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#sec-dates %} and is what the input's `value` will be set to regardless of browser or locale.
+This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#dates-and-times %} and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
@@ -165,7 +165,7 @@ Using `.type()` on a week input (`<input type="week">`) requires specifying a va
 
 Where `W` is the literal character 'W' and `ww` is the number of the week (01-53).
 
-This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
+This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 

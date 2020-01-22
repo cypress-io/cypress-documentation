@@ -29,6 +29,7 @@ describe('i18n', () => {
           cy.get('#lang-select')
           .select(lang)
           .should('have.value', lang)
+
           cy.url().should('include', lang)
           cy.document().its('documentElement.lang').should('equal', lang)
         })
@@ -51,6 +52,7 @@ describe('i18n', () => {
         cy.get('#mobile-lang-select')
         .select(lang)
         .should('have.value', lang)
+
         cy.url().should('include', lang)
       })
     })

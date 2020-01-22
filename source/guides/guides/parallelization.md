@@ -78,7 +78,7 @@ Duration estimation is done separately for every browser the spec file was teste
 
 # Example
 
-The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
+The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/projects/4b7344/runs/2929/specs %}.
 
 ## Without parallelization
 
@@ -261,7 +261,7 @@ This waiting period is called the **run completion delay** and it begins after t
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard" project settings page" projects#Run-completion-delay %}.
+This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard project settings page" projects#Run-completion-delay %}.
 
 # Visualizing parallelization and groups in the Dashboard
 
