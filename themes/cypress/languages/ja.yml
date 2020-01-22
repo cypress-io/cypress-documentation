@@ -53,6 +53,7 @@ sidebar:
     launching-browsers: ブラウザーを起動する
     custom-commands: カスタムコマンド
     web-security: ウェブセキュリティー
+    errors: エラー
     references: 参考
     configuration: 設定
     proxy-configuration: Proxy Configuration

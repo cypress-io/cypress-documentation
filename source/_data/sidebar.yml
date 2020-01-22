@@ -34,6 +34,7 @@ guides:
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
     web-security: web-security.html
+    errors: errors.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
     plugins-guide: plugins-guide.html
