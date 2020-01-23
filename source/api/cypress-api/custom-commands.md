@@ -244,16 +244,16 @@ Cypress.Commands.add('createUser', (user) => {
     method: 'POST',
     url: 'https://www.example.com/tokens',
     body: {
-      email: 'admin_username'),
-      password: 'admin_password')
+      email: 'admin_username',
+      password: 'admin_password'
     }
   }).then((resp) => {
-      cy.request({
-          method: 'POST',
-          url: 'https://www.example.com/users',
-          headers: ({ Authorization: 'Bearer ' + resp.body.token }),
-          body: user
-      })
+    cy.request({
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: ({ Authorization: 'Bearer ' + resp.body.token }),
+      body: user
+    })
   })
 })
 ```
