@@ -93,6 +93,12 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
+# Debug errors
+
+Cypress prints several pieces of information when an error occurs during a Cypress test that can be helpful for debugging why the error occurred.
+
+{% partial errors_anatomy %}
+
 # Cypress fiddle
 
 While learning Cypress it may be a good idea to try small tests against some HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.

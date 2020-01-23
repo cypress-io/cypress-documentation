@@ -680,8 +680,9 @@ All DOM based commands automatically wait for their elements to exist in the DOM
 You don't need to write {% url "`.should('exist')`" should %} after a DOM based command, unless you chain extra `.should()` assertions.
 {% endnote %}
 
-{% note danger "Negative DOM assertions" %}
-If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions ,such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
+#### Negative DOM assertions
+
+If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions, such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist. There's an {% url 'open discussion' https://github.com/cypress-io/cypress/issues/205 %} about this behavior.
 
 ```js
 cy.get('.does-not-exist').should('not.be.visible')         // passes
@@ -696,9 +697,6 @@ cy.get('.does-not-exist').should(($element) => {
   expect($element.find('input')).to.not.exist
 })
 ```
-
-There's an {% url 'open discussion' https://github.com/cypress-io/cypress/issues/205 %} about this behavior.
-{% endnote %}
 
 These rules are pretty intuitive, and most commands give you the flexibility to override or bypass the default ways they can fail, typically by passing a `{force: true}` option.
 
