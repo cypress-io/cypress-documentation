@@ -244,8 +244,8 @@ Cypress.Commands.add('createUser', (user) => {
     method: 'POST',
     url: 'https://www.example.com/tokens',
     body: {
-      email: 'admin_username'),
-      password: 'admin_password')
+      email: 'admin_username',
+      password: 'admin_password'
     }
   }).then((resp) => {
       cy.request({
