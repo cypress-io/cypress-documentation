@@ -532,7 +532,7 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 <!-- keep old hash -->
 <a name='The-Chromium-Renderer-process-just-crashed'></a>
 
-## {% fa fa-exclamation-triangle red %} The browser renderer process running your tests just exited unexpectedly
+## {% fa fa-exclamation-triangle red %} The browser process running your tests just exited unexpectedly
 
 This error can occur whenever Cypress detects that the browser that was launched for running tests has exited or crashed before the tests could finish running, or without the user manually stopping the tests in Cypress.
 
