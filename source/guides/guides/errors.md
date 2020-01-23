@@ -2,29 +2,25 @@
 title: Errors
 ---
 
-Sometimes tests fail. Sometimes we want them to fail, just so we know they're doing the right thing when the pass. But other times, tests fail unintentionally and we need to figure out why. Cypress tries its best to provide errors that make that process as easy as possible.
+Sometimes tests fail. Sometimes we want them to fail, just so we know they're testing the right thing when they pass. But other times, tests fail unintentionally and we need to figure out why. Cypress provides some tools to help make that process as easy as possible.
 
-Let's take a look at the anatomy of an error, by way of a failing test.
+# Anatomy of an error
+
+Let's take a look at the anatomy of an error and how it is displayed in Cypress, by way of a failing test.
 
 ```javascript
 it('failure', () => {
   cy
   .get('div')
-  .find('h1')
+  .find('h1') // this element does not exist
 })
 ```
 
-{% imgTag /img/guides/command-failure-error.png "example command failure error" %}
+The `<h1>` element does not exist in our application under test, so the test above will fail. Within Cypress, an error will show on failure that includes the following pieces of information:
 
-1. **Error name**: This is the type of the error (e.g. AssertionError, CypressError)
-2. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error.
-3. **View stack trace button**: Clicking this toggles the visibility of the stack trace.
-4. **Stack trace**: This is hidden by default, but clicking *View stack trace* will show it in full. Stack traces vary in length. Click on the blue file path, and the file will open in your {% url "application of choice" file-opener-preference %}.
-5. **Code frame file**: This is usually the top line of the stack trace and is shows the file, line, and column that is highlighted in the code frame below. Click on it to open it in your {% url "application of choice" file-opener-preference %}.
-6. **Code frame**: This shows a snippet of code where the failure occurred, with the relevant line highlighted.
-7. **Print to console button**: Click this to print the error in your DevTools console. This will usually allow you to click on lines in the stack trace and open files in your DevTools.
+{% partial errors_anatomy %}
 
-## Source maps
+# Source maps
 
 Cypress utilizes source maps to enhance the error experience. Stack traces are translated so that your source files are shown instead of the generated file that is loaded by the browser. This also enables displaying code frames. Without inline source maps, you will not see code frames.
 

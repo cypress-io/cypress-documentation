@@ -55,8 +55,8 @@ As we continue to save our new test file we'll see the browser auto reloading in
 Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
 
 ```js
-describe('My First Test', function() {
-  it('Does not do much!', function() {
+describe('My First Test', () => {
+  it('Does not do much!', () => {
     expect(true).to.equal(true)
   })
 })
@@ -77,14 +77,16 @@ Notice Cypress displays a message about this being the default page {% url "on t
 Now let's write our first failing test.
 
 ```js
-describe('My First Test', function() {
-  it('Does not do much!', function() {
+describe('My First Test', () => {
+  it('Does not do much!', () => {
     expect(true).to.equal(false)
   })
 })
 ```
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
+
+Cypress also displays the stack trace and the code frame where the assertion failed (when available). You can click on the blue file link to open the file where the error occurred in your preferred application. To read more about the error's display, read our {% url "Errors doc" errors %}.
 
 {% imgTag /img/guides/failing-test.png "Failing test" %}
 
@@ -189,7 +191,7 @@ Can you see what Cypress is doing under the hood? It's automatically waiting and
 {% imgTag /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning 'Error Messages' %}
-We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
+We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page. To read more about the error's display, read our {% url "Errors doc" errors %}.
 {% endnote %}
 
 Before we add another command - let's get this test back to passing. Replace `hype` with `type`.
@@ -366,6 +368,12 @@ The **before** snapshot is taken prior to the click event firing. The **after** 
 
 When a command causes an immediate visual change in our application, cycling between before and after will update our snapshot. We can see this in action by clicking the `TYPE` command in the Command Log. Now, clicking **before** will show us the input in a default state, showing the placeholder text. Click **after** will show us what the input looks like when the `TYPE` command has completed.
 
+## Errors
+
+Cypress prints several pieces of information when an error occurs during a Cypress test.
+
+{% partial errors_anatomy %}
+
 ## Page events
 
 Notice there is also a funny looking Log called: `(PAGE LOAD)` followed by another entry for `(NEW URL)`. Neither of these was a command that we issued - rather Cypress itself will log out important events from your application when they occur. Notice these look different (they are gray and without a number).
@@ -431,7 +439,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 {% imgTag /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
-## In action
+### In action
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
