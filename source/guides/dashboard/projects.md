@@ -73,7 +73,7 @@ If you're using source control, we recommend that you check your `cypress.json`,
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-## Record key {% fa fa-key %}
+## Record key
 
 The record key is used to authenticate that your project is *allowed* to record tests to the Dashboard Service. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
 
@@ -107,7 +107,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg "Record Key in Configuration Tab" %}
 
 # Record keys
 
