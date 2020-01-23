@@ -248,12 +248,12 @@ Cypress.Commands.add('createUser', (user) => {
       password: 'admin_password'
     }
   }).then((resp) => {
-      cy.request({
-          method: 'POST',
-          url: 'https://www.example.com/users',
-          headers: ({ Authorization: 'Bearer ' + resp.body.token }),
-          body: user
-      })
+    cy.request({
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: ({ Authorization: 'Bearer ' + resp.body.token }),
+      body: user
+    })
   })
 })
 ```
