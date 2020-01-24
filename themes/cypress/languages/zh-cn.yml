@@ -68,7 +68,6 @@ sidebar:
     roadmap: 路线图
     tooling: 工具
     IDE-integration: IDE Integration
-    intelligent-code-completion: 代码智能补全
     plugins-guide: 插件
     reporters: 报告生成器
     typescript-support: TypeScript

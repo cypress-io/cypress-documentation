@@ -280,7 +280,7 @@ You can turn this option off if the application or site you're testing **does no
 
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
 {% url "3.5.0" changelog %} | Added support for option `nodeVersion`

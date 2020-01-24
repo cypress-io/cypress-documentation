@@ -221,7 +221,7 @@ Now we can assert something about this new page!
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
 
 {% note info %}
-{% fa fa-magic %} You can see IntelliSense in your spec files by adding a single special comment line. Read about {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
+{% fa fa-magic %} You can see IntelliSense in your spec files by adding a single special comment line. Read about {% url 'Intelligent Code Completion' IDE-integration#Triple-slash-directives %}.
 {% endnote %}
 
 ## {% fa fa-check-square-o %} Step 4: Make an assertion
@@ -504,7 +504,7 @@ describe('My First Test', function() {
 # Next steps
 
 - Start {% url 'testing your app' testing-your-app %}.
-- Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
+- Set up {% url 'intelligent code completion' IDE-integration#Intelligent-Code-Completion %} for Cypress commands and assertions.
 - Search Cypress's documentation to quickly find what you need.
 
 {% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}
