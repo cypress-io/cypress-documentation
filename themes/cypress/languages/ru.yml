@@ -57,7 +57,6 @@ sidebar:
     references: Ссылки
     configuration: Конфигурация
     proxy-configuration: Конфигурация прокси
-    file-opener-preference: File Opener Preference
     error-messages: Сообщения об ошибках
     bundled-tools: Встроенные инструменты
     assertions: Ассерты
@@ -66,7 +65,7 @@ sidebar:
     changelog: Изменения в продукте
     roadmap: Карта проекта
     tooling: Утилиты
-    intelligent-code-completion: Интеллектуальное завершение кода
+    IDE-integration: IDE Integration
     plugins-guide: Плагины
     reporters: Репортеры
     typescript-support: TypeScript

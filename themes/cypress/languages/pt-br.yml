@@ -57,7 +57,6 @@ sidebar:
     references: Referências
     configuration: Configuração
     proxy-configuration: Configuração de Proxy
-    file-opener-preference: File Opener Preference
     error-messages: Mensagens de Erro
     bundled-tools: Ferramentas incluídas
     assertions: Asserções
@@ -66,7 +65,7 @@ sidebar:
     changelog: Changelog
     roadmap: Roteiro
     tooling: Ferramentas
-    intelligent-code-completion: Conclusão Inteligente de Código
+    IDE-integration: IDE Integration
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript

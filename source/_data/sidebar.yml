@@ -36,7 +36,7 @@ guides:
     web-security: web-security.html
     errors: errors.html
   tooling:
-    intelligent-code-completion: intelligent-code-completion.html
+    IDE-integration: IDE-integration.html
     plugins-guide: plugins-guide.html
     reporters: reporters.html
     typescript-support: typescript-support.html
@@ -47,7 +47,6 @@ guides:
     assertions: assertions.html
     configuration: configuration.html
     proxy-configuration: proxy-configuration.html
-    file-opener-preference: file-opener-preference.html
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
