@@ -4,15 +4,19 @@ title: IDE Integration
 
 # File Opener Preference
 
-When clicking on a file path from the {% url "Test Runner" test-runner %} in an {% url "error stack trace or a code frame" errors %}, Cypress will attempt to open the file on your system.
+When clicking on a file path from the {% url "Test Runner" test-runner %} in an {% url "error stack trace or a code frame" errors %}, Cypress will attempt to open the file on your system. If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
 
-The first time you click a file path, Cypress will prompt you to select which location you prefer to open the file. You can choose to open it on your file system (e.g. Finder on MacOS, File Explore on Windows), in a file editor located on your system, or you can specify a path to any application you wish.
+{% imgTag /img/guides/file-opener-ide-go-to-line.gif "Open file at line in VS Code" %}
+
+The first time you click a file path, Cypress will prompt you to select which location you prefer to open the file. You can choose to open it in your:
+
+- File system (e.g. Finder on MacOS, File Explore on Windows)
+- An IDE located on your system
+- A specified application path
 
 {% note warning %}
 Cypress attempts to find available file editors on your system and display those as options. If your preferred editor is not list, you can specify the (full) path to it by selecting **Other**. Cypress will make every effort to open the file, *but it is not guaranteed to work with every application*.
 {% endnote %}
-
-If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
 
 After setting your file opener preference any files will automatically open in your selected application without prompting you to choose. If you want to change your selection, you can do so in the **Settings** tab of the Cypress Test Runner by clicking under **File Opener Preference**.
 
