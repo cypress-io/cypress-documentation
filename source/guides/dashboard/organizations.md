@@ -23,9 +23,22 @@ You can create an organization from within the {% url "Dashboard Service" https:
 
 {% imgTag /img/dashboard/add-organization-dialog.png "Add Organization dialog" width-600 %}
 
-## Personal Orgs
+## Personal Org
 
 By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this personal organization.
+
+### Convert to professional org
+
+If you’ve already set up your projects, users, and billing on your personal organization, you can convert it to a professional organization via the Organization's settings page.
+
+{% imgTag /img/dashboard/convert-to-professional-org-button.jpg "Convert org for billing" %}
+
+Click the **Convert organization** button, provide a name for the organization, and hit **Convert organization**. This will do two things:
+
+1. It will upgrade your personal organization to a new named organization. All of your projects, users, and billing information will carry over to this new organization.
+2. We’ll create a new, empty personal organization so you always have a place to keep your side projects and experiments!
+
+{% imgTag /img/dashboard/convert-to-professional-org-modal.jpg "Convert org to new org" width-600 %}
 
 ## Delete Org
 
