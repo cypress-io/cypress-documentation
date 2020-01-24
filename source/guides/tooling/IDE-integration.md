@@ -4,7 +4,7 @@ title: IDE Integration
 
 # File Opener Preference
 
-When clicking on a file path from the {% url "Test Runner" test-runner %} in an {% url "error stack trace or a code frame" debugging#errors %}, Cypress will attempt to open the file on your system. If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
+When clicking on a file path from the {% url "Test Runner" test-runner %} in an {% url "error stack trace or a code frame" debugging##rrors %}, Cypress will attempt to open the file on your system. If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
 
 {% imgTag /img/guides/file-opener-ide-go-to-line.gif "Open file at line in VS Code" %}
 
