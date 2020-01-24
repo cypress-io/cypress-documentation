@@ -29,7 +29,7 @@ By default, every user of Cypress is given a personal organization - named after
 
 ### Convert to professional org
 
-If you’ve already set up your projects, users, and billing on your personal organization, you can convert it to a professional organization via the Organization's settings page.
+If you’ve already set up your projects, users, and billing on your personal organization, you can convert it to a professional organization via the **Organization settings** page.
 
 {% imgTag /img/dashboard/convert-to-professional-org-button.jpg "Convert org for billing" %}
 
