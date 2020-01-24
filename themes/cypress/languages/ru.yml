@@ -53,7 +53,6 @@ sidebar:
     launching-browsers: Запуск браузеров
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
-    errors: Errors
     references: Ссылки
     configuration: Конфигурация
     proxy-configuration: Конфигурация прокси
@@ -62,6 +61,7 @@ sidebar:
     assertions: Ассерты
     best-practices: Лучшие практики
     trade-offs: Компромиссы
+    toubleshooting: Troubleshooting
     changelog: Изменения в продукте
     roadmap: Карта проекта
     tooling: Утилиты

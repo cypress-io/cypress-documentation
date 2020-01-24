@@ -55,7 +55,6 @@ sidebar:
     launching-browsers: 启动浏览器
     custom-commands: 自定义命令
     web-security: Web安全
-    errors: Errors
     references: 参考
     configuration: 配置
     proxy-configuration: 代理配置
@@ -64,6 +63,7 @@ sidebar:
     assertions: 断言
     best-practices: 最佳实践
     trade-offs: 取舍
+    toubleshooting: Troubleshooting
     changelog: 更新日志
     roadmap: 路线图
     tooling: 工具

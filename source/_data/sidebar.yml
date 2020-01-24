@@ -34,7 +34,6 @@ guides:
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
     web-security: web-security.html
-    errors: errors.html
   tooling:
     IDE-integration: IDE-integration.html
     plugins-guide: plugins-guide.html
@@ -51,6 +50,7 @@ guides:
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
     trade-offs: trade-offs.html
+    troubleshooting: troubleshooting.html
     changelog: changelog.html
     roadmap: roadmap.html
 

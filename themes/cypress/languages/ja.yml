@@ -53,7 +53,6 @@ sidebar:
     launching-browsers: ブラウザーを起動する
     custom-commands: カスタムコマンド
     web-security: ウェブセキュリティー
-    errors: エラー
     references: 参考
     configuration: 設定
     proxy-configuration: Proxy Configuration
@@ -62,6 +61,7 @@ sidebar:
     assertions: アサーション
     best-practices: ベストプラクティス
     trade-offs: トレードオフ
+    toubleshooting: Troubleshooting
     changelog: 変更履歴
     roadmap: ロードマップ
     tooling: ツール

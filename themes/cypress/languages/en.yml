@@ -53,7 +53,6 @@ sidebar:
     launching-browsers: Launching Browsers
     custom-commands: Custom Commands
     web-security: Web Security
-    errors: Errors
     references: References
     configuration: Configuration
     proxy-configuration: Proxy Configuration
@@ -62,6 +61,7 @@ sidebar:
     assertions: Assertions
     best-practices: Best Practices
     trade-offs: Trade-offs
+    toubleshooting: Troubleshooting
     changelog: Changelog
     roadmap: Roadmap
     tooling: Tooling
