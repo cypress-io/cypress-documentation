@@ -68,6 +68,7 @@ it('uses invokes done and returns promise', function (done) {
     // assertions
     done()
   })
+
   eventEmitter.doSomethingThatEmitsChange()
 })
 ```
