@@ -105,7 +105,7 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to "chrome", "canary", "chromium", "edge", "edgeCanary" or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
 
 You can also choose a browser by supplying a path:
 
@@ -325,7 +325,7 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-The Dashboard will display any tags sent with the appropriate run. 
+The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
@@ -365,7 +365,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Currently, only browsers in the Chrome family are supported.
+Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
 
 {% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
 

@@ -14,6 +14,7 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Canary" https://www.google.com/chrome/browser/canary.html %}
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
+- {% url "Edge" https://www.microsoft.com/edge %}
 - {% url "Electron" https://electron.atom.io/ %}
 - {% url "Firefox" https://www.mozilla.org/firefox/ %}
 - {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
@@ -65,6 +66,12 @@ Or Chrome Canary:
 
 ```shell
 cypress run --browser canary
+```
+
+Or Microsoft Edge:
+
+```shell
+cypress run --browser edge
 ```
 
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}

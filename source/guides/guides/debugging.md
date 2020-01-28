@@ -160,6 +160,8 @@ Browser Name | Expected Bundle Identifier | Expected Executable
 `chromium` | `org.chromium.Chromium` | `Contents/MacOS/Chromium`
 `canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
 
+For the current list, see {% url 'packages/launcher' https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts %} files.
+
 ### Linux
 
 On Linux, Cypress scans your `PATH` for a number of different binary names. If the browser you are trying to use does not exist under one of the expected binary names, Cypress will not be able to find it.
@@ -187,6 +189,8 @@ Browser Name | Expected Path
 `chrome` | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`
 `chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
 `canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
+
+For the current list, see {% url 'packages/launcher' https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts %} files.
 
 To make a browser installed at a different path be auto-detected, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
 
