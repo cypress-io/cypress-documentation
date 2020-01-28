@@ -1,10 +1,11 @@
 {
   "plugins": [
     "cypress",
+    "@cypress/dev",
     "no-only-tests"
   ],
   "extends": [
-    "plugin:cypress-dev/general",
+    "plugin:@cypress/dev/general",
     "plugin:cypress/recommended"
   ],
   "env": {

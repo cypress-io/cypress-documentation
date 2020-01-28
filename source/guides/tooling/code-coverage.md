@@ -108,7 +108,7 @@ If you are unfamiliar with code coverage or want to learn more, take a look at t
 
 This guide explains how to instrument the application source code using common tools. Then we show how to save the coverage information and generate reports using the {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} Cypress plugin. After reading this guide you should be able to better target your tests using the code coverage information.
 
-This guide explains how to find what parts of your application code are covered by Cypress tests so you can have 100% confidence that your tests aren't missing cruicial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
+This guide explains how to find what parts of your application code are covered by Cypress tests so you can have 100% confidence that your tests aren't missing crucial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
 
 {% note info %}
 The full source code for this guide can be found in the {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} repository.
@@ -414,8 +414,9 @@ For any other server type, define a `GET /__coverage__` endpoint and return the 
 ```javascript
 if (global.__coverage__) {
   // handle "GET __coverage__" requests
-  onRequest = (response) =>
+  onRequest = (response) => {
     response.sendJSON({ coverage: global.__coverage__ })
+  }
 }
 ```
 

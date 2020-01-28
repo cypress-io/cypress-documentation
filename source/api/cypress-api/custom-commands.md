@@ -244,16 +244,16 @@ Cypress.Commands.add('createUser', (user) => {
     method: 'POST',
     url: 'https://www.example.com/tokens',
     body: {
-      email: 'admin_username'),
-      password: 'admin_password')
+      email: 'admin_username',
+      password: 'admin_password'
     }
   }).then((resp) => {
-      cy.request({
-          method: 'POST',
-          url: 'https://www.example.com/users',
-          headers: ({ Authorization: 'Bearer ' + resp.body.token }),
-          body: user
-      })
+    cy.request({
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: ({ Authorization: 'Bearer ' + resp.body.token }),
+      body: user
+    })
   })
 })
 ```
@@ -406,7 +406,6 @@ This example overwrites `screenshot` to always wait until a certain element is v
 
 ```javascript
 Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
-
   // call another command, no need to return as it is managed
   cy.get('.app')
     .should('be.visible')
@@ -415,7 +414,6 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
     // otherwise the `then` is limited to the default command timeout
     .then({ timeout: Cypress.config('responseTimeout') },
       () => {
-
         // return the original function so that cypress waits for it
         return originalFn(subject, name, options)
       })

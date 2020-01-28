@@ -82,7 +82,7 @@ The examples below are from a run of our {% url "Kitchen Sink Example" https://g
 
 ## Without parallelization
 
-In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
+In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/aabb10cc1bb9dee88e1bf28e0af5e9661427ee7a/circle.yml#L41 %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
 
 ```text
 1x-electron, Machine #1
@@ -114,7 +114,7 @@ Notice that when adding up the spec's run times (**0:55**), they add up to less 
 
 ## With parallelization
 
-When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file and it finished in **59 seconds**.
+When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/aabb10cc1bb9dee88e1bf28e0af5e9661427ee7a/circle.yml#L53 %} file and it finished in **59 seconds**.
 
 ```text
 2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
@@ -236,7 +236,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 Provider  | Environment Variable
 --|--
 AppVeyor  | `APPVEYOR_BUILD_NUMBER`
-Bamboo  | `BAMBOO_BUILD_NUMBER`
+Bamboo  | `bamboo_buildNumber`
 Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
 Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`

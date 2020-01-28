@@ -87,13 +87,13 @@ describe('lib/url_generator', () => {
       global.sinon.stub(fs, 'stat').returns(Promise.resolve())
     })
 
-    it('requests file', () =>
-      urlGenerator.getLocalFile(data, 'as')
+    it('requests file', () => {
+      return urlGenerator.getLocalFile(data, 'as')
       .spread((pathToFile, str) => {
         expect(pathToFile).to.eq('api/commands/as.html')
         expect(str).to.be.a('string')
       })
-    )
+    })
 
     return it('throws when cannot find file', () => {
       const source = 'my-file.md'
@@ -118,15 +118,15 @@ describe('lib/url_generator', () => {
       return urlGenerator.validateAndGetUrl(data, undefined, 'foo', 'content', render)
       .then(() => {
         throw new Error('should have caught error')
-      }).catch((err) =>
-        [
+      }).catch((err) => {
+        return [
           'A url tag was not passed an href argument.',
           'The source file was: foo',
           'url tag\'s text was: content',
         ].forEach((msg) => {
           expect(err.message).to.include(msg)
         })
-      )
+      })
     })
 
     it('fails when external returns non 2xx', () => {
@@ -140,12 +140,12 @@ describe('lib/url_generator', () => {
       }).catch((err) => expect(err.message).to.include('Request to: https://www.google.com/ failed. (Status Code 500)'))
     })
 
-    it('fails when URL is invalid', () =>
-      urlGenerator.validateAndGetUrl(data, 'https://hub.docker.com/[object Object]p>')
+    it('fails when URL is invalid', () => {
+      return urlGenerator.validateAndGetUrl(data, 'https://hub.docker.com/[object Object]p>')
       .then(() => {
         throw new Error('should have caught error')
       }).catch((err) => expect(err.message).to.include('You must quote the URL: https://hub.docker.com'))
-    )
+    })
 
     it('verifies local file and caches subsequent requests', () => {
       const markdown = '## Notes\nfoobarbaz'
@@ -191,8 +191,8 @@ describe('lib/url_generator', () => {
       return urlGenerator.validateAndGetUrl(data, 'https://www.google.com/#foo', 'bar.md')
       .then(() => {
         throw new Error('should have caught error')
-      }).catch((err) =>
-        [
+      }).catch((err) => {
+        return [
           'Constructing {% url %} tag helper failed',
           'The source file was: bar.md',
           'You referenced a hash that does not exist at: https://www.google.com/',
@@ -200,7 +200,7 @@ describe('lib/url_generator', () => {
           'The HTML response body was:',
           '<html></html>',
         ].forEach((msg) => expect(err.message).to.include(msg))
-      )
+      })
     })
 
     it('fails when hash is not present in local file', () => {
@@ -211,8 +211,8 @@ describe('lib/url_generator', () => {
       return urlGenerator.validateAndGetUrl(data, 'and#foo', 'guides/core-concepts/bar.md', 'content', render)
       .then(() => {
         throw new Error('should have caught error')
-      }).catch((err) =>
-        [
+      }).catch((err) => {
+        return [
           'Constructing {% url %} tag helper failed',
           'The source file was: guides/core-concepts/bar.md',
           'You referenced a hash that does not exist at: api/commands/and.html',
@@ -220,27 +220,27 @@ describe('lib/url_generator', () => {
           'The HTML response body was:',
           '<html></html>',
         ].forEach((msg) => expect(err.message).to.include(msg))
-      )
+      })
     })
 
-    it('resolves cached values in a promise', () =>
-      urlGenerator.cache.set('foo', 'bar')
-      .then(() =>
-        urlGenerator.validateAndGetUrl(data, 'foo')
+    it('resolves cached values in a promise', () => {
+      return urlGenerator.cache.set('foo', 'bar')
+      .then(() => {
+        return urlGenerator.validateAndGetUrl(data, 'foo')
         .then((url) => expect(url).to.eq('bar'))
-      )
-    )
+      })
+    })
 
-    return it('correctly composes changelog URLs', () =>
-      urlGenerator.validateAndGetUrl(data, 'changelog#3-0-0', '', '')
+    return it('correctly composes changelog URLs', () => {
+      return urlGenerator.validateAndGetUrl(data, 'changelog#3-0-0', '', '')
       .then((pathToFile) => {
-        // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
         console.log(pathToFile)
         expect(pathToFile).to.eq('/guides/references/changelog.html#3-0-0')
 
         return urlGenerator.validateAndGetUrl(data, 'changelog', '', '')
         .then((pathToFile) => expect(pathToFile).to.eq('/guides/references/changelog.html'))
       })
-    )
+    })
   })
 })

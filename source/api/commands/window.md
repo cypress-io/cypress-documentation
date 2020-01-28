@@ -94,10 +94,10 @@ it('equals bar', () => {
     .then((win) => {
       foo = win.foo
     })
-    .then(() =>
+    .then(() => {
       // variable "foo" has been set
       expect(foo).to.equal('bar') // test passes
-    )
+    })
 })
 ```
 
