@@ -10,7 +10,6 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 Status               | Feature                            |  Issue            | PR
 ---------------------| -----------------------------------|-------------------|---
-*Work in progress*   | **Firefox support**                |  {% issue 1096 %} | {% PR 1359 %}
 *Work in progress*   | **Full network layer stubbing**    |  {% issue 687 %}  | {% PR 4176 %}
 *Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}
 *Work in progress*   | **Testing Electron Apps**          |  {% issue 2072 %} |

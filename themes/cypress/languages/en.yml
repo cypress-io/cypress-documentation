@@ -51,6 +51,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Custom Commands
     web-security: Web Security
     references: References
@@ -176,6 +177,8 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
+    isbrowsertype: isBrowserType
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

@@ -260,9 +260,13 @@ So if you cannot work around any of the issues using the suggested workarounds a
 
 One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to cross-origin errors that can otherwise be fixed. If you think you're experiencing a bug, {% open_an_issue 'open an issue' %}.
 
-To start, you will need to understand that *not all browsers expose a way to turn off web security*. Some do, some don't. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
+{% note warning 'Chrome only' %}
+Disabling web security is only supported in Chrome family browsers. Settings in `chromeWebSecurity` will have no effect in other browsers. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
+{% endnote %}
 
-## Setting `chromeWebSecurity` to `false` allows you to do the following:
+## Set `chromeWebSecurity` to `false`
+
+Setting `chromeWebSecurity` to `false` in Chrome family browsers allows you to do the following:
 
 - Display insecure content
 - Navigate to any superdomain without cross-origin errors
@@ -272,7 +276,7 @@ One thing you may notice though is that Cypress still enforces visiting a single
 
 Still here? That's cool, let's disable web security!
 
-### Set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %}` and we'll take care of the rest
+### Set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %}`
 
 ```json
 {

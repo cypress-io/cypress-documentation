@@ -33,6 +33,7 @@ guides:
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
+    cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
   tooling:
     intelligent-code-completion: intelligent-code-completion.html
@@ -161,6 +162,8 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
+    isbrowser: isbrowser.html
+    isbrowsertype: isbrowsertype.html
     iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html
