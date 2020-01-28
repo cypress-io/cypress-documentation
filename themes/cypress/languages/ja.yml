@@ -62,6 +62,7 @@ sidebar:
     best-practices: ベストプラクティス
     trade-offs: トレードオフ
     changelog: 変更履歴
+    migration-guide: Migration Guide
     roadmap: ロードマップ
     tooling: ツール
     intelligent-code-completion: コード自動補完

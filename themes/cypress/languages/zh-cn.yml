@@ -64,6 +64,7 @@ sidebar:
     best-practices: 最佳实践
     trade-offs: 取舍
     changelog: 更新日志
+    migration-guide: Migration Guide
     roadmap: 路线图
     tooling: 工具
     intelligent-code-completion: 代码智能补全

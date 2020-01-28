@@ -62,6 +62,7 @@ sidebar:
     best-practices: Лучшие практики
     trade-offs: Компромиссы
     changelog: Изменения в продукте
+    migration-guide: Migration Guide
     roadmap: Карта проекта
     tooling: Утилиты
     intelligent-code-completion: Интеллектуальное завершение кода
