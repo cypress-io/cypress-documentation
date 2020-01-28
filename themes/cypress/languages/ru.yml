@@ -51,6 +51,7 @@ sidebar:
     parallelization: Параллелизация
     environment-variables: Переменные среды
     launching-browsers: Запуск браузеров
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
     references: Ссылки
