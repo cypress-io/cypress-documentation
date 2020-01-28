@@ -35,3 +35,7 @@
 - name: GraphiQL
   description: A graphical interactive in-browser GraphQL IDE
   url: https://github.com/graphql/graphiql/tree/master/packages/graphiql
+
+- name: React Admin
+  description: A frontend Framework for building B2B applications running in the browser on top of REST/GraphQL APIs, using ES6, React and Material Design
+  url: https://github.com/marmelab/react-admin

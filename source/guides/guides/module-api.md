@@ -10,7 +10,7 @@ You can require Cypress as a node module from your application under test. This 
 
 ## `cypress.run()`
 
-Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
+Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#fundamentals %}.
 
 ### Options:
 

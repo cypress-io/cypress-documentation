@@ -221,7 +221,7 @@ Cypress automatically disables certain functionality in the Cypress launched bro
 - Disables prompts requesting permission to use devices like cameras or mics
 - Disables user gesture requirements for autoplaying videos.
 
-You can see all of the default chrome command line switches we send {% url "here" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.coffee#L18 %}.
+You can see all of the default chrome command line switches we send {% url "here" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.ts#L36 %}.
 
 # Browser Icon
 

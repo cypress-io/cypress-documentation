@@ -105,7 +105,6 @@ cy.get('button').then(($btn) => {
     })
   })
 })
-
 ```
 
 ## Variables

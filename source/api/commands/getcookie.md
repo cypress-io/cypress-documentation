@@ -88,6 +88,7 @@ cy.getCookie('session_id')
     // save cookie until we need it
     cookie = c
   })
+
 // some time later, force the "cy.request"
 // to run ONLY after the cookie has been set
 // by placing it inside ".then"

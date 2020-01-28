@@ -45,7 +45,7 @@ Pass in an options object to define the implicit behavior of the custom command.
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
-`prevSubject` | `String` or `Array` | `false` | how to handle the previously yielded subject.
+`prevSubject` | `Boolean`, `String` or `Array` | `false` | how to handle the previously yielded subject.
 
 The `prevSubject` accepts the following values:
 
@@ -126,9 +126,7 @@ cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 
 ```js
 Cypress.Commands.add('getSessionStorage', (key) => {
-  cy.window().then((window) => {
-    window.sessionStorage.getItem(key)
-  })
+  cy.window().then((window) => window.sessionStorage.getItem(key))
 })
 
 Cypress.Commands.add('setSessionStorage', (key, value) => {
@@ -149,6 +147,7 @@ cy.getSessionStorage('token').should('eq', 'abc123')
 Cypress.Commands.add('typeLogin', (user) => {
   cy.get('input[name=email]')
     .type(user.email)
+
   cy.get('input[name=password]')
     .type(user.password)
 })
@@ -228,6 +227,7 @@ Cypress.Commands.add('logout', () => {
 Cypress.Commands.add('logout', () => {
   cy.window().its('localStorage')
     .invoke('removeItem', 'session')
+
   cy.visit('/login')
 })
 ```
@@ -244,16 +244,16 @@ Cypress.Commands.add('createUser', (user) => {
     method: 'POST',
     url: 'https://www.example.com/tokens',
     body: {
-      email: 'admin_username'),
-      password: 'admin_password')
+      email: 'admin_username',
+      password: 'admin_password'
     }
   }).then((resp) => {
-      cy.request({
-          method: 'POST',
-          url: 'https://www.example.com/users',
-          headers: ({ Authorization: 'Bearer ' + resp.body.token }),
-          body: user
-      })
+    cy.request({
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: ({ Authorization: 'Bearer ' + resp.body.token }),
+      body: user
+    })
   })
 })
 ```
@@ -406,7 +406,6 @@ This example overwrites `screenshot` to always wait until a certain element is v
 
 ```javascript
 Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
-
   // call another command, no need to return as it is managed
   cy.get('.app')
     .should('be.visible')
@@ -415,7 +414,6 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
     // otherwise the `then` is limited to the default command timeout
     .then({ timeout: Cypress.config('responseTimeout') },
       () => {
-
         // return the original function so that cypress waits for it
         return originalFn(subject, name, options)
       })

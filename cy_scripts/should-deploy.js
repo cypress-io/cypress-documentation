@@ -54,8 +54,9 @@ function isRightBranch (env) {
     master: 'production',
   }
 
-  const isDocsToStagingBranch = (branch) =>
-    branch.startsWith('docs-') && env === 'staging'
+  const isDocsToStagingBranch = (branch) => {
+    return branch.startsWith('docs-') && env === 'staging'
+  }
 
   const isBranchAllowedToDeploy = (branch) => {
     debug('checking if branch "%s" allowed to deploy?', branch)
@@ -140,16 +141,19 @@ function lastDeployedCommit (env) {
   }))
 }
 
-const changedFilesSince = (branchName) => (sha) => {
-  la(is.unemptyString(branchName), 'missing branch name', branchName)
-  debug('finding files changed in branch %s since commit %s', branchName, sha)
+const changedFilesSince = (branchName) => {
+  return (sha) => {
+    la(is.unemptyString(branchName), 'missing branch name', branchName)
+    debug('finding files changed in branch %s since commit %s', branchName, sha)
 
-  return git.changedFilesAfter(sha, branchName)
-  .then(tap((list) => {
-    debug('%s changed since last docs deploy in branch %s',
-      `${list.length} ${list.length === 1 ? 'file' : 'files'}`, branchName)
-    debug(list.join('\n'))
-  }))
+    return git.changedFilesAfter(sha, branchName)
+    .then(tap((list) => {
+      debug('%s changed since last docs deploy in branch %s',
+        `${list.length} ${list.length === 1 ? 'file' : 'files'}`, branchName)
+
+      debug(list.join('\n'))
+    }))
+  }
 }
 
 function docsFilesChangedSinceLastDeploy (env, branchName) {
@@ -160,6 +164,7 @@ function docsFilesChangedSinceLastDeploy (env, branchName) {
     console.log(list.join('\n'))
     console.log('%d documentation %s changed since last doc deploy',
       list.length, list.length === 1 ? 'file' : 'files')
+
     console.log('in branch %s against environment %s', branchName, env)
   }))
   .then(docsChanged)

@@ -164,12 +164,12 @@ cypress run --reporter cypress-multi-reporters \
   --reporter-options configFile=reporter-config.json
 ```
 
-Then add the separate `reporter-config.json` file (defined in your configuration) to enable `spec` and `junit` reporters and direct the `junit` reporter to save a separate XML files.
+Then add the separate `reporter-config.json` file (defined in your configuration) to enable `spec` and `junit` reporters and direct the `junit` reporter to save separate XML files.
 
 ```json
 {
   "reporterEnabled": "spec, mocha-junit-reporter",
-  "reporterOptions": {
+  "mochaJunitReporterReporterOptions": {
     "mochaFile": "cypress/results/results-[hash].xml"
   }
 }
@@ -223,13 +223,13 @@ cypress run --reporter mochawesome \
 Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. Then we can combine them using the {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.
 
 ```shell
-npx mochawesome-merge --reportDir cypress/results > mochawesome.json
+npx mochawesome-merge "cypress/results/*.json" > mochawesome.json
 ```
 
 We can now generate a combined HTML report from the `mochawesome.json` file using the {% url https://github.com/adamgruber/mochawesome-report-generator %}:
 
 ```shell
-npx mochawesome-report-generator mochawesome.json
+npx marge mochawesome.json
 ```
 
 It generates the beautiful standalone HTML report file `mochawesome-report/mochawesome.html` shown below. As you can see all test results, timing information, and even test bodies are included.
