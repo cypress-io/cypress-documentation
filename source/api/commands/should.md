@@ -29,7 +29,6 @@ An alias of {% url `.and()` and %}
 cy.get('.error').should('be.empty')                    // Assert that '.error' is empty
 cy.contains('Login').should('be.visible')              // Assert that el is visible
 cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' property equals 'bar'
-
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -138,7 +137,7 @@ cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be
 
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
-Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+Be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
 
 ### Verify length, content, and classes from multiple `<p>`
 
@@ -316,7 +315,7 @@ cy.get('.company-details')
 
 ### Chaining multiple assertions
 
-Cypress makes it easy to chain assertions together.
+Cypress makes it easier to chain assertions together.
 
 In this example we use {% url `.and()` and %} which is identical to `.should()`.
 

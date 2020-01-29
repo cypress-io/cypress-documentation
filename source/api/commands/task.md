@@ -230,7 +230,7 @@ on('task', myTask)
 See {% issue 2284 '#2284' %} for implementation.
 
 {% note warning Duplicate task keys %}
-If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
 
 # Rules
@@ -249,7 +249,7 @@ If multiple task objects use the same key, the later registration will overwrite
 
 # Command Log
 
-***List the contents of `cypress.json`***
+### List the contents of the default `cypress.json` configuration file
 
 ```javascript
 cy.task('readJson', 'cypress.json')

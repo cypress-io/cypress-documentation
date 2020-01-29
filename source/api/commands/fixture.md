@@ -231,7 +231,7 @@ describe('User page', () => {
   beforeEach(function () {
     // "this" points at the test context object
     cy.fixture('user')
-      .then(() => {
+      .then((user) => {
         // "this" is still the test context object
         this.user = user
       })

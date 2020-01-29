@@ -88,9 +88,20 @@ cy.wait(1000)
 cy.get('.target').trigger('mouseleave')
 ```
 
-### jQuery UI Sortable 
+### Trigger a `mousedown` from a specific mouse button
 
-To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
+```js
+// Main button pressed (usually the left button)
+cy.get('.target').trigger('mousedown', { button: 0 })
+// Auxiliary button pressed (usually the middle button)
+cy.get('.target').trigger('mousedown', { button: 1 })
+//Secondary button pressed (usually the right button)
+cy.get('.target').trigger('mousedown', { button: 2 })
+```
+
+### jQuery UI Sortable
+
+To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.
 
 ```javascript
 cy.get('[data-cy=draggable]')
@@ -137,7 +148,7 @@ cy.get('button').trigger('mousedown', 'topRight')
 ### Specify explicit coordinates relative to the top left corner
 
 ```javascript
-cy.get('button').trigger('contextmenu', 15, 40)
+cy.get('button').trigger('mouseup', 15, 40)
 ```
 
 ## Options
@@ -227,6 +238,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 {% imgTag /img/api/trigger/console-log-trigger.png "console log trigger" %}
 
 {% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added `screenX` and `screenY` properties to events
 {% url "0.20.0" changelog#0-20-0 %} | `.trigger()` command added
 {% endhistory %}
 
@@ -236,6 +248,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 - {% url `.check()` check %}
 - {% url `.click()` click %}
 - {% url `.focus()` focus %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
 - {% url `.type()` type %}

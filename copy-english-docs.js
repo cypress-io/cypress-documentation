@@ -15,6 +15,8 @@ const getLanguageName = (short) => {
   const names = {
     ja: 'Japanese',
     'zh-cn': 'Chinese',
+    'pt-br': 'Portuguese Brazil',
+    'ru': 'Russian',
   }
 
   if (!names[short]) {
@@ -48,8 +50,10 @@ const findAllDocs = () => {
 
 const isJapaneseDoc = R.test(/\/ja\//)
 const isChineseDoc = R.test(/\/zh-cn\//)
+const isPortugueseDoc = R.test(/\/pt-br\//)
+const isRussianDoc = R.test(/\/ru\//)
 const isImage = R.test(/\/img\//)
-const isTranslation = R.anyPass([isJapaneseDoc, isChineseDoc, isImage])
+const isTranslation = R.anyPass([isJapaneseDoc, isChineseDoc, isPortugueseDoc, isRussianDoc, isImage])
 
 const translationsFilter = R.reject(isTranslation)
 
@@ -60,7 +64,7 @@ const findAllEnglishDocs = () => {
 }
 
 /**
- * @param {("ja" | "zh-cn")} shortName The short language name
+ * @param {("ja" | "zh-cn" | "pt-br" | "ru")} shortName The short language name
  */
 const findAllDocsFor = (shortName) => {
   const relativeSourceFolder = `source/${shortName}`
@@ -69,7 +73,7 @@ const findAllDocsFor = (shortName) => {
 }
 
 /**
- * @param {("ja" | "zh-cn")} targetLanguage
+ * @param {("ja" | "zh-cn" | "pt-br" | "ru")} targetLanguage
  */
 const copyAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
   return Promise.all([
@@ -87,6 +91,7 @@ const copyAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
 
     console.log('Copying %s from English to %s',
       pluralize('file', untransledEnglishFiles.length, true), getLanguageName(targetLanguage))
+
     console.table(untransledEnglishFiles)
 
     return Promise.mapSeries(untransledEnglishFiles, (relativePathToEnglishFile) => {
@@ -98,7 +103,6 @@ const copyAllEnglishDocsNotTranslatedTo = (targetLanguage) => {
       .then(() => {
         return fs.copyFile(sourcePath, destinationPath)
       })
-
     })
   })
 }
@@ -107,8 +111,11 @@ const copyUntranslatedDocs = () => {
   return copyAllEnglishDocsNotTranslatedTo('ja')
   .then(() => {
     return copyAllEnglishDocsNotTranslatedTo('zh-cn')
+  }).then(() => {
+    return copyAllEnglishDocsNotTranslatedTo('pt-br')
+  }).then(() => {
+    return copyAllEnglishDocsNotTranslatedTo('ru')
   })
-
 }
 
 // allow using module.parent

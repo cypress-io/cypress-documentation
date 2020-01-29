@@ -51,7 +51,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
 | `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %} |
-| 'withinSubject' | null                                               | {% usage_options withinSubject %} |
+| `withinSubject` | null                                               | {% usage_options withinSubject %} |
 
 ## Yields {% helper_icon yields %}
 
@@ -83,6 +83,12 @@ cy.get('.dropdown-menu').click()
 
 ```javascript
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
+```
+
+### Find the link with an href attribute containing the word "questions" and click it
+
+```javascript
+cy.get('a[href*="questions"]').click()
 ```
 
 ## Get in `.within()`

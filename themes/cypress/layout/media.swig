@@ -17,9 +17,12 @@
                     <li>
                       <h3>
                         <a href="{{course.url}}" target="_blank" rel="noopener noreferrer">{{ course.title }}</a>
+                        {% if course.free %}
+                          <span class="badge badge-pill badge-primary">Free</span>
+                        {% endif %}
                       </h3>
                       <p>
-                        Published 
+                        Published
                         {% if course.sourceUrl or course.sourceName %}
                           on
                           {% if course.sourceUrl %}
@@ -46,7 +49,21 @@
                   {% endfor %}
                 </ul>
               {% endif %}
-              
+
+              {% if page.dataType === 'projects' %}
+                <p>Open source projects that use Cypress to run their end-to-end tests.</p>
+                <ul class="projects-list">
+                  {% for project in site.data.projects %}
+                    <li>
+                      <h3>
+                        <a href="{{project.url}}" target="_blank" rel="noopener noreferrer">{{ project.name }}</a>
+                      </h3>
+                      <p>{{ project.description }}</p>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
               {% if site.data[page.dataType].small %}
                 <div class="small-media">
                   <ul>
@@ -63,7 +80,19 @@
               <div class="media-large">
                 {% for media in site.data[page.dataType].large %}
                   <div class="media">
-                    <h2><a href="{{ media.url }}">{{ media.title }}</a></h2>
+                    <h2>
+                    {% if media.youtubeId or media.url %}
+                      {% if media.youtubeId %}
+                        <a href="https://www.youtube.com/watch?v={{ media.youtubeId }}">
+                      {% else %}
+                        <a href="{{ media.url }}">
+                      {% endif %}
+                          {{ media.title }}
+                        </a>
+                    {% else %}
+                      {{ media.title }}
+                    {% endif %}
+                    </h2>
                     {% if media.youtubeId %}
                       <div class="embed-container">
                         <iframe src="https://www.youtube.com/embed/{{ media.youtubeId }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -74,7 +103,7 @@
                       </a>
                     {% endif %}
                     <p>
-                      Published 
+                      Published
                       {% if media.sourceUrl or media.sourceName %}
                         on
                         {% if media.sourceUrl %}

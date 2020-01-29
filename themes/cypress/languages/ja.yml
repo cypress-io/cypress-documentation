@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    analytics: 分析
     debugging: デバッグする
     variables-and-aliases: 変数と別名
     stubs-spies-and-clocks: スタブ、スパイ、そしてクロック
@@ -126,6 +127,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -206,6 +208,7 @@ sidebar:
     podcasts-media: ポッドキャスト
     screencasts-media: スクリーンキャスト
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: 一般的な質問

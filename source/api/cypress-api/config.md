@@ -45,7 +45,7 @@ Set multiple configuration options with an object literal.
 
 ## No Arguments
 
-### Get all configuration options
+### Get all configuration options from {% url 'configuration' configuration %} file (`cypress.json` by default)
 
 ```json
 {
@@ -62,7 +62,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ## Name
 
-### Return just a single configuration option value
+### Return a single configuration option from {% url 'configuration' configuration %} file (`cypress.json` by default)
 
 ```json
 {
@@ -76,7 +76,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 ## Name and Value
 
-### Change the values of your configuration options from within tests
+### Change the values of configuration options from configuration file (`cypress.json` by default) from within your tests
 
 {% note warning Scope %}
 Remember, any changes that you make to configuration using this API will only be in effect for the remainder of the tests _in the same spec file._
@@ -97,7 +97,7 @@ Cypress.config('viewportWidth') // => 800
 
 ## Object
 
-### Set multiple values by passing an object literal
+### Override multiple options from configuration file (`cypress.json` by default) by passing an object literal
 
 ```json
 {

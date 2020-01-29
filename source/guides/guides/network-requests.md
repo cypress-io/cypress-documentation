@@ -15,7 +15,7 @@ title: Network Requests
 
 # Testing Strategies
 
-Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
+Cypress helps you test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
 {% partial network_stubbing_warning %}
 
@@ -76,7 +76,7 @@ Stubbing responses enables you to control every aspect of the response, includin
 You don't have to do any work on the server. Your application will have no idea its requests are being stubbed, so there are *no code changes* needed.
 
 {% note success Benefits %}
-- Easy control of response bodies, status, and headers
+- Control of response bodies, status, and headers
 - Can force responses to take longer to simulate network delay
 - No code changes to your server or client code
 - Fast, < 20ms response times
@@ -96,7 +96,7 @@ You don't have to do any work on the server. Your application will have no idea 
 
 # Stubbing
 
-Cypress makes it easy to stub a response and control the `body`, `status`, `headers`, or even delay.
+Cypress enables you to stub a response and control the `body`, `status`, `headers`, or even delay.
 
 ***To begin stubbing responses you need to do two things.***
 
@@ -143,7 +143,7 @@ Once you start a server with {% url `cy.server()` server %}, all requests will b
 
 A fixture is a fixed set of data located in a file that is used in your tests. The purpose of a test fixture is to ensure that there is a well known and fixed environment in which tests are run so that results are repeatable. Fixtures are accessed within tests by calling the {% url `cy.fixture()` fixture %} command.
 
-Cypress makes it easy to stub a network requests and have it respond instantly with fixture data.
+With Cypress, you can stub network requests and have it respond instantly with fixture data.
 
 When stubbing a response, you typically need to manage potentially large and complex JSON objects. Cypress allows you to integrate fixture syntax directly into responses.
 
@@ -221,13 +221,16 @@ cy.route({
   method: 'POST',
   url: '/myApi',
 }).as('apiCheck')
+
 cy.visit('/')
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '1st API call has data')
 })
+
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '2nd API call has data')
 })
+
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '3rd API call has data')
 })
@@ -294,6 +297,8 @@ In our example above we can assert about the request object to verify that it se
 
 ```javascript
 cy.server()
+// any request to "search/*" endpoint will automatically receive
+// an array with two book objects
 cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
@@ -317,6 +322,50 @@ cy.get('#results')
 - Request Headers
 - Response Body
 - Response Headers
+
+**Examples**
+
+```javascript
+cy.server()
+// spy on POST requests to /users endpoint
+cy.route('POST', '/users').as('new-user')
+// trigger network calls by manipulating web app's user interface, then
+cy.wait('@new-user')
+  .should('have.property', 'status', 201)
+
+// we can grab the completed XHR object again to run more assertions
+// using cy.get(<alias>)
+cy.get('@new-user') // yields the same XHR object
+  .its('requestBody') // alternative: its('request.body')
+  .should('deep.equal', {
+    id: '101',
+    firstName: 'Joe',
+    lastName: 'Black'
+  })
+
+// and we can place multiple assertions in a single "should" callback
+cy.get('@new-user')
+  .should((xhr) => {
+    expect(xhr.url).to.match(/\/users$/)
+    expect(xhr.method).to.equal('POST')
+    // it is a good practice to add assertion messages
+    // as the 2nd argument to expect()
+    expect(xhr.response.headers, 'response headers').to.include({
+      'cache-control': 'no-cache',
+      expires: '-1',
+      'content-type': 'application/json; charset=utf-8',
+      location: '<domain>/users/101'
+    })
+  })
+```
+
+**Tip:** you can inspect the full XHR object by logging it to the console
+
+```javascript
+cy.wait('@new-user').then(console.log)
+```
+
+You can find more examples in our {% url "XHR Assertions" https://github.com/cypress-io/cypress-example-recipes#server-communication %} recipe.
 
 # See also
 

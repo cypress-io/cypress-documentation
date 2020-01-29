@@ -12,7 +12,7 @@ Just as you would when writing TypeScript files in your project, you will have t
 
 - {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
 - {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Simple Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+- {% url "Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
 
 ## Set up your dev environment
 
@@ -41,6 +41,16 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 
 {% note info %}
 You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %} repo.
+{% endnote %}
+
+{% note warning %}
+You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
+
+VS Code (within a .ts or .js file):
+* Open the command palette (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
+* Type "restart ts" and select the "TypeScript: Restart TS server." option
+
+If that does not work, try restarting the IDE.
 {% endnote %}
 
 ## Types for custom commands
@@ -96,7 +106,7 @@ it('works', () => {
 ### Examples:
 
 - See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
-- You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
+- You can find an example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
 - Example project {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} uses custom commands to avoid boilerplate code.
 
 ## Types for custom assertions
