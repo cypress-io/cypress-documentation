@@ -24,7 +24,7 @@ In February 2018 we gave a "Best Practices" conference talk at AssertJS. This vi
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Use `data-*` attributes to provide context to your selectors and insulate them from CSS or JS changes.
+{% fa fa-check-circle green %} **Best Practice:** Use `data-*` attributes to provide context to your selectors and isolate them from CSS or JS changes.
 {% endnote %}
 
 Every test you write will include selectors for elements. To save yourself a lot of headaches, you should write selectors that are resilient to changes.
@@ -58,7 +58,7 @@ Selector | Recommended | Notes
 `cy.get('#main').click()` | {% fa fa-warning orange %} Sparingly | Better. But still coupled to styling or JS event listeners.
 `cy.get('[name=submission]').click()` | {% fa fa-warning orange %} Sparingly | Coupled to the `name` attribute which has HTML semantics.
 `cy.contains('Submit').click()` | {% fa fa-check-circle green %} Depends | Much better. But still coupled to text content that may change.
-`cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Insulated from all changes.
+`cy.get('[data-cy=submit]').click()` | {% fa fa-check-circle green %} Always | Best. Isolated from all changes.
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and highly subject to change. You may swap out the element, you may refactor CSS and update ID's, or you may add or remove classes that affect the style of the element.
 
@@ -541,7 +541,7 @@ cy.get('table tr').should('have.length', 2)
 {% endnote %}
 
 {% note success %}
-{% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress in the Test Runner or headless mode.
+{% fa fa-check-circle green %} **Best Practice:** Start a web server prior to running Cypress.
 {% endnote %}
 
 We do NOT recommend trying to start your back end web server from within Cypress.

@@ -10,7 +10,7 @@ You can require Cypress as a node module from your application under test. This 
 
 ## `cypress.run()`
 
-Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#cypress-module-api %}.
+Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#fundamentals %}.
 
 ### Options:
 
@@ -21,10 +21,11 @@ Option | Type | Description
 `browser` | *string* | Specify different browser to run tests in, either by name or by filesystem path
 `ciBuildId` | *string* | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
 `config` | *object* | Specify {% url "configuration" configuration %}
-`configFile` | *string | boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
 `env` | *object* | Specify {% url "environment variables" environment-variables %}
 `group` | *string* | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
-`headed` | *boolean* | Display the Electron browser instead of running headlessly
+`headed` | *boolean* | Displays the browser instead of running headlessly (defaults to true for Chrome-family browsers)
+`headless` | *boolean* | Hide the browser instead of running headed (defaults to true for Electron)
 `key` | *string* | Specify your secret record key
 `exit` | *boolean* | Whether to close Cypress after all tests run
 `parallel` | *boolean* | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
@@ -34,6 +35,7 @@ Option | Type | Description
 `reporter` | *string* | Specify a {% url "Mocha reporter" reporters %}
 `reporterOptions` | *object* | Specify {% url "Mocha reporter" reporters %} options
 `spec` | *string* | Specify the specs to run
+`tag` | *string* | Identify a run with a tag or tags
 
 ```javascript
 const cypress = require('cypress')
@@ -121,7 +123,7 @@ Option |  Type | Description
 ------ | ---- | ---------
 `browser` | *string* | Specify a filesystem path to a custom browser
 `config` | *object* | Specify {% url "configuration" configuration %}
-`configFile` | *string | boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
+`configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
 `detached` | *boolean* | Open Cypress in detached mode
 `env` | *object* | Specify {% url "environment variables" environment-variables %}
 `global` | *boolean* | Run in global mode

@@ -76,7 +76,7 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
-`chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
+`chromeWebSecurity`    | `true`    | Whether Chrome Web Security for same-origin policy and insecure mixed content is enabled. {% url 'Read more about this here' web-security %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 `blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
 `modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
@@ -131,7 +131,10 @@ cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffe
 
 ## Plugins
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
+
+- Use `fs` and read off configuration values and dynamically change them.
+- Edit the list of browsers found by default by Cypress
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 

@@ -23,6 +23,16 @@ After recording your tests, you will see them in the {% url 'Dashboard' https://
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
+## {% fa fa-angle-right %} What counts as a test recording?
+
+Which {% url 'pricing tier' https://www.cypress.io/pricing %} is best for you depends on the number of test you record each month in your organization.
+
+Tests are recorded when {% url "`cypress run`" command-line#cypress-run %} is called with the `--record` flag while supplying the record `--key`. This means your {% url "test run data" runs %} is being "recorded" to the Dashboard.
+
+We consider each time the `it()` function is called to be a single test. So you will generally have several tests recorded within each spec file and likely several spec files within a single run.
+
+You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
+
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
@@ -84,7 +94,7 @@ Even if your CI setup is very different from the {% url "CI examples we have" co
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
 ```
 
-For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might be good enough for the job.
+For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might be good enough for the job.
 
 ## {% fa fa-angle-right %} Can I delete a run from the Dashboard?
 
@@ -94,7 +104,7 @@ We are working on implementing run deletion. {% url "Track the issue." https://g
 
 ## {% fa fa-angle-right %} Can I delete my Cypress account?
 
-You can delete your Cypress account from {% url "your Dashboard profile" https://dashboard.cypress.io/#/profile %}. Deleting your account cannot be undone! By deleting your Cypress account, all associated data in your account will be permanently deleted.
+You can delete your Cypress account from {% url "your Dashboard profile" https://dashboard.cypress.io/profile %}. Deleting your account cannot be undone! By deleting your Cypress account, all associated data in your account will be permanently deleted.
 
 ## {% fa fa-angle-right %} What happens to my Dashboard if I downgrade my account?
 

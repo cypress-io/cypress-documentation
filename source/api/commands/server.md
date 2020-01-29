@@ -145,6 +145,7 @@ cy.server({
     'x-token': 'abc-123-foo-bar'
   }
 })
+
 cy.route('GET', '/users/1', { id: 1, name: 'Amanda' }).as('getUser')
 cy.visit('/users/1/profile')
 cy.wait('@getUser').its('responseHeaders')

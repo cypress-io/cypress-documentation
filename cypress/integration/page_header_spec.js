@@ -85,7 +85,6 @@ describe('Page Header', () => {
 
         cy.visit(`${visitUrlPrefix}${path}`)
 
-
         cy.contains('a', improvePageText).as('editLink')
         .should('have.attr', 'href')
         .and('include', mdPath)

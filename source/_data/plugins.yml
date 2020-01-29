@@ -82,6 +82,11 @@
       link: https://github.com/bahmutov/cypress-watch-and-reload
       keywords: [file-watcher]
 
+    - name: cypress-plugin-livereload
+      description: Reloads Cypress using livereload
+      link: https://github.com/unlocomqx/cypress-plugin-livereload
+      keywords: [livereload]
+
     - name: cypress-select-tests
       description: User space solution for grepping Cypress tests to run
       link: https://github.com/bahmutov/cypress-select-tests
@@ -117,6 +122,21 @@
       link: https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper
       keywords: [vscode, extension, intellisense]
 
+    - name: 'cypress-dotenv'
+      description: Cypress plugin that enables compatability with dotenv.
+      link: https://github.com/morficus/cypress-dotenv
+      keywords: [dotenv, env, environment, env var]
+
+    - name: 'cypress-har-generator'
+      description: Generate HTTP Archive (HAR) while running tests.
+      link: https://github.com/NeuraLegion/cypress-har-generator
+      keywords: [har, http-archive, http, websocket, recording, chrome]
+
+    - name: cypress-expect-n-assertions
+      description: Cypress helper that checks number of expected and actual assertions in the test
+      link: https://github.com/bahmutov/cypress-expect-n-assertions
+      keywords: [test, assertion]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -128,6 +148,11 @@
       description: Track, test, and block code execution based on network state.
       link: https://github.com/RcKeller/cypress-unfetch
       keywords: [commands, routing, networking]
+
+    - name: cypress-redux
+      description: Run assertions against Redux stores.
+      link: https://github.com/RcKeller/cypress-redux
+      keywords: [commands, redux]
 
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
@@ -208,6 +233,26 @@
       description: Simple commands to skip a test based on platform, browser or a url
       link: https://github.com/cypress-io/cypress-skip-test
       keywords: [commands]
+
+    - name: cypress-websocket-testing
+      description: Test WebSocket connections with Cypress
+      link: https://github.com/lensesio/cypress-websocket-testing
+      keywords: [commands, websocket]
+
+    - name: '@bahmutov/cy-api'
+      description: Cypress custom command "cy.api" for HTTP API testing with server logs
+      link: https://github.com/bahmutov/cy-api
+      keywords: [api]
+
+    - name: cy-spok
+      description: Adds assertions from Spok library for easy schema and value validations
+      link: https://github.com/bahmutov/cy-spok
+      keywords: [assertions]
+
+    - name: cypress-localstorage-commands
+      description: Custom commands for localStorage. Allows preserving localStorage between tests
+      link: https://github.com/javierbrea/cypress-localstorage-commands
+      keywords: [commands, localstorage, persistence]
 
 - name: Extending other testing frameworks
   plugins:
@@ -295,6 +340,11 @@
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
+
+    - name: cypress-laravel
+      description: Add commands and hooks to test Laravel applications
+      link: https://github.com/noeldemartin/cypress-laravel
+      keywords: [php, laravel]
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.

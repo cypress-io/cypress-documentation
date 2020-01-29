@@ -5,7 +5,7 @@ title: Custom Commands
 Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.
 
 {% note info  %}
-A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated via an import statement in cypress/support/index.js.
+A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated via an import statement in your {% url "`supportFile`" configuration#Folders-Files %} (`cypress/support/index.js` by default).
 {% endnote %}
 
 # Syntax
@@ -45,7 +45,7 @@ Pass in an options object to define the implicit behavior of the custom command.
 
 Option | Accepts | Default | Description
 --- | --- | --- | ---
-`prevSubject` | `String` or `Array` | `false` | how to handle the previously yielded subject.
+`prevSubject` | `Boolean`, `String` or `Array` | `false` | how to handle the previously yielded subject.
 
 The `prevSubject` accepts the following values:
 
@@ -75,7 +75,89 @@ Examples of parent commands:
 - {% url `cy.exec()` exec %}
 - {% url `cy.route()` route %}
 
-### Custom `login` command
+### Click link containing text
+
+```js
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+```js
+cy.clickLink('Buy Now')
+```
+
+### Check a token
+
+```js
+Cypress.Commands.add('checkToken', (token) => {
+  cy.window()
+    .its('localStorage.token')
+    .should('eq', token)
+})
+```
+
+```js
+cy.checkToken('abc123')
+```
+
+### Download a file
+
+Originally used in {% url "cypress-downloadfile" https://github.com/Xvier/cypress-downloadfile %}, this command calls other Cypress commands.
+
+```javascript
+Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
+  return cy.getCookies().then((cookies) => {
+    return cy.task('downloadFile', {
+      url,
+      directory,
+      cookies,
+      fileName,
+    })
+  })
+})
+```
+
+```js
+cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
+```
+
+### Commands to work with `sessionStorage`
+
+```js
+Cypress.Commands.add('getSessionStorage', (key) => {
+  cy.window().then((window) => window.sessionStorage.getItem(key))
+})
+
+Cypress.Commands.add('setSessionStorage', (key, value) => {
+  cy.window().then((window) => {
+    window.sessionStorage.setItem(key, value)
+  })
+})
+```
+
+```js
+cy.setSessionStorage('token', 'abc123')
+cy.getSessionStorage('token').should('eq', 'abc123')
+```
+
+### Log in command using UI
+
+```js
+Cypress.Commands.add('typeLogin', (user) => {
+  cy.get('input[name=email]')
+    .type(user.email)
+
+  cy.get('input[name=password]')
+    .type(user.password)
+})
+```
+
+```js
+cy.typeLogin({ email: 'fake@email.com', password: 'Secret1' })
+```
+
+### Log in command using request
 
 ```javascript
 Cypress.Commands.add('login', (userType, options = {}) => {
@@ -121,14 +203,66 @@ Cypress.Commands.add('login', (userType, options = {}) => {
 })
 ```
 
-### Usage
-
 ```javascript
-cy.login('admin') // can start a chain off of cy
+// can start a chain off of cy
+cy.login('admin')
 
-cy
-  .get('button')
-  .login('user') // can be chained but will not receive the previous subject
+// can be chained but will not receive the previous subject
+cy.get('button').login('user')
+```
+
+### Log out command using UI
+
+```js
+Cypress.Commands.add('logout', () => {
+  cy.contains('Login').should('not.exist')
+  cy.get('.avatar').click()
+  cy.contains('Logout').click()
+})
+```
+
+### Log out command using `localStorage`
+
+```js
+Cypress.Commands.add('logout', () => {
+  cy.window().its('localStorage')
+    .invoke('removeItem', 'session')
+
+  cy.visit('/login')
+})
+```
+
+```js
+cy.logout()
+```
+
+### Create a user
+
+```js
+Cypress.Commands.add('createUser', (user) => {
+  cy.request({
+    method: 'POST',
+    url: 'https://www.example.com/tokens',
+    body: {
+      email: 'admin_username',
+      password: 'admin_password'
+    }
+  }).then((resp) => {
+    cy.request({
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: ({ Authorization: 'Bearer ' + resp.body.token }),
+      body: user
+    })
+  })
+})
+```
+
+```js
+cy.createUser({
+  id: 123,
+  name: 'Jane Lane'
+})
 ```
 
 {% note info 'Command Log' %}
@@ -175,8 +309,6 @@ Cypress.Commands.add('console', {
 })
 ```
 
-### Usage
-
 ```javascript
 cy.get('button').console('info').then(($button) => {
   // subject is still $button
@@ -192,7 +324,7 @@ cy.console() // error about how you can't call console without a subject
 ```
 
 {% note info %}
-Whenever you're using a child command you likely want to use `cy.wrap()` on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.
+Whenever you're using a child command you likely want to use {% url "`cy.wrap()`" wrap %} on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.
 {% endnote %}
 
 ## Dual Commands
@@ -229,8 +361,6 @@ Cypress.Commands.add('dismiss', {
 })
 ```
 
-### Usage
-
 ```javascript
 cy.dismiss() // no subject
 cy.get('#dialog').dismiss() // with subject
@@ -265,7 +395,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 {% note info %}
 We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out a `baseUrl` that both `cy.visit()` and `cy.request()` use. Set the `baseUrl` configuration property in your {% url "configuration" configuration %} file (`cypress.json` by default) and override it with the `CYPRESS_BASE_URL` environment variable.
+This is usually unnecessary because Cypress is already configured to swap out a `baseUrl` that both {% url "`cy.visit()`" visit %} and {% url "`cy.request()`" request %} use. Set the `baseUrl` configuration property in your {% url "configuration" configuration %} file (`cypress.json` by default) and override it with the `CYPRESS_BASE_URL` environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
@@ -276,7 +406,6 @@ This example overwrites `screenshot` to always wait until a certain element is v
 
 ```javascript
 Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
-
   // call another command, no need to return as it is managed
   cy.get('.app')
     .should('be.visible')
@@ -285,7 +414,6 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
     // otherwise the `then` is limited to the default command timeout
     .then({ timeout: Cypress.config('responseTimeout') },
       () => {
-
         // return the original function so that cypress waits for it
         return originalFn(subject, name, options)
       })
@@ -554,6 +682,7 @@ You can describe the method signature for your custom command, allowing IntelliS
 
 # See also
 
+- {% url "Plugins using custom commands" plugins#custom-commands %}
 - {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}
 - {% url 'Recipe: Logging In' recipes %}
