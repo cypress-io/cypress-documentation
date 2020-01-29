@@ -58,7 +58,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `sample_spec.js` file created in the previous tutorial now that it's no longer needed.
 
 ```shell
 rm cypress/integration/sample_spec.js
@@ -96,7 +96,7 @@ If you've started your server, then you should see your application loaded and w
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 
-Open up `cypress.json`, which you will find in your project root (where you installed Cypress.) It starts out empty:
+Open up your {% url "configuration file" configuration %} (`cypress.json` in your project directory, by default) It starts out empty:
 
 ```json
 {}
@@ -113,7 +113,7 @@ Let's add the `baseUrl` option.
 This will automatically **prefix** {% url `cy.visit()` visit %} and {% url `cy.request()` request %} commands with this baseUrl.
 
 {% note info %}
-Whenever you modify `cypress.json`, Cypress will automatically reboot itself and kill any open browsers. This is normal. Click on the spec file again to relaunch the browser.
+Whenever you modify your configuration file, Cypress will automatically reboot itself and kill any open browsers. This is normal. Click on the spec file again to relaunch the browser.
 {% endnote %}
 
 We can now visit a relative path and omit the hostname and port.

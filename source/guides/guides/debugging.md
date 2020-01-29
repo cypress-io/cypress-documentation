@@ -146,7 +146,9 @@ Cypress attempts to {% url 'automatically find installed Chrome versions for you
 You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
 {% endnote %}
 
-To see debug logs from the browser launcher, run Cypress with the `DEBUG` environment variable set to `cypress:launcher`.
+You can see the full list of found browsers and their properties within the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
+
+Another way to log what is found by Cypress is to run Cypress with the {% urlHash "DEBUG environment variable" Print-DEBUG-logs %} set to `cypress:launcher`. This will print information about the found browsers and their properties to the terminal.
 
 ### Mac
 
@@ -395,6 +397,23 @@ cypress:server:appdata path: /root/.config/Cypress/cy/production +0ms
 cypress:server:cypress starting in mode smokeTest +356ms
 101
 cypress:server:cypress about to exit with code 0 +4ms
+```
+
+If the smoke test does not show a specific error yet fails, try printing the Electron crash stack to maybe pinpoint the problem better:
+
+```shell
+ELECTRON_ENABLE_STACK_DUMPING=1 npx cypress verify
+...
+Received signal 11 SEGV_MAPERR ffffffb27e8955bb
+#0 0x55c6389f83d9 (/root/.cache/Cypress/3.8.2/Cypress/Cypress+0x35d13d8)
+r8: 0000000000000000  r9: 00007ffcf0387c80 r10: 00007ffcf0387bd8 r11: 000000000000000e
+r12: 00007ffcf0387d2c r13: 00007f3ea737b720 r14: ffffffb27e89558b r15: 00007f3ea8974200
+di: 0000000000000000  si: 0000000000000020  bp: 0000000000000000  bx: 0000004f2f375580
+dx: 0000000000000001  ax: 0000000000000030  cx: 0000000000000001  sp: 00007ffcf0387d00
+ip: 00007f3ea89582dd efl: 0000000000010246 cgf: 002b000000000033 erf: 0000000000000005
+trp: 000000000000000e msk: 0000000000000000 cr2: ffffffb27e8955bb
+[end of stack trace]
+Calling _exit(1). Core file will not be generated.
 ```
 
 ## Patch Cypress

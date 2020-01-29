@@ -17,6 +17,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 
 - {% url `.click()` click %}
 - {% url `.dblclick()` dblclick %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.type()` type %}
 - {% url `.clear()` clear %}
 - {% url `.check()` check %}
@@ -35,6 +36,7 @@ Cypress will wait for the element to pass all of these checks for the duration o
 - {% urlHash 'Scroll the element into view.' Scrolling %}
 - {% urlHash 'Ensure the element is not hidden.' Visibility %}
 - {% urlHash 'Ensure the element is not disabled.' Disability %}
+- {% urlHash 'Ensure the element is not detached.' Detached %}
 - {% urlHash 'Ensure the element is not readonly.' Readonly %}
 - {% urlHash 'Ensure the element is not animating.' Animations %}
 - {% urlHash 'Ensure the element is not covered.' Covering %}
@@ -73,6 +75,12 @@ The following calculations factor in CSS translations and transforms.
 ## Disability
 
 Cypress checks whether an element's `disabled` property is `true`.
+
+## Detached
+
+When many applications rerender the DOM, they actually remove the DOM element and insert a new DOM element in its place with the newly change attributes.
+
+Cypress checks whether an element you are making assertions is detached from the DOM. This checks that the element is still within the `document` of the application under test.
 
 ## Readonly
 
@@ -163,7 +171,7 @@ We recommend placing `debugger` or using the {% url `.debug()` debug %} command 
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0`, you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
+You can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command
@@ -201,6 +209,7 @@ We will NOT perform these:
 - Scroll the element into view
 - Ensure it is visible
 - Ensure it is not disabled
+- Ensure it is not detached
 - Ensure it is not readonly
 - Ensure it is not animating
 - Ensure it is not covered

@@ -24,7 +24,7 @@ cy.writeFile('menu.json')
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
-A path to a file within the project root (the directory that contains `cypress.json`).
+A path to a file within the project root (the directory that contains the default `cypress.json`).
 
 **{% fa fa-angle-right %} contents** ***(String, Array, or Object)***
 
@@ -62,7 +62,7 @@ To use encoding with other options, have your options object be your third param
 
 ## Yields {% helper_icon yields %}
 
-{% yields null cy.writeFile %}
+{% yields sets_subject cy.writeFile 'yields the value of the <code>contents</code> argument' %}
 
 # Examples
 

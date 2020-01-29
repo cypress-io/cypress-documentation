@@ -37,11 +37,10 @@ cy.visit('http://localhost:8080/app')
 cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
   ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of `cypress.json`.
+2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of of your {% url "configuration file" configuration %}.
 
   ```json
   // cypress.json
-
   {
     "baseUrl": "http://localhost:1234"
   }

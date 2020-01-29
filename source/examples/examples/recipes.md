@@ -25,6 +25,7 @@ Recipe  | Description
 {% url 'Form Interactions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__form-interactions %} |  Test form elements like input type `range`
 {% url 'Drag and Drop' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop %} | Use `.trigger()` to test drag and drop
 {% url 'Shadow DOM' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__shadow-dom %} | You need to use any of available custom commands
+{% url 'Website monitoring' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize `cypress` to monitor your website
 
 ## Logging In 
 Recipe  | Description
@@ -68,6 +69,7 @@ Recipe  | Description
 {% url 'Stubbing `window.fetch`' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch %} | Use `cy.stub()` to control fetch requests
 {% url 'Stub methods called on `window`' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window %}  | Use `cy.stub()` for methods called on `window`
 {% url 'Stubbing Google Analytics' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics %} | Use `cy.stub()` to test Google Analytics calls
+{% url 'Stub methods called on `console`' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__console %} | Use `cy.stub()` to test and control methods called on `console`
 
 ## Unit Testing
 Recipe  | Description

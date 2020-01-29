@@ -190,9 +190,9 @@ Cypress will continuously attempt to interact with the element until it eventual
 cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
-You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
+You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %}.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
 
 ```json
 {
@@ -306,6 +306,14 @@ it('does not forget to return a promise', function () {
 ## {% fa fa-exclamation-triangle red %} `cy.visit()` failed because you are attempting to visit a second unique domain
 
 See our {% url "Web Security" web-security#Limitations %} documentation.
+
+## {% fa fa-exclamation-triangle red %} `cy.visit()` failed because you are attempting to visit a different origin domain
+
+Two URLs have the same origin if the `protocol`, `port` (if specified), and `host` are the same for both. You can only visit domains that are of the same-origin within a single test. You can read more about same-origin policy in general {% url "here" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}.
+
+You can visit urls that are of different origin across different tests, so you may consider splitting your `cy.visit()` of different origin domains into separate tests.
+
+See our {% url "Web Security" web-security#Limitations %} documentation for more information and workarounds.
 
 ## {% fa fa-exclamation-triangle red %} `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
@@ -505,11 +513,9 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
-```javascript
-// cypress.json
-
+```json
 {
   "chromeWebSecurity": false
 }
@@ -557,7 +563,7 @@ Here are some potential workarounds:
 
 1. Ask your administrator to disable these policies so that you can use Cypress with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by these policies. {% url 'See the guide to launching browsers for more information.' launching-browsers#Electron-Browser %}
-3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com/ %}
+3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com %}
 4. If you have Local Administrator access to your computer, you may be able to delete the registry keys that are affecting Chrome. Here are some instructions:
     1. Open up Registry Editor by pressing WinKey+R and typing `regedit.exe`
     2. Look in the following locations for the policy settings listed above:

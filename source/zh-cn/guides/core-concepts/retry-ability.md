@@ -21,9 +21,11 @@ it('creates 2 items', function () {
   cy.visit('/')                       // 命令
   cy.focused()                        // 命令
     .should('have.class', 'new-todo') // 断言
+
   cy.get('.new-todo')                 // 命令
     .type('todo A{enter}')            // 命令
     .type('todo B{enter}')            // 命令
+
   cy.get('.todo-list li')             // 命令
     .should('have.length', 2)         // 断言
 })
@@ -191,6 +193,7 @@ app.TodoModel.prototype.addTodo = function (title) {
     title: title,
     completed: false
   })
+
   setTimeout(() => {
     this.inform()
   }, 100)

@@ -101,9 +101,9 @@ To add a page such as a new guide or API documentation:
 
 - Add the new page to the relevant directory under [`source`](/source).
 - Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
-- Add translations for the sidebar link (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- Add translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
-- Copy over the new page to other language translations - Japanese docs in [`source/ja`](/source/ja), Chinese docs in [`source/zh-cn`](/source/zh-cn).
+- Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
 
 #### A Worked Example
@@ -167,6 +167,8 @@ Our currently supported languages can be found at [`/source/_data/languages.yml`
 
 Translate existing documentation then submit a [pull request](#Pull-Requests) for your change.
 
+**Note:** When adding a new doc file to the English source, the English file will need to be commited to git before the translated file is auto-generated.
+
 If a page does not have a translation, then a pre-start step copies the English file to the language folder. These copies should NOT be committed into the source code. Only when the file has been translated you can add it to the source code with `git add --force source/<language>/.../file.md` and this file will not be overwritten by the English file.
 
 ## Committing Code
@@ -192,6 +194,8 @@ You should push your local changes to your forked GitHub repository and then ope
 - When opening a PR for a specific issue already open, please use the `closes #issueNumber` syntax in the pull request description&mdash;for example, `closes #138`&mdash;so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
 ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
+
+Every pull request merged into `develop` automatically opens another pull request to `master`, which should be merged automatically using Mergify Bot after the CircleCI tests pass, see issue [#2363](https://github.com/cypress-io/cypress-documentation/issues/2363).
 
 ### Contributor License Agreement
 

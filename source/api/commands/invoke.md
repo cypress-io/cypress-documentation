@@ -12,7 +12,10 @@ If you want to get a property that is not a function on the previously yielded s
 
 ```javascript
 .invoke(functionName)
+.invoke(options, functionName)
 .invoke(functionName, args...)
+.invoke(options, functionName, args...)
+
 ```
 
 ## Usage
@@ -33,9 +36,17 @@ cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 
 ## Arguments
 
-**{% fa fa-angle-right %} functionName**  ***(String)***
+**{% fa fa-angle-right %} functionName**  ***(String, Number)***
 
 Name of function to be invoked.
+
+**{% fa fa-angle-right %} options** **_(Object)_**
+
+Pass in an options object to change the default behavior of `.invoke()`.
+
+| Option    | Default                                                  | Description                        |
+| --------- | -------------------------------------------------------- | ---------------------------------- |
+| `log`     | `true`                                                   | {% usage_options log %}            |
 
 **{% fa fa-angle-right %} args...**
 
@@ -109,6 +120,18 @@ cy
     .should('include', 'myLogo')
 ```
 
+## Arrays
+
+In the above examples, the subject was an object, but `cy.invoke` also works on arrays and allows using numerical index to pick a function to run.
+
+```javascript
+const reverse = (s) => Cypress._.reverse(s)
+const double = (n) => n * n
+
+// picks function with index 1 and calls it with argument 4
+cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
+```
+
 # Notes
 
 ## Third Party Plugins
@@ -164,6 +187,11 @@ The commands above will display in the Command Log as:
 When clicking on `invoke` within the command log, the console outputs the following:
 
 {% imgTag /img/api/invoke/log-function-invoked-and-return.png "Console Log for invoke" %}
+
+{% history %}
+{% url "3.8.0" changelog#3-8-0 %} | Added support for `options` argument
+{% url "3.7.0" changelog#3-7-0 %} | Added support for arguments of type Number for `functionName`
+{% endhistory %}
 
 # See also
 

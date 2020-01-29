@@ -14,6 +14,7 @@ language:
   - zh-cn
   - ja
   - pt-br
+  - ru
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -151,6 +152,7 @@ alias:
 
   # obsolete content
   dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html
+  guides/core-concepts/launching-browsers.html: guides/guides/launching-browsers.html
 
 
 # Include/Exclude Files/Folders
