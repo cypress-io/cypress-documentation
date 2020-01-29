@@ -40,10 +40,10 @@ Cypress pode testar qualquer coisa que seja executada em um navegador.
 
 # Ecossitema do Cypress
 
-Cypress consiste em um Test Runner gratuito, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-introduction%}.
+O Cypress consiste em um gratuito, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "instalação local" installing-cypress %} Test Runner **e** Serviço de Dashboard para {% url 'gravar seus testes' dashboard-introduction%}.
 
-- ***Em Primeiro Lugar:*** Cypress makes it easy to set up and start writing tests every day while you build your application locall. *TDD at its best!*
-- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard Service' dashboard-introduction%} can record your test runs. You'll never have to wonder: *Why did this fail?*
+- ***Primeiramente:*** O Cypress facilita a configuração e o início da gravação de testes diários enquanto você constroi a estrutura do seu aplicativo *TDD no seu melhor!*
+- ***Posteriormente:*** Após construir sua suíte de testes {% url "integrando o Cypress" continuous-integration %} com seu Provedor de CI , nosso {% url 'Serviço de Dashboard' dashboard-introduction%} pode registrar suas execuções de teste. Você nunca terá que se perguntar: *Por que isso falhou?*
 
 # Nossa missão
 
