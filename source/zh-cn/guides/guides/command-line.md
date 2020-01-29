@@ -165,11 +165,11 @@ cypress run --group develop-env
 你也可以通过添加一个名称来添加多组测试用例，这可以让你区分开不同测试文件所在的组。
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --spec 'cypress/integration/user/**/*'
 ```
 
 `--ci-build-id`的定义是必要的。
