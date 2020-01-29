@@ -66,6 +66,11 @@
       description: Official TypeScript definitions for the Cypress API.
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
+    
+    - name: Cypress TypeScript Transpiler
+      description: Plugin to write tests in typescript
+      link: https://github.com/rubendmatos1985/typescript-cypress
+      keywords: [typescript, typescript-cypress-webpack]
 
     - name: cypress-plugin-retries
       description: A Cypress plugin to retry failed tests.
