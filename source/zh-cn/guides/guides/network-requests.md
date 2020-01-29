@@ -219,13 +219,16 @@ cy.route({
   method: 'POST',
   url: '/myApi',
 }).as('apiCheck')
+
 cy.visit('/')
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '1st API call has data')
 })
+
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '2nd API call has data')
 })
+
 cy.wait('@apiCheck').then((xhr) => {
   assert.isNotNull(xhr.response.body.data, '3rd API call has data')
 })

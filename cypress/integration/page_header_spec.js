@@ -7,7 +7,13 @@ describe('Page Header', () => {
   })
 
   it('displays correct page title', function () {
-    cy.wrap(this.langValues).each(function (lang) {
+    // disabling this test because we are copying untranslated English document pages
+    // into other language folders. A single translated page title is not enough to count
+    // thus the sidebar has translated title, but the page itself shows English translation
+    // limit to English instead of "this.langValues"
+    const languages = ['en']
+
+    cy.wrap(languages).each(function (lang) {
       let sidebarYaml = 'source/_data/sidebar.yml'
       let visitUrlPrefix = ''
 
@@ -55,21 +61,35 @@ describe('Page Header', () => {
     })
   })
 
-  it('should have link to edit doc', function () {
-    cy.wrap(this.MAIN_NAV).each((nav) => {
-      let path = `${nav.path}.html`
-      let mdPath = `${nav.path}.md`
+  it('should have link to edit doc in each language', function () {
+    cy.wrap(this.langValues).each(function (lang) {
+      // In English it probably is "Improve this doc",
+      // and in other languages it is a translation
+      const improvePageText = this[lang].page.improve
 
-      if (nav.path === '/plugins/') {
-        path = `${nav.path}index.html`
-        mdPath = `${nav.path}index.md`
+      cy.log(`Language **${lang}**`)
+      let visitUrlPrefix = ''
+
+      if (lang !== 'en') {
+        visitUrlPrefix = lang
       }
 
-      cy.visit(path)
-      cy.contains('a', 'Improve this doc').as('editLink')
-      .should('have.attr', 'href')
-      .and('include', mdPath)
-      .and('include', this.improveUrl)
+      cy.wrap(this.MAIN_NAV).each((nav) => {
+        let path = `${nav.path}.html`
+        let mdPath = `${nav.path}.md`
+
+        if (nav.path === '/plugins/') {
+          path = `${nav.path}index.html`
+          mdPath = `${nav.path}index.md`
+        }
+
+        cy.visit(`${visitUrlPrefix}${path}`)
+
+        cy.contains('a', improvePageText).as('editLink')
+        .should('have.attr', 'href')
+        .and('include', mdPath)
+        .and('include', this.improveUrl)
+      })
     })
   })
 })

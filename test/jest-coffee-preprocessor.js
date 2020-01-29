@@ -5,6 +5,7 @@ module.exports = {
     if (path.match(/\.coffee$/)) {
       return coffee.compile(src, { bare: true })
     }
+
     return src
   },
 }

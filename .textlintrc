@@ -23,8 +23,6 @@
         ["^chai", "Chai"],
         ["^chai-jquery", "chai-jquery"],
         ["cross origin", "cross-origin"],
-        ["(Chrome ?)DevTools", "Developer Tools"],
-        ["(?!^Chrome $)DevTools", "Developer Tools"],
         "ESLint",
         ["Express.js", "Express"],
         "FFmpeg",
@@ -54,6 +52,7 @@
         "Sinon–Chai",
         "TypeScript",
         "YouTube",
+        ["VSCode", "VS Code"],
         ["^Vue", "Vue.JS"],
         "webpack",
         ["WebSocket(s?)", "WebSocket$1"],
@@ -99,6 +98,9 @@
         ["labelled", "labeled"],
         ["licence", "license"],
         ["organise", "organize"],
+
+        // Common misspellings
+        ["gaurantee", "guarantee"],
 
         // Words we would like to not use altogether
         ["simply", ""],

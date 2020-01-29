@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    analytics: Analytics
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -126,6 +127,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -200,11 +202,13 @@ sidebar:
     docker: Docker
     media: Media
     courses-media: Courses
+    webinars-media: Webinars
     blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: General Questions

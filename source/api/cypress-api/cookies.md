@@ -71,7 +71,7 @@ Cypress.Cookies.debug(false) // now debugging is turned off
 
 ### Preserve cookies through multiple tests
 
-Cypress gives you a simple interface to automatically preserve cookies for multiple tests. Cypress automatically clears all cookies before each new test starts by default.
+Cypress gives you an interface to automatically preserve cookies for multiple tests. Cypress automatically clears all cookies before each new test starts by default.
 
 By clearing cookies before each test you are guaranteed to always start from a clean slate. Starting from a clean state prevents coupling your tests to one another and prevents situations where mutating something in your application in one test affects another one downstream.
 
@@ -99,7 +99,7 @@ describe('Dashboard', function () {
     // will not be cleared before the NEXT test starts.
     //
     // the name of your cookies will likely be different
-    // this is just a simple example
+    // this is an example
     Cypress.Cookies.preserveOnce('session_id', 'remember_token')
   })
 

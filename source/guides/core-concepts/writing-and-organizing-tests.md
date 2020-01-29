@@ -56,14 +56,14 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-***Configuring Folder Structure***
+## Configuring Folder Structure
 
 While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
-You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration#Folders-Files %} for more detail.
+You can modify the folder configuration in your configuration file. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
 {% note info "What files should I add to my '.gitignore file' ?" %}
-Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
+Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your configuration file (`cypress.json` by default) or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
 {% endnote %}
 
 ## Fixture Files
@@ -101,7 +101,7 @@ The initial imported plugins file can be {% url 'configured to another file' con
 
 ## Support file
 
-By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
 The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
@@ -268,7 +268,6 @@ describe('Unit Test FizzBuzz', function () {
     numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
-
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
@@ -335,14 +334,14 @@ Remember to use {% url `.only` writing-and-organizing-tests#Excluding-and-Includ
 
 ### Files
 
-- {% url `cypress.json` configuration %}
-- {% url `cypress.env.json` environment-variables %}
+- {% url "Configuration file (`cypress.json`) by default" configuration %}
+- {% url "`cypress.env.json`" environment-variables %}
 
 ### Folders
 
-- `cypress/integration/`
-- `cypress/support/`
-- `cypress/plugins/`
+- Integration directory (`cypress/integration/` by default)
+- Support directory (`cypress/support/` by default)
+- Plugins directory (`cypress/plugins/` by default)
 
 The folder, the files within the folder, and all child folders and their files (recursively) are watched.
 

@@ -4,10 +4,10 @@ describe('Changelog', () => {
   })
 
   // check if rendering messed up and removed the sidebar
-  it('has navigation sidebar', () =>
-    cy.get('aside#sidebar')
+  it('has navigation sidebar', () => {
+    return cy.get('aside#sidebar')
     .should('be.visible')
-  )
+  })
 
   if (Cypress.isDevelopment()) {
     it('has a truncated table of contents', () => {

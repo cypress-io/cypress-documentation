@@ -8,7 +8,11 @@
   left: 0; 
   bottom: 0;
   border-right: 1px solid #f0f3f2;
-  padding-top: 0;
+  padding-top: 60px;
+
+  @media screen and (min-width: 768px) and (max-width: 991px){
+    transition: margin-top 0.2s linear;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -20,7 +24,6 @@
     overflow-y: auto;
     margin-top: 1.5em;
   }
-
 }
 
 .toggle-sidebar-btns {

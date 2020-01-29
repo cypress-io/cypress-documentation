@@ -22,6 +22,7 @@ it('completes todo', () => {
   cy.get('.new-todo').type('write tests{enter}')
   cy.contains('.todo-list li', 'write tests')
     .find('.toggle').check()
+
   cy.contains('.todo-list li', 'write tests')
     .should('have.class', 'completed')
 })
@@ -40,7 +41,7 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
 ```
 
-Your visual styles may also rely on more than just CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
+Your visual styles may also rely on more than CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
 
 Luckily, Cypress gives a stable platform for {% url "writing plugins" plugins-guide %} that _can perform visual testing_.
 
@@ -62,8 +63,10 @@ it('completes todo', () => {
   cy.contains('.todo-list li', 'write tests')
     .find('.toggle')
     .check()
+
   cy.contains('.todo-list li', 'write tests')
     .should('have.class', 'completed')
+
   // run 'npm i cypress-plugin-snapshots -S'
   // capture the element screenshot and
   // compare to the baseline image
@@ -91,16 +94,24 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
+<!-- textlint-disable -->
+{% video youtube qVRjhABuyG0 %}
+<!-- textlint-enable -->
+
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
 
 Resource |  Description
 ------- |  ----
 {% url 'Official docs' https://applitools.com/cypress %} | Applitools' Cypress documentation
-{% url 'Tutorial' https://applitools.com/tutorials/cypress.html#how-it-works %} | Applitools' Cypress tutorial
+{% url 'Tutorial' https://applitools.com/tutorials/cypress.html %} | Applitools' Cypress tutorial
 {% url 'Webinar' https://applitools.com/blog/cypress-applitools-end-to-end-testing %} | *Creating a Flawless User Experience, End-to-End, Functional to Visual – Practical Hands-on Session*, a webinar recorded together with Cypress and Applitools
 {% url 'Blog' https://glebbahmutov.com/blog/testing-a-chart/ %} | Testing a chart with Cypress and Applitools
 
 ## Percy
+
+<!-- textlint-disable -->
+{% video youtube MXfZeE9RQDw %}
+<!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
@@ -109,7 +120,7 @@ Resource |  Description
 {% url 'Official docs' https://docs.percy.io/docs/cypress %} | Percy's Cypress documentation
 {% url 'Tutorial'  https://docs.percy.io/docs/cypress-tutorial %} | Percy's Cypress tutorial
 {% url "Webinar" https://www.youtube.com/watch?v=MXfZeE9RQDw %} | *Cypress + Percy = End-to-end functional and visual testing for the web*, a webinar recorded together with Cypress and Percy.io
-{% url "Blog" https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-and-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} | The companion blog for the Cypress + Percy webinar
+{% url "Blog" https://www.cypress.io/blog/2019/04/19/webinar-recording-cypress-io-percy-end-to-end-functional-and-visual-testing-for-the-web/ %} | The companion blog for the Cypress + Percy webinar
 {% url "Slides" https://slides.com/bahmutov/visual-testing-with-percy %} | The companion slides for the Cypress + Percy webinar
 {% url "Blog" https://glebbahmutov.com/blog/testing-visually/ %} | Testing how an application renders a drawing with Cypress and Percy
 
