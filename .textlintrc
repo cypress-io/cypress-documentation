@@ -41,7 +41,6 @@
         "Lodash",
         "minimatch",
         "Mocha",
-        ["node.js", "Node"],
         "node module",
         "npm",
         ["React[ .]js", "React"],
