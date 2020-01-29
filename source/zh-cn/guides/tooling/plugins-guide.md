@@ -8,7 +8,7 @@ title: 插件
 
 > 插件能够使你在浏览器外部运行`node`进程。
 
-插件是一个"接缝"你可以编写自己的自定义代码，该代码在Cypress生命周期的特定阶段执行。
+插件是一个"接缝"你可以编写自己的自定义代码，该代码在Cypress生命周期的特定阶段执行。 It also allows you to execute code within your own Node version when the {% url "`nodeVersion`" configuration#Node-version %} is set in your configuration.
 
 {% note info "这是一个简短的概述" %}
 如果你想了解更多一些关于如何编写插件，我们已经编写了API文档，向你展示如何处理每个插件事件。
@@ -72,7 +72,8 @@ title: 插件
 
 ## cy.task
 
-事件`task`是与{% url `cy.task()` task %}命令一起使用。 它允许你在node中编写任意代码，以完成浏览器中不可能完成的任务。
+事件`task`是与{% url `cy.task()` task %}命令一起使用。 它允许你在node中编写任意代码，以完成浏览器中不可能完成的任务。 It also allows you to execute code within your own Node version when the {% url "`nodeVersion`" configuration#Node-version %} is set in your configuration.
+
 
 你可以使用`task`事件执行以下操作：
 
@@ -116,7 +117,6 @@ cypress/plugins/index.js
 
 // export a function
 module.exports = (on, config) => {
-
   // bind to the event we care about
   on('<event>', (arg1, arg2) => {
     // plugin stuff here

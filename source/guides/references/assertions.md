@@ -64,7 +64,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | increase(*function*) {% aliases increases %} | `expect(fn).to.increase(obj, 'val')` |
 | decrease(*function*) {% aliases decreases %} | `expect(fn).to.decrease(obj, 'val')` |
 
-These getters are also available for BDD assertions. They don't actually do anything, but they enable you to write simple, english sentences.
+These getters are also available for BDD assertions. They don't actually do anything, but they enable you to write clear, english sentences.
 
 | Chainable getters |
 | --- |
@@ -110,7 +110,6 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 | .isNotString(*value*, *[message]*) | `assert.isNotString(2, 'val not string')` |
 | .isNumber(*value*, *[message]*) | `assert.isNumber(2, 'val is number')` |
 | .isNotNumber(*value*, *[message]*) | `assert.isNotNumber('e2e', 'val not number')` |
-| .isFinite(*value*, *[message]*) | `assert.isFinite('e2e', 'val is finite')` |
 | .isBoolean(*value*, *[message]*) | `assert.isBoolean(true, 'val is bool')` |
 | .isNotBoolean(*value*, *[message]*) | `assert.isNotBoolean('true', 'val not bool')` |
 | .typeOf(*value*, *name*, *[message]*) | `assert.typeOf('e2e', 'string', 'val is string')` |
@@ -258,7 +257,7 @@ cy.get('#accordion').should('not.have.css', 'display', 'none')
 
 # Should callback
 
-If built-in assertions are not enough, you can easily write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
+If built-in assertions are not enough, you can write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
 
 ```html
 <div class="main-abc123 heading-xyz987">Introduction</div>

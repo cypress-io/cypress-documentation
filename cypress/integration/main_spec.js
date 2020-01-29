@@ -1,8 +1,24 @@
+// loads Cypress types and any of our custom commands
+/// <reference path="../support/index.d.ts" />
+// @ts-check
+
 const GUIDES_PATH = '/guides/overview/why-cypress.html'
 
 describe('Main', () => {
   beforeEach(() => {
     cy.server()
+  })
+
+  context('robots.txt', () => {
+    if (!Cypress.isDevelopment()) {
+      it('has robots.txt', () => {
+        cy.request('/robots.txt').its('body')
+        .should('include', 'Disallow: /ja/')
+        .and('include', 'Disallow: /zh-cn/')
+        .and('include', 'Disallow: /pt-br/')
+        .and('include', 'Disallow: /ru/')
+      })
+    }
   })
 
   context('CSS', () => {
@@ -15,27 +31,27 @@ describe('Main', () => {
 
     // only works in development environment where each CSS
     // file is separate
-    if (Cypress.env('NODE_ENV') === 'development') {
+    if (Cypress.isDevelopment()) {
       it('loads roboto', () => {
         cy.request('/fonts/vendor/roboto-fontface/css/roboto/roboto-fontface.css')
       })
     }
 
-    it('has limited container height', () =>
-      cy.get('#container')
+    it('has limited container height', () => {
+      return cy.get('#container')
       .then((el) => {
         const elHeight = getComputedStyle(el[0]).height
         const viewportHeight = Cypress.config('viewportHeight')
 
         expect(elHeight).to.equal(`${viewportHeight}px`)
       })
-    )
+    })
 
     it('has app CSS style rules', () => {
-      const isAppStyle = (ruleList) =>
-        ruleList.href.includes('/cypress.css') || // local separate CSS files
-        ruleList.href.includes('/style') // single bundle in production
-
+      const isAppStyle = (ruleList) => {
+        return ruleList.href.includes('/cypress.css') || // local separate CSS files
+        ruleList.href.includes('/style')
+      } // single bundle in production
 
       cy.document()
       .then(function (doc) {
@@ -54,13 +70,13 @@ describe('Main', () => {
   })
 
   context('Pages', () => {
-    describe('404', () =>
-      it('displays', () => {
+    describe('404', () => {
+      return it('displays', () => {
         cy.visit('/404.html')
 
         cy.contains('404')
       })
-    )
+    })
 
     describe('Root routes to main guides', () => {
       beforeEach(() => {
@@ -79,9 +95,9 @@ describe('Main', () => {
     })
 
     // check if rendering messed up and removed the sidebar
-    it('has navigation sidebar', () =>
-      cy.get('aside#sidebar')
+    it('has navigation sidebar', () => {
+      return cy.get('aside#sidebar')
       .should('be.visible')
-    )
+    })
   })
 })

@@ -69,7 +69,7 @@ cy.get('textarea').clear().type('Hello, World')
 
 ## Documentation
 
-`.clear()` is just an alias for {% url `.type({selectall}{backspace})` type %}.
+`.clear()` is an alias for {% url `.type({selectall}{backspace})` type %}.
 
 Please read the {% url `.type()` type %} documentation for more details.
 

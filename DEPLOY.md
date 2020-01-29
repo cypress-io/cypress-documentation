@@ -39,7 +39,7 @@ To debug deployment actions, run with `DEBUG=deploy ...` environment variable.
 
 On CI, the deployment and scraping configuration are passed via environment
 variables `support__aws_credentials_json` and `support__circle_credentials_json`,
-which are just JSON files as strings.
+which are JSON files as strings.
 
 ```shell
 cat support/.circle-credentials.json | pbcopy
