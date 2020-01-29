@@ -6,9 +6,9 @@ title: Migration Guide
 
 Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, which themselves have breaking changes. This guide details the changes and how to change your code to migrate to Cypress 4.0.
 
-## Node 8+ support
+## Node.js 8+ support
 
-Node 4 reached its end of life on April 30, 2018 and Node 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node versions will no longer be supported. The minimum Node version supported by Cypress is Node 8.
+Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported. The minimum Node.js version supported by Cypress is Node.js 8.
 
 ## Mocha upgrade changes
 
@@ -87,7 +87,7 @@ it('uses async/await', async function (done) {
 })
 ```
 
-{% badge danger Before %} Update to the test code below.
+{% badge success After %} Update to the test code below.
 
 ```javascript
 it('uses async/await', async function () {
@@ -136,7 +136,7 @@ expect(true).to.be.ture
 
 ## Sinon.JS upgrade changes
 
-Sinon.JS has been upgraded to Sinon.JS 7 with some [breaking changes](https://sinonjs.org/releases/v7.1.1/#migration-guides).
+Sinon.JS has been upgraded to Sinon.JS 7 with some [breaking changes](https://sinonjs.org/releases/latest/#migration-guides).
 
 ### Example #1
 
@@ -190,4 +190,29 @@ const browserify = require('@cypress/browserify-preprocessor')
 module.exports = (on) => {
   on('file:preprocessor', browserify())
 }
+```
+
+## `cy.writeFile()` yields `null`
+
+`cy.writeFile()` now yields `null` instead of the `contents` written to the file. This change was made to more closely align with the behavior of Node.js {% url "`fs.writeFile`" https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback %}.
+
+### Example #1
+
+{% badge danger Before %} This assertion will no longer pass
+
+```js
+cy.writeFile('path/to/message.txt', 'Hello World')
+  .then((text) => {
+    // Would pass in Cypress 3 but will fail in 4
+    expect(text).to.equal('Hello World') // false
+  })
+```
+
+{% badge success After %} Read the contents of the file
+
+```js
+cy.writeFile('path/to/message.txt', 'Hello World')
+cy.readFile('path/to/message.txt').then((text) => {
+  expect(text).to.equal('Hello World') // true
+})
 ```
