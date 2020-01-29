@@ -3,59 +3,59 @@ title: 测试执行器
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} 你将会学习到什么
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- The names and purposes of the visual parts of the Cypress Test Runner
-- How to use the Selector Playground for targeting your page elements
+- Cypress测试执行器的功能和目的
+- 如何使用选择定位器定位页面元素
 {% endnote %}
 
-# Overview
+# 概述
 
-Cypress runs tests in a unique interactive runner that allows you to see commands as they execute while also viewing the application under test.
+Cypress在一个独立的交互式环境中运行测试脚本，允许你在测试时，可以一边查看测试脚本中的命令，一边查看应用的运行状态。
 
 {% imgTag /img/guides/gui-diagram.png "Cypress Test Runner" "no-border" %}
 
-# Command Log
+# 命令日志
 
-The lefthand side of the Test Runner is a visual representation of your test suite. Each test block is properly nested and each test, when clicked, displays every Cypress command and assertion executed within the test's block as well as any command or assertion executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
+测试执行器的左侧直观的展示了可用的测试文件。每个测试块都是正确嵌套的， 单击每个测试，将会显示测试执行中的每个Cypress命令和断言，以及在相关的 `before`, `beforeEach`, `afterEach`, 和 `after` 中执行的任何命令和断言。
 
 {% imgTag /img/guides/command-log.png 436 "Cypress Test Runner" %}
 
-### Hovering on Commands
+## 悬停在命令上
 
-Each command and assertion, when hovered over, restores the Application Under Test (righthand side) to the state it was in when that command executed. This allows you to 'time-travel' back to previous states of your application when testing.
+当悬停在每个命令和断言上时，测试执行器会将正在测试的应用程序（右侧）恢复到执行该命令时的状态。这将会允许你在测试时通过"时间旅行"回到应用程序之前的状态。
 
 {% note info  %}
-By default, Cypress keeps 50 tests worth of snapshots and command data for time traveling. If you are seeing extremely high memory consumption in your browser, you may want to lower the `numTestsKeptInMemory` in your {% url 'configuration' configuration#Global %}.
+默认情况下，Cypress为时间旅行保留了50个测试快照和命令数据。如果你在浏览器中看到极高的内存消耗，则可能需要降低在 {% url 'configuration' configuration#Global %} 中的 `numTestsKeptInMemory` 配置项的值。
 {% endnote %}
 
-### Clicking on Commands
+## 单击命令
 
-Each command, assertion, or error, when clicked on, displays extra information in the dev tools console. Clicking also 'pins' the Application Under Test (righthand side) to its previous state when the command executed.
+单击每个命令，断言或错误都会在开发工具控制台中显示额外的信息。当测试执行完毕后，单击命令也会让测试的应用程序（右侧）‘固定’在之前的状态。
 
 {% imgTag /img/guides/clicking-commands.png "Click to console.log and to pin" %}
 
-# Instrument Panel
+# 仪表盘
 
-For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
+对于某些命令，例如：{% url `cy.route()` route %}， {% url `cy.stub()` stub %}，和 {% url `cy.spy()` spy %}，这是一个额外的工具面板显示在测试上方，以提供有关测试状态的更多信息。
 
-### Routes:
+## Routes:
 
 {% imgTag /img/guides/instrument-panel-routes.png "Routes Instrument Panel" %}
 
-### Stubs:
+## Stubs:
 
 {% imgTag /img/guides/instrument-panel-stubs.png "Stubs Instrument Panel" %}
 
-### Spies:
+## Spies:
 
 {% imgTag /img/guides/instrument-panel-spies.png "Spies Instrument Panel" %}
 
-# Application Under Test
+# 测试中的应用程序
 
-The righthand side of the Test Runner is used to display the Application Under Test (AUT): the application that was navigated to using a {% url `cy.visit()` visit %} or any subsequent routing calls made from the visited application.
+测试执行器的右侧用于显示正在测试的应用程序（AUT:Application Under Test）:使用 {% url `cy.visit()` visit %} 或从访问过的应用程序进行的任何后续路由调用跳转到的应用程序。
 
-In the example below, we wrote the following code in our test file:
+在下面的示例中，我们在测试文件中编写了以下代码：
 
 ```javascript
 cy.visit('https://example.cypress.io')
@@ -63,37 +63,37 @@ cy.visit('https://example.cypress.io')
 cy.title().should('include', 'Kitchen Sink')
 ```
 
-In the corresponding Application Preview below, you can see `https://example.cypress.io` is being displayed in the righthand side. Not only is the application visible, but it is fully interactable. You can open your developer tools to inspect elements as you would your normal application. The DOM is completely available for debugging.
+在下面相应的应用程序预览中，你可以看到右侧显示`https://example.cypress.io`。应用程序不仅可以看见，而且完全可以互动。你可以打开开发者工具来检查元素，就像正常应用程序一样。DOM结构完全可用于调试。
 
 {% imgTag /img/guides/application-under-test.png "Application Under Test" %}
 
-The AUT also displays in the size and orientation specified in your tests. You can change the size or orientation with the {% url `cy.viewport()` viewport %} command or in your {% url "Cypress configuration" configuration#Viewport %}. If the AUT does not fit within the current browser window, it is scaled appropriately to fit within the window.
+AUT还会在测试中显示指定的大小和方向。你可以使用 {% url `cy.viewport()` viewport %} 命令或者通过 {% url "Cypress配置" configuration#Viewport %}来更改大小或方向。如果AUT不适合当前浏览器窗口，则会适当缩放窗口以适应浏览器窗口大小。
 
-The current size and scale of the AUT is displayed in the top right corner of the window.
+AUT的当前大小和比例显示在窗口的右上角。
 
-The image below shows that our application is displaying at `1000px` width, `660px` height and scaled to `100%`.
+下图显示我们的应用程序宽度为`1000px`，高度为`660px`，缩放为 `100%`。
 
 {% imgTag /img/guides/viewport-scaling.png "Viewport Scaling" %}
 
-*Note: The righthand side may also be used to display syntax errors in your test file that prevent the tests from running.*
+*注意: 右侧窗口也可能用于在测试文件中显示语法错误，以防止测试继续运行。*
 
 {% imgTag /img/guides/errors.png "Errors" %}
 
-# Selector Playground
+# 选择定位器
 
-The Selector Playground is an interactive feature that helps you:
+选择定位器是一个互动功能，可以帮助你：
 
-* Determine a unique selector for an element.
-* See what elements match a given selector.
-* See what element matches a string of text.
+- 确定元素的唯一选择器。
+- 查看哪些元素与给定的选择器匹配。
+- 查看哪个元素与一串文本匹配。
 
 {% video local /img/snippets/selector-playground.mp4 %}
 
-## Uniqueness
+## 唯一性
 
-Cypress will automatically calculate a **unique selector** to use targeted element by running through a series of selector strategies.
+Cypress将通过运行一系列选择器策略自动计算目标元素的**唯一选择器**。
 
-By default Cypress will favor:
+默认情况下，Cypress鼓励：
 
 1. `data-cy`
 2. `data-test`
@@ -104,53 +104,53 @@ By default Cypress will favor:
 7. `attributes`
 8. `nth-child`
 
-{% note info "This is configurable" %}
-Cypress allows you to control how a selector is determined.
+{% note info "这个是可以配置的" %}
+Cypress允许你控制选择器的确定方式。
 
-Use the {% url "`Cypress.SelectorPlayground`" selector-playground-api %} API to control the selectors you want returned.
+使用 {% url "`Cypress.SelectorPlayground`" selector-playground-api %} API来控制要返回的选择器。
 {% endnote %}
 
-## Best Practices
+## 最佳实践
 
-You may find yourself struggling to write good selectors because:
+你可能会发现自己很难写出好的选择器，因为：
 
-- Your application uses dynamic ID's and class names
-- Your tests break whenever there are CSS or content changes
+- 你的应用程序使用动态ID和类名
+- 只要有CSS或内容发生变化，你的测试就会中断
 
-To help with these common challenges, the Selector Playground automatically prefers certain `data-*` attributes when determining a unique selector.
+为了帮助解决这些常见挑战，选择定位器在确定唯一选择器时会自动更喜欢某些 `data-*` 属性。
 
-Please read our {% url "Best Practices guide" best-practices#Selecting-Elements %} on helping you target elements and prevent tests from breaking on CSS or JS changes.
+请阅读我们的 {% url "最佳实践指南" best-practices#Selecting-Elements %}来帮助你确定元素并防止CSS或者JS改变导致测试中断。
 
-## Finding Selectors
+## 查找选择器
 
-To open the Selector Playground, click the `{% fa fa-crosshairs grey %}` button next to the URL at the top of the runner. Hover over elements in your app to preview a unique selector for that element in the tooltip.
+要打开选择定位器，请单击顶部URL旁边的 `{% fa fa-crosshairs grey %}` 按钮。将鼠标悬停在应用程序中的元素上，以便在工具提示中预览该元素的唯一选择器。
 
 {% imgTag /img/guides/test-runner/open-selector-playground.gif "Opening selector playground and hovering over elements" %}
 
-Click on the element and its selector will appear at the top. From there, you can copy it to your clipboard (`{% fa fa-copy grey %}`) or print it to the console (`{% fa fa-terminal %}`).
+单击元素，它的选择器将显示在顶部。从那里，你可以将其复制到剪切板(`{% fa fa-copy grey %}`) 或将其打印到控制台 (`{% fa fa-terminal %}`)。
 
 {% imgTag /img/guides/test-runner/copy-selector-in-selector-playground.gif "Clicking an element, copying its selector to clipboard, printing it to the console" %}
 
-## Running Experiments
+## 使用经验
 
-The box at the top that displays the selector is also a text input.
+顶部显示器的框也是一个文本输入框。
 
-### Editing a Selector
+### 编辑选择器
 
-When you edit the selector, it will show you how many elements match and highlight those elements in your app.
+当你编辑选择器时，他会显示有多少元素匹配并突出显示应用程序中的这些元素。
 
 {% imgTag /img/guides/test-runner/typing-a-selector-to-find-in-playground.gif "Type a selector to see what elements it matches" %}
 
-### Switching to Contains
+### 切换到Contains
 
-You can also experiment with what {% url `cy.contains()` contains %} would yield given a string of text. Click on `cy.get` and switch to `cy.contains`.
+你还可以尝试在给定一串文本的情况下，使用 {% url `cy.contains()` contains %}将会产生什么效果。单击 `cy.get` 并切换到 `cy.contains`。
 
-Type in text to see which element it matches. Note that {% url `cy.contains()` contains %} only yields the first element that matches the text, even if multiple elements on the page contain the text.
+输入文本来查看它匹配的元素。请注意 {% url `cy.contains()` contains %} 仅产生与文本匹配的第一个元素，即时页面上的多个元素包含文本也是如此。
 
 {% imgTag /img/guides/test-runner/cy-contains-in-selector-playground.gif "Experiment with cy.contains" %}
 
-### Disabling Highlights
+### 禁用突出显示
 
-If you would like to interact with your app while the Selector Playground is open, the element highlighting might get in the way. Toggling the highlighting off will allow you to interact with your app more easily.
+如果你觉得在使用选择定位器时，元素的突出显示可能会妨碍你，那么你可以像下面那样来关闭它。
 
 {% imgTag /img/guides/test-runner/turn-off-highlight-in-selector-playground.gif "Turn off highlighting" %}

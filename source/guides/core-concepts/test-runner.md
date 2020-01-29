@@ -21,7 +21,7 @@ The lefthand side of the Test Runner is a visual representation of your test sui
 
 {% imgTag /img/guides/command-log.png 436 "Cypress Test Runner" %}
 
-### Hovering on Commands
+## Hovering on Commands
 
 Each command and assertion, when hovered over, restores the Application Under Test (righthand side) to the state it was in when that command executed. This allows you to 'time-travel' back to previous states of your application when testing.
 
@@ -29,7 +29,7 @@ Each command and assertion, when hovered over, restores the Application Under Te
 By default, Cypress keeps 50 tests worth of snapshots and command data for time traveling. If you are seeing extremely high memory consumption in your browser, you may want to lower the `numTestsKeptInMemory` in your {% url 'configuration' configuration#Global %}.
 {% endnote %}
 
-### Clicking on Commands
+## Clicking on Commands
 
 Each command, assertion, or error, when clicked on, displays extra information in the dev tools console. Clicking also 'pins' the Application Under Test (righthand side) to its previous state when the command executed.
 
@@ -39,15 +39,15 @@ Each command, assertion, or error, when clicked on, displays extra information i
 
 For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
 
-### Routes:
+## Routes:
 
 {% imgTag /img/guides/instrument-panel-routes.png "Routes Instrument Panel" %}
 
-### Stubs:
+## Stubs:
 
 {% imgTag /img/guides/instrument-panel-stubs.png "Stubs Instrument Panel" %}
 
-### Spies:
+## Spies:
 
 {% imgTag /img/guides/instrument-panel-spies.png "Spies Instrument Panel" %}
 
@@ -83,9 +83,9 @@ The image below shows that our application is displaying at `1000px` width, `660
 
 The Selector Playground is an interactive feature that helps you:
 
-* Determine a unique selector for an element.
-* See what elements match a given selector.
-* See what element matches a string of text.
+- Determine a unique selector for an element.
+- See what elements match a given selector.
+- See what element matches a string of text.
 
 {% video local /img/snippets/selector-playground.mp4 %}
 
@@ -154,3 +154,20 @@ Type in text to see which element it matches. Note that {% url `cy.contains()` c
 If you would like to interact with your app while the Selector Playground is open, the element highlighting might get in the way. Toggling the highlighting off will allow you to interact with your app more easily.
 
 {% imgTag /img/guides/test-runner/turn-off-highlight-in-selector-playground.gif "Turn off highlighting" %}
+
+# Keyboard Shortcuts
+
+There are keyboard shortcuts to quickly perform common actions from within the Test Runner.
+
+| Key      | Action |
+| ----------- | ----------- |
+| `r`      | Rerun tests       |
+| `s`      | Stop tests        |
+| `f`      | Bring focus to 'specs' window  |
+
+{% imgTag /img/guides/test-runner/keyboard-shortcuts.png "Tooltips show keyboard shortcuts" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added keyboard shortcuts to Test Runner
+{% url "1.3.0" changelog#1-3-0 %} | Added Selector Playground
+{% endhistory %}

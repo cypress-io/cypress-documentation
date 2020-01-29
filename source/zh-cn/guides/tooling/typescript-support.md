@@ -2,11 +2,11 @@
 title: TypeScript
 ---
 
-Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript. All that is required is a little bit of configuration.
+Cypress使用{% url "TypeScript" https://www.typescriptlang.org/ %}作为{% url "官方类型定义" https://github.com/cypress-io/cypress/tree/develop/cli/types %}(语言包)。这意味着你可以使用TypeScript编写测试。所有这些只需要一点点的设置。
 
-## Transpiling TypeScript test files
+## 源码转换TypeScript测试文件
 
-Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`file:preprocessor` event" preprocessors-api %} you can use to customize how your test code is transpiled and sent to the browser.
+你可能会想要直接在项目中写Typescript，那就必须处理源码转换问题。Cypress暴露一个{% url "`file:preprocessor` event" preprocessors-api %}以便你可以自定义你的源码是如何进行转换和发送到浏览器的。
 
 ### Examples
 
@@ -45,11 +45,59 @@ You can find an example of Jest and Cypress installed in the same project using 
 
 ## Types for custom commands
 
-When adding custom commands to the `cy` object, you can add their types to avoid TypeScript errors. You can find the simplest implementation of Cypress and TypeScript in this {% url "repo example here" https://github.com/omerose/cypress-support %}.
+When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors.
 
-## TODO MVC Example Repo
+For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
-You can find an example in the {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} repo.
+```javascript
+// cypress/support/index.js
+Cypress.Commands.add('dataCy', (value) => {
+  return cy.get(`[data-cy=${value}]`)
+})
+```
+
+Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your {% url "`supportFile`" configuration#Folders-Files %}, in this case at `cypress/support/index.d.ts`.
+
+```typescript
+// in cypress/support/index.d.ts
+// load type definitions that come with Cypress module
+/// <reference types="cypress" />
+
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * Custom command to select DOM element by data-cy attribute.
+     * @example cy.dataCy('greeting')
+    */
+    dataCy(value: string): Chainable<Element>
+  }
+}
+```
+
+{% note info %}
+A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
+{% endnote %}
+
+If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
+
+Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+
+```javascript
+// from your cypress/integration/spec.js
+/// <reference path="../support/index.d.ts" />
+it('works', () => {
+  cy.visit('/')
+  // IntelliSense and TS compiler should
+  // not complain about unknown method
+  cy.dataCy('greeting')
+})
+```
+
+### Examples:
+
+- See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
+- You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
+- Example project {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} uses custom commands to avoid boilerplate code.
 
 ## Types for custom assertions
 
@@ -57,6 +105,6 @@ If you extend Cypress assertions, you can extend the assertion types to make the
 
 ## Additional information
 
-See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}.
+See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}. Take a look at {% url "this video" https://www.youtube.com/watch?v=1Vr1cAN_CLA %} Basarat has recorded and the accompanying repo {% url basarat/cypress-ts https://github.com/basarat/cypress-ts %}.
 
-We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.
+{% fa fa-github %} We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.

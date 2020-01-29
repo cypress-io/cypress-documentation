@@ -3,7 +3,6 @@ const ffmpeg = require('fluent-ffmpeg')
 const debug = require('debug')
 const ora = require('ora')
 
-
 const convert = (inFile, outVid, outImg) => {
   let filesize = 0
   const spinner = ora('Creating .mp4 - 0kB').start()
@@ -57,21 +56,20 @@ const convert = (inFile, outVid, outImg) => {
   .finally(() => {
     spinner.stop()
   })
-
-
 }
 
 module.exports = {
   convert,
 }
 
-const ffError = (reject) => (err, stdout, stderr) => {
-  debug('ERROR')
-  err.message += `
+const ffError = (reject) => {
+  return (err, stdout, stderr) => {
+    debug('ERROR')
+    err.message += `
       ${stdout}
       ${stderr}
       `
 
-  return reject(err)
+    return reject(err)
+  }
 }
-

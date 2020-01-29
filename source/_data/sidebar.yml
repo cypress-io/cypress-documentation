@@ -14,7 +14,14 @@ guides:
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
     test-runner: test-runner.html
-    dashboard-service: dashboard-service.html
+  dashboard:
+    dashboard-introduction: introduction.html
+    projects: projects.html
+    runs: runs.html
+    organizations: organizations.html
+    users: users.html
+    github-integration: github-integration.html
+    analytics: analytics.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
@@ -105,6 +112,7 @@ api:
     readfile: readfile.html
     reload: reload.html
     request: request.html
+    rightclick: rightclick.html
     root: root.html
     route: route.html
     screenshot: screenshot.html
@@ -175,8 +183,10 @@ examples:
     applications: applications.html
     docker: docker.html
     workshop: workshop.html
+    projects-media: projects-media.html
   media:
     courses-media: courses-media.html
+    webinars-media: webinars-media.html
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html

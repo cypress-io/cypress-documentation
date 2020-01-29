@@ -5,7 +5,7 @@ title: Debugging
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
+- How Cypress runs in the same event loop with your code, keeping debugging less demanding and more understandable
 - How Cypress embraces the standard Developer Tools
 - How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
 - How to troubleshoot issues with Cypress itself
@@ -13,11 +13,11 @@ title: Debugging
 
 # Using `debugger`
 
-Your Cypress test code runs in the same run loop as your application. This means you have access to the code running on the page, as well as the things the browser makes available to you, like `document`, `window`, and, of course, `debugger`.
+Your Cypress test code runs in the same run loop as your application. This means you have access to the code running on the page, as well as the things the browser makes available to you, like `document`, `window`, and `debugger`.
 
 ## Debug just like you always do
 
-Based on those statements, you might be tempted to just throw a `debugger` into your test, like so:
+Based on those statements, you might be tempted to throw a `debugger` into your test, like so:
 
 ```js
 it('let me debug like a fiend', function() {
@@ -93,6 +93,10 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
+# Cypress fiddle
+
+While learning Cypress it may be a good idea to try small tests against some HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
+
 # Troubleshooting Cypress
 
 There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking these support resources **first**.
@@ -142,7 +146,9 @@ Cypress attempts to {% url 'automatically find installed Chrome versions for you
 You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
 {% endnote %}
 
-To see debug logs from the browser launcher, run Cypress with the `DEBUG` environment variable set to `cypress:launcher`.
+You can see the full list of found browsers and their properties within the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
+
+Another way to log what is found by Cypress is to run Cypress with the {% urlHash "DEBUG environment variable" Print-DEBUG-logs %} set to `cypress:launcher`. This will print information about the found browsers and their properties to the terminal.
 
 ### Mac
 
@@ -204,7 +210,7 @@ Cypress maintains some local application data in order to save user preferences 
 2. Go to `File` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data is stored. If you cannot open Cypress, search your file system for a directory named `cy` whose content should look something like this:
 
-  ```
+  ```text
   📂 production
     📄 all.log
     📁 browsers
@@ -238,7 +244,7 @@ Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %
 **On Mac or Linux:**
 
 ```shell
-DEBUG=cypress:* cypress open
+DEBUG=cypress:* cypress run
 ```
 
 **On Windows:**
@@ -248,7 +254,7 @@ set DEBUG=cypress:*
 ```
 
 ```shell
-cypress open
+cypress run
 ```
 
 Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.
@@ -321,7 +327,9 @@ If you'd like to contribute directly to the Cypress code, we'd love to have your
 
 ## Run the Cypress app by itself
 
-Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}. Some common situations on why you would want to do this are:
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}.
+
+Some common situations on why you would want to run the Cypress app by itself are to:
 
 - debug Cypress not starting or hanging
 - debug problems related to the way CLI arguments are parsed by the npm CLI module
@@ -354,11 +362,11 @@ If the smoke test fails to execute, check if a shared library is missing (a comm
 
 ```shell
 ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
-	linux-vdso.so.1 (0x00007ffe9eda0000)
-	libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
-	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
-	libgtk-3.so.0 => not found
-	libgdk-3.so.0 => not found
+  linux-vdso.so.1 (0x00007ffe9eda0000)
+  libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
+  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
+  libgtk-3.so.0 => not found
+  libgdk-3.so.0 => not found
   ...
 ```
 
@@ -390,6 +398,65 @@ cypress:server:cypress starting in mode smokeTest +356ms
 101
 cypress:server:cypress about to exit with code 0 +4ms
 ```
+
+If the smoke test does not show a specific error yet fails, try printing the Electron crash stack to maybe pinpoint the problem better:
+
+```shell
+ELECTRON_ENABLE_STACK_DUMPING=1 npx cypress verify
+...
+Received signal 11 SEGV_MAPERR ffffffb27e8955bb
+#0 0x55c6389f83d9 (/root/.cache/Cypress/3.8.2/Cypress/Cypress+0x35d13d8)
+r8: 0000000000000000  r9: 00007ffcf0387c80 r10: 00007ffcf0387bd8 r11: 000000000000000e
+r12: 00007ffcf0387d2c r13: 00007f3ea737b720 r14: ffffffb27e89558b r15: 00007f3ea8974200
+di: 0000000000000000  si: 0000000000000020  bp: 0000000000000000  bx: 0000004f2f375580
+dx: 0000000000000001  ax: 0000000000000030  cx: 0000000000000001  sp: 00007ffcf0387d00
+ip: 00007f3ea89582dd efl: 0000000000010246 cgf: 002b000000000033 erf: 0000000000000005
+trp: 000000000000000e msk: 0000000000000000 cr2: ffffffb27e8955bb
+[end of stack trace]
+Calling _exit(1). Core file will not be generated.
+```
+
+## Patch Cypress
+
+Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb server (if necessary), and then opens the Test Runner application built on top of {% url "Electron" https://electronjs.org/ %}.
+
+If you're encountering a bug in the current version of Cypress, you can implementing a temporary fix by patching Cypress in your own project. Here is an example of how to do this.
+
+1. Install {% url "patch-package" https://github.com/ds300/patch-package %}.
+2. Add a patch step to your CI configuration after installing your npm packages.
+
+  ```yaml
+  - run: npm ci
+  - run: npx patch-package
+  ```
+
+  Alternatively, you can apply the patch during a post-install phase. In your `package.json`, for example, you could add the following:
+
+  ```json
+  {
+    "scripts": {
+      "postinstall": "patch-package"
+    }
+  }
+  ```
+
+3. Edit the line causing the problem *in your local node_modules folder* within `node_modules/cypress`.
+4. Run the `npx patch-package cypress` command. This command will create a new file `patches/cypress+3.4.1.patch`.
+
+  ```shell
+  npx patch-package cypress
+  patch-package 6.1.2
+  • Creating temporary folder
+  • Installing cypress@3.4.1 with npm
+  • Diffing your files with clean files
+  ✔ Created file patches/cypress+3.4.1.patch
+  ```
+
+5. Commit the new `patches` folder to git.
+
+{% note info %}
+If you find a patch for an error, please add a comment explaining your workaround to the relevant Cypress GitHub issue. It will help us release an official fix faster.
+{% endnote %}
 
 ## Edit the installed Cypress code
 

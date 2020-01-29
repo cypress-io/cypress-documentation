@@ -23,7 +23,7 @@ Cypress is a desktop application that is installed on your computer. The desktop
 
 ## {% fa fa-terminal %} `npm install`
 
-Installing Cypress via `npm` is easy:
+Install Cypress via `npm`:
 
 ```shell
 cd /your/project/path
@@ -68,17 +68,21 @@ yarn add cypress --dev
 
 ## {% fa fa-download %} Direct download
 
-If you're not using Node or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
+If you're not using Node or `npm` in your project or you want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
+
+{% note warning %}
+Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
+{% endnote %}
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
-Just manually unzip and double click. Cypress will run without needing to install any dependencies.
+Then you can manually unzip and double click. Cypress will run without needing to install any dependencies.
 
 {% video local /img/snippets/installing-global.mp4 %}
 
 ## {% fa fa-refresh %} Continuous integration
 
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
+Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
 # Opening Cypress
 
@@ -212,6 +216,13 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
+Cypress will automatically replace the `~` with the user's home directory. So you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for example:
+
+```yml
+environment:
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
+```
+
 See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
 
 {% note warning %}
@@ -254,10 +265,10 @@ The download server URL is `https://download.cypress.io`.
 
 We currently have the following downloads available:
 
-* Windows 64-bit (`?platform=win32&arch=x64`)
-* Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
-* Linux 64-bit (`?platform=linux`)
-* macOS 64-bit (`?platform=darwin`)
+- Windows 64-bit (`?platform=win32&arch=x64`)
+- Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
+- Linux 64-bit (`?platform=linux`)
+- macOS 64-bit (`?platform=darwin`)
 
 Here are the available download URLs:
 
@@ -265,15 +276,15 @@ See {% url "https://download.cypress.io/desktop.json" https://download.cypress.i
 
  Method | URL                            | Description
  ------ | ------------------------------ | -------------------------------------------------------------------------
- `GET`  | `/desktop                 `    | Download Cypress at latest version (platform auto-detected)
- `GET`  | `/desktop.json            `    | Returns JSON containing latest available CDN destinations
- `GET`  | `/desktop?platform=p&arch=a  ` | Download Cypress for a specific platform and/or architecture
+ `GET`  | `/desktop`                     | Download Cypress at latest version (platform auto-detected)
+ `GET`  | `/desktop.json`                | Returns JSON containing latest available CDN destinations
+ `GET`  | `/desktop?platform=p&arch=a`   | Download Cypress for a specific platform and/or architecture
  `GET`  | `/desktop/:version`            | Download Cypress with a specified version
  `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture
 
 **Example of downloading Cypress `3.0.0` for Windows 64-bit:**
 
-```
+```text
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 

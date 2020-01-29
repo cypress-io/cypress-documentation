@@ -54,7 +54,7 @@ In case you missed it before - Cypress tests run inside of the browser! This mea
 
 But what this also means is that your test code **is being evaluated inside the browser**. Test code is not evaluated in Node, or any other server side language. The **only** language we will ever support is the language of the web: JavaScript.
 
-This trade-off means it makes it a little bit harder to communicate with the back end - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can of course require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node to import or talk directly to your back end scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
+This trade-off means it makes it a little bit harder to communicate with the back end - like your server or database. You will not be able to connect or import those server-side libraries or modules directly. Although you can require `node_modules` which can be used in the browser. Additionally, you have the ability to use Node to import or talk directly to your back end scripts using {% url "our Plugins API" writing-a-plugin %} or {% url "`cy.task()`" task %}.
 
 To talk to your database or server you need to use the {% url `cy.exec()` exec %}, {% url `cy.task()` task %}, or {% url `cy.request()` request %} commands. That means you will need to expose a way to seed and setup your database. This really is not that hard, but it might take a bit more elbow grease than other testing tools written in your back end language.
 
@@ -70,10 +70,10 @@ Most of the time this use case is needed when users click an `<a>` that opens a 
 
 To take this a step further - we don't believe there is any use case for testing the browser's native behavior. You should ask yourself why you are testing that clicking an `<a href="/foo" target="_blank">` opens a new tab. You already know that is what the browser is designed to do and you already know that it is triggered by the `target="_blank"` attribute.
 
-Since that is the case, just test **the thing** triggering the browser to perform this behavior - as opposed to testing the behavior itself.
+Since that is the case, test **the thing** triggering the browser to perform this behavior - as opposed to testing the behavior itself.
 
 ```js
-cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank') // so simple
+cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank')
 ```
 
 This principle applies to everything in Cypress. Do not test what does not need testing. It is slow, brittle, and adds zero value. Only test the underlying thing that causes the behavior you care about testing.
@@ -140,7 +140,7 @@ server &rightarrow; browser
 
 To do this - you would need a background process outside of the browser to make the underlying WebSocket connection that you can then communicate with and control.
 
-You can do this in many ways and here is a simple example of using an HTTP server to act as the client and exposing a REST interface that enables us to control it.
+You can do this in many ways and here is an example of using an HTTP server to act as the client and exposing a REST interface that enables us to control it.
 
 ```js
 // Cypress tests
@@ -198,37 +198,59 @@ This avoids ever needing a second open browser, but still gives you an end-to-en
 
 ## Same-origin
 
-Each test is limited to only visiting a single superdomain.
+Each test is limited to only visiting a domains that are determined to be of the same-origin.
 
-What is a superdomain? Given the urls below, all have the same superdomain of `cypress.io`.
+What is same-origin? Two URLs have the same origin if the protocol, port (if specified), and host are the same for both. Cypress automatically handles hosts of the same superdomain by injecting {% url "`document.domain`" https://developer.mozilla.org/en-US/docs/Web/API/Document/domain %} into `text/html` pages, so a host of the same superdomain is considered fine.
 
-- `http://cypress.io`
+Given the URLs below, all have the same-origin compared to `https://www.cypress.io`.
+
 - `https://cypress.io`
-- `https://www.cypress.io`
 - `https://docs.cypress.io`
 - `https://example.cypress.io/commands/querying`
 
+The URLs below, however, will have different origins compared to `https://www.cypress.io`.
+
+- `http://www.cypress.io` (Different protocol)
+- `https://docs.cypress.io:81` (Different port)
+- `https://www.auth0.com/` (Different host of different superdomain)
+
 The rules are:
 
-- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two different superdomains in the same test.
-- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different subdomains in the same test.
-- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} different superdomains in **different** tests.
+- {% fa fa-warning red %} You **cannot** {% url "visit" visit %} two domains of different origin in the same test.
+- {% fa fa-check-circle green %} You **can** {% url "visit" visit %} two or more domains of different origin in **different** tests.
 
 ```javascript
-cy.visit('https://www.cypress.io')
-cy.visit('https://docs.cypress.io') // yup all good
+it('navigates', () => {
+  cy.visit('https://www.cypress.io')
+  cy.visit('https://docs.cypress.io') // yup all good
+})
 ```
 
 ```javascript
-cy.visit('https://apple.com')
-cy.visit('https://google.com')      // this will immediately error
+it('navigates', () => {
+  cy.visit('https://apple.com')
+  cy.visit('https://google.com')      // this will error
+})
+```
+
+```javascript
+it('navigates', () => {
+  cy.visit('https://apple.com')
+})
+
+// split visiting different origin in another test
+it('navigates to new origin', () => {
+  cy.visit('https://google.com')      // yup all good
+})
 ```
 
 This limitation exists because Cypress switches to the domain under each specific test when it runs.
 
-The good news here is that it is extremely rare to need to visit two different superdomains in a single test. Why? Because the browser has a natural security barrier called `origin policy` that means that state like `localStorage`, `cookies`, `service workers` and many other APIs are not shared between them.
+### Other workarounds
 
-Therefore what you do on one site could not possibly affect another.
+There are other ways of testing the interaction between 2 superdomains. Because the browser has a natural security barrier called `origin policy` this means that state like `localStorage`, `cookies`, `service workers` and many other APIs are not shared between them anyways.
+
+So what you do on one site does not directly affect another.
 
 As a best practice, you should not visit or interact with a 3rd party service not under your control. However, there are exceptions! If your organization uses Single Sign On (SSO) or OAuth then you might involve a 3rd party service other than your superdomain.
 

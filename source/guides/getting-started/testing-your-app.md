@@ -41,7 +41,7 @@ Last but not least - trying to shoehorn tests to an already built application is
 
 The last, and probably most important reason why you want to test against local servers, is the ability to **control them**. When your application is running in production you can't control it.
 
-When it's running in development you can easily:
+When it's running in development you can:
 
 - take shortcuts
 - seed data by running executable scripts
@@ -58,7 +58,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `sample_spec.js` file created in the previous tutorial now that it's no longer needed.
 
 ```shell
 rm cypress/integration/sample_spec.js
@@ -96,8 +96,7 @@ If you've started your server, then you should see your application loaded and w
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 
-Open up `cypress.json`, which you will find in your project root (where you installed Cypress.) It starts out empty:
-
+Open up your {% url "configuration file" configuration %} (`cypress.json` in your project directory, by default) It starts out empty:
 
 ```json
 {}
@@ -114,7 +113,7 @@ Let's add the `baseUrl` option.
 This will automatically **prefix** {% url `cy.visit()` visit %} and {% url `cy.request()` request %} commands with this baseUrl.
 
 {% note info %}
-Whenever you modify `cypress.json`, Cypress will automatically reboot itself and kill any open browsers. This is normal. Just click on the spec file again to relaunch the browser.
+Whenever you modify your configuration file, Cypress will automatically reboot itself and kill any open browsers. This is normal. Click on the spec file again to relaunch the browser.
 {% endnote %}
 
 We can now visit a relative path and omit the hostname and port.
@@ -217,11 +216,11 @@ The good news is that we aren't Selenium, nor are we a traditional e2e testing t
 
 ## Stubbing the server
 
-Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
+Another valid approach opposed to seeding and talking to your server is to bypass it altogether.
 
 While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
 
-This means that instead of resetting the database, or seeding it with the state we want, you can just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
+This means that instead of resetting the database, or seeding it with the state we want, you can force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
 
 Another upside is that this enables you to **build out your application** without needing the *contract* of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
 
@@ -235,7 +234,7 @@ You could have the server generate all of the fixture stubs for you ahead of tim
 
 ### Write a single e2e test without stubs, and then stub the rest
 
-Another more balanced approach is just to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
+Another more balanced approach is to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
 
 Once you've established it's working you can then use stubs to test all of the edge cases and additional scenarios. There are no benefits to using real data in the vast majority of cases. We recommend that the vast majority of tests use stub data. They will be orders of magnitude faster, and much less complex.
 
@@ -253,7 +252,7 @@ Nothing slows a test suite down like having to log in, but all the good parts of
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
-As we just mentioned, logging in is one of those features that are **mission critical** and should likely involve your server.  We recommend you test signup and login using your UI as a real user would:
+Logging in is one of those features that are **mission critical** and should likely involve your server.  We recommend you test signup and login using your UI as a real user would:
 
 Here's an example alongside seeding your database:
 
@@ -330,7 +329,7 @@ Don't use your UI to build up state! It's enormously slow, cumbersome, and unnec
 Read about {% url 'best practices' best-practices %} here.
 {% endnote %}
 
-Using your UI to **log in** is the *exact same scenario* as what we just described above. Logging in is just a prerequisite of state that comes before all of your other tests.
+Using your UI to **log in** is the *exact same scenario* as what we described previously. Logging in is a prerequisite of state that comes before all of your other tests.
 
 Because Cypress isn't Selenium, we can actually take a huge shortcut here and skip needing to use our UI by using {% url `cy.request()` request %}.
 

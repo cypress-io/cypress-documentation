@@ -27,6 +27,7 @@ function checkToken (token) {
     `
       )
     )
+
     throw new Error('missing token')
   }
 }

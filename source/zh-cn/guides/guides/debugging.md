@@ -3,21 +3,21 @@ title: 调试
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
-- How Cypress runs in the same event loop with your code, keeping debugging simple and understandable
-- How Cypress embraces the standard Developer Tools
-- How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
-- How to troubleshoot issues with Cypress itself
+- Cypress如何在同一个事件循环中运行你的代码, 并且保持调试简单易懂
+- Cypress如何接受标准的开发工具
+- 如何以及何时使用`调试工具`已经{% url `.debug()` debug %}速记命令
+- 如何解决Cypress本身的问题
 {% endnote %}
 
-# Using `debugger`
+# 使用`调试器`
 
-Your Cypress test code runs in the same run loop as your application. This means you have access to the code running on the page, as well as the things the browser makes available to you, like `document`, `window`, and, of course, `debugger`.
+你的Cypress测试代码运行在与应用程序相同的运行循环中.这意味着你可以访问页面上运行的代码, 以及浏览器为你提供的东西, 比如`document`, `window`等等, 当然也包括`调试器`.
 
-## Debug just like you always do
+## 像往常一样调试
 
-Based on those statements, you might be tempted to just throw a `debugger` into your test, like so:
+基于这些陈述, 你可能想在测试中添加一个`调试器`, 就像这样:
 
 ```js
 it('let me debug like a fiend', function() {
@@ -204,7 +204,7 @@ Cypress maintains some local application data in order to save user preferences 
 2. Go to `File` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data is stored. If you cannot open Cypress, search your file system for a directory named `cy` whose content should look something like this:
 
-  ```
+  ```text
   📂 production
     📄 all.log
     📁 browsers
@@ -354,11 +354,11 @@ If the smoke test fails to execute, check if a shared library is missing (a comm
 
 ```shell
 ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
-	linux-vdso.so.1 (0x00007ffe9eda0000)
-	libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
-	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
-	libgtk-3.so.0 => not found
-	libgdk-3.so.0 => not found
+  linux-vdso.so.1 (0x00007ffe9eda0000)
+  libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
+  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
+  libgtk-3.so.0 => not found
+  libgdk-3.so.0 => not found
   ...
 ```
 
@@ -424,4 +424,3 @@ When finished, if necessary, remove the edited Test Runner version and reinstall
 rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
 npm install cypress@3.3.1
 ```
-

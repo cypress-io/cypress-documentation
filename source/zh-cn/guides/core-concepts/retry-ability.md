@@ -3,54 +3,57 @@ title: 重试机制
 ---
 
 {% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
-- How Cypress retries commands and assertions
-- When commands are retried and when they are not
-- How to address some situations of flaky tests
+# {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
+
+- Cypress如何重试命令和断言
+- 命令在什么时候重试什么时候不重试
+- 如何解决一些片状测试的情况
 {% endnote %}
 
-A core feature of Cypress that assists with testing dynamic web applications is retry-ability. Like a good transmission in a car, it usually works without you noticing it. But understanding how it works will help you write faster tests with fewer run-time surprises.
+Cypress的核心功能时帮助测试动态Web应用程序，它具有重试机制。这就像汽车中的自动变速器一样，你通常感知不到它在工作。但是了解它的工作原理将有助于你用更少的运行时间来更快的编写测试。
 
-# Commands vs assertions
+# 命令和断言
 
-There are two types of methods you can call in your Cypress tests: **commands** and **assertions**. For example, there are 6 commands and 2 assertions in the test below.
+在Cypress测试代码中可以调用两种类型的方法：**命令** 和 **断言**。例如，下面的测试代码中有6个命令和2个断言。
 
 ```javascript
 it('creates 2 items', function () {
-  cy.visit('/')                       // command
-  cy.focused()                        // command
-    .should('have.class', 'new-todo') // assertion
-  cy.get('.new-todo')                 // command
-    .type('todo A{enter}')            // command
-    .type('todo B{enter}')            // command
-  cy.get('.todo-list li')             // command
-    .should('have.length', 2)         // assertion
+  cy.visit('/')                       // 命令
+  cy.focused()                        // 命令
+    .should('have.class', 'new-todo') // 断言
+
+  cy.get('.new-todo')                 // 命令
+    .type('todo A{enter}')            // 命令
+    .type('todo B{enter}')            // 命令
+
+  cy.get('.todo-list li')             // 命令
+    .should('have.length', 2)         // 断言
 })
 ```
 
-The {% url "Command Log" test-runner#Command-Log %} shows both commands and assertions with passing assertions showing in green.
+{% url "命令日志" test-runner#Command-Log %} 会显示命令和断言，测试通过的断言会显示为绿色。
 
 {% imgTag /img/guides/retry-ability/commands-assertions.png "ommands and assertions" %}
 
-Let's look at the last command and assertion pair:
+让我们看看最后一个命令和断言：
 
 ```javascript
 cy.get('.todo-list li')     // command
   .should('have.length', 2) // assertion
 ```
 
-Because nothing is synchronous in modern web applications, Cypress can't query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
+因为现代Web应用程序中没有任何内容是同步的，所以Cypress不能在所有DOM元素里面去查找`todo-list`，并检查它们是否只有2个。有很多例子说明为什么这种方法效果不好。
 
-- What if the application has not updated the DOM by the time these commands run?
-- What if the application is waiting for its back end to respond before populating the DOM element?
-- What if the application does some intensive computation before showing the results in the DOM?
+- 如果应用程序在这些命令运行时没有更新DOM，我们该怎么办？
+- 如果应用程序在填充DOM元素之前等待其后端响应，我们该怎么办？
+- 如果应用程序在DOM显示之前进行了一些密集的计算，我们该怎么办？
 
-Thus the Cypress {% url `cy.get` get %} command has to be smarter and expect the application to potentially update. The `cy.get()` queries the application's DOM, finds the elements that match the selector, and then tries the assertion that follows it (in our case `should('have.length', 2)`) against the list of found elements.
+因此，Cypress的 {% url `cy.get` get %} 命令必须更加智能，并期望应用程序可能会更新DOM。`cy.get()` 查询应用程序的DOM结构，找到与之匹配的元素，然后执行它的断言（在我们的例子中是：`should('have.length', 2)`）。
 
-- ✅ If the assertion that follows the `cy.get()` command passes, then the command finishes successfully.
-- 🚨 If the assertion that follows the `cy.get()` command fails, then the `cy.get()` command will requery the application's DOM again. Then Cypress will try the assertion against the elements yielded from `cy.get()`. If the assertion still fails, `cy.get()` will try requery the DOM again, and so on until the `cy.get()` command timeout is reached.
+- ✅ 如果 `cy.get()` 命令后面的断言通过，则命令成功完成。
+- 🚨 如果 `cy.get()` 命令后面的断言失败，那么 `cy.get()` 命令将再次重新查询应用程序的DOM结构。然后Cypress将再次尝试对来自`cy.get()`的元素进行断言。如果断言仍然失败，`cy.get()`将尝试再次重新查询DOM结构，以此类推，直到`cy.get()`命令超时。
 
-The retry-ability allows the tests to complete each command as soon as the assertion passes, without hard-coding waits. If your application takes a few milliseconds or even seconds to render each DOM element - no big deal, the test does not have to change at all. For example, let's introduce an artificial delay of 3 seconds when refreshing the application's UI below in an example TodoMVC model code:
+重试能力允许测试在断言通过后立即完成每个命令，而无需硬编码等待。如果你的应用程序需要几毫秒甚至几秒来渲染每个DOM元素 - 这没什么大不了的，测试程序根本不需要改变。例如：在下面的示例中，我们引入3秒的人为延迟用于刷新我们的应用程序UI：
 
 ```javascript
 app.TodoModel.prototype.addTodo = function (title) {
@@ -67,17 +70,17 @@ app.TodoModel.prototype.addTodo = function (title) {
 }
 ```
 
-My test still passes! The last `cy.get('.todo-list')` and the assertion `should('have.length', 2)` are clearly showing the spinning indicators, meaning Cypress is requerying for them.
+我的测试仍然能通过！最后的 `cy.get('.todo-list')` 和断言 `should('have.length', 2)`清晰的显示了旋转等待图标，这意味着Cypress正在重新查询它们。
 
 {% imgTag /img/guides/retry-ability/retry-2-items.gif "Retrying finding 2 items" %}
 
-Within a few milliseconds after the DOM updates, `cy.get()` finds two elements and the `should('have.length', 2)` assertion passes
+在DOM更新后的几毫秒内，`cy.get()` 找到了两个元素并且 `should('have.length', 2)` 断言通过。
 
-# Multiple assertions
+# 多个断言
 
-A single command followed by multiple assertions retries each one of them -- in order. Thus when the first assertion passes, the command will be retried with first and second assertion. When the first and second assertion pass, then the command will be retried with the first, second, and third assertion, and so on.
+单个命令后跟着多个断言在重试的时候将按照顺序挨个尝试。因此，当第一个断言通过，将使用第一个和第二个断言重试该命令。当第一个和第二个断言通过时，将使用第一个、第二个和第三个断言重试该命令，以此类推。
 
-For example, the following test has {% url `.should()` should %} and {% url `.and()` and %} assertions. `.and()` is an alias of the `.should()` command, so the second assertion is really a custom callback assertion in the form of the {% url `.should(cb)` should#Function %} function with 2 {% url `expect` assertions#BDD-Assertions %} assertions inside of it.
+例如：下面的测试有 {% url `.should()` should %} 和 {% url `.and()` and %} 断言。 `.and()`是`.should()`的别名命令，所以第二个断言实际上是{% url `.should(cb)` should#Function %}函数形式的自定义回调断言，这其中又包含2个 {% url `expect` assertions#BDD-Assertions %} 断言。
 
 ```javascript
 cy.get('.todo-list li')     // command
@@ -89,27 +92,27 @@ cy.get('.todo-list li')     // command
   })
 ```
 
-Because the second assertion `expect($li.get(0).textContent, 'first item').to.equal('todo a')` fails, the third assertion is never reached. The command fails after timing out, and the Command Log correctly shows that the first encountered assertion `should('have.length', 2)` passed, but the second assertion and the command itself failed.
+因为第二个断言 `expect($li.get(0).textContent, 'first item').to.equal('todo a')` 失败，所以永远不会到达第三个断言。超时后命令失败，命令日志正确的显示了第一个遇到的断言`should('have.length', 2)`通过了，但是第二个断言和命令本身是失败的。
 
 {% imgTag /img/guides/retry-ability/second-assertion-fails.gif "Retrying multiple assertions" %}
 
-# Not every command is retried
+# 不是每个命令都被重试
 
-Cypress only retries commands that query the DOM: {% url `cy.get()` get %}, {% url `.find()` find %}, {% url `.contains()` contains %}, etc. You can check if a particular command is retried by looking at the "Assertions" section in its API documentation. For example, "Assertions section" of {% url `.first()` first %} tells us that the command is retried until all assertions that follow it are passing.
+Cypress只重试查询DOM结构的命令：{% url `cy.get()` get %}， {% url `.find()` find %}， {% url `.contains()` contains %}等等。你可以通过查看API文档中的"断言"部分来检查特定的命令是否会重试。例如：{% url `.first()` first %}的"断言部分"告诉我们这个命令会一直重试直到所有的断言都通过。
 
 {% assertions existence .first %}
 
-## Why are some commands *NOT* retried?
+## 为什么有些命令*不*重试？
 
-Commands are not retried when they could potentially change the state of the application under test. For example, Cypress will not retry the {% url '.click()' click %} command, because it could change something in the application.
+当命令可能会更改被测试应用程序的状态时，不会重试命令。例如：Cypress不会重试 {% url '.click()' click %} 命令，因为它可能会改变应用程序中的某些内容。
 
 {% note warning %}
-Very rarely you may want to retry a command like `.click()`. We describe one case like that where the event listeners are attached to a modal popup only after a delay, the causing default events fired during `.click()` to not register. In this special case you may want to "keep clicking" until the event registers, and the dialog disappears. Read about it in the {% url "When Can the Test Click?" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %} blog post.
+在很小的概率下你可能想重试`.click()`这样的命令。我们描述了一个案例，事件监听器需要在窗口弹出后一段时间才会生效，这样导致`.click()`命令无法按照预期来执行。在这种特殊情况下，你可能希望"不断点击"直到点击事件被注册，点击后对话框消失。更多详细信息可以参考我们的博客：{% url "在测试中什么时候可以点击？" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %}。
 {% endnote %}
 
-# Built-in assertions
+# 内置断言
 
-Often a Cypress command has built-in assertions that will cause the command to be retried. For example, the {% url `.eq()` eq %} command will be retried even without any attached assertions until it finds an element with the given index in the previously yielded list of elements.
+通常，Cypress的命令都有内置断言，这些断言将导致命令被重试。例如：即使没有任何附加的断言，{% url `.eq()` eq %}命令也会重试，直到它在之前产生的元素列表中找到给定索引的元素。
 
 ```javascript
 cy.get('.todo-list li')     // command
@@ -119,28 +122,28 @@ cy.get('.todo-list li')     // command
 
 {% imgTag /img/guides/retry-ability/eq.gif "Retrying built-in assertion" %}
 
-Some commands that cannot be retried still have built-in _waiting_. For example, as described in the "Assertions" section of {% url "`.click()`" click %}, the `click()` command waits to click until the element becomes {% url "actionable" interacting-with-elements#Actionability %}.
+一些无法重试的命令仍然具有内置的_等待_。例如：正如"断言"部分所描述的那样，{% url "`.click()`" click %}会等待点击，直到该元素变为{% url "可操作" interacting-with-elements#Actionability %}。
 
-Cypress tries to act like a human user would using the browser.
+Cypress尝试像人类用户那样使用浏览器。
 
-- Can a user click on the element?
-- Is the element invisible?
-- Is the element behind another element?
-- Does the element have the `disabled` attribute?
+- 用户可以点击该元素吗？
+- 元素时不可见的吗？
+- 元素是否在另一个元素后面？
+- 元素是否具有`disabled`属性？
 
-The `.click()` command will automatically wait until multiple built-in assertion checks like these pass, and then it will attempt to click just once.
+`.click()`命令将自动等待，直到多个内置的断言检查通过，然后它将尝试单击一次。
 
-# Timeouts
+# 超时
 
-By default each command that retries, does so for up to 4 seconds - the {% url `defaultCommandTimeout` configuration#Timeouts %} setting. You can change this timeout for _all commands_ using your configuration file, a CLI parameter, via an environment variable, or programmatically.
+默认情况下，每个重试的命令最多持续4秒 - 通过 {% url `defaultCommandTimeout` configuration#Timeouts %} 来配置。 你可以通过 _所有的_ 方式来修改这个配置选项，例如配置文件，命令行参数，环境变量或者通过代码来修改。
 
-For example, to set the default command timeout to 10 seconds via command line:
+例如，要通过命令行将默认命令超时设置为10秒：
 
 ```shell
 cypress run --config defaultCommandTimeout=10000
 ```
 
-See {% url 'Configuration: Overriding Options' configuration#Overriding-Options %} for other examples of overriding this option. We do not recommend changing the command timeout globally. Instead, pass the inividual command's `{ timeout: ms }` option to retry for a different period of time. For example:
+有关覆盖此选项的其它示例，请参考 {% url 'Configuration: Overriding Options' configuration#Overriding-Options %}。我们不建议修改全局的超时配置。相反的，你应该将 `{ timeout: ms }` 参数传递给函数用于重试不同的时间。例如：
 
 ```javascript
 // we've modified the timeout which affects default + added assertions
@@ -149,11 +152,11 @@ cy.get('.mobile-nav', { timeout: 10000 })
   .and('contain', 'Home')
 ```
 
-Cypress will retry for up to 10 seconds to find a visible element of class `mobile-nav` with text containing "Home". For more examples, read the {% url 'Timeouts' introduction-to-cypress#Timeouts %} section in the "Introduction to Cypress" guide.
+Cypress将重试最多10秒，以找到包含"Home"文本的 `mobile-nav` 类的可见元素。有关更多的示例，请参考"Cypress简介"中的{% url 'Timeouts' introduction-to-cypress#Timeouts %}部分。
 
-# Only the last command is retried
+# 只有最后一个命令会被重试
 
-Here is a short test that demonstrates some flake.
+这是一个简短的测试，它展示了一部分情况。
 
 ```javascript
 it('adds two items', function () {
@@ -171,17 +174,17 @@ it('adds two items', function () {
 })
 ```
 
-The test passes in Cypress without a hitch.
+这个测试毫无疑问的在Cypress上通过。
 
 {% imgTag /img/guides/retry-ability/adds-two-items-passes.gif "Test passes" %}
 
-But sometimes the test fails - not usually locally, no - it almost always fails on our continuous integration server. When the test fails, the recorded video and screenshots are NOT showing any obvious problems! Here is the failing test video:
+但有时候测试会失败 - 通常本地不会测试失败 - 它几乎总是在我们的持续集成服务器上失败。当测试失败时，录制的视频和屏幕截图没有显示任何明显的问题！这是测试失败的视频：
 
 {% imgTag /img/guides/retry-ability/adds-two-items-fails.gif "Test fails" %}
 
-The problem looks weird - I can clearly see the label "todo B" present in the list, so why isn't Cypress finding it? What is going on?
+问题看起来很奇怪 - 我可以清楚的看到列表中出现的标签"todo B"，那么为什么Cypress找不到它？这到底是怎么回事？
 
-Remember the delay we introduced into our application code that causes the test to time out? We added a 100ms delay before the UI rerenders itself.
+还记得我们在应用程序代码中引入的延迟导致测试超时吗？在UI重新呈现之前，我们添加了100ms的延迟。
 
 ```javascript
 app.TodoModel.prototype.addTodo = function (title) {
@@ -190,37 +193,38 @@ app.TodoModel.prototype.addTodo = function (title) {
     title: title,
     completed: false
   })
+
   setTimeout(() => {
     this.inform()
   }, 100)
 }
 ```
 
-This delay could be the source of our flaky tests when the application is running on our CI server. Here is how to see the source of the problem. In the Command Log, hover over each command to see which elements Cypress found at each step.
+当应用程序在我们的CI服务器上运行时，这个延迟就可能是我们测试失败的原因。 下面我们一起来寻找下问题的根源。在命令日志中，将鼠标悬停在每个命令上来查看Cypress在每个步骤中找到的元素。
 
-In the failing test, the first label was indeed found correctly:
+在失败的测试中，确实找到了第一个标签：
 
 {% imgTag /img/guides/retry-ability/first-item-label.png "First item label" %}
 
-Hover over the second "FIND label" command - something is wrong here. It found the _first label_, then kept requerying to find the text "todo B", but the first item always remains "todo A".
+将鼠标悬停在第二个"FIND label"命令上 - 这里出了一点问题。它找到了 _第一个标签_，然后继续重新查找文本"todo B"，但是第一项仍然是"todo A"。
 
 {% imgTag /img/guides/retry-ability/second-item-label.png "Second item label" %}
 
-Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over the "GET .todo-list li" command to inspect what _that command found_. Ohh, interesting - there was only one item at that moment.
+嗯，这确实很奇怪，为什么Cypress只看 _第一个_ 元素？让我们将鼠标悬停在"GET .todo-list li"命令上看看它 _找到了什么_ 。 哦，有趣的是 - 在那一刻只有一个元素。
 
 {% imgTag /img/guides/retry-ability/second-get-li.png "Second get li" %}
 
-During the test, the `cy.get('.todo-list li')` command quickly found the rendered `<li>` item - and that item was the first and only "todo A" item. Our application was waiting 100ms before appending the second item "todo B" to the list. By the time the second item was added, Cypress had already "moved on", working only with the first `<li>` element. It only searched for `<label>` inside the first `<li>` element, completely ignoring the newly created 2nd item.
+在测试期间，`cy.get('.todo-list li')` 命令很快的找到了渲染的 `<li>` 元素 - 这是第一个也是唯一的一个"todo A"元素。我们的程序在等待了100ms后才把"todo B"元素附加到列表上。 当第二个元素被添加时，Cypress已经"完成了元素的查找"，它只使用第一个`<li>`元素。它只在第一个`<li>`元素中搜索`<label>`，完全忽略了新创建的第二个项目。
 
-To confirm this, let's remove the artificial delay to see what's happening in the passing test.
+为了确认这一点，让我们删除延迟代码，看看在测试通过的例子中发生了什么。
 
 {% imgTag /img/guides/retry-ability/two-items.png "Two items" %}
 
-When the web application runs without the delay, it gets its items into the DOM before the Cypress command `cy.get('.todo-list li')` runs. After the `cy.get()` returns 2 items, the `.find()` command just has to find the right label. Great.
+当应用程序没有延迟时，它会在Cypress命令`cy.get('.todo-list li')`运行之前将元素放入DOM中。`cy.get()`将会返回2个元素，`.find()` 命令将会找到正确的标签。非常棒。
 
-Now that we understand the real reason behind the flaky test, we need to think about why the default retry-ability has not helped us in this situation. Why hasn't Cypress found the 2 `<li>` elements after the second one was added?
+既然我们已经理解了上面那个测试背后的真正原因，那我们需要考虑为什么默认的重试机制在这种情况下没有帮助我们。为什么Cypress不能发现后来添加的第二个`<li>`元素？
 
-For a variety of implementation reasons, Cypress commands **only** retry the **last command** before the assertion. In our test:
+出于各种实现原因，Cypress命令 **仅** 重试断言之前的 **最后一个命令**。在我们的测试中：
 
 ```javascript
 cy.get('.new-todo').type('todo B{enter}')
@@ -229,11 +233,11 @@ cy.get('.todo-list li')         // queries immediately, finds 1 <li>
   .should('contain', 'todo B')  // never succeeds with only 1st <li>
 ```
 
-Luckily, once we understand how retry-ability works and how only the last command is used for assertion retries, we can fix this test for good.
+幸运的是，一旦我们了解了重试机制是如何工作以及最后一个命令如何用于断言重试，我们就可以很好的修复这个测试。
 
-## Merging queries
+## 合并查询
 
-The first solution we recommend is to avoid unnecessarily splitting commands that query elements. In our case we first query elements using `cy.get()` and then query from that list of elements using `.find()`. We can combine two separate queries into one - forcing the combined query to be retried.
+我们建议的第一个解决方案是避免不必要的拆分查询元素的命令。在我们的例子中，我们首先使用`cy.get()`查询元素，然后使用`.find()`从该元素列表中查询。我们可以将两个单独的查询合并为一个 -  强制重试组合查询。
 
 ```javascript
 it('adds two items', function () {
@@ -249,32 +253,32 @@ it('adds two items', function () {
 })
 ```
 
-To show the retries, I increased the application's artificial delay to 500ms. The test now always passes because the entire selector is retried. It finds 2 list elements when the second "todo B" is added to the DOM.
+为了显示重试次数，我将应用程序的人工延迟增加到500ms。现在测试总是通过， 因为重试了整个选择器。当第二个"todo B"元素添加到DOM时，它会找到包含2个元素的列表。
 
 {% imgTag /img/guides/retry-ability/combined-selectors.gif "Combined selector" %}
 
-Similarly, when working with deeply nested JavaScript properties using the {% url `.its()` its %} command, try not to split it across multiple calls. Instead, combine property names into a single call using the `.` separator:
+类似的，当使用{% url `.its()` its %} 命令处理深度嵌套的JavaScript属性时，尽量不要将它分割为多个调用。相反的，使用`.`分隔符将属性名称组合成一个调用：
 
 ```javascript
-// 🛑 not recommended
-// only the last "its" will be retried
+// 🛑 不推荐
+// 只有最后一个`its`会被重试
 cy.window()
-  .its('app')             // runs once
-  .its('model')           // runs once
-  .its('todos')           // retried
+  .its('app')             // 运行一次
+  .its('model')           // 运行一次
+  .its('todos')           // 重试
   .should('have.length', 2)
 
-// ✅ recommended
+// ✅ 推荐
 cy.window()
-  .its('app.model.todos') // retried
+  .its('app.model.todos') // 重试
   .should('have.length', 2)
 ```
 
-See the {% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-to-start-tests/ %} blog for the full example.
+有关完整示例，请参考{% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-to-start-tests/ %} 的博客。
 
-## Alternate commands and assertions
+## 交替使用命令和断言
 
-There is another way to fix our flaky test. Whenever you write a longer test, we recommend alternating commands with assertions. In this case, I will add an assertion after the `cy.get()` command, but before the `.find()` command.
+这里还有另外一种方式来修复上面的测试。无论写多长的测试，我们都建议交替使用命令和断言。在这种情况下，我将在`cy.get()`命令之后，`.find()`命令之前添加一个断言。
 
 ```javascript
 it('adds two items', function () {
@@ -296,10 +300,10 @@ it('adds two items', function () {
 
 {% imgTag /img/guides/retry-ability/alternating.png "Passing test" %}
 
-The test passes, because the second `cy.get('.todo-list li')` is retried with its own assertion now `.should('have.length', 2)`. Only after successfully finding two `<li>` elements, the command `.find('label')` and its assertion starts, and by now, the item with correct "todo B" label has been correctly queried.
+测试通过了，因为第二个 `cy.get('.todo-list li')` 被自己的断言`.should('have.length', 2)`重试了。只有在成功找到2个 `<li>` 元素，`.find('label')`命令和对应的断言才开始，到现在为止，它能够正确查询了带有正确"todo B"标签的元素。
 
-# See also
+# 其它参考
 
-- You can add retry-ability to your own {% url "custom commands" custom-commands %}, see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
-- You can retry any function with attached assertions using this 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
-- See retry-ability examples in the {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.
+- 你可以为自己的 {% url "custom commands" custom-commands %}添加重试功能，可以参考 {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %}。
+- 你可以使用这个第三方插件来重试附加了断言的任何功能：{% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}。
+- 请参考{% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} 中的重试机制示例。

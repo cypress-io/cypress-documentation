@@ -1,6 +1,34 @@
 # Online courses that teach end-to-end testing using Cypress.io
-# over multiple videos. The courses appear in the order 
+# over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
+
+- title: "End-to-End JavaScript Testing with Cypress.io"
+  url: https://www.lynda.com/Developer-tutorials/End-End-JavaScript-Testing-Cypress-io/2814152-2.html
+  author: Shaun Wassell
+  sourceName: Lynda.com
+  sourceUrl: https://www.lynda.com/
+
+- title: "Cypress.io - End to End Testing Framework"
+  url: https://www.youtube.com/watch?v=IMx7Ng-T2mw&list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0
+  author: Bushra Alam
+  authorTwitter: imBushraAlam
+  sourceName: QAMilestone Academy
+  sourceUrl:  https://www.qamilestone.com
+  free: true
+
+- title: "Cypress-Modern Automation Testing from Scratch + Framework"
+  url: https://www.udemy.com/course/cypress-tutorial/?LSNPUBID=hh*FqEN*ZGw&ranEAID=hh*FqEN*ZGw&ranMID=39197&ranSiteID=hh.FqEN.ZGw-3od9TEk.GmnZ.QA2DzTmFA
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com/
+
+- title: Introduction to Cypress
+  url: https://testautomationu.applitools.com/cypress-tutorial/
+  author: Gil Tayar
+  authorTwitter: giltayar
+  sourceName: Test Automation University
+  sourceUrl: https://testautomationu.applitools.com/
+  free: true
+
 - title: Test Automation using Cypress
   url: https://training.xebia.com/quality-test-automation/test-automation-using-cypress
   author: Xebia
@@ -61,3 +89,27 @@
   authorTwitter: avanslaars
   sourceName: Cypress.io
   sourceUrl: https://www.cypress.io
+  free: true
+
+- title: Test Automation with Cypress basic
+  url: http://udemy.com/course/test-automation-with-cypress-basic
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+
+- title: Testes Automatizados com Cypress (básico)
+  url: http://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-basico
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Coursify.me
+  sourceUrl: http://coursify.me
+  language: Portuguese
+
+- title: Testes Automatizados com Cypress (intermediário)
+  url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-intermediario#
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Coursify.me
+  sourceUrl: http://coursify.me
+  language: Portuguese

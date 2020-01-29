@@ -1,4 +1,5 @@
-version: 2
+# let's try using orbs, jobs, commands
+version: 2.1
 
 env_defaults: &env_defaults
   ## this enables colors + fixes failing unit tests
@@ -65,9 +66,8 @@ jobs:
       #
       - run: ls -la
       - run: npm run deps
-      - run: npm run lint
+      - run: npm run lint -- --max-warnings=0
       - run: npm run md-lint
-      - run: npm run stop-only
       - run: npm test
       - run: npm run build
 
@@ -159,8 +159,8 @@ workflows:
       - docs-tests:
           requires:
             - build
-      # we can deploy development docs in parallel with
-      # unit testining them.
+      # we can deploy development docs in parallel
+      # with unit testing them.
       - deploy-docs-staging:
           filters:
             branches:

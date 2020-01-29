@@ -213,7 +213,7 @@ This gives you the best of both worlds - a fast error feedback loop when request
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements parent cy.wait %}
+{% requirements wait cy.wait %}
 
 ## Assertions {% helper_icon assertions %}
 

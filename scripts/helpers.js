@@ -67,7 +67,7 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   let expandAll = false
 
   // IF the sidebar's categories aren't that many,
-  // just expand them all, since it's more of a hassle to expand one by one
+  // expand them all, since it's more of a hassle to expand one by one
   if (_.keys(sidebar).length <= 6) {
     expandAll = true
   }

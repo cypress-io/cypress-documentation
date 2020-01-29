@@ -10,11 +10,15 @@ title: Why Cypress?
 - Key Cypress features
 {% endnote %}
 
+<!-- textlint-disable -->
+{% video youtube LcGHiFnBh3Y %}
+<!-- textlint-enable -->
+
 # In a nutshell
 
 Cypress is a next generation front end testing tool built for the modern web. We address the key pain points developers and QA engineers face when testing modern applications.
 
-We make it simple to:
+We make it possible to:
 
 - {% urlHash 'Set up tests' Setting-up-tests %}
 - {% urlHash 'Write tests' Writing-tests %}
@@ -39,22 +43,22 @@ Cypress can test anything that runs in a browser.
 
 # Cypress ecosystem
 
-Cypress consists of a free, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-service %}.
+Cypress consists of a free, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-introduction%}.
 
-- ***First:*** Cypress makes it easy to set up and start writing tests every day while you build your application locally. *TDD at its best!*
-- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard Service' dashboard-service %} can record your test runs. You'll never have to wonder: *Why did this fail?*
+- ***First:*** Cypress helps you set up and start writing tests every day while you build your application locally. *TDD at its best!*
+- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard Service' dashboard-introduction%} can record your test runs. You'll never have to wonder: *Why did this fail?*
 
 # Our mission
 
 Our mission is to build a thriving, open source ecosystem that enhances productivity, makes testing an enjoyable experience, and generates developer happiness. We hold ourselves accountable to champion a testing process **that actually works**.
 
-We believe our documentation should be simple and approachable. This means enabling our readers to understand fully not just the **what** but the **why** as well.
+We believe our documentation should be approachable. This means enabling our readers to understand fully not just the **what** but the **why** as well.
 
 We want to help developers build a new generation of modern applications faster, better, and without the stress and anxiety associated with managing tests.
 
 We know that in order for us to be successful we must enable, nurture, and foster an ecosystem that thrives on open source. Every line of test code is an investment in **your codebase**, it will never be coupled to us as a paid service or company. Tests will be able to run and work independently, *always*.
 
-We believe testing needs a lot of {% fa fa-heart %} and we are here to build a tool, a service, and a community that everyone can learn and benefit from. We're solving the hardest pain points shared by every developer working on the web. We believe in this mission and hope that you will join us to make Cypress a lasting ecosystem that helps everyone happy.
+We believe testing needs a lot of {% fa fa-heart %} and we are here to build a tool, a service, and a community that everyone can learn and benefit from. We're solving the hardest pain points shared by every developer working on the web. We believe in this mission and hope that you will join us to make Cypress a lasting ecosystem that makes everyone happy.
 
 # Features
 
@@ -76,7 +80,7 @@ There are no servers, drivers, or any other dependencies to install or configure
 
 ## {% fa fa-code %} Writing tests
 
-Tests written in Cypress are easy to read and understand. Our API comes fully baked, on top of tools you are familiar with already.
+Tests written in Cypress are meant to be easy to read and understand. Our API comes fully baked, on top of tools you are familiar with already.
 
 {% video local /img/snippets/writing-tests.mp4 %}
 

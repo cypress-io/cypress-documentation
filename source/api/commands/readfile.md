@@ -25,7 +25,7 @@ cy.readFile('menu.json')
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
-A path to a file within the project root (the directory that contains `cypress.json`).
+A path to a file within the project root (the directory that contains the default `cypress.json` configuration file).
 
 **{% fa fa-angle-right %} encoding**  ***(String)***
 
@@ -160,6 +160,10 @@ You can assert that a file does not exist like so:
 cy.readFile('does-not-exist.yaml').should('not.exist')
 ```
 
+### Read a file that might not exist
+
+{% url "See our example on using `cy.task()` to read a file that *may* not exist." task#Read-a-file-that-might-not-exist %}
+
 ## Retries
 
 ### Automatic retries
@@ -188,7 +192,7 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 # Command Log
 
-***List the contents of cypress.json***
+***List the contents of the default `cypress.json` configuration file***
 
 ```javascript
 cy.readFile('cypress.json')

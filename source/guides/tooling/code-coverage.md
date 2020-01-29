@@ -10,6 +10,10 @@ title: Code Coverage
 - How to use the code coverage reports to guide writing tests
 {% endnote %}
 
+<!-- textlint-disable -->
+{% video youtube C8g5X4vCZJA %}
+<!-- textlint-enable -->
+
 # Introduction
 
 As you write more and more end-to-end tests, you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too much? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test should be added to ensure that part of our application logic is tested.
@@ -94,7 +98,7 @@ When the test calls `add(2, 3)`, the counter increments inside the "add" functio
 }
 ```
 
-This single test has achieved 100% code coverage - every function and every statement has been executed at least once. Of course in real world applications, achieving 100% code coverage requires multiple tests.
+This single test has achieved 100% code coverage - every function and every statement has been executed at least once. But, in real world applications, achieving 100% code coverage requires multiple tests.
 
 Once the tests finish, the coverage object can be serialized and saved to disk so that a human-friendly report can be generated. The collected coverage information can also be sent to external services and help during pull request reviews.
 
@@ -104,7 +108,7 @@ If you are unfamiliar with code coverage or want to learn more, take a look at t
 
 This guide explains how to instrument the application source code using common tools. Then we show how to save the coverage information and generate reports using the {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} Cypress plugin. After reading this guide you should be able to better target your tests using the code coverage information.
 
-This guide explains how to find what parts of your application code are covered by Cypress tests so you can have 100% confidence that your tests aren't missing cruicial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
+This guide explains how to find what parts of your application code are covered by Cypress tests so you can have 100% confidence that your tests aren't missing crucial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
 
 {% note info %}
 The full source code for this guide can be found in the {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} repository.
@@ -116,6 +120,8 @@ Cypress does not instrument your code - you need to do it yourself. The golden s
 
 - Using the {% url "nyc" https://github.com/istanbuljs/nyc %} module - a command-line interface for the {% url "Istanbul" https://istanbul.js.org %} library
 - As part of your code transpilation pipeline using the {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} tool.
+
+## Using NYC
 
 To instrument the application code located in your `src` folder and save it in an `instrumented` folder use the following command:
 
@@ -158,6 +164,8 @@ If we drill into the coverage object to see the statements executed in each file
 
 In green, we highlighted the 4 statements present in that file. The first three statements were each executed once and the last statement was never executed (it probably was inside an `if` statement). By using the application, we can both increment the counters and flip some of the zero counters into positive numbers.
 
+## Using code transpilation pipeline
+
 Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-istanbul`" https://github.com/istanbuljs/babel-plugin-istanbul %} to instrument the code as part of its transpilation. Add this plugin to the `.babelrc` file.
 
 ```json
@@ -168,6 +176,10 @@ Instead of using the `npx instrument` command, we can use {% url "`babel-plugin-
 ```
 
 We can now serve the application and get instrumented code without an intermediate folder, but the result is the same instrumented code loaded by the browser, with the same `window.__coverage__` object keeping track of the original statements.
+
+{% note info %}
+Check out {% url "`@cypress/code-coverage#examples`" https://github.com/cypress-io/code-coverage#examples %} for full example projects showing different code coverage setups.
+{% endnote %}
 
 {% imgTag /img/guides/code-coverage/source-map.png "Bundled code and source mapped originals" %}
 
@@ -239,12 +251,14 @@ it('adds and completes todos', () => {
     .type('write code{enter}')
     .type('write tests{enter}')
     .type('deploy{enter}')
+
   cy.get('.todo').should('have.length', 3)
 
   cy.get('.todo')
     .first()
     .find('.toggle')
     .check()
+
   cy.get('.todo')
     .first()
     .should('have.class', 'completed')
@@ -348,7 +362,7 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 
 # Full stack code coverage
 
-A complex application might have a Node back end with its own complex logic. From the front end web application, the calls to the API go through layers of code. It would be nice to track what back end code has been exercised during Cypress end-to-end tests. 
+A complex application might have a Node back end with its own complex logic. From the front end web application, the calls to the API go through layers of code. It would be nice to track what back end code has been exercised during Cypress end-to-end tests.
 
 Are our end-to-end tests that are so effective at covering the web application code are also covering the back end server code?
 
@@ -400,8 +414,9 @@ For any other server type, define a `GET /__coverage__` endpoint and return the 
 ```javascript
 if (global.__coverage__) {
   // handle "GET __coverage__" requests
-  onRequest = (response) =>
+  onRequest = (response) => {
     response.sendJSON({ coverage: global.__coverage__ })
+  }
 }
 ```
 
@@ -423,6 +438,12 @@ From now on, the front end code coverage collected during end-to-end tests will 
 
 You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
 
+# Future work
+
+We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid "manual" instrumentation step using Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in {% url bahmutov/cypress-native-chrome-code-coverage-example https://github.com/bahmutov/cypress-native-chrome-code-coverage-example %} repository.
+
+Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of back end code.
+
 # Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
@@ -431,6 +452,12 @@ You can find full examples showing different code coverage setups in the followi
 - {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
 - {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
+- {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for React App that uses TypeScript.
+- {% url 'bahmutov/cypress-and-jest' https://github.com/bahmutov/cypress-and-jest %} shows how to run Jest unit tests and Cypress unit tests, collecting code coverage from both test runners, and then produce merged report.
+- {% url 'rootstrap/react-redux-base' https://github.com/rootstrap/react-redux-base %} shows an example with a realistic webpack config. Instruments the source code using `babel-plugin-istanbul` during tests.
+- {% url 'skylock/cypress-angular-coverage-example' https://github.com/skylock/cypress-angular-coverage-example %} shows Angular 8 + TypeScript application with instrumentation done using `ngx-build-plus`.
+- {% url 'bahmutov/testing-react' https://github.com/bahmutov/testing-react %} shows how to get code coverage for a React application created using `CRA v3` without ejecting `react-scripts`.
+- {% url 'bahmutov/next-and-cypress-example' https://github.com/bahmutov/next-and-cypress-example %} shows how to get back end and front end coverage for a Next.js project. `middleware/nextjs.js`.
 
 # See also
 

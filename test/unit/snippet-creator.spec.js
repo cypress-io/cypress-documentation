@@ -18,4 +18,3 @@ describe('Snippet Creator', () => {
     .then(snapshot)
   })
 })
-

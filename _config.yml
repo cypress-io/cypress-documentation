@@ -13,6 +13,8 @@ language:
   - en
   - zh-cn
   - ja
+  - pt-br
+  - ru
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -39,9 +41,10 @@ alias:
   index.html: guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
-  guides.html/: guides/overview/why-cypress.html
+  guides.html: guides/overview/why-cypress.html
   guides/references/type/: api/commands/type.html
-  guides/integrating-cypress/features.html/: guides/guides/continuous-integration.html
+  guides/references/known-issues.html: 404.html
+  guides/integrating-cypress/features.html: guides/guides/continuous-integration.html
   guides/network-requests-xhr/: guides/guides/network-requests.html
   guides/issuing-commands/: guides/core-concepts/introduction-to-cypress.html#Subject-Management
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
@@ -104,13 +107,13 @@ alias:
 
   plugins/: plugins/index.html
 
-  dashboard/index.html: guides/core-concepts/dashboard-service.html
-  dashboard/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/features-dashboard/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/features-dashboard.html: guides/core-concepts/dashboard-service.html
-  dashboard/overview/projects-dashboard.html: guides/core-concepts/dashboard-service.html
-  dashboard/overview/organizations-dashboard.html: guides/core-concepts/dashboard-service.html
+  dashboard/index.html: guides/dashboard/dashboard-introduction.html
+  dashboard/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/features-dashboard/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/features-dashboard.html: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/projects-dashboard.html: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/organizations-dashboard.html: guides/dashboard/dashboard-introduction.html
 
   faq/index.html: faq/questions/using-cypress-faq.html
 
@@ -146,6 +149,10 @@ alias:
 
   # for chinese translation
   zh-cn/: zh-cn/guides/overview/why-cypress.html
+
+  # obsolete content
+  dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html
+  guides/core-concepts/launching-browsers.html: guides/guides/launching-browsers.html
 
 
 # Include/Exclude Files/Folders

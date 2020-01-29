@@ -32,7 +32,11 @@ cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
 
 The text to be typed into the DOM element.
 
-Text passed to `.type()` may include any of these special character sequences:
+Text passed to `.type()` may include any of the special character sequences below.
+
+{% note info %}
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+{% endnote %}
 
 Sequence | Notes
 --- | ---
@@ -70,6 +74,7 @@ Option | Default | Description
 `log` | `true` | {% usage_options log %}
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
+`parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
 
@@ -101,6 +106,21 @@ Each keypress is delayed 10ms by default in order to simulate how a very fast us
 cy.get('[contenteditable]').type('some text!')
 ```
 
+### 'Selecting' an option from datalist
+For 'selecting' an option, just type it into the input.
+```html
+<input list="fruit" />
+<datalist id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cantaloupe</option>
+</datalist>
+```
+
+```javascript
+cy.get('input').type('Apple')
+```
+
 ## Tabindex
 
 ### Type into a non-input or non-textarea element with `tabindex`
@@ -123,7 +143,7 @@ Using `.type()` on a date input (`<input type="date">`) requires specifying a va
 
 - `yyyy-MM-dd` (e.g. `1999-12-31`)
 
-This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#sec-dates %} and is what the input's `value` will be set to regardless of browser or locale.
+This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#dates-and-times %} and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
@@ -145,7 +165,7 @@ Using `.type()` on a week input (`<input type="week">`) requires specifying a va
 
 Where `W` is the literal character 'W' and `ww` is the number of the week (01-53).
 
-This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
+This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
@@ -170,6 +190,16 @@ When using special character sequences, it's possible to activate modifier keys 
 ```javascript
 // this is the same as a user holding down SHIFT and ALT, then pressing Q
 cy.get('input').type('{shift}{alt}Q')
+```
+
+### Type literal `{` or `}` characters
+
+To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
+
+```js
+cy.get('#code-input')
+  // will not escape { } characters
+  .type('function (num) {return num * num;}', { parseSpecialCharSequences: false })
 ```
 
 ### Hold down modifier key and type a word
@@ -230,8 +260,8 @@ cy.get('button').click()
 
 `.type()` requires a focusable element as the subject, since it's usually intended to type into something that's an input or textarea. Although there *are* a few cases where it's valid to "type" into something other than an input or textarea:
 
-* Keyboard shortcuts where the listener is on the `document` or `body`.
-* Holding modifier keys and clicking an arbitrary element.
+- Keyboard shortcuts where the listener is on the `document` or `body`.
+- Holding modifier keys and clicking an arbitrary element.
 
 To support this, the `body` can be used as the DOM element to type into (even though it's *not* a focusable element).
 
@@ -265,23 +295,22 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ## Supported Elements
 
-* ^HTML `<body>` and `<textarea>` elements.
-* Elements with a defined `tabindex` attribute.
-* Elements with a defined `contenteditable` attribute.
-* ^HTML `<input>` elements with a defined `type` attribute of one of the following:
-  * `text`
-  * `password`
-  * `email`
-  * `number`
-  * `date`
-  * `week`
-  * `month`
-  * `time`
-  * `datetime`
-  * `datetime-local`
-  * `search`
-  * `url`
-  * `tel`
+- ^HTML `<body>` and `<textarea>` elements.
+- Elements with a defined `tabindex` attribute.
+- Elements with a defined `contenteditable` attribute.
+- ^HTML `<input>` elements with a defined `type` attribute of one of the following:
+  - `text`
+  - `password`
+  - `email`
+  - `number`
+  - `date`
+  - `week`
+  - `month`
+  - `time`
+  - `datetime-local`
+  - `search`
+  - `url`
+  - `tel`
 
 ## Actionability
 
@@ -292,8 +321,6 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 ### When element is not in focus
 
 If the element is currently not in focus, before issuing any keystrokes Cypress will first issue a {% url `.click()` click %} to the element to bring it into focus.
-
-All of {% url 'the normal events' click#Events %} documented on {% url `.click()` click %} will fire.
 
 ### Events that fire
 
@@ -317,14 +344,14 @@ Events that should not fire on non input types such as elements with `tabindex` 
 
 The following rules have been implemented that match real browser behavior (and the spec):
 
-1. Cypress respects not firing subsequent events if previous ones were cancelled.
+1. Cypress respects not firing subsequent events if previous ones were canceled.
 2. Cypress will fire `keypress` *only* if that key is supposed to actually fire `keypress`.
 3. Cypress will fire `textInput` *only* if typing that key would have inserted an actual character.
 4. Cypress will fire `input` *only* if typing that key modifies or changes the value of the element.
 
 ### Event Cancellation
 
-Cypress respects all default browser behavior when events are cancelled.
+Cypress respects all default browser behavior when events are canceled.
 
 ```javascript
 // prevent the characters from being inserted
@@ -418,7 +445,7 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 3. Submits a form, but does not fire synthetic `click` event, if there is 1 `input` and no `submit` button
 4. Submits form and fires a synthetic `click` event to the `submit` when it exists.
 
-Of course if the form's `submit` event is `preventedDefault` the form will not actually be submitted.
+If the form's `submit` event is `preventedDefault` the form will not actually be submitted.
 
 # Rules
 
@@ -451,6 +478,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
+{% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
 {% url "0.20.0" changelog#0-20-0 %} | Supports for typing in inputs of type `date`, `time`, `month`, and `week`

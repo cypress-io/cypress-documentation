@@ -2,7 +2,7 @@
 title: 配置
 ---
 
-When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ({% url 'after configuring your tests to record' dashboard-service#Setup %}) and any configuration values you supply.
+当一个项目被添加到Cypress中时，项目中会创建`cypress.json`文件。这个文件用于存储`projectId`（{% url '在配置要记录的测试之后' projects#Setup %}）和你提供的任何配置值。
 
 ```json
 {
@@ -10,104 +10,110 @@ When a project is added to Cypress, a `cypress.json` file is created in the proj
 }
 ```
 
-# Options
+# 选项
 
-The default behavior of Cypress can be modified by supplying any of the following configuration options. Below is a list of available options and their default values.
+Cypress的默认行为可以通过提供以下任何配置选项来修改。下面是可用选项及其默认值的列表。
 
-## Global
+## 全局
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
-`env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
-`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
-`numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
-`port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
-`reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
-`reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
-`testFiles` | `**/*.*` | A String glob pattern of the test files to load
-`watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
+`baseUrl` | `null` | url用作{% url `cy.visit()` visit %}或{% url `cy.request()` request %}命令的url前缀
+`env` | `{}` | 要设置为{% url '环境变量' environment-variables %}的任何值
+`ignoreTestFiles` | `*.hot-update.js` |用于忽略测试文件的glob模式的字符串或数组，否则那些测试文件将显示在测试列表中。Cypress使用`minimatch`选项：`{dot: true, matchBase: true}`。我们建议使用{% url "http://globtester.com" http://globtester.com %}来测试哪些文件匹配。
+`numTestsKeptInMemory` | `50` | 快照和命令数据将保存在内存中的测试数量。如果在测试运行期间浏览器的内存消耗很高，请减少这个数字。
+`port` | `null` | 用于托管Cypress的端口。通常这是一个随机生成的端口。
+`reporter` | `spec` | {% url '报告生成器' reporters %}在`cypress run`时使用
+`reporterOptions` | `null` | 使用的{% url '报告生成器选项' reporters#Reporter-Options %}。所支持的选项取决于报告生成器。
+`testFiles` | `**/*.*` | 要加载的字符串glob模式的测试文件
+`watchForFileChanges` | `true` | Cypress是否会在测试文件更改时监视并重新启动测试
 
-## Timeouts
+## 超时
 
-{% note success Core Concept %}
-{% url 'Timeouts are a core concept' introduction-to-cypress#Timeouts %} you should understand well. The default values listed here are meaningful.
+{% note success 核心概念 %}
+{% url '超时' introduction-to-cypress#Timeouts %}应该是个很好理解的核心概念。这里列出的默认值是有意义的。
 {% endnote %}
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`defaultCommandTimeout` | `4000` | Time, in milliseconds, to wait until most DOM based commands are considered timed out
-`execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a {% url `cy.exec()` exec %} command
-`taskTimeout` | `60000` | Time, in milliseconds, to wait for a task to finish executing during a {% url `cy.task()` task %} command
-`pageLoadTimeout` | `60000` | Time, in milliseconds, to wait for `page transition events` or {% url `cy.visit()` visit %}, {% url `cy.go()` go %}, {% url `cy.reload()` reload %} commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.
-`requestTimeout` | `5000` | Time, in milliseconds, to wait for an XHR request to go out in a {% url `cy.wait()` wait %} command
-`responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a {% url `cy.request()` request %}, {% url `cy.wait()` wait %}, {% url `cy.fixture()` fixture %}, {% url `cy.getCookie()` getcookie %}, {% url `cy.getCookies()` getcookies %}, {% url `cy.setCookie()` setcookie %}, {% url `cy.clearCookie()` clearcookie %}, {% url `cy.clearCookies()` clearcookies %}, and {% url `cy.screenshot()` screenshot %} commands
+`defaultCommandTimeout` | `4000` | 等待时间(以毫秒为单位)，直到大多数基于DOM的命令被认为超时
+`execTimeout` | `60000` | {% url `cy.exec()` exec %}命令期间等待系统命令执行结束的时间(以毫秒为单位)
+`taskTimeout` | `60000` | {% url `cy.task()` task %}命令期间等待任务执行结束的时间(以毫秒为单位)
+`pageLoadTimeout` | `60000` | 等待`页面转换事件`或{% url `cy.visit()` visit %}、{% url `cy.go()` go %}、{% url `cy.reload()` reload %}命令来触发它们的页面`加载`事件的时间(以毫秒为单位)。网络请求受底层操作系统的限制，即使这个值增加，仍然可能超时。
+`requestTimeout` | `5000` | 等待{% url `cy.wait()` wait %}命令发出XHR请求的时间(以毫秒为单位)
+`responseTimeout` | `30000` | 等待响应的时间(以毫秒为单位)，直到{% url `cy.request()` request %}、{% url `cy.wait()` wait %}、{% url `cy.fixture()` fixture %}、{% url `cy.getCookie()` getcookie %}、{% url `cy.getCookies()` getcookies %}、{% url `cy.setCookie()` setcookie %}、{% url `cy.clearCookie()` clearcookie %}、{% url `cy.clearCookies()` clearcookies %}和{% url `cy.screenshot()` screenshot %}中的一个返回响应。
 
-## Folders / Files
+## 文件夹/文件
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
-`fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
-`integrationFolder` | `cypress/integration` | Path to folder containing integration test files
-`pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
-`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
-`supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
-`videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
+`fileServerFolder`    | 项目根目录    | 应用程序文件将尝试从其中提供服务的文件夹路径
+`fixturesFolder`    | `cypress/fixtures`    | 包含fixture文件的文件夹路径（传递`false`禁用）
+`integrationFolder` | `cypress/integration` | 包含集成测试文件的文件夹路径
+`pluginsFile` | `cypress/plugins/index.js` | 插件文件的路径。（传递`false`禁用）
+`screenshotsFolder`     | `cypress/screenshots`     | 通过{% url `cy.screenshot()` screenshot %}命令保存或者在`cypress run`过程中测试失败后保存的截屏存放的文件夹路径
+`supportFile` | `cypress/support/index.js` | 加载测试文件之前要加载的文件路径。这个文件被编译并绑定。（传递`false`禁用）
+`videosFolder`     | `cypress/videos`     | 在`cypress run`过程中保存的视频存放的文件夹路径
 
-## Screenshots
+## 截屏
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`screenshotsFolder`     | `cypress/screenshots`     | 通过{% url `cy.screenshot()` screenshot %}命令保存或者在`cypress run`过程中测试失败后保存的截屏存放的文件夹路径
+`trashAssetsBeforeRuns` | `true` | 在使用`cypress run`运行测试之前，Cypress是否会清除`screenshotsFolder`和`videosFolder`中的资源
 
-For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
+有关截屏的更多选项，请查看{% url 'Cypress.Screenshot API' screenshot-api %}。
 
-## Videos
+## 视频
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
-`videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
-`videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
-`video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
-`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-service %} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+`trashAssetsBeforeRuns` | `true` | 在使用`cypress run`运行测试之前，Cypress是否会清除`screenshotsFolder`和`videosFolder`中的资源
+`videoCompression` | `32` | 视频压缩的质量设置，以恒定速率系数(CRF)表示。该值可以是`false`以禁用压缩或`0`和`51`之间的值，其中较低的值会产生更好的质量（以更大的文件大小为代价）。
+`videosFolder`     | `cypress/videos` | 当通过`cypress run`运行测试时，Cypress会自动保存测试运行的视频。
+`video`     | `true`     | Cypress是否会捕捉通过`cypress run`运行的测试视频。
+`videoUploadOnPasses`     | `true`     | Cypress是否将处理、压缩和上传视频到{% url "仪表盘" dashboard-introduction%}，即使spec文件中的所有测试都通过了。这只适用于记录在仪表板上的运行。如果你只想在测试失败时上传spec文件的视频，请关闭此功能。
 
-## Browser
+## 浏览器
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`chromeWebSecurity`    | `true`    | Whether Chrome Web Security for `same-origin policy` and `insecure mixed content` is enabled. {% url 'Read more about this here' web-security %}
-`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
-`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
-`modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
+`chromeWebSecurity`    | `true`    | 是否启用`同源策略`和`不安全混合内容`的Chrome Web安全。{% url '在此处阅读更多相关内容' web-security %}
+`userAgent` | `null` | 使你能够重写浏览器在所有请求头中发送的默认用户代理。服务器通常使用用户代理值来帮助识别操作系统、浏览器和浏览器版本。有关用户代理值的示例，请参见{% url "用户代理MDN文档" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %}。
+`blacklistHosts` | `null` | 希望为其阻塞通信的字符串或主机数组。{% urlHash '请阅读注解中的例子。' blacklistHosts %}
+`modifyObstructiveCode` | `true` | Cypress是否会在.js或.html文件中搜索并替换阻塞的JS代码。{% urlHash '有关此设置的更多信息，请阅读注解。' modifyObstructiveCode %}
 
-## Viewport
+## 视口
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`viewportHeight` | `660` | Default height in pixels for the application under tests' viewport (Override with {% url `cy.viewport()` viewport %} command)
-`viewportWidth` | `1000` | Default width in pixels for the application under tests' viewport. (Override with {% url `cy.viewport()` viewport %} command)
+`viewportHeight` | `660` | 测试视口下应用程序的默认高度（以像素为单位）。（使用{% url `cy.viewport()` viewport %}命令重写）
+`viewportWidth` | `1000` | 测试视口下应用程序的默认宽度（以像素为单位）。（使用{% url `cy.viewport()` viewport %}命令重写）
 
-## Animations
+## 动画
 
-Option | Default | Description
+选项 | 默认值 | 描述
 ----- | ---- | ----
-`animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
-`waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
+`animationDistanceThreshold` | `5` | 元素的距离（以像素为单位）必须超过一定的时间才能被认为是动画
+`waitForAnimations` | `true` | 是否在执行命令之前等待元素结束动画
 
-# Overriding Options
+## Node 版
 
-Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
+选项 | 默认值 | 描述
+----- | ---- | ----
+`nodeVersion` | `bundled` | 如果设置为`system`，赛普拉斯将尝试在您的路径上找到 Node 可执行文件，以便在执行{％ url plugins plugins-guide ％}时使用。 否则，赛普拉斯将使用与赛普拉斯捆绑的Node版本。
 
-This gives you the option to do things like override the `baseUrl` or environment variables.
+# 重写选项
 
-## Command Line
+Cypress提供了动态更改配置值的选项。这对于在多个环境和多个开发人员机器上运行Cypress非常有用。
 
-When {% url 'running Cypress from the Command Line' command-line %} you can pass a `--config` flag.
+这为你提供了这样的选项，例如重写`baseUrl`或环境变量。
 
-**Examples:**
+## 命令行
+
+当{% url '在命令行运行Cypress' command-line %}时，可以传递一个`--config`标志。
+
+**示例：**
 
 ```shell
 cypress open --config watchForFileChanges=false,waitForAnimations=false
@@ -121,19 +127,19 @@ cypress run --config integrationFolder=tests,fixturesFolder=false
 cypress run --record --config viewportWidth=1280,viewportHeight=720
 ```
 
-## Plugins
+## 插件
 
-As of {% url `1.2.0` changelog#1-2-0 %} you can programmatically modify configuration values using Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+对于{% url `1.2.0` changelog#1-2-0 %}，你可以使用Node代码以编程方式修改配置值。这使你能够使用`fs`之类的操作，读取配置值并动态更改它们。
 
-While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
+虽然这可能比其他选项需要更多的工作—它为你提供了最大的灵活性和管理配置的能力。
 
-{% url "We've fully documented how to do this here." configuration-api %}
+{% url "我们已经在这里完整地记录了如何做到这一点。" configuration-api %}
 
-## Environment Variables
+## 环境变量
 
-You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+还可以使用{% url '环境变量' environment-variables %}重写配置值。这在{% url '持续集成' continuous-integration %}或在本地工作时特别有用。这使你能够在不修改任何代码或构建脚本的情况下更改配置选项。
 
-By default, any environment variable that matches a corresponding configuration key will override the `cypress.json` value.
+默认情况下，任何与相应配置键匹配的环境变量都将重写`cypress.json`的值。
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -143,9 +149,9 @@ export CYPRESS_VIEWPORT_WIDTH=800
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
-We automatically normalize both the key and the value. Cypress will *strip off* the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
+我们自动对键和值进行标准化。Cypress将*剥去*`CYPRESS_`， 驼峰命名任意键，并自动将值转换为`Number`或`Boolean`。确保你的环境变量前缀为`CYPRESS_`，否则它们将被忽略。
 
-**Both options below are valid**
+### 下面的两个选项都是有效的
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
@@ -156,17 +162,17 @@ export CYPRESS_PAGE_LOAD_TIMEOUT=100000
 ```
 
 {% note warning  %}
-Environment variables that do not match configuration keys will instead be set as regular environment variables for use in your tests with `Cypress.env()`.
+不匹配配置键的环境变量将被设置为常规环境变量，以便在`Cypress.env()`的测试中使用。
 
-You can {% url 'read more about Environment Variables' environment-variables %}.
+你可以{% url '阅读更多关于环境变量的信息' environment-variables %}。
 {% endnote %}
 
 ## `Cypress.config()`
 
-You can also override configuration values within your test using {% url `Cypress.config()` config %}.
+还可以使用{% url `Cypress.config()` config %}重写测试中的配置值。
 
-{% note warning Scope %}
-Configuration set using `Cypress.config` _is only in scope for the current spec file._
+{% note warning 作用域 %}
+使用`Cypress.config`的配置集_只在当前spec文件的作用域内。_
 {% endnote %}
 
 ```javascript
@@ -175,34 +181,34 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-# Resolved Configuration
+# 解析配置
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This makes it easy to understand and see where different values came from.
+当你打开Cypress项目时，单击*设置*选项卡将向你显示已解析的配置。这使得理解和查看不同的值从何而来变得很容易。
 
 {% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
-# Notes
+# 注解
 
 ## blacklistHosts
 
-By passing a string or array of strings you can block requests made to one or more hosts.
+通过传递字符串或字符串数组，可以阻止向一个或多个主机发出的请求。
 
-To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
+要查看这方面的使用示例，请查看{% url '谷歌解析方法' recipes#Stubbing-and-spying %}。
 
-To blacklist a host:
+将主机列入黑名单：
 
-- {% fa fa-check-circle green %} Pass only the host
-- {% fa fa-check-circle green %} Use wildcard `*` patterns
-- {% fa fa-check-circle green %} Include the port other than `80` and `443`
-- {% fa fa-exclamation-triangle red %} Do **NOT** include protocol: `http://` or `https://`
+- {% fa fa-check-circle green %} 只传递主机
+- {% fa fa-check-circle green %} 使用通配符`*`模式
+- {% fa fa-check-circle green %} 包含`80`和`443`以外的端口
+- {% fa fa-exclamation-triangle red %} **不**包含协议：`http://`或`https://`
 
 {% note info %}
-Not sure what a part of the URL a host is? {% url 'Use this guide as a reference.' https://nodejs.org/api/url.html#url_url_strings_and_url_objects %}
+不确定URL的哪一部分是主机？{% url '以本指南为参考。' https://nodejs.org/api/url.html#url_url_strings_and_url_objects %}
 
-When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
+将主机列入黑名单时，使用{% url `minimatch` minimatch %}检查主机。当有疑问时，你可以测试某些东西是否符合你的需求。
 {% endnote %}
 
-Given the following URLs:
+给定以下网址：
 
 ```text
 https://www.google-analytics.com/ga.js
@@ -210,7 +216,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-This would match the following blacklisted hosts:
+这将匹配以下黑名单主机：
 
 ```text
 www.google-analytics.com
@@ -220,34 +226,34 @@ www.google-analytics.com
 localhost:1234
 ```
 
-Because `localhost:1234` uses a port other than `80` and `443` it **must be included**.
+因为`localhost:1234`使用的端口不是`80`和`443`，所以*必须包含*它。
 
-{% note warning "Subdomains" %}
-Be cautious for URL's which have no subdomain.
+{% note warning "子域名" %}
+小心没有子域名的URL。
 
-For instance given a URL: `https://google.com/search?q=cypress`
+例如给定一个URL：`https://google.com/search?q=cypress`
 
-- {% fa fa-check-circle green %} Matches `google.com`
-- {% fa fa-check-circle green %} Matches `*google.com`
-- {% fa fa-exclamation-triangle red %} Does NOT match `*.google.com`
+- {% fa fa-check-circle green %} 匹配`google.com`
+- {% fa fa-check-circle green %} 匹配`*google.com`
+- {% fa fa-exclamation-triangle red %} 不匹配`*.google.com`
 {% endnote %}
 
-When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
+当Cypress阻塞向匹配主机发出的请求时，它将自动发送一个`503`状态码。为了方便起见，它还设置了一个`x-cypress-blacklist-host`头，以便你可以看到它匹配了哪个规则。
 
 {% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
 
 ## modifyObstructiveCode
 
-With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that {% url 'matches the following patterns.' https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884 %}
+启用此选项后，Cypress将搜索来自`.html`和`.js`文件上服务器的响应流，并替换{% url '匹配以下模式' https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884 %}的代码。
 
-These script patterns are antiquated and deprecated security techniques to prevent clickjacking and framebusting. They are a relic of the past and are no longer necessary in modern browsers. However many sites and applications still implement them.
+这些脚本模式是过时和弃用的安全技术，用于防止点击劫持和帧崩溃。它们是过去的残留物，在现代浏览器中不再需要。然而，许多站点和应用程序仍然实现它们。
 
-These techniques prevent Cypress from working, and they can be safely removed without altering any of your application's behavior.
+这些技术妨碍Cypress工作，并且可以在不改变任何应用程序行为的情况下安全地删除它们。
 
-Cypress modifies these scripts at the network level, and therefore there is a tiny performance cost to search the response streams for these patterns.
+Cypress在网络级别修改这些脚本，因此搜索这些模式的响应流会有很小的性能开销。
 
-You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
+如果你测试的应用程序或站点*没有*实现这些安全措施，你可以关闭此选项。此外，我们搜索的模式可能会不小心重写有效的JS代码。如果是这种情况，请禁用此选项。
 
-## Intelligent Code Completion
+## 智能代码补全
 
-IntelliSense is available for Cypress while editing your `cypress.json` file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+Cypress在编辑你的`cypress.json`文件时可以使用智能提示。{% url "了解如何设置智能代码补全。" intelligent-code-completion %}
