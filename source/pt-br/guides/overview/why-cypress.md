@@ -60,7 +60,7 @@ Acreditamos que o teste precisa de muito {% fa fa-heart %} e estamos aqui para c
 
 # Recursos
 
-Cypress vem quente, com baterias incluidas. Aqui está uma lista de coisas que ele pode fazer e nenhum outro Framework de teste pode:
+Cypress vem quente, com pilhas inclusas. Aqui está uma lista de coisas que ele pode fazer e nenhum outro Framework de teste pode:
 
 - **Viagem no Tempo:** O Cypress tira snapshots enquanto seus testes são executados. Passe o mouse nos comandos no {% url 'Log de Comando' test-runner#Command-Log %} para ver exatamente o que aconteceu em cada etapa.
 - **Debugabilidade:** Pare de adivinhar por que seus testes estão falhando. {% url 'Depure diretamente' debugging %} de ferramentas conhecidas, como o Developer Tools. Nossos erros legíveis e rastreamentos de pilha tornam a depuração extremamente rápida.
