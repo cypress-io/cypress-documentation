@@ -141,12 +141,19 @@ getVuex().invoke('dispatch', 'addTodoAfterDelay', {
   milliseconds: 2000,
   title: 'async task'
 })
+
 // log message appears after 2 seconds
 cy.log('after invoke')
 
 // assert UI
 getTodoItems().should('have.length', 1).first().contains('async task')
 ```
+
+`getVuex()` in this example is a function that returns the Vuex data store wrapped inside Cypress object to allow E2E tests to access the application state. For that the application saved itself as "window.app".
+
+{% note info %}
+This example comes from the recipe {% url "Vue + Vuex + REST" https://github.com/cypress-io/cypress-example-recipes %}
+{% endnote %}
 
 # Notes
 
