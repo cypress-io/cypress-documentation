@@ -40,23 +40,23 @@ Cypress pode testar qualquer coisa que seja executada em um navegador.
 
 # Ecossitema do Cypress
 
-Cypress consiste em um Test Runner gratuito, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-introduction%}.
+O Cypress consiste em um gratuito, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "instalação local" installing-cypress %} Test Runner **e** Serviço de Dashboard para {% url 'gravar seus testes' dashboard-introduction%}.
 
-- ***Em Primeiro Lugar:*** Cypress makes it easy to set up and start writing tests every day while you build your application locall. *TDD at its best!*
-- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard Service' dashboard-introduction%} can record your test runs. You'll never have to wonder: *Why did this fail?*
+- ***Primeiramente:*** O Cypress facilita a configuração e o início da gravação de testes diários enquanto você constroi a estrutura do seu aplicativo *TDD no seu melhor!*
+- ***Posteriormente:*** Após construir sua suíte de testes {% url "integrando o Cypress" continuous-integration %} com seu Provedor de CI , nosso {% url 'Serviço de Dashboard' dashboard-introduction%} pode registrar suas execuções de teste. Você nunca terá que se perguntar: *Por que isso falhou?*
 
 # Nossa missão
 
 Nossa missão é construir um ecossistema open source que aprimore a produtividade, torne o teste uma experiência agradável e gere a felicidade do desenvolvedor.
 Nós nos responsabilizamos por defender um processo de teste que **realmente funciona**.
 
-Acreditamos que nossa documentação deve ser simples e acessível. Isso significa permitir que nossos leitores compreendem completamente não apenas o **porque** e o **como** também.
+Acreditamos que nossa documentação deve ser simples e acessível. Isso significa permitir que nossos leitores compreendam completamente e não apenas o **porque** e o **como** também.
 
-Queremos ajudar os desenvolvedores a criar uma nova geração de aplicações modernas de maneira mais rápida, meljor esem o estresse e a ansiedade que associamos ao gerenciamento de testes.
+Queremos ajudar os desenvolvedores a criar uma nova geração de aplicações modernas de maneira mais rápida, melhor e sem o estresse e a ansiedade que associamos ao gerenciamento de testes.
 
 Sabemos que, para sermos bem-sucedidos, precisamos habilitar, nutrir e promover um ecossistema que cresça como open source. Cada linha de teste é um investimento no seu **código fonte**, nunca será associados a nós como um serviço pago ou empresa. Os testes serão capazes de executar e trabalhar independentemente *sempre*.
 
-Acreditamos que o teste precisa de {% fa fa-heart %} e estamos aqui para criar uma ferramenta, um serviço e uma comunidade na qual todos possam aprender e se beneficiar. Estamos resolvendo os pontos mais difícies compartilhados por todos os desenvolvedores que trabalham na web. Acreditamos nessa missão e esperamos que você se junte a nós para tornar o Cypress um ecossistema duradouro que faça todos felizes.
+Acreditamos que o teste precisa de muito {% fa fa-heart %} e estamos aqui para criar uma ferramenta, um serviço e uma comunidade na qual todos possam aprender e se beneficiar. Estamos resolvendo os pontos mais difícies compartilhados por todos os desenvolvedores que trabalham na web. Acreditamos nessa missão e esperamos que você se junte a nós para tornar o Cypress um ecossistema duradouro que faça todos felizes.
 
 # Recursos
 
