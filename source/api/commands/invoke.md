@@ -2,7 +2,7 @@
 title: invoke
 ---
 
-Invoke a function on the previously yielded subject.
+Invoke a function on the previously yielded subject. If the invoked function returns a promise, it will automatically wait for it until it resolves.
 
 {% note info %}
 If you want to get a property that is not a function on the previously yielded subject, use {% url `.its()` its %}.
@@ -130,6 +130,22 @@ const double = (n) => n * n
 
 // picks function with index 1 and calls it with argument 4
 cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
+```
+
+## Invoking an async function
+
+In this example we invoke a Vuex action that returns a Promise. `cy.invoke` will wait until the Promise resolves after the specified delay which we pass as an argument and only then will continue executing. 
+
+```javascript
+getVuex().invoke('dispatch', 'addTodoAfterDelay', {
+  milliseconds: 2000,
+  title: 'async task'
+})
+// log message appears after 2 seconds
+cy.log('after invoke')
+
+// assert UI
+getTodoItems().should('have.length', 1).first().contains('async task')
 ```
 
 # Notes
