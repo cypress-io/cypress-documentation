@@ -78,13 +78,13 @@ Não há servidores, drivers ou nenhuma outra dependências para instalar ou con
 
 ## {% fa fa-code %} Escrevendo testes
 
-Tests written in Cypress are easy to read and understand. Our API comes fully baked, on top of tools you are familiar with already.
+Os testes escritos no Cypress são fáceis de ler e entender. Nossa API vem totalmente pronta, além das ferramentas que você já conhece.
 
 {% video local /img/snippets/writing-tests.mp4 %}
 
 ## {% fa fa-play-circle %} Executando testes
 
-Cypress runs as fast as your browser can render content. You can watch tests run in real time as you develop your applications. TDD FTW!
+Cypress roda tão rápido quanto seu navegador pode renderizar conteúdo. Você pode assistir a testes executados em tempo real enquanto desenvolve seus aplicativos. TDD FTW!
 
 {% video local /img/snippets/running-tests.mp4 %}
 
