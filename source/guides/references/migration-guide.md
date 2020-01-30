@@ -8,7 +8,7 @@ Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, wh
 
 ## Mocha upgrade
 
-Mocha was upgraded from `2.5.3` to `6.2.2`, which includes a number of breaking changes and new features outlined in their {% url "changelog" https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#622--2019-10-18 %}. Some changes you might notice are described below.
+Mocha was upgraded from `2.5.3` to `7.0.1`, which includes a number of breaking changes and new features outlined in their {% url "changelog" https://github.com/mochajs/mocha/blob/master/CHANGELOG.md %}. Some changes you might notice are described below.
 
 ### {% fa fa-warning red %} Breaking Change: invoke `done` callback and return a promise
 
@@ -99,7 +99,7 @@ it('uses async/await', async function () {
 
 ## Chai upgrade
 
-Mocha was upgraded from `3.5.0` to `4.3.0`, which includes a number of breaking changes and new features outlined in {% url "Chai's migration guide" https://github.com/chaijs/chai/issues/781 %}. Some changes you might notice are described below.
+Chai was upgraded from `3.5.0` to `4.2.0`, which includes a number of breaking changes and new features outlined in {% url "Chai's migration guide" https://github.com/chaijs/chai/issues/781 %}. Some changes you might notice are described below.
 
 ### {% fa fa-warning red %} Breaking Change: assertions expecting numbers
 
@@ -134,7 +134,7 @@ expect(true).to.be.ture
 
 ## Sinon.JS upgrade
 
-Sinon.JS was upgraded from `3.2.0` to `7.5.0`, which includes a number of breaking changes and new features outlined in {% url "Sinon.JS's migration guide" https://sinonjs.org/releases/latest/#migration-guides %}. Some changes you might notice are described below.
+Sinon.JS was upgraded from `3.2.0` to `8.1.1`, which includes a number of breaking changes and new features outlined in {% url "Sinon.JS's migration guide" https://sinonjs.org/releases/latest/#migration-guides %}. Some changes you might notice are described below.
 
 ### {% fa fa-warning red %} Breaking Change: stub non-existent properties
 
