@@ -68,7 +68,7 @@ Or Chrome Canary:
 cypress run --browser canary
 ```
 
-Or Microsoft Edge:
+Or Microsoft Edge (Chromium-based):
 
 ```shell
 cypress run --browser edge
@@ -137,7 +137,7 @@ When you open the Test Runner in a project that uses the above modifications to 
 If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
 {% endnote %}
 
-If you have installed a Chromium-based browser like {% url Brave https://brave.com/ %}, {% url Vivaldi https://vivaldi.com/ %} and even the new {% url "Microsoft Edge Beta" https://www.microsoftedgeinsider.com/en-us/ %} you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
+If you have installed a Chromium-based browser like {% url Brave https://brave.com/ %}, {% url Vivaldi https://vivaldi.com/ %} you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
 
 ```javascript
 // cypress/plugins/index.js

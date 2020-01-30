@@ -20,7 +20,7 @@ This event will yield you the `browser` as an object, and `args` which are the d
 
 Here are options for the currently supported browsers:
 
-* {% url 'Chrome, Chromium, Canary, or Microsoft Edge browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
+* {% url 'Chrome, Chromium, Canary, or Microsoft Edge (Chromium based) browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
 * {% url 'Firefox' "http://kb.mozillazine.org/About:config_entries" %}
 * {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
 

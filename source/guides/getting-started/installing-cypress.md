@@ -19,6 +19,10 @@ Cypress is a desktop application that is installed on your computer. The desktop
 - **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 *(64-bit only)*
 - **Windows** 7 and above
 
+If using `npm` to install Cypress, we support:
+
+- **Node.js** 8 and above
+
 # Installing
 
 ## {% fa fa-terminal %} `npm install`
