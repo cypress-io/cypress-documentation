@@ -161,6 +161,7 @@ const store = new Vuex.Store({
             completed: false,
             id: randomId(),
           }
+          
           commit('ADD_TODO', todo)
           resolve()
         }, milliseconds)
@@ -168,7 +169,6 @@ const store = new Vuex.Store({
     },
   },
 })
-
 ```
 
 The Cypress Test with `cy.inkoke()` awaiting the promise:
@@ -178,7 +178,7 @@ The Cypress Test with `cy.inkoke()` awaiting the promise:
 // if (isCypress) {
 //    window.store = store
 // }
-const getVuex = () => cy.window({log: false}).its('store')
+const getVuex = () => cy.window({ log: false }).its('store')
 
 getVuex().invoke('dispatch', 'addTodoAfterDelay', {
   milliseconds: 2000,
