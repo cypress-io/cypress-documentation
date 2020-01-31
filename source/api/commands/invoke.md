@@ -2,7 +2,7 @@
 title: invoke
 ---
 
-Invoke a function on the previously yielded subject. If the invoked function returns a promise, it will automatically wait for it until it resolves.
+Invoke a function on the previously yielded subject.
 
 {% note info %}
 If you want to get a property that is not a function on the previously yielded subject, use {% url `.its()` its %}.
@@ -233,7 +233,7 @@ cy
 
 ## Timeouts {% helper_icon timeout %}
 
-{% timeouts assertions .invoke %}
+{% timeouts invoke .invoke %}
 
 # Command Log
 
