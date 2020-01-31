@@ -60,15 +60,15 @@ Acreditamos que o teste precisa de muito {% fa fa-heart %} e estamos aqui para c
 
 # Recursos
 
-Cypress comes fully baked, batteries included. Here is a list of things it can do that no other testing framework can:
+Cypress vem quente, com pilhas inclusas. Aqui está uma lista de coisas que ele pode fazer e nenhum outro Framework de teste pode:
 
-- **Time Travel:** Cypress takes snapshots as your tests run. Hover over commands in the {% url 'Command Log' test-runner#Command-Log %} to see exactly what happened at each step.
-- **Debuggability:** Stop guessing why your tests are failing. {% url 'Debug directly' debugging %} from familiar tools like Developer Tools. Our readable errors and stack traces make debugging lightning fast.
-- **Automatic Waiting:** Never add waits or sleeps to your tests. Cypress {% url 'automatically waits' introduction-to-cypress#Cypress-is-Not-Like-jQuery %} for commands and assertions before moving on. No more async hell.
-- **Spies, Stubs, and Clocks:** Verify and {% url 'control the behavior' stubs-spies-and-clocks %} of functions, server responses, or timers. The same functionality you love from unit testing is right at your fingertips.
-- **Network Traffic Control:** Easily {% url 'control, stub, and test edge cases' network-requests %} without involving your server. You can stub network traffic however you like.
-- **Resultados Consistentes:** Our architecture doesn’t use Selenium or WebDriver. Say hello to fast, consistent and reliable tests that are flake-free.
-- **Screenshots e Vídeos:** View screenshots taken automatically on failure, or videos of your entire test suite when run from the CLI.
+- **Viagem no Tempo:** O Cypress tira snapshots enquanto seus testes são executados. Passe o mouse nos comandos no {% url 'Log de Comando' test-runner#Command-Log %} para ver exatamente o que aconteceu em cada etapa.
+- **Debugabilidade:** Pare de adivinhar por que seus testes estão falhando. {% url 'Depure diretamente' debugging %} de ferramentas conhecidas, como o Developer Tools. Nossos erros legíveis e rastreamentos de pilha tornam a depuração extremamente rápida.
+- **Espera automática:** Nunca adicione waits ou sleeps nos seus testes. O Cypress {% url 'espera automaticamente' introduction-to-cypress#Cypress-is-Not-Like-jQuery %} por comandos e asserções antes de prosseguir. Não há mais aquele inferno assíncrono.
+- **Spies, Stubs, e Clocks:** Verifica e {% url 'controla o comportamento' stubs-spies-and-clocks %} de funções, respostas do servidor, ou timers. A mesma funcionalidade que você adora nos testes de unidade está ao seu alcance.
+- **Controle de Tráfego de Rede:** Facil {% url 'controle, stub, e teste casos de borda' network-requests %} sem envolver seu servidor. Você pode utilizar o stub no tráfego de rede como quiser.
+- **Resultados Consistentes:** Nossa arquitetura não usa Selenium ou WebDriver. Diga olá para a velocidade, testes consistentes e confiáveis, sem flocos.
+- **Screenshots e Vídeos:** Veja capturas de tela capturadas automaticamente em caso de falha ou vídeos de todo o seu conjunto de testes quando executado a partir da CLI.
 
 ## {% fa fa-cog %} Configurando testes
 
@@ -78,13 +78,13 @@ Não há servidores, drivers ou nenhuma outra dependências para instalar ou con
 
 ## {% fa fa-code %} Escrevendo testes
 
-Tests written in Cypress are easy to read and understand. Our API comes fully baked, on top of tools you are familiar with already.
+Os testes escritos no Cypress são fáceis de ler e entender. Nossa API vem totalmente pronta, além das ferramentas que você já conhece.
 
 {% video local /img/snippets/writing-tests.mp4 %}
 
 ## {% fa fa-play-circle %} Executando testes
 
-Cypress runs as fast as your browser can render content. You can watch tests run in real time as you develop your applications. TDD FTW!
+Cypress roda tão rápido quanto seu navegador pode renderizar conteúdo. Você pode assistir a testes executados em tempo real enquanto desenvolve seus aplicativos. TDD FTW!
 
 {% video local /img/snippets/running-tests.mp4 %}
 

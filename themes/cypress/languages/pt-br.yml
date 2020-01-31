@@ -20,7 +20,7 @@ page:
 sidebar:
   guides:
     overview: Visão Geral
-    why-cypress: Por que Cypress?
+    why-cypress: Por que o Cypress?
     getting-started: Introdução
     key-differences: Principais diferenças
     installing-cypress: Instalando o Cypress
