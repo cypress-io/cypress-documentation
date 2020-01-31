@@ -161,7 +161,7 @@ const store = new Vuex.Store({
             completed: false,
             id: randomId(),
           }
-          
+
           commit('ADD_TODO', todo)
           resolve()
         }, milliseconds)
