@@ -3,7 +3,7 @@ title: Cypress.log
 
 ---
 
-This is the internal API for controlling what get's printed to the Command Log.
+This is the internal API for controlling what gets printed to the Command Log.
 
 Useful when writing your own {% url "custom commands" custom-commands %}.
 
