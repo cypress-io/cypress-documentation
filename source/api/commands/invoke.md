@@ -136,7 +136,50 @@ cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 
 In this example we invoke a Vuex action that returns a Promise. `cy.invoke` will wait until the Promise resolves after the specified delay which we pass as an argument and only then will continue executing. 
 
+A minimal Vuex store:
 ```javascript
+function randomId () {
+  return Math.random().toString().substr(2, 10)
+}
+
+const store = new Vuex.Store({
+  state: {
+    todos: []
+  },
+  mutations: {
+    ADD_TODO (state, todoObject) {
+      state.todos.push(todoObject)
+    }
+  },
+  actions: {
+    // example promise-returning action
+    addTodoAfterDelay ({ commit }, { milliseconds, title }) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const todo = {
+            title,
+            completed: false,
+            id: randomId(),
+          }
+          commit('ADD_TODO', todo)
+          resolve()
+        }, milliseconds)
+      })
+    },
+  },
+})
+
+```
+
+The Cypress Test with `cy.inkoke()` awaiting the promise:
+```javascript
+// For this command to work you have to expose your vuex store under window.store for cypress to be able to access it
+// e.g. like this
+// if (isCypress) {
+//    window.store = store
+// }
+const getVuex = () => cy.window({log: false}).its('store')
+
 getVuex().invoke('dispatch', 'addTodoAfterDelay', {
   milliseconds: 2000,
   title: 'async task'
@@ -148,8 +191,6 @@ cy.log('after invoke')
 // assert UI
 getTodoItems().should('have.length', 1).first().contains('async task')
 ```
-
-`getVuex()` in this example is a function that returns the Vuex data store wrapped inside Cypress object to allow E2E tests to access the application state. For that the application saved itself as "window.app".
 
 {% note info %}
 This example comes from the recipe {% url "Vue + Vuex + REST" https://github.com/cypress-io/cypress-example-recipes %}
