@@ -65,13 +65,13 @@ cypress run --browser chromium
 Or Chrome Canary:
 
 ```shell
-cypress run --browser canary
+cypress run --browser chrome:canary
 ```
 
 Or Microsoft Edge (Chromium-based):
 
 ```shell
-cypress run --browser edge
+cypress run --browser edge ## or edge:canary
 ```
 
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
@@ -84,6 +84,13 @@ All Firefox* flavored browsers will be detected and are supported.
 
 ```bash
 cypress run --browser firefox
+```
+
+Or Firefox Developer/Nightly Edition:
+
+```bash
+cypress run --browser firefox:dev
+cypress run --browser firefox:nightly
 ```
 
 To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
@@ -115,8 +122,9 @@ In the plugins file, you can filter the list of browsers passed inside the `conf
 module.exports = (on, config) => {
   // inside config.browsers array each object has information like
   // {
-  //   name: 'canary',
-  //   family: 'chrome',
+  //   name: 'chrome',
+  //   channel: 'canary',
+  //   family: 'chromium',
   //   displayName: 'Canary',
   //   version: '80.0.3966.0',
   //   path:
@@ -124,7 +132,7 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === 'chrome')
+    browsers: config.browsers.filter((b) => b.family === 'chromium')
   }
 }
 ```
@@ -156,7 +164,8 @@ const findBrowser = () => {
 
     return {
       name: 'Brave',
-      family: 'chrome',
+      channel: 'stable',
+      family: 'chromium',
       displayName: 'Brave',
       version,
       path: browserPath,
@@ -176,7 +185,7 @@ module.exports = (on, config) => {
 
 {% imgTag /img/guides/plugins/brave-browser.png "List of browsers includes Brave browser" %}
 
-Once selected, the Brave browser is detected using the same approach as any other browser of the `chrome` family.
+Once selected, the Brave browser is detected using the same approach as any other browser of the `chromium` family.
 
 {% imgTag /img/guides/plugins/brave-running-tests.png "Brave browser executing end-to-end tests" %}
 
