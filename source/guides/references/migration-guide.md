@@ -216,3 +216,17 @@ cy.readFile('path/to/message.txt').then((text) => {
 Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. But, installing Cypress on your system uses the Node.js version installed on your system.
 
 Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
+
+## cy.contains() ignores invisible whitespaces
+
+Browsers ignore leading, trailing, duplicate whitespaces. And Cypress now does that, too.
+
+```html
+<p>hello
+world</p>
+```
+
+```javascript
+cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.
+cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 3.x.
+```
