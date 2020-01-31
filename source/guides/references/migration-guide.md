@@ -228,5 +228,5 @@ world</p>
 
 ```javascript
 cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.
-cy.get('p').contains('hello\nwolrd') // Pass in 3.x. Fail in 3.x.
+cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 3.x.
 ```
