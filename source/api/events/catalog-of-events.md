@@ -179,7 +179,6 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   // failing the test
   return false
 })
-
 ```
 
 ### To catch a single uncaught exception
@@ -204,7 +203,6 @@ it('is doing something very important', function (done) {
   // assume this causes an error
   cy.get('button').click()
 })
-
 ```
 
 ## Catching Test Failures

@@ -129,7 +129,6 @@ Use this approach to grab the value of an environment variable _once_ before any
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-
   config.env.sharedSecret = process.env.NODE_ENV === 'qa'
     ? 'hoop brick tort'
     : 'sushi cup lemon'
@@ -141,7 +140,6 @@ module.exports = (on, config) => {
 ```js
 // cypress/integration/secrets_spec.js
 describe('Environment variable set in plugin', () => {
-
   let sharedSecret
 
   before(() => {

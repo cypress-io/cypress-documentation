@@ -105,7 +105,9 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to `chrome`, `chromium`, `edge`, or `electron` to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+
+To launch non-stable browsers, add a colon and the desired release channel. For example, to launch Chrome Canary, use `chrome:canary`.
 
 You can also choose a browser by supplying a path:
 
@@ -182,11 +184,11 @@ cypress run --group develop-env
 You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --spec 'cypress/integration/user/**/*'
 ```
 
 Specifying the `--ci-build-id` may also be necessary.
@@ -325,7 +327,7 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-The Dashboard will display any tags sent with the appropriate run. 
+The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
@@ -365,7 +367,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Currently, only browsers in the Chrome family are supported.
+Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
 
 {% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
 

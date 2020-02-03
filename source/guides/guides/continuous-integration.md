@@ -538,7 +538,7 @@ See our {% url 'examples' docker %} for additional information on our maintained
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
 ```shell
-apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
 ## Caching
@@ -732,9 +732,9 @@ If you want colors to be disabled, you can pass the `NO_COLOR` environment varia
 NO_COLOR=1 cypress run
 ```
 
-
 # See also
 
 - {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
+- {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
 - {% url "Blog: Record Test Artifacts from any Docker CI" https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/ %}

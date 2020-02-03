@@ -61,14 +61,17 @@ Once you've started the GitHub App installation process {% urlHash "via a Cypres
 
 After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for *any* Cypress project.
 
-1. Visit a project's setting page, and scroll down to the GitHub Integration section.
+1. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
+
+2. Scroll down to the GitHub Integration section.
     {% note info %}
     You can quickly get to a project's GitHub Integrations settings, by clicking on the **Configure** link of the desired project within an organization's Integrations page:
     {% endnote %}
 
     {% imgTag /img/dashboard/github-integration/org-settings-with-no-enabled-projects.png "Org GitHub Integration settings" "no-border" %}
 
-2. Select a GitHub repository to associated with the project.
+3. Select a GitHub repository to associate with the project.
 
   {% imgTag /img/dashboard/github-integration/project-settings-repo-selection.png "Associate GitHub repo with Cypress project" "no-border" %}
 
@@ -84,10 +87,10 @@ If status checks are enabled within a project's GitHub integration settings, the
 
 The Cypress GitHub App reports commit status checks in two separate styles:
 
-- One check per {% url "run group" parallelization#Grouping-test-runs %}.
+- **One check per {% url "run group" parallelization#Grouping-test-runs %}.**
     {% imgTag /img/dashboard/github-integration/status-checks-per-group-failed.png "Status checks per group" "no-border" %}
 
-- Or one check per spec file.
+- **Or one check per spec file.**
     {% imgTag /img/dashboard/github-integration/status-checks-per-spec.png "Status checks per spec" "no-border" %}
 
 Each status check will report the number of test failures or passes, and the associated **Details** link will direct you to the test run's page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
@@ -102,14 +105,14 @@ GitHub status checks are optional, and can be disabled within a project's GitHub
 
 The Cypress GitHub App can provide detailed test information within pull requests via comments that include:
 
-- Run statistics, such as tests passed, failed, skipped, and over-limit.
-- Run context details:
+- **Run statistics, such as tests passed, failed, skipped, and over-limit.**
+- **Run context details:**
   - The associated Cypress project
   - Final run status (passed, failed, etc)
   - Commit SHA linking to the GitHub commit
   - The time the run started and finished as well as the duration.
   - Operating system version and browser version.
-- Run failures:
+- **Run failures:**
   - The first 10 failures are displayed with a link to more.
   - Each failed test links back to the associated failure within the Cypress Dashboard.
   - Screenshot thumbnails are also provided with each failure to conveniently provide context.

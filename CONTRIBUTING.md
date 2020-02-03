@@ -195,6 +195,8 @@ You should push your local changes to your forked GitHub repository and then ope
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
 ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
 
+Every pull request merged into `develop` automatically opens another pull request to `master`, which should be merged automatically using Mergify Bot after the CircleCI tests pass, see issue [#2363](https://github.com/cypress-io/cypress-documentation/issues/2363).
+
 ### Contributor License Agreement
 
 We use a [`cla-assistant.io`](https://cla-assistant.io/) web hook to make sure every contributor assigns the rights of their contribution to Cypress.io. If you want to read the CLA agreement, its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).

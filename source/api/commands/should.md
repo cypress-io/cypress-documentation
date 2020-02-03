@@ -29,7 +29,6 @@ An alias of {% url `.and()` and %}
 cy.get('.error').should('be.empty')                    // Assert that '.error' is empty
 cy.contains('Login').should('be.visible')              // Assert that el is visible
 cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' property equals 'bar'
-
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**

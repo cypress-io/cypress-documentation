@@ -53,6 +53,7 @@ sidebar:
     parallelization: 并行化
     environment-variables: 环境变量
     launching-browsers: 启动浏览器
+    cross-browser-testing: 跨浏览器测试
     custom-commands: 自定义命令
     web-security: Web安全
     references: 参考
@@ -178,6 +179,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

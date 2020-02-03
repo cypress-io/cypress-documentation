@@ -6,35 +6,11 @@ title: Migration Guide
 
 Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, which themselves have breaking changes. This guide details the changes and how to change your code to migrate to Cypress 4.0.
 
-## Node 8+ support
+## Mocha upgrade
 
-Node 4 reached its end of life on April 30, 2018 and Node 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node versions will no longer be supported. The minimum Node version supported by Cypress is Node 8.
+Mocha was upgraded from `2.5.3` to `7.0.1`, which includes a number of breaking changes and new features outlined in their {% url "changelog" https://github.com/mochajs/mocha/blob/master/CHANGELOG.md %}. Some changes you might notice are described below.
 
-## Plugin Event `before:browser:launch`
-
-Since we now support more advanced browser launch options, during `before:browser:launch` we have switched from yielding the second argument as an `array` of browser arguments to an options `object` with an `args` property.
-
-// add link to API doc, mention other props included
-
-### Example
-
-{% badge danger Before %} The second argument is no longer an array.
-```js
-on('browser:before:launch', (browser, args) => {
-  args.push('--another-arg')
-})
-```
-
-{% badge success After %} Access the `args` property on the second argument
-```js
-on('browser:before:launch', (browser, options) => {
-  options.args.push('--another-arg')
-})
-```
-
-## Mocha upgrade changes
-
-Mocha has been upgraded to Mocha 7.
+### {% fa fa-warning red %} Breaking Change: invoke `done` callback and return a promise
 
 Starting with [Mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31), invoking a `done` callback *and* returning a promise in a test results in an error.
 
@@ -44,7 +20,7 @@ The reason is that using two different ways to signal that a test is finished is
 
 In the meantime, you can fix the error by choosing a single way to signal the end of your test's execution.
 
-### Example #1
+#### Example #1
 
 {% badge danger Before %} This test has a done callback and a promise
 
@@ -67,7 +43,7 @@ it('uses invokes done and returns promise', function () {
 })
 ```
 
-### Example #2
+#### Example #2
 
 {% badge danger Before %} Sometimes it might make more sense to use the `done` callback and not return a promise:
 
@@ -95,7 +71,7 @@ it('uses invokes done and returns promise', function (done) {
 })
 ```
 
-### Example #3
+#### Example #3
 
 Test functions using `async/await` automatically return a promise, so they need to be refactored to not use a `done` callback.
 
@@ -109,7 +85,7 @@ it('uses async/await', async function (done) {
 })
 ```
 
-{% badge danger Before %} Update to the test code below.
+{% badge success After %} Update to the test code below.
 
 ```javascript
 it('uses async/await', async function () {
@@ -121,11 +97,11 @@ it('uses async/await', async function () {
 })
 ```
 
-## Chai upgrade changes
+## Chai upgrade
 
-Chai has been upgraded to Chai 4, which includes a number of breaking changes and new features outlined in [Chai's migration guide](https://github.com/chaijs/chai/issues/781). Some changes you might notice include:
+Chai was upgraded from `3.5.0` to `4.2.0`, which includes a number of breaking changes and new features outlined in {% url "Chai's migration guide" https://github.com/chaijs/chai/issues/781 %}. Some changes you might notice are described below.
 
-### Example #1
+### {% fa fa-warning red %} Breaking Change: assertions expecting numbers
 
 Some assertions will now throw an error if the assertion's target or arguments are not numbers, including `within`, `above`, `least`, `below`, `most`, `increase` and `decrease`.
 
@@ -137,7 +113,7 @@ expect(null).to.be.above(10)
 expect('string').to.have.a.length.of.at.least(3)
 ```
 
-### Example #2
+### {% fa fa-warning red %} Breaking Change: `empty` assertions
 
 The `.empty` assertion will now throw when it is passed non-string primitives and functions.
 
@@ -147,7 +123,7 @@ expect(Symbol()).to.be.empty
 expect(function() {}).to.be.empty
 ```
 
-### Example #3
+### {% fa fa-warning red %} Breaking Change: non-existent properties
 
 An error will throw when a non-existent property is read. If there are typos in property assertions, they will now appear as failures.
 
@@ -156,11 +132,11 @@ An error will throw when a non-existent property is read. If there are typos in 
 expect(true).to.be.ture
 ```
 
-## Sinon.JS upgrade changes
+## Sinon.JS upgrade
 
-Sinon.JS has been upgraded to Sinon.JS 7 with some [breaking changes](https://sinonjs.org/releases/v7.1.1/#migration-guides).
+Sinon.JS was upgraded from `3.2.0` to `8.1.1`, which includes a number of breaking changes and new features outlined in {% url "Sinon.JS's migration guide" https://sinonjs.org/releases/latest/#migration-guides %}. Some changes you might notice are described below.
 
-### Example #1
+### {% fa fa-warning red %} Breaking Change: stub non-existent properties
 
 An error will throw when trying to stub a non-existent property.
 
@@ -169,7 +145,7 @@ An error will throw when trying to stub a non-existent property.
 cy.stub(obj, 'nonExistingProperty')
 ```
 
-### Example #2
+### {% fa fa-warning red %} Breaking Change: `reset()` replaced by `resetHistory()`
 
 For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
 
@@ -193,11 +169,153 @@ spy.resetHistory()
 stub.resetHistory()
 ```
 
+## Plugin Event `before:browser:launch`
+
+Since we now support more advanced browser launch options, during `before:browser:launch` we no longer yield the second argument as an array of browser arguments and instead yield an `options` object with an `args` property.
+
+You can see more examples of the new `options` in use in the {% url "Browser Launch API doc" browser-launch-api %}.
+
+{% badge danger Before %} The second argument is no longer an array.
+
+```js
+on('browser:before:launch', (browser, args) => {
+  args.push('--another-arg')
+})
+```
+
+{% badge success After %} Access the `args` property off `options`
+
+```js
+on('browser:before:launch', (browser, options) => {
+  options.args.push('--another-arg')
+})
+```
+
+## Chromium-based browser `family`
+
+We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'electron') {
+      // would match Electron in 3.x
+      // will match no browsers in 4.0.0
+      return args
+    }
+
+    if (browser.family === 'chromium') {
+      // would match no browsers in 3.x
+      // will match any Chromium-based browser in 4.0.0
+      // ie Chrome, Canary, Chromium, Electron, Edge (Chromium-based)
+      return args
+    }
+  })
+}
+```
+
+### Example #1 (Finding Electron)
+
+{% badge danger Before %} This will no longer find the Electron browser.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'electron') {
+      // run code for Electron browser in 3.x
+      return args
+    }
+  })
+}
+```
+
+{% badge success After %} Use `browser.name` to check for Electron
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.name === 'electron') {
+      // run code for Electron browser in 4.0.0
+      return args
+    }
+  })
+}
+```
+
+### Example #2 (Finding Chromium-based browsers)
+
+{% badge danger Before %} This will no longer find any browsers.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chrome') {
+      // in 4.x, `family` was changed to 'chromium' for all Chromium-based browsers
+      return args
+    }
+  })
+}
+```
+
+{% badge success After %} Use `browser.name` and `browser.family` to select non-Electron Chromium-based browsers
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      // pass args to Chromium-based browsers in 4.0
+      return args
+    }
+  })
+}
+```
+
+## `cy.writeFile()` yields `null`
+
+`cy.writeFile()` now yields `null` instead of the `contents` written to the file. This change was made to more closely align with the behavior of Node.js {% url "`fs.writeFile`" https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback %}.
+
+{% badge danger Before %} This assertion will no longer pass
+
+```js
+cy.writeFile('path/to/message.txt', 'Hello World')
+  .then((text) => {
+    // Would pass in Cypress 3 but will fail in 4
+    expect(text).to.equal('Hello World') // false
+  })
+```
+
+{% badge success After %} Instead read the contents of the file
+
+```js
+cy.writeFile('path/to/message.txt', 'Hello World')
+cy.readFile('path/to/message.txt').then((text) => {
+  expect(text).to.equal('Hello World') // true
+})
+```
+
+## cy.contains() ignores invisible whitespaces
+
+Browsers ignore leading, trailing, duplicate whitespaces. And Cypress now does that, too.
+
+```html
+<p>hello
+world</p>
+```
+
+```javascript
+cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.0.
+cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
+```
+
+## Node.js 8+ support
+
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. But, installing Cypress on your system uses the Node.js version installed on your system.
+
+Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
+
 ## CJSX is no longer supported
 
 Cypress no longer supports CJSX (CoffeeScript + JSX), because the library used to transpile it is no longer maintained.
-
-### Example #1
 
 If you need CJSX support, you can use a pre-2.x version of the Browserify preprocessor.
 

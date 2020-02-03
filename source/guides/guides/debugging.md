@@ -158,7 +158,9 @@ Browser Name | Expected Bundle Identifier | Expected Executable
 --- | --- | ---
 `chrome` | `com.google.Chrome` | `Contents/MacOS/Google Chrome`
 `chromium` | `org.chromium.Chromium` | `Contents/MacOS/Chromium`
-`canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
+`chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
+
+For the current list, see {% url 'packages/launcher' https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts %} files.
 
 ### Linux
 
@@ -168,7 +170,7 @@ Browser Name | Expected Binary Name(s)
 --- | ---
 `chrome` | `google-chrome`, `chrome`, or `google-chrome-stable`
 `chromium` | `chromium-browser` or `chromium`
-`canary` | `google-chrome-canary`
+`chrome:canary` | `google-chrome-canary`
 
 These binary names should work for most Linux distributions. If your distribution packages browsers under a different binary name, you can add a symlink using the expected binary name so that Cypress can detect it.
 
@@ -186,7 +188,9 @@ Browser Name | Expected Path
 --- | ---
 `chrome` | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`
 `chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
-`canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
+`chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
+
+For the current list, see {% url 'packages/launcher' https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts %} files.
 
 To make a browser installed at a different path be auto-detected, create a symbolic link using `mklink` in the location that Cypress expects to find your browser.
 
@@ -251,9 +255,6 @@ DEBUG=cypress:* cypress run
 
 ```shell
 set DEBUG=cypress:*
-```
-
-```shell
 cypress run
 ```
 
@@ -308,6 +309,31 @@ cy.now('task', 123)
 {% note warning %}
 The `cy.now()` command is an internal command and may change in the future.
 {% endnote %}
+
+## Log memory and CPU usage
+
+You can tell Cypress to log out a summary of the memory and CPU usage of itself and any subprocesses at a regular interval by enabling the `cypress:server:util:process_profiler` debug stream, like so:
+
+**On Mac or Linux:**
+
+```shell
+DEBUG=cypress:server:util:process_profiler cypress run
+```
+
+**On Windows:**
+
+```shell
+set DEBUG=cypress:server:util:process_profiler
+cypress run
+```
+
+In the resulting output, processes are grouped by their name.
+
+{% imgTag /img/guides/troubleshooting-cypress-process-profiler-cli.jpg "Process printout of Cypress in CLI" %}
+
+By default, process information is collected and summarized is printed once every 10 seconds. You can override this interval by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
+
+You can also obtain more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Additional information
 
@@ -397,6 +423,23 @@ cypress:server:appdata path: /root/.config/Cypress/cy/production +0ms
 cypress:server:cypress starting in mode smokeTest +356ms
 101
 cypress:server:cypress about to exit with code 0 +4ms
+```
+
+If the smoke test does not show a specific error yet fails, try printing the Electron crash stack to maybe pinpoint the problem better:
+
+```shell
+ELECTRON_ENABLE_STACK_DUMPING=1 npx cypress verify
+...
+Received signal 11 SEGV_MAPERR ffffffb27e8955bb
+#0 0x55c6389f83d9 (/root/.cache/Cypress/3.8.2/Cypress/Cypress+0x35d13d8)
+r8: 0000000000000000  r9: 00007ffcf0387c80 r10: 00007ffcf0387bd8 r11: 000000000000000e
+r12: 00007ffcf0387d2c r13: 00007f3ea737b720 r14: ffffffb27e89558b r15: 00007f3ea8974200
+di: 0000000000000000  si: 0000000000000020  bp: 0000000000000000  bx: 0000004f2f375580
+dx: 0000000000000001  ax: 0000000000000030  cx: 0000000000000001  sp: 00007ffcf0387d00
+ip: 00007f3ea89582dd efl: 0000000000010246 cgf: 002b000000000033 erf: 0000000000000005
+trp: 000000000000000e msk: 0000000000000000 cr2: ffffffb27e8955bb
+[end of stack trace]
+Calling _exit(1). Core file will not be generated.
 ```
 
 ## Patch Cypress

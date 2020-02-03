@@ -6,7 +6,7 @@ Before Cypress launches a browser, it gives you the ability to modify the argume
 
 This is helpful to modify, remove, or add your own arguments.
 
-The most common use case is adding your own chrome extension.
+The most common use case is adding your own web extension - {% url "example recipe" https://www.cypress.io/blog/2020/01/07/how-to-load-the-react-devtools-extension-in-cypress/ %}.
 
 # Usage
 
@@ -20,24 +20,27 @@ The returned `options` object will become the new launch options for the browser
 
 Here are options for the currently supported browsers:
 
-* {% url 'Chrome, Chromium, or Canary' "https://peter.sh/experiments/chromium-command-line-switches/" %}
+* {% url 'Chrome, Chromium, Canary, or Microsoft Edge (Chromium based) browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
+* {% url 'Firefox' "http://kb.mozillazine.org/About:config_entries" %}
 * {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
 
 Modify browser launch arguments:
+
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, options) => {
     // browser will look something like this
     // {
     //   name: 'chrome',
-    //   family: 'chrome'
+    //   family: 'chromium',
+    //   channel: 'stable',
     //   displayName: 'Chrome',
     //   version: '63.0.3239.108',
     //   path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //   majorVersion: '63'
     // }
 
-    if (browser.family === 'chrome') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // `args` is an array of all the arguments
       // that will be passed to Chrome when it launchers
       options.args.push('--start-fullscreen')
@@ -46,8 +49,13 @@ module.exports = (on, config) => {
       return options
     }
 
-    if (browser.family === 'electron') {
-      // `options.preferences` is a `BrowserWindow` options object
+    if (browser.family === 'firefox') {
+      args.extensions.push('/path/to/my/extension')
+      args.preferences['browser.blink_allowed'] = true
+    }
+
+    if (browser.name === 'electron') {
+      // `args` is a `BrowserWindow` options object
       // https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
       options.preferences['fullscreen'] = true
 
@@ -65,6 +73,7 @@ module.exports = (on, config) => {
 ```
 
 Add browser extensions:
+
 ```js
 module.exports = (on, config) => {
   on('browser:before:launch', (browser, options) => {
@@ -88,11 +97,18 @@ module.exports = (on, config) => {
 
 Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://electronjs.org/docs/api/chrome-command-line-switches/history %}.
 
-You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, open or run the Cypress Test Runner like this:
+You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, you can set the environment variables before running Cypress like below:
+
+### Linux/OSX
 
 ```shell
 export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
-npx cypress open|run
+```
+
+### Windows
+
+```shell
+set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
 ```
 
 Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. There is no way to see all currently set switches after Electron's launch.
@@ -116,7 +132,7 @@ You can however send your own video file for testing by passing a Chrome command
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, options) => {
-    if (browser.name === 'chrome') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Mac/Linux
       options.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
 

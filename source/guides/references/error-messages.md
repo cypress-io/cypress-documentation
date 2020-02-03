@@ -307,6 +307,14 @@ it('does not forget to return a promise', function () {
 
 See our {% url "Web Security" web-security#Limitations %} documentation.
 
+## {% fa fa-exclamation-triangle red %} `cy.visit()` failed because you are attempting to visit a different origin domain
+
+Two URLs have the same origin if the `protocol`, `port` (if specified), and `host` are the same for both. You can only visit domains that are of the same-origin within a single test. You can read more about same-origin policy in general {% url "here" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}.
+
+You can visit urls that are of different origin across different tests, so you may consider splitting your `cy.visit()` of different origin domains into separate tests.
+
+See our {% url "Web Security" web-security#Limitations %} documentation for more information and workarounds.
+
 ## {% fa fa-exclamation-triangle red %} `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
 In version {% url "`0.20.0`" changelog %}, we removed the commands for adding custom commands and replaced them with, what we believe to be, a simpler interface.
@@ -347,7 +355,7 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 
 ## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked a done callback.
 
-The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade-changes %}.
+The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade %}.
 
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
@@ -509,7 +517,7 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %} when running in Chrome family browsers (this setting will not work in other browsers). Before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
 ```json
 {
