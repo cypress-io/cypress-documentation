@@ -10,47 +10,75 @@ The most common use case is adding your own chrome extension.
 
 # Usage
 
-## Modify args based on browser
+## Modify browser launch arguments, preferences, and extensions
 
-Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify the arguments based on the browser that Cypress is launching.
+Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify how Cypress launches the browser (e.g. modify arguments, user preferences, and extensions).
 
-This event will yield you the `browser` as an object, and `args` which are the default arguments used to launch the browser.
+This event will yield you the `browser` object, which gives you information about the browser, and the `options` object, which allows you to modify how the browser is launched.
 
-`args` may be an array or an object (based on the type of browser we're launching). Whatever you return from this event will become the new args for launching the browser.
+The returned `options` object will become the new launch options for the browser.
 
 Here are options for the currently supported browsers:
 
 * {% url 'Chrome, Chromium, or Canary' "https://peter.sh/experiments/chromium-command-line-switches/" %}
 * {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
 
+Modify browser launch arguments:
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('before:browser:launch', (browser = {}, options) => {
     // browser will look something like this
     // {
     //   name: 'chrome',
+    //   family: 'chrome'
     //   displayName: 'Chrome',
     //   version: '63.0.3239.108',
     //   path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //   majorVersion: '63'
     // }
 
-    if (browser.name === 'chrome') {
+    if (browser.family === 'chrome') {
       // `args` is an array of all the arguments
       // that will be passed to Chrome when it launchers
-      args.push('--start-fullscreen')
+      options.args.push('--start-fullscreen')
 
-      // whatever you return here becomes the new args
-      return args
+      // whatever you return here becomes the launch options
+      return options
     }
 
-    if (browser.name === 'electron') {
-      // `args` is a `BrowserWindow` options object
+    if (browser.family === 'electron') {
+      // `options.preferences` is a `BrowserWindow` options object
       // https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
-      args['fullscreen'] = true
+      options.preferences['fullscreen'] = true
 
-      // whatever you return here becomes the new args
-      return args
+      // whatever you return here becomes the new launch options
+      return options
+    }
+
+    if (browser.family === 'firefox') {
+      options.firefoxOptions.windowSizeMode = 'fullscreen'
+
+      return options
+    }
+  })
+}
+```
+
+Add browser extensions:
+```js
+module.exports = (on, config) => {
+  on('browser:before:launch', (browser, options) => {
+    if (browser.family === 'chrome' || browser.family === 'electron') {
+      // NOTE: extensions CANNOT be loaded in chrome headless
+      options.extensions.push('/path/to/chrome/extension')
+
+      return options
+    }
+
+    if (browser.family === 'firefox') {
+      options.extensions.push('/path/to/firefox/addon')
+
+      return options
     }
   })
 }
@@ -87,16 +115,16 @@ You can however send your own video file for testing by passing a Chrome command
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('before:browser:launch', (browser = {}, options) => {
     if (browser.name === 'chrome') {
       // Mac/Linux
-      args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
+      options.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
 
       // Windows
-      // args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+      // options.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
     }
 
-    return args
+    return options
   })
 }
 ```

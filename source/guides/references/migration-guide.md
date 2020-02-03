@@ -10,6 +10,28 @@ Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, wh
 
 Node 4 reached its end of life on April 30, 2018 and Node 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node versions will no longer be supported. The minimum Node version supported by Cypress is Node 8.
 
+## Plugin Event `before:browser:launch`
+
+Since we now support more advanced browser launch options, during `before:browser:launch` we have switched from yielding the second argument as an `array` of browser arguments to an options `object` with an `args` property.
+
+// add link to API doc, mention other props included
+
+### Example
+
+{% badge danger Before %} The second argument is no longer an array.
+```js
+on('browser:before:launch', (browser, args) => {
+  args.push('--another-arg')
+})
+```
+
+{% badge success After %} Access the `args` property on the second argument
+```js
+on('browser:before:launch', (browser, options) => {
+  options.args.push('--another-arg')
+})
+```
+
 ## Mocha upgrade changes
 
 Mocha has been upgraded to Mocha 7.
@@ -68,6 +90,7 @@ it('uses invokes done and returns promise', function (done) {
     // assertions
     done()
   })
+
   eventEmitter.doSomethingThatEmitsChange()
 })
 ```
