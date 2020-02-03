@@ -81,11 +81,31 @@ module.exports = (on, config) => {
       // NOTE: extensions CANNOT be loaded in chrome headless
       options.extensions.push('/path/to/chrome/extension')
 
+    return options
+  })
+}
+```
+
+Changing browser preferences:
+
+```js
+module.exports = (on, config) => {
+  on('browser:before:launch', (browser, options) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
+      // via options.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
+
+      // for example, to set `somePreference: true` in Preferences:
+      options.preferences.default.somePreference = true
+
+      // more information about Chromium preferences can be found here:
+      // https://www.chromium.org/developers/design-documents/preferences
+
       return options
     }
 
     if (browser.family === 'firefox') {
-      options.extensions.push('/path/to/firefox/addon')
+      // TODO @Bkucera what does this look like?
 
       return options
     }
