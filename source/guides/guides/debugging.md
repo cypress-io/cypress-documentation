@@ -255,9 +255,6 @@ DEBUG=cypress:* cypress run
 
 ```shell
 set DEBUG=cypress:*
-```
-
-```shell
 cypress run
 ```
 
@@ -312,6 +309,31 @@ cy.now('task', 123)
 {% note warning %}
 The `cy.now()` command is an internal command and may change in the future.
 {% endnote %}
+
+## Log memory and CPU usage
+
+You can tell Cypress to log out a summary of the memory and CPU usage of itself and any subprocesses at a regular interval by enabling the `cypress:server:util:process_profiler` debug stream, like so:
+
+**On Mac or Linux:**
+
+```shell
+DEBUG=cypress:server:util:process_profiler cypress run
+```
+
+**On Windows:**
+
+```shell
+set DEBUG=cypress:server:util:process_profiler
+cypress run
+```
+
+In the resulting output, processes are grouped by their name.
+
+{% imgTag /img/guides/troubleshooting-cypress-process-profiler-cli.jpg "Process printout of Cypress in CLI" %}
+
+By default, process information is collected and summarized is printed once every 10 seconds. You can override this interval by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
+
+You can also obtain more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Additional information
 
