@@ -169,7 +169,7 @@ spy.resetHistory()
 stub.resetHistory()
 ```
 
-## Chromium based browser `family`
+## Chromium-based browser `family`
 
 We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.
 
@@ -191,6 +191,8 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+### Example #1 (Finding Electron)
 
 {% badge danger Before %} This will no longer find the Electron browser.
 
@@ -218,22 +220,32 @@ module.exports = (on, config) => {
 }
 ```
 
-## `--browser` flag for release channels
+### Example #2 (Finding Chromium-based browsers)
 
-The {% url "`--browser` flag" command-line#cypress-run-browser-lt-browser-name-or-path-gt %} has been updated so you can specify a specific release channel of a browser to run.
+{% badge danger Before %} This will no longer find any browsers.
 
-This means that release channels that could previously be passed as the sole argument need to be prepended with the browser name.
-
-{% badge danger Before %} This will no longer run Chrome Canary.
-
-```shell
-cypress run --browser canary
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chrome') {
+      // in 4.x, `family` was changed to 'chromium' for all Chromium-based browsers
+      return args
+    }
+  })
+}
 ```
 
-{% badge success After %} Use `chrome:canary` to run Chrome Canary.
+{% badge success After %} Use `browser.name` and `browser.family` to select non-Electron Chromium-based browsers
 
-```shell
-cypress run --browser chrome:canary
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      // pass args to Chromium-based browsers in 4.0
+      return args
+    }
+  })
+}
 ```
 
 ## `cy.writeFile()` yields `null`
