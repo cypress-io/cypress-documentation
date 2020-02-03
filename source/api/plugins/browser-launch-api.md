@@ -77,9 +77,9 @@ Add browser extensions:
 ```js
 module.exports = (on, config) => {
   on('browser:before:launch', (browser, options) => {
-    if (browser.family === 'chrome' || browser.family === 'electron') {
-      // NOTE: extensions CANNOT be loaded in chrome headless
-      options.extensions.push('/path/to/chrome/extension')
+    // supply the path to an unpacked WebExtension
+    // NOTE: extensions cannot be loaded in headless Chrome
+    options.extensions.push('/path/to/webextension')
 
     return options
   })
