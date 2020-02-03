@@ -254,6 +254,11 @@
       link: https://github.com/javierbrea/cypress-localstorage-commands
       keywords: [commands, localstorage, persistence]
 
+    - name: cypress-iframe
+      description: Custom commands for interacting with iframes
+      link:https://gitlab.com/kgroat/cypress-iframe
+      keywords: [commands, iframe]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
