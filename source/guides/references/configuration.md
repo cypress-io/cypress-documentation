@@ -23,6 +23,7 @@ Option | Default | Description
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
+`firefoxGcInterval` | `{ runMode: 1, openMode: null }` | Controls whether or not Cypress forces Firefox to run garbage collection (GC) cleanup and also controls how frequently this cleanup runs. See full details in {% url "GitHub issue #1687" https://github.com/cypress-io/cypress/issues/6187 %}.
 
 ## Timeouts
 
