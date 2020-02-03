@@ -9,9 +9,7 @@ title: Cypress.isBrowser
 ```javascript
 // while running in Chrome
 Cypress.isBrowser('chrome')  // true
-Cypress.isBrowser('Chrome')  // true
-Cypress.isBrowser('firefox') // false
-Cypress.isBrowser('canary')  // false
+Cypress.isBrowser('firefox')  // false
 ```
 
 ## Arguments

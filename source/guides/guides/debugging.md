@@ -158,7 +158,7 @@ Browser Name | Expected Bundle Identifier | Expected Executable
 --- | --- | ---
 `chrome` | `com.google.Chrome` | `Contents/MacOS/Google Chrome`
 `chromium` | `org.chromium.Chromium` | `Contents/MacOS/Chromium`
-`canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
+`chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
 
 For the current list, see {% url 'packages/launcher' https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts %} files.
 
@@ -170,7 +170,7 @@ Browser Name | Expected Binary Name(s)
 --- | ---
 `chrome` | `google-chrome`, `chrome`, or `google-chrome-stable`
 `chromium` | `chromium-browser` or `chromium`
-`canary` | `google-chrome-canary`
+`chrome:canary` | `google-chrome-canary`
 
 These binary names should work for most Linux distributions. If your distribution packages browsers under a different binary name, you can add a symlink using the expected binary name so that Cypress can detect it.
 
@@ -188,7 +188,7 @@ Browser Name | Expected Path
 --- | ---
 `chrome` | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`
 `chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
-`canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
+`chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
 
 For the current list, see {% url 'packages/launcher' https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts %} files.
 

@@ -30,13 +30,15 @@ module.exports = (on, config) => {
     // browser will look something like this
     // {
     //   name: 'chrome',
+    //   family: 'chromium',
+    //   channel: 'stable',
     //   displayName: 'Chrome',
     //   version: '63.0.3239.108',
     //   path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //   majorVersion: '63'
     // }
 
-    if (browser.name === 'chrome') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // `args` is an array of all the arguments
       // that will be passed to Chrome when it launchers
       args.push('--start-fullscreen')
@@ -45,7 +47,7 @@ module.exports = (on, config) => {
       return args
     }
 
-    if (browser.name === 'firefox') {
+    if (browser.family === 'firefox') {
       args.extensions.push('/path/to/my/extension')
       args.preferences['browser.blink_allowed'] = true
     }
@@ -101,7 +103,7 @@ You can however send your own video file for testing by passing a Chrome command
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, args) => {
-    if (browser.name === 'chrome') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Mac/Linux
       args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
 
