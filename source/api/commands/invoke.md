@@ -134,7 +134,7 @@ cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 
 ## Invoking an async function
 
-In this example we invoke a Vuex action that returns a Promise. `cy.invoke` will wait until the Promise resolves after the specified delay which we pass as an argument and only then will continue executing. 
+In this example we invoke a Vuex action that returns a Promise. `.invoke()` will wait until the Promise resolves after the specified delay which we pass as an argument and only then will continue executing. 
 
 A minimal Vuex store:
 ```javascript
