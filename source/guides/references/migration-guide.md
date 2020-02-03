@@ -222,7 +222,7 @@ module.exports = (on, config) => {
 
 The {% url "`--browser` flag" command-line#cypress-run-browser-lt-browser-name-or-path-gt %} has been updated so you can specify a specific release channel of a browser to run.
 
-This means that release channels that could previously be passed as the sole argument need to be prepended with their browser name.
+This means that release channels that could previously be passed as the sole argument need to be prepended with the browser name.
 
 {% badge danger Before %} This will no longer run Chrome Canary.
 

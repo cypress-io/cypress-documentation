@@ -355,7 +355,7 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 
 ## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked a done callback.
 
-The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade-changes %}.
+The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade %}.
 
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
