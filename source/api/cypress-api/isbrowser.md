@@ -2,21 +2,22 @@
 title: Cypress.isBrowser
 ---
 
-`Cypress.isBrowser` returns `true` if the current browser matches the name passed or `false` if it does not. The name is case-insensitive.
+`Cypress.isBrowser` returns `true` if the current browser matches the filter passed or `false` if it does not.
 
 # Syntax
 
 ```javascript
-// while running in Chrome
-Cypress.isBrowser('chrome')  // true
-Cypress.isBrowser('firefox')  // false
+Cypress.isBrowser('chrome') // true when running in Chrome
+Cypress.isBrowser('firefox') // true when running in Firefox
+Cypress.isBrowser({ family: 'chromium' }) // true when running in any Chromium-based browser (Chrome, Electron, etc...)
+Cypress.isBrowser({ family: 'chromium', channel: 'stable' }) // true when running in any stable release of a Chromium-based browser
 ```
 
 ## Arguments
 
-**{% fa fa-angle-right %} name**  ***(String)***
+**{% fa fa-angle-right %} filter**  ***(string or object)***
 
-The name of the browser to check against.
+The filter to check against. If an object, it should match the browser types returned by the {% url "browser launch API" browser-launch-api %}. If a name, it will be matched against the name of the browser (case-insensitive).
 
 # Examples
 
