@@ -169,22 +169,52 @@ spy.resetHistory()
 stub.resetHistory()
 ```
 
-## CJSX is no longer supported
+## Chromium based browser `family`
 
-Cypress no longer supports CJSX (CoffeeScript + JSX), because the library used to transpile it is no longer maintained.
+We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.
 
-If you need CJSX support, you can use a pre-2.x version of the Browserify preprocessor.
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'electron') {
+      // would match Electron in 3.x
+      // will match no browsers in 4.0.0
+      return args
+    }
 
-```shell
-npm install @cypress/browserify-preprocessor@1.1.2
+    if (browser.family === 'chromium') {
+      // would match no browsers in 3.x
+      // will match any Chromium-based browser in 4.0.0
+      // ie Chrome, Canary, Chromium, Electron, Edge (Chromium-based)
+      return args
+    }
+  })
+}
 ```
 
-```javascript
-// cypress/plugins/index.js
-const browserify = require('@cypress/browserify-preprocessor')
+{% badge danger Before %} This would match Electron browser.
 
-module.exports = (on) => {
-  on('file:preprocessor', browserify())
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'electron') {
+      // run code for Electron browser in 3.x
+      return args
+    }
+  })
+}
+```
+
+{% badge success After %} Use `browser.name` to check for Electron
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.name === 'electron') {
+      // run code for Electron browser in 4.0.0
+      return args
+    }
+  })
 }
 ```
 
@@ -211,12 +241,6 @@ cy.readFile('path/to/message.txt').then((text) => {
 })
 ```
 
-## Node.js 8+ support
-
-Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. But, installing Cypress on your system uses the Node.js version installed on your system.
-
-Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
-
 ## cy.contains() ignores invisible whitespaces
 
 Browsers ignore leading, trailing, duplicate whitespaces. And Cypress now does that, too.
@@ -227,6 +251,31 @@ world</p>
 ```
 
 ```javascript
-cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.
-cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.x.
+cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.0.
+cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
+```
+
+## Node.js 8+ support
+
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. But, installing Cypress on your system uses the Node.js version installed on your system.
+
+Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
+
+## CJSX is no longer supported
+
+Cypress no longer supports CJSX (CoffeeScript + JSX), because the library used to transpile it is no longer maintained.
+
+If you need CJSX support, you can use a pre-2.x version of the Browserify preprocessor.
+
+```shell
+npm install @cypress/browserify-preprocessor@1.1.2
+```
+
+```javascript
+// cypress/plugins/index.js
+const browserify = require('@cypress/browserify-preprocessor')
+
+module.exports = (on) => {
+  on('file:preprocessor', browserify())
+}
 ```
