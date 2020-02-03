@@ -192,7 +192,7 @@ module.exports = (on, config) => {
 }
 ```
 
-{% badge danger Before %} This would match Electron browser.
+{% badge danger Before %} This will no longer find the Electron browser.
 
 ```js
 module.exports = (on, config) => {
@@ -216,6 +216,24 @@ module.exports = (on, config) => {
     }
   })
 }
+```
+
+## `--browser` flag for release channels
+
+The {% url "`--browser` flag" command-line#cypress-run-browser-lt-browser-name-or-path-gt %} has been updated so you can specify a specific release channel of a browser to run.
+
+This means that release channels that could previously be passed as the sole argument need to be prepended with their browser name.
+
+{% badge danger Before %} This will no longer run Chrome Canary.
+
+```shell
+cypress run --browser canary
+```
+
+{% badge success After %} Use `chrome:canary` to run Chrome Canary.
+
+```shell
+cypress run --browser chrome:canary
 ```
 
 ## `cy.writeFile()` yields `null`
