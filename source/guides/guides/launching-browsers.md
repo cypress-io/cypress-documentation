@@ -71,7 +71,13 @@ cypress run --browser chrome:canary
 Or Microsoft Edge (Chromium-based):
 
 ```shell
-cypress run --browser edge ## or edge:canary
+cypress run --browser edge
+```
+
+Or Microsoft Edge Canary (Chromium-based):
+
+```shell
+cypress run --browser edge:canary
 ```
 
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
