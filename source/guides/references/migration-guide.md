@@ -169,7 +169,7 @@ spy.resetHistory()
 stub.resetHistory()
 ```
 
-## Chromium based browser `family`
+## Chromium-based browser `family`
 
 We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.
 
@@ -192,6 +192,8 @@ module.exports = (on, config) => {
 }
 ```
 
+### Example #1 (Finding Electron)
+
 {% badge danger Before %} This will no longer find the Electron browser.
 
 ```js
@@ -212,6 +214,34 @@ module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, args) => {
     if (browser.name === 'electron') {
       // run code for Electron browser in 4.0.0
+      return args
+    }
+  })
+}
+```
+
+### Example #2 (Finding Chromium-based browsers)
+
+{% badge danger Before %} This will no longer find any browsers.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chrome') {
+      // in 4.x, `family` was changed to 'chromium' for all Chromium-based browsers
+      return args
+    }
+  })
+}
+```
+
+{% badge success After %} Use `browser.name` and `browser.family` to select non-Electron Chromium-based browsers
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      // pass args to Chromium-based browsers in 4.0
       return args
     }
   })
