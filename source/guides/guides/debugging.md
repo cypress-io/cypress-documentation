@@ -313,21 +313,23 @@ You can tell Cypress to log out a summary of the memory and CPU usage of itself 
 **On Mac or Linux:**
 
 ```shell
-DEBUG=cypress:server:util:process_profiler cypress ...
+DEBUG=cypress:server:util:process_profiler cypress run
 ```
 
 **On Windows:**
 
 ```shell
 set DEBUG=cypress:server:util:process_profiler
-cypress ...
+cypress run
 ```
 
-In the resulting output, processes are grouped by the first word of their name.
+In the resulting output, processes are grouped by their name.
 
-By default, the interval at which process information is collected and summarized is once every 10 seconds. You can override this by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
+{% imgTag /img/guides/troubleshooting-cypress-process-profiler-cli.jpg "Process printout of Cypress in CLI" %}
 
-You can also obtain even more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
+By default, process information is collected and summarized is printed once every 10 seconds. You can override this interval by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
+
+You can also obtain more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Additional information
 
