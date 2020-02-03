@@ -144,3 +144,9 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+{% history %}
+{% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`
+{% url "4.0.0" changelog#4-0-0 %} | All Chromium-based browsers, including Electron, have `chromium` set as their `family` property.
+{% url "4.0.0" changelog#4-0-0 %} | Added `channel` property to browser.
+{% endhistory %}
