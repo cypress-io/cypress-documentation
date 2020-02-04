@@ -193,6 +193,28 @@ on('browser:before:launch', (browser, options) => {
 })
 ```
 
+## Electron options in `before:browser:launch`
+
+Previously, you could pass options to the launched Electron {% url "BrowserWindow" https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions %} in `before:browser:launch` by modifying the `options` object.
+
+Now, you must pass those options as `options.preferences`:
+
+{% badge danger Before %} Passing BrowserWindow options on the `options` object is no longer supported.
+
+```js
+on('browser:before:launch', (browser, options) => {
+  options.darkTheme = true
+})
+```
+
+{% badge success After %} Pass BrowserWindow options on the `options.preferences` object instead.
+
+```js
+on('browser:before:launch', (browser, options) => {
+  options.preferences.darkTheme = true
+})
+```
+
 ## Chromium-based browser `family`
 
 We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.

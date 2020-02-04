@@ -2,11 +2,40 @@
 title: Browser Launch API
 ---
 
-Before Cypress launches a browser, it gives you the ability to modify the arguments used to launch it.
+Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options.
 
-This is helpful to modify, remove, or add your own arguments.
+# Syntax
 
-The most common use case is adding your own web extension - {% url "example recipe" https://www.cypress.io/blog/2020/01/07/how-to-load-the-react-devtools-extension-in-cypress/ %}.
+```js
+on('before:browser:launch', (browser = {}, launchOptions) => { /* ... */ })
+```
+
+**{% fa fa-angle-right %} browser** ***(object)***
+
+An object describing the browser being launched, with the following properties:
+
+Property | Type | Description
+--- | --- | ---
+`name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
+`family` | `string` | Rendering engine being used. `chromium` or `firefox`.
+`channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
+`displayName` | `string` | Human-readable display name for the browser.
+`version` | `string` | Full version string.
+`path` | `string` | Path to the browser on disk. Blank for Electron.
+`majorVersion` | `number` | The major version number of the browser.
+
+
+**{% fa fa-angle-right %} launchOptions** ***(object)***
+
+Options that can be modified to control how the browser is launched, with the following properties:
+
+Property | Type | Description
+--- | --- | ---
+`preferences` | `object` | An object describing browser preferences. Differs between browsers. See {% url "\"Changing browser preferences\"" #Changing-browser-preferences %} for details.
+`args` | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See {% url "\"Modify browser launch arguments\"" #Modify-browser-launch-arguments %} for details.
+`extensions` | `string[]` | An array of paths to folders containing unpacked WebExtensions, to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See {% url "\"Add browser extensions\"" #Add-browser-extensions %} for details.
+`windowSize` | `string` | By default, browsers will open `maximized`. You can make a browser open in fullscreen mode by passing `fullscreen` here.
+
 
 # Usage
 
@@ -14,59 +43,28 @@ The most common use case is adding your own web extension - {% url "example reci
 
 Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify how Cypress launches the browser (e.g. modify arguments, user preferences, and extensions).
 
-This event will yield you the `browser` object, which gives you information about the browser, and the `options` object, which allows you to modify how the browser is launched.
+This event will yield you the `browser` object, which gives you information about the browser, and the `launchOptions` object, which allows you to modify how the browser is launched.
 
-The returned `options` object will become the new launch options for the browser.
-
-Here are options for the currently supported browsers:
-
-* {% url 'Chrome, Chromium, Canary, or Microsoft Edge (Chromium based) browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
-* {% url 'Firefox' "http://kb.mozillazine.org/About:config_entries" %}
-* {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
+The returned `launchOptions` object will become the new launch options for the browser.
 
 ### Modify browser launch arguments:
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, options) => {
-    // browser will look something like this
-    // {
-    //   name: 'chrome',
-    //   family: 'chromium',
-    //   channel: 'stable',
-    //   displayName: 'Chrome',
-    //   version: '63.0.3239.108',
-    //   path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    //   majorVersion: '63'
-    // }
-
+  on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // `args` is an array of all the arguments that will
       //  be passed to Chromium-based browsers when it launchers
-      options.args.push('--start-fullscreen')
+      launchOptions.args.push('--start-fullscreen')
 
-      // whatever you return here becomes the launch options
-      return options
+      // whatever you return here becomes the launchOptions
+      return launchOptions
     }
 
     if (browser.family === 'firefox') {
-      args.extensions.push('/path/to/my/extension')
-      args.preferences['browser.blink_allowed'] = true
-    }
+      launchOptions.args.push('-some-cli-argument')
 
-    if (browser.name === 'electron') {
-      // `args` is a `BrowserWindow` options object
-      // https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
-      options.preferences['fullscreen'] = true
-
-      // whatever you return here becomes the new launch options
-      return options
-    }
-
-    if (browser.family === 'firefox') {
-      options.firefoxOptions.windowSizeMode = 'fullscreen'
-
-      return options
+      return launchOptions
     }
   })
 }
@@ -76,38 +74,47 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on('browser:before:launch', (browser, options) => {
+  on('browser:before:launch', (browser, launchOptions) => {
     // supply the path to an unpacked WebExtension
     // NOTE: extensions cannot be loaded in headless Chrome
-    options.extensions.push('/path/to/webextension')
+    launchOptions.extensions.push('/path/to/webextension')
 
-    return options
+    return launchOptions
   })
 }
 ```
 
-Changing browser preferences:
+### Changing browser preferences:
 
 ```js
 module.exports = (on, config) => {
-  on('browser:before:launch', (browser, options) => {
+  on('browser:before:launch', (browser, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
-      // via options.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
+      // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
 
       // for example, to set `somePreference: true` in Preferences:
-      options.preferences.default.somePreference = true
+      launchOptions.preferences.default.somePreference = true
 
       // more information about Chromium preferences can be found here:
       // https://www.chromium.org/developers/design-documents/preferences
 
-      return options
+      return launchOptions
     }
 
     if (browser.family === 'firefox') {
-      // TODO @Bkucera what does this look like?
+      // launchOptions.preferences is a map of preference names to values
+      launchOptions.preferences['browser.startup.homepage'] = 'https://cypress.io'
 
-      return options
+      return launchOptions
+    }
+
+    if (browser.name === 'electron') {
+      // launchOptions.preferences is a `BrowserWindow` `options` object:
+      // https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
+      launchOptions.preferences.darkTheme = true
+
+      return launchOptions
     }
   })
 }
@@ -151,16 +158,16 @@ You can however send your own video file for testing by passing a Chrome command
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, options) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Mac/Linux
-      options.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
+      launchOptions.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
 
       // Windows
-      // options.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+      // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
     }
 
-    return options
+    return launchOptions
   })
 }
 ```
