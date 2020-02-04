@@ -6,7 +6,7 @@ title: Cypress简介
 # {% fa fa-graduation-cap %} 通过这篇文档你将会学习到
 
 - Cypress如何查询DOM
-- Cypress如何管理主题及命令链
+- Cypress如何管理操作对象及命令链
 - 断言是什么样的及它是如何工作的
 - 超时如何应用于命令
 {% endnote %}
@@ -224,7 +224,7 @@ cy.get('.my-slow-selector', { timeout: 10000 })
 
 # 命令链接机制
 
-了解Cypress用于将命令链接在一起的机制非常重要。它代表您管理Promise链，每个命令都会产生下一个命令的"主题"，直到链结束或遇到错误。开发人员不需要直接使用Promises，但了解它们的工作方式是很有帮助的！
+了解Cypress用于将命令链接在一起的机制非常重要。它代表您管理Promise链，每个命令都会产生下一个命令的"操作对象"，直到链结束或遇到错误。开发人员不需要直接使用Promises，但了解它们的工作方式是很有帮助的！
 
 ## 元素交互
 
@@ -237,7 +237,7 @@ cy.get('textarea.post-body')
   .type('This is an excellent post.')
 ```
 
-我们将 {% url `.type()` type %}链接到{% url `cy.get()` get %}上，告诉它输入从{% url `cy.get()` get %}命令得到的主题，这将是一个DOM元素。
+我们将 {% url `.type()` type %}链接到{% url `cy.get()` get %}上，告诉它输入从{% url `cy.get()` get %}命令得到的操作对象，这将是一个DOM元素。
 
 以下是Cypress提供的与您的应用进行交互的更多动作命令：
 
@@ -282,7 +282,7 @@ cy.get('input').should('not.have.value', 'US')
 
 我们将在本指南后面详细了解{% urlHash '断言' 断言 %}
 
-## 主题管理
+## 操作对象管理
 
 新的Cypress链始终以`cy.[command]`开头，`command`产生的内容确定了下一个可以调用的其他命令或者(命令链)
 
@@ -292,15 +292,15 @@ cy.get('input').should('not.have.value', 'US')
 
 ### 某些命令无法链接:
 
-- 仅从`cy` 开始,这意味着它们不对主题进行操作 {% url `cy.clearCookies()` clearcookies %}.
-- 来自用于特定类型主题的命令(如 DOM 元素):{% url `.type()` type %}.
-- 来自`cy` *或* 来自主题生成命令: {% url `cy.contains()` contains %}.
+- 仅从`cy` 开始,这意味着它们不对操作对象进行操作 {% url `cy.clearCookies()` clearcookies %}.
+- 来自用于特定类型操作对象的命令(如 DOM 元素):{% url `.type()` type %}.
+- 来自`cy` *或* 来自操作对象生成命令: {% url `cy.contains()` contains %}.
 
 ### 一些无返回的命令:
 
 - `null`, 意味着在命令之后不能链接任何命令: {% url `cy.clearCookie()` clearcookie %}.
-- 他们最初用于同一主题: {% url `.click()` click %}.
-- 适合命令的新主题 {% url `.wait()` wait %}.
+- 他们最初用于同一操作对象: {% url `.click()` click %}.
+- 适合命令的新操作对象 {% url `.wait()` wait %}.
 
 它实际上比听起来更直观。
 
@@ -315,18 +315,18 @@ cy.get('.main-container') // 得到匹配 DOM 元素的数组
 ```
 
 {% note success 核心概念 %}
-Cypress命令不是**返回**它们的主题，它们是**获取**它们。请记住:Cypress 命令是异步的,会排队等待执行。在执行过程中,从一个命令生成到下一个命令,并且在每个命令之间运行大量有用的 Cypress 代码,以确保一切正常。
+Cypress命令不是**返回**它们的操作对象，它们是**获取**它们。请记住:Cypress 命令是异步的,会排队等待执行。在执行过程中,从一个命令生成到下一个命令,并且在每个命令之间运行大量有用的 Cypress 代码,以确保一切正常。
 {% endnote %}
 
 {% note info %}
 为了解决参考元素的需要,Cypress 还有一种{% url '称为别名' variables-and-aliases %}的功能。别名可帮助您**存储**和**保存**元素引用以供将来使用。
 {% endnote %}
 
-### 使用 {% url `.then()` then %} 来操作一个主题
+### 使用 {% url `.then()` then %} 来操作一个操作对象
 
-想要跳入命令流并直接了解主题?没问题,在命令链中添加{% url '`.then()`' type %}。当前面的命令解析时,它将调用回调函数,并将产生的主题作为第一个参数
+想要跳入命令流并直接了解操作对象?没问题,在命令链中添加{% url '`.then()`' type %}。当前面的命令解析时,它将调用回调函数,并将产生的操作对象作为第一个参数
 
-如果要在{% url `.then()` then %} 之后继续链接命令,则需要指定要链接于这些命令的主题,可以使用`null`或`undefined`以外的简单返回值来实现该主题。Cypress为你产生下一个命令
+如果要在{% url `.then()` then %} 之后继续链接命令,则需要指定要链接于这些命令的操作对象,可以使用`null`或`undefined`以外的简单返回值来实现该操作对象。Cypress为你产生下一个命令
 
 ### 让我们来看一个例子:
 
@@ -336,7 +336,7 @@ cy
   .get('#some-link')
 
   .then(($myElement) => {
-    // ...模拟任意主题的一段代码
+    // ...模拟任意操作对象的一段代码
 
     // 获取它的 href 属性
     const href = $myElement.prop('href')
@@ -345,7 +345,7 @@ cy
     return href.replace(/(#.*)/, '')
   })
   .then((href) => {
-    // href 是现在的新主题
+    // href 是现在的新操作对象
     // 现在我们可以干我们想干的
   })
 ```
@@ -354,9 +354,9 @@ cy
 我们有更多的{% url "`cy.then()`" then %}例子和用例在我们的 {% url '核心概念导引' variables-and-aliases %}教你如何正确处理异步代码,何时使用变量,以及什么是别名。
 {% endnote %}
 
-### 使用别名来引用以前的主题
+### 使用别名来引用以前的操作对象
 
-Cypress有一些附加功能,像快速引用过去的主题进行调用  {% url '别名' variables-and-aliases %}. 如下所示:
+Cypress有一些附加功能,像快速引用过去的操作对象进行调用  {% url '别名' variables-and-aliases %}. 如下所示:
 
 ```js
 cy
@@ -680,7 +680,7 @@ cy.get('form')
 - {% url `.find()` find %} 预期元素最终存在于DOM 中。
 - {% url `.type()` type %} 预期元素最终为 *可输入* 状态。
 - {% url `.click()` click %} 预期元素最终为 *可操作* 状态。
-- {% url `.its()` its %} 预期最终找到当前主题的一个属性。
+- {% url `.its()` its %} 预期最终找到当前操作对象的一个属性。
 
 某些命令可能有特殊的要求，需要立即返回而不需要重试:例如{% url `cy.request()` request %}。
 
@@ -778,15 +778,15 @@ Cypress捆绑了{% url "`Chai`" bundled-tools#Chai %}, {% url "`Chai-jQuery`" bu
 
 在 Cypress 中有两种断言写法:
 
-1. **隐式主题:** 使用 {% url `.should()` should %} 或者 {% url `.and()` and %}.
-2. **显示主题:** 使用 `expect`.
+1. **隐式操作对象:** 使用 {% url `.should()` should %} 或者 {% url `.and()` and %}.
+2. **显示操作对象:** 使用 `expect`.
 
-## 隐式主题
+## 隐式操作对象
 
 在Cypress里使用{% url `.should()` should %} 或者 {% url `.and()` and %}断言是首选方式。这些典型的命令，表明它们通常直接应用于当前的命令链中。
 
 ```javascript
-// 这里隐含的主题是第一<tr>
+// 这里隐含的操作对象是第一<tr>
 // 断言 <tr>有一个active类
 cy.get('tbody tr:first').should('have.class', 'active')
 ```
@@ -799,7 +799,7 @@ cy.get('#header a')
   .and('have.attr', 'href', '/users')
 ```
 
-因为 {% url "`.should('have.class')`" should %} 并不会改变主题,对同一元素执行时使用{% url "`.and('have.attr')`" and %} 。当你需要针对单个主题快速断言多个内容时,这非常方便。
+因为 {% url "`.should('have.class')`" should %} 并不会改变操作对象,对同一元素执行时使用{% url "`.and('have.attr')`" and %} 。当你需要针对单个操作对象快速断言多个内容时,这非常方便。
 
 如果我们以显式形式编写此断言,它将如下所示:
 
@@ -814,15 +814,15 @@ cy.get('tbody tr:first').should(($tr) => {
 
 通常,当您想要:
 
-- 对同一主题进行多次断言
-- 在做出断言之前,以某种方式预估主题
+- 对同一操作对象进行多次断言
+- 在做出断言之前,以某种方式预估操作对象
 
-## 显式主题
+## 显式操作对象
 
-使用`expect`允许你传递特定主题并对此进行断言。这可能是你通常在单元测试中编写的断言:
+使用`expect`允许你传递特定操作对象并对此进行断言。这可能是你通常在单元测试中编写的断言:
 
 ```js
-// 这里显示主题是布尔:值为真
+// 这里显示操作对象是布尔:值为真
 expect(true).to.be.true
 ```
 
@@ -833,9 +833,9 @@ expect(true).to.be.true
 当你需要的时候,显式断言很棒:
 
 - 断言可以自定义逻辑.
-- 对同一主题进行多个断言.
+- 对同一操作对象进行多个断言.
 
-{% url `.should()` should %} 命令允许我们传递一个回调函数,该函数将产生的主题作为其第一个参数。这和 {% url `.then()` then %}一样, 预期Cypress 会自动**等待和重试** 回调函数内的所有传递的内容。
+{% url `.should()` should %} 命令允许我们传递一个回调函数,该函数将产生的操作对象作为其第一个参数。这和 {% url `.then()` then %}一样, 预期Cypress 会自动**等待和重试** 回调函数内的所有传递的内容。
 
 {% note info '复杂断言' %}
 
@@ -848,7 +848,7 @@ expect(true).to.be.true
 cy
   .get('p')
   .should(($p) => {
-    // 从DOM元素里模拟我们的主题
+    // 从DOM元素里模拟我们的操作对象
     // 得到所有p的文本数组
     let texts = $p.map((el, i) => {
       return Cypress.$(el).text()
