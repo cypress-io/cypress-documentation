@@ -179,6 +179,8 @@ You can see more examples of the new `options` in use in the {% url "Browser Lau
 
 ```js
 on('browser:before:launch', (browser, args) => {
+  // will print a deprecation warning telling you
+  // to change your code to the new signature
   args.push('--another-arg')
 })
 ```
