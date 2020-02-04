@@ -88,11 +88,11 @@ describe('The Home Page', function() {
 
 然后，点击 `home_page_spec.js` 然后见证Cypress打开你的浏览器吧！
 
-如果你忘记了启动Cypress服务了，你将看到以下错误：
+如果你忘记了启动本地服务了，你将看到以下错误：
 
 {% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
-如果你已经启动了Cypress服务，你将会看到应用启动并且开始工作了。
+如果你已经启动了本地服务，你将会看到应用启动并且开始工作了。
 
 # {% fa fa-cogs %} No.3: Cypress配置
 
