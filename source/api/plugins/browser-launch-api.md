@@ -24,7 +24,7 @@ Here are options for the currently supported browsers:
 * {% url 'Firefox' "http://kb.mozillazine.org/About:config_entries" %}
 * {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
 
-Modify browser launch arguments:
+### Modify browser launch arguments:
 
 ```js
 module.exports = (on, config) => {
@@ -72,7 +72,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Add browser extensions:
+### Add browser extensions:
 
 ```js
 module.exports = (on, config) => {
