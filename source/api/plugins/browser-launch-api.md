@@ -41,8 +41,8 @@ module.exports = (on, config) => {
     // }
 
     if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // `args` is an array of all the arguments
-      // that will be passed to Chrome when it launchers
+      // `args` is an array of all the arguments that will
+      //  be passed to Chromium-based browsers when it launchers
       options.args.push('--start-fullscreen')
 
       // whatever you return here becomes the launch options
@@ -135,7 +135,7 @@ Cypress already sets some the Electron command line switches internally. See fil
 
 ## See all Chrome browser switches
 
-If you are running Cypress tests using Chrome browser, you can see ALL currently set command line switches and the browser version information by opening a new tab and typing `chrome://version` url.
+If you are running Cypress tests using a Chromium-based browser, you can see ALL currently set command line switches and the browser version information by opening a new tab and typing `chrome://version` url.
 
 {% imgTag /img/api/chrome-switches.png "See all Chrome switches" %}
 
