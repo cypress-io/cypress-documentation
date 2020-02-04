@@ -153,7 +153,7 @@ function disableElementAsync (element) {
   })
 }
 
-cy.get('[data-cy=my-text-input]').then(textElements => {
+cy.get('[data-cy=my-text-input]').then((textElements) => {
   cy.wrap({ disableElementAsync }).invoke('disableElementAsync', textElements[0])
 })
 
