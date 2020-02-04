@@ -134,66 +134,38 @@ cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 
 ## Invoking an async function
 
-In this example we invoke a Vuex action that returns a Promise. `.invoke()` will wait until the Promise resolves after the specified delay which we pass as an argument and only then will continue executing. 
+In this example we have a little text input field and we invoke an async action which will disable this input field.
+`.invoke()` will then wait until the Promise resolves and only then will continue executing to check if it really has been disabled.
 
-A minimal Vuex store:
-```javascript
-function randomId () {
-  return Math.random().toString().substr(2, 10)
-}
-
-const store = new Vuex.Store({
-  state: {
-    todos: []
-  },
-  mutations: {
-    ADD_TODO (state, todoObject) {
-      state.todos.push(todoObject)
-    }
-  },
-  actions: {
-    // example promise-returning action
-    addTodoAfterDelay ({ commit }, { milliseconds, title }) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const todo = {
-            title,
-            completed: false,
-            id: randomId(),
-          }
-
-          commit('ADD_TODO', todo)
-          resolve()
-        }, milliseconds)
-      })
-    },
-  },
-})
+Our input field
+```html
+<input type="text" name="text" data-cy="my-text-input">
 ```
 
 The Cypress Test with `cy.inkoke()` awaiting the promise:
 ```javascript
-// For this command to work you have to expose your vuex store under window.store for cypress to be able to access it
-// e.g. like this
-// if (isCypress) {
-//    window.store = store
-// }
-const getVuex = () => cy.window({ log: false }).its('store')
+function disableElementAsync (element) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      element.disabled = true
+      resolve()
+    }, 3000)
+  })
+}
 
-getVuex().invoke('dispatch', 'addTodoAfterDelay', {
-  milliseconds: 2000,
-  title: 'async task'
+cy.get('[data-cy=my-text-input]').then(textElements => {
+  cy.wrap({ disableElementAsync }).invoke('disableElementAsync', textElements[0])
 })
 
-// log message appears after 2 seconds
+// log message appears after 3 seconds
 cy.log('after invoke')
 
 // assert UI
-getTodoItems().should('have.length', 1).first().contains('async task')
+cy.get('[data-cy=my-text-input]').should('be.disabled')
 ```
 
 {% note info %}
-This example comes from the recipe {% url "Vue + Vuex + REST" https://github.com/cypress-io/cypress-example-recipes %}
+For a full example where invoke is used to await async Vuex store actions, visit the recipe: {% url "Vue + Vuex + REST" https://github.com/cypress-io/cypress-example-recipes %}
 {% endnote %}
 
 # Notes
