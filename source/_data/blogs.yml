@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress in Action: A Few Months In"
+    url: https://blog.noredink.com/post/190625483798/cypress-in-action-a-few-months-in-three-months
+    sourceName: "NoRedInk"
+    sourceUrl: https://blog.noredink.com/
+    author: Matt Charlton
+    date: Feb 3, 2020
+    img: /img/examples/calendar.jpg 
+    
   - title: "Testing WebSocket connections with Cypress"
     url: "https://medium.com/@SebDragomir/testing-websocket-connections-with-cypress-2100ab369945"
     sourceName: Medium
