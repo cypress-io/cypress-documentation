@@ -188,7 +188,7 @@ cypress run --headed
 
 ### `cypress run --no-exit`
 
-要想在运行完毕测试用例后关闭掉Cypress运行器，请使用`--no-exit`.
+要想在运行完毕测试用例后不关闭Cypress运行器，请使用`--no-exit`.
 
 你也可以使用`--headed --no-exit`，以便在某个`spec`运行完毕后可以查看**命令日志**或进入**开发者工具**。
 
