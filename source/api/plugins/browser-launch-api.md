@@ -34,8 +34,6 @@ Property | Type | Description
 `preferences` | `object` | An object describing browser preferences. Differs between browsers. See {% url "\"Changing browser preferences\"" #Changing-browser-preferences %} for details.
 `args` | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See {% url "\"Modify browser launch arguments\"" #Modify-browser-launch-arguments %} for details.
 `extensions` | `string[]` | An array of paths to folders containing unpacked WebExtensions, to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See {% url "\"Add browser extensions\"" #Add-browser-extensions %} for details.
-`windowSize` | `string` | By default, browsers will open `maximized`. You can make a browser open in fullscreen mode by passing `fullscreen` here.
-
 
 # Usage
 
