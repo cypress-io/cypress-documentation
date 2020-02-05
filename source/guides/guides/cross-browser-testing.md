@@ -12,10 +12,6 @@ Tests that require the {% url "`chromeWebSecurity` configuration option to be di
 Cypress triggers Firefox's internal garbage collection (GC) to better manage the browser's memory consumption. {% url "Learn more here" configuration#firefoxGcInterval %}.
 {% endnote %}
 
-{% note warning 'Firefox Headless Video Recording' %}
-Video recording is not currently supported in the **Firefox** headless browser. See {% issue 1767 %} for more details.
-{% endnote %}
-
 Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.
 
 {% imgTag /img/guides/cross-browser-testing/cypress-browser-selector.png "Cypress Test Runner with Firefox selected as the browser" "no-border" %}
