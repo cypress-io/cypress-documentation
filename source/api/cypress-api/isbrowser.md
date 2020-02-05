@@ -19,7 +19,7 @@ The name of the browser (case-insensitive).
 
 **{% fa fa-angle-right %} filter**  ***(Object)***
 
-Filter by the browser properties. You can inspect the current browser properties by using the {% url "Browser Launch API" browser-launch-api %}. Supported properties are:
+Filter by the browser properties. You can inspect the current browser's properties by using the {% url "`Cypress.browser`" browser %}. Supported properties are:
 
 - `name`
 - `family`
