@@ -215,6 +215,26 @@ on('browser:before:launch', (browser, options) => {
 })
 ```
 
+## Launching Chrome Canary with `--browser`
+
+Before 4.0, `cypress run --browser canary` would run tests in Chrome Canary.
+
+Now, you must pass `--browser chrome:canary` to select Chrome Canary.
+
+See the {% url "docs for `cypress run --browser`" command-line#cypress-run-browser-lt-browser-name-or-path-gt %} for more information.
+
+{% badge danger Before %} Before Cypress 4.0
+
+```shell
+cypress run --browser canary
+```
+
+{% badge success After %} In Cypress 4.0+
+
+```shell
+cypress run --browser chrome:canary
+```
+
 ## Chromium-based browser `family`
 
 We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.
