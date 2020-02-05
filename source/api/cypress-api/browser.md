@@ -78,6 +78,7 @@ cy.screenshot()
 
 # See also
 
-- {% url "Launching Browsers" launching-browsers %}
 - {% url "Browser Launch API" browser-launch-api %}
-
+- {% url "Cross Browser Testing" cross-browser-testing %}
+- {% url "`Cypress.isBrowser`" is-browser %}
+- {% url "Launching Browsers" launching-browsers %}

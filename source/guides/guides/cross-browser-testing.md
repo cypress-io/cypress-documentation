@@ -235,3 +235,10 @@ it('a test', function() {
   // ... test body
 })
 ```
+
+# See also
+
+- {% url "Browser Launch API" browser-launch-api %}
+- {% url "`Cypress.browser`" browser %}
+- {% url "`Cypress.isBrowser`" is-browser %}
+- {% url "Launching Browsers" launching-browsers %}
