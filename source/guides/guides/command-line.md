@@ -85,7 +85,7 @@ Option | Description
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
 `--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
-`--headed`  | {% urlHash "Displays the browser instead of running headlessly (defaults to `true` for Chrome-family and Firefox browsers)" cypress-run-headed %}
+`--headed`  | {% urlHash "Displays the browser instead of running headlessly (defaults to true for Firefox and Chromium-family browsers)" cypress-run-headed %}
 `--headless` | {% urlHash "Hide the browser instead of running headed (defaults to `true` for Electron)" cypress-run-headless %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
@@ -198,7 +198,7 @@ Specifying the `--ci-build-id` may also be necessary.
 ### `cypress run --headed`
 
 {% note warning %}
-Video recording is not currently supported in the **Electron** headed browser. See {% issue 1767 %} for more details.
+Video recording is not currently supported in Electron with the `--headed` flag. See {% issue 1767 %} for more details.
 {% endnote %}
 
 By default, Cypress will run tests in Electron headlessly.
@@ -211,13 +211,9 @@ cypress run --headed
 
 ### `cypress run --headless`
 
-{% note warning %}
-Video recording is not currently supported in the **Firefox** headless browser. See {% issue 1767 %} for more details.
-{% endnote %}
-
 Cypress will run tests in Chrome and Firefox headed by default.
 
-Passing `--headless` will force Chrome to be hidden.
+Passing `--headless` will force the browser to be hidden.
 
 ```shell
 cypress run --headless --browser chrome

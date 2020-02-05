@@ -46,7 +46,7 @@ Because Electron is the default browser - it is typically run in CI. If you are 
 
 All Chrome* flavored browsers will be detected and are supported.
 
-### You can launch Chrome browsers:
+You can launch Chrome like this:
 
 ```shell
 cypress run --browser chrome
@@ -84,22 +84,24 @@ cypress run --browser edge:canary
 
 ## Firefox Browsers
 
-All Firefox* flavored browsers will be detected and are supported.
+Firefox-family browsers are supported.
 
-### You can launch Firefox browsers:
+You can launch Firefox like this:
 
-```bash
+```shell
 cypress run --browser firefox
 ```
 
 Or Firefox Developer/Nightly Edition:
 
-```bash
+```shell
 cypress run --browser firefox:dev
 cypress run --browser firefox:nightly
 ```
 
 To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+
+By default, we will launch Firefox in headed mode. To run Firefox headlessly, you can pass the `--headless` argument to `cypress run`.
 
 ## Launching by a path
 
