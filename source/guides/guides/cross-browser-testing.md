@@ -9,7 +9,11 @@ Tests that require the {% url "`chromeWebSecurity` configuration option to be di
 {% endnote %}
 
 {% note warning 'Firefox Garbage Collection' %}
-Cypress triggers Firefox's internal garbage collection (GC) to better manage the browser's memory consumption. Since this process has some overhead it is disabled in **open mode** and enabled by default in **run mode** to offer the best experience locally and in CI. The Firefox garbage collection behavior is configurable via the {% url "`firefoxGcInterval` configuration" configuration#Global %} value, and you can learn more {% url "here" configuration#firefoxGcInterval %}.
+Cypress triggers Firefox's internal garbage collection (GC) to better manage the browser's memory consumption. {% url "Learn more here" configuration#firefoxGcInterval %}.
+{% endnote %}
+
+{% note warning 'Firefox Headless Video Recording' %}
+Video recording is not currently supported in the **Firefox** headless browser. See {% issue 1767 %} for more details.
 {% endnote %}
 
 Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.
