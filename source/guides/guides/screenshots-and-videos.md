@@ -27,7 +27,14 @@ Cypress clears any existing screenshots before `cypress run`. If you do not want
 
 # Videos
 
-Cypress also records videos when running tests.
+{% note warning %}
+Video recording is not currently supported in the browser configurations below. See {% issue 1767 %} for more details.
+
+- **Firefox** headless browser (using the {% url "`--headless` flag" command-line#cypress-run-headless %}).
+- **Electron** headed browser (using the {% url "`--headed` flag" command-line#cypress-run-headed %}).
+{% endnote %}
+
+Cypress records a video for each spec file when running tests.
 
 Video recording can be turned off entirely by setting {% url `video` configuration#Videos %} to `false` from within your configuration.
 

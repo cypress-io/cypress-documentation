@@ -197,6 +197,10 @@ Specifying the `--ci-build-id` may also be necessary.
 
 ### `cypress run --headed`
 
+{% note warning %}
+Video recording is not currently supported in the **Electron** headed browser. See {% issue 1767 %} for more details.
+{% endnote %}
+
 By default, Cypress will run tests in Electron headlessly.
 
 Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
@@ -206,6 +210,10 @@ cypress run --headed
 ```
 
 ### `cypress run --headless`
+
+{% note warning %}
+Video recording is not currently supported in the **Firefox** headless browser. See {% issue 1767 %} for more details.
+{% endnote %}
 
 For backwards-compatibility reasons, when using Chrome, Cypress will run tests in headed mode by default.
 
