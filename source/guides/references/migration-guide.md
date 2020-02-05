@@ -169,6 +169,52 @@ spy.resetHistory()
 stub.resetHistory()
 ```
 
+## Plugin Event `before:browser:launch`
+
+Since we now support more advanced browser launch options, during `before:browser:launch` we no longer yield the second argument as an array of browser arguments and instead yield an `options` object with an `args` property.
+
+You can see more examples of the new `options` in use in the {% url "Browser Launch API doc" browser-launch-api %}.
+
+{% badge danger Before %} The second argument is no longer an array.
+
+```js
+on('browser:before:launch', (browser, args) => {
+  // will print a deprecation warning telling you
+  // to change your code to the new signature
+  args.push('--another-arg')
+})
+```
+
+{% badge success After %} Access the `args` property off `options`
+
+```js
+on('browser:before:launch', (browser, options) => {
+  options.args.push('--another-arg')
+})
+```
+
+## Electron options in `before:browser:launch`
+
+Previously, you could pass options to the launched Electron {% url "BrowserWindow" https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions %} in `before:browser:launch` by modifying the `options` object.
+
+Now, you must pass those options as `options.preferences`:
+
+{% badge danger Before %} Passing BrowserWindow options on the `options` object is no longer supported.
+
+```js
+on('browser:before:launch', (browser, options) => {
+  options.darkTheme = true
+})
+```
+
+{% badge success After %} Pass BrowserWindow options on the `options.preferences` object instead.
+
+```js
+on('browser:before:launch', (browser, options) => {
+  options.preferences.darkTheme = true
+})
+```
+
 ## Chromium-based browser `family`
 
 We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chromium-based browsers, including Electron, to have `chromium` set as their `family` field.
