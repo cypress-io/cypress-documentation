@@ -229,7 +229,7 @@ It is important to note that *ignoring* tests is different from *skipping* tests
 ```js
 // Skip the test, but still record it to the Cypress Dashboard
 it('a test', function() {
-  if (!Cypress.isBrowser('firefox') {
+  if (!Cypress.isBrowser('firefox')) {
     this.skip()
   }
   // ... test body
