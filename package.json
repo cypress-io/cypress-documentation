@@ -126,7 +126,7 @@
     "textlint": "11.6.1",
     "textlint-filter-rule-comments": "1.2.2",
     "textlint-rule-eslint": "3.2.1",
-    "textlint-rule-terminology": "2.0.1",
+    "textlint-rule-terminology": "2.0.3",
     "utf8": "3.0.0",
     "wait-on": "3.3.0",
     "yamljs": "0.3.0"
