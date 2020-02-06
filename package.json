@@ -82,7 +82,7 @@
     "@cypress/questions-remain": "1.0.1",
     "@cypress/skip-test": "2.5.0",
     "@keyv/redis": "github:bahmutov/keyv-redis#b64f44cd1d1e87893d989b1469068af8292299d5",
-    "@types/fluent-ffmpeg": "2.1.11",
+    "@types/fluent-ffmpeg": "2.1.14",
     "@types/jest": "24.9.1",
     "beeper": "2.0.0",
     "bluebird": "3.7.2",
@@ -126,7 +126,7 @@
     "textlint": "11.6.1",
     "textlint-filter-rule-comments": "1.2.2",
     "textlint-rule-eslint": "3.2.1",
-    "textlint-rule-terminology": "2.0.1",
+    "textlint-rule-terminology": "2.0.3",
     "utf8": "3.0.0",
     "wait-on": "3.3.0",
     "yamljs": "0.3.0"
