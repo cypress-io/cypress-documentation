@@ -27,11 +27,11 @@ Property | Type | Description
 `family` | `string` | Rendering engine being used. `chromium` or `firefox`.
 `channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
 `displayName` | `string` | Human-readable display name for the browser.
-`version` | `string` | Full version string.
+`version` | `string` | Full version.
 `path` | `string` | Path to the browser on disk. Blank for Electron.
 `majorVersion` | `number` | The major version number of the browser.
-`isHeadless` | `boolean` | Whether the browser displays instead of running headlessly.
-`isHeaded` | `boolean` | Whether the browser is hidden instead of running headed.
+`isHeadless` | `boolean` | Whether the browser is running headlessly.
+`isHeaded` | `boolean` | Whether the browser displays headed.
 
 # Examples
 

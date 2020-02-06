@@ -14,15 +14,16 @@ The object has the following properties:
 
 Property | Type | Description
 --- | --- | ---
+`channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
 `displayName` | `string` | Human-readable display name for the browser.
 `family` | `string` | Rendering engine being used. `chromium` or `firefox`.
 `isChosen` | `boolean` | Whether the browser is selected in the browser selector of the Test Runner.
 `majorVersion` | `number` | The major version number of the browser.
 `name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
 `path` | `string` | Path to the browser on disk. Blank for Electron.
-`version` | `string` | Full version string.
-`isHeadless` | `boolean` | Whether the browser displays instead of running headlessly.
-`isHeaded` | `boolean` | Whether the browser is hidden instead of running headed.
+`version` | `string` | Full version.
+`isHeadless` | `boolean` | Whether the browser is running headlessly.
+`isHeaded` | `boolean` | Whether the browser displays headed.
 
 # Examples
 
@@ -34,10 +35,11 @@ Property | Type | Description
 it('log browser info', function() {
   console.log(Cypress.browser)
   // {
+  //   channel: 'stable',
   //   displayName: 'Chrome',
   //   family: 'chromium',
   //   isChosen: true,
-  //   majorVersion: '80',
+  //   majorVersion: 80,
   //   name: 'chrome',
   //   path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   //   version: '80.0.3987.87',
