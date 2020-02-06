@@ -25,7 +25,7 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
 
-{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+{% imgTag /img/guides/browser-list-dropdown.png "Select a different browser" %}
 
 {% partial chromium_download %}
 
