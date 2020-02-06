@@ -10,6 +10,20 @@ title: Cypress.browser
 Cypress.browser // returns browser object
 ```
 
+The object has the following properties:
+
+Property | Type | Description
+--- | --- | ---
+`displayName` | `string` | Human-readable display name for the browser.
+`family` | `string` | Rendering engine being used. `chromium` or `firefox`.
+`isChosen` | `boolean` | Whether the browser is selected in the browser selector of the Test Runner.
+`majorVersion` | `number` | The major version number of the browser.
+`name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
+`path` | `string` | Path to the browser on disk. Blank for Electron.
+`version` | `string` | Full version string.
+`isHeadless` | `boolean` | Whether the browser displays instead of running headlessly.
+`isHeaded` | `boolean` | Whether the browser is hidden instead of running headed.
+
 # Examples
 
 ## Log browser information
@@ -20,11 +34,13 @@ Cypress.browser // returns browser object
 it('log browser info', function() {
   console.log(Cypress.browser)
   // {
-  //   name: 'chrome',
   //   displayName: 'Chrome',
-  //   version: '67.123.456.90',
-  //   majorVersion: '67',
-  //   path: '/path/to/browser',
+  //   family: 'chromium',
+  //   isChosen: true,
+  //   majorVersion: '80',
+  //   name: 'chrome',
+  //   path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  //   version: '80.0.3987.87',
   //   isHeaded: true,
   //   isHeadless: false
   // }

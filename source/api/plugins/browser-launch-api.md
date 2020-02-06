@@ -22,8 +22,10 @@ Property | Type | Description
 `displayName` | `string` | Human-readable display name for the browser.
 `version` | `string` | Full version string.
 `path` | `string` | Path to the browser on disk. Blank for Electron.
+`info` | `string` | *(Optional)* Extra information about the browser (used for display in the browser selector of the Test Runner)
 `majorVersion` | `number` | The major version number of the browser.
-
+`isHeadless` | `boolean` | Whether the browser displays instead of running headlessly.
+`isHeaded` | `boolean` | Whether the browser is hidden instead of running headed.
 
 **{% fa fa-angle-right %} launchOptions** ***(object)***
 
@@ -31,9 +33,9 @@ Options that can be modified to control how the browser is launched, with the fo
 
 Property | Type | Description
 --- | --- | ---
-`preferences` | `object` | An object describing browser preferences. Differs between browsers. See {% url "\"Changing browser preferences\"" #Changing-browser-preferences %} for details.
-`args` | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See {% url "\"Modify browser launch arguments\"" #Modify-browser-launch-arguments %} for details.
-`extensions` | `string[]` | An array of paths to folders containing unpacked WebExtensions, to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See {% url "\"Add browser extensions\"" #Add-browser-extensions %} for details.
+`preferences` | `object` | An object describing browser preferences. Differs between browsers. See {% urlHash "Changing browser preferences" Changing-browser-preferences %} for details.
+`args` | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See {% urlHash "Modify browser launch arguments" Modify-browser-launch-arguments %} for details.
+`extensions` | `string[]` | An array of paths to folders containing unpacked WebExtensions, to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See {% urlHash "Add browser extensions" Add-browser-extensions %} for details.
 
 # Usage
 

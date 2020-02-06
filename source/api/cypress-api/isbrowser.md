@@ -21,13 +21,17 @@ The name of the browser (case-insensitive).
 
 Filter by the browser properties. You can inspect the current browser's properties by using the {% url "`Cypress.browser`" browser %}. Supported properties are:
 
-- `name`
-- `family`
-- `channel`
-- `displayName`
-- `version`
-- `path`
-- `majorVersion`
+Property | Type | Description
+--- | --- | ---
+`name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
+`family` | `string` | Rendering engine being used. `chromium` or `firefox`.
+`channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
+`displayName` | `string` | Human-readable display name for the browser.
+`version` | `string` | Full version string.
+`path` | `string` | Path to the browser on disk. Blank for Electron.
+`majorVersion` | `number` | The major version number of the browser.
+`isHeadless` | `boolean` | Whether the browser displays instead of running headlessly.
+`isHeaded` | `boolean` | Whether the browser is hidden instead of running headed.
 
 # Examples
 
