@@ -557,6 +557,8 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 
 If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
 
+**Tip:** you can find lots of CI examples with configured caching in our {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} repository.
+
 ## Environment variables
 
 You can set various environment variables to modify how Cypress runs.

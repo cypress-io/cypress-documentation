@@ -58,7 +58,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
 
 ## Configuring Folder Structure
 
-While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
+While Cypress allows you to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
 You can modify the folder configuration in your configuration file. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
