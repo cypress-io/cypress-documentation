@@ -139,6 +139,10 @@
 
 - name: Custom Commands
   plugins:
+    - name: cypress-lighthouse
+      description: Run a lighthouse audit and assert scores from within Cypress.
+      link: https://github.com/gkemp94/cypress-lighthouse
+      keywords: [commands, lighthouse]
     - name: cy-view
       description: Run tests on multiple URLs at various viewport sizes.
       link: https://github.com/andrewmcoupe/cy-view
