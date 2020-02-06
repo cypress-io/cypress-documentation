@@ -603,9 +603,9 @@ Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spy
 
 ## {% fa fa-angle-right %} How do I use special characters with cy.get?
 
-[According to the CSS spec](https://www.w3.org/TR/html50/dom.html#the-id-attribute), special characters like `/`, `.` are valid characters for ids. 
+{% url "According to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}, special characters like `/`, `.` are valid characters for ids. 
 
-To test elements with those characters in ids, they need to be escaped with [`CSS.escape`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape) or [`Cypress.$.escapeSelector`](https://api.jquery.com/jQuery.escapeSelector/).
+To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
 
 Example:
 
@@ -620,10 +620,10 @@ Example:
 
 ```js
 it('test', () => {
-  cy.visit('fixtures/issue-2027.html')
+  cy.visit('index.html')
   cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains('Hello World')
   cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`).contains('Hello World')
 })
 ```
 
-Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM.
+Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. {% url "Learn more about why" $#Notes %}
