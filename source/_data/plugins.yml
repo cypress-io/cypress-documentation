@@ -256,7 +256,7 @@
 
     - name: cypress-iframe
       description: Custom commands for interacting with iframes
-      link:https://gitlab.com/kgroat/cypress-iframe
+      link: https://gitlab.com/kgroat/cypress-iframe
       keywords: [commands, iframe]
 
 - name: Extending other testing frameworks
