@@ -16,9 +16,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Edge" https://www.microsoft.com/edge %}
 - {% url "Electron" https://electron.atom.io/ %}
-- {% url "Firefox" https://www.mozilla.org/firefox/ %}
-- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
-- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}
+- {% url "Firefox" https://www.mozilla.org/firefox/ %} (Beta support)
+- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %} (Beta support)
+- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %} (Beta support)
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
 
@@ -84,7 +84,7 @@ cypress run --browser edge:canary
 
 ## Firefox Browsers
 
-Firefox-family browsers are supported.
+Firefox-family browsers have beta support.
 
 You can launch Firefox like this:
 
@@ -249,13 +249,13 @@ You can see all of the default chrome command line switches we send {% url "here
 
 # Browser Icon
 
-You might notice that if you already have the browser open you will see two of the same browser icons in your Dock.
+You might notice that if you already have the browser open you will see two of the same browser icons in your dock.
 
 {% video local /img/snippets/switching-between-cypress-and-other-chrome-browser.mp4 %}
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %}, {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}, {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}, or {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}. These browsers both have different icons from the standard Chrome browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+For this reason you may find downloading and using a browser's release channel versions (Dev, Canary, etc) useful. These browsers have different icons from the standard stable browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a dock icon.
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
