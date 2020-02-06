@@ -262,7 +262,7 @@ You can turn this option off if the application or site you're testing **does no
 
 ## firefoxGcInterval
 
-Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing.
+Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can progress on this issue {% issue 6187 'here' %}.
 
 Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
 
