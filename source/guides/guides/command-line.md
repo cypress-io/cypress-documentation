@@ -85,8 +85,8 @@ Option | Description
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
 `--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
-`--headed`  | {% urlHash "Displays the browser instead of running headlessly (defaults to true for Firefox and Chromium-family browsers)" cypress-run-headed %}
-`--headless` | {% urlHash "Hide the browser instead of running headed (defaults to `true` for Electron)" cypress-run-headless %}
+`--headed`  | {% urlHash "Displays the browser instead of running headlessly (default for Firefox and Chromium-based browsers)" cypress-run-headed %}
+`--headless` | {% urlHash "Hide the browser instead of running headed (default for Electron)" cypress-run-headless %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}

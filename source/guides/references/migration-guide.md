@@ -223,13 +223,13 @@ Now, you must pass `--browser chrome:canary` to select Chrome Canary.
 
 See the {% url "docs for `cypress run --browser`" command-line#cypress-run-browser-lt-browser-name-or-path-gt %} for more information.
 
-{% badge danger Before %} Before Cypress 4.0
+{% badge danger Before %} Passing `canary` will no longer find a browser
 
 ```shell
 cypress run --browser canary
 ```
 
-{% badge success After %} In Cypress 4.0+
+{% badge success After %} Pass `chrome:canary` to launch Chrome Canary
 
 ```shell
 cypress run --browser chrome:canary
