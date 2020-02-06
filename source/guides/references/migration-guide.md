@@ -4,7 +4,7 @@ title: Migration Guide
 
 # Migrating to Cypress 4.0
 
-Changes in Cypress 4.0 mainly relate to upgrading Cypress's own dependencies, which themselves have breaking changes. This guide details the changes and how to change your code to migrate to Cypress 4.0.
+This guide details the changes and how to change your code to migrate to Cypress 4.0.
 
 ## Mocha upgrade
 
@@ -128,7 +128,7 @@ expect(function() {}).to.be.empty
 An error will throw when a non-existent property is read. If there are typos in property assertions, they will now appear as failures.
 
 ```javascript
-// Would pass in Cypress 3 but will fail in 4
+// Would pass in Cypress 3 but will fail correctly in 4
 expect(true).to.be.ture
 ```
 
@@ -171,47 +171,47 @@ stub.resetHistory()
 
 ## Plugin Event `before:browser:launch`
 
-Since we now support more advanced browser launch options, during `before:browser:launch` we no longer yield the second argument as an array of browser arguments and instead yield an `options` object with an `args` property.
+Since we now support more advanced browser launch options, during `before:browser:launch` we no longer yield the second argument as an array of browser arguments and instead yield a `launchOptions` object with an `args` property.
 
-You can see more examples of the new `options` in use in the {% url "Browser Launch API doc" browser-launch-api %}.
+You can see more examples of the new `launchOptions` in use in the {% url "Browser Launch API doc" browser-launch-api %}.
 
 {% badge danger Before %} The second argument is no longer an array.
 
 ```js
-on('browser:before:launch', (browser, args) => {
+on('before:browser:launch', (browser, args) => {
   // will print a deprecation warning telling you
   // to change your code to the new signature
   args.push('--another-arg')
 })
 ```
 
-{% badge success After %} Access the `args` property off `options`
+{% badge success After %} Access the `args` property off `launchOptions`
 
 ```js
-on('browser:before:launch', (browser, options) => {
-  options.args.push('--another-arg')
+on('before:browser:launch', (browser, launchOptions) => {
+  launchOptions.args.push('--another-arg')
 })
 ```
 
 ## Electron options in `before:browser:launch`
 
-Previously, you could pass options to the launched Electron {% url "BrowserWindow" https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions %} in `before:browser:launch` by modifying the `options` object.
+Previously, you could pass options to the launched Electron {% url "BrowserWindow" https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions %} in `before:browser:launch` by modifying the `launchOptions` object.
 
-Now, you must pass those options as `options.preferences`:
+Now, you must pass those options as `launchOptions.preferences`:
 
-{% badge danger Before %} Passing BrowserWindow options on the `options` object is no longer supported.
+{% badge danger Before %} Passing BrowserWindow options on the `launchOptions` object is no longer supported.
 
 ```js
-on('browser:before:launch', (browser, options) => {
-  options.darkTheme = true
+on('before:browser:launch', (browser, args) => {
+  args.darkTheme = true
 })
 ```
 
 {% badge success After %} Pass BrowserWindow options on the `options.preferences` object instead.
 
 ```js
-on('browser:before:launch', (browser, options) => {
-  options.preferences.darkTheme = true
+on('before:browser:launch', (browser, launchOptions) => {
+  launchOptions.preferences.darkTheme = true
 })
 ```
 
@@ -241,18 +241,18 @@ We updated the {% url "Cypress browser objects" browser-launch-api %} of all Chr
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'electron') {
       // would match Electron in 3.x
       // will match no browsers in 4.0.0
-      return args
+      return launchOptions
     }
 
     if (browser.family === 'chromium') {
       // would match no browsers in 3.x
       // will match any Chromium-based browser in 4.0.0
       // ie Chrome, Canary, Chromium, Electron, Edge (Chromium-based)
-      return args
+      return launchOptions
     }
   })
 }
@@ -277,10 +277,10 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.name === 'electron') {
       // run code for Electron browser in 4.0.0
-      return args
+      return launchOptions
     }
   })
 }
@@ -305,10 +305,10 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // pass args to Chromium-based browsers in 4.0
-      return args
+      // pass launchOptions to Chromium-based browsers in 4.0
+      return launchOptions
     }
   })
 }
@@ -353,7 +353,7 @@ cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
 
 ## Node.js 8+ support
 
-Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. But, installing Cypress on your system uses the Node.js version installed on your system.
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
 

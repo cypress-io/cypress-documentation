@@ -261,12 +261,16 @@ So if you cannot work around any of the issues using the suggested workarounds a
 One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to cross-origin errors that can otherwise be fixed. If you think you're experiencing a bug, {% open_an_issue 'open an issue' %}.
 
 {% note warning 'Chrome only' %}
-Disabling web security is only supported in Chrome family browsers. Settings in `chromeWebSecurity` will have no effect in other browsers. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
+Disabling web security is only supported in Chrome-based browsers. Settings in `chromeWebSecurity` will have no effect in other browsers. We will log a warning in this case.
+
+{% imgTag /img/guides/chrome-web-security-stdout-warning.jpg 'chromeWebSecurity warning in stdout'%}
+
+If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
 {% endnote %}
 
 ## Set `chromeWebSecurity` to `false`
 
-Setting `chromeWebSecurity` to `false` in Chrome family browsers allows you to do the following:
+Setting `chromeWebSecurity` to `false` in Chrome-based browsers allows you to do the following:
 
 - Display insecure content
 - Navigate to any superdomain without cross-origin errors

@@ -105,7 +105,7 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to `chrome`, `chromium`, `edge`, or `electron` to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to `chrome`, `chromium`, `edge`, `electron`, `firefox` to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
 
 To launch non-stable browsers, add a colon and the desired release channel. For example, to launch Chrome Canary, use `chrome:canary`.
 
@@ -114,8 +114,6 @@ You can also choose a browser by supplying a path:
 ```shell
 cypress run --browser /usr/bin/chromium
 ```
-
-Currently, only browsers in the Chrome family are supported.
 
 {% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
 

@@ -74,7 +74,7 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on('browser:before:launch', (browser, launchOptions) => {
+  on('before:browser:launch', (browser, launchOptions) => {
     // supply the path to an unpacked WebExtension
     // NOTE: extensions cannot be loaded in headless Chrome
     launchOptions.extensions.push('/path/to/webextension')
@@ -88,7 +88,7 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on('browser:before:launch', (browser, launchOptions) => {
+  on('before:browser:launch', (browser, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
       // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
