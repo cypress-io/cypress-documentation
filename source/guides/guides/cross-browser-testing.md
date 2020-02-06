@@ -240,5 +240,5 @@ it('a test', function() {
 
 - {% url "Browser Launch API" browser-launch-api %}
 - {% url "`Cypress.browser`" browser %}
-- {% url "`Cypress.isBrowser`" is-browser %}
+- {% url "`Cypress.isBrowser`" isbrowser %}
 - {% url "Launching Browsers" launching-browsers %}
