@@ -15,6 +15,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
 - {% url "Edge" https://www.microsoft.com/edge %}
+- {% url "Edge Beta" https://www.microsoftedgeinsider.com/download %}
+- {% url "Edge Canary" https://www.microsoftedgeinsider.com/download %}
+- {% url "Edge Dev" https://www.microsoftedgeinsider.com/download %}
 - {% url "Electron" https://electron.atom.io/ %}
 - {% url "Firefox" https://www.mozilla.org/firefox/ %} (Beta support)
 - {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %} (Beta support)
@@ -82,7 +85,7 @@ cypress run --browser edge:canary
 
 {% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
 
-## Firefox Browsers
+## Firefox Browsers (beta)
 
 Firefox-family browsers have beta support.
 
