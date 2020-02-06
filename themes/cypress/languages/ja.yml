@@ -51,6 +51,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: 環境変数
     launching-browsers: ブラウザーを起動する
+    cross-browser-testing: クロスブラウザテスト
     custom-commands: カスタムコマンド
     web-security: ウェブセキュリティー
     references: 参考
@@ -62,6 +63,7 @@ sidebar:
     best-practices: ベストプラクティス
     trade-offs: トレードオフ
     changelog: 変更履歴
+    migration-guide: Migration Guide
     roadmap: ロードマップ
     tooling: ツール
     intelligent-code-completion: コード自動補完
@@ -175,6 +177,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies
