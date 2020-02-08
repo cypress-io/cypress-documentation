@@ -2,6 +2,14 @@
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
 
+- title: "End to End Testing with Cypress (Conference Talk)"
+  url: https://www.pluralsight.com/courses/codemash-session-01
+  author: Avindra Fernando
+  authorTwitter: avindrafernando
+  sourceName: Pluralsight
+  sourceUrl: https://www.pluralsight.com/
+  free: true
+
 - title: "End-to-End JavaScript Testing with Cypress.io"
   url: https://www.lynda.com/Developer-tutorials/End-End-JavaScript-Testing-Cypress-io/2814152-2.html
   author: Shaun Wassell
