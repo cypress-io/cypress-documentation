@@ -97,6 +97,16 @@ it('uses async/await', async function () {
 })
 ```
 
+### {% fa fa-warning red %} Tests require a title
+
+Tests now require a title and will error when not provided one.
+
+```javascript
+// Would show as pending in Cypress 3
+// Will throw type error in Cypress 4:
+it() // Test argument "title" should be a string. Received type "undefined"
+```
+
 ## Chai upgrade
 
 Chai was upgraded from `3.5.0` to `4.2.0`, which includes a number of breaking changes and new features outlined in {% url "Chai's migration guide" https://github.com/chaijs/chai/issues/781 %}. Some changes you might notice are described below.
