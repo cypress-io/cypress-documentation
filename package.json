@@ -128,7 +128,7 @@
     "textlint-rule-eslint": "3.2.1",
     "textlint-rule-terminology": "2.0.3",
     "utf8": "3.0.0",
-    "wait-on": "3.3.0",
+    "wait-on": "4.0.0",
     "yamljs": "0.3.0"
   },
   "dependencies": {
