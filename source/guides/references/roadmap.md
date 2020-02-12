@@ -10,7 +10,7 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 *Last updated February 12, 2020*
 
-Status               | Feature                            |  Issue            | PR           | Release
+Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------
 *Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}|
 *Work in progress*   | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}|
