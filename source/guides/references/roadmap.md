@@ -12,12 +12,12 @@ Status               | Feature                            |  Issue            | 
 ---------------------| -----------------------------------|-------------------|---
 *Work in progress*   | **Full network layer stubbing**    |  {% issue 687 %}  | {% PR 4176 %}
 *Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}
-*Work in progress*   | **Testing Electron Apps**          |  {% issue 2072 %} |
 *Work in progress*   | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}
-*Work in progress*   | **Mocha, Chai, Sinon upgrade**     |  {% issue 2840 %} | {% PR 4225 %}
 *Work in progress*   | **Expose more events**             |  {% issue 2840 %} | {% PR 4225 %}
 *Work in progress*   | **Native events**                  |  {% issue 311 %}  |
-*Work in progress*   | **Cross browser support**          |  {% issue 310 %}  |
+*Work in progress*   | **Testing Electron Apps**          |  {% issue 2072 %} |
+✅ *Released*        | **Cross browser support**          |  {% issue 310 %}  | {% PR 4426 %}
+✅ *Released*        | **Mocha, Chai, Sinon upgrade**     |  {% issue 2840 %} | {% PR 4225 %}
 
 ## Dashboard Service
 
