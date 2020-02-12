@@ -1,5 +1,6 @@
 ---
 title: Roadmap
+last-updated: hello
 ---
 
 # Upcoming features
@@ -7,6 +8,8 @@ title: Roadmap
 Our team is always planning and working on really "big" upcoming features. Priorities can change as we move forward, but here is an outline of where Cypress is headed now.
 
 ## Test Runner
+
+*Last updated February 12, 2020*
 
 Status               | Feature                            |  Issue            | PR           | Release
 ---------------------| -----------------------------------|-------------------|--------------|------------
