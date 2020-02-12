@@ -19,7 +19,7 @@ Status               | Feature                            |  Issue            | 
 *Work in progress*   | **Native events**                  |  {% issue 311 %}  |              |
 *Work in progress*   | **Testing Electron Apps**          |  {% issue 2072 %} | {% PR 6143 %}|
 ✅ *Released*        | **Cross browser support**          |  {% issue 310 %}  | {% PR 4226 %}| {% url "v4.0.0" changelog#4-0-0 %}
-✅ *Released*        | **Mocha, Chai, Sinon upgrade**     |  {% issue 2840 %} | {% PR 4225 %}| {% url "v4.0.0" changelog#4-0-0 %}
+✅ *Released*        | **Mocha, Chai, Sinon upgrade**     |                   | {% PR 4226 %}| {% url "v4.0.0" changelog#4-0-0 %}
 
 ## Dashboard Service
 
