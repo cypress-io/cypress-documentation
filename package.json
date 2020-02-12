@@ -95,7 +95,7 @@
     "dependency-check": "3.4.1",
     "deps-ok": "1.4.1",
     "eslint": "6.1.0",
-    "eslint-plugin-cypress": "2.8.1",
+    "eslint-plugin-cypress": "2.9.0",
     "eslint-plugin-json-format": "2.0.1",
     "eslint-plugin-no-only-tests": "2.4.0",
     "execa": "2.1.0",
