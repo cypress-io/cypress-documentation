@@ -49,20 +49,29 @@ The returned `launchOptions` object will become the new launch options for the b
 
 ### Modify browser launch arguments:
 
+Here are args available for the currently supported browsers:
+
+* {% url 'Chromium-based browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
+* {% url 'Firefox' "https://developer.mozilla.org/docs/Mozilla/Command_Line_Options" %}
+
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
+    // `args` is an array of all the arguments that will
+    // be passed to browsers when it launches
+    console.log(launchOptions.args) // print all current args
+
     if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // `args` is an array of all the arguments that will
-      //  be passed to Chromium-based browsers when it launchers
-      launchOptions.args.push('--start-fullscreen')
+      // auto open devtools
+      launchOptions.args.push('--auto-open-devtools-for-tabs')
 
       // whatever you return here becomes the launchOptions
       return launchOptions
     }
 
     if (browser.family === 'firefox') {
-      launchOptions.args.push('-some-cli-argument')
+      // auto open devtools
+      launchOptions.args.push('-devtools')
 
       return launchOptions
     }
@@ -86,6 +95,12 @@ module.exports = (on, config) => {
 
 ### Changing browser preferences:
 
+Here are preferences available for the currently supported browsers:
+
+* {% url 'Chromium-based browsers' "https://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/pref_names.cc?view=markup" %}
+* {% url 'Electron' "https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions" %}
+* Firefox: visit `about:config` URL within your Firefox browser to see all available preferences.
+
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
@@ -96,22 +111,18 @@ module.exports = (on, config) => {
       // for example, to set `somePreference: true` in Preferences:
       launchOptions.preferences.default.somePreference = true
 
-      // more information about Chromium preferences can be found here:
-      // https://www.chromium.org/developers/design-documents/preferences
-
       return launchOptions
     }
 
     if (browser.family === 'firefox') {
       // launchOptions.preferences is a map of preference names to values
-      launchOptions.preferences['browser.startup.homepage'] = 'https://cypress.io'
+      launchOptions.preferences['some.preference'] = true
 
       return launchOptions
     }
 
     if (browser.name === 'electron') {
-      // launchOptions.preferences is a `BrowserWindow` `options` object:
-      // https://electronjs.org/docs/api/browser-window#new-browserwindowoptions
+      // launchOptions.preferences is a `BrowserWindow` `options` object
       launchOptions.preferences.darkTheme = true
 
       return launchOptions
@@ -147,6 +158,26 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 {% imgTag /img/api/chrome-switches.png "See all Chrome switches" %}
 
 # Examples
+
+## Start fullscreen
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--start-fullscreen')
+
+      return launchOptions
+    }
+
+    if (browser.name === 'electron') {
+      launchOptions.preferences.fullscreen = true
+
+      return launchOptions
+    }
+  })
+}
+```
 
 ## Use fake video for webcam testing
 
