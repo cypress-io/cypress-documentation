@@ -457,6 +457,55 @@ Cypress package version: 3.0.0
 Cypress binary version: 3.0.0
 ```
 
+## `cypress info`
+
+Prints the Cypress and machine information:
+- list of detected browsers
+- any environment variables that control {% url 'proxy configuration' proxy-configuration %}
+- any environment variables that start with `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security)
+- folder names where Cypress stores run-time data
+- folder where the Cypress binary is cached
+- operating system and memory limits
+
+```shell
+cypress info
+Displaying Cypress info...
+
+Detected 2 browsers installed:
+
+1. Chrome
+  - Name: chrome
+  - Channel: stable
+  - Version: 79.0.3945.130
+  - Executable: /path/to/google-chrome
+  - Profile: /user/profile/folder/for/google-chrome
+
+2. Firefox Nightly
+  - Name: firefox
+  - Channel: nightly
+  - Version: 74.0a1
+  - Executable: /path/to/firefox
+
+Note: to run these browsers, pass <name>:<channel> to the '--browser' field
+
+Examples:
+- cypress run --browser firefox:nightly
+- cypress run --browser chrome
+
+Learn More: https://on.cypress.io/launching-browsers
+
+Proxy Settings: none detected
+Environment Variables: none detected
+
+Application Data: /path/to/app/data/cypress/cy/development
+Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
+Binary Caches: /user/profile/path/.cache/Cypress
+
+Cypress Version: 4.1.0
+System Platform: darwin (19.2.0)
+System Memory: 17.2 GB free 670 MB
+```
+
 ## `cypress cache [command]`
 
 Commands for managing the global Cypress cache. The Cypress cache applies to all installs of Cypress across your machine, global or not.
