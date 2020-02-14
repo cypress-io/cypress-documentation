@@ -27,6 +27,7 @@ Name | Description
 {% fa fa-github %} {% url 'cypress-example-docker-compose' https://github.com/cypress-io/cypress-example-docker-compose %} | Run Cypress tests using docker-compose on {% url 'CircleCI' https://circleci.com/ %}
 {% fa fa-github %} {% url 'cypress-open-from-docker-compose' https://github.com/bahmutov/cypress-open-from-docker-compose %} | Demo running application and Cypress tests using docker-compose
 {% fa fa-github %} {% url 'cypress-tests-apache-in-docker' https://github.com/bahmutov/cypress-tests-apache-in-docker %} | Run local Cypress tests against Apache running inside a Docker container
+{% fa fa-github %} {% url 'cypress-example-docker-compose-included' https://github.com/cypress-io/cypress-example-docker-compose-included %} | Cypress example with docker-compose and `cypress/included` image
 
 # See also
 
