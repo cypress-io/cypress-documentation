@@ -118,11 +118,13 @@ However, it will make your Dashboard subject to the limitations of your new plan
 
 ## {% fa fa-angle-right %} What happens once I reach the test recording limit?
 
-After exceeding 100% of your plan’s test recording limit, parallelization will be disabled and new test recordings will be hidden from the dashboard.
+On the free Seed plan (500 recordings), tests running with the `--record` flag will fail and exit when the test recording limit is reached. You can upgrade to a paid plan, wait until your usage resets at the next month, or remove the `--record` flag to continue running your tests.
+
+On a paid plan, tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded.
 
 In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
 
-1. Logging into the Dashboard
+1. Logging into the {% url "Dashboard" https://dashboard.cypress.io %}
 2. Select your organization
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage
