@@ -137,6 +137,11 @@
       link: https://github.com/bahmutov/cypress-expect-n-assertions
       keywords: [test, assertion]
 
+    - name: cypress-audit
+      description: Run Lighthouse audit directly in your E2E test suites
+      link: https://github.com/mfrachet/cypress-audit
+      keywords: [lighthouse]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
