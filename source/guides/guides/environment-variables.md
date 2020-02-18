@@ -32,7 +32,7 @@ However, you **do not** need to use environment variables to point to the origin
 `baseUrl` can be set in your configuration file (`cypress.json` by default) - and then you can use an environment variable to override it.
 
 ```shell
-CYPRESS_baseUrl=https://staging.app.com cypress run
+CYPRESS_BASE_URL=https://staging.app.com cypress run
 ```
 
 {% endnote %}
