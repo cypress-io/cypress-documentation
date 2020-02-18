@@ -63,7 +63,7 @@ You can always run your tests in CI using {% url "`cypress run`" command-line#cy
 
 ## {% fa fa-angle-right %} What is my Organization ID?
 
-Your Organization ID a unique identifier that is linked to your organization. Instructions on how to find your ID are in the {% url "Dashboard Guide." organizations#Organization-ID%}
+Your Organization ID is a unique identifier that is linked to your organization. Instructions on how to find your ID are in the {% url "Dashboard Guide." organizations#Organization-ID%}
 
 ## {% fa fa-angle-right %} What does Cypress record?
 
