@@ -437,35 +437,17 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress open --project ./some/nested/folder
 ```
 
-## `cypress verify`
-
-Verify that Cypress is installed correctly and is executable.
-
-```shell
-cypress verify
-✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
-```
-
-## `cypress version`
-
-Output both the versions of the installed Cypress binary application and the npm module.
-In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
-
-```shell
-cypress version
-Cypress package version: 3.0.0
-Cypress binary version: 3.0.0
-```
-
 ## `cypress info`
 
-Prints the Cypress and machine information:
-- list of detected browsers
-- any environment variables that control {% url 'proxy configuration' proxy-configuration %}
-- any environment variables that start with `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security)
-- folder names where Cypress stores run-time data
-- folder where the Cypress binary is cached
-- operating system and memory limits
+Prints information about Cypress and the current environment such as:
+
+- A list of browsers Cypress detected on the machine.
+- Any environment variables that control {% url 'proxy configuration' proxy-configuration %}.
+- Any environment variables that start with the `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security).
+- The location where run-time data is stored.
+- The location where the Cypress binary is cached.
+- Operating system information.
+- System memory including free space.
 
 ```shell
 cypress info
@@ -506,6 +488,26 @@ System Platform: darwin (19.2.0)
 System Memory: 17.2 GB free 670 MB
 ```
 
+## `cypress verify`
+
+Verify that Cypress is installed correctly and is executable.
+
+```shell
+cypress verify
+✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
+```
+
+## `cypress version`
+
+Output both the versions of the installed Cypress binary application and the npm module.
+In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
+
+```shell
+cypress version
+Cypress package version: 3.0.0
+Cypress binary version: 3.0.0
+```
+
 ## `cypress cache [command]`
 
 Commands for managing the global Cypress cache. The Cypress cache applies to all installs of Cypress across your machine, global or not.
@@ -535,6 +537,7 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 ```shell
 cypress cache clear
 ```
+
 
 # Debugging commands
 
