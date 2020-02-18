@@ -2,7 +2,8 @@
 title: GitHub Integration
 ---
 
-The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull request comments' Pull-request-comments %}.
+The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull request comments' Pull-request-comments %}. A project first needs to be {% url "setup to record" projects %} to the Cypress Dashboard to use GitHub integration.
+
 {% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
 
 {% note info %}
@@ -134,3 +135,12 @@ You can uninstall the Cypress GitHub app from GitHub by performing the following
 2. Click on **Installed GitHub Apps**.
 3. Click **Configure** beside the Cypress app.
 4. Click **Uninstall** below the "Uninstall Cypress" section.
+
+# Got Feedback?
+
+If you have any insights or feedback on how to improve Cypress GitHub Integration, please reach out via our official {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/9-github-status-checks-and-pull-request-comments %}.
+
+# See also
+
+- {% url "Cypress GitHub Action + Examples" https://github.com/cypress-io/github-action %}
+- {% url "Example project that uses both Cypress GitHub Action and Cypress GitHub Integration" https://github.com/cypress-io/gh-action-and-gh-integration %}

@@ -51,6 +51,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Custom Commands
     web-security: Web Security
     references: References
@@ -62,6 +63,7 @@ sidebar:
     best-practices: Best Practices
     trade-offs: Trade-offs
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roadmap
     tooling: Tooling
     intelligent-code-completion: Intelligent Code Completion
@@ -175,6 +177,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

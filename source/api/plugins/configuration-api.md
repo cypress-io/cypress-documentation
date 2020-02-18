@@ -41,7 +41,7 @@ Additionally, Cypress will respect and await promises you return. This enables y
 
 ## Customize available browsers
 
-The configuration includes the list of browsers found on your system that are available to Cypress. 
+The configuration includes the list of browsers found on your system that are available to Cypress.
 
 {% note info %}
 Read our full guide on {% url "Launching Browsers" launching-browsers %} for more information on how this works.
@@ -54,8 +54,9 @@ In the plugins file, you can filter the list of browsers passed inside the `conf
 module.exports = (on, config) => {
   // inside config.browsers array each object has information like
   // {
-  //   name: 'canary',
-  //   family: 'chrome',
+  //   name: 'chrome',
+  //   family: 'chromium',
+  //   channel: 'canary',
   //   displayName: 'Canary',
   //   version: '80.0.3966.0',
   //   path:
@@ -63,7 +64,7 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === 'chrome')
+    browsers: config.browsers.filter((b) => b.family === 'chromium')
   }
 }
 ```

@@ -45,7 +45,7 @@ Option | Default | Description
 ----- | ---- | ----
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
-`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
+`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "https://globster.xyz" https://globster.xyz %} to test what files would match.
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
 `pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
@@ -76,10 +76,11 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
-`chromeWebSecurity`    | `true`    | Whether Chrome Web Security for same-origin policy and insecure mixed content is enabled. {% url 'Read more about this here' web-security %}
-`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
+`chromeWebSecurity`    | `true`    | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. {% url 'Read more about Web Security' web-security %}.
 `blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
+`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
 `modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
+`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 
 ## Viewport
 
@@ -258,6 +259,72 @@ These techniques prevent Cypress from working, and they can be safely removed wi
 Cypress modifies these scripts at the network level, and therefore there is a tiny performance cost to search the response streams for these patterns.
 
 You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
+
+## firefoxGcInterval
+
+Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can progress on this issue {% issue 6187 'here' %}.
+
+Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
+
+Running GC is an expensive and **blocking** routine. It adds significant time to the overall run, and causes Firefox to "freeze" for the duration of GC cleanup. This causes the browser not to respond to any user input.
+
+Cypress runs GC cleanup during {% url "`cypress run`" command-line#cypress-run %} only because we don't expect users to interact with the browser - since this is typically run in CI. We've disabled running GC during {% url "`cypress open`" command-line#cypress-open %} because users typically interact with the browser.
+
+Because GC adds additional time to the overall run, we've added the amount of time this routine has taken to the bottom of the Command Log in the Test Runner.
+
+{% imgTag /img/guides/firefox-gc-interval-in-command-log.jpg %}
+
+### Configuration
+
+You can control how often GC cleanup runs via the `firefoxGcInterval` configuration value.
+
+`firefoxGcInterval` controls whether Cypress forces Firefox to run GC cleanup and how frequently.
+
+By default, we force GC cleanup between every test during {% url "`cypress run`" command-line#cypress-run %}, but do not run any GC cleanup during {% url "`cypress open`" command-line#cypress-open %} using the configuration value below:
+
+```json
+{
+  "firefoxGcInterval": {
+    "runMode": 1,
+    "openMode": null
+  }
+}
+```
+
+You can override how often Cypress runs GC cleanup by setting the `firefoxGcInterval` config value to:
+
+- `null`, to disable it for both {% url "`cypress run`" command-line#cypress-run %} and {% url "`cypress open`" command-line#cypress-open %}
+- a `number`, which sets the interval for both {% url "`cypress run`" command-line#cypress-run %} and {% url "`cypress open`" command-line#cypress-open %}
+- an `object` to set different intervals for each mode
+
+**Examples**
+
+Turn off GC cleanup all modes
+
+```json
+{
+  "firefoxGcInterval": null
+}
+```
+
+Run GC cleanup before every other test during {% url "`cypress run`" command-line#cypress-run %} and {% url "`cypress open`" command-line#cypress-open %}
+
+```json
+{
+  "firefoxGcInterval": 2
+}
+```
+
+Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#cypress-run %} and disable running GC cleanup during {% url "`cypress open`" command-line#cypress-open %}.
+
+```json
+{
+  "firefoxGcInterval": {
+    "runMode": 3,
+    "openMode": null
+  }
+}
+```
 
 ## Intelligent Code Completion
 
