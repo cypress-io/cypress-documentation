@@ -235,15 +235,15 @@ However between tests, when a new test runs, the previous configuration is resto
 
 When a new test runs, any outstanding requests still in flight are automatically aborted. In fact this happens by default whether or not you've even started a `cy.server()`.
 
-## {% url `cy.visit()` visit %}
+## `cy.visit()`
 
 ### Server can be started before you {% url `cy.visit()` visit %}
 
-Oftentimes your application may make initial requests immediately when it loads (such as authenticating a user). Cypress makes it possible to start your server and define routes before a {% url `cy.visit()` visit %}. Upon the next visit, the server + routes will be instantly applied before your application loads.
+Oftentimes your application may make initial requests immediately when it loads (such as authenticating a user). Cypress makes it possible to start your server and define routes before a {% url "`cy.visit()`" visit %}. Upon the next visit, the server + routes will be instantly applied before your application loads.
 
 You can {% url 'read more about XHR strategy here' network-requests %}.
 
-## {% url `cy.request()` request %}
+## `cy.request()`
 
 ### `cy.server()` does not effect {% url "`cy.request()`" request %}
 
