@@ -120,7 +120,7 @@
     "prompt-confirm": "2.0.4",
     "ramda": "0.26.1",
     "request-promise": "4.2.5",
-    "sinon": "8.1.0",
+    "sinon": "8.1.1",
     "sinon-chai": "3.4.0",
     "start-server-and-test": "1.10.8",
     "textlint": "11.6.3",
