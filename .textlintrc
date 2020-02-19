@@ -22,6 +22,7 @@
         "BrowserStack",
         ["^chai", "Chai"],
         ["^chai-jquery", "chai-jquery"],
+        ["cross-browser", "cross browser"],
         ["cross origin", "cross-origin"],
         "ESLint",
         ["Express.js", "Express"],

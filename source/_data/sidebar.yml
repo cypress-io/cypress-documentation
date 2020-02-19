@@ -33,6 +33,7 @@ guides:
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
+    cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
   tooling:
     IDE-integration: IDE-integration.html
@@ -52,6 +53,7 @@ guides:
     trade-offs: trade-offs.html
     troubleshooting: troubleshooting.html
     changelog: changelog.html
+    migration-guide: migration-guide.html
     roadmap: roadmap.html
 
 api:
@@ -161,6 +163,7 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
+    isbrowser: isbrowser.html
     iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html

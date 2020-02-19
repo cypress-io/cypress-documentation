@@ -57,4 +57,26 @@ describe('i18n', () => {
       })
     })
   })
+
+  context('shortcut url', () => {
+    it('exists', function () {
+      cy.wrap(this.langValues).each((lang) => {
+        if (lang === 'en') return
+
+        cy.request(`/${lang}`).then((resp) => {
+          expect(resp.status).to.eq(200)
+        })
+      })
+    })
+
+    it('redirects to a given language homepage', function () {
+      cy.wrap(this.langValues).each((lang) => {
+        if (lang === 'en') return
+
+        cy.visit(`/${lang}`)
+        cy.url().should('contain', 'why-cypress')
+        cy.url().should('include', lang)
+      })
+    })
+  })
 })

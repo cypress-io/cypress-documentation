@@ -40,35 +40,35 @@ Cypress pode testar qualquer coisa que seja executada em um navegador.
 
 # Ecossitema do Cypress
 
-Cypress consiste em um Test Runner gratuito, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-introduction%}.
+O Cypress consiste em um gratuito, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "instalação local" installing-cypress %} Test Runner **e** Serviço de Dashboard para {% url 'gravar seus testes' dashboard-introduction%}.
 
-- ***Em Primeiro Lugar:*** Cypress makes it easy to set up and start writing tests every day while you build your application locall. *TDD at its best!*
-- ***Later:*** After building up a suite of tests and {% url "integrating Cypress" continuous-integration %} with your CI Provider, our  {% url 'Dashboard Service' dashboard-introduction%} can record your test runs. You'll never have to wonder: *Why did this fail?*
+- ***Primeiramente:*** O Cypress facilita a configuração e o início da gravação de testes diários enquanto você constroi a estrutura do seu aplicativo *TDD no seu melhor!*
+- ***Posteriormente:*** Após construir sua suíte de testes {% url "integrando o Cypress" continuous-integration %} com seu Provedor de CI , nosso {% url 'Serviço de Dashboard' dashboard-introduction%} pode registrar suas execuções de teste. Você nunca terá que se perguntar: *Por que isso falhou?*
 
 # Nossa missão
 
 Nossa missão é construir um ecossistema open source que aprimore a produtividade, torne o teste uma experiência agradável e gere a felicidade do desenvolvedor.
 Nós nos responsabilizamos por defender um processo de teste que **realmente funciona**.
 
-Acreditamos que nossa documentação deve ser simples e acessível. Isso significa permitir que nossos leitores compreendem completamente não apenas o **porque** e o **como** também.
+Acreditamos que nossa documentação deve ser simples e acessível. Isso significa permitir que nossos leitores compreendam completamente e não apenas o **porque** e o **como** também.
 
-Queremos ajudar os desenvolvedores a criar uma nova geração de aplicações modernas de maneira mais rápida, meljor esem o estresse e a ansiedade que associamos ao gerenciamento de testes.
+Queremos ajudar os desenvolvedores a criar uma nova geração de aplicações modernas de maneira mais rápida, melhor e sem o estresse e a ansiedade que associamos ao gerenciamento de testes.
 
 Sabemos que, para sermos bem-sucedidos, precisamos habilitar, nutrir e promover um ecossistema que cresça como open source. Cada linha de teste é um investimento no seu **código fonte**, nunca será associados a nós como um serviço pago ou empresa. Os testes serão capazes de executar e trabalhar independentemente *sempre*.
 
-Acreditamos que o teste precisa de {% fa fa-heart %} e estamos aqui para criar uma ferramenta, um serviço e uma comunidade na qual todos possam aprender e se beneficiar. Estamos resolvendo os pontos mais difícies compartilhados por todos os desenvolvedores que trabalham na web. Acreditamos nessa missão e esperamos que você se junte a nós para tornar o Cypress um ecossistema duradouro que faça todos felizes.
+Acreditamos que o teste precisa de muito {% fa fa-heart %} e estamos aqui para criar uma ferramenta, um serviço e uma comunidade na qual todos possam aprender e se beneficiar. Estamos resolvendo os pontos mais difícies compartilhados por todos os desenvolvedores que trabalham na web. Acreditamos nessa missão e esperamos que você se junte a nós para tornar o Cypress um ecossistema duradouro que faça todos felizes.
 
 # Recursos
 
-Cypress comes fully baked, batteries included. Here is a list of things it can do that no other testing framework can:
+Cypress vem quente, com pilhas inclusas. Aqui está uma lista de coisas que ele pode fazer e nenhum outro Framework de teste pode:
 
-- **Time Travel:** Cypress takes snapshots as your tests run. Hover over commands in the {% url 'Command Log' test-runner#Command-Log %} to see exactly what happened at each step.
-- **Debuggability:** Stop guessing why your tests are failing. {% url 'Debug directly' debugging %} from familiar tools like Developer Tools. Our readable errors and stack traces make debugging lightning fast.
-- **Automatic Waiting:** Never add waits or sleeps to your tests. Cypress {% url 'automatically waits' introduction-to-cypress#Cypress-is-Not-Like-jQuery %} for commands and assertions before moving on. No more async hell.
-- **Spies, Stubs, and Clocks:** Verify and {% url 'control the behavior' stubs-spies-and-clocks %} of functions, server responses, or timers. The same functionality you love from unit testing is right at your fingertips.
-- **Network Traffic Control:** Easily {% url 'control, stub, and test edge cases' network-requests %} without involving your server. You can stub network traffic however you like.
-- **Resultados Consistentes:** Our architecture doesn’t use Selenium or WebDriver. Say hello to fast, consistent and reliable tests that are flake-free.
-- **Screenshots e Vídeos:** View screenshots taken automatically on failure, or videos of your entire test suite when run from the CLI.
+- **Viagem no Tempo:** O Cypress tira snapshots enquanto seus testes são executados. Passe o mouse nos comandos no {% url 'Log de Comando' test-runner#Command-Log %} para ver exatamente o que aconteceu em cada etapa.
+- **Debugabilidade:** Pare de adivinhar por que seus testes estão falhando. {% url 'Depure diretamente' debugging %} de ferramentas conhecidas, como o Developer Tools. Nossos erros legíveis e rastreamentos de pilha tornam a depuração extremamente rápida.
+- **Espera automática:** Nunca adicione waits ou sleeps nos seus testes. O Cypress {% url 'espera automaticamente' introduction-to-cypress#Cypress-is-Not-Like-jQuery %} por comandos e asserções antes de prosseguir. Não há mais aquele inferno assíncrono.
+- **Spies, Stubs, e Clocks:** Verifica e {% url 'controla o comportamento' stubs-spies-and-clocks %} de funções, respostas do servidor, ou timers. A mesma funcionalidade que você adora nos testes de unidade está ao seu alcance.
+- **Controle de Tráfego de Rede:** Facil {% url 'controle, stub, e teste casos de borda' network-requests %} sem envolver seu servidor. Você pode utilizar o stub no tráfego de rede como quiser.
+- **Resultados Consistentes:** Nossa arquitetura não usa Selenium ou WebDriver. Diga olá para a velocidade, testes consistentes e confiáveis, sem flocos.
+- **Screenshots e Vídeos:** Veja capturas de tela capturadas automaticamente em caso de falha ou vídeos de todo o seu conjunto de testes quando executado a partir da CLI.
 
 ## {% fa fa-cog %} Configurando testes
 
@@ -78,13 +78,13 @@ Não há servidores, drivers ou nenhuma outra dependências para instalar ou con
 
 ## {% fa fa-code %} Escrevendo testes
 
-Tests written in Cypress are easy to read and understand. Our API comes fully baked, on top of tools you are familiar with already.
+Os testes escritos no Cypress são fáceis de ler e entender. Nossa API vem totalmente pronta, além das ferramentas que você já conhece.
 
 {% video local /img/snippets/writing-tests.mp4 %}
 
 ## {% fa fa-play-circle %} Executando testes
 
-Cypress runs as fast as your browser can render content. You can watch tests run in real time as you develop your applications. TDD FTW!
+Cypress roda tão rápido quanto seu navegador pode renderizar conteúdo. Você pode assistir a testes executados em tempo real enquanto desenvolve seus aplicativos. TDD FTW!
 
 {% video local /img/snippets/running-tests.mp4 %}
 

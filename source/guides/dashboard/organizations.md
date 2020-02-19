@@ -13,6 +13,14 @@ Organizations are used to group projects and manage access to those projects.
 - Transfer projects
 - Pay for all of your projects usage.
 
+## Organization ID
+
+An Organization's ID is a unique identifier in [UUID](https://tools.ietf.org/html/rfc4122) format that can be found under the "Organization settings" section of the Dashboard. This ID is used frequently by the Support, Success, and Sales teams to reference an Organization.
+
+To locate your organization's UUID, go to "Organization settings" then Organization ID. Click on the clipboard icon to copy the ID for easy sharing with Cypress teams.
+
+{% imgTag /img/dashboard/organizations/OrganizationUUID.gif "Locate UUID gif" %}
+
 # Managing Organizations
 
 ## Create Org

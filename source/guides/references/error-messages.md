@@ -391,6 +391,10 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 
 `cy` commands themselves are already promise like, and you can likely avoid the use of the separate Promise.
 
+## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked a done callback.
+
+The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade %}.
+
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
 You can safely remove: `{stub: false}`.
@@ -551,7 +555,7 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %} when running in Chrome family browsers (this setting will not work in other browsers). Before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
 ```json
 {

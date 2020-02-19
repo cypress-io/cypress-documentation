@@ -51,6 +51,7 @@ sidebar:
     parallelization: Параллелизация
     environment-variables: Переменные среды
     launching-browsers: Запуск браузеров
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
     references: Ссылки
@@ -63,6 +64,7 @@ sidebar:
     trade-offs: Компромиссы
     troubleshooting: Troubleshooting
     changelog: Изменения в продукте
+    migration-guide: Migration Guide
     roadmap: Карта проекта
     tooling: Утилиты
     IDE-integration: IDE Integration
@@ -176,6 +178,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies
