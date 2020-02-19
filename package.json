@@ -118,7 +118,7 @@
     "ora": "3.4.0",
     "pluralize": "8.0.0",
     "prompt-confirm": "2.0.4",
-    "ramda": "0.26.1",
+    "ramda": "0.27.0",
     "request-promise": "4.2.5",
     "sinon": "8.1.0",
     "sinon-chai": "3.4.0",
