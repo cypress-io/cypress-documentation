@@ -139,7 +139,7 @@
     "docsearch.js": "2.6.3",
     "font-awesome": "4.7.0",
     "hexo": "3.9.0",
-    "hexo-algoliasearch": "0.4.1",
+    "hexo-algoliasearch": "0.4.2",
     "hexo-cli": "3.1.0",
     "hexo-filter-cleanup": "1.2.2",
     "hexo-generator-alias": "0.1.3",
