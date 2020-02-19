@@ -61,6 +61,10 @@ Of course. The Dashboard Service is a separate service from the Test Runner and 
 
 You can always run your tests in CI using {% url "`cypress run`" command-line#cypress-run %} without the `--record` flag which does not communicate with our external servers and will not record any test results.
 
+## {% fa fa-angle-right %} What is my Organization ID?
+
+Your Organization ID is a unique identifier that is linked to your organization. Instructions on how to find your ID are in the {% url "Dashboard Guide." organizations#Organization-ID%}
+
 ## {% fa fa-angle-right %} What does Cypress record?
 
 We capture the following:

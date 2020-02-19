@@ -20,7 +20,7 @@ page:
 sidebar:
   guides:
     overview: Visão Geral
-    why-cypress: Por que Cypress?
+    why-cypress: Por que o Cypress?
     getting-started: Introdução
     key-differences: Principais diferenças
     installing-cypress: Instalando o Cypress
@@ -51,6 +51,7 @@ sidebar:
     parallelization: Paralelização
     environment-variables: Variáveis de Ambiente
     launching-browsers: Iniciando navegadores
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Comandos Customizados
     web-security: Segurança Web
     references: Referências
@@ -62,6 +63,7 @@ sidebar:
     best-practices: Boas Práticas
     trade-offs: Trade-offs
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roteiro
     tooling: Ferramentas
     intelligent-code-completion: Conclusão Inteligente de Código
@@ -175,6 +177,7 @@ sidebar:
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

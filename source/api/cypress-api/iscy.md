@@ -14,7 +14,7 @@ Cypress.isCy(obj)
 
 ## Arguments
 
-**{% fa fa-angle-right %} obj** ***(any)***
+**{% fa fa-angle-right %} obj** ***(Object)***
 
 The object to test.
 
