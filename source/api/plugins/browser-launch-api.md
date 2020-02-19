@@ -109,7 +109,7 @@ module.exports = (on, config) => {
       // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
 
       // for example, to set `somePreference: true` in Preferences:
-      launchOptions.preferences.default.somePreference = true
+      launchOptions.preferences.default['preference'] = true
 
       return launchOptions
     }
@@ -199,6 +199,34 @@ module.exports = (on, config) => {
     }
 
     return launchOptions
+  })
+}
+```
+
+## Change download directory
+
+Change the download directory of files downloaded during Cypress tests.
+
+```js
+module.exports = (on) => {
+  on('before:browser:launch', (browser, options) => {
+    const downloadDirectory = path.join(__dirname, '..', 'downloads')
+
+    if (browser.family === 'chromium') {
+      options.preferences.default['download'] = { default_directory: downloadDirectory }
+
+      return options
+    }
+
+    if (browser.family === 'firefox') {
+      options.preferences['browser.download.dir'] = downloadDirectory
+      options.preferences['browser.download.folderList'] = 2
+
+      // needed to prevent download prompt for text/csv files.
+      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
+
+      return options
+    }
   })
 }
 ```
