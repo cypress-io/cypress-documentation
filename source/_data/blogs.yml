@@ -15,7 +15,7 @@ large:
     sourceUrl: https://blog.noredink.com/
     author: Matt Charlton
     date: Feb 3, 2020
-    img: /img/examples/calendar.jpg 
+    img: /img/examples/calendar.png 
 
   - title: "End-to-End Testing with Cypress.io — A Lowdown"
     url: "https://madebyextreme.com/insights/end-to-end-testing-with-cypress-io"
