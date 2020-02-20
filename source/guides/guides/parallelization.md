@@ -19,7 +19,7 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}. If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our {% url "Cross Browser Testing guide" cross-browser-testing %} for helpful CI strategies when using parallelization.
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
@@ -147,6 +147,13 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 {% imgTag /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" "no-border" %}
 
+{% note info %}
+# Cross Browser Testing
+
+Grouping test runs with or without parallelization is a useful mechanism when implementing a CI strategy for cross browser testing. Check out the {% url "Cross Browser Testing guide" cross-browser-testing %} to learn more.
+
+{% endnote %}
+
 ## Grouping by browser
 
 You can test your application against different browsers and view the results under a single run within the Dashboard. Below, we name our groups the same name as the browser being tested:
@@ -236,7 +243,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 Provider  | Environment Variable
 --|--
 AppVeyor  | `APPVEYOR_BUILD_NUMBER`
-Bamboo  | `BAMBOO_BUILD_NUMBER`
+Bamboo  | `bamboo_buildNumber`
 Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
 Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`
@@ -287,6 +294,8 @@ The Machines View charts spec files by the machines that executed them. This vie
 
 # See also
 
+- {% url "Continuous Integration Guide" continuous-integration %}
+- {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
 - {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}

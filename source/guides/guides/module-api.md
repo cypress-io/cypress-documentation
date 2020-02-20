@@ -24,8 +24,8 @@ Option | Type | Description
 `configFile` | *string / boolean* | Path to the config file to be used. If `false` is passed, no config file will be used.
 `env` | *object* | Specify {% url "environment variables" environment-variables %}
 `group` | *string* | {% url "Group" parallelization#Grouping-test-runs %} recorded tests together under a single run
-`headed` | *boolean* | Displays the browser instead of running headlessly (defaults to true for Chrome-family browsers)
-`headless` | *boolean* | Hide the browser instead of running headed (defaults to true for Electron)
+`headed` | *boolean* | Displays the browser instead of running headlessly (default Firefox and Chromium-based browsers)
+`headless` | *boolean* | Hide the browser instead of running headed (defaults for Electron)
 `key` | *string* | Specify your secret record key
 `exit` | *boolean* | Whether to close Cypress after all tests run
 `parallel` | *boolean* | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
@@ -45,7 +45,6 @@ cypress.run({
   browser: 'chrome',
   config: {
     baseUrl: 'http://localhost:8080',
-    chromeWebSecurity: false,
     video: true,
   },
   env: {

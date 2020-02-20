@@ -141,7 +141,7 @@ We have seen many different iterations of this question. The answers can be vari
 
 **_How do I know if my page is done loading?_**
 
-When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#Same-superdomain-per-test %}, Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
 
@@ -600,3 +600,30 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
 
 Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spying %}.
+
+## {% fa fa-angle-right %} How do I use special characters with cy.get?
+
+{% url "According to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}, special characters like `/`, `.` are valid characters for ids. 
+
+To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
+
+Example:
+
+```html
+<!doctype html>
+<html lang="en">
+<body>
+  <div id="Configuration/Setup/TextField.id">Hello World</div>
+</body>
+</html>
+```
+
+```js
+it('test', () => {
+  cy.visit('index.html')
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains('Hello World')
+  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`).contains('Hello World')
+})
+```
+
+Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. {% url "Learn more about why" $#Notes %}

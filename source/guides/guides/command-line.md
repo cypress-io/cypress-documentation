@@ -69,7 +69,7 @@ npx cypress run --record --spec "cypress/integration/my-spec.js"
 
 ## `cypress run`
 
-Runs Cypress tests to completion. By default, `cypress run` will run all tests headlessly in the `Electron` browser.
+Runs Cypress tests to completion. By default, `cypress run` will run all tests headlessly in the Electron browser.
 
 ```shell
 cypress run [options]
@@ -85,8 +85,8 @@ Option | Description
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
 `--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
-`--headed`  | {% urlHash "Displays the browser instead of running headlessly (defaults to true for Chrome-family browsers)" cypress-run-headed %}
-`--headless` | {% urlHash "Hide the browser instead of running headed (defaults to true for Electron)" cypress-run-headless %}
+`--headed`  | {% urlHash "Displays the browser instead of running headlessly (default for Firefox and Chromium-based browsers)" cypress-run-headed %}
+`--headless` | {% urlHash "Hide the browser instead of running headed (default for Electron)" cypress-run-headless %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
@@ -105,15 +105,15 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to `chrome`, `chromium`, `edge`, `electron`, `firefox` to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+
+To launch non-stable browsers, add a colon and the desired release channel. For example, to launch Chrome Canary, use `chrome:canary`.
 
 You can also choose a browser by supplying a path:
 
 ```shell
 cypress run --browser /usr/bin/chromium
 ```
-
-Currently, only browsers in the Chrome family are supported.
 
 {% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
 
@@ -182,11 +182,11 @@ cypress run --group develop-env
 You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --spec 'cypress/integration/user/**/*'
 ```
 
 Specifying the `--ci-build-id` may also be necessary.
@@ -194,6 +194,10 @@ Specifying the `--ci-build-id` may also be necessary.
 {% url "Read more about grouping." parallelization#Grouping-test-runs %}
 
 ### `cypress run --headed`
+
+{% note warning %}
+Video recording is not currently supported in Electron with the `--headed` flag. See {% issue 1767 %} for more details.
+{% endnote %}
 
 By default, Cypress will run tests in Electron headlessly.
 
@@ -205,9 +209,9 @@ cypress run --headed
 
 ### `cypress run --headless`
 
-For backwards-compatibility reasons, when using Chrome, Cypress will run tests in headed mode by default.
+Cypress will run tests in Chrome and Firefox headed by default.
 
-Passing `--headless` will force Chrome to be hidden.
+Passing `--headless` will force the browser to be hidden.
 
 ```shell
 cypress run --headless --browser chrome
@@ -325,7 +329,7 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-The Dashboard will display any tags sent with the appropriate run. 
+The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
@@ -365,7 +369,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Currently, only browsers in the Chrome family are supported.
+Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
 
 {% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
 
