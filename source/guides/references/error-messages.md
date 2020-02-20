@@ -534,26 +534,22 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 
 ## {% fa fa-exclamation-triangle red %} The browser process running your tests just exited unexpectedly
 
-This error can occur whenever Cypress detects that the browser that was launched for running tests has exited or crashed before the tests could finish running, or without the user manually stopping the tests in Cypress.
+This error can occur whenever Cypress detects that the launched browser has exited or crashed before the tests could finish running.
 
-This can happen for a number of different reasons, including:
+This can happen for a number of reasons, including:
 
 - The browser was exited manually, by clicking the "Quit" button or otherwise
-- Your test suite or website code is starving the browser for resources, such as with an infinite loop
-- Tests are running in a memory-starved environment
+- Your test suite or application under test is starving the browser of resources, such as running an infinite loop
+- Cypress is running in a memory-starved environment
 - The browser is testing a memory-heavy application
-- Tests are running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
+- Cypress is running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
 - There are problems with the GPU / GPU drivers
-- There is a bug in the browser <!-- TODO: link to Firefox bug here? https://github.com/cypress-io/cypress/issues/6187-->
+- There is a bug in the browser involving memory management<!-- TODO: link to Firefox bug here? https://github.com/cypress-io/cypress/issues/6187 -->
 - There is a memory leak in Cypress
-
-<!-- TODO: worth adding image of new error?
-{% imgTag /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
- -->
 
 If the browser running Cypress tests crashes, currently, Cypress will abort any remaining tests and print out this error.
 
-There is an {% issue 349 'open issue' %} to recover from browser crashes automatically, so tests could continue to run.
+There is an {% issue 349 'open issue' %} to recover from browser crashes automatically, so tests can continue to run.
 
 # Test Runner errors
 
