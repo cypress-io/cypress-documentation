@@ -300,7 +300,7 @@
       keywords: [authentication, otp, 2fa, mfa]
 
     - name: cypress-keycloak-commands
-      description: Cypress commands for authenticating users with Keycloak Identity Provider
+      description: Cypress commands for authenticate users with Keycloak Identity Provider
       link: https://github.com/Fredx87/cypress-keycloak-commands
       keywords: [authentication, login, keycloak, oauth, openid]
 
