@@ -299,6 +299,11 @@
       link: https://github.com/NoriSte/cypress-otp
       keywords: [authentication, otp, 2fa, mfa]
 
+    - name: cypress-keycloak-commands
+      description: Cypress commands for authenticating users with Keycloak Identity Provider
+      link: https://github.com/Fredx87/cypress-keycloak-commands
+      keywords: [authentication, login, keycloak, oauth, openid]
+
 - name: Framework tooling
   plugins:
     - name: Cypress Angular Schematic
