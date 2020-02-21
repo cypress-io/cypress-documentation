@@ -59,6 +59,11 @@ This configuration contains all of the values that get passed into the browser f
 
 {% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
 
+It also includes the following extra values that are not part of the standard configuration. Note that these values cannot be modified from the plugins file.
+
+* __configFile__: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the {% urlHash "`--config-file` flag" cypress-open-config-file-lt-config-file-gt %}.
+* __projectRoot__: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+
 Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
 
 You can programmatically modify these values and Cypress will then respect these changes. This enables you to swap out configuration based on things like the environment you're running in.
