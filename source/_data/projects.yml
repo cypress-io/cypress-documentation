@@ -43,3 +43,7 @@
 - name: Webiny
   description: Serverless CMS (GraphQL + React + Node.js + AWS Lambda)
   url: https://github.com/webiny/webiny-js 
+
+- name: Userbase
+  description: Create secure and private web apps using only static JavaScript, HTML, and CSS.
+  url: https://github.com/encrypted-dev/userbase
