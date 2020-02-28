@@ -302,6 +302,62 @@ it('adds two items', function () {
 
 The test passes, because the second `cy.get('.todo-list li')` is retried with its own assertion now `.should('have.length', 2)`. Only after successfully finding two `<li>` elements, the command `.find('label')` and its assertion starts, and by now, the item with the correct "todo B" label has been correctly queried.
 
+## Use `.should()` with a callback
+
+If you have to use commands that cannot be retried, but need to retry the entire chain, consider rewriting the commands into a single {% url '.should(callbackFn)' should#Function %} chained off the very first retry-able command.
+
+Below is an example where the number value is set after a delay:
+
+```html
+<div class="random-number-example">
+  Random number: <span id="random-number">🎁</span>
+</div>
+<script>
+  const el = document.getElementById('random-number')
+  setTimeout(() => {
+    el.innerText = Math.floor(Math.random() * 10 + 1)
+  }, 1500)
+</script>
+```
+
+{% imgTag /img/guides/retry-ability/random-number.gif "Random number" %}
+
+### {% fa fa-warning red %} Incorrectly waiting for values
+
+You may want to write a test like below, to test that the number is between 1 and 10, although **this will not work as intended**. The test yields the following values, noted in the comments, before failing.
+
+```javascript
+// WRONG: this test will not work as intended
+cy.get('#random-number') // <div>🎁</div>
+  .invoke('text')        // "🎁"
+  .then(parseFloat)      // NaN
+  .should('be.gte', 1)   // fails
+  .and('be.lte', 10)     // never evaluates
+```
+
+Unfortunately, the {% url '.invoke()' invoke %} and {% url '.then()' then %} commands are not retried. Thus the test only runs the entire chain once before failing.
+
+{% imgTag /img/guides/retry-ability/random-number-first-attempt.png "First attempt at writing the test" width-600 %}
+
+### {% fa fa-check-circle green %} Correctly waiting for values
+
+We need to retry getting the element, invoking the `text()` method, calling the `parseFloat` function and running the `gte` and `lte` assertions. We can achieve this using the `.should(callbackFn)`.
+
+```javascript
+cy.get('#random-number')
+  .should(($div) => {
+    // all the code inside here will retry
+    // until it passes or times out
+    const n = parseFloat($div.text())
+
+    expect(n).to.be.gte(1).and.be.lte(10)
+  })
+```
+
+The above test retries getting the element and invoking the text of the element to get the number. When the number is finally set in the application, then the `gte` and `lte` assertions pass and the test passes.
+
+{% imgTag /img/guides/retry-ability/random-number-callback.gif "Random number using callback" %}
+
 # See also
 
 - You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
