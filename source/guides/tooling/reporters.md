@@ -117,7 +117,7 @@ The following configuration will create separate XML files in the `results` fold
 
 ```shell
 cypress run --reporter junit \
-  --reporter-options "results/my-test-output-[hash].xml"
+  --reporter-options "mochaFile=results/my-test-output-[hash].xml"
 ```
 
 # Multiple reporters
