@@ -274,7 +274,7 @@ And there you have it: a short test in Cypress that visits a page, finds and cli
 > 3. Click on it
 > 4. Get the URL
 > 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `.actions-email` class
+> 6. Get the input with the `.action-email` class
 > 7. Type `fake@email.com` into the input
 > 8. Assert the input reflects the new value
 
@@ -282,9 +282,9 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `.actions-email` input
+> 3. And they type "fake@email.com" into the `.action-email` input
 > 3. Then the URL should include `/commands/actions`
-> 4. And the `.actions-email` input has "fake@email.com" as its value
+> 4. And the `.action-email` input has "fake@email.com" as its value
 
 And hey, this is a very clean test! We didn't have to say anything about *how* things work, just that we'd like to verify a particular series of events and outcomes.
 
