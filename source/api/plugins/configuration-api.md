@@ -29,7 +29,14 @@ Whenever you return an object from your `pluginFile`, Cypress will take this and
 
 If you don't return an object, then configuration will not be modified.
 
-Resolved values will show up in your Settings tab.
+{% note warning %}
+The `config` object also includes the following extra values that are not part of the standard configuration. **These values are read only and cannot be modified from the plugins file.**
+
+* `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
+* `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+{% endnote %}
+
+Resolved values will show up in the "Settings" tab of the Test Runner.
 
 {% imgTag /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
 
