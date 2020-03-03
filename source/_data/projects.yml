@@ -39,3 +39,11 @@
 - name: React Admin
   description: A frontend Framework for building B2B applications running in the browser on top of REST/GraphQL APIs, using ES6, React and Material Design
   url: https://github.com/marmelab/react-admin
+
+- name: Webiny
+  description: Serverless CMS (GraphQL + React + Node.js + AWS Lambda)
+  url: https://github.com/webiny/webiny-js 
+
+- name: Userbase
+  description: Create secure and private web apps using only static JavaScript, HTML, and CSS.
+  url: https://github.com/encrypted-dev/userbase
