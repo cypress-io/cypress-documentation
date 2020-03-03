@@ -123,6 +123,16 @@ Or you can directly add a `$schema` key to your Cypress configuration file, whic
 "$schema": "https://on.cypress.io/cypress.schema.json",
 ```
 
+## Run tests directly from IDE
+To be able to run Cypress tests directly from IDE the following plugins may be used
+### Visual Studio Code
+{% url "Open Cypress extension" https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress %}
+{% imgTag /img/guides/intelligent-code-completion/vscode-extension-open-cypress.gif %}
+### IntelliJ Platform (IDEA Ultimate, Webstorm and others with JS support)
+{% url "Intellij-Cypress plugin" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %} 
+<!-- textlint-disable -->
+{% video youtube 1gjjy0RQeBw %}
+<!-- textlint-enable -->
 # See also
 
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
