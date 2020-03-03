@@ -400,11 +400,13 @@ it('does not work as we expect', () => {
   cy.get('.awesome-selector')   // Still nothing happening
     .click()                    // Nope, nothing
 
-  // Cypress.$ is synchronous
-  // this element only exists after you click the .awesome-selector
-  let el = Cypress.$('.new-el') // evaluates immediately!
+  // Cypress.$ is synchronous, so evaluates immediately
+  // there is no element to find yet because
+  // the cy.visit() was only queued to visit
+  // and did not actually visit the application
+  let el = Cypress.$('.new-el') // evaluates immdeiately as []
 
-  if (el.length) {              // evaluates immediately!
+  if (el.length) {              // evaluates immediately as 0
     cy.get('.another-selector')
   } else {
     // this code will never run
@@ -430,9 +432,9 @@ it('does not work as we expect', () => {
   cy.get('.awesome-selector')      // Still nothing happening
     .click()                       // Nope, nothing
     .then(() => {
-      // placing this code inside the .then ensures
+      // placing this code inside the .then() ensures
       // it runs after the cypress commands 'execute'
-      let el = Cypress.$('.new-el') // evaluates after .then
+      let el = Cypress.$('.new-el') // evaluates after .then()
 
       if (el.length) {
         cy.get('.another-selector')
@@ -453,7 +455,7 @@ In the example below, the check on the `username` value gets evaluated immediate
 
 ```js
 it('test', () => {
-  let username = undefined     // evaluates immediately!
+  let username = undefined     // evaluates immediately as undefined
 
   cy.visit('https://app.com') // Nothing happens yet
   cy.get('.user-name')        // Still, nothing happens yet
@@ -462,8 +464,9 @@ it('test', () => {
       username = $el.text()
     })
 
-  // evaluates immediately!
-  if (username) {
+  // this evaluates before the .then() above
+  // so the username is still undefined
+  if (username) {             // evaluates immediately as undefined
     cy.contains(username).click()
   } else {
     // this will never run
@@ -484,15 +487,16 @@ Below is one way the code above could be rewritten in order to ensure the comman
 
 ```js
 it('test', () => {
-  let username = undefined     // evaluates immediately!
+  let username = undefined     // evaluates immediately as undefined
 
   cy.visit('https://app.com') // Nothing happens yet
   cy.get('.user-name')        // Still, nothing happens yet
     .then(($el) => {          // Nothing happens yet
-      // this line evaluates after the .then executes
+      // this line evaluates after the .then() executes
       username = $el.text()
 
-      // evaluates after the .then executes
+      // evaluates after the .then() executes
+      // it's the correct value gotten from the $el.text()
       if (username) {
         cy.contains(username).click()
       } else {
