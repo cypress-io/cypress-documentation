@@ -210,7 +210,7 @@ setTimeout(() => {
   message = 'bye'
 }, 1000)
 
-// initially the o.greeting() returns "hello" failing the assertion.
+// initially the english.greeting() returns "hello" failing the assertion.
 // cy.invoke('greeting') tries again and again until after 1 second
 // the returned message becomes "bye" and the assertion passes
 cy.wrap(o).invoke('greeting').should('equal', 'bye')
