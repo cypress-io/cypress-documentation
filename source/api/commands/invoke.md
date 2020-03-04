@@ -196,7 +196,7 @@ cy
 
 ### Retries
 
-The command `cy.invoke` automatically retries invoking the specified method, until any the returned value satisfied the attached assertions. The example below passes after 1 second.
+`.invoke()` automatically retries invoking the specified method until the returned value satisfies the attached assertions. The example below passes after 1 second.
 
 ```javascript
 let message = 'hello'
