@@ -216,7 +216,7 @@ setTimeout(() => {
 cy.wrap(o).invoke('greeting').should('equal', 'bye')
 ```
 
-{% imgTag /img/api/invoke/invoke-retries.gif "Invoke retries example" %}
+{% imgTag /img/api/invoke/invoke-retries.gif "Invoke retries example" width-600 %}
 
 # Rules
 
