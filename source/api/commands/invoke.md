@@ -194,7 +194,7 @@ cy
   .invoke('val').should('match', /apples/)
 ```
 
-### Retries
+## Retries
 
 `.invoke()` automatically retries invoking the specified method until the returned value satisfies the attached assertions. The example below passes after 1 second.
 
