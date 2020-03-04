@@ -200,7 +200,7 @@ cy
 
 ```javascript
 let message = 'hello'
-const o = {
+const english = {
   greeting () {
     return message
   }
