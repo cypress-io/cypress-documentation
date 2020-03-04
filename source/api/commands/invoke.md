@@ -213,7 +213,7 @@ setTimeout(() => {
 // initially the english.greeting() returns "hello" failing the assertion.
 // .invoke('greeting') tries again and again until after 1 second
 // the returned message becomes "bye" and the assertion passes
-cy.wrap(o).invoke('greeting').should('equal', 'bye')
+cy.wrap(english).invoke('greeting').should('equal', 'bye')
 ```
 
 {% imgTag /img/api/invoke/invoke-retries.gif "Invoke retries example" width-600 %}
