@@ -104,8 +104,18 @@ To add a page such as a new guide or API documentation:
 - Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
 - Add translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
-- Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
+- **REQUIRED**: Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
+
+### Deleting Pages
+
+To delete a page:
+
+- Delete the page from the relevant directory under [`source`](/source).
+- Remove the link from the the [`sidebar.yml`](/source/_data/sidebar.yml).
+- Remove the translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- **REQUIRED**: Commit the new file using git - we auto-remove the doc within each supported language, this auto-generation depends on the file being deleted in git, the build will not work until this is commited.
+- Build the documentation site locally so that you can visually inspect and make sure it was properly deleted.
 
 #### A Worked Example
 
