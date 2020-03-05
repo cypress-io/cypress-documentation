@@ -229,8 +229,8 @@ Let's make an assertion about something on the new page we clicked into. Perhaps
 Here's what that looks like:
 
 ```js
-describe('My First Test', function() {
-  it('clicking "type" navigates to a new url', function() {
+describe('My First Test', () => {
+  it('clicking "type" navigates to a new url', () => {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -250,8 +250,8 @@ We can continue the interactions and assertions in this test by adding another c
 We can use {% url "`cy.get()`" get %} to select an element based on a CSS class. Then we can use the {% url "`.type()`" type %} command to enter text into the selected input. Finally, we can verify that the value of the input reflects the text that was typed with another {% url "`.should()`" should %}.
 
 ```js
-describe('My First Test', function() {
-  it('Gets, types and asserts', function() {
+describe('My First Test', () => {
+  it('Gets, types and asserts', () => {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -431,7 +431,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 {% imgTag /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
-## In action
+### In action
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
