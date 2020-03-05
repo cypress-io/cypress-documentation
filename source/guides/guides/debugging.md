@@ -113,6 +113,20 @@ Cypress emits multiple events you can listen to as shown below. {% url 'Read mor
 
 {% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
 
+# Run Cypress command outside the test
+
+If you need to run a Cypress command straight from the Developer Tools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
+
+```javascript
+cy.now('task', 123)
+  .then(console.log)
+// runs cy.task(123) and prints the resolved value
+```
+
+{% note warning %}
+The `cy.now()` command is an internal command and may change in the future.
+{% endnote %}
+
 # Cypress fiddle
 
 While learning Cypress it may be a good idea to try small tests against some HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.

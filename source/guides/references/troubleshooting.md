@@ -179,26 +179,6 @@ Reload the browser and see debug messages within the Developer Tools console. Yo
 
 {% imgTag /img/api/debug/debug-driver.jpg "Debug logs in browser" %}
 
-# Log Cypress events
-
-In addition to the `DEBUG` messages, Cypress also emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
-
-{% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
-
-# Run Cypress command outside the test
-
-If you need to run a Cypress command straight from the Developer Tools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
-
-```javascript
-cy.now('task', 123)
-  .then(console.log)
-// runs cy.task(123) and prints the resolved value
-```
-
-{% note warning %}
-The `cy.now()` command is an internal command and may change in the future.
-{% endnote %}
-
 # Log memory and CPU usage
 
 You can tell Cypress to log out a summary of the memory and CPU usage of itself and any subprocesses at a regular interval by enabling the `cypress:server:util:process_profiler` debug stream, like so:

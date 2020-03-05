@@ -65,7 +65,7 @@ cypress run --browser chromium
 cypress run --browser canary
 ```
 
-{% url '启动已安装的浏览器出现问题？请阅读关于调试浏览器启动的详细信息' debugging#Launching-browsers %}
+{% url '启动已安装的浏览器出现问题？请阅读关于调试浏览器启动的详细信息' troubleshooting#Launching-browsers %}
 
 ## 通过路径启动
 
