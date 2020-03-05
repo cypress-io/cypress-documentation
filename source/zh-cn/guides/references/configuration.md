@@ -256,4 +256,4 @@ Cypress在网络级别修改这些脚本，因此搜索这些模式的响应流�
 
 ## 智能代码补全
 
-Cypress在编辑你的`cypress.json`文件时可以使用智能提示。{% url "了解如何设置智能代码补全。" intelligent-code-completion %}
+Cypress在编辑你的`cypress.json`文件时可以使用智能提示。{% url "了解如何设置智能代码补全。" IDE-integration %}

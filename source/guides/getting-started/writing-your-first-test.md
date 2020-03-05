@@ -219,7 +219,7 @@ Now we can assert something about this new page!
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
 
 {% note info %}
-{% fa fa-magic %} You can see IntelliSense in your spec files by adding a single special comment line. Read about {% url 'Intelligent Code Completion' intelligent-code-completion#Triple-slash-directives %}.
+{% fa fa-magic %} You can see IntelliSense in your spec files by adding a single special comment line. Read about {% url 'Intelligent Code Completion' IDE-integration#Triple-slash-directives %}.
 {% endnote %}
 
 ## {% fa fa-check-square-o %} Step 4: Make an assertion
@@ -229,8 +229,8 @@ Let's make an assertion about something on the new page we clicked into. Perhaps
 Here's what that looks like:
 
 ```js
-describe('My First Test', function() {
-  it('clicking "type" navigates to a new url', function() {
+describe('My First Test', () => {
+  it('clicking "type" navigates to a new url', () => {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -250,8 +250,8 @@ We can continue the interactions and assertions in this test by adding another c
 We can use {% url "`cy.get()`" get %} to select an element based on a CSS class. Then we can use the {% url "`.type()`" type %} command to enter text into the selected input. Finally, we can verify that the value of the input reflects the text that was typed with another {% url "`.should()`" should %}.
 
 ```js
-describe('My First Test', function() {
-  it('Gets, types and asserts', function() {
+describe('My First Test', () => {
+  it('Gets, types and asserts', () => {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -431,7 +431,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 {% imgTag /img/guides/first-test-paused.png "Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" %}
 
-## In action
+### In action
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
 
@@ -496,7 +496,7 @@ describe('My First Test', function() {
 # Next steps
 
 - Start {% url 'testing your app' testing-your-app %}.
-- Set up {% url 'intelligent code completion' intelligent-code-completion %} for Cypress commands and assertions.
+- Set up {% url 'intelligent code completion' IDE-integration#Intelligent-Code-Completion %} for Cypress commands and assertions.
 - Search Cypress's documentation to quickly find what you need.
 
 {% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}
