@@ -22,6 +22,40 @@ Details of each run are displayed including:
 
 {% imgTag /img/dashboard/run-details.png "run-details" %}
 
+# Cancelling runs
+
+You can cancel a run currently in progress from the Dashboard. Runs can only be cancelled by members of a project.
+
+To cancel a run, click on a run in progress from the run list, then click on "Cancel Run" in the upper-right corner of the run details page.
+
+Cancelling a run in progress cannot be undone. Once you click "Cancel Run", a confirmation message will appear. Click the red "Yes, cancel this run" button to proceed.
+
+{% video local /img/snippets/cancelling-run.mp4 %}
+
+Once a run is cancelled:
+
+- The run status will update to cancelled
+- All incompleted instances of the run will be marked as cancelled
+- All test runners associated with the run will exit with an error
+- A message will appear on the run details page showing the time of cancellation and the user that made the request
+- The run will update to cancelled in GitHub if integration is enabled
+
+If you have Analytics enabled, cancelled runs will appear in the Runs over Time chart. Runs can also be filtered by cancellation status. 
+
+Cancelled runs do not count against your test recording limit.
+
+# Archiving runs
+
+Runs that have been cancelled or are in an errored state can be archived from the Dashboard. Archiving a run will remove it from the run list and Analytics reporting.
+
+Archived runs can still be accessed by the URL to that run. The format is:
+
+`dashboard.cypress.io/projects/{project ID}/runs/{run number}`
+
+Archived runs can be restored from the run detail page.
+
+{% imgTag /img/dashboard/restore-from-archive.png "restore-from-archive" %}
+
 # {% fa fa-file-code-o fa-fw %} Spec files
 
 You can see the result of each spec file that ran within **Specs**. There is also the option to switch between **Timeline View** and **Bar Chart View**.
