@@ -12,6 +12,7 @@ Thanks for taking the time to contribute! :smile:
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
   - [Writing the Changelog](#writing-the-changelog)
+  - [Translating](#translating)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)

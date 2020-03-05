@@ -385,6 +385,131 @@ it('changes the URL when "awesome" is clicked', function() {
 
 Cypress doesn't kick off the browser automation magic until the test function exits.
 
+### Mixing Async and Sync code
+
+Remembering that Cypress commands run asynchronously is important if you are attempting to mix Cypress commands with synchronous code. Synchronous code will execute immediately - not waiting for the Cypress commands above it to execute.
+
+**{% fa fa-warning red %} Incorrect Usage**
+
+In the example below, the `el` evaluates immediately, before the `cy.visit()` has executed, so will always evaluate to an empty array.
+
+```js
+it('does not work as we expect', () => {
+  cy.visit('/my/resource/path') // Nothing happens yet
+
+  cy.get('.awesome-selector')   // Still nothing happening
+    .click()                    // Nope, nothing
+
+  // Cypress.$ is synchronous, so evaluates immediately
+  // there is no element to find yet because
+  // the cy.visit() was only queued to visit
+  // and did not actually visit the application
+  let el = Cypress.$('.new-el') // evaluates immdeiately as []
+
+  if (el.length) {              // evaluates immediately as 0
+    cy.get('.another-selector')
+  } else {
+    // this code will never run
+    // because the 'el' will never exist
+    // when the code executes
+    cy.get('.optional-selector')
+  }
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+**{% fa fa-check-circle green %} Correct usage** 
+
+Below is one way the code above could be rewritten in order to ensure the commands run as expected.
+
+```js
+it('does not work as we expect', () => {
+  cy.visit('/my/resource/path')    // Nothing happens yet
+
+  cy.get('.awesome-selector')      // Still nothing happening
+    .click()                       // Nope, nothing
+    .then(() => {
+      // placing this code inside the .then() ensures
+      // it runs after the cypress commands 'execute'
+      let el = Cypress.$('.new-el') // evaluates after .then()
+
+      if (el.length) {
+        cy.get('.another-selector')
+      } else {
+        cy.get('.optional-selector')
+      }
+    })
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+**{% fa fa-warning red %} Incorrect Usage** 
+
+In the example below, the check on the `username` value gets evaluated immediately, before the `cy.visit()` has executed, so will always evaluate to `undefined`.
+
+```js
+it('test', () => {
+  let username = undefined     // evaluates immediately as undefined
+
+  cy.visit('https://app.com') // Nothing happens yet
+  cy.get('.user-name')        // Still, nothing happens yet
+    .then(($el) => {          // Nothing happens yet
+      // this line evaluates after the .then executes
+      username = $el.text()
+    })
+
+  // this evaluates before the .then() above
+  // so the username is still undefined
+  if (username) {             // evaluates immediately as undefined
+    cy.contains(username).click()
+  } else {
+    // this will never run
+    // because username will always
+    // evaluate to undefined
+    cy.contains('My Profile').click()
+  }
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+**{% fa fa-check-circle green %} Correct usage** 
+
+Below is one way the code above could be rewritten in order to ensure the commands run as expected.
+
+```js
+it('test', () => {
+  let username = undefined     // evaluates immediately as undefined
+
+  cy.visit('https://app.com') // Nothing happens yet
+  cy.get('.user-name')        // Still, nothing happens yet
+    .then(($el) => {          // Nothing happens yet
+      // this line evaluates after the .then() executes
+      username = $el.text()
+
+      // evaluates after the .then() executes
+      // it's the correct value gotten from the $el.text()
+      if (username) {
+        cy.contains(username).click()
+      } else {
+        cy.get('My Profile').click()
+      }
+    })
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
 {% note success Core Concept %}
 Each Cypress command (and chain of commands) returns immediately, having only been appended to a queue of commands to be executed at a later time.
 

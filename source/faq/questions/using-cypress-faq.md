@@ -26,6 +26,12 @@ cy.get('div').should(($div) => {
 })
 ```
 
+If you need to convert text to a number before checking if it is greater than 10:
+
+```javascript
+cy.get('div').invoke('text').then(parseFloat).should('be.gt', 10)
+```
+
 If you need to hold a reference or compare values of text:
 
 ```javascript
@@ -603,7 +609,7 @@ Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spy
 
 ## {% fa fa-angle-right %} How do I use special characters with cy.get?
 
-{% url "According to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}, special characters like `/`, `.` are valid characters for ids. 
+{% url "According to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}, special characters like `/`, `.` are valid characters for ids.
 
 To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
 
