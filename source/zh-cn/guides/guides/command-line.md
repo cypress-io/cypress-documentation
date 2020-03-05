@@ -112,7 +112,7 @@ cypress run --browser /usr/bin/chromium
 
 目前，仅支持Chrome家族的浏览器。
 
-{% url "有浏览器检测问题？看看调试指南吧！" debugging#Launching-browsers %}
+{% url "有浏览器检测问题？看看调试指南吧！" troubleshooting#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -323,7 +323,7 @@ cypress open --browser /usr/bin/chromium
 
 当前，只有Chrome家族的浏览器是支持的。
 
-{% url "对使用浏览器有疑问？请阅读调试指南" debugging#Launching-browsers %}。
+{% url "对使用浏览器有疑问？请阅读调试指南" troubleshooting#Launching-browsers %}。
 
 ### `cypress open --config <config>`
 
