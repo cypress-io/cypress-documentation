@@ -142,6 +142,38 @@ An error will throw when a non-existent property is read. If there are typos in 
 expect(true).to.be.ture
 ```
 
+### {% fa fa-warning red %} Breaking Change: `include` checks strict equality
+
+`include` now always use strict equality unless the `deep` property is set.
+
+{% badge danger Before %} `include` would always use deep equality
+
+```javascript
+// Would pass in Cypress 3 but will fail correctly in 4
+cy.wrap([{
+  first: 'Jane',
+  last: 'Lane'
+}])
+.should('include', {
+  first: 'Jane',
+  last: 'Lane'
+})
+```
+
+{% badge success After %} Need to specificy `deep.include` for deep equality
+
+```javascript
+// Specifically check for deep.include to pass in Cypress 4
+cy.wrap([{
+  first: 'Jane',
+  last: 'Lane'
+}])
+.should('deep.include', {
+  first: 'Jane',
+  last: 'Lane'
+})
+```
+
 ## Sinon.JS upgrade
 
 Sinon.JS was upgraded from `3.2.0` to `8.1.1`, which includes a number of breaking changes and new features outlined in {% url "Sinon.JS's migration guide" https://sinonjs.org/releases/latest/#migration-guides %}. Some changes you might notice are described below.
