@@ -8,7 +8,6 @@ title: Debugging
 - How Cypress runs in the same event loop with your code, keeping debugging less demanding and more understandable
 - How Cypress embraces the standard Developer Tools
 - How and when to use `debugger` and the shorthand {% url `.debug()` debug %} command
-- How to troubleshoot issues with Cypress itself
 {% endnote %}
 
 # Using `debugger`
@@ -130,3 +129,7 @@ The `cy.now()` command is an internal command and may change in the future.
 # Cypress fiddle
 
 While learning Cypress it may be a good idea to try small tests against some HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
+
+# Toubleshooting Cypress
+
+There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking our out {% url "Troubleshooting Guide" troubleshooting %}.
