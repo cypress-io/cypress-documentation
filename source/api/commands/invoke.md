@@ -24,13 +24,13 @@ If you want to get a property that is not a function on the previously yielded s
 
 ```javascript
 cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
-cy.get('.modal').invoke('show')          // Invoke the jQuery 'show' function
+cy.get('.modal').invoke('show')            // Invoke the jQuery 'show' function
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.invoke('convert')                   // Errors, cannot be chained off 'cy'
+cy.invoke('convert')                     // Errors, cannot be chained off 'cy'
 cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 ```
 
@@ -77,11 +77,11 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 In the example below, we use `.invoke()` to force a hidden div to be `'display: block'` so we can interact with its children elements.
 
 ```javascript
-cy.get('div.container').should('be.hidden') // true
-
+cy.get('div.container').should('be.hidden') // element is hidden
   .invoke('show') // call jquery method 'show' on the '.container'
-    .should('be.visible') // true
-    .find('input').type('Cypress is great')
+  .should('be.visible') // element is visible now
+  .find('input') // drill down into a child "input" element
+  .type('Cypress is great') // and type text
 ```
 
 ### Use `.invoke('show')` and `.invoke('trigger')`
@@ -193,6 +193,30 @@ cy
   .invoke('select', 'apples')
   .invoke('val').should('match', /apples/)
 ```
+
+## Retries
+
+`.invoke()` automatically retries invoking the specified method until the returned value satisfies the attached assertions. The example below passes after 1 second.
+
+```javascript
+let message = 'hello'
+const english = {
+  greeting () {
+    return message
+  }
+}
+
+setTimeout(() => {
+  message = 'bye'
+}, 1000)
+
+// initially the english.greeting() returns "hello" failing the assertion.
+// .invoke('greeting') tries again and again until after 1 second
+// the returned message becomes "bye" and the assertion passes
+cy.wrap(english).invoke('greeting').should('equal', 'bye')
+```
+
+{% imgTag /img/api/invoke/invoke-retries.gif "Invoke retries example" width-600 %}
 
 # Rules
 

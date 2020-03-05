@@ -83,7 +83,7 @@ Or Microsoft Edge Canary (Chromium-based):
 cypress run --browser edge:canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
+{% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}
 
 ## Firefox Browsers (beta)
 

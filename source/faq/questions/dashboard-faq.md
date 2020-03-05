@@ -55,6 +55,23 @@ When a run happens and a test fails - instead of going and inspecting your CI pr
 
 No, although we are looking to build an on-premise version of the Dashboard for use in private clouds. If you're interested in our on-premise version, please add your interest to our {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}!
 
+## {% fa fa-angle-right %} Why do my Cypress tests pass locally but not in CI?
+
+There are many reasons why tests may fail in CI but pass locally. Some of these include:
+
+- There is a problem isolated to the Electron browser (`cypress run` by default runs in the Electron browser)
+- A test failure in CI could be highlighting a bug in your CI build process
+- Variability in timing when running your application in CI (For example, network requests that resolve within the timeout locally may take longer in CI)
+- Machine differences in CI versus your local machine -- CPU resources, environment variables, etc.
+
+To troubleshoot why tests are failing in CI but passing locally, you can try these strategies:
+
+- Test locally with Electron to identify if the issue is specific to the browser.
+- You can also identify browser-specific issues by running in a different browser in CI with the `--browser` flag.
+- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
+- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
+- Ensure video recording and/or screenshots are enabled for the CI run and compare the recording to the Command Log when running the test locally.
+
 ## {% fa fa-angle-right %} Can I choose not to use the Dashboard?
 
 Of course. The Dashboard Service is a separate service from the Test Runner and will always remain optional. We hope you'll find a tremendous amount of value in it, but it is not coupled to being able to run your tests.
