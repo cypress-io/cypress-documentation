@@ -336,6 +336,11 @@
       link: https://github.com/matzeeable/wp-reactjs-starter
       keywords: [wp, wordpress]
 
+    - name: Next Right Now - Next.js Boilerplate
+      description: Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants)
+      link: https://github.com/UnlyEd/next-right-now
+      keywords: [next.js, react, monorepo, multi-tenants]
+
     - name: Elm Batteries Included
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
