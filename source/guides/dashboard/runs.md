@@ -26,7 +26,11 @@ Details of each run are displayed including:
 
 You can cancel a run currently in progress from the Dashboard. Runs can only be cancelled by members of a project.
 
-To cancel a run, click on a run in progress from the run list, then click on "Cancel Run" in the upper-right corner of the run details page.
+To cancel a run:
+
+- Click on a run in progress from the run list
+- Click on "Cancel Run" in the upper-right corner of the run details page
+- Click **Yes, cancel this run** to confirm. **Note: this cannot be undone**
 
 Cancelling a run in progress cannot be undone. Once you click "Cancel Run", a confirmation message will appear. Click the red "Yes, cancel this run" button to proceed.
 
@@ -36,17 +40,21 @@ Once a run is cancelled:
 
 - The run status will update to cancelled
 - All incompleted instances of the run will be marked as cancelled
-- All test runners associated with the run will exit with an error
 - A message will appear on the run details page showing the time of cancellation and the user that cancelled the run
 - The run will update to cancelled in GitHub if integration is enabled
+- All active test runners associated with the run will exit with an error
+
+{% imgTag /img/dashboard/cancel-run-error.png "cancel-run-error" %}
+
+When a run is cancelled, any tests that have already been recorded to the Dashboard will have the test results available in the run details view. Any recorded tests will also count against the monthly test recording limit.
 
 If you have Analytics enabled, cancelled runs will appear in the {% url "Runs over time" analytics#Runs-over-time %} chart. Runs can also be filtered by cancellation status. 
-
-Cancelled runs do not count against your test recording limit.
 
 # Archiving runs
 
 Runs that have been cancelled or are in an errored state can be archived from the Dashboard. Archiving a run will remove it from the run list and {% url "Analytics" analytics %} reporting.
+
+Any test recorded to the Dashboard will count against your monthly test recording limit, even if it has been archived.
 
 Archived runs can still be accessed by the URL to that run. The format is:
 
