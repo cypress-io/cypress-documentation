@@ -2,6 +2,24 @@
 title: IDE Integration
 ---
 
+# Extensions & Plugins
+
+There are many third-party IDE extensions and plugins to help integrate your IDE with Cypress.
+
+## Visual Studio Code
+
+- {% url "Cypress Fixture-IntelliSense" https://marketplace.visualstudio.com/items?itemName=JosefBiehler.cypress-fixture-intellisense %}: Supports your {% url "`cy.fixture()`" fixture %} and {% url "`cy.route(..., "fixture:")`" route %} commands by providing intellisense for existing fixtures.
+- {% url "Cypress Helper" https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper %}: Various helpers and commands for integration with Cypress.
+- {% url "Cypress Snippets" https://marketplace.visualstudio.com/items?itemName=andrew-codes.cypress-snippets %}: Useful Cypress code snippets.
+- {% url "Open Cypress" https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress %}: Allows you to open Cypress specs and single `it()` blocks directly from VS Code.
+- {% url "Test Utils" https://marketplace.visualstudio.com/items?itemName=chrisbreiding.test-utils %}: Easily add or remove `.only` and `.skip` modifiers with keyboard shortcuts or the command palette.
+
+## IntelliJ Platform
+
+Compatible with IntelliJ IDEA, AppCode, CLion, GoLand, PhpStorm, PyCharm, Rider, RubyMine, and WebStorm.
+
+- {% url "Intellij-Cypress" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %}: Integrates Cypress under the common Intellij test framework.
+
 # Intelligent Code Completion
 
 ## Writing Tests
@@ -125,16 +143,6 @@ Or you can directly add a `$schema` key to your Cypress configuration file, whic
 "$schema": "https://on.cypress.io/cypress.schema.json",
 ```
 
-## Run tests directly from IDE
-To be able to run Cypress tests directly from IDE the following plugins may be used
-### Visual Studio Code
-{% url "Open Cypress extension" https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress %}
-{% imgTag /img/guides/intelligent-code-completion/vscode-extension-open-cypress.gif %}
-### IntelliJ Platform (IDEA Ultimate, Webstorm and others with JS support)
-{% url "Intellij-Cypress plugin" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %} 
-<!-- textlint-disable -->
-{% video youtube 1gjjy0RQeBw %}
-<!-- textlint-enable -->
-# See also
+## See also
 
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
