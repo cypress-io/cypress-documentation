@@ -46,7 +46,7 @@ Cancelled runs do not count against your test recording limit.
 
 # Archiving runs
 
-Runs that have been cancelled or are in an errored state can be archived from the Dashboard. Archiving a run will remove it from the run list and Analytics reporting.
+Runs that have been cancelled or are in an errored state can be archived from the Dashboard. Archiving a run will remove it from the run list and {% url "Analytics" analytics %} reporting.
 
 Archived runs can still be accessed by the URL to that run. The format is:
 
