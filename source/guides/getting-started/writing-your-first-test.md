@@ -86,6 +86,8 @@ describe('My First Test', function() {
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
 
+Cypress also displays the stack trace and the code frame where the assertion failed (when available). You can click on the blue file link to open the file where the error occurred in your preferred application. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
+
 {% imgTag /img/guides/failing-test.png "Failing test" %}
 
 Cypress provides a nice {% url 'Test Runner' test-runner %} that gives you a visual structure of suites, tests, and assertions. Soon you'll also see commands, page events, network requests, and more.
@@ -189,7 +191,7 @@ Can you see what Cypress is doing under the hood? It's automatically waiting and
 {% imgTag /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning 'Error Messages' %}
-We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page.
+We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
 {% endnote %}
 
 Before we add another command - let's get this test back to passing. Replace `hype` with `type`.
@@ -365,6 +367,12 @@ There is also a new menu panel. Some commands (like action commands) will take m
 The **before** snapshot is taken prior to the click event firing. The **after** snapshot is taken immediately after the click event. Although this click event caused our browser to load a new page, it's not an instantaneous transition. Depending on how fast your page loaded, you may still see the same page, or a blank screen as the page is unloading and in transition.
 
 When a command causes an immediate visual change in our application, cycling between before and after will update our snapshot. We can see this in action by clicking the `TYPE` command in the Command Log. Now, clicking **before** will show us the input in a default state, showing the placeholder text. Click **after** will show us what the input looks like when the `TYPE` command has completed.
+
+## Errors
+
+Cypress prints several pieces of information when an error occurs during a Cypress test.
+
+{% partial errors_anatomy %}
 
 ## Page events
 

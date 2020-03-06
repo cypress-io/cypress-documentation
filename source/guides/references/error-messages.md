@@ -95,6 +95,24 @@ If you are purposefully writing commands outside of a test, there is probably a 
 
 Getting this errors means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
 
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
+
 {% imgTag /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
 
 Cypress errors because it can't interact with "dead" elements - much like a real user could not do this either. Understanding how this happens is very important - and it is often preventable.
@@ -175,6 +193,22 @@ cy.get('[disabled]').click({force: true}).
 *Be careful with this option. It's possible to force your tests to pass when the element is actually not interactable in your application.*
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element is currently animating
+
+<!--
+To reproduce the following screenshot:
+describe('animating example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      Cypress.$('<input style="position: absolute;" />').appendTo($body)
+      .animate({ left: '+=1000000' }, 10)
+    })
+  })
+  it('is animating', () => {
+    cy.get('input')
+    .type('some text', { timeout: 20 })
+  })
+})
+-->
 
 {% imgTag /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
 
