@@ -32,7 +32,7 @@ From the Dashboard you can:
 
 From the Dashboard you can:
 
-- Cancel runs currently in progress
+- {% url "Cancel runs" runs#Cancelling-runs %} currently in progress
 - Archive runs in a cancelled or errored state
 
 ## Manage organizations
