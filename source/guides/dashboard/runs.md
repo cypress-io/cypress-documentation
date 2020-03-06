@@ -50,7 +50,7 @@ Runs that have been cancelled or are in an errored state can be archived from th
 
 Archived runs can still be accessed by the URL to that run. The format is:
 
-`dashboard.cypress.io/projects/{project ID}/runs/{run number}`
+`https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
 
 Archived runs can be restored from the run detail page.
 
