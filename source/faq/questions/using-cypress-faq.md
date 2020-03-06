@@ -607,13 +607,11 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 
 Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spying %}.
 
-## {% fa fa-angle-right %} How do I use special characters with cy.get?
+## {% fa fa-angle-right %} How do I use special characters with `cy.get()`?
 
-{% url "According to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}, special characters like `/`, `.` are valid characters for ids.
+Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}. 
 
 To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
-
-Example:
 
 ```html
 <!doctype html>
@@ -627,8 +625,11 @@ Example:
 ```js
 it('test', () => {
   cy.visit('index.html')
-  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains('Hello World')
-  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`).contains('Hello World')
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
+
+  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
 })
 ```
 
