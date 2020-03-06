@@ -335,7 +335,7 @@ cy.get('#random-number') // <div>🎁</div>
   .and('be.lte', 10)     // never evaluates
 ```
 
-Unfortunately, the {% url '.invoke()' invoke %} and {% url '.then()' then %} commands are not retried. Thus the test only runs the entire chain once before failing.
+Unfortunately, the {% url '.then()' then %} command is not retried. Thus the test only runs the entire chain once before failing.
 
 {% imgTag /img/guides/retry-ability/random-number-first-attempt.png "First attempt at writing the test" width-600 %}
 
