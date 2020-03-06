@@ -37,7 +37,7 @@ Once a run is cancelled:
 - The run status will update to cancelled
 - All incompleted instances of the run will be marked as cancelled
 - All test runners associated with the run will exit with an error
-- A message will appear on the run details page showing the time of cancellation and the user that made the request
+- A message will appear on the run details page showing the time of cancellation and the user that cancelled the run
 - The run will update to cancelled in GitHub if integration is enabled
 
 If you have Analytics enabled, cancelled runs will appear in the Runs over Time chart. Runs can also be filtered by cancellation status. 
