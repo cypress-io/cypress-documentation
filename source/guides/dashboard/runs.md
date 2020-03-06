@@ -40,7 +40,7 @@ Once a run is cancelled:
 - A message will appear on the run details page showing the time of cancellation and the user that cancelled the run
 - The run will update to cancelled in GitHub if integration is enabled
 
-If you have Analytics enabled, cancelled runs will appear in the Runs over Time chart. Runs can also be filtered by cancellation status. 
+If you have Analytics enabled, cancelled runs will appear in the {% url "Runs over time" analytics#Runs-over-time %} chart. Runs can also be filtered by cancellation status. 
 
 Cancelled runs do not count against your test recording limit.
 
