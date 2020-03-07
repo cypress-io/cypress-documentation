@@ -62,11 +62,12 @@ sidebar:
     assertions: Ассерты
     best-practices: Лучшие практики
     trade-offs: Компромиссы
+    troubleshooting: Troubleshooting
     changelog: Изменения в продукте
     migration-guide: Migration Guide
     roadmap: Карта проекта
     tooling: Утилиты
-    intelligent-code-completion: Интеллектуальное завершение кода
+    IDE-integration: IDE Integration
     plugins-guide: Плагины
     reporters: Репортеры
     typescript-support: TypeScript

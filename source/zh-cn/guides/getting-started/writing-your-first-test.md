@@ -219,7 +219,7 @@ describe('My First Test', function() {
 {% video local /img/snippets/first-test-click-30fps.mp4 %}
 
 {% note info %}
-{% fa fa-magic %} 想在你的规格文件里面查看智能代码补全只需要添加一个单条注释哦. 阅读{% url '智能代码补全' intelligent-code-completion#Triple-slash-directives %}了解更多.
+{% fa fa-magic %} 想在你的规格文件里面查看智能代码补全只需要添加一个单条注释哦. 阅读{% url '智能代码补全' IDE-integration#Triple-slash-directives %}了解更多.
 {% endnote %}
 
 ## {% fa fa-check-square-o %} 步骤4: 写断言
@@ -498,7 +498,7 @@ describe('My First Test', function() {
 # 下一步
 
 - 开始{% url '测试你的app' testing-your-app %}.
-- 为Cypress命令和断言设立{% url '智能代码补全' intelligent-code-completion %}.
+- 为Cypress命令和断言设立{% url '智能代码补全' IDE-integration %}.
 - 搜索Cypress的文档说明书来更快的发现你需要的东西.
 
 {% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}

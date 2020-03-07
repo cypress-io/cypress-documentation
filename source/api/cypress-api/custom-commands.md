@@ -402,7 +402,7 @@ For more complex use cases feel free to overwrite existing commands.
 
 ### Overwrite `screenshot` command
 
-This example overwrites `screenshot` to always wait until a certain element is visible.
+This example overwrites {% url "`cy.screenshot()`" screenshot %} to always wait until a certain element is visible.
 
 ```javascript
 Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
@@ -417,6 +417,25 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
         // return the original function so that cypress waits for it
         return originalFn(subject, name, options)
       })
+})
+```
+
+## Overwrite `contains` command
+
+This example overwrites {% url "`.contains()`" contains %} to always have the `matchCase` option set to `false`.
+
+```js
+Cypress.Commands.overwrite('contains', (originalFn, subject, filter, text, options = {}) => {
+  // determine if a filter argument was passed
+  if (typeof text === 'object') {
+    options = text
+    text = filter
+    filter = undefined
+  }
+
+  options.matchCase = false
+
+  return originalFn(subject, filter, text, options)
 })
 ```
 

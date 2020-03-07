@@ -64,7 +64,7 @@ We have several more examples in our {% url 'Core Concepts Guide' variables-and-
 
 ```javascript
 cy.get('button').then(($btn) => {
-  const cls = $btn.class()
+  const cls = $btn.attr('class')
 
   cy.wrap($btn).click().should('not.have.class', cls)
 })
@@ -84,7 +84,7 @@ cy.wrap(1).then((num) => {
 
 ```javascript
 cy.get('button').then(($btn) => {
-  const cls = $btn.class()
+  const cls = $btn.attr('class')
 
   cy.wrap($btn).click().should('not.have.class', cls)
     .find('i')

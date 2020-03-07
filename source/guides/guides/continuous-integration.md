@@ -356,7 +356,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://127.0.0.1:8080"
     test:
       commands:
@@ -399,7 +399,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://127.0.0.1:8080"
     test:
       commands:
@@ -446,7 +446,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://localhost:3000"
     test:
       commands:
@@ -495,7 +495,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://localhost:3000"
     test:
       commands:

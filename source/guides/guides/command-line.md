@@ -115,7 +115,7 @@ You can also choose a browser by supplying a path:
 cypress run --browser /usr/bin/chromium
 ```
 
-{% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble with browser detection? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -371,7 +371,7 @@ If found, the specified browser will be added to the list of available browsers 
 
 Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
 
-{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress open --config <config>`
 
@@ -437,6 +437,57 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress open --project ./some/nested/folder
 ```
 
+## `cypress info`
+
+Prints information about Cypress and the current environment such as:
+
+- A list of browsers Cypress detected on the machine.
+- Any environment variables that control {% url 'proxy configuration' proxy-configuration %}.
+- Any environment variables that start with the `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security).
+- The location where run-time data is stored.
+- The location where the Cypress binary is cached.
+- Operating system information.
+- System memory including free space.
+
+```shell
+cypress info
+Displaying Cypress info...
+
+Detected 2 browsers installed:
+
+1. Chrome
+  - Name: chrome
+  - Channel: stable
+  - Version: 79.0.3945.130
+  - Executable: /path/to/google-chrome
+  - Profile: /user/profile/folder/for/google-chrome
+
+2. Firefox Nightly
+  - Name: firefox
+  - Channel: nightly
+  - Version: 74.0a1
+  - Executable: /path/to/firefox
+
+Note: to run these browsers, pass <name>:<channel> to the '--browser' field
+
+Examples:
+- cypress run --browser firefox:nightly
+- cypress run --browser chrome
+
+Learn More: https://on.cypress.io/launching-browsers
+
+Proxy Settings: none detected
+Environment Variables: none detected
+
+Application Data: /path/to/app/data/cypress/cy/development
+Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
+Binary Caches: /user/profile/path/.cache/Cypress
+
+Cypress Version: 4.1.0
+System Platform: darwin (19.2.0)
+System Memory: 17.2 GB free 670 MB
+```
+
 ## `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.
@@ -486,6 +537,7 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 ```shell
 cypress cache clear
 ```
+
 
 # Debugging commands
 
