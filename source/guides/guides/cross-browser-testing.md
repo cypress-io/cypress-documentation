@@ -195,13 +195,13 @@ In the example below we've implemented two helper functions that utilize {% url 
 
 ```js
 const runOn = (browser, fn) => {
-  if (Cypress.isBrowser(browser) {
+  if (Cypress.isBrowser(browser)) {
     fn()
   }
 }
 
 const ignoreOn = (browser, fn) => {
-  if (!Cypress.isBrowser(browser) {
+  if (!Cypress.isBrowser(browser)) {
     fn()
   }
 }

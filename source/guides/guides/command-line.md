@@ -484,6 +484,8 @@ System Platform: darwin (19.2.0)
 System Memory: 17.2 GB free 670 MB
 ```
 
+**Tip:** set {% url "DEBUG environment variable" troubleshooting#Print-DEBUG-logs %} to `cypress:launcher` when running `cypress info` to troubleshoot browser detection.
+
 ## `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.
@@ -519,11 +521,17 @@ cypress cache path
 
 ### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+Print all existing installed versions of Cypress. The output will be a table with cached versions and the last time the binary was used by the user, determined from the file's access time.
 
 ```shell
 cypress cache list
-3.0.0 3.0.1 3.0.2
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
 ```
 
 ### `cypress cache clear`
