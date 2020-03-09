@@ -96,7 +96,7 @@ You can cancel a run currently in progress from the Dashboard. Runs can only be 
 - Any tests recorded to completion will still count towards your monthly test recording limit.
 - If you have Analytics enabled, canceled runs will appear in the {% url "Runs over time" analytics#Runs-over-time %} chart.
 - Any incomplete calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will be marked as canceled and not run.
-- Any existing calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will exit with an error similar to the one shown below.
+- Any existing calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will exit with an error like below.
   {% imgTag /img/dashboard/cancel-run-error.png "cancel-run-error" width-600 %}
 
 # Archive run
