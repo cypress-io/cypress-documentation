@@ -32,8 +32,8 @@ From the Dashboard you can:
 
 From the Dashboard you can:
 
-- {% url "Cancel runs" runs#Cancelling-runs %} currently in progress
-- {% url "Archive runs" runs#Archiving-runs %} in a cancelled or errored state
+- {% url "Cancel runs" runs#Cancel-run %} currently in progress
+- {% url "Archive runs" runs#Archive-run %} in a canceled or errored state
 
 ## Manage organizations
 
