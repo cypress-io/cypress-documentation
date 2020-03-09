@@ -488,6 +488,8 @@ System Platform: darwin (19.2.0)
 System Memory: 17.2 GB free 670 MB
 ```
 
+**Tip:** set {% url "DEBUG environment variable" troubleshooting#Print-DEBUG-logs %} to `cypress:launcher` when running `cypress info` to troubleshoot browser detection.
+
 ## `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.
