@@ -86,7 +86,7 @@ describe('My First Test', function() {
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
 
-Cypress also displays the stack trace and the code frame where the assertion failed (when available). You can click on the blue file link to open the file where the error occurred in your preferred application. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
+Cypress also displays the stack trace and the code frame where the assertion failed (when available). You can click on the blue file link to open the file where the error occurred in {% url "your preferred file opener" IDE-integration#File-Opener-Preference %}. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
 
 {% imgTag /img/guides/failing-test.png "Failing test" %}
 
@@ -191,7 +191,7 @@ Can you see what Cypress is doing under the hood? It's automatically waiting and
 {% imgTag /img/guides/first-test-failing-contains.png "Test failing to not find content 'hype'" %}
 
 {% note warning 'Error Messages' %}
-We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case Cypress **timed out retrying** to find the content: `hype` within the entire page. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
+We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case, Cypress **timed out retrying** to find the content `hype` within the entire page. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
 {% endnote %}
 
 Before we add another command - let's get this test back to passing. Replace `hype` with `type`.

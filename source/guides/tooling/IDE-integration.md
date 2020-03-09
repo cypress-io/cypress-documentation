@@ -18,7 +18,7 @@ The first time you click a file path, Cypress will prompt you to select which lo
 Cypress attempts to find available file editors on your system and display those as options. If your preferred editor is not list, you can specify the (full) path to it by selecting **Other**. Cypress will make every effort to open the file, *but it is not guaranteed to work with every application*.
 {% endnote %}
 
-After setting your file opener preference any files will automatically open in your selected application without prompting you to choose. If you want to change your selection, you can do so in the **Settings** tab of the Cypress Test Runner by clicking under **File Opener Preference**.
+After setting your file opener preference, any files will automatically open in your selected application without prompting you to choose. If you want to change your selection, you can do so in the **Settings** tab of the Cypress Test Runner by clicking under **File Opener Preference**.
 
 {% imgTag /img/guides/file-opener-preference-settings-tab.png "screenshot of Test Runner settings tab with file opener preference panel" %}
 
