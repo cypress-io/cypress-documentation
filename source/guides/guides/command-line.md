@@ -525,11 +525,17 @@ cypress cache path
 
 ### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+Print all existing installed versions of Cypress. The output will be a table with cached versions and the last time the binary was used by the user, determined from the file's access time.
 
 ```shell
 cypress cache list
-3.0.0 3.0.1 3.0.2
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
 ```
 
 ### `cypress cache clear`
