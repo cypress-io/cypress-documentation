@@ -22,8 +22,8 @@ Property | Type | Description
 `takenAt` | `string` | The date and time the screenshot was taken. ISO 8601 format in UTC (example: `'2020-03-09T07:30:37.686Z'`)
 `duration` | `number` | Duration taking and saving the screenshot (in milliseconds).
 `dimensions` | `object` | The width and height of the image in pixels (example: `{ width: 100, height: 50 }`)
-`multipart` | `boolean` |
-`pixelRatio` | `number` | *(Optional)*
+`multipart` | `boolean` | Whether the screenshot was stitched together from multiple screenshot images.
+`pixelRatio` | `number` | *(Optional)* The ratio of screenshot pixels to the browser's displayed pixels.
 `name` | `string` | *(Optional)* The `fileName` argument passed in via {% url `cy.screenshot()`" screenshot#Arguments %}
 `specName` | `string` | The name of the specfile where the screenshot was taken.
 `path` | `string` | The absolute path to the image.
