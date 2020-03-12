@@ -82,6 +82,12 @@ We have already begun the implementation for capturing even more things from you
 
 These will be added in subsequent releases.
 
+## {% fa fa-angle-right %} Why are my video recordings freezing or dropping frames when running in CI?
+
+There is a {% url 'known issue' https://github.com/cypress-io/cypress/issues/4722 %} where videos recorded to the Dashboard may freeze up or drop frames if there are not enough resources available when running the tests in your CI container. You can run your tests with {% url 'memory and CPU logs enabled' troubleshooting#Log-memory-and-CPU-usage %} to identify and evaluate the resource utilization within your CI.
+
+If you are experiencing this issue, we recommend switching to a more powerful CI container or provider. There is also an {% url 'open issue' https://github.com/cypress-io/cypress/issues/5061 %} to add detect and warn when a video recording freezes or drop frames.
+
 ## {% fa fa-angle-right %} Why is test parallelization based on spec files and not on the individual functions?
 
 Cypress {% url "test parallelization" parallelization %} is indeed based on specs. For each spec the Test Runner scaffolds the new running context, in a sense isolating each spec file from any previous spec files, and ensuring a clean slate for the next spec. Doing this for each _individual_ test would be very very expensive and would slow down the test runs significantly.
