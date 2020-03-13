@@ -7,6 +7,7 @@ Cypress automatically includes {% url 'Sinon.JS' http://sinonjs.org/ %} and expo
 # Syntax
 
 ```javascript
+Cypress.sinon.match(value)
 Cypress.sinon.match.<matcher name>
 ```
 
@@ -57,8 +58,9 @@ cy.get('@setColor')
 
 # See also
 
-- {% url 'Sinon matchers' https://sinonjs.org/releases/latest/matchers/ %}
+- {% url 'Spies, stubs & clocks' https://example.cypress.io/commands/spies-stubs-clocks %} example page
+- {% url 'Sinon matchers' https://sinonjs.org/releases/latest/matchers/ %} documentation page
 - {% url 'Bundled Tools' bundled-tools %}
 - {% url `cy.spy()` spy %}
 - {% url `cy.stub()` stub %}
-- {% url "Stubs, Spies, and Clocks" stubs-spies-and-clocks %}
+- {% url "Stubs, Spies, and Clocks" stubs-spies-and-clocks %} guide
