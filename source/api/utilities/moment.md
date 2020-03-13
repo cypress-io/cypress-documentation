@@ -40,4 +40,4 @@ cy.get('span').should('contain', 'Order shipped on: ' + todaysDate)
 # See also
 
 - {% url 'Bundled Tools' bundled-tools %}
-- {% `cy.clock()` clock %}
+- {% url `cy.clock()` clock %}
