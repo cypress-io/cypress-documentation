@@ -26,7 +26,7 @@ cy.sinon.match.string // Errors, cannot be chained off 'cy'
 
 # Examples
 
-## `Cypress.sinon.match.string`
+## `match.string`
 
 Application code where `setProperty` is called
 
@@ -54,3 +54,10 @@ cy.get('input[type=color]')
 cy.get('@setColor')
 .should('have.been.calledWith', Cypress.sinon.match.string, '#ff0000')
 ```
+
+# See also
+
+- {% url 'Bundled Tools' bundled-tools %}
+- {% url `cy.spy()` spy %}
+- {% url `cy.stub()` stub %}
+- {% url "Stubs, Spies, and Clocks" stubs-spies-and-clocks %}
