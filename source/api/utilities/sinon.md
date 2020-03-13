@@ -2,12 +2,12 @@
 title: Cypress.sinon
 ---
 
-Cypress automatically includes {% url 'Sinon.JS' http://sinonjs.org/ %} and exposes it as `Cypress.sinon`.
+Cypress automatically includes {% url 'Sinon.JS' http://sinonjs.org/ %} and exposes it as `Cypress.sinon`. Because commands {% url `cy.spy` spy %} and {% url `cy.stub` stub %} are already wrapping Sinon methods, the most common use for `Cypress.sinon` is to provide flexible {% url matchers https://sinonjs.org/releases/latest/matchers/ %} when doing assertions.
 
 # Syntax
 
 ```javascript
-Cypress.sinon.method()
+Cypress.sinon.match.<matcher name>
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ cy.sinon.match.string // Errors, cannot be chained off 'cy'
 
 ## `match.string`
 
-Application code where `setProperty` is called
+This example comes from the recipe {% url "Root style" https://github.com/cypress-io/cypress-example-recipes#testing-the-dom %}. Imagine an application code where the method `setProperty` is called to change a CSS variable:
 
 ```js
 document.querySelector('input[type=color]').addEventListener('change', (e) => {
@@ -36,27 +36,28 @@ document.querySelector('input[type=color]').addEventListener('change', (e) => {
 })
 ```
 
-Test that `setProperty` was called with string
+We can write a test to confirm that the method `setProperty` was called with two strings; we don't care about value of the first string, but we do want to check if it was indeed a string.
 
 ```javascript
 cy.document()
-.its('documentElement.style')
-.then((style) => {
-  cy.spy(style, 'setProperty').as('setColor')
-})
+  .its('documentElement.style')
+  .then((style) => {
+    cy.spy(style, 'setProperty').as('setColor')
+  })
 
 cy.get('input[type=color]')
-.invoke('val', '#ff0000')
-.trigger('change')
+  .invoke('val', '#ff0000')
+  .trigger('change')
 
 // we don't care about '--background-color' exact
 // value but know it should be a string
 cy.get('@setColor')
-.should('have.been.calledWith', Cypress.sinon.match.string, '#ff0000')
+  .should('have.been.calledWith', Cypress.sinon.match.string, '#ff0000')
 ```
 
 # See also
 
+- {% url 'Sinon matchers' https://sinonjs.org/releases/latest/matchers/ %}
 - {% url 'Bundled Tools' bundled-tools %}
 - {% url `cy.spy()` spy %}
 - {% url `cy.stub()` stub %}
