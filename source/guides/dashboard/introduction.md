@@ -28,6 +28,13 @@ From the Dashboard you can:
 
 {% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
+## Manage runs
+
+From the Dashboard you can:
+
+- {% url "Cancel runs" runs#Cancel-run %} currently in progress
+- {% url "Archive runs" runs#Archive-run %} in a canceled or errored state
+
 ## Manage organizations
 
 From the Dashboard you can:
