@@ -404,7 +404,7 @@ it('does not work as we expect', () => {
   // there is no element to find yet because
   // the cy.visit() was only queued to visit
   // and did not actually visit the application
-  let el = Cypress.$('.new-el') // evaluates immdeiately as []
+  let el = Cypress.$('.new-el') // evaluates immediately as []
 
   if (el.length) {              // evaluates immediately as 0
     cy.get('.another-selector')
