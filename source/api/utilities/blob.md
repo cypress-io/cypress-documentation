@@ -62,3 +62,7 @@ return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
   cy.get('.utility-blob img').click().should('have.attr', 'src', dataUrl)
 })
 ```
+
+# See also
+
+- {% url 'Bundled Tools' bundled-tools %}
