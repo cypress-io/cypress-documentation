@@ -15,6 +15,7 @@
         ["test runner", "Test Runner"],
 
         // Brands and Technologies
+        ["ansi", "ANSI"],
         "AppVeyor",
         "Babel",
         ["^Blob(?! %)", "Blob"],
