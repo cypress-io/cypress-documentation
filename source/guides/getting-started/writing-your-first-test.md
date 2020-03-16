@@ -18,7 +18,7 @@ Assuming you've successfully {% url "installed the Test Runner" installing-cypre
 
 1. Create a `sample_spec.js` file.
 2. Watch Cypress update our list of specs.
-3. Launch Cypress in interactive mode.
+3. Launch the Cypress Test Runner.
 
 Let's create a new file in the `cypress/integration` folder that was created for us:
 

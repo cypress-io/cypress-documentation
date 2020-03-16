@@ -396,5 +396,5 @@ From here you may want to explore some more of our guides:
 - {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
 - {% url "Cypress API" table-of-contents %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
-- {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
+- {% url 'Command Line' command-line %} for running all your tests outside via `cypress run`
 - {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI
