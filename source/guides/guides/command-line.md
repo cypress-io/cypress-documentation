@@ -197,7 +197,7 @@ Specifying the `--ci-build-id` may also be necessary.
 
 By default, Cypress will run tests in Electron headlessly.
 
-Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
+Passing `--headed` will force Electron to be shown. This matches how you run Electron via `cypress open`.
 
 ```shell
 cypress run --headed
@@ -331,7 +331,7 @@ The Dashboard will display any tags sent with the appropriate run.
 
 ## `cypress open`
 
-Opens the Cypress Test Runner in interactive mode.
+Opens the Cypress Test Runner.
 
 ```shell
 cypress open [options]

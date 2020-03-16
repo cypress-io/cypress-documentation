@@ -117,13 +117,13 @@ Event | Details
 Event | Details
 --- | ---
 **Name:** | `log:added`
-**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode **(Boolean)**
+**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode (running via `cypress open`) **(Boolean)**
 **Description:** | Fires whenever a command emits this event so it can be displayed in the Command Log. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
 
 Event | Details
 --- | ---
 **Name:** | `log:changed`
-**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode **(Boolean)**
+**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode (running via `cypress open`) **(Boolean)**
 **Description:** | Fires whenever a command's attributes changes. This event is debounced to prevent it from firing too quickly and too often. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
 
 Event | Details
