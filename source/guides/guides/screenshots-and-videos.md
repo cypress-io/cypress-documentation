@@ -17,7 +17,7 @@ Cypress comes with the ability to take screenshots, whether you are running via 
 
 To take a manual screenshot you can use the {% url `cy.screenshot()` screenshot %} command.
 
-Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress open`. Screenshots on failure are *not* automatically taken during `cypress open`.
+Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress run`. Screenshots on failure are *not* automatically taken during `cypress open`.
 
 This behavior can be turned off by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
