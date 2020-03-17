@@ -19,6 +19,10 @@ Cypress is a desktop application that is installed on your computer. The desktop
 - **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 *(64-bit only)*
 - **Windows** 7 and above
 
+If using `npm` to install Cypress, we support:
+
+- **Node.js** 8 and above
+
 # Installing
 
 ## {% fa fa-terminal %} `npm install`
@@ -122,7 +126,7 @@ After a moment, the Cypress Test Runner will launch.
 
 The Cypress Test Runner attempts to find all compatible browsers on the user's machine. The drop down to select a different browser is in the top right corner of the Test Runner.
 
-{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+{% imgTag /img/guides/browser-list-dropdown.png "Select a different browser" %}
 
 Read {% url "Launching Browsers" launching-browsers %} for more information on how Cypress controls a real browser during end-to-end tests.
 

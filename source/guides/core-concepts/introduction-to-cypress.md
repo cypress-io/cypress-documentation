@@ -312,7 +312,7 @@ To work around the need to reference elements, Cypress has a feature {% url 'kno
 
 ### Using {% url `.then()` then %} To Act On A Subject
 
-Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' type %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
+Want to jump into the command flow and get your hands on the subject directly? No problem, add a {% url '`.then()`' then %} to your command chain. When the previous command resolves, it will call your callback function with the yielded subject as the first argument.
 
 If you wish to continue chaining commands after your {% url `.then()` then %}, you'll need to specify the subject you want to yield to those commands, which you can achieve with a return value other than `null` or `undefined`. Cypress will yield that to the next command for you.
 
@@ -384,6 +384,131 @@ it('changes the URL when "awesome" is clicked', function() {
 ```
 
 Cypress doesn't kick off the browser automation magic until the test function exits.
+
+### Mixing Async and Sync code
+
+Remembering that Cypress commands run asynchronously is important if you are attempting to mix Cypress commands with synchronous code. Synchronous code will execute immediately - not waiting for the Cypress commands above it to execute.
+
+**{% fa fa-warning red %} Incorrect Usage**
+
+In the example below, the `el` evaluates immediately, before the `cy.visit()` has executed, so will always evaluate to an empty array.
+
+```js
+it('does not work as we expect', () => {
+  cy.visit('/my/resource/path') // Nothing happens yet
+
+  cy.get('.awesome-selector')   // Still nothing happening
+    .click()                    // Nope, nothing
+
+  // Cypress.$ is synchronous, so evaluates immediately
+  // there is no element to find yet because
+  // the cy.visit() was only queued to visit
+  // and did not actually visit the application
+  let el = Cypress.$('.new-el') // evaluates immediately as []
+
+  if (el.length) {              // evaluates immediately as 0
+    cy.get('.another-selector')
+  } else {
+    // this code will never run
+    // because the 'el' will never exist
+    // when the code executes
+    cy.get('.optional-selector')
+  }
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+**{% fa fa-check-circle green %} Correct usage** 
+
+Below is one way the code above could be rewritten in order to ensure the commands run as expected.
+
+```js
+it('does not work as we expect', () => {
+  cy.visit('/my/resource/path')    // Nothing happens yet
+
+  cy.get('.awesome-selector')      // Still nothing happening
+    .click()                       // Nope, nothing
+    .then(() => {
+      // placing this code inside the .then() ensures
+      // it runs after the cypress commands 'execute'
+      let el = Cypress.$('.new-el') // evaluates after .then()
+
+      if (el.length) {
+        cy.get('.another-selector')
+      } else {
+        cy.get('.optional-selector')
+      }
+    })
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+**{% fa fa-warning red %} Incorrect Usage** 
+
+In the example below, the check on the `username` value gets evaluated immediately, before the `cy.visit()` has executed, so will always evaluate to `undefined`.
+
+```js
+it('test', () => {
+  let username = undefined     // evaluates immediately as undefined
+
+  cy.visit('https://app.com') // Nothing happens yet
+  cy.get('.user-name')        // Still, nothing happens yet
+    .then(($el) => {          // Nothing happens yet
+      // this line evaluates after the .then executes
+      username = $el.text()
+    })
+
+  // this evaluates before the .then() above
+  // so the username is still undefined
+  if (username) {             // evaluates immediately as undefined
+    cy.contains(username).click()
+  } else {
+    // this will never run
+    // because username will always
+    // evaluate to undefined
+    cy.contains('My Profile').click()
+  }
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+**{% fa fa-check-circle green %} Correct usage** 
+
+Below is one way the code above could be rewritten in order to ensure the commands run as expected.
+
+```js
+it('test', () => {
+  let username = undefined     // evaluates immediately as undefined
+
+  cy.visit('https://app.com') // Nothing happens yet
+  cy.get('.user-name')        // Still, nothing happens yet
+    .then(($el) => {          // Nothing happens yet
+      // this line evaluates after the .then() executes
+      username = $el.text()
+
+      // evaluates after the .then() executes
+      // it's the correct value gotten from the $el.text()
+      if (username) {
+        cy.contains(username).click()
+      } else {
+        cy.get('My Profile').click()
+      }
+    })
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
 
 {% note success Core Concept %}
 Each Cypress command (and chain of commands) returns immediately, having only been appended to a queue of commands to be executed at a later time.
@@ -680,7 +805,8 @@ All DOM based commands automatically wait for their elements to exist in the DOM
 You don't need to write {% url "`.should('exist')`" should %} after a DOM based command, unless you chain extra `.should()` assertions.
 {% endnote %}
 
-{% note danger "Negative DOM assertions" %}
+#### Negative DOM assertions
+
 If you chain any `.should()` command, the default `.should('exist')` is not asserted. This does not matter for most *positive* assertions, such as `.should('have.class')`, because those imply existence in the first place, but if you chain *negative* assertions ,such as `.should('not.have.class')`, they will pass even if the DOM element doesn't exist:
 
 ```js
@@ -696,9 +822,6 @@ cy.get('.does-not-exist').should(($element) => {
   expect($element.find('input')).to.not.exist
 })
 ```
-
-There's an {% url 'open discussion' https://github.com/cypress-io/cypress/issues/205 %} about this behavior.
-{% endnote %}
 
 These rules are pretty intuitive, and most commands give you the flexibility to override or bypass the default ways they can fail, typically by passing a `{force: true}` option.
 

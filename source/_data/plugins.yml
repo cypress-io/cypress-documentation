@@ -137,6 +137,11 @@
       link: https://github.com/bahmutov/cypress-expect-n-assertions
       keywords: [test, assertion]
 
+    - name: cypress-audit
+      description: Run Lighthouse audit directly in your E2E test suites
+      link: https://github.com/mfrachet/cypress-audit
+      keywords: [lighthouse]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -331,6 +336,11 @@
       link: https://github.com/matzeeable/wp-reactjs-starter
       keywords: [wp, wordpress]
 
+    - name: Next Right Now - Next.js Boilerplate
+      description: Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants)
+      link: https://github.com/UnlyEd/next-right-now
+      keywords: [next.js, react, monorepo, multi-tenants]
+
     - name: Elm Batteries Included
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
@@ -448,3 +458,8 @@
       description: Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs
       link: https://github.com/you54f/cypress-slack-reporter
       keywords: [reporter, mochawesome, slack]
+
+    - name: cypress-terminal-report
+      description: Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.
+      link: https://github.com/archfz/cypress-terminal-report
+      keywords: [reporter, logs, terminal, CI, CLI]

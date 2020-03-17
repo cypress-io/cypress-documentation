@@ -285,9 +285,11 @@ Before sending the HTTP request, we automatically attach cookies that would have
 
 In other words, `cy.request()` transparently performs all of the underlying functions as if it came from the browser.
 
-## `cy.request()` cannot be used to debug {% url `cy.server()` server %} and {% url `cy.route()` route %}
+## {% url `cy.server()` server %} and {% url `cy.route()` route %}
 
 ### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`
+
+`cy.server()` and any configuration passed to {% url `cy.server()` server %} has no effect on `cy.request()`.
 
 The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 

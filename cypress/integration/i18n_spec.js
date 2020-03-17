@@ -7,6 +7,30 @@ describe('i18n', () => {
     cy.url().should('contain', 'why-cypress')
   })
 
+  context('alternate links', () => {
+    it('provides an alternate link for available English languages', function () {
+      cy.wrap(this.langValues).each((lang) => {
+        cy.get(`link[hreflang="${lang}"]`).should(($linkTag) => {
+          let expectedHref = `https://docs.cypress.io/${lang}/guides/overview/why-cypress.html`
+
+          if (lang === 'en') {
+            expectedHref = 'https://docs.cypress.io/guides/overview/why-cypress.html'
+          }
+
+          expect($linkTag[0].rel).to.eq('alternate')
+          expect($linkTag[0].href).to.eq(expectedHref)
+        })
+      })
+    })
+
+    it('provides a default', function () {
+      cy.get('link[hreflang="x-default"]').should(($linkTag) => {
+        expect($linkTag[0].rel).to.eq('alternate')
+        expect($linkTag[0].href).to.eq('https://docs.cypress.io/guides/overview/why-cypress.html')
+      })
+    })
+  })
+
   context('language select', () => {
     it('selects English by default', () => {
       cy.get('#lang-select').find('option')
@@ -53,6 +77,28 @@ describe('i18n', () => {
         .select(lang)
         .should('have.value', lang)
 
+        cy.url().should('include', lang)
+      })
+    })
+  })
+
+  context('shortcut url', () => {
+    it('exists', function () {
+      cy.wrap(this.langValues).each((lang) => {
+        if (lang === 'en') return
+
+        cy.request(`/${lang}`).then((resp) => {
+          expect(resp.status).to.eq(200)
+        })
+      })
+    })
+
+    it('redirects to a given language homepage', function () {
+      cy.wrap(this.langValues).each((lang) => {
+        if (lang === 'en') return
+
+        cy.visit(`/${lang}`)
+        cy.url().should('contain', 'why-cypress')
         cy.url().should('include', lang)
       })
     })

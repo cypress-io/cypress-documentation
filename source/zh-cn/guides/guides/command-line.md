@@ -112,7 +112,7 @@ cypress run --browser /usr/bin/chromium
 
 目前，仅支持Chrome家族的浏览器。
 
-{% url "有浏览器检测问题？看看调试指南吧！" debugging#Launching-browsers %}
+{% url "有浏览器检测问题？看看调试指南吧！" troubleshooting#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -165,11 +165,11 @@ cypress run --group develop-env
 你也可以通过添加一个名称来添加多组测试用例，这可以让你区分开不同测试文件所在的组。
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --spec 'cypress/integration/user/**/*'
 ```
 
 `--ci-build-id`的定义是必要的。
@@ -188,7 +188,7 @@ cypress run --headed
 
 ### `cypress run --no-exit`
 
-要想在运行完毕测试用例后关闭掉Cypress运行器，请使用`--no-exit`.
+要想在运行完毕测试用例后不关闭Cypress运行器，请使用`--no-exit`.
 
 你也可以使用`--headed --no-exit`，以便在某个`spec`运行完毕后可以查看**命令日志**或进入**开发者工具**。
 
@@ -323,7 +323,7 @@ cypress open --browser /usr/bin/chromium
 
 当前，只有Chrome家族的浏览器是支持的。
 
-{% url "对使用浏览器有疑问？请阅读调试指南" debugging#Launching-browsers %}。
+{% url "对使用浏览器有疑问？请阅读调试指南" troubleshooting#Launching-browsers %}。
 
 ### `cypress open --config <config>`
 

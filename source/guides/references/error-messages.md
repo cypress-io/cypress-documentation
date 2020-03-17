@@ -353,6 +353,10 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 
 `cy` commands themselves are already promise like, and you can likely avoid the use of the separate Promise.
 
+## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked a done callback.
+
+The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade %}.
+
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
 You can safely remove: `{stub: false}`.
@@ -513,7 +517,7 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %} when running in Chrome family browsers (this setting will not work in other browsers). Before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
 ```json
 {
@@ -529,15 +533,27 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 
 # Browser Errors
 
-## {% fa fa-exclamation-triangle red %} The Chromium Renderer process just crashed
+<!-- keep old hash -->
+<a name='The-Chromium-Renderer-process-just-crashed'></a>
 
-Browsers are enormously complex pieces of software, and from time to time they will inconsistently crash *for no good reason*. Crashes are just a part of running automated tests.
+## {% fa fa-exclamation-triangle red %} The browser process running your tests just exited unexpectedly
 
-{% imgTag /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
+This error can occur whenever Cypress detects that the launched browser has exited or crashed before the tests could finish running.
 
-At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
+This can happen for a number of reasons, including:
 
-If you are running `Docker` {% issue 350 'there is a one line fix for this problem documented here' %}.
+- The browser was exited manually, by clicking the "Quit" button or otherwise
+- Your test suite or application under test is starving the browser of resources, such as running an infinite loop
+- Cypress is running in a memory-starved environment
+- The browser is testing a memory-heavy application
+- Cypress is running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
+- There are problems with the GPU / GPU drivers
+- There is a bug in the browser involving memory management<!-- TODO: link to Firefox bug here? https://github.com/cypress-io/cypress/issues/6187 -->
+- There is a memory leak in Cypress
+
+If the browser running Cypress tests crashes, currently, Cypress will abort any remaining tests and print out this error.
+
+There is an {% issue 349 'open issue' %} to recover from browser crashes automatically, so tests can continue to run.
 
 # Test Runner errors
 

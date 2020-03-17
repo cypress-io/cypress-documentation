@@ -16,7 +16,7 @@ Just as you would when writing TypeScript files in your project, you will have t
 
 ## Set up your dev environment
 
-Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" intelligent-code-completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
+Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" IDE-integration#Intelligent-Code-Completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
 ## Configure tsconfig.json
 
@@ -112,6 +112,23 @@ it('works', () => {
 ## Types for custom assertions
 
 If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" recipes#Fundamentals %} for instructions.
+
+## Types for plugins
+
+You can utilize Cypress's type declarations in your {% url "plugins file" plugins-guide %} by annotating it like the following:
+
+```javascript
+// cypress/plugins/index.js
+
+/// <reference types="cypress" />
+
+/**
+ * @type {Cypress.PluginConfig}
+ */
+module.exports = (on, config) => {
+
+}
+```
 
 ## Additional information
 

@@ -356,7 +356,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://127.0.0.1:8080"
     test:
       commands:
@@ -399,7 +399,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://127.0.0.1:8080"
     test:
       commands:
@@ -446,7 +446,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://localhost:3000"
     test:
       commands:
@@ -495,7 +495,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://localhost:3000"
     test:
       commands:
@@ -537,6 +537,8 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
+### Linux
+
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
@@ -556,6 +558,8 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 - If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
 If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+
+**Tip:** you can find lots of CI examples with configured caching in our {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} repository.
 
 ## Environment variables
 
@@ -732,9 +736,9 @@ If you want colors to be disabled, you can pass the `NO_COLOR` environment varia
 NO_COLOR=1 cypress run
 ```
 
-
 # See also
 
 - {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
+- {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
 - {% url "Blog: Record Test Artifacts from any Docker CI" https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/ %}

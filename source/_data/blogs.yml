@@ -8,6 +8,23 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+
+  - title: "Cypress in Action: A Few Months In"
+    url: https://blog.noredink.com/post/190625483798/cypress-in-action-a-few-months-in-three-months
+    sourceName: "NoRedInk"
+    sourceUrl: https://blog.noredink.com/
+    author: Matt Charlton
+    date: Feb 3, 2020
+    img: /img/examples/calendar.png 
+
+  - title: "End-to-End Testing with Cypress.io — A Lowdown"
+    url: "https://madebyextreme.com/insights/end-to-end-testing-with-cypress-io"
+    sourceName: madebyextreme
+    sourceUrl: https://madebyextreme.com/
+    author: Neil Charlton
+    date: February 07, 2020
+    img: /img/examples/madebyextreme-cypress-testing.png
+    
   - title: "Testing WebSocket connections with Cypress"
     url: "https://medium.com/@SebDragomir/testing-websocket-connections-with-cypress-2100ab369945"
     sourceName: Medium

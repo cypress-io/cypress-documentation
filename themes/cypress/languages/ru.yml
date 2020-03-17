@@ -51,6 +51,7 @@ sidebar:
     parallelization: Параллелизация
     environment-variables: Переменные среды
     launching-browsers: Запуск браузеров
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
     references: Ссылки
@@ -61,10 +62,12 @@ sidebar:
     assertions: Ассерты
     best-practices: Лучшие практики
     trade-offs: Компромиссы
+    troubleshooting: Troubleshooting
     changelog: Изменения в продукте
+    migration-guide: Migration Guide
     roadmap: Карта проекта
     tooling: Утилиты
-    intelligent-code-completion: Интеллектуальное завершение кода
+    IDE-integration: IDE Integration
     plugins-guide: Плагины
     reporters: Репортеры
     typescript-support: TypeScript
@@ -172,9 +175,11 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

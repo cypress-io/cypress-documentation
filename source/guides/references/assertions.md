@@ -110,6 +110,7 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 | .isNotString(*value*, *[message]*) | `assert.isNotString(2, 'val not string')` |
 | .isNumber(*value*, *[message]*) | `assert.isNumber(2, 'val is number')` |
 | .isNotNumber(*value*, *[message]*) | `assert.isNotNumber('e2e', 'val not number')` |
+| .isFinite(*value*, *[message]*) | `assert.isFinite('e2e', 'val is finite')` |
 | .isBoolean(*value*, *[message]*) | `assert.isBoolean(true, 'val is bool')` |
 | .isNotBoolean(*value*, *[message]*) | `assert.isNotBoolean('true', 'val not bool')` |
 | .typeOf(*value*, *name*, *[message]*) | `assert.typeOf('e2e', 'string', 'val is string')` |

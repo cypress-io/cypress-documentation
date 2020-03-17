@@ -101,6 +101,11 @@ a.article-edit-link {
     margin: 25px 0;
     word-wrap: break-word;
     font-family: $font-sans;
+
+    .badge {
+      position: relative;
+      top: -2px;
+    }
   }
 
   ol {
@@ -454,6 +459,10 @@ a.article-edit-link {
           color: color-grey;
         }
       }
+    }
+
+    p>img {
+      margin: 0;
     }
 
     &>h1, &>h2, &>h3 {
