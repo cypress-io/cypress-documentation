@@ -195,10 +195,6 @@ Specifying the `--ci-build-id` may also be necessary.
 
 ### `cypress run --headed`
 
-{% note warning %}
-Video recording is not currently supported in Electron with the `--headed` flag. See {% issue 1767 %} for more details.
-{% endnote %}
-
 By default, Cypress will run tests in Electron headlessly.
 
 Passing `--headed` will force Electron to be shown. This matches how you run Electron via `cypress open`.
@@ -525,11 +521,17 @@ cypress cache path
 
 ### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+Print all existing installed versions of Cypress. The output will be a table with cached versions and the last time the binary was used by the user, determined from the file's access time.
 
 ```shell
 cypress cache list
-3.0.0 3.0.1 3.0.2
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
 ```
 
 ### `cypress cache clear`

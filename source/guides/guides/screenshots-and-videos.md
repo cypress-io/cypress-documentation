@@ -17,7 +17,7 @@ Cypress comes with the ability to take screenshots, whether you are running via 
 
 To take a manual screenshot you can use the {% url `cy.screenshot()` screenshot %} command.
 
-Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress open`. Screenshots on failure are *not* automatically taken during `cypress open`.
+Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress run`. Screenshots on failure are *not* automatically taken during `cypress open`.
 
 This behavior can be turned off by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
@@ -26,10 +26,6 @@ Screenshots are stored in the {% url `screenshotsFolder` configuration#Screensho
 Cypress clears any existing screenshots before `cypress run`. If you do not want to clear your screenshots folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Screenshots %} to `false`.
 
 # Videos
-
-{% note warning %}
-Video recording is not currently supported in Electron with the {% url "`--headed` flag" command-line#cypress-run-headed %}. See {% issue 1767 %} for more details.
-{% endnote %}
 
 Cypress records a video for each spec file when running tests.
 
