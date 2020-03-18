@@ -537,6 +537,8 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
+### Linux
+
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```

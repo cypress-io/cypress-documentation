@@ -127,6 +127,10 @@ Conflicting values will override values from your configuration file (`cypress.j
 
 Cypress will *strip off* the `CYPRESS_` when adding your environment variables.
 
+{% note danger %}
+The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be set.
+{% endnote %}
+
 ### Export cypress env variables from the command line
 
 ```shell
