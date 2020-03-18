@@ -459,6 +459,8 @@ You can find full examples showing different code coverage setups in the followi
 - {% url 'bahmutov/testing-react' https://github.com/bahmutov/testing-react %} shows how to get code coverage for a React application created using `CRA v3` without ejecting `react-scripts`.
 - {% url 'bahmutov/next-and-cypress-example' https://github.com/bahmutov/next-and-cypress-example %} shows how to get back end and front end coverage for a Next.js project. `middleware/nextjs.js`.
 
+Find the full list of examples linked in {% url cypress-io/code-coverage#external-examples https://github.com/cypress-io/code-coverage#external-examples %}.
+
 # See also
 
 - The official {% url "@cypress/code-coverage" https://github.com/cypress-io/code-coverage %} plugin
