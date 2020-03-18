@@ -6,7 +6,7 @@
     "version": "3.9.0"
   },
   "engines": {
-    "node": "^8.6.0"
+    "node": "^12.8.1"
   },
   "license": "MIT",
   "bugs": "https://github.com/cypress-io/cypress-documentation/issues",
