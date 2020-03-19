@@ -26,7 +26,7 @@ describe('i18n', () => {
     it('provides a default', function () {
       cy.get('link[hreflang="x-default"]').should(($linkTag) => {
         expect($linkTag[0].rel).to.eq('alternate')
-        expect($linkTag[0].href).to.eq('https://docs.cypress.io/guides/overview/why-cypress.html')
+        expect($linkTag[0].href).to.include('guides/overview/why-cypress.html')
       })
     })
   })
