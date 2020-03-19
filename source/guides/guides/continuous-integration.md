@@ -700,6 +700,38 @@ See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
 
+In a Docker container, the default size of the `/dev/shm` shared memory space is 64MB. This is not typically enough to run Chrome and can cause the browser to crash. You can fix this by passing the `--disable-dev-shm-usage` flag to Chrome with the following workarounds:
+
+### Cypress versions 4.0.0 and up
+
+```javascript
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chrome') {
+      console.log('Adding --disable-dev-shm-usage...')
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
+
+### Cypress versions pre-4.0.0
+
+```javascript
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chrome') {
+      console.log('Adding --disable-dev-shm-usage...')
+      args.push('--disable-dev-shm-usage')
+    }
+
+    return args
+  })
+}
+```
+
 ## Xvfb
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
