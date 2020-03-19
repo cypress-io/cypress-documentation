@@ -150,6 +150,9 @@ jobs:
       # use script that just deploys without rebuilding the production docs
       - run: npm run deploy-prebuilt -- --environment production --scrape
       - run: cat public/build.json
+      - store_artifacts:
+          path: npm-debug.log
+
 
 workflows:
   version: 2
