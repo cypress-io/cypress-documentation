@@ -137,6 +137,9 @@ jobs:
           path: cypress/screenshots
       - store_artifacts:
           path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
 
   "deploy-docs-production":
     <<: *defaults
@@ -152,7 +155,9 @@ jobs:
       - run: cat public/build.json
       - store_artifacts:
           path: npm-debug.log
-
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
 
 workflows:
   version: 2
