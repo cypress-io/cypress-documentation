@@ -26,6 +26,8 @@ If the hover behavior depends on a JavaScript event like `mouseover`, you can tr
 Using `.trigger()` will only affect events in JavaScript and will not trigger any effects in CSS. 
 {% endnote %}
 
+As a workaround, check out the {$ url 'recipe leveraging Chrome remote debugging' recipes#Fundamentals} to set pseudo classes like `hover`.
+
 ### Simulating `mouseover` event to get popover to display
 
 ```javascript
