@@ -1,5 +1,10 @@
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress + Gatsby: Confidently fast web development"
+    date: Sep 4, 2019
+    author: Cypress & Gatsby with Amir Rustamzadeh & Dustin Schau
+    youtubeId: Tx6Lg9mwcCE
+
   - title: "From Zero to Hero with Cypress: Slido’s journey of creating E2E tests without JS experience"
     date: Aug 7, 2019
     author: Cypress & sli.do with Filip Hric, Lubo Droby, & Steven Yi
