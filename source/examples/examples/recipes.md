@@ -52,6 +52,7 @@ Recipe  | Description
 {% url 'grep' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep %} | Filter tests by name using Mocha-like `grep` syntax
 {% url 'TypeScript with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %} | Add TypeScript support with Browserify
 {% url 'TypeScript with webpack' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %} | Add TypeScript support with webpack
+{% url 'Flow with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify %} | Add flow support with browserify
 
 ## Blogs
 Demo recipes from the blog posts at {% url 'Cypress blog' https://www.cypress.io/blog %}.
@@ -68,6 +69,10 @@ Recipe  | Description
 {% url 'Vue + Vuex + REST Testing' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__vue-vuex-rest %} | Test an application that uses central Vuex data store
 {% url 'A11y Testing' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__a11y %} | Accessibility testing with {% url 'cypress-axe' https://github.com/avanslaars/cypress-axe %}
 {% url 'Automate Angular Testing' https://www.cypress.io/blog/2019/08/02/guest-post-angular-adding-cypress-ui-tests-to-your-devops-pipeline %} | Automate Angular Testing
+{% url 'React DevTools' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__use-react-devtools %} | Loads React DevTools Chrome extension automatically
+{% url 'Expect N assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__assertion-counting %} | How to expect a certain number of assertions in a test
+{% url 'Browser notifications' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__notification %} | How to test application that uses {% url '`Notification`' https://developer.mozilla.org/en-US/docs/Web/API/notification %}
+{% url 'Testing iframes' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__iframes %} | Accessing elements in 3rd party iframe, spy and stub network calls from iframe
 
 ## Stubbing and spying
 Recipe  | Description
