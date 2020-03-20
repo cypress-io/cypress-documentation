@@ -16,6 +16,8 @@ Recipe  | Description
 {% url 'Fixtures' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__fixtures %} | Loading single or multiple fixtures
 {% url 'Adding Chai Assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions %} | Add new or custom chai assertions
 {% url 'Cypress module API' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__module-api %} | Run Cypress via its module API
+{% url 'Custom browsers' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__custom-browsers %} | Control which browsers the project can use, or even add a custom browser into the list
+{% url 'use Chrome Remote Interface' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__chrome-remote-debugging %} | Use Chrome debugger protocol to trigger hover state and print media style
 
 ## Testing the DOM
 Recipe  | Description
