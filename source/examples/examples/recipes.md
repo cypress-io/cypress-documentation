@@ -52,7 +52,7 @@ Recipe  | Description
 {% url 'grep' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep %} | Filter tests by name using Mocha-like `grep` syntax
 {% url 'TypeScript with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %} | Add TypeScript support with Browserify
 {% url 'TypeScript with webpack' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %} | Add TypeScript support with webpack
-{% url 'Flow with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify %} | Add flow support with browserify
+{% url 'Flow with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify %} | Add flow support with Browserify
 
 ## Blogs
 Demo recipes from the blog posts at {% url 'Cypress blog' https://www.cypress.io/blog %}.
@@ -97,6 +97,24 @@ Recipe  | Description
 {% url 'Bootstrapping your App' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__bootstrapping-your-app %} | Seed your application with test data
 {% url 'Seeding your Database in Node' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node %} | Seed your database with test data
 {% url 'XHR assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__xhr-assertions %} | Spy and assert on application's network calls
+
+## Other Cypress Recipes
+Recipe | Description
+--- | ---
+{% url 'Visual Testing' visual-testing %} | Official Cypress guide to visual testing
+{% url 'Code Coverage' code-coverage %} | Official Cypress guide to code coverage
+{% url 'detect-page-reload' https://glebbahmutov.com/blog/detect-page-reload/ %} | How to detect from Cypress test when a page reloads using object property assertions
+{% url 'run in Docker' https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command/ %} | Run Cypress with a single Docker command
+{% url 'SSR E2E' https://glebbahmutov.com/blog/ssr-e2e/ %} | End-to-end Testing for Server-Side Rendered Pages
+{% url 'Using TS aliases' https://glebbahmutov.com/blog/using-ts-aliases-in-cypress-tests/ %} | Using TypeScript aliases in Cypress tests
+{% url 'stub-navigator-api' https://glebbahmutov.com/blog/stub-navigator-api/ %} | Stub navigator API in end-to-end tests
+{% url 'Readable Cypress.io tests' https://glebbahmutov.com/blog/readable-tests/ %} | How to write readable tests using custom commands and custom Chai assertions
+{% url 'Parallel or not' https://glebbahmutov.com/blog/parallel-or-not/ %} | Run Cypress in parallel mode on CircleCI depending on environment variables
+{% url 'Use TypeScript With Cypress' https://glebbahmutov.com/blog/use-typescript-with-cypress/ %} | Step by step tutorial on how to set up TypeScript support in Cypress using webpack bundler
+{% url 'Cypress should callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} | Examples of `.should(cb)` assertions
+{% url 'Cypress jump' https://glebbahmutov.com/blog/cypress-jump/ %} | Create a React component using JSX and inject it into live application from a Cypress test
+{% url 'Unit testing Vuex data store using Cypress.io Test Runner' https://dev.to/bahmutov/unit-testing-vuex-data-store-using-cypress-io-test-runner-3g4n %} | Complete walkthrough for anyone trying to unit test a data store
+
 
 ## Community Recipes
 Recipe | Description
