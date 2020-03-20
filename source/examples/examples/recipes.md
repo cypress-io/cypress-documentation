@@ -28,6 +28,11 @@ Recipe  | Description
 {% url 'Drag and Drop' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop %} | Use `.trigger()` to test drag and drop
 {% url 'Shadow DOM' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__shadow-dom %} | You need to use any of available custom commands
 {% url 'Website monitoring' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize `cypress` to monitor your website
+{% url 'Waiting for static resource' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__wait-for-resource %} | Shows how to wait for CSS, image, or any other static resource to load
+{% url 'CSV load and table test' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__csv-table %} | Loads CSV file and compares objects against cells in a table
+{% url 'Evaluate performance metrics' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize Cypress to monitor a website
+{% url 'Root style' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__root-style %} | Trigger input color change that modifies CSS variable
+{% url 'Select widgets' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__select2 %} | Working with `<select>` elements and [Select2](https://select2.org/) widgets
 
 ## Logging In 
 Recipe  | Description
