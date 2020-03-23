@@ -47,7 +47,7 @@ Cypress.Commands.add('setSessionStorage', (key, value) => {
       // print to dev tools console on click
       return {
         'Key': key,
-        'Value': value',
+        'Value': value,
         'Session Storage': window.sessionStorage
       }
     }
