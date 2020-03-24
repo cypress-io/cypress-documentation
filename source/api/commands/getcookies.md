@@ -41,6 +41,7 @@ Option | Default | Description
 - `httpOnly`
 - `secure`
 - `expiry`
+- `sameSite` (will only be returned if `experimentalGetCookiesSameSite` config value is `true`)
 
 # Examples
 

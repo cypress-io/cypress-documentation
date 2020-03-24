@@ -42,6 +42,7 @@ Option | Default | Description
 `path` | `/` | The cookie path
 `secure` | `false` | Whether the cookie is a secure cookie
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.setCookie %}
+`sameSite` | Firefox: `no_restriction` / Others: `unspecified` | Cookie's SameSite value, one of `lax`, `strict`, `unspecified`, or `no_restriction` (`unspecified` is only supported in Chromium-family browsers)
 
 ## Yields {% helper_icon yields %}
 
@@ -54,6 +55,7 @@ Option | Default | Description
 - `httpOnly`
 - `secure`
 - `expiry`
+- `sameSite` (will only be returned if `experimentalGetCookiesSameSite` config value is `true`)
 
 # Examples
 
