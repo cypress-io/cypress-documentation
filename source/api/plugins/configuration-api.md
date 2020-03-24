@@ -29,7 +29,14 @@ Whenever you return an object from your `pluginFile`, Cypress will take this and
 
 If you don't return an object, then configuration will not be modified.
 
-Resolved values will show up in your Settings tab.
+{% note warning %}
+The `config` object also includes the following extra values that are not part of the standard configuration. **These values are read only and cannot be modified from the plugins file.**
+
+* `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
+* `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+{% endnote %}
+
+Resolved values will show up in the "Settings" tab of the Test Runner.
 
 {% imgTag /img/guides/plugin-configuration.png "Resolved configuration in the Desktop app" %}
 
@@ -41,7 +48,7 @@ Additionally, Cypress will respect and await promises you return. This enables y
 
 ## Customize available browsers
 
-The configuration includes the list of browsers found on your system that are available to Cypress. 
+The configuration includes the list of browsers found on your system that are available to Cypress.
 
 {% note info %}
 Read our full guide on {% url "Launching Browsers" launching-browsers %} for more information on how this works.
@@ -54,8 +61,9 @@ In the plugins file, you can filter the list of browsers passed inside the `conf
 module.exports = (on, config) => {
   // inside config.browsers array each object has information like
   // {
-  //   name: 'canary',
-  //   family: 'chrome',
+  //   name: 'chrome',
+  //   family: 'chromium',
+  //   channel: 'canary',
   //   displayName: 'Canary',
   //   version: '80.0.3966.0',
   //   path:
@@ -63,7 +71,7 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === 'chrome')
+    browsers: config.browsers.filter((b) => b.family === 'chromium')
   }
 }
 ```

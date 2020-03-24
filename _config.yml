@@ -14,6 +14,7 @@ language:
   - zh-cn
   - ja
   - pt-br
+  - ru
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -37,7 +38,12 @@ skip_render:
 # can also do outside page links here
 # plugins/index.html: https://github.com/cypress/cypress/wiki/Plugins
 alias:
+  # indices
   index.html: guides/overview/why-cypress.html
+  zh-cn/: zh-cn/guides/overview/why-cypress.html
+  ja/: ja/guides/overview/why-cypress.html
+  pt-br/: pt-br/guides/overview/why-cypress.html
+  ru/: ru/guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
   guides.html: guides/overview/why-cypress.html
@@ -145,9 +151,6 @@ alias:
   docs/finding-elements/: guides/core-concepts/introduction-to-cypress.html#Querying-Elements
 
   continuous-integration.html: guides/guides/continuous-integration.html
-
-  # for chinese translation
-  zh-cn/: zh-cn/guides/overview/why-cypress.html
 
   # obsolete content
   dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html

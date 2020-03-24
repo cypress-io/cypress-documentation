@@ -26,6 +26,12 @@ cy.get('div').should(($div) => {
 })
 ```
 
+If you need to convert text to a number before checking if it is greater than 10:
+
+```javascript
+cy.get('div').invoke('text').then(parseFloat).should('be.gt', 10)
+```
+
 If you need to hold a reference or compare values of text:
 
 ```javascript
@@ -141,7 +147,7 @@ We have seen many different iterations of this question. The answers can be vari
 
 **_How do I know if my page is done loading?_**
 
-When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#One-Superdomain-per-Test %}, Cypress will log a verbose yet friendly error message.
+When you load your application using `cy.visit()`, Cypress will wait for the `load` event to fire. The {% url '`cy.visit()`' visit#Usage %} command loads a remote page and does not resolve until all of the external resources complete their loading phase. Because we expect your applications to observe differing load times, this command's default timeout is set to 60000ms. If you visit an invalid url or a {% url 'second unique domain' web-security#Same-superdomain-per-test %}, Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
 
@@ -184,7 +190,6 @@ describe('The Document Metadata', () => {
     // if you click on DOCUMENT from the command log,
     // it will output the entire #document to the console
     cy.document()
-
   })
 
   // or make assertions on any of the metadata in the head element
@@ -198,7 +203,6 @@ describe('The Document Metadata', () => {
     cy.get('head meta[name="description"]')
       .should('have.attr', 'content', 'This description is so meta')
   })
-
 })
 ```
 
@@ -315,6 +319,29 @@ If you're looking to abstract behavior or roll up a series of actions you can cr
 
 For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
 
+## {% fa fa-angle-right %} Why do my Cypress tests pass locally but not in CI?
+
+There are many reasons why tests may fail in CI but pass locally. Some of these include:
+
+- There is a problem isolated to the Electron browser (`cypress run` by default runs in the Electron browser)
+- A test failure in CI could be highlighting a bug in your CI build process
+- Variability in timing when running your application in CI (For example, network requests that resolve within the timeout locally may take longer in CI)
+- Machine differences in CI versus your local machine -- CPU resources, environment variables, etc.
+
+To troubleshoot why tests are failing in CI but passing locally, you can try these strategies:
+
+- Test locally with Electron to identify if the issue is specific to the browser.
+- You can also identify browser-specific issues by running in a different browser in CI with the `--browser` flag.
+- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
+- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
+- Ensure video recording and/or screenshots are enabled for the CI run and compare the recording to the Command Log when running the test locally.
+
+## {% fa fa-angle-right %} Why are my video recordings freezing or dropping frames when running in CI?
+
+Videos recorded on Continuous Integration may have frozen or dropped frames if there are not enough resources available when running the tests in your CI container. Like with any application, there needs to be the required CPU to run Cypress and record video. You can run your tests with {% url 'memory and CPU logs enabled' troubleshooting#Log-memory-and-CPU-usage %} to identify and evaluate the resource utilization within your CI.
+
+If you are experiencing this issue, we recommend switching to a more powerful CI container or provider.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% url 'here' parallelization %}.
@@ -420,7 +447,6 @@ cy.get('button', { timeout: 10000 }) // wait up to 10 seconds for this 'button' 
 
 cy.get('.element').click({ timeout: 10000 }).should('not.have.class', 'animating')
 // wait up to 10 seconds for the .element to not have 'animating' class
-
 ```
 
 However, most of the time you don't even have to worry about animations. Why not?  Cypress will {% url "automatically wait" interacting-with-elements %} for elements to stop animating prior to interacting with them via action commands like `.click()` or `.type()`.
@@ -442,7 +468,6 @@ Yes, you can. We provide an {% url 'example here' viewport#Width-Height %}.
 Yes. In this example, we loop through an array of urls and make assertions on the logo.
 
 ```javascript
-
 const urls = ['https://docs.cypress.io', 'https://www.cypress.io']
 
 describe('Logo', () => {
@@ -598,8 +623,37 @@ cy.visit('/', {
     cy.stub(win.console, 'log').as('consoleLog')
   }
 })
+
 //...
 cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
 
 Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spying %}.
+
+## {% fa fa-angle-right %} How do I use special characters with `cy.get()`?
+
+Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}. 
+
+To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
+
+```html
+<!doctype html>
+<html lang="en">
+<body>
+  <div id="Configuration/Setup/TextField.id">Hello World</div>
+</body>
+</html>
+```
+
+```js
+it('test', () => {
+  cy.visit('index.html')
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
+
+  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
+})
+```
+
+Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. {% url "Learn more about why" $#Notes %}

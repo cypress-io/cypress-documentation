@@ -2,7 +2,8 @@
 title: GitHub Integration
 ---
 
-The Cypress Dashboard can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull request comments' Pull-request-comments %}.
+The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate your Cypress tests with your GitHub workflow via commit {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull request comments' Pull-request-comments %}. A project first needs to be {% url "setup to record" projects %} to the Cypress Dashboard to use GitHub integration.
+
 {% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
 
 {% note info %}
@@ -19,7 +20,7 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 
 ## Install via organization integration settings
 
-1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/#/organizations %} or open the organization switcher.
+1. Go to the Dashboard {% url "Organizations page" https://dashboard.cypress.io/organizations %} or open the organization switcher.
 2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
   {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
 3. Visit the selected organization's **Integrations** page via the side navigation.
@@ -61,14 +62,17 @@ Once you've started the GitHub App installation process {% urlHash "via a Cypres
 
 After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for *any* Cypress project.
 
-1. Visit a project's setting page, and scroll down to the GitHub Integration section.
+1. Go to the project's settings page.
+  {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
+
+2. Scroll down to the GitHub Integration section.
     {% note info %}
     You can quickly get to a project's GitHub Integrations settings, by clicking on the **Configure** link of the desired project within an organization's Integrations page:
     {% endnote %}
 
     {% imgTag /img/dashboard/github-integration/org-settings-with-no-enabled-projects.png "Org GitHub Integration settings" "no-border" %}
 
-2. Select a GitHub repository to associated with the project.
+3. Select a GitHub repository to associate with the project.
 
   {% imgTag /img/dashboard/github-integration/project-settings-repo-selection.png "Associate GitHub repo with Cypress project" "no-border" %}
 
@@ -84,10 +88,10 @@ If status checks are enabled within a project's GitHub integration settings, the
 
 The Cypress GitHub App reports commit status checks in two separate styles:
 
-- One check per {% url "run group" parallelization#Grouping-test-runs %}.
+- **One check per {% url "run group" parallelization#Grouping-test-runs %}.**
     {% imgTag /img/dashboard/github-integration/status-checks-per-group-failed.png "Status checks per group" "no-border" %}
 
-- Or one check per spec file.
+- **Or one check per spec file.**
     {% imgTag /img/dashboard/github-integration/status-checks-per-spec.png "Status checks per spec" "no-border" %}
 
 Each status check will report the number of test failures or passes, and the associated **Details** link will direct you to the test run's page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
@@ -102,14 +106,14 @@ GitHub status checks are optional, and can be disabled within a project's GitHub
 
 The Cypress GitHub App can provide detailed test information within pull requests via comments that include:
 
-- Run statistics, such as tests passed, failed, skipped, and over-limit.
-- Run context details:
+- **Run statistics, such as tests passed, failed, skipped, and over-limit.**
+- **Run context details:**
   - The associated Cypress project
   - Final run status (passed, failed, etc)
   - Commit SHA linking to the GitHub commit
   - The time the run started and finished as well as the duration.
   - Operating system version and browser version.
-- Run failures:
+- **Run failures:**
   - The first 10 failures are displayed with a link to more.
   - Each failed test links back to the associated failure within the Cypress Dashboard.
   - Screenshot thumbnails are also provided with each failure to conveniently provide context.
@@ -131,3 +135,12 @@ You can uninstall the Cypress GitHub app from GitHub by performing the following
 2. Click on **Installed GitHub Apps**.
 3. Click **Configure** beside the Cypress app.
 4. Click **Uninstall** below the "Uninstall Cypress" section.
+
+# Got Feedback?
+
+If you have any insights or feedback on how to improve Cypress GitHub Integration, please reach out via our official {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/9-github-status-checks-and-pull-request-comments %}.
+
+# See also
+
+- {% url "Cypress GitHub Action + Examples" https://github.com/cypress-io/github-action %}
+- {% url "Example project that uses both Cypress GitHub Action and Cypress GitHub Integration" https://github.com/cypress-io/gh-action-and-gh-integration %}

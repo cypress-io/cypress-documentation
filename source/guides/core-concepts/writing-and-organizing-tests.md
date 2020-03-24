@@ -58,7 +58,7 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
 
 ## Configuring Folder Structure
 
-While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
+While Cypress allows you to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
 You can modify the folder configuration in your configuration file. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
@@ -101,7 +101,7 @@ The initial imported plugins file can be {% url 'configured to another file' con
 
 ## Support file
 
-By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
 The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
@@ -268,7 +268,6 @@ describe('Unit Test FizzBuzz', function () {
     numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
-
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
@@ -323,7 +322,7 @@ it('can subtract numbers', function() {
 
 # Watching tests
 
-When running in interactive mode using {% url "`cypress open`" command-line#cypress-open %} Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
+When running in using {% url "`cypress open`" command-line#cypress-open %}, Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
 
 This makes for a productive development experience because you can add and edit tests as you're implementing a feature and the Cypress user interface will always reflect the results of your latest edits.
 

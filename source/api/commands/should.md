@@ -29,7 +29,6 @@ An alias of {% url `.and()` and %}
 cy.get('.error').should('be.empty')                    // Assert that '.error' is empty
 cy.contains('Login').should('be.visible')              // Assert that el is visible
 cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' property equals 'bar'
-
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -175,10 +174,9 @@ cy
   })
 ```
 
-{% note warning %}
-Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
+**{% fa fa-warning red %} Warning** Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
 
-```
+```js
 cy
   .get('p')
   .should(($p) => {
@@ -190,7 +188,6 @@ cy
     // the argument $p will be the 3 elements, not "foo"
   })
 ```
-{% endnote %}
 
 ### Assert class name contains `heading-`
 
@@ -237,9 +234,9 @@ cy.get('.docs-header')
   })
 ```
 
-### Assert text contents of 3 elements
+### Assert text content of 3 elements
 
-Example below first asserts that there are 3 elements, and then checks the text contents of each one.
+Example below first asserts that there are 3 elements, and then checks the text content of each one.
 
 ```html
 <ul class="connectors-list">

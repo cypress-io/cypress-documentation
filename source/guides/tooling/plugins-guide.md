@@ -79,7 +79,7 @@ You can use the `task` event to do things like:
 - Manipulating a database (seeding, reading, writing, etc.)
 - Storing state in Node that you want persisted (since the driver is fully refreshed on visits)
 - Performing parallel tasks (like making multiple http requests outside of Cypress)
-- Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer)
+- Running an external process (like spinning up a Webdriver instance of another browser like Safari or puppeteer)
 
 # List of plugins
 
@@ -116,7 +116,6 @@ Inside of this file, you will export a function. Cypress will call this function
 
 // export a function
 module.exports = (on, config) => {
-
   // bind to the event we care about
   on('<event>', (arg1, arg2) => {
     // plugin stuff here

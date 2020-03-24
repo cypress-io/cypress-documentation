@@ -99,8 +99,8 @@ describe('Table of Contents', () => {
           cy.visit(GUIDES_PATH)
         })
 
-        it('displays toc', () =>
-          cy.get('.sidebar-link')
+        it('displays toc', () => {
+          return cy.get('.sidebar-link')
           .each(function (linkElement) {
             cy.log(linkElement[0].innerText)
             cy.request(linkElement[0].href).its('body')
@@ -130,7 +130,7 @@ describe('Table of Contents', () => {
               })
             })
           })
-        )
+        })
       })
     })
   })

@@ -33,6 +33,10 @@ We consider each time the `it()` function is called to be a single test. So you 
 
 You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
 
+## {% fa fa-angle-right %} What counts as a user?
+
+A {% url 'user' users %} is anyone with a login to our Dashboard Service that has been invited to see and review the test results of your organization.
+
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
@@ -60,6 +64,10 @@ No, although we are looking to build an on-premise version of the Dashboard for 
 Of course. The Dashboard Service is a separate service from the Test Runner and will always remain optional. We hope you'll find a tremendous amount of value in it, but it is not coupled to being able to run your tests.
 
 You can always run your tests in CI using {% url "`cypress run`" command-line#cypress-run %} without the `--record` flag which does not communicate with our external servers and will not record any test results.
+
+## {% fa fa-angle-right %} What is my Organization ID?
+
+Your Organization ID is a unique identifier that is linked to your organization. Instructions on how to find your ID are in the {% url "Dashboard Guide." organizations#Organization-ID%}
 
 ## {% fa fa-angle-right %} What does Cypress record?
 
@@ -94,7 +102,7 @@ Even if your CI setup is very different from the {% url "CI examples we have" co
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
 ```
 
-For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.coffee %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might be good enough for the job.
+For reference, here are {% url "the variables" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/ci_provider.js %} we extract from the popular CI providers, and for most of them there is some variable that is set to the same value across multiple containers running in parallel. If there is NO common variable, try using the commit SHA string. Assuming you do not run the same tests more than once against the same commit, it might be good enough for the job.
 
 ## {% fa fa-angle-right %} Can I delete a run from the Dashboard?
 
@@ -104,7 +112,7 @@ We are working on implementing run deletion. {% url "Track the issue." https://g
 
 ## {% fa fa-angle-right %} Can I delete my Cypress account?
 
-You can delete your Cypress account from {% url "your Dashboard profile" https://dashboard.cypress.io/#/profile %}. Deleting your account cannot be undone! By deleting your Cypress account, all associated data in your account will be permanently deleted.
+You can delete your Cypress account from {% url "your Dashboard profile" https://dashboard.cypress.io/profile %}. Deleting your account cannot be undone! By deleting your Cypress account, all associated data in your account will be permanently deleted.
 
 ## {% fa fa-angle-right %} What happens to my Dashboard if I downgrade my account?
 
@@ -114,11 +122,13 @@ However, it will make your Dashboard subject to the limitations of your new plan
 
 ## {% fa fa-angle-right %} What happens once I reach the test recording limit?
 
-After exceeding 100% of your plan’s test recording limit, parallelization will be disabled and new test recordings will be hidden from the dashboard.
+On the free Seed plan (500 recordings), tests running with the `--record` flag will fail and exit when the test recording limit is reached. You can upgrade to a paid plan, wait until your usage resets at the next month, or remove the `--record` flag to continue running your tests.
+
+On a paid plan, tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded.
 
 In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
 
-1. Logging into the Dashboard
+1. Logging into the {% url "Dashboard" https://dashboard.cypress.io %}
 2. Select your organization
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage

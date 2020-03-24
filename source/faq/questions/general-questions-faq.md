@@ -92,7 +92,7 @@ No. In fact Cypress' architecture is very different from Selenium in a few criti
 
 ## {% fa fa-angle-right %} If Cypress runs in the browser, doesn't that mean it's sandboxed?
 
-Yes, technically; it's sandboxed and has to follow the same rules as every other browser. That's actually a good thing because it doesn't require a browser extension, and it naturally will work across all browsers (which enables cross-browser testing).
+Yes, technically; it's sandboxed and has to follow the same rules as every other browser. That's actually a good thing because it doesn't require a browser extension, and it naturally will work across all browsers (which enables cross browser testing).
 
 But Cypress is actually way beyond a basic JavaScript application running in the browser. It is also a desktop application and communicates with back end web services.
 
@@ -154,7 +154,7 @@ In addition to the above differences, below are a few rules of thumb to decide w
 - If the code you are trying to test is called from other code, use a unit test.
 - If the code is going be called from the external system, like a browser, use an end-to-end test.
 - If a unit test requires a lot of mocking and you have to bring tools like `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
-- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewite it as a unit test
+- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewrite it as a unit test
 
 Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
 

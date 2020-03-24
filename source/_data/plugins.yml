@@ -82,6 +82,11 @@
       link: https://github.com/bahmutov/cypress-watch-and-reload
       keywords: [file-watcher]
 
+    - name: cypress-plugin-livereload
+      description: Reloads Cypress using livereload
+      link: https://github.com/unlocomqx/cypress-plugin-livereload
+      keywords: [livereload]
+
     - name: cypress-select-tests
       description: User space solution for grepping Cypress tests to run
       link: https://github.com/bahmutov/cypress-select-tests
@@ -122,6 +127,21 @@
       link: https://github.com/morficus/cypress-dotenv
       keywords: [dotenv, env, environment, env var]
 
+    - name: 'cypress-har-generator'
+      description: Generate HTTP Archive (HAR) while running tests.
+      link: https://github.com/NeuraLegion/cypress-har-generator
+      keywords: [har, http-archive, http, websocket, recording, chrome]
+
+    - name: cypress-expect-n-assertions
+      description: Cypress helper that checks number of expected and actual assertions in the test
+      link: https://github.com/bahmutov/cypress-expect-n-assertions
+      keywords: [test, assertion]
+
+    - name: cypress-audit
+      description: Run Lighthouse audit directly in your E2E test suites
+      link: https://github.com/mfrachet/cypress-audit
+      keywords: [lighthouse]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -133,6 +153,11 @@
       description: Track, test, and block code execution based on network state.
       link: https://github.com/RcKeller/cypress-unfetch
       keywords: [commands, routing, networking]
+
+    - name: cypress-redux
+      description: Run assertions against Redux stores.
+      link: https://github.com/RcKeller/cypress-redux
+      keywords: [commands, redux]
 
     - name: cypress-axe
       description: Helps test your applications for accessibility issues using axe-core.
@@ -224,6 +249,16 @@
       link: https://github.com/bahmutov/cy-api
       keywords: [api]
 
+    - name: cy-spok
+      description: Adds assertions from Spok library for easy schema and value validations
+      link: https://github.com/bahmutov/cy-spok
+      keywords: [assertions]
+
+    - name: cypress-localstorage-commands
+      description: Custom commands for localStorage. Allows preserving localStorage between tests
+      link: https://github.com/javierbrea/cypress-localstorage-commands
+      keywords: [commands, localstorage, persistence]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -300,6 +335,11 @@
       description: Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.
       link: https://github.com/matzeeable/wp-reactjs-starter
       keywords: [wp, wordpress]
+
+    - name: Next Right Now - Next.js Boilerplate
+      description: Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants)
+      link: https://github.com/UnlyEd/next-right-now
+      keywords: [next.js, react, monorepo, multi-tenants]
 
     - name: Elm Batteries Included
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
@@ -418,3 +458,8 @@
       description: Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs
       link: https://github.com/you54f/cypress-slack-reporter
       keywords: [reporter, mochawesome, slack]
+
+    - name: cypress-terminal-report
+      description: Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.
+      link: https://github.com/archfz/cypress-terminal-report
+      keywords: [reporter, logs, terminal, CI, CLI]

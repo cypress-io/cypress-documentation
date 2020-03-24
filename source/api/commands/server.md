@@ -2,7 +2,7 @@
 title: server
 ---
 
-Start a server to begin routing responses to {% url `cy.route()` route %} and {% url `cy.request()` request %}.
+Start a server to begin routing responses to {% url "`cy.route()`" route %} and to change the behavior of network requests.
 
 {% note info %}
 **Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
@@ -145,6 +145,7 @@ cy.server({
     'x-token': 'abc-123-foo-bar'
   }
 })
+
 cy.route('GET', '/users/1', { id: 1, name: 'Amanda' }).as('getUser')
 cy.visit('/users/1/profile')
 cy.wait('@getUser').its('responseHeaders')
@@ -222,21 +223,33 @@ cy.server({ enable: false })
 
 # Notes
 
-***Server persists until the next test runs***
+## State between tests
+
+### Server persists until the next test runs
 
 Cypress automatically continues to persist the server and routing configuration even after a test ends. This means you can continue to use your application and still benefit from stubbing or other server configuration.
 
 However between tests, when a new test runs, the previous configuration is restored to a clean state. No configuration leaks between tests.
 
-***Outstanding requests are automatically aborted between tests***
+### Outstanding requests are automatically aborted between tests
 
 When a new test runs, any outstanding requests still in flight are automatically aborted. In fact this happens by default whether or not you've even started a `cy.server()`.
 
-***Server can be started before you {% url `cy.visit()` visit %}***
+## `cy.visit()`
 
-Oftentimes your application may make initial requests immediately when it loads (such as authenticating a user). Cypress makes it possible to start your server and define routes before a {% url `cy.visit()` visit %}. Upon the next visit, the server + routes will be instantly applied before your application loads.
+### Server can be started before you {% url `cy.visit()` visit %}
+
+Oftentimes your application may make initial requests immediately when it loads (such as authenticating a user). Cypress makes it possible to start your server and define routes before a {% url "`cy.visit()`" visit %}. Upon the next visit, the server + routes will be instantly applied before your application loads.
 
 You can {% url 'read more about XHR strategy here' network-requests %}.
+
+## `cy.request()`
+
+### `cy.server()` does not effect {% url "`cy.request()`" request %}
+
+`cy.server()` and any configuration passed to `cy.server()` has no effect on {% url "`cy.request()`" request %}.
+
+The intention of {% url "`cy.request()`" request %} is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 # Rules
 
@@ -266,7 +279,5 @@ You can {% url 'read more about XHR strategy here' network-requests %}.
 # See also
 
 - {% url 'Network Requests' network-requests %}
-- {% url `cy.request()` request %}
 - {% url `cy.route()` route %}
-- {% url `cy.visit()` visit %}
 - {% url `cy.wait()` wait %}

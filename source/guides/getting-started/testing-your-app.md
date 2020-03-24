@@ -58,7 +58,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `sample_spec.js` file created in the previous tutorial now that it's no longer needed.
 
 ```shell
 rm cypress/integration/sample_spec.js
@@ -396,5 +396,5 @@ From here you may want to explore some more of our guides:
 - {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
 - {% url "Cypress API" table-of-contents %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
-- {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
+- {% url 'Command Line' command-line %} for running all your tests outside via `cypress run`
 - {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI

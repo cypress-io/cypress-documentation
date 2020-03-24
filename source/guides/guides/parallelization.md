@@ -19,7 +19,7 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}.
+This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}. If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our {% url "Cross Browser Testing guide" cross-browser-testing %} for helpful CI strategies when using parallelization.
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
@@ -78,11 +78,11 @@ Duration estimation is done separately for every browser the spec file was teste
 
 # Example
 
-The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/#/projects/4b7344/runs/2929/specs %}.
+The examples below are from a run of our {% url "Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink %} project. You can see the results of this run on the {% url "Cypress Dashboard" https://dashboard.cypress.io/projects/4b7344/runs/2929/specs %}.
 
 ## Without parallelization
 
-In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
+In this example, a single machine runs a job named `1x-electron`, defined in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/aabb10cc1bb9dee88e1bf28e0af5e9661427ee7a/circle.yml#L41 %} file. Cypress runs all 19 spec files one by one alphabetically in this job. It takes **1:51** to complete all of the tests.
 
 ```text
 1x-electron, Machine #1
@@ -114,7 +114,7 @@ Notice that when adding up the spec's run times (**0:55**), they add up to less 
 
 ## With parallelization
 
-When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %} file and it finished in **59 seconds**.
+When we run the same tests with parallelization, Cypress uses its {% urlHash "balance strategy" Balance-strategy %} to order to specs to run based on the spec's previous run history. During the same CI run as above, we ran _all_ tests again, but this time with parallelization across 2 machines. This job was named `2x-electron` in the project's {%url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/aabb10cc1bb9dee88e1bf28e0af5e9661427ee7a/circle.yml#L53 %} file and it finished in **59 seconds**.
 
 ```text
 2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
@@ -146,6 +146,13 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 {% endnote %}
 
 {% imgTag /img/guides/parallelization/machines-view-grouping-expanded.png "Machines view grouping expanded" "no-border" %}
+
+{% note info %}
+# Cross Browser Testing
+
+Grouping test runs with or without parallelization is a useful mechanism when implementing a CI strategy for cross browser testing. Check out the {% url "Cross Browser Testing guide" cross-browser-testing %} to learn more.
+
+{% endnote %}
 
 ## Grouping by browser
 
@@ -236,7 +243,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 Provider  | Environment Variable
 --|--
 AppVeyor  | `APPVEYOR_BUILD_NUMBER`
-Bamboo  | `BAMBOO_BUILD_NUMBER`
+Bamboo  | `bamboo_buildNumber`
 Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
 Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`
@@ -261,7 +268,7 @@ This waiting period is called the **run completion delay** and it begins after t
 
 {% imgTag /img/guides/parallelization/run-completion-delay.png "Test run completion delay" "no-border" %}
 
-This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard" project settings page" projects#Run-completion-delay %}.
+This **delay is 60 seconds by default**, but is {% url "configurable within the Dashboard project settings page" projects#Run-completion-delay %}.
 
 # Visualizing parallelization and groups in the Dashboard
 
@@ -287,6 +294,8 @@ The Machines View charts spec files by the machines that executed them. This vie
 
 # See also
 
+- {% url "Continuous Integration Guide" continuous-integration %}
+- {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}
 - {% url "CI Configurations in Kitchen Sink Example" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}

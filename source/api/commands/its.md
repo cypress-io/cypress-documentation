@@ -12,6 +12,7 @@ If you want to call a `function` on the previously yielded subject, use {% url `
 
 ```javascript
 .its(propertyName)
+.its(propertyName, options)
 ```
 
 ## Usage
@@ -35,6 +36,14 @@ cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 **{% fa fa-angle-right %} propertyName**  ***(String, Number)***
 
 Index, name of property or name of nested properties (with dot notation) to get.
+
+**{% fa fa-angle-right %} options** **_(Object)_**
+
+Pass in an options object to change the default behavior of `.its()`.
+
+| Option    | Default                                                  | Description                        |
+| --------- | -------------------------------------------------------- | ---------------------------------- |
+| `log`     | `true`                                                   | {% usage_options log %}            |
 
 ## Yields {% helper_icon yields %}
 
@@ -209,6 +218,11 @@ The commands above will display in the Command Log as:
 When clicking on `its` within the command log, the console outputs the following:
 
 {% imgTag /img/api/its/response-body-yielded-with-its-command-log.png "Console Log for its" %}
+
+{% history %}
+{% url "3.8.0" changelog#3-8-0 %} | Added support for `options` argument
+{% url "3.7.0" changelog#3-7-0 %} | Added support for arguments of type Number for `propertyName`
+{% endhistory %}
 
 # See also
 
