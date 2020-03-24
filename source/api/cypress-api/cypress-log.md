@@ -32,7 +32,7 @@ We want the Command Log and the console in the DevTools to log specific properti
 
 ```javascript
 Cypress.Commands.add('setSessionStorage', (key, value) => {
-  // urn off logging of the cy.window() to command log
+  // Turn off logging of the cy.window() to command log
   cy.window({ log: false }).then((window) => {
     window.sessionStorage.setItem(key, value)
   })
