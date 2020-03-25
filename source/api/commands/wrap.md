@@ -2,7 +2,8 @@
 title: wrap
 ---
 
-Yield the object passed into `.wrap()`.
+- Yield the object passed into `.wrap()`. 
+- `.wrap(promise)` forces the test commands to wait until promise resolves
 
 # Syntax
 
