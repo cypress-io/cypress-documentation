@@ -42,7 +42,7 @@ Option | Default | Description
 `path` | `/` | The cookie path
 `secure` | `false` | Whether the cookie is a secure cookie
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.setCookie %}
-`sameSite` | `undefined` | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default.
+`sameSite` | `undefined` | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`.
 
 ## Yields {% helper_icon yields %}
 
