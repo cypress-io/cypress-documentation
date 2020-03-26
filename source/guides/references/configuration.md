@@ -120,7 +120,7 @@ If you'd like to try out what we're working on, you can enable beta features for
 
 Option | Default | Description
 ----- | ---- | ----
-`experimentalGetCookiesSameSite` | `false` | Adds `sameSite` property to object yielded from {% url "`cy.getCookie()`" getcookie %} and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
+`experimentalGetCookiesSameSite` | `false` | Adds `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
 
 # Overriding Options
 
