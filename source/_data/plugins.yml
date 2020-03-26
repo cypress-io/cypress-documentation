@@ -395,7 +395,7 @@
       keywords: [component, vue, vue.js]
 
 - name: Visual Testing
-  description:
+  description: Visual testing is a great complement to functional testing, read our [full visual testing guide](https://on.cypress.io/visual-testing)
   plugins:
     - name: Applitools
       description: Fast, easy and reliable visual UI testing with Cypress
@@ -405,6 +405,11 @@
     - name: Percy
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
+      keywords: [screenshots, visual regression]
+
+    - name: Happo
+      description: Cross-platform, cross-browser screenshot testing for modern user interfaces.
+      link: https://github.com/happo/happo-cypress
       keywords: [screenshots, visual regression]
 
     - name: cypress-plugin-snapshots
