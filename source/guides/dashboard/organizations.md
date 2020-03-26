@@ -19,7 +19,7 @@ An Organization's ID is a unique identifier in [UUID](https://tools.ietf.org/htm
 
 To locate your organization's UUID, go to "Organization settings" then Organization ID. Click on the clipboard icon to copy the ID for easy sharing with Cypress teams.
 
-{% imgTag /img/dashboard/organizations/OrganizationUUID.gif "Locate UUID gif" %}
+{% imgTag /img/dashboard/organizations/cypress-organization-UUID.gif "Locate UUID gif" %}
 
 # Managing Organizations
 
@@ -54,81 +54,6 @@ You can delete organizations that you own as long as they do not have any projec
 
 {% imgTag /img/dashboard/remove-organization-dialog.png "Delete Organization" %}
 
-## Enable SSO for an Org
-
-### Integration
-
-1. Coordinate with an Owner of the Cypress Dashboard. Have them log into the Cypress Dashboard and navigate to the Integrations page for your organization.
-
-{% imgTag /img/dashboard/organizations/IntegrationsMenuScreenshot.png "Enable SSO" %}
-
-2. Scroll down to the Enterprise SSO section. Select your SSO provider and take note of the information provided, and the information we require. Keep this window open and continue to the next step.
-
-### SSO Provider Configuration
-
-The next step will depend on your SSO provider.
-
-#### Okta
-
-The Cypress Dashboard can integrate with Okta via SAML. In addition to the documentation below, refer to [Okta’s official documentation for setting up a new SAML application.](https://developer.okta.com/docs/guides/saml-application-setup/overview/)
-
-{% imgTag /img/dashboard/organizations/EnterpriseSSOOktaScreenshot.png "SSO Okta" %}
-
-1. Log into your Okta dashboard and head to the Admin section.
-
-{% imgTag /img/dashboard/organizations/OktaAdminScreenshot.png "Okta Admin" %}
-
-2. Create a new SAML-based Web application.
-
-{% imgTag /img/dashboard/organizations/OktaAddApplicationScreenshot.png "Create Okta SAML App" %}
-
-{% imgTag /img/dashboard/organizations/OktaAddApplication2Screenshot.png "Create Okta SAML App" %}
-
-{% imgTag /img/dashboard/organizations/OktaAddApplication3Screenshot.png "Create Okta SAML App" %}
-
-3. Work through the Okta setup wizard supplying the information requested:
-- App name: “Cypress Dashboard”
-- App logo: [Cypress logo download](https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png)
-- Single sign on URL: Collect the URL provided by the Cypress Dashboard
-- Audience URI: Collect the URI provided by the Cypress Dashboard
-- Attribute statements: Add the attribute statements described in the Cypress Dashboard
-- Click “Next”
-- Select “I’m an Okta customer” and click “Finish”
-
-4. Click the “View Setup Instructions” button in the middle of the page. The Cypress Dashboard needs information provided here:
-- Copy the Identity Provider Single sign-on URL to the Cypress Dashboard
-- Download the certificate and upload that to the Cypress Dashboard
-
-{% imgTag /img/dashboard/organizations/OktaDownloadCertificateScreenshot.png "Download Certificate" %}
-
-5. Navigate to the “Assignments” tab and grant your users access to the Cypress Dashboard.
-
-{% imgTag /img/dashboard/organizations/OktaAssignmentsScreenshot.png "Assignments Access" %}
-
-#### SAML
-
-The Cypress Dashboard can integrate with your identity provider via SAML. In addition to the documentation below, refer to your provider’s official documentation for configuring a SAML integration.
-
-{% imgTag /img/dashboard/organizations/EnterpriseSSOSAMLScreenshot.png "SAML SSO" %}
-
-1. Log into the admin interface for your identity provider.
-2. Work through the setup wizard supplying the information requested:
-    - App name: “Cypress Dashboard”
-    - App logo: [Cypress logo download](https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png)
-    - Single sign on URL: Collect the URL provided by the Cypress Dashboard
-    - Audience URI: Collect the URI provided by the Cypress Dashboard
-    - Add a custom mapping of “AttributeStatements” with the following:
-        - User.Email: user’s email
-        - User.FirstName: user’s first name
-        - User.LastName: user’s last name
-3. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
-
-### Save and Test
-
-1. Return to the Cypress Dashboard and click “Save and test configuration”. The Cypress Dashboard will attempt to authenticate.
-
-2. Your integration is now complete! You can invite all of the users in your organization to sign in through your SSO provider. 
-
 # Billing & Usage
 
 ## Open Source Plan
@@ -156,4 +81,78 @@ Follow the following process to request an OSS plan for your project:
 
 If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).
 
+# Integrations
+
+## GitHub Integration
+
+Please see our full documentation for {% url "GitHub Integration" github-integration %}.
+
+## Enterprise SSO
+
+{% note warning "Requires Owner Permissions" %}
+**All instructions below must be done by an owner of the organization.** If you are not an owner of the organization, coordinate with an owner of the organization to set up SSO.
+{% endnote %}
+
+### Enable SSO
+
+1. Log in to the Cypress Dashboard and navigate to the **Integrations** page for your organization.
+  {% imgTag /img/dashboard/organizations/integrations-nenu-screenshot.png "Enable SSO" width-600 %}
+2. Scroll down to the **Enterprise SSO** section. Select your SSO provider and take note of the information provided and required. Keep this window open and continue to the {% urlHash "configuration instructions for your specific SSO provider" SSO-Provider-Configuration %} below.
+
+### SSO Provider Configuration
+
+Follow the instructions below for your specific SSO provider.
+
+- {% urlHash "Okta" Okta %}
+- {% urlHash "SAML" SAML %}
+
+#### Okta
+
+The Cypress Dashboard can integrate with Okta via SAML. In addition to the documentation below, refer to {% url "Okta’s official documentation for setting up a new SAML application." https://developer.okta.com/docs/guides/saml-application-setup/overview/ %}
+
+{% imgTag /img/dashboard/organizations/enterprise-SSO-Okta.png "SSO Okta" %}
+
+1. Log into your Okta dashboard and head to the **Admin** section.
+  {% imgTag /img/dashboard/organizations/okta-admin-cypress-sso-setup.png "Okta Admin" %}
+1. Create a new SAML-based Web application.
+  {% imgTag /img/dashboard/organizations/okta-add-application-step1-cypress-sso.png "Create Okta SAML App" %}
+  {% imgTag /img/dashboard/organizations/okta-add-application-step2-cypress-sso.png "Create Okta SAML App" %}
+  {% imgTag /img/dashboard/organizations/okta-add-application-step3-cypress-sso.png "Create Okta SAML App" width-600 %}  
+1. Supply the following information requested in the Okta setup wizard:
+  - **App name:** `Cypress Dashboard`
+  - **App logo:** {% url "Cypress logo download" https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png %}
+  - **Single sign on URL:** The URL provided in the Cypress Dashboard
+  - **Audience URI:** The URI provided in the Cypress Dashboard
+  - **Attribute statements:** Add the attribute statements described in the Cypress Dashboard
+1. Click **Next** then select **I’m an Okta customer** and click **Finish**.
+1. Click the **View Setup Instructions** button in the middle of the page. The Cypress Dashboard needs the information provided here:
+  - Copy the Identity Provider Single sign-on URL to the Cypress Dashboard.
+  - Download the certificate and upload that to the Cypress Dashboard.
+  {% imgTag /img/dashboard/organizations/okta-download-certificate-for-cypress-dashboard.png "Download Certificate" %}
+1. Navigate to the **Assignments** tab and grant your users access to the Cypress Dashboard.
+  {% imgTag /img/dashboard/organizations/okta-assignments-tab-for-sso.png "Assignments Access" %}
+
+#### SAML
+
+The Cypress Dashboard can integrate with your identity provider via SAML. In addition to the documentation below, refer to your provider’s official documentation for configuring a SAML integration.
+
+{% imgTag /img/dashboard/organizations/enterprise-SSO-SAML.png "SAML SSO" %}
+
+1. Log into the admin interface for your identity provider.
+2. Work through the setup wizard supplying the information requested:
+  - **App name:** `Cypress Dashboard`
+  - **App logo:** {% url "Cypress logo download" https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png %}
+  - **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
+  - **Audience URI:** Collect the URI provided by the Cypress Dashboard
+  - Add a custom mapping of **AttributeStatements** with the following:
+      - `User.Email`: User’s email
+      - `User.FirstName`: User’s first name
+      - `User.LastName`: User’s last name
+3. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
+
+### Save and Test
+
+1. Return to the Cypress Dashboard and click **Save and test configuration**. The Cypress Dashboard will attempt to authenticate.
+
+🎉 Your integration is now complete! You can invite all of the users in your organization to sign in through your SSO provider.
 
