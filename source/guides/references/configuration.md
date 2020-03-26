@@ -114,6 +114,14 @@ You may want to use a different Node version if the code executing from the plug
 
 {% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
 
+## Experimental features
+
+If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the following options.
+
+Option | Default | Description
+----- | ---- | ----
+`experimentalGetCookiesSameSite` | `false` | Adds `sameSite` property to object yielded from {% url "`cy.getCookie()`" getcookie %} and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
