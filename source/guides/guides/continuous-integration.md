@@ -706,7 +706,6 @@ In a Docker container, the default size of the `/dev/shm` shared memory space is
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chrome') {
-      console.log('Adding --disable-dev-shm-usage...')
       launchOptions.args.push('--disable-dev-shm-usage')
     }
 
