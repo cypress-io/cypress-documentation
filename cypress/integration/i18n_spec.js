@@ -7,6 +7,30 @@ describe('i18n', () => {
     cy.url().should('contain', 'why-cypress')
   })
 
+  context('alternate links', () => {
+    it('provides an alternate link for available English languages', function () {
+      cy.wrap(this.langValues).each((lang) => {
+        cy.get(`link[hreflang="${lang}"]`).should(($linkTag) => {
+          let expectedPath = `${lang}/guides/overview/why-cypress.html`
+
+          if (lang === 'en') {
+            expectedPath = 'guides/overview/why-cypress.html'
+          }
+
+          expect($linkTag[0].rel).to.eq('alternate')
+          expect($linkTag[0].href).to.include(expectedPath)
+        })
+      })
+    })
+
+    it('provides a default', function () {
+      cy.get('link[hreflang="x-default"]').should(($linkTag) => {
+        expect($linkTag[0].rel).to.eq('alternate')
+        expect($linkTag[0].href).to.include('guides/overview/why-cypress.html')
+      })
+    })
+  })
+
   context('language select', () => {
     it('selects English by default', () => {
       cy.get('#lang-select').find('option')

@@ -64,11 +64,12 @@ sidebar:
     assertions: 断言
     best-practices: 最佳实践
     trade-offs: 取舍
+    troubleshooting: Troubleshooting
     changelog: 更新日志
     migration-guide: Migration Guide
     roadmap: 路线图
     tooling: 工具
-    intelligent-code-completion: 代码智能补全
+    IDE-integration: IDE Integration
     plugins-guide: 插件
     reporters: 报告生成器
     typescript-support: TypeScript
@@ -176,6 +177,7 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env

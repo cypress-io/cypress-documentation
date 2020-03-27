@@ -62,11 +62,12 @@ sidebar:
     assertions: アサーション
     best-practices: ベストプラクティス
     trade-offs: トレードオフ
+    troubleshooting: Troubleshooting
     changelog: 変更履歴
     migration-guide: Migration Guide
     roadmap: ロードマップ
     tooling: ツール
-    intelligent-code-completion: コード自動補完
+    IDE-integration: IDE Integration
     plugins-guide: プラグイン
     reporters: レポーター
     typescript-support: TypeScript
@@ -174,6 +175,7 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env

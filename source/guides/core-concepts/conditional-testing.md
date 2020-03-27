@@ -387,9 +387,13 @@ However, this is really the same question as asking to do conditional testing, b
 
 For instance you may want to do this:
 
-**The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+{% note danger %}
+{% fa fa-exclamation-triangle red %} The following code is not valid.
+{% endnote %}
 
 ```js
+//! You cannot add error handling to Cypress commands
+//! This code is just for demonstration purposes
 cy.get('button').contains('hello')
   .catch((err) => {
     // oh no the button wasn't found
@@ -408,10 +412,13 @@ Enabling this would mean that for every single command, it would recover from er
 
 Let's reimagine our "Welcome Wizard" example from before.
 
-**The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+{% note danger %}
+{% fa fa-exclamation-triangle red %} The following code is not valid.
+{% endnote %}
 
 ```js
-// great error recovery code
+//! You cannot add error handling to Cypress commands.
+//! This code is just for demonstration purposes
 function keepCalmAndCarryOn () {
   cy.get(...).should(...).click()
 }

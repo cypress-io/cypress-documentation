@@ -73,7 +73,7 @@ If you're using source control, we recommend that you check your `cypress.json`,
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-## Record key {% fa fa-key %}
+## Record key
 
 The record key is used to authenticate that your project is *allowed* to record tests to the Dashboard Service. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
 

@@ -73,7 +73,7 @@ Cypress uses your {% urlHash "`projectId`" 项目ID %} and {% urlHash "Record Ke
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-## 录制秘钥 {% fa fa-key %}
+## 录制秘钥
 
 Cypress使用你的`projectId`和*Record Key*，结合起来唯一标识你的项目。
 

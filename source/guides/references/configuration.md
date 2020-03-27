@@ -102,6 +102,18 @@ Option | Default | Description
 ----- | ---- | ----
 `nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your {% url plugins plugins-guide %}. Otherwise, Cypress will use the Node version bundled with Cypress.
 
+The Node version printed in the Node.js Version panel is used in Cypress to:
+
+- Build files in the {% url "`integrationFolder`" configuration#Folders-Files %}.
+- Build files in the {% url "`supportFolder`" configuration#Folders-Files %}.
+- Execute code in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+
+Cypress comes automatically bundled with a set Node version by default.
+
+You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`.
+
+{% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
@@ -189,7 +201,14 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 # Resolved Configuration
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from.
+When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
+
+- Default value
+- The {% url "configuration file" configuration %}
+- The {% url "Cypress environment file" environment-variables#Option-2-cypress-env-json %}
+- System {% url "environment variables" environment-variables#Option-3-CYPRESS %}
+- {% url "Command Line arguments" command-line %}
+- {% url "Plugin file" configuration-api %}
 
 {% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
@@ -262,7 +281,7 @@ You can turn this option off if the application or site you're testing **does no
 
 ## firefoxGcInterval
 
-Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can progress on this issue {% issue 6187 'here' %}.
+Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can see progress on this issue {% issue 6187 'here' %}.
 
 Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
 
@@ -328,7 +347,7 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
 {% url "3.5.0" changelog %} | Added support for option `nodeVersion`

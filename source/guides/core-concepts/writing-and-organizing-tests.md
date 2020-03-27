@@ -322,7 +322,7 @@ it('can subtract numbers', function() {
 
 # Watching tests
 
-When running in interactive mode using {% url "`cypress open`" command-line#cypress-open %} Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
+When running in using {% url "`cypress open`" command-line#cypress-open %}, Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
 
 This makes for a productive development experience because you can add and edit tests as you're implementing a feature and the Cypress user interface will always reflect the results of your latest edits.
 

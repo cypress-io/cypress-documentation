@@ -88,7 +88,8 @@ function deployEnvironmentBranch (env, branch) {
   checkBranchEnvFolder(branch)(env)
 
   debug('uploading to S3 dist folder %s', distDir)
-  uploadToS3(distDir, env)
+
+  return uploadToS3(distDir, env)
   .then(() => scrapeDocs(env, branch))
   .then(() => {
     console.log(chalk.yellow('\n==============================\n'))

@@ -356,7 +356,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://127.0.0.1:8080"
     test:
       commands:
@@ -399,7 +399,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://127.0.0.1:8080"
     test:
       commands:
@@ -446,7 +446,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://localhost:3000"
     test:
       commands:
@@ -495,7 +495,7 @@ test:
       commands:
         - npm install
         - npm install wait-on
-        - npm install  mocha@5.2.0 mochawesome mochawesome-merge mochawesome-report-generator
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
         - "npm start & npx wait-on http://localhost:3000"
     test:
       commands:
@@ -536,6 +536,8 @@ See our {% url 'examples' docker %} for additional information on our maintained
 ## Dependencies
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
+
+### Linux
 
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
@@ -698,6 +700,19 @@ See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
 
+In a Docker container, the default size of the `/dev/shm` shared memory space is 64MB. This is not typically enough to run Chrome and can cause the browser to crash. You can fix this by passing the `--disable-dev-shm-usage` flag to Chrome with the following workaround:
+
+```javascript
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
 ## Xvfb
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.

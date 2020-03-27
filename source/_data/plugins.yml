@@ -341,6 +341,11 @@
       link: https://github.com/matzeeable/wp-reactjs-starter
       keywords: [wp, wordpress]
 
+    - name: Next Right Now - Next.js Boilerplate
+      description: Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants)
+      link: https://github.com/UnlyEd/next-right-now
+      keywords: [next.js, react, monorepo, multi-tenants]
+
     - name: Elm Batteries Included
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
@@ -395,7 +400,7 @@
       keywords: [component, vue, vue.js]
 
 - name: Visual Testing
-  description:
+  description: Visual testing is a great complement to functional testing, read our {% url "full visual testing guide" visual-testing %}
   plugins:
     - name: Applitools
       description: Fast, easy and reliable visual UI testing with Cypress
@@ -405,6 +410,11 @@
     - name: Percy
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
+      keywords: [screenshots, visual regression]
+
+    - name: Happo
+      description: Cross-platform, cross-browser screenshot testing for modern user interfaces.
+      link: https://github.com/happo/happo-cypress
       keywords: [screenshots, visual regression]
 
     - name: cypress-plugin-snapshots

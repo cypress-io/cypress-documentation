@@ -115,7 +115,7 @@ You can also choose a browser by supplying a path:
 cypress run --browser /usr/bin/chromium
 ```
 
-{% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble with browser detection? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -195,13 +195,9 @@ Specifying the `--ci-build-id` may also be necessary.
 
 ### `cypress run --headed`
 
-{% note warning %}
-Video recording is not currently supported in Electron with the `--headed` flag. See {% issue 1767 %} for more details.
-{% endnote %}
-
 By default, Cypress will run tests in Electron headlessly.
 
-Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
+Passing `--headed` will force Electron to be shown. This matches how you run Electron via `cypress open`.
 
 ```shell
 cypress run --headed
@@ -335,7 +331,7 @@ The Dashboard will display any tags sent with the appropriate run.
 
 ## `cypress open`
 
-Opens the Cypress Test Runner in interactive mode.
+Opens the Cypress Test Runner.
 
 ```shell
 cypress open [options]
@@ -371,7 +367,7 @@ If found, the specified browser will be added to the list of available browsers 
 
 Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
 
-{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress open --config <config>`
 
@@ -437,6 +433,59 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress open --project ./some/nested/folder
 ```
 
+## `cypress info`
+
+Prints information about Cypress and the current environment such as:
+
+- A list of browsers Cypress detected on the machine.
+- Any environment variables that control {% url 'proxy configuration' proxy-configuration %}.
+- Any environment variables that start with the `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security).
+- The location where run-time data is stored.
+- The location where the Cypress binary is cached.
+- Operating system information.
+- System memory including free space.
+
+```shell
+cypress info
+Displaying Cypress info...
+
+Detected 2 browsers installed:
+
+1. Chrome
+  - Name: chrome
+  - Channel: stable
+  - Version: 79.0.3945.130
+  - Executable: /path/to/google-chrome
+  - Profile: /user/profile/folder/for/google-chrome
+
+2. Firefox Nightly
+  - Name: firefox
+  - Channel: nightly
+  - Version: 74.0a1
+  - Executable: /path/to/firefox
+
+Note: to run these browsers, pass <name>:<channel> to the '--browser' field
+
+Examples:
+- cypress run --browser firefox:nightly
+- cypress run --browser chrome
+
+Learn More: https://on.cypress.io/launching-browsers
+
+Proxy Settings: none detected
+Environment Variables: none detected
+
+Application Data: /path/to/app/data/cypress/cy/development
+Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
+Binary Caches: /user/profile/path/.cache/Cypress
+
+Cypress Version: 4.1.0
+System Platform: darwin (19.2.0)
+System Memory: 17.2 GB free 670 MB
+```
+
+**Tip:** set {% url "DEBUG environment variable" troubleshooting#Print-DEBUG-logs %} to `cypress:launcher` when running `cypress info` to troubleshoot browser detection.
+
 ## `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.
@@ -472,11 +521,17 @@ cypress cache path
 
 ### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+Print all existing installed versions of Cypress. The output will be a table with cached versions and the last time the binary was used by the user, determined from the file's access time.
 
 ```shell
 cypress cache list
-3.0.0 3.0.1 3.0.2
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
 ```
 
 ### `cypress cache clear`
@@ -486,6 +541,7 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 ```shell
 cypress cache clear
 ```
+
 
 # Debugging commands
 
