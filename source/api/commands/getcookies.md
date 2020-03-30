@@ -97,6 +97,10 @@ When clicking on `getCookies` within the command log, the console outputs the fo
 
 {% imgTag /img/api/getcookies/test-application-cookies.png "Console Log getcookies" %}
 
+{% history %}
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experimental-features %} configuration value is `true`.
+{% endhistory %}
+
 # See also
 
 - {% url `cy.clearCookie()` clearcookie %}

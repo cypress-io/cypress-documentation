@@ -139,6 +139,10 @@ When clicking on `getCookie` within the command log, the console outputs the fol
 
 {% imgTag /img/api/getcookie/inspect-cookie-object-properties-in-console.png "Console Log getcookie" %}
 
+{% history %}
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experimental-features %} configuration value is `true`.
+{% endhistory %}
+
 # See also
 
 - {% url `cy.clearCookie()` clearcookie %}
