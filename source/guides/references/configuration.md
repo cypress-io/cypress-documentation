@@ -114,6 +114,16 @@ You may want to use a different Node version if the code executing from the plug
 
 {% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
 
+## Experimental features
+
+If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the options below.
+
+When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experimental features** panel will display the experimental features that are available and whether they are enabled for your project.
+
+Option | Default | Description
+----- | ---- | ----
+`experimentalGetCookiesSameSite` | `false` | If `true`, Cypress will add `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
@@ -201,7 +211,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 # Resolved Configuration
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
+When you open a Cypress project, clicking on the **Settings** tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
 
 - Default value
 - The {% url "configuration file" configuration %}

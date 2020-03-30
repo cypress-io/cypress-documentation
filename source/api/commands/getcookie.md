@@ -45,6 +45,7 @@ Option | Default | Description
 - `httpOnly`
 - `secure`
 - `expiry`
+- `sameSite` *(will only be returned if the {% url "`experimentalGetCookiesSameSite`" configuration#Experimental-features %} configuration value is `true`)*
 
 ### When a cookie matching the name could not be found:
 
@@ -137,6 +138,10 @@ The commands above will display in the Command Log as:
 When clicking on `getCookie` within the command log, the console outputs the following:
 
 {% imgTag /img/api/getcookie/inspect-cookie-object-properties-in-console.png "Console Log getcookie" %}
+
+{% history %}
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experimental-features %} configuration value is `true`.
+{% endhistory %}
 
 # See also
 
