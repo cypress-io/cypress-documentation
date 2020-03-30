@@ -4,4 +4,4 @@
 4. **View stack trace**: Clicking this toggles the visibility of the stack trace. Stack traces vary in length.
 5. **Print to console button**: Click this to print the full error to your DevTools console. This will usually allow you to click on lines in the stack trace and open files in your DevTools.
 
-{% imgTag /img/guides/command-failure-error.png "example command failure error" %}
+{% imgTag /img/guides/command-failure-error.png "example command failure error" width-600 %}
