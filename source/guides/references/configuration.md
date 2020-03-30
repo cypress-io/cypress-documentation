@@ -114,11 +114,11 @@ You may want to use a different Node version if the code executing from the plug
 
 {% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
 
-## Experimental features
+## Experiments
 
 If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the options below.
 
-When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experimental features** panel will display the experimental features that are available and whether they are enabled for your project.
+When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experiments** panel will display the experimental features that are available and whether they are enabled for your project.
 
 Option | Default | Description
 ----- | ---- | ----
