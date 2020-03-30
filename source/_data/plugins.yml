@@ -259,6 +259,11 @@
       link: https://github.com/javierbrea/cypress-localstorage-commands
       keywords: [commands, localstorage, persistence]
 
+    - name: cypress-iframe
+      description: Custom commands for interacting with iframes
+      link: https://gitlab.com/kgroat/cypress-iframe
+      keywords: [commands, iframe]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -298,6 +303,11 @@
       description: Valid OTP token generation for Cypress
       link: https://github.com/NoriSte/cypress-otp
       keywords: [authentication, otp, 2fa, mfa]
+
+    - name: cypress-keycloak-commands
+      description: Cypress commands for authenticate users with Keycloak Identity Provider
+      link: https://github.com/Fredx87/cypress-keycloak-commands
+      keywords: [authentication, login, keycloak, oauth, openid]
 
 - name: Framework tooling
   plugins:
