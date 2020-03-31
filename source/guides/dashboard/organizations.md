@@ -105,18 +105,17 @@ Follow the instructions below for your specific SSO provider.
 
 - {% urlHash "Okta" Okta %}
 - {% urlHash "SAML" SAML %}
+- {% urlHash "Azure AD" Azure-AD %}
 
 #### Okta
 
 The Cypress Dashboard can integrate with Okta via SAML. In addition to the documentation below, refer to {% url "Okta’s official documentation for setting up a new SAML application." https://developer.okta.com/docs/guides/saml-application-setup/overview/ %}
 
-{% imgTag /img/dashboard/organizations/enterprise-SSO-Okta.png "SSO Okta" %}
 
 1. Log into your Okta dashboard and head to the **Admin** section.
   {% imgTag /img/dashboard/organizations/okta-admin-cypress-sso-setup.png "Okta Admin" %}
 1. Create a new SAML-based Web application.
   {% imgTag /img/dashboard/organizations/okta-add-application-step1-cypress-sso.png "Create Okta SAML App" %}
-  {% imgTag /img/dashboard/organizations/okta-add-application-step2-cypress-sso.png "Create Okta SAML App" %}
   {% imgTag /img/dashboard/organizations/okta-add-application-step3-cypress-sso.png "Create Okta SAML App" width-600 %}  
 1. Supply the following information requested in the Okta setup wizard:
   - **App name:** `Cypress Dashboard`
@@ -130,7 +129,6 @@ The Cypress Dashboard can integrate with Okta via SAML. In addition to the docum
   - Download the certificate and upload that to the Cypress Dashboard.
   {% imgTag /img/dashboard/organizations/okta-download-certificate-for-cypress-dashboard.png "Download Certificate" %}
 1. Navigate to the **Assignments** tab and grant your users access to the Cypress Dashboard.
-  {% imgTag /img/dashboard/organizations/okta-assignments-tab-for-sso.png "Assignments Access" %}
 
 #### SAML
 
@@ -149,6 +147,20 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
       - `User.FirstName`: User’s first name
       - `User.LastName`: User’s last name
 3. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
+
+#### Azure AD
+
+The Cypress Dashboard can integrate with your identity provider via Azure AD. In addition to the documentation below, refer to the Microsoft Guides for {% url "configuring an application" https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app %}.
+
+1. Log into the Azure portal and create a new Application.
+2. Work through the application setup, supplying the following information when requested:
+  - **App name:** `Cypress Dashboard`
+  - **App logo:** {% url "Cypress logo download" https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png %}
+  - **Login URL:** Collect the URL provided by the Cypress Dashboard
+3. Collect the `Client ID` for your application provided in the Application overview page.
+4. Go to **Certificates and Secrets** in your Azure Application and create a new secret that does not expire. Copy this newly-created secret and paste it in the `Azure Client Secret` field in the Cypress Dashboard.
+5. Under **API Permissions** in Azure AD, ensure the application has access to **User.Read** permissions
+6. Enter the domain used for your Active Directory, as well as the list of SSO domains you wish to allow user to authenticate with, in the Cypress Dashboard. This is used for SSO discovery from the login screen.
 
 ### Save and Test
 
