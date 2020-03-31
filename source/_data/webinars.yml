@@ -1,5 +1,24 @@
+# small links with title and url
+# Using this to post subscribe to updates link
+small:
+  - title: "Get notified of upcoming webcasts by subscribing to emails from Cypress"
+    sourceUrl: https://go.cypress.io/subscribe
+  - title: "Follow us on Twitter!"
+    sourceUrl: https://twitter.com/Cypress_io
+
 # large links with thumbnails, links, embedded video
 large:
+  - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
+    date: Dec 10, 2018
+    author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb
+    youtubeId: J-xbNtKgXfY
+    slides: https://slides.com/bahmutov/circleci-cypress-orb
+
+  - title: "Cypress + Gatsby: Confidently fast web development"
+    date: Sep 4, 2019
+    author: Cypress & Gatsby with Amir Rustamzadeh & Dustin Schau
+    youtubeId: Tx6Lg9mwcCE
+
   - title: "From Zero to Hero with Cypress: Slido’s journey of creating E2E tests without JS experience"
     date: Aug 7, 2019
     author: Cypress & sli.do with Filip Hric, Lubo Droby, & Steven Yi

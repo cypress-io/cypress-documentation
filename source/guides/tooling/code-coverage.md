@@ -18,7 +18,7 @@ title: Code Coverage
 
 As you write more and more end-to-end tests, you will find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are there parts of the application that perhaps are tested too much? One answer to those questions is to find out which lines of the application's source code were executed during end-to-end tests. If there are important sections of the application's logic that **were not** executed from the tests, then a new test should be added to ensure that part of our application logic is tested.
 
-Computing the source code lines that were executed during the test is done through **code coverage**. Code coverage requires inserting additional counters into your source code before running it. This step is called **instrumentation**. Instrumentation takes code that looks likes this...
+Computing the source code lines that were executed during the test is done through **code coverage**. Code coverage requires inserting additional counters into your source code before running it. This step is called **instrumentation**. Instrumentation takes code that looks like this...
 
 ```javascript
 // add.js
@@ -28,7 +28,7 @@ function add(a, b) {
 module.exports = { add }
 ```
 
-...and parses it to find all functions, statements, and branches and then inserts a **counters** into the code. For the above code it might look likes this:
+...and parses it to find all functions, statements, and branches and then inserts **counters** into the code. For the above code it might look like this:
 
 ```javascript
 // this object counts the number of times each
@@ -158,7 +158,7 @@ Notice the calls to `cov_18hmhptych.s[0]++` and `cov_18hmhptych.s[1]++` that inc
 
 {% imgTag /img/guides/code-coverage/coverage-object.png "Code coverage object" %}
 
-If we drill into the coverage object to see the statements executed in each file. For example the file `src/index.js` has the following information:
+If we drill into the coverage object we can see the statements executed in each file. For example the file `src/index.js` has the following information:
 
 {% imgTag /img/guides/code-coverage/coverage-statements.png "Covered statements counters in a from the index file" %}
 
@@ -275,7 +275,7 @@ Even better, we can drill down into the individual source files to see what code
 
 Notice how the **ADD_TODO** action was executed 3 times - because our test has added 3 todo items, and the **COMPLETE_TODO** action was executed just once - because our test has marked 1 todo item as completed.
 
-The sources line not covered marked in yellow (the switch cases the test missed) and red (regular statements) are a great guide for writing more end-to-end tests. We need tests that delete todo items, edit them, mark all of them as completed at once and clear completed items. When we cover every switch statement in `src/reducers/todos.js` we probably will achieve close to 100% code coverage. Even more importantly, we will cover the main features of the application the user is expected to use.
+The source lines not covered marked in yellow (the switch cases the test missed) and red (regular statements) are a great guide for writing more end-to-end tests. We need tests that delete todo items, edit them, mark all of them as completed at once and clear completed items. When we cover every switch statement in `src/reducers/todos.js` we probably will achieve close to 100% code coverage. Even more importantly, we will cover the main features of the application the user is expected to use.
 
 We can write more E2E tests.
 
@@ -317,7 +317,7 @@ describe('getVisibleTodos', () => {
 })
 ```
 
-The test passes, even if the there is no web application visited.
+The test passes, even if there is no web application visited.
 
 {% imgTag /img/guides/code-coverage/unit-test.png "Unit test for selector" %}
 
@@ -364,7 +364,7 @@ Our unit test is hitting the line we could not reach from the end-to-end tests, 
 
 A complex application might have a Node back end with its own complex logic. From the front end web application, the calls to the API go through layers of code. It would be nice to track what back end code has been exercised during Cypress end-to-end tests.
 
-Are our end-to-end tests that are so effective at covering the web application code are also covering the back end server code?
+Are our end-to-end tests that are so effective at covering the web application code also covering the back end server code?
 
 **Long story short: yes.** You can collect the code coverage from the back end, and let the `@cypress/code-coverage` plugin merge it with the front end coverage, creating a single full stack report.
 
@@ -440,7 +440,7 @@ You can explore the above combined full stack coverage report at the {% url 'cov
 
 # Future work
 
-We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid "manual" instrumentation step using Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in {% url bahmutov/cypress-native-chrome-code-coverage-example https://github.com/bahmutov/cypress-native-chrome-code-coverage-example %} repository.
+We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid the "manual" instrumentation step using the Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in {% url bahmutov/cypress-native-chrome-code-coverage-example https://github.com/bahmutov/cypress-native-chrome-code-coverage-example %} repository.
 
 Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of back end code.
 
@@ -452,12 +452,14 @@ You can find full examples showing different code coverage setups in the followi
 - {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
 - {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
-- {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for React App that uses TypeScript.
-- {% url 'bahmutov/cypress-and-jest' https://github.com/bahmutov/cypress-and-jest %} shows how to run Jest unit tests and Cypress unit tests, collecting code coverage from both test runners, and then produce merged report.
+- {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for a React App that uses TypeScript.
+- {% url 'bahmutov/cypress-and-jest' https://github.com/bahmutov/cypress-and-jest %} shows how to run Jest unit tests and Cypress unit tests, collecting code coverage from both test runners, and then produce a merged report.
 - {% url 'rootstrap/react-redux-base' https://github.com/rootstrap/react-redux-base %} shows an example with a realistic webpack config. Instruments the source code using `babel-plugin-istanbul` during tests.
-- {% url 'skylock/cypress-angular-coverage-example' https://github.com/skylock/cypress-angular-coverage-example %} shows Angular 8 + TypeScript application with instrumentation done using `ngx-build-plus`.
+- {% url 'skylock/cypress-angular-coverage-example' https://github.com/skylock/cypress-angular-coverage-example %} shows an Angular 8 + TypeScript application with instrumentation done using `ngx-build-plus`.
 - {% url 'bahmutov/testing-react' https://github.com/bahmutov/testing-react %} shows how to get code coverage for a React application created using `CRA v3` without ejecting `react-scripts`.
 - {% url 'bahmutov/next-and-cypress-example' https://github.com/bahmutov/next-and-cypress-example %} shows how to get back end and front end coverage for a Next.js project. `middleware/nextjs.js`.
+
+Find the full list of examples linked in {% url cypress-io/code-coverage#external-examples https://github.com/cypress-io/code-coverage#external-examples %}.
 
 # See also
 

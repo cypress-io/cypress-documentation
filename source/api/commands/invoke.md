@@ -142,7 +142,7 @@ Our input field
 <input type="text" name="text" data-cy="my-text-input">
 ```
 
-The Cypress Test with `cy.inkoke()` awaiting the promise:
+The Cypress Test with `cy.invoke()` awaiting the promise:
 ```javascript
 function disableElementAsync (element) {
   return new Promise((resolve) => {

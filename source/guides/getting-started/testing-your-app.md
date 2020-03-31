@@ -88,6 +88,13 @@ Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 
+<!--
+To reproduce the following screenshot:
+it('successfully loads', () => {
+  cy.visit('https://localhost:8080')
+})
+-->
+
 {% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 If you've started your server, then you should see your application loaded and working.

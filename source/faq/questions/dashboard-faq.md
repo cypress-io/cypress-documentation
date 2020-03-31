@@ -33,6 +33,10 @@ We consider each time the `it()` function is called to be a single test. So you 
 
 You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
 
+## {% fa fa-angle-right %} What counts as a user?
+
+A {% url 'user' users %} is anyone with a login to our Dashboard Service that has been invited to see and review the test results of your organization.
+
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.

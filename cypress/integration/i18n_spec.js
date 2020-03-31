@@ -11,14 +11,14 @@ describe('i18n', () => {
     it('provides an alternate link for available English languages', function () {
       cy.wrap(this.langValues).each((lang) => {
         cy.get(`link[hreflang="${lang}"]`).should(($linkTag) => {
-          let expectedHref = `https://docs.cypress.io/${lang}/guides/overview/why-cypress.html`
+          let expectedPath = `${lang}/guides/overview/why-cypress.html`
 
           if (lang === 'en') {
-            expectedHref = 'https://docs.cypress.io/guides/overview/why-cypress.html'
+            expectedPath = 'guides/overview/why-cypress.html'
           }
 
           expect($linkTag[0].rel).to.eq('alternate')
-          expect($linkTag[0].href).to.eq(expectedHref)
+          expect($linkTag[0].href).to.include(expectedPath)
         })
       })
     })
@@ -26,7 +26,7 @@ describe('i18n', () => {
     it('provides a default', function () {
       cy.get('link[hreflang="x-default"]').should(($linkTag) => {
         expect($linkTag[0].rel).to.eq('alternate')
-        expect($linkTag[0].href).to.eq('https://docs.cypress.io/guides/overview/why-cypress.html')
+        expect($linkTag[0].href).to.include('guides/overview/why-cypress.html')
       })
     })
   })
