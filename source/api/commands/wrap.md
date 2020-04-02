@@ -158,7 +158,7 @@ cy.get('some-submit-button').click().then(() => {
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions retry cy.wrap %}
+{% assertions wrap cy.wrap %}
 
 ## Timeouts {% helper_icon timeout %}
 
