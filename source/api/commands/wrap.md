@@ -85,6 +85,28 @@ cy
 
 You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the {% url "Logging in using application code" recipes#Logging-In %} recipe for the full example.
 
+### Simple example
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+  // we use setTimeout(...) to simulate async code.
+  setTimeout(() => {
+    resolve({
+      type: 'success',
+      message: 'It worked!'
+    })
+  }, 2500)
+})
+
+it('should wait for promises to resolve', () => {
+  cy.wrap(myPromise).its('message').should('eq', 'It worked!')
+})
+```
+
+{% imgTag /img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif "Wrap of promises" %}
+
+### Application example
+
 ```javascript
 // import application code for logging in
 import { userService } from '../../src/_services/user.service'
