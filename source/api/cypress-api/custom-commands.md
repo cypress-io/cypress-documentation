@@ -439,6 +439,10 @@ Now our sensitive password is not printed to the Test Runner's Command Log when 
 
 {% imgTag "/img/api/custom-commands/custom-command-type-masked-password.png" %}
 
+{% note info "Keep passwords secret blog" %}
+Check out {% url "this blog" https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/ %} to explore another way to keep passwords secret within your tests.
+{% endnote %}
+
 ### Overwrite `screenshot` command
 
 This example overwrites {% url "`cy.screenshot()`" screenshot %} to always wait until a certain element is visible.
