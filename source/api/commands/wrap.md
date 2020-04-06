@@ -2,7 +2,7 @@
 title: wrap
 ---
 
-Yield the object passed into `.wrap()`.
+Yield the object passed into `.wrap()`. If the object is a promise, yield its resolved value.
 
 # Syntax
 
@@ -216,4 +216,5 @@ When clicking on the `wrap` command within the command log, the console outputs 
 - {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}
-- {% url "Logging in using application code" recipes#Logging-In %} recipe
+- {% url "Logging In: Using application code" recipes#Logging-In %} recipe
+- {% url "Unit Testing: Application Code" recipes#Unit-Testing %} recipe
