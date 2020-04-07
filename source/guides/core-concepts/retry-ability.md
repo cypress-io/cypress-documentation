@@ -17,7 +17,7 @@ A core feature of Cypress that assists with testing dynamic web applications is 
 There are two types of methods you can call in your Cypress tests: **commands** and **assertions**. For example, there are 6 commands and 2 assertions in the test below.
 
 ```javascript
-it('creates 2 items', function () {
+it('creates 2 items', () => {
   cy.visit('/')                       // command
   cy.focused()                        // command
     .should('have.class', 'new-todo') // assertion
@@ -159,7 +159,7 @@ Cypress will retry for up to 10 seconds to find a visible element of class `mobi
 Here is a short test that demonstrates some flake.
 
 ```javascript
-it('adds two items', function () {
+it('adds two items', () => {
   cy.visit('/')
 
   cy.get('.new-todo').type('todo A{enter}')
@@ -240,7 +240,7 @@ Luckily, once we understand how retry-ability works and how only the last comman
 The first solution we recommend is to avoid unnecessarily splitting commands that query elements. In our case we first query elements using `cy.get()` and then query from that list of elements using `.find()`. We can combine two separate queries into one - forcing the combined query to be retried.
 
 ```javascript
-it('adds two items', function () {
+it('adds two items', () => {
   cy.visit('/')
 
   cy.get('.new-todo').type('todo A{enter}')
@@ -281,7 +281,7 @@ See the {% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-
 There is another way to fix our flaky test. Whenever you write a longer test, we recommend alternating commands with assertions. In this case, I will add an assertion after the `cy.get()` command, but before the `.find()` command.
 
 ```javascript
-it('adds two items', function () {
+it('adds two items', () => {
   cy.visit('/')
 
   cy.get('.new-todo').type('todo A{enter}')
