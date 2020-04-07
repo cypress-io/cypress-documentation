@@ -122,7 +122,7 @@ cy.route('/activities/**', 'fixture:activities.json')
 
 ```javascript
 // Application Code
-$(function () {
+$(() => {
   $.get('/activities')
 
   // this will be sent back 404 since it

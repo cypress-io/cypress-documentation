@@ -218,7 +218,7 @@ runOn('firefox', () => {
 // Ignore test if Cypress is running via Firefox
 // This test is not recorded to the Cypress Dashboard
 ignoreOn('firefox', () => {
-  it('a test', function() {
+  it('a test', () => {
     // ... test body
   })
 }

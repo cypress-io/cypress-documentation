@@ -55,8 +55,8 @@ As we continue to save our new test file we'll see the browser auto reloading in
 Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
 
 ```js
-describe('My First Test', function() {
-  it('Does not do much!', function() {
+describe('My First Test', () => {
+  it('Does not do much!', () => {
     expect(true).to.equal(true)
   })
 })
@@ -77,8 +77,8 @@ Notice Cypress displays a message about this being the default page {% url "on t
 Now let's write our first failing test.
 
 ```js
-describe('My First Test', function() {
-  it('Does not do much!', function() {
+describe('My First Test', () => {
+  it('Does not do much!', () => {
     expect(true).to.equal(false)
   })
 })
@@ -140,8 +140,8 @@ First, let's visit a web page. We will visit our {% url 'Kitchen Sink' applicati
 We can pass the URL we want to visit to {% url `cy.visit()` visit %}. Let's replace our previous test with the one below that actually visits a page:
 
 ```js
-describe('My First Test', function() {
-  it('Visits the Kitchen Sink', function() {
+describe('My First Test', () => {
+  it('Visits the Kitchen Sink', () => {
     cy.visit('https://example.cypress.io')
   })
 })
@@ -180,8 +180,8 @@ To find this element by its contents, we'll use {% url "`cy.contains()`" contain
 Let's add it to our test and see what happens:
 
 ```js
-describe('My First Test', function() {
-  it('finds the content "type"', function() {
+describe('My First Test', () => {
+  it('finds the content "type"', () => {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type')
@@ -222,8 +222,8 @@ Before we add another command - let's get this test back to passing. Replace `hy
 Ok, now we want to click on the link we found. How do we do that? Add a {% url "`.click()`" click %} command to the end of the previous command, like so:
 
 ```js
-describe('My First Test', function() {
-  it('clicks the link "type"', function() {
+describe('My First Test', () => {
+  it('clicks the link "type"', () => {
     cy.visit('https://example.cypress.io')
 
     cy.contains('type').click()
@@ -435,8 +435,8 @@ For instance there is:
 Let's add a {% url "`cy.pause()`" pause %} to our test code and see what happens.
 
 ```js
-describe('My First Test', function() {
-  it('clicking "type" shows the right headings', function() {
+describe('My First Test', () => {
+  it('clicking "type" shows the right headings', () => {
     cy.visit('https://example.cypress.io')
 
     cy.pause()
@@ -461,64 +461,6 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 ### In action
 
 {% video local /img/snippets/first-test-debugging-30fps.mp4 %}
-
-<!-- ## Bonus Step: Refactor
-
-Once we have a passing test that covers the system we're working on, we usually like to go one step further and make sure the test code itself is well-structured and maintainable. This is sometimes expressed in TDD circles as "Red, Green, Refactor", which means:
-
-1. Write a failing test.
-2. Write the code to make the test pass.
-3. Clean up the code, keeping the test passing.
-
-Regardless of how you feel about writing tests first, the refactor step is very important! We want all of our code to be maintainable and extensible so that it lives a long and productive life, *including our test code*.
-
-To make this concrete, imagine we added a second, similar test to this suite:
-
-```js
-describe('My First Test', function() {
-  it("clicking type shows the heading Actions", function() {
-    cy.visit('https://example.cypress.io')
-
-    cy.contains('type').click()
-
-    cy.get("h1").should('have.value', "Actions")
-  })
-
-  it("clicking focus shows the heading Focus Command", function() {
-    cy.visit('https://example.cypress.io')
-
-    cy.contains("focus").click()
-
-    cy.get("h1").should('have.value', "Focus Command")
-  })
-})
-```
-
-We've got some duplication here and could probably make a number of refactoring moves, but for this brief tutorial we'll do a common one. Let's move that initial visit out into a `beforeEach()` block.
-
-```js
-describe('My First Test', function() {
-  beforeEach(function() {
-    cy.visit('https://example.cypress.io')
-  })
-
-  it("clicking type shows the heading Actions", function() {
-    cy.contains('type').click()
-
-    cy.get("h1").should('have.value', "Actions")
-  })
-
-  it("clicking focus shows the heading Focus Command", function() {
-    cy.contains("focus").click()
-
-    cy.get("h1").should('have.value', "Focus Command")
-  })
-})
-```
-
-`beforeEach()` runs before each and every test in the same `describe()` block, so both of our tests in this case. Both tests still pass, and both are a bit shorter and easier to read.
-
--->
 
 # Next steps
 

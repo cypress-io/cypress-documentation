@@ -69,7 +69,7 @@ setTimeout(() => {
 
 ```js
 // your cypress test code
-it('does something different based on the class of the button', function () {
+it('does something different based on the class of the button', () => {
   // RERUN THIS TEST OVER AND OVER AGAIN
   // AND IT WILL SOMETIMES BE TRUE, AND
   // SOMETIMES BE FALSE.

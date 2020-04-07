@@ -19,7 +19,7 @@ Your Cypress test code runs in the same run loop as your application. This means
 Based on those statements, you might be tempted to throw a `debugger` into your test, like so:
 
 ```js
-it('let me debug like a fiend', function() {
+it('let me debug like a fiend', () => {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -35,7 +35,7 @@ Both {% url `cy.visit()` visit %} and {% url `cy.get()` get %} will return immed
 Let's use {% url `.then()` then %} to tap into the Cypress command during execution and add a `debugger` at the appropriate time:
 
 ```js
-it('let me debug when the after the command executes', function () {
+it('let me debug when the after the command executes', () => {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -60,7 +60,7 @@ Now we're in business! The first time through, {% url `cy.visit()` visit %} and 
 Cypress also exposes a shortcut for debugging commands, {% url `.debug()` debug %}. Let's rewrite the test above using this helper method:
 
 ```js
-it('let me debug like a fiend', function() {
+it('let me debug like a fiend', () => {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -79,7 +79,7 @@ Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your
 You can run the test command by command using the {% url `.pause()` pause %} command.
 
 ```javascript
-it('adds items', function () {
+it('adds items', () => {
   cy.pause()
   cy.get('.new-todo')
   // more commands

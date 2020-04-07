@@ -130,7 +130,7 @@ You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` gl
 `cy.request()` is great for talking to an external endpoint before your tests to seed a database.
 
 ```javascript
-beforeEach(function () {
+beforeEach(() => {
   cy.request('http://localhost:8080/db/seed')
 })
 ```

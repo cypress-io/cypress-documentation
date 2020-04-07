@@ -110,7 +110,7 @@ The support file is a great place to put reusable behavior such as Custom Comman
 You can define your behaviors in a `beforeEach` within any of the `cypress/support` files:
 
 ```javascript
-beforeEach(function () {
+beforeEach(() => {
   cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
@@ -165,21 +165,21 @@ function multiply (a, b) {
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit test our math functions', function() {
-  context('math', function() {
-    it('can add numbers', function() {
+describe('Unit test our math functions', () => {
+  context('math', () => {
+    it('can add numbers', () => {
       expect(add(1, 2)).to.eq(3)
     })
 
-    it('can subtract numbers', function() {
+    it('can subtract numbers', () => {
       expect(subtract(5, 12)).to.eq(-7)
     })
 
-    specify('can divide numbers', function() {
+    specify('can divide numbers', () => {
       expect(divide(27, 9)).to.eq(3)
     })
 
-    specify('can multiply numbers', function() {
+    specify('can multiply numbers', () => {
       expect(multiply(5, 4)).to.eq(20)
     })
   })
@@ -194,20 +194,20 @@ Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}
 These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
-describe('Hooks', function() {
-  before(function() {
+describe('Hooks', () => {
+  before(() => {
     // runs once before all tests in the block
   })
 
-  after(function() {
+  after(() => {
     // runs once after all tests in the block
   })
 
-  beforeEach(function() {
+  beforeEach(() => {
     // runs before each test in the block
   })
 
-  afterEach(function() {
+  afterEach(() => {
     // runs after each test in the block
   })
 })
@@ -247,7 +247,7 @@ function fizzbuzz (num) {
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit Test FizzBuzz', function () {
+describe('Unit Test FizzBuzz', () => {
   function numsExpectedToEq (arr, expected) {
     // loop through the array of nums and make
     // sure they equal what is expected
@@ -256,15 +256,15 @@ describe('Unit Test FizzBuzz', function () {
     })
   }
 
-  it.only('returns "fizz" when number is multiple of 3', function () {
+  it.only('returns "fizz" when number is multiple of 3', () => {
     numsExpectedToEq([9, 12, 18], 'fizz')
   })
 
-  it('returns "buzz" when number is multiple of 5', function () {
+  it('returns "buzz" when number is multiple of 5', () => {
     numsExpectedToEq([10, 20, 25], 'buzz')
   })
 
-  it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
+  it('returns "fizzbuzz" when number is multiple of both 3 and 5', () => {
     numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
@@ -273,7 +273,7 @@ describe('Unit Test FizzBuzz', function () {
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
-it.skip('returns "fizz" when number is multiple of 3', function () {
+it.skip('returns "fizz" when number is multiple of 3', () => {
   numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
@@ -283,9 +283,9 @@ it.skip('returns "fizz" when number is multiple of 3', function () {
 You can dynamically generate tests using JavaScript.
 
 ```javascript
-describe('if your app uses jQuery', function () {
+describe('if your app uses jQuery', () => {
   ['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
-    it('triggers event: ' + event, function () {
+    it('triggers event: ' + event, () => {
       // if your app uses jQuery, then we can trigger a jQuery
       // event that causes the event callback to fire
       cy
@@ -311,11 +311,11 @@ The code above will produce a suite with 4 tests:
 Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertions. {% url "Read more about assertions." assertions %}
 
 ```javascript
-it('can add numbers', function() {
+it('can add numbers', () => {
   expect(add(1, 2)).to.eq(3)
 })
 
-it('can subtract numbers', function() {
+it('can subtract numbers', () => {
   assert.equal(subtract(5, 12), -7, 'these numbers are equal')
 })
 ```

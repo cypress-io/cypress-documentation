@@ -22,8 +22,8 @@ After you're done, we suggest watching some of our {% fa fa-video-camera %} {% u
 Simplicity is all about getting more done with less typing. Let's look at an example:
 
 ```js
-describe('Post Resource', function() {
-  it('Creating a New Post', function() {
+describe('Post Resource', () => {
+  it('Creating a New Post', () => {
     cy.visit('/posts/new')     // 1.
 
     cy.get('input.post-title') // 2.
@@ -368,7 +368,7 @@ It is very important to understand that Cypress commands don't do anything at th
 ### Take this short test, for example:
 
 ```js
-it('changes the URL when "awesome" is clicked', function() {
+it('changes the URL when "awesome" is clicked', () => {
   cy.visit('/my/resource/path') // Nothing happens yet
 
   cy.get('.awesome-selector')   // Still nothing happening
@@ -567,7 +567,7 @@ Let's compare the prior example to a fictional version of it as raw, Promise-bas
 ### Noisy Promise demonstration. Not valid code.
 
 ```js
-it('changes the URL when "awesome" is clicked', function() {
+it('changes the URL when "awesome" is clicked', () => {
   // THIS IS NOT VALID CODE.
   // THIS IS JUST FOR DEMONSTRATION.
   return cy.visit('/my/resource/path')
@@ -590,7 +590,7 @@ it('changes the URL when "awesome" is clicked', function() {
 ### How Cypress really looks, Promises wrapped up and hidden from us.
 
 ```javascript
-it('changes the URL when "awesome" is clicked', function() {
+it('changes the URL when "awesome" is clicked', () => {
   cy.visit('/my/resource/path')
 
   cy.get('.awesome-selector')
