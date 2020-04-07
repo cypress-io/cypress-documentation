@@ -69,8 +69,8 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ```javascript
 // cypress/integration/users.spec.js
 
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     // screenshot will be saved as
     // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
@@ -164,8 +164,8 @@ Screenshot naming follows these rules:
 For example, given a spec file located at `cypress/integration/users/login_spec.js`:
 
 ```javascript
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png

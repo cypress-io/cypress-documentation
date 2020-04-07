@@ -16,16 +16,16 @@ Iterate through an array like structure (arrays or objects with a `length` prope
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.get('ul>li').each(function () {...}) // Iterate through each 'li'
-cy.getCookies().each(function () {...}) // Iterate through each cookie
+cy.get('ul>li').each(() => {...}) // Iterate through each 'li'
+cy.getCookies().each(() => {...}) // Iterate through each cookie
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
 
-cy.each(function () {...})            // Errors, cannot be chained off 'cy'
-cy.location().each(function () {...}) // Errors, 'location' doesn't yield an array
+cy.each(() => {...})            // Errors, cannot be chained off 'cy'
+cy.location().each(() => {...}) // Errors, 'location' doesn't yield an array
 ```
 
 ## Arguments

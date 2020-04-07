@@ -42,7 +42,7 @@ Property | Type | Description
 ```javascript
 // true when running in Chrome
 if (Cypress.isBrowser('chrome')) {
-  it('only runs in chrome', function () {
+  it('only runs in chrome', () => {
     // test some (hypothetical) issue with chrome
   })
 }
@@ -64,7 +64,7 @@ it('a test', function() {
 ### Only run commands in Chromium-based browser
 
 ```javascript
-it('has correct Chromium-based specific css property', function () {
+it('has correct Chromium-based specific css property', () => {
   // if in Chromium-based browser (Chrome, Electron, etc...)
   // check css property was properly applied
   if (Cypress.isBrowser({ family: 'chromium' })) {
@@ -81,7 +81,7 @@ it('has correct Chromium-based specific css property', function () {
 ```javascript
 // true when running in any stable release of a Chromium-based browser
 if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
-  it('will not run in Canary or Dev browsers', function () {
+  it('will not run in Canary or Dev browsers', () => {
     // test some (hypothetical) issue with chrome
   })
 }
