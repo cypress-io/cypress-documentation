@@ -8,6 +8,8 @@ title: Cypress.isBrowser
 
 ```javascript
 Cypress.isBrowser(name)
+Cypress.isBrowser(exclusion)
+Cypress.isBrowser(names)
 Cypress.isBrowser(filter)
 ```
 
@@ -15,11 +17,19 @@ Cypress.isBrowser(filter)
 
 **{% fa fa-angle-right %} name**  ***(String)***
 
-The name of the browser (case-insensitive).
+The name of the browser (case-insensitive) you want to match.
 
-**{% fa fa-angle-right %} filter**  ***(Object)***
+**{% fa fa-angle-right %} exclusion**  ***(String)***
 
-Filter by the browser properties. You can inspect the current browser's properties by using the {% url "`Cypress.browser`" browser %}. Supported properties are:
+The name of the browser (case-insensitive) you want to exclude prepended with a `!` character.
+
+**{% fa fa-angle-right %} names**  ***(Array)***
+
+An array of the names of the browsers (case-insensitive) you want to match.
+
+**{% fa fa-angle-right %} filter**  ***(Object or Array)***
+
+Filter one or multiple browsers by the browser properties. You can inspect the current browser's properties by using the {% url "`Cypress.browser`" browser %}. Supported properties are:
 
 Property | Type | Description
 --- | --- | ---
@@ -59,6 +69,32 @@ it('a test', function() {
 })
 ```
 
+## Exclusion
+
+### Run tests in all browsers but firefox
+
+```javascript
+// true when running in Chrome, Electron, etc...
+if (Cypress.isBrowser('!firefox')) {
+  it('does not run in Firefox', () => {
+    // test some (hypothetical) issue excluding Firefox
+  })
+}
+```
+
+## Names
+
+### Run tests in all specified browsers
+
+```javascript
+// true when running in Firefox and Chrome
+if (Cypress.isBrowser(['firefox', 'chrome'])) {
+  it('runs in Firefox and Chrome only', () => {
+    // test some (hypothetical) issue in the browsers
+  })
+}
+```
+
 ## Filter
 
 ### Only run commands in Chromium-based browser
@@ -83,6 +119,21 @@ it('has correct Chromium-based specific css property', () => {
 if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
   it('will not run in Canary or Dev browsers', () => {
     // test some (hypothetical) issue with chrome
+  })
+}
+```
+
+### Only run on specific release channels of browsers
+
+```javascript
+// true when running in any stable release of a Chromium-based browser
+// and dev releases of Firefox browser
+if (Cypress.isBrowser([
+  { family: 'chromium', channel: 'stable' },
+  { family: 'firefox', channel: 'dev' }
+])) {
+  it('will not run in Canary or stable Firefox browsers', () => {
+    // test some (hypothetical) issue
   })
 }
 ```
