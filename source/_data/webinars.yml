@@ -14,10 +14,27 @@ large:
     youtubeId: J-xbNtKgXfY
     slides: https://slides.com/bahmutov/circleci-cypress-orb
 
+  - title: "How PlanGrid (Autodesk) Achieved Consistency in Automation Across 20 Development Teams"
+    date: Feb 12, 2020
+    author: Cypress & PlanGrid (Autodesk) with Gleb Bahmutov, Graeme Harvey & Brendan Drew
+    youtubeId: aaU41lsdX24
+    slides: https://cypress.slides.com/cypress-io/quality-in-1-million-projects
+
+  - title: "How Siemens SW Hub increased their test productivity by 38% with Cypress"
+    date: Dec 11, 2019
+    author: Cypress & Siemens with Gleb Bahmutov & Murat Ozcan
+    youtubeId: aMPkaLOpyns
+    slides: https://cypress.slides.com/cypress-io/siemens-case-study
+
   - title: "Cypress + Gatsby: Confidently fast web development"
     date: Sep 4, 2019
     author: Cypress & Gatsby with Amir Rustamzadeh & Dustin Schau
     youtubeId: Tx6Lg9mwcCE
+
+  - title: "Spotahome’s Test-First Engineering Culture Using Cypress"
+    date: Aug 13, 2019
+    author: Cypress & Spotahome with Borja Guzman, David Zambrana & Steven Yi
+    youtubeId: 3YODposgH5A
 
   - title: "From Zero to Hero with Cypress: Slido’s journey of creating E2E tests without JS experience"
     date: Aug 7, 2019
