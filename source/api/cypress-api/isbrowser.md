@@ -7,25 +7,20 @@ title: Cypress.isBrowser
 # Syntax
 
 ```javascript
-Cypress.isBrowser(name)
-Cypress.isBrowser(exclusion)
-Cypress.isBrowser(names)
+Cypress.isBrowser(matcher)
+Cypress.isBrowser(matchers)
 Cypress.isBrowser(filter)
 ```
 
 ## Arguments
 
-**{% fa fa-angle-right %} name**  ***(String)***
+**{% fa fa-angle-right %} matcher**  ***(String)***
 
-The name of the browser (case-insensitive) you want to match.
+The name of the browser (case-insensitive) you want to match or you want to exclude (prepended with a `!` character).
 
-**{% fa fa-angle-right %} exclusion**  ***(String)***
+**{% fa fa-angle-right %} matchers**  ***(Array)***
 
-The name of the browser (case-insensitive) you want to exclude prepended with a `!` character.
-
-**{% fa fa-angle-right %} names**  ***(Array)***
-
-An array of the names of the browsers (case-insensitive) you want to match.
+An array of the names of the browsers (case-insensitive) you want to match or you want to exclude (prepended with a `!` character).
 
 **{% fa fa-angle-right %} filter**  ***(Object or Array)***
 
@@ -45,7 +40,7 @@ Property | Type | Description
 
 # Examples
 
-## Name
+## Matcher
 
 ### Only run tests in Chrome
 
@@ -69,8 +64,6 @@ it('a test', function() {
 })
 ```
 
-## Exclusion
-
 ### Run tests in all browsers but firefox
 
 ```javascript
@@ -82,7 +75,7 @@ if (Cypress.isBrowser('!firefox')) {
 }
 ```
 
-## Names
+## Matchers
 
 ### Run tests in all specified browsers
 
@@ -90,6 +83,17 @@ if (Cypress.isBrowser('!firefox')) {
 // true when running in Firefox and Chrome
 if (Cypress.isBrowser(['firefox', 'chrome'])) {
   it('runs in Firefox and Chrome only', () => {
+    // test some (hypothetical) issue in the browsers
+  })
+}
+```
+
+### Run tests in all browsers except specified
+
+```javascript
+// true when running in browser other than chrome and firefox
+if (Cypress.isBrowser(['!firefox', '!chrome'])) {
+  it('does not run in Firefox and Chrome', () => {
     // test some (hypothetical) issue in the browsers
   })
 }
