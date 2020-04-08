@@ -19,7 +19,7 @@ Your Cypress test code runs in the same run loop as your application. This means
 Based on those statements, you might be tempted to throw a `debugger` into your test, like so:
 
 ```js
-it('let me debug like a fiend', function() {
+it('let me debug like a fiend', () => {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -35,7 +35,7 @@ Both {% url `cy.visit()` visit %} and {% url `cy.get()` get %} will return immed
 Let's use {% url `.then()` then %} to tap into the Cypress command during execution and add a `debugger` at the appropriate time:
 
 ```js
-it('let me debug when the after the command executes', function () {
+it('let me debug when the after the command executes', () => {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -60,7 +60,7 @@ Now we're in business! The first time through, {% url `cy.visit()` visit %} and 
 Cypress also exposes a shortcut for debugging commands, {% url `.debug()` debug %}. Let's rewrite the test above using this helper method:
 
 ```js
-it('let me debug like a fiend', function() {
+it('let me debug like a fiend', () => {
   cy.visit('/my/page/path')
 
   cy.get('.selector-in-question')
@@ -79,7 +79,7 @@ Use {% url `.debug()` debug %} to quickly inspect any (or many!) part(s) of your
 You can run the test command by command using the {% url `.pause()` pause %} command.
 
 ```javascript
-it('adds items', function () {
+it('adds items', () => {
   cy.pause()
   cy.get('.new-todo')
   // more commands
@@ -105,6 +105,25 @@ All of Cypress's commands, when clicked on within the {% url "Command Log" test-
 ### When clicking on `.type()` command, the Developer Tools console outputs the following:
 
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
+
+# Errors
+
+Sometimes tests fail. Sometimes we want them to fail, just so we know they're testing the right thing when they pass. But other times, tests fail unintentionally and we need to figure out why. Cypress provides some tools to help make that process as easy as possible.
+
+## Anatomy of an error
+
+Let's take a look at the anatomy of an error and how it is displayed in Cypress, by way of a failing test.
+
+```js
+it('failure', () => {
+  // the center of the clicked element is hidden
+  cy.contains('Users').click()
+})
+```
+
+The center of the `<li>Users</li>` element is hidden from view in our application under test, so the test above will fail. Within Cypress, an error will show on failure that includes the following pieces of information:
+
+{% partial errors_anatomy %}
 
 # Log Cypress events
 

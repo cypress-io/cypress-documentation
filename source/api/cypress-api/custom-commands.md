@@ -602,7 +602,7 @@ const search = (term, options = {}) => {
     .wait('@getSearchResults')
 }
 
-it('displays a list of search results', function () {
+it('displays a list of search results', () => {
   cy
     .visit('/page')
     .then(() => {
@@ -626,7 +626,7 @@ it('displays a list of search results', function () {
     .get('#pagination').should('not.exist')
 })
 
-it('displays no search results', function () {
+it('displays no search results', () => {
   cy
     .visit('/page')
     .then(() => {
@@ -637,7 +637,7 @@ it('displays no search results', function () {
     .get('#results').should('contain', 'No results found')
 })
 
-it('paginates many search results', function () {
+it('paginates many search results', () => {
   cy
     .visit('/page')
     .then(() => {

@@ -2,7 +2,7 @@
 title: wrap
 ---
 
-Yield the object passed into `.wrap()`.
+Yield the object passed into `.wrap()`. If the object is a promise, yield its resolved value.
 
 # Syntax
 
@@ -85,6 +85,28 @@ cy
 
 You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the {% url "Logging in using application code" recipes#Logging-In %} recipe for the full example.
 
+### Simple example
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+  // we use setTimeout(...) to simulate async code.
+  setTimeout(() => {
+    resolve({
+      type: 'success',
+      message: 'It worked!'
+    })
+  }, 2500)
+})
+
+it('should wait for promises to resolve', () => {
+  cy.wrap(myPromise).its('message').should('eq', 'It worked!')
+})
+```
+
+{% imgTag /img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif "Wrap of promises" %}
+
+### Application example
+
 ```javascript
 // import application code for logging in
 import { userService } from '../../src/_services/user.service'
@@ -158,7 +180,7 @@ cy.get('some-submit-button').click().then(() => {
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions retry cy.wrap %}
+{% assertions wrap cy.wrap %}
 
 ## Timeouts {% helper_icon timeout %}
 
@@ -194,4 +216,5 @@ When clicking on the `wrap` command within the command log, the console outputs 
 - {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}
-- {% url "Logging in using application code" recipes#Logging-In %} recipe
+- {% url "Logging In: Using application code" recipes#Logging-In %} recipe
+- {% url "Unit Testing: Application Code" recipes#Unit-Testing %} recipe

@@ -35,6 +35,12 @@ Each command, assertion, or error, when clicked on, displays extra information i
 
 {% imgTag /img/guides/clicking-commands.png "Click to console.log and to pin" %}
 
+# Errors
+
+Cypress prints several pieces of information when an error occurs during a Cypress test.
+
+{% partial errors_anatomy %}
+
 # Instrument Panel
 
 For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
