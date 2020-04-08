@@ -214,6 +214,17 @@ You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypr
 
 {% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}
 
+## Add some subdomains on your VPN withelist for the Dashboard work properly
+You have to add the following subdomains on your vpn whitelist to the Dashboard work properly:
+
+- Cypress API: https://**API**.cypress.io
+- Dashboard App: https://**dashboard**.cypress.io
+- CDN Download of Cypress Binary: https://**download**.cypress.io
+- Authenticate API: https://**authenticate**.cypress.io
+- Asset CDN (Org logos, Icons, CI Video Uploads, Screenshots, etc.): https://**assets**.cypress.io
+- URL Shortener for link redirect: https://**on**.cypress.io
+- Cypress Docs: https://**docs**.cypress.io
+
 # Hacking on Cypress
 
 If you want to dive into Cypress and edit the code yourself, you can do that. The Cypress code is open source and licensed under an {% url "MIT license" https://github.com/cypress-io/cypress/blob/develop/LICENSE %}. There are a few tips on getting started that we've outlined below.
