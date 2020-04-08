@@ -122,11 +122,11 @@ cy.get('@todos')
 ### Get the aliased 'submitBtn' element
 
 ```javascript
-beforeEach(function() {
+beforeEach(() => {
   cy.get('button[type=submit]').as('submitBtn')
 })
 
-it('disables on click', function() {
+it('disables on click', () => {
   cy.get('@submitBtn').should('be.disabled')
 })
 ```
@@ -134,11 +134,11 @@ it('disables on click', function() {
 ### Get the aliased 'users' fixture
 
 ```javascript
-beforeEach(function() {
+beforeEach(() => {
   cy.fixture('users.json').as('users')
 })
 
-it('disables on click', function() {
+it('disables on click', () => {
   // access the array of users
   cy.get('@users').then((users) => {
     // get the first user

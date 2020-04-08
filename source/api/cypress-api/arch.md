@@ -17,7 +17,7 @@ Cypress.arch // 'x64'
 ## CPU Architecture
 
 ```javascript
-it('has expected CPU architecture', function () {
+it('has expected CPU architecture', () => {
   expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
 })
 ```
@@ -25,7 +25,7 @@ it('has expected CPU architecture', function () {
 ## Conditionals
 
 ```javascript
-it('does something differently', function () {
+it('does something differently', () => {
   if (Cypress.arch === 'x64') {
     cy.exec('something')
   } else {

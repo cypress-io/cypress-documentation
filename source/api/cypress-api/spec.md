@@ -17,7 +17,7 @@ Cypress.spec // returns spec object
 ### `Cypress.spec` returns an object
 
 ```js
-it('log spec info', function() {
+it('log spec info', () => {
   console.log(Cypress.spec)
   // {
   //   name: 'filter.spec.js',

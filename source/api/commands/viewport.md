@@ -86,28 +86,28 @@ cy.viewport(1024, 768)
 ### Organize desktop vs mobile tests separately
 
 ```javascript
-describe('Nav Menus', function () {
-  context('720p resolution', function () {
-    beforeEach(function () {
+describe('Nav Menus', () => {
+  context('720p resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a desktop
       // browser with a 720p monitor
       cy.viewport(1280, 720)
     })
 
-    it('displays full header', function () {
+    it('displays full header', () => {
       cy.get('nav .desktop-menu').should('be.visible')
       cy.get('nav .mobile-menu').should('not.be.visible')
     })
   })
 
-  context('iphone-5 resolution', function () {
-    beforeEach(function () {
+  context('iphone-5 resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a mobile browser
       // and ensure our responsive UI is correct
       cy.viewport('iphone-5')
     })
 
-    it('displays mobile menu on click', function () {
+    it('displays mobile menu on click', () => {
       cy.get('nav .desktop-menu').should('not.be.visible')
       cy.get('nav .mobile-menu')
         .should('be.visible')
