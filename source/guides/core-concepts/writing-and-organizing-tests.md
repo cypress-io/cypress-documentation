@@ -141,7 +141,7 @@ If you're familiar with writing tests in JavaScript, then writing tests in Cypre
 
 ## Test Structure
 
-The test interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
+The test interface, borrowed from {% url 'Mocha' bundled-tools#Mocha %}, provides `describe()`, `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`, so choose whatever terminology works best for you.
 
@@ -277,6 +277,10 @@ it.skip('returns "fizz" when number is multiple of 3', function () {
   numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
+
+## Per Test Configuration
+
+To apply a specific {% url "Cypress configuration" configuration %} value to a suite or test, pass a configuration object to the function.
 
 ## Dynamically Generate Tests
 
