@@ -133,3 +133,14 @@ In order to avoid any interruption in service, we recommend that you review your
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage
 5. Scroll down and select *Upgrade* under your plan of choice
+
+## {% fa fa-angle-right %} Which subdomains do I have to whitelist on my VPN for the Dashboard to work properly?
+You have to add the following subdomains on your vpn whitelist to the Dashboard work properly:
+
+- Cypress API: https://**API**.cypress.io
+- Dashboard App: https://**dashboard**.cypress.io
+- CDN Download of Cypress Binary: https://**download**.cypress.io
+- Authenticate API: https://**authenticate**.cypress.io
+- Asset CDN (Org logos, Icons, CI Video Uploads, Screenshots, etc.): https://**assets**.cypress.io
+- URL Shortener for link redirect: https://**on**.cypress.io
+- Cypress Docs: https://**docs**.cypress.io
