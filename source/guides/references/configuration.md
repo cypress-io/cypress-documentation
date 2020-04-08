@@ -134,7 +134,7 @@ This gives you the option to do things like override the `baseUrl` or environmen
 
 When {% url 'running Cypress from the Command Line' command-line %} you can pass a `--config` flag.
 
-**Examples:**
+### Examples:
 
 ```shell
 cypress open --config watchForFileChanges=false,waitForAnimations=false
@@ -207,6 +207,57 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
+```
+
+## Per test configuration
+
+To apply a specific {% url "Cypress configuration" configuration %} value to a suite or test, pass a configuration object to the function.
+
+{% note warning %}
+Some configuration values are readonly and cannot be changed via test configuration.
+{% endnote %}
+
+### The following configuration values are allowed:
+
+Option | Default | Description
+----- | ---- | ----
+`animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
+`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
+`defaultCommandTimeout` | `4000` | Time, in milliseconds, to wait until most DOM based commands are considered timed out
+`execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a {% url `cy.exec()` exec %} command
+`env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
+`requestTimeout` | `5000` | Time, in milliseconds, to wait for an XHR request to go out in a {% url `cy.wait()` wait %} command
+`responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a {% url `cy.request()` request %}, {% url `cy.wait()` wait %}, {% url `cy.fixture()` fixture %}, {% url `cy.getCookie()` getcookie %}, {% url `cy.getCookies()` getcookies %}, {% url `cy.setCookie()` setcookie %}, {% url `cy.clearCookie()` clearcookie %}, {% url `cy.clearCookies()` clearcookies %}, and {% url `cy.screenshot()` screenshot %} commands
+`viewportHeight` | `660` | Default height in pixels for the application under tests' viewport (Override with {% url `cy.viewport()` viewport %} command)
+`viewportWidth` | `1000` | Default width in pixels for the application under tests' viewport. (Override with {% url `cy.viewport()` viewport %} command)
+`waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
+
+### Configure suite of tests configuration
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible)
+  })
+})
+```
+
+### Configure single test configuration
+
+```js
+it('open product view', (), {
+  waitForAnimations: false
+} => {
+  cy.contains('Add to Cart').click()
+  cy.get('#modal').contains('Confirm').click()
+})
 ```
 
 # Resolved Configuration
