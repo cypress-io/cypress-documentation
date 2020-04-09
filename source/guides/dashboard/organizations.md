@@ -111,7 +111,6 @@ Follow the instructions below for your specific SSO provider.
 
 The Cypress Dashboard can integrate with Okta via SAML. In addition to the documentation below, refer to {% url "Okta’s official documentation for setting up a new SAML application." https://developer.okta.com/docs/guides/saml-application-setup/overview/ %}
 
-
 1. Log into your Okta dashboard and head to the **Admin** section.
   {% imgTag /img/dashboard/organizations/okta-admin-cypress-sso-setup.png "Okta Admin" %}
 1. Create a new SAML-based Web application.
@@ -138,7 +137,7 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
 {% imgTag /img/dashboard/organizations/enterprise-SSO-SAML.png "SAML SSO" %}
 
 1. Log into the admin interface for your identity provider.
-2. Work through the setup wizard supplying the information requested:
+1. Work through the setup wizard supplying the information requested:
   - **App name:** `Cypress Dashboard`
   - **App logo:** {% url "Cypress logo download" https://on.cypress.io/logo %}
   - **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
@@ -147,7 +146,7 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
       - `User.Email`: User’s email
       - `User.FirstName`: User’s first name
       - `User.LastName`: User’s last name
-3. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
+1. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
 1. {% urlHash "Save and test the configuration" Save-and-Test %}.
 
 #### Azure AD
@@ -155,14 +154,14 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
 The Cypress Dashboard can integrate with your identity provider via Azure AD. In addition to the documentation below, refer to the Microsoft Guides for {% url "configuring an application" https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app %}.
 
 1. Log into the Azure portal and create a new Application.
-2. Work through the application setup, supplying the following information when requested:
+1. Work through the application setup, supplying the following information when requested:
   - **App name:** `Cypress Dashboard`
   - **App logo:** {% url "Cypress logo download" https://on.cypress.io/logo %}
   - **Login URL:** Collect the URL provided by the Cypress Dashboard
-3. Collect the `Client ID` for your application provided in the Application overview page.
-4. Go to **Certificates and Secrets** in your Azure Application and create a new secret that does not expire. Copy this newly-created secret and paste it in the `Azure Client Secret` field in the Cypress Dashboard.
-5. Under **API Permissions** in Azure AD, ensure the application has access to **User.Read** permissions
-6. Enter the domain used for your Active Directory, as well as the list of SSO domains you wish to allow user to authenticate with, in the Cypress Dashboard. This is used for SSO discovery from the login screen.
+1. Collect the `Client ID` for your application provided in the Application overview page.
+1. Go to **Certificates and Secrets** in your Azure Application and create a new secret that does not expire. Copy this newly-created secret and paste it in the `Azure Client Secret` field in the Cypress Dashboard.
+1. Under **API Permissions** in Azure AD, ensure the application has access to **User.Read** permissions
+1. Enter the domain used for your Active Directory, as well as the list of SSO domains you wish to allow user to authenticate with, in the Cypress Dashboard. This is used for SSO discovery from the login screen.
 1. {% urlHash "Save and test the configuration" Save-and-Test %}.
 
 ### Save and Test
@@ -170,4 +169,3 @@ The Cypress Dashboard can integrate with your identity provider via Azure AD. In
 1. Return to the Cypress Dashboard and click **Save and test configuration**. The Cypress Dashboard will attempt to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your organization to sign in through your SSO provider.
-
