@@ -119,7 +119,7 @@ The Cypress Dashboard can integrate with Okta via SAML. In addition to the docum
   {% imgTag /img/dashboard/organizations/okta-add-application-step3-cypress-sso.png "Create Okta SAML App" width-600 %}  
 1. Supply the following information requested in the Okta setup wizard:
   - **App name:** `Cypress Dashboard`
-  - **App logo:** {% url "Cypress logo download" https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png %}
+  - **App logo:** {% url "Cypress logo download" https://on.cypress.io/logo %}
   - **Single sign on URL:** The URL provided in the Cypress Dashboard
   - **Audience URI:** The URI provided in the Cypress Dashboard
   - **Attribute statements:** Add the attribute statements described in the Cypress Dashboard
@@ -139,7 +139,7 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
 1. Log into the admin interface for your identity provider.
 2. Work through the setup wizard supplying the information requested:
   - **App name:** `Cypress Dashboard`
-  - **App logo:** {% url "Cypress logo download" https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png %}
+  - **App logo:** {% url "Cypress logo download" https://on.cypress.io/logo %}
   - **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
   - **Audience URI:** Collect the URI provided by the Cypress Dashboard
   - Add a custom mapping of **AttributeStatements** with the following:
@@ -155,7 +155,7 @@ The Cypress Dashboard can integrate with your identity provider via Azure AD. In
 1. Log into the Azure portal and create a new Application.
 2. Work through the application setup, supplying the following information when requested:
   - **App name:** `Cypress Dashboard`
-  - **App logo:** {% url "Cypress logo download" https://raw.githubusercontent.com/cypress-io/cypress-icons/master/src/logo/cypress-bw.png %}
+  - **App logo:** {% url "Cypress logo download" https://on.cypress.io/logo %}
   - **Login URL:** Collect the URL provided by the Cypress Dashboard
 3. Collect the `Client ID` for your application provided in the Application overview page.
 4. Go to **Certificates and Secrets** in your Azure Application and create a new secret that does not expire. Copy this newly-created secret and paste it in the `Azure Client Secret` field in the Cypress Dashboard.
