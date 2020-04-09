@@ -209,7 +209,7 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-## Per test configuration
+## Test Declaration
 
 To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to the function.
 
@@ -235,9 +235,7 @@ describe('page display on medium size screen', {
 ### Configure single test configuration
 
 ```js
-it('open product view', (), {
-  waitForAnimations: false
-} => {
+it('open product view', (), { waitForAnimations: false } => {
   cy.contains('Add to Cart').click()
   cy.get('#modal').contains('Confirm').click()
 })

@@ -169,4 +169,4 @@ it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
 - {% url "Cross Browser Testing" cross-browser-testing %}
 - {% url "`Cypress.browser`" browser %}
 - {% url "Launching Browsers" launching-browsers %}
-- {% url "Per Test Configuration" configuration#Per-test-configuration %}
+- {% url "Per Test Configuration" configuration#Test-Declaration %}

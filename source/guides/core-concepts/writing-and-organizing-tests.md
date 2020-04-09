@@ -278,7 +278,7 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 })
 ```
 
-## Per Test Configuration
+## Test Declaration Configuration
 
 To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to test or suite the function as the second argument.
 
@@ -315,9 +315,7 @@ describe('page display on medium size screen', {
 ### Configure single test configuration
 
 ```js
-it('open product view', (), {
-  waitForAnimations: false
-} => {
+it('open product view', (), { waitForAnimations: false } => {
   cy.contains('Add to Cart').click()
   cy.get('#modal').contains('Confirm').click()
 })
