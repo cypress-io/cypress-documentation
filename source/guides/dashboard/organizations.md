@@ -129,6 +129,7 @@ The Cypress Dashboard can integrate with Okta via SAML. In addition to the docum
   - Download the certificate and upload that to the Cypress Dashboard.
   {% imgTag /img/dashboard/organizations/okta-download-certificate-for-cypress-dashboard.png "Download Certificate" %}
 1. Navigate to the **Assignments** tab and grant your users access to the Cypress Dashboard.
+1. {% urlHash "Save and test the configuration" Save-and-Test %}.
 
 #### SAML
 
@@ -147,6 +148,7 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
       - `User.FirstName`: User’s first name
       - `User.LastName`: User’s last name
 3. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
+1. {% urlHash "Save and test the configuration" Save-and-Test %}.
 
 #### Azure AD
 
@@ -161,6 +163,7 @@ The Cypress Dashboard can integrate with your identity provider via Azure AD. In
 4. Go to **Certificates and Secrets** in your Azure Application and create a new secret that does not expire. Copy this newly-created secret and paste it in the `Azure Client Secret` field in the Cypress Dashboard.
 5. Under **API Permissions** in Azure AD, ensure the application has access to **User.Read** permissions
 6. Enter the domain used for your Active Directory, as well as the list of SSO domains you wish to allow user to authenticate with, in the Cypress Dashboard. This is used for SSO discovery from the login screen.
+1. {% urlHash "Save and test the configuration" Save-and-Test %}.
 
 ### Save and Test
 
