@@ -16,11 +16,11 @@ Cypress.isBrowser(filter)
 
 **{% fa fa-angle-right %} matcher**  ***(String)***
 
-The name of the browser (case-insensitive) you want to match or you want to exclude (prepended with a `!` character).
+The name of the browser (case-insensitive) you want to check against. Name can be prepended with a `!` character to inverse the check.
 
 **{% fa fa-angle-right %} matchers**  ***(Array)***
 
-An array of the names of the browsers (case-insensitive) you want to match or you want to exclude (prepended with a `!` character).
+An array of the names of the browsers (case-insensitive) you want to check against. Name can be prepended with a `!` character to inverse the check.
 
 **{% fa fa-angle-right %} filter**  ***(Object or Array)***
 
@@ -42,61 +42,60 @@ Property | Type | Description
 
 ## Matcher
 
-### Only run tests in Chrome
+### Only run command in Chrome
 
 ```javascript
-// true when running in Chrome
-if (Cypress.isBrowser('chrome')) {
-  it('only runs in chrome', () => {
-    // test some (hypothetical) issue with chrome
-  })
-}
-```
-
-### Skip a test in Firefox
-
-```javascript
-it('a test', function() {
+it('download extension link', () => {
   // true when running in Firefox
   if (Cypress.isBrowser('firefox')) {
-    this.skip()
+    cy.get('#dl-extension')
+      .should('contain', 'Download Firefox Extension')
+  }
+
+  // true when running in Chrome
+  if (Cypress.isBrowser('chrome')) {
+    cy.get('#dl-extension')
+      .should('contain', 'Download Chrome Extension')
   }
 })
 ```
 
-### Run tests in all browsers but firefox
+### Run command in all browsers except Chrome
 
 ```javascript
-// true when running in Chrome, Electron, etc...
-if (Cypress.isBrowser('!firefox')) {
-  it('does not run in Firefox', () => {
-    // test some (hypothetical) issue excluding Firefox
-  })
-}
+it('warns to view page in Chrome browser', () => {
+  // true when running in Firefox, etc...
+  if (Cypress.isBrowser('!chrome')) {
+    cy.get('.browser-warning')
+      .should('contain', 'For optimal viewing, use Chrome browser')
+  }
+})
 ```
 
 ## Matchers
 
-### Run tests in all specified browsers
+### Run commands in all specified browsers
 
 ```javascript
-// true when running in Firefox and Chrome
-if (Cypress.isBrowser(['firefox', 'chrome'])) {
-  it('runs in Firefox and Chrome only', () => {
-    // test some (hypothetical) issue in the browsers
-  })
-}
+it('colors rainbow', () => {
+  // true when running in Electron or Chrome
+  if (Cypress.isBrowser(['electron', 'chrome'])) {
+    cy.get('.rainbox')
+    .should('have.css', 'conic-gradient(red, orange, yellow, green, blue)')
+  }
+})
 ```
 
-### Run tests in all browsers except specified
+### Run commands in all browsers except specified
 
 ```javascript
-// true when running in browser other than chrome and firefox
-if (Cypress.isBrowser(['!firefox', '!chrome'])) {
-  it('does not run in Firefox and Chrome', () => {
-    // test some (hypothetical) issue in the browsers
-  })
-}
+// true when running in browser other than chrome and electron
+it('does not run in Firefox and Chrome', () => {
+  if (Cypress.isBrowser(['!electron', '!chrome'])) {
+    cy.get('#h4')
+    .should('have.css', 'font-size-adjust', '0.5')
+  }
+})
 ```
 
 ## Filter
@@ -104,14 +103,12 @@ if (Cypress.isBrowser(['!firefox', '!chrome'])) {
 ### Only run commands in Chromium-based browser
 
 ```javascript
-it('has correct Chromium-based specific css property', () => {
+it('has CSS reflections', () => {
   // if in Chromium-based browser (Chrome, Electron, etc...)
   // check css property was properly applied
   if (Cypress.isBrowser({ family: 'chromium' })) {
-    cy
-    .get('.header')
-    .should('have.css', 'margin-right')
-    .and('eq', '0')
+    cy.get('.header')
+    .should('have.css', '-webkit-box-reflect', 'left')
   }
 })
 ```
@@ -119,27 +116,47 @@ it('has correct Chromium-based specific css property', () => {
 ### Only run on stable release in Chromium-based browser
 
 ```javascript
-// true when running in any stable release of a Chromium-based browser
-if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
-  it('will not run in Canary or Dev browsers', () => {
-    // test some (hypothetical) issue with chrome
-  })
-}
+it('test', () => {
+  // true when in any stable release of a Chromium-based browser
+  if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
+    // test some (hypothetical) scenario in chrome stable
+  }
+})
 ```
 
 ### Only run on specific release channels of browsers
 
 ```javascript
-// true when running in any stable release of a Chromium-based browser
-// and dev releases of Firefox browser
-if (Cypress.isBrowser([
-  { family: 'chromium', channel: 'stable' },
-  { family: 'firefox', channel: 'dev' }
-])) {
-  it('will not run in Canary or stable Firefox browsers', () => {
-    // test some (hypothetical) issue
-  })
-}
+it('test', () => {
+  // true when running in Chrome Canary
+  // and dev releases of Firefox browser
+  if (Cypress.isBrowser([
+    { family: 'chromium', channel: 'canary' },
+    { family: 'firefox', channel: 'dev' }
+  ])) {
+    // test some (hypothetical) scenario
+  }
+})
+```
+
+## Notes
+
+### Per test configuration: `browser`
+
+If you want to target a test or suite to run or be excluded when run in a specific browser, we suggest passing the `browser` configuration value per test or suite. The `browser` configuration accepts the same {% urlHash "arguments" Arguments %} as `Cypress.isBrowser()`.
+
+```js
+it('Download extension in Firefox', (), { browser: 'firefox' } => {
+  cy.get('#dl-extension')
+    .should('contain', 'Download Firefox Extension')
+})
+```
+
+```js
+it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
+})
 ```
 
 {% history %}
@@ -152,3 +169,4 @@ if (Cypress.isBrowser([
 - {% url "Cross Browser Testing" cross-browser-testing %}
 - {% url "`Cypress.browser`" browser %}
 - {% url "Launching Browsers" launching-browsers %}
+- {% url "Per Test Configuration" configuration#Per-test-configuration %}
