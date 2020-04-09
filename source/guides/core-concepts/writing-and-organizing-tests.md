@@ -199,16 +199,16 @@ describe('Hooks', () => {
     // runs once before all tests in the block
   })
 
-  after(() => {
-    // runs once after all tests in the block
-  })
-
   beforeEach(() => {
     // runs before each test in the block
   })
 
   afterEach(() => {
     // runs after each test in the block
+  })
+
+  after(() => {
+    // runs once after all tests in the block
   })
 })
 ```
@@ -280,26 +280,20 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ## Per Test Configuration
 
-To apply a specific {% url "Cypress configuration" configuration %} value to a suite or test, pass a configuration object to the function.
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to test or suite the function as the second argument.
 
-{% note warning %}
-Some configuration values are readonly and cannot be changed via test configuration.
-{% endnote %}
+### Syntax
 
-### The following configuration values are allowed:
+```javascript
+describe(name, configuration, fn)
+context(name, configuration, fn)
+it(name, configuration, fn)
+specify(name, configuration, fn)
+```
 
-Option | Default | Description
------ | ---- | ----
-`animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
-`baseUrl` | `null` | URL used as prefix for {% url `cy.visit()` visit %} or {% url `cy.request()` request %} command's URL
-`defaultCommandTimeout` | `4000` | Time, in milliseconds, to wait until most DOM based commands are considered timed out
-`execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a {% url `cy.exec()` exec %} command
-`env` | `{}` | Any values to be set as {% url 'environment variables' environment-variables %}
-`requestTimeout` | `5000` | Time, in milliseconds, to wait for an XHR request to go out in a {% url `cy.wait()` wait %} command
-`responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a {% url `cy.request()` request %}, {% url `cy.wait()` wait %}, {% url `cy.fixture()` fixture %}, {% url `cy.getCookie()` getcookie %}, {% url `cy.getCookies()` getcookies %}, {% url `cy.setCookie()` setcookie %}, {% url `cy.clearCookie()` clearcookie %}, {% url `cy.clearCookies()` clearcookies %}, and {% url `cy.screenshot()` screenshot %} commands
-`viewportHeight` | `660` | Default height in pixels for the application under tests' viewport (Override with {% url `cy.viewport()` viewport %} command)
-`viewportWidth` | `1000` | Default width in pixels for the application under tests' viewport. (Override with {% url `cy.viewport()` viewport %} command)
-`waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
+### Whitelisted config values
+
+{% partial per_test_config_whitelist %}
 
 ### Configure suite of tests configuration
 
