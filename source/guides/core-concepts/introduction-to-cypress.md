@@ -526,7 +526,21 @@ Cypress's APIs are built very differently from what you're likely used to: but t
 
 ## Commands Run Serially
 
-After a test function is finished running, Cypress goes to work executing the commands that were enqueued using the `cy.*` command chains. The test above would cause an execution in this order:
+After a test function is finished running, Cypress goes to work executing the commands that were enqueued using the `cy.*` command chains. 
+
+### Let's take another look at an example
+
+```js
+it('changes the URL when "awesome" is clicked', () => {
+  cy.visit('/my/resource/path')
+  cy.get('.awesome-selector')
+    .click()
+  cy.url()
+    .should('include', '/my/resource/path#awesomeness')
+})
+```
+
+The test above would cause an execution in this order:
 
 1. Visit a URL.
 2. Find an element by its selector.
