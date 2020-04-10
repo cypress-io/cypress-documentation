@@ -19,8 +19,6 @@ Once you've read through the documentation below, we invite you to experience th
 
 # Custom reporter
 
-You need to install any peer dependencies the reporter requires, even if they're bundled with Cypress. For example, {% url "mochawesome" https://github.com/adamgruber/mochawesome %} requires `mocha` as a peer dependency. You will need to install `mocha` as a dev dependency of your own project for it to work.
-
 ## Installed locally
 
 Custom reporters can be loaded through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
