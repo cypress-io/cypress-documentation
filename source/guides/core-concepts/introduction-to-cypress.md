@@ -532,11 +532,11 @@ After a test function is finished running, Cypress goes to work executing the co
 
 ```js
 it('changes the URL when "awesome" is clicked', () => {
-  cy.visit('/my/resource/path')
-  cy.get('.awesome-selector')
-    .click()
-  cy.url()
-    .should('include', '/my/resource/path#awesomeness')
+  cy.visit('/my/resource/path')                          // 1.
+  cy.get('.awesome-selector')                            // 2.
+    .click()                                             // 3.
+  cy.url()                                               // 4.
+    .should('include', '/my/resource/path#awesomeness')  // 5.
 })
 ```
 
