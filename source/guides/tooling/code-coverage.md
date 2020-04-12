@@ -209,7 +209,8 @@ import '@cypress/code-coverage/support'
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on('task', require('@cypress/code-coverage/task'))
+  require('@cypress/code-coverage/task')(on, config)
+  return config
 }
 ```
 
@@ -328,7 +329,7 @@ If we want to collect the code coverage from the unit tests, we need to instrume
 ```javascript
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on('task', require('@cypress/code-coverage/task'))
+  require('@cypress/code-coverage/task')(on, config)
   // tell Cypress to use .babelrc file
   // and instrument the specs files
   // only the extra application files will be instrumented
