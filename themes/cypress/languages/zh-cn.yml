@@ -41,6 +41,7 @@ sidebar:
     organizations: 组织
     users: 成员
     github-integration: GitHub Integration
+    analytics: 分析工具
     debugging: 调试
     variables-and-aliases: 变量和别名
     stubs-spies-and-clocks: 桩, Spies和时钟
@@ -52,6 +53,7 @@ sidebar:
     parallelization: 并行化
     environment-variables: 环境变量
     launching-browsers: 启动浏览器
+    cross-browser-testing: 跨浏览器测试
     custom-commands: 自定义命令
     web-security: Web安全
     references: 参考
@@ -62,10 +64,12 @@ sidebar:
     assertions: 断言
     best-practices: 最佳实践
     trade-offs: 取舍
+    troubleshooting: Troubleshooting
     changelog: 更新日志
+    migration-guide: Migration Guide
     roadmap: 路线图
     tooling: 工具
-    intelligent-code-completion: 代码智能补全
+    IDE-integration: IDE Integration
     plugins-guide: 插件
     reporters: 报告生成器
     typescript-support: TypeScript
@@ -128,6 +132,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -172,9 +177,11 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies
@@ -208,6 +215,7 @@ sidebar:
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: General Questions

@@ -97,6 +97,12 @@ Cypress的默认行为可以通过提供以下任何配置选项来修改。下�
 `animationDistanceThreshold` | `5` | 元素的距离（以像素为单位）必须超过一定的时间才能被认为是动画
 `waitForAnimations` | `true` | 是否在执行命令之前等待元素结束动画
 
+## Node 版
+
+选项 | 默认值 | 描述
+----- | ---- | ----
+`nodeVersion` | `bundled` | 如果设置为`system`，赛普拉斯将尝试在您的路径上找到 Node 可执行文件，以便在执行{％ url plugins plugins-guide ％}时使用。 否则，赛普拉斯将使用与赛普拉斯捆绑的Node版本。
+
 # 重写选项
 
 Cypress提供了动态更改配置值的选项。这对于在多个环境和多个开发人员机器上运行Cypress非常有用。
@@ -250,4 +256,4 @@ Cypress在网络级别修改这些脚本，因此搜索这些模式的响应流�
 
 ## 智能代码补全
 
-Cypress在编辑你的`cypress.json`文件时可以使用智能提示。{% url "了解如何设置智能代码补全。" intelligent-code-completion %}
+Cypress在编辑你的`cypress.json`文件时可以使用智能提示。{% url "了解如何设置智能代码补全。" IDE-integration %}

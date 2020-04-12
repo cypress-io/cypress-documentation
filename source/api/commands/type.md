@@ -106,6 +106,21 @@ Each keypress is delayed 10ms by default in order to simulate how a very fast us
 cy.get('[contenteditable]').type('some text!')
 ```
 
+### 'Selecting' an option from datalist
+For 'selecting' an option, just type it into the input.
+```html
+<input list="fruit" />
+<datalist id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cantaloupe</option>
+</datalist>
+```
+
+```javascript
+cy.get('input').type('Apple')
+```
+
 ## Tabindex
 
 ### Type into a non-input or non-textarea element with `tabindex`
@@ -128,7 +143,7 @@ Using `.type()` on a date input (`<input type="date">`) requires specifying a va
 
 - `yyyy-MM-dd` (e.g. `1999-12-31`)
 
-This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#sec-dates %} and is what the input's `value` will be set to regardless of browser or locale.
+This isn't exactly how a user would type into a date input, but is a workaround since date input support varies between browsers and the format varies based on locale. `yyyy-MM-dd` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#dates-and-times %} and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
@@ -150,7 +165,7 @@ Using `.type()` on a week input (`<input type="week">`) requires specifying a va
 
 Where `W` is the literal character 'W' and `ww` is the number of the week (01-53).
 
-This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://www.w3.org/TR/html/infrastructure.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
+This isn't exactly how a user would type into a week input, but is a workaround since week input support varies between browsers and the format varies based on locale. `yyyy-Www` is the format required by {% url "the W3 spec" https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string %} and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
@@ -217,12 +232,12 @@ cy.get('button').click()
 Modifiers are automatically released between tests, even with `{release: false}`.
 
 ```javascript
-it('has modifiers activated', function () {
+it('has modifiers activated', () => {
   // 'altKey' will be true while typing 'foo'
   cy.get('input').type('{alt}foo', { release: false })
 })
 
-it('does not have modifiers activated', function () {
+it('does not have modifiers activated', () => {
   // 'altKey' will be false while typing 'bar'
   cy.get('input').type('bar')
 })
@@ -306,8 +321,6 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 ### When element is not in focus
 
 If the element is currently not in focus, before issuing any keystrokes Cypress will first issue a {% url `.click()` click %} to the element to bring it into focus.
-
-All of {% url 'the normal events' click#Events %} documented on {% url `.click()` click %} will fire.
 
 ### Events that fire
 
@@ -432,7 +445,7 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 3. Submits a form, but does not fire synthetic `click` event, if there is 1 `input` and no `submit` button
 4. Submits form and fires a synthetic `click` event to the `submit` when it exists.
 
-Of course if the form's `submit` event is `preventedDefault` the form will not actually be submitted.
+If the form's `submit` event is `preventedDefault` the form will not actually be submitted.
 
 # Rules
 

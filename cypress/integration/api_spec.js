@@ -6,10 +6,10 @@ describe('API', () => {
       cy.visit('/api/events/catalog-of-events.html')
     })
 
-    it('loads catalog of events', () =>
-      cy.get('.article-title')
+    it('loads catalog of events', () => {
+      return cy.get('.article-title')
       .contains('Catalog of Events')
-    )
+    })
   })
 
   context('Table of Contents', () => {

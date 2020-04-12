@@ -17,7 +17,7 @@ Cypress.platform // 'darwin'
 ## Conditionals
 
 ```javascript
-it('has JSON files', function () {
+it('has JSON files', () => {
   // if windows do one thing, else do another
   const cmd = Cypress.platform === 'win32' ? 'dir *.json' : 'ls *.json'
 

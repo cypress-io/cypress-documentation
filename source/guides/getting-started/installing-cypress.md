@@ -19,11 +19,15 @@ Cypress is a desktop application that is installed on your computer. The desktop
 - **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 *(64-bit only)*
 - **Windows** 7 and above
 
+If using `npm` to install Cypress, we support:
+
+- **Node.js** 8 and above
+
 # Installing
 
 ## {% fa fa-terminal %} `npm install`
 
-Installing Cypress via `npm` is easy:
+Install Cypress via `npm`:
 
 ```shell
 cd /your/project/path
@@ -68,7 +72,7 @@ yarn add cypress --dev
 
 ## {% fa fa-download %} Direct download
 
-If you're not using Node or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
+If you're not using Node or `npm` in your project or you want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
 
 {% note warning %}
 Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
@@ -76,13 +80,13 @@ Recording runs to the Dashboard is not possible from the direct download. This d
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
-Just manually unzip and double click. Cypress will run without needing to install any dependencies.
+Then you can manually unzip and double click. Cypress will run without needing to install any dependencies.
 
 {% video local /img/snippets/installing-global.mp4 %}
 
 ## {% fa fa-refresh %} Continuous integration
 
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
+Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
 # Opening Cypress
 
@@ -122,7 +126,7 @@ After a moment, the Cypress Test Runner will launch.
 
 The Cypress Test Runner attempts to find all compatible browsers on the user's machine. The drop down to select a different browser is in the top right corner of the Test Runner.
 
-{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+{% imgTag /img/guides/browser-list-dropdown.png "Select a different browser" %}
 
 Read {% url "Launching Browsers" launching-browsers %} for more information on how Cypress controls a real browser during end-to-end tests.
 
@@ -214,6 +218,13 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 
 ```shell
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
+```
+
+Cypress will automatically replace the `~` with the user's home directory. So you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for example:
+
+```yml
+environment:
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
 ```
 
 See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.

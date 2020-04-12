@@ -30,11 +30,11 @@ cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 
 **{% fa fa-angle-right %} width** ***(Number)***
 
-Width of viewport in pixels (must be between 20 and 3000).
+Width of viewport in pixels (must be a non-negative, finite number).
 
 **{% fa fa-angle-right %} height** ***(Number)***
 
-Height of viewport in pixels (must be between 20 and 3000).
+Height of viewport in pixels (must be a non-negative, finite number).
 
 **{% fa fa-angle-right %} preset** ***(String)***
 
@@ -42,16 +42,20 @@ A preset dimension to set the viewport. Preset supports the following options:
 
 | Preset | width | height |
 | ----------- | ----- | ------ |
-| `macbook-15`  | 1440  | 900    |
-| `macbook-13`  | 1280  | 800    |
-| `macbook-11`  | 1366  | 768    |
 | `ipad-2`      | 768   | 1024    |
 | `ipad-mini`   | 768   | 1024    |
-| `iphone-6+`   | 414   | 736    |
-| `iphone-6`    | 375   | 667    |
-| `iphone-5`    | 320   | 568    |
-| `iphone-4`    | 320   | 480    |
 | `iphone-3`    | 320   | 480    |
+| `iphone-4`    | 320   | 480    |
+| `iphone-5`    | 320   | 568    |
+| `iphone-6`    | 375   | 667    |
+| `iphone-6+`   | 414   | 736    |
+| `iphone-x`    | 375   | 812    |
+| `iphone-xr`   | 414   | 896    |
+| `macbook-11`  | 1366  | 768    |
+| `macbook-13`  | 1280  | 800    |
+| `macbook-15`  | 1440  | 900    |
+| `samsung-note9` | 414 | 846    |
+| `samsung-s10` | 360   | 760    |
 
 **{% fa fa-angle-right %} orientation** ***(String)***
 
@@ -82,32 +86,33 @@ cy.viewport(1024, 768)
 ### Organize desktop vs mobile tests separately
 
 ```javascript
-describe('Nav Menus', function () {
-  context('720p resolution', function () {
-    beforeEach(function () {
+describe('Nav Menus', () => {
+  context('720p resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a desktop
       // browser with a 720p monitor
       cy.viewport(1280, 720)
     })
 
-    it('displays full header', function () {
+    it('displays full header', () => {
       cy.get('nav .desktop-menu').should('be.visible')
       cy.get('nav .mobile-menu').should('not.be.visible')
     })
   })
 
-  context('iphone-5 resolution', function () {
-    beforeEach(function () {
+  context('iphone-5 resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a mobile browser
       // and ensure our responsive UI is correct
       cy.viewport('iphone-5')
     })
 
-    it('displays mobile menu on click', function () {
+    it('displays mobile menu on click', () => {
       cy.get('nav .desktop-menu').should('not.be.visible')
       cy.get('nav .mobile-menu')
         .should('be.visible')
         .find('i.hamburger').click()
+
       cy.get('ul.slideout-menu').should('be.visible')
     })
   })
@@ -177,7 +182,7 @@ When hovering over each command, Cypress will automatically display the snapshot
 
 By default, until you issue a `cy.viewport()` command, Cypress sets the width to `1000px` and the height to `660px` by default.
 
-You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your `cypress.json`:
+You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -236,6 +241,9 @@ When clicking on `viewport` within the command log, the console outputs the foll
 {% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
 
 {% history %}
+{% url "3.8.0" changelog#3-8-0 %} | Removed max viewport size and lowered min viewport size to `0`.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
+{% url "3.5.0" changelog#3-5-0 %} | Increased max viewport size to `4000`
 {% url "0.9.0" changelog#0-9-0 %} | `cy.viewport()` command added
 {% endhistory %}
 

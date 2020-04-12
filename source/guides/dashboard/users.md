@@ -30,7 +30,7 @@ The permissions for each user role for the Dashboard Service.
 | Permission                                         |  |  | |
 | ---------------------------------------------------|--------|-------|------|
 | See test recordings of private projects            | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
-| See record keys of projects                           | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
+| See record keys of projects                        | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
 | See billing and usage information                  |        | ✅ **Admin**    | ✅ **Owner** |
 | Edit billing information                           |        | ✅ **Admin**    | ✅ **Owner** |
 | See users invited to organization                  |        | ✅ **Admin**    | ✅ **Owner** |
@@ -49,7 +49,7 @@ The permissions for each user role for the Dashboard Service.
 | Invite 'owner' to organization                     |        |        | ✅ **Owner** |
 | Edit 'owner' in organization                       |        |        | ✅ **Owner** |
 | Remove 'owner' from organization                   |        |        | ✅ **Owner** |
-| Add, edit, remove user in default organization |        |        | ✅ **Owner** |
+| Add, edit, remove user in personal organization    |        |        | ✅ **Owner** |
 | Edit organization name                             |        |        | ✅ **Owner** |
 | Delete organization                                |        |        | ✅ **Owner** |
 | Transfer project to another organization           |        |        | ✅ **Owner** |

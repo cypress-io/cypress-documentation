@@ -2,7 +2,7 @@
 title: wrap
 ---
 
-Yield the object passed into `.wrap()`.
+Yield the object passed into `.wrap()`. If the object is a promise, yield its resolved value.
 
 # Syntax
 
@@ -85,6 +85,28 @@ cy
 
 You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the {% url "Logging in using application code" recipes#Logging-In %} recipe for the full example.
 
+### Simple example
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+  // we use setTimeout(...) to simulate async code.
+  setTimeout(() => {
+    resolve({
+      type: 'success',
+      message: 'It worked!'
+    })
+  }, 2500)
+})
+
+it('should wait for promises to resolve', () => {
+  cy.wrap(myPromise).its('message').should('eq', 'It worked!')
+})
+```
+
+{% imgTag /img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif "Wrap of promises" %}
+
+### Application example
+
 ```javascript
 // import application code for logging in
 import { userService } from '../../src/_services/user.service'
@@ -114,6 +136,42 @@ it('can assert against resolved object using .should', () => {
 })
 ```
 
+**Note:** `.wrap()` will not synchronize asynchronous function calls for you. For example, given the following example:
+
+- You have two async functions `async function foo() {...}` and `async function bar() {...}`
+- You need to make sure `foo()` has resolved first before invoking `bar()`
+- `bar()` is also dependent on some data that is created while after calling other Cypress commands.
+
+**{% fa fa-exclamation-triangle red %}** If you wrap the asynchronous functions in `cy.wrap()`, then `bar()` may be called prematurely before the required data is available:
+
+```javascript
+cy.wrap(foo())
+
+cy.get('some-button').click()
+cy.get('some-input').type(someValue)
+cy.get('some-submit-button').click()
+
+// this will execute `bar()` immediately without waiting
+// for other cy.get(...) functions to complete
+cy.wrap(bar()) // DON'T DO THIS
+```
+
+This behavior is due to the function invocation `foo()` and `bar()`, which call the functions immediately to return a Promise.
+
+**{% fa fa-check-circle green %}** If you want `bar()` to execute after `foo()` and the {% url "`cy.get()`" get %} commands, one solution is to chain off the final command using {% url "`.then()`" then %}:
+
+```javascript
+cy.wrap(foo())
+
+cy.get('some-button').click()
+cy.get('some-input').type(someValue)
+cy.get('some-submit-button').click().then(() => {
+  // this will execute `bar()` after the
+  // other cy.get(...) functions complete
+  cy.wrap(bar())
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -122,7 +180,7 @@ it('can assert against resolved object using .should', () => {
 
 ## Assertions {% helper_icon assertions %}
 
-{% assertions retry cy.wrap %}
+{% assertions wrap cy.wrap %}
 
 ## Timeouts {% helper_icon timeout %}
 
@@ -158,4 +216,5 @@ When clicking on the `wrap` command within the command log, the console outputs 
 - {% url `.should()` should %}
 - {% url `.spread()` spread %}
 - {% url `.then()` then %}
-- {% url "Logging in using application code" recipes#Logging-In %} recipe
+- {% url "Logging In: Using application code" recipes#Logging-In %} recipe
+- {% url "Unit Testing: Application Code" recipes#Unit-Testing %} recipe

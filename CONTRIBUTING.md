@@ -12,6 +12,7 @@ Thanks for taking the time to contribute! :smile:
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
   - [Writing the Changelog](#writing-the-changelog)
+  - [Translating](#translating)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)
@@ -101,10 +102,20 @@ To add a page such as a new guide or API documentation:
 
 - Add the new page to the relevant directory under [`source`](/source).
 - Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
-- Add translations for the sidebar link (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- Add translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
-- Copy over the new page to other language translations - Japanese docs in [`source/ja`](/source/ja), Chinese docs in [`source/zh-cn`](/source/zh-cn).
+- **REQUIRED**: Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
+
+### Deleting Pages
+
+To delete a page:
+
+- Delete the page from the relevant directory under [`source`](/source).
+- Remove the link from the the [`sidebar.yml`](/source/_data/sidebar.yml).
+- Remove the translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- **REQUIRED**: Commit the change using git - we auto-remove the doc within each supported language, this auto-generation depends on the file being deleted in git, the build will not work until this is commited.
+- Build the documentation site locally so that you can visually inspect and make sure it was properly deleted.
 
 #### A Worked Example
 
@@ -157,7 +168,8 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 
 1. Add a new language folder in [`source`](/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php).
 1. Add the new language to [`source/_data/languages.yml`](/source/_data/languages.yml).
-1. Add the new language to [`_config.yml`](/_config.yml#L10) under `language`.
+1. Add the new language to [`_config.yml`](/_config.yml#L12) under `language`.
+1. Add the new language index page to [`_config.yml`](/_config.yml#L41) under `alias`.
 1. Copy Markdown and template files in [`source`](/source) folder to the new language folder.
 1. Copy `en.yml` in [`themes/cypress/languages`](/themes/cypress/languages) and rename to the abbreviated language name (all lower case).
 
@@ -166,6 +178,8 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 Our currently supported languages can be found at [`/source/_data/languages.yml`](/source/_data/languages.yml). From here, find the corresponding directory within the [`/source`](/source) directory that matches the language you want to translate.
 
 Translate existing documentation then submit a [pull request](#Pull-Requests) for your change.
+
+**Note:** When adding a new doc file to the English source, the English file will need to be commited to git before the translated file is auto-generated.
 
 If a page does not have a translation, then a pre-start step copies the English file to the language folder. These copies should NOT be committed into the source code. Only when the file has been translated you can add it to the source code with `git add --force source/<language>/.../file.md` and this file will not be overwritten by the English file.
 
@@ -193,11 +207,13 @@ You should push your local changes to your forked GitHub repository and then ope
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
 ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
 
+Every pull request merged into `develop` automatically opens another pull request to `master`, which should be merged automatically using Mergify Bot after the CircleCI tests pass, see issue [#2363](https://github.com/cypress-io/cypress-documentation/issues/2363).
+
 ### Contributor License Agreement
 
 We use a [`cla-assistant.io`](https://cla-assistant.io/) web hook to make sure every contributor assigns the rights of their contribution to Cypress.io. If you want to read the CLA agreement, its text is in this [gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
 
-After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Just click on the link and accept the CLA. That's it!
+After making a [pull request](#pull-requests), the CLA assistant will add a review comment. Click on the link and accept the CLA. That's it!
 
 ## Deployment
 

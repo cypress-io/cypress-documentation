@@ -12,11 +12,11 @@ Just as you would when writing TypeScript files in your project, you will have t
 
 - {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
 - {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Simple Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+- {% url "Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
 
 ## Set up your dev environment
 
-Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" intelligent-code-completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
+Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" IDE-integration#Intelligent-Code-Completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
 ## Configure tsconfig.json
 
@@ -41,6 +41,16 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 
 {% note info %}
 You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %} repo.
+{% endnote %}
+
+{% note warning %}
+You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
+
+VS Code (within a .ts or .js file):
+* Open the command palette (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
+* Type "restart ts" and select the "TypeScript: Restart TS server." option
+
+If that does not work, try restarting the IDE.
 {% endnote %}
 
 ## Types for custom commands
@@ -80,7 +90,7 @@ A nice detailed JSDoc comment above the method type will be really appreciated b
 
 If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
 
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
 ```javascript
 // from your cypress/integration/spec.js
@@ -96,12 +106,29 @@ it('works', () => {
 ### Examples:
 
 - See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
-- You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
+- You can find an example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
 - Example project {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} uses custom commands to avoid boilerplate code.
 
 ## Types for custom assertions
 
 If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" recipes#Fundamentals %} for instructions.
+
+## Types for plugins
+
+You can utilize Cypress's type declarations in your {% url "plugins file" plugins-guide %} by annotating it like the following:
+
+```javascript
+// cypress/plugins/index.js
+
+/// <reference types="cypress" />
+
+/**
+ * @type {Cypress.PluginConfig}
+ */
+module.exports = (on, config) => {
+
+}
+```
 
 ## Additional information
 

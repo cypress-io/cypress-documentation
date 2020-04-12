@@ -175,7 +175,7 @@ expect(user.fail).to.have.thrown('Error')                  // true
 
 # Integration and Extensions
 
-Beyond just integrating these tools together we have also extended and improved collaboration between these tools.
+Beyond integrating these tools together, we have also extended and improved collaboration between these tools.
 
 ***Some examples:***
 
@@ -207,5 +207,6 @@ When you click on a stub or spy, we also output **remarkably** helpful debugging
 
 # See also
 
-- ["Stub navigator API in end-to-end tests"](https://glebbahmutov.com/blog/stub-navigator-api/)
-- ["Shrink the Untestable Code With App Actions And Effects"](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)
+- {% url "Spies, stubs and clocks" https://example.cypress.io/commands/spies-stubs-clocks %} examples
+- {% url "Stub navigator API in end-to-end tests" https://glebbahmutov.com/blog/stub-navigator-api/ %}
+- {% url "Shrink the Untestable Code With App Actions And Effects" https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/ %}

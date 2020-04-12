@@ -71,7 +71,7 @@ Cypress.Cookies.debug(false) // now debugging is turned off
 
 ### Preserve cookies through multiple tests
 
-Cypress gives you a simple interface to automatically preserve cookies for multiple tests. Cypress automatically clears all cookies before each new test starts by default.
+Cypress gives you an interface to automatically preserve cookies for multiple tests. Cypress automatically clears all cookies before each new test starts by default.
 
 By clearing cookies before each test you are guaranteed to always start from a clean slate. Starting from a clean state prevents coupling your tests to one another and prevents situations where mutating something in your application in one test affects another one downstream.
 
@@ -84,8 +84,8 @@ You can use `Cypress.Cookies.preserveOnce()` to preserve cookies through multipl
 There are *likely* better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
 
 ```javascript
-describe('Dashboard', function () {
-  before(function () {
+describe('Dashboard', () => {
+  before () => {
     // log in only once before any of the tests run.
     // your app will likely set some sort of session cookie.
     // you'll need to know the name of the cookie(s), which you can find
@@ -93,25 +93,25 @@ describe('Dashboard', function () {
     cy.login()
   })
 
-  beforeEach(function () {
+  beforeEach () => {
     // before each test, we can automatically preserve the
     // 'session_id' and 'remember_token' cookies. this means they
     // will not be cleared before the NEXT test starts.
     //
     // the name of your cookies will likely be different
-    // this is just a simple example
+    // this is an example
     Cypress.Cookies.preserveOnce('session_id', 'remember_token')
   })
 
-  it('displays stats', function () {
+  it('displays stats', () => {
     // ...
   })
 
-  it('can do something', function () {
+  it('can do something', () => {
     // ...
   })
 
-  it('opens a modal', function () {
+  it('opens a modal', () => {
     // ...
   })
 })
@@ -170,7 +170,7 @@ Cypress.Cookies.defaults({
 
 ```javascript
 Cypress.Cookies.defaults({
-  whitelist: function(cookie) {
+  whitelist: (cookie) => {
     // implement your own logic here
     // if the function returns truthy
     // then the cookie will not be cleared

@@ -45,6 +45,7 @@ Option | Default | Description
 - `httpOnly`
 - `secure`
 - `expiry`
+- `sameSite` *(will only be returned if the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`)*
 
 ### When a cookie matching the name could not be found:
 
@@ -88,6 +89,7 @@ cy.getCookie('session_id')
     // save cookie until we need it
     cookie = c
   })
+
 // some time later, force the "cy.request"
 // to run ONLY after the cookie has been set
 // by placing it inside ".then"
@@ -136,6 +138,10 @@ The commands above will display in the Command Log as:
 When clicking on `getCookie` within the command log, the console outputs the following:
 
 {% imgTag /img/api/getcookie/inspect-cookie-object-properties-in-console.png "Console Log getcookie" %}
+
+{% history %}
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`.
+{% endhistory %}
 
 # See also
 

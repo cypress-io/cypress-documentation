@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    analytics: 分析
     debugging: デバッグする
     variables-and-aliases: 変数と別名
     stubs-spies-and-clocks: スタブ、スパイ、そしてクロック
@@ -50,6 +51,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: 環境変数
     launching-browsers: ブラウザーを起動する
+    cross-browser-testing: クロスブラウザテスト
     custom-commands: カスタムコマンド
     web-security: ウェブセキュリティー
     references: 参考
@@ -60,10 +62,12 @@ sidebar:
     assertions: アサーション
     best-practices: ベストプラクティス
     trade-offs: トレードオフ
+    troubleshooting: Troubleshooting
     changelog: 変更履歴
+    migration-guide: Migration Guide
     roadmap: ロードマップ
     tooling: ツール
-    intelligent-code-completion: コード自動補完
+    IDE-integration: IDE Integration
     plugins-guide: プラグイン
     reporters: レポーター
     typescript-support: TypeScript
@@ -126,6 +130,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -170,9 +175,11 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies
@@ -206,6 +213,7 @@ sidebar:
     podcasts-media: ポッドキャスト
     screencasts-media: スクリーンキャスト
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: 一般的な質問

@@ -16,7 +16,7 @@ title: Variables and Aliases
 New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs.
 
 {% note success 'Do not worry!' %}
-There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
+There are many ways to reference, compare and utilize the objects that Cypress commands yield you.
 
 Once you get the hang of async code you'll realize you can do everything you could do synchronously, without your code doing any backflips.
 
@@ -34,15 +34,10 @@ The first and most important concept you should recognize is...
 {% endnote %}
 
 ```js
-// ...this won't work...
-
-// nope
+// this won't work the way you think it does
 const button = cy.get('button')
-
-// nope
 const form = cy.get('form')
 
-// nope
 button.click()
 ```
 
@@ -110,7 +105,6 @@ cy.get('button').then(($btn) => {
     })
   })
 })
-
 ```
 
 ## Variables
@@ -131,7 +125,7 @@ you clicked button <span id='num'>0</span> times
 // app code
 let count = 0
 
-$('button').on('click', function () {
+$('button').on('click', () => {
   $('#num').text(count += 1)
 })
 ```
@@ -159,13 +153,13 @@ The reason for using `const` is because the `$span` object is mutable. Whenever 
 Using `.then()` callback functions to access the previous command values is great&mdash;but what happens when you're running code in hooks like `before` or `beforeEach`?
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   cy.button().then(($btn) => {
     const text = $btn.text()
   })
 })
 
-it('does not have access to text', function () {
+it('does not have access to text', () => {
   // how do we get access to text ?!?!
 })
 ```
@@ -179,19 +173,19 @@ This code below is just for demonstration.
 {% endnote %}
 
 ```js
-describe('a suite', function () {
+describe('a suite', () => {
   // this creates a closure around
   // 'text' so we can access it
   let text
 
-  beforeEach(function () {
+  beforeEach(() => {
     cy.button().then(($btn) => {
       // redefine text reference
       text = $btn.text()
     })
   })
 
-  it('does have access to text', function () {
+  it('does have access to text', () => {
     // now text is available to us
     // but this is not a great solution :(
     text
@@ -199,12 +193,12 @@ describe('a suite', function () {
 })
 ```
 
-Fortunately, you don't have to make your code do backflips. Cypress makes it easy to handle these situations.
+Fortunately, you don't have to make your code do backflips. With Cypress, we can better handle these situations.
 
 {% note success 'Introducing Aliases' %}
 Aliases are a powerful construct in Cypress that have many uses. We'll explore each of their capabilities below.
 
-At first, we'll use them to make it easy to share objects between your hooks and your tests.
+At first, we'll use them to share objects between your hooks and your tests.
 {% endnote %}
 
 ## Sharing Context
@@ -216,7 +210,7 @@ To alias something you'd like to share use the {% url `.as()` as %} command.
 Let's look at our previous example with aliases.
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the $btn.text() as 'text'
   cy.get('button').invoke('text').as('text')
 })
@@ -231,18 +225,18 @@ Under the hood, aliasing basic objects and primitives utilizes Mocha's shared {%
 Mocha automatically shares contexts for us across all applicable hooks for each test. Additionally these aliases and properties are automatically cleaned up after each test.
 
 ```js
-describe('parent', function () {
-  beforeEach(function () {
+describe('parent', () => {
+  beforeEach(() => {
     cy.wrap('one').as('a')
   })
 
-  context('child', function () {
-    beforeEach(function () {
+  context('child', () => {
+    beforeEach(() => {
       cy.wrap('two').as('b')
     })
 
-    describe('grandchild', function () {
-      beforeEach(function () {
+    describe('grandchild', () => {
+      beforeEach(() => {
         cy.wrap('three').as('c')
       })
 
@@ -263,7 +257,7 @@ The most common use case for sharing context is when dealing with {% url `cy.fix
 Often times you may load a fixture in a `beforeEach` hook but want to utilize the values in your tests.
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the users fixtures
   cy.fixture('users.json').as('users')
 })
@@ -303,7 +297,7 @@ The same principles we introduced many times before apply to this situation. If 
 // yup all good
 cy.fixture('users.json').then((users) => {
   // now we can avoid the alias altogether
-  // and just use a callback function
+  // and use a callback function
   const user = users[0]
 
   // passes
@@ -324,7 +318,7 @@ Instead of using the `this.*` syntax, there is another way to access aliases.
 The {% url `cy.get()` get %} command is capable of accessing aliases with a special syntax using the `@` character:
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the users fixtures
   cy.fixture('users.json').as('users')
 })
@@ -401,7 +395,7 @@ cy.get('@firstTodo').should('have.class', 'editing')
 
 When we reference `@firstTodo`, Cypress checks to see if all of the elements it is referencing are still in the DOM. If they are, it returns those existing elements. If they aren't, Cypress replays the commands leading up to the alias definition.
 
-In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything just works because the new `<li>` is found.
+In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything works because the new `<li>` is found.
 
 {% note warning  %}
 *Usually*, replaying previous commands will return what you expect, but not always. It is recommended that you **alias elements as soon as possible** instead of further down a chain of commands.

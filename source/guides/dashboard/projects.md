@@ -67,22 +67,30 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
-If you're using source control, we recommend that you check your `cypress.json`, including the `projectId`, into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your system but could be as simple as:
+If you're using source control, we recommend that you check your `cypress.json`, including the `projectId`, into source control. If you don't want your `projectId` visible in your source code you can set it as an environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so depends on your system but could be something like:
 
 ```shell
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-## Record key {% fa fa-key %}
+## Record key
 
 The record key is used to authenticate that your project is *allowed* to record tests to the Dashboard Service. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
 
-If you have a public project you should *still* keep your record key secret. If someone knows both your record key and your `projectId`, they could record test runs for your project - which could mix up all of your results and be counted towards your usage during billing.
-
 Think of your record key as the key that enables you to *write and create* runs. However, it has nothing to do with being able to *read or see* runs once they are recorded.
 
-{% note warning  %}
-If your Record Key is accidentally exposed, you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new one" Create-new-record-key %}.
+{% note warning "Exposing a record key" %}
+Anyone that has access to both the `projectId` and the record key of a project can record runs to that organization's project in the Dashboard.
+
+**You would not want people outside of your team running tests because:**
+
+1. **This could drive up the number of tests you've run.** Since Cypress bills based on the number of recorded tests - this means they can use up all allotted tests and there would be consequences to that.
+2. **They can write any data they want to your Cypress Dashboard.** They could edit the test suite so that recorded tests record different things than the project's original intent. This could including visiting different websites and generating videos of visiting those websites, for example.
+
+If a record key is exposed you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new record key" Create-new-record-key %}. Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
+
+You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration#Environment-variables %}.
+
 {% endnote %}
 
 Once you're set up to record test runs, we automatically generate a *Record Key* for the project.

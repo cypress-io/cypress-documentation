@@ -20,7 +20,7 @@ page:
 sidebar:
   guides:
     overview: Visão Geral
-    why-cypress: Por que Cypress?
+    why-cypress: Por que o Cypress?
     getting-started: Introdução
     key-differences: Principais diferenças
     installing-cypress: Instalando o Cypress
@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizações
     users: Usuários
     github-integration: Integração com GitHub
+    analytics: Analytics
     debugging: Debugando
     variables-and-aliases: Variáveis e Aliases
     stubs-spies-and-clocks: Stubs, Spies e Clocks
@@ -50,6 +51,7 @@ sidebar:
     parallelization: Paralelização
     environment-variables: Variáveis de Ambiente
     launching-browsers: Iniciando navegadores
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Comandos Customizados
     web-security: Segurança Web
     references: Referências
@@ -60,10 +62,12 @@ sidebar:
     assertions: Asserções
     best-practices: Boas Práticas
     trade-offs: Trade-offs
+    troubleshooting: Troubleshooting
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roteiro
     tooling: Ferramentas
-    intelligent-code-completion: Conclusão Inteligente de Código
+    IDE-integration: IDE Integration
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
@@ -126,6 +130,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -170,9 +175,11 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies
@@ -206,6 +213,7 @@ sidebar:
     podcasts-media: Podcasts
     screencasts-media: Screencasts
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: Perguntas gerais

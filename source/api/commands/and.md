@@ -126,7 +126,7 @@ cy
 
 Passing a function to `.and()` enables you to assert on the yielded subject. This gives you the opportunity to *massage* what you'd like to assert.
 
-Just be sure *not* to include any code that has side effects in your callback function.
+Be sure *not* to include any code that has side effects in your callback function.
 
 The callback function will be retried over and over again until no assertions within it throw.
 

@@ -13,11 +13,11 @@ title: Screenshots and Videos
 
 # Screenshots
 
-Cypress comes with the ability to take screenshots, whether you are running in interactive mode using `cypress open` or run mode using `cypress run`, even in CI.
+Cypress comes with the ability to take screenshots, whether you are running via `cypress open` or `cypress run`, even in CI.
 
 To take a manual screenshot you can use the {% url `cy.screenshot()` screenshot %} command.
 
-Additionally, Cypress will automatically capture screenshots when a failure happens during runs outside of interactive mode.
+Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress run`. Screenshots on failure are *not* automatically taken during `cypress open`.
 
 This behavior can be turned off by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
@@ -27,11 +27,7 @@ Cypress clears any existing screenshots before `cypress run`. If you do not want
 
 # Videos
 
-Cypress also records videos when running tests.
-
-{% note warning %}
-Video recording is currently only supported when running Cypress from the Electron browser. {% issue 1767 "See this issue" %} for more information.
-{% endnote %}
+Cypress records a video for each spec file when running tests.
 
 Video recording can be turned off entirely by setting {% url `video` configuration#Videos %} to `false` from within your configuration.
 
@@ -45,7 +41,7 @@ Cypress clears any existing videos before a `cypress run`. If you do not want to
 
 ## Video encoding
 
-If your spec files have a long run duration, you might notice a time gap between a finished spec and a new spec starting during `cypress run`. During this time, Cypress is encoding the captured video and possibly uploading it to the Dashboard. 
+If your spec files have a long run duration, you might notice a time gap between a finished spec and a new spec starting during `cypress run`. During this time, Cypress is encoding the captured video and possibly uploading it to the Dashboard.
 
 If the machine is encoding the video slowly (which is often the case for virtual machines that use a single core), the encoding might take a long time. In this case, you can modify the {% url `videoCompression` configuration#Videos %} configuration to make the encoding a little bit faster. Here are some common scenarios:
 

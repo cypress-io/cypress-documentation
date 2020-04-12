@@ -14,6 +14,7 @@ language:
   - zh-cn
   - ja
   - pt-br
+  - ru
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -37,12 +38,18 @@ skip_render:
 # can also do outside page links here
 # plugins/index.html: https://github.com/cypress/cypress/wiki/Plugins
 alias:
+  # indices
   index.html: guides/overview/why-cypress.html
+  zh-cn/: zh-cn/guides/overview/why-cypress.html
+  ja/: ja/guides/overview/why-cypress.html
+  pt-br/: pt-br/guides/overview/why-cypress.html
+  ru/: ru/guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
-  guides.html/: guides/overview/why-cypress.html
+  guides.html: guides/overview/why-cypress.html
   guides/references/type/: api/commands/type.html
-  guides/integrating-cypress/features.html/: guides/guides/continuous-integration.html
+  guides/references/known-issues.html: 404.html
+  guides/integrating-cypress/features.html: guides/guides/continuous-integration.html
   guides/network-requests-xhr/: guides/guides/network-requests.html
   guides/issuing-commands/: guides/core-concepts/introduction-to-cypress.html#Subject-Management
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
@@ -145,8 +152,9 @@ alias:
 
   continuous-integration.html: guides/guides/continuous-integration.html
 
-  # for chinese translation
-  zh-cn/: zh-cn/guides/overview/why-cypress.html
+  # obsolete content
+  dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html
+  guides/core-concepts/launching-browsers.html: guides/guides/launching-browsers.html
 
 
 # Include/Exclude Files/Folders

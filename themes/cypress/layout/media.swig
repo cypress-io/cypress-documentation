@@ -17,9 +17,12 @@
                     <li>
                       <h3>
                         <a href="{{course.url}}" target="_blank" rel="noopener noreferrer">{{ course.title }}</a>
+                        {% if course.free %}
+                          <span class="badge badge-pill badge-primary">Free</span>
+                        {% endif %}
                       </h3>
                       <p>
-                        Published 
+                        Published
                         {% if course.sourceUrl or course.sourceName %}
                           on
                           {% if course.sourceUrl %}
@@ -46,7 +49,21 @@
                   {% endfor %}
                 </ul>
               {% endif %}
-              
+
+              {% if page.dataType === 'projects' %}
+                <p>Open source projects that use Cypress to run their end-to-end tests.</p>
+                <ul class="projects-list">
+                  {% for project in site.data.projects %}
+                    <li>
+                      <h3>
+                        <a href="{{project.url}}" target="_blank" rel="noopener noreferrer">{{ project.name }}</a>
+                      </h3>
+                      <p>{{ project.description }}</p>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
               {% if site.data[page.dataType].small %}
                 <div class="small-media">
                   <ul>
@@ -86,7 +103,7 @@
                       </a>
                     {% endif %}
                     <p>
-                      Published 
+                      Published
                       {% if media.sourceUrl or media.sourceName %}
                         on
                         {% if media.sourceUrl %}

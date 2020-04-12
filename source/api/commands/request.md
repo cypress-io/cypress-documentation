@@ -37,11 +37,10 @@ cy.visit('http://localhost:8080/app')
 cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
   ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of `cypress.json`.
+2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of of your {% url "configuration file" configuration %}.
 
   ```json
   // cypress.json
-
   {
     "baseUrl": "http://localhost:1234"
   }
@@ -131,12 +130,12 @@ You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` gl
 `cy.request()` is great for talking to an external endpoint before your tests to seed a database.
 
 ```javascript
-beforeEach(function () {
+beforeEach(() => {
   cy.request('http://localhost:8080/db/seed')
 })
 ```
 
-### Issue a simple HTTP request
+### Issue an HTTP request
 
 Sometimes it's quicker to test the contents of a page rather than {% url `cy.visit()` visit %} and wait for the entire page and all of its resources to load.
 
@@ -201,7 +200,7 @@ cy.request({
 
 Oftentimes, once you have a proper e2e test around logging in, there's no reason to continue to `cy.visit()` the login and wait for the entire page to load all associated resources before running any other commands. Doing so can slow down our entire test suite.
 
-Using `cy.request()`, we can bypass all of this because it automatically gets and sets cookies just as if the requests had come from the browser.
+Using `cy.request()`, we can bypass all of this because it automatically gets and sets cookies as if the requests had come from the browser.
 
 ```javascript
 cy.request({
@@ -214,7 +213,7 @@ cy.request({
   }
 })
 
-// just to prove we have a session
+// to prove we have a session
 cy.getCookie('cypress-session-cookie').should('exist')
 ```
 
@@ -233,7 +232,7 @@ This is useful when you're polling a server for a response that may take awhile 
 All we're really doing here is creating a recursive function. Nothing more complicated than that.
 
 ```js
-// just a regular ol' function folks
+// a regular ol' function folks
 function req () {
   cy
     .request(...)
@@ -286,9 +285,11 @@ Before sending the HTTP request, we automatically attach cookies that would have
 
 In other words, `cy.request()` transparently performs all of the underlying functions as if it came from the browser.
 
-## `cy.request()` cannot be used to debug {% url `cy.server()` server %} and {% url `cy.route()` route %}
+## {% url `cy.server()` server %} and {% url `cy.route()` route %}
 
 ### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`
+
+`cy.server()` and any configuration passed to {% url `cy.server()` server %} has no effect on `cy.request()`.
 
 The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 

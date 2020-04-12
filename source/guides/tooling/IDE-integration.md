@@ -1,34 +1,54 @@
 ---
-title: Intelligent Code Completion
+title: IDE Integration
 ---
 
-# Writing Tests
+# Extensions & Plugins
 
-## Features
+There are many third-party IDE extensions and plugins to help integrate your IDE with Cypress.
+
+## Visual Studio Code
+
+- {% url "Cypress Fixture-IntelliSense" https://marketplace.visualstudio.com/items?itemName=JosefBiehler.cypress-fixture-intellisense %}: Supports your {% url "`cy.fixture()`" fixture %} and {% url "`cy.route(..., "fixture:")`" route %} commands by providing intellisense for existing fixtures.
+- {% url "Cypress Helper" https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper %}: Various helpers and commands for integration with Cypress.
+- {% url "Cypress Snippets" https://marketplace.visualstudio.com/items?itemName=andrew-codes.cypress-snippets %}: Useful Cypress code snippets.
+- {% url "Open Cypress" https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress %}: Allows you to open Cypress specs and single `it()` blocks directly from VS Code.
+- {% url "Test Utils" https://marketplace.visualstudio.com/items?itemName=chrisbreiding.test-utils %}: Easily add or remove `.only` and `.skip` modifiers with keyboard shortcuts or the command palette.
+
+## IntelliJ Platform
+
+Compatible with IntelliJ IDEA, AppCode, CLion, GoLand, PhpStorm, PyCharm, Rider, RubyMine, and WebStorm.
+
+- {% url "Intellij-Cypress" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %}: Integrates Cypress under the common Intellij test framework.
+
+# Intelligent Code Completion
+
+## Writing Tests
+
+### Features
 
 IntelliSense is available for Cypress. It offers intelligent code suggestions directly in your IDE while writing tests. A typical IntelliSense popup shows command definition, a code example and a link to the full documentation page.
 
-### Autocomplete while typing Cypress commands
+#### Autocomplete while typing Cypress commands
 
 {% video local /img/snippets/intellisense-cypress-assertion-matchers.mp4 %}
 
-### Signature help when writing and hovering on Cypress commands
+#### Signature help when writing and hovering on Cypress commands
 
 {% video local /img/snippets/intellisense-method-signature-examples.mp4 %}
 
-### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
+#### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
 
 {% video local /img/snippets/intellisense-assertion-chainers.mp4 %}
 
-## Set up in your Dev Environment
+### Set up in your Dev Environment
 
 This document assumes you have {% url "installed Cypress" installing-cypress %}.
 
 Cypress comes with TypeScript {% url "type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} included. Modern text editors can use these type declarations to show IntelliSense inside spec files.
 
-### Triple slash directives
+#### Triple slash directives
 
-The simplest way to see IntelliSense when typing a Cypress command or assertion is to add a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file. This will turn the IntelliSense on a per file basis. Just copy the comment line below and paste it into your spec file.
+The simplest way to see IntelliSense when typing a Cypress command or assertion is to add a {% url "triple-slash directive" "http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html" %} to the head of your JavaScript or TypeScript testing file. This will turn the IntelliSense on a per file basis. Copy the comment line below and paste it into your spec file.
 
 ```js
 /// <reference types="Cypress" />
@@ -50,7 +70,7 @@ See the {% url `cypress-example-todomvc` https://github.com/cypress-io/cypress-e
 
 If the triple slash directive does not work, please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get {% url "TypeScript support" typescript-support %} and intelligent code completion configured in your developer environment first. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
-### Reference type declarations via `jsconfig`
+#### Reference type declarations via `jsconfig`
 
 Instead of adding triple slash directives to each JavaScript spec file, some IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the project. In that file, you can include the Cypress module and your test folders.
 
@@ -65,7 +85,7 @@ Instead of adding triple slash directives to each JavaScript spec file, some IDE
 
 The Intelligent Code Completion should now show help for `cy` commands inside regular JavaScript spec files.
 
-### Reference type declarations via `tsconfig`
+#### Reference type declarations via `tsconfig`
 
 Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %} with the following configuration should get intelligent code completion working.
 
@@ -84,25 +104,25 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 }
 ```
 
-# Configuration
+## Configuration
 
-## Features:
+### Features:
 
-When editing the {% url "`cypress.json`" configuration %} file, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
+When editing the {% url "configuration file (`cypress.json` by default)" configuration %}, you can use our {% url "json schema file" https://on.cypress.io/cypress.schema.json %} to get intelligent tooltips in your IDE for each configuration property.
 
-### Property help when writing and hovering on configuration keys
+#### Property help when writing and hovering on configuration keys
 
 {% video local /img/snippets/intellisense-cypress-config-tooltips.mp4 %}
 
-### Properties list with intelligent defaults
+#### Properties list with intelligent defaults
 
 {% video local /img/snippets/intellisense-config-defaults.mp4 %}
 
-## Set up in your Dev Environment:
+### Set up in your Dev Environment:
 
 Intelligent code completion using JSON schemas is supported by default in {% url "Visual Studio Code" https://code.visualstudio.com/ %} and {% url "Visual Studio" https://www.visualstudio.com/ %}. All other editors will require extra configuration or plugins for JSON schema support.
 
-To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property.
+To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you can open `Preferences / Settings / User Settings` and add the `json.schemas` property. Make sure to replace `cypress.json` with your configuration file if not the default.
 
 ```json
 {
@@ -117,6 +137,12 @@ To set up in {% url "Visual Studio Code" https://code.visualstudio.com/ %} you c
 }
 ```
 
-# See also
+Or you can directly add a `$schema` key to your Cypress configuration file, which is a great way to share the schema with all collaborators of the project.
+
+```json
+"$schema": "https://on.cypress.io/cypress.schema.json",
+```
+
+## See also
 
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}

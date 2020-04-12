@@ -56,14 +56,14 @@ After adding a new project, Cypress will automatically scaffold out a suggested 
     - index.js
 ```
 
-***Configuring Folder Structure***
+## Configuring Folder Structure
 
-While Cypress allows to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
+While Cypress allows you to configure where your tests, fixtures, and support files are located, if you're starting your first project, we recommend you use the above structure.
 
-You can modify the folder configuration in your `cypress.json`. See {% url 'configuration' configuration#Folders-Files %} for more detail.
+You can modify the folder configuration in your configuration file. See {% url 'configuration' configuration#Folders-Files %} for more detail.
 
 {% note info "What files should I add to my '.gitignore file' ?" %}
-Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your `cypress.json` or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
+Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your configuration file (`cypress.json` by default) or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
 {% endnote %}
 
 ## Fixture Files
@@ -101,7 +101,7 @@ The initial imported plugins file can be {% url 'configured to another file' con
 
 ## Support file
 
-By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file . We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
 The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
 
@@ -110,7 +110,7 @@ The support file is a great place to put reusable behavior such as Custom Comman
 You can define your behaviors in a `beforeEach` within any of the `cypress/support` files:
 
 ```javascript
-beforeEach(function () {
+beforeEach(() => {
   cy.log('I run before every test in every spec file!!!!!!')
 })
 ```
@@ -165,21 +165,21 @@ function multiply (a, b) {
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit test our math functions', function() {
-  context('math', function() {
-    it('can add numbers', function() {
+describe('Unit test our math functions', () => {
+  context('math', () => {
+    it('can add numbers', () => {
       expect(add(1, 2)).to.eq(3)
     })
 
-    it('can subtract numbers', function() {
+    it('can subtract numbers', () => {
       expect(subtract(5, 12)).to.eq(-7)
     })
 
-    specify('can divide numbers', function() {
+    specify('can divide numbers', () => {
       expect(divide(27, 9)).to.eq(3)
     })
 
-    specify('can multiply numbers', function() {
+    specify('can multiply numbers', () => {
       expect(multiply(5, 4)).to.eq(20)
     })
   })
@@ -194,20 +194,20 @@ Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}
 These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
-describe('Hooks', function() {
-  before(function() {
+describe('Hooks', () => {
+  before(() => {
     // runs once before all tests in the block
   })
 
-  after(function() {
+  after(() => {
     // runs once after all tests in the block
   })
 
-  beforeEach(function() {
+  beforeEach(() => {
     // runs before each test in the block
   })
 
-  afterEach(function() {
+  afterEach(() => {
     // runs after each test in the block
   })
 })
@@ -247,7 +247,7 @@ function fizzbuzz (num) {
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit Test FizzBuzz', function () {
+describe('Unit Test FizzBuzz', () => {
   function numsExpectedToEq (arr, expected) {
     // loop through the array of nums and make
     // sure they equal what is expected
@@ -256,25 +256,24 @@ describe('Unit Test FizzBuzz', function () {
     })
   }
 
-  it.only('returns "fizz" when number is multiple of 3', function () {
+  it.only('returns "fizz" when number is multiple of 3', () => {
     numsExpectedToEq([9, 12, 18], 'fizz')
   })
 
-  it('returns "buzz" when number is multiple of 5', function () {
+  it('returns "buzz" when number is multiple of 5', () => {
     numsExpectedToEq([10, 20, 25], 'buzz')
   })
 
-  it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
+  it('returns "fizzbuzz" when number is multiple of both 3 and 5', () => {
     numsExpectedToEq([15, 30, 60], 'fizzbuzz')
   })
 })
-
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
-it.skip('returns "fizz" when number is multiple of 3', function () {
+it.skip('returns "fizz" when number is multiple of 3', () => {
   numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
@@ -284,9 +283,9 @@ it.skip('returns "fizz" when number is multiple of 3', function () {
 You can dynamically generate tests using JavaScript.
 
 ```javascript
-describe('if your app uses jQuery', function () {
+describe('if your app uses jQuery', () => {
   ['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
-    it('triggers event: ' + event, function () {
+    it('triggers event: ' + event, () => {
       // if your app uses jQuery, then we can trigger a jQuery
       // event that causes the event callback to fire
       cy
@@ -312,18 +311,18 @@ The code above will produce a suite with 4 tests:
 Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertions. {% url "Read more about assertions." assertions %}
 
 ```javascript
-it('can add numbers', function() {
+it('can add numbers', () => {
   expect(add(1, 2)).to.eq(3)
 })
 
-it('can subtract numbers', function() {
+it('can subtract numbers', () => {
   assert.equal(subtract(5, 12), -7, 'these numbers are equal')
 })
 ```
 
 # Watching tests
 
-When running in interactive mode using {% url "`cypress open`" command-line#cypress-open %} Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
+When running in using {% url "`cypress open`" command-line#cypress-open %}, Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.
 
 This makes for a productive development experience because you can add and edit tests as you're implementing a feature and the Cypress user interface will always reflect the results of your latest edits.
 
@@ -335,14 +334,14 @@ Remember to use {% url `.only` writing-and-organizing-tests#Excluding-and-Includ
 
 ### Files
 
-- {% url `cypress.json` configuration %}
-- {% url `cypress.env.json` environment-variables %}
+- {% url "Configuration file (`cypress.json`) by default" configuration %}
+- {% url "`cypress.env.json`" environment-variables %}
 
 ### Folders
 
-- `cypress/integration/`
-- `cypress/support/`
-- `cypress/plugins/`
+- Integration directory (`cypress/integration/` by default)
+- Support directory (`cypress/support/` by default)
+- Plugins directory (`cypress/plugins/` by default)
 
 The folder, the files within the folder, and all child folders and their files (recursively) are watched.
 

@@ -46,6 +46,7 @@ Option |Default | Description
 `capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
 `clip` | `null` | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
+`padding` | `null` | Padding used to alter the dimensions of a screenshot of an element. It can either be a number, or an array of up to four numbers [using CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). This property is only applied for element screenshots and is ignored for all other types.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
 `onBeforeScreenshot` | `null` | A callback before a non-failure screenshot is taken. When capturing screenshots of an element, the argument is the element being captured. For other screenshots, the argument is the `document`.
@@ -68,8 +69,8 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ```javascript
 // cypress/integration/users.spec.js
 
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     // screenshot will be saved as
     // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
@@ -111,6 +112,12 @@ cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
 
 ```javascript
 cy.get('.post').first().screenshot()
+```
+
+### Take a screenshot of the first `.post` element with 10px of padding around it
+
+```javascript
+cy.get('.post').first().screenshot({ padding: 10 })
 ```
 
 ### Chain off the screenshot to click the element captured
@@ -157,8 +164,8 @@ Screenshot naming follows these rules:
 For example, given a spec file located at `cypress/integration/users/login_spec.js`:
 
 ```javascript
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
@@ -242,6 +249,10 @@ The commands above will display in the Command Log as:
 When clicking on `screenshot` within the command log, the console outputs the following:
 
 {% imgTag /img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png "Console Log screenshot" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added support for option `padding`.
+{% endhistory %}
 
 # See also
 

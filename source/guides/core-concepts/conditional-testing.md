@@ -45,7 +45,7 @@ A human also has intuition. If you click a button and see a loading spinner, you
 
 A robot has no intuition - it will do exactly as it is programmed to do.
 
-To illustrate this, let's take a very simple example of trying to conditionally test unstable state.
+To illustrate this, let's take a straightforward example of trying to conditionally test unstable state.
 
 ## The DOM is unstable
 
@@ -69,7 +69,7 @@ setTimeout(() => {
 
 ```js
 // your cypress test code
-it('does something different based on the class of the button', function () {
+it('does something different based on the class of the button', () => {
   // RERUN THIS TEST OVER AND OVER AGAIN
   // AND IT WILL SOMETIMES BE TRUE, AND
   // SOMETIMES BE FALSE.
@@ -98,7 +98,7 @@ Let's explore a few examples.
 
 ## Server side rendering
 
-If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can easily do conditional testing on the DOM!
+If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can do conditional testing on the DOM!
 
 Why? Because if the DOM is not going to change after the `load` event occurs, then it can accurately represent a stable state of truth.
 
@@ -114,7 +114,7 @@ This is difficult to do (if not impossible) without making changes to your appli
 
 In other words, you cannot do conditional testing safely if you want your tests to run 100% consistently.
 
-But do not fret - there are better workarounds to still achieve conditional testing **without** relying on the DOM. You just have to *anchor* yourself to another piece of truth that is not mutable.
+But do not fret - there are better workarounds to still achieve conditional testing **without** relying on the DOM. You have to *anchor* yourself to another piece of truth that is not mutable.
 
 # The strategies
 
@@ -134,7 +134,7 @@ Let's explore some examples of conditional testing that will pass or fail 100% o
 
 In this example let's assume you visit your website and the content will be different based on which A/B campaign your server decides to send. Perhaps it is based on geo-location, IP address, time of day, locale, or other factors that are difficult to control. How can you write tests in this manner?
 
-Easily: control which campaign gets sent, or provide a reliable means to know which one it is.
+Control which campaign gets sent, or provide a reliable means to know which one it is.
 
 ### Use URL query params:
 
@@ -156,7 +156,7 @@ Now there is not even a need to do conditional testing since you are able to kno
 
 ### Use the server:
 
-Alternatively, if your server saves the campaign with a session, you could just ask your server to tell you which campaign you are on.
+Alternatively, if your server saves the campaign with a session, you could ask your server to tell you which campaign you are on.
 
 ```js
 // this sends us the session cookies
@@ -175,7 +175,7 @@ cy.request('https://app.com/me')
 
 ### Use session cookies:
 
-Perhaps an even easier way to test this is if your server sent the campaign in a session cookie that you could read off.
+Another way to test this is if your server sent the campaign in a session cookie that you could read off.
 
 ```js
 cy.visit('https://app.com')
@@ -220,7 +220,7 @@ cy.visit('https://app.com?wizard=0')
 cy.visit('https://app.com?wizard=1')
 ```
 
-We would likely just need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
+We would likely need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
 
 ### Use Cookies to know ahead of time:
 
@@ -243,7 +243,7 @@ cy.getCookie('showWizard')
 
 ### Use your server or database:
 
-If you store and/or persist whether to show the wizard on the server, then just ask it.
+If you store and/or persist whether to show the wizard on the server, then ask it.
 
 ```js
 cy.visit('https://app.com')
@@ -261,7 +261,7 @@ cy.request('https://app.com/me')
   .click()     // more commands here
 ```
 
-Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
+Alternatively, if you are creating users, it might take less time to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.
 
 ### Embed data in DOM:
 
@@ -341,7 +341,7 @@ Cypress is built around creating **reliable tests**. The secret to writing good 
 
 Doing conditional testing adds a huge problem - that the test writers themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.
 
-If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
+If you are not sure if you have written a potentially flaky test, there is a way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you've written a good test, it will pass or fail 100% of the time.
 
 ```js
 Cypress._.times(100, (i) => {
@@ -379,17 +379,21 @@ cy.get('body').then(($body) => {
 
 Many of our users ask how they can recover from failed commands.
 
-> If I had error handling, I could just try to find X and if X fails go find Y
+> If I had error handling, I could try to find X and if X fails go find Y
 
 Because error handling is a common idiom in most programming languages, and especially in Node, it seems reasonable to expect to do that in Cypress.
 
-However, this is really the same question as asking to do conditional testing just wrapped up in a slightly different implementation detail.
+However, this is really the same question as asking to do conditional testing, but wrapped up in a slightly different implementation detail.
 
 For instance you may want to do this:
 
-**The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+{% note danger %}
+{% fa fa-exclamation-triangle red %} The following code is not valid.
+{% endnote %}
 
 ```js
+//! You cannot add error handling to Cypress commands
+//! This code is just for demonstration purposes
 cy.get('button').contains('hello')
   .catch((err) => {
     // oh no the button wasn't found
@@ -408,10 +412,13 @@ Enabling this would mean that for every single command, it would recover from er
 
 Let's reimagine our "Welcome Wizard" example from before.
 
-**The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.**
+{% note danger %}
+{% fa fa-exclamation-triangle red %} The following code is not valid.
+{% endnote %}
 
 ```js
-// great error recovery code
+//! You cannot add error handling to Cypress commands.
+//! This code is just for demonstration purposes
 function keepCalmAndCarryOn () {
   cy.get(...).should(...).click()
 }

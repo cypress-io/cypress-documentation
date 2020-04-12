@@ -69,7 +69,7 @@ npx cypress run --record --spec "cypress/integration/my-spec.js"
 
 ## `cypress run`
 
-Runs Cypress tests to completion. By default will run all tests headlessly in the `Electron` browser.
+Runs Cypress tests to completion. By default, `cypress run` will run all tests headlessly in the Electron browser.
 
 ```shell
 cypress run [options]
@@ -79,12 +79,14 @@ cypress run [options]
 
 Option | Description
 ------ |  ---------
-`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-run-browser-lt-browser-name-or-path-gt %}
+`--browser`, `-b`  | {% urlHash "Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path." cypress-run-browser-lt-browser-name-or-path-gt %}
 `--ci-build-id` | {% urlHash "Specify a unique identifier for a run to enable grouping or parallelization." cypress-run-ci-build-id-lt-id-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
+`--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
 `--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
-`--headed`  | {% urlHash "Display the Electron browser instead of running headlessly" cypress-run-headed %}
+`--headed`  | {% urlHash "Displays the browser instead of running headlessly (default for Firefox and Chromium-based browsers)" cypress-run-headed %}
+`--headless` | {% urlHash "Hide the browser instead of running headed (default for Electron)" cypress-run-headless %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
@@ -95,6 +97,7 @@ Option | Description
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
 `--spec`, `-s`  | {% urlHash "Specify the spec files to run" cypress-run-spec-lt-spec-gt %}
+`--tag`, `-t`  | {% urlHash "Identify a run with a tag or tags" cypress-run-spec-lt-spec-gt %}
 
 ### `cypress run --browser <browser-name-or-path>`
 
@@ -102,7 +105,9 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to `chrome`, `chromium`, `edge`, `electron`, `firefox` to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+
+To launch non-stable browsers, add a colon and the desired release channel. For example, to launch Chrome Canary, use `chrome:canary`.
 
 You can also choose a browser by supplying a path:
 
@@ -110,9 +115,7 @@ You can also choose a browser by supplying a path:
 cypress run --browser /usr/bin/chromium
 ```
 
-Currently, only browsers in the Chrome family are supported.
-
-{% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble with browser detection? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -128,15 +131,29 @@ Only valid when providing a `--group` or `--parallel` flag. Read our {% url "par
 
 ### `cypress run --config <config>`
 
-Read more about {% url 'environment variables' environment-variables %} and {% url 'configuration' configuration %}.
+Set {% url 'configuration' configuration %} values. Separate multiple values with a comma. The values set here override any values set in your configuration file.
 
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
+### `cypress run --config-file <config-file>`
+
+You can specify a path to a JSON file where {% url 'configuration' configuration %} values are set. This defaults to `cypress.json`.
+
+```shell
+cypress run --config-file tests/cypress-config.json
+```
+
+You can pass `false` to disable the use of a configuration file entirely.
+
+```shell
+cypress run --config-file false
+```
+
 ### `cypress run --env <env>`
 
-Pass a single string variable.
+Set Cypress {% url 'environment variables' environment-variables %}.
 
 ```shell
 cypress run --env host=api.dev.local
@@ -165,11 +182,11 @@ cypress run --group develop-env
 You can add multiple groups to the same run by passing a different name. This can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*
+cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*
+cypress run --group user-tests --spec 'cypress/integration/user/**/*'
 ```
 
 Specifying the `--ci-build-id` may also be necessary.
@@ -180,10 +197,20 @@ Specifying the `--ci-build-id` may also be necessary.
 
 By default, Cypress will run tests in Electron headlessly.
 
-Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
+Passing `--headed` will force Electron to be shown. This matches how you run Electron via `cypress open`.
 
 ```shell
 cypress run --headed
+```
+
+### `cypress run --headless`
+
+Cypress will run tests in Chrome and Firefox headed by default.
+
+Passing `--headless` will force the browser to be hidden.
+
+```shell
+cypress run --headless --browser chrome
 ```
 
 ### `cypress run --no-exit`
@@ -219,10 +246,6 @@ cypress run --port 8080
 ```
 
 ### `cypress run --project <project-path>`
-
-By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
-
-This enables you to install Cypress in a top level `node_modules` folder but run Cypress in a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
 
 To see this in action we've set up an {% url 'example repo to demonstrate this here' https://github.com/cypress-io/cypress-test-nested-projects %}.
 
@@ -288,9 +311,27 @@ Run tests specifying multiple test files to run.
 cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
 ```
 
+### `cypress run --tag <tag>`
+
+Add a tag or tags to the recorded run. This can be used to help identify separate run when displayed in the Dashboard.
+
+```shell
+cypress run  --record --tag "staging"
+```
+
+Give a run multiple tags.
+
+```shell
+cypress run --record --tag "production,nightly"
+```
+
+The Dashboard will display any tags sent with the appropriate run.
+
+{% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
+
 ## `cypress open`
 
-Opens the Cypress Test Runner in interactive mode.
+Opens the Cypress Test Runner.
 
 ```shell
 cypress open [options]
@@ -298,12 +339,13 @@ cypress open [options]
 
 ### Options:
 
-Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in `cypress.json`.
+Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in your configuration file (`cypress.json` by default).
 
 Option | Description
 ------ | ---------
-`--browser`, `-b`  | {% urlHash "Specify a different browser to run tests in" cypress-open-browser-lt-browser-path-gt %}
+`--browser`, `-b`  | {% urlHash "Path to a custom browser to be added to the list of available browsers in Cypress" cypress-open-browser-lt-browser-path-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-open-config-lt-config-gt %}
+`--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-open-config-file-lt-config-file-gt %}
 `--detached`, `-d` | Open Cypress in detached mode
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-open-env-lt-env-gt %}
 `--global` | {% urlHash "Run in global mode" cypress-open-global %}
@@ -321,20 +363,52 @@ The "browser" option allows you to specify the path to a custom browser to use w
 cypress open --browser /usr/bin/chromium
 ```
 
-Currently, only browsers in the Chrome family are supported.
+If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
+
+{% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress open --config <config>`
 
+Set {% url 'configuration' configuration %} values. Separate multiple values with a comma. The values set here override any values set in your configuration file.
+
 ```shell
-cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
+cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+### `cypress open --config-file <config-file>`
+
+You can specify a path to a JSON file where {% url 'configuration' configuration %} values are set. This defaults to `cypress.json`.
+
+```shell
+cypress open --config-file tests/cypress-config.json
+```
+
+You can pass `false` to disable the use of a configuration file entirely.
+
+```shell
+cypress open --config-file false
 ```
 
 ### `cypress open --env <env>`
 
+Set Cypress {% url 'environment variables' environment-variables %}.
+
 ```shell
 cypress open --env host=api.dev.local
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically converted from strings.
+
+```shell
+cypress open --env host=api.dev.local,port=4222
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress open --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
 ### `cypress open --global`
@@ -353,15 +427,64 @@ cypress open --port 8080
 
 ### `cypress open --project <project-path>`
 
-By default, Cypress expects your `cypress.json` to be found where your `package.json` is. However, you can point Cypress to run in a different location.
-
-This enables you to install Cypress in a top level `node_modules` folder but run Cypress in a nested folder. This is also helpful when you have multiple Cypress projects in your repo.
-
 To see this in action we've set up an {% url 'example repo to demonstrate this here' https://github.com/cypress-io/cypress-test-nested-projects %}.
 
 ```shell
 cypress open --project ./some/nested/folder
 ```
+
+## `cypress info`
+
+Prints information about Cypress and the current environment such as:
+
+- A list of browsers Cypress detected on the machine.
+- Any environment variables that control {% url 'proxy configuration' proxy-configuration %}.
+- Any environment variables that start with the `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security).
+- The location where run-time data is stored.
+- The location where the Cypress binary is cached.
+- Operating system information.
+- System memory including free space.
+
+```shell
+cypress info
+Displaying Cypress info...
+
+Detected 2 browsers installed:
+
+1. Chrome
+  - Name: chrome
+  - Channel: stable
+  - Version: 79.0.3945.130
+  - Executable: /path/to/google-chrome
+  - Profile: /user/profile/folder/for/google-chrome
+
+2. Firefox Nightly
+  - Name: firefox
+  - Channel: nightly
+  - Version: 74.0a1
+  - Executable: /path/to/firefox
+
+Note: to run these browsers, pass <name>:<channel> to the '--browser' field
+
+Examples:
+- cypress run --browser firefox:nightly
+- cypress run --browser chrome
+
+Learn More: https://on.cypress.io/launching-browsers
+
+Proxy Settings: none detected
+Environment Variables: none detected
+
+Application Data: /path/to/app/data/cypress/cy/development
+Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
+Binary Caches: /user/profile/path/.cache/Cypress
+
+Cypress Version: 4.1.0
+System Platform: darwin (19.2.0)
+System Memory: 17.2 GB free 670 MB
+```
+
+**Tip:** set {% url "DEBUG environment variable" troubleshooting#Print-DEBUG-logs %} to `cypress:launcher` when running `cypress info` to troubleshoot browser detection.
 
 ## `cypress verify`
 
@@ -398,11 +521,17 @@ cypress cache path
 
 ### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+Print all existing installed versions of Cypress. The output will be a table with cached versions and the last time the binary was used by the user, determined from the file's access time.
 
 ```shell
 cypress cache list
-3.0.0 3.0.1 3.0.2
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
 ```
 
 ### `cypress cache clear`
@@ -412,6 +541,7 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 ```shell
 cypress cache clear
 ```
+
 
 # Debugging commands
 

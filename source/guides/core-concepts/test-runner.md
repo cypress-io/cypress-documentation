@@ -35,19 +35,25 @@ Each command, assertion, or error, when clicked on, displays extra information i
 
 {% imgTag /img/guides/clicking-commands.png "Click to console.log and to pin" %}
 
+# Errors
+
+Cypress prints several pieces of information when an error occurs during a Cypress test.
+
+{% partial errors_anatomy %}
+
 # Instrument Panel
 
 For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
 
-## Routes:
+## Routes
 
 {% imgTag /img/guides/instrument-panel-routes.png "Routes Instrument Panel" %}
 
-## Stubs:
+## Stubs
 
 {% imgTag /img/guides/instrument-panel-stubs.png "Stubs Instrument Panel" %}
 
-## Spies:
+## Spies
 
 {% imgTag /img/guides/instrument-panel-spies.png "Spies Instrument Panel" %}
 
@@ -154,3 +160,20 @@ Type in text to see which element it matches. Note that {% url `cy.contains()` c
 If you would like to interact with your app while the Selector Playground is open, the element highlighting might get in the way. Toggling the highlighting off will allow you to interact with your app more easily.
 
 {% imgTag /img/guides/test-runner/turn-off-highlight-in-selector-playground.gif "Turn off highlighting" %}
+
+# Keyboard Shortcuts
+
+There are keyboard shortcuts to quickly perform common actions from within the Test Runner.
+
+| Key      | Action |
+| ----------- | ----------- |
+| `r`      | Rerun tests       |
+| `s`      | Stop tests        |
+| `f`      | Bring focus to 'specs' window  |
+
+{% imgTag /img/guides/test-runner/keyboard-shortcuts.png "Tooltips show keyboard shortcuts" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added keyboard shortcuts to Test Runner
+{% url "1.3.0" changelog#1-3-0 %} | Added Selector Playground
+{% endhistory %}

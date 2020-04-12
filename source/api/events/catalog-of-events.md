@@ -117,13 +117,13 @@ Event | Details
 Event | Details
 --- | ---
 **Name:** | `log:added`
-**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode **(Boolean)**
+**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode (running via `cypress open`) **(Boolean)**
 **Description:** | Fires whenever a command emits this event so it can be displayed in the Command Log. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
 
 Event | Details
 --- | ---
 **Name:** | `log:changed`
-**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode **(Boolean)**
+**Yields:** | log attributes **(Object)**, whether Cypress is in interactive mode (running via `cypress open`) **(Boolean)**
 **Description:** | Fires whenever a command's attributes changes. This event is debounced to prevent it from firing too quickly and too often. Useful to see how internal cypress commands utilize the {% url 'Cypress.log()' cypress-log %} API.
 
 Event | Details
@@ -157,7 +157,7 @@ It's important to understand why you'd want to bind to either `Cypress` or `cy`.
 
 Cypress is a global object that persists for the entirety of all of your tests. Any events you bind to Cypress will apply to all tests, and will not be unbound unless you manually unbind them.
 
-This is useful when you're debugging and just want to add a single "catch-all" event to track down things like test failures, or uncaught exceptions from your application.
+This is useful when you're debugging and want to add a single "catch-all" event to track down things like test failures, or uncaught exceptions from your application.
 
 ## cy
 
@@ -179,13 +179,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   // failing the test
   return false
 })
-
 ```
 
 ### To catch a single uncaught exception
 
 ```javascript
-it('is doing something very important', function (done) {
+it('is doing something very important', (done) => {
   // this event will automatically be unbound when this
   // test ends because it's attached to 'cy'
   cy.on('uncaught:exception', (err, runnable) => {
@@ -204,7 +203,6 @@ it('is doing something very important', function (done) {
   // assume this causes an error
   cy.get('button').click()
 })
-
 ```
 
 ## Catching Test Failures
@@ -224,7 +222,7 @@ Cypress.on('fail', (error, runnable) => {
   throw error // throw error to have test still fail
 })
 
-it('calls the "fail" callback when this test fails', function () {
+it('calls the "fail" callback when this test fails', () => {
   // when this cy.get() fails the callback
   // is invoked with the error
   cy.get('element-that-does-not-exist')
@@ -243,7 +241,7 @@ $('button').on('click', (e) => {
 })
 
 // test code
-it('redirects to another page on click', function (done) {
+it('redirects to another page on click', (done) => {
   // this event will automatically be unbound when this
   // test ends because it's attached to 'cy'
   cy.on('window:before:unload', (e) => {
@@ -268,7 +266,7 @@ it('redirects to another page on click', function (done) {
 ### Modify your Application before it loads after page transitions
 
 ```javascript
-it('can modify the window prior to page load on all pages', function () {
+it('can modify the window prior to page load on all pages', () => {
   // create the stub here
   const ga = cy.stub().as('ga')
 
@@ -323,7 +321,7 @@ $('button').on('click', (e) => {
 })
 
 // test code
-it('can control application confirms', function (done) {
+it('can control application confirms', (done) => {
   let count = 0
 
   // make sure you bind to this **before** the
@@ -366,7 +364,7 @@ it('can control application confirms', function (done) {
   cy.get('button').click()
 })
 
-it('could also use a stub instead of imperative code', function () {
+it('could also use a stub instead of imperative code', () => {
   const stub = cy.stub()
 
   // not necessary but showing for clarity
@@ -402,7 +400,7 @@ $('button').on('click', (e) => {
   alert('friend')
 })
 
-it('can assert on the alert text content', function () {
+it('can assert on the alert text content', () => {
   const stub = cy.stub()
 
   cy.on('window:alert', stub)

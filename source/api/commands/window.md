@@ -76,6 +76,7 @@ it('equals bar', () => {
     .then((win) => {
       foo = win.foo
     })
+
   // variable "foo" is still undefined
   // because the above "then" callback
   // has not been executed yet
@@ -93,10 +94,10 @@ it('equals bar', () => {
     .then((win) => {
       foo = win.foo
     })
-    .then(() =>
+    .then(() => {
       // variable "foo" has been set
       expect(foo).to.equal('bar') // test passes
-    )
+    })
 })
 ```
 

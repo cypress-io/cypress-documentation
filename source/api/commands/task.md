@@ -84,7 +84,7 @@ Option | Default | Description
 
 # Examples
 
-## Command
+## Event
 
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
@@ -176,6 +176,50 @@ module.exports = (on, config) => {
 }
 ```
 
+### Save a variable across non same-origin URL visits
+
+When visiting non same-origin URL, Cypress will {% url "change the hosted URL to the new URL" web-security %}, wiping the state of any local variables. We want to save a variable across visiting non same-origin URLs.
+
+We can save the variable and retrieve the saved variable outside of the test using `cy.task()` as shown below.
+
+```javascript
+// in test
+describe('Href visit', () => {
+  it('captures href', () => {
+    cy.visit('https://www.mywebapp.com')
+    cy.get('a').invoke('attr', 'href')
+      .then((href) => {
+        // href is not same-origin as current url
+        // like https://www.anotherwebapp.com
+        cy.task('setHref', href)
+      })
+  })
+
+  it('visit href', () => {
+    cy.task('getHref').then((href) => {
+      // visit non same-origin url https://www.anotherwebapp.com
+      cy.visit(href)
+    })
+  })
+})
+```
+
+```javascript
+// in plugins/index.js
+let href
+
+module.exports = (on, config) => {
+  on('task', {
+    setHref: (val) => {
+      return href = val
+    },
+    getHref: () => {
+      return href
+    }
+  })
+}
+```
+
 ## Options
 
 ### Change the timeout
@@ -230,7 +274,7 @@ on('task', myTask)
 See {% issue 2284 '#2284' %} for implementation.
 
 {% note warning Duplicate task keys %}
-If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
 
 # Rules
@@ -249,7 +293,7 @@ If multiple task objects use the same key, the later registration will overwrite
 
 # Command Log
 
-***List the contents of `cypress.json`***
+### List the contents of the default `cypress.json` configuration file
 
 ```javascript
 cy.task('readJson', 'cypress.json')
