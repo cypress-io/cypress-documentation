@@ -37,10 +37,18 @@
     .main-nav-link {
       display: inline-block;
     }
+    .main-nav-right{
+      display: flex;
+      align-items: center;
+    }
   }
 
   #lang-select-wrap {
-    display: inline-block;
+    display: flex;
+    #lang-select-label{
+      display: flex;
+      align-items: center;
+    }
   }
 
   #sidebar {
@@ -84,9 +92,6 @@
 
 
 @media screen and(max-width: 1300px) {
-  #lang-select-wrap {
-    display: none;
-  }
 
   .toc-top .article-wrapper {
     margin-right: 40px;
@@ -169,6 +174,10 @@
     padding-top: 0;
   }
 
+  #lang-select-wrap {
+    display: none;
+  }
+  
   .examples.tutorial {
      .article-wrapper {
         margin-left: 30px;
