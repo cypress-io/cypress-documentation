@@ -136,10 +136,10 @@ The below examples were implemented in {% url https://github.com/cypress-io/cypr
 
 We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON reports and then combine them into a single report.
 
-We need to install additional dependencies including Mocha itself.
+We need to install additional dependencies.
 
 ```shell
-npm install --save-dev mocha cypress-multi-reporters mocha-junit-reporter
+npm install --save-dev cypress-multi-reporters mocha-junit-reporter
 ```
 
 Specify your reporter and reporterOptions in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
@@ -189,10 +189,10 @@ We recommend deleting all files from the `cypress/results` folder before running
 
 This example is shown in the branch `spec-and-single-mochawesome-json` in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}. We want to output a "spec" report to `STDOUT`, save an individual Mochawesome JSON file per test file, and then combine all JSON reports into a single report.
 
-We need to install several dependencies.
+We need to install some additional dependencies.
 
 ```shell
-npm install --save-dev mocha mochawesome mochawesome-merge mochawesome-report-generator
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
 ```
 
 We need to configure the reporter in your {% url "configuration file (`cypress.json` by default)" configuration %} to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
