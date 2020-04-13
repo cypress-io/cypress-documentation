@@ -4,15 +4,13 @@ title: TypeScript
 
 Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript. All that is required is a little bit of configuration.
 
-## Transpiling TypeScript test files
+## Install TypeScript
 
-Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`file:preprocessor` event" preprocessors-api %} you can use to customize how your test code is transpiled and sent to the browser.
+You'll need to have TypeScript installed within your project to have TypeScript support within Cypress.
 
-### Examples
-
-- {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
-- {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+```bash
+npm install typescript
+```
 
 ## Set up your dev environment
 
