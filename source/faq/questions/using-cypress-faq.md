@@ -549,7 +549,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
 
-Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
+Typically you'd reuse your existing `babel` and `webpack` configurations.
 
 ## {% fa fa-angle-right %} How does one determine what the latest version of Cypress is?
 
