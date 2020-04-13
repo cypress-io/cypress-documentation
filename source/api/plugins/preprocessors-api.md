@@ -18,15 +18,6 @@ The code contains comments that explain how it utilizes the preprocessor API.
 * {% url 'webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
 * {% url 'Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 
-# Recipes
-
-We've also added some recipes showing how to utilize these preprocessors.
-
-Here are two recipes using both webpack and Browserify to write your tests in TypeScript.
-
-- {% url 'TypeScript with Browserify Preprocessor' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url 'TypeScript with webpack Preprocessor' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
-
 # Defaults
 
 By default, Cypress comes packaged with the **Browserify Preprocessor** already installed.
@@ -47,7 +38,6 @@ Are you looking to change the **default options** for Browserify?
 Changing the Browserify options lets you:
 
 - Add your own Babel plugins
-- Add support for TypeScript
 - Add support for CoffeeScript `2.x.x`
 
 Please read this link in the {% url 'Browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
