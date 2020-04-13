@@ -109,6 +109,10 @@ Cypress utilizes a Chrome extension within the Test Runner in order to run prope
 caljajdfkjjjdehjdoimjkkakekklcck
 ```
 
+# URL whitelisting on VPNs
+
+{% partial vpn_whitelist_list %}
+
 # Clear App Data
 
 Cypress maintains some local application data in order to save user preferences and more quickly start up. Sometimes this data can become corrupted. You may fix an issue you have by clearing this app data.
@@ -213,10 +217,6 @@ You can also obtain more detailed per-process information by enabling the verbos
 You can include the plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your tests. This plugin writes the list of Cypress commands to the terminal as well as a JSON file if a test fails.
 
 {% imgTag /img/api/debug/failed-log.png "cypress-failed-log terminal output" %}
-
-## If you working at a restritive VPN, add some subdomains on your withelist for the Dashboard work properly
-
-{% partial vpn_whitelist_list %}
 
 # Hacking on Cypress
 
