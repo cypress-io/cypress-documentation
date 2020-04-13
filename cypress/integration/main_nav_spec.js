@@ -87,4 +87,29 @@ describe('Main Nav', () => {
       })
     })
   })
+
+  context('Language selector', () => {
+    beforeEach(() => {
+      cy.visit('/')
+    })
+
+    it('displays laguage wrapper at desktop view', function () {
+      cy.get('#lang-select-wrap').should('be.visible')
+    })
+
+    describe('in tablet view', () => {
+      beforeEach(() => {
+        cy.viewport('ipad-mini')
+      })
+
+      it('not displays desktop laguage wrapper', function () {
+        cy.get('#lang-select-wrap').should('not.visible')
+      })
+
+      it('displays mobile laguage select', function () {
+        cy.get('#mobile-nav-toggle').click()
+        cy.get('#mobile-lang-select').should('be.visible')
+      })
+    })
+  })
 })

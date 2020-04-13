@@ -22,15 +22,6 @@
 
       {% if not className %}
         <div class="main-nav-right">
-          <div id="search-container">
-            <div id="search-input-wrap">
-              <div id="search-input-icon">
-                <i class="fa fa-search"></i>
-              </div>
-              <label for="search-input">Search</label>
-              <input type="search" id="search-input" aria-label="Search" placeholder="Search...">
-            </div>
-          </div>
           {% if site.data.languages|length > 1 %}
             <div id="lang-select-wrap">
               <label aria-label="Select language" id="lang-select-label"><i class="fa fa-globe"></i><span>{{ lang_name(page.lang) }}</span><i class="fa fa-caret-down"></i></label>
@@ -41,6 +32,15 @@
               </select>
             </div>
           {% endif %}
+          <div id="search-container">
+            <div id="search-input-wrap">
+              <div id="search-input-icon">
+                <i class="fa fa-search"></i>
+              </div>
+              <label for="search-input">Search</label>
+              <input type="search" id="search-input" aria-label="Search" placeholder="Search...">
+            </div>
+          </div>
         </div>
       {% endif %}
     </nav>

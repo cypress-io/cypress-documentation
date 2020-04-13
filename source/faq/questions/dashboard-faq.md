@@ -133,3 +133,7 @@ In order to avoid any interruption in service, we recommend that you review your
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage
 5. Scroll down and select *Upgrade* under your plan of choice
+
+## {% fa fa-angle-right %} I'm working at a restritive VPN. Which subdomains do I have to whitelist on my VPN for the Dashboard to work properly?
+
+{% partial vpn_whitelist_list %}
