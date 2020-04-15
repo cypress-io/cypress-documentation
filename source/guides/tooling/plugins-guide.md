@@ -38,7 +38,6 @@ The event `file:preprocessor` is used to customize how your test code is transpi
 
 You can use the `file:preprocessor` event to do things like:
 
-- Add TypeScript support.
 - Add the latest ES* support.
 - Write your test code in ClojureScript.
 - Customize the `babel` settings to add your own plugins.

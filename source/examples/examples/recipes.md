@@ -54,8 +54,6 @@ Also see {% url 'Authentication plugins' plugins#authentication and watch {% url
 Recipe  | Description
 --- | ---
 {% url 'Grep tests' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep %} | Filter tests by name using Mocha-like `grep` syntax
-{% url 'TypeScript with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %} | Add TypeScript support with Browserify
-{% url 'TypeScript with webpack' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %} | Add TypeScript support with webpack
 {% url 'Flow with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify %} | Add flow support with Browserify
 
 ## Blogs
@@ -115,7 +113,6 @@ Recipe | Description
 {% url 'Stub Navigator API' https://glebbahmutov.com/blog/stub-navigator-api/ %} | Stub navigator API in end-to-end tests
 {% url 'Readable Cypress.io tests' https://glebbahmutov.com/blog/readable-tests/ %} | How to write readable tests using custom commands and custom Chai assertions
 {% url 'Conditional Parallelization' https://glebbahmutov.com/blog/parallel-or-not/ %} | Run Cypress in parallel mode on CircleCI depending on environment variables
-{% url 'Use TypeScript With Cypress' https://glebbahmutov.com/blog/use-typescript-with-cypress/ %} | Step by step tutorial on how to set up TypeScript support in Cypress using webpack bundler
 {% url '`.should()` Callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} | Examples of `.should(cb)` assertions
 {% url 'React component testing' https://glebbahmutov.com/blog/cypress-jump/ %} | Create a React component using JSX and inject it into live application from a Cypress test
 {% url 'Unit testing Vuex data store' https://dev.to/bahmutov/unit-testing-vuex-data-store-using-cypress-io-test-runner-3g4n %} | Complete walkthrough for anyone trying to unit test a data store
