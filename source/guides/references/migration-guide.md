@@ -250,7 +250,7 @@ Now, you must pass those options as `launchOptions.preferences`:
 ```js
 on('before:browser:launch', (browser, args) => {
   args.darkTheme = true
-  
+
   return args
 })
 ```
@@ -260,7 +260,7 @@ on('before:browser:launch', (browser, args) => {
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
   launchOptions.preferences.darkTheme = true
-  
+
   return launchOptions
 })
 ```
