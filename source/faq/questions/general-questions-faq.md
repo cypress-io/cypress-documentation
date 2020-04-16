@@ -168,3 +168,11 @@ Certainly, unit and end-to-end tests are NOT in opposition to each other and are
 ## {% fa fa-angle-right %} How do I convince my company to use Cypress?
 
 First, be honest with yourself - {% url "is Cypress the right tool" why-cypress %} for your company and your project? We believe that the best approach is a "bottoms up" approach, where you can demonstrate how Cypress solves your company's particular needs. Implement a prototype with your project to see how it feels. Test a couple of common user stories. Identify if there are any technical blockers. Show the prototype to others before proceeding any further. If you can demonstrate the benefits of using Cypress as a developer tool for your project to other engineers, then Cypress will likely be more quickly adopted.
+
+## {% fa fa-angle-right %} How can I find out about new versions of Cypress?
+
+We publish our releases at GitHub and Npm, together with the releases we also publish a changelog with the principal changes, fixes, and updates.
+You can follow through these links:
+- {% url "GitHub (Releases & changelog)" https://github.com/cypress-io/cypress/releases %}
+- {% url "npm (Releases)" https://www.npmjs.com/package/cypress %}
+- {% url "Changelog section at Cypress Docs" https://docs.cypress.io/guides/references/changelog.html %}
