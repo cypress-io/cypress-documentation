@@ -478,3 +478,8 @@
       description: Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.
       link: https://github.com/archfz/cypress-terminal-report
       keywords: [reporter, logs, terminal, CI, CLI]
+
+    - name: cypress-allure-plugin
+      description: Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.
+      link: https://github.com/Shelex/cypress-allure-plugin
+      keywords: [reporter, allure]
