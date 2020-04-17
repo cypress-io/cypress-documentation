@@ -175,4 +175,4 @@ We publish our releases at GitHub and Npm, together with the releases we also pu
 You can follow through these links:
 - {% url "GitHub (Releases & changelog)" https://github.com/cypress-io/cypress/releases %}
 - {% url "npm (Releases)" https://www.npmjs.com/package/cypress %}
-- {% url "Changelog section at Cypress Docs" https://docs.cypress.io/guides/references/changelog.html %}
+- {% url "Changelog at Cypress Docs" changelog %}
