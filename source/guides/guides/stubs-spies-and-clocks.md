@@ -64,7 +64,7 @@ cy.stub(obj, 'method').rejects(new Error('foo'))
 
 You generally stub a function when it has side effects you are trying to control.
 
-***Common Scenarios:***
+### Common Scenarios:
 
 - You have a function that accepts a callback, and want to invoke the callback.
 - Your function returns a `Promise`, and you want to automatically resolve or reject it.
@@ -89,20 +89,20 @@ cy.spy(obj, 'method')
 ```
 
 {% note info cy.spy() %}
-{% url 'Read more about how to use `cy.spy()`' spy %}
+{% url 'Read more about how to use `cy.spy()`' spy %}.
 {% endnote %}
 
 ## Clock
 
 There are situations when it is useful to control your application's `date` and `time` in order to override its behavior or avoid slow tests.
 
-{% url `cy.clock()` clock %} gives you the ability to control:
+With {% url "`cy.clock()`" clock %} you can control:
 
 - `Date`
 - `setTimeout`
 - `setInterval`
 
-***Common Scenarios***
+### Common Scenarios
 
 - You're polling something in your application with `setInterval` and want to control that.
 - You have **throttled** or **debounced** functions which you want to control.
@@ -116,7 +116,7 @@ cy.get('#search').type('foobarbaz')
 cy.tick(1000)
 ```
 
-{% url `cy.clock()` clock %} is special in that it can be called **prior** to visiting your application, and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} + {% url `cy.route()` route %}.
+You can call {% url `cy.clock()` clock %} **prior** to visiting your application and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} and {% url `cy.route()` route %}.
 
 ## Assertions
 
