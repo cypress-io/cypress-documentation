@@ -545,7 +545,7 @@ apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss
 
 ## Caching
 
-As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can save minutes off install time by preventing a large binary download.
 
 ### We recommend users:
 
@@ -755,3 +755,4 @@ NO_COLOR=1 cypress run
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
 - {% url "Blog: Record Test Artifacts from any Docker CI" https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/ %}
+- {% url "Continuous Integration with Cypress" https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/ %} webinar covering TeamCity, Travis and CircleCI setups, {% url slides https://cypress.slides.com/cypress-io/cypress-on-ci %}.
