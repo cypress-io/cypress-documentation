@@ -1,23 +1,23 @@
 ---
-title: Introduction
+title: 简介
 ---
 其实，{% url 'Cypress数据面板' https://on.cypress.io/dashboard %}是一个给予你可以对测试过程进行录制的工具 - 特别是当你在{% url 'CI提供商' continuous-integration %}平台进行Cypres测试时，数据面板可以让你对测试过程发生了什么一窥究竟。
 
-# Features
+# 功能
 
-## Organize projects
+## 组织项目
 
-From the Dashboard you can:
+使用数据面板你可以:
 
-- Set up a project to record in the Dashboard
-- Reset or add more record keys
-- Change who can access your Cypress project
-- Transfer ownership of projects
-- Delete projects
+- 在数据面板中创建一个要录制的项目
+- 重置或添加多个录制key
+- 修改你Cypress项目的可访问人员
+- 转移项目的所有权
+- 删除项目
 
-## See test run results
+## 查看测试结果
 
-From the Dashboard you can:
+使用数据面板你可以:
 
 - 查看失败，通过，挂起和被跳过的测试用例的数量；
 - 获取失败的测试的整个堆栈跟踪；
@@ -28,27 +28,27 @@ From the Dashboard you can:
 
 {% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-## Manage organizations
+## 管理组织
 
-From the Dashboard you can:
+使用数据面板你可以:
 
-- Create, edit and delete organizations
+- 创建，编辑和删除组织
 - 查看每个组织的使用详情；
 - 支付你选择的结算方案。
 
-## Manage users
+## 管理用户
 
-From the Dashboard you can:
+使用数据面板你可以:
 
-- Invite and edit user's roles for organizations
-- Accept or reject requests to join your organization.
+- 邀请并编辑组织中的用户角色
+- 接受或拒绝加入组织的申请
 
-## Integrate with GitHub
+## 与GitHub集成
 
-From the Dashboard you can:
+使用数据面板你可以:
 
-- Integrate your Cypress tests with your GitHub workflow via commit {% url 'status checks' github-integration#Status-checks %}
-- Integrate Cypress into GitHub via {% url 'pull requests' github-integration#Pull-request-comments %}
+- 通过对 commit 的 {% url '状态检查' github-integration#Status-checks %} 将你的Cypress测试与GitHub工作流集成
+- 通过 {% url '合并请求' github-integration#Pull-request-comments %} 将Cypress集成到GitHub
 
 ## 示例项目
 

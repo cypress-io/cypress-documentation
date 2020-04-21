@@ -391,7 +391,7 @@ Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.c
 
 **我们能够看到Cypress在控制台输出了额外的信息:**
 
-- Command (that was issued)
+- Command (被执行的命令)
 - Yielded (被这个命令返回的东西)
 - Elements (发现的元素个数)
 - Selector (我们用的参数)
