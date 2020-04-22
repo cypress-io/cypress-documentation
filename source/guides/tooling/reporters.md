@@ -19,10 +19,6 @@ Once you've read through the documentation below, we invite you to experience th
 
 # Custom reporter
 
-{% note warning %}
-In versions before {% url "`4.4.2`" changelog %}, you will need to install `mocha` if it's listed as a `peerDependency` of your Mocha reporter.
-{% endnote %}
-
 ## Installed locally
 
 Custom reporters can be loaded through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
@@ -142,10 +138,6 @@ We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON rep
 
 We need to install additional dependencies.
 
-{% note warning %}
-In versions before {% url "`4.4.2`" changelog %}, you will need to install `mocha` if it's listed as a `peerDependency` of your Mocha reporter.
-{% endnote %}
-
 ```shell
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
 ```
@@ -243,3 +235,7 @@ It generates the beautiful standalone HTML report file `mochawesome-report/mocha
 {% imgTag /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
 
 For more information, see {% url 'Integrating Mochawesome reporter with Cypress's http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}
+
+{% history %}
+{% url "4.4.2" changelog %} | Custom Mocha reporters updated to use the version of Mocha bundled with Cypress. No need to install `mocha` separately to use custom reporters.
+{% endhistory %}
