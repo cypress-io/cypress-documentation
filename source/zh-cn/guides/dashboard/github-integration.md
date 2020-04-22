@@ -2,7 +2,7 @@
 title: GitHub集成
 ---
 
-{% url "Cypress数据面板" https://on.cypress.io/dashboard %} 可以通过对commit的 {% urlHash '状态检查' Status-checks %} 和 {% urlHash '合并请求注解' Pull-request-comments %} 将Cypress测试和GitHub进行集成。使用GitHub集成之前需要先在数据面板中对项目进行{% url "录制设置" projects %} 。
+{% url "Cypress数据面板" https://on.cypress.io/dashboard %} 可以通过对commit的 {% urlHash '状态检查' 状态检查 %} 和 {% urlHash '合并请求注解' 合并请求注解 %} 将Cypress测试和GitHub进行集成。使用GitHub集成之前需要先在数据面板中对项目进行{% url "录制设置" projects %} 。
 
 {% imgTag /img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg "Cypress GitHub App PR" %}
 
@@ -41,7 +41,7 @@ GitHub集成依赖于你的CI环境可靠地提供commit SHA数据(通常是通�
 
 ## Cypress GitHub应用安装流程
 
-一旦你通过{% urlHash "Cypress组织设置" Install-via-organization-integration-settings %} 或者 {% urlHash "项目设置" Install-via-project-settings %}开始GitHub应用安装，你会被重定向到GitHub.com完成后续安装：
+一旦你通过{% urlHash "Cypress组织设置" 通过组织集成设置安装 %} 或者 {% urlHash "项目设置" 通过项目设置安装 %}开始GitHub应用安装，你会被重定向到GitHub.com完成后续安装：
 
 1. 选择所需的GitHub组织或账号来集成你的Cypress组织.
 {% imgTag /img/dashboard/github-integration/select-gh-org.jpg "Select a GitHub organization"  %}
