@@ -51,20 +51,6 @@ Cypress replaces Protractor because it does all of these things and much more. O
 
 Also, Protractor is very much focused on `AngularJS`, whereas Cypress is designed to work with any JavaScript framework. Protractor, because it's based on Selenium, is still pretty slow, and is prohibitive when trying to TDD your application. Cypress, on the other hand, runs at the speed your browser and application are capable of serving and rendering; there is no additional bloat.
 
-### Sauce Labs
-
-Using {% url "Sauce Labs" https://SauceLabs.com/ %} enables Selenium-based tests to be run across various browsers and operating systems. Additionally, they have a JavaScript Unit Testing tool that isn't Selenium focused.
-
-Sauce Labs also has a `manual testing` mode, where you can remotely control browsers in the cloud as if they were installed on your machine.
-
-Ultimately Sauce Labs and Cypress offer very different value propositions. Sauce Labs doesn't help you write your tests, it takes your existing tests and runs them across different browsers and aggregates the results for you.
-
-Cypress on the other hand **helps** you write your tests. You can use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
-
-{% note info A note about Cypress and Sauce Labs %}
-Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future; however, complete integration is not yet available.
-{% endnote %}
-
 ## {% fa fa-angle-right %} Do you support X language or X framework?
 
 Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything that runs in the context of a browser. It is back end, front end, language and framework agnostic.
