@@ -48,7 +48,7 @@ Cypress数据面板提供了一个数据分析工具，工具提供了诸如运�
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-runs-over-time-table.png "Dashboard Analytics Runs Over Time Table Screenshot" %}
 
-一个通过时间范围过滤条件，按日期分组统计的包含通过，失败，运行中，超时和错误数的表格
+一个通过时间范围过滤条件，按日期分组统计的包含通过，失败，运行中，超时和错误数列的表格
 
 # 性能
 
@@ -57,69 +57,69 @@ Cypress数据面板提供了一个数据分析工具，工具提供了诸如运�
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration.png "Dashboard Analytics Run Duration Screenshot" %}
 这个报告展示了项目中一个Cypress测试运行的平均时间，包含了并行测试对总运行时间的影响。注意这里我们只包含了通过测试的运行数据 — 失败或者错误的运行结果会影响平均运行时间使之偏离正常的时间区间。
 
-### Filters
+### 过滤器
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration-filters.png "Dashboard Analytics Run Duration Filters Screenshot" %}
 
-Results may be filtered by:
+运行结果可以按以下方式过滤：
 
-- Branch
-- Run Group
-- Time Range
-- Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
+- 分支
+- 运行组
+- 时间范围
+- 时间间隔(每小时，每天，每周，每月，每季度)
 
-### Results
+### 运行结果
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration-graph.png "Dashboard Analytics Run Duration Graph Screenshot" %}
 
-The average run duration over time is displayed respective of the filters selected.
+时间内平均运行时间图表通过所选的各个过滤条件展示了通过，失败，运行中，超时和错误的测试数据
 
-The results may be downloaded as a comma-separated values (CSV) file for further analysis.
-This can be done via the download icon to the right of the filters.
+结果可以被下载保存为逗号分隔的CSV文件用于后续分析。
+在过滤器右侧的下载图标中可以进行此操作。
 
-### Key Performance Indicators
+### 关键性能指标
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration-kpi.png "Dashboard Analytics Run Duration KPI Screenshot" %}
 
-Average parallelization, average run duration and time saved from parallelization are computed respective of the filters selected.
+平均并行度，平均运行时间和并行节省时间都可以通过所选的各个过滤条件统计出来。
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration-table.png "Dashboard Analytics Run Duration Table Screenshot" %}
 
-A table of results grouped by date for the time range filter is displayed with average runtime, concurrency and time saved from parallelization columns.
+一个通过时间范围过滤条件，按日期分组统计的包含平均运行时，连续性和并行节省时间列的表格
 
-# Process
+# 处理
 
-## Test suite size
+## 测试套件大小
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-test-suite-size.png "Dashboard Analytics Test Suite Size Screenshot" %}
 
-This report shows how your test suite is growing over time. It calculates the average number of test cases executed per run for each day in the given time period. It excludes runs that errored or timed out since they don't accurately represent the size of your test suite.
+这份报告显示了你的测试套件大小是如何随着时间一直变大的。它统计了给定时间内每天每个测试运行的平均测试用例数。它不包含错误的或者超时的测试，因为它们不能准确的反映出你的测试套件的大小。
 
-### Filters
+### 过滤器
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-test-suite-size-filters.png "Dashboard Analytics Test Suite Size Filters Screenshot" %}
 
-Results may be filtered by:
+运行结果可以按以下方式过滤：
 
-- Branch
-- Run Group
-- Time Range
+- 分支
+- 运行组
+- 时间范围
 
-### Results
+### 运行结果
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-test-suite-size-graph.png "Dashboard Analytics Test Suite Size Graph Screenshot" %}
 
-The average test suite size over time is displayed respective of the filters selected.
+时间内通过所选的各个过滤条件展示了平均测试套件大小。
 
-The results may be downloaded as a comma-separated values (CSV) file for further analysis.
-This can be done via the download icon to the right of the filters.
+结果可以被下载保存为逗号分隔的CSV文件用于后续分析。
+在过滤器右侧的下载图标中可以进行此操作。
 
-### Key Performance Indicators
+### 关键性能指标
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-test-suite-size-kpi.png "Dashboard Analytics Test Suite Size KPI Screenshot" %}
 
-Unique tests and number of spec files are computed respective of the filters selected.
+通过所选的各个过滤条件统计出独立的测试和spec文件的数量。
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-test-suite-size-table.png "Dashboard Analytics Test Suite Size Table Screenshot" %}
 
-A table of results grouped by date for the time range filter is displayed with unique tests and spec files.
+一个通过时间范围过滤条件，按日期分组统计的包含独立测试和spec文件的表格
