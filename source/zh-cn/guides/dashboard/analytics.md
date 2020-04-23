@@ -48,7 +48,7 @@ Cypress数据面板提供了一个数据分析工具，工具提供了诸如运�
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-runs-over-time-table.png "Dashboard Analytics Runs Over Time Table Screenshot" %}
 
-一个通过时间范围过滤条件，按日期分组统计的包含通过，失败，运行中，超时和错误数列的表格
+一个通过时间范围过滤条件，按日期分组统计的包含通过，失败，运行中，超时和错误数的表格
 
 # 性能
 
