@@ -83,12 +83,6 @@ Event | Description
 {% url `task` task %} | Occurs in conjunction with the `cy.task` command.
 {% url `after:screenshot` after-screenshot-api %} | Occurs after a screenshot is taken.
 
-{% note warning "More Coming Soon" %}
-The Plugins API is relatively new.
-
-We have many new plugin events {% issue 684 'we are adding' %}.
-{% endnote %}
-
 # Execution context
 
 Your `pluginsFile` is invoked when Cypress opens a project.
