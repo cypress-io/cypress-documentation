@@ -22,8 +22,8 @@ After you're done, we suggest watching some of our {% fa fa-video-camera %} {% u
 Simplicity is all about getting more done with less typing. Let's look at an example:
 
 ```js
-describe('Post Resource', function() {
-  it('Creating a New Post', function() {
+describe('Post Resource', () => {
+  it('Creating a New Post', () => {
     cy.visit('/posts/new')     // 1.
 
     cy.get('input.post-title') // 2.
@@ -368,7 +368,7 @@ It is very important to understand that Cypress commands don't do anything at th
 ### Take this short test, for example:
 
 ```js
-it('changes the URL when "awesome" is clicked', function() {
+it('changes the URL when "awesome" is clicked', () => {
   cy.visit('/my/resource/path') // Nothing happens yet
 
   cy.get('.awesome-selector')   // Still nothing happening
@@ -404,7 +404,7 @@ it('does not work as we expect', () => {
   // there is no element to find yet because
   // the cy.visit() was only queued to visit
   // and did not actually visit the application
-  let el = Cypress.$('.new-el') // evaluates immdeiately as []
+  let el = Cypress.$('.new-el') // evaluates immediately as []
 
   if (el.length) {              // evaluates immediately as 0
     cy.get('.another-selector')
@@ -526,7 +526,23 @@ Cypress's APIs are built very differently from what you're likely used to: but t
 
 ## Commands Run Serially
 
-After a test function is finished running, Cypress goes to work executing the commands that were enqueued using the `cy.*` command chains. The test above would cause an execution in this order:
+After a test function is finished running, Cypress goes to work executing the commands that were enqueued using the `cy.*` command chains. 
+
+### Let's take another look at an example
+
+```js
+it('changes the URL when "awesome" is clicked', () => {
+  cy.visit('/my/resource/path')                          // 1.
+
+  cy.get('.awesome-selector')                            // 2.
+    .click()                                             // 3.
+
+  cy.url()                                               // 4.
+    .should('include', '/my/resource/path#awesomeness')  // 5.
+})
+```
+
+The test above would cause an execution in this order:
 
 1. Visit a URL.
 2. Find an element by its selector.
@@ -567,7 +583,7 @@ Let's compare the prior example to a fictional version of it as raw, Promise-bas
 ### Noisy Promise demonstration. Not valid code.
 
 ```js
-it('changes the URL when "awesome" is clicked', function() {
+it('changes the URL when "awesome" is clicked', () => {
   // THIS IS NOT VALID CODE.
   // THIS IS JUST FOR DEMONSTRATION.
   return cy.visit('/my/resource/path')
@@ -590,7 +606,7 @@ it('changes the URL when "awesome" is clicked', function() {
 ### How Cypress really looks, Promises wrapped up and hidden from us.
 
 ```javascript
-it('changes the URL when "awesome" is clicked', function() {
+it('changes the URL when "awesome" is clicked', () => {
   cy.visit('/my/resource/path')
 
   cy.get('.awesome-selector')

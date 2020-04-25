@@ -319,13 +319,32 @@ If you're looking to abstract behavior or roll up a series of actions you can cr
 
 For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
 
+## {% fa fa-angle-right %} Why do my Cypress tests pass locally but not in CI?
+
+There are many reasons why tests may fail in CI but pass locally. Some of these include:
+
+- There is a problem isolated to the Electron browser (`cypress run` by default runs in the Electron browser)
+- A test failure in CI could be highlighting a bug in your CI build process
+- Variability in timing when running your application in CI (For example, network requests that resolve within the timeout locally may take longer in CI)
+- Machine differences in CI versus your local machine -- CPU resources, environment variables, etc.
+
+To troubleshoot why tests are failing in CI but passing locally, you can try these strategies:
+
+- Test locally with Electron to identify if the issue is specific to the browser.
+- You can also identify browser-specific issues by running in a different browser in CI with the `--browser` flag.
+- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
+- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
+- Ensure video recording and/or screenshots are enabled for the CI run and compare the recording to the Command Log when running the test locally.
+
+## {% fa fa-angle-right %} Why are my video recordings freezing or dropping frames when running in CI?
+
+Videos recorded on Continuous Integration may have frozen or dropped frames if there are not enough resources available when running the tests in your CI container. Like with any application, there needs to be the required CPU to run Cypress and record video. You can run your tests with {% url 'memory and CPU logs enabled' troubleshooting#Log-memory-and-CPU-usage %} to identify and evaluate the resource utilization within your CI.
+
+If you are experiencing this issue, we recommend switching to a more powerful CI container or provider.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% url 'here' parallelization %}.
-
-## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
-
-Our goal is to offer full integration with Sauce Labs and BrowserStack in the future; however, complete integration is not yet available.
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
@@ -526,7 +545,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
 
-Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
+Typically you'd reuse your existing `babel` and `webpack` configurations.
 
 ## {% fa fa-angle-right %} How does one determine what the latest version of Cypress is?
 
@@ -607,13 +626,11 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 
 Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spying %}.
 
-## {% fa fa-angle-right %} How do I use special characters with cy.get?
+## {% fa fa-angle-right %} How do I use special characters with `cy.get()`?
 
-{% url "According to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}, special characters like `/`, `.` are valid characters for ids.
+Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}. 
 
 To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
-
-Example:
 
 ```html
 <!doctype html>
@@ -627,8 +644,11 @@ Example:
 ```js
 it('test', () => {
   cy.visit('index.html')
-  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains('Hello World')
-  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`).contains('Hello World')
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
+
+  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
 })
 ```
 

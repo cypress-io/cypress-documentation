@@ -2,17 +2,15 @@
 title: TypeScript
 ---
 
-Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript. All that is required is a little bit of configuration.
+Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript.
 
-## Transpiling TypeScript test files
+## Install TypeScript
 
-Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`file:preprocessor` event" preprocessors-api %} you can use to customize how your test code is transpiled and sent to the browser.
+You'll need to have TypeScript installed within your project to have TypeScript support within Cypress.
 
-### Examples
-
-- {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
-- {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+```bash
+npm install typescript
+```
 
 ## Set up your dev environment
 
@@ -90,7 +88,7 @@ A nice detailed JSDoc comment above the method type will be really appreciated b
 
 If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
 
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
 ```javascript
 // from your cypress/integration/spec.js
@@ -135,3 +133,11 @@ module.exports = (on, config) => {
 See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}. Take a look at {% url "this video" https://www.youtube.com/watch?v=1Vr1cAN_CLA %} Basarat has recorded and the accompanying repo {% url basarat/cypress-ts https://github.com/basarat/cypress-ts %}.
 
 {% fa fa-github %} We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.
+
+{% history %}
+{% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
+{% endhistory %}
+
+# See also
+
+- {% url "IDE Integration" IDE-integration %}

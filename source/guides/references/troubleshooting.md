@@ -53,6 +53,8 @@ You can see the full list of found browsers and their properties within the {% u
 
 Another way to log what is found by Cypress is to run Cypress with the {% urlHash "DEBUG environment variable" Print-DEBUG-logs %} set to `cypress:launcher`. This will print information about the found browsers and their properties to the terminal.
 
+**Tip:** use the {% url '`cypress info`' command-line#cypress-info %} command to see all locally detected browsers.
+
 ## Mac
 
 On Mac, Cypress attempts to find installed browsers by their bundle identifier. If this does not succeed, it will fall back to the Linux browser detection method.
@@ -106,6 +108,10 @@ Cypress utilizes a Chrome extension within the Test Runner in order to run prope
 ```sh
 caljajdfkjjjdehjdoimjkkakekklcck
 ```
+
+# URL whitelisting on VPNs
+
+{% partial vpn_whitelist_list %}
 
 # Clear App Data
 

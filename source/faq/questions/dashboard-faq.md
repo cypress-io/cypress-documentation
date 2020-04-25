@@ -33,6 +33,10 @@ We consider each time the `it()` function is called to be a single test. So you 
 
 You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
 
+## {% fa fa-angle-right %} What counts as a user?
+
+A {% url 'user' users %} is anyone with a login to our Dashboard Service that has been invited to see and review the test results of your organization.
+
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
@@ -54,23 +58,6 @@ When a run happens and a test fails - instead of going and inspecting your CI pr
 ## {% fa fa-angle-right %} Can I host the Dashboard data myself?
 
 No, although we are looking to build an on-premise version of the Dashboard for use in private clouds. If you're interested in our on-premise version, please add your interest to our {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}!
-
-## {% fa fa-angle-right %} Why do my Cypress tests pass locally but not in CI?
-
-There are many reasons why tests may fail in CI but pass locally. Some of these include:
-
-- There is a problem isolated to the Electron browser (`cypress run` by default runs in the Electron browser)
-- A test failure in CI could be highlighting a bug in your CI build process
-- Variability in timing when running your application in CI (For example, network requests that resolve within the timeout locally may take longer in CI)
-- Machine differences in CI versus your local machine -- CPU resources, environment variables, etc.
-
-To troubleshoot why tests are failing in CI but passing locally, you can try these strategies:
-
-- Test locally with Electron to identify if the issue is specific to the browser.
-- You can also identify browser-specific issues by running in a different browser in CI with the `--browser` flag.
-- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
-- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
-- Ensure video recording and/or screenshots are enabled for the CI run and compare the recording to the Command Log when running the test locally.
 
 ## {% fa fa-angle-right %} Can I choose not to use the Dashboard?
 
@@ -146,3 +133,7 @@ In order to avoid any interruption in service, we recommend that you review your
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage
 5. Scroll down and select *Upgrade* under your plan of choice
+
+## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to whitelist on my VPN for the Dashboard to work properly?
+
+{% partial vpn_whitelist_list %}

@@ -195,13 +195,13 @@ In the example below we've implemented two helper functions that utilize {% url 
 
 ```js
 const runOn = (browser, fn) => {
-  if (Cypress.isBrowser(browser) {
+  if (Cypress.isBrowser(browser)) {
     fn()
   }
 }
 
 const ignoreOn = (browser, fn) => {
-  if (!Cypress.isBrowser(browser) {
+  if (!Cypress.isBrowser(browser)) {
     fn()
   }
 }
@@ -218,7 +218,7 @@ runOn('firefox', () => {
 // Ignore test if Cypress is running via Firefox
 // This test is not recorded to the Cypress Dashboard
 ignoreOn('firefox', () => {
-  it('a test', function() {
+  it('a test', () => {
     // ... test body
   })
 }

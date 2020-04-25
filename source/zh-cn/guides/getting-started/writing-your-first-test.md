@@ -166,7 +166,7 @@ Cypress不是一个**通用目的**网页自动化工具. 它不太适合实时�
 
 通过这个元素的内容找到它, 我们将使用{% url "`cy.contains()`" contains %}.
 
-让我门把它加到我们的测试里面, 并看下会发生什么吧:
+让我们把它加到我们的测试里面, 并看下会发生什么吧:
 
 ```js
 describe('My First Test', function() {
@@ -391,7 +391,7 @@ Cypress自动回溯到该命令解析之时的快照. 此外, 因为{% url `cy.c
 
 **我们能够看到Cypress在控制台输出了额外的信息:**
 
-- Command (that was issued)
+- Command (被执行的命令)
 - Yielded (被这个命令返回的东西)
 - Elements (发现的元素个数)
 - Selector (我们用的参数)

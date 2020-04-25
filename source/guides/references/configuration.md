@@ -114,6 +114,16 @@ You may want to use a different Node version if the code executing from the plug
 
 {% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
 
+## Experiments
+
+If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the options below.
+
+When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experiments** panel will display the experimental features that are available and whether they are enabled for your project.
+
+Option | Default | Description
+----- | ---- | ----
+`experimentalGetCookiesSameSite` | `false` | If `true`, Cypress will add `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
@@ -201,7 +211,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 # Resolved Configuration
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
+When you open a Cypress project, clicking on the **Settings** tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
 
 - Default value
 - The {% url "configuration file" configuration %}
@@ -281,7 +291,7 @@ You can turn this option off if the application or site you're testing **does no
 
 ## firefoxGcInterval
 
-Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can progress on this issue {% issue 6187 'here' %}.
+Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can see progress on this issue {% issue 6187 'here' %}.
 
 Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
 

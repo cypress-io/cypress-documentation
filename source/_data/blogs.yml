@@ -8,6 +8,13 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "How to Write Automation Tests for Feature Flags with Cypress.io and Selenium"
+    url: https://medium.com/engineers-optimizely/how-to-write-automation-tests-for-feature-flags-with-cypress-io-and-selenium-98493b5c46bc
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Todd Seller
+    date: April 3, 2020
+    img: /img/examples/cypress-optimizely.png
 
   - title: "Cypress in Action: A Few Months In"
     url: https://blog.noredink.com/post/190625483798/cypress-in-action-a-few-months-in-three-months
