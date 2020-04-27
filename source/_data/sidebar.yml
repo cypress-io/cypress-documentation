@@ -55,7 +55,6 @@ guides:
     changelog: changelog.html
     migration-guide: migration-guide.html
     roadmap: roadmap.html
-    experiments: experiments.html
 
 api:
   api:

@@ -116,7 +116,18 @@ You may want to use a different Node version if the code executing from the plug
 
 ## Experiments
 
-Configuration might include experimental options currently being tested. See {% url Experiments experiments %} page.
+If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the options below.
+
+{% note warning %}
+⚠️ The experimental features might change or ultimately be removed without making it into the core product. Our primary goal for experiments is to collect real-world feedback during the development.
+{% endnote %}
+
+When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experiments** panel will display the experimental features that are available and whether they are enabled for your project.
+
+Option | Default | Description
+----- | ---- | ----
+`experimentalGetCookiesSameSite` | `false` | If `true`, Cypress will add `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
+`experimentalComponentTesting` | `false` | When set to `true`, Cypress allows you to execute component tests using framework-specific adaptors. By default  `cypress/component` is the path for component tests. You can change this setting by setting the `componentFolder` configuration option. For more details see the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test/tree/feature/cypress-mount-mode %} and {% url "cypress-vue-unit-test" https://github.com/bahmutov/cypress-vue-unit-test/tree/feature/cypress-mount-mode %} repos.
 
 # Overriding Options
 

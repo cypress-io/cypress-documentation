@@ -56,7 +56,6 @@ sidebar:
     web-security: Web Security
     references: References
     configuration: Configuration
-    experiments: Experiments
     proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
