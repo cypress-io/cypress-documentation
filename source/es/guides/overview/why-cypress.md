@@ -11,6 +11,10 @@ title: ¿Por qué Cypress?
 
 {% endnote %}
 
+<!-- textlint-disable -->
+{% video youtube LcGHiFnBh3Y %}
+<!-- textlint-enable -->
+
 # Breve definición
 
 Cypress es una herramienta de testeo front end de última generación creada para la web moderna. Abordamos las principales dificultades que desarrolladores e ingenieros de control de calidad enfrentan al testear aplicaciones modernas.
