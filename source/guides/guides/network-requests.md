@@ -14,7 +14,7 @@ title: Network Requests
 {% endnote %}
 
 {% note info %}
-{% fa fa-cogs %} If your looking for a resource to make an HTTP request take a look at {% url "`cy.request()`" request %}
+**Note:** If your looking for a resource to make an HTTP request take a look at {% url "`cy.request()`" request %}
 {% endnote %}
 # Testing Strategies
 
