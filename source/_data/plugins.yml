@@ -405,7 +405,7 @@
       keywords: [component, vue, vue.js]
 
 - name: Visual Testing
-  description: Visual testing is a great complement to functional testing, read our {% url "full visual testing guide" visual-testing %}
+  description: Visual testing is a great complement to functional testing
   plugins:
     - name: Applitools
       description: Fast, easy and reliable visual UI testing with Cypress
