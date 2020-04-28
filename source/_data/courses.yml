@@ -142,3 +142,12 @@
   sourceName: Coursify.me
   sourceUrl: http://coursify.me
   language: Portuguese
+
+- title: Test end to end con Cypress.io (Webinar básico)
+  url: https://plataforma.keepcoding.io/p/curso-test-end-to-end-cypressio
+  author: Kevin Martínez Escobar
+  authorTwitter: kjmesc
+  sourceName: Keepcoding
+  sourceUrl: https://keepcoding.io
+  language: Spanish
+  free: true
