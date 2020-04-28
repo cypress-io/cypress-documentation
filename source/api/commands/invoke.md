@@ -47,6 +47,7 @@ Pass in an options object to change the default behavior of `.invoke()`.
 | Option    | Default                                                  | Description                        |
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
+| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .invoke %}   |
 
 **{% fa fa-angle-right %} args...**
 
