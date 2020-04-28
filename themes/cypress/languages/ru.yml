@@ -55,6 +55,7 @@ sidebar:
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
     references: Ссылки
+    experiments: Эксперименты
     configuration: Конфигурация
     proxy-configuration: Конфигурация прокси
     error-messages: Сообщения об ошибках
