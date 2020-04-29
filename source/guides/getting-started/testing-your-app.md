@@ -405,4 +405,4 @@ From here you may want to explore some more of our guides:
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
 - {% url "Command Line" command-line %} for running all your tests outside via `cypress run`
 - {% url "Continuous Integration" continuous-integration %} for running Cypress in CI
-- {% url "cross browser Testing" cross-browser-testing %} for optimally running tests in CI across Firefox and Chrome-family browsers
+- {% url "Cross Browser Testing" cross-browser-testing %} for optimally running tests in CI across Firefox and Chrome-family browsers
