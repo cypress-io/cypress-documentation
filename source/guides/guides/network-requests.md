@@ -13,6 +13,9 @@ title: Network Requests
 - How to write declarative tests that resist flake
 {% endnote %}
 
+{% note info %}
+**Note:** If your looking for a resource to make an HTTP request take a look at {% url "`cy.request()`" request %}
+{% endnote %}
 # Testing Strategies
 
 Cypress helps you test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
@@ -379,3 +382,4 @@ You can find more examples in our {% url "XHR Assertions" https://github.com/cyp
 # See also
 
 - {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
+- {% url "See how to make a request with `cy.request()`" request %}
