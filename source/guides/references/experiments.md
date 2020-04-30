@@ -39,7 +39,7 @@ describe('Post skeletons', () => {
 
 {% imgTag /img/guides/references/component-test.gif "Example React component test" %}
 
-Feature | Test libraries | Cypress component tests
+Feature | Other testing libraries | Cypress component testing
 --- | --- | ---
 Test runs in real browser | ❌ | ✅
 Uses full mount | ❌ | ✅
