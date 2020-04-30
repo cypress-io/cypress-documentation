@@ -111,7 +111,7 @@
     "inquirer": "6.5.0",
     "jest": "25.1.0",
     "keyv": "4.0.0",
-    "lint-staged": "8.2.1",
+    "lint-staged": "9.5.0",
     "make-empty-github-commit": "1.2.1",
     "minimist": "1.2.5",
     "nock": "10.0.6",
