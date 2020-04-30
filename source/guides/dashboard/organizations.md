@@ -89,6 +89,10 @@ Please see our full documentation for {% url "GitHub Integration" github-integra
 
 ## Enterprise SSO
 
+{% note info Paid Add-on Integration %}
+Enterprise SSO is available as an add-on to any of our {% url 'paid pricing plans' https://www.cypress.io/pricing %}.
+{% endnote %}
+
 {% note warning "Requires Owner Permissions" %}
 **All instructions below must be done by an owner of the organization.** If you are not an owner of the organization, coordinate with an owner of the organization to set up SSO.
 {% endnote %}
