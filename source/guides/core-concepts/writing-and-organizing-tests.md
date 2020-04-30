@@ -278,24 +278,26 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 })
 ```
 
-## Test Declaration Configuration
+## Test Options
 
-To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to test or suite the function as the second argument.
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass an options object to the test or suite function as the second argument.
+
+These options will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
 
 ### Syntax
 
 ```javascript
-describe(name, configuration, fn)
-context(name, configuration, fn)
-it(name, configuration, fn)
-specify(name, configuration, fn)
+describe(name, options, fn)
+context(name, options, fn)
+it(name, options, fn)
+specify(name, options, fn)
 ```
 
 ### Whitelisted config values
 
-{% partial per_test_config_whitelist %}
+{% partial test_options_config_whitelist %}
 
-### Configure suite of tests configuration
+### Suite of test options
 
 ```js
 describe('page display on medium size screen', {
@@ -312,7 +314,7 @@ describe('page display on medium size screen', {
 })
 ```
 
-### Configure single test configuration
+### Single test options
 
 ```js
 it('open product view', (), { waitForAnimations: false } => {

@@ -149,9 +149,9 @@ Cypress.config('execTimeout', 30000)
 Cypress.config('execTimeout') // => 30000
 ```
 
-## Set timeout in the test declaration
+## Set timeout in the test options
 
-You can configure the `cy.exec()` timeout within a suite or test by passing the new configuration value as a second argument within the {% url "test declaration" configuration#Test-Declaration %}.
+You can configure the `cy.exec()` timeout within a suite or test by passing the new configuration value within the {% url "test options" configuration#Test-Options %}.
 
 This will set the timeout throughout the duration of the tests, then return it to the default `execTimeout` when complete.
 
