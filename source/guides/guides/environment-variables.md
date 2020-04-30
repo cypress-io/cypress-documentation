@@ -270,10 +270,6 @@ it('smoke test staging api', (), {
 - Allows for dynamic values between tests
 {% endnote %}
 
-{% note danger Downsides %}
-- Environment value can be set from multiple tests requiring maintenance
-{% endnote %}
-
 # Overriding Configuration
 
 If your environment variables match a standard configuration key, then instead of setting an `environment variable` they will instead override the configuration value.
