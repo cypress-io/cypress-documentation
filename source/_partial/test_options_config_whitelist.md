@@ -2,6 +2,7 @@
 
 - `animationDistanceThreshold`
 - `baseUrl`
+- `browser`
 - `defaultCommandTimeout`
 - `execTimeout`
 - `env`
