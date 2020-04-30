@@ -396,3 +396,7 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 {% history %}
 {% url "3.5.0" changelog %} | Added support for option `nodeVersion`
 {% endhistory %}
+
+# See also
+
+- {% url "`Cypress.config()`" config %}
