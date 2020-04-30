@@ -39,10 +39,10 @@ describe('Post skeletons', () => {
 
 {% imgTag /img/guides/references/component-test.gif "Example React component test" %}
 
-Feature | Other testing libraries | Cypress component testing
+Feature | Other testing libraries * | Cypress component testing
 --- | --- | ---
 Test runs in real browser | ❌ | ✅
-Uses full mount | ❌ | ✅
+Mounts realistic components | ❌ | ✅
 Test speed | 🏎 | as fast as the app works in the browser
 Test can use additional plugins | maybe | use any {% url "Cypress plugin" plugins %}
 Test can interact with component | synthetic limited API | use any {% url "Cypress command" table-of-contents %}
@@ -53,3 +53,6 @@ Test output on CI | terminal | terminal, screenshots, videos
 Tests can be run in parallel | ✅ | ✅ via {% url "parallelization" parallelization %}
 Spying and mocking | Jest mocks / 3rd party | Built-in via Sinon library
 Code coverage | ✅ / maybe | ✅
+
+
+\* Most common libraries: React Testing Library, Enzyme, Vue Testing Library, Vue Test Utils
