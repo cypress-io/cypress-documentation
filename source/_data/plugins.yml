@@ -263,6 +263,11 @@
       description: Custom commands for interacting with iframes
       link: https://gitlab.com/kgroat/cypress-iframe
       keywords: [commands, iframe]
+      
+    - name: cypress-react-selector
+      description: cypress custom commands to locate react elements by component, props and state
+      link: https://github.com/abhinaba-ghosh/cypress-react-selector
+      keywords: [react, commands, locator]
 
 - name: Extending other testing frameworks
   plugins:
