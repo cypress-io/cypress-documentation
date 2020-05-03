@@ -267,7 +267,7 @@
     - name: cypress-react-selector
       description: cypress custom commands to locate react elements by component, props and state
       link: https://github.com/abhinaba-ghosh/cypress-react-selector
-      keywords: [react, commands, component, props, e2e]
+      keywords: [react, commands]
 
 - name: Extending other testing frameworks
   plugins:
