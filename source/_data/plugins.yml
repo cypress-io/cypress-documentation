@@ -264,6 +264,11 @@
       link: https://gitlab.com/kgroat/cypress-iframe
       keywords: [commands, iframe]
 
+    - name: cypress-react-selector
+      description: cypress plugin to locate react elements by component, props and state
+      link: https://github.com/abhinaba-ghosh/cypress-react-selector
+      keywords: [react, commands]
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
