@@ -33,6 +33,10 @@ We consider each time the `it()` function is called to be a single test. So you 
 
 You can always see how many tests you've recorded from your organization's {% url "Billing & Usage" organizations#Billing-amp-Usage %} page within the Dashboard.
 
+## {% fa fa-angle-right %} What counts as a user?
+
+A {% url 'user' users %} is anyone with a login to our Dashboard Service that has been invited to see and review the test results of your organization.
+
 ## {% fa fa-angle-right %} What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's similar to how public projects on Github, Travis, or Circle are handled. Anyone who knows your `projectId` will be able to see the recorded runs, screenshots, and videos for public projects.
@@ -129,3 +133,7 @@ In order to avoid any interruption in service, we recommend that you review your
 3. Navigate to the Billing and Usage tab
 4. Review your organization’s usage
 5. Scroll down and select *Upgrade* under your plan of choice
+
+## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to whitelist on my VPN for the Dashboard to work properly?
+
+{% partial vpn_whitelist_list %}

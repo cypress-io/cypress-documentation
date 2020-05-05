@@ -47,6 +47,7 @@ Pass in an options object to change the default behavior of `.invoke()`.
 | Option    | Default                                                  | Description                        |
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
+| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .invoke %}   |
 
 **{% fa fa-angle-right %} args...**
 
@@ -142,7 +143,7 @@ Our input field
 <input type="text" name="text" data-cy="my-text-input">
 ```
 
-The Cypress Test with `cy.inkoke()` awaiting the promise:
+The Cypress Test with `cy.invoke()` awaiting the promise:
 ```javascript
 function disableElementAsync (element) {
   return new Promise((resolve) => {

@@ -2,6 +2,20 @@
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
 
+- title: "Add e2e tests with cypress to a React application"
+  author: Tomasz Łakomy
+  authorTwitter: tlakomy
+  sourceName: egghead.io
+  sourceUrl: https://egghead.io/playlists/add-e2e-tests-with-cypress-to-a-react-application-7691?af=6p5abz
+  free: true
+
+- title: "Outside-In Frontend Development"
+  author: Josh Justice
+  authorTwitter: codingitwrong
+  sourceName: OutsideIn.dev
+  sourceUrl: https://outsidein.dev/
+  free: true
+
 - title: "End to End Testing with Cypress (Conference Talk)"
   url: https://www.pluralsight.com/courses/codemash-session-01
   author: Avindra Fernando
@@ -128,3 +142,12 @@
   sourceName: Coursify.me
   sourceUrl: http://coursify.me
   language: Portuguese
+
+- title: Test end to end con Cypress.io (Webinar básico)
+  url: https://plataforma.keepcoding.io/p/curso-test-end-to-end-cypressio
+  author: Kevin Martínez Escobar
+  authorTwitter: kjmesc
+  sourceName: Keepcoding
+  sourceUrl: https://keepcoding.io
+  language: Spanish
+  free: true

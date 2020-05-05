@@ -49,7 +49,7 @@ During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-in
 
 1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction%} to indicate which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
-3. Upon receiving requests from a CI machines, Cypress calculates the estimated duration to test each spec file.
+3. Upon receiving requests from a CI machine, Cypress calculates the estimated duration to test each spec file.
 4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
 5. As each CI machine finishes running its assigned spec file, more spec files are distributed to it. This process repeats until all spec files are complete.
 6. Upon completion of all spec files, Cypress {% urlHash 'waits for a configurable amount of time' Run-completion-delay %} before considering the test run as fully complete. This is done to better support {% urlHash 'grouping of runs' Grouping-test-runs %}.

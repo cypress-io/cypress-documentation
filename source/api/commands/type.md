@@ -232,12 +232,12 @@ cy.get('button').click()
 Modifiers are automatically released between tests, even with `{release: false}`.
 
 ```javascript
-it('has modifiers activated', function () {
+it('has modifiers activated', () => {
   // 'altKey' will be true while typing 'foo'
   cy.get('input').type('{alt}foo', { release: false })
 })
 
-it('does not have modifiers activated', function () {
+it('does not have modifiers activated', () => {
   // 'altKey' will be false while typing 'bar'
   cy.get('input').type('bar')
 })

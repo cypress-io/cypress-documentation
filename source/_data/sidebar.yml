@@ -55,6 +55,7 @@ guides:
     changelog: changelog.html
     migration-guide: migration-guide.html
     roadmap: roadmap.html
+    experiments: experiments.html
 
 api:
   api:
@@ -152,6 +153,7 @@ api:
     minimatch: minimatch.html
     moment: moment.html
     promise: promise.html
+    sinon: sinon.html
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html

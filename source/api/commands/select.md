@@ -128,7 +128,9 @@ cy.get('select')
 
 ## Actionability
 
-`.select()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
+`.select()` is an action command that follows the rules {% url 'defined here' interacting-with-elements %}.
+
+However, passing `{ force: true }` to `.select()` will not override the actionability checks for selecting a disabled `<select>`, a disabled `<option>`, or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
 
 # Rules
 
@@ -162,4 +164,5 @@ When clicking on `select` within the command log, the console outputs the follow
 
 # See also
 
+- Read {% url 'Working with Select elements and Select2 widgets in Cypress' https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/ %}
 - {% url `.click()` click %}

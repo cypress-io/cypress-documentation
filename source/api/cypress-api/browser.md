@@ -32,7 +32,7 @@ Property | Type | Description
 ### `Cypress.browser` returns browser object
 
 ```js
-it('log browser info', function() {
+it('log browser info', () => {
   console.log(Cypress.browser)
   // {
   //   channel: 'stable',
@@ -62,7 +62,7 @@ it('log browser info', function() {
 ```
 
 ```javascript
-it('has correct Chrome specific css property', function () {
+it('has correct Chrome specific css property', () => {
   // if in Chrome, check css property was properly applied
   if (Cypress.browser.name === 'chrome') {
     cy

@@ -55,6 +55,7 @@ sidebar:
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
     references: Ссылки
+    experiments: Эксперименты
     configuration: Конфигурация
     proxy-configuration: Конфигурация прокси
     error-messages: Сообщения об ошибках
@@ -175,6 +176,7 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env

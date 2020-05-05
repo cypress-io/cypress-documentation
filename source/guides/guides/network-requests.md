@@ -13,6 +13,9 @@ title: Network Requests
 - How to write declarative tests that resist flake
 {% endnote %}
 
+{% note info %}
+**Note:** If your looking for a resource to make an HTTP request take a look at {% url "`cy.request()`" request %}
+{% endnote %}
 # Testing Strategies
 
 Cypress helps you test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
@@ -285,6 +288,15 @@ In this example, there are many possible sources of failure. In most testing too
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
 
+<!--
+To reproduce the following screenshot:
+it('test', () => {
+  cy.server()
+  cy.route('foo/bar').as('getSearch')
+  cy.wait('@getSearch')
+})
+-->
+
 {% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
@@ -370,3 +382,4 @@ You can find more examples in our {% url "XHR Assertions" https://github.com/cyp
 # See also
 
 - {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
+- {% url "See how to make a request with `cy.request()`" request %}

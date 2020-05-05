@@ -39,7 +39,7 @@ Cypress supports both ES2015 modules and CommonJS modules. You can import/requir
 import _ from 'lodash'
 import util from './util'
 
-it('uses modules', function () {
+it('uses modules', () => {
   expect(_.kebabCase('FooBar')).to.equal('foo-bar')
   expect(util.secretCode()).to.equal('1-2-3-4')
 })
@@ -67,16 +67,16 @@ This message means you tried to execute one or more Cypress commands outside of 
 Typically this happens accidentally, like in the following situation.
 
 ```javascript
-describe('Some Tests', function () {
-  it('is true', function () {
+describe('Some Tests', () => {
+  it('is true', () => {
     expect(true).to.be.true   // yup, fine
   })
 
-  it('is false', function () {
+  it('is false', () => {
     expect(false).to.be.false // yup, also fine
   })
 
-  context('some nested tests', function () {
+  context('some nested tests', () => {
     // oops you forgot to write an it(...) here!
     // these cypress commands below
     // are running outside of a test and cypress
@@ -93,7 +93,25 @@ If you are purposefully writing commands outside of a test, there is probably a 
 
 ## {% fa fa-exclamation-triangle red %} `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
-Getting this errors means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
+Getting this error means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
+
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
 
 <!--
 To reproduce the following screenshot:
@@ -253,7 +271,7 @@ Even though we return a string in our test, Cypress automatically figures out th
 
 ```javascript
 // This test passes!
-it('Cypress is smart and this does not fail', function () {
+it('Cypress is smart and this does not fail', () => {
   cy.get('body').children().should('not.contain', 'foo') // <- no return here
 
   return 'foobarbaz'    // <- return here
@@ -264,7 +282,7 @@ The example below will fail because you've forcibly terminated the test early wi
 
 ```javascript
 // This test errors!
-it('but you can forcibly end the test early which does fail', function (done) {
+it('but you can forcibly end the test early which does fail', (done) => {
   cy.get('body')
     .then(() => {
       done() // forcibly end test even though there are commands below
@@ -287,7 +305,7 @@ describe('a complex example with async code', function() {
     }, 10)
   })
 
-  it('this test will fail due to the previous poorly written test', function() {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
     cy.wait(10)
   })
@@ -297,7 +315,7 @@ describe('a complex example with async code', function() {
 The correct way to write the above test code is using Mocha's `done` to signify it is asynchronous.
 
 ```javascript
-it('does not cause commands to bleed into the next test', function (done) {
+it('does not cause commands to bleed into the next test', (done) => {
   setTimeout(() => {
     cy.get('body').children().should('not.contain', 'foo').then(() => {
       done()
@@ -312,15 +330,15 @@ In the example below, we forget to return the `Promise` in our test. This means 
 This also causes the commands to be queued on the wrong test. We will get the error in the next test that Cypress detected it had commands in its command queue.
 
 ```javascript
-describe('another complex example using a forgotten "return"', function () {
-  it('forgets to return a promise', function () {
+describe('another complex example using a forgotten "return"', () => {
+  it('forgets to return a promise', () => {
     // This test passes...but...
     Cypress.Promise.delay(10).then(() => {
       cy.get('body').children().should('not.contain', 'foo')
     })
   })
 
-  it('this test will fail due to the previous poorly written test', function () {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
     cy.wait(10)
   })
@@ -330,7 +348,7 @@ describe('another complex example using a forgotten "return"', function () {
 The correct way to write the above test code would be to return our `Promise`:
 
 ```javascript
-it('does not forget to return a promise', function () {
+it('does not forget to return a promise', () => {
   return Cypress.Promise.delay(10).then(() => {
     return cy.get('body').children().should('not.contain', 'foo')
   })

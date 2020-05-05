@@ -299,7 +299,7 @@ Cypress will automatically apply the server and routes to the very next `cy.visi
 ***Visit example application in a `beforeEach`***
 
 ```javascript
-beforeEach(function () {
+beforeEach(() => {
   cy.visit('https://example.cypress.io/commands/viewport')
 })
 ```

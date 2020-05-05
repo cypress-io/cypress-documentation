@@ -537,13 +537,15 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
+### Linux
+
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
 ## Caching
 
-As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can save minutes off install time by preventing a large binary download.
 
 ### We recommend users:
 
@@ -698,6 +700,19 @@ See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
 
+In a Docker container, the default size of the `/dev/shm` shared memory space is 64MB. This is not typically enough to run Chrome and can cause the browser to crash. You can fix this by passing the `--disable-dev-shm-usage` flag to Chrome with the following workaround:
+
+```javascript
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
 ## Xvfb
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
@@ -740,3 +755,4 @@ NO_COLOR=1 cypress run
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
 - {% url "Blog: Record Test Artifacts from any Docker CI" https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/ %}
+- {% url "Continuous Integration with Cypress" https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/ %} webinar covering TeamCity, Travis and CircleCI setups, {% url slides https://cypress.slides.com/cypress-io/cypress-on-ci %}.

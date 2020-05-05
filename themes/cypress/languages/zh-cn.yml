@@ -34,13 +34,13 @@ sidebar:
     writing-and-organizing-tests: 编写和组织测试
     conditional-testing: 条件测试
     test-runner: 测试执行器
-    dashboard: Dashboard
-    dashboard-introduction: Introduction
+    dashboard: 数据面板
+    dashboard-introduction: 简介
     projects: 项目
     runs: 录制的运行
     organizations: 组织
     users: 成员
-    github-integration: GitHub Integration
+    github-integration: GitHub集成
     analytics: 分析工具
     debugging: 调试
     variables-and-aliases: 变量和别名
@@ -57,6 +57,7 @@ sidebar:
     custom-commands: 自定义命令
     web-security: Web安全
     references: 参考
+    experiments: Experiments
     configuration: 配置
     proxy-configuration: 代理配置
     error-messages: 错误消息
@@ -177,6 +178,7 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env

@@ -25,7 +25,7 @@ In the meantime, you can fix the error by choosing a single way to signal the en
 {% badge danger Before %} This test has a done callback and a promise
 
 ```javascript
-it('uses invokes done and returns promise', function (done) {
+it('uses invokes done and returns promise', (done) => {
   return codeUnderTest.doSomethingThatReturnsPromise().then((result) => {
     // assertions here
     done()
@@ -36,7 +36,7 @@ it('uses invokes done and returns promise', function (done) {
 {% badge success After %} You can remove the `done` callback and return the promise instead:
 
 ```javascript
-it('uses invokes done and returns promise', function () {
+it('uses invokes done and returns promise', () => {
   return codeUnderTest.doSomethingThatReturnsPromise().then((result) => {
     // assertions here
   })
@@ -48,7 +48,7 @@ it('uses invokes done and returns promise', function () {
 {% badge danger Before %} Sometimes it might make more sense to use the `done` callback and not return a promise:
 
 ```javascript
-it('uses invokes done and returns promise', function (done) {
+it('uses invokes done and returns promise', (done) => {
   eventEmitter.on('change', () => {
     // assertions
     done()
@@ -61,7 +61,7 @@ it('uses invokes done and returns promise', function (done) {
 {% badge success After %} In this case, you don't need to return the promise:
 
 ```javascript
-it('uses invokes done and returns promise', function (done) {
+it('uses invokes done and returns promise', (done) => {
   eventEmitter.on('change', () => {
     // assertions
     done()
@@ -78,7 +78,7 @@ Test functions using `async/await` automatically return a promise, so they need 
 {% badge danger Before %} This will cause an overspecified error.
 
 ```javascript
-it('uses async/await', async function (done) {
+it('uses async/await', async (done) => {
   const eventEmitter = await getEventEmitter()
   eventEmitter.on('change', () => done())
   eventEmitter.doSomethingThatEmitsChange()
@@ -88,7 +88,7 @@ it('uses async/await', async function (done) {
 {% badge success After %} Update to the test code below.
 
 ```javascript
-it('uses async/await', async function () {
+it('uses async/await', async () => {
   const eventEmitter = await getEventEmitter()
   return new Promise((resolve) => {
     eventEmitter.on('change', () => resolve())
@@ -130,7 +130,7 @@ The `.empty` assertion will now throw when it is passed non-string primitives an
 ```javascript
 // These will now throw TypeErrors
 expect(Symbol()).to.be.empty
-expect(function() {}).to.be.empty
+expect(() => {}).to.be.empty
 ```
 
 ### {% fa fa-warning red %} Breaking Change: non-existent properties
@@ -224,6 +224,8 @@ on('before:browser:launch', (browser, args) => {
   // will print a deprecation warning telling you
   // to change your code to the new signature
   args.push('--another-arg')
+
+  return args
 })
 ```
 
@@ -232,6 +234,8 @@ on('before:browser:launch', (browser, args) => {
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
   launchOptions.args.push('--another-arg')
+
+  return launchOptions
 })
 ```
 
@@ -246,6 +250,8 @@ Now, you must pass those options as `launchOptions.preferences`:
 ```js
 on('before:browser:launch', (browser, args) => {
   args.darkTheme = true
+
+  return args
 })
 ```
 
@@ -254,6 +260,8 @@ on('before:browser:launch', (browser, args) => {
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
   launchOptions.preferences.darkTheme = true
+
+  return launchOptions
 })
 ```
 

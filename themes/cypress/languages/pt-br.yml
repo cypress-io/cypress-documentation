@@ -56,6 +56,7 @@ sidebar:
     web-security: Segurança Web
     references: Referências
     configuration: Configuração
+    experiments: Experiments
     proxy-configuration: Configuração de Proxy
     error-messages: Mensagens de Erro
     bundled-tools: Ferramentas incluídas
@@ -175,6 +176,7 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
