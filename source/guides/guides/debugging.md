@@ -149,6 +149,6 @@ The `cy.now()` command is an internal command and may change in the future.
 
 While learning Cypress it may be a good idea to try small tests against some HTML. We have written a {% url @cypress/fiddle https://github.com/cypress-io/cypress-fiddle %} plugin for this. It can quickly mount any given HTML and run some Cypress test commands against it.
 
-# Toubleshooting Cypress
+# Troubleshooting Cypress
 
 There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking our out {% url "Troubleshooting Guide" troubleshooting %}.
