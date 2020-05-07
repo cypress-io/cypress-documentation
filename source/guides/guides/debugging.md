@@ -115,9 +115,9 @@ Sometimes tests fail. Sometimes we want them to fail, just so we know they're te
 Let's take a look at the anatomy of an error and how it is displayed in Cypress, by way of a failing test.
 
 ```js
-it('failure', () => {
-  // the center of the clicked element is hidden
+it('reroutes on users page', () => {
   cy.contains('Users').click()
+  cy.url().should('include', 'users')
 })
 ```
 
