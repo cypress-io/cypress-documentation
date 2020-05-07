@@ -29,7 +29,7 @@ However, you **do not** need to use environment variables to point to the origin
 
 {% url `cy.visit()` visit %} and {% url `cy.request()` request %} are automatically prefixed with this value - avoiding the need to specify them.
 
-`baseUrl` can be set in your configuration file (`cypress.json` by default) - and then you can use an environment variable to override it.
+`baseUrl` can be set in your configuration file (`cypress.json` by default) - and then you can set an environment variable in your OS to override it like shown below.
 
 ```shell
 CYPRESS_BASE_URL=https://staging.app.com cypress run
