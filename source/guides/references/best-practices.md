@@ -537,7 +537,7 @@ cy.get('table tr').should('have.length', 2)
 ## Web Servers
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
+{% fa fa-warning red %} **Anti-Pattern:** Trying to start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
 {% endnote %}
 
 {% note success %}
