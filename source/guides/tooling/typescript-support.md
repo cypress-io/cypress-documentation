@@ -128,6 +128,10 @@ module.exports = (on, config) => {
 }
 ```
 
+{% history %}
+{% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
+{% endhistory %}
+
 # See also
 
 - {% url "IDE Integration" IDE-integration %}
