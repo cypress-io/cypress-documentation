@@ -42,7 +42,8 @@ guides:
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
     code-coverage: code-coverage.html
-
+  migration:
+    protractor: protractor.html
   references:
     assertions: assertions.html
     configuration: configuration.html
