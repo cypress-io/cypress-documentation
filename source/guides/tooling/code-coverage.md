@@ -477,3 +477,15 @@ Find the full list of examples linked in {% url cypress-io/code-coverage#externa
 - {% url "Combined End-to-end and Unit Test Coverage" https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/ %}
 - {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
 - {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
+
+## Videos
+
+There is a series of videos we have recorded showing code coverage in Cypress
+
+- {% url "How to instrument react-scripts web application for code coverage" https://youtu.be/edgeQZ8UpD0 %}
+- {% url "Get code coverage reports from Cypress tests" https://youtu.be/y8StkffYra0 %}
+- {% url "Excluding code from code coverage reports" https://youtu.be/DlceMpRpbAw %}
+- {% url "Check code coverage robustly using 3rd party tool" https://youtu.be/dwU5gUG2-EM %}
+- {% url "Adding code coverage badge to your project" https://youtu.be/bNVRxb-MKGo %}
+- {% url "Show code coverage in commit status check" https://youtu.be/AAl4HmJ3YuM %}
+- {% url "Checking code coverage on pull request" https://youtu.be/9Eq_gIshK0o %}
