@@ -55,5 +55,9 @@ Tests can be run in parallel | ✅ | ✅ via {% url "parallelization" paralleliz
 Spying and mocking | Jest mocks / 3rd party | Built-in via Sinon library
 Code coverage | ✅ / maybe | ✅
 
-
 \* Most common libraries: React Testing Library, Enzyme, Vue Testing Library, Vue Test Utils
+
+{% history %}
+{% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
+{% url "4.3.0" changelog#4-3-0 %} | Added support for `experimentalGetCookiesSameSite`.
+{% endhistory %}

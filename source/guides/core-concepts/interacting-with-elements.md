@@ -220,5 +220,5 @@ We will NOT perform these:
 In summary, `{ force: true }` skips the checks, and it will always fire the event at the desired element.
 
 {% note warning "force `.select()` disabled options" %}
-Passing `{ force: true }` to {% url "`.select()`" select %} will not override the actionability checks for selecting a disabled `<select>`, a disabled `<option>`, or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
+Passing `{ force: true }` to {% url "`.select()`" select %} will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
 {% endnote %}
