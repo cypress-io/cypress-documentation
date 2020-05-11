@@ -65,6 +65,8 @@ sidebar:
     trade-offs: Trade-offs
     troubleshooting: Troubleshooting
     changelog: Changelog
+    migration: Migration
+    protractor: Protractor
     migration-guide: Migration Guide
     roadmap: Roadmap
     tooling: Tooling
