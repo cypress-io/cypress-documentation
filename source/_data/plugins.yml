@@ -30,6 +30,11 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
 
+    - name: Rollup
+      description: Watches and bundles your spec files via Rollup
+      link: https://github.com/bahmutov/cy-rollup
+      keywords: [rollup]
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
