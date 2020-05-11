@@ -58,6 +58,7 @@ Code coverage | ✅ / maybe | ✅
 \* Most common libraries: React Testing Library, Enzyme, Vue Testing Library, Vue Test Utils
 
 {% history %}
+{% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
 {% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
 {% url "4.3.0" changelog#4-3-0 %} | Added support for `experimentalGetCookiesSameSite`.
 {% endhistory %}
