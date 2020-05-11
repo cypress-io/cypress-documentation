@@ -195,8 +195,12 @@ To handle code coverage collected during each test, we created a {% url "`@cypre
 
 ## Install the plugin
 
+{% note info %}
+Please consult {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} README documentation for up-to-date installation instructions
+{% endnote %}
+
 ```shell
-npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
+npm install -D @cypress/code-coverage
 ```
 
 Then add the code below to your {% url "`supportFile`" configuration#Folders-Files %} and {% url "`pluginsFile`" configuration#Folders-Files %}.
@@ -209,8 +213,12 @@ import '@cypress/code-coverage/support'
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
+  // include any other project's plugins ...
+
   require('@cypress/code-coverage/task')(on, config)
 
+  // IMPORTANT to return the config object
+  // with the any changed environment variables
   return config
 }
 ```
