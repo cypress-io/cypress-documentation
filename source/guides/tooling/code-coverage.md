@@ -196,7 +196,7 @@ To handle code coverage collected during each test, we created a {% url "`@cypre
 ## Install the plugin
 
 {% note info %}
-Please consult {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} README documentation for up-to-date installation instructions
+Please consult the {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} documentation for up-to-date installation instructions.
 {% endnote %}
 
 ```shell
@@ -213,12 +213,11 @@ import '@cypress/code-coverage/support'
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  // include any other project's plugins ...
-
   require('@cypress/code-coverage/task')(on, config)
+  // include any other plugin code...
 
-  // IMPORTANT to return the config object
-  // with the any changed environment variables
+  // It's IMPORTANT to return the config object
+  // with any changed environment variables
   return config
 }
 ```
@@ -454,6 +453,39 @@ We are currently exploring two additional features for code coverage during end-
 
 Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of back end code.
 
+# Videos
+
+There is a series of videos we have recorded showing code coverage in Cypress
+
+### How to instrument react-scripts web application for code coverage
+<!-- textlint-disable terminology -->
+{% video youtube edgeQZ8UpD0 %}
+
+### Get code coverage reports from Cypress tests
+
+{% video youtube y8StkffYra0 %}
+
+### Excluding code from code coverage reports
+
+{% video youtube DlceMpRpbAw %}
+
+### Check code coverage robustly using 3rd party tool
+
+{% video youtube dwU5gUG2 %}
+
+### Adding code coverage badge to your project
+
+{% video youtube bNVRxb-MKGo %}
+
+### Show code coverage in commit status check
+
+{% video youtube AAl4HmJ3YuM %}
+
+### Checking code coverage on pull request
+
+{% video youtube 9Eq_gIshK0o %}
+<!-- textlint-enable -->
+
 # Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
@@ -478,14 +510,4 @@ Find the full list of examples linked in {% url cypress-io/code-coverage#externa
 - {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
 - {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
 
-## Videos
 
-There is a series of videos we have recorded showing code coverage in Cypress
-
-- {% url "How to instrument react-scripts web application for code coverage" https://youtu.be/edgeQZ8UpD0 %}
-- {% url "Get code coverage reports from Cypress tests" https://youtu.be/y8StkffYra0 %}
-- {% url "Excluding code from code coverage reports" https://youtu.be/DlceMpRpbAw %}
-- {% url "Check code coverage robustly using 3rd party tool" https://youtu.be/dwU5gUG2-EM %}
-- {% url "Adding code coverage badge to your project" https://youtu.be/bNVRxb-MKGo %}
-- {% url "Show code coverage in commit status check" https://youtu.be/AAl4HmJ3YuM %}
-- {% url "Checking code coverage on pull request" https://youtu.be/9Eq_gIshK0o %}
