@@ -57,6 +57,7 @@ sidebar:
     custom-commands: 自定义命令
     web-security: Web安全
     references: 参考
+    experiments: Experiments
     configuration: 配置
     proxy-configuration: 代理配置
     error-messages: 错误消息

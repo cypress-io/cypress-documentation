@@ -30,6 +30,11 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
 
+    - name: Rollup
+      description: Watches and bundles your spec files via Rollup
+      link: https://github.com/bahmutov/cy-rollup
+      keywords: [rollup]
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
@@ -263,6 +268,11 @@
       description: Custom commands for interacting with iframes
       link: https://gitlab.com/kgroat/cypress-iframe
       keywords: [commands, iframe]
+      
+    - name: cypress-react-selector
+      description: cypress custom commands to locate react elements by component, props and state
+      link: https://github.com/abhinaba-ghosh/cypress-react-selector
+      keywords: [react, commands, locator]
 
 - name: Extending other testing frameworks
   plugins:

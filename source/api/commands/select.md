@@ -128,7 +128,9 @@ cy.get('select')
 
 ## Actionability
 
-`.select()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
+`.select()` is an action command that follows the rules {% url 'defined here' interacting-with-elements %}.
+
+However, passing `{ force: true }` to `.select()` will not override the actionability checks for selecting a disabled `<select>`, a disabled `<option>`, or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
 
 # Rules
 
