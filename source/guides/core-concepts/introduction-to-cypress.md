@@ -469,7 +469,7 @@ it('test', () => {
   if (username) {             // evaluates immediately as undefined
     cy.contains(username).click()
   } else {
-    // this will never run
+    // this will always run
     // because username will always
     // evaluate to undefined
     cy.contains('My Profile').click()

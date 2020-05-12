@@ -122,7 +122,7 @@ yarn run cypress open
 
 Cypress测试执行器会尝试在用户的机器上找到所有兼容的浏览器。你可以在程序的右上角下拉列表选择不同的浏览器。
 
-{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+{% imgTag /img/guides/browser-list-dropdown.png "Select a different browser" %}
 
 阅读{% url "启动浏览器" launching-browsers %}，了解Cypress是如何在端对端测试中控制一个真实的浏览器。
 

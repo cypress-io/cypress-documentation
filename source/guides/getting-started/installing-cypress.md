@@ -130,6 +130,12 @@ The Cypress Test Runner attempts to find all compatible browsers on the user's m
 
 Read {% url "Launching Browsers" launching-browsers %} for more information on how Cypress controls a real browser during end-to-end tests.
 
+{% note info Cross Browser Support %}
+
+Cypress currently supports Firefox and Chrome-family browsers (including Edge and Electron). To run tests optimally across these browsers in CI, check out the strategies demonstrated in the {% url "cross browser Testing" cross-browser-testing %} guide.
+
+{% endnote %}
+
 ## Adding npm scripts
 
 While there's nothing wrong with writing out the full path to the Cypress executable each time, it's much easier and clearer to add Cypress commands to the `scripts` field in your `package.json` file.
