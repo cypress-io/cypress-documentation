@@ -131,19 +131,21 @@ When {% url 'running Cypress from the Command Line' command-line %} you can pass
 **Examples:**
 
 ```shell
-cypress open --config watchForFileChanges=false,waitForAnimations=false
+cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
 ```
 
 ```shell
-cypress run --config integrationFolder=tests,fixturesFolder=false
+cypress run --config integrationFolder=tests,videoUploadOnPasses=false
 ```
 
 ```shell
-cypress run --record --config viewportWidth=1280,viewportHeight=720
+cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
 
+For more complex configuration objects, you may want to consider passing a {% url "JSON.stringified" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %} object surrounded by quotes.
+
 ```shell
-cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffee"]
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.coffee"]}'
 ```
 
 ## Plugins
