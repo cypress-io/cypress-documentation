@@ -127,9 +127,9 @@ You will commonly use these chainers after using DOM commands like: {% url `cy.g
 <!-- textlint-disable -->
 | Chainers | Assertion |
 | --- | --- |
-| attr(*name*, *[value]*) | `expect($el).to.have.attr('foo', 'bar')` |
-| prop(*name*, *[value]*) | `expect($el).to.have.prop('disabled', false)` |
-| css(*name*, *[value]*) | `expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')` |
+| attr(*name*, *[value]*)<br /><br />attr(*obj*) | `expect($el).to.have.attr('foo', 'bar')`<br/><br />`expect($el).to.have.attr({ foo: 'bar' })` |
+| prop(*name*, *[value]*)<br /><br />prop(*obj*) | `expect($el).to.have.prop('disabled', false)`<br/><br />`expect($el).to.have.prop({ disabled: false })` |
+| css(*name*, *[value]*)<br /><br />css(*obj*) | `expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')`<br/><br />`expect($el).to.have.css({ 'background-color': 'rgb(0, 0, 0)' })` |
 | data(*name*, *[value]*) | `expect($el).to.have.data('foo', 'bar')` |
 | class(*className*) | `expect($el).to.have.class('foo')` |
 | id(*id*) | `expect($el).to.have.id('foo')` |
