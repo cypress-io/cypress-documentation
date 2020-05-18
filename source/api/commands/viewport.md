@@ -168,7 +168,7 @@ cy.viewport('iphone-6', 'landscape')
 
 ### `devicePixelRatio` is not simulated
 
-This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. {% open_an_issue %} if you need this to be fixed.
+This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. Follow {% issue 7075 %} if you need this supported.
 
 ## Restores
 

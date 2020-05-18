@@ -346,10 +346,6 @@ If you are experiencing this issue, we recommend switching to a more powerful CI
 
 You can read more about parallelization {% url 'here' parallelization %}.
 
-## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
-
-Our goal is to offer full integration with Sauce Labs and BrowserStack in the future; however, complete integration is not yet available.
-
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an {% url `.only` writing-and-organizing-tests#Excluding-and-Including-Tests %} on a test suite or specific test.

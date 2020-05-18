@@ -16,8 +16,9 @@ You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Window
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
-Cypress will never be able to run on a native mobile app, but we do intend to support mobile web browsers in the future. Down the road we'll likely have first class support for this, but today it is not a current priority. Cypress can test JavaScript code in hybrid mobile platforms like Ionic.
-Currently our users use Cypress to control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application.
+Cypress will never be able to run on a native mobile app, but we can test some functionality of mobile web browsers.
+
+Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application.
 
 ## {% fa fa-angle-right %} How is this different from 'X' testing tool?
 
@@ -50,20 +51,6 @@ Using {% url "Protractor" http://www.protractortest.org/ %} provides a nice Prom
 Cypress replaces Protractor because it does all of these things and much more. One major difference is that Cypress enables you to write your unit tests and integration tests in the same tool, as opposed to splitting up this work across both Karma and Protractor.
 
 Also, Protractor is very much focused on `AngularJS`, whereas Cypress is designed to work with any JavaScript framework. Protractor, because it's based on Selenium, is still pretty slow, and is prohibitive when trying to TDD your application. Cypress, on the other hand, runs at the speed your browser and application are capable of serving and rendering; there is no additional bloat.
-
-### Sauce Labs
-
-Using {% url "Sauce Labs" https://SauceLabs.com/ %} enables Selenium-based tests to be run across various browsers and operating systems. Additionally, they have a JavaScript Unit Testing tool that isn't Selenium focused.
-
-Sauce Labs also has a `manual testing` mode, where you can remotely control browsers in the cloud as if they were installed on your machine.
-
-Ultimately Sauce Labs and Cypress offer very different value propositions. Sauce Labs doesn't help you write your tests, it takes your existing tests and runs them across different browsers and aggregates the results for you.
-
-Cypress on the other hand **helps** you write your tests. You can use Cypress every day, building and testing your application, and then use Sauce Labs to ensure your application works on every browser.
-
-{% note info A note about Cypress and Sauce Labs %}
-Cypress' API is written to be completely compatible for integration with Sauce Labs. It is our goal to offer full integration with Sauce Labs in the future; however, complete integration is not yet available.
-{% endnote %}
 
 ## {% fa fa-angle-right %} Do you support X language or X framework?
 
@@ -168,3 +155,11 @@ Certainly, unit and end-to-end tests are NOT in opposition to each other and are
 ## {% fa fa-angle-right %} How do I convince my company to use Cypress?
 
 First, be honest with yourself - {% url "is Cypress the right tool" why-cypress %} for your company and your project? We believe that the best approach is a "bottoms up" approach, where you can demonstrate how Cypress solves your company's particular needs. Implement a prototype with your project to see how it feels. Test a couple of common user stories. Identify if there are any technical blockers. Show the prototype to others before proceeding any further. If you can demonstrate the benefits of using Cypress as a developer tool for your project to other engineers, then Cypress will likely be more quickly adopted.
+
+## {% fa fa-angle-right %} How can I find out about new versions of Cypress?
+
+We publish our releases at GitHub and Npm, together with the releases we also publish a changelog with the principal changes, fixes, and updates.
+You can follow through these links:
+- {% url "GitHub (Releases & changelog)" https://github.com/cypress-io/cypress/releases %}
+- {% url "npm (Releases)" https://www.npmjs.com/package/cypress %}
+- {% url "Changelog at Cypress Docs" changelog %}
