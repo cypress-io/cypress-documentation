@@ -87,8 +87,8 @@ cy.get('#saveUserName').check()
 
 ```html
 <form>
-  <input type="radio" id="us-canada" value="CA">
-  <label for="us-canada">Canada</label>
+  <input type="radio" id="ca-country" value="CA">
+  <label for="ca-country">Canada</label>
   <input type="radio" id="us-country" value="US">
   <label for="us-country">United States</label>
 </form>
