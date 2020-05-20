@@ -159,6 +159,22 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 
 # Examples
 
+## Set screen size when running headless Chrome
+
+When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below.
+
+```js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.name === 'chrome' && browser.isHeadless) {
+      launchOptions.args.push('--window-size=1400,1200')
+
+      return launchOptions
+    }
+  })
+}
+```
+
 ## Start fullscreen
 
 ```js

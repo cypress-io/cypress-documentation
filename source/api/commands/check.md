@@ -85,16 +85,34 @@ cy.get('#saveUserName').check()
 
 ### Select the radio with the value of 'US'
 
+```html
+<form>
+  <input type="radio" id="ca-country" value="CA">
+  <label for="ca-country">Canada</label>
+  <input type="radio" id="us-country" value="US">
+  <label for="us-country">United States</label>
+</form>
+```
+
 ```javascript
 cy.get('[type="radio"]').check('US')
 ```
 
 ## Values
 
-### Check the checkboxes with the values 'ga' and 'ca'
+### Check the checkboxes with the values 'subscribe' and 'accept'
+
+```html
+<form>
+  <input type="checkbox" id="subscribe" value="subscribe">
+  <label for="subscribe">Subscribe to newsletter?</label>
+  <input type="checkbox" id="acceptTerms" value="accept">
+  <label for="acceptTerms">Accept terms and conditions.</label>
+</form>
+```
 
 ```javascript
-cy.get('[type="checkbox"]').check(['ga', 'ca'])
+cy.get('form input').check(['subscribe', 'accept'])
 ```
 
 ## Options
