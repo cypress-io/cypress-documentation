@@ -42,8 +42,6 @@ guides:
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
     code-coverage: code-coverage.html
-  migration:
-    protractor: protractor.html
   references:
     assertions: assertions.html
     configuration: configuration.html
@@ -55,6 +53,7 @@ guides:
     troubleshooting: troubleshooting.html
     changelog: changelog.html
     migration-guide: migration-guide.html
+    protractor-migration-guide: protractor-migration-guide.html
     roadmap: roadmap.html
     experiments: experiments.html
 
