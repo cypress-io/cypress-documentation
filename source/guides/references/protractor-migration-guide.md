@@ -13,15 +13,17 @@ title: Protractor Migration Guide
 
 ## Introduction
 
-Considering using Cypress but worried about the obstacles that might get in your way when migrating from Protractor? We got you covered here with this comprehensive guide for migrating from Protractor to Cypress. 
+Considering using Cypress but unsure of whether the migration is worth it for your Angular app? We got you covered here with this migration guide to help transition from Protractor to Cypress. 
 
-If you see any inaccuracies with this or feel something has been misrepresented, please submit an issue here.
+{% note warning %}
+If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+{% endnote %}
 
-To start, let's take a quick look at a common test case scenario: allowing a user to sign up for a new account. We 
+To start, let's take a quick look at a common test case scenario: allowing a user to sign up for a new account.
 
-{% badge danger Before %} **Protractor**
+**Before: Protractor**
 
-```js
+```javascript
 describe('Authorization tests', () => {
   it('allows the user to signup for a new account', () => {
     browser.get('/signup')
@@ -35,9 +37,9 @@ describe('Authorization tests', () => {
 })
 ```
 
-{% badge success After %} **Cypress**
+**After: Cypress**
 
-```js
+```javascript
 describe('Authorization Tests', () => {
   it('allows the user to signup for a new account', () => {
     cy.visit('/signup')
@@ -65,27 +67,25 @@ As many developers can attest to, end-to-end testing is one of those things that
 
 ### Interact with your tests in a browser
 
-When Protractor runs tests, the browser automation launches a browser instance and often runs through tests too fast for the human eye. Without additional configuration, this often leads to over reliance on terminal errors to 
+When Protractor runs tests, the browser automation launches a browser instance and often runs through tests too fast for the human eye. Without additional configuration, this often leads to a reliance on lengthy terminal errors that can be expensive from a context-switching perspective.
+
+{% video local /img/snippets/cypress-interactive-debugging.mp4 %}
 
 ### Faster feedback loops
 
-When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to iterate faster with confidence. Without additional configuration and dependencies, this is not possible out of the box with Protractor.
+When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to iterate faster with confidence. Though this is not possible out of the box with Protractor, Cypress tests automatically re-run within the browser whenever they are saved which allows you to iterate faster with confidence.
 
 ### Time travel through tests
 
 Rather than trying to decipher errors inside of your terminal, with Cypress you can debug your tests just like you would debug your application normally. In addition, Cypress allows you to see snapshots of your Angular application as the test is executed so you can debug your applications more easily.
 
-### Interactively debug your tests
-
-Rather than wait to the end of development to write or verify tests to see if your codebase is valid, Cypress enables developers to do this in parallel workflows involve waiting until you're done with development 
-
 ### Easily automate screenshots
 
-Another powerful feature of end-to-end testing is the ability to capture screenshots and recording. While possible in both tools, Protractor requires you to manually tap into Node.js and has limited configuration options. 
+Another powerful feature of end-to-end testing is the ability to capture screenshots and recording. While possible in both tools, Protractor requires you to manually tap into Node.js and has limited configuration options.
 
-{% badge danger Before %} **Protractor**
+**Before: Protractor**
 
-```js
+```javascript
 const fs = require('fs')
 
 describe('Dashboard', () => {
@@ -103,9 +103,9 @@ describe('Dashboard', () => {
 })
 ```
 
-{% badge success After %} **Cypress**
+**After: Cypress**
 
-```jsx
+```javascript
 describe('Dashboard', () => {
   it('should render dashboard', () => {
 	  cy.visit('/dashboard')
@@ -189,6 +189,8 @@ npm run cypress
 
 It will start up Cypress and our Angular app at the same time!
 
+{% video local /img/snippets/npm-run-cypress.mp4 %}
+
 ## Essentials
 
 ### How to Get DOM Elements
@@ -197,7 +199,7 @@ It will start up Cypress and our Angular app at the same time!
 
 When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with `cy.get` while using CSS selectors to account for all use cases.
 
-{% badge danger Before %} **Protractor**
+**Before: Protractor**
 
 ```js
 // Get an element
@@ -213,7 +215,7 @@ element(by.id('my-id'))
 element(by.name('field-name'))
 ```
 
-{% badge success After %} **Cypress**
+**After: Cypress**
 
 ```js
 // Get an element
@@ -233,7 +235,7 @@ cy.get('input[name="field-name"]')
 
 When you want to get access to more than one element on the page, you would need to chain the `.all()` method. However, in Cypress, no syntax change is necessary!
 
-{% badge danger Before %} **Protractor**
+**Before: Protractor**
 
 ```js
 // Get all list-item elements on the page
@@ -246,7 +248,7 @@ element.all(by.css('.list-item'))
 element.all(by.name('field-name'))
 ```
 
-{% badge success After %} **Cypress**
+**After: Cypress**
 
 ```jsx
 // Get all list-item elements on the page
@@ -261,16 +263,9 @@ cy.get('input[name="field-name"]')
 
 You can learn more about how to get DOM elements in our official documentation.
 
-## How to Interact with DOM Elements
+### How to Interact with DOM Elements
 
----
-
-- Choose a common scenario
-    - Filling out a form
-    - Getting text values
-    - Waiting for data to populate
-
-{% badge danger Before %} **Protractor**
+**Before: Protractor**
 
 ```jsx
 // Click on the element
@@ -287,7 +282,7 @@ element(by.css('input')).clear()
 element(by.css('input')).getAttribute('value')
 ```
 
-{% badge success After %} **Cypress**
+**After: Cypress**
 
 ```jsx
 // Click on the element
@@ -306,18 +301,50 @@ cy.get('input').its('value')
 
 You can learn more about [interacting with DOM elements in our official documentation](https://docs.cypress.io/guides/core-concepts/interacting-with-elements.html).
 
-## Network Spies
+### Assertions
+
+Similar to Protractor, Cypress enables to use human readable assertions.
+
+**Before: Protractor**
+
+```js
+describe('verify elements on a page', () => {
+  it('verifies that a link is visible', () => {
+    expect($('a.submit-link').isDisplayed()).toBe(true)
+  })
+})
+```
+
+**After: Cypress**
+
+```js
+describe('verify elements on a page', () => {
+	it('verifies that a link is visible', () => {
+		cy.get('a.submit-link').should('be.visible)
+	})
+})
+```
+
+But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability.html). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives. 
+
+In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
+
+You can learn more about how Cypress handles [assertions in our official documentation](https://docs.cypress.io/guides/references/assertions.html).
+
+### Network Spies
 
 By default, Protractor utilizes Jasmine's `spyOn` function to call a method and test that it was called.
 
-```jsx
+```js
 // paymentApi.js
 export default {
   submit() { ... }
 }
 ```
 
-```jsx
+**Before: Protractor**
+
+```js
 // Protractor
 import paymentApi from './paymentApi.js'
 
@@ -332,7 +359,9 @@ describe('Protractor payment example', () => {
 
 Fortunately for us, creating a spy in Cypress is almost identical!
 
-```jsx
+**After: Cypress**
+
+```js
 // Cypress
 describe('Cypress payment example', () => {
   it('verifies payment is only sent once', () => {
@@ -343,13 +372,15 @@ describe('Cypress payment example', () => {
 })
 ```
 
-## Stubbing
+For more information, check out our [official documentation on spies](https://docs.cypress.io/api/commands/spy.html).
 
-Ran into a hard block with this since many code examples on blog posts don't seem to work in the Angular 9 codebase
+### Stubbing
 
-Similar to how Protractor allows you to use the `browser.addMockModules()` method to stub behaviors such as API requests, Cypress allows you to do the same with `cy.stub()`.
+In Protractor, stubbing is a complex topic where many resources recommend the `browser.addMockModules()` method to stub behaviors. This requires a lot of manual configuration and can lead to an additional dependency that you need to maintain. With Cypress however, there is a built-in method to allow you to stub network requests: `cy.stub()`.
 
-```jsx
+**Before: Protractor**
+
+```js
 // Unable to get this to work just yet
 describe('show stubbing example', () => {
   it('stubs a call to the login API', () => {
@@ -360,47 +391,27 @@ describe('show stubbing example', () => {
 })
 ```
 
-```jsx
-it('shows cypress example', () => {
-  // A lot of e2e testing is about waiting for network requests
-  // It helps to ensure that things are asserted at the right time
+**After: Cypress**
 
-  // Declare an alias for the route you want to watch
-  cy.route('GET', 'comments/*').as('getComment')
-
-  // we have code that gets a comment when
-  // the button is clicked in scripts.js
-  cy.get('.network-btn').click()
-
-  // https://on.cypress.io/wait
-  cy.wait('@getComment').its('status').should('eq', 200)
-  cy.wait('@postComment').should((xhr) => {
-    expect(xhr.requestBody).to.include('email')
-    expect(xhr.requestHeaders).to.have.property('Content-Type')
-    expect(xhr.responseBody).to.have.property('name', 'Using POST in cy.route()')
-  })
-
-  // Listen to POST to comments
-  cy.route('POST', '/comments').as('postComment')
-
-  // we have code that posts a comment when
-  // the button is clicked in scripts.js
-  cy.get('.network-post').click()
-  cy.wait('@postComment').should((xhr) => {
-    expect(xhr.requestBody).to.include('email')
-    expect(xhr.requestHeaders).to.have.property('Content-Type')
-    expect(xhr.responseBody).to.have.property('name', 'Using POST in cy.route()')
+```js
+describe('show stubbing scaffold', () => {
+  it('stubs a call to the login API', () => {
+    cy.stub(api, 'login').resolves('user-id-123')
   })
 })
 ```
 
-## Navigating Websites
+With the `cy.stub()` method, you can easily replace a function, record its usage, and even control its behavior.
 
-When you want to visit a page, the code is fairly straightforward.
+For more information, check out our [official documentation on stubbing](https://docs.cypress.io/api/commands/stub.html#Syntax).
 
-{% badge danger Before %} **Protractor**
+### Navigating Websites
 
-```jsx
+When you want to visit a page, you can do so with the following code:
+
+**Before: Protractor**
+
+```js
 it('visits a page', () => {
   browser.get('/about')
   browser.navigate().forward()
@@ -408,17 +419,19 @@ it('visits a page', () => {
 })
 ```
 
-{% badge success After %} **Protractor**
+**After: Cypress**
 
 ```js
 it('visit a non-Angular page', () => {
   cy.visit('/about')
+  cy.go('forward')
+  cy.go('back')
 })
 ```
 
 However, Protractor assumes that all websites you want to visit are Angular apps. As a result, you have to take an extra step to disable this behavior. When you write Cypress tests though, you don't need to do any extra work!
 
-{% badge danger Before %} **Protractor**
+**Before: Protractor**
 
 ```js
 it('visit a non-Angular page', () => {
@@ -427,7 +440,7 @@ it('visit a non-Angular page', () => {
 })
 ```
 
-{% badge success After %} **Protractor**
+**After: Cypress**
 
 ```js
 it('visit a non-Angular page', () => {
@@ -435,13 +448,51 @@ it('visit a non-Angular page', () => {
 })
 ```
 
+### Debugging Tests
+
+In Protractor, per [the official docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#disabled-control-flow), the process for debugging your tests interactively involves a few steps:
+
+1. Add `debugger` keyword to the test case that you want to debug
+
+**Before: Protractor**
+
+```js
+describe('example test suite', () => 
+  it('contains an error we need to debug', () => {
+    browser.get('/login')
+    debugger
+    element(by.css('#password-field')).sendKeys('testPassword1234')
+  })
+})
+```
+
+2. Set the inspector agent with a breakpoint flag and a config file
+3. Use Chrome's DevTools devices to locate the correct target 
+
+With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the `debug()` command!
+
+**After: Cypress**
+
+```js
+describe('example test suite', () => {
+	it('contains an error we need to debug', () => {
+		cy.visit('/login')
+		cy.get('#password-field')).debug().sendKeys('testPassword1234')
+	})
+})
+```
+
+For more information, check out our [official documentation on debugging](https://docs.cypress.io/guides/guides/debugging.html#Using-debugger)!
+
 ### Parallelization
 
 One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, Cypress Dashboard Service allows your tests to run in parallel. If your longest test only test a minute to run, this means that you've just cut down your testing by over 12,000%!
 
 This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). An example is provided below:
 
-```jsx
+**Before: Protractor**
+
+```js
 // Example from https://developers.perfectomobile.com/display/PD/Protractor+parallel+execution
 // An example configuration file.
 exports.config = {
@@ -490,10 +541,28 @@ exports.config = {
 
 However, with Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
 
+**After: Cypress**
+
 ```bash
 $ cypress run --record --parallel
 ```
 
-# Conclusion
+For more information, check out our [official docs on parallelization](https://docs.cypress.io/guides/guides/parallelization.html#Overview)!
+
+### Element Explorer
+
+For those who are big fans of [Protractor's Element Explorer functionality](https://www.protractortest.org/#/debugging#enabled-control-flow), Cypress also provides you with a Selector Playground that allows you to:
+
+- Determine a unique selector for an element
+- See what elements match a given selector
+- See what element matches a string of text
+
+For more information, check out our official docs on the [Selector Playground](https://docs.cypress.io/guides/core-concepts/test-runner.html#Selector-Playground).
+
+## Next Steps
 
 For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](https://docs.cypress.io/guides/overview/why-cypress.html).
+
+{% note warning %}
+If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+{% endnote %}
