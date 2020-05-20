@@ -16,6 +16,7 @@ Option | Default | Description
 ----- | ---- | ----
 `experimentalGetCookiesSameSite` | `false` | If `true`, Cypress will add `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
 `experimentalComponentTesting` | `false` | When set to `true`, Cypress allows you to execute component tests using framework-specific adaptors. By default  `cypress/component` is the path for component tests. You can change this setting by setting the `componentFolder` configuration option. For more details see the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %} and {% url "cypress-vue-unit-test" https://github.com/bahmutov/cypress-vue-unit-test %} repos.
+`experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 
 # Component Testing
 
@@ -57,6 +58,7 @@ Code coverage | ✅ / maybe | ✅
 \* Most common libraries: React Testing Library, Enzyme, Vue Testing Library, Vue Test Utils
 
 {% history %}
+{% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
 {% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
 {% url "4.3.0" changelog#4-3-0 %} | Added support for `experimentalGetCookiesSameSite`.
 {% endhistory %}
