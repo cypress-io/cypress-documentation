@@ -86,7 +86,7 @@ describe('My First Test', () => {
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
 
-Cypress also displays the stack trace where the assertion failed (when available). To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
+Cypress also displays the stack trace and the code frame where the assertion failed (when available). You can click on the blue file link to open the file where the error occurred in {% url "your preferred file opener" IDE-integration#File-Opener-Preference %}. To read more about the error's display, read about {% url "Debugging Errors" debugging#Errors %}.
 
 <!--
 To reproduce the following screenshot:
