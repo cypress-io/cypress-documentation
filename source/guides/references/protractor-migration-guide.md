@@ -11,7 +11,7 @@ title: Protractor Migration Guide
 {% endnote %}
 
 
-## Introduction
+# Introduction
 
 Considering using Cypress but unsure of whether the migration is worth it for your Angular app? We got you covered here with this migration guide to help transition from Protractor to Cypress. 
 
@@ -146,7 +146,7 @@ Yes! Your Protractor tests would continue to live in the `e2e` directory that An
 
 In fact, as you work through migrating to Cypress, we believe that progressively enhancing your e2e tests with Cypress is the best path forward to ensure that feature development is not impacted.
 
-## Getting Started
+# Getting Started
 
 Like any library you would add to your application, we start by adding it as a dependency to our `package.json`.
 
@@ -190,11 +190,11 @@ It will start up Cypress and our Angular app at the same time!
 
 {% video local /img/snippets/npm-run-cypress.mp4 %}
 
-## Essentials
+# Essentials
 
-### How to Get DOM Elements
+## How to Get DOM Elements
 
-#### Getting a single element on the page
+### Getting a single element on the page
 
 When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with `cy.get` while using CSS selectors to account for all use cases.
 
@@ -262,7 +262,7 @@ cy.get('input[name="field-name"]')
 
 You can learn more about how to get DOM elements in our official documentation.
 
-### How to Interact with DOM Elements
+## How to Interact with DOM Elements
 
 **Before: Protractor**
 
@@ -300,7 +300,7 @@ cy.get('input').its('value')
 
 You can learn more about [interacting with DOM elements in our official documentation](https://docs.cypress.io/guides/core-concepts/interacting-with-elements.html).
 
-### Assertions
+## Assertions
 
 Similar to Protractor, Cypress enables to use human readable assertions.
 
@@ -330,7 +330,7 @@ In the example above, if the submit link does not appear on the page at the exac
 
 You can learn more about how Cypress handles [assertions in our official documentation](https://docs.cypress.io/guides/references/assertions.html).
 
-### Network Spies
+## Network Spies
 
 By default, Protractor utilizes Jasmine's `spyOn` function to call a method and test that it was called.
 
@@ -371,7 +371,7 @@ describe('Cypress payment example', () => {
 
 For more information, check out our [official documentation on spies](https://docs.cypress.io/api/commands/spy.html).
 
-### Stubbing
+## Stubbing
 
 In Protractor, stubbing is a complex topic where many resources recommend the `browser.addMockModules()` method to stub behaviors. This requires a lot of manual configuration and can lead to an additional dependency that you need to maintain. With Cypress however, there is a built-in method to allow you to stub network requests: `cy.stub()`.
 
@@ -402,7 +402,7 @@ With the `cy.stub()` method, you can easily replace a function, record its usage
 
 For more information, check out our [official documentation on stubbing](https://docs.cypress.io/api/commands/stub.html#Syntax).
 
-### Navigating Websites
+## Navigating Websites
 
 When you want to visit a page, you can do so with the following code:
 
@@ -445,7 +445,9 @@ it('visit a non-Angular page', () => {
 })
 ```
 
-### Debugging Tests
+# Workflows
+
+## Debugging Tests
 
 In Protractor, per [the official docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#disabled-control-flow), the process for debugging your tests interactively involves a few steps:
 
@@ -481,7 +483,7 @@ describe('example test suite', () => {
 
 For more information, check out our [official documentation on debugging](https://docs.cypress.io/guides/guides/debugging.html#Using-debugger)!
 
-### Parallelization
+## Parallelization
 
 One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, Cypress Dashboard Service allows your tests to run in parallel. If your longest test only test a minute to run, this means that you've just cut down your testing by over 12,000%!
 
@@ -546,7 +548,7 @@ $ cypress run --record --parallel
 
 For more information, check out our [official docs on parallelization](https://docs.cypress.io/guides/guides/parallelization.html#Overview)!
 
-### Element Explorer
+## Element Explorer
 
 For those who are big fans of [Protractor's Element Explorer functionality](https://www.protractortest.org/#/debugging#enabled-control-flow), Cypress also provides you with a Selector Playground that allows you to:
 
@@ -556,7 +558,7 @@ For those who are big fans of [Protractor's Element Explorer functionality](http
 
 For more information, check out our official docs on the [Selector Playground](https://docs.cypress.io/guides/core-concepts/test-runner.html#Selector-Playground).
 
-## Next Steps
+# Next Steps
 
 For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](https://docs.cypress.io/guides/overview/why-cypress.html).
 
