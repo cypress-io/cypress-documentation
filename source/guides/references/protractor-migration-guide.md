@@ -73,15 +73,15 @@ When Protractor runs tests, the browser automation launches a browser instance a
 
 ### Faster feedback loops
 
-When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to iterate faster with confidence. Though this is not possible out of the box with Protractor, Cypress tests automatically re-run within the browser whenever they are saved which allows you to iterate faster with confidence.
+When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to iterate faster with confidence. Though this is not possible out of the box with Protractor, Cypress tests {% url "automatically re-run within the browser whenever test files are saved" writing-and-organizing-tests#Watching-tests %} which allows you to iterate faster with confidence.
 
 ### Time travel through tests
 
-Rather than trying to decipher errors inside of your terminal, with Cypress you can debug your tests just like you would debug your application normally. In addition, Cypress allows you to see snapshots of your Angular application as the test is executed so you can debug your applications more easily.
+Rather than trying to decipher errors inside of your terminal, with Cypress you can debug your tests just like you would debug your application normally. In addition, Cypress allows you to {% url "see snapshots of your Angular application" test-runner#Hovering-on-Commands %} as the test is executed so you can debug your applications more easily.
 
 ### Easily automate screenshots
 
-Another powerful feature of end-to-end testing is the ability to capture screenshots and recording. While possible in both tools, Protractor requires you to manually tap into Node.js and has limited configuration options.
+Another powerful feature of end-to-end testing is the ability to {% url "capture screenshots and video recording" screenshots-and-videos %}. While possible in both tools, Protractor requires you to manually tap into Node.js and has limited configuration options.
 
 **Before: Protractor**
 
@@ -113,7 +113,7 @@ describe('Dashboard', () => {
 })
 ```
 
-For more information on what configuration options are available, be sure to check out the {% url "official Cypress documentation on the screenshot command" https://docs.cypress.io/api/commands/screenshot.html %}.
+For more information on what configuration options are available, be sure to check out the {% url "official Cypress documentation on the `cy.screenshot()` command" screenshot %}.
 
 ## FAQs
 
@@ -260,7 +260,7 @@ cy.get('.list-item')
 cy.get('input[name="field-name"]')
 ```
 
-You can learn more about how to {% url "get DOM elements in our official documentation" https://docs.cypress.io/api/commands/get.html %}.
+You can learn more about how to {% url "get DOM elements in our official documentation" get %}.
 
 ## How to Interact with DOM Elements
 
@@ -298,7 +298,7 @@ cy.get('input').clear()
 cy.get('input').its('value')
 ```
 
-You can learn more about {% url "interacting with DOM elements in our official documentation" https://docs.cypress.io/guides/core-concepts/interacting-with-elements.html %}.
+You can learn more about {% url "interacting with DOM elements in our official documentation" interacting-with-elements %}.
 
 ## Assertions
 
@@ -324,11 +324,11 @@ describe('verify elements on a page', () => {
 })
 ```
 
-But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: {% url "retry-ability" https://docs.cypress.io/guides/core-concepts/retry-ability.html %}. When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives. 
+But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: {% url "retry-ability" retry-ability %}. When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives. 
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
 
-You can learn more about how Cypress handles {% url "assertions in our official documentation" https://docs.cypress.io/guides/references/assertions.html %}.
+You can learn more about how Cypress handles {% url "assertions in our official documentation" assertions %}.
 
 ## Network Spies
 
@@ -369,7 +369,7 @@ describe('Cypress payment example', () => {
 })
 ```
 
-For more information, check out our {% url "official documentation on spies" https://docs.cypress.io/api/commands/spy.html %}.
+For more information, check out our {% url "official documentation on spies" spy %}.
 
 ## Stubbing
 
@@ -400,7 +400,7 @@ describe('show stubbing scaffold', () => {
 
 With the `cy.stub()` method, you can easily replace a function, record its usage, and even control its behavior.
 
-For more information, check out our {% url "official documentation on stubbing" https://docs.cypress.io/api/commands/stub.html#Syntax %}.
+For more information, check out our {% url "official documentation on stubbing" stub %}.
 
 ## Navigating Websites
 
@@ -481,7 +481,7 @@ describe('example test suite', () => {
 })
 ```
 
-For more information, check out our {% url "official documentation on debugging" https://docs.cypress.io/guides/guides/debugging.html#Using-debugger %}!
+For more information, check out our {% url "official documentation on debugging" debugging %}!
 
 ## Parallelization
 
@@ -546,7 +546,7 @@ However, with Cypress, all you need to do is pass the `--parallel` and `--record
 $ cypress run --record --parallel
 ```
 
-For more information, check out our {% url "official docs on parallelization" https://docs.cypress.io/guides/guides/parallelization.html#Overview %}!
+For more information, check out our {% url "official docs on parallelization" parallelization %}!
 
 ## Element Explorer
 
@@ -556,11 +556,11 @@ For those who are big fans of {% url "Protractor's Element Explorer functionalit
 - See what elements match a given selector
 - See what element matches a string of text
 
-For more information, check out our official docs on the {% url "Selector Playground" https://docs.cypress.io/guides/core-concepts/test-runner.html#Selector-Playground %}.
+For more information, check out our official docs on the {% url "Selector Playground" test-runner#Selector-Playground %}.
 
 # Next Steps
 
-For more information on how to create end-to-end tests with Cypress, be sure to check out {% url "our official documentation here" https://docs.cypress.io/guides/overview/why-cypress.html %}.
+For more information on how to create end-to-end tests with Cypress, be sure to check out {% url "our official documentation here" why-cypress %}.
 
 {% note warning %}
 If you see any inaccuracies with this or feel something has been misrepresented, please {% url "submit an issue here" https://github.com/cypress-io/cypress-documentation/issues/new %}.
