@@ -16,7 +16,7 @@ title: Protractor Migration Guide
 Considering using Cypress but unsure of whether the migration is worth it for your Angular app? We got you covered here with this migration guide to help transition from Protractor to Cypress. 
 
 {% note warning %}
-If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+If you see any inaccuracies with this or feel something has been misrepresented, please {% url "submit an issue here" https://github.com/cypress-io/cypress-documentation/issues/new %}.
 {% endnote %}
 
 To start, let's take a quick look at a common test case scenario: allowing a user to sign up for a new account.
@@ -113,7 +113,7 @@ describe('Dashboard', () => {
 })
 ```
 
-For more information on what configuration options are available, be sure to check out the [official Cypress documentation on the screenshot command](https://docs.cypress.io/api/commands/screenshot.html).
+For more information on what configuration options are available, be sure to check out the {% url "official Cypress documentation on the screenshot command" https://docs.cypress.io/api/commands/screenshot.html %}.
 
 ## FAQs
 
@@ -260,7 +260,7 @@ cy.get('.list-item')
 cy.get('input[name="field-name"]')
 ```
 
-You can learn more about how to get DOM elements in our official documentation.
+You can learn more about how to {% url "get DOM elements in our official documentation" https://docs.cypress.io/api/commands/get.html %}.
 
 ## How to Interact with DOM Elements
 
@@ -298,7 +298,7 @@ cy.get('input').clear()
 cy.get('input').its('value')
 ```
 
-You can learn more about [interacting with DOM elements in our official documentation](https://docs.cypress.io/guides/core-concepts/interacting-with-elements.html).
+You can learn more about {% url "interacting with DOM elements in our official documentation" https://docs.cypress.io/guides/core-concepts/interacting-with-elements.html %}.
 
 ## Assertions
 
@@ -324,11 +324,11 @@ describe('verify elements on a page', () => {
 })
 ```
 
-But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability.html). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives. 
+But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: {% url "retry-ability" https://docs.cypress.io/guides/core-concepts/retry-ability.html %}. When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives. 
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
 
-You can learn more about how Cypress handles [assertions in our official documentation](https://docs.cypress.io/guides/references/assertions.html).
+You can learn more about how Cypress handles {% url "assertions in our official documentation" https://docs.cypress.io/guides/references/assertions.html %}.
 
 ## Network Spies
 
@@ -369,7 +369,7 @@ describe('Cypress payment example', () => {
 })
 ```
 
-For more information, check out our [official documentation on spies](https://docs.cypress.io/api/commands/spy.html).
+For more information, check out our {% url "official documentation on spies" https://docs.cypress.io/api/commands/spy.html %}.
 
 ## Stubbing
 
@@ -400,7 +400,7 @@ describe('show stubbing scaffold', () => {
 
 With the `cy.stub()` method, you can easily replace a function, record its usage, and even control its behavior.
 
-For more information, check out our [official documentation on stubbing](https://docs.cypress.io/api/commands/stub.html#Syntax).
+For more information, check out our {% url "official documentation on stubbing" https://docs.cypress.io/api/commands/stub.html#Syntax %}.
 
 ## Navigating Websites
 
@@ -449,7 +449,7 @@ it('visit a non-Angular page', () => {
 
 ## Debugging Tests
 
-In Protractor, per [the official docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#disabled-control-flow), the process for debugging your tests interactively involves a few steps:
+In Protractor, per {% url "the official docs" https://github.com/angular/protractor/blob/master/docs/debugging.md#disabled-control-flow %}, the process for debugging your tests interactively involves a few steps:
 
 1. Add `debugger` keyword to the test case that you want to debug
 
@@ -481,7 +481,7 @@ describe('example test suite', () => {
 })
 ```
 
-For more information, check out our [official documentation on debugging](https://docs.cypress.io/guides/guides/debugging.html#Using-debugger)!
+For more information, check out our {% url "official documentation on debugging" https://docs.cypress.io/guides/guides/debugging.html#Using-debugger %}!
 
 ## Parallelization
 
@@ -546,22 +546,22 @@ However, with Cypress, all you need to do is pass the `--parallel` and `--record
 $ cypress run --record --parallel
 ```
 
-For more information, check out our [official docs on parallelization](https://docs.cypress.io/guides/guides/parallelization.html#Overview)!
+For more information, check out our {% url "official docs on parallelization" https://docs.cypress.io/guides/guides/parallelization.html#Overview %}!
 
 ## Element Explorer
 
-For those who are big fans of [Protractor's Element Explorer functionality](https://www.protractortest.org/#/debugging#enabled-control-flow), Cypress also provides you with a Selector Playground that allows you to:
+For those who are big fans of {% url "Protractor's Element Explorer functionality" https://www.protractortest.org/#/debugging#enabled-control-flow %}, Cypress also provides you with a Selector Playground that allows you to:
 
 - Determine a unique selector for an element
 - See what elements match a given selector
 - See what element matches a string of text
 
-For more information, check out our official docs on the [Selector Playground](https://docs.cypress.io/guides/core-concepts/test-runner.html#Selector-Playground).
+For more information, check out our official docs on the {% url "Selector Playground" https://docs.cypress.io/guides/core-concepts/test-runner.html#Selector-Playground %}.
 
 # Next Steps
 
-For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](https://docs.cypress.io/guides/overview/why-cypress.html).
+For more information on how to create end-to-end tests with Cypress, be sure to check out {% url "our official documentation here" https://docs.cypress.io/guides/overview/why-cypress.html %}.
 
 {% note warning %}
-If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+If you see any inaccuracies with this or feel something has been misrepresented, please {% url "submit an issue here" https://github.com/cypress-io/cypress-documentation/issues/new %}.
 {% endnote %}
