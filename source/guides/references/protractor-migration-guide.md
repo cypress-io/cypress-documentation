@@ -90,7 +90,6 @@ const fs = require('fs')
 
 describe('Dashboard', () => {
   it('should render dashboard', () => {
-    i
     browser.get('/dashboard')
     browser.takeScreenshot().then((png) => {
       const stream = fs.createWriteStream(filename)
@@ -345,7 +344,6 @@ export default {
 **Before: Protractor**
 
 ```js
-// Protractor
 import paymentApi from './paymentApi.js'
 
 describe('Protractor payment example', () => {
@@ -362,7 +360,6 @@ Fortunately for us, creating a spy in Cypress is almost identical!
 **After: Cypress**
 
 ```js
-// Cypress
 describe('Cypress payment example', () => {
   it('verifies payment is only sent once', () => {
     cy.spy(paymentApi, 'submit')
