@@ -172,7 +172,6 @@ Then we will update our `package.json` with the a script to run Cypress and your
   "scripts": {
     ...
     "e2e": "ng e2e",
-    "e2e:debug": "node --inspect-brk ./node_modules/.bin/protractor ./e2e/protractor.conf.js",
     "cypress": "concurrently \"ng serve\" \"cypress open\""
   },
   "dependencies": { ... },
