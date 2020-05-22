@@ -95,6 +95,7 @@ describe('Dashboard', () => {
       const stream = fs.createWriteStream(filename)
 
       writeScreenShot(png, 'dashboard.png')
+      // eslint-disable-next-line
       stream.write(new Buffer(png, 'base64'))
       stream.end()
     })
