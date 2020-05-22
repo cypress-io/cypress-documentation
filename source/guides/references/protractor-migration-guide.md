@@ -107,8 +107,8 @@ describe('Dashboard', () => {
 ```javascript
 describe('Dashboard', () => {
   it('should render dashboard', () => {
-	  cy.visit('/dashboard')
-	  cy.screenshot('dashboard.png')
+    cy.visit('/dashboard')
+    cy.screenshot('dashboard.png')
   })
 })
 ```
@@ -317,9 +317,9 @@ describe('verify elements on a page', () => {
 
 ```js
 describe('verify elements on a page', () => {
-	it('verifies that a link is visible', () => {
-		cy.get('a.submit-link').should('be.visible)
-	})
+  it('verifies that a link is visible', () => {
+    cy.get('a.submit-link').should('be.visible)
+  })
 })
 ```
 
@@ -473,10 +473,10 @@ With Cypress however, because your tests are available through the browser dashb
 
 ```js
 describe('example test suite', () => {
-	it('contains an error we need to debug', () => {
-		cy.visit('/login')
-		cy.get('#password-field')).debug().sendKeys('testPassword1234')
-	})
+  it('contains an error we need to debug', () => {
+    cy.visit('/login')
+    cy.get('#password-field')).debug().sendKeys('testPassword1234')
+  })
 })
 ```
 
