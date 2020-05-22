@@ -4,7 +4,9 @@ title: Slack Integration
 
 Slack Integration allows you to see your Cypress test results directly in your teams' Slack channels.
 
-# Installation
+{% imgTag /img/dashboard/cypress-slack-integration-channel-feed.png "Cypress App notification feed in Slack channel" %}
+
+# Install the Cypress Slack app
 
 {% note warning Ownership Requirements %}
 In order to install the Slack Integration, you must be an admin or owner of both your Cypress Dashboard organization and your Slack workspace.
@@ -20,7 +22,18 @@ In order to install the Slack Integration, you must be an admin or owner of both
 1. Click the **Install Slack Integration** button.
 1. You'll see a popup window that requests permission for Cypress to access the workspace and allows you to choose your Slack workspace and channel to associate with the installation. Once you've selected a channel and allowed access, the installation is complete! The Cypress Dashboard will post run results for all projects in your organization to the specified Slack channel.
 
-# Setting notification preferences
+# Per-organization configuration
+
+## Add additional Slack channels
+
+You can have the Cypress Dashboard post run results to an additional channels. To add a channel:
+
+1. Navigate to the **Integrations** page for the organization with the installed Slack integration.
+1. Within the Slack integration, click **Configure**.
+1. Click **Add Slack Channel**.
+1. You'll see a popup window that allows you to choose the channel to associate with the organization. The Cypress Dashboard will post run results for all projects in your organization to the new Slack channel.
+
+## Set notification preferences
 
 By default, the Cypress Dashboard will post a Slack message to each configured channel only for failing runs. If you'd like to change these preferences:
 
@@ -30,7 +43,7 @@ By default, the Cypress Dashboard will post a Slack message to each configured c
   - **All runs**: will notify on all runs (including passed)
   - **Failed runs only**: will only notify on runs with a fail status.
 
-# Muting a channel
+## Mute a channel
 
 If you want the Cypress Dashboard to temporarily stop posting Slack messages to a certain channel, you can **Mute** that channel. This allows you to easily pause and resume notifications for a specific channel without losing the configuration you’ve put in place.
 
@@ -38,16 +51,7 @@ If you want the Cypress Dashboard to temporarily stop posting Slack messages to 
 1. Within the Slack integration, click **Configure**.
 1. Under **Actions**, select your **Mute** for each Slack channel you want muted.
 
-# Adding additional Slack channels
-
-You can have the Cypress Dashboard post run results to an additional channels. To add a channel:
-
-1. Navigate to the **Integrations** page for the organization with the installed Slack integration.
-1. Within the Slack integration, click **Configure**.
-1. Click **Add Slack Channel**.
-1. You'll see a popup window that allows you to choose the channel to associate with the organization. The Cypress Dashboard will post run results for all projects in your organization to the new Slack channel.
-
-# Removing a Slack channel
+## Remove a Slack channel
 
 You can have the Cypress Dashboard stop posting notifications to a channel. You can remove all Slack channels if you’d prefer to disable global notifications altogether in favor of per-project notifications.
 
@@ -59,7 +63,7 @@ You can have the Cypress Dashboard stop posting notifications to a channel. You 
 
 If your organization has multiple teams working on separate projects, you can tailor the Slack notifications of each project to match your teams' needs.
 
-## Adding a new Slack channel
+## Add a new Slack channel
 
 You can have the Cypress Dashboard post run results for a specific project to an additional channel.
 
@@ -73,7 +77,7 @@ You can have the Cypress Dashboard post run results for a specific project to an
 1. Click **Add Slack Channel**.
 1. You'll see a popup window that allows you to choose the channel to associate with the project.
 
-## Setting notification preferences
+## Set notification preferences
 
 By default, the Cypress Dashboard will post a Slack message to each configured channel only for failing runs. You cannot override the notification preferences for the global organization channels. If you'd like to change these preferences:
 
@@ -83,7 +87,7 @@ By default, the Cypress Dashboard will post a Slack message to each configured c
   - **All runs**: will notify on all runs (including passed)
   - **Failed runs only**: will only notify on runs with a fail status.
 
-## Muting a channel
+## Mute a channel
 
 If you want the Cypress Dashboard to temporarily stop posting Slack messages to a certain channel, you can **Mute** that channel. This allows you to easily pause and resume notifications for a specific channel without losing the configuration you’ve put in place. You can even mute the messages for the global organization channels!
 
@@ -91,7 +95,7 @@ If you want the Cypress Dashboard to temporarily stop posting Slack messages to 
 1. Scroll down to the **Slack Integration** section.
 1. Under **Actions**, select your **Mute** for each Slack channel you want muted.
 
-## Removing a channel
+## Remove a channel
 
 You can have the Cypress Dashboard stop posting notifications to a channel. You cannot delete the global notification channels from a project.
 
@@ -99,7 +103,7 @@ You can have the Cypress Dashboard stop posting notifications to a channel. You 
 1. Scroll down to the **Slack Integration** section.
 1. Under **Actions**, select your **Delete** for each Slack channel you want deleted.
 
-# Removing the integration
+# Remove the integration
 
 You can completely remove the Slack integration from your workspace. This will remove the @cypress bot from your workspace and will delete all of the Slack configurations you’ve set in the Cypress Dashboard. You cannot undo this, but you will be able to install the Slack integration again in the future.
 
