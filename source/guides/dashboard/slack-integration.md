@@ -109,4 +109,4 @@ You can completely remove the Slack integration from your workspace. This will r
 
 1. Navigate to the **Integrations** page for the organization with the installed Slack integration.
 1. Within the Slack integration, click **Configure**.
-1. Click **Uninstall Slack integration** to uninstall the Slack integration.
+1. Click **Uninstall Slack Integration** to uninstall the Slack Integration.
