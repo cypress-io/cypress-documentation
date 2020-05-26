@@ -54,7 +54,7 @@ cy.request('seed/admin') // url is http://localhost:1234/seed/admin
 
 **{% fa fa-angle-right %} body** ***(String, Object)***
 
-A request `body` to be sent in the request. Cypress sets the `Accepts` request header and serializes the response body by its `Content-Type`.
+A request `body` to be sent in the request. Cypress sets the `Accepts` request header and serializes the response body by the `encoding` option.
 
 **{% fa fa-angle-right %} method** ***(String)***
 
@@ -103,6 +103,7 @@ Option | Default | Description
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `followRedirect` | `true` | Whether to automatically follow redirects
 `form` | `false` | Whether to convert the `body` values to url encoded content and set the `x-www-form-urlencoded` header
+`encoding` | `utf8` | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le`
 `gzip` | `true` | Whether to accept the `gzip` encoding
 `headers` | `null` | Additional headers to send; Accepts object literal
 `qs` | `null` | Query parameters to append to the `url` of the request
