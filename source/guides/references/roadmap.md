@@ -8,12 +8,12 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 ## Test Runner
 
-*Last updated Apr 29, 2020*
+*Last updated May 25, 2020*
 
 Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------
 *Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
-*Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}|
+*Done*               | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}| {% url "v4.6.0" changelog#4-6-0 %}
 *Work in progress*   | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}|
 *Work in progress*   | **Full network layer stubbing**    |  {% issue 687 %}  | {% PR 4176 %}|
 
