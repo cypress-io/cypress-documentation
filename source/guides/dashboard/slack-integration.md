@@ -105,7 +105,7 @@ You can have the Cypress Dashboard stop posting notifications to a channel. You 
 
 # Remove the integration
 
-You can completely remove the Slack integration from your workspace. This will remove the @cypress bot from your workspace and will delete all of the Slack configurations you’ve set in the Cypress Dashboard. You cannot undo this, but you will be able to install the Slack integration again in the future.
+You can completely remove the Slack Integration from your workspace. This will remove the @cypress bot from your workspace and will delete all of the Slack configurations you’ve set in the Cypress Dashboard. You cannot undo this, but you will be able to install the Slack Integration again in the future.
 
 1. Navigate to the **Integrations** page for the organization with the installed Slack Integration.
 1. Within the Slack Integration, click **Configure**.
