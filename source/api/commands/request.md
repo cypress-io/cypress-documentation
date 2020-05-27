@@ -197,6 +197,33 @@ cy.request({
   })
 ```
 
+### Download a binary file (.pdf, .zip, .doc, …)
+
+```javascript
+cy.request({
+  url: 'http://localhost:8080/some-document.pdf', // or .zip, …
+  encoding: 'binary', // response.body will be a serialized binary content of the file
+})
+  .then((response) => {
+    cy.writeFile('path/to/save/document.pdf', response.body, 'binary');
+  });
+```
+
+### Get DataURI of an image
+
+```javascript
+cy.request({
+  url: 'https://docs.cypress.io/img/logo.png',
+  encoding: 'base64', // response.body will be a base64-encoded content of the image
+})
+  .then((response) => {
+    const base64Content = response.body;
+    const mime = response.headers['content-type']; // or 'image/png'
+    // see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+    const imageDataUri = `data:${mime};base64,${base64Content}`
+  })
+```
+
 ### HTML form submissions using form option
 
 Oftentimes, once you have a proper e2e test around logging in, there's no reason to continue to `cy.visit()` the login and wait for the entire page to load all associated resources before running any other commands. Doing so can slow down our entire test suite.
