@@ -7,7 +7,7 @@ const revisionOpts = {
   dontRenameFile: ['.html', 'CNAME'],
   dontUpdateReference: ['.html'],
   dontSearchFile: ['.js'],
-  debug: process.env.NODE_ENV === 'production',
+  debug: true,
 }
 
 function remove (folder) {
