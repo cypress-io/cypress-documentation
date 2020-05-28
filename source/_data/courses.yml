@@ -2,26 +2,29 @@
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
 - title: "Cypress test automation for people in a hurry"
+  url: https://www.udemy.com/course/cypress-test-automation-for-people-in-a-hurry/?referralCode=21A875FF429457CF641D
   author: Filip Hric
   authorTwitter: filip_hric
   sourceName: Udemy
-  sourceUrl: https://www.udemy.com/course/cypress-test-automation-for-people-in-a-hurry/?referralCode=21A875FF429457CF641D
+  sourceUrl: https://www.udemy.com
   
 - title: "Cypress: End-to-end JavaScript Testing"
   url: https://app.pluralsight.com/library/courses/cypress-end-to-end-javascript-testing/table-of-contents
   author: Adhithi Ravichandran
   authorTwitter: AdhithiRavi
   sourceName: Pluralsight
-  sourceUrl: https://www.pluralsight.com/courses/cypress-end-to-end-javascript-testing
+  sourceUrl: https://www.pluralsight.com
 
 - title: "Add e2e tests with cypress to a React application"
+  url: https://egghead.io/playlists/add-e2e-tests-with-cypress-to-a-react-application-7691?af=6p5abz
   author: Tomasz Łakomy
   authorTwitter: tlakomy
   sourceName: egghead.io
-  sourceUrl: https://egghead.io/playlists/add-e2e-tests-with-cypress-to-a-react-application-7691?af=6p5abz
+  sourceUrl: https://egghead.io
   free: true
 
 - title: "Outside-In Frontend Development"
+  url: https://outsidein.dev/
   author: Josh Justice
   authorTwitter: codingitwrong
   sourceName: OutsideIn.dev
@@ -33,7 +36,7 @@
   author: Avindra Fernando
   authorTwitter: avindrafernando
   sourceName: Pluralsight
-  sourceUrl: https://www.pluralsight.com/
+  sourceUrl: https://www.pluralsight.com
   free: true
 
 - title: "End-to-End JavaScript Testing with Cypress.io"
@@ -52,8 +55,9 @@
 
 - title: "Cypress-Modern Automation Testing from Scratch + Framework"
   url: https://www.udemy.com/course/cypress-tutorial/?LSNPUBID=hh*FqEN*ZGw&ranEAID=hh*FqEN*ZGw&ranMID=39197&ranSiteID=hh.FqEN.ZGw-3od9TEk.GmnZ.QA2DzTmFA
+  author: Rahul Shetty
   sourceName: Udemy
-  sourceUrl: https://www.udemy.com/
+  sourceUrl: https://www.udemy.com
 
 - title: Introduction to Cypress
   url: https://testautomationu.applitools.com/cypress-tutorial/
@@ -89,6 +93,8 @@
   url: https://www.pluralsight.com/courses/ng-conf-19-testing-cypress-io
   author: Joe Eames
   authorTwitter: josepheames
+  sourceName: Pluralsight
+  sourceUrl: https://www.pluralsight.com
   company: pluralsight.com
 
 - title: End to End automation testing with Cypress
