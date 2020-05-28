@@ -197,31 +197,35 @@ cy.request({
   })
 ```
 
-### Download a binary file (.pdf, .zip, .doc, …)
+### Download a PDF file
+
+By passing the `encoding: binary` option, the `response.body` will be serialized binary content of the file. You can use this to access various file types via `.request()` like `.pdf`, `.zip`, or `.doc` files.
 
 ```javascript
 cy.request({
-  url: 'http://localhost:8080/some-document.pdf', // or .zip, …
-  encoding: 'binary', // response.body will be a serialized binary content of the file
+  url: 'http://localhost:8080/some-document.pdf',
+  encoding: 'binary',
 })
-  .then((response) => {
-    cy.writeFile('path/to/save/document.pdf', response.body, 'binary');
-  });
+.then((response) => {
+  cy.writeFile('path/to/save/document.pdf', response.body, 'binary')
+})
 ```
 
-### Get DataURI of an image
+### Get Data URL of an image
+
+By passing the `encoding: base64` option, the `response.body` will be base64-encoded content of the image. You can use this to construct a {% url "Data URI" https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs %} for use elsewhere.
 
 ```javascript
 cy.request({
   url: 'https://docs.cypress.io/img/logo.png',
-  encoding: 'base64', // response.body will be a base64-encoded content of the image
+  encoding: 'base64',
 })
-  .then((response) => {
-    const base64Content = response.body;
-    const mime = response.headers['content-type']; // or 'image/png'
-    // see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
-    const imageDataUri = `data:${mime};base64,${base64Content}`
-  })
+.then((response) => {
+  const base64Content = response.body
+  const mime = response.headers['content-type'] // or 'image/png'
+  // see https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+  const imageDataUrl = `data:${mime};base64,${base64Content}`
+})
 ```
 
 ### HTML form submissions using form option
