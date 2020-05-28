@@ -225,6 +225,10 @@ describe('Hooks', () => {
 {% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our {% url "thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`" best-practices#Using-after-or-afterEach-hooks %}.
 {% endnote %}
 
+{% note danger %}
+{% fa fa-warning %} Be wary of placing hooks in the root scope, as they could execute in surprising order when clicking "Run all specs" button. Instead place them inside `describe` or `context` suites. Read {% url "Be careful when running all specs together" https://glebbahmutov.com/blog/run-all-specs/ %}.
+{% endnote %}
+
 ## Excluding and Including Tests
 
 To run a specified suite or test, append `.only` to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.
