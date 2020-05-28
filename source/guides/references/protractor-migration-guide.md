@@ -148,7 +148,7 @@ In fact, as you work through migrating to Cypress, we believe that progressively
 
 # Getting Started
 
-Like any library you would add to your application, we start by adding it as a dependency to our `package.json`.
+Like any library you would add to your application, we start by {% url "adding it as a dependency" installing-cypress#Installing %} to our `package.json`.
 
 ```shell
 npm install cypress -D
