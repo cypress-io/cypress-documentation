@@ -69,7 +69,7 @@ You can have the Cypress Dashboard post run results for a specific project to an
 
 1. Select your organization in the organization switcher.
   {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
-1. Select the project you wish to integrate with a GitHub repository.
+1. Select the project you wish to integrate with Slack.
   {% imgTag /img/dashboard/select-cypress-project.png "Select a project" %}
 1. Go to the project's settings page.
   {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
