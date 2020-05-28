@@ -30,6 +30,11 @@
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
 
+    - name: Rollup
+      description: Watches and bundles your spec files via Rollup
+      link: https://github.com/bahmutov/cy-rollup
+      keywords: [rollup]
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
@@ -141,6 +146,11 @@
       description: Run Lighthouse audit directly in your E2E test suites
       link: https://github.com/mfrachet/cypress-audit
       keywords: [lighthouse]
+
+    - name: cypress-hmr-restarter
+      description: Restarts tests when receiving webpack-dev-server HMR updates
+      link: https://github.com/Svish/cypress-hmr-restarter
+      keywords: [webpack, webpack-dev-server, hmr]
 
 - name: Custom Commands
   plugins:
@@ -263,6 +273,11 @@
       description: Custom commands for interacting with iframes
       link: https://gitlab.com/kgroat/cypress-iframe
       keywords: [commands, iframe]
+      
+    - name: cypress-react-selector
+      description: cypress custom commands to locate react elements by component, props and state
+      link: https://github.com/abhinaba-ghosh/cypress-react-selector
+      keywords: [react, commands, locator]
 
 - name: Extending other testing frameworks
   plugins:
@@ -478,3 +493,8 @@
       description: Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.
       link: https://github.com/archfz/cypress-terminal-report
       keywords: [reporter, logs, terminal, CI, CLI]
+
+    - name: cypress-allure-plugin
+      description: Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.
+      link: https://github.com/Shelex/cypress-allure-plugin
+      keywords: [reporter, allure]
