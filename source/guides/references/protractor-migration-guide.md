@@ -151,9 +151,8 @@ In fact, as you work through migrating to Cypress, we believe that progressively
 
 Like any library you would add to your application, we start by adding it as a dependency to our `package.json`.
 
-```
+```shell
 npm install cypress -D
-```
 
 Then, since Cypress can run in parallel with your application, let's install Concurrently to simplify our npm script.
 
