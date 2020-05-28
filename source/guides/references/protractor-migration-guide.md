@@ -153,13 +153,12 @@ Like any library you would add to your application, we start by {% url "adding i
 ```shell
 npm install cypress -D
 
-Then, since Cypress can run in parallel with your application, let's install Concurrently to simplify our npm script.
+Then, since Cypress can run in parallel with your application, let's install {% url "Concurrently" https://github.com/kimmobrunfeldt/concurrently %} to simplify our npm script.
 
-```
+```shell
 npm install concurrently -D
-```
 
-Then we will update our `package.json` with the a script to run Cypress and your Angular app simultaneously:
+Then we will update our `package.json` with a script to run Cypress and your Angular app simultaneously:
 
 ```js
 "cypress": "concurrently \"ng serve\" \"cypress open\""
@@ -171,7 +170,7 @@ Then we will update our `package.json` with the a script to run Cypress and your
   "scripts": {
     ...
     "e2e": "ng e2e",
-    "cypress": "concurrently \"ng serve\" \"cypress open\""
+    "cypress:open": "concurrently \"ng serve\" \"cypress open\""
   },
   "dependencies": { ... },
   "devDependencies": { ... }
@@ -181,7 +180,7 @@ Then we will update our `package.json` with the a script to run Cypress and your
 Now, when we run:
 
 ```bash
-npm run cypress
+npm run cypress:open
 ```
 
 It will start up Cypress and our Angular app at the same time!
@@ -194,7 +193,7 @@ It will start up Cypress and our Angular app at the same time!
 
 ### Getting a single element on the page
 
-When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with `cy.get` while using CSS selectors to account for all use cases.
+When it comes to e2e tests, one of the most common things you'll need to do is query one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with {% url "`cy.get()`" get %} while using specific selectors to account for all use cases.
 
 **Before: Protractor**
 
@@ -238,7 +237,7 @@ When you want to get access to more than one element on the page, you would need
 // Get all list-item elements on the page
 element.all(by.tagName('li'))
 
-/// Get all elements by using a CSS selector.
+/// Get all elements by using a class selector.
 element.all(by.css('.list-item'))
 
 // Find an element using an input name selector.
@@ -247,11 +246,11 @@ element.all(by.name('field-name'))
 
 **After: Cypress**
 
-```jsx
+```js
 // Get all list-item elements on the page
 cy.get('li')
 
-/// Get all elements by using a CSS selector.
+/// Get all elements by using a class selector.
 cy.get('.list-item')
 
 // Find an element using an input name selector.
@@ -285,7 +284,7 @@ element(by.css('input')).getAttribute('value')
 // Click on the element
 cy.get('button').click()
 
-// Send keys to the element (usually an input)
+// Type in an element (usually an input)
 cy.get('input').type('my text')
 
 // Clear the text in an element (usually an input)
@@ -293,7 +292,7 @@ cy.get('input').clear()
 
 // Get the attribute of an element
 // Example: Get the value of an input
-cy.get('input').its('value')
+cy.get('input').invoke('val')
 ```
 
 You can learn more about {% url "interacting with DOM elements in our official documentation" interacting-with-elements %}.
@@ -324,7 +323,7 @@ describe('verify elements on a page', () => {
 
 But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: {% url "retry-ability" retry-ability %}. When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives. 
 
-In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
+In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond the {% url "command timeout" configuration#Timeouts %}.
 
 You can learn more about how Cypress handles {% url "assertions in our official documentation" assertions %}.
 
@@ -361,8 +360,9 @@ Fortunately for us, creating a spy in Cypress is almost identical!
 describe('Cypress payment example', () => {
   it('verifies payment is only sent once', () => {
     cy.spy(paymentApi, 'submit')
-    cy.visit('/payment')
-    expect(paymentApi.submit).to.have.been.called.once
+    cy.visit('/payment').then(() => {
+      expect(paymentApi.submit).to.have.been.called.once
+   }
   })
 })
 ```
@@ -371,7 +371,7 @@ For more information, check out our {% url "official documentation on spies" spy
 
 ## Stubbing
 
-In Protractor, stubbing is a complex topic where many resources recommend the `browser.addMockModules()` method to stub behaviors. This requires a lot of manual configuration and can lead to an additional dependency that you need to maintain. With Cypress however, there is a built-in method to allow you to stub network requests: `cy.stub()`.
+In Protractor, stubbing is a complex topic where many resources recommend the `browser.addMockModules()` method to stub behaviors. This requires a lot of manual configuration and can lead to an additional dependency that you need to maintain. With Cypress however, there is a built-in method to allow you to stub network requests: {% url "`cy.stub()`" stub %}.
 
 **Before: Protractor**
 
@@ -396,7 +396,7 @@ describe('show stubbing scaffold', () => {
 })
 ```
 
-With the `cy.stub()` method, you can easily replace a function, record its usage, and even control its behavior.
+With the {% url "`cy.stub()`" stub %} method, you can easily replace a function, record its usage, and even control its behavior.
 
 For more information, check out our {% url "official documentation on stubbing" stub %}.
 
@@ -418,13 +418,13 @@ it('visits a page', () => {
 
 ```js
 it('visit a non-Angular page', () => {
-  cy.visit('/about')
+  cy.visit('http://localhost:4200/about')
   cy.go('forward')
   cy.go('back')
 })
 ```
 
-However, Protractor assumes that all websites you want to visit are Angular apps. As a result, you have to take an extra step to disable this behavior. When you write Cypress tests though, you don't need to do any extra work!
+However, Protractor assumes that all websites you want to visit are Angular apps. As a result, you have to take an extra step to disable this behavior when visiting a non-Angular page. When you write Cypress tests though, you don't need to do any extra work!
 
 **Before: Protractor**
 
@@ -466,7 +466,7 @@ describe('example test suite', () =>
 2. Set the inspector agent with a breakpoint flag and a config file
 3. Use Chrome's DevTools devices to locate the correct target 
 
-With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the `debug()` command!
+With Cypress however, because your tests are available through the browser, you can debug with developer tools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the {% url "`.debug()`" debug %} command!
 
 **After: Cypress**
 
@@ -483,7 +483,7 @@ For more information, check out our {% url "official documentation on debugging"
 
 ## Parallelization
 
-One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, Cypress Dashboard Service allows your tests to run in parallel. If your longest test only test a minute to run, this means that you've just cut down your testing by over 12,000%!
+One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to finish before verifying something works. Instead, the {% url "Cypress Dashboard Service" dashboard-introduction %} allows your tests to run {% url "in parallel" parallelization %}. If your longest test only takes a minute to run, this means that you've just cut down your testing by over 12,000%!
 
 This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). An example is provided below:
 
@@ -536,12 +536,12 @@ exports.config = {
 }
 ```
 
-However, with Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
+However, with Cypress, you can pass the {% url "`--parallel`" command-line#cypress-run-parallel %} and {% url "`--record`" command-line#cypress-run-record-key-lt-record-key-gt %} flag to `cypress run`, and your tests will automatically run in parallel:
 
 **After: Cypress**
 
-```bash
-$ cypress run --record --parallel
+```shell
+cypress run --record --parallel
 ```
 
 For more information, check out our {% url "official docs on parallelization" parallelization %}!
