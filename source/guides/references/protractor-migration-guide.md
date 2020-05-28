@@ -124,7 +124,7 @@ Absolutely not. While it might sound ideal to replace Protractor entirely, we kn
 
 ### Can Protractor and Cypress coexist in the same app?
 
-Yes! Your Protractor tests would continue to live in the `e2e` directory that Angular CLI scaffolded while all Cypress tests would live in a sibling folder named `cypress`.
+Yes! Your Protractor tests would continue to live in the `e2e` directory that Angular CLI scaffolded while all Cypress tests would live in a sibling folder named `cypress` in the root of your project, but can be {% url "configured" configuration#Folders-Files %} to another directory.
 
 ```
 .
