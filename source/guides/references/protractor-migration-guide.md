@@ -127,22 +127,21 @@ Absolutely not. While it might sound ideal to replace Protractor entirely, we kn
 Yes! Your Protractor tests would continue to live in the `e2e` directory that Angular CLI scaffolded while all Cypress tests would live in a sibling folder named `cypress` in the root of your project, but can be {% url "configured" configuration#Folders-Files %} to another directory.
 
 ```text
-.
-├── cypress
-├── e2e
-├── src
-├── .editorconfig
-├── .gitignore
-├── angular.json
-├── browserslist
-├── cypress.json
-├── karma.conf.js
-├── package.json
-├── README.md
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.spec.json
-└── tslint.json
+📁 cypress
+📁 e2e
+📁 src
+📄 .editorconfig
+📄 .gitignore
+📄 angular.json
+📄 browserslist
+📄 cypress.json
+📄 karma.conf.js
+📄 package.json
+📄 README.md
+📄 tsconfig.app.json
+📄 tsconfig.json
+📄 tsconfig.spec.json
+📄 tslint.json
 ```
 
 In fact, as you work through migrating to Cypress, we believe that progressively enhancing your e2e tests with Cypress is the best path forward to ensure that feature development is not impacted.
