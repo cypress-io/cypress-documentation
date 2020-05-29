@@ -133,6 +133,35 @@ We automatically seed you an example support file, which has several commented o
 Our {% url '"Node Modules" recipes' recipes#Fundamentals %} show you how to modify the support file.
 {% endnote %}
 
+### Execution
+
+Cypress executes the support file before the spec file, for example when you click on a test file named `spec-a.js` from the GUI, then the Test Runner executes:
+
+```html
+<!-- bundled support file -->
+<script src="support/index.js"></script>
+<!-- bundled spec file -->
+<script src="integration/spec-a.js"></script>
+```
+
+The same happens when using `cypress run` command: a new browser window is opened for each support + spec file pair.
+
+But when you click on "Run all specs" button from the GUI, the Test Runner bundles and concatenates all specs together, in essence running scripts like this:
+
+```html
+<!-- bundled support file -->
+<script src="support/index.js"></script>
+<!-- bundled first spec file, second spec file, etc -->
+<script src="integration/spec-a.js"></script>
+<script src="integration/spec-b.js"></script>
+...
+<script src="integration/spec-n.js"></script>
+```
+
+{% note info %}
+Having a single support file and all specs run together might execute `before` and `beforeEach` hooks in the ways you probably did not anticipate. Read {% url "Be careful when running all specs together" https://glebbahmutov.com/blog/run-all-specs/ %} for examples.
+{% endnote %}
+
 # Writing tests
 
 Cypress is built on top of {% url 'Mocha' bundled-tools#Mocha %} and {% url 'Chai' bundled-tools#Chai %}. We support both Chai's `BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere to this style.
@@ -194,6 +223,11 @@ Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}
 These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
+beforeEach(() => {
+  // root-level hook
+  // runs before every test
+})
+
 describe('Hooks', () => {
   before(() => {
     // runs once before all tests in the block
@@ -226,7 +260,7 @@ describe('Hooks', () => {
 {% endnote %}
 
 {% note danger %}
-{% fa fa-warning %} Be wary of placing hooks in the root scope, as they could execute in surprising order when clicking "Run all specs" button. Instead place them inside `describe` or `context` suites. Read {% url "Be careful when running all specs together" https://glebbahmutov.com/blog/run-all-specs/ %}.
+{% fa fa-warning %} Be wary of root-level hooks, as they could execute in surprising order when clicking "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read {% url "Be careful when running all specs together" https://glebbahmutov.com/blog/run-all-specs/ %}.
 {% endnote %}
 
 ## Excluding and Including Tests
