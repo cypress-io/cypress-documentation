@@ -13,7 +13,7 @@ const addAssetCacheHash = (assetSrc, hash) => {
 
   parsedSrc.splice(-1, 0, hash)
 
-  return parsedSrc
+  return parsedSrc.join('.')
 }
 
 describe('Examples', () => {
@@ -275,16 +275,6 @@ describe('Examples', () => {
             }
           })
         })
-      })
-    })
-
-    it('images exist', function () {
-      cy.wrap(podcasts.large).each((podcast) => {
-        if (podcast.img) {
-          cy.request(Cypress.config('baseUrl') + podcast.img).should((response) => {
-            expect(response.status).to.eq(200)
-          })
-        }
       })
     })
   })
