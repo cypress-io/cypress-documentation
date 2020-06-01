@@ -2,6 +2,26 @@
 title: IDE Integration
 ---
 
+# File Opener Preference
+
+When clicking on a file path from the {% url "Test Runner" test-runner %} in an {% url "error stack trace or a code frame" debugging#Errors %}, Cypress will attempt to open the file on your system. If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
+
+{% imgTag /img/guides/file-opener-ide-go-to-line.gif "Open file at line in VS Code" %}
+
+The first time you click a file path, Cypress will prompt you to select which location you prefer to open the file. You can choose to open it in your:
+
+- File system (e.g. Finder on MacOS, File Explore on Windows)
+- An IDE located on your system
+- A specified application path
+
+{% note warning %}
+Cypress attempts to find available file editors on your system and display those as options. If your preferred editor is not list, you can specify the (full) path to it by selecting **Other**. Cypress will make every effort to open the file, *but it is not guaranteed to work with every application*.
+{% endnote %}
+
+After setting your file opener preference, any files will automatically open in your selected application without prompting you to choose. If you want to change your selection, you can do so in the **Settings** tab of the Cypress Test Runner by clicking under **File Opener Preference**.
+
+{% imgTag /img/guides/file-opener-preference-settings-tab.png "screenshot of Test Runner settings tab with file opener preference panel" %}
+
 # Extensions & Plugins
 
 There are many third-party IDE extensions and plugins to help integrate your IDE with Cypress.

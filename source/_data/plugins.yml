@@ -147,6 +147,11 @@
       link: https://github.com/mfrachet/cypress-audit
       keywords: [lighthouse]
 
+    - name: cypress-hmr-restarter
+      description: Restarts tests when receiving webpack-dev-server HMR updates
+      link: https://github.com/Svish/cypress-hmr-restarter
+      keywords: [webpack, webpack-dev-server, hmr]
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -488,3 +493,8 @@
       description: Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.
       link: https://github.com/archfz/cypress-terminal-report
       keywords: [reporter, logs, terminal, CI, CLI]
+
+    - name: cypress-allure-plugin
+      description: Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.
+      link: https://github.com/Shelex/cypress-allure-plugin
+      keywords: [reporter, allure]
