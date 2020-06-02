@@ -17,6 +17,25 @@ const addAssetCacheHash = (assetSrc, hash) => {
 }
 
 describe('Examples', () => {
+  describe('Test Utilities', () => {
+    const hash = '7e135988'
+
+    it('extract asset cache hash from img src', () => {
+      const src = `/img/examples/cypress-optimizely.${hash}.png`
+      const imgEl = document.createElement('img')
+
+      imgEl.setAttribute('src', src)
+
+      expect(getAssetCacheHash(Cypress.$(imgEl))).to.equal(hash)
+    })
+
+    it('add asset cache hash to img src', () => {
+      const src = '/img/examples/cypress-optimizely.png'
+
+      expect(addAssetCacheHash(src, hash)).to.equal(`/img/examples/cypress-optimizely.${hash}.png`)
+    })
+  })
+
   describe('Projects', () => {
     let projects = []
 
@@ -180,7 +199,7 @@ describe('Examples', () => {
       cy.get('.media-large .media img').each(($img, i) => {
         const assetHash = getAssetCacheHash($img)
         const imgSrc = assetHash.length
-          ? addAssetCacheHash(blogs.large[i].img)
+          ? addAssetCacheHash(blogs.large[i].img, assetHash)
           : blogs.large[i].img
 
         expect($img).to.have.attr('src', imgSrc)
@@ -221,7 +240,7 @@ describe('Examples', () => {
               cy.root().find('img').then(($img) => {
                 const assetHash = getAssetCacheHash($img)
                 const imgSrc = assetHash.length
-                  ? addAssetCacheHash(talk.img)
+                  ? addAssetCacheHash(talk.img, assetHash)
                   : talk.img
 
                 expect($img).to.have.attr('src', imgSrc)
@@ -266,7 +285,7 @@ describe('Examples', () => {
               cy.root().find('img').then(($img) => {
                 const assetHash = getAssetCacheHash($img)
                 const imgSrc = assetHash.length
-                  ? addAssetCacheHash(podcast.img)
+                  ? addAssetCacheHash(podcast.img, assetHash)
                   : podcast.img
 
                 expect($img).to.have.attr('src', imgSrc)
@@ -309,7 +328,7 @@ describe('Examples', () => {
               cy.root().find('img').then(($img) => {
                 const assetHash = getAssetCacheHash($img)
                 const imgSrc = assetHash.length
-                  ? addAssetCacheHash(screencast.img)
+                  ? addAssetCacheHash(screencast.img, assetHash)
                   : screencast.img
 
                 expect($img).to.have.attr('src', imgSrc)
