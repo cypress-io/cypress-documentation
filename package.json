@@ -100,7 +100,7 @@
     "eslint-plugin-no-only-tests": "2.4.0",
     "execa": "2.1.0",
     "fluent-ffmpeg": "2.1.2",
-    "fs-extra": "8.1.0",
+    "fs-extra": "9.0.0",
     "ggit": "2.4.12",
     "git-last": "1.2.14",
     "got": "9.6.0",
