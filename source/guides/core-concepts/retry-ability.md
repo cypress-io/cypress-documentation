@@ -362,7 +362,7 @@ The above test retries getting the element and invoking the text of the element 
 
 When using {% url `cy.stub()` stub %} or {% url `cy.spy()` spy %} to test application's code, a good practice is to give it an alias and use the `cy.get('@alias').should('...')` assertion to retry.
 
-For example, when confirming that the button component invokes the passes `click` prop, the following test might or might not work:
+For example, when confirming that the button component invokes the `click` prop testing with the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %} plugin, the following test might or might not work:
 
 ### {% fa fa-warning red %} Incorrectly checking if the stub was called
 
@@ -383,7 +383,7 @@ it('calls the click prop twice', () => {
     .click()
     .then(() => {
       // works in this case, but not recommended
-      // because https://on.cypress.io/then does not retry
+      // because .then() does not retry
       expect(onClick).to.be.calledTwice
     })
 })
@@ -399,13 +399,13 @@ const Clicker = ({ click }) => (
 )
 ```
 
-{% imgTag /img/guides/retry-ability/delay-click.png "Expect fails the test without waiting for the delayed stub" %}
+{% imgTag /img/guides/retry-ability/delay-click.png "Expect fails the test without waiting for the delayed stub" width-600 %}
 
 The test finishes before the component calls the `click` prop twice, and without retrying the assertion `expect(onClick).to.be.calledTwice`.
 
 ### {% fa fa-check-circle green %} Correctly waiting for the stub to be called
 
-We recommend to give the stub an alias using {% url `.as` as %} command and use `cy.get('@alias').should(...)` assertions.
+We recommend aliasing the stub using the {% url `.as` as %} command and using `cy.get('@alias').should(...)` assertions.
 
 ```js
 it('calls the click prop', () => {
@@ -426,7 +426,10 @@ it('calls the click prop', () => {
 {% imgTag /img/guides/retry-ability/click-twice.gif "Retrying the assertions using a stub alias" %}
 
 Watch the short video below to see this example in action
-{% video YouTube AlltFcsIFvc %}
+
+<!-- textlint-disable -->
+{% video youtube AlltFcsIFvc %}
+<!-- textlint-enable -->
 
 # See also
 
