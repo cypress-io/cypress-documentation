@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    slack-integration: Slack Integration
     analytics: 分析
     debugging: デバッグする
     variables-and-aliases: 変数と別名

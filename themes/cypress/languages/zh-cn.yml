@@ -41,6 +41,7 @@ sidebar:
     organizations: 组织
     users: 成员
     github-integration: GitHub集成
+    slack-integration: Slack Integration
     analytics: 分析工具
     debugging: 调试
     variables-and-aliases: 变量和别名

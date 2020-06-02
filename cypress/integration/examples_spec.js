@@ -2,7 +2,40 @@
 
 const YAML = require('yamljs')
 
+const getAssetCacheHash = ($img) => {
+  const src = $img.attr('src').split('.')
+
+  return src.length >= 3 ? src.slice(-2, -1).pop() : ''
+}
+
+const addAssetCacheHash = (assetSrc, hash) => {
+  let parsedSrc = assetSrc.split('.')
+
+  parsedSrc.splice(-1, 0, hash)
+
+  return parsedSrc.join('.')
+}
+
 describe('Examples', () => {
+  describe('Test Utilities', () => {
+    const hash = '7e135988'
+
+    it('extract asset cache hash from img src', () => {
+      const src = `/img/examples/cypress-optimizely.${hash}.png`
+      const imgEl = document.createElement('img')
+
+      imgEl.setAttribute('src', src)
+
+      expect(getAssetCacheHash(Cypress.$(imgEl))).to.equal(hash)
+    })
+
+    it('add asset cache hash to img src', () => {
+      const src = '/img/examples/cypress-optimizely.png'
+
+      expect(addAssetCacheHash(src, hash)).to.equal(`/img/examples/cypress-optimizely.${hash}.png`)
+    })
+  })
+
   describe('Projects', () => {
     let projects = []
 
@@ -163,16 +196,14 @@ describe('Examples', () => {
     })
 
     it('displays large blog imgs', () => {
-      cy.get('.media-large .media img').each((img, i) => {
-        expect(img).to.have.attr('src', blogs.large[i].img)
-      })
-    })
+      cy.get('.media-large .media img').each(($img, i) => {
+        const assetHash = getAssetCacheHash($img)
+        const imgSrc = assetHash.length
+          ? addAssetCacheHash(blogs.large[i].img, assetHash)
+          : blogs.large[i].img
 
-    it('images exist', () => {
-      cy.wrap(blogs.large).each((blog) => {
-        cy.request(Cypress.config('baseUrl') + blog.img).should((response) => {
-          expect(response.status).to.eq(200)
-        })
+        expect($img).to.have.attr('src', imgSrc)
+        cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
       })
     })
   })
@@ -206,21 +237,18 @@ describe('Examples', () => {
               .find(`a[href='${talk.url}']`)
               .contains(talk.title)
 
-              cy.root().find('img')
-              .should('have.attr', 'src', talk.img)
+              cy.root().find('img').then(($img) => {
+                const assetHash = getAssetCacheHash($img)
+                const imgSrc = assetHash.length
+                  ? addAssetCacheHash(talk.img, assetHash)
+                  : talk.img
+
+                expect($img).to.have.attr('src', imgSrc)
+                cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
+              })
             }
           })
         })
-      })
-    })
-
-    it('images exist', function () {
-      cy.wrap(talks.large).each((talk) => {
-        if (talk.img) {
-          cy.request(Cypress.config('baseUrl') + talk.img).should((response) => {
-            expect(response.status).to.eq(200)
-          })
-        }
       })
     })
   })
@@ -254,21 +282,18 @@ describe('Examples', () => {
               .find(`a[href='${podcast.url}']`)
               .contains(podcast.title)
 
-              cy.root().find('img')
-              .should('have.attr', 'src', podcast.img)
+              cy.root().find('img').then(($img) => {
+                const assetHash = getAssetCacheHash($img)
+                const imgSrc = assetHash.length
+                  ? addAssetCacheHash(podcast.img, assetHash)
+                  : podcast.img
+
+                expect($img).to.have.attr('src', imgSrc)
+                cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
+              })
             }
           })
         })
-      })
-    })
-
-    it('images exist', function () {
-      cy.wrap(podcasts.large).each((podcast) => {
-        if (podcast.img) {
-          cy.request(Cypress.config('baseUrl') + podcast.img).should((response) => {
-            expect(response.status).to.eq(200)
-          })
-        }
       })
     })
   })
@@ -300,21 +325,18 @@ describe('Examples', () => {
               .find(`a[href='${screencast.url}']`)
               .contains(screencast.title)
 
-              cy.root().find('img')
-              .should('have.attr', 'src', screencast.img)
+              cy.root().find('img').then(($img) => {
+                const assetHash = getAssetCacheHash($img)
+                const imgSrc = assetHash.length
+                  ? addAssetCacheHash(screencast.img, assetHash)
+                  : screencast.img
+
+                expect($img).to.have.attr('src', imgSrc)
+                cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
+              })
             }
           })
         })
-      })
-    })
-
-    it('images exist', function () {
-      cy.wrap(screencasts.large).each((screencast) => {
-        if (screencast.img) {
-          cy.request(Cypress.config('baseUrl') + screencast.img).should((response) => {
-            expect(response.status).to.eq(200)
-          })
-        }
       })
     })
   })
