@@ -64,6 +64,7 @@ sidebar:
     roadmap: Roadmap
     runs: Runs
     screenshots-and-videos: Screenshots and Videos
+    slack-integration: Slack Integration
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
     test-runner: The Test Runner
     testing-your-app: Testing Your App

@@ -57,6 +57,12 @@ From the Dashboard you can:
 - Integrate your Cypress tests with your GitHub workflow via commit {% url 'status checks' github-integration#Status-checks %}
 - Integrate Cypress into GitHub via {% url 'pull requests' github-integration#Pull-request-comments %}
 
+## Integrate with Slack
+
+From the Dashboard you can:
+
+- Integrate Cypress into Slack on every recorded test run.
+
 ### See tests runs in the Test Runner
 
 Additionally we've integrated the tests run into the Cypress {% url 'Test Runner' test-runner %}. This means you can see the tests run in the *Runs* tab from within every project.
