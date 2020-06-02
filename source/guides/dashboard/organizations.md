@@ -87,6 +87,10 @@ If you have any questions regarding the OSS plan, please feel free [contact us](
 
 Please see our full documentation for {% url "GitHub Integration" github-integration %}.
 
+## Slack Integration
+
+Please see our full documentation for {% url "Slack Integration" slack-integration %}.
+
 ## Enterprise SSO
 
 {% note info Paid Add-on Integration %}
