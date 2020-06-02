@@ -114,7 +114,7 @@
     "lint-staged": "8.2.1",
     "make-empty-github-commit": "1.2.1",
     "minimist": "1.2.5",
-    "nock": "10.0.6",
+    "nock": "12.0.3",
     "ora": "3.4.0",
     "pluralize": "8.0.0",
     "prompt-confirm": "2.0.4",
