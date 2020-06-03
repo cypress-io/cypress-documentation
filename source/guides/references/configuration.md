@@ -145,7 +145,7 @@ cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 For more complex configuration objects, you may want to consider passing a {% url "JSON.stringified" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %} object surrounded by single quotes.
 
 ```shell
-cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.coffee"]}'
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 ## Plugins
