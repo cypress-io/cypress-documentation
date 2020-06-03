@@ -115,7 +115,7 @@
     "make-empty-github-commit": "1.2.1",
     "minimist": "1.2.5",
     "nock": "10.0.6",
-    "ora": "3.4.0",
+    "ora": "4.0.4",
     "pluralize": "8.0.0",
     "prompt-confirm": "2.0.4",
     "ramda": "0.27.0",
