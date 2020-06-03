@@ -15,6 +15,13 @@ First we'll test our "Login Page", refactor, and then create a {% url "Custom Co
 | -- | -- | -- | -- |
 | {% url "Organizing Tests, Logging In, Controlling State" https://www.youtube.com/watch?v=5XQOK0v_YRE %} | {% fa fa-video-camera %} 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0 |
 
+# Video playlists
+
+- {% url "Cypress.io - end-to-end Testing Framework" https://www.youtube.com/playlist?list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0 %} by {% url "Bushra Alam" https://twitter.com/imBushraAlam %}
+- {% url "Cypress Tips & Tricks" https://www.youtube.com/playlist?list=PLP9o9QNnQuAYYRpJzDNWpeuOVTwxmIxcI %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
+- {% url "Cypress Component Testing for Svelte" https://www.youtube.com/playlist?list=PLP9o9QNnQuAa50lwW3cUql5sgdKIWkapp %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
+- {% url "Visually testing React component using open source tools" https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
+
 # Test a React Todo App
 
 In this tutorial, we will walk through building a "Todo" application in {% url "React" https://reactjs.org %} while testing it with Cypress. We will look at ways we can use Cypress to not only create a test suite for our application, but help us write our tests and guide feature implementation.
