@@ -38,7 +38,8 @@ There are many third-party IDE extensions and plugins to help integrate your IDE
 
 Compatible with IntelliJ IDEA, AppCode, CLion, GoLand, PhpStorm, PyCharm, Rider, RubyMine, and WebStorm.
 
-- {% url "Intellij-Cypress" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %}: Integrates Cypress under the common Intellij test framework.
+- {% url "Cypress Support" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %}: Integrates Cypress under the common Intellij test framework.
+- {% url "Cypress Support Pro" https://plugins.jetbrains.com/plugin/13987-cypress-pro %}: An improved version of Cypress Support plugin with debugging from the IDE, advanced autocomplete and other features.
 
 # Intelligent Code Completion
 
