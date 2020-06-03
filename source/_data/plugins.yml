@@ -189,11 +189,6 @@
       link: https://github.com/prescottprue/cypress-firebase
       keywords: [firebase, database, commands]
 
-    - name: cypress-graphql-mock
-      description: Adds commands for executing a mocked GraphQL server using only the client
-      link: https://github.com/tgriesser/cypress-graphql-mock
-      keywords: [graphql]
-
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
