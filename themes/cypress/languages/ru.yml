@@ -39,6 +39,7 @@ sidebar:
     organizations: Организации
     users: Пользователи
     github-integration: Интеграция с GitHub
+    slack-integration: Slack Integration
     analytics: Аналитика
     debugging: Отладка
     variables-and-aliases: Переменные и Алиасы
@@ -55,6 +56,7 @@ sidebar:
     custom-commands: Пользовательские команды
     web-security: Web-безопасность
     references: Ссылки
+    experiments: Эксперименты
     configuration: Конфигурация
     proxy-configuration: Конфигурация прокси
     error-messages: Сообщения об ошибках

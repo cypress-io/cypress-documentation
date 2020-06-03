@@ -8,18 +8,14 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 ## Test Runner
 
-*Last updated February 12, 2020*
+*Last updated May 25, 2020*
 
 Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------
-*Work in progress*   | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}|
+*Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
+*Done*               | **Improve Test Runner errors**     |  {% issue 3762 %} | {% PR 3930 %}| {% url "v4.6.0" changelog#4-6-0 %}
 *Work in progress*   | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}|
 *Work in progress*   | **Full network layer stubbing**    |  {% issue 687 %}  | {% PR 4176 %}|
-*Work in progress*   | **Expose more events**             |  {% issue 2840 %} | {% PR 4225 %}|
-*Work in progress*   | **Native events**                  |  {% issue 311 %}  |              |
-*Work in progress*   | **Testing Electron Apps**          |  {% issue 2072 %} | {% PR 6143 %}|
-✅ *Released*        | **Cross browser support**          |  {% issue 310 %}  | {% PR 4226 %}| {% url "v4.0.0" changelog#4-0-0 %}
-✅ *Released*        | **Mocha, Chai, Sinon upgrade**     |                   | {% PR 4226 %}| {% url "v4.0.0" changelog#4-0-0 %}
 
 ## Dashboard Service
 

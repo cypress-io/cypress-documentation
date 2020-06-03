@@ -107,7 +107,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg "Record Key in Configuration Tab" %}
 
 # Record keys
 
@@ -150,6 +150,14 @@ You can integrate your project with GitHub and edit its settings from within the
 {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
 
 See our {% url "GitHub Integration guide" github-integration %} to learn more.
+
+# Slack Integration
+
+You can integrate your project with Slack and edit its settings from within the project settings page.
+
+{% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
+
+See our {% url "Slack Integration guide" slack-integration %} to learn more.
 
 # Access to Runs
 

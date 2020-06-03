@@ -116,13 +116,7 @@ You may want to use a different Node version if the code executing from the plug
 
 ## Experiments
 
-If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the options below.
-
-When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experiments** panel will display the experimental features that are available and whether they are enabled for your project.
-
-Option | Default | Description
------ | ---- | ----
-`experimentalGetCookiesSameSite` | `false` | If `true`, Cypress will add `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
+Configuration might include experimental options currently being tested. See {% url Experiments experiments %} page.
 
 # Overriding Options
 
@@ -137,19 +131,21 @@ When {% url 'running Cypress from the Command Line' command-line %} you can pass
 **Examples:**
 
 ```shell
-cypress open --config watchForFileChanges=false,waitForAnimations=false
+cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
 ```
 
 ```shell
-cypress run --config integrationFolder=tests,fixturesFolder=false
+cypress run --config integrationFolder=tests,videoUploadOnPasses=false
 ```
 
 ```shell
-cypress run --record --config viewportWidth=1280,viewportHeight=720
+cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
 
+For more complex configuration objects, you may want to consider passing a {% url "JSON.stringified" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %} object surrounded by single quotes.
+
 ```shell
-cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffee"]
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.coffee"]}'
 ```
 
 ## Plugins

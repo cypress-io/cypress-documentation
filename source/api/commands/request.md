@@ -54,7 +54,7 @@ cy.request('seed/admin') // url is http://localhost:1234/seed/admin
 
 **{% fa fa-angle-right %} body** ***(String, Object)***
 
-A request `body` to be sent in the request. Cypress sets the `Accepts` request header and serializes the response body by its `Content-Type`.
+A request `body` to be sent in the request. Cypress sets the `Accepts` request header and serializes the response body by the `encoding` option.
 
 **{% fa fa-angle-right %} method** ***(String)***
 
@@ -103,6 +103,7 @@ Option | Default | Description
 `failOnStatusCode` | `true` | Whether to fail on response codes other than `2xx` and `3xx`
 `followRedirect` | `true` | Whether to automatically follow redirects
 `form` | `false` | Whether to convert the `body` values to url encoded content and set the `x-www-form-urlencoded` header
+`encoding` | `utf8` | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le`
 `gzip` | `true` | Whether to accept the `gzip` encoding
 `headers` | `null` | Additional headers to send; Accepts object literal
 `qs` | `null` | Query parameters to append to the `url` of the request
@@ -194,6 +195,37 @@ cy.request({
     expect(resp.status).to.eq(302)
     expect(resp.redirectedToUrl).to.eq('http://localhost:8082/unauthorized')
   })
+```
+
+### Download a PDF file
+
+By passing the `encoding: binary` option, the `response.body` will be serialized binary content of the file. You can use this to access various file types via `.request()` like `.pdf`, `.zip`, or `.doc` files.
+
+```javascript
+cy.request({
+  url: 'http://localhost:8080/some-document.pdf',
+  encoding: 'binary',
+})
+.then((response) => {
+  cy.writeFile('path/to/save/document.pdf', response.body, 'binary')
+})
+```
+
+### Get Data URL of an image
+
+By passing the `encoding: base64` option, the `response.body` will be base64-encoded content of the image. You can use this to construct a {% url "Data URI" https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs %} for use elsewhere.
+
+```javascript
+cy.request({
+  url: 'https://docs.cypress.io/img/logo.png',
+  encoding: 'base64',
+})
+.then((response) => {
+  const base64Content = response.body
+  const mime = response.headers['content-type'] // or 'image/png'
+  // see https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+  const imageDataUrl = `data:${mime};base64,${base64Content}`
+})
 ```
 
 ### HTML form submissions using form option
@@ -329,6 +361,7 @@ When clicking on `request` within the command log, the console outputs the follo
 {% imgTag /img/api/request/console-log-request-response-body-headers-status-url.png "Console Log request" %}
 
 {% history %}
+{% url "4.7.0" changelog#3-3-0 %} | Added support for `encoding` option.
 {% url "3.3.0" changelog#3-3-0 %} | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.
 {% url "3.2.0" changelog#3-2-0 %} | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`.
 {% endhistory %}
