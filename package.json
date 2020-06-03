@@ -98,7 +98,7 @@
     "eslint-plugin-cypress": "2.11.1",
     "eslint-plugin-json-format": "2.0.1",
     "eslint-plugin-no-only-tests": "2.4.0",
-    "execa": "2.1.0",
+    "execa": "3.4.0",
     "fluent-ffmpeg": "2.1.2",
     "fs-extra": "8.1.0",
     "ggit": "2.4.12",
