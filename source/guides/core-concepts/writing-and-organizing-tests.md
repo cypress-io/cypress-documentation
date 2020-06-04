@@ -104,7 +104,7 @@ The initial imported plugins file can be {% url 'configured to another file' con
 By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
 {% note danger%}
-{% fa fa-warning %} Keep in mind, when you clicking "Run all specs" after {% url "`cypress open`" command-line#cypress-open %}, the code in the support file is executed once before all spec files, instead of once before each spec file. See {% urlHash "Execution" Execution %} for more details.
+{% fa fa-warning %} Keep in mind, when clicking "Run all specs" after {% url "`cypress open`" command-line#cypress-open %}, the code in the support file is executed once before all spec files, instead of once before each spec file. See {% urlHash "Execution" Execution %} for more details.
 {% endnote %}
 
 The initial imported support file can be configured to another file or turned off completely using the  {% url '`supportFile`' configuration#Folders-Files %} configuration.
