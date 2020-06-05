@@ -41,116 +41,139 @@
       description: Official Cypress Orb for CircleCI configuration.
       link: https://github.com/cypress-io/circleci-orb
       keywords: [continuous-integration]
+      badge: official
 
     - name: cypress-dark
       description: Several color themes for Cypress test runner
       link: https://github.com/bahmutov/cypress-dark
       keywords: [theme]
+      badge: verified
 
     - name: cypress-protobuf
       description: Encode a fixture with Protocol Buffers.
       link: https://github.com/NoriSte/cypress-protobuf
       keywords: [encoding, protobuf]
+      badge: community
 
     - name: Docker
       description: Docker images providing all the dependencies to run Cypress in CI including browsers.
       link: https://github.com/cypress-io/cypress-docker-images
       keywords: [docker, continuous-integration]
+      badge: official
 
     - name: ESLint
       description: ESLint plugin that sets globals for writing tests in Cypress.
       link: https://github.com/cypress-io/eslint-plugin-cypress
       keywords: [eslint]
+      badge: official
 
     - name: Knapsack Pro Cypress
       description: Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.
       link: https://github.com/KnapsackPro/knapsack-pro-cypress
       keywords: [CI parallelisation, continuous-integration]
+      badge: community
 
     - name: TypeScript
       description: Official TypeScript definitions for the Cypress API.
       link: https://github.com/cypress-io/cypress/tree/master/cli/types
       keywords: [typescript]
+      badge: official
 
     - name: cypress-plugin-retries
       description: A Cypress plugin to retry failed tests.
       link: https://github.com/Bkucera/cypress-plugin-retries
       keywords: [cypress-plugin-retries]
+      badge: verified
 
     - name: cly
       description: A prototype of generating quicker project scaffolding for Cypress.
       link: https://github.com/bahmutov/cly
       keywords: [cypress cli,prototype,CLI,scaffolding]
+      badge: community
 
     - name: cypress-watch-and-reload
       description: Reloads Cypress when one of the watched files changes
       link: https://github.com/bahmutov/cypress-watch-and-reload
       keywords: [file-watcher]
+      badge: community
 
     - name: cypress-plugin-livereload
       description: Reloads Cypress using livereload
       link: https://github.com/unlocomqx/cypress-plugin-livereload
       keywords: [livereload]
+      badge: community
 
     - name: cypress-select-tests
       description: User space solution for grepping Cypress tests to run
       link: https://github.com/bahmutov/cypress-select-tests
       keywords: [browserify]
+      badge: community
 
     - name: cypress-autorecord
       description: Simplify API mocking by auto-recording/stubbing HTTP interactions and automating the process of updating/deleting mocks.
       link: https://github.com/Nanciee/cypress-autorecord
       keywords: [mock, recording, http, integration test]
+      badge: community
 
     - name: '@cypress/code-coverage'
       description: Plugin to save code coverage collected during Cypress tests
       link: https://github.com/cypress-io/code-coverage
       keywords: [coverage]
+      badge: official
 
     - name: '@cypress/instrument-cra'
       description: NPM module for create-react-app applications to instrument source code without ejecting react-scripts
       link: https://github.com/cypress-io/instrument-cra
       keywords: [coverage]
+      badge: official
 
     - name: '@cypress/fiddle'
       description: Quickly generates Cypress tests from HTML and JS code
       link: https://github.com/cypress-io/cypress-fiddle
       keywords: [prototype]
+      badge: official
 
     - name: 'npm-cy'
       description: This GitHub Action for npm enables arbitrary actions with the npm command-line client, including testing with cypress.io and publishing to a registry.
       link: https://github.com/bartlett705/npm-cy
       keywords: [github, actions, npm]
+      badge: community
 
     - name: 'vscode-cy-helper'
       description: Visual Studio Code extension for cypress and cucumber preprocessor
       link: https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper
       keywords: [vscode, extension, intellisense]
+      badge: community
 
     - name: 'cypress-dotenv'
       description: Cypress plugin that enables compatability with dotenv.
       link: https://github.com/morficus/cypress-dotenv
       keywords: [dotenv, env, environment, env var]
+      badge: community
 
     - name: 'cypress-har-generator'
       description: Generate HTTP Archive (HAR) while running tests.
       link: https://github.com/NeuraLegion/cypress-har-generator
       keywords: [har, http-archive, http, websocket, recording, chrome]
+      badge: community
 
     - name: cypress-expect-n-assertions
       description: Cypress helper that checks number of expected and actual assertions in the test
       link: https://github.com/bahmutov/cypress-expect-n-assertions
       keywords: [test, assertion]
+      badge: community
 
     - name: cypress-audit
       description: Run Lighthouse audit directly in your E2E test suites
       link: https://github.com/mfrachet/cypress-audit
       keywords: [lighthouse]
+      badge: community
 
     - name: cypress-hmr-restarter
       description: Restarts tests when receiving webpack-dev-server HMR updates
       link: https://github.com/Svish/cypress-hmr-restarter
       keywords: [webpack, webpack-dev-server, hmr]
+      badge: community
 
 - name: Custom Commands
   plugins:
