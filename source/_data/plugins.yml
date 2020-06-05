@@ -544,38 +544,46 @@
       description: Saves the Cypress test command log as a JSON file if a test fails.
       link: https://github.com/bahmutov/cypress-failed-log
       keywords: [reporter]
+      badge: community
 
     - name: cypress-log-to-output
       description: Plugin that prints all browser console logs to the terminal while running Cypress tests. Currently, only Chrome is supported.
       link: https://github.com/flotwig/cypress-log-to-output
       keywords: [logging]
+      badge: community
 
     - name: cypress-testrail-reporter
       description: Custom reporter for publishing Cypress results to a TestRail test run.
       link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
       keywords: [testrail, reporter]
+      badge: community
 
     - name: mochawesome-merge
       description: Merges multiple mochawesome JSON reports
       link: https://github.com/antontelesh/mochawesome-merge
       keywords: [reporter, mochawesome]
+      badge: community
 
     - name: cypress-slack-healthcheck
       description: A simple tool which integrates Cypress with Slack to report failing tests.
       link: https://github.com/bdimitrovski/cypress-healthcheck
       keywords: [reporter, slack, healthcheck]
+      badge: community
 
     - name: cypress-slack-reporter
       description: Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs
       link: https://github.com/you54f/cypress-slack-reporter
       keywords: [reporter, mochawesome, slack]
+      badge: community
 
     - name: cypress-terminal-report
       description: Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.
       link: https://github.com/archfz/cypress-terminal-report
       keywords: [reporter, logs, terminal, CI, CLI]
+      badge: community
 
     - name: cypress-allure-plugin
       description: Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.
       link: https://github.com/Shelex/cypress-allure-plugin
       keywords: [reporter, allure]
+      badge: community
