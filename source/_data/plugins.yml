@@ -386,56 +386,67 @@
       description: Angular CLI addition that allows you to install Cypress E2E to an Angular CLI project
       link: https://github.com/briebug/cypress-schematic
       keywords: [angular, cli]
+      badge: community
 
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
       link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
       keywords: [ruby-rack, ruby-on-rails]
+      badge: community
 
     - name: Nx
       description: Nrwl Extensions for Angular
       link: https://nrwl.io/nx/e2e-testing-with-cypress
       keywords: [angular, cli]
+      badge: community
 
     - name: Cypress Daywalker
       description: Shadow Dom support for cypress
       link: https://github.com/JaySunSyn/cypress-daywalker
       keywords: [Polymer, lit-html, ShadowDom]
+      badge: community
 
     - name: Vue CLI
       description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
+      badge: verified
 
     - name: Aurelia CLI
       description: The Aurelia CLI is the official command line tool for Aurelia.
       link: https://aurelia.io/docs/cli
       keywords: [aurelia, cli]
+      badge: community
 
     - name: WordPress ReactJS Boilerplate
       description: Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.
       link: https://github.com/matzeeable/wp-reactjs-starter
       keywords: [wp, wordpress]
+      badge: community
 
     - name: Next Right Now - Next.js Boilerplate
       description: Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants)
       link: https://github.com/UnlyEd/next-right-now
       keywords: [next.js, react, monorepo, multi-tenants]
+      badge: community
 
     - name: Elm Batteries Included
       description: A project template to learn how Elm, Parcel, Cypress and Netlify work together.
       link: https://github.com/cedricss/elm-batteries
       keywords: [elm, parcel, netlify]
+      badge: community
 
     - name: cypress-rails
       description: Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests
       link: https://github.com/testdouble/cypress-rails
       keywords: [ruby, rails]
+      badge: community
 
     - name: cypress-laravel
       description: Add commands and hooks to test Laravel applications
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
+      badge: community
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
