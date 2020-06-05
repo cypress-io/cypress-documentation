@@ -304,25 +304,29 @@
 - name: Authentication
   description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
   plugins:
+    - name: cypress-keycloak-commands
+      description: Cypress commands for authenticate users with Keycloak Identity Provider
+      link: https://github.com/Fredx87/cypress-keycloak-commands
+      keywords: [authentication, login, keycloak, oauth, openid]
+      badge: verified
+
     - name: cypress-ntlm-auth
       description: NTLM authentication support for Cypress
       link: https://github.com/bjowes/cypress-ntlm-auth
       keywords: [authentication, ntlm]
-
-    - name: cypress-social-logins
-      description: Cypress authentication flows using social network providers
-      link: https://github.com/lirantal/cypress-social-logins
-      keywords: [authentication, login, social profiles, github, google]
+      badge: verified
 
     - name: cypress-otp
       description: Valid OTP token generation for Cypress
       link: https://github.com/NoriSte/cypress-otp
       keywords: [authentication, otp, 2fa, mfa]
+      badge: community
 
-    - name: cypress-keycloak-commands
-      description: Cypress commands for authenticate users with Keycloak Identity Provider
-      link: https://github.com/Fredx87/cypress-keycloak-commands
-      keywords: [authentication, login, keycloak, oauth, openid]
+    - name: cypress-social-logins
+      description: Cypress authentication flows using social network providers
+      link: https://github.com/lirantal/cypress-social-logins
+      keywords: [authentication, login, social profiles, github, google]
+      badge: community
 
 - name: Framework tooling
   plugins:
