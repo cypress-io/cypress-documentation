@@ -507,36 +507,43 @@
       description: Fast, easy and reliable visual UI testing with Cypress
       link: https://applitools.com/tutorials/cypress.html
       keyword: [screenshots, visual regression, visual-ai]
+      badge: verified
 
     - name: Percy
       description: Visual regression testing for Cypress tests with Percy.
       link: https://docs.percy.io/docs/cypress
       keywords: [screenshots, visual regression]
+      badge: verified
 
     - name: Happo
       description: Cross-platform, cross-browser screenshot testing for modern user interfaces.
       link: https://github.com/happo/happo-cypress
       keywords: [screenshots, visual regression]
+      badge: community
 
     - name: cypress-plugin-snapshots
       description: Plugin for snapshot tests in Cypress. Same API as Jest, but with graphical interface for reviewing and approving changes.
       link: https://github.com/meinaart/cypress-plugin-snapshots
       keywords: [snapshot]
+      badge: community
 
     - name: Cypress Image Snapshot
       description: Catch visual regressions and compare image diffs locally and in Cypress Dashboard.
       link: https://github.com/palmerhq/cypress-image-snapshot
       keywords: [image-diff, snapshot]
+      badge: community
 
     - name: Cypress Visual Regression
       description: Adds visual regression testing to Cypress
       link: https://github.com/mjhea0/cypress-visual-regression
       keywords: [image-diff, snapshot]
+      badge: community
 
     - name: cypress-blink-test
       description: Module for adding visual regression testing to Cypress.
       link: https://github.com/PatrickWalker/cypress-visual-regression
       keywords: [image-diff, snapshot]
+      badge: community
 
 - name: Reporting
   plugins:
