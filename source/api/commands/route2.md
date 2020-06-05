@@ -119,20 +119,41 @@ cy.route('**/posts/**')
 // https://localhost:7777/posts/quuz?a=b&1=2 <-- matches
 ```
 
+### Modify request
+
+Before a request gets passed through, we can modify the request before it is sent out through the `handler` function.
+
+```javascript
+cy.route('/login', (req) => {
+  // modify the headers or body
+  req.headers = {...req.headers, accept: 'application/json'}
+  req.body = {...req.body, foo: 'bar'}
+
+  // delay the request
+  req.delay(100)
+  // split delay between server and client
+  req.delay(100, 200)
+  // or
+  req.delay({
+    client: 100,
+    server: 200
+  })
+
+  // throttle the response
+  req.throttle('3G')
+})
+```
+
+
 ### Modify response
 
-With a request gets passed through, we can still modify the response through a `handler` function.
+After a request that gets passed through, we can modify the response from the server before it is returned through a `handler` function.
 
 ```javascript
 cy.route('/login', (req) => {
   // passing a function to req.reply causes the request to pass through
   // and allows the response from the origin server to be modified
-
   req.reply((res) => {
-    // res.body
-    // res.headers
-    // res.status
-
     res.status = 200
     res.headers['x-new-headers'] = 'from-server'
 
