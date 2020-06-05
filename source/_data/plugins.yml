@@ -310,21 +310,25 @@
       description: Converts WDIO automation tests to Cypress.
       link: https://github.com/intuit/cyphfell
       keywords: [wdio]
+      badge: community
 
     - name: cypress-capybara
       description: Several Capybara finders re-implemented in Cypress to locate UI elements by their text and labels.
       link: https://github.com/testdouble/cypress-capybara
       keywords: [testing-library, capybara]
+      badge: community
 
     - name: cypress-jest-adapter
       description: Add jest assertion style to Cypress expect command
       link: https://github.com/phongnd39/cypress-jest-adapter
       keywords: [jest]
+      badge: community
 
     - name: PickleJS
       description: 'An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: "I click on an <Element>", "I should see an <Element>")'
       link: https://picklejs.com
       keywords: [cucumber, collection, actions, commands]
+      badge: community
 
 - name: Authentication
   description: Also take a look at ["Logging in"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.
