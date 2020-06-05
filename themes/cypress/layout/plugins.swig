@@ -16,8 +16,24 @@
           <ul class="plugins-list">
             {% for plugin in order_by_name(pluginType.plugins) %}
               <li>
+                {% if plugin.badge %}
+                  {% if plugin.badge === 'community' %}
+                  <span class="badge badge-pill badge-warning">
+                  {% endif %}
+                  {% if plugin.badge === 'experimental' %}
+                  <span class="badge badge-pill badge-danger">
+                  {% endif %}
+                  {% if plugin.badge === 'official' %}
+                  <span class="badge badge-pill badge-info">
+                  {% endif %}
+                  {% if plugin.badge === 'verified' %}
+                  <span class="badge badge-pill badge-success">
+                  {% endif %}
+                    {{ plugin.badge }}
+                  </span>
+                {% endif %}
                 <h3>
-                  <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a>
+                  <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a> 
                 </h3>
                 <p>{{ plugin.description }}</p>
                 {% for keyword in plugin.keywords %}
