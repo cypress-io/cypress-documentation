@@ -4,36 +4,43 @@
       description: Watches and bundles your spec files via browserify. This is the default preprocessor that's built into Cypress.
       link: https://github.com/cypress-io/cypress-browserify-preprocessor
       keywords: [browserify]
+      badge: official
 
     - name: Cucumber
       description: Run cucumber/gherkin-syntaxed specs with cypress.io
       link: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor
       keywords: [file-watcher, cucumber]
+      badge: community
 
     - name: cypress-app-watcher-preprocessor
       description: Reruns Cypress tests when the back end server restarts
       link: https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor
       keywords: [file-watcher]
+      badge: community
 
     - name: ESLint
       description: Runs linting via ESLint on your spec files as they are loaded and display errors in the console
       link: https://github.com/chinchiheather/cypress-eslint-preprocessor
       keywords: [eslint]
+      badge: community
 
     - name: Watch
       description: Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.
       link: https://github.com/cypress-io/cypress-watch-preprocessor
       keywords: [file-watcher]
+      badge: official
 
     - name: Webpack
       description: Watches and bundles your spec files via webpack.
       link: https://github.com/cypress-io/cypress-webpack-preprocessor
       keywords: [webpack]
+      badge: official
 
     - name: Rollup
       description: Watches and bundles your spec files via Rollup
       link: https://github.com/bahmutov/cy-rollup
       keywords: [rollup]
+      badge: community
 
 - name: Development Tools
   plugins:
