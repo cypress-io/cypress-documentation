@@ -295,7 +295,7 @@ specify(name, config, fn)
 
 ### Whitelisted config values
 
-{% partial test_options_config_whitelist %}
+{% partial test_config_whitelist %}
 
 ### Suite of test configuration
 

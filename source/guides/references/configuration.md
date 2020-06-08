@@ -211,7 +211,7 @@ To apply a specific Cypress {% url "configuration" configuration %} value to a s
 
 This configuration will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
 
-{% partial test_config_whitelist.md %}
+{% partial test_config_whitelist %}
 
 ### Suite of test configuration
 
