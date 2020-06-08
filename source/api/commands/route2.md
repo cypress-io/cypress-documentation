@@ -117,36 +117,25 @@ cy.route2('**/posts/**')
 
 Before a request gets passed through, we can modify the request before it is sent out through a function. The function exposes a `req` object which contains the request.
 
+You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} or {% urlHash 'throttle' Simulate-throttle %} on the request to be sent out.
+
 ```javascript
 cy.route2('/users', (req) => {
   // modify the headers or body
   req.headers = {...req.headers, accept: 'application/json'}
   req.body = {...req.body, foo: 'bar'}
-
-  // delay the request
-  req.delay(100)
-  // split delay between server and client
-  req.delay(100, 200)
-  // or
-  req.delay({
-    client: 100,
-    server: 200
-  })
-
-  // throttle the response
-  req.throttle('3G')
 })
 ```
 
 ### Modify response
 
-After a request that gets passed through, we can modify the response from the server before it is returned through a function. The function exposes a `req` object which contains the request. The `req.reply()` function exposes a `res` object which contains the response.
+After a request that gets passed through, we can modify the response from the server before it is returned through a function. The function exposes a `req` object which contains the request. The `req.send()` function exposes a `res` object which contains the response.
 
 ```javascript
 cy.route2('/users', (req) => {
-  // passing a function to req.reply causes the request to pass through
+  // passing a function to req.send causes the request to pass through
   // and allows the response from the origin server to be modified
-  req.reply((res) => {
+  req.send((res) => {
     res.status = 200
     res.headers['x-new-headers'] = 'from-server'
 
@@ -190,37 +179,44 @@ $.get('https://localhost:7777/users/1337', (data) => {
 
 ### Response functions
 
-You can also use a function as a response which enables you to add logic and modify properties of the response. The function exposes a `req` object which contains the request as well as a way to `reply` with a response.
+You can also use a function as a response which enables you to add logic and modify properties of the response. The function exposes a `req` object which contains the request as well as a way to `send` with a response.
 
 ```javascript
 cy.route2('/login', (req) => {
-  // reply with status code
-  req.reply(200)
+  req.send('Success')
+})
+```
 
-  // reply with status code and body
-  req.reply(200, { some: 'response' })
+```javascript
+// reply with body and headers
+cy.route2('/login', (req) => {
+  req.send('Success', { 'x-new-headers': 'from-server' })
+})
+```
 
-  // reply with status code, body and headers
-  req.reply(200, { some: 'response' }, { 'x-new-headers': 'from-server' })
-
-  // reply with body
-  req.reply({
-    some: 'response'
-  })
-
-  // reply with status code, body and headers
-  req.reply({
-    status: 200,
-    body: {
+```javascript
+// reply with an object containing more response details
+cy.route2('/login', (req) => {
+  req.send({
+    statusCode: 200,
+    body: JSON.stringify({
       some: 'response'
-    },
+    }),
     headers: {
       'x-new-headers': 'from-server'
-    }
+    },
+    // If `destroySocket` is truthy, Cypress will destroy the connection to the
+    // browser and send no response. Useful for simulating a server that is not
+    // reachable. Must not be set in combination with other options.
+    destroySocket: false
   })
+})
+```
 
-  // redirect the request
-  req.redirect('/register')
+```javascript
+// continue the HTTP response to the browser, including any modifications made to `res`
+cy.route2('/login', (req) => {
+  req.send()
 })
 ```
 
@@ -238,4 +234,96 @@ The below example matches all `DELETE` requests to "/users" and stubs a response
 
 ```javascript
 cy.route2('DELETE', '**/users/*', {})
+```
+
+### Making multiple requests to the same route
+
+You can test a route multiple times with unique response objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
+
+```javascript
+cy.route2('/beetles', []).as('getBeetles')
+cy.get('#search').type('Weevil')
+
+// wait for the first response to finish
+cy.wait('@getBeetles')
+
+// the results should be empty because we
+// responded with an empty array first
+cy.get('#beetle-results').should('be.empty')
+
+// now re-define the /beetles response
+cy.route2('/beetles', [{ name: 'Geotrupidae' }])
+
+cy.get('#search').type('Geotrupidae')
+
+// now when we wait for 'getBeetles' again, Cypress will
+// automatically know to wait for the 2nd response
+cy.wait('@getBeetles')
+
+// we responded with 1 beetle item so now we should
+// have one result
+cy.get('#beetle-results').should('have.length', 1)
+```
+
+### Fixtures
+
+Instead of writing a response inline you can automatically connect a response with a {% url `cy.fixture()` fixture %}.
+
+```javascript
+cy.route2('**/posts/*', 'fixture:logo.png').as('getLogo')
+cy.route2('**/users', 'fixture:users/all.json').as('getUsers')
+cy.route2('**/admin', 'fx:users/admin.json').as('getAdmin')
+```
+
+You may want to define the `cy.route2()` after receiving the fixture and working with its data.
+
+```javascript
+cy.fixture('user').then((user) => {
+  user.firstName = 'Jane'
+  // work with the users array here
+
+  cy.route2('GET', '**/user/123', user)
+})
+
+cy.visit('/users')
+cy.get('.user').should('include', 'Jane')
+```
+
+You can also reference fixtures as strings directly in the response by passing an aliased fixture with `@`.
+
+```javascript
+cy.fixture('user').as('fxUser')
+cy.route2('POST', '**/users', '@fxUser')
+```
+
+## Options
+
+### Server redirect
+
+You can simulate a server redirect through the `redirect` method exposed by the handler function.
+
+```javascript
+cy.route2('/login', (req) => {
+  req.redirect('/register')
+})
+```
+
+### Simulate delay
+
+You can specify a delay (in ms) before the response is sent to the client.
+
+```javascript
+cy.route2('/users', (req) => {
+  req.delay(200)
+})
+```
+
+### Simulate throttle
+
+You can specify the speed at which a response is served at (in kilobytes per second).
+
+```javascript
+cy.route2('/users', (req) => {
+  req.throttle(3000)
+})
 ```
