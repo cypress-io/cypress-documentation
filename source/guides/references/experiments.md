@@ -82,7 +82,7 @@ Given the following DOM:
   <my-component>
     #shadow-root
       <button class="my-button">Click me</button>
-  </my-component
+  </my-component>
 </div>
 ```
 
