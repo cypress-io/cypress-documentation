@@ -280,7 +280,7 @@
       keywords: [react, commands, locator]
 
     - name: cypress-layout-inspector
-      description: 🕵️‍♂️ Simple utility to provide layout testing functionality to Cypress via custom assertions.
+      description: A simple utility to provide layout testing functionality to Cypress via custom assertions.
       link: https://github.com/msmps/cypress-layout-inspector
       keywords: [testing, ui, dom, assertions]
 
