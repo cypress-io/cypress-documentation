@@ -67,6 +67,7 @@ sidebar:
     troubleshooting: Troubleshooting
     changelog: Changelog
     migration-guide: Migration Guide
+    protractor-migration-guide: Protractor Migration Guide
     roadmap: Roteiro
     tooling: Ferramentas
     IDE-integration: IDE Integration

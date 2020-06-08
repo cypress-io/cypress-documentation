@@ -69,6 +69,7 @@ sidebar:
     troubleshooting: Troubleshooting
     changelog: 更新日志
     migration-guide: Migration Guide
+    protractor-migration-guide: Protractor Migration Guide
     roadmap: 路线图
     tooling: 工具
     IDE-integration: IDE Integration

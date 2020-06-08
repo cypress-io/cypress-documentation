@@ -67,6 +67,7 @@ sidebar:
     troubleshooting: Troubleshooting
     changelog: Изменения в продукте
     migration-guide: Migration Guide
+    protractor-migration-guide: Protractor Migration Guide
     roadmap: Карта проекта
     tooling: Утилиты
     IDE-integration: IDE Integration
