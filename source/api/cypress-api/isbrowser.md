@@ -146,14 +146,14 @@ it('test', () => {
 If you want to target a test or suite to run or be excluded when run in a specific browser, we suggest passing the `browser` within the {% url "test configuration" configuration#Test-Configuration %}.  The `browser` option accepts the same {% urlHash "arguments" Arguments %} as `Cypress.isBrowser()`.
 
 ```js
-it('Download extension in Firefox', (), { browser: 'firefox' } => {
+it('Download extension in Firefox', { browser: 'firefox' } => {
   cy.get('#dl-extension')
     .should('contain', 'Download Firefox Extension')
 })
 ```
 
 ```js
-it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
+it('Show warning outside Chrome', {  browser: '!chrome' } => {
   cy.get('.browser-warning')
     .should('contain', 'For optimal viewing, use Chrome browser')
 })

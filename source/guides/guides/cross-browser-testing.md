@@ -192,7 +192,7 @@ You can specify a browser to run or exclude by passing a matcher to the suite or
 
 ```js
 // Run the test if Cypress is run via Firefox
-it('Download extension in Firefox', (), { browser: 'firefox' } => {
+it('Download extension in Firefox', { browser: 'firefox' } => {
   cy.get('#dl-extension')
     .should('contain', 'Download Firefox Extension')
 })
