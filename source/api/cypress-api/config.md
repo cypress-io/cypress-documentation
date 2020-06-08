@@ -121,6 +121,14 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 Some configuration values cannot be changed while running a test. Anything that's not directly under Cypress's control - like timeouts, `userAgent`, or environment variables - will be ignored at run-time.
 
+## Test Configuration
+
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test you can pass an {% url "test configuration", configuration#Test-Configuration %} to the test or suite function.
+
+`Cypress.config()` changes the configuration value through the entire spec file. But using test configuration will only change the configuration value during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+
+See the full guide on {% url "test configuration", configuration#Test-Configuration %}.
+
 ## Why is it `Cypress.config` and not `cy.config`?
 
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
@@ -135,3 +143,4 @@ Since the configuration added or changed by `Cypress.config` is only in scope fo
 
 - {% url 'configuration' configuration %}
 - The {% url 'Environment Variable' environment-variables %} guide
+- {% url "Test Configuration" configuration#Test-Configuration %}
