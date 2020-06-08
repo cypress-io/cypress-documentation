@@ -228,7 +228,7 @@ describe('page display on medium size screen', {
   })
 
   it('shows hamburger menu', () => {
-    cy.get('#header').find('i.menu').should('be.visible)
+    cy.get('#header').find('i.menu').should('be.visible')
   })
 })
 ```
