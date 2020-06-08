@@ -215,6 +215,8 @@ This configuration will take effect during the suite or tests where they are set
 
 ### Suite of test configuration
 
+You can configure the size of the viewport height and width within a suite.
+
 ```js
 describe('page display on medium size screen', {
   viewportHeight: 1000,
@@ -232,10 +234,12 @@ describe('page display on medium size screen', {
 
 ### Single test configuration
 
+If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
 ```js
-it('open product view', (), { waitForAnimations: false } => {
-  cy.contains('Add to Cart').click()
-  cy.get('#modal').contains('Confirm').click()
+it('Show warning outside Chrome', {  browser: '!chrome' } => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
 })
 ```
 
