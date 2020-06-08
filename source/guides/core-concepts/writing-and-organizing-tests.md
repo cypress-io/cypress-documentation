@@ -141,7 +141,7 @@ If you're familiar with writing tests in JavaScript, then writing tests in Cypre
 
 ## Test Structure
 
-The test interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
+The test interface, borrowed from {% url 'Mocha' bundled-tools#Mocha %}, provides `describe()`, `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`, so choose whatever terminology works best for you.
 
@@ -199,16 +199,16 @@ describe('Hooks', () => {
     // runs once before all tests in the block
   })
 
-  after(() => {
-    // runs once after all tests in the block
-  })
-
   beforeEach(() => {
     // runs before each test in the block
   })
 
   afterEach(() => {
     // runs after each test in the block
+  })
+
+  after(() => {
+    // runs once after all tests in the block
   })
 })
 ```
@@ -275,6 +275,51 @@ To skip a specified suite or test, append `.skip()` to the function. All nested 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', () => {
   numsExpectedToEq([9, 12, 18], 'fizz')
+})
+```
+
+## Test Options
+
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass an options object to the test or suite function as the second argument.
+
+These options will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+
+### Syntax
+
+```javascript
+describe(name, options, fn)
+context(name, options, fn)
+it(name, options, fn)
+specify(name, options, fn)
+```
+
+### Whitelisted config values
+
+{% partial test_options_config_whitelist %}
+
+### Suite of test options
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible)
+  })
+})
+```
+
+### Single test options
+
+```js
+it('open product view', (), { waitForAnimations: false } => {
+  cy.contains('Add to Cart').click()
+  cy.get('#modal').contains('Confirm').click()
 })
 ```
 

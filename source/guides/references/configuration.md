@@ -128,7 +128,7 @@ This gives you the option to do things like override the `baseUrl` or environmen
 
 When {% url 'running Cypress from the Command Line' command-line %} you can pass a `--config` flag.
 
-**Examples:**
+### Examples:
 
 ```shell
 cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
@@ -203,6 +203,40 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
+```
+
+## Test Options
+
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass an options object to the test or suite function.
+
+These options will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+
+{% partial test_options_config_whitelist %}
+
+### Suite of test options
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible)
+  })
+})
+```
+
+### Single test options
+
+```js
+it('open product view', (), { waitForAnimations: false } => {
+  cy.contains('Add to Cart').click()
+  cy.get('#modal').contains('Confirm').click()
+})
 ```
 
 # Resolved Configuration
@@ -358,3 +392,7 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 {% history %}
 {% url "3.5.0" changelog %} | Added support for option `nodeVersion`
 {% endhistory %}
+
+# See also
+
+- {% url "`Cypress.config()`" config %}
