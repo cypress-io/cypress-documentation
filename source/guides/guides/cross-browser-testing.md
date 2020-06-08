@@ -188,7 +188,7 @@ There may be instances where it can be useful to run or ignore one or more tests
 When considering to ignore or only run a particular test within a given browser, assess the true need for the test to run on multiple browsers.
 {% endnote %}
 
-You can specify a browser to run or exclude by passing a matcher to the suite or test within the {% url "test options" configuration#Test-Options %}. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser#Arguments %}.
+You can specify a browser to run or exclude by passing a matcher to the suite or test within the {% url "test configuration" configuration#Test-Configuration %}. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser#Arguments %}.
 
 ```js
 // Run the test if Cypress is run via Firefox
@@ -218,4 +218,4 @@ it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
 - {% url "`Cypress.browser`" browser %}
 - {% url "`Cypress.isBrowser`" isbrowser %}
 - {% url "Launching Browsers" launching-browsers %}
-- {% url "Test Options" configuration#Test-Options %}
+- {% url "Test Configuration" configuration#Test-Configuration %}

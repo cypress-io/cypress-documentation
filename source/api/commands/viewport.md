@@ -212,9 +212,9 @@ Cypress.config('viewportWidth', 800)
 Cypress.config('viewportWidth') // => 800
 ```
 
-## Set viewport in the test options
+## Set viewport in the test configuration
 
-You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the {% url "test options" configuration#Test-Options %}.
+You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
 
 This will set the height and width throughout the duration of the tests, then return it to the default `viewportHeight` and `viewportWidth` when complete.
 

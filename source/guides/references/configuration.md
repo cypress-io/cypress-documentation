@@ -205,15 +205,15 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-## Test Options
+## Test Configuration
 
-To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass an options object to the test or suite function.
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to the test or suite function as the second argument.
 
-These options will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+This configuration will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
 
-{% partial test_options_config_whitelist %}
+{% partial test_config_whitelist.md %}
 
-### Suite of test options
+### Suite of test configuration
 
 ```js
 describe('page display on medium size screen', {
@@ -230,7 +230,7 @@ describe('page display on medium size screen', {
 })
 ```
 
-### Single test options
+### Single test configuration
 
 ```js
 it('open product view', (), { waitForAnimations: false } => {

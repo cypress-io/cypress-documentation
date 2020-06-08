@@ -48,7 +48,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - {% urlHash "Export as `CYPRESS_*`" Option-3-CYPRESS %}
 - {% urlHash "Pass in the CLI as `--env`" Option-4-env %}
 - {% urlHash "Set an environment variable within your plugins." Option-5-Plugins %}
-- {% urlHash "Set an environment variable within test options." Option-6-Test-Options %}
+- {% urlHash "Set an environment variable within test configuration." Option-6-Test-Configuration %}
 
 Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration %}.
 
@@ -220,11 +220,11 @@ Instead of setting environment variables in a file, you can use plugins to dynam
 - More challenging
 {% endnote %}
 
-## Option #6: Test Options
+## Option #6: Test Configuration
 
-You can set environment variables for specific suites or tests by passing the `env` values to the {% url "test options" configuration#Test-Options %}.
+You can set environment variables for specific suites or tests by passing the `env` values to the {% url "test configuration" configuration#Test-Configuration %}.
 
-### Suite of test options
+### Suite of test configuration
 
 ```js
 // change environment variable for single suite of tests
@@ -240,7 +240,7 @@ describe('test against Spanish site', {
 })
 ```
 
-### Single test options
+### Single test configuration
 
 ```js
 // change environment variable for single test
@@ -293,4 +293,4 @@ You can {% url 'read more about how environment variables can change configurati
 - {% url "`Cypress.env()`" env %}
 - {% url "Configuration API" configuration-api %}
 - {% url "Environment Variables recipe" recipes#Server-Communication %}
-- {% url "Test Options" configuration#Test-Options %}
+- {% url "Test Configuration" configuration#Test-Configuration %}

@@ -141,9 +141,9 @@ it('test', () => {
 
 ## Notes
 
-### Test options: `browser`
+### Test configuration: `browser`
 
-If you want to target a test or suite to run or be excluded when run in a specific browser, we suggest passing the `browser` within the {% url "test options" configuration#Test-Options %}.  The `browser` option accepts the same {% urlHash "arguments" Arguments %} as `Cypress.isBrowser()`.
+If you want to target a test or suite to run or be excluded when run in a specific browser, we suggest passing the `browser` within the {% url "test configuration" configuration#Test-Configuration %}.  The `browser` option accepts the same {% urlHash "arguments" Arguments %} as `Cypress.isBrowser()`.
 
 ```js
 it('Download extension in Firefox', (), { browser: 'firefox' } => {
@@ -160,6 +160,7 @@ it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
 ```
 
 {% history %}
+{% url "4.8.0" changelog#4-8-0 %} | Expanded `matcher` and `matchers` arguments to assist in filtering browsers.
 {% url "4.0.0" changelog#4-0-0 %} | Added `isBrowser` command.
 {% endhistory %}
 
@@ -169,4 +170,4 @@ it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
 - {% url "Cross Browser Testing" cross-browser-testing %}
 - {% url "`Cypress.browser`" browser %}
 - {% url "Launching Browsers" launching-browsers %}
-- {% url "Test Options" configuration#Test-Options %}
+- {% url "Test Configuration" configuration#Test-Configuration %}
