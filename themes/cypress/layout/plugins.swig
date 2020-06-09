@@ -16,25 +16,29 @@
           <ul class="plugins-list">
             {% for plugin in order_by_name(pluginType.plugins) %}
               <li>
-                {% if plugin.badge %}
-                  {% if plugin.badge === 'community' %}
-                  <span class="badge badge-pill badge-warning">
+                <div class="plugin-title">
+                  <h3>
+                    <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a> 
+                  </h3>
+                  <div class="plugin-badge">
+                    {% if plugin.badge %}
+                      {% if plugin.badge === 'community' %}
+                      <span class="badge badge-pill badge-community">
+                      {% endif %}
+                      {% if plugin.badge === 'experimental' %}
+                      <span class="badge badge-pill badge-experimental">
+                      {% endif %}
+                      {% if plugin.badge === 'official' %}
+                      <span class="badge badge-pill badge-official">
+                      {% endif %}
+                      {% if plugin.badge === 'verified' %}
+                      <span class="badge badge-pill badge-verified">
+                    {% endif %}
+                      {{ plugin.badge }}
+                    </span>
                   {% endif %}
-                  {% if plugin.badge === 'experimental' %}
-                  <span class="badge badge-pill badge-danger">
-                  {% endif %}
-                  {% if plugin.badge === 'official' %}
-                  <span class="badge badge-pill badge-info">
-                  {% endif %}
-                  {% if plugin.badge === 'verified' %}
-                  <span class="badge badge-pill badge-success">
-                  {% endif %}
-                    {{ plugin.badge }}
-                  </span>
-                {% endif %}
-                <h3>
-                  <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a> 
-                </h3>
+                  </div>
+                </div>
                 <p>{{ plugin.description }}</p>
                 {% for keyword in plugin.keywords %}
                   <span class="keyword">#{{ keyword }}</span>
