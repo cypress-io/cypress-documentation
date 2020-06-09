@@ -48,6 +48,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - {% urlHash "Export as `CYPRESS_*`" Option-3-CYPRESS %}
 - {% urlHash "Pass in the CLI as `--env`" Option-4-env %}
 - {% urlHash "Set an environment variable within your plugins." Option-5-Plugins %}
+- {% urlHash "Set an environment variable within test configuration." Option-6-Test-Configuration %}
 
 Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration %}.
 
@@ -205,9 +206,69 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
 
-While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
-
 {% url "We've fully documented how to do this here." configuration-api %}
+
+### Overview
+
+{% note success Benefits %}
+- Most amount of flexibility
+- Ability to manage configuration however you'd like
+{% endnote %}
+
+{% note danger Downsides %}
+- Requires knowledge of writing in Node
+- More challenging
+{% endnote %}
+
+## Option #6: Test Configuration
+
+You can set environment variables for specific suites or tests by passing the `env` values to the {% url "test configuration" configuration#Test-Configuration %}.
+
+### Suite of test configuration
+
+```js
+// change environment variable for single suite of tests
+describe('test against Spanish site', {
+  env: {
+    language: 'es'
+  }
+}, () => {
+  it('displays Spanish', () => {
+    cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
+    cy.contains('¿Por qué Cypress?')
+  })
+})
+```
+
+### Single test configuration
+
+```js
+// change environment variable for single test
+it('smoke test develop api', (), {
+  env: {
+    api: 'https://dev.myapi.com'
+  }
+} => {
+  cy.request(Cypress.env('api')).its('status').should('eq', 200)
+})
+
+// change environment variable for single test
+it('smoke test staging api', (), {
+  env: {
+    api: 'https://staging.myapi.com'
+  }
+} => {
+  cy.request(Cypress.env('api')).its('status').should('eq', 200)
+})
+```
+
+### Overview
+
+{% note success Benefits %}
+- Only takes effect for duration of suite or test.
+- More clear where environment variables come from.
+- Allows for dynamic values between tests
+{% endnote %}
 
 # Overriding Configuration
 
@@ -229,4 +290,7 @@ You can {% url 'read more about how environment variables can change configurati
 
 ## See also
 
+- {% url "`Cypress.env()`" env %}
+- {% url "Configuration API" configuration-api %}
 - {% url "Environment Variables recipe" recipes#Fundamentals %}
+- {% url "Test Configuration" configuration#Test-Configuration %}
