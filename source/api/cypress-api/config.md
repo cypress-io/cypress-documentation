@@ -123,9 +123,9 @@ Some configuration values cannot be changed while running a test. Anything that'
 
 ## Test Configuration
 
-To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test you can pass an {% url "test configuration", configuration#Test-Configuration %} to the test or suite function.
+To apply specific Cypress {% url "configuration" configuration %} values to a suite or test, you can pass a {% url "test configuration" configuration#Test-Configuration %} object to the test or suite function.
 
-`Cypress.config()` changes the configuration value through the entire spec file. But using test configuration will only change the configuration value during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+While `Cypress.config()` changes configuration values through the entire spec file, using test configuration will only change configuration values during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
 
 See the full guide on {% url "test configuration", configuration#Test-Configuration %}.
 
