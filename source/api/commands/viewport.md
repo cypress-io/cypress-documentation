@@ -203,6 +203,36 @@ Scaling the app should not affect any calculations or behavior of your applicati
 
 The upsides to this are that tests should consistently pass or fail regardless of a developers' screen size. Tests will also consistently run in `CI` because all of the viewports will be the same no matter what machine Cypress runs on.
 
+## Reset viewport via `Cypress.config()`
+
+You can change the size of the viewport height and width for the remainder of the tests by setting the new values for `viewportHeight` or `viewportWidth` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('viewportWidth', 800)
+Cypress.config('viewportWidth') // => 800
+```
+
+## Set viewport in the test configuration
+
+You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the height and width throughout the duration of the tests, then return it to the default `viewportHeight` and `viewportWidth` when complete.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -249,4 +279,5 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 # See also
 
-- {% url 'configuration' configuration %}
+- {% url 'Configuration' configuration %}
+- {% url '`Cypress.config()`' config %}
