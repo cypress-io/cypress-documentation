@@ -140,6 +140,35 @@ cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
 
 A command must exit within the `execTimeout` or Cypress will kill the command's process and fail the current test.
 
+## Reset timeout via `Cypress.config()`
+
+You can change the timeout of `cy.exec()` for the remainder of the tests by setting the new values for `execTimeout` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('execTimeout', 30000)
+Cypress.config('execTimeout') // => 30000
+```
+
+## Set timeout in the test configuration
+
+You can configure the `cy.exec()` timeout within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the timeout throughout the duration of the tests, then return it to the default `execTimeout` when complete.
+
+```js
+describe('has data available from database', { execTimeout: 90000 }, () => {
+  before(() => {
+    cy.exec('rake db:seed')
+  })
+
+  // tests
+
+  after(() => {
+    cy.exec('rake db:reset')
+  })
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

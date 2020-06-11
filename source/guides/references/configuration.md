@@ -128,7 +128,7 @@ This gives you the option to do things like override the `baseUrl` or environmen
 
 When {% url 'running Cypress from the Command Line' command-line %} you can pass a `--config` flag.
 
-**Examples:**
+### Examples:
 
 ```shell
 cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
@@ -145,7 +145,7 @@ cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 For more complex configuration objects, you may want to consider passing a {% url "JSON.stringified" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %} object surrounded by single quotes.
 
 ```shell
-cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.coffee"]}'
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 ## Plugins
@@ -203,6 +203,44 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
+```
+
+## Test Configuration
+
+To apply specific Cypress {% url "configuration" configuration %} values to a suite or test, pass a configuration object to the test or suite function as the second argument.
+
+The configuration values passed in will only take effect during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
+
+{% partial test_config_whitelist %}
+
+### Suite configuration
+
+You can configure the size of the viewport height and width within a suite.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
+
+### Single test configuration
+
+If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
+```js
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
+})
 ```
 
 # Resolved Configuration
@@ -358,3 +396,7 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 {% history %}
 {% url "3.5.0" changelog %} | Added support for option `nodeVersion`
 {% endhistory %}
+
+# See also
+
+- {% url "`Cypress.config()`" config %}
