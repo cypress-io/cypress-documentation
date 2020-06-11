@@ -8,7 +8,6 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 This document is only a reference to every assertion Cypress supports.
 
 If you're looking to understand **how** to use these assertions please read about assertions in our {% url "Introduction to Cypress" introduction-to-cypress#Assertions guide %}.
-{% endnote %}
 
 # Chai
 
@@ -230,11 +229,19 @@ cy.get('a').parent('span.help').should('not.contain', 'click me')
 cy.get('button').should('be.visible')
 ```
 
-## Existence
+## Removal
 
 ```javascript
 // retry until loading spinner no longer exists
 cy.get('#loading').should('not.exist')
+```
+
+## Existence
+
+```javascript
+// check synchronously that the element does not exist (no retry)
+// for example just after a server-side render
+cy.get('#ssr-error', { timeout: 0}).should('not.exist')
 ```
 
 ## State
