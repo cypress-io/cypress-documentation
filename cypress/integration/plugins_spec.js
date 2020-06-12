@@ -21,9 +21,6 @@ describe('Plugins', () => {
     plugins.forEach((plugin) => {
       cy.get(`[data-cy="plugin-${_.kebabCase(plugin.name)}"`).within(() => {
         cy.get('h2').contains(plugin.name).should('be.visible')
-        plugin.plugins.forEach((plugin) => {
-          cy.get('.plugins-list li').find('.plugin-title h3').contains(plugin.name).should('be.visible')
-        })
       })
     })
   })
