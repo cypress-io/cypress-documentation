@@ -194,6 +194,11 @@
       link: https://github.com/tgriesser/cypress-graphql-mock
       keywords: [graphql]
 
+    - name: cy-mobile-commands
+      description: Mobile testing helper for Cypress
+      link: https://gitlab.com/nTopus/cy-mobile-commands#readme
+      keywords: [mobile, swipe, touch, commands]
+
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
       link: https://github.com/NicholasBoll/cypress-pipe
