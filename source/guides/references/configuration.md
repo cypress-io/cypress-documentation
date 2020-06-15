@@ -207,13 +207,13 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 ## Test Configuration
 
-To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to the test or suite function as the second argument.
+To apply specific Cypress {% url "configuration" configuration %} values to a suite or test, pass a configuration object to the test or suite function as the second argument.
 
-This configuration will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+The configuration values passed in will only take effect during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
 
 {% partial test_config_whitelist %}
 
-### Suite of test configuration
+### Suite configuration
 
 You can configure the size of the viewport height and width within a suite.
 
@@ -237,7 +237,7 @@ describe('page display on medium size screen', {
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
 
 ```js
-it('Show warning outside Chrome', {  browser: '!chrome' } => {
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
   cy.get('.browser-warning')
     .should('contain', 'For optimal viewing, use Chrome browser')
 })
