@@ -220,7 +220,7 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 
 # Notes
 
-## blocklisthosts
+## blocklistHosts
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
