@@ -18,6 +18,7 @@ Option | Default | Description
 `experimentalComponentTesting` | `false` | When set to `true`, Cypress allows you to execute component tests using framework-specific adaptors. By default  `cypress/component` is the path for component tests. You can change this setting by setting the `componentFolder` configuration option. For more details see the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %} and {% url "cypress-vue-unit-test" https://github.com/bahmutov/cypress-vue-unit-test %} repos.
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 `experimentalShadowDomSupport` | `false` | Enables shadow DOM support. Adds the `cy.shadow()` command and the `includeShadowDom` option to some DOM commands.
+`experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub.
 
 # Component Testing
 
@@ -117,6 +118,7 @@ cy.get('.container .my-button', { includeShadowDom: true })
 In the selector `.container .my-button`, the first part (`.container`) exists in the light DOM and the second part (`.my-button`) exists in the shadow DOM. This will not find the button element. Instead, you can use one of the methods in the above examples.
 
 {% history %}
+{% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
 {% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
 {% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
 {% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
