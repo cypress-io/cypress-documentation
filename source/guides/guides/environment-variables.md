@@ -292,5 +292,5 @@ You can {% url 'read more about how environment variables can change configurati
 
 - {% url "`Cypress.env()`" env %}
 - {% url "Configuration API" configuration-api %}
-- {% url "Environment Variables recipe" recipes#Server-Communication %}
+- {% url "Environment Variables recipe" recipes#Fundamentals %}
 - {% url "Test Configuration" configuration#Test-Configuration %}

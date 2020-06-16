@@ -18,7 +18,7 @@ npm install typescript
 
 ## 配置 tsconfig.json
 
-我们推进你在{% url "`cypress` 文件夹下" writing-and-organizing-tests#Folder-Structure %}按下面的配置来配置你的{% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %}。
+我们推荐你在{% url "`cypress` 文件夹下" writing-and-organizing-tests#Folder-Structure %}按下面的配置来配置你的{% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %}。
 
 ```json
 {
