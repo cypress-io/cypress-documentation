@@ -3,7 +3,7 @@ title: Trade-offs
 containerClass: faq
 ---
 
-Cypress automates the browser with its own unique architecture - different from any other testing tool. While this unlocks the power to do things you will not find anywhere else, there are specific trade-offs that are made. There is no free lunch!
+Cypress automates the browser with its own unique architecture. While this unlocks the power to do things you will not find anywhere else, there are specific trade-offs that are made. There is no free lunch!
 
 In this guide we will lay out what some of the trade-offs are - and specifically how you can work around them.
 
