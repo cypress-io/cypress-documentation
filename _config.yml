@@ -47,6 +47,7 @@ alias:
   pt-br/: pt-br/guides/overview/why-cypress.html
   ru/: ru/guides/overview/why-cypress.html
   es/: es/guides/overview/why-cypress.html
+  pl/: pl/guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
   guides.html: guides/overview/why-cypress.html
