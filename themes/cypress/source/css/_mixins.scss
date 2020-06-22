@@ -1,0 +1,6 @@
+// Responsive
+@mixin breakpoint($size) {
+  @media screen and (min-width: $size) {
+    @content;
+  }
+}

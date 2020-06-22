@@ -69,7 +69,7 @@ describe('Post skeletons', () => {
 
 # Shadow DOM
 
-Support for shadow DOM is currently experimental and includes the addition of a new command `.shadow()` and an `includeShadowDom` option for some DOM commands. You can enable component testing by setting the `experimentalShadowDomSupport` configuration to `true`.
+Support for shadow DOM is currently experimental and includes the addition of a new command `.shadow()` and an `includeShadowDom` option for some DOM commands. You can enable shadow DOM by setting the `experimentalShadowDomSupport` configuration to `true`.
 
 ## `.shadow()`
 
