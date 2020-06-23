@@ -8,7 +8,7 @@ title: Cypress.Cookies
 
 Cypress automatically clears all cookies **before** each test to prevent state from building up.
 
-You can take advantage of `Cypress.Cookies.preserveOnce()` or even *whitelist* cookies by their name to preserve values across multiple tests. This enables you to preserve sessions through several tests.
+You can take advantage of `Cypress.Cookies.preserveOnce()` or even preserve cookies by their name to preserve values across multiple tests. This enables you to preserve sessions through several tests.
 
 # Syntax
 
@@ -30,7 +30,7 @@ Names of cookies to be preserved. Pass an unlimited number of arguments.
 
 **{% fa fa-angle-right %} options**  ***(Object)***
 
-Set defaults for all cookies, such as whitelisting a set of cookies to bypass being cleared before each test.
+Set defaults for all cookies, such as preserving a set of cookies to bypass being cleared before each test.
 
 # Examples
 
@@ -121,7 +121,7 @@ describe('Dashboard', () => {
 
 ### Set global default cookies
 
-You can modify the global defaults and whitelist a set of Cookies which will always be preserved across tests.
+You can modify the global defaults and preserve a set of Cookies which will always be preserved across tests.
 
 Any change you make here will take effect immediately for the remainder of every single test.
 
@@ -129,14 +129,14 @@ Any change you make here will take effect immediately for the remainder of every
 A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
 {% endnote %}
 
-### Whitelist accepts:
+### `whitelist` accepts:
 
 - String
 - Array
 - RegExp
 - Function
 
-### Whitelist String
+### Preserve String
 
 ```javascript
 // now any cookie with the name 'session_id' will
@@ -146,7 +146,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-### Whitelist Array
+### Preserve Array
 
 ```javascript
 // now any cookie with the name 'session_id' or 'remember_token'
@@ -156,7 +156,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-### Whitelist RegExp
+### Preserve RegExp
 
 ```javascript
 // now any cookie that matches this RegExp
@@ -166,7 +166,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-### Whitelist Function
+### Preserve Function
 
 ```javascript
 Cypress.Cookies.defaults({
