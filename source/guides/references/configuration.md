@@ -211,7 +211,7 @@ To apply specific Cypress {% url "configuration" configuration %} values to a su
 
 The configuration values passed in will only take effect during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
 
-{% partial test_config_whitelist %}
+{% partial allowed_test_config %}
 
 ### Suite configuration
 
@@ -258,13 +258,13 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 
 # Notes
 
-## blacklistHosts
+## `blacklistHosts`
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
 To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
-To blacklist a host:
+To block a host:
 
 - {% fa fa-check-circle green %} Pass only the host
 - {% fa fa-check-circle green %} Use wildcard `*` patterns
@@ -274,7 +274,7 @@ To blacklist a host:
 {% note info %}
 Not sure what a part of the URL a host is? {% url 'Use this guide as a reference.' https://nodejs.org/api/url.html#url_url_strings_and_url_objects %}
 
-When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
+When blocking a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
 {% endnote %}
 
 Given the following URLs:
@@ -285,7 +285,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-This would match the following blacklisted hosts:
+This would match the following blocked hosts:
 
 ```text
 www.google-analytics.com
@@ -309,7 +309,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
-{% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
+{% imgTag /img/guides/blocked-host.png "Network tab of dev tools with analytics.js request selected and the response header highlighted " %}
 
 ## modifyObstructiveCode
 
