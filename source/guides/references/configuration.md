@@ -307,7 +307,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 - {% fa fa-exclamation-triangle red %} Does NOT match `*.google.com`
 {% endnote %}
 
-When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
+When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blocklist-host` header so you can see which rule it matched.
 
 {% imgTag /img/guides/blocked-host.png "Network tab of dev tools with analytics.js request selected and the response header highlighted " %}
 
@@ -394,7 +394,9 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
-{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% url "5.0.0" changelog %} | Renamed `blacklistHosts` to `blocklistHosts`
+{% url "4.0.0" changelog %} | Added `firefoxGcInterval` configuration option
+{% url "3.5.0" changelog %} | Added `nodeVersion` configuration option
 {% endhistory %}
 
 # See also
