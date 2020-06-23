@@ -2,25 +2,23 @@
 title: TypeScript
 ---
 
-Cypress使用{% url "TypeScript" https://www.typescriptlang.org/ %}作为{% url "官方类型定义" https://github.com/cypress-io/cypress/tree/develop/cli/types %}(语言包)。这意味着你可以使用TypeScript编写测试。所有这些只需要一点点的设置。
+Cypress自带了 {% url "TypeScript" https://www.typescriptlang.org/ %} {% url "官方类型声明" https://github.com/cypress-io/cypress/tree/develop/cli/types %}让你可以使用Typescript写测试代码。
 
-## 源码转换TypeScript测试文件
+## 安装 TypeScript
 
-你可能会想要直接在项目中写Typescript，那就必须处理源码转换问题。Cypress暴露一个{% url "`file:preprocessor` event" preprocessors-api %}以便你可以自定义你的源码是如何进行转换和发送到浏览器的。
+要让Cypress支持Typescript你需要在项目中安装TypeScript
 
-### Examples
+```bash
+npm install typescript
+```
 
-- {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
-- {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Simple Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+## 配置开发环境
 
-## Set up your dev environment
+在开始之前，请参考 {% url "TypeScript's Editor Support 文档" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} 并按照步骤配置你的IDE来支持TypeScript，参考{% url "intelligent code completion" IDE-integration#Intelligent-Code-Completion %} 来配置你的开发环境，{% url "Visual Studio Code" https://code.visualstudio.com/ %}，{% url "Visual Studio" https://www.visualstudio.com/ %}和{% url "WebStorm" https://www.jetbrains.com/webstorm/ %}原生支持Typescript，其他编辑器需要额外的配置。
 
-Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" IDE-integration %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
+## 配置 tsconfig.json
 
-## Configure tsconfig.json
-
-We recommend the following configuration in a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %} inside your {% url "`cypress` folder" writing-and-organizing-tests#Folder-Structure %}.
+我们推荐你在{% url "`cypress` 文件夹下" writing-and-organizing-tests#Folder-Structure %}按下面的配置来配置你的{% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/tsconfig-json.html %}。
 
 ```json
 {
@@ -37,17 +35,27 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 }
 ```
 
-The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since {% url "Chai" bundled-tools#Chai %} and {% url "jQuery" bundled-tools#Other-Library-Utilities %} are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
+`"types"`会告诉TypeScript编译器只包含Cypress的类型声明，这个配置也会处理使用`@types/chai`或`@types/jquery`的实例。 由于 {% url "Chai" bundled-tools#Chai %} 和 {% url "jQuery" bundled-tools#Other-Library-Utilities %} 是全局的命名空间，不兼容的版本会使包管理工具(`yarn` 或 `npm`)处理依赖并加载多个版本导致冲突。
 
 {% note info %}
-You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %} repo.
+在 {% url cypress-io/cypress-and-jest-typescript-example https://github.com/cypress-io/cypress-and-jest-typescript-example %} 仓库中你可以找到Jest和Cypress在同一个项目中使用不同`tsconfig.json`的例子。
 {% endnote %}
 
-## Types for custom commands
+{% note warning %}
+如果上述的配置没有生效，你可能需要重启下你的IDE的TypeScript服务，例如：
 
-When adding {% url "custom commands" custom-commands %} to the `cy` object, you can manually add their types to avoid TypeScript errors.
+VS Code (在.ts 或 .js 文件中):
+* 打开command面板 (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
+* 输入 "restart ts" 并选择 "TypeScript: Restart TS server." 选项
 
-For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
+如果还不行就重启IDE.
+{% endnote %}
+
+## 自定义命令的类型
+
+当你给`cy`对象添加{% url "自定义命令" custom-commands %}时，你可以手动添加它们的类型避免Typescript报错。
+
+例如你按下面的方式在 {% url "`supportFile`" configuration#Folders-Files %} 添加了 `cy.dataCy` 命令：
 
 ```javascript
 // cypress/support/index.js
@@ -56,7 +64,7 @@ Cypress.Commands.add('dataCy', (value) => {
 })
 ```
 
-Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your {% url "`supportFile`" configuration#Folders-Files %}, in this case at `cypress/support/index.d.ts`.
+然后通过在 {% url "`supportFile`" configuration#Folders-Files %} 旁边创建一个新的Typescript声明，本例中是`cypress/support/index.d.ts`， `dataCy` 命令就被添加到全局的Cypress链式调用接口中 （之所以这样说是因为命令是链接在一起的）。
 
 ```typescript
 // in cypress/support/index.d.ts
@@ -75,12 +83,12 @@ declare namespace Cypress {
 ```
 
 {% note info %}
-A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
+方法类型上面编写良好JSDoc注释对使用你的自定义命令的用户很有帮助
 {% endnote %}
 
-If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
+如果你的specs文件是用Typescript写的，你需要将Typescript声明文件 `cypress/support/index.d.ts` 和其他源文件一起包含。
 
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+即使你的项目是纯JavaScript编写的，JavaScript specs文件也能通过三个斜杠的`reference path`注释指向的文件识别到新的命令。
 
 ```javascript
 // from your cypress/integration/spec.js
@@ -93,18 +101,37 @@ it('works', () => {
 })
 ```
 
-### Examples:
+### 示例：
 
-- See {% url "Adding Custom Commands" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} example recipe.
-- You can find a simple example with custom commands written in TypeScript in {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} repo.
-- Example project {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %} uses custom commands to avoid boilerplate code.
+- 查阅 {% url "添加自定义命令" https://github.com/cypress-io/cypress-example-recipes#fundamentals %} 示例。
+- 使用Typescript编写的自定义命令的例子可以在 {% url "omerose/cypress-support" https://github.com/omerose/cypress-support %} 仓库找到。
+- 使用自定义命令避免样板代码的示例项目 {% url "cypress-example-todomvc custom commands" https://github.com/cypress-io/cypress-example-todomvc#custom-commands %}。
 
-## Types for custom assertions
+## 自定义断言的类型
 
-If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" recipes#Fundamentals %} for instructions.
+如果你要扩展Cypress断言， 你可以扩展断言类型使得Typescript编译器能识别新的方法，参阅 {% url "Recipe: Adding Chai Assertions" recipes#Fundamentals %} 说明
 
-## Additional information
+## 插件的类型
 
-See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}. Take a look at {% url "this video" https://www.youtube.com/watch?v=1Vr1cAN_CLA %} Basarat has recorded and the accompanying repo {% url basarat/cypress-ts https://github.com/basarat/cypress-ts %}.
+你可以在{% url "plugins文件" plugins-guide %}里利用Cypress的类型声明按如下方式注解：
 
-{% fa fa-github %} We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.
+```javascript
+// cypress/plugins/index.js
+
+/// <reference types="cypress" />
+
+/**
+ * @type {Cypress.PluginConfig}
+ */
+module.exports = (on, config) => {
+
+}
+```
+
+{% history %}
+{% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
+{% endhistory %}
+
+# 另请参阅
+
+- {% url "IDE集成" IDE-integration %}
