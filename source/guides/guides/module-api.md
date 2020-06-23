@@ -137,3 +137,7 @@ const cypress = require('cypress')
 
 cypress.open()
 ```
+
+{% history %}
+{% url "4.9.0" changelog %} | Added `quiet` option to `cypress.run()`
+{% endhistory %}
