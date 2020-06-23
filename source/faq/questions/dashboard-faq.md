@@ -134,6 +134,6 @@ In order to avoid any interruption in service, we recommend that you review your
 4. Review your organization’s usage
 5. Scroll down and select *Upgrade* under your plan of choice
 
-## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to whitelist on my VPN for the Dashboard to work properly?
+## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for the Dashboard to work properly?
 
-{% partial vpn_whitelist_list %}
+{% partial vpn_allowed_list %}
