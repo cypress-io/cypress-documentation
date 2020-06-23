@@ -118,6 +118,22 @@ cy.tick(1000)
 
 You can call {% url `cy.clock()` clock %} **prior** to visiting your application and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} and {% url `cy.route()` route %}.
 
+You can restore the original clock allowing your application to resume normal functions.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('foobarbaz')
+cy.tick(1000)
+...
+// restore the clock
+cy.clock().then(clock => {
+  clock.restore()
+})
+// or use this shortcut
+cy.clock().invoke('restore')
+```
+
 ## Assertions
 
 Once you have a `stub` or a `spy` in hand, you can then create assertions about them.
