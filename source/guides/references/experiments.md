@@ -14,7 +14,6 @@ You can pass the {% url "configuration" configuration %} options below to enable
 
 Option | Default | Description
 ----- | ---- | ----
-`experimentalGetCookiesSameSite` | `false` | Adds `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in a later Cypress version.
 `experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See {% urlHash "Component Testing" Component-Testing %} for more detail.
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 `experimentalShadowDomSupport` | `false` | Enables shadow DOM support. Adds the `cy.shadow()` command and the `includeShadowDom` option to some DOM commands. See {% urlHash "Shadow DOM" Shadow-DOM %} for more detail.
@@ -125,6 +124,8 @@ cy.get('.container .my-button', { includeShadowDom: true })
 In the selector `.container .my-button`, the first part (`.container`) exists in the light DOM and the second part (`.my-button`) exists in the shadow DOM. This will not find the button element. Instead, you can use one of the methods in the above examples.
 
 {% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
+{% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
 {% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
 {% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
 {% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
