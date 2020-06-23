@@ -71,6 +71,23 @@ cy.get('#header').should('have.text', 'Hello, World')
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-and-spying %}
 {% endnote %}
 
+## Restore clock
+
+You can restore the clock
+
+```javascript
+cy.clock()
+cy.visit('/index.html')
+cy.tick(1000)
+...
+// restore the clock
+cy.tick().then(clock => {
+  clock.restore()
+})
+// or use this shortcut
+cy.tick().invoke('restore')
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

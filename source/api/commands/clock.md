@@ -65,6 +65,23 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 # Examples
 
+## Restore clock
+
+You can restore the clock
+
+```javascript
+cy.clock()
+cy.visit('/index.html')
+cy.tick(1000)
+...
+// restore the clock
+cy.clock().then(clock => {
+  clock.restore()
+})
+// or use this shortcut
+cy.clock().invoke('restore')
+```
+
 ## No Args
 
 ### Create a clock and use it to trigger a `setInterval`
