@@ -93,6 +93,7 @@ Option | Description
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
+`--quiet`, `-q` | If passed, Cypress output will not be printed to `stdout`. Only output from the configured {% url "Mocha reporter" reporters %} will print.
 `--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
@@ -542,7 +543,6 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
-
 # Debugging commands
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
@@ -584,3 +584,7 @@ DEBUG=cypress:launcher cypress run
 ```shell
 DEBUG=cypress:server:project cypress run
 ```
+
+{% history %}
+{% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
+{% endhistory %}

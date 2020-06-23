@@ -31,6 +31,7 @@ Option | Type | Description
 `parallel` | *boolean* | Run recorded specs in {% url "parallel" parallelization %} across multiple machines
 `port` | *number* | Override default port
 `project` | *string* | Path to a specific project
+`quiet`| *boolean* | If passed, Cypress output will not be printed to `stdout`. Only output from the configured {% url "Mocha reporter" reporters %} will print.
 `record` | *boolean* | Whether to record the test run
 `reporter` | *string* | Specify a {% url "Mocha reporter" reporters %}
 `reporterOptions` | *object* | Specify {% url "Mocha reporter" reporters %} options
@@ -136,3 +137,7 @@ const cypress = require('cypress')
 
 cypress.open()
 ```
+
+{% history %}
+{% url "4.9.0" changelog %} | Added `quiet` option to `cypress.run()`
+{% endhistory %}
