@@ -49,7 +49,10 @@ context('Sidebar', function () {
               , [])
           })
 
-          cy.visit(`${this.visitUrlPrefix}${nav.path}.html`)
+          const page = `${this.visitUrlPrefix}${nav.path}.html`
+
+          cy.task('log', `Visiting ${page}`)
+          cy.visit(`${page}`)
 
           cy.get('#sidebar').within(() => {
             cy.get('.sidebar-title strong')
