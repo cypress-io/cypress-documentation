@@ -124,6 +124,21 @@ Resource |  Description
 {% url "Slides" https://slides.com/bahmutov/visual-testing-with-percy %} | The companion slides for the Cypress + Percy webinar
 {% url "Blog" https://glebbahmutov.com/blog/testing-visually/ %} | Testing how an application renders a drawing with Cypress and Percy
 
+## Happo
+
+<!-- textlint-disable -->
+{% video youtube C_p12IvN5HU %}
+<!-- textlint-enable -->
+
+{% fa fa-external-link %} {% url "https://happo.io/" https://happo.io/ %}
+
+Resource |  Description
+------- |  ----
+{% url 'Official docs' https://docs.happo.io/docs/cypress %} | Happo's Cypress documentation
+{% url "Webinar" https://www.youtube.com/watch?v=C_p12IvN5HU %} | *Keep your UI Sharp: Ensuring Functional and Visual Quality with Cypress.io + Happo.io*, a webinar recorded together with Cypress and Happo
+{% url "Blog" https://www.cypress.io/blog/2020/05/27/webcast-recording-keep-your-ui-sharp/ %} | The companion blog for the Cypress + Happo webinar
+{% url "Slides" https://cypress.slides.com/cypress-io/cypress-and-happo %} | The companion slides for the Cypress + Happo webinar
+
 ## Do It Yourself
 
 Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow the example {% url "Visual Regression testing with Cypress and cypress-image-snapshot" https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595 %} tutorial and do it all yourself.
