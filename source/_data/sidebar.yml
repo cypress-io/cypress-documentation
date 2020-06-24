@@ -30,6 +30,7 @@ guides:
     network-requests: network-requests.html
     continuous-integration: continuous-integration.html
     parallelization: parallelization.html
+    test-retries: test-retries.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     screenshots-and-videos: screenshots-and-videos.html

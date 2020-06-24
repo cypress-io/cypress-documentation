@@ -52,6 +52,7 @@ sidebar:
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
+    test-retries: Test Retries
     cross-browser-testing: Cross Browser Testing
     custom-commands: Custom Commands
     web-security: Web Security
