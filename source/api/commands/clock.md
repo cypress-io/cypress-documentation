@@ -65,23 +65,6 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 # Examples
 
-## Restore clock
-
-You can restore the clock
-
-```javascript
-cy.clock()
-cy.visit('/index.html')
-cy.tick(1000)
-...
-// restore the clock
-cy.clock().then(clock => {
-  clock.restore()
-})
-// or use this shortcut
-cy.clock().invoke('restore')
-```
-
 ## No Args
 
 ### Create a clock and use it to trigger a `setInterval`
@@ -192,6 +175,30 @@ cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 {% note info %}
 {% url 'Check out our example recipe testing spying, stubbing and time.' recipes#Stubbing-and-spying %}
 {% endnote %}
+
+## Restore clock
+
+You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
+// more test code here
+
+// restore the clock
+cy.clock().then((clock) => {
+  clock.restore()
+})
+// more test code here
+```
+
+You could also restore by using {% url "`.invoke()` invoke %}  to invoke the `restore` function.
+
+```js
+cy.clock().invoke('restore')
+```
 
 # Notes
 
