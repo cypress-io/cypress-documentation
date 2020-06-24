@@ -236,6 +236,7 @@
       description: Mobile testing helper for Cypress
       link: https://gitlab.com/nTopus/cy-mobile-commands#readme
       keywords: [mobile, swipe, touch, commands]
+      badge: community
 
     - name: cypress-pipe
       description: Create custom commands using plain-old functions. Similar to `cy.then` but with retriability.
