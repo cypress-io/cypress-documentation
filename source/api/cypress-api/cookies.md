@@ -85,7 +85,7 @@ There are *likely* better ways to do this, but this isn't well documented at the
 
 ```javascript
 describe('Dashboard', () => {
-  before () => {
+  before(() => {
     // log in only once before any of the tests run.
     // your app will likely set some sort of session cookie.
     // you'll need to know the name of the cookie(s), which you can find
@@ -93,7 +93,7 @@ describe('Dashboard', () => {
     cy.login()
   })
 
-  beforeEach () => {
+  beforeEach(() => {
     // before each test, we can automatically preserve the
     // 'session_id' and 'remember_token' cookies. this means they
     // will not be cleared before the NEXT test starts.
