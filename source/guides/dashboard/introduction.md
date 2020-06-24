@@ -3,6 +3,10 @@ title: Introduction
 ---
 The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
 
+<!-- textlint-disable -->
+{% video youtube ezp60FUnjGg %}
+<!-- textlint-enable -->
+
 # Features
 
 ## Organize projects

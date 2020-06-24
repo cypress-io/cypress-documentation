@@ -244,20 +244,20 @@ describe('test against Spanish site', {
 
 ```js
 // change environment variable for single test
-it('smoke test develop api', (), {
+it('smoke test develop api', {
   env: {
     api: 'https://dev.myapi.com'
   }
-} => {
+}, () => {
   cy.request(Cypress.env('api')).its('status').should('eq', 200)
 })
 
 // change environment variable for single test
-it('smoke test staging api', (), {
+it('smoke test staging api', {
   env: {
     api: 'https://staging.myapi.com'
   }
-} => {
+}, () => {
   cy.request(Cypress.env('api')).its('status').should('eq', 200)
 })
 ```
@@ -292,5 +292,5 @@ You can {% url 'read more about how environment variables can change configurati
 
 - {% url "`Cypress.env()`" env %}
 - {% url "Configuration API" configuration-api %}
-- {% url "Environment Variables recipe" recipes#Server-Communication %}
+- {% url "Environment Variables recipe" recipes#Fundamentals %}
 - {% url "Test Configuration" configuration#Test-Configuration %}

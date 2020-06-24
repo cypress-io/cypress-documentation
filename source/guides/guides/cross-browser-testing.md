@@ -192,7 +192,7 @@ You can specify a browser to run or exclude by passing a matcher to the suite or
 
 ```js
 // Run the test if Cypress is run via Firefox
-it('Download extension in Firefox', { browser: 'firefox' } => {
+it('Download extension in Firefox', { browser: 'firefox' }, () => {
   cy.get('#dl-extension')
     .should('contain', 'Download Firefox Extension')
 })
@@ -206,7 +206,7 @@ describe('happy path suite', { browser: 'firefox' }, () => {
 
 // Ignore test if Cypress is running via Chrome
 // This test is not recorded to the Cypress Dashboard
-it('Show warning outside Chrome', (), {  browser: '!chrome' } => {
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
   cy.get('.browser-warning')
     .should('contain', 'For optimal viewing, use Chrome browser')
 })

@@ -293,9 +293,9 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-### Whitelisted config values
+### Allowed config values
 
-{% partial test_config_whitelist %}
+{% partial allowed_test_config %}
 
 ### Suite of test configuration
 
@@ -321,7 +321,7 @@ describe('page display on medium size screen', {
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
 
 ```js
-it('Show warning outside Chrome', {  browser: '!chrome' } => {
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
   cy.get('.browser-warning')
     .should('contain', 'For optimal viewing, use Chrome browser')
 })
