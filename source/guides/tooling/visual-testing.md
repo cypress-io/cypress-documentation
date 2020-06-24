@@ -141,7 +141,10 @@ Resource |  Description
 
 ## Do It Yourself
 
-Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow the example {% url "Visual Regression testing with Cypress and cypress-image-snapshot" https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595 %} tutorial and do it all yourself.
+Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow these examples
+
+- {% url "Visual Regression testing with Cypress and cypress-image-snapshot" https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595 %} tutorial.
+- {% url "Visual testing for React components using open source tools" https://glebbahmutov.com/blog/open-source-visual-testing-of-components/ %} with companion {% url videos https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ %}.
 
 {% note warning %}
 You will want to consider the development costs of implementing a visual testing tool yourself versus using an external 3rd party provider. Storing, reviewing and analyzing image differences are non-trivial tasks and they can quickly become a chore when going with a DIY solution.
@@ -238,6 +241,8 @@ Targeting specific DOM element will help avoid visual changes from component "X"
 {% note success %}
 {% fa fa-check-circle green %} **Best Practice:** Use {% url "Component Testing plugins" plugins %} to test the individual components functionality in addition to end-to-end and visual tests.
 {% endnote %}
+
+If you are working on React components, read {% url "Visual testing for React components using open source tools" https://glebbahmutov.com/blog/open-source-visual-testing-of-components/ %}, browse {% url slides https://slides.com/bahmutov/i-see-what-is-going-on %}, and watch the {% url 'companion videos' https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ %}.
 
 # See also
 
