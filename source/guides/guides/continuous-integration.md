@@ -717,6 +717,7 @@ module.exports = (on, config) => {
   })
 }
 ```
+
 ## Xvfb
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.

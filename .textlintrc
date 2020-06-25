@@ -86,6 +86,8 @@
         ["craziest", "most complex"],
         ["dumb", "unintended"],
         ["insane", "outrageous"],
+        ["blacklist", "blocklist"],
+        ["whitelist", "allow"],
 
         // Prefer American spelling
         ["behaviour", "behavior"],
