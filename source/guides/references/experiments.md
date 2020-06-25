@@ -15,6 +15,7 @@ You can pass the {% url "configuration" configuration %} options below to enable
 Option | Default | Description
 ----- | ---- | ----
 `experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See {% urlHash "Component Testing" Component-Testing %} for more detail.
+`experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub.
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 `experimentalShadowDomSupport` | `false` | Enables shadow DOM support. Adds the `cy.shadow()` command and the `includeShadowDom` option to some DOM commands. See {% urlHash "Shadow DOM" Shadow-DOM %} for more detail.
 

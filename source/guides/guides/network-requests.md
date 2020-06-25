@@ -118,7 +118,7 @@ Cypress automatically indicates when an XHR request happens in your application.
 
 {% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
 
-By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
+By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default filtering in the {% url '`cy.server()` options' server#Options %}.
 
 Cypress automatically collects the request `headers` and the request `body` and will make this available to you.
 
