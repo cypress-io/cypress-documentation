@@ -17,6 +17,7 @@ First we'll test our "Login Page", refactor, and then create a {% url "Custom Co
 
 Learn how to use Cypress to solve specific testing problems from the videos in the playlists below.
 
+- {% url "Official Cypress.io Youtube Channel" https://www.youtube.com/cypress_io %}
 - {% url "Cypress.io - end-to-end Testing Framework" https://www.youtube.com/playlist?list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0 %} by {% url "Bushra Alam" https://twitter.com/imBushraAlam %}
 - {% url "Cypress Tips & Tricks" https://www.youtube.com/playlist?list=PLP9o9QNnQuAYYRpJzDNWpeuOVTwxmIxcI %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
 - {% url "Cypress Component Testing for Svelte" https://www.youtube.com/playlist?list=PLP9o9QNnQuAa50lwW3cUql5sgdKIWkapp %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
