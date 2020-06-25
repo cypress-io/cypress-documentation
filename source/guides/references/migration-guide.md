@@ -2,9 +2,85 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 5.0
+
+This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
+
+## `blacklistHosts` configuration renamed
+
+The {% url "`blacklistHosts`" configuration#Notes %} configuration has been renamed to `blocklistHosts` to more closely reflect its behavior.
+
+This should be updated in all places where Cypress configuration can be set including the via the configuration file (`cypress.json` by default), command line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
+
+{% badge danger Before %} `blacklistHosts` configuration in `cypress.json`
+
+```json
+{
+  "blacklistHosts": "www.google-analytics.com"
+}
+```
+
+{% badge success After %} `blocklistHosts` configuration in `cypress.json`
+
+```json
+{
+  "blocklistHosts": "www.google-analytics.com"
+}
+```
+
+## Cookies `whitelist` option renamed
+
+The {% url "`Cypress.Cookies.defaults()`" cookies %} `whitelist` option has been renamed to `preserve` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+Cypress.Cookies.defaults({
+  whitelist: 'session_id'
+})
+```
+
+{% badge success After %} `preserve` option
+
+```js
+Cypress.Cookies.defaults({
+  preserve: 'session_id'
+})
+```
+
+## `cy.server()` `whitelist` option renamed
+
+The {% url "`cy.server()`" server %} `whitelist` option has been renamed to `ignore` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+cy.server({
+  whitelist: (xhr) => {
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  }
+})
+```
+
+{% badge success After %} `ignore` option
+
+```js
+cy.server({
+  ignore: (xhr) => {
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  }
+})
+```
+
+## Node.js 10+ support
+
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 8 reached its end of life on Dev 31, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. This Node.js version will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10.
+
 # Migrating to Cypress 4.0
 
-This guide details the changes and how to change your code to migrate to Cypress 4.0.
+This guide details the changes and how to change your code to migrate to Cypress 4.0. {% url "See the full changelog for 4.0" changelog#4-0-0 %}.
 
 ## Mocha upgrade
 
