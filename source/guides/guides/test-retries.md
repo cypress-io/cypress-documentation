@@ -12,7 +12,7 @@ title: Test Retries
 
 ## Introduction
 
-A scenario that often comes up when running end-to-end (E2E) tests is that tests may be unintentionally flaky (i.e., unreliable) and fail intermittently. For example, because E2E tests often involves multiple integrations, it is not uncommon to have services that have intermittent outages. Some other common race conditions that could result in unreliable tests include:
+End-to-end (E2E) tests excel at testing complex systems. However, there are still behaviors that are difficult to verify and make tests unintentionally flaky (i.e., unreliable) and fail intermittently due to unpredictable conditions (eg., temporary outages in external dependencies, random network errors, etc.)  Some other common race conditions that could result in unreliable tests include:
 
 - Animations
 - API calls
@@ -20,18 +20,16 @@ A scenario that often comes up when running end-to-end (E2E) tests is that tests
 - Resource dependencies availability
 - Network issues
 
-Just like an average user, if they run into an error when loading your application, you would want them to refresh and try again before submitting a bug report. However, without test retries, this often resulted in random failed tests and broken continuous integration (CI) build fails which are a waste of resources. As a result, rather than fail the entire test run, Cypress 5.0 introduces native test retries.
+With the new test retries feature, Cypress (5.0+) will be able to retry failed tests to help reduce test flakiness and continuous integration (CI) build failures. By doing so, this will save your team valuable time and resources so you can focus on what matters most to you.
 
 ## How It Works
 
-By default, tests being run in `cypress run` mode will automatically be retried up to two additional times (for a total of three attempts) before being marked as a failed test. When each test is run again, the following lifecycle hooks will be re-run on each attempt:
+As of Cypress 5.0, test retries are on by default in `cypress run` mode. This means that tests will automatically be re-run up to two additional times (for a total of three attempts) before being marked as a failed test. When each test is run again, the following lifecycle hooks will be re-run on each attempt:
 
-- `before`
 - `beforeEach`
 - `afterEach`
-- `after`
 
-The following is a detailed step-by-step example of how test retries will work by default:
+The following is a detailed step-by-step example of how test retries will work:
 
 1. A test runs for the first time. If it passes, Cypress will move forward with any remaining tests as expected.
 
@@ -45,7 +43,7 @@ The following is a detailed step-by-step example of how test retries will work b
 
     🖼 Insert screenshot
 
-4. If it fails a second time, it will make the final third attempt to re-run the test
+4. If it fails a second time, it will make the final third attempt to re-run the test.
 
     🖼 Insert screenshot
 
@@ -55,7 +53,7 @@ The following is a detailed step-by-step example of how test retries will work b
 
 The following is a screen capture of what test retries looks like on a failed test.
 
-    🖼 Insert screenshot
+    🖼 Insert screenshot for CLI and UI
 
 In addition, you will be able to see the number of attempts made in the Command Log and expand each attempt for further inspection and debugging if desired.
 
@@ -68,9 +66,7 @@ Starting with Cypress 5.0, if any tests fail, they will be automatically:
 - Retried up to two times (for a total of three attempts) in `cypress run` mode
 - Run normally with no retries in `cypress open` mode
 
-The reason for this distinction is to avoid adding unnecessary 
-
- retried up to two times (for a total of three attempts) in  with no additional configuration needed. When developing locally with Cypress' Open Mode, test retries is disabled by default to prevent blocking developers with unnecessary retries.
+The reason for this distinction is to avoid wasting developer time by preventing unnecessary runs while a test is being worked on.
 
 If you need more information on how to migrate to 5.x, please see our official migration guide here.
 
@@ -83,6 +79,18 @@ If you need to change the number of attempts being made across your entire test 
   "retries": 1
 }
 ```
+
+#### Disable Test Retries
+
+If you would like to disable test retries, you can use the global configuration to do so by setting it to 0.
+
+```jsx
+{
+  "retries": 1
+}
+```
+
+#### Configuring Specific Retries for Different Modes
 
 However, in the event you need to define unique retry attempts for the different modes of Cypress, you can pass the `retries` option an object with the following options:
 
