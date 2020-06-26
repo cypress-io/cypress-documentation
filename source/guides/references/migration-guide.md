@@ -8,7 +8,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## `blacklistHosts` configuration renamed
 
-The {% url "`blacklistHosts`" configuration#Notes %} configuration has been renamed to `blocklistHosts` to more closely reflect its behavior.
+The `blacklistHosts` configuration has been renamed to {% url "`blockHosts`" configuration#Notes %} to more closely reflect its behavior.
 
 This should be updated in all places where Cypress configuration can be set including the via the configuration file (`cypress.json` by default), command line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
 
@@ -20,11 +20,11 @@ This should be updated in all places where Cypress configuration can be set incl
 }
 ```
 
-{% badge success After %} `blocklistHosts` configuration in `cypress.json`
+{% badge success After %} `blockHosts` configuration in `cypress.json`
 
 ```json
 {
-  "blocklistHosts": "www.google-analytics.com"
+  "blockHosts": "www.google-analytics.com"
 }
 ```
 
