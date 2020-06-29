@@ -86,7 +86,7 @@ If you would like to disable test retries, you can use the global configuration 
 
 ```jsx
 {
-  "retries": 1
+  "retries": 0
 }
 ```
 
@@ -190,4 +190,3 @@ Cypress triggers Firefox's internal garbage collection (GC) to better manage the
 Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.
 
 {% imgTag /img/guides/cross-browser-testing/cypress-browser-selector.png "Cypress Test Runner with Firefox selected as the browser" "no-border" %}
-
