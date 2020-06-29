@@ -111,7 +111,40 @@ cypress.run({
 
 Find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
 
+### Handling errors
+
 Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find  a module dependency. In that case, the `Promise` will be rejected with a detailed error.
+
+There is a third option - Cypress could run, but the tests could not start for some reason. In that case the resolved value is an object with two fields
+
+```js
+{
+  "failures": 1, // non-zero number
+  "message": "..." // error message
+}
+```
+
+Thus the typical Cypress use should be:
+
+```js
+const cypress = require('cypress')
+cypress.run({...})
+.then(result => {
+  if (result.failures) {
+    console.error('Could not execute tests')
+    console.error(result.message)
+    process.exit(result.failures)
+  }
+
+  // print test results and exit
+  // with the number of failed tests as exit code
+  process.exit(result.totalFailed)
+})
+.catch(err => {
+  console.error(err.message)
+  process.exit(1)
+})
+```
 
 ## `cypress.open()`
 
