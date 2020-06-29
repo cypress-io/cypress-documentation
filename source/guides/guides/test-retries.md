@@ -171,6 +171,10 @@ With test retries, Cypress will now generate any screenshots and videos per each
 'User Sign-up and Login -- should display login errors (failed) (attempt 3).png'
 ```
 
+## Dashboard
+
+If you are using {% url "Cypress Dashboard" dashboard %}, test retries will not change your current experience at this time. However, if you are interested in future enhancements coming to the Dashboard experience, be sure to check out our {% url "product roadmap" https://cypress-io.productboard.com/roadmap/1238172-product-roadmap %}.
+
 ## Tips and Strategies
 
 While test retries are great for helping to avoid false negatives from failing an entire test run, it is not a good replacement for writing good tests. As a result, here are some tips and strategies to keep in mind in order to maximize the effectiveness of your tests with test retries:
