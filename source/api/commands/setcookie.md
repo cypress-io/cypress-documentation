@@ -55,7 +55,7 @@ Option | Default | Description
 - `httpOnly`
 - `secure`
 - `expiry`
-- `sameSite` *(will only be returned if the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`)*
+- `sameSite`
 
 # Examples
 
@@ -100,6 +100,7 @@ When clicking on `setCookie` within the command log, the console outputs the fol
 {% imgTag /img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png "Console Log setcookie" %}
 
 {% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
 {% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`.
 {% url "0.16.0" changelog#0-16-0 %} | `cy.setCookie()` command added
 {% endhistory %}
