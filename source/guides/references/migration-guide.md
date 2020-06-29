@@ -6,6 +6,95 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
 
+## Tests retry by default
+
+Test retries are on by default when running via {% url "`cypress run`" command-line#cypress-run %} in Cypress 5.0. 
+
+This means that tests will automatically be re-run up to 2 additional times (for a total of 3 attempts) before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works.
+
+Additionally, the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. You can safely remove any code requiring this plugin.
+
+### Configure test retries via the CLI
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via env vars
+
+```shell
+CYPRESS_RETRIES=2 cypress run
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via via env vars
+
+```shell
+CYPRESS_RETRIES=2 cypress run
+```
+
+### Configure test retries in the configuration file
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via configuration
+
+```json
+{
+  "env":
+  {
+    "RETRIES": 2
+  }
+}
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via configuration
+
+```json
+{
+  "retries": 1
+}
+```
+
+- `runMode` allows you to define the number of test retries when running `cypress run`
+- `openMode` allows you to define the number of test retries when running `cypress open`
+
+```json
+{
+  "retries": {
+    "runMode": 1,
+    "openMode": 3
+  }
+}
+```
+
+### Configure test retries per test
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via the test
+
+```js
+it('test', () => {
+  Cypress.currentTest.retries(2)
+})
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via test options
+
+```js
+it('allows user to login', {
+  retries: 2
+}, () => {
+  // ...
+})
+```
+
+- `runMode` allows you to define the number of test retries when running `cypress run`
+- `openMode` allows you to define the number of test retries when running `cypress open`
+
+```js
+it('allows user to login', {
+  retries: {
+    runMode: 2,
+    openMode: 3
+  }
+}, () => {
+  // ...
+})
+```
+
 ## Cookies `whitelist` option renamed
 
 The {% url "`Cypress.Cookies.defaults()`" cookies %} `whitelist` option has been renamed to `preserve` to more closely reflect its behavior.
