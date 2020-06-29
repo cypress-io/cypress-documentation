@@ -172,7 +172,6 @@ With test retries, Cypress will now generate any screenshots and videos per each
 While test retries are great for helping to avoid false negatives from failing an entire test run, it is not a good replacement for writing good tests. As a result, here are some tips and strategies to keep in mind in order to maximize the effectiveness of your tests with test retries:
 
 - If you are noticing that you need to increase the number of retries, the cause is more likely due to how the tests are written and is worth spending the time to investigate.
-- If you use `Run all specs` a lot in `cypress open` mode, make sure to configure your Cypress instance to have a global `retries` of `2` so you can simulate what is being run in `cypress run` mode.
 
 ## Frequently Asked Questions (FAQs)
 
