@@ -33,31 +33,27 @@ The following is a detailed step-by-step example of how test retries will work:
 
 1. A test runs for the first time. If the test passes, Cypress will move forward with any remaining tests as expected.
 
-    🖼 Insert screenshot
-
 2. If the test fails, Cypress will inform you that the first attempt failed and will attempt to run the test a second time.
 
-    🖼 Insert screenshot
+{% img /img/guides/test-retries/attempt-2-start.png %}
 
 3. If the test passes after the second try, Cypress will continue with any remaining tests.
 
-    🖼 Insert screenshot
-
 4. If it fails a second time, it will make the final third attempt to re-run the test.
 
-    🖼 Insert screenshot
+{% img /img/guides/test-retries/attempt-3-start.png %}
 
 5. If the test fails a third time, Cypress will mark the test as failed and then proceed with any remaining tests.
 
-    🖼 Insert screenshot
+{% img /img/guides/test-retries/attempt-3-fail.png %}
 
-The following is a screen capture of what test retries looks like on a failed test.
+The following is a screen capture of what test retries looks like on the same failed test when running `cypress run`.
 
-    🖼 Insert screenshot for CLI and UI
+{% img /img/guides/test-retries/cli-error-message.png %}
 
 In addition, you will be able to see the number of attempts made in the Command Log and expand each attempt for further inspection and debugging if desired.
 
-    🖼 Insert screenshot
+{% video local /img/guides/test-retries/attempt-expand-collapse-time-travel.mp4 %}
 
 ## Configuring Test Retries
 
@@ -124,7 +120,7 @@ describe('User sign-up and login', () => {
   })
 
   // `it` test block with custom configuration
-  it('allows user to login', { 
+  it('allows user to login', {
     retries: {
       runMode: 3,
       openMode: 2
@@ -165,7 +161,15 @@ You can find more information about custom configurations here: {% url "Test Con
 
 With test retries, Cypress will now generate any screenshots and videos per each test attempt. These will be properly labeled with the attempt number appended at the end of each filename.
 
-    🖼 Insert screenshot
+```js
+// Example file names
+'User Sign-up and Login -- should display login errors.png'
+'User Sign-up and Login -- should display login errors (failed).png'
+'User Sign-up and Login -- should display login errors (attempt 2).png'
+'User Sign-up and Login -- should display login errors (failed) (attempt 2).png'
+'User Sign-up and Login -- should display login errors (attempt 3).png'
+'User Sign-up and Login -- should display login errors (failed) (attempt 3).png'
+```
 
 ## Tips and Strategies
 
@@ -175,19 +179,10 @@ While test retries are great for helping to avoid false negatives from failing a
 
 ## Frequently Asked Questions (FAQs)
 
-#### Will tests that retry be counted as more than one test recording in my billing?
+### Will retried tests be counted as more than one test recording in my billing?
 
 No. Tests recorded during `cypress run` with the `--record` flag will be counted the same with or without test retries.
 
 We consider each time the `it()` function is called to be a single test for billing purposes. The test retrying will not count as extra test recordings in your billing.
 
 You can always see how many tests you’ve recorded from your organization’s Billing & Usage page within the {% url "Dashboard" https://on.cypress.io/dashboard %}.
-
-
-{% note warning 'Firefox Garbage Collection' %}
-Cypress triggers Firefox's internal garbage collection (GC) to better manage the browser's memory consumption. {% url "Learn more here" configuration#firefoxGcInterval %}.
-{% endnote %}
-
-Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.
-
-{% imgTag /img/guides/cross-browser-testing/cypress-browser-selector.png "Cypress Test Runner with Firefox selected as the browser" "no-border" %}
