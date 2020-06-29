@@ -113,14 +113,14 @@ However, in the event you need to define unique retry attempts for the different
 
 #### Individual Test(s)
 
-In the event a specific test requires a custom number of test retries configured, this can be achieved by using the test's local configuration option.
+In the event a specific test requires a custom number of test retries configured, this can be achieved by using the test's configuration option.
 
 ```jsx
 // Customizing retries for an individual test
 describe('User sign-up and login', () => {
   // `it` test block with no custom configuration
   it('should redirect unauthenticated user to sign-in page', () => {
-    ...
+    // ...
   })
 
   // `it` test block with custom configuration
@@ -130,15 +130,14 @@ describe('User sign-up and login', () => {
       openMode: 2
     }
   }, () => {
-    ...
+    // ...
   })
 })
-
 ```
 
 #### Test Suite(s)
 
-If you want a suite of tests to re-run in requires a custom number of test retries configured, this can be achieved by using the test's local configuration option
+If you want a suite of tests to re-run a custom number of times, this can be achieved by using the suite's configuration option.
 
 ```jsx
 // Customizing retries for a suite of tests
@@ -150,11 +149,11 @@ describe('User bank accounts', {
 }, () => {
   // Individual tests will be run normally
   it('allows a user to view their transactions, () => {
-    ...
+    // ...
   }
 
   it('allows a user to edit their transactions, () => {
-    ...
+    // ...
   }
 })
 
@@ -162,9 +161,9 @@ describe('User bank accounts', {
 
 You can find more information about custom configurations here: {% url "Test Configuration" configuration#Test-Configuration %}
 
-## Assets
+## Screenshots and Videos
 
-With test retries, Cypress will now generate any assets (i.e., screenshots, video recordings, etc.) per each test attempt. The assets will be properly labeled with the attempt number appended at the end of each asset.
+With test retries, Cypress will now generate any screenshots and videos per each test attempt. These will be properly labeled with the attempt number appended at the end of each filename.
 
     🖼 Insert screenshot
 
@@ -172,14 +171,18 @@ With test retries, Cypress will now generate any assets (i.e., screenshots, vide
 
 While test retries are great for helping to avoid false negatives from failing an entire test run, it is not a good replacement for writing good tests. As a result, here are some tips and strategies to keep in mind in order to maximize the effectiveness of your tests with test retries:
 
-- If you are noticing that you need to increase the number of retries, this cause is more likely due to how the tests are written and is worth spending the time to investigate
+- If you are noticing that you need to increase the number of retries, the cause is more likely due to how the tests are written and is worth spending the time to investigate.
 - If you use `Run all specs` a lot in `cypress open` mode, make sure to configure your Cypress instance to have a global `retries` of `2` so you can simulate what is being run in `cypress run` mode.
 
 ## Frequently Asked Questions (FAQs)
 
-#### Will runs with test retries be counted as more than one run?
+#### Will tests that retry be counted as more than one test recording in my billing?
 
-No. When recording to the Cypress Dashboard, runs with test retries will be counted as a single run.
+No. Tests recorded during `cypress run` with the `--record` flag will be counted the same with or without test retries.
+
+We consider each time the `it()` function is called to be a single test for billing purposes. The test retrying will not count as extra test recordings in your billing.
+
+You can always see how many tests you’ve recorded from your organization’s Billing & Usage page within the {% url "Dashboard" https://on.cypress.io/dashboard %}.
 
 
 {% note warning 'Firefox Garbage Collection' %}
