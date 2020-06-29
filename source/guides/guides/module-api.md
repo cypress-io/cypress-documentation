@@ -146,6 +146,28 @@ cypress.run({...})
 })
 ```
 
+## `cypress.cli`
+
+### `cypress.cli.parseRunArguments()`
+
+If you are writing a tool that wraps about Cypress `run` command, you might need to parse user-supplied command line using the same logic as `cypress run` uses. In that case, use the included function that exposes the logic.
+
+```javascript
+// wrapper.js
+const cypress = require('cypress')
+const runOptions = await cypress.cli.parseRunArguments(process.argv.slice(2))
+const results = await cypress.run(runOptions)
+// process the "cypress.run()" results
+```
+
+Typical use could be:
+
+```shell
+$ node ./wrapper cypress run --browser chrome --config ...
+```
+
+**Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
+
 ## `cypress.open()`
 
 ### Options
