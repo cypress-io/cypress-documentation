@@ -6,6 +6,26 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
 
+## Cookies `whitelist` option renamed
+
+The {% url "`Cypress.Cookies.defaults()`" cookies %} `whitelist` option has been renamed to `preserve` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+Cypress.Cookies.defaults({
+  whitelist: 'session_id'
+})
+```
+
+{% badge success After %} `preserve` option
+
+```js
+Cypress.Cookies.defaults({
+  preserve: 'session_id'
+})
+```
+
 ## `blacklistHosts` configuration renamed
 
 The `blacklistHosts` configuration has been renamed to {% url "`blockHosts`" configuration#Notes %} to more closely reflect its behavior.
@@ -28,24 +48,27 @@ This should be updated in all places where Cypress configuration can be set incl
 }
 ```
 
-## Cookies `whitelist` option renamed
+## Return type of `Cypress.Blob` changed
 
-The {% url "`Cypress.Cookies.defaults()`" cookies %} `whitelist` option has been renamed to `preserve` to more closely reflect its behavior.
+We updated the {% url 'Blob' https://github.com/nolanlawson/blob-util %} library used behind {% url "`Cypress.Blob`" blob %} from `1.3.3` to `2.0.2`.
 
-{% badge danger Before %} `whitelist` option
+The return type of the {% url "`Cypress.Blob`" blob %} methods `arrayBufferToBlob`, `base64StringToBlob`, `binaryStringToBlob`, and `dataURLToBlob` have changed from `Promise<Blob>` to `Blob`.
+
+{% badge danger Before %} `Cypress.Blob` methods returned a Promise
 
 ```js
-Cypress.Cookies.defaults({
-  whitelist: 'session_id'
+Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+.then((blob) => {
+  // work with the returned blob
 })
 ```
 
-{% badge success After %} `preserve` option
+{% badge success After %} `Cypress.Blob` methods return a Blob
 
 ```js
-Cypress.Cookies.defaults({
-  preserve: 'session_id'
-})
+const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+
+// work with the returned blob
 ```
 
 ## `cy.server()` `whitelist` option renamed
