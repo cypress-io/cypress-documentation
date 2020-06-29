@@ -31,15 +31,15 @@ As of Cypress 5.0, test retries are on by default in `cypress run` mode. This me
 
 The following is a detailed step-by-step example of how test retries will work:
 
-1. A test runs for the first time. If it passes, Cypress will move forward with any remaining tests as expected.
+1. A test runs for the first time. If the test passes, Cypress will move forward with any remaining tests as expected.
 
     🖼 Insert screenshot
 
-2. If the test fails, it will inform users that the first attempt failed and it will attempt to run the test a second time.
+2. If the test fails, Cypress will inform you that the first attempt failed and will attempt to run the test a second time.
 
     🖼 Insert screenshot
 
-3. If the test succeed after the second try, Cypress will continue with any remaining tests.
+3. If the test passes after the second try, Cypress will continue with any remaining tests.
 
     🖼 Insert screenshot
 
@@ -47,7 +47,7 @@ The following is a detailed step-by-step example of how test retries will work:
 
     🖼 Insert screenshot
 
-5. If it fails a third time, Cypress will make the test as failed and then proceed with any remaining tests.
+5. If the test fails a third time, Cypress will mark the test as failed and then proceed with any remaining tests.
 
     🖼 Insert screenshot
 
@@ -61,18 +61,17 @@ In addition, you will be able to see the number of attempts made in the Command 
 
 ## Configuring Test Retries
 
-Starting with Cypress 5.0, if any tests fail, they will be automatically:
+If any tests fail, they will be automatically:
 
-- Retried up to two times (for a total of three attempts) in `cypress run` mode
+- Retried up to 2 times (for a total of 3 attempts) in `cypress run` mode
 - Run normally with no retries in `cypress open` mode
 
 The reason for this distinction is to avoid wasting developer time by preventing unnecessary runs while a test is being worked on.
 
-If you need more information on how to migrate to 5.x, please see our official migration guide here.
 
 ### Global Configuration
 
-If you need to change the number of attempts being made across your entire test suite for both `cypress run` and `cypress open`, you can configure this in your `cypress.json` by defining the `retries` property and giving it the desired number.
+If you need to change the number of attempts being made across your entire test suite for both `cypress run` and `cypress open`, you can configure this in your {% url "configuration file" command-line#cypress-open-config-file-lt-config-file-gt %} (`cypress.json` by default) by defining the `retries` property and giving it the desired number.
 
 ```jsx
 {
