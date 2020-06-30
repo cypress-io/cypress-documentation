@@ -420,7 +420,7 @@ You can preserve specific cookies across tests using the {% url "Cypress.Cookies
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: 'session_id'
+  preserve: 'session_id'
 })
 ```
 
