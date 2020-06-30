@@ -84,9 +84,9 @@ module.exports = (on, config) => {
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
-    // supply the path to an unpacked WebExtension
+    // supply the absolute path to an unpacked extension's folder
     // NOTE: extensions cannot be loaded in headless Chrome
-    launchOptions.extensions.push('/path/to/webextension')
+    launchOptions.extensions.push('Users/jane/path/to/extension')
 
     return launchOptions
   })

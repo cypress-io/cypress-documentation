@@ -2,9 +2,246 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 5.0
+
+This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
+
+## Tests retry by default
+
+Test retries are on by default when running via {% url "`cypress run`" command-line#cypress-run %} in Cypress 5.0. 
+
+This means that tests will automatically be re-run up to 2 additional times (for a total of 3 attempts) before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works.
+
+Additionally, the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. You can safely remove any code requiring this plugin.
+
+### Configure test retries via the CLI
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via env vars
+
+```shell
+CYPRESS_RETRIES=2 cypress run
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via via env vars
+
+```shell
+CYPRESS_RETRIES=2 cypress run
+```
+
+### Configure test retries in the configuration file
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via configuration
+
+```json
+{
+  "env":
+  {
+    "RETRIES": 2
+  }
+}
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via configuration
+
+```json
+{
+  "retries": 1
+}
+```
+
+- `runMode` allows you to define the number of test retries when running `cypress run`
+- `openMode` allows you to define the number of test retries when running `cypress open`
+
+```json
+{
+  "retries": {
+    "runMode": 1,
+    "openMode": 3
+  }
+}
+```
+
+### Configure test retries per test
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via the test
+
+```js
+it('test', () => {
+  Cypress.currentTest.retries(2)
+})
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via test options
+
+```js
+it('allows user to login', {
+  retries: 2
+}, () => {
+  // ...
+})
+```
+
+- `runMode` allows you to define the number of test retries when running `cypress run`
+- `openMode` allows you to define the number of test retries when running `cypress open`
+
+```js
+it('allows user to login', {
+  retries: {
+    runMode: 2,
+    openMode: 3
+  }
+}, () => {
+  // ...
+})
+```
+
+## Cookies `whitelist` option renamed
+
+The {% url "`Cypress.Cookies.defaults()`" cookies %} `whitelist` option has been renamed to `preserve` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+Cypress.Cookies.defaults({
+  whitelist: 'session_id'
+})
+```
+
+{% badge success After %} `preserve` option
+
+```js
+Cypress.Cookies.defaults({
+  preserve: 'session_id'
+})
+```
+
+## `blacklistHosts` configuration renamed
+
+The `blacklistHosts` configuration has been renamed to {% url "`blockHosts`" configuration#Notes %} to more closely reflect its behavior.
+
+This should be updated in all places where Cypress configuration can be set including the via the configuration file (`cypress.json` by default), command line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
+
+{% badge danger Before %} `blacklistHosts` configuration in `cypress.json`
+
+```json
+{
+  "blacklistHosts": "www.google-analytics.com"
+}
+```
+
+{% badge success After %} `blockHosts` configuration in `cypress.json`
+
+```json
+{
+  "blockHosts": "www.google-analytics.com"
+}
+```
+
+## Return type of `Cypress.Blob` changed
+
+We updated the {% url 'Blob' https://github.com/nolanlawson/blob-util %} library used behind {% url "`Cypress.Blob`" blob %} from `1.3.3` to `2.0.2`.
+
+The return type of the {% url "`Cypress.Blob`" blob %} methods `arrayBufferToBlob`, `base64StringToBlob`, `binaryStringToBlob`, and `dataURLToBlob` have changed from `Promise<Blob>` to `Blob`.
+
+{% badge danger Before %} `Cypress.Blob` methods returned a Promise
+
+```js
+Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+.then((blob) => {
+  // work with the returned blob
+})
+```
+
+{% badge success After %} `Cypress.Blob` methods return a Blob
+
+```js
+const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+
+// work with the returned blob
+```
+
+## `cy.server()` `whitelist` option renamed
+
+The {% url "`cy.server()`" server %} `whitelist` option has been renamed to `ignore` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+cy.server({
+  whitelist: (xhr) => {
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  }
+})
+```
+
+{% badge success After %} `ignore` option
+
+```js
+cy.server({
+  ignore: (xhr) => {
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  }
+})
+```
+
+## Cookies `sameSite` property
+
+Values yielded by {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %} will now contain the `sameSite` property if specified.
+
+If you were using the `experimentalGetCookiesSameSite` configuration to get the `sameSite` property previously, this should be removed.
+
+{% badge danger Before %} Cookies yielded before had no `sameSite` property.
+
+```js
+cy.getCookie('token').then((cookie) => {
+  // cy.getCookie() yields a cookie object
+  // {
+  //   domain: "localhost",
+  //   expiry: 1593551644,
+  //   httpOnly: false,
+  //   name: "token",
+  //   path: "/commands",
+  //   secure: false,
+  //   value: "123ABC"
+  // }
+})
+```
+
+{% badge success After %} Cookies yielded now have `sameSite` property if specified.
+
+```js
+cy.getCookie('token').then((cookie) => {
+  // cy.getCookie() yields a cookie object
+  // {
+  //   domain: "localhost",
+  //   expiry: 1593551644,
+  //   httpOnly: false,
+  //   name: "token",
+  //   path: "/commands",
+  //   sameSite: "strict",
+  //   secure: false,
+  //   value: "123ABC"
+  // }
+})
+```
+
+## Linux dependencies
+
+Running Cypress on Linux OS's now requires the `libgbm-dev` dependency. To install all required dependencies on Ubuntu/Debian, you can run the script below.
+
+```shell
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+## Node.js 10+ support
+
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 8 reached its end of life on Dev 31, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. This Node.js version will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10.
+
 # Migrating to Cypress 4.0
 
-This guide details the changes and how to change your code to migrate to Cypress 4.0.
+This guide details the changes and how to change your code to migrate to Cypress 4.0. {% url "See the full changelog for 4.0" changelog#4-0-0 %}.
 
 ## Mocha upgrade
 

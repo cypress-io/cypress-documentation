@@ -293,9 +293,9 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-### Whitelisted config values
+### Allowed config values
 
-{% partial test_config_whitelist %}
+{% partial allowed_test_config %}
 
 ### Suite of test configuration
 
