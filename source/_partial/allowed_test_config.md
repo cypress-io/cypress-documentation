@@ -8,6 +8,7 @@
 - `env`
 - `requestTimeout`
 - `responseTimeout`
+- `retries`
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`
