@@ -233,6 +233,10 @@ Running Cypress on Linux OS's now requires the `libgbm-dev` dependency. To insta
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
+## TypeScript 3.4+ support
+
+You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
+
 ## Node.js 10+ support
 
 Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
