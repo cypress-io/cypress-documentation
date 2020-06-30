@@ -34,14 +34,14 @@ Option | Default | Description
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the following properties:
 
-- `name`
-- `value`
-- `path`
 - `domain`
+- `expiry` *(if specified)*
 - `httpOnly`
+- `name`
+- `path`
+- `sameSite` *(if specified)*
 - `secure`
-- `expiry`
-- `sameSite`
+- `value`
 
 # Examples
 

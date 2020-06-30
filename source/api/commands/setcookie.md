@@ -46,16 +46,16 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-`cy.setCookie()` yields a cookie object literal with the following properties:
+`cy.setCookie()` yields a cookie object with the following properties:
 
-- `name`
-- `value`
-- `path`
 - `domain`
+- `expiry` *(if specified)*
 - `httpOnly`
+- `name`
+- `path`
+- `sameSite` *(if specified)*
 - `secure`
-- `expiry`
-- `sameSite`
+- `value`
 
 # Examples
 

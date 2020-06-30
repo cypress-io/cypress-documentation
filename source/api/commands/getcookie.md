@@ -38,14 +38,14 @@ Option | Default | Description
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
-- `name`
-- `value`
-- `path`
 - `domain`
+- `expiry` *(if specified)*
 - `httpOnly`
+- `name`
+- `path`
+- `sameSite` *(if specified)*
 - `secure`
-- `expiry`
-- `sameSite`
+- `value`
 
 ### When a cookie matching the name could not be found:
 
