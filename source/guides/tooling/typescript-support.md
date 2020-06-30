@@ -6,7 +6,7 @@ Cypress ships with {% url "official type declarations" https://github.com/cypres
 
 ## Install TypeScript
 
-You'll need to have TypeScript installed within your project to have TypeScript support within Cypress.
+You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
 ```bash
 npm install typescript
