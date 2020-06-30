@@ -20,11 +20,11 @@ End-to-end (E2E) tests excel at testing complex systems. However, there are stil
 - Resource dependencies availability
 - Network issues
 
-With the new test retries feature, Cypress (5.0+) will be able to retry failed tests to help reduce test flakiness and continuous integration (CI) build failures. By doing so, this will save your team valuable time and resources so you can focus on what matters most to you.
+With the new test retries feature, Cypress will be able to retry failed tests to help reduce test flakiness and continuous integration (CI) build failures. By doing so, this will save your team valuable time and resources so you can focus on what matters most to you.
 
 ## How It Works
 
-As of Cypress 5.0, test retries are on by default in `cypress run` mode. This means that tests will automatically be re-run up to two additional times (for a total of three attempts) before being marked as a failed test. When each test is run again, the following lifecycle hooks will be re-run on each attempt:
+As of Cypress, test retries are on by default in `cypress run` mode. This means that tests will automatically be re-run up to two additional times (for a total of three attempts) before being marked as a failed test. When each test is run again, the following lifecycle hooks will be re-run on each attempt:
 
 - `beforeEach`
 - `afterEach`
