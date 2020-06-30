@@ -5,12 +5,17 @@ title: Retry-ability
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
+- How Cypress retries tests
 - How Cypress retries commands and assertions
 - When commands are retried and when they are not
 - How to address some situations of flaky tests
 {% endnote %}
 
 A core feature of Cypress that assists with testing dynamic web applications is retry-ability. Like a good transmission in a car, it usually works without you noticing it. But understanding how it works will help you write faster tests with fewer run-time surprises.
+
+# Test retries
+
+Tests retry by default during `cypress run` if they fail. Additionally, the number of retries can be configured. Read {% url "Test Retries" test-retries %} for more information.
 
 # Commands vs assertions
 
