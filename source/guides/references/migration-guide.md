@@ -184,6 +184,47 @@ cy.server({
 })
 ```
 
+## Cookies `sameSite` property
+
+Values yielded by {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %} will now contain the `sameSite` property if specified.
+
+If you were using the `experimentalGetCookiesSameSite` configuration to get the `sameSite` property previously, this should be removed.
+
+{% badge danger Before %} Cookies yielded before had no `sameSite` property.
+
+```js
+cy.getCookie('token').then((cookie) => {
+  // cy.getCookie() yields a cookie object
+  // {
+  //   domain: "localhost",
+  //   expiry: 1593551644,
+  //   httpOnly: false,
+  //   name: "token",
+  //   path: "/commands",
+  //   secure: false,
+  //   value: "123ABC"
+  // }
+})
+```
+
+{% badge success After %} Cookies yielded now have `sameSite` property if specified.
+
+```js
+cy.getCookie('token').then((cookie) => {
+  // cy.getCookie() yields a cookie object
+  // {
+  //   domain: "localhost",
+  //   expiry: 1593551644,
+  //   httpOnly: false,
+  //   name: "token",
+  //   path: "/commands",
+  //   sameSite: "strict",
+  //   secure: false,
+  //   value: "123ABC"
+  // }
+})
+```
+
 ## Linux dependencies
 
 Running Cypress on Linux OS's now requires the `libgbm-dev` dependency. To install all required dependencies on Ubuntu/Debian, you can run the script below.
