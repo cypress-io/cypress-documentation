@@ -129,6 +129,7 @@ module.exports = (on, config) => {
 ```
 
 {% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Raised minimum required TypeScript version from 2.9+ to 3.4+
 {% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
 {% endhistory %}
 
