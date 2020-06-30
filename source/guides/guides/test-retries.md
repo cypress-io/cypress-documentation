@@ -29,6 +29,10 @@ As of Cypress, test retries are on by default in `cypress run` mode. This means 
 - `beforeEach`
 - `afterEach`
 
+{% note warning %}
+However, `before` and `after` hooks will not be re-run in retries.
+{% endnote %}
+
 The following is a detailed step-by-step example of how test retries will work:
 
 1. A test runs for the first time. If the test passes, Cypress will move forward with any remaining tests as expected.
