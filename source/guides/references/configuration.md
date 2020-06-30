@@ -22,6 +22,7 @@ Option | Default | Description
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
+`retries` | `{ "runMode": 2, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See {% url "Test Retries" test-retries %} for more information.
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
 ## Timeouts
