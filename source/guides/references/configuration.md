@@ -215,19 +215,21 @@ The configuration values passed in will only take effect during the suite or tes
 
 ### Suite configuration
 
-You can configure the size of the viewport height and width within a suite.
+You can configure the number of times to retries a suite of tests if they fail during `cypress run` and `cypress open` separately.
 
 ```js
-describe('page display on medium size screen', {
-  viewportHeight: 1000,
-  viewportWidth: 400
+describe('login', {
+  retries: {
+    runMode: 3,
+    openMode: 2
+  }
 }, () => {
-  it('does not display sidebar', () => {
-    cy.get('#sidebar').should('not.be.visible')
+  it('should redirect unauthenticated user to sign-in page', () => {
+    // ...
   })
 
-  it('shows hamburger menu', () => {
-    cy.get('#header').find('i.menu').should('be.visible')
+  it('allows user to login', () => {
+    // ...
   })
 })
 ```
