@@ -235,7 +235,7 @@ apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 lib
 
 ## TypeScript 3.4+ support
 
-You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
+Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
 ## Node.js 10+ support
 
