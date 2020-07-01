@@ -200,7 +200,7 @@ CYPRESS_INSTALL_BINARY=0 npm install
 
 ## 二进制缓存
 
-从`3.0`版本开始, Cypress下载对应的Cypress二进制文件到全局系统缓存中, 以便二进制文件能够在多个项目件共享. 默认情况下, 全局缓存文件夹是:
+从`3.0`版本开始, Cypress下载对应的Cypress二进制文件到全局系统缓存中, 以便二进制文件能够在多个项目间共享. 默认情况下, 全局缓存文件夹是:
 
 - **MacOS**: `~/Library/Caches/Cypress`
 - **Linux**: `~/.cache/Cypress`
