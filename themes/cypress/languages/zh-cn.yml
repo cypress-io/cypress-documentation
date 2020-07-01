@@ -50,6 +50,7 @@ sidebar:
     screenshots-and-videos: 截图和视频
     guides: 指南
     command-line: 命令行
+    test-retries: Test Retries
     continuous-integration: 持续集成
     parallelization: 并行化
     environment-variables: 环境变量
