@@ -138,7 +138,7 @@ cy.clock().then((clock) => {
 // more test code here
 ```
 
-You could also restore by using {% url "`.invoke()` invoke %} to invoke the `restore` function.
+You could also restore by using {% url "`.invoke()`" invoke %} to invoke the `restore` function.
 
 ```js
 cy.clock().invoke('restore')
