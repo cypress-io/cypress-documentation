@@ -24,7 +24,7 @@ With the new test retries feature, Cypress will be able to retry failed tests to
 
 ## How It Works
 
-As of Cypress, test retries are on by default in `cypress run` mode. This means that tests will automatically be re-run up to two additional times (for a total of three attempts) before being marked as a failed test. When each test is run again, the following lifecycle hooks will be re-run on each attempt:
+By default, tests being run in {% url "`cypress run`" command-line#cypress-run %} mode will automatically be retried up to 2 additional times (for a total of 3 attempts) before being marked as a failed test. When each test is run again, the following {% url "hooks" writing-and-organizing-tests#Hooks %} will be re-run on each attempt:
 
 - `beforeEach`
 - `afterEach`
