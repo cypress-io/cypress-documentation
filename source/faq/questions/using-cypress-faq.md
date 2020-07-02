@@ -414,7 +414,7 @@ We have an {% issue 685 'open proposal' %} to expand the APIs to support "switch
 
 By default, Cypress automatically {% url "clears all cookies **before** each test" clearcookies %} to prevent state from building up.
 
-You can whitelist specific cookies to be preserved across tests using the {% url "Cypress.Cookies api" cookies %}:
+You can preserve specific cookies across tests using the {% url "Cypress.Cookies api" cookies %}:
 
 ```javascript
 // now any cookie with the name 'session_id' will

@@ -539,13 +539,7 @@ If you are not using one of the above CI providers then make sure your system ha
 
 ### Linux
 
-```shell
-# Ubuntu/Debian
-apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-
-# CentOS
-yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
-```
+{% partial linux_dependencies %}
 
 ## Caching
 
@@ -717,6 +711,7 @@ module.exports = (on, config) => {
   })
 }
 ```
+
 ## Xvfb
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.

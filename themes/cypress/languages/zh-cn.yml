@@ -41,6 +41,7 @@ sidebar:
     organizations: 组织
     users: 成员
     github-integration: GitHub集成
+    slack-integration: Slack集成
     analytics: 分析工具
     debugging: 调试
     variables-and-aliases: 变量和别名
@@ -57,7 +58,7 @@ sidebar:
     custom-commands: 自定义命令
     web-security: Web安全
     references: 参考
-    experiments: Experiments
+    experiments: 实验性
     configuration: 配置
     proxy-configuration: 代理配置
     error-messages: 错误消息
@@ -65,19 +66,19 @@ sidebar:
     assertions: 断言
     best-practices: 最佳实践
     trade-offs: 取舍
-    troubleshooting: Troubleshooting
+    troubleshooting: 故障排查
     changelog: 更新日志
-    migration-guide: Migration Guide
+    migration-guide: 迁移指南
     roadmap: 路线图
     tooling: 工具
-    IDE-integration: IDE Integration
+    IDE-integration: IDE集成
     plugins-guide: 插件
     reporters: 报告生成器
     typescript-support: TypeScript
     module-api: API模块
     retry-ability: 重试机制
-    visual-testing: Visual Testing
-    code-coverage: Code Coverage
+    visual-testing: 可视化测试
+    code-coverage: 代码覆盖率
   api:
     api: API
     table-of-contents: Table of Contents

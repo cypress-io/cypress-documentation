@@ -166,7 +166,7 @@ If you're familiar with writing tests in JavaScript, then writing tests in Cypre
 
 ## Test Structure
 
-The test interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
+The test interface, borrowed from {% url 'Mocha' bundled-tools#Mocha %}, provides `describe()`, `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`, so choose whatever terminology works best for you.
 
@@ -229,16 +229,16 @@ describe('Hooks', () => {
     // runs once before all tests in the block
   })
 
-  after(() => {
-    // runs once after all tests in the block
-  })
-
   beforeEach(() => {
     // runs before each test in the block
   })
 
   afterEach(() => {
     // runs after each test in the block
+  })
+
+  after(() => {
+    // runs once after all tests in the block
   })
 })
 ```
@@ -309,6 +309,55 @@ To skip a specified suite or test, append `.skip()` to the function. All nested 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', () => {
   numsExpectedToEq([9, 12, 18], 'fizz')
+})
+```
+
+## Test Configuration
+
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to the test or suite function as the second argument.
+
+This configuration will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+
+### Syntax
+
+```javascript
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
+```
+
+### Allowed config values
+
+{% partial allowed_test_config %}
+
+### Suite of test configuration
+
+You can configure the size of the viewport height and width within a suite.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
+
+### Single test configuration
+
+If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
+```js
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
 })
 ```
 
