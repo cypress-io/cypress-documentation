@@ -103,11 +103,19 @@ The initial imported plugins file can be {% url 'configured to another file' con
 
 By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
-The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
+{% note danger%}
+{% fa fa-warning %} Keep in mind, when clicking "Run all specs" after {% url "`cypress open`" command-line#cypress-open %}, the code in the support file is executed once before all spec files, instead of once before each spec file. See {% urlHash "Execution" Execution %} for more details.
+{% endnote %}
 
-The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
+The initial imported support file can be configured to another file or turned off completely using the  {% url '`supportFile`' configuration#Folders-Files %} configuration.
 
-You can define your behaviors in a `beforeEach` within any of the `cypress/support` files:
+The support file is a great place to put reusable behavior such as {% url "custom commands" custom-commands %} or global overrides that you want applied and available to all of your spec files.
+
+From your support file you can `import` or `require` other files to keep things organized.
+
+We automatically seed an example support file, which has several commented out examples.
+
+You can define behaviors in a `before` or `beforeEach` within any of the `cypress/support` files:
 
 ```javascript
 beforeEach(() => {
@@ -121,16 +129,33 @@ beforeEach(() => {
 **Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}.
 {% endnote %}
 
-{% note danger%}
-{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road.
-{% endnote %}
+### Execution
 
-From your support file you should also `import` or `require` other files to keep things organized.
+Cypress executes the support file before the spec file. For example when you click on a test file named `spec-a.js` via {% url "`cypress open`" command-line#cypress-open %}, then the Test Runner executes the files in the following order:
 
-We automatically seed you an example support file, which has several commented out examples.
+```html
+<!-- bundled support file -->
+<script src="support/index.js"></script>
+<!-- bundled spec file -->
+<script src="integration/spec-a.js"></script>
+```
 
-{% note info Example Recipe %}
-Our {% url '"Node Modules" recipes' recipes#Fundamentals %} show you how to modify the support file.
+The same happens when using the {% url "`cypress run`" command-line#cypress-run %} command: a new browser window is opened for each support and spec file pair.
+
+But when you click on "Run all specs" button after {% url "`cypress open`" command-line#cypress-open %}, the Test Runner bundles and concatenates all specs together, in essence running scripts like shown below. This means the code in the support file is executed once before all spec files, instead of once before each spec file.
+
+```html
+<!-- bundled support file -->
+<script src="support/index.js"></script>
+<!-- bundled first spec file, second spec file, etc -->
+<script src="integration/spec-a.js"></script>
+<script src="integration/spec-b.js"></script>
+...
+<script src="integration/spec-n.js"></script>
+```
+
+{% note info %}
+Having a single support file when running all specs together might execute `before` and `beforeEach` hooks in ways you may not anticipate. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %} for examples.
 {% endnote %}
 
 # Writing tests
@@ -194,6 +219,11 @@ Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}
 These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
+beforeEach(() => {
+  // root-level hook
+  // runs before every test
+})
+
 describe('Hooks', () => {
   before(() => {
     // runs once before all tests in the block
@@ -223,6 +253,10 @@ describe('Hooks', () => {
 
 {% note danger %}
 {% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our {% url "thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`" best-practices#Using-after-or-afterEach-hooks %}.
+{% endnote %}
+
+{% note danger %}
+{% fa fa-warning %} Be wary of root-level hooks, as they could execute in a surprising order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %}.
 {% endnote %}
 
 ## Excluding and Including Tests

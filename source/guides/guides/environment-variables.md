@@ -113,6 +113,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 - Dedicated file just for environment variables.
 - Enables you to generate this file from other build processes.
 - Values can be different on each machine (if not checked into source control).
+- Supports nested fields (objects), e.g. `{ testUser: { name: '...', email: '...' } }`.
 {% endnote %}
 
 {% note danger Downsides %}
@@ -161,6 +162,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 {% note danger Downsides %}
 - Not as obvious where values come from versus the other options.
+- No support for nested fields.
 {% endnote %}
 
 ## Option #4: `--env`
@@ -200,6 +202,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 {% note danger Downsides %}
 - Pain to write the `--env` options everywhere you use Cypress.
+- No support for nested fields.
 {% endnote %}
 
 ## Option #5: Plugins
