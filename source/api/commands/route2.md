@@ -2,13 +2,18 @@
 title: route2
 ---
 
+{% note danger %}
+🚨 **This is an experimental feature. In order to use it, you must manually configure the `experimentalNetworkMocking` option to `true`.** See {% issue 687 %} for more details.
+{% endnote %}
+
 Use `cy.route2()` to manage the behavior of network requests at the network layer.
 
-Unlike {% url `cy.route()` route %}, `cy.route2()` can mock all types of network requests (Fetch API, page loads, etc.) in addition to XMLHttpRequests. With `cy.route2()`, there is no need to define a {% url `cy.server()` server %} before use.
+## Comparison to cy.route()
 
-{% note danger %}
-🚨 **This is an experimental feature. You must explicitly enable it by setting the `experimentalNetworkMocking` configuration option to `true`.** See {% issue 687 %} for more details.
-{% endnote %}
+Unlike {% url `cy.route()` route %}, `cy.route2()`:
+
+- can mock all types of network requests (i.e., Fetch API, page loads, XMLHttpRequests, etc.)
+- no longer requires {% url `cy.server()` server %} before use
 
 # Syntax
 
@@ -31,16 +36,31 @@ cy.route2('/users/**')
 
 **{% fa fa-angle-right %} requestMatcher** ***(String, Glob, RegExp, Object)***
 
-Listen for a route matching a specific URL or pattern.
+The `requestMatcher` argument allows you to listen for a route matching a specific URL or pattern.
 
-Pass in an object to match additional properties of the route.
+For simple route matching, passing a string is the simplest method:
+
+```js
+cy.route2('/users/**')
+```
+
+However, if you need to match additional properties on the route, you can pass an object instead.
+
+```js
+cy.route2({
+  path: '/users/**',
+  method: 'POST',
+})
+```
+
+The following contains a complete list of available properties you can verify against:
 
 Option | Default | Description
 --- | --- | ---
 `auth` | `null` | Object with a `username` and `password` to match HTTP basic authentication
 `headers` | `null` | Object to match client request headers
 `hostname` | `null` | String, RegExp, or Glob to match based on requested hostname
-`method` | `'ALL'` | Match based on HTTP method (`GET`. `POST`, `PUT`, etc.)
+`method` | `'ALL'` | Match based on HTTP method (`GET`, `POST`, `PUT`, etc.)
 `path` | `null` | String, RegExp, or Glob to match on request path after the hostname, including query params
 `pathname` | `null` | String, RegExp, or Glob to match on request path after the hostname, without query params
 `port` | `null` | Match based on requested port number
@@ -49,14 +69,37 @@ Option | Default | Description
 
 **{% fa fa-angle-right %} response** ***(String, Object, Array, Function)***
 
-Supply a response `body` to *stub* in the matching route. You can also supply a function to modify properties of the request and response.
+This allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route. This is accomplished by giving you access to the request that you can use in a plain function.
+
+```js
+cy.route2('/users/**', (req) => {
+  req.send({
+    statusCode: 200,
+    body: JSON.stringify({
+      profile: {
+        firstName: 'Tony',
+        lastName: 'Jarvis'
+      }
+    })
+  })
+})
+```
+
+In addition, because you have access to the request, this means that you can modify the request as well:
+
+```js
+cy.route2('/users/**', (req) => {
+  req.headers = { ...req.headers, accept: 'application/json' }
+  req.body = { ...req.body, note: 'Custom note' }
+})
+```
 
 **{% fa fa-angle-right %} method** ***(String)***
 
-Match the route to a specific method (`GET`, `POST`, `PUT`, etc).
+Match the route to a specific HTTP method (`GET`, `POST`, `PUT`, etc).
 
 {% note bolt %}
-If no method is defined Cypress will match `ALL` requests by default.
+By default, Cypress will match `ALL` requests by default.
 {% endnote %}
 
 ## Yields {% helper_icon yields %}
