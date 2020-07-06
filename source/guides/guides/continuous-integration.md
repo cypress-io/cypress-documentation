@@ -86,12 +86,15 @@ npm install --save-dev start-server-and-test
 Pass the command to boot your server, the url your server is hosted on and your Cypress test command.
 
 ```json
+// package.json
 {
+  ...
   "scripts": {
     "start": "my-server -p 3030",
     "cy:run": "cypress run",
     "test": "start-server-and-test start http://localhost:3030 cy:run"
   }
+  ...
 }
 ```
 
