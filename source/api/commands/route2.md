@@ -38,10 +38,22 @@ cy.route2('/users/**')
 
 The `requestMatcher` argument allows you to listen for a route matching a specific URL or pattern.
 
-For simple route matching, passing a string is the simplest method:
+For simple route matching, passing a string, glob, or RegExp is the simplest method:
 
 ```js
+// String
+cy.route2('/users)
+
+// Regex
+cy.route2(/users\/\d+/)
+
+// Glob to match all paths in the /user path
 cy.route2('/users/**')
+
+// https://localhost:8080/users/1b2c3            <-- matches
+// https://localhost:8080/users/profile/edit  <-- matches
+// https://localhost:8080/users/transaction?month=03&year=2020 <-- matches
+
 ```
 
 However, if you need to match additional properties on the route, you can pass an object instead.
