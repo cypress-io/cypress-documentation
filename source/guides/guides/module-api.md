@@ -18,6 +18,7 @@ Just like the {% url "Command Line options" command-line %} for `cypress run`, y
 
 Option | Type | Description
 ------ | ---- | ---------
+`bail` | * boolean* | If passed, Cypress will exit the test suite immediately upon failing a test.
 `browser` | *string* | Specify different browser to run tests in, either by name or by filesystem path
 `ciBuildId` | *string* | Specify a unique identifier for a run to enable {% url "grouping" parallelization#Grouping-test-runs %} or {% url "parallelization" parallelization %}
 `config` | *object* | Specify {% url "configuration" configuration %}
