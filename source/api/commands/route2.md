@@ -1,5 +1,6 @@
 ---
 title: route2
+containerClass: experimental
 ---
 
 {% note danger %}

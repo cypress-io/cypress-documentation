@@ -159,6 +159,10 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
   @include clearfix;
 }
 
+.experiment #content-inner {
+  background-color: #ffffdb;
+}
+
 #container {
   transition: 0.4s;
   height: 100%;
