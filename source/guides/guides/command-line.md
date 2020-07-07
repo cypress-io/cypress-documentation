@@ -79,6 +79,7 @@ cypress run [options]
 
 Option | Description
 ------ |  ---------
+`--bail` | If passed, cypress will exit the test suite immediately upon failing a test.
 `--browser`, `-b`  | {% urlHash "Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path." cypress-run-browser-lt-browser-name-or-path-gt %}
 `--ci-build-id` | {% urlHash "Specify a unique identifier for a run to enable grouping or parallelization." cypress-run-ci-build-id-lt-id-gt %}
 `--config`, `-c`  | {% urlHash "Specify configuration" cypress-run-config-lt-config-gt %}
