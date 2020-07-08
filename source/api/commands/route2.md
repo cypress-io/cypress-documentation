@@ -3,8 +3,8 @@ title: route2
 containerClass: experimental
 ---
 
-{% note danger %}
-🚨 **This is an experimental feature. In order to use it, you must manually configure the `experimentalNetworkMocking` option to `true`.** See {% issue 687 %} for more details.
+{% note warning %}
+{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must manually configure the `experimentalNetworkMocking` option to `true`.** See {% issue 687 %} for more details.
 {% endnote %}
 
 Use `cy.route2()` to manage the behavior of network requests at the network layer.
