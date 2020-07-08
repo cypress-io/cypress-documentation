@@ -83,10 +83,11 @@ If the server takes a very long time to start, we recommend trying the {% url st
 npm install --save-dev start-server-and-test
 ```
 
-Pass the command to boot your server, the url your server is hosted on and your Cypress test command.
+In your `package.json` scripts, pass the command to boot your server, the url your server is hosted on and your Cypress test command.
 
 ```json
 {
+  ...
   "scripts": {
     "start": "my-server -p 3030",
     "cy:run": "cypress run",
