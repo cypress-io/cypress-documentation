@@ -67,6 +67,12 @@ cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 cy.get('footer').scrollIntoView({ duration: 2000 })
 ```
 
+### Scroll 150px below an element
+
+```js
+cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
+```
+
 # Notes
 
 ## Snapshots
