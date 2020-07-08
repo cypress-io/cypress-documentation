@@ -513,7 +513,7 @@ Commands for managing the global Cypress cache. The Cypress cache applies to all
 
 ### `cypress cache path`
 
-Print the `path` to the Cypress cache folder.
+Print the `path` to the Cypress cache folder. You can change the path where the Cypress cache is located by following {% url "these instructions" installing-cypress#Binary-cache %}.
 
 ```shell
 cypress cache path
