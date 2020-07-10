@@ -228,7 +228,7 @@ module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     const downloadDirectory = path.join(__dirname, '..', 'downloads')
 
-    if (browser.family === 'chromium') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       options.preferences.default['download'] = { default_directory: downloadDirectory }
 
       return options
