@@ -281,7 +281,7 @@ Yes. {% url "You can override this with `userAgent` in your configuration file (
 
 ## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
-Yes. {% url "You can set this with `blacklistHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
+Yes. {% url "You can set this with `blockHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
 
 Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 

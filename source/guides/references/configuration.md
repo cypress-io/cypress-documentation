@@ -77,7 +77,7 @@ Option | Default | Description
 Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. {% url 'Read more about Web Security' web-security %}.
-`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
+`blockHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blockHosts %}
 `firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
 `modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
@@ -258,7 +258,7 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 
 # Notes
 
-## `blacklistHosts`
+## blockHosts
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
@@ -307,7 +307,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 - {% fa fa-exclamation-triangle red %} Does NOT match `*.google.com`
 {% endnote %}
 
-When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
+When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blocked-host` header so you can see which rule it matched.
 
 {% imgTag /img/guides/blocked-host.png "Network tab of dev tools with analytics.js request selected and the response header highlighted " %}
 
@@ -394,7 +394,9 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
-{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% url "5.0.0" changelog %} | Renamed `blacklistHosts` to `blockHosts`
+{% url "4.0.0" changelog %} | Added `firefoxGcInterval` configuration option
+{% url "3.5.0" changelog %} | Added `nodeVersion` configuration option
 {% endhistory %}
 
 # See also
