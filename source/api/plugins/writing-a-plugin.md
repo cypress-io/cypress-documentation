@@ -57,7 +57,7 @@ Each event documents its own argument signature. To understand how to use them, 
 
 This configuration contains all of the values that get passed into the browser for your project.
 
-{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.js %}
 
 Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
 
