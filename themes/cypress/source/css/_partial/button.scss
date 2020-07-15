@@ -1,0 +1,30 @@
+.button {
+  background-color: $color-green;
+  color: rgb(255, 255, 255);
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 3rem;
+  text-decoration: none;
+  padding: 0 1rem;
+  border-radius: 30px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  transition: background-color 0.2s cubic-bezier(0.6, 0.41, 0.47, 1.18) 0s, color 0.3s cubic-bezier(0.6, 0.41, 0.47, 1.18) 0s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.article-content .note.info a.button {
+  color: #fff;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

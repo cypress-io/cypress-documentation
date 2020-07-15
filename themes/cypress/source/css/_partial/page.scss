@@ -145,6 +145,10 @@ a.article-edit-link {
     padding-left: 30px;
     list-style: disc;
 
+    &.mb-2 {
+      margin-bottom: 2rem;
+    }
+
     ul {
       margin-top: 0;
       margin-bottom: 0;
@@ -635,6 +639,11 @@ a.article-edit-link {
   line-height: 1.7em;
   color: #282C34;
   font-size: 2.6em;
+}
+
+.section-title {
+  @include article-title;
+  font-size: 1.2rem;
 }
 
 .article-inner {
