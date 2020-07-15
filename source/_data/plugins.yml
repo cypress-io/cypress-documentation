@@ -561,7 +561,7 @@
       description: Integration with open source service for visual testing and managing its results.
       link: https://github.com/Visual-Regression-Tracker/agent-cypress
       keywords: [screenshots, image-diff, visual regression]
-      badge: verified
+      badge: community
 
 - name: Reporting
   plugins:
