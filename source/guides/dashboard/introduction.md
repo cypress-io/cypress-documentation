@@ -87,3 +87,10 @@ Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboar
 - [{% fa fa-folder-open-o %} cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
 - [{% fa fa-folder-open-o %} cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
 - [{% fa fa-folder-open-o %} cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
+
+# Next Steps
+
+<!-- Line breaks removed to prevent random br elements -->
+{% note info %}
+<p class="section-title">Test and debug faster with the Cypress Dashboard</p><ul class="mb-2"><li>See exact point of failure of tests running in CI</li><li>Supercharge test times by running tests in parallel</li><li>Get instant test failure alerts via Slack or GitHub</li></ul><a href="https://www.cypress.io/dashboard" class="button">Get Started Free</a>
+{% endnote %} 
