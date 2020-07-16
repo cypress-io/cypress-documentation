@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `cy.route()`. By def
 Option | Default | Description
 --- | --- | ---
 `delay` | `0` | Delay for stubbed responses (in ms)
-`force404` | `false` | Forcibly send a 404 status when the XHR does not match any existing {% url `cy.route()` route %}.
+`force404` | `false` | Forcibly send a 404 status when the XHR does not match any existing `cy.route()`.
 `headers` | `null` | Response headers for stubbed routes
 `method` | `GET` | Method to match against requests
 `onAbort` | `null` | Callback function which fires anytime an XHR is aborted
