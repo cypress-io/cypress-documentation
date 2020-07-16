@@ -556,6 +556,12 @@
       link: https://github.com/PatrickWalker/cypress-visual-regression
       keywords: [image-diff, snapshot]
       badge: community
+      
+    - name: Visual Regression Tracker
+      description: Integration with open source service for visual testing and managing its results.
+      link: https://github.com/Visual-Regression-Tracker/agent-cypress
+      keywords: [screenshots, image-diff, visual regression]
+      badge: community
 
 - name: Reporting
   plugins:

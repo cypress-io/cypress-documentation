@@ -47,7 +47,7 @@ Recipe  | Description
 {% url 'Json Web Tokens' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__jwt %} | Log in using JWT
 {% url 'Using application code' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__using-app-code %} | Log in by calling the application code
 
-Also see {% url 'Authentication plugins' plugins#authentication and watch {% url 'Organizing Tests, Logging In, Controlling State' https://www.youtube.com/watch?v=5XQOK0v_YRE %}
+Also see {% url 'Authentication plugins' plugins#authentication %} and watch {% url 'Organizing Tests, Logging In, Controlling State' https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
 ## Preprocessors
 
