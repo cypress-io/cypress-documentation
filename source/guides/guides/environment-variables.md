@@ -145,6 +145,8 @@ export cypress_api_server=http://localhost:8888/api/v1/
 
 ### In test file
 
+In your test file you should omit `CYPRESS_` or `cypress_` prefix
+
 ```javascript
 Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
 Cypress.env('HOST')       // 'laura.dev.local'
@@ -291,7 +293,7 @@ export CYPRESS_FOO=bar
 
 You can {% url 'read more about how environment variables can change configuration here' configuration %}.
 
-## See also
+# See also
 
 - {% url "`Cypress.env()`" env %}
 - {% url "Configuration API" configuration-api %}
