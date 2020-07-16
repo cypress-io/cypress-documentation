@@ -50,6 +50,8 @@ Sequence | Notes
 `{home}` | Moves cursor to the start of the line
 `{insert}` | Inserts character to the right of the cursor
 `{leftarrow}` | Moves cursor left
+`{movetoend}` | Moves cursor to end of typeable element
+`{movetostart}` | Moves cursor to the start of typeable element
 `{pagedown}` | Scrolls down
 `{pageup}` | Scrolls up
 `{rightarrow}` | Moves cursor right
