@@ -251,7 +251,7 @@ Second, try a smoke test that verifies that the application has all its required
 101
 ```
 
-If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
+If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://www.electronjs.org/docs/api/command-line-switches %}:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
