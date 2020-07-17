@@ -90,7 +90,6 @@ Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboar
 
 # Next Steps
 
-<!-- Line breaks removed to prevent random br elements -->
 {% note info %}
 ### Test and debug faster with the Cypress Dashboard
 
