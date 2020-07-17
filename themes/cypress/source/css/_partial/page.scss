@@ -145,10 +145,6 @@ a.article-edit-link {
     padding-left: 30px;
     list-style: disc;
 
-    &.mb-2 {
-      margin-bottom: 2rem;
-    }
-
     ul {
       margin-top: 0;
       margin-bottom: 0;
@@ -631,11 +627,6 @@ a.article-edit-link {
   font-size: 2.6em;
 }
 
-.section-title {
-  @include article-title;
-  font-size: 1.2rem;
-}
-
 .article-inner {
   @include clearfix;
 }
@@ -648,7 +639,7 @@ a.article-edit-link {
   height: auto;
   margin: 2em 0;
   border: 1px solid #ddd;
-  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .embed-container iframe {
