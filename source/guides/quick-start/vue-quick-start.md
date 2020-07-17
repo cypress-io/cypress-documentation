@@ -226,7 +226,7 @@ In the event you want to verify multiple properties, Cypress makes this easy for
 // Verify that password helper text is visible and contains the correct text
 cy.get('#password-helper-text')
   .should('be.visible')
-  .and('contain', "Password must contain at least 4 characters")
+  .and('contain', 'Password must contain at least 4 characters')
 ```
 
 ### Interacting with elements
