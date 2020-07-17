@@ -9,7 +9,7 @@
 
 ## Introduction
 
-In this guide, we will be covering how to setup Cypress in your Vue CLI application.
+In this guide, we will be covering how to set up Cypress in your {% url "Vue CLI" https://cli.vuejs.org/ %} application.
 
 ### What is Cypress?
 
