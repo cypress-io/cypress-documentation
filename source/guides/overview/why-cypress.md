@@ -43,6 +43,16 @@ Cypress can test anything that runs in a browser.
 
 # Cypress ecosystem
 
+{% note info %}
+### Test and debug faster with the Cypress Dashboard
+
+- See exact point of failure of tests running in CI
+- Supercharge test times by running tests in parallel
+- Get instant test failure alerts via Slack or GitHub
+
+<a href="https://www.cypress.io/dashboard" class="button">Get Started Free</a>
+{% endnote %} 
+
 Cypress consists of a free, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-introduction%}.
 
 - ***First:*** Cypress helps you set up and start writing tests every day while you build your application locally. *TDD at its best!*
