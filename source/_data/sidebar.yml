@@ -36,6 +36,8 @@ guides:
     launching-browsers: launching-browsers.html
     cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
+  quick-start:
+    vue-quick-start: vue-quick-start.html
   tooling:
     IDE-integration: IDE-integration.html
     plugins-guide: plugins-guide.html

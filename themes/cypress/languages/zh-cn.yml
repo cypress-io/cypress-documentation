@@ -79,6 +79,8 @@ sidebar:
     retry-ability: 重试机制
     visual-testing: 可视化测试
     code-coverage: 代码覆盖率
+    quick-start: Quick Start
+    vue-quick-start: Vue Quick Start
   api:
     api: API
     table-of-contents: Table of Contents

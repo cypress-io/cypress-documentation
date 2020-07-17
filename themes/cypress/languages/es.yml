@@ -77,6 +77,8 @@ sidebar:
     retry-ability: Repetición
     visual-testing: Testeo visual
     code-coverage: Cobertura de código
+    quick-start: Quick Start
+    vue-quick-start: Vue Quick Start
   api:
     api: API
     table-of-contents: Índice
