@@ -3,7 +3,7 @@
 {% note info %}
 **What You'll Learn**
 - What Cypress is
-- How to setup Cypress with a Vue.js application
+- How to set up Cypress with a Vue.js application
 - Essential concepts and techniques 
 {% endnote %}
 
