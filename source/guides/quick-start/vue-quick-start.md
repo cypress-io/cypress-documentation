@@ -29,7 +29,7 @@ vue add e2e-cypress
 
 ### Getting Started
 
-To start Cypress, all you need to do is run:
+To start Cypress, run:
 
 ```jsx
 npm run test:e2e
