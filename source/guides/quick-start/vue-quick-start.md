@@ -21,7 +21,7 @@ This guide assumes that you will are using Vue CLI, if you would like to see doc
 
 The easiest way to install Cypress is through Vue CLI's plugin. This will not only add Cypress as a dependency to your project, but will also help create a scaffold in your project. 
 
-Once you open up your project in your terminal, all you need to do is run the following command:
+Once you open up your project in your terminal, run the following command:
 
 ```jsx
 vue add e2e-cypress
