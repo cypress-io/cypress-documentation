@@ -330,6 +330,53 @@ The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
+### Exit code
+
+When Cypress finishes running tests, it exits. If there are no failed tests, the exit code will be 0.
+
+```text
+# All tests pass
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✔  All specs passed!      00:16       17       17        0
+
+# print exit code on Mac or Linux
+$ echo $?
+0
+```
+
+If there are any test failures, then the exit code will match the number of tests that failed.
+
+```text
+# Spec with two failing tests
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✖  1 of 1 failed (100%)   00:22       17       14        2
+
+# print exit code on Mac or Linux
+$ echo $?
+2
+```
+
+If Cypress could not run for some reason (for example if no spec files were found) then the exit code will be 1.
+
+```text
+# No spec files found
+$ cypress run --spec not-found.js
+...
+Can't run because no spec files were found.
+
+We searched for any files matching this glob pattern:
+
+not-found.js
+
+# print exit code on Mac or Linux
+$ echo $?
+1
+```
+
 ## `cypress open`
 
 Opens the Cypress Test Runner.
