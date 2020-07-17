@@ -373,7 +373,7 @@ cy.route({
 
 Another benefit that you get by using Cypress is the ability to automate screenshot captures of  your app. While the immediate benefit of this often comes with being able to see how your app looks during certain points of time for debugging purposes, this also means that it can help with automating things such as documentation as well.
 
-To capture screenshots, Cypress offers the command: `.screenshot()`
+To capture screenshots, Cypress offers the command: {% url "`.screenshot()`" screenshot %}
 
 Using the example of a login form, here is what the code might look like if we wanted to take a screenshot of the form before and after it is submitted.
 
