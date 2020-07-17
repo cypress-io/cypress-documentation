@@ -17,7 +17,7 @@ Cypress is an end-to-end (E2E) testing framework that helps you validate your ap
 
 ### Installation
 
-This guide assumes that you will are using Vue CLI, if you would like to see documentation with how Cypress should be run with a CDN version of Vue, be sure to visit this issue and give it a thumbs up.
+This guide assumes that you are using {% url "Vue CLI" https://cli.vuejs.org/ %}, if you would like to see documentation on how Cypress should be run with a CDN version of Vue, be sure to visit this issue and give it a thumbs up.
 
 The easiest way to install Cypress is through Vue CLI's plugin. This will not only add Cypress as a dependency to your project, but will also help create a scaffold in your project. 
 
