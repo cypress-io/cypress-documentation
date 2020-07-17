@@ -344,7 +344,7 @@ it('show login success message', function () {
 })
 ```
 
-### **Mocking network requests**
+### Mocking network requests
 
 While being able to monitor your network requests can be helpful, there are also situations where it is important to mock or stub network requests. Some of these include:
 
