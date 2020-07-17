@@ -398,7 +398,7 @@ For example, even though the ability to preview your app while Cypress is runnin
 
 {% video local /img/guides/vue-quick-start/vue-quick-start-debugging-01.mp4 %}
 
-In this example, in the event we want to verify the state of our application, the test completes before we can register what happened. Fear not though, for Cypress' command log has another ability that we have not discussed yet: time travel.
+In this example, in the event we want to verify the state of our application, the test completes before we can register what happened. Fear not though, for Cypress' Command Log has another ability that we have not discussed yet: time travel.
 
 ### Time Travel
 
