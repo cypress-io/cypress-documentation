@@ -17,7 +17,7 @@
   transition: background-color 0.2s cubic-bezier(0.6, 0.41, 0.47, 1.18) 0s, color 0.3s cubic-bezier(0.6, 0.41, 0.47, 1.18) 0s;
 
   &:hover {
-    text-decoration: underline;
+    background-color: $color-green-dark;
   }
 }
 
@@ -25,6 +25,6 @@
   color: #fff;
 
   &:hover {
-    text-decoration: underline;
+    background-color: $color-green-dark;
   }
 }
