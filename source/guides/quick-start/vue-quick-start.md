@@ -394,7 +394,7 @@ it('displays errors with incorrect credentials', () => {
 
 Modern web applications are highly visual, interactive, and stateful thanks to frameworks like Vue.js that ease the creation of advanced UIs. As a result, Cypress enables workflows with helpful feedback loops for writing and running tests.
 
-For example, even though the ability to preview your app while Cypress is running is a convenience, there are times where the test goes to quickly for us to understand what happened.
+For example, even though the ability to preview your app while Cypress is running is a convenience, there are times where the test goes too quickly for us to understand what happened.
 
 {% video local /img/guides/vue-quick-start/vue-quick-start-debugging-01.mp4 %}
 
