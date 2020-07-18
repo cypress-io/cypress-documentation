@@ -104,6 +104,12 @@
       keywords: [file-watcher]
       badge: community
 
+    - name: cypress-autostub
+      description: Alleviates the need to mantain brittle manual mocks by automating the recording and stubbing of requests.
+      link: https://github.com/dan-cooke/cypress-autostub
+      keywords: [mocking, stubbing, recording, fetch, xhr]
+      badge: community
+
     - name: cypress-plugin-livereload
       description: Reloads Cypress using livereload
       link: https://github.com/unlocomqx/cypress-plugin-livereload
