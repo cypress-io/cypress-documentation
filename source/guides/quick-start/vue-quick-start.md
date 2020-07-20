@@ -424,6 +424,9 @@ With these automatic DOM snapshots, you'll have the {% url "ability to time-trav
 
 ## Next Steps
 
-In this guide, we have covered the essentials you need for getting started, but there is much more in the world of Cypress.
+In this guide, we have covered the essentials you need for getting started, but there is much more in the world of Cypress. 
+
+- {% url "Cypress Core Concepts" introduction-to-cypress %}
+- {% url "Cypress Dashbaord" dashboard-introduction %}
 
 Thanks for reading our guide!
