@@ -104,6 +104,12 @@
       keywords: [file-watcher]
       badge: community
 
+    - name: cypress-autostub
+      description: Alleviates the need to mantain brittle manual mocks by automating the recording and stubbing of requests.
+      link: https://github.com/dan-cooke/cypress-autostub
+      keywords: [mocking, stubbing, recording, fetch, xhr]
+      badge: community
+
     - name: cypress-plugin-livereload
       description: Reloads Cypress using livereload
       link: https://github.com/unlocomqx/cypress-plugin-livereload
@@ -561,6 +567,12 @@
       description: Module for adding visual regression testing to Cypress.
       link: https://github.com/PatrickWalker/cypress-visual-regression
       keywords: [image-diff, snapshot]
+      badge: community
+      
+    - name: Visual Regression Tracker
+      description: Integration with open source service for visual testing and managing its results.
+      link: https://github.com/Visual-Regression-Tracker/agent-cypress
+      keywords: [screenshots, image-diff, visual regression]
       badge: community
 
 - name: Reporting
