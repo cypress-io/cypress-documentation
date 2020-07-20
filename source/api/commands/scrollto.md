@@ -58,9 +58,10 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
 `duration` | `0` | Scrolls over the duration (in ms)
 `easing` | `swing` | Will scroll with the easing animation
+`ensureScrollable` | `true` | Ensure element is scrollable. Error if element cannot scroll.
+`log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .scrollTo %}
 
 ## Yields {% helper_icon yields %}
@@ -115,6 +116,16 @@ cy.get('.documentation').scrollTo('top', { easing: 'linear' })
 
 ```javascript
 cy.get('#slider').scrollTo('right', { duration: 2000 })
+```
+
+### Do not error if element is not scrollable
+
+Let's say we do not know whether our `table` element is scrollable. Sometimes the `table` may be scrollable (with 2,000 rows) and sometimes the `table` may not be scrollable (with 5 rows). You can ignore the error checking to ensure the element is scrollable by passing `ensureScrollable: false`.
+
+```js
+// will move on to next command even if table is not scrollable
+cy.get('table').scrollTo('bottom', { ensureScrollable: false })
+cy.get('table').find('tr:last-child').should('be.visible')
 ```
 
 # Notes
