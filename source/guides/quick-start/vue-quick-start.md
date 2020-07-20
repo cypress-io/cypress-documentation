@@ -426,4 +426,4 @@ With these automatic DOM snapshots, you'll have the {% url "ability to time-trav
 
 In this guide, we have covered the essentials you need for getting started, but there is much more in the world of Cypress.
 
-Thanks for reading our guide and hope it has helped you create more trust in your app.
+Thanks for reading our guide!
