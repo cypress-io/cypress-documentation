@@ -175,6 +175,10 @@ When clicking on `scrollTo` within the command log, the console outputs the foll
 
 {% imgTag /img/api/scrollto/console-log-scrollto.png "console.log for scrollTo" %}
 
+{% history %}
+{% url "4.11.0" changelog#4-11-0 %} | Added support for `ensureScrollable` option.
+{% endhistory %}
+
 # See also
 
 - {% url `.scrollIntoView()` scrollintoview %}
