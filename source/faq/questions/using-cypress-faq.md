@@ -484,7 +484,7 @@ describe('Logo', () => {
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `webpack` and `babel`.
 
 We recommend utilizing one of the following to execute code outside of the browser. Furthermore, you can use your own Node version during code excecution by setting the {% url "`nodeVersion`" configuration#Node-version %} in your configuration.
 
@@ -628,7 +628,7 @@ Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spy
 
 ## {% fa fa-angle-right %} How do I use special characters with `cy.get()`?
 
-Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}. 
+Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}.
 
 To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
 
