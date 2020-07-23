@@ -402,3 +402,5 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 # See also
 
 - {% url "`Cypress.config()`" config %}
+- {% url "Environment variables" environment-variables %}
+- {% url "Environment Variables recipe" recipes#Fundamentals %}

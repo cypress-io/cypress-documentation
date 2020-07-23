@@ -69,7 +69,7 @@ Option | Default | Description
 
 ### After starting a server:
 
-- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
+- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Use-Server-Responses %}.
 - Any request that matches the `options.ignore` function will **NOT** be logged or stubbed.
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
 

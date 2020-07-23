@@ -157,4 +157,4 @@ While learning Cypress it may be a good idea to try small tests against some HTM
 
 # Troubleshooting Cypress
 
-There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking our out {% url "Troubleshooting Guide" troubleshooting %}.
+There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking out our {% url "Troubleshooting Guide" troubleshooting %}.
