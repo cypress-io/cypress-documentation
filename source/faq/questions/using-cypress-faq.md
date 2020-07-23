@@ -484,7 +484,7 @@ describe('Logo', () => {
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `webpack` and `babel`.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with webpack and Babel.
 
 We recommend utilizing one of the following to execute code outside of the browser. Furthermore, you can use your own Node version during code excecution by setting the {% url "`nodeVersion`" configuration#Node-version %} in your configuration.
 
@@ -545,7 +545,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
 
-Typically you'd reuse your existing `babel` and `webpack` configurations.
+Typically you'd reuse your existing Babel and webpack configurations.
 
 ## {% fa fa-angle-right %} How does one determine what the latest version of Cypress is?
 
