@@ -858,7 +858,7 @@ large:
     img: /img/examples/cypress-com-cucumber.jpg
 
   - title: "Testes E2E com CyPress no Quasar Framework"
-    url: https://medium.com/assertqualityassurance/setting-cypress-and-cucumber-in-e2e-tests-6239adac1077
+    url: https://imasters.com.br/front-end/testes-e2e-com-cypress-no-quasar-framework
     sourceName: iMasters
     sourceUrl: https://imasters.com.br/
     author: Patrick Pinheiro Mmonteiro
