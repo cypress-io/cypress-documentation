@@ -21,6 +21,7 @@ guides:
     organizations: organizations.html
     users: users.html
     github-integration: github-integration.html
+    slack-integration: slack-integration.html
     analytics: analytics.html
   guides:
     command-line: command-line.html

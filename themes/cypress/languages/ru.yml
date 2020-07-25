@@ -39,6 +39,7 @@ sidebar:
     organizations: Организации
     users: Пользователи
     github-integration: Интеграция с GitHub
+    slack-integration: Slack Integration
     analytics: Аналитика
     debugging: Отладка
     variables-and-aliases: Переменные и Алиасы

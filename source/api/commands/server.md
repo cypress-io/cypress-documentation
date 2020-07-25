@@ -57,7 +57,7 @@ Option | Default | Description
 `onAnyRequest` | `undefined` | callback function called when any request is sent
 `onAnyResponse` | `undefined` | callback function called when any response is returned
 `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs
-`whitelist` | function | Callback function that whitelists requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
+`whitelist` | function | Callback function that filters requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
 
 ## Yields {% helper_icon yields %}
 
@@ -69,8 +69,8 @@ Option | Default | Description
 
 ### After starting a server:
 
-- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
-- Any request that matches the `options.whitelist` function will **NOT** be logged or stubbed. In other words it is "whitelisted" and ignored.
+- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Use-Server-Responses %}.
+- Any request that matches the `options.whitelist` function will **NOT** be logged or stubbed. In other words it is filtered and ignored.
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
 
 ```javascript
@@ -179,7 +179,7 @@ cy.server({
 })
 ```
 
-### Change the default whitelisting
+### Change the default filtering
 
 `cy.server()` comes with a `whitelist` function that by default filters out any requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
 
@@ -187,12 +187,12 @@ Any request that passes the `whitelist` will be ignored - it will not be logged 
 
 The idea is that we never want to interfere with static assets that are fetched via Ajax.
 
-**The default whitelist function in Cypress is:**
+**The default filter function in Cypress is:**
 
 ```javascript
 const whitelist = (xhr) => {
   // this function receives the xhr object in question and
-  // will whitelist if it's a GET that appears to be a static resource
+  // will filter if it's a GET that appears to be a static resource
   return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
 }
 ```

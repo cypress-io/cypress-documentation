@@ -1,6 +1,6 @@
 To send the data and results of your tests to the [Dashboard](https://on.cypress.io/dashboard-introduction), Cypress needs free access to some URLs.
 
-If you are running the tests from within a restrictive VPN you will need to add some URLs to your whitelist so that Cypress can have effective communication with the Dashboard.
+If you are running the tests from within a restrictive VPN you will need to allow some URLs so that Cypress can have effective communication with the Dashboard.
 
 **The URLs are the following:**
 

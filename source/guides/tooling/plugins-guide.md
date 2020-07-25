@@ -82,9 +82,9 @@ You can use the `task` event to do things like:
 
 # List of plugins
 
-Cypress maintains an official list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
+Cypress maintains a curated list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
 
-{% url 'Our official list of Cypress plugins.' plugins %}
+{% url 'Our curated list of Cypress plugins.' plugins %}
 
 # Installing plugins
 

@@ -84,9 +84,9 @@ module.exports = (on, config) => {
 ```js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
-    // supply the path to an unpacked WebExtension
+    // supply the absolute path to an unpacked extension's folder
     // NOTE: extensions cannot be loaded in headless Chrome
-    launchOptions.extensions.push('/path/to/webextension')
+    launchOptions.extensions.push('Users/jane/path/to/extension')
 
     return launchOptions
   })
@@ -133,7 +133,7 @@ module.exports = (on, config) => {
 
 ## Modify Electron app switches
 
-Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://electronjs.org/docs/api/chrome-command-line-switches/history %}.
+Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://www.electronjs.org/docs/api/command-line-switches %}.
 
 You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, you can set the environment variables before running Cypress like below:
 
@@ -149,7 +149,7 @@ export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-erro
 set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
 ```
 
-Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. There is no way to see all currently set switches after Electron's launch.
+Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.js" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js %}. There is no way to see all currently set switches after Electron's launch.
 
 ## See all Chrome browser switches
 
@@ -228,7 +228,7 @@ module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     const downloadDirectory = path.join(__dirname, '..', 'downloads')
 
-    if (browser.family === 'chromium') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       options.preferences.default['download'] = { default_directory: downloadDirectory }
 
       return options

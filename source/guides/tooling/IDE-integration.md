@@ -4,7 +4,7 @@ title: IDE Integration
 
 # File Opener Preference
 
-When clicking on a file path from the {% url "Test Runner" test-runner %} in an {% url "error stack trace or a code frame" debugging#Errors %}, Cypress will attempt to open the file on your system. If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
+When clicking on a file path from the {% url "Test Runner" test-runner %} in the {% url "command log" test-runner#Open-files-in-your-IDE %} or an {% url "error" debugging#Errors %}, Cypress will attempt to open the file on your system. If the editor supports inline highlighting of the file, the file will open with the cursor located on the line and column of interest.
 
 {% imgTag /img/guides/file-opener-ide-go-to-line.gif "Open file at line in VS Code" %}
 
@@ -38,7 +38,8 @@ There are many third-party IDE extensions and plugins to help integrate your IDE
 
 Compatible with IntelliJ IDEA, AppCode, CLion, GoLand, PhpStorm, PyCharm, Rider, RubyMine, and WebStorm.
 
-- {% url "Intellij-Cypress" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %}: Integrates Cypress under the common Intellij test framework.
+- {% url "Cypress Support" https://plugins.jetbrains.com/plugin/13819-intellij-cypress %}: Integrates Cypress under the common Intellij test framework.
+- {% url "Cypress Support Pro" https://plugins.jetbrains.com/plugin/13987-cypress-pro %}: An improved version of Cypress Support plugin with debugging from the IDE, advanced autocomplete, built-in recorder and other features.
 
 # Intelligent Code Completion
 

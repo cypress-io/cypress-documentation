@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `cy.route()`. By def
 Option | Default | Description
 --- | --- | ---
 `delay` | `0` | Delay for stubbed responses (in ms)
-`force404` | `false` | Forcibly send XHR's a 404 status when the XHR's do not match any existing {% url `cy.route()` route %}.
+`force404` | `false` | Forcibly send a 404 status when the XHR does not match any existing `cy.route()`.
 `headers` | `null` | Response headers for stubbed routes
 `method` | `GET` | Method to match against requests
 `onAbort` | `null` | Callback function which fires anytime an XHR is aborted
@@ -209,7 +209,7 @@ Any request that matches the `method` and `url` of a route will be responded to 
 {% note info %}
 If a request doesn't match any route then the behavior depends on the value of the `force404` option on the {% url `cy.server()` server %}:
 
-* if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
+* if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Use-Server-Responses %}.
 * if `force404` is `true` then the response {% urlHash "will be a 404" Notes %}.
 
 You can {% url 'read more about this behavior here.' server#Options %}
@@ -406,13 +406,13 @@ cy.route(() => {
 
 ## Debugging
 
-### Understanding stubbed vs regular XHR's
+### Understanding stubbed vs regular XHRs
 
 Cypress indicates whether an XHR sent back a stubbed response or actually went out to a server in its Command Log
 
-XHR's that display `(XHR STUB)` in the Command Log have been stubbed and their response, status, headers, and delay have been controlled by your matching `cy.route()`.
+XHRs that display `(XHR STUB)` in the Command Log have been stubbed and their response, status, headers, and delay have been controlled by your matching `cy.route()`.
 
-XHR's that display `(XHR)` in the Command Log have *not* been stubbed and were passed directly through to a server.
+XHRs that display `(XHR)` in the Command Log have *not* been stubbed and were passed directly through to a server.
 
 {% imgTag /img/api/route/xhr-stub-versus-not-stubbed-routes-in-command-log.png "XHR Command Log when not stubbed" %}
 
@@ -438,7 +438,7 @@ When Cypress matches up an outgoing XHR request to a `cy.route()`, it actually a
 cy.route('**/users/*')
 ```
 
-The following XHR's which were `xhr.open(...)` with these URLs would:
+The following XHRs which were `xhr.open(...)` with these URLs would:
 
 **Match:**
 
@@ -490,7 +490,7 @@ Whenever you start a server and add routes, Cypress will display a new Instrumen
 
 {% imgTag /img/api/route/routing-table-displayed-in-command-log-for-cy-route.png "Command Log routing table" %}
 
-When XHR's are made, Cypress will log them in the Command Log and indicate whether they matched a routing alias:
+When XHRs are made, Cypress will log them in the Command Log and indicate whether they matched a routing alias:
 
 {% imgTag /img/api/route/some-xhr-responses-including-200-and-500-status-codes.png "Command Log XHR alias route" %}
 

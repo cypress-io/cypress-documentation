@@ -103,11 +103,19 @@ The initial imported plugins file can be {% url 'configured to another file' con
 
 By default Cypress will automatically include the support file `cypress/support/index.js`. This file runs **before** every single spec file. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
 
-The initial imported support file can be {% url 'configured to another file' configuration#Folders-Files %}.
+{% note danger%}
+{% fa fa-warning %} Keep in mind, when clicking "Run all specs" after {% url "`cypress open`" command-line#cypress-open %}, the code in the support file is executed once before all spec files, instead of once before each spec file. See {% urlHash "Execution" Execution %} for more details.
+{% endnote %}
 
-The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.
+The initial imported support file can be configured to another file or turned off completely using the  {% url '`supportFile`' configuration#Folders-Files %} configuration.
 
-You can define your behaviors in a `beforeEach` within any of the `cypress/support` files:
+The support file is a great place to put reusable behavior such as {% url "custom commands" custom-commands %} or global overrides that you want applied and available to all of your spec files.
+
+From your support file you can `import` or `require` other files to keep things organized.
+
+We automatically seed an example support file, which has several commented out examples.
+
+You can define behaviors in a `before` or `beforeEach` within any of the `cypress/support` files:
 
 ```javascript
 beforeEach(() => {
@@ -121,16 +129,33 @@ beforeEach(() => {
 **Note:** This example assumes you are already familiar with Mocha {% url 'hooks' writing-and-organizing-tests#Hooks %}.
 {% endnote %}
 
-{% note danger%}
-{% fa fa-warning %} Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road.
-{% endnote %}
+### Execution
 
-From your support file you should also `import` or `require` other files to keep things organized.
+Cypress executes the support file before the spec file. For example when you click on a test file named `spec-a.js` via {% url "`cypress open`" command-line#cypress-open %}, then the Test Runner executes the files in the following order:
 
-We automatically seed you an example support file, which has several commented out examples.
+```html
+<!-- bundled support file -->
+<script src="support/index.js"></script>
+<!-- bundled spec file -->
+<script src="integration/spec-a.js"></script>
+```
 
-{% note info Example Recipe %}
-Our {% url '"Node Modules" recipes' recipes#Fundamentals %} show you how to modify the support file.
+The same happens when using the {% url "`cypress run`" command-line#cypress-run %} command: a new browser window is opened for each support and spec file pair.
+
+But when you click on "Run all specs" button after {% url "`cypress open`" command-line#cypress-open %}, the Test Runner bundles and concatenates all specs together, in essence running scripts like shown below. This means the code in the support file is executed once before all spec files, instead of once before each spec file.
+
+```html
+<!-- bundled support file -->
+<script src="support/index.js"></script>
+<!-- bundled first spec file, second spec file, etc -->
+<script src="integration/spec-a.js"></script>
+<script src="integration/spec-b.js"></script>
+...
+<script src="integration/spec-n.js"></script>
+```
+
+{% note info %}
+Having a single support file when running all specs together might execute `before` and `beforeEach` hooks in ways you may not anticipate. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %} for examples.
 {% endnote %}
 
 # Writing tests
@@ -141,7 +166,7 @@ If you're familiar with writing tests in JavaScript, then writing tests in Cypre
 
 ## Test Structure
 
-The test interface borrowed from {% url 'Mocha' bundled-tools#Mocha %} provides `describe()`, `context()`, `it()` and `specify()`.
+The test interface, borrowed from {% url 'Mocha' bundled-tools#Mocha %}, provides `describe()`, `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`, so choose whatever terminology works best for you.
 
@@ -194,13 +219,14 @@ Cypress also provides hooks (borrowed from {% url 'Mocha' bundled-tools#Mocha %}
 These are helpful to set conditions that you want to run before a set of tests or before each test. They're also helpful to clean up conditions after a set of tests or after each test.
 
 ```javascript
+beforeEach(() => {
+  // root-level hook
+  // runs before every test
+})
+
 describe('Hooks', () => {
   before(() => {
     // runs once before all tests in the block
-  })
-
-  after(() => {
-    // runs once after all tests in the block
   })
 
   beforeEach(() => {
@@ -209,6 +235,10 @@ describe('Hooks', () => {
 
   afterEach(() => {
     // runs after each test in the block
+  })
+
+  after(() => {
+    // runs once after all tests in the block
   })
 })
 ```
@@ -223,6 +253,10 @@ describe('Hooks', () => {
 
 {% note danger %}
 {% fa fa-warning %} Before writing `after()` or `afterEach()` hooks, please see our {% url "thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`" best-practices#Using-after-or-afterEach-hooks %}.
+{% endnote %}
+
+{% note danger %}
+{% fa fa-warning %} Be wary of root-level hooks, as they could execute in a surprising order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %}.
 {% endnote %}
 
 ## Excluding and Including Tests
@@ -275,6 +309,55 @@ To skip a specified suite or test, append `.skip()` to the function. All nested 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', () => {
   numsExpectedToEq([9, 12, 18], 'fizz')
+})
+```
+
+## Test Configuration
+
+To apply a specific Cypress {% url "configuration" configuration %} value to a suite or test, pass a configuration object to the test or suite function as the second argument.
+
+This configuration will take effect during the suite or tests where they are set then return to their previous default values after the suite or tests are complete.
+
+### Syntax
+
+```javascript
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
+```
+
+### Allowed config values
+
+{% partial allowed_test_config %}
+
+### Suite of test configuration
+
+You can configure the size of the viewport height and width within a suite.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
+
+### Single test configuration
+
+If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
+```js
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
 })
 ```
 

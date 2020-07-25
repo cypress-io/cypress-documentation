@@ -1,3 +1,5 @@
+import { MAIN_NAV } from '../support/defaults'
+
 describe('Main Nav', () => {
   beforeEach(() => {
     cy.server()
@@ -8,8 +10,8 @@ describe('Main Nav', () => {
       cy.visit('/')
     })
 
-    it('displays links to pages', function () {
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+    MAIN_NAV.forEach((nav) => {
+      it(`displays link to ${nav.name}`, function () {
         cy.contains('.main-nav-link', nav.name)
         .should('have.attr', 'href').and('include', nav.path)
       })
@@ -21,8 +23,8 @@ describe('Main Nav', () => {
       .and('eq', 'https://github.com/cypress-io/cypress')
     })
 
-    it('highlights main page links when navigated to', function () {
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+    MAIN_NAV.forEach((nav) => {
+      it(`highlights main page links when navigated to ${nav.name}`, function () {
         let path = `${nav.path}.html`
 
         if (nav.path === '/plugins/') {

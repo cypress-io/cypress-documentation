@@ -151,6 +151,14 @@ You can integrate your project with GitHub and edit its settings from within the
 
 See our {% url "GitHub Integration guide" github-integration %} to learn more.
 
+# Slack Integration
+
+You can integrate your project with Slack and edit its settings from within the project settings page.
+
+{% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
+
+See our {% url "Slack Integration guide" slack-integration %} to learn more.
+
 # Access to Runs
 
 Visit your project settings to see who has access to your project's runs.

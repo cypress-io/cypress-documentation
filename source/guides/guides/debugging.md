@@ -157,4 +157,14 @@ While learning Cypress it may be a good idea to try small tests against some HTM
 
 # Troubleshooting Cypress
 
-There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking our out {% url "Troubleshooting Guide" troubleshooting %}.
+There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking out our {% url "Troubleshooting Guide" troubleshooting %}.
+
+# More info
+
+Often debugging a failing Cypress test means understanding better how your own application works, and how the application might race against the test commands. We recommend reading these blog posts where we show common error scenarios and how to solve them:
+
+- {% url "When Can The Test Start?" https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/ %}
+- {% url "When Can The Test Stop?" https://www.cypress.io/blog/2020/01/16/when-can-the-test-stop/ %}
+- {% url "When Can The Test Click?" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %}
+- {% url "When Can The Test Log Out?" https://www.cypress.io/blog/2020/06/25/when-can-the-test-log-out/ %}
+- {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %}

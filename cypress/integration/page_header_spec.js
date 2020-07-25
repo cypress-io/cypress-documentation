@@ -1,31 +1,33 @@
 const YAML = require('yamljs')
 const _ = require('lodash')
 
+import { MAIN_NAV } from '../support/defaults'
+
 describe('Page Header', () => {
   beforeEach(() => {
     cy.server()
   })
 
-  it('displays correct page title', function () {
+  MAIN_NAV.forEach((nav) => {
+    // the Plugin docs doesn't have a sidebar
+    // the API docs don't really need translations (since it's all commands)
+    if (nav.name === 'Plugins' || nav.name === 'API') return
+
+    it(`displays correct page title for ${nav.name}`, function () {
     // disabling this test because we are copying untranslated English document pages
     // into other language folders. A single translated page title is not enough to count
     // thus the sidebar has translated title, but the page itself shows English translation
     // limit to English instead of "this.langValues"
-    const languages = ['en']
+      const languages = ['en']
 
-    cy.wrap(languages).each(function (lang) {
-      let sidebarYaml = 'source/_data/sidebar.yml'
-      let visitUrlPrefix = ''
+      cy.wrap(languages).each(function (lang) {
+        let sidebarYaml = 'source/_data/sidebar.yml'
+        let visitUrlPrefix = ''
 
-      if (lang !== 'en') {
-        sidebarYaml = `source/${lang}/_data/sidebar.yml`
-        visitUrlPrefix = lang
-      }
-
-      cy.wrap(this.MAIN_NAV).each((nav) => {
-        // the Plugin docs doesn't have a sidebar
-        // the API docs don't really need translations (since it's all commands)
-        if (nav.name === 'Plugins' || nav.name === 'API') return
+        if (lang !== 'en') {
+          sidebarYaml = `source/${lang}/_data/sidebar.yml`
+          visitUrlPrefix = lang
+        }
 
         cy.readFile(sidebarYaml)
         .then(function (yamlString) {
@@ -74,7 +76,7 @@ describe('Page Header', () => {
         visitUrlPrefix = lang
       }
 
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+      cy.wrap(MAIN_NAV).each((nav) => {
         let path = `${nav.path}.html`
         let mdPath = `${nav.path}.md`
 

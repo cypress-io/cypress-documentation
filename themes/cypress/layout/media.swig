@@ -65,10 +65,10 @@
               {% endif %}
 
               {% if site.data[page.dataType].small %}
-                <div class="small-media">
+                <div class="media-small">
                   <ul>
                     {% for media in site.data[page.dataType].small %}
-                      <li class="small-media-item">
+                      <li class="media-small-item">
                         <a href="{{ media.sourceUrl }}" target="_blank" rel="noopener noreferrer">{{ media.title }}</a>
                       </li>
                     {% endfor %}

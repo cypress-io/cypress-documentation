@@ -277,6 +277,35 @@ See {% issue 2284 '#2284' %} for implementation.
 If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
 
+## Reset timeout via `Cypress.config()`
+
+You can change the timeout of `cy.task()` for the remainder of the tests by setting the new values for `taskTimeout` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('taskTimeout', 30000)
+Cypress.config('taskTimeout') // => 30000
+```
+
+## Set timeout in the test configuration
+
+You can configure the `cy.task()` timeout within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the timeout throughout the duration of the tests, then return it to the default `taskTimeout` when complete.
+
+```js
+describe('has data available from database', { taskTimeout: 90000 }, () => {
+  before(() => {
+    cy.task('seedDatabase')
+  })
+
+  // tests
+
+  after(() => {
+    cy.task('resetDatabase')
+  })
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

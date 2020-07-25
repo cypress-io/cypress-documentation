@@ -358,6 +358,79 @@ The above test retries getting the element and invoking the text of the element 
 
 {% imgTag /img/guides/retry-ability/random-number-callback.gif "Random number using callback" %}
 
+## Use aliases
+
+When using {% url `cy.stub()` stub %} or {% url `cy.spy()` spy %} to test application's code, a good practice is to give it an alias and use the `cy.get('@alias').should('...')` assertion to retry.
+
+For example, when confirming that the button component invokes the `click` prop testing with the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %} plugin, the following test might or might not work:
+
+### {% fa fa-warning red %} Incorrectly checking if the stub was called
+
+```js
+const Clicker = ({ click }) => (
+  <div>
+    <button onClick={click}>Click me</button>
+  </div>
+)
+
+it('calls the click prop twice', () => {
+  const onClick = cy.stub()
+  // "mount" function comes from
+  // https://github.com/bahmutov/cypress-react-unit-test
+  mount(<Clicker click={onClick} />)
+  cy.get('button')
+    .click()
+    .click()
+    .then(() => {
+      // works in this case, but not recommended
+      // because .then() does not retry
+      expect(onClick).to.be.calledTwice
+    })
+})
+```
+
+The above example will fail if the component calls the `click` prop after a delay.
+
+```js
+const Clicker = ({ click }) => (
+  <div>
+    <button onClick={() => setTimeout(click, 500)}>Click me</button>
+  </div>
+)
+```
+
+{% imgTag /img/guides/retry-ability/delay-click.png "Expect fails the test without waiting for the delayed stub" width-600 %}
+
+The test finishes before the component calls the `click` prop twice, and without retrying the assertion `expect(onClick).to.be.calledTwice`.
+
+### {% fa fa-check-circle green %} Correctly waiting for the stub to be called
+
+We recommend aliasing the stub using the {% url `.as` as %} command and using `cy.get('@alias').should(...)` assertions.
+
+```js
+it('calls the click prop', () => {
+  const onClick = cy.stub().as('clicker')
+  // "mount" function comes from
+  // https://github.com/bahmutov/cypress-react-unit-test
+  mount(<Clicker click={onClick} />)
+  cy.get('button')
+    .click()
+    .click()
+
+  // good practice 💡
+  // auto-retry the stub until it was called twice
+  cy.get('@clicker').should('have.been.calledTwice')
+})
+```
+
+{% imgTag /img/guides/retry-ability/click-twice.gif "Retrying the assertions using a stub alias" %}
+
+Watch the short video below to see this example in action
+
+<!-- textlint-disable -->
+{% video youtube AlltFcsIFvc %}
+<!-- textlint-enable -->
+
 # See also
 
 - You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.

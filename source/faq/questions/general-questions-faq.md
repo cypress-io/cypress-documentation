@@ -16,9 +16,11 @@ You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Window
 
 ## {% fa fa-angle-right %} Do you support native mobile apps?
 
-Cypress will never be able to run on a native mobile app, but we can test some functionality of mobile web browsers.
+Cypress will never be able to run on a native mobile app, but we can test some functionality of mobile web browsers and test mobile applications that are developed in a browser, such as with {% url "the Ionic framework" https://ionicframework.com/ %}.
 
-Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application.
+Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application. You can also mimic certain behaviors like swiping using {% url "custom commands" custom-commands %}. 
+
+You can read about testing mobile applications with Ionic and Cypress {% url "here" https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/ %} and see how we manage testing the mobile viewport in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 
 ## {% fa fa-angle-right %} How is this different from 'X' testing tool?
 

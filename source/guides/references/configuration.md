@@ -128,7 +128,7 @@ This gives you the option to do things like override the `baseUrl` or environmen
 
 When {% url 'running Cypress from the Command Line' command-line %} you can pass a `--config` flag.
 
-**Examples:**
+### Examples:
 
 ```shell
 cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
@@ -145,7 +145,7 @@ cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 For more complex configuration objects, you may want to consider passing a {% url "JSON.stringified" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %} object surrounded by single quotes.
 
 ```shell
-cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.coffee"]}'
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 ## Plugins
@@ -205,6 +205,44 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
+## Test Configuration
+
+To apply specific Cypress {% url "configuration" configuration %} values to a suite or test, pass a configuration object to the test or suite function as the second argument.
+
+The configuration values passed in will only take effect during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
+
+{% partial allowed_test_config %}
+
+### Suite configuration
+
+You can configure the size of the viewport height and width within a suite.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
+
+### Single test configuration
+
+If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
+```js
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
+})
+```
+
 # Resolved Configuration
 
 When you open a Cypress project, clicking on the **Settings** tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
@@ -220,13 +258,13 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 
 # Notes
 
-## blacklistHosts
+## `blacklistHosts`
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
 To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
-To blacklist a host:
+To block a host:
 
 - {% fa fa-check-circle green %} Pass only the host
 - {% fa fa-check-circle green %} Use wildcard `*` patterns
@@ -236,7 +274,7 @@ To blacklist a host:
 {% note info %}
 Not sure what a part of the URL a host is? {% url 'Use this guide as a reference.' https://nodejs.org/api/url.html#url_url_strings_and_url_objects %}
 
-When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
+When blocking a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
 {% endnote %}
 
 Given the following URLs:
@@ -247,7 +285,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-This would match the following blacklisted hosts:
+This would match the following blocked hosts:
 
 ```text
 www.google-analytics.com
@@ -271,7 +309,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
 
-{% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
+{% imgTag /img/guides/blocked-host.png "Network tab of dev tools with analytics.js request selected and the response header highlighted " %}
 
 ## modifyObstructiveCode
 
@@ -358,3 +396,9 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 {% history %}
 {% url "3.5.0" changelog %} | Added support for option `nodeVersion`
 {% endhistory %}
+
+# See also
+
+- {% url "`Cypress.config()`" config %}
+- {% url "Environment variables" environment-variables %}
+- {% url "Environment Variables recipe" recipes#Fundamentals %}
