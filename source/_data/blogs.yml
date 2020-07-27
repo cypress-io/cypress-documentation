@@ -1,37 +1,4 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@7daytheory 
-cypress-io
-/
-cypress-documentation
-24
-258
-548
-Code
-Issues
-202
-Pull requests
-27
-Actions
-Projects
-Security
-Insights
-cypress-documentation/source/_data/blogs.yml
-@jennifer-shehane
-jennifer-shehane Write tests for Examples page (#2826)
-Latest commit c692e34 on May 28
- History
- 19 contributors
-@jennifer-shehane@mguery@ValerieThoma@bahmutov@richdouglasevans@anjanab96@mncharlton@YOU54F@toddseller@dsebastian@samsonyuwono@RandallKent
-1591 lines (1392 sloc)  64.8 KB
-  
-# small links with title and url
+ # small links with title and url
 small:
   - title: "Cypress Technology Blog"
     sourceUrl: https://www.cypress.io/blog
@@ -1622,15 +1589,3 @@ large:
     date: Jan 27, 2016
     author: Kiki Roeder
     img: /img/examples/hypepotamus-guy-testing-website.jpg
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
