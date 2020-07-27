@@ -57,6 +57,7 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
+`screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during cypress run.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
 

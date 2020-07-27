@@ -23,6 +23,8 @@ This behavior can be turned off by setting `screenshotOnRunFailure` to `false` i
 
 Screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
 
+Capturing of screenshots when a test fail can be turned off entirely by setting {% url `screenshotOnRunFailure` configuration#Screenshots %} to `false` from within your configuration.
+
 Cypress clears any existing screenshots before `cypress run`. If you do not want to clear your screenshots folder before a run, you can set {% url `trashAssetsBeforeRuns` configuration#Screenshots %} to `false`.
 
 # Videos
