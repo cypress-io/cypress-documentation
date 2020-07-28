@@ -1,4 +1,4 @@
- # small links with title and url
+# small links with title and url
 small:
   - title: "Cypress Technology Blog"
     sourceUrl: https://www.cypress.io/blog
