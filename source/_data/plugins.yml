@@ -136,6 +136,11 @@
       description: Cypress helper that checks number of expected and actual assertions in the test
       link: https://github.com/bahmutov/cypress-expect-n-assertions
       keywords: [test, assertion]
+      
+    - name: 'cypress-random-test-order'
+      description: Randomise the order `it` blocks are executed in
+      link: https://github.com/mncharlton/cypress-random-test-order
+      keywords: [test, random, testing, randomise, randomize]
 
 - name: Custom Commands
   plugins:
