@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Controlling Browser Permissions in Cypress End-to-End Tests"
+    url: https://dev.to/kamranayub/controlling-browser-permissions-in-cypress-end-to-end-tests-5d7b
+    sourceName: Dev.to
+    sourceUrl: https://dev.to/
+    author: Kamran Ayub
+    date: July 17, 2020
+    img: /img/examples/cypress-browser-permissions.png
+
   - title: "How to Write Automation Tests for Feature Flags with Cypress.io and Selenium"
     url: https://medium.com/engineers-optimizely/how-to-write-automation-tests-for-feature-flags-with-cypress-io-and-selenium-98493b5c46bc
     sourceName: Medium
