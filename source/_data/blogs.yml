@@ -824,16 +824,16 @@ large:
     date: Jan 30, 2019
     img: /img/examples/tendencias-quality-assurance.png
 
-  - title: "Cypress com Cucumber nos testes E2E"
-    url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
-    sourceName: Concrete
-    sourceUrl: https://www.concrete.com.br/
+  - title: "Setting Cypress and Cucumber in e2e tests"
+    url: https://medium.com/assertqualityassurance/setting-cypress-and-cucumber-in-e2e-tests-6239adac1077
+    sourceName: Medium
+    sourceUrl: https://www.medium.com
     author: Lucas Fraga
-    date: Jan 24, 2019
+    date: April 3, 2019
     img: /img/examples/cypress-com-cucumber.jpg
 
   - title: "Testes E2E com CyPress no Quasar Framework"
-    url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
+    url: https://imasters.com.br/front-end/testes-e2e-com-cypress-no-quasar-framework
     sourceName: iMasters
     sourceUrl: https://imasters.com.br/
     author: Patrick Pinheiro Mmonteiro
