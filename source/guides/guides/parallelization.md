@@ -301,7 +301,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 - Supercharge test times by running tests in parallel
 - Get instant test failure alerts via Slack or GitHub
 
-<a href="https://www.cypress.io/dashboard" class="button">Get Started Free</a>
+<a href="https://www.cypress.io/dashboard" class="button">Learn more</a>
 {% endnote %} 
 
 - {% url "Continuous Integration Guide" continuous-integration %}
