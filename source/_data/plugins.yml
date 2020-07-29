@@ -436,6 +436,12 @@
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
       badge: verified
+    
+    - name: Cypress Nuxt
+      description: Utilities for using Cypress with Nuxt.
+      link: https://github.com/NickBolles/cypress-nuxt
+      keywords: [vue.js, vue, nuxt, nuxt.js]
+      badge: community
 
     - name: Aurelia CLI
       description: The Aurelia CLI is the official command line tool for Aurelia.
