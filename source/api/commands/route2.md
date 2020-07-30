@@ -54,7 +54,6 @@ cy.route2('/users/**')
 // https://localhost:8080/users/1b2c3            <-- matches
 // https://localhost:8080/users/profile/edit  <-- matches
 // https://localhost:8080/users/transaction?month=03&year=2020 <-- matches
-
 ```
 
 However, if you need to match additional properties on the route, you can pass an object instead.
