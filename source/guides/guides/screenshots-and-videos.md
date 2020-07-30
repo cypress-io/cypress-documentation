@@ -81,7 +81,7 @@ So you are capturing screenshots and recording videos of your test runs, now wha
 - Supercharge test times by running tests in parallel
 - Get instant test failure alerts via Slack or GitHub
 
-<a href="https://www.cypress.io/dashboard" class="button">Get Started Free</a>
+<a href="https://www.cypress.io/dashboard" class="button">Learn more</a>
 {% endnote %} 
 
 Something you can take advantage of today is the {% url 'Cypress Dashboard Service' dashboard-introduction%}: our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.

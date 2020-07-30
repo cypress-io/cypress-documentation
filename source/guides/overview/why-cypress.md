@@ -50,7 +50,7 @@ Cypress can test anything that runs in a browser.
 - Supercharge test times by running tests in parallel
 - Get instant test failure alerts via Slack or GitHub
 
-<a href="https://www.cypress.io/dashboard" class="button">Get Started Free</a>
+<a href="https://www.cypress.io/dashboard" class="button">Learn more</a>
 {% endnote %} 
 
 Cypress consists of a free, {% url "open source" https://github.com/cypress-io/cypress %}, {% url "locally installed" installing-cypress %} Test Runner **and** a Dashboard Service for {% url 'recording your tests' dashboard-introduction%}.
