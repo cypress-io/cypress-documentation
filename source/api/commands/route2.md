@@ -49,6 +49,7 @@ cy.route2('/users')
 cy.route2(/users\/\d+/)
 
 // Glob to match all paths in the /user path
+// Uses minimatch for matching: https://github.com/isaacs/minimatch
 cy.route2('/users/**')
 
 // https://localhost:8080/users/1b2c3            <-- matches
@@ -277,7 +278,17 @@ cy.route2('/login', (req) => {
 
 ### Matching requests and routes
 
-Any request that matches the `method` and `url` of a route will be responded to based on the configuration of that route.
+When a request matches any of the following route properties:
+
+- `method`
+- `url`
+- `auth`
+- `path`
+- `query`
+- `port`
+- and so forth
+
+The `RouteMatcher` will respond based on the configuration of that route.
 
 {% note bolt %}
 By default, all HTTP methods will be used used to match routes. If you want to stub a route with a specific HTTP method such as `POST` then you {% urlHash 'must be explicit about the method' Arguments %}.
