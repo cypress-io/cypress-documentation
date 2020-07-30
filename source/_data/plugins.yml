@@ -188,6 +188,12 @@
       keywords: [webpack, webpack-dev-server, hmr]
       badge: community
 
+    - name: cypress-browser-permissions
+      description: Controls permissions for desktop notifications, geolocation, and other browser APIs
+      link: https://github.com/kamranayub/cypress-browser-permissions
+      keyboards: [permissions, notifications, geolocation, camera, microphone]
+      badge: community
+
 - name: Custom Commands
   plugins:
     - name: cy-view
