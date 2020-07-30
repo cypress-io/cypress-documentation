@@ -43,7 +43,7 @@ For simple route matching, passing a string, glob, or RegExp is the simplest met
 
 ```js
 // String
-cy.route2('/users)
+cy.route2('/users')
 
 // Regex
 cy.route2(/users\/\d+/)
