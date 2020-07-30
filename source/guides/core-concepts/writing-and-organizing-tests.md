@@ -396,12 +396,35 @@ Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertion
 ```javascript
 it('can add numbers', () => {
   expect(add(1, 2)).to.eq(3)
+  // equivalent assertion
+  cy.wrap(add(1, 2)).should('equal', 3)
 })
 
 it('can subtract numbers', () => {
   assert.equal(subtract(5, 12), -7, 'these numbers are equal')
 })
 ```
+
+# Running tests
+
+We suggest running test files individually by clicking on the spec filename. For example the {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} has multiple test files, but we run a single "new-transaction.spec.ts" test file.
+
+{% imgTag /img/guides/core-concepts/run-single-spec.gif "Running a single spec" %}
+
+You can run all spec files together by clicking "Run all specs" button. This mode is equivalent to concatenating all spec files together into a single piece of test code.
+
+{% imgTag /img/guides/core-concepts/run-all-specs.gif "Running all specs" %}
+
+{% note danger %}
+{% fa fa-warning %} Be wary of root-level hooks, as they could execute in a surprising order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %}.
+{% endnote %}
+
+You can also run a subset of all specs by entering a text search filter. Only the specs with relative file paths containing the search filter will remain and be concatenated together when clicking "Run N specs" button.
+
+{% imgTag /img/guides/core-concepts/run-selected-specs.gif "Running specs matching the search filter" %}
+
+- the search filter is case-insensitive; the filter "ui" will match both "UI-spec.js" and "admin-ui-spec.js" files.
+- the search filter is applied to the entire relative spec file path, thus you can use folder names to limit the specs; the filter "ui" will match both "admin-ui.spec.js" and "ui/admin.spec.js" files.
 
 # Watching tests
 
