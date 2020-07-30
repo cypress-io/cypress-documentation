@@ -325,9 +325,9 @@ cy.get('#beetle-results').should('have.length', 1)
 Instead of writing a response inline you can automatically connect a response with a {% url `cy.fixture()` fixture %}.
 
 ```javascript
-cy.route2('**/posts/*', 'fixture:logo.png').as('getLogo')
-cy.route2('**/users', 'fixture:users/all.json').as('getUsers')
-cy.route2('**/admin', 'fx:users/admin.json').as('getAdmin')
+cy.route2('**/posts/*', { fixture: 'logo.png' }).as('getLogo')
+cy.route2('**/users', { fixture: 'users/all.json' }).as('getUsers')
+cy.route2('**/admin', { fixture: 'users/admin.json' }).as('getAdmin')
 ```
 
 You may want to define the `cy.route2()` after receiving the fixture and working with its data.
