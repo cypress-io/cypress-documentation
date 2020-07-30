@@ -344,13 +344,6 @@ cy.visit('/users')
 cy.get('.user').should('include', 'Jane')
 ```
 
-You can also reference fixtures as strings directly in the response by passing an aliased fixture with `@`.
-
-```javascript
-cy.fixture('user').as('fxUser')
-cy.route2('POST', '**/users', '@fxUser')
-```
-
 ## Options
 
 ### Server redirect
