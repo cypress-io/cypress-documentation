@@ -66,19 +66,19 @@ cy.route2({
 })
 ```
 
-The following contains a complete list of available properties you can verify against:
+The following contains a complete list of available properties you can match against:
 
-Option | Default | Description
---- | --- | ---
-`auth` | `null` | Object with a `username` and `password` to match HTTP basic authentication
-`headers` | `null` | Object to match client request headers
-`hostname` | `null` | String, RegExp, or Glob to match based on requested hostname
-`method` | `'ALL'` | Match based on HTTP method (`GET`, `POST`, `PUT`, etc.)
-`path` | `null` | String, RegExp, or Glob to match on request path after the hostname, including query params
-`pathname` | `null` | String, RegExp, or Glob to match on request path after the hostname, without query params
-`port` | `null` | Match based on requested port number
-`query` | `null` | Object to match based on query parameters
-`url` | `null` | String, RegExp, or Glob to match based on full request URL
+Option | Default | Type | Description
+--- | --- | --- | ---
+`auth` | `null` | *Object* | HTTP basic authentication including `username` and `password`
+`headers` | `null` | *Object* | Client request headers
+`hostname` | `null` | *String, RegExp, Glob* | Requested hostname
+`method` | `'ALL'` | *String* | HTTP method (`GET`, `POST`, `PUT`, etc.)
+`path` | `null` | *String, RegExp, Glob* | Request path after the hostname, including query params
+`pathname` | `null` | *String, RegExp, Glob* | Request path after the hostname, without query params
+`port` | `null` | *Number* | Requested port number
+`query` | `null` | *Object* | Query parameters
+`url` | `null` | *String, RegExp, Glob* | Full request URL
 
 **{% fa fa-angle-right %} response** ***(String, Object, Array, Function)***
 
