@@ -391,7 +391,7 @@ The code above will produce a suite with 4 tests:
 
 ## Assertion Styles
 
-Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertions. {% url "Read more about assertions." assertions %}
+Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain assertions. {% url "Read more about plain assertions." assertions %}
 
 ```javascript
 it('can add numbers', () => {
@@ -401,6 +401,12 @@ it('can add numbers', () => {
 it('can subtract numbers', () => {
   assert.equal(subtract(5, 12), -7, 'these numbers are equal')
 })
+```
+
+The {% url "`.should()`" should %} command and its alias {% url "`.and()`" and %} can also be used to more easily chain assertions off of Cypress commands. {% url "Read more about assertions." introduction-to-cypress#Assertions %}
+
+```js
+cy.wrap(add(1, 2)).should('equal', 3)
 ```
 
 # Running tests
