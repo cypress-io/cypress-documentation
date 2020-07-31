@@ -9,7 +9,7 @@ containerClass: experimental
 
 Use `cy.route2()` to manage the behavior of network requests at the network layer.
 
-## Comparison to cy.route()
+# Comparison to `cy.route()`
 
 Unlike {% url `cy.route()` route %}, `cy.route2()`:
 
