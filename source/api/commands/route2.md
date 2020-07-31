@@ -4,7 +4,7 @@ containerClass: experimental
 ---
 
 {% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must manually configure the `experimentalNetworkMocking` option to `true`.** See {% issue 687 %} for more details.
+{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must manually configure the {% url "`experimentalNetworkMocking`" experiments %} option to `true`.** See {% issue 687 %} for more details.
 {% endnote %}
 
 Use `cy.route2()` to manage the behavior of network requests at the network layer.
@@ -52,8 +52,8 @@ cy.route2(/users\/\d+/)
 // Uses minimatch for matching: https://github.com/isaacs/minimatch
 cy.route2('/users/**')
 
-// https://localhost:8080/users/1b2c3            <-- matches
-// https://localhost:8080/users/profile/edit  <-- matches
+// https://localhost:8080/users/1b2c3                          <-- matches
+// https://localhost:8080/users/profile/edit                   <-- matches
 // https://localhost:8080/users/transaction?month=03&year=2020 <-- matches
 ```
 
@@ -112,7 +112,7 @@ cy.route2('/users/**', (req) => {
 Match the route to a specific HTTP method (`GET`, `POST`, `PUT`, etc).
 
 {% note bolt %}
-By default, Cypress will match `ALL` requests by default.
+By default, Cypress will match `ALL` requests.
 {% endnote %}
 
 ## Yields {% helper_icon yields %}
@@ -203,11 +203,11 @@ cy.route2('/users', (req) => {
 
 ## With Stubbing
 
-If you pass a `response` to `cy.route()`, Cypress will stub the response in the request.
+If you pass a `response` to `cy.route2()`, Cypress will stub the response in the request.
 
 ### `url` as a string
 
-When passing a `string` as the `url`, the URL must match *exactly* what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
+When passing a String as the `url`, the URL must match *exactly* what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
 
 ```javascript
 cy.route2('https://localhost:7777/surveys/customer?email=john@doe.com', [
