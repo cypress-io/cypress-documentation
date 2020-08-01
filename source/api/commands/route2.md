@@ -307,28 +307,21 @@ cy.route2('DELETE', '**/users/*', {})
 You can test a route multiple times with unique response objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
 
 ```javascript
-cy.route2('/beetles', []).as('getBeetles')
-cy.get('#search').type('Weevil')
+// Define two HTTP methods on the same route
+cy.route2('GET', '/api/blog').as('getBlogPost')
+cy.route2('POST', '/api/blog').as('postBlogPost')
 
-// wait for the first response to finish
-cy.wait('@getBeetles')
+cy.get('#search').type('Network Requests with Cypress')
+cy.get('#submit').click()
 
-// the results should be empty because we
-// responded with an empty array first
-cy.get('#beetle-results').should('be.empty')
-
-// now re-define the /beetles response
-cy.route2('/beetles', [{ name: 'Geotrupidae' }])
-
-cy.get('#search').type('Geotrupidae')
-
-// now when we wait for 'getBeetles' again, Cypress will
-// automatically know to wait for the 2nd response
-cy.wait('@getBeetles')
+// Wait for the first response to finish
+cy.wait('@getBlogPost')
+// Wait for the second response to finish
+cy.wait('@postBlogPost')
 
 // we responded with 1 beetle item so now we should
 // have one result
-cy.get('#beetle-results').should('have.length', 1)
+cy.get('#blog-post-results').should('have.length', 1)
 ```
 
 ### Fixtures
