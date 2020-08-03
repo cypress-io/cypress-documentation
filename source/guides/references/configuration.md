@@ -57,6 +57,7 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
+`screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during `cypress run`.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
 
@@ -394,7 +395,9 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
-{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% url "4.1.0" changelog#4-12-0 %} | Added support for `screenshotOnRunFailure` configuration.
+{% url "4.0.0" changelog#4-0-0 %} | Added support for `firefoxGcInterval` configuration.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for `nodeVersion` configuration.
 {% endhistory %}
 
 # See also
