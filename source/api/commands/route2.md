@@ -267,11 +267,8 @@ cy.route2('/login', {
 })
 
 ```javascript
-// continue the HTTP response to the browser, including any modifications made to `res`
-cy.route2('/login', (req) => {
-  req.send()
-})
-```
+// continue the HTTP response to the browser, including any modifications made to `res` <--- what's `res` here?
+cy.route2('/login')
 
 ### Matching requests and routes
 
