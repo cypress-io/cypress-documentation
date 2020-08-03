@@ -238,9 +238,7 @@ $.get('https://localhost:7777/users/1337', (data) => {
 You can also use a function as a response which enables you to add logic and modify properties of the response. The function exposes a `req` object which contains the request as well as a way to `send` with a response.
 
 ```javascript
-cy.route2('/login', (req) => {
-  req.send('Success')
-})
+cy.route2('/login', 'Success')
 ```
 
 ```javascript
