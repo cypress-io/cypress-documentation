@@ -252,22 +252,19 @@ cy.route2('/login', (req) => {
 
 ```javascript
 // reply with an object containing more response details
-cy.route2('/login', (req) => {
-  req.send({
-    statusCode: 200,
-    body: JSON.stringify({
-      some: 'response'
-    }),
-    headers: {
-      'x-new-headers': 'from-server'
-    },
-    // If `destroySocket` is truthy, Cypress will destroy the connection to the
-    // browser and send no response. Useful for simulating a server that is not
-    // reachable. Must not be set in combination with other options.
-    destroySocket: false
-  })
+cy.route2('/login', {
+  statusCode: 200,
+  body: {
+    some: 'response'
+  },
+  headers: {
+    'x-new-headers': 'from-server'
+  },
+  // If `destroySocket` is truthy, Cypress will destroy the connection to the
+  // browser and send no response. Useful for simulating a server that is not
+  // reachable. Must not be set in combination with other options.
+  destroySocket: false
 })
-```
 
 ```javascript
 // continue the HTTP response to the browser, including any modifications made to `res`
