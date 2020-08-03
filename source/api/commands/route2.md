@@ -85,18 +85,14 @@ Option | Default | Type | Description
 This allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route. This is accomplished by giving you access to the request that you can use in a plain function.
 
 ```js
-cy.route2('/users/**', (req) => {
-  req.send({
-    statusCode: 200,
-    body: JSON.stringify({
-      profile: {
-        firstName: 'Tony',
-        lastName: 'Jarvis'
-      }
-    })
-  })
+cy.route2('/users/**', {
+  statusCode: 200,
+  body: {
+    profile: {
+      firstName: 'Tony',
+      lastName: 'Jarvis'
+  }
 })
-```
 
 In addition, because you have access to the request, this means that you can modify the request as well:
 
