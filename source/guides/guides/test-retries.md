@@ -24,7 +24,12 @@ With the new test retries feature, Cypress will be able to retry failed tests to
 
 ## How It Works
 
-By default, tests being run in {% url "`cypress run`" command-line#cypress-run %} mode will automatically be retried up to 2 additional times (for a total of 3 attempts) before being marked as a failed test. When each test is run again, the following {% url "hooks" writing-and-organizing-tests#Hooks %} will be re-run on each attempt:
+By default, tests will have test retries disabled. 
+
+However, when test retries is configured, tests will automatically be retried up to X additional times based on the desired configuration. For example, if test retries are enabled with a value of `2`, it will retry tests up to 2 additional times (for a total of 3 attempts) before being marked as a failed test.
+
+
+When each test is run again, the following {% url "hooks" writing-and-organizing-tests#Hooks %} will be re-run on each attempt:
 
 - `beforeEach`
 - `afterEach`
@@ -61,17 +66,9 @@ In addition, you will be able to see the number of attempts made in the Command 
 
 ## Configuring Test Retries
 
-If any tests fail, they will be automatically:
-
-- Retried up to 2 times (for a total of 3 attempts) in `cypress run` mode
-- Run normally with no retries in `cypress open` mode
-
-The reason for this distinction is to avoid wasting developer time by preventing unnecessary runs while a test is being worked on.
-
-
 ### Global Configuration
 
-If you need to change the number of attempts being made across your entire test suite for both `cypress run` and `cypress open`, you can configure this in your {% url "configuration file" command-line#cypress-open-config-file-lt-config-file-gt %} (`cypress.json` by default) by defining the `retries` property and giving it the desired number.
+If you want to change the number of attempts being made across your entire test suite for both `cypress run` and `cypress open`, you can configure this in your {% url "configuration file" command-line#cypress-open-config-file-lt-config-file-gt %} (`cypress.json` by default) by defining the `retries` property and giving it the desired number.
 
 ```jsx
 {
@@ -100,11 +97,11 @@ However, in the event you need to define unique retry attempts for the different
 {
   "retries": {
     // Configure retries for `cypress run` 
-    // Default is 2
-    "runMode": 1,
+    // Default is 0
+    "runMode": 2,
     // Configure retries for `cypress open`
     // Default is 0
-    "openMode": 3
+    "openMode": 1
   }
 }
 ```
@@ -126,8 +123,8 @@ describe('User sign-up and login', () => {
   // `it` test block with custom configuration
   it('allows user to login', {
     retries: {
-      runMode: 3,
-      openMode: 2
+      runMode: 2,
+      openMode: 1
     }
   }, () => {
     // ...
@@ -143,7 +140,7 @@ If you want a suite of tests to re-run a custom number of times, this can be ach
 // Customizing retries for a suite of tests
 describe('User bank accounts', {
   retries: {
-    runMode: 3,
+    runMode: 2,
     openMode: 1,
   }
 }, () => {
