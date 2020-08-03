@@ -185,7 +185,7 @@ cy.route2('/users', (req) => {
 
 ### Modify response
 
-After a request that gets passed through, we can modify the response from the server before it is returned through a function. The function exposes a `req` object which contains the request. The `req.send()` function exposes a `res` object which contains the response.
+After a request gets passed through, we can modify the response from the server. The `response` function accepts the request object as a parameter. Calling `.send()` on the request exposes a `response` object that can be modified.
 
 ```javascript
 cy.route2('/users', (req) => {
