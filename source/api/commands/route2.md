@@ -171,7 +171,7 @@ cy.route2('**/posts/**')
 
 ### Modify request
 
-Before a request gets passed through, we can modify the request before it is sent out through a function. The function exposes a `req` object which contains the request.
+Before a request gets passed through, we can modify the request. The `response` function accepts the request object as a parameter.
 
 You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} or {% urlHash 'throttle' Simulate-throttle %} on the request to be sent out.
 
