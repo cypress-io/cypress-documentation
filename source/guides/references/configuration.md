@@ -395,7 +395,9 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
-{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% url "4.1.0" changelog#4-12-0 %} | Added support for `screenshotOnRunFailure` configuration.
+{% url "4.0.0" changelog#4-0-0 %} | Added support for `firefoxGcInterval` configuration.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for `nodeVersion` configuration.
 {% endhistory %}
 
 # See also
