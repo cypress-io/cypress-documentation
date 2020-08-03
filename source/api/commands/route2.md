@@ -102,7 +102,7 @@ In addition, because you have access to the request, this means that you can mod
 
 ```js
 cy.route2('/users/**', (req) => {
-  req.headers = { ...req.headers, accept: 'application/json' }
+  req.headers['accept'] = 'application/json'
   req.body = { ...req.body, note: 'Custom note' }
 })
 ```
