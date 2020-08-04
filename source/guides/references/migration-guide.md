@@ -6,13 +6,11 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
 
-## Tests retry by default
+## Tests retries
 
-Test retries are on by default when running via {% url "`cypress run`" command-line#cypress-run %} in Cypress 5.0. 
+Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works and how to turn on test retries.
 
-This means that tests will automatically be re-run up to 2 additional times (for a total of 3 attempts) before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works.
-
-Additionally, the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. You can safely remove any code requiring this plugin.
+The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. You can safely remove any code requiring this plugin. There's guidance below on how to migrate from the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin to Cypress's built-in test retries.
 
 ### Configure test retries via the CLI
 
