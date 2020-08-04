@@ -188,6 +188,10 @@ When we say *guard*, this usually means:
 - Writing an assertion
 - Waiting on an XHR
 
+### More info
+
+Read the blog post {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %} for another example of this error, and how to solve it.
+
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element cannot be interacted with
 
 You may see a variation of this message for 4 different reasons:

@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `cy.route()`. By def
 Option | Default | Description
 --- | --- | ---
 `delay` | `0` | Delay for stubbed responses (in ms)
-`force404` | `false` | Forcibly send a 404 status when the XHR does not match any existing {% url `cy.route()` route %}.
+`force404` | `false` | Forcibly send a 404 status when the XHR does not match any existing `cy.route()`.
 `headers` | `null` | Response headers for stubbed routes
 `method` | `GET` | Method to match against requests
 `onAbort` | `null` | Callback function which fires anytime an XHR is aborted
@@ -209,7 +209,7 @@ Any request that matches the `method` and `url` of a route will be responded to 
 {% note info %}
 If a request doesn't match any route then the behavior depends on the value of the `force404` option on the {% url `cy.server()` server %}:
 
-* if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
+* if `force404` is `false` (the default) then the request will {% url 'pass through to the server' network-requests#Use-Server-Responses %}.
 * if `force404` is `true` then the response {% urlHash "will be a 404" Notes %}.
 
 You can {% url 'read more about this behavior here.' server#Options %}

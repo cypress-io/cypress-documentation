@@ -290,7 +290,7 @@ Now we can put an `.only` on this test and it will run successfully irrespective
 
 ```javascript
 describe('my form', () => {
-  beforeEach () => {
+  beforeEach(() => {
     cy.visit('/users/new')
     cy.get('#first').type('Johnny')
     cy.get('#last').type('Appleseed')

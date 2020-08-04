@@ -241,7 +241,7 @@ cy.get('textarea.post-body')
 
 以下是Cypress提供的与您的应用进行交互的更多动作命令：
 
-- {% url `.blur()` blur %} - 使焦点DOM元素模糊.
+- {% url `.blur()` blur %} - 移开DOM元素上的焦点.
 - {% url `.focus()` focus %} - 聚焦DOM元素.
 - {% url `.clear()` clear %} - 清除输入或文本区域的值.
 - {% url `.check()` check %} - 选中复选框或者单选框.

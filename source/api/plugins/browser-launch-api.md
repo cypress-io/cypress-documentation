@@ -2,7 +2,7 @@
 title: Browser Launch API
 ---
 
-Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options.
+Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from your {% url "`pluginsFile`" plugins-guide %}.
 
 # Syntax
 
@@ -55,6 +55,7 @@ Here are args available for the currently supported browsers:
 * {% url 'Firefox' "https://developer.mozilla.org/docs/Mozilla/Command_Line_Options" %}
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     // `args` is an array of all the arguments that will
@@ -82,6 +83,7 @@ module.exports = (on, config) => {
 ### Add browser extensions:
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
     // supply the absolute path to an unpacked extension's folder
@@ -102,6 +104,7 @@ Here are preferences available for the currently supported browsers:
 * Firefox: visit `about:config` URL within your Firefox browser to see all available preferences.
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
@@ -133,7 +136,7 @@ module.exports = (on, config) => {
 
 ## Modify Electron app switches
 
-Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://electronjs.org/docs/api/chrome-command-line-switches/history %}.
+Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://www.electronjs.org/docs/api/command-line-switches %}.
 
 You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, you can set the environment variables before running Cypress like below:
 
@@ -149,7 +152,7 @@ export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-erro
 set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
 ```
 
-Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. There is no way to see all currently set switches after Electron's launch.
+Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.js" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js %}. There is no way to see all currently set switches after Electron's launch.
 
 ## See all Chrome browser switches
 
@@ -159,18 +162,44 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 
 # Examples
 
-## Set screen size when running headless Chrome
+## Set screen size when running headless
 
-When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below.
+When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
+
+{% note warning %}
+This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the {% url "configuration" configuration %}. The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner.
+{% endnote %}
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
     if (browser.name === 'chrome' && browser.isHeadless) {
+      // fullPage screenshot size is 1400x1200 on non-retina screens
+      // and 2800x2400 on retina screens
       launchOptions.args.push('--window-size=1400,1200')
 
-      return launchOptions
+      // force screen to be non-retina (1400x1200 size)
+      launchOptions.args.push('--force-device-scale-factor=1')
+
+      // force screen to be retina (2800x2400 size)
+      // launchOptions.args.push('--force-device-scale-factor=2')
     }
+
+    if (browser.name === 'electron' && browser.isHeadless) {
+      // fullPage screenshot size is 1400x1200
+      launchOptions.preferences.width = 1400
+      launchOptions.preferences.height = 1200
+    }
+
+    if (browser.name === 'firefox' && browser.isHeadless) {
+      // menubars take up height on the screen
+      // so fullPage screenshot size is 1400x1126
+      launchOptions.args.push('--width=1400')
+      launchOptions.args.push('--height=1200')
+    }
+
+    return launchOptions
   })
 }
 ```
@@ -178,6 +207,7 @@ module.exports = (on, config) => {
 ## Start fullscreen
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
@@ -204,6 +234,7 @@ By default, Cypress passes the Chrome command line switch to enable a fake video
 You can however send your own video file for testing by passing a Chrome command line switch pointing to a video file.
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
@@ -224,11 +255,12 @@ module.exports = (on, config) => {
 Change the download directory of files downloaded during Cypress tests.
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     const downloadDirectory = path.join(__dirname, '..', 'downloads')
 
-    if (browser.family === 'chromium') {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       options.preferences.default['download'] = { default_directory: downloadDirectory }
 
       return options
