@@ -199,6 +199,6 @@ node ./wrapper cypress run --browser chrome --config ...
 **Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
 
 {% history %}
-{% url "4.11.0" changelog#4-11-0 %} | Added `cypress.cli` option with `parseRunArguments` function.
+{% url "4.11.0" changelog#4-11-0 %} | Added `cypress.cli` with `parseRunArguments` function.
 {% url "4.9.0" changelog#4-9-0 %} | Added `quiet` option to `cypress.run()`
 {% endhistory %}
