@@ -195,6 +195,8 @@ node ./wrapper cypress run --browser chrome --config ...
 
 **Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
 
+We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky recipes" https://github.com/cypress-io/cypress-example-recipes/blob/master/test-repeat.js %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-react-unit-test/blob/main/scripts/cypress-expect.js %}.
+
 {% history %}
 {% url "4.11.0" changelog#4-11-0 %} | Added `cypress.cli` with `parseRunArguments` function.
 {% url "4.9.0" changelog#4-9-0 %} | Added `quiet` option to `cypress.run()`
