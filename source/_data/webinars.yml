@@ -8,6 +8,12 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Build invincible integration tests using Cypress and cypress-testing-library"
+    date: July 8, 2020
+    author: Cypress & Fiverr with Gleb Bahmutov & Roman Sadler
+    youtubeId: F8LH9d9eN3M
+    slides: https://slides.com/romansandler/bulletproof-cypress/
+
   - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
     date: Dec 10, 2018
     author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb

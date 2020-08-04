@@ -58,7 +58,7 @@ When adding {% url "custom commands" custom-commands %} to the `cy` object, you 
 For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
 ```javascript
-// cypress/support/index.js
+// cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
@@ -91,7 +91,7 @@ If your specs files are in TypeScript, you should include the TypeScript definit
 Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
 ```javascript
-// from your cypress/integration/spec.js
+// from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
@@ -116,7 +116,7 @@ If you extend Cypress assertions, you can extend the assertion types to make the
 You can utilize Cypress's type declarations in your {% url "plugins file" plugins-guide %} by annotating it like the following:
 
 ```javascript
-// cypress/plugins/index.js
+// cypress/plugins/index.ts
 
 /// <reference types="cypress" />
 

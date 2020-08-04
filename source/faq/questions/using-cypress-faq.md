@@ -653,3 +653,10 @@ it('test', () => {
 ```
 
 Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. {% url "Learn more about why" $#Notes %}
+
+## {% fa fa-angle-right %} Can I use Cypress to test charts and graphs?
+
+Yes. You can leverage visual testing tools to test that charts and graphs are rendering as expected. For more information, check out the {% url "Visual Testing guide" visual-testing %} and the following blog posts.
+
+- see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
+- see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
