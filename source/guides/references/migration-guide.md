@@ -231,6 +231,20 @@ Running Cypress on Linux now requires the `libgbm` dependency (on Debian-based s
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
+## TypeScript esModuleInterop
+
+Cypress no longer forces the `esModuleInterop` compiler option for TypeScript to be `true` for spec, support, and plugin files. We recommend setting it in your project's `tsconfig.json` instead if you need to.
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    /* ... other compiler options ... */
+  }
+}
+```
+
 ## TypeScript 3.4+ support
 
 Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
