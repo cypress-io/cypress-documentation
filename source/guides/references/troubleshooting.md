@@ -212,13 +212,16 @@ You can also obtain more detailed per-process information by enabling the verbos
 
 # Debugging flake
 
-While Cypress is {% url "flake-resistant" key-differences#flake-resistant %}, some users do experience flake, particularly when running locally versus in CI. Most often in cases of flaky tests, we see that there are not enough assertions surrounding test actions or network requests before moving on to the next assertion.
+While Cypress is {% url "flake-resistant" key-differences#Flake-resistant %}, some users do experience flake, particularly when running locally versus in CI. Most often in cases of flaky tests, we see that there are not enough assertions surrounding test actions or network requests before moving on to the next assertion.
 
 If there is any variation in the speed of the network requests or responses in interactive mode versus run mode, then there can be failures in one over the other.
 
 Because of this, we recommend asserting on as many required steps as possible before moving forward with the test. This also helps later to isolate where the exact failure is when debugging.
 
-Flake can also occur when there are differences between your local and test environments. You can review the {% url "FAQ here" using-cypress-faq#Why-do-my-Cypress-tests-pass-locally-but-not-in-CI %} for tips on how to address tests that pass locally but fail in CI.
+Flake can also occur when there are differences between your local and test environments. You can use the following methods troubleshoot  tests that pass locally but fail in CI.
+
+- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
+- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
 
 The Cypress Dashboard also offers {% url "Analytics" analytics %} that illustrate trends in your tests and can help identify the tests that fail most often. This could help narrow down what is causing the flake -- for example, seeing increased failures after a change to the test environment could indicate issues with the new environment.
 
