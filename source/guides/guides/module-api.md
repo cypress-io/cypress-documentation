@@ -8,11 +8,11 @@ You can require Cypress as a node module from your application under test. This 
 - Rerun a single failing spec file
 - Kick off other builds or scripts
 
-## `cypress.run()`
+# `cypress.run()`
 
 Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#fundamentals %}.
 
-### Options:
+## Options
 
 Just like the {% url "Command Line options" command-line %} for `cypress run`, you can pass options that modify how Cypress runs.
 
@@ -55,7 +55,7 @@ cypress.run({
 })
 ```
 
-### Example:
+## Example
 
 Here is an example of programmatically running a spec file:
 
@@ -149,11 +149,45 @@ cypress.run({
 
 Find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
 
-Even when tests fail, the `Promise` still resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason; for example if a binary has not been installed or it cannot find  a module dependency. In that case, the `Promise` will be rejected with a detailed error.
+## Handling errors
 
-## `cypress.open()`
+Even when tests fail, the `Promise` resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason (for example if a binary has not been installed or it cannot find a module dependency). In that case, the `Promise` will be rejected with a detailed error.
 
-### Options
+There is a third option - Cypress could run, but the tests could not start for some reason. In that case the resolved value is an object with two fields
+
+```js
+{
+  "failures": 1,    // non-zero number
+  "message": "..."  // error message
+}
+```
+
+In order to handle these possible errors, you can add a `catch` to `cypress.run()`:
+
+```js
+const cypress = require('cypress')
+
+cypress.run({...})
+.then(result => {
+  if (result.failures) {
+    console.error('Could not execute tests')
+    console.error(result.message)
+    process.exit(result.failures)
+  }
+
+  // print test results and exit
+  // with the number of failed tests as exit code
+  process.exit(result.totalFailed)
+})
+.catch(err => {
+  console.error(err.message)
+  process.exit(1)
+})
+```
+
+# `cypress.open()`
+
+## Options
 
 Just like the {% url "Command Line options" command-line %}, you can pass options that modify how Cypress runs.
 
@@ -168,7 +202,7 @@ Option |  Type | Description
 `port` | *number* | Override default port
 `project` | *string* | Path to a specific project
 
-### Example
+## Example
 
 ```javascript
 const cypress = require('cypress')
@@ -176,7 +210,33 @@ const cypress = require('cypress')
 cypress.open()
 ```
 
+# `cypress.cli`
+
+## `parseRunArguments()`
+
+If you are writing a tool that wraps around the `cypress.run()` command, you might want to parse user-supplied command line arguments using the same logic as `cypress run` uses. In that case, you can use the included `parseRunArguments` function.
+
+```javascript
+// wrapper.js
+const cypress = require('cypress')
+
+const runOptions = await cypress.cli.parseRunArguments(process.argv.slice(2))
+const results = await cypress.run(runOptions)
+// process the "cypress.run()" results
+```
+
+An example use could be:
+
+```shell
+node ./wrapper cypress run --browser chrome --config ...
+```
+
+**Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
+
+We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky recipes" https://github.com/cypress-io/cypress-example-recipes/blob/master/test-repeat.js %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-react-unit-test/blob/main/scripts/cypress-expect.js %}.
+
 {% history %}
 {% url "5.0.0" changelog %} | Test results returned from `cypress.run()` changed.
+{% url "4.11.0" changelog#4-11-0 %} | Added `cypress.cli` with `parseRunArguments` function.
 {% url "4.9.0" changelog#4-9-0 %} | Added `quiet` option to `cypress.run()`
 {% endhistory %}
