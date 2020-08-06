@@ -62,6 +62,10 @@ Option | Default | Description
 `force` | `false` | {% usage_options force rightclick %}
 `multiple` | `false` | {% usage_options multiple rightclick %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .rightclick %}
+`ctrlKey` | `false` | {% usage_options ctrlKey %}
+`altKey` | `false` | {% usage_options altKey %}
+`shiftKey` | `false` | {% usage_options shiftKey %}
+`metaKey` | `false` | {% usage_options metaKey %}
 
 ## Yields {% helper_icon yields %}
 
