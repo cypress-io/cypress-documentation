@@ -95,16 +95,23 @@ it('allows user to login', {
 
 ## Module API results
 
-To more accurately reflect result data for runs with test retries, the structure of each run's `tests` object resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
+To more accurately reflect result data for runs with test retries, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
 
 Mainly there is a new `attempts` Array on each `test` which will reflect the result of each test retry.
 
-{% badge danger Before %} `results.run.tests`  Module API results
+{% badge danger Before %} `results.runs`  Module API results
 
 ```json
 {
   // ...
   "runs": [{
+    // ...
+    "hooks": [{
+      "hookId": "h1",
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
     // ...
     "screenshots": [{
       "screenshotId": "8ddmk",
@@ -115,6 +122,12 @@ Mainly there is a new `attempts` Array on each `test` which will reflect the res
       "height": 720,
       "width": 1280
     }],
+    "stats": {
+      // ...
+      "wallClockStartedAt": "2020-08-05T08:38:37.589Z",
+      "wallClockEndedAt": "2018-07-11T17:53:35.675Z",
+      "wallClockDuration": 1171
+    },
     "tests": [{
       "testId": "r2",
       "title": [ "test" ],
@@ -137,43 +150,51 @@ Mainly there is a new `attempts` Array on each `test` which will reflect the res
 }
 ```
 
-{% badge success After %} `results.run.tests` Module API results
+{% badge success After %} `results.runs` Module API results
 
 ```json
 {
   // ...
   "runs": [{
     // ...
-    "tests": [
-      {
-        "attempts": [{
-          "state": "failed",
-          "error": {
-            "message": "expected true to be false",
-            "stack": "AssertionError: expected true to be false\n' +
-        '    at Context.eval (...cypress/integration/spec.js:5:21"
-          },
-          "screenshots": [{
-            "name": null,
-            "takenAt": "2020-08-05T08:52:20.432Z",
-            "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
-            "height": 720,
-            "width": 1280
-          }],
-          "timings": {...},
-          "failedFromHookId": null,
-          "wallClockStartedAt": "2020-08-05T08:38:37.589Z",
-          "wallClockDuration": 1171,
-          "videoTimestamp": 4486
-        }],
-        "testId": "r2",
-        "title": [ "test" ],
+    "hooks": [{
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
+    // ...
+    "stats": {
+      // ...
+      "startedAt": "2020-08-05T08:38:37.589Z",
+      "endedAt": "2018-07-11T17:53:35.675Z",
+      "duration": 1171
+    },
+    "tests": [{
+      "title": [ "test" ],
+      "state": "failed",
+      "body": "function () {\n  expect(true).to.be["false"];\n}",
+      "displayError": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21",
+      "attempts": [{
         "state": "failed",
-        "body": "function () {\n  expect(true).to.be["false"];\n}",
-        "displayError": "expected true to be false",
+        "error": {
+          "message": "expected true to be false",
+          "name": "AssertionError",
+          "stack": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21"
+        },
+        "screenshots": [{
+          "name": null,
+          "takenAt": "2020-08-05T08:52:20.432Z",
+          "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+          "height": 720,
+          "width": 1280
+        }],
+        "startedAt": "2020-08-05T08:38:37.589Z",
+        "duration": 1171,
         "videoTimestamp": 4486
-      }
-    ],
+      }]
+    }],
   }],
   // ...
 }
