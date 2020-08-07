@@ -35,7 +35,7 @@ When each test is run again, the following {% url "hooks" writing-and-organizing
 - `afterEach`
 
 {% note warning %}
-However, `before` and `after` hooks will not be re-run in retries.
+However, `before` and `after` hooks will not be run in subsequent attempts.
 {% endnote %}
 
 The following is a detailed step-by-step example of how test retries will work:
