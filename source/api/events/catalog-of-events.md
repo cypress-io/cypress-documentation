@@ -60,7 +60,7 @@ Event | Details
 --- | ---
 **Name:** | `window:unload`
 **Yields:** | the actual unload event **(Object)**
-**Description:** | Fires when your application is has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
+**Description:** | Fires when your application has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
 
 Event | Details
 --- | ---

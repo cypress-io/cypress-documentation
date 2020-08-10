@@ -44,7 +44,7 @@ sidebar:
     debugging: Depuración
     variables-and-aliases: Variables y alias
     stubs-spies-and-clocks: Stub, Spy y Clock
-    network-requests: Soliciudes de red
+    network-requests: Solicitudes de red
     screenshots-and-videos: Capturas de pantalla y videos
     guides: Guías
     command-line: Línea de comandos

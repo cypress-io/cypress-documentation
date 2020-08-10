@@ -6,13 +6,13 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
 
-## Tests retry by default
+## Tests retries
 
-Test retries are on by default when running via {% url "`cypress run`" command-line#cypress-run %} in Cypress 5.0. 
+Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works and how to turn on test retries.
 
-This means that tests will automatically be re-run up to 2 additional times (for a total of 3 attempts) before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works.
+When test retries are turned on, there will now be a screenshot taken for every failed attempt, so there could potentially be more than 1 screenshot per test failure. Read the Test Retries doc for more information on how this works.
 
-Additionally, the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. You can safely remove any code requiring this plugin.
+The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. There's guidance below on how to migrate from the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin to Cypress's built-in test retries.
 
 ### Configure test retries via the CLI
 
@@ -93,6 +93,113 @@ it('allows user to login', {
 }, () => {
   // ...
 })
+```
+
+## Module API results
+
+To more accurately reflect result data for runs with test retries, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
+
+Mainly there is a new `attempts` Array on each `test` which will reflect the result of each test retry.
+
+{% badge danger Before %} `results.runs`  Module API results
+
+```json
+{
+  // ...
+  "runs": [{
+    // ...
+    "hooks": [{
+      "hookId": "h1",
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
+    // ...
+    "screenshots": [{
+      "screenshotId": "8ddmk",
+      "name": null,
+      "testId": "r2",
+      "takenAt": "2020-08-05T08:52:20.432Z",
+      "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+      "height": 720,
+      "width": 1280
+    }],
+    "stats": {
+      // ...
+      "wallClockStartedAt": "2020-08-05T08:38:37.589Z",
+      "wallClockEndedAt": "2018-07-11T17:53:35.675Z",
+      "wallClockDuration": 1171
+    },
+    "tests": [{
+      "testId": "r2",
+      "title": [ "test" ],
+      "state": "failed",
+      "body": "function () {\n  expect(true).to.be["false"];\n}",
+      "stack": "AssertionError: expected true to be false\n' +
+        '    at Context.eval (...cypress/integration/spec.js:5:21",
+      "error": "expected true to be false",
+      "timings": {
+        "lifecycle": 16,
+        "test": {...}
+      },
+      "failedFromHookId": null,
+      "wallClockStartedAt": "2020-08-05T08:38:37.589Z",
+      "wallClockDuration": 1171,
+      "videoTimestamp": 4486
+    }],
+  }],
+  // ...
+}
+```
+
+{% badge success After %} `results.runs` Module API results
+
+```json
+{
+  // ...
+  "runs": [{
+    // ...
+    "hooks": [{
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
+    // ...
+    "stats": {
+      // ...
+      "startedAt": "2020-08-05T08:38:37.589Z",
+      "endedAt": "2018-07-11T17:53:35.675Z",
+      "duration": 1171
+    },
+    "tests": [{
+      "title": [ "test" ],
+      "state": "failed",
+      "body": "function () {\n  expect(true).to.be["false"];\n}",
+      "displayError": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21",
+      "attempts": [{
+        "state": "failed",
+        "error": {
+          "message": "expected true to be false",
+          "name": "AssertionError",
+          "stack": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21"
+        },
+        "screenshots": [{
+          "name": null,
+          "takenAt": "2020-08-05T08:52:20.432Z",
+          "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+          "height": 720,
+          "width": 1280
+        }],
+        "startedAt": "2020-08-05T08:38:37.589Z",
+        "duration": 1171,
+        "videoTimestamp": 4486
+      }]
+    }],
+  }],
+  // ...
+}
 ```
 
 ## Cookies `whitelist` option renamed
@@ -227,11 +334,15 @@ cy.getCookie('token').then((cookie) => {
 
 ## Linux dependencies
 
-Running Cypress on Linux OS's now requires the `libgbm-dev` dependency. To install all required dependencies on Ubuntu/Debian, you can run the script below.
+Running Cypress on Linux now requires the `libgbm` dependency (on Debian-based systems, this is available as `libgbm-dev`). To install all required dependencies on Ubuntu/Debian, you can run the script below:
 
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
+
+## TypeScript 3.4+ support
+
+Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
 ## Node.js 10+ support
 

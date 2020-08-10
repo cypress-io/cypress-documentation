@@ -281,7 +281,7 @@ Yes. {% url "You can override this with `userAgent` in your configuration file (
 
 ## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
-Yes. {% url "You can set this with `blacklistHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
+Yes. {% url "You can set this with `blockHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
 
 Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
@@ -420,7 +420,7 @@ You can preserve specific cookies across tests using the {% url "Cypress.Cookies
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: 'session_id'
+  preserve: 'session_id'
 })
 ```
 
@@ -653,3 +653,10 @@ it('test', () => {
 ```
 
 Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. {% url "Learn more about why" $#Notes %}
+
+## {% fa fa-angle-right %} Can I use Cypress to test charts and graphs?
+
+Yes. You can leverage visual testing tools to test that charts and graphs are rendering as expected. For more information, check out the {% url "Visual Testing guide" visual-testing %} and the following blog posts.
+
+- see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
+- see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
