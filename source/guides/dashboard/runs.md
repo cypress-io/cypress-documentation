@@ -122,7 +122,7 @@ Runs that have been canceled or are in an errored state can be archived from the
 - Click **{% fa fa-history %} Restore from archive**
   {% imgTag /img/dashboard/restore-from-archive.png "restore-from-archive" %}
 
-## Test Case History
+# Test Case History
 
 {% imgTag /img/dashboard/runs/dashboard-runs-details-sidebar-test-case-history.png "Screenshot of the Test Case History panel" %}
 
