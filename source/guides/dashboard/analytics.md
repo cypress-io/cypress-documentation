@@ -129,7 +129,7 @@ A table of results grouped by date for the time range filter is displayed with u
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures.png "Dashboard Analytics Top Failures Screenshot" %}
 
-This report shows how your test suite is growing over time. It calculates the average number of test cases executed per run for each day in the given time period. It excludes runs that errored or timed out since they don't accurately represent the size of your test suite.
+This report shows the top failures in your test suite.
 
 ### Filters
 
@@ -138,8 +138,14 @@ This report shows how your test suite is growing over time. It calculates the av
 Results may be filtered by:
 
 - Branch
-- Run Group
+- Tag
 - Time Range
+- Run Group
+- Committer
+- Spec File
+- Browser
+- Cypress Version
+- Operating System
 
 ### Results
 
@@ -154,17 +160,20 @@ This can be done via the download icon to the right of the filters.
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-kpi.png "Dashboard Analytics Top Failures KPI Screenshot" %}
 
-DESCRIPTION
+The main key performance indicators tracked are:
+
+- Median failure rate
+- Number of failures (measured by test cases)
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-table.png "Dashboard Analytics Top Failures Table Screenshot" %}
 
-DESCRIPTION
+A table of results grouped failure rate is displayed with spec files and total runs.
 
 ## Slowest Tests
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests.png "Dashboard Analytics Slowest Tests Screenshot" %}
 
-This report shows how your test suite is growing over time. It calculates the average number of test cases executed per run for each day in the given time period. It excludes runs that errored or timed out since they don't accurately represent the size of your test suite.
+This report shows the slowest tests in a test suite.
 
 ### Filters
 
@@ -173,14 +182,21 @@ This report shows how your test suite is growing over time. It calculates the av
 Results may be filtered by:
 
 - Branch
-- Run Group
+- Tag
 - Time Range
+- Status
+- Run Group
+- Committer
+- Spec File
+- Browser
+- Cypress Version
+- Operating System
 
 ### Results
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-graph.png "Dashboard Analytics Slowest Tests Graph Screenshot" %}
 
-The average test suite size over time is displayed respective of the filters selected.
+The slowest tests are displayed by duration of time.
 
 The results may be downloaded as a comma-separated values (CSV) file for further analysis.
 This can be done via the download icon to the right of the filters.
@@ -189,8 +205,12 @@ This can be done via the download icon to the right of the filters.
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-kpi.png "Dashboard Analytics Slowest Tests KPI Screenshot" %}
 
-DESCRIPTION
+The main key performance indicators tracked are:
+
+- Median duration
+- Total number of test cases
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-table.png "Dashboard Analytics Slowest Tests Table Screenshot" %}
 
-DESCRIPTION
+A table of results grouped by median duration and provides total runs.
+
