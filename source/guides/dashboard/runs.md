@@ -126,9 +126,12 @@ Runs that have been canceled or are in an errored state can be archived from the
 
 {% imgTag /img/dashboard/runs/dashboard-runs-details-sidebar-test-case-history.png "Screenshot of the Test Case History panel" %}
 
-When looking further into a test runs information, there is a new Test Case History panel. It allows users to be able to:
+When looking further into a test runs information, there is a new Test Case History panel. It matches test cases by spec and title and combines it with commit information to provide users insight into:
 
 1. See the history of a test over its lifespan
+1. View the diff of a single test case*
 1. Jump directly to the commit
 1. See what run number each test snapshot is associated with
 1. See the time span between each point in its history 
+
+\*_Note: This currently shows the diff of the transpiled code since we are not collecting source maps._
