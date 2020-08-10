@@ -5,11 +5,7 @@ The Cypress Dashboard provides Analytics to offer insight into metrics like runs
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-overview.png "Dashboard Analytics Screenshot" %}
 
-To enabled Dashboard Analytics, visit **Organization Settings** and enabled the "Project Analytics" setting under **Cypress Labs**.
-
-{% imgTag /img/dashboard/analytics/dashboard-analytics-cypress-labs-project-analytics.png "Organization Settings Project Analytics Screenshot" %}
-
-## Runs over time
+## Run status
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-runs-over-time.png "Dashboard Analytics Runs Over Time Screenshot" %}
 
@@ -117,7 +113,7 @@ Unique tests and number of spec files are computed respective of the filters sel
 
 A table of results grouped by date for the time range filter is displayed with unique tests and spec files.
 
-## Top Failures
+## Top failures
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures.png "Dashboard Analytics Top Failures Screenshot" %}
 
@@ -150,7 +146,7 @@ Results may also be filtered by:
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-graph.png "Dashboard Analytics Top Failures Graph Screenshot" %}
 
-The number of tests by failure rate over time is displayed respective of the filters selected.
+The number of tests by failure rate is displayed respective of the filters selected.
 
 The results may be downloaded as a comma-separated values (CSV) file for further analysis.
 
@@ -169,7 +165,7 @@ The main key performance indicators tracked are:
 
 A table of results grouped failure rate is displayed with spec files and total runs.
 
-## Slowest Tests
+## Slowest tests
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests.png "Dashboard Analytics Slowest Tests Screenshot" %}
 
