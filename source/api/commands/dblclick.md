@@ -129,27 +129,30 @@ You can turn this off by passing `multiple: false` to `.dblclick()`.
 cy.get('button').dblclick({ multiple: false })
 ```
 
-## Double click with key combinations
+### Double click with key combinations
 
-The `.dblclick()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while double clicking, such as `SHIFT + double click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.dblclick()` command may also be fired with key modifiers in order to simulate holding key combinations while double clicking, such as `SHIFT + double click`.
+
+{% note info %}
+You can also use key combinations during {% url "`.type()`" type %}. This offers options to hold down keys across multiple commands. See {% url "Key Combinations" type#Key-Combinations %} for more information.
+{% endnote %}
 
 The following modifiers can be combined with `.dblclick()`.
 
-Sequence | Notes
+Option | Notes
 --- | ---
-`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
-`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
-`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
-`{shift}` | Activates the `shiftKey` modifier.
+`altKey` | {% usage_options altKey %}
+`ctrlKey` | {% usage_options ctrlKey %}
+`metaKey` | {% usage_options metaKey %}
+`shiftKey` | {% usage_options shiftKey %}
 
-### Alt click
+#### Alt click
 
 ```js
-// execute a ALT + dblclick on the first <li>
-// { release: false } is necessary so that
-// ALT will not be released after the type command
-cy.get('body').type('{alt}', { release: false })
-cy.get('li:first').dblclick()
+// execute ALT + dblclick on the first <li>
+cy.get('li:first').dblclick({
+  altKey: true
+})
 ```
 
 # Notes
