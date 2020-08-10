@@ -162,14 +162,31 @@ You can find more information about custom configurations here: {% url "Test Con
 
 With test retries, Cypress will take a separate screenshot for each test attempt. These will be properly labeled with the attempt number appended at the end of each filename.
 
+With the following test code, you would see the below screenshot filename when all 3 attempts fail:
+
 ```js
-// Example file names
-'User Sign-up and Login -- should display login errors.png'
-'User Sign-up and Login -- should display login errors (failed).png'
-'User Sign-up and Login -- should display login errors (attempt 2).png'
-'User Sign-up and Login -- should display login errors (failed) (attempt 2).png'
-'User Sign-up and Login -- should display login errors (attempt 3).png'
-'User Sign-up and Login -- should display login errors (failed) (attempt 3).png'
+describe('User Login', () => {
+  it('displays login errors', () => {
+    cy.visit('/')
+    cy.screenshot()
+    // ...
+  })
+})
+```
+
+```js
+// screenshot filename from cy.screenshot() on 1st attempt
+'User Login -- displays login errors.png'
+// screenshot filename on 1st failed attempt
+'User Login -- displays login errors (failed).png'
+// screenshot filename from cy.screenshot() on 2nd attempt
+'User Login -- displays login errors (attempt 2).png'
+// screenshot filename on 2nd failed attempt
+'User Login -- displays login errors (failed) (attempt 2).png'
+// screenshot filename from cy.screenshot() on 3rd attempt
+'User Login -- displays login errors (attempt 3).png'
+// screenshot filename on 3rd failed attempt
+'User Login -- displays login errors (failed) (attempt 3).png'
 ```
 
 # Dashboard
