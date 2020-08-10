@@ -143,9 +143,10 @@ Results may be filtered by:
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-graph.png "Dashboard Analytics Top Failures Graph Screenshot" %}
 
-The average test suite size over time is displayed respective of the filters selected.
+The number of tests by failure rate over time is displayed respective of the filters selected.
 
 The results may be downloaded as a comma-separated values (CSV) file for further analysis.
+
 This can be done via the download icon to the right of the filters.
 
 ### Key Performance Indicators
