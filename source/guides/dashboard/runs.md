@@ -121,3 +121,14 @@ Runs that have been canceled or are in an errored state can be archived from the
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
 - Click **{% fa fa-history %} Restore from archive**
   {% imgTag /img/dashboard/restore-from-archive.png "restore-from-archive" %}
+
+## Test Case History
+
+{% imgTag /img/dashboard/runs/dashboard-runs-details-sidebar-test-case-history.png "Screenshot of the Test Case History panel" %}
+
+When looking further into a test runs information, there is a new Test Case History panel that's currently in beta. It allows users to be able to:
+
+1. See the history of a test over its lifespan
+1. Jump directly to the commit
+1. See what run number each test snapshot is associated with
+1. See the time span between each point in its history 
