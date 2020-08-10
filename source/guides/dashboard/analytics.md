@@ -123,11 +123,18 @@ A table of results grouped by date for the time range filter is displayed with u
 
 This report shows the top failures in your test suite.
 
-### Filters
+### Filters and Views
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-filters.png "Dashboard Analytics Top Failures Filters Screenshot" %}
 
-Results may be filtered by:
+Results can be seen through custom grouping by using the "View By" dropdown. It can be grouped by:
+
+- Test Case
+- Spec File
+- Tag
+- Branch
+
+Results may also be filtered by:
 
 - Branch
 - Tag
@@ -168,11 +175,18 @@ A table of results grouped failure rate is displayed with spec files and total r
 
 This report shows the slowest tests in a test suite.
 
-### Filters
+### Filters and Views
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-filters.png "Dashboard Analytics Slowest Tests Filters Screenshot" %}
 
-Results may be filtered by:
+Results can be seen through custom grouping by using the "View By" dropdown. It can be grouped by:
+
+- Test Case
+- Spec File
+- Tag
+- Branch
+
+Results may also be filtered by:
 
 - Branch
 - Tag
