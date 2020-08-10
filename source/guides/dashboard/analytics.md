@@ -55,6 +55,7 @@ A table of results grouped by date for the time range filter is displayed with p
 ## Run duration
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration.png "Dashboard Analytics Run Duration Screenshot" %}
+
 This report shows the average duration of a Cypress run for your project, including how test parallelization is impacting your total run time. Note that we only include passing runs here — failing or errored runs can sway the average away from its typical duration.
 
 ### Filters
