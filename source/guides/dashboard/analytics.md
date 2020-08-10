@@ -124,3 +124,73 @@ Unique tests and number of spec files are computed respective of the filters sel
 {% imgTag /img/dashboard/analytics/dashboard-analytics-test-suite-size-table.png "Dashboard Analytics Test Suite Size Table Screenshot" %}
 
 A table of results grouped by date for the time range filter is displayed with unique tests and spec files.
+
+## Top Failures
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures.png "Dashboard Analytics Top Failures Screenshot" %}
+
+This report shows how your test suite is growing over time. It calculates the average number of test cases executed per run for each day in the given time period. It excludes runs that errored or timed out since they don't accurately represent the size of your test suite.
+
+### Filters
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-filters.png "Dashboard Analytics Top Failures Filters Screenshot" %}
+
+Results may be filtered by:
+
+- Branch
+- Run Group
+- Time Range
+
+### Results
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-graph.png "Dashboard Analytics Top Failures Graph Screenshot" %}
+
+The average test suite size over time is displayed respective of the filters selected.
+
+The results may be downloaded as a comma-separated values (CSV) file for further analysis.
+This can be done via the download icon to the right of the filters.
+
+### Key Performance Indicators
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-kpi.png "Dashboard Analytics Top Failures KPI Screenshot" %}
+
+DESCRIPTION
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-table.png "Dashboard Analytics Top Failures Table Screenshot" %}
+
+DESCRIPTION
+
+## Slowest Tests
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests.png "Dashboard Analytics Slowest Tests Screenshot" %}
+
+This report shows how your test suite is growing over time. It calculates the average number of test cases executed per run for each day in the given time period. It excludes runs that errored or timed out since they don't accurately represent the size of your test suite.
+
+### Filters
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-filters.png "Dashboard Analytics Slowest Tests Filters Screenshot" %}
+
+Results may be filtered by:
+
+- Branch
+- Run Group
+- Time Range
+
+### Results
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-graph.png "Dashboard Analytics Slowest Tests Graph Screenshot" %}
+
+The average test suite size over time is displayed respective of the filters selected.
+
+The results may be downloaded as a comma-separated values (CSV) file for further analysis.
+This can be done via the download icon to the right of the filters.
+
+### Key Performance Indicators
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-kpi.png "Dashboard Analytics Slowest Tests KPI Screenshot" %}
+
+DESCRIPTION
+
+{% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-table.png "Dashboard Analytics Slowest Tests Table Screenshot" %}
+
+DESCRIPTION
