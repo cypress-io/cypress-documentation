@@ -32,6 +32,7 @@ Results may be filtered by:
 The total runs over time are displayed for passed, failed, running, timed out and errored tests, respective of the filters selected.
 
 The results may be downloaded as a comma-separated values (CSV) file for further analysis.
+
 This can be done via the download icon to the right of the filters.
 
 ### Key Performance Indicators
@@ -57,7 +58,7 @@ This report shows the average duration of a Cypress run for your project, includ
 Results may be filtered by:
 
 - Branch
-- Run Group
+- Tag
 - Time Range
 - Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
 
@@ -93,8 +94,9 @@ This report shows how your test suite is growing over time. It calculates the av
 Results may be filtered by:
 
 - Branch
-- Run Group
+- Tag
 - Time Range
+- Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
 
 ### Results
 
