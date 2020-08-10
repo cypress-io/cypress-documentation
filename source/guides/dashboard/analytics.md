@@ -13,8 +13,6 @@ To enabled Dashboard Analytics, visit **Organization Settings** and enabled the 
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-cypress-labs-project-analytics.png "Organization Settings Project Analytics Screenshot" %}
 
-# Usage
-
 ## Runs over time
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-runs-over-time.png "Dashboard Analytics Runs Over Time Screenshot" %}
@@ -49,8 +47,6 @@ Total runs, average per day, passed runs and failed runs are the computed respec
 {% imgTag /img/dashboard/analytics/dashboard-analytics-runs-over-time-table.png "Dashboard Analytics Runs Over Time Table Screenshot" %}
 
 A table of results grouped by date for the time range filter is displayed with passed, failed, running, timed out and errored columns.
-
-# Performance
 
 ## Run duration
 
@@ -87,8 +83,6 @@ Average parallelization, average run duration and time saved from parallelizatio
 {% imgTag /img/dashboard/analytics/dashboard-analytics-run-duration-table.png "Dashboard Analytics Run Duration Table Screenshot" %}
 
 A table of results grouped by date for the time range filter is displayed with average runtime, concurrency and time saved from parallelization columns.
-
-# Process
 
 ## Test suite size
 
