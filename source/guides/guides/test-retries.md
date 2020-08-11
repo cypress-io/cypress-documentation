@@ -183,11 +183,6 @@ describe('User Login', () => {
 
 If you are using the {% url "Cypress Dashboard" dashboard %}, information related to test retries is not currently shown. Showing this information and other analytics related to test retries is on our {% url "product roadmap" https://cypress-io.productboard.com/roadmap/1238172-product-roadmap %}.
 
-# Tips and Strategies
-
-While test retries are great for helping to avoid false negatives from failing an entire test run, it is not a good replacement for writing good tests. Here are some tips and strategies to keep in mind in order to maximize the effectiveness of your tests with test retries:
-
-- If you are noticing that you need to increase the number of retries, the cause is more likely due to how the tests are written and is worth spending the time to investigate.
 
 # Frequently Asked Questions (FAQs)
 
