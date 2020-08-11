@@ -34,14 +34,15 @@ Check out our {% url 'Configuration API docs' configuration-api %} which describ
 
 ## Preprocessors
 
-The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
+The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default, Cypress handles ES2105, TypeScript, and CoffeeScript, using webpack to package it for the browser.
 
 You can use the `file:preprocessor` event to do things like:
 
 - Add the latest ES* support.
 - Write your test code in ClojureScript.
-- Customize the `babel` settings to add your own plugins.
-- Swap out `browserify` for `webpack` or anything else.
+- Customize the Babel settings to add your own plugins.
+- Customize the options for compiling TypeScript.
+- Swap out webpack for Browserify or anything else.
 
 Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which describe how to use this event.
 
