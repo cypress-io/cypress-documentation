@@ -163,7 +163,7 @@ The main key performance indicators tracked are:
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-top-failures-table.png "Dashboard Analytics Top Failures Table Screenshot" %}
 
-A table of results grouped failure rate is displayed with spec files and total runs.
+A table of results grouped by failure rate is displayed with spec files and total runs.
 
 ## Slowest tests
 
@@ -216,4 +216,3 @@ The main key performance indicators tracked are:
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-table.png "Dashboard Analytics Slowest Tests Table Screenshot" %}
 
 A table of results grouped by median duration and provides total runs.
-
