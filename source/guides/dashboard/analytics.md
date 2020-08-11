@@ -215,4 +215,4 @@ The main key performance indicators tracked are:
 
 {% imgTag /img/dashboard/analytics/dashboard-analytics-slowest-tests-table.png "Dashboard Analytics Slowest Tests Table Screenshot" %}
 
-A table of results grouped by median duration and provides total runs.
+A table of results grouped by median duration and total runs.
