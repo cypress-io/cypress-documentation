@@ -58,14 +58,14 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 
 Option | Default | Description
 --- | --- | ---
+`altKey` | `false` | {% usage_options altKey %}
+`ctrlKey` | `false` | {% usage_options ctrlKey %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force rightclick %}
-`multiple` | `false` | {% usage_options multiple rightclick %}
-`timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .rightclick %}
-`ctrlKey` | `false` | {% usage_options ctrlKey %}
-`altKey` | `false` | {% usage_options altKey %}
-`shiftKey` | `false` | {% usage_options shiftKey %}
 `metaKey` | `false` | {% usage_options metaKey %}
+`multiple` | `false` | {% usage_options multiple rightclick %}
+`shiftKey` | `false` | {% usage_options shiftKey %}
+`timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .rightclick %}
 
 ## Yields {% helper_icon yields %}
 
