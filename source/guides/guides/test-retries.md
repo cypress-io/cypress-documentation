@@ -6,7 +6,7 @@ title: Test Retries
 # {% fa fa-graduation-cap %} What you'll learn
 
 - What are test retries?
-- Why is test retries important?
+- Why are test retries important?
 - How to configure test retries
 {% endnote %}
 
