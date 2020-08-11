@@ -159,7 +159,7 @@ With the following test code, you would see the below screenshot filenames when 
 describe('User Login', () => {
   it('displays login errors', () => {
     cy.visit('/')
-    cy.screenshot()
+    cy.screenshot('my-image')
     // ...
   })
 })
