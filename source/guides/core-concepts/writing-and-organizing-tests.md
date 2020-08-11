@@ -352,7 +352,7 @@ describe('When in Chrome', {  browser: '!chrome' } () => {
 
 ### Single test configuration
 
-You can configure the number of times to retry a test if they fail during `cypress run` or `cypress open` separately. See {% url "Test Retries" test-retries %} for more information.
+You can configure the number of times to retry tests if they fail during `cypress run` or `cypress open`. See {% url "Test Retries" test-retries %} for more information.
 
 ```js
 it('should redirect unauthenticated user to sign-in page', {
