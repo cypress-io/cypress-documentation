@@ -159,7 +159,7 @@ With the following test code, you would see the below screenshot filenames when 
 describe('User Login', () => {
   it('displays login errors', () => {
     cy.visit('/')
-    cy.screenshot('my-image')
+    cy.screenshot('user-login-errors')
     // ...
   })
 })
@@ -167,17 +167,17 @@ describe('User Login', () => {
 
 ```js
 // screenshot filename from cy.screenshot() on 1st attempt
-'User Login -- displays login errors.png'
+'user-login-errors.png'
 // screenshot filename on 1st failed attempt
-'User Login -- displays login errors (failed).png'
+'user-login-errors (failed).png'
 // screenshot filename from cy.screenshot() on 2nd attempt
-'User Login -- displays login errors (attempt 2).png'
+'user-login-errors (attempt 2).png'
 // screenshot filename on 2nd failed attempt
-'User Login -- displays login errors (failed) (attempt 2).png'
+'user-login-errors (failed) (attempt 2).png'
 // screenshot filename from cy.screenshot() on 3rd attempt
-'User Login -- displays login errors (attempt 3).png'
+'user-login-errors (attempt 3).png'
 // screenshot filename on 3rd failed attempt
-'User Login -- displays login errors (failed) (attempt 3).png'
+'user-login-errors (failed) (attempt 3).png'
 ```
 
 # Dashboard
