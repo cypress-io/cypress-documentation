@@ -26,7 +26,7 @@ With test retries, Cypress is able to retry failed tests to help reduce test fla
 
 By default, tests will not retry when they fail. You will need to {% urlHash "enable test retries in your configuration" Configure-Test-Retries %} to use this feature.
 
-When test retries is on, tests will automatically be retried up to X additional times based on your desired configuration. For example, if test retries is set to `2`, it will retry tests up to 2 additional times (for a total of 3 attempts) before potentially being marked as a failed test.
+When test retries is on, tests will automatically be retried up to X additional times based on your desired configuration. For example, if test retries is set to `2`, Cypress will retry tests up to 2 additional times (for a total of 3 attempts) before potentially being marked as a failed test.
 
 When each test is run again, the following {% url "hooks" writing-and-organizing-tests#Hooks %} will be re-run also:
 
@@ -34,7 +34,7 @@ When each test is run again, the following {% url "hooks" writing-and-organizing
 - `afterEach`
 
 {% note warning %}
-However, `before` and `after` hooks will not be run in next attempts.
+However, failures in `before` and `after` hooks will not trigger a retry.
 {% endnote %}
 
 **The following is a detailed step-by-step example of how test retries works:**
@@ -49,7 +49,7 @@ Assuming we have set test retries to `2` (for a total of 3 attempts), the follow
 
 3. If the {% fa fa-check-circle green %} test passes after the second attempt, Cypress will continue with any remaining tests.
 
-4. If the {% fa fa-times red %} test fails a second time, it will make the final third attempt to re-run the test.
+4. If the {% fa fa-times red %} test fails a second time, Cypress will make the final third attempt to re-run the test.
 
 {% img /img/guides/test-retries/attempt-3-start.png %}
 
@@ -69,27 +69,7 @@ During {% url "`cypress open`" command-line#cypress-open %} you will be able to 
 
 ## Global Configuration
 
-If you want to change the number of attempts being made for all tests run for both `cypress run` and `cypress open`, you can configure this in your {% url "configuration file" command-line#cypress-open-config-file-lt-config-file-gt %} (`cypress.json` by default) by defining the `retries` property and giving it the desired number of retries.
-
-```jsx
-{
-  "retries": 1
-}
-```
-
-### Disable Test Retries
-
-If you would like to disable test retries completely (the default configuration), you can use the global configuration to do so by setting `retries` to 0.
-
-```jsx
-{
-  "retries": 0
-}
-```
-
-### Configure specific retries for different modes
-
-If you want to define different retry attempts for `cypress run` versus `cypress open`, you can pass the `retries` option an object with the following options:
+Typically you will want to define different retry attempts for `cypress run` versus `cypress open`. You can configure this in your {% url "configuration file" command-line#cypress-open-config-file-lt-config-file-gt %} (`cypress.json` by default) by passing the `retries` option an object with the following options:
 
 - `runMode` allows you to define the number of test retries when running `cypress run`
 - `openMode` allows you to define the number of test retries when running `cypress open`
@@ -102,8 +82,18 @@ If you want to define different retry attempts for `cypress run` versus `cypress
     "runMode": 2,
     // Configure retries for `cypress open`
     // Default is 0
-    "openMode": 1
+    "openMode": 0
   }
+}
+```
+
+### Configure specific retries for all modes
+
+If you want to change the number of attempts being made for all tests run for both `cypress run` and `cypress open`, you can configure this in your {% url "configuration file" command-line#cypress-open-config-file-lt-config-file-gt %} (`cypress.json` by default) by defining the `retries` property and setting the desired number of retries.
+
+```jsx
+{
+  "retries": 1
 }
 ```
 
@@ -160,9 +150,9 @@ You can find more information about custom configurations here: {% url "Test Con
 
 # Screenshots
 
-With test retries, Cypress will take a separate screenshot for each test attempt. These will be properly labeled with the attempt number appended at the end of each filename.
+When a test retries, Cypress will continue to take screenshots for each failed attempt or {% url "`cy.screenshot()`" screenshot %} and suffix each new screenshot with `(attempt n)`, corresponding to the current test attempt number.
 
-With the following test code, you would see the below screenshot filename when all 3 attempts fail:
+With the following test code, you would see the below screenshot filenames when all 3 attempts fail:
 
 ```js
 describe('User Login', () => {
@@ -191,7 +181,7 @@ describe('User Login', () => {
 
 # Dashboard
 
-If you are using the {% url "Cypress Dashboard" dashboard %}, test retries will not change your current experience at this time. However, if you are interested in future enhancements coming to the Dashboard experience, be sure to check out our {% url "product roadmap" https://cypress-io.productboard.com/roadmap/1238172-product-roadmap %}.
+If you are using the {% url "Cypress Dashboard" dashboard %}, information related to test retries is not currently shown. Showing this information and other analytics related to test retries is on our {% url "product roadmap" https://cypress-io.productboard.com/roadmap/1238172-product-roadmap %}.
 
 # Tips and Strategies
 

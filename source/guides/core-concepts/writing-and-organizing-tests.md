@@ -331,35 +331,39 @@ specify(name, config, fn)
 
 {% partial allowed_test_config %}
 
-### Suite of test configuration
+### Suite configuration
 
-You can configure the number of times to retries a suite of tests if they fail during `cypress run` and `cypress open` separately.
+If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
 
 ```js
-describe('login', {
-  retries: {
-    runMode: 3,
-    openMode: 2
-  }
-}, () => {
-  it('should redirect unauthenticated user to sign-in page', () => {
-    // ...
+describe('When in Chrome', {  browser: '!chrome' } () => {
+  it('Shows warning', () => {
+    cy.get('.browser-warning')
+      .should('contain', 'For optimal viewing, use Chrome browser')
   })
 
-  it('allows user to login', () => {
-    // ...
+  it('Links to browser compatibility doc', () => {
+    cy.get('a.browser-compat')
+      .should('have.attr', 'href')
+      .and('include', 'browser-compatibility)
   })
 })
 ```
 
 ### Single test configuration
 
-If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+You can configure the number of times to retry a test if they fail during `cypress run` or `cypress open` separately. See {% url "Test Retries" test-retries %} for more information.
 
 ```js
-it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
-  cy.get('.browser-warning')
-    .should('contain', 'For optimal viewing, use Chrome browser')
+it('should redirect unauthenticated user to sign-in page', {
+    retries: {
+      runMode: 3,
+      openMode: 2
+    }
+  } () => {
+    cy.visit('/')
+    // ...
+  })
 })
 ```
 
