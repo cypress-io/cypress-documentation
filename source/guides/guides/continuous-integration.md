@@ -757,6 +757,7 @@ In certain Linux environments, you may experience connection errors with your X1
 ```shell
 Xvfb -screen 0 1024x768x24 :99 &
 ```
+Cypress internally passes these Xvfb arguments, but if you are spawning your own Xvfb, you would need to pass these arguments. This is necessary to avoid using 8-bit color depth with Xvfb, which will prevent Chrome or Electron from crashing.
 
 {% endnote %}
 
