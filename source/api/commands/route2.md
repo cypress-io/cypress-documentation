@@ -13,16 +13,16 @@ Use `cy.route2()` to manage the behavior of network requests at the network laye
 
 Unlike {% url `cy.route()` route %}, `cy.route2()`:
 
-- can mock all types of network requests (i.e., Fetch API, page loads, XMLHttpRequests, etc.)
-- no longer requires {% url `cy.server()` server %} before use
+- can mock all types of network requests including Fetch API, page loads, XMLHttpRequests, etc.
+- does not require calling {% url `cy.server()` server %} before use
 
 # Syntax
 
 ```javascript
-cy.route2(requestMatcher)
-cy.route2(requestMatcher, response)
-cy.route2(method, requestMatcher)
-cy.route2(method, requestMatcher, response)
+cy.route2(routeMatcher)
+cy.route2(routeMatcher, response)
+cy.route2(method, routeMatcher)
+cy.route2(method, routeMatcher, response)
 ```
 
 ## Usage
@@ -35,9 +35,9 @@ cy.route2('/users/**')
 
 ## Arguments
 
-**{% fa fa-angle-right %} requestMatcher** ***(String, Glob, RegExp, Object)***
+**{% fa fa-angle-right %} routeMatcher** ***(String, Glob, RegExp, Object)***
 
-The `requestMatcher` argument allows you to listen for a route matching a specific URL or pattern.
+The `routeMatcher` argument allows you to listen for a route matching a specific URL or pattern.
 
 For simple route matching, passing a string, glob, or RegExp is the simplest method:
 
@@ -91,8 +91,10 @@ cy.route2('/users/**', {
     profile: {
       firstName: 'Tony',
       lastName: 'Jarvis'
+    }
   }
 })
+```
 
 In addition, because you have access to the request, this means that you can modify the request as well:
 
@@ -207,7 +209,7 @@ If you pass a `response` to `cy.route2()`, Cypress will stub the response in the
 When passing a String as the `url`, the URL must match *exactly* what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
 
 ```javascript
-cy.route2('https://localhost:7777/surveys/customer?email=john@doe.com', [
+cy.route2('https://localhost:7777/users/customer?email=john@doe.com', [
   {
     id: 1,
     name: 'john'
@@ -255,15 +257,19 @@ cy.route2('/login', {
   headers: {
     'x-new-headers': 'from-server'
   },
-  // If `destroySocket` is truthy, Cypress will destroy the connection to the
-  // browser and send no response. Useful for simulating a server that is not
-  // reachable. Must not be set in combination with other options.
+  // If `destroySocket` is truthy, Cypress will destroy the connection
+  // to the browser and send no response. Useful for simulating a
+  // server that is not reachable. Must not be set in combination
+  // with other options.
   destroySocket: false
 })
+```
 
 ```javascript
-// continue the HTTP response to the browser, including any modifications made to `res` <--- what's `res` here?
+// continue the HTTP response to the browser
+// including any modifications made to the response
 cy.route2('/login')
+```
 
 ### Matching requests and routes
 
