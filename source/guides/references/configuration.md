@@ -22,6 +22,7 @@ Option | Default | Description
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
+`retries` | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See {% url "Test Retries" test-retries %} for more information.
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
 
 ## Timeouts
@@ -216,19 +217,21 @@ The configuration values passed in will only take effect during the suite or tes
 
 ### Suite configuration
 
-You can configure the size of the viewport height and width within a suite.
+You can configure the number of times to retries a suite of tests if they fail during `cypress run` and `cypress open` separately.
 
 ```js
-describe('page display on medium size screen', {
-  viewportHeight: 1000,
-  viewportWidth: 400
+describe('login', {
+  retries: {
+    runMode: 3,
+    openMode: 2
+  }
 }, () => {
-  it('does not display sidebar', () => {
-    cy.get('#sidebar').should('not.be.visible')
+  it('should redirect unauthenticated user to sign-in page', () => {
+    // ...
   })
 
-  it('shows hamburger menu', () => {
-    cy.get('#header').find('i.menu').should('be.visible')
+  it('allows user to login', () => {
+    // ...
   })
 })
 ```
@@ -395,6 +398,7 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
+{% url "5.0.0" changelog %} | Added `retries` configuration.
 {% url "5.0.0" changelog %} | Renamed `blacklistHosts` configuration to `blockHosts`.
 {% url "4.1.0" changelog#4-12-0 %} | Added `screenshotOnRunFailure` configuration.
 {% url "4.0.0" changelog#4-0-0 %} | Added `firefoxGcInterval` configuration.
