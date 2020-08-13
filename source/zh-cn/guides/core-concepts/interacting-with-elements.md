@@ -55,6 +55,7 @@ The following calculations factor in CSS translations and transforms.
 - 它的CSS属性（或祖先）是 `visibility: hidden`.
 - 它的CSS属性（或祖先）是 `display: none`.
 - 它的CSS属性是 `position: fixed` 并且它在屏幕外或被掩盖。
+- 它的CSS属性（或祖先）是 `opacity: 0`. 有一个特别的例外。`opacity:0` 的元素是看不到但是会互动。
 
 ### 此外，在以下情况，元素也会被视为隐藏：
 

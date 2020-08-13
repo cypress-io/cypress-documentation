@@ -57,6 +57,7 @@ The following calculations factor in CSS translations and transforms.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and it's offscreen or covered up.
+- Its CSS property (or ancestors) is `opacity: 0`. There is a specific exception made for this check when determining actionability, since elements with `opacity: 0` are invisible to the eye but can be interacted with.
 
 ### Additionally an element is considered hidden if:
 
