@@ -137,6 +137,50 @@ See {% url '"Set flag to start tests"' https://glebbahmutov.com/blog/set-flag-to
 cy.window({ timeout: 10000 }).should('have.property', 'foo')
 ```
 
+# Notes 
+
+## Cypress uses 2 different windows.
+
+Let's say you want to check the type of the events. You might write code like below:
+
+```js
+it('test', (done) => {
+  cy.get('#test-input').then((jQueryElement) => {
+    let elemHtml = jQueryElement.get(0)
+
+    elemHtml.addEventListener('keydown', (event) => {
+      expect(event instanceof KeyboardEvent).to.be.true
+      done()
+    })
+  })
+
+  cy.get('#test-input').type('A')
+})
+```
+
+It fails. But the interesting thing is that the type of `event` is `KeyboardEvent` when you `console.log(event)`. 
+
+It's because Cypress Runner uses `iframe` to load the test application. In other words, `KeyboardEvent` used in the the code above and the `KeyboardEvent` class from which `event` variable is constructed are different `KeyboardEvent`s. 
+
+That's why the test should be written like this. 
+
+```js
+it('should trigger KeyboardEvent with .type inside Cypress event listener', (done) => {
+  cy.window().then((win) => {
+    cy.get('#test-input').then((jQueryElement) => {
+      let elemHtml = jQueryElement.get(0)
+
+      elemHtml.addEventListener('keydown', (event) => {
+        expect(event instanceof win['KeyboardEvent']).to.be.true
+        done()
+      })
+    })
+  })
+
+  cy.get('#test-input').type('A')
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
