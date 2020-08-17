@@ -34,7 +34,7 @@ Check out our {% url 'Configuration API docs' configuration-api %} which describ
 
 ## Preprocessors
 
-The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default, Cypress handles ES2105, TypeScript, and CoffeeScript, using webpack to package it for the browser.
+The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default, Cypress handles ES2015+, TypeScript, and CoffeeScript, using webpack to package it for the browser.
 
 You can use the `file:preprocessor` event to do things like:
 
