@@ -332,6 +332,30 @@ cy.getCookie('token').then((cookie) => {
 })
 ```
 
+## __dirname / __filename
+
+The globals `__dirname` and `__filename` no longer include a leading slash.
+
+{% badge danger Before %} `__dirname` / `__filename`
+
+```js
+// cypress/integration/app_spec.js
+it('include leading slash < 5.0', () => {
+  expect(__dirname).to.equal('/cypress/integration')
+  expect(__filename).to.equal('/cypress/integration/app_spec.js')
+})
+```
+
+{% badge success After %} `__dirname` / `__filename`
+
+```js
+// cypress/integration/app_spec.js
+it('do not include leading slash >= 5.0', () => {
+  expect(__dirname).to.equal('cypress/integration')
+  expect(__filename).to.equal('cypress/integration/app_spec.js')
+})
+```
+
 ## Linux dependencies
 
 Running Cypress on Linux now requires the `libgbm` dependency (on Debian-based systems, this is available as `libgbm-dev`). To install all required dependencies on Ubuntu/Debian, you can run the script below:
