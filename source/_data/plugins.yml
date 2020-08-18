@@ -478,6 +478,12 @@
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
       badge: community
+      
+    - name: Bison
+      description: A Full Stack Jamstack Template that uses Cypress and GitHub Actions for E2E testing.
+      link: https://github.com/echobind/bisonapp
+      keywords: [next.js, react, graphql, prisma, vercel]
+      badge: community
 
 - name: Component Testing
   description: ⚠️ Loading and mounting components from various frameworks is highly experimental and might change in the future.
