@@ -60,6 +60,7 @@ Option | Default | Description
 `force` | `false` | {% usage_options force trigger %}
 `bubbles` | `true` | Whether the event bubbles
 `cancelable` | `true` | Whether the event is cancelable
+`eventType` | `Event` | The type of `Event` you want to trigger
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .trigger %}
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.
@@ -169,6 +170,16 @@ This overrides the default auto-positioning based on the element itself. Useful 
 cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
 
+## Fire other Event types.
+
+By default, `cy.trigger()` fires {% url `Event` https://developer.mozilla.org/en-US/docs/Web/API/Event %}. But for any reason, you might want to trigger other events like `MouseEvent`, `KeyboardEvent`. 
+
+In that case, use `eventType` option.
+
+```js
+cy.get('button').trigger('mouseover', { eventType: 'MouseEvent' })
+```
+
 # Notes
 
 ## Actionability
@@ -182,6 +193,10 @@ cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ### What event should I fire?
 
 `cy.trigger()` is meant to be a low-level utility that makes triggering events easier than manually constructing and dispatching them. Since any arbitrary event can be triggered, Cypress tries not to make any assumptions about how it should be triggered. This means you'll need to know the implementation details (which may be in a 3rd party library) of the event handler(s) receiving the event and provide the necessary properties.
+
+### Why should I manually set the event type?
+
+As you can see the documentation of {% url `MouseEvent` https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent %}, most properties of event class instances are read-only. Because of that, it's sometimes impossible to set the value of some properties like `pageX`, `pageY`. It can be problematic in some tests.
 
 ## Differences
 
