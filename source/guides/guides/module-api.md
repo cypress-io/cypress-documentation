@@ -2,7 +2,7 @@
 title: Module API
 ---
 
-You can require Cypress as a node module from your application under test. This can be useful when you want to access to the test results directly after the run. With this workflow, for example, you can:
+You can require Cypress as a node module from your application under test and run Cypress via Node.js. This can be useful when you want access to the test results directly after the run. With this workflow, for example, you can:
 
 - Send a notification about failing tests with included screenshot images
 - Rerun a single failing spec file
@@ -10,7 +10,31 @@ You can require Cypress as a node module from your application under test. This 
 
 # `cypress.run()`
 
-Runs Cypress tests and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#fundamentals %}.
+Runs Cypress tests via Node.js and resolve with all test results. See the {% url 'Cypress Module API recipe' https://github.com/cypress-io/cypress-example-recipes#fundamentals %}.
+
+```javascript
+// e2e-run-tests.js
+const cypress = require('cypress')
+
+cypress.run({
+  reporter: 'junit',
+  browser: 'chrome',
+  config: {
+    baseUrl: 'http://localhost:8080',
+    video: true,
+  },
+  env: {
+    login_url: '/login',
+    products_url: '/products',
+  }
+})
+```
+
+You can then run Cypress by running the following in your terminal or an npm script:
+
+```shell
+node e2e-run-tests.js
+```
 
 ## Options
 
@@ -38,28 +62,12 @@ Option | Type | Description
 `spec` | *string* | Specify the specs to run
 `tag` | *string* | Identify a run with a tag or tags
 
-```javascript
-const cypress = require('cypress')
-
-cypress.run({
-  reporter: 'junit',
-  browser: 'chrome',
-  config: {
-    baseUrl: 'http://localhost:8080',
-    video: true,
-  },
-  env: {
-    foo: 'bar',
-    baz: 'quux',
-  }
-})
-```
-
 ## Example
 
 Here is an example of programmatically running a spec file:
 
 ```js
+// e2e-run-tests.js
 const cypress = require('cypress')
 
 cypress.run({
@@ -72,6 +80,14 @@ cypress.run({
   console.error(err)
 })
 ```
+
+You can then run Cypress by running the following in your terminal or an npm script:
+
+```shell
+node e2e-run-tests.js
+```
+
+## Results
 
 `cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run could return something like this:
 
@@ -109,7 +125,7 @@ cypress.run({
 }
 ```
 
-Find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
+You can find the TypeScript definition for the results object in the {% url "`cypress/cli/types` folder" https://github.com/cypress-io/cypress/tree/develop/cli/types %}.
 
 ## Handling errors
 
@@ -127,6 +143,7 @@ There is a third option - Cypress could run, but the tests could not start for s
 In order to handle these possible errors, you can add a `catch` to `cypress.run()`:
 
 ```js
+// e2e-run-tests.js
 const cypress = require('cypress')
 
 cypress.run({...})
@@ -149,6 +166,29 @@ cypress.run({...})
 
 # `cypress.open()`
 
+Open Cypress tests via Node.js.
+
+```javascript
+// e2e-open-tests.js
+const cypress = require('cypress')
+
+cypress.open({
+  config: {
+    baseUrl: 'http://localhost:8080',
+  },
+  env: {
+    login_url: '/login',
+    products_url: '/products',
+  }
+})
+```
+
+You can then open Cypress by running the following in your terminal or an npm script:
+
+```shell
+node e2e-open-tests.js
+```
+
 ## Options
 
 Just like the {% url "Command Line options" command-line %}, you can pass options that modify how Cypress runs.
@@ -167,10 +207,20 @@ Option |  Type | Description
 ## Example
 
 ```javascript
+// e2e-open-tests.js
 const cypress = require('cypress')
 
-cypress.open()
+cypress.open({
+
+})
 ```
+
+You can then open Cypress by running the following in your terminal or an npm script:
+
+```shell
+node e2e-open-tests.js
+```
+
 
 # `cypress.cli`
 
@@ -187,7 +237,7 @@ const results = await cypress.run(runOptions)
 // process the "cypress.run()" results
 ```
 
-An example use could be:
+An example use running from your terminal could be:
 
 ```shell
 node ./wrapper cypress run --browser chrome --config ...
