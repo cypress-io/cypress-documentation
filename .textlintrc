@@ -86,7 +86,7 @@
         ["craziest", "most complex"],
         ["dumb", "unintended"],
         ["insane", "outrageous"],
-        ["blacklist", "blocklist"],
+        ["blacklist", "block"],
         ["whitelist", "allow"],
 
         // Prefer American spelling

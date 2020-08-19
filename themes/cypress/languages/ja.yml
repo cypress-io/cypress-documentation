@@ -48,6 +48,7 @@ sidebar:
     screenshots-and-videos: スクリーンショットとビデオ
     guides: ガイド
     command-line: コマンドライン
+    test-retries: Test Retries
     continuous-integration: 継続的インテグレーション
     parallelization: Parallelization
     environment-variables: 環境変数

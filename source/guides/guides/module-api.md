@@ -87,14 +87,52 @@ cypress.run({
   "osVersion": "14.5.0",
   "runs": [{
     "error": null,
-    "hooks": [...],
+    "hooks": [{
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
     "reporter": "spec",
     "reporterStats": {...},
-    "screenshots": [],
     "shouldUploadVideo": true,
     "spec": {...},
-    "stats": {...},
-    "tests": [...],
+    "stats": {
+      "suites": 1,
+      "tests": 1,
+      "passes": 0,
+      "pending": 0,
+      "skipped": 0,
+      "failures": 1,
+      "startedAt": "2020-08-05T08:38:37.589Z",
+      "endedAt": "2018-07-11T17:53:35.675Z",
+      "duration": 1171
+    },
+    "tests": [{
+      "title": [ "test" ],
+      "state": "failed",
+      "body": "function () {\n  expect(true).to.be["false"];\n}",
+      "displayError": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21",
+      "attempts": [{
+        "state": "failed",
+        "error": {
+          "message": "expected true to be false",
+          "name": "AssertionError",
+          "stack": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21"
+        },
+        "screenshots": [{
+          "name": null,
+          "takenAt": "2020-08-05T08:52:20.432Z",
+          "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+          "height": 720,
+          "width": 1280
+        }],
+        "startedAt": "2020-08-05T08:38:37.589Z",
+        "duration": 1171,
+        "videoTimestamp": 4486
+      }]
+    }],
     "video": "User/janelane/my-app/cypress/videos/abc123.mp4"
   }],
   "runUrl": "https://dashboard.cypress.io/projects/def456/runs/12",
@@ -103,9 +141,9 @@ cypress.run({
   "totalFailed": 1,
   "totalPassed": 0,
   "totalPending": 0,
-  "totalSkipped": 12,
-  "totalSuites": 8,
-  "totalTests": 13,
+  "totalSkipped": 0,
+  "totalSuites": 1,
+  "totalTests": 1,
 }
 ```
 
@@ -198,6 +236,7 @@ node ./wrapper cypress run --browser chrome --config ...
 We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky recipes" https://github.com/cypress-io/cypress-example-recipes/blob/master/test-repeat.js %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-react-unit-test/blob/main/scripts/cypress-expect.js %}.
 
 {% history %}
+{% url "5.0.0" changelog %} | Test results returned from `cypress.run()` changed.
 {% url "4.11.0" changelog#4-11-0 %} | Added `cypress.cli` with `parseRunArguments` function.
 {% url "4.9.0" changelog#4-9-0 %} | Added `quiet` option to `cypress.run()`
 {% endhistory %}
