@@ -3,7 +3,7 @@ const RevAll = require('gulp-rev-all')
 const clean = require('gulp-clean')
 
 const revisionOpts = {
-  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4'],
+  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4', '.woff', '.woff2', '.less'],
   dontRenameFile: ['.html', 'CNAME'],
   dontUpdateReference: ['.html'],
   dontSearchFile: ['.js'],
