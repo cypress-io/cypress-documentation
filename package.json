@@ -18,7 +18,7 @@
   },
   "scripts": {
     "add-snippet": "node ./cy_scripts/snippet-creator",
-    "build": "node --stack-size=8192 ./index.js generate",
+    "build": "node --stack-size=8192 --max-old-space-size=4096 ./index.js generate",
     "clean-deps": "rm -rf node_modules",
     "clean": "hexo clean",
     "cypress:open": "cypress open",
