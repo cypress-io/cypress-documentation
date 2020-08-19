@@ -58,9 +58,13 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 
 Option | Default | Description
 --- | --- | ---
+`altKey` | `false` | {% usage_options altKey %}
+`ctrlKey` | `false` | {% usage_options ctrlKey %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force rightclick %}
+`metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `false` | {% usage_options multiple rightclick %}
+`shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .rightclick %}
 
 ## Yields {% helper_icon yields %}
@@ -127,27 +131,30 @@ By default, Cypress will error if you're trying to right click multiple elements
 cy.get('.open-menu').rightclick({ multiple: true })
 ```
 
-## Right click with key combinations
+### Right click with key combinations
 
-The `.rightclick()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while right clicking, such as `ALT + rightclick`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.rightclick()` command may also be fired with key modifiers in order to simulate holding key combinations while right clicking, such as `ALT + rightclick`.
 
-The following modifiers can be combined with `.rightclick()`.
+{% note info %}
+You can also use key combinations during {% url "`.type()`" type %}. This offers options to hold down keys across multiple commands. See {% url "Key Combinations" type#Key-Combinations %} for more information.
+{% endnote %}
 
-Sequence | Notes
+The following key can be combined with `.rightclick()` through the `options`..
+
+Option | Notes
 --- | ---
-`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
-`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
-`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
-`{shift}` | Activates the `shiftKey` modifier.
+`altKey` | {% usage_options altKey %}
+`ctrlKey` | {% usage_options ctrlKey %}
+`metaKey` | {% usage_options metaKey %}
+`shiftKey` | {% usage_options shiftKey %}
 
-### Command right click
+#### Command right click
 
 ```js
 // execute a CMD + right click on the .menu-item
-// { release: false } is necessary so that
-// CMD will not be released after the type command
-cy.get('body').type('{cmd}', { release: false })
-cy.get('.menu-item').rightclick()
+cy.get('.menu-item').rightclick({
+  metaKey: true
+})
 ```
 
 # Notes
