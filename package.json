@@ -18,7 +18,7 @@
   },
   "scripts": {
     "add-snippet": "node ./cy_scripts/snippet-creator",
-    "build": "node --stack-size=8192 --max-old-space-size=4096 ./index.js generate",
+    "build": "node --stack-size=8192 --max-old-space-size=8192 ./index.js generate",
     "clean-deps": "rm -rf node_modules",
     "clean": "hexo clean",
     "cypress:open": "cypress open",
@@ -149,7 +149,7 @@
     "menuspy": "1.3.0",
     "moment": "2.24.0",
     "roboto-fontface": "0.10.0",
-    "scrollingelement": "1.5.2",
-    "yall": "github:malchata/yall.js#1c782f1ab7a0becb1a88fd6f3b260e55d5e213a2"
+    "scrollingelement": "1.5.2",Î
+    "yall": "github:malchata/yall.js#1c782f1ab7a0becb1a88fd6f3b260e55d5e213a2"Î
   }
 }
