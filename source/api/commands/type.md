@@ -185,6 +185,10 @@ Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL + R` or `SHIFT + ALT + Q`. The modifier(s) remain activated for the duration of the `.type()` command, and are released when all subsequent characters are typed, unless {% url '`{release: false}`' type#Options %} is passed as an {% url 'option' type#Key-Combinations %}. A `keydown` event is fired when a modifier is activated and a `keyup` event is fired when it is released.
 
+{% note info %}
+You can also use key combinations during {% url "`.click()`" click#Click-with-key-combinations %}, {% url "`.rightclick()`" rightclick#Right-click-with-key-combinations %} and {% url "`.dblclick()`" dblclick#Double-click-with-key-combinations %} through their options. See each doc for more information.
+{% endnote %}
+
 ### Type a key combination
 
 ```javascript

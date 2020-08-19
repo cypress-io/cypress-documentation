@@ -54,9 +54,13 @@ Pass in an options object to change the default behavior of `.click()`.
 
 Option | Default | Description
 --- | --- | ---
+`altKey` | `false` | {% usage_options altKey %}
+`ctrlKey` | `false` | {% usage_options ctrlKey %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force click %}
+`metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `false` | {% usage_options multiple click %}
+`shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .click %}
 
 ## Yields {% helper_icon yields %}
@@ -124,27 +128,30 @@ By default, Cypress will error if you're trying to click multiple elements. By p
 cy.get('[id^=btn]').click({ multiple: true })
 ```
 
-## Click with key combinations
+### Click with key combinations
 
-The `.click()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while clicking, such as `ALT + click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.click()` command may also be fired with key modifiers in order to simulate holding key combinations while clicking, such as `ALT + click`.
 
-The following modifiers can be combined with `.click()`.
+{% note info %}
+You can also use key combinations during {% url "`.type()`" type %}. This offers options to hold down keys across multiple commands. See {% url "Key Combinations" type#Key-Combinations %} for more information.
+{% endnote %}
 
-Sequence | Notes
+The following keys can be combined with `.click()` through the `options`.
+
+Option | Notes
 --- | ---
-`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
-`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
-`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
-`{shift}` | Activates the `shiftKey` modifier.
+`altKey` | {% usage_options altKey %}
+`ctrlKey` | {% usage_options ctrlKey %}
+`metaKey` | {% usage_options metaKey %}
+`shiftKey` | {% usage_options shiftKey %}
 
-### Shift click
+#### Shift click
 
 ```js
 // execute a SHIFT + click on the first <li>
-// { release: false } is necessary so that
-// SHIFT will not be released after the type command
-cy.get('body').type('{shift}', { release: false })
-cy.get('li:first').click()
+cy.get('li:first').click({
+  shiftKey: true
+})
 ```
 
 # Notes
