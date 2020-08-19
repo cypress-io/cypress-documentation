@@ -172,9 +172,9 @@ cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 
 ## Fire other Event types.
 
-By default, `cy.trigger()` fires {% url `Event` https://developer.mozilla.org/en-US/docs/Web/API/Event %}. But for any reason, you might want to trigger other events like `MouseEvent`, `KeyboardEvent`. 
+By default, `cy.trigger()` fires {% url `Event` https://developer.mozilla.org/en-US/docs/Web/API/Event %}. But you may want to trigger other events like `MouseEvent` or `KeyboardEvent`. 
 
-In that case, use `eventType` option.
+In that case, use the `eventType` option.
 
 ```js
 cy.get('button').trigger('mouseover', { eventType: 'MouseEvent' })
@@ -196,7 +196,7 @@ cy.get('button').trigger('mouseover', { eventType: 'MouseEvent' })
 
 ### Why should I manually set the event type?
 
-As you can see the documentation of {% url `MouseEvent` https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent %}, most properties of event class instances are read-only. Because of that, it's sometimes impossible to set the value of some properties like `pageX`, `pageY`. It can be problematic in some tests.
+As you can see the documentation of {% url `MouseEvent` https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent %}, most properties of event class instances are read-only. Because of that, it's sometimes impossible to set the value of some properties like `pageX`, `pageY`. This can be problematic in when testing some situations.
 
 ## Differences
 
