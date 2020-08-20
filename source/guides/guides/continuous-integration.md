@@ -180,7 +180,7 @@ CI Provider | Example Project | Example Config
 {% url "Azure / VSTS CI / TeamFoundation" https://azure.microsoft.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "azure-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
 {% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
-{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
+{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".circleci/config.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml %}
 {% url "CodeShip Basic" https://codeship.com/features/basic %} (has {% issue 328 "cy.exec() issue" %}) | |
 {% url "CodeShip Pro" https://codeship.com/features/pro %} | {% url "cypress-example-docker-codeship" https://github.com/cypress-io/cypress-example-docker-codeship %} |
 {% url "Concourse" https://concourse-ci.org/ %} | |
@@ -227,7 +227,7 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ### {% badge success New %} Example CircleCI Orb
 
-The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
+The Cypress CircleCI Orb is a piece of configuration set in your `config.yml` file to correctly install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
@@ -272,7 +272,7 @@ In all cases, you are using `run` and `install` job definitions that Cypress pro
 
 You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
-### Example `circle.yml` v2 config file
+### Example `config.yml` v2 config file
 
 ```yaml
 version: 2
@@ -303,7 +303,7 @@ jobs:
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-### Example `circle.yml` v2 config file with `yarn`
+### Example `config.yml` v2 config file with `yarn`
 
 ```yaml
 version: 2
