@@ -43,7 +43,7 @@ Assuming we have configured test retries with `2` retry attempts (for a total of
 
 1. A test runs for the first time. If the {% fa fa-check-circle green %} test passes, Cypress will move forward with any remaining tests as usual.
 
-2. If the {% fa fa-times red %} test fails, Cypress will tell you that the first attempt failed and will to run the test a second time.
+2. If the {% fa fa-times red %} test fails, Cypress will tell you that the first attempt failed and will attempt to run the test a second time.
 
 {% img /img/guides/test-retries/attempt-2-start.png %}
 
