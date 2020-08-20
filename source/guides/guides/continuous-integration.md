@@ -279,7 +279,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -310,7 +310,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -530,7 +530,7 @@ RUN $(npm bin)/cypress run
 Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
