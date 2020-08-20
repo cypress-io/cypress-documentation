@@ -62,8 +62,8 @@ Any key/value you set in your {% url "configuration file (`cypress.json` by defa
 {
   "projectId": "128076ed-9868-4e98-9cef-98dd8b705d75",
   "env": {
-    "foo": "bar",
-    "some": "value"
+    "login_url": "/login",
+    "products_url": "/products",
   }
 }
 ```
@@ -71,9 +71,9 @@ Any key/value you set in your {% url "configuration file (`cypress.json` by defa
 ### Test file
 
 ```javascript
-Cypress.env()       // {foo: 'bar', some: 'value'}
-Cypress.env('foo')  // 'bar'
-Cypress.env('some') // 'value'
+Cypress.env()               // {login_url: '/login', products_url: '/products'}
+Cypress.env('login_url')    // '/login'
+Cypress.env('products_url') // '/products'
 ```
 
 ### Overview
