@@ -272,7 +272,7 @@ In all cases, you are using `run` and `install` job definitions that Cypress pro
 
 You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
-### Example `config.yml` v2 config file
+### Example `.circleci/config.yml` v2 config file
 
 ```yaml
 version: 2
