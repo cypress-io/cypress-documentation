@@ -227,7 +227,7 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ### {% badge success New %} Example CircleCI Orb
 
-The Cypress CircleCI Orb is a piece of configuration set in your `config.yml` file to correctly install, cache and run Cypress with very little effort.
+The Cypress CircleCI Orb is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
