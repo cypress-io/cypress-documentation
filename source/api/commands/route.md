@@ -346,7 +346,7 @@ If you'd like to override this, explicitly pass in `headers` as an object litera
 ```javascript
 cy.route({
   url: '**/user-image.png',
-  response: 'fx:logo.png,binary' // binary encoding
+  response: 'fx:logo.png,binary', // binary encoding
   headers: {
     // set content-type headers
     'content-type': 'binary/octet-stream'
