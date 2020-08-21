@@ -331,33 +331,39 @@ specify(name, config, fn)
 
 {% partial allowed_test_config %}
 
-### Suite of test configuration
+### Suite configuration
 
-You can configure the size of the viewport height and width within a suite.
+If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
 
 ```js
-describe('page display on medium size screen', {
-  viewportHeight: 1000,
-  viewportWidth: 400
-}, () => {
-  it('does not display sidebar', () => {
-    cy.get('#sidebar').should('not.be.visible')
+describe('When in Chrome', {  browser: '!chrome' } () => {
+  it('Shows warning', () => {
+    cy.get('.browser-warning')
+      .should('contain', 'For optimal viewing, use Chrome browser')
   })
 
-  it('shows hamburger menu', () => {
-    cy.get('#header').find('i.menu').should('be.visible')
+  it('Links to browser compatibility doc', () => {
+    cy.get('a.browser-compat')
+      .should('have.attr', 'href')
+      .and('include', 'browser-compatibility)
   })
 })
 ```
 
 ### Single test configuration
 
-If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+You can configure the number of retry attempts during `cypress run` or `cypress open`. See {% url "Test Retries" test-retries %} for more information.
 
 ```js
-it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
-  cy.get('.browser-warning')
-    .should('contain', 'For optimal viewing, use Chrome browser')
+it('should redirect unauthenticated user to sign-in page', {
+    retries: {
+      runMode: 3,
+      openMode: 2
+    }
+  } () => {
+    cy.visit('/')
+    // ...
+  })
 })
 ```
 
@@ -391,7 +397,7 @@ The code above will produce a suite with 4 tests:
 
 ## Assertion Styles
 
-Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style assertions. {% url "Read more about assertions." assertions %}
+Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain assertions. {% url "Read more about plain assertions." assertions %}
 
 ```javascript
 it('can add numbers', () => {
@@ -402,6 +408,39 @@ it('can subtract numbers', () => {
   assert.equal(subtract(5, 12), -7, 'these numbers are equal')
 })
 ```
+
+The {% url "`.should()`" should %} command and its alias {% url "`.and()`" and %} can also be used to more easily chain assertions off of Cypress commands. {% url "Read more about assertions." introduction-to-cypress#Assertions %}
+
+```js
+cy.wrap(add(1, 2)).should('equal', 3)
+```
+
+# Running tests
+
+## Run a single spec file
+
+We suggest running test files individually by clicking on the spec filename to ensure the best performance. For example the {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} has multiple test files, but below we run a single "new-transaction.spec.ts" test file.
+
+{% imgTag /img/guides/core-concepts/run-single-spec.gif "Running a single spec" %}
+
+## Run all specs
+
+You can run all spec files together by clicking the "Run all specs" button. This mode is equivalent to concatenating all spec files together into a single piece of test code.
+
+{% imgTag /img/guides/core-concepts/run-all-specs.gif "Running all specs" %}
+
+{% note danger %}
+{% fa fa-warning %} Be wary of root-level hooks, as they could execute in a surprising order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %}.
+{% endnote %}
+
+## Run filtered specs
+
+You can also run a subset of all specs by entering a text search filter. Only the specs with relative file paths containing the search filter will remain and be run as if concatenating all spec files together when clicking the "Run N specs" button.
+
+- The search filter is case-insensitive; the filter "ui" will match both "UI-spec.js" and "admin-ui-spec.js" files.
+- The search filter is applied to the entire relative spec file path, thus you can use folder names to limit the specs; the filter "ui" will match both "admin-ui.spec.js" and "ui/admin.spec.js" files.
+
+{% imgTag /img/guides/core-concepts/run-selected-specs.gif "Running specs matching the search filter" %}
 
 # Watching tests
 
@@ -452,7 +491,7 @@ Set the {% url `watchForFileChanges` configuration#Global %} configuration prope
 The `watchForFileChanges` property is only in effect when running Cypress using {% url "`cypress open`" command-line#cypress-open %}.
 {% endnote %}
 
-The component responsible for the file-watching behavior in Cypress is the {% url 'Cypress Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is the default file-watcher packaged with Cypress.
+The component responsible for the file-watching behavior in Cypress is the {% url '`cypress-webpack-preprocessor`' https://github.com/cypress-io/cypress-webpack-preprocessor %}. This is the default file-watcher packaged with Cypress.
 
 If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as _what_ is watched and the delay before emitting an "update" event after a change.
 

@@ -6,7 +6,7 @@ Cypress ships with {% url "official type declarations" https://github.com/cypres
 
 ## Install TypeScript
 
-You'll need to have TypeScript installed within your project to have TypeScript support within Cypress.
+You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
 ```bash
 npm install typescript
@@ -58,7 +58,7 @@ When adding {% url "custom commands" custom-commands %} to the `cy` object, you 
 For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
 ```javascript
-// cypress/support/index.js
+// cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
@@ -91,7 +91,7 @@ If your specs files are in TypeScript, you should include the TypeScript definit
 Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
 ```javascript
-// from your cypress/integration/spec.js
+// from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
@@ -116,7 +116,7 @@ If you extend Cypress assertions, you can extend the assertion types to make the
 You can utilize Cypress's type declarations in your {% url "plugins file" plugins-guide %} by annotating it like the following:
 
 ```javascript
-// cypress/plugins/index.js
+// cypress/plugins/index.ts
 
 /// <reference types="cypress" />
 
@@ -129,6 +129,7 @@ module.exports = (on, config) => {
 ```
 
 {% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Raised minimum required TypeScript version from 2.9+ to 3.4+
 {% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
 {% endhistory %}
 

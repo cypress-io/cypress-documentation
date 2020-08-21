@@ -188,6 +188,12 @@
       keywords: [webpack, webpack-dev-server, hmr]
       badge: community
 
+    - name: cypress-browser-permissions
+      description: Controls permissions for desktop notifications, geolocation, and other browser APIs
+      link: https://github.com/kamranayub/cypress-browser-permissions
+      keyboards: [permissions, notifications, geolocation, camera, microphone]
+      badge: community
+
 - name: Custom Commands
   plugins:
     - name: cy-view
@@ -254,12 +260,6 @@
       description: A custom command to download different kinds of files and store them on your local machine
       link: https://github.com/Xvier/cypress-downloadfile
       keywords: [commands, downloading]
-      badge: community
-
-    - name: cypress-shadow-dom
-      description: Custom commands for shadow DOM support
-      link: https://github.com/abramenal/cypress-shadow-dom
-      keywords: [shadow, shadow-dom, polymer, lit-html, commands]
       badge: community
 
     - name: cypress-testing-library
@@ -482,6 +482,12 @@
       description: Add commands and hooks to test Laravel applications
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
+      badge: community
+      
+    - name: Bison
+      description: A Full Stack Jamstack Template that uses Cypress and GitHub Actions for E2E testing.
+      link: https://github.com/echobind/bisonapp
+      keywords: [next.js, react, graphql, prisma, vercel]
       badge: community
 
 - name: Component Testing

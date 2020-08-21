@@ -28,6 +28,7 @@ guides:
     module-api: module-api.html
     debugging: debugging.html
     network-requests: network-requests.html
+    test-retries: test-retries.html
     continuous-integration: continuous-integration.html
     parallelization: parallelization.html
     environment-variables: environment-variables.html
@@ -43,7 +44,6 @@ guides:
     typescript-support: typescript-support.html
     visual-testing: visual-testing.html
     code-coverage: code-coverage.html
-
   references:
     assertions: assertions.html
     configuration: configuration.html

@@ -12,6 +12,10 @@ title: Retry-ability
 
 A core feature of Cypress that assists with testing dynamic web applications is retry-ability. Like a good transmission in a car, it usually works without you noticing it. But understanding how it works will help you write faster tests with fewer run-time surprises.
 
+{% note info "Test Retries" %}
+If you are looking to retry tests a configured number of times when the test fails, check out our official guide on {% url "Test Retries" test-retries %}.
+{% endnote %}
+
 # Commands vs assertions
 
 There are two types of methods you can call in your Cypress tests: **commands** and **assertions**. For example, there are 6 commands and 2 assertions in the test below.
@@ -436,3 +440,4 @@ Watch the short video below to see this example in action
 - You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
 - You can retry any function with attached assertions using this 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
 - See retry-ability examples in the {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.
+- To learn how to enable Cypress' test retries functionality, which retries tests that fail up to the configured number, check out our official guide on {% url "Test Retries" test-retries %}.
