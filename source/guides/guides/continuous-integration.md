@@ -303,7 +303,7 @@ jobs:
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-### Example `config.yml` v2 config file with `yarn`
+### Example `.circleci/config.yml` v2 config file with `yarn`
 
 ```yaml
 version: 2
