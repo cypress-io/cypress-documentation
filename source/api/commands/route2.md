@@ -132,8 +132,6 @@ cy.route2('/users/**', (req) => {
 
 ## Without Stubbing
 
-If you do not pass a `response` to a route, Cypress will pass the request through without stubbing it. We can still wait for the request to resolve later.
-
 ### Wait on `GET` request matching `url`
 
 ```javascript
@@ -194,9 +192,9 @@ cy.route2('/users', (req) => {
 
 ### Modify response
 
-After a request gets passed through, we can modify the response from the server. The `response` function accepts the request object as a parameter. Calling `.send()` on the request exposes a `response` object that can be modified.
+After a request gets passed through, we can modify the response from the server. This is done by passing the `req.send()` method a callback function which receives the original response (i.e., `res`) as the first argument.
 
-```javascript
+```js
 cy.route2('/users', (req) => {
   // passing a function to req.send causes the request to pass through
   // and allows the response from the origin server to be modified
