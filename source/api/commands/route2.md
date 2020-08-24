@@ -19,10 +19,10 @@ Unlike {% url `cy.route()` route %}, `cy.route2()`:
 # Syntax
 
 ```javascript
-cy.route2(routeMatcher)
-cy.route2(routeMatcher, response)
-cy.route2(method, routeMatcher)
-cy.route2(method, routeMatcher, response)
+cy.route2(url)
+cy.route2(url, response)
+cy.route2(method, url)
+cy.route2(method, url, response)
 ```
 
 ## Usage
@@ -35,9 +35,9 @@ cy.route2('/users/**')
 
 ## Arguments
 
-**{% fa fa-angle-right %} routeMatcher** ***(String, Glob, RegExp, Object)***
+**{% fa fa-angle-right %} url** ***(String, Glob, RegExp, Object)***
 
-The `routeMatcher` argument allows you to listen for a route matching a specific URL or pattern.
+The `url` argument allows you to listen for a route matching a specific URL or pattern.
 
 For simple route matching, passing a string, glob, or RegExp is the simplest method:
 
@@ -49,13 +49,14 @@ cy.route2('/users')
 cy.route2(/users\/\d+/)
 
 // Glob to match all paths in the /user path
-// Uses minimatch for matching: https://github.com/isaacs/minimatch
 cy.route2('/users/**')
 
 // https://localhost:8080/users/1b2c3                          <-- matches
 // https://localhost:8080/users/profile/edit                   <-- matches
 // https://localhost:8080/users/transaction?month=03&year=2020 <-- matches
 ```
+
+When passing a String to `url`, Cypres uses {% url 'minimatch' https://github.com/isaacs/minimatch %} to match glob patterns of `url`.
 
 However, if you need to match additional properties on the route, you can pass an object instead.
 
@@ -79,6 +80,8 @@ Option | Default | Type | Description
 `port` | `null` | *Number* | Requested port number
 `query` | `null` | *Object* | Query parameters
 `url` | `null` | *String, RegExp, Glob* | Full request URL
+
+When passing String as a value to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} under the hood.
 
 **{% fa fa-angle-right %} response** ***(String, Object, Array, Function)***
 
