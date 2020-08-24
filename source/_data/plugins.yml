@@ -232,7 +232,7 @@
       keywords: [fileupload, file, upload, commands]
       badge: community
       
-      - name: cypress-fill-command
+    - name: cypress-fill-command
       description: A Cypress command for fill inputs
       link: https://github.com/DanielFerrariR/cypress-fill-command
       keywords: [commands]
