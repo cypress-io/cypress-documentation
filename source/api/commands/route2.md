@@ -39,7 +39,7 @@ cy.route2('/users/**')
 
 The `url` argument allows you to listen for a route matching a specific URL or pattern.
 
-For simple route matching, passing a string, glob, or RegExp is the simplest method:
+For route matching, passing a string, glob, or RegExp is the simplest method:
 
 ```js
 // String
