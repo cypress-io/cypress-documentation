@@ -35,28 +35,30 @@ cy.route2('/users/**')
 
 ## Arguments
 
-**{% fa fa-angle-right %} url** ***(String, Glob, RegExp, Object)***
+**{% fa fa-angle-right %} url**
 
-The `url` argument allows you to listen for a route matching a specific URL or pattern.
+- **Expects**: `String` | `Glob` | `RegExp` | `Object`
 
-For route matching, passing a string, glob, or RegExp is the simplest method:
+- **Description**: Allows you to listen for a route matching a specific URL or pattern
+
+- **Examples**:
 
 ```js
 // String
+// Cypress uses minimatch to match glob patterns
+// https://github.com/isaacs/minimatch
 cy.route2('/users')
 
 // Regex
 cy.route2(/users\/\d+/)
 
 // Glob to match all paths in the /user path
+// Examples of paths it will match:
+// https://localhost:8080/users/1b2c3
+// https://localhost:8080/users/profile/edit
+// https://localhost:8080/users/transaction?month=03&year=2020
 cy.route2('/users/**')
-
-// https://localhost:8080/users/1b2c3                          <-- matches
-// https://localhost:8080/users/profile/edit                   <-- matches
-// https://localhost:8080/users/transaction?month=03&year=2020 <-- matches
 ```
-
-When passing a String to `url`, Cypres uses {% url 'minimatch' https://github.com/isaacs/minimatch %} to match glob patterns of `url`.
 
 However, if you need to match additional properties on the route, you can pass an object instead.
 
@@ -67,7 +69,7 @@ cy.route2({
 })
 ```
 
-The following contains a complete list of available properties you can match against:
+The following contains a complete list of available properties you can match the URL against:
 
 Option | Default | Type | Description
 --- | --- | --- | ---
@@ -81,13 +83,20 @@ Option | Default | Type | Description
 `query` | `null` | *Object* | Query parameters
 `url` | `null` | *String, RegExp, Glob* | Full request URL
 
-When passing String as a value to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} under the hood.
+{% note info %}
+When passing String as a value to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
+{% endnote %}
 
-**{% fa fa-angle-right %} response** ***(String, Object, Array, Function)***
+**{% fa fa-angle-right %} response**
 
-This allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route. This is accomplished by giving you access to the request that you can use in a plain function.
+- **Expects**: `String` | `Object` | `Array` | `Function`
+
+- **Description**: Allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route.
+
+- **Example**:
 
 ```js
+// Supplying an Object
 cy.route2('/users/**', {
   statusCode: 200,
   body: {
@@ -97,24 +106,23 @@ cy.route2('/users/**', {
     }
   }
 })
-```
 
-In addition, because you have access to the request, this means that you can modify the request as well:
-
-```js
+// Supplying a callback function
+// which receives the request
+// as an argument
 cy.route2('/users/**', (req) => {
   req.headers['accept'] = 'application/json'
   req.body = { ...req.body, note: 'Custom note' }
 })
 ```
 
-**{% fa fa-angle-right %} method** ***(String)***
+**{% fa fa-angle-right %} method** 
 
-Match the route to a specific HTTP method (`GET`, `POST`, `PUT`, etc).
+- **Expects**: `String`
 
-{% note bolt %}
-By default, Cypress will match `ALL` requests.
-{% endnote %}
+- **Description**: Match the route to a specific HTTP method (e.g., `GET`, `POST`, `PUT`, etc).
+
+- **Default Value**: Matches any HTTP method
 
 ## Yields {% helper_icon yields %}
 
@@ -172,7 +180,7 @@ cy.route2('**/posts/**')
 
 ### Modify request
 
-Before a request gets passed through, we can modify the request. The `response` function accepts the request object as a parameter.
+Before a request gets sent to the actual endpoint, we can modify the request. The supplied `RouteHandler` callback receives the request object as a parameter.
 
 You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} or {% urlHash 'throttle' Simulate-throttle %} on the request to be sent out.
 
