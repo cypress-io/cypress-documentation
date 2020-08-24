@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress + OneLogin: using API to authenticate before testing"
+    url: https://medium.com/@jedicwb/cypress-io-onelogin-using-api-to-authenticate-before-testing-a6e2412b356c
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Jonathan Machado
+    date: August 24, 2020
+    img: https://miro.medium.com/max/576/1*-9hvi8ko4HWxF2jCA_JAQw.png
+    
   - title: "Controlling Browser Permissions in Cypress End-to-End Tests"
     url: https://dev.to/kamranayub/controlling-browser-permissions-in-cypress-end-to-end-tests-5d7b
     sourceName: Dev.to
