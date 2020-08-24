@@ -8,9 +8,9 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## Tests retries
 
-Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works and how to turn on test retries.
+Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the {% url "Test Retries" test-retries %} doc for more information on how this works and how to turn on test retries.
 
-When test retries are turned on, there will now be a screenshot taken for every failed attempt, so there could potentially be more than 1 screenshot per test failure. Read the Test Retries doc for more information on how this works.
+When test retries are turned on, there will now be a screenshot taken for every failed attempt, so there could potentially be more than 1 screenshot per test failure. Read the {% url "Test Retries" test-retries %} doc for more information on how this works.
 
 The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. There's guidance below on how to migrate from the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin to Cypress's built-in test retries.
 
@@ -97,7 +97,7 @@ it('allows user to login', {
 
 ## Module API results
 
-To more accurately reflect result data for runs with test retries, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
+To more accurately reflect result data for runs with {% url "test retries" test-retries %}, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
 
 Mainly there is a new `attempts` Array on each `test` which will reflect the result of each test retry.
 
