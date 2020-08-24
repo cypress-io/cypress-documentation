@@ -231,6 +231,12 @@
       link: https://github.com/abramenal/cypress-file-upload
       keywords: [fileupload, file, upload, commands]
       badge: community
+      
+      - name: cypress-fill-command
+      description: A Cypress command for fill inputs
+      link: https://github.com/DanielFerrariR/cypress-fill-command
+      keywords: [commands]
+      badge: community
 
     - name: cypress-firebase
       description: Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).
