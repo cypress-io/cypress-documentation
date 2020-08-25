@@ -14,7 +14,7 @@ Read about {% url 'best practices' best-practices#Setting-a-global-baseUrl %} he
 
 ```javascript
 cy.visit(url)
-cy.visit(url, options)
+cy.visit(url, body)
 cy.visit(options)
 ```
 
@@ -37,6 +37,10 @@ Cypress will prefix the URL with the `baseUrl` configured in your {% url 'networ
 
 You may also specify the relative path of an html file.  The path is relative to the root
 directory of the Cypress installation. Note that the `file://` prefix is not needed.
+
+**{% fa fa-angle-right %} body** ***(Object)***
+
+Pass in the body of the request to `cy.visit()`.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
