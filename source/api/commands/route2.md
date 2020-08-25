@@ -19,11 +19,22 @@ Unlike {% url `cy.route()` route %}, `cy.route2()`:
 # Syntax
 
 ```javascript
+// JavaScript
 cy.route2(url)
 cy.route2(url, response)
 cy.route2(method, url)
 cy.route2(method, url, response)
 ```
+
+```typescript
+// TypeScript
+cy.route2(url: RouteMatcher, response?: RouteHandler): Chainable<null>
+cy.route2(method: string, url: RouteMatcher, response?: RouteHandler)): Chainable<null>
+```
+
+{% note info %}
+To learn more about types, check out [the repo](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L209-L210) for more information.
+{% endnote %}
 
 ## Usage
 
@@ -37,9 +48,11 @@ cy.route2('/users/**')
 
 **{% fa fa-angle-right %} url**
 
+- **Description**: Allows you to listen for a route matching a specific URL or pattern
+
 - **Expects**: `String` | `Glob` | `RegExp` | `Object`
 
-- **Description**: Allows you to listen for a route matching a specific URL or pattern
+- **Type**: [`RouteMatcher`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L118)
 
 - **Examples**:
 
@@ -52,17 +65,16 @@ cy.route2('/users')
 // Regex
 cy.route2(/users\/\d+/)
 
-// Glob to match all paths in the /user path
-// Examples of paths it will match:
-// https://localhost:8080/users/1b2c3
+// Glob
+// Match all paths in a given pattern
+// The following would match:
+// https://localhost:8080/users/johnsmith
 // https://localhost:8080/users/profile/edit
-// https://localhost:8080/users/transaction?month=03&year=2020
+// https://localhost:8080/users/transaction?month=03&day=20
 cy.route2('/users/**')
-```
 
-However, if you need to match additional properties on the route, you can pass an object instead.
-
-```js
+// Object
+// If you need to match additional properties
 cy.route2({
   path: '/users/**',
   method: 'POST',
@@ -70,6 +82,12 @@ cy.route2({
 ```
 
 The following contains a complete list of available properties you can match the URL against:
+
+{% note info %}
+When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
+
+This means you can take advantage of `*` and `**` glob support. This makes it *much* easier to route against dynamic segments without having to build up a complex `RegExp`.
+{% endnote %}
 
 Option | Default | Type | Description
 --- | --- | --- | ---
@@ -83,20 +101,18 @@ Option | Default | Type | Description
 `query` | `null` | *Object* | Query parameters
 `url` | `null` | *String, RegExp, Glob* | Full request URL
 
-{% note info %}
-When passing String as a value to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
-{% endnote %}
-
 **{% fa fa-angle-right %} response**
+
+- **Description**: Allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route.
 
 - **Expects**: `String` | `Object` | `Array` | `Function`
 
-- **Description**: Allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route.
+- **Type**: [`RouteHandler`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L171)
 
 - **Example**:
 
 ```js
-// Supplying an Object
+// Object
 cy.route2('/users/**', {
   statusCode: 200,
   body: {
@@ -107,9 +123,10 @@ cy.route2('/users/**', {
   }
 })
 
-// Supplying a callback function
+// Function
+// You can supply a callback function
 // which receives the request
-// as an argument
+// as the first argument
 cy.route2('/users/**', (req) => {
   req.headers['accept'] = 'application/json'
   req.body = { ...req.body, note: 'Custom note' }
@@ -118,9 +135,9 @@ cy.route2('/users/**', (req) => {
 
 **{% fa fa-angle-right %} method** 
 
-- **Expects**: `String`
+- **Description**: Matches the route to a specific HTTP method (e.g., `GET`, `POST`, `PUT`, etc).
 
-- **Description**: Match the route to a specific HTTP method (e.g., `GET`, `POST`, `PUT`, etc).
+- **Expects**: `String`
 
 - **Default Value**: Matches any HTTP method
 
@@ -148,14 +165,6 @@ cy.visit('/users')
 cy.get('#first-name').type('Julius{enter}')
 cy.wait('@postUser')
 ```
-
-### Wait on `url` matching glob
-
-Under the hood Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} to match glob patterns of `url`.
-
-This means you can take advantage of `*` and `**` glob support. This makes it *much* easier to route against dynamic segments without having to build up a complex `RegExp`.
-
-We expose {% url `Cypress.minimatch` minimatch %} as a function that you can use in your console to test routes.
 
 ### Match route against any UserId
 
