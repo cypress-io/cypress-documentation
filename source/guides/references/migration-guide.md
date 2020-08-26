@@ -22,7 +22,7 @@ The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-
 CYPRESS_RETRIES=2 cypress run
 ```
 
-{% badge success After %} Setting test retries in Cypress 5.0 via via env vars
+{% badge success After %} Setting test retries in Cypress 5.0 via env vars
 
 ```shell
 CYPRESS_RETRIES=2 cypress run
