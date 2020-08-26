@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Cypress + OneLogin: using API to authenticate before testing"
+    url: https://medium.com/@jedicwb/cypress-io-onelogin-using-api-to-authenticate-before-testing-a6e2412b356c
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Jonathan Machado
+    date: August 24, 2020
+    img: /img/examples/cypress-plus-onelogin.png
+  
   - title: "How to Write Automation Tests for Feature Flags with Cypress.io and Selenium"
     url: https://medium.com/engineers-optimizely/how-to-write-automation-tests-for-feature-flags-with-cypress-io-and-selenium-98493b5c46bc
     sourceName: Medium
