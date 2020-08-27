@@ -8,6 +8,7 @@ Cypress bundles the popular {% url 'Chai' assertions#Chai %} assertion library, 
 This document is only a reference to every assertion Cypress supports.
 
 If you're looking to understand **how** to use these assertions please read about assertions in our {% url "Introduction to Cypress" introduction-to-cypress#Assertions guide %}.
+{% endnote %}
 
 # Chai
 
