@@ -229,19 +229,11 @@ cy.get('a').parent('span.help').should('not.contain', 'click me')
 cy.get('button').should('be.visible')
 ```
 
-## Removal
+## Existence
 
 ```javascript
 // retry until loading spinner no longer exists
 cy.get('#loading').should('not.exist')
-```
-
-## Existence
-
-```javascript
-// check synchronously that the element does not exist (no retry)
-// for example just after a server-side render
-cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
 ```
 
 ## State

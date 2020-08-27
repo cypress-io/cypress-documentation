@@ -135,15 +135,19 @@ The `.click()` command will automatically wait until multiple built-in assertion
 
 # Timeouts
 
-By default each command that retries, does so for up to 4 seconds - the {% url `defaultCommandTimeout` configuration#Timeouts %} setting. You can change this timeout for _all commands_ using your configuration file, a CLI parameter, via an environment variable, or programmatically.
+By default each command that retries, does so for up to 4 seconds - the {% url `defaultCommandTimeout` configuration#Timeouts %} setting.
 
-For example, to set the default command timeout to 10 seconds via command line:
+## Increase time to retry
+
+You can change this timeout for _all commands_. See {% url 'Configuration: Overriding Options' configuration#Overriding-Options %} for examples of overriding this option.
+
+For example, to set the default command timeout to 10 seconds via the command line:
 
 ```shell
 cypress run --config defaultCommandTimeout=10000
 ```
 
-See {% url 'Configuration: Overriding Options' configuration#Overriding-Options %} for other examples of overriding this option. We do not recommend changing the command timeout globally. Instead, pass the inividual command's `{ timeout: ms }` option to retry for a different period of time. For example:
+ We do not recommend changing the command timeout globally. Instead, pass the individual command's `{ timeout: ms }` option to retry for a different period of time. For example:
 
 ```javascript
 // we've modified the timeout which affects default + added assertions
@@ -153,6 +157,16 @@ cy.get('.mobile-nav', { timeout: 10000 })
 ```
 
 Cypress will retry for up to 10 seconds to find a visible element of class `mobile-nav` with text containing "Home". For more examples, read the {% url 'Timeouts' introduction-to-cypress#Timeouts %} section in the "Introduction to Cypress" guide.
+
+## Disable retry
+
+Overriding the timeout to `0` will essentially disable retrying the command, since it will spend 0 milliseconds retrying.
+
+```javascript
+// check synchronously that the element does not exist (no retry)
+// for example just after a server-side render
+cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
+```
 
 # Only the last command is retried
 
