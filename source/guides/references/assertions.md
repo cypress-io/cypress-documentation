@@ -241,7 +241,7 @@ cy.get('#loading').should('not.exist')
 ```javascript
 // check synchronously that the element does not exist (no retry)
 // for example just after a server-side render
-cy.get('#ssr-error', { timeout: 0}).should('not.exist')
+cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
 ```
 
 ## State
