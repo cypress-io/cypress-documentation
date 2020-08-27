@@ -8,8 +8,16 @@ Cypress ships with {% url "official type declarations" https://github.com/cypres
 
 You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
-```bash
-npm install typescript
+### With npm
+
+```shell
+npm install --save-dev typescript
+```
+
+### With yarn
+
+```shell
+yarn add --dev typescript
 ```
 
 ## Set up your dev environment
@@ -23,8 +31,6 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```json
 {
   "compilerOptions": {
-    "strict": true,
-    "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["cypress"]
