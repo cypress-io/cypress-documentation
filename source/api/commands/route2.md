@@ -304,7 +304,7 @@ When a request matches any of the following route properties:
 The `RouteMatcher` will respond based on the configuration of that route.
 
 {% note bolt %}
-By default, all HTTP methods will be used used to match routes. If you want to stub a route with a specific HTTP method such as `POST` then you {% urlHash 'must be explicit about the method' Arguments %}.
+By default, all HTTP methods will be used to match routes. If you want to stub a route with a specific HTTP method such as `POST` then you {% urlHash 'must be explicit about the method' Arguments %}.
 {% endnote %}
 
 ### Specify the method
