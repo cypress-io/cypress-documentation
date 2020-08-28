@@ -275,11 +275,11 @@ cy.route2('/login', {
   headers: {
     'x-new-headers': 'from-server'
   },
-  // If `destroySocket` is truthy, Cypress will destroy the connection
+  // If `forceNetworkError` is truthy, Cypress will destroy the connection
   // to the browser and send no response. Useful for simulating a
   // server that is not reachable. Must not be set in combination
   // with other options.
-  destroySocket: false
+  forceNetworkError: false
 })
 ```
 
