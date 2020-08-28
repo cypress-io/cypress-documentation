@@ -50,7 +50,7 @@ cy.route2('/users/**')
 
 - **Description**: Allows you to listen for a route matching a specific URL or pattern
 
-- **Expects**: `String` | `Glob` | `RegExp` | `Object`
+- **Expects**: `String` | `RegExp` | `Object` | `StaticResponse`
 
 - **Type**: [`RouteMatcher`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L118)
 
