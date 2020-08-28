@@ -114,7 +114,6 @@ Adding a {% url "`tsconfig.json`" http://www.typescriptlang.org/docs/handbook/ts
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "../node_modules",
     "types": [
       "cypress"
     ]
