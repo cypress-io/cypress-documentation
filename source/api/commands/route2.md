@@ -50,7 +50,7 @@ cy.route2('/users/**')
 
 - **Description**: Allows you to listen for a route matching a specific URL or pattern
 
-- **Expects**: `String` | `Glob` | `RegExp` | `Object`
+- **Expects**: `String` | `RegExp` | `Object` | `StaticResponse`
 
 - **Type**: [`RouteMatcher`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L118)
 
@@ -240,7 +240,7 @@ cy.route2('/users', (req) => {
 
 ## With Stubbing
 
-If you pass a `response` to `cy.route2()`, Cypress will stub the response in the request.
+If you pass a `routeHandler` as the second argument to `cy.route2()`, Cypress will allow you to stub the response to the request.
 
 ### `url` as a string
 
