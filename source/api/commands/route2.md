@@ -90,7 +90,7 @@ This means you can take advantage of `*` and `**` glob support. This makes it *m
 
 Option | Default | Type | Description
 --- | --- | --- | ---
-`auth` | `null` | *Object* | HTTP basic authentication including `username` and `password`
+`auth` | `null` | *Object* | Pass an object with `username` and `password` properties to match requests using HTTP basic auth.
 `headers` | `null` | *Object* | Client request headers
 `hostname` | `null` | *String, RegExp, Glob* | Requested hostname
 `method` | `'ALL'` | *String* | HTTP method (`GET`, `POST`, `PUT`, etc.)
