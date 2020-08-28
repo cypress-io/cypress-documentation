@@ -111,7 +111,7 @@ Option | Default | Type | Description
 - **Example**:
 
 ```js
-// Object
+// StaticResponse
 cy.route2('/users/**', {
   statusCode: 200,
   body: {
