@@ -280,8 +280,9 @@ cy.route2('/login', 'Success')
 
 ```javascript
 // reply with body and headers
-cy.route2('/login', (req) => {
-  req.reply('Success', { 'x-new-headers': 'from-server' })
+cy.route2('/login', {
+  body: 'Success',
+  headers: { 'x-new-headers': 'from-server' }
 })
 ```
 
