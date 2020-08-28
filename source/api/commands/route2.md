@@ -128,7 +128,7 @@ cy.route2('/users/**', {
 // which receives the request
 // as the first argument
 cy.route2('/users/**', (req) => {
-  req.headers['accept'] = 'application/json'
+  req.headers.accept = 'application/json'
 
   // To modify a JSON response,
   // it will be provided as a string 
@@ -204,7 +204,7 @@ You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} o
 ```javascript
 cy.route2('/users', (req) => {
   // modify the headers or body
-  req.headers = {...req.headers, accept: 'application/json'}
+  req.headers.accept = 'application/json'
   
   // To modify a JSON response,
   // it will be provided as a string 
