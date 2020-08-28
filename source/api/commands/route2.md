@@ -35,7 +35,7 @@ To learn more about types, check out [the repo](https://github.com/cypress-io/cy
 
 - **Description**: Allows you to listen for a route matching a specific URL or pattern
 
-- **Expects**: `String` | `RegExp` | `Object` | `StaticResponse`
+- **Expects**: `String` | `RegExp` | `Object` | [`StaticResponse`](#StaticResponse)
 
 - **Type**: [`RouteMatcher`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L118)
 
@@ -153,6 +153,41 @@ cy.route2('/users/**', (req) => {
 ## Yields {% helper_icon yields %}
 
 {% yields null_alias cy.route2 %}
+
+## Relevant Types
+
+### {% fa fa-angle-right %} StaticResponse
+
+- **Description**: Describes a response that will be sent back to the browser to fulfill the request.
+
+- **Expects**: `Fixture` | `Body`
+
+- **Interface**:
+
+```ts
+{
+  /**
+   * If set, serve a fixture as the response body.
+   */
+  fixture?: Fixture
+  /**
+   * If set, serve a static string/JSON object as the response body.
+   */
+  body?: Body
+  /**
+   * @default {}
+   */
+  headers?: { [key: string]: string }
+  /**
+   * @default 200
+   */
+  statusCode?: number
+  /**
+   * If `forceNetworkError` is truthy, Cypress will destroy the connection to the browser and send no response. Useful for simulating a server that is not reachable. Must not be set in combination with other options.
+   */
+  forceNetworkError?: boolean
+}
+```
 
 # Examples
 
