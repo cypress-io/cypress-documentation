@@ -241,7 +241,7 @@ cy.route2('/users', (req) => {
 
 If you pass a `routeHandler` as the second argument to `cy.route2()`, Cypress will allow you to stub the response to the request.
 
-### `url` as a string
+### `url` as a String
 
 When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
 
