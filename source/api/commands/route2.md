@@ -201,7 +201,7 @@ cy.route2('/users', (req) => {
 
 ### Modify response
 
-After a request gets passed through, we can modify the response from the server. This is done by passing the `req.send()` method a callback function which receives the original response (i.e., `res`) as the first argument.
+After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method a callback function which receives the original response (i.e., `res`) as the first argument.
 
 ```js
 cy.route2('/users', (req) => {
