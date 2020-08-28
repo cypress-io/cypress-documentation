@@ -102,7 +102,7 @@ Option | Default | Type | Description
 
 **{% fa fa-angle-right %} routeHandler**
 
-- **Description**: Allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route.
+- **Description**: Define how this route should be handled, either by statically defining a response, or supplying a function for dynamic interception.
 
 - **Expects**: `String` | `Object` | `Array` | `Function`
 
