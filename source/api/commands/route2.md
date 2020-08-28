@@ -43,8 +43,6 @@ To learn more about types, check out [the repo](https://github.com/cypress-io/cy
 
 ```js
 // String
-// Cypress uses minimatch to match glob patterns
-// https://github.com/isaacs/minimatch
 cy.route2('/users')
 
 // Regex
@@ -52,11 +50,14 @@ cy.route2(/users\/\d+/)
 
 // Glob
 // Match all paths in a given pattern
-// The following would match:
+// Cypress uses minimatch to match glob patterns
+// https://github.com/isaacs/minimatch
+cy.route2('/users/**')
+
+// The following would match the previous glob:
 // https://localhost:8080/users/johnsmith
 // https://localhost:8080/users/profile/edit
 // https://localhost:8080/users/transaction?month=03&day=20
-cy.route2('/users/**')
 
 // Object
 // If you need to match additional properties
