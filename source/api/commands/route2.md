@@ -80,7 +80,7 @@ cy.route2('/users', {
 })
 ```
 
-The following contains a complete list of available properties you can match the URL against:
+The following contains a complete list of available properties you can match the request against:
 
 {% note info %}
 When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
