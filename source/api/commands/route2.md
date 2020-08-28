@@ -129,7 +129,17 @@ cy.route2('/users/**', {
 // as the first argument
 cy.route2('/users/**', (req) => {
   req.headers['accept'] = 'application/json'
-  req.body = { ...req.body, note: 'Custom note' }
+
+  // To modify a JSON response,
+  // it will be provided as a string 
+  // in req.body and must be
+  // parsed and stringified properly.
+  const requestBody = JSON.parse(req.body)
+  
+  req.body = JSON.stringify({
+    ...requestBody, 
+    note: 'Custom note' 
+  })
 })
 ```
 
