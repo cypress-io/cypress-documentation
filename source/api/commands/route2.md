@@ -61,8 +61,8 @@ cy.route2('/users/**')
 // https://localhost:8080/users/profile/edit
 // https://localhost:8080/users/transaction?month=03&day=20
 
-// Object
-// If you need to match additional properties
+// RouteMatcher
+// For matching on properties of the request besides the URL.
 cy.route2({
   path: '/users/**',
   method: 'POST',
