@@ -104,7 +104,7 @@ Option | Default | Type | Description
 
 - **Description**: Define how this route should be handled, either by statically defining a response, or supplying a function for dynamic interception.
 
-- **Expects**: `String` | `Object` | `Array` | `Function`
+- **Expects**: `String` | `Object` | `Array` | `StaticResponse` | `Function`
 
 - **Type**: [`RouteHandler`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L171)
 
