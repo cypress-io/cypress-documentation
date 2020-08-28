@@ -1,6 +1,12 @@
+.dashboard-ad-wrapper {
+  border-top: 1px solid #eee; 
+  margin-top: 1rem;
+}
+
 .dashboard-ad {
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
   padding: 2rem;
   background-color: #f7fafc;
 
@@ -10,7 +16,12 @@
   }
 
   img {
+    display: none;
     max-width: 100%;
+
+    @media (min-width: 1000px) {
+      display: block;
+    }
   }
 
   ul {
