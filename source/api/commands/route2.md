@@ -33,7 +33,7 @@ To learn more about types, check out [the repo](https://github.com/cypress-io/cy
 
 **{% fa fa-angle-right %} url**
 
-- **Description**: Allows you to listen for a route matching a specific URL or pattern
+- **Description**: Defines a filter for incoming HTTP requests to decide which requests will be handled by this route.
 
 - **Expects**: `String` | `RegExp` | `Object` | [`StaticResponse`](#StaticResponse)
 
@@ -52,6 +52,8 @@ cy.route2(/users\/\d+/)
 // Match all paths in a given pattern
 // Cypress uses minimatch to match glob patterns
 // https://github.com/isaacs/minimatch
+// Cypress uses minimatch to match glob patterns
+// https://github.com/isaacs/minimatch
 cy.route2('/users/**')
 
 // The following would match the previous glob:
@@ -59,8 +61,8 @@ cy.route2('/users/**')
 // https://localhost:8080/users/profile/edit
 // https://localhost:8080/users/transaction?month=03&day=20
 
-// Object
-// If you need to match additional properties
+// RouteMatcher
+// For matching on properties of the request besides the URL.
 cy.route2({
   path: '/users/**',
   method: 'POST',
@@ -80,38 +82,38 @@ cy.route2('/users', {
 })
 ```
 
-The following contains a complete list of available properties you can match the URL against:
+The following contains a complete list of available properties you can match the request against:
 
 {% note info %}
-When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
+When passing a `String` to properties such as (`auth.*`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
 
 This means you can take advantage of `*` and `**` glob support. This makes it *much* easier to route against dynamic segments without having to build up a complex `RegExp`.
 {% endnote %}
 
 Option | Default | Type | Description
 --- | --- | --- | ---
-`auth` | `null` | *Object* | HTTP basic authentication including `username` and `password`
-`headers` | `null` | *Object* | Client request headers
-`hostname` | `null` | *String, RegExp, Glob* | Requested hostname
-`method` | `'ALL'` | *String* | HTTP method (`GET`, `POST`, `PUT`, etc.)
-`path` | `null` | *String, RegExp, Glob* | Request path after the hostname, including query params
-`pathname` | `null` | *String, RegExp, Glob* | Request path after the hostname, without query params
-`port` | `null` | *Number* | Requested port number
-`query` | `null` | *Object* | Query parameters
-`url` | `null` | *String, RegExp, Glob* | Full request URL
+`auth` | `null` | *Object* | Pass an object with `username` and `password` properties to match requests using HTTP basic auth.
+`headers` | `null` | *Object* | Pass an object with header names as keys to match against request headers
+`hostname` | `null` | *String, RegExp, Glob* | Match against request hostname (HTTP `Host` header)
+`method` | `'ALL'` | *String* | Match against HTTP method (`GET`, `POST`, `PUT`, etc.)
+`path` | `null` | *String, RegExp, Glob* | Match on requested path, including query params
+`pathname` | `null` | *String, RegExp, Glob* | Match on requested path, without query params
+`port` | `null` | *Number* | Match on requested port number
+`query` | `null` | *Object* | Pass an object to match against specified query parameters
+`url` | `null` | *String, RegExp, Glob* | Match against full request URL
 
-**{% fa fa-angle-right %} response**
+**{% fa fa-angle-right %} routeHandler**
 
-- **Description**: Allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route.
+- **Description**: Define how this route should be handled, either by statically defining a response, or supplying a function for dynamic interception.
 
-- **Expects**: `String` | `Object` | `Array` | `Function`
+- **Expects**: `String` | `Object` | `Array` | `StaticResponse` | `Function`
 
 - **Type**: [`RouteHandler`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L171)
 
 - **Example**:
 
 ```js
-// Object
+// StaticResponse
 cy.route2('/users/**', {
   statusCode: 200,
   body: {
@@ -123,9 +125,7 @@ cy.route2('/users/**', {
 })
 
 // Function
-// You can supply a callback function
-// which receives the request
-// as the first argument
+// You can supply a callback function which receives the request as the first argument
 cy.route2('/users/**', (req) => {
   req.headers.accept = 'application/json'
 
@@ -276,7 +276,7 @@ cy.route2('/users', (req) => {
 
 If you pass a `routeHandler` as the second argument to `cy.route2()`, Cypress will allow you to stub the response to the request.
 
-### `url` as a string
+### `url` as a String
 
 When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
 
