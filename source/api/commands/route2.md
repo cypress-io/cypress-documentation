@@ -33,7 +33,7 @@ To learn more about types, check out [the repo](https://github.com/cypress-io/cy
 
 **{% fa fa-angle-right %} url**
 
-- **Description**: Allows you to listen for a route matching a specific URL or pattern
+- **Description**: Defines a filter for incoming HTTP requests to decide which requests will be handled by this route.
 
 - **Expects**: `String` | `RegExp` | `Object` | `StaticResponse`
 
