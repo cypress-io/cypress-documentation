@@ -91,14 +91,14 @@ This means you can take advantage of `*` and `**` glob support. This makes it *m
 Option | Default | Type | Description
 --- | --- | --- | ---
 `auth` | `null` | *Object* | Pass an object with `username` and `password` properties to match requests using HTTP basic auth.
-`headers` | `null` | *Object* | Client request headers
-`hostname` | `null` | *String, RegExp, Glob* | Requested hostname
-`method` | `'ALL'` | *String* | HTTP method (`GET`, `POST`, `PUT`, etc.)
-`path` | `null` | *String, RegExp, Glob* | Request path after the hostname, including query params
-`pathname` | `null` | *String, RegExp, Glob* | Request path after the hostname, without query params
-`port` | `null` | *Number* | Requested port number
-`query` | `null` | *Object* | Query parameters
-`url` | `null` | *String, RegExp, Glob* | Full request URL
+`headers` | `null` | *Object* | Pass an object with header names as keys to match against request headers
+`hostname` | `null` | *String, RegExp, Glob* | Match against request hostname (HTTP `Host` header)
+`method` | `'ALL'` | *String* | Match against HTTP method (`GET`, `POST`, `PUT`, etc.)
+`path` | `null` | *String, RegExp, Glob* | Match on requested path, including query params
+`pathname` | `null` | *String, RegExp, Glob* | Match on requested path, without query params
+`port` | `null` | *Number* | Match on requested port number
+`query` | `null` | *Object* | Pass an object to match against specified query parameters
+`url` | `null` | *String, RegExp, Glob* | Match against full request URL
 
 **{% fa fa-angle-right %} response**
 
