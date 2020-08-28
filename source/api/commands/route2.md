@@ -29,14 +29,6 @@ cy.route2(method: string, url: RouteMatcher, response?: RouteHandler)
 To learn more about types, check out [the repo](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L209-L210) for more information.
 {% endnote %}
 
-## Usage
-
-**{% fa fa-check-circle green %} Correct Usage**
-
-```javascript
-cy.route2('/users/**')
-```
-
 ## Arguments
 
 **{% fa fa-angle-right %} url**
