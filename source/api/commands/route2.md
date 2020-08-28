@@ -65,6 +65,19 @@ cy.route2({
   path: '/users/**',
   method: 'POST',
 })
+
+// StaticResponse
+// Allows you to define a response
+// that will be sent back to the browser
+// to fulfill the request
+cy.route2('/users', {
+  body: '{ "message": "Custom message" }',
+  headers: {
+    accept: 'application/json'
+  },
+  statusCode: 200,
+  forceNetworkError: false
+})
 ```
 
 The following contains a complete list of available properties you can match the URL against:
