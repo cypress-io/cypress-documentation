@@ -135,7 +135,7 @@ cy.route2('/users/**', (req) => {
   // in req.body and must be
   // parsed and stringified properly.
   const requestBody = JSON.parse(req.body)
-  
+
   req.body = JSON.stringify({
     ...requestBody, 
     note: 'Custom note' 
@@ -205,7 +205,17 @@ You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} o
 cy.route2('/users', (req) => {
   // modify the headers or body
   req.headers = {...req.headers, accept: 'application/json'}
-  req.body = {...req.body, foo: 'bar'}
+  
+  // To modify a JSON response,
+  // it will be provided as a string 
+  // in req.body and must be
+  // parsed and stringified properly.
+  const requestBody = JSON.parse(req.body)
+
+  req.body = JSON.stringify({
+    ...requestBody, 
+    note: 'Custom note' 
+  })
 })
 ```
 
