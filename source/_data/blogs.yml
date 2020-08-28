@@ -16,6 +16,14 @@ large:
     date: August 24, 2020
     img: /img/examples/cypress-plus-onelogin.png
   
+  - title: "Controlling Browser Permissions in Cypress End-to-End Tests"
+    url: https://dev.to/kamranayub/controlling-browser-permissions-in-cypress-end-to-end-tests-5d7b
+    sourceName: Dev.to
+    sourceUrl: https://dev.to/
+    author: Kamran Ayub
+    date: July 17, 2020
+    img: /img/examples/cypress-browser-permissions.png
+
   - title: "How to Write Automation Tests for Feature Flags with Cypress.io and Selenium"
     url: https://medium.com/engineers-optimizely/how-to-write-automation-tests-for-feature-flags-with-cypress-io-and-selenium-98493b5c46bc
     sourceName: Medium
@@ -824,16 +832,16 @@ large:
     date: Jan 30, 2019
     img: /img/examples/tendencias-quality-assurance.png
 
-  - title: "Cypress com Cucumber nos testes E2E"
-    url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
-    sourceName: Concrete
-    sourceUrl: https://www.concrete.com.br/
+  - title: "Setting Cypress and Cucumber in e2e tests"
+    url: https://medium.com/assertqualityassurance/setting-cypress-and-cucumber-in-e2e-tests-6239adac1077
+    sourceName: Medium
+    sourceUrl: https://www.medium.com
     author: Lucas Fraga
-    date: Jan 24, 2019
+    date: April 3, 2019
     img: /img/examples/cypress-com-cucumber.jpg
 
   - title: "Testes E2E com CyPress no Quasar Framework"
-    url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
+    url: https://imasters.com.br/front-end/testes-e2e-com-cypress-no-quasar-framework
     sourceName: iMasters
     sourceUrl: https://imasters.com.br/
     author: Patrick Pinheiro Mmonteiro

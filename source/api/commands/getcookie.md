@@ -38,14 +38,14 @@ Option | Default | Description
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
-- `name`
-- `value`
-- `path`
 - `domain`
+- `expiry` *(if specified)*
 - `httpOnly`
+- `name`
+- `path`
+- `sameSite` *(if specified)*
 - `secure`
-- `expiry`
-- `sameSite` *(will only be returned if the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`)*
+- `value`
 
 ### When a cookie matching the name could not be found:
 
@@ -140,7 +140,8 @@ When clicking on `getCookie` within the command log, the console outputs the fol
 {% imgTag /img/api/getcookie/inspect-cookie-object-properties-in-console.png "Console Log getcookie" %}
 
 {% history %}
-{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`.
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`.
 {% endhistory %}
 
 # See also
