@@ -83,7 +83,7 @@ cy.route2('/users', {
 The following contains a complete list of available properties you can match the request against:
 
 {% note info %}
-When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
+When passing a `String` to properties such as (`auth.*`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
 
 This means you can take advantage of `*` and `**` glob support. This makes it *much* easier to route against dynamic segments without having to build up a complex `RegExp`.
 {% endnote %}
