@@ -19,17 +19,10 @@ Unlike {% url `cy.route()` route %}, `cy.route2()`:
 # Syntax
 
 ```javascript
-// JavaScript
-cy.route2(url)
-cy.route2(url, response)
-cy.route2(method, url)
-cy.route2(method, url, response)
-```
+cy.route2(url: RouteMatcher, response?: RouteHandler)
 
-```typescript
-// TypeScript
-cy.route2(url: RouteMatcher, response?: RouteHandler): Chainable<null>
-cy.route2(method: string, url: RouteMatcher, response?: RouteHandler)): Chainable<null>
+// If you need to define a specific HTTP method
+cy.route2(method: string, url: RouteMatcher, response?: RouteHandler)
 ```
 
 {% note info %}
