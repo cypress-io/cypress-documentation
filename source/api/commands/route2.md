@@ -100,7 +100,7 @@ Option | Default | Type | Description
 `query` | `null` | *Object* | Pass an object to match against specified query parameters
 `url` | `null` | *String, RegExp, Glob* | Match against full request URL
 
-**{% fa fa-angle-right %} response**
+**{% fa fa-angle-right %} routeHandler**
 
 - **Description**: Allows you to supply a response `body` to {% url 'stub' stubs-spies-and-clocks#Stubs %} in the matching route.
 
