@@ -227,7 +227,7 @@ After a request gets passed through, we can modify the response from the server.
 cy.route2('/users', (req) => {
   // passing a function to req.reply causes the request to pass through
   // and allows the response from the origin server to be modified
-  req.send((res) => {
+  req.reply((res) => {
     res.status = 200
     res.headers['x-new-headers'] = 'from-server'
 
