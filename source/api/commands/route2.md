@@ -244,7 +244,7 @@ If you pass a `response` to `cy.route2()`, Cypress will stub the response in the
 
 ### `url` as a string
 
-When passing a String as the `url`, the URL must match *exactly* what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
+When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
 
 ```javascript
 cy.route2('https://localhost:7777/users/customer?email=john@doe.com', [
