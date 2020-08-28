@@ -47,9 +47,7 @@ Whenever Cypress cannot interact with an element, it could fail at any of the ab
 
 ## Visibility
 
-Cypress checks a lot of things to determine an element's visibility.
-
-The following calculations factor in CSS translations and transforms.
+Cypress checks a lot of things to determine an element's visibility. The following calculations factor in CSS translations and transforms.
 
 ### An element is considered hidden if:
 
@@ -57,10 +55,6 @@ The following calculations factor in CSS translations and transforms.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and it's offscreen or covered up.
-- Its CSS property (or ancestors) is `opacity: 0`. There is a specific exception made for this check when determining actionability, since elements with `opacity: 0` are invisible to the eye but can be interacted with.
-
-### Additionally an element is considered hidden if:
-
 - Any of its ancestors **hides overflow**\*
   - AND that ancestor has a `width` or `height` of `0`
   - AND an element between that ancestor and the element is `position: absolute`
@@ -71,7 +65,13 @@ The following calculations factor in CSS translations and transforms.
   - AND the element is `position: relative`
   - AND it is positioned outside that ancestor's bounds
 
-\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
+\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y: hidden`, `overflow: scroll`, or `overflow: auto`
+
+{% note info "Opacity" %}
+Elements where the CSS property (or ancestors) is `opacity: 0` are considered hidden when {% url "asserting on the element's visibility directly" assertions#Visibility %}.
+
+However elements where the CSS property (or ancestors) is `opacity: 0` are considered actionable and any commands used to interact with the hidden element will perform the action.
+{% endnote %}
 
 ## Disability
 
