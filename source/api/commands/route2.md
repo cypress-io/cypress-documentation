@@ -123,9 +123,7 @@ cy.route2('/users/**', {
 })
 
 // Function
-// You can supply a callback function
-// which receives the request
-// as the first argument
+// You can supply a callback function which receives the request as the first argument
 cy.route2('/users/**', (req) => {
   req.headers.accept = 'application/json'
 
