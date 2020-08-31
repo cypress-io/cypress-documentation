@@ -4,7 +4,7 @@ title: Cypress.Cookies
 
 `Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress' cookie behavior.
 
-`Cookies.debug()` enables you to log out whenever any cookies are modified.
+`Cookies.debug()` enables you to generate logs to the console whenever any cookies are modified.
 
 Cypress automatically clears all cookies **before** each test to prevent state from building up.
 
