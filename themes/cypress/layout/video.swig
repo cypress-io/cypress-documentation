@@ -13,6 +13,7 @@
             <div class="article-content" itemprop="articleBody">
               {{ add_page_anchors(page.content) }}
             </div>
+            {{ partial('partial/dashboard-cta') }}
             <footer class="article-footer">
               {{ page_nav() }}
             </footer>
