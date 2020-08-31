@@ -4,7 +4,7 @@ containerClass: experimental
 ---
 
 {% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must manually configure the {% url "`experimentalNetworkMocking`" experiments %} option to `true`.** See {% issue 687 %} for more details.
+{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must manually configure the {% url "`experimentalNetworkStubbing`" experiments %} option to `true`.** See {% issue 687 %} for more details.
 {% endnote %}
 
 Use `cy.route2()` to manage the behavior of network requests at the network layer.
@@ -126,19 +126,19 @@ cy.route2('/users/**', (req) => {
   req.headers.accept = 'application/json'
 
   // To modify a JSON response,
-  // it will be provided as a string 
+  // it will be provided as a string
   // in req.body and must be
   // parsed and stringified properly.
   const requestBody = JSON.parse(req.body)
 
   req.body = JSON.stringify({
-    ...requestBody, 
-    note: 'Custom note' 
+    ...requestBody,
+    note: 'Custom note'
   })
 })
 ```
 
-**{% fa fa-angle-right %} method** 
+**{% fa fa-angle-right %} method**
 
 - **Description**: Matches the route to a specific HTTP method (e.g., `GET`, `POST`, `PUT`, etc).
 
@@ -235,16 +235,16 @@ You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} o
 cy.route2('/users', (req) => {
   // modify the headers or body
   req.headers.accept = 'application/json'
-  
+
   // To modify a JSON response,
-  // it will be provided as a string 
+  // it will be provided as a string
   // in req.body and must be
   // parsed and stringified properly.
   const requestBody = JSON.parse(req.body)
 
   req.body = JSON.stringify({
-    ...requestBody, 
-    note: 'Custom note' 
+    ...requestBody,
+    note: 'Custom note'
   })
 })
 ```
