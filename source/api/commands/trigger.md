@@ -60,7 +60,7 @@ Option | Default | Description
 `force` | `false` | {% usage_options force trigger %}
 `bubbles` | `true` | Whether the event bubbles
 `cancelable` | `true` | Whether the event is cancelable
-`eventType` | `Event` | The type of `Event` you want to trigger
+`eventConstructor` | `Event` | The constructor for the event type you want to trigger
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .trigger %}
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.
