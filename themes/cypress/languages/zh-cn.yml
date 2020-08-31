@@ -138,6 +138,7 @@ sidebar:
     rightclick: rightclick
     root: root
     route: route
+    route2: route2.html
     screenshot: screenshot
     scrollintoview: scrollIntoView
     scrollto: scrollTo
