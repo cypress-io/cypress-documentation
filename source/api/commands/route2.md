@@ -73,10 +73,7 @@ cy.route2({
 // that will be sent back to the browser
 // to fulfill the request
 cy.route2('/users', {
-  body: '{ "message": "Custom message" }',
-  headers: {
-    accept: 'application/json'
-  },
+  body: { message: "Custom message" },
   statusCode: 200,
   forceNetworkError: false
 })
