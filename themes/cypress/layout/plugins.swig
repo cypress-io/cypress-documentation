@@ -50,6 +50,7 @@
           </section>
         {% endfor %}
       </div>
+      {{ partial('partial/dashboard-cta') }}
       <div class="article-footer-updated">
         <time datetime="{{ date_xml(page.updated) }}" itemprop="dateModified">{{ __('page.last-updated', date(page.updated)) }}</time>
       </div>
