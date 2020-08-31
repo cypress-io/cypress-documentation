@@ -174,10 +174,10 @@ cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 
 By default, `cy.trigger()` fires {% url `Event` https://developer.mozilla.org/en-US/docs/Web/API/Event %}. But you may want to trigger other events like `MouseEvent` or `KeyboardEvent`. 
 
-In that case, use the `eventType` option.
+In that case, use the `eventConstructor` option.
 
 ```js
-cy.get('button').trigger('mouseover', { eventType: 'MouseEvent' })
+cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
 ```
 
 # Notes
