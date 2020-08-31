@@ -1,7 +1,7 @@
 <aside class="dashboard-ad-wrapper">
   <div class="dashboard-ad">
     <div class="dashboard-ad-content">
-      <h2 class="dashboard-ad-title">Test and debug faster with the Cypress Dashboard</h2>
+      <h3 class="dashboard-ad-title">Test and debug faster with the Cypress Dashboard</h3>
       <ul>
         <li>See the exact point of failure of tests running in CI</li>
         <li>Supercharge test times by running tests in parallel</li>
