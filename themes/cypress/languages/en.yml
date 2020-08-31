@@ -48,6 +48,7 @@ sidebar:
     screenshots-and-videos: Screenshots and Videos
     guides: Guides
     command-line: Command Line
+    test-retries: Test Retries
     continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables

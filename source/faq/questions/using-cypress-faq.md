@@ -281,7 +281,7 @@ Yes. {% url "You can override this with `userAgent` in your configuration file (
 
 ## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
-Yes. {% url "You can set this with `blacklistHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
+Yes. {% url "You can set this with `blockHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
 
 Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
@@ -420,7 +420,7 @@ You can preserve specific cookies across tests using the {% url "Cypress.Cookies
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: 'session_id'
+  preserve: 'session_id'
 })
 ```
 
@@ -484,7 +484,7 @@ describe('Logo', () => {
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with webpack and Babel.
 
 We recommend utilizing one of the following to execute code outside of the browser. Furthermore, you can use your own Node version during code excecution by setting the {% url "`nodeVersion`" configuration#Node-version %} in your configuration.
 
@@ -545,7 +545,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
 
-Typically you'd reuse your existing `babel` and `webpack` configurations.
+Typically you'd reuse your existing Babel and webpack configurations.
 
 ## {% fa fa-angle-right %} How does one determine what the latest version of Cypress is?
 
@@ -628,7 +628,7 @@ Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spy
 
 ## {% fa fa-angle-right %} How do I use special characters with `cy.get()`?
 
-Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}. 
+Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}.
 
 To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
 

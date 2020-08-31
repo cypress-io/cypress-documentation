@@ -47,7 +47,7 @@ Because Electron is the default browser - it is typically run in CI. If you are 
 
 ## Chrome Browsers
 
-All Chrome* flavored browsers will be detected and are supported.
+All Chrome* flavored browsers will be detected and are supported above Chrome 64.
 
 You can launch Chrome like this:
 

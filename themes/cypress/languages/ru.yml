@@ -48,6 +48,7 @@ sidebar:
     screenshots-and-videos: Скриншоты и видео
     guides: Руководства
     command-line: Командная строка
+    test-retries: Test Retries
     continuous-integration: Непрерывная интеграция
     parallelization: Параллелизация
     environment-variables: Переменные среды

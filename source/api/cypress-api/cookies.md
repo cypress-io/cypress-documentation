@@ -4,7 +4,7 @@ title: Cypress.Cookies
 
 `Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress' cookie behavior.
 
-`Cookies.debug()` enables you to log out whenever any cookies are modified.
+`Cookies.debug()` enables you to generate logs to the console whenever any cookies are modified.
 
 Cypress automatically clears all cookies **before** each test to prevent state from building up.
 
@@ -129,7 +129,7 @@ Any change you make here will take effect immediately for the remainder of every
 A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
 {% endnote %}
 
-### `whitelist` accepts:
+### `preserve` accepts:
 
 - String
 - Array
@@ -142,7 +142,7 @@ A great place to put this configuration is in your `cypress/support/index.js` fi
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: 'session_id'
+  preserve: 'session_id'
 })
 ```
 
@@ -152,7 +152,7 @@ Cypress.Cookies.defaults({
 // now any cookie with the name 'session_id' or 'remember_token'
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: ['session_id', 'remember_token']
+  preserve: ['session_id', 'remember_token']
 })
 ```
 
@@ -162,7 +162,7 @@ Cypress.Cookies.defaults({
 // now any cookie that matches this RegExp
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: /session|remember/
+  preserve: /session|remember/
 })
 ```
 
@@ -170,7 +170,7 @@ Cypress.Cookies.defaults({
 
 ```javascript
 Cypress.Cookies.defaults({
-  whitelist: (cookie) => {
+  preserve: (cookie) => {
     // implement your own logic here
     // if the function returns truthy
     // then the cookie will not be cleared
@@ -180,6 +180,7 @@ Cypress.Cookies.defaults({
 ```
 
 {% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Renamed `whitelist` option to `preserve`
 {% url "0.16.1" changelog#0-16-1 %} | `{verbose: false}` option added
 {% url "0.16.0" changelog#0-16-0 %} | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove`
 {% url "0.12.4" changelog#0-12-4 %} | `Cypress.Cookies` API added

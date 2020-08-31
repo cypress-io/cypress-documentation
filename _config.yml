@@ -63,6 +63,7 @@ alias:
   guides/core-concepts/screenshots-and-videos.html: guides/guides/screenshots-and-videos.html
   guides/guides/reporters.html: guides/tooling/reporters.html
   guides/guides/reporters/: guides/tooling/reporters.html
+  guides/test-retries.html: guides/guides/test-retries.html
   overview-of-test-runner/: guides/core-concepts/test-runner.html
   why-cypress/: guides/overview/why-cypress.html
 

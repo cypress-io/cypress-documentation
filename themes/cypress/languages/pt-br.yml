@@ -48,6 +48,7 @@ sidebar:
     screenshots-and-videos: Screenshots e Vídeos
     guides: Guias
     command-line: Linha de Comando
+    test-retries: Test Retries
     continuous-integration: Integração Contínua
     parallelization: Paralelização
     environment-variables: Variáveis de Ambiente

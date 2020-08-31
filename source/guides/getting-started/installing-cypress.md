@@ -25,7 +25,7 @@ Cypress is a desktop application that is installed on your computer. The desktop
 
 If you're using `npm` to install Cypress, we support:
 
-- **Node.js** 8 and above
+- **Node.js** 10 or 12 and above
 
 ### Linux
 
