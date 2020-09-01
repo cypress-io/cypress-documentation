@@ -133,6 +133,7 @@
             </div>
           {% endif %}
           </div>
+          {{ partial('partial/dashboard-cta') }}
           <footer class="article-footer">
             {{ page_nav() }}
           </footer>
