@@ -14,6 +14,8 @@ Environment variables set using `Cypress.env` _are only in scope for the current
 Cypress runs each spec file in isolation: the browser is exited between specs. Environment variables added or changed in one spec won't be visible in other specs.
 {% endnote %}
 
+{% partial cypress_env_var_warning %}
+
 # Syntax
 
 ```javascript

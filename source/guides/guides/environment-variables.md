@@ -2,6 +2,8 @@
 title: Environment Variables
 ---
 
+{% partial cypress_env_var_warning %}
+
 Environment variables are useful when:
 
 - Values are different across developer machines.
@@ -123,7 +125,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ## Option #3: `CYPRESS_*`
 
-Any environment variable on your machine that starts with either `CYPRESS_` or `cypress_` will automatically be added and made available to you.
+Any OS-level environment variable on your machine that starts with either `CYPRESS_` or `cypress_` will automatically be added to Cypress' environment variables and made available to you.
 
 Conflicting values will override values from your configuration file (`cypress.json` by default) and `cypress.env.json` files.
 

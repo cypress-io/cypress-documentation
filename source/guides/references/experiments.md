@@ -18,8 +18,7 @@ Option | Default | Description
 `experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub.
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 `experimentalShadowDomSupport` | `false` | Enables shadow DOM support. Adds the `cy.shadow()` command and the `includeShadowDom` option to some DOM commands. See {% urlHash "Shadow DOM" Shadow-DOM %} for more detail.
-
-When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experiments** panel will display the experimental features that are available and whether they are enabled for your project.
+`experimentalNetworkStubbing` | `false` | Enables {% url "`cy.route2`" route2 %}: a new version of the `cy.route` API that works on the HTTP layer, instead of stubbing out XMLHttpRequests. See {% issue 687 %} for details.
 
 # Component Testing
 

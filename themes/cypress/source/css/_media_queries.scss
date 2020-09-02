@@ -75,14 +75,6 @@
 }
 
 @media screen and (max-width: 1351px) {
-
-  .examples.tutorial {
-
-    .article-wrapper {
-      margin:60px 100px 60px 330px;
-    }
-  }
-
   .media {
     h2 {
       font-size: 1.2em;
@@ -92,7 +84,6 @@
 
 
 @media screen and(max-width: 1300px) {
-
   .toc-top .article-wrapper {
     margin-right: 40px;
   }
@@ -135,7 +126,7 @@
   }
 
   .article-wrapper {
-    margin-right: 30px;
+    margin-right: 0;
 
     .media {
       h2 {
@@ -177,17 +168,10 @@
   #lang-select-wrap {
     display: none;
   }
-  
-  .examples.tutorial {
-     .article-wrapper {
-        margin-left: 30px;
-        margin-right: 30px;
-      }
-  }
 
   .article-wrapper {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 0;
+    margin-right: 0;
   }
  
 

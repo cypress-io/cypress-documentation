@@ -42,6 +42,12 @@
       keywords: [rollup]
       badge: community
 
+    - name: cypress-rollup-preprocessor
+      description: Cypress preprocessor for bundling JavaScript via rollup
+      link: https://github.com/lmarqs/cypress-rollup-preprocessor
+      keywords: [rollup]
+      badge: community
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
@@ -230,6 +236,12 @@
       description: Simple custom command to ease file upload testing
       link: https://github.com/abramenal/cypress-file-upload
       keywords: [fileupload, file, upload, commands]
+      badge: community
+      
+    - name: cypress-fill-command
+      description: A Cypress command for fill inputs
+      link: https://github.com/DanielFerrariR/cypress-fill-command
+      keywords: [commands]
       badge: community
 
     - name: cypress-firebase
