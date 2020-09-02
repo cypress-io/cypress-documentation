@@ -120,6 +120,7 @@ api:
     rightclick: rightclick.html
     root: root.html
     route: route.html
+    route2: route2.html
     screenshot: screenshot.html
     scrollintoview: scrollintoview.html
     scrollto: scrollto.html
