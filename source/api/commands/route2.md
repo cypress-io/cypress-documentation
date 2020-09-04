@@ -166,7 +166,7 @@ cy.route2('/users/**', (req) => {
   send(status: number, body?: string | number | object, headers?: { [key: string]: string }): void
   send(body: string | object, headers?: { [key: string]: string }): void
   send(staticResponse: StaticResponse): void
-  
+
   /**
     * Continue the HTTP response to the browser, including any modifications made to `res`.
     */
@@ -283,7 +283,7 @@ cy.route2('/users', (req) => {
 
 ### Modify response
 
-After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method a callback function which receives the original response (i.e., `res`) as the first argument.
+After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method a callback function which receives the original response (i.e., `res`) as the first argument, which is an[`IncomingHttpResponse`](#IncomingHttpResponse).
 
 ```js
 cy.route2('/users', (req) => {
