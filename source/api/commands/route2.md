@@ -442,6 +442,8 @@ You can specify the speed at which a response is served at (in kilobytes per sec
 
 ```javascript
 cy.route2('/users', (req) => {
-  req.throttle(3000)
+  req.reply((res) => {
+    res.throttle(1024).send()
+  })
 })
 ```
