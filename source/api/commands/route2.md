@@ -154,7 +154,7 @@ cy.route2('/users/**', (req) => {
 
 ### {% fa fa-angle-right %} IncomingHttpRequest
 
-- **Description**: Allows user to intrecept the HTTP request and track or modify the original request
+- **Description**: Allows user to intercept the HTTP request and track or modify the original request
 
 - **Interface**:
 
