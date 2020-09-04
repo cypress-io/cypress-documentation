@@ -173,6 +173,13 @@ cy.route2('/users/**', (req) => {
   reply(status: number, body?: string | object, headers?: { [key: string]: string }): void
 
   /**
+    * Continue the HTTP request to the server
+    * If the RouteHandler returns a Promise, it will be implicitly called when the Promise resolves. 
+    * Otherwise, it will be implicitly called once the RouteHandler finishes
+    */
+  reply(): void
+
+  /**
     * Redirect original request to a new location
     */
   redirect(location: string, statusCode: number): void
