@@ -174,7 +174,7 @@ cy.route2('/users/**', (req) => {
 
   /**
     * Continue the HTTP request to the server
-    * If the RouteHandler returns a Promise, it will be implicitly called when the Promise resolves. 
+    * If the RouteHandler returns a Promise, it will be implicitly called when the Promise resolves.
     * Otherwise, it will be implicitly called once the RouteHandler finishes
     */
   reply(): void
@@ -202,8 +202,8 @@ cy.route2('/users/**', (req) => {
   send(staticResponse: StaticResponse): void
 
   /**
-    * Continue the HTTP response to the browser, including any modifications made to `res`. 
-    * If the function returns a Promise, it will be implicitly called when the Promise resolves. 
+    * Continue the HTTP response to the browser, including any modifications made to `res`.
+    * If the function returns a Promise, it will be implicitly called when the Promise resolves.
     * Otherwise, it will be implicitly called once the function finishes
     */
   send(): void
@@ -451,10 +451,6 @@ cy.get('#submit').click()
 cy.wait('@getBlogPost')
 // Wait for the second response to finish
 cy.wait('@postBlogPost')
-
-// we responded with 1 beetle item so now we should
-// have one result
-cy.get('#blog-post-results').should('have.length', 1)
 ```
 
 ### Fixtures
