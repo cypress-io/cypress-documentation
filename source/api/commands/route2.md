@@ -168,7 +168,9 @@ cy.route2('/users/**', (req) => {
   send(staticResponse: StaticResponse): void
 
   /**
-    * Continue the HTTP response to the browser, including any modifications made to `res`.
+    * Continue the HTTP response to the browser, including any modifications made to `res`. 
+    * If the function returns a Promise, it will be implicitly called when the promise resolves. 
+    * Otherwise, it will be implicitly called once the function finishes
     */
   send(): void
 
@@ -296,8 +298,7 @@ cy.route2('/users', (req) => {
     // dynamically alter body
     res.body = res.body.replace('window.top', 'window.self')
     // now, the response will continue to the browser
-    // since res.send() will be implicitly called once the
-    // function is resolved
+    // since res.send() will be be implicitly called once the function is finished
   })
 })
 ```
