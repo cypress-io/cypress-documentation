@@ -152,6 +152,33 @@ cy.route2('/users/**', (req) => {
 
 ## Relevant Types
 
+### {% fa fa-angle-right %} IncomingHttpRequest
+
+- **Description**: Allows user to intrecept the HTTP request and track or modify the original request
+
+- **Interface**:
+
+```ts
+{
+  /**
+    * Delete the original request
+    */
+  destroy(): void
+
+  /**
+    * Continue the HTTP request, merging the supplied values with the original request.
+    */
+  reply(interceptor?: StaticResponse | HttpResponseInterceptor): void
+  reply(body: string | object, headers?: { [key: string]: string }): void
+  reply(status: number, body?: string | object, headers?: { [key: string]: string }): void
+
+  /**
+    * Redirect original request to a new location
+    */
+  redirect(location: string, statusCode: number): void
+}
+```
+
 ### {% fa fa-angle-right %} IncomingHttpResponse
 
 - **Description**: Allows user to intercept the HTTP response and track / modify what is being sent
@@ -285,7 +312,7 @@ cy.route2('/users', (req) => {
 
 ### Modify response
 
-After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method a callback function which receives the original response (i.e., `res`) as the first argument, which is an[`IncomingHttpResponse`](#IncomingHttpResponse).
+After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method, which is of type [`IncomingHttpRequest`](#IncomingHttpRequest), a callback function which receives the original response (i.e., `res`) as the first argument, which is of the type [`IncomingHttpResponse`](#IncomingHttpResponse).
 
 ```js
 cy.route2('/users', (req) => {
