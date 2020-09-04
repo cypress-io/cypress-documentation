@@ -203,7 +203,7 @@ cy.route2('/users/**', (req) => {
 
   /**
     * Continue the HTTP response to the browser, including any modifications made to `res`. 
-    * If the function returns a Promise, it will be implicitly called when the promise resolves. 
+    * If the function returns a Promise, it will be implicitly called when the Promise resolves. 
     * Otherwise, it will be implicitly called once the function finishes
     */
   send(): void
