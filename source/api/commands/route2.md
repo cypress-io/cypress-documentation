@@ -152,6 +152,38 @@ cy.route2('/users/**', (req) => {
 
 ## Relevant Types
 
+### {% fa fa-angle-right %} IncomingHttpResponse
+
+- **Description**: Allows user to intercept the HTTP response and track / modify what is being sent
+
+- **Interface**:
+
+```ts
+{
+  /**
+    * Continue the HTTP response, merging the supplied values with the real response.
+    */
+  send(status: number, body?: string | number | object, headers?: { [key: string]: string }): void
+  send(body: string | object, headers?: { [key: string]: string }): void
+  send(staticResponse: StaticResponse): void
+  
+  /**
+    * Continue the HTTP response to the browser, including any modifications made to `res`.
+    */
+  send(): void
+
+  /**
+    * Wait for `delayMs` milliseconds before sending the response to the client.
+    */
+  delay: (delayMs: number) => IncomingHttpResponse
+
+  /**
+    * Serve the response at `throttleKbps` kilobytes per second.
+    */
+  throttle: (throttleKbps: number) => IncomingHttpResponse
+}
+```
+
 ### {% fa fa-angle-right %} StaticResponse
 
 - **Description**: Describes a response that will be sent back to the browser to fulfill the request.
