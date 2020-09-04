@@ -296,6 +296,8 @@ cy.route2('/users', (req) => {
     // dynamically alter body
     res.body = res.body.replace('window.top', 'window.self')
     // now, the response will continue to the browser
+    // since res.send() will be implicitly called once the
+    // function is resolved
   })
 })
 ```
