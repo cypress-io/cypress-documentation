@@ -512,6 +512,7 @@ You can specify the speed at which a response is served at (in kilobytes per sec
 ```javascript
 cy.route2('/users', (req) => {
   req.reply((res) => {
+    // response from upstream will be throttled to 1024kbps
     res.throttle(1024).send()
   })
 })
