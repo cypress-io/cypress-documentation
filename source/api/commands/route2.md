@@ -152,6 +152,74 @@ cy.route2('/users/**', (req) => {
 
 ## Relevant Types
 
+### {% fa fa-angle-right %} IncomingHttpRequest
+
+- **Description**: Allows user to intercept the HTTP request and track or modify the original request
+
+- **Interface**:
+
+```ts
+{
+  /**
+    * Delete the original request
+    */
+  destroy(): void
+
+  /**
+    * Continue the HTTP request, merging the supplied values with the original request.
+    */
+  reply(interceptor?: StaticResponse | HttpResponseInterceptor): void
+  reply(body: string | object, headers?: { [key: string]: string }): void
+  reply(status: number, body?: string | object, headers?: { [key: string]: string }): void
+
+  /**
+    * Continue the HTTP request to the server
+    * If the RouteHandler returns a Promise, it will be implicitly called when the Promise resolves.
+    * Otherwise, it will be implicitly called once the RouteHandler finishes
+    */
+  reply(): void
+
+  /**
+    * Redirect original request to a new location
+    */
+  redirect(location: string, statusCode: number): void
+}
+```
+
+### {% fa fa-angle-right %} IncomingHttpResponse
+
+- **Description**: Allows user to intercept the HTTP response and track / modify what is being sent
+
+- **Interface**:
+
+```ts
+{
+  /**
+    * Continue the HTTP response, merging the supplied values with the real response.
+    */
+  send(status: number, body?: string | number | object, headers?: { [key: string]: string }): void
+  send(body: string | object, headers?: { [key: string]: string }): void
+  send(staticResponse: StaticResponse): void
+
+  /**
+    * Continue the HTTP response to the browser, including any modifications made to `res`.
+    * If the function returns a Promise, it will be implicitly called when the Promise resolves.
+    * Otherwise, it will be implicitly called once the function finishes
+    */
+  send(): void
+
+  /**
+    * Wait for `delayMs` milliseconds before sending the response to the client.
+    */
+  delay: (delayMs: number) => IncomingHttpResponse
+
+  /**
+    * Serve the response at `throttleKbps` kilobytes per second.
+    */
+  throttle: (throttleKbps: number) => IncomingHttpResponse
+}
+```
+
 ### {% fa fa-angle-right %} StaticResponse
 
 - **Description**: Describes a response that will be sent back to the browser to fulfill the request.
@@ -251,7 +319,7 @@ cy.route2('/users', (req) => {
 
 ### Modify response
 
-After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method a callback function which receives the original response (i.e., `res`) as the first argument.
+After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method, which is of type [`IncomingHttpRequest`](#IncomingHttpRequest), a callback function which receives the original response (i.e., `res`) as the first argument, which is of the type [`IncomingHttpResponse`](#IncomingHttpResponse).
 
 ```js
 cy.route2('/users', (req) => {
@@ -264,6 +332,7 @@ cy.route2('/users', (req) => {
     // dynamically alter body
     res.body = res.body.replace('window.top', 'window.self')
     // now, the response will continue to the browser
+    // since res.send() will be be implicitly called once the function is finished
   })
 })
 ```
@@ -382,10 +451,6 @@ cy.get('#submit').click()
 cy.wait('@getBlogPost')
 // Wait for the second response to finish
 cy.wait('@postBlogPost')
-
-// we responded with 1 beetle item so now we should
-// have one result
-cy.get('#blog-post-results').should('have.length', 1)
 ```
 
 ### Fixtures
@@ -430,7 +495,9 @@ You can specify a delay (in ms) before the response is sent to the client.
 
 ```javascript
 cy.route2('/users', (req) => {
-  req.delay(200)
+  req.reply((res) => {
+    res.delay(1000).send('Delayed by 1000ms')
+  })
 })
 ```
 
@@ -440,6 +507,9 @@ You can specify the speed at which a response is served at (in kilobytes per sec
 
 ```javascript
 cy.route2('/users', (req) => {
-  req.throttle(3000)
+  req.reply((res) => {
+    // response from upstream will be throttled to 1024kbps
+    res.throttle(1024).send()
+  })
 })
 ```
