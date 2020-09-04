@@ -430,7 +430,9 @@ You can specify a delay (in ms) before the response is sent to the client.
 
 ```javascript
 cy.route2('/users', (req) => {
-  req.delay(200)
+  req.reply((res) => {
+    res.delay(1000).send('Delayed by 1000ms)
+  })
 })
 ```
 
