@@ -183,6 +183,18 @@ cy.route2('/users/**', (req) => {
     * Redirect original request to a new location
     */
   redirect(location: string, statusCode: number): void
+
+  /**
+    * Set if redirects should be followed when this request is made. By default, requests will
+    * not follow redirects before yielding the response (the 3xx redirect is yielded)
+    */
+  followRedirect?: boolean
+
+  /**
+    * Define a timeout for the upstream response in milliseconds. By default, this is `responseTimeout`
+    * from Cypress config.
+    */
+  responseTimeout?: number
 }
 ```
 
