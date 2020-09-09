@@ -17,7 +17,6 @@ Option | Default | Description
 `experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See {% urlHash "Component Testing" Component-Testing %} for more detail.
 `experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub.
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
-`experimentalShadowDomSupport` | `false` | Enables shadow DOM support. Adds the `cy.shadow()` command and the `includeShadowDom` option to some DOM commands. See {% urlHash "Shadow DOM" Shadow-DOM %} for more detail.
 `experimentalNetworkStubbing` | `false` | Enables {% url "`cy.route2`" route2 %}: a new version of the `cy.route` API that works on the HTTP layer, instead of stubbing out XMLHttpRequests. See {% issue 687 %} for details.
 
 # Component Testing
@@ -65,65 +64,8 @@ describe('Post skeletons', () => {
 
 {% imgTag /img/guides/references/component-test.gif "Example React component test" %}
 
-# Shadow DOM
-
-Support for shadow DOM is currently experimental and includes the addition of a new command `.shadow()` and an `includeShadowDom` option for some DOM commands. You can enable shadow DOM by setting the `experimentalShadowDomSupport` configuration to `true`.
-
-## `.shadow()`
-
-`.shadow()` will traverse into an element's shadow root, so that further DOM commands will find elements within that shadow root.
-
-## `includeShadowDom`
-
-Enabling the `includeShadowDom` option allows using existing commands to query the DOM, finding elements within the shadow DOM that would normally not be found due to the shadow DOM's boundary hiding them. It is supported by the following commands:
-
-- {% url `cy.get()` get %}
-- {% url `.find()` find %}
-
-## Examples
-
-Given the following DOM:
-
-```html
-<div class="container">
-  <my-component>
-    #shadow-root
-      <button class="my-button">Click me</button>
-  </my-component>
-</div>
-```
-
-You can query for the button in two ways:
-
-```javascript
-// with .shadow()
-cy
-.get('my-component')
-.shadow()
-.find('.my-button')
-.click()
-
-// - or -
-
-// with { includeShadowDom: true }
-cy
-.get('my-component')
-.find('.my-button', { includeShadowDom: true })
-.click()
-```
-
-## {% fa fa-warning red %} Cross-boundary selectors
-
-Note that cross-boundary selectors are not supported. This is best illustrated with an example (using the html above):
-
-```javascript
-// ❗️INVALID CODE - WILL NOT WORK
-cy.get('.container .my-button', { includeShadowDom: true })
-```
-
-In the selector `.container .my-button`, the first part (`.container`) exists in the light DOM and the second part (`.my-button`) exists in the shadow DOM. This will not find the button element. Instead, you can use one of the methods in the above examples.
-
 {% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
 {% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
 {% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
 {% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
