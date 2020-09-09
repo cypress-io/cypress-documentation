@@ -55,6 +55,7 @@ Option | Default | Description
 `matchCase` | `true` | Check case sensitivity
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .contains %}
+`includeShadowDom` | `false` | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 
@@ -406,6 +407,7 @@ When clicking on the `contains` command within the command log, the console outp
 {% imgTag /img/api/contains/see-elements-found-from-contains-in-console.png "console.log contains" %}
 
 {% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
 {% url "4.0.0" changelog#4-0-0 %} | Added support for option `matchCase`.
 {% endhistory %}
 
