@@ -193,6 +193,12 @@
       link: https://github.com/Svish/cypress-hmr-restarter
       keywords: [webpack, webpack-dev-server, hmr]
       badge: community
+      
+    - name: '@bahmutov/cypress-extends'
+      description: Cypress plugin that adds "extends" support to the configuration file
+      link: https://github.com/bahmutov/cypress-extends
+      keywords: [config]
+      badge: community
 
     - name: cypress-browser-permissions
       description: Controls permissions for desktop notifications, geolocation, and other browser APIs
