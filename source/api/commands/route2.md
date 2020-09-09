@@ -517,4 +517,4 @@ cy.route2('/users', (req) => {
 # See also
 
 - {% url "cy.route2 recipe" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
-- {% url "open network control issues" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed network control issues" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
+- {% url "open issues for experimentalNetworkStubbing" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for experimentalNetworkStubbing" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
