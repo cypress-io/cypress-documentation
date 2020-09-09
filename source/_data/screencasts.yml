@@ -1,14 +1,5 @@
 # large links with thumbnails, links, embedded video
 large:
-  - title: "Testing Shadow DOM inside Custom Elements with Cypress"
-    url: https://www.youtube.com/watch?v=BsF6jer8Mxk
-    sourceName: Youtube
-    sourceUrl: https://www.youtube.com/watch?v=BsF6jer8Mxk
-    date: Oct 23, 2019
-    author: Adam Bien
-    youtubeId: BsF6jer8Mxk
-    slides: http://adambien.blog/roller/abien/entry/accessing_shadow_dom_insides_a
-
   - title: "Human Connection - Cypress-Tests"
     url: https://www.youtube.com/watch?v=MNrA6-KjXk4
     sourceName: Youtube
@@ -16,7 +7,7 @@ large:
     date: Oct 8, 2019
     author: Alexander
     youtubeId: MNrA6-KjXk4
-    
+
   - title: "CI with Jenkins build pipeline for Cypress automation testing"
     url: https://www.youtube.com/watch?v=UFErY92HeyM
     sourceName: Youtube
@@ -24,7 +15,7 @@ large:
     date: Oct 2, 2019
     author: Execute Automation
     youtubeId: UFErY92HeyM
-    
+
   - title: "GitHub Actions Cypress.io E2E testing parallel jobs with matrix feature"
     url: https://www.youtube.com/watch?v=06Ghp1-coVo
     sourceName: Youtube
@@ -33,7 +24,7 @@ large:
     author: Artur Trzop
     youtubeId: 06Ghp1-coVo
     slides: https://gist.github.com/ArturT/3535fc24bf2fac577462b9162c12c1d6
-    
+
   - title: "React Cypress Applitools for Functional Testing - part 3"
     url: https://www.youtube.com/watch?v=-loovapKJk4
     sourceName: Youtube
@@ -41,7 +32,7 @@ large:
     date: Sept 5, 2019
     author: Bilal Haidar
     youtubeId: -loovapKJk4
-    
+
   - title: "React Cypress Applitools for Functional Testing - part 2"
     url: https://www.youtube.com/watch?v=qkmGt1GS1Uw
     sourceName: Youtube
@@ -73,7 +64,7 @@ large:
     date: Aug 23, 2019
     author: Svelte Master
     youtubeId: 0LyG2hRZHeI
-    
+
   - title: "Cypress.io & E2E Testing Intro and Dojo"
     url: https://www.youtube.com/watch?v=P8Y2n87XWxE
     sourceName: Youtube
@@ -98,7 +89,7 @@ large:
     date: Aug 7, 2019
     author: Sam De Maeyer
     youtubeId: jO2ssfqhrSc
-   
+
   - title: "GitHub integration with Cypress Dashboard of Cypress 3.4.1"
     url: https://www.youtube.com/watch?v=NGsGx3cbDcc&t=
     sourceName: Youtube
@@ -127,14 +118,14 @@ large:
     date: Jul 24, 2019
     author: Didier Corrales
     youtubeId: 9IVA2HTtlL0
-    
+
   - title: "Cypress + Cucumber Automated Browser Testing stream 02"
     sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=JNYia3gHCc4
     date: Jul 3, 2019
     author: Code Mortals
     youtubeId: JNYia3gHCc4
-  
+
   - title: "Preparing Angular Cypress End to End Tests for Continuous Integration (CI)"
     sourceName: YouTube
     sourceUrl: https://angular-university.io/course/angular-testing-course
@@ -162,22 +153,22 @@ large:
     date: May 18, 2019
     author: Jesse Warden
     youtubeId: zpn0f4sKUNw
-    slides: https://github.com/JesterXL/react-redux-async-types/tree/cypress    
- 
+    slides: https://github.com/JesterXL/react-redux-async-types/tree/cypress
+
   - title: "Cypress: cómo mantener el amor tras las primeras citas"
     sourceName: YouTube
-    sourceUrl: https://www.youtube.com/watch?v=LlF6VhAAm7g 
+    sourceUrl: https://www.youtube.com/watch?v=LlF6VhAAm7g
     date: May 2, 2019
     author: Alberto Gualis
     youtubeId: LlF6VhAAm7g
-   
+
   - title: "End to End Testing a Web Application using Cypress"
     sourceName: YouTube
     sourceUrl: https://www.youtube.com/watch?v=woI490HRM34
     date: Apr 23, 2019
     author: Code With Kris
     youtubeId: woI490HRM34
-    slides: https://github.com/kriscfoster/end-to-end-testing-todo-app 
+    slides: https://github.com/kriscfoster/end-to-end-testing-todo-app
 
   - title: "Working with XHR in Web app automation testing with Cypress.io"
     sourceName: YouTube
@@ -192,7 +183,7 @@ large:
     date: Apr 19, 2019
     author: Jason Lengstorf & Marcy Sutton
     youtubeId: IADSsClWVtA
-    slides: https://github.com/jlengstorf/a11y-testing     
+    slides: https://github.com/jlengstorf/a11y-testing
 
   - title: "ngHouston - Intro to Cypress w/ Jesse Sanders"
     sourceName: YouTube
@@ -200,7 +191,7 @@ large:
     date: Mar 13, 2019
     author: Bonnie Brennan, Jesse Sanders, Mike Brocchi, Amir Rustamzadeh
     youtubeId: tM2KRTE3F6Y
-    
+
   - title: "How to write tests for your Gatsby sites and apps"
     sourceName: YouTube
     sourceUrl: https://www.twitch.tv/jlengstorf
