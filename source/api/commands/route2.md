@@ -262,6 +262,14 @@ cy.route2('/users/**', (req) => {
    * If `forceNetworkError` is truthy, Cypress will destroy the connection to the browser and send no response. Useful for simulating a server that is not reachable. Must not be set in combination with other options.
    */
   forceNetworkError?: boolean
+  /**
+   * If set, `delayMs` will pass before the response is sent.
+   */
+  delayMs?: number
+  /**
+   * If set, the `body` will be sent at `throttleKbps` kbps.
+   */
+  throttleKbps?: number
 }
 ```
 
