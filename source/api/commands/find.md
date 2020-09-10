@@ -44,7 +44,7 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .find %}
-`includeShadowDom` | `false` | {% usage_options includeShadowDom %}
+`includeShadowDom` | {% url '`includeShadowDom`<br /> config option value' configuration#Global %} | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 

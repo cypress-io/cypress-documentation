@@ -33,7 +33,7 @@ cy.get('.not-a-shadow-host').shadow()  // Errors, subject must host a shadow roo
 
 # Examples
 
-## Traverse into the shadow DOM of an element
+## Find and click on a button inside the shadow DOM
 
 ```html
 <div class="shadow-host">
@@ -44,7 +44,11 @@ cy.get('.not-a-shadow-host').shadow()  // Errors, subject must host a shadow roo
 
 ```javascript
 // yields [#shadow-root (open)]
-cy.get('.shadow-host').shadow()
+cy
+.get('.shadow-host')
+.shadow()
+.find('.my-button')
+.click()
 ```
 
 # Rules
@@ -82,3 +86,4 @@ When clicking on the `shadow` command within the command log, the console output
 - {% url `cy.get()` get#Arguments %} with `includeShadowDom` option
 - {% url `cy.find()` find#Arguments %} with `includeShadowDom` option
 - {% url `cy.contains()` contains#Arguments %} with `includeShadowDom` option
+- {% url '`includeShadowDom` config option' configuration#Global %}
