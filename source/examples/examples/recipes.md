@@ -28,7 +28,7 @@ Recipe  | Description
 {% url 'Hover and Hidden Elements' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__hover-hidden-elements %} | Test hidden elements requiring hover
 {% url 'Form Interactions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__form-interactions %} |  Test form elements like input type `range`
 {% url 'Drag and Drop' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop %} | Use `.trigger()` to test drag and drop
-{% url 'Shadow DOM' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__shadow-dom %} | You need to use any of available custom commands
+{% url 'Shadow DOM' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__shadow-dom %} | Test elements within shadow DOM
 {% url 'Website monitoring' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize `cypress` to monitor your website
 {% url 'Waiting for static resource' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__wait-for-resource %} | Shows how to wait for CSS, image, or any other static resource to load
 {% url 'CSV load and table test' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__csv-table %} | Loads CSV file and compares objects against cells in a table
@@ -39,7 +39,7 @@ Recipe  | Description
 ## Logging In
 
 Recipe  | Description
---- | --- 
+--- | ---
 {% url 'Single Sign On' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__single-sign-on %} | Log in across multiple servers or providers
 {% url 'HTML Web Forms' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms %} | Log in with a basic HTML form
 {% url 'XHR Web Forms' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__xhr-web-forms %} | Log in using an XHR
