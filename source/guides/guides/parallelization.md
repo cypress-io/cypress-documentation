@@ -294,17 +294,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 {% imgTag /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
 
 # Next Steps
-
-{% note info %}
-### Test and debug faster with the Cypress Dashboard
-
-- See exact point of failure of tests running in CI
-- Supercharge test times by running tests in parallel
-- Get instant test failure alerts via Slack or GitHub
-
-<a href="https://www.cypress.io/dashboard" class="button">Learn more</a>
-{% endnote %} 
-
+- {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
 - {% url "Continuous Integration Guide" continuous-integration %}
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
