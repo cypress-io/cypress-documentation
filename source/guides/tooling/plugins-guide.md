@@ -81,6 +81,36 @@ You can use the `task` event to do things like:
 - Performing parallel tasks (like making multiple http requests outside of Cypress)
 - Running an external process (like spinning up a Webdriver instance of another browser like Safari or puppeteer)
 
+#### {% fa fa-graduation-cap %} Real World Example
+
+The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses {% url tasks task %} to re-seed its database, and to filter/find test data for various testing scenarios.
+
+```ts
+// cypress/plugins/index.ts
+
+  on("task", {
+    async "db:seed"() {
+      // seed database with test data
+      const { data } = await axios.post(`${testDataApiEndpoint}/seed`);
+      return data;
+    },
+
+    // fetch test data from a database (MySQL, PostgreSQL, etc...)
+    "filter:database"(queryPayload) {
+      return queryDatabase(queryPayload, (data, attrs) => _.filter(data.results, attrs));
+    },
+    "find:database"(queryPayload) {
+      return queryDatabase(queryPayload, (data, attrs) => _.find(data.results, attrs));
+    },
+  });
+  // ..
+};
+```
+
+> *{% fa fa-github %} Source: {% url "cypress/plugins/index.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts %}*
+
+Check out the {% url "Real World App test suites" https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui %} to see these tasks in action.
+
 # List of plugins
 
 Cypress maintains a curated list of plugins created by us and the community. You can `npm install` any of the plugins listed below:

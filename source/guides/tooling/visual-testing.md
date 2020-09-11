@@ -115,6 +115,15 @@ Resource |  Description
 
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the `cy.percySnapshot()` command provided by the {% url "Cypress Percy plugin" https://github.com/percy/percy-cypress %} to take visual snapshots throughout the user journey end-to-end tests
+
+Check out the {% url "Real World App test suites" https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui %} to see these Percy and Cypress in action.
+
+{% endnote %}
+
 Resource |  Description
 ------- |  ----
 {% url 'Official docs' https://docs.percy.io/docs/cypress %} | Percy's Cypress documentation
@@ -252,3 +261,4 @@ If you are working on React components, read {% url "Visual testing for React co
 - {% url "Plugins" plugins-guide %}
 - {% url "Visual Testing Plugins" plugins#visual-testing %}
 - {% url "Writing a Plugin" writing-a-plugin %}
+- {% fa fa-github %} {% url 'Cypress Real World App (RWA)' https://github.com/cypress-io/cypress-realworld-app %} is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
