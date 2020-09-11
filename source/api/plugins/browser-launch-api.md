@@ -256,6 +256,8 @@ Change the download directory of files downloaded during Cypress tests.
 
 ```js
 // cypress/plugins/index.js
+const path = require('path')
+
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     const downloadDirectory = path.join(__dirname, '..', 'downloads')
