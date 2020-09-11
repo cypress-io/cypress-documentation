@@ -19,6 +19,7 @@ Recipe  | Description
 {% url 'Cypress module API' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__module-api %} | Run Cypress via its module API
 {% url 'Custom browsers' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__custom-browsers %} | Control which browsers the project can use, or even add a custom browser into the list
 {% url 'Use Chrome Remote Interface' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__chrome-remote-debugging %} | Use Chrome debugger protocol to trigger hover state and print media style
+{% url 'File download' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download %} | Download and validate files
 
 ## Testing the DOM
 
@@ -39,7 +40,7 @@ Recipe  | Description
 ## Logging In
 
 Recipe  | Description
---- | --- 
+--- | ---
 {% url 'Single Sign On' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__single-sign-on %} | Log in across multiple servers or providers
 {% url 'HTML Web Forms' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms %} | Log in with a basic HTML form
 {% url 'XHR Web Forms' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__xhr-web-forms %} | Log in using an XHR
