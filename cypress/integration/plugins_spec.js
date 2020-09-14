@@ -1,7 +1,7 @@
 const yaml = require('yamljs')
 const _ = require('lodash')
 
-describe('Plugins', () => {
+describe.skip('Plugins', () => {
   let plugins = []
 
   before(() => {
