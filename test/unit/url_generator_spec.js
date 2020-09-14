@@ -129,7 +129,7 @@ describe('lib/url_generator', () => {
       })
     })
 
-    it('fails when external returns non 2xx', () => {
+    it.skip('fails when external returns non 2xx', () => {
       global.nock('https://www.google.com')
       .head('/')
       .reply(500)
@@ -170,7 +170,7 @@ describe('lib/url_generator', () => {
       })
     })
 
-    it('verifies external url with anchor href matching hash', () => {
+    it.skip('verifies external url with anchor href matching hash', () => {
       global.nock('https://www.google.com')
       .get('/')
       .reply(200, '<html><a href="#assertions">assertions</a></html>')
