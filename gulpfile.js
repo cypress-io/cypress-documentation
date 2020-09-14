@@ -1,7 +1,8 @@
 const gulp = require('gulp')
 const RevAll = require('gulp-rev-all')
 const clean = require('gulp-clean')
-const filter = require('gulp-filter')
+// const filter = require('gulp-filter')
+const gulpIgnore = require('gulp-ignore')
 
 const revisionOpts = {
   dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4', '.woff', '.woff2', '.less'],
@@ -86,7 +87,7 @@ const publicLangTasks = languages.map((lang) => `revision:${lang}`)
 gulp.task('revision:most', () => {
   return gulp
   .src('public/**')
-  .pipe(filter(languages.map(makePublicLangGlob)))
+  .pipe(gulpIgnore.exclude(languages.map(makePublicLangGlob)))
   .pipe(RevAll.revision(revisionOpts))
   .pipe(gulp.dest('tmp'))
 })
