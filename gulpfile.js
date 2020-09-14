@@ -1,15 +1,15 @@
 const gulp = require('gulp')
-const RevAll = require('gulp-rev-all')
+// const RevAll = require('gulp-rev-all')
 const clean = require('gulp-clean')
-const filter = require('gulp-filter')
+// const filter = require('gulp-filter')
 
-const revisionOpts = {
-  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4', '.woff', '.woff2', '.less'],
-  dontRenameFile: ['.html', 'CNAME'],
-  dontUpdateReference: ['.html'],
-  dontSearchFile: ['.js'],
-  debug: true,
-}
+// const revisionOpts = {
+//   dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4', '.woff', '.woff2', '.less'],
+//   dontRenameFile: ['.html', 'CNAME'],
+//   dontUpdateReference: ['.html'],
+//   dontSearchFile: ['.js'],
+//   debug: true,
+// }
 
 function remove (folder) {
   return gulp
@@ -79,17 +79,17 @@ gulp.task('move:font:awesome:fonts:folder', function () {
 
 gulp.task('move:font:awesome:fonts', gulp.series('move:font:awesome:css', 'move:font:awesome:fonts:folder'))
 
-const languages = 'es ja pt-br ru zh-cn'.split(' ')
-const makePublicLangGlob = (lang) => `public/${lang}/**`
-// const publicLangTasks = languages.map((lang) => `revision:${lang}`)
+// const languages = 'es ja pt-br ru zh-cn'.split(' ')
+// const makePublicLangGlob = (lang) => `public/${lang}/**`
+// // const publicLangTasks = languages.map((lang) => `revision:${lang}`)
 
-gulp.task('revision:most', () => {
-  return gulp
-  .src('public/**')
-  .pipe(filter(languages.map(makePublicLangGlob)))
-  .pipe(RevAll.revision(revisionOpts))
-  .pipe(gulp.dest('tmp'))
-})
+// gulp.task('revision:most', () => {
+//   return gulp
+//   .src('public/**')
+//   .pipe(filter(languages.map(makePublicLangGlob)))
+//   .pipe(RevAll.revision(revisionOpts))
+//   .pipe(gulp.dest('tmp'))
+// })
 
 // languages.forEach((lang) => {
 //   gulp.task(`revision:${lang}`, () => {
@@ -145,4 +145,4 @@ gulp.task('copy:static:assets', gulp.parallel('move:menu:spy:js', 'move:scrollin
 
 gulp.task('pre:build', gulp.parallel('copy:static:assets'))
 
-gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'revision:most', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))
+gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))
