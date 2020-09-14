@@ -1,6 +1,7 @@
 const gulp = require('gulp')
 const RevAll = require('gulp-rev-all')
 const clean = require('gulp-clean')
+const filter = require('gulp-filter')
 
 const revisionOpts = {
   dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4', '.woff', '.woff2', '.less'],
@@ -78,12 +79,28 @@ gulp.task('move:font:awesome:fonts:folder', function () {
 
 gulp.task('move:font:awesome:fonts', gulp.series('move:font:awesome:css', 'move:font:awesome:fonts:folder'))
 
-gulp.task('revision', () => {
+const languages = 'es ja pt-br ru zh-cn'.split(' ')
+const makePublicLangGlob = (lang) => `public/${lang}/**`
+const publicLangTasks = languages.map((lang) => `revision:${lang}`)
+
+gulp.task('revision:most', () => {
   return gulp
   .src('public/**')
+  .pipe(filter(languages.map(makePublicLangGlob)))
   .pipe(RevAll.revision(revisionOpts))
   .pipe(gulp.dest('tmp'))
 })
+
+languages.forEach((lang) => {
+  gulp.task(`revision:${lang}`, () => {
+    return gulp
+    .src(makePublicLangGlob(lang))
+    .pipe(RevAll.revision(revisionOpts))
+    .pipe(gulp.dest('tmp'))
+  })
+})
+
+gulp.task('revision', gulp.series(...['revision:most'].concat(publicLangTasks)))
 
 gulp.task('copy:tmp:to:public', () => {
   return gulp
