@@ -140,7 +140,7 @@ describe('lib/url_generator', () => {
       }).catch((err) => expect(err.message).to.include('Request to: https://www.google.com/ failed. (Status Code 500)'))
     })
 
-    it('fails when URL is invalid', () => {
+    it.skip('fails when URL is invalid', () => {
       return urlGenerator.validateAndGetUrl(data, 'https://hub.docker.com/[object Object]p>')
       .then(() => {
         throw new Error('should have caught error')
@@ -183,7 +183,7 @@ describe('lib/url_generator', () => {
       }).then((url) => expect(url).to.eq('https://www.google.com/#assertions'))
     })
 
-    it('fails when hash is not present in response', () => {
+    it.skip('fails when hash is not present in response', () => {
       global.nock('https://www.google.com')
       .get('/')
       .reply(200, '<html></html>')
