@@ -81,7 +81,7 @@ gulp.task('move:font:awesome:fonts', gulp.series('move:font:awesome:css', 'move:
 
 const languages = 'es ja pt-br ru zh-cn'.split(' ')
 const makePublicLangGlob = (lang) => `public/${lang}/**`
-const publicLangTasks = languages.map((lang) => `revision:${lang}`)
+// const publicLangTasks = languages.map((lang) => `revision:${lang}`)
 
 gulp.task('revision:most', () => {
   return gulp
@@ -100,7 +100,7 @@ languages.forEach((lang) => {
   })
 })
 
-gulp.task('revision', gulp.series(...['revision:most'].concat(publicLangTasks)))
+gulp.task('revision', gulp.series(...['revision:most']))
 
 gulp.task('copy:tmp:to:public', () => {
   return gulp
