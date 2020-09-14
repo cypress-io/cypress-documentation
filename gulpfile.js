@@ -91,16 +91,16 @@ gulp.task('revision:most', () => {
   .pipe(gulp.dest('tmp'))
 })
 
-languages.forEach((lang) => {
-  gulp.task(`revision:${lang}`, () => {
-    return gulp
-    .src(makePublicLangGlob(lang))
-    .pipe(RevAll.revision(revisionOpts))
-    .pipe(gulp.dest('tmp'))
-  })
-})
+// languages.forEach((lang) => {
+//   gulp.task(`revision:${lang}`, () => {
+//     return gulp
+//     .src(makePublicLangGlob(lang))
+//     .pipe(RevAll.revision(revisionOpts))
+//     .pipe(gulp.dest('tmp'))
+//   })
+// })
 
-gulp.task('revision', gulp.series(...['revision:most']))
+// gulp.task('revision', gulp.series(...['revision:most']))
 
 gulp.task('copy:tmp:to:public', () => {
   return gulp
@@ -145,4 +145,4 @@ gulp.task('copy:static:assets', gulp.parallel('move:menu:spy:js', 'move:scrollin
 
 gulp.task('pre:build', gulp.parallel('copy:static:assets'))
 
-gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'revision', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))
+gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'revision:most', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))
