@@ -90,7 +90,7 @@ describe('Main Nav', () => {
     })
   })
 
-  context('Language selector', () => {
+  context.skip('Language selector', () => {
     beforeEach(() => {
       cy.visit('/')
     })

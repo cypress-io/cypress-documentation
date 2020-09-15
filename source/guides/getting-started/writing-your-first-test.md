@@ -466,6 +466,7 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 
 - Start {% url 'testing your app' testing-your-app %}.
 - Set up {% url 'intelligent code completion' IDE-integration#Intelligent-Code-Completion %} for Cypress commands and assertions.
+- Check out the {% fa fa-github %} {% url "Cypress Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 
 {% imgTag /img/guides/search-box.png "Use the search box to find relevant documentation" %}

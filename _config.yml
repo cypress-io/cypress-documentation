@@ -9,13 +9,7 @@ description: Cypress is a test engine that runs unit and integration tests in yo
 author: Cypress.io
 
 # https://hexo.io/docs/internationalization.html
-language:
-  - en
-  - zh-cn
-  - ja
-  - pt-br
-  - ru
-  - es
+language: en
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -29,7 +23,7 @@ github: cypress-io/cypress
 # Directory
 source_dir: source
 public_dir: public
-i18n_dir: :lang
+# i18n_dir: :lang
 skip_render:
 
 # Generate alias pages for redirecting to posts, pages or URL
@@ -41,11 +35,11 @@ skip_render:
 alias:
   # indices
   index.html: guides/overview/why-cypress.html
-  zh-cn/: zh-cn/guides/overview/why-cypress.html
-  ja/: ja/guides/overview/why-cypress.html
-  pt-br/: pt-br/guides/overview/why-cypress.html
-  ru/: ru/guides/overview/why-cypress.html
-  es/: es/guides/overview/why-cypress.html
+  zh-cn/: guides/overview/why-cypress.html
+  ja/: guides/overview/why-cypress.html
+  pt-br/: guides/overview/why-cypress.html
+  ru/: guides/overview/why-cypress.html
+  es/: guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
   guides.html: guides/overview/why-cypress.html

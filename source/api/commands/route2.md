@@ -183,6 +183,18 @@ cy.route2('/users/**', (req) => {
     * Redirect original request to a new location
     */
   redirect(location: string, statusCode: number): void
+
+  /**
+    * Set if redirects should be followed when this request is made. By default, requests will
+    * not follow redirects before yielding the response (the 3xx redirect is yielded)
+    */
+  followRedirect?: boolean
+
+  /**
+    * Define a timeout for the upstream response in milliseconds. By default, this is `responseTimeout`
+    * from Cypress config.
+    */
+  responseTimeout?: number
 }
 ```
 
@@ -250,6 +262,14 @@ cy.route2('/users/**', (req) => {
    * If `forceNetworkError` is truthy, Cypress will destroy the connection to the browser and send no response. Useful for simulating a server that is not reachable. Must not be set in combination with other options.
    */
   forceNetworkError?: boolean
+  /**
+   * If set, `delayMs` will pass before the response is sent.
+   */
+  delayMs?: number
+  /**
+   * If set, the `body` will be sent at `throttleKbps` kbps.
+   */
+  throttleKbps?: number
 }
 ```
 
@@ -513,3 +533,8 @@ cy.route2('/users', (req) => {
   })
 })
 ```
+
+# See also
+
+- {% url "cy.route2 recipe" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
+- {% url "open issues for experimentalNetworkStubbing" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for experimentalNetworkStubbing" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
