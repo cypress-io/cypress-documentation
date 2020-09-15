@@ -193,7 +193,7 @@
       link: https://github.com/Svish/cypress-hmr-restarter
       keywords: [webpack, webpack-dev-server, hmr]
       badge: community
-      
+
     - name: '@bahmutov/cypress-extends'
       description: Cypress plugin that adds "extends" support to the configuration file
       link: https://github.com/bahmutov/cypress-extends
@@ -243,7 +243,7 @@
       link: https://github.com/abramenal/cypress-file-upload
       keywords: [fileupload, file, upload, commands]
       badge: community
-      
+
     - name: cypress-fill-command
       description: A Cypress command for fill inputs
       link: https://github.com/DanielFerrariR/cypress-fill-command
@@ -357,7 +357,7 @@
       link: https://gitlab.com/kgroat/cypress-iframe
       keywords: [commands, iframe]
       badge: community
-      
+
     - name: cypress-react-selector
       description: cypress custom commands to locate react elements by component, props and state
       link: https://github.com/abhinaba-ghosh/cypress-react-selector
@@ -443,18 +443,12 @@
       keywords: [angular, cli]
       badge: community
 
-    - name: Cypress Daywalker
-      description: Shadow Dom support for cypress
-      link: https://github.com/JaySunSyn/cypress-daywalker
-      keywords: [Polymer, lit-html, ShadowDom]
-      badge: community
-
     - name: Vue CLI
       description: Vue CLI allows you to scaffold an application with Cypress E2E fully configured
       link: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress
       keywords: [vue.js, vue, cli]
       badge: verified
-    
+
     - name: Cypress Nuxt
       description: Utilities for using Cypress with Nuxt.
       link: https://github.com/NickBolles/cypress-nuxt
@@ -496,7 +490,7 @@
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
       badge: community
-      
+
     - name: Bison
       description: A Full Stack Jamstack Template that uses Cypress and GitHub Actions for E2E testing.
       link: https://github.com/echobind/bisonapp
@@ -511,7 +505,7 @@
       link: https://github.com/bahmutov/cypress-angular-unit-test
       keywords: [component, angular]
       badge: experimental
-    
+
     - name: cypress-angularjs-unit-test
       description: Unit test Angularjs code using Cypress Test Runner
       link: https://github.com/bahmutov/cypress-angularjs-unit-test
@@ -592,7 +586,7 @@
       link: https://github.com/PatrickWalker/cypress-visual-regression
       keywords: [image-diff, snapshot]
       badge: community
-      
+
     - name: Visual Regression Tracker
       description: Integration with open source service for visual testing and managing its results.
       link: https://github.com/Visual-Regression-Tracker/agent-cypress
