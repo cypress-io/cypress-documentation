@@ -127,6 +127,7 @@ api:
     select: select.html
     server: server.html
     setcookie: setcookie.html
+    shadow: shadow.html
     should: should.html
     siblings: siblings.html
     spread: spread.html

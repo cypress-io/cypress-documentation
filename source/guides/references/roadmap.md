@@ -8,15 +8,15 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 ## Test Runner
 
-*Last updated Aug 20, 2020*
+*Last updated Sep 14, 2020*
 
 Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------
+*Work in progress*   | **Session API**                    |  {% issue 8301 %} |              |
+*Experimental*       | **Full network layer rewrite**     |  {% issue 687 %}  | {% PR 4176 %}| {% url "v5.1.0" changelog#5-1-0 %}
 *Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
-*Experimental*       | **Shadow DOM Support**              |  {% issue 144 %} | {% PR 7469 %}| {% url "v4.8.0" changelog#4-8-0 %}
-*Done*   | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}| {% url "v5.0.0" changelog#5-0-0 %}
-*Work in progress*   | **Full network layer rewrite**    |  {% issue 687 %}  | {% PR 4176 %}|
-*Work in progress*   | **Session API**    |  {% issue 8301 %}  | |
+*Done*               | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}| {% url "v5.0.0" changelog#5-0-0 %}
+*Done*               | **Shadow DOM Support**             |  {% issue 144 %}  | {% PR 7469 %}| {% url "v5.2.0" changelog#5-2-0 %}
 
 ## Dashboard Service
 

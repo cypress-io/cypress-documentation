@@ -145,6 +145,7 @@ sidebar:
     select: select
     server: server
     setcookie: setCookie
+    shadow: shadow
     should: should
     siblings: siblings
     spread: spread
