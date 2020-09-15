@@ -9,8 +9,7 @@ description: Cypress is a test engine that runs unit and integration tests in yo
 author: Cypress.io
 
 # https://hexo.io/docs/internationalization.html
-language:
-  - en
+language: en
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'

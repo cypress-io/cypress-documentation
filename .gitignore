@@ -20,17 +20,3 @@ cypress/videos
 # Dynamically parsed data
 
 source/_data/banners.yml
-
-# Translations
-# By default we ignore each translation folder like "source/ja",
-# During the build, We copy English file for each untranslated page to
-# the language folder - if there is no fully translated file there.
-# Thus when you add a new translation, add it to the source control
-# with "git add --force" command to override the folder.
-#
-source/ja
-source/zh-cn
-source/pt-br
-source/ru
-source/es
-
