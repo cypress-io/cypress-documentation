@@ -205,6 +205,12 @@
       link: https://github.com/kamranayub/cypress-browser-permissions
       keyboards: [permissions, notifications, geolocation, camera, microphone]
       badge: community
+      
+    - name: cypress-expect
+      description: Cypress CLI wrapper where you can specify the total number of expected tests
+      link: https://github.com/bahmutov/cypress-expect
+      keyboards: [cli]
+      badge: community
 
 - name: Custom Commands
   plugins:
