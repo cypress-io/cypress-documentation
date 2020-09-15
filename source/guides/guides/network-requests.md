@@ -97,6 +97,17 @@ You don't have to do any work on the server. Your application will have no idea 
 - Perfect for JSON APIs
 {% endnote %}
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} end-to-end tests predominately rely on server responses, and only stub network responses {% url "on a few occasions" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/notifications.spec.ts#L250-L264 %} to conveniently **create edge-case** or **hard-to-create application states**.
+
+This practice allows the project to achieve full {% url code-coverage code-coverage %} for the front end *and back end* of the app, but this has also required creating intricate database seeding or test data factory scripts that can generate appropriate data in compliance with the business-logic of the app.
+
+Check out any of the {% url "Real World App test suites" https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui %} to see Cypress network handling in action.
+
+{% endnote %}
+
 # Stubbing
 
 Cypress enables you to stub a response and control the `body`, `status`, `headers`, or even delay.
@@ -274,6 +285,15 @@ cy.get('#results')
   .and('contain', 'Book 2')
 ```
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} has various tests for testing an auto-complete field within a large user journey test that properly await requests triggered upon auto-complete input changes. Check out the example:
+- {% fa fa-github %} {% url "Auto-complete test code" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50 %}
+- {% fa fa-video-camera %} {% url "Auto-complete test run video recording" https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video %} in Cypress Dashboard.
+
+{% endnote %}
+
 ## Failures
 
 In our example above, we added an assertion to the display of the search results.
@@ -383,3 +403,4 @@ You can find more examples in our {% url "XHR Assertions" https://github.com/cyp
 
 - {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
 - {% url "See how to make a request with `cy.request()`" request %}
+- {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} test suites to see Cypress network handling in action.
