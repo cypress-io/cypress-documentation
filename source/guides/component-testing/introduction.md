@@ -26,24 +26,27 @@ A Cypress Component Test contains a `mount` function and assertions about the co
 
 With Cypress as the Test Runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in Vue:
  
- ```javascript
+```javascript
 import { mount } from '@cypress/vue' // or cypress-react-unit-test
 import TodoList from '@/components/TodoList'
 
-describe('Tod  List', () => {
-  it('renders the tod    ist', () => {
-      ount(TodoList)
-    cy.get('[data-testid=todo-list]  ).sh  uld('exist')
+describe('TodoList', () => {
+  it('renders the todo list', () => {
+    mount(TodoList)
+    cy.get('[data-testid=todo-list]').should('exist')
   })
 
-  it('contains the correct numbe    f todos', () =>        const todos = [
-      { text      y milk', id: 1 },
-      { text: 'Learn Comp    nt     ting', id: 2 }
-            mount(TodoList, {
-       p    sData: { todos }
+  it('contains the correct number of todos', () => {
+    const todos = [
+      { text: 'Buy milk', id: 1 },
+      { text: 'Learn Component Testing', id: 2 }
+    ]
+
+    mount(TodoList, {
+      propsData: { todos }
     })
 
-    cy.get('[data-testid=todos]').should(  have.length', todos.length)
+    cy.get('[data-testid=todos]').should('have.length', todos.length)
   })
 })
 ```
