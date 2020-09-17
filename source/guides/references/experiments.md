@@ -19,3 +19,12 @@ Option | Default | Description
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 `experimentalNetworkStubbing` | `false` | Enables {% url "`cy.route2`" route2 %}: a new version of the `cy.route` API that works on the HTTP layer, instead of stubbing out XMLHttpRequests. See {% issue 687 %} for details.
 
+{% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
+{% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
+{% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
+{% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
+{% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
+{% url "4.3.0" changelog#4-3-0 %} | Added support for `experimentalGetCookiesSameSite`.
+{% endhistory %}
