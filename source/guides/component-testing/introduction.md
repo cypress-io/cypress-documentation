@@ -24,31 +24,34 @@ We have plenty of Component Testing examples for Vue and React to help you get s
 # Getting Started
 A Cypress Component Test contains a `mount` function and assertions about the component it has rendered. A test may interact with component as a user would, using Cypress API commands like {% url "`.click()`" click %}, {% url "`.type()`" type %}, or {% url "many more" table-of-contents %}.
 
-With Cypress as the Test Runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in Vue:
+With Cypress as the test runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in Vue:
  
  ```javascript
 import { mount } from '@cypress/vue' // or cypress-react-unit-test
 import TodoList from '@/components/TodoList'
 
-describe('Tod  List', () => {
-  it('renders the tod    ist', () => {
-      ount(TodoList)
-    cy.get('[data-testid=todo-list]  ).sh  uld('exist')
+describe('TodoList', () => {
+  it('renders the todo list', () => {
+    mount(TodoList)
+    cy.get('[data-testid=todo-list]').should('exist')
   })
 
-  it('contains the correct numbe    f todos', () =>        const todos = [
-      { text      y milk', id: 1 },
-      { text: 'Learn Comp    nt     ting', id: 2 }
-            mount(TodoList, {
-       p    sData: { todos }
+  it('contains the correct number of todos', () => {
+    const todos = [
+      { text: 'Buy milk', id: 1 },
+      { text: 'Learn Component Testing', id: 2 }
+    ]
+
+    mount(TodoList, {
+      propsData: { todos }
     })
 
-    cy.get('[data-testid=todos]').should(  have.length', todos.length)
+    cy.get('[data-testid=todos]').should('have.length', todos.length)
   })
 })
 ```
 
-If I were to write this test for a React component, the test would be almost identical. I would only have to change the `mount` function. Generally, the only framework-specific code in a Cypress Component Test is related to mounting and bundling the component. This means that, contrary to most existing component testing solutions, you do not need to await the internals of the front end framework you're working with.
+If I were to write this test for a React component, the test would be almost identical. I would only have to change the `mount` function. Generally, the only framework-specific code in a Cypress Component Test is related to mounting and bundling the component. This means that, contrary to most existing component testing solutions, you do not need to await the internals of the frontend framework you're working with.
 
 # Setup and Installation
 
@@ -56,7 +59,7 @@ We currently support Vue and React and intend to support other frameworks in the
 
 ## Vue
 
-We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" %}.
+We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "Github repository" %}.
 
 ```sh
 vue add cypress-experimental
@@ -84,7 +87,6 @@ require('cypress-react-unit-test/support')
 // cypress/plugins/index.js
 module.exports = (on, config) => {
   require('cypress-react-unit-test/plugins/react-scripts')(on, config)
-
   // IMPORTANT to return the config object
   // with the any changed environment variables
   return config
