@@ -1,64 +1,103 @@
 ---
-title: Component Testing
-containerClass: experimental
+title: Introduction
+containerClass: component-testing
 ---
 
-{% note info %}
-# {% fa fa-graduation-cap %} What you'll learn
+⚠️ The Cypress Component Testing library is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
 
-- What Component Testing is
-- How Component Testing works with Cypress
-{% endnote %}
 
-**Component testing is a feature that is experimental.** You can enable component testing by setting the `experimentalComponentTesting` configuration to `true`.
+# What is Cypress Component Testing?
+Cypress Component Testing uses framework-specific libraries on top of the powerful Cypress Test Runner to create a **browser-based testing and isolated development environment**.
 
-# Component Libraries
+For those coming from Storybook, this is like if your style guide was testable.
 
-Component testing can be used with the libraries below. You can find more details on integration with each library in their respective repo.
+Browser-based component testing with Cypress creates a tight development cycle where you never leave your browser, or your test framework, when building your components and applications.
 
-- **React:** {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %}
-- **Vue:** {% url "cypress-vue-unit-test" https://github.com/bahmutov/cypress-vue-unit-test %}
+It looks like this:
 
-# Component Folder
+{% imgTag /img/guides/references/component-test.gif "Example React component test" %}
+ 
+If you are new to Cypress, don't worry.
 
-By default `cypress/component` is the path for component tests. You can change this path by setting the `componentFolder` configuration option.
+We have plenty of Component Testing examples for Vue and React to help you get started.
 
-**Example `cypress.json`**
+# Getting Started
+A Cypress Component Test contains a `mount` function and assertions about the component it has rendered. A test may interact with component as a user would, using Cypress API commands like {% url "`.click()`" click %}, {% url "`.type()`" type %}, or {% url "many more" table-of-contents %}.
 
-```json
-{
-  "experimentalComponentTesting": true,
-  "componentFolder": "cypress/component"
-}
-```
+With Cypress as the Test Runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in Vue:
+ 
+ ```javascript
+import { mount } from '@cypress/vue' // or cypress-react-unit-test
+import TodoList from '@/components/TodoList'
 
-# Example
+describe('Tod  List', () => {
+  it('renders the tod    ist', () => {
+      ount(TodoList)
+    cy.get('[data-testid=todo-list]  ).sh  uld('exist')
+  })
 
-An example of a component test may look like the code below. This test would execute in the browser, similar to the full end-to-end test, except with no URL website being visited.
+  it('contains the correct numbe    f todos', () =>        const todos = [
+      { text      y milk', id: 1 },
+      { text: 'Learn Comp    nt     ting', id: 2 }
+            mount(TodoList, {
+       p    sData: { todos }
+    })
 
-```js
-import { mount } from 'cypress-react-unit-test'
-import Post from './Post.jsx'
-
-describe('Post skeletons', () => {
-  it('loads title after timeout', () => {
-    mount(<Post title={title} children={text} />)
-    // and then use regular Cypress commands
-    // at first, the title and the text are 💀
-    cy.get('h1 .react-loading-skeleton').should('have.length', 1)
-    cy.get('p .react-loading-skeleton').should('have.length', 5)
+    cy.get('[data-testid=todos]').should(  have.length', todos.length)
   })
 })
 ```
 
-{% imgTag /img/guides/references/component-test.gif "Example React component test" %}
+If I were to write this test for a React component, the test would be almost identical. I would only have to change the `mount` function. Generally, the only framework-specific code in a Cypress Component Test is related to mounting and bundling the component. This means that, contrary to most existing component testing solutions, you do not need to await the internals of the front end framework you're working with.
 
-{% history %}
-{% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
-{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
-{% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
-{% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
-{% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
-{% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
-{% url "4.3.0" changelog#4-3-0 %} | Added support for `experimentalGetCookiesSameSite`.
-{% endhistory %}
+# Setup and Installation
+
+We currently support Vue and React and intend to support other frameworks in the future. The manual setup instructions between frameworks are very similar, with the difference that Vue has 1-step install via Vue CLI.
+
+## Vue
+
+We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" %}.
+
+```sh
+vue add cypress-experimental
+```
+
+Cypress component testing with Vue currently supports Vue 2.x. Support for Vue 3 is in progress.
+
+Examples for testing different Vue applications (containing {% url "Vuex" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/counter-vuex %}, {% url "VueRouter" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/router-example %}, {% url "VueI18n" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/advanced/i18n %}) exist in the component testing directory for {% url "@cypress/vue" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component %}.
+
+## React
+
+```sh
+npm install --save-dev cypress cypress-react-unit-test
+```
+
+1. Include this plugin from your project's `cypress/support/index.js`
+
+```js
+require('cypress-react-unit-test/support')
+```
+
+2. Tell Cypress how your React application is transpiled or bundled (using Webpack), so Cypress can load your components. For example, if you use `react-scripts` (even after ejecting) do:
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  require('cypress-react-unit-test/plugins/react-scripts')(on, config)
+
+  // IMPORTANT to return the config object
+  // with the any changed environment variables
+  return config
+}
+```
+
+See {% url "Recipes" https://github.com/bahmutov/cypress-react-unit-test/blob/main/docs/recipes.md %} for more examples.
+
+3. ⚠️ Turn the experimental component support on in your `cypress.json`. You can also specify where component spec files are located. For example, to have them located in `src` folder use:
+
+```json
+{
+  "experimentalComponentTesting": true,
+  "componentFolder": "src"
+}
+```
