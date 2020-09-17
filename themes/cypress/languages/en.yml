@@ -78,8 +78,8 @@ sidebar:
     module-api: Module API
     retry-ability: Retry-ability
     visual-testing: Visual Testing
-    code-coverage: Code Coverage 
-    component-testing-introduction: Introduction to Component Testing
+    code-coverage: Code Coverage
+    component-testing-introduction: Introduction
   api:
     api: API
     table-of-contents: Table of Contents
