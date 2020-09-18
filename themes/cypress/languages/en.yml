@@ -57,6 +57,7 @@ sidebar:
     custom-commands: Custom Commands
     web-security: Web Security
     references: References
+    component-testing: Component Testing
     configuration: Configuration
     experiments: Experiments
     proxy-configuration: Proxy Configuration
@@ -78,6 +79,7 @@ sidebar:
     retry-ability: Retry-ability
     visual-testing: Visual Testing
     code-coverage: Code Coverage
+    component-testing-introduction: Introduction
   api:
     api: API
     table-of-contents: Table of Contents
