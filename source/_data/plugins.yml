@@ -619,6 +619,12 @@
       keywords: [testrail, reporter]
       badge: community
 
+    - name: cypress-teamcity-reporter
+      description: Custom reporter for Teamcity which makes it possible to display test results in real-time and add them on the Tests tab of the Build Results page
+      link: https://github.com/prma85/cypress-teamcity-reporter
+      keywords: [teamcity, reporter]
+      badge: community
+
     - name: mochawesome-merge
       description: Merges multiple mochawesome JSON reports
       link: https://github.com/antontelesh/mochawesome-merge
