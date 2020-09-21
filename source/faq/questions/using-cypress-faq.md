@@ -660,3 +660,10 @@ Yes. You can leverage visual testing tools to test that charts and graphs are re
 
 - see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
 - see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
+
+## {% fa fa-angle-right %} Can I use Cucumber to write tests?
+
+Yes, you can. You can write Cypress tests using Cucumber syntax, and a special preprocessor would convert those tests into the "regular" JavaScript Cypress tests.
+
+- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url Plugins plugins %} page for additional helper plugins
+- read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
