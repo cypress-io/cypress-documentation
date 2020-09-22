@@ -668,3 +668,11 @@ Yes, you can. You can write feature files containing Cucumber scenarios and then
 - try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url Plugins plugins %} page for additional helper plugins
 - read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
 - take a look at {% url "briebug/bba-cypress-quickstart" https://github.com/briebug/bba-cypress-quickstart %} example application
+
+## {% fa fa-angle-right %} Can I test Next.js sites using Cypress?
+
+Yes, absolutely. See an example in the {% url next-and-cypress-example https://github.com/bahmutov/next-and-cypress-example %} repository where we show how to instrument the application's source code to get {% url "code coverage" code-coverage %} from tests. You can learn how to set good Cypress tests for a Next.js application in this {% url tutorial https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress %}.
+
+## {% fa fa-angle-right %} Can I test Gatsby.js sites using Cypress?
+
+Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.com/docs/end-to-end-testing/ %}. You can also watch the "Cypress + Gatsby webinar" {% url recording https://www.youtube.com/watch?v=Tx6Lg9mwcCE %} and browse the webinar's {% url slides https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development %}.
