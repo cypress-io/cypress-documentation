@@ -675,4 +675,4 @@ Yes, absolutely. See an example in the {% url next-and-cypress-example https://g
 
 ## {% fa fa-angle-right %} Can I test Gatsby.js sites using Cypress?
 
-Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.com/docs/end-to-end-testing/ %}. You can also watch "Cypress + Gatsby webinar" {% url recording https://www.youtube.com/watch?v=Tx6Lg9mwcCE %} and browse the webinar's {% url slides https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development %}.
+Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.com/docs/end-to-end-testing/ %}. You can also watch the "Cypress + Gatsby webinar" {% url recording https://www.youtube.com/watch?v=Tx6Lg9mwcCE %} and browse the webinar's {% url slides https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development %}.
