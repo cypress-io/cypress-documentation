@@ -14,6 +14,11 @@ large:
     youtubeId: F8LH9d9eN3M
     slides: https://slides.com/romansandler/bulletproof-cypress/
 
+  - title: "How Optimizely Tests Features and Feature Flags 300% Faster with Cypress"
+    date: June 10, 2020
+    author: Cypress & Optimizely with Gleb Bahmutov, Jeff Sing, and Todd Seller
+    youtubeId: payZtbdv8R8
+
   - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
     date: Dec 10, 2018
     author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb
