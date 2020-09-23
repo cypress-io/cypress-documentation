@@ -39,12 +39,6 @@ large:
     author: Cypress & Lightstep with Gleb Bahmutov, Jonah Moses & Ted Pennings
     youtubeId: FdF4FyzSiDE
 
-  - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
-    date: Dec 10, 2018
-    author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb
-    youtubeId: J-xbNtKgXfY
-    slides: https://slides.com/bahmutov/circleci-cypress-orb
-
   - title: "How PlanGrid (Autodesk) Achieved Consistency in Automation Across 20 Development Teams"
     date: Feb 12, 2020
     author: Cypress & PlanGrid (Autodesk) with Gleb Bahmutov, Graeme Harvey & Brendan Drew
@@ -96,6 +90,12 @@ large:
     date: Mar 28, 2019
     author: Cypress & GoDaddy with Pablo Velasquez, Kolya Venturi, Stephen Commisso & Steve Yi
     youtubeId: ZSbNT-Fff9A
+
+  - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
+    date: Dec 10, 2018
+    author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb
+    youtubeId: J-xbNtKgXfY
+    slides: https://slides.com/bahmutov/circleci-cypress-orb
 
   - title: "Get the latest updates from Cypress"
     date: Oct 16, 2018
