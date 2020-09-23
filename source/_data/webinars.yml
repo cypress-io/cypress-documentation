@@ -23,6 +23,11 @@ large:
     date: June 10, 2020
     author: Cypress & Optimizely with Gleb Bahmutov, Jeff Sing, and Todd Seller
     youtubeId: payZtbdv8R8
+    
+  - title: "Shipping with Confidence: How DHL reduced test execution time by 50%"
+    date: May 7, 2020  
+    author: Cypress & DHL with Gleb Bahmutov & Rick Fleuren
+    youtubeId: TiLtELQ0hkI  
 
   - title: "How Lightstep Quadrupled Deployment Velocity with Cypress"
     date: April 15, 2020
