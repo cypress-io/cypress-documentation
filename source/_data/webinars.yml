@@ -24,6 +24,11 @@ large:
     author: Cypress & Optimizely with Gleb Bahmutov, Jeff Sing, and Todd Seller
     youtubeId: payZtbdv8R8
 
+  - title: "How Lightstep Quadrupled Deployment Velocity with Cypress"
+    date: April 15, 2020
+    author: Cypress & Lightstep with Gleb Bahmutov, Jonah Moses & Ted Pennings
+    youtubeId: FdF4FyzSiDE
+
   - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
     date: Dec 10, 2018
     author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb
