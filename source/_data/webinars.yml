@@ -8,6 +8,11 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "How GoFundMe’s QA Engineers and Developers Test 30x Faster with Cypress"
+    date: August 26, 2020
+    author: Cypress & GoFundMe with Gleb Bahmutov and Todd Williams
+    youtubeId: fIVZjlHUm8g
+
   - title: "Build invincible integration tests using Cypress and cypress-testing-library"
     date: July 8, 2020
     author: Cypress & Fiverr with Gleb Bahmutov & Roman Sadler
