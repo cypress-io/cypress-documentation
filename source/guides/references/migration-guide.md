@@ -8,9 +8,9 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## Tests retries
 
-Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the Test Retries doc for more information on how this works and how to turn on test retries.
+Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the {% url "Test Retries" test-retries %} doc for more information on how this works and how to turn on test retries.
 
-When test retries are turned on, there will now be a screenshot taken for every failed attempt, so there could potentially be more than 1 screenshot per test failure. Read the Test Retries doc for more information on how this works.
+When test retries are turned on, there will now be a screenshot taken for every failed attempt, so there could potentially be more than 1 screenshot per test failure. Read the {% url "Test Retries" test-retries %} doc for more information on how this works.
 
 The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. There's guidance below on how to migrate from the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin to Cypress's built-in test retries.
 
@@ -22,7 +22,7 @@ The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-
 CYPRESS_RETRIES=2 cypress run
 ```
 
-{% badge success After %} Setting test retries in Cypress 5.0 via via env vars
+{% badge success After %} Setting test retries in Cypress 5.0 via env vars
 
 ```shell
 CYPRESS_RETRIES=2 cypress run
@@ -97,7 +97,7 @@ it('allows user to login', {
 
 ## Module API results
 
-To more accurately reflect result data for runs with test retries, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
+To more accurately reflect result data for runs with {% url "test retries" test-retries %}, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
 
 Mainly there is a new `attempts` Array on each `test` which will reflect the result of each test retry.
 
@@ -386,7 +386,7 @@ Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 
 Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
-Node.js 8 reached its end of life on Dev 31, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. This Node.js version will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10.
+Node.js 8 reached its end of life on Dev 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
 # Migrating to Cypress 4.0
 

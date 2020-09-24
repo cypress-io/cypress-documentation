@@ -256,6 +256,8 @@ Change the download directory of files downloaded during Cypress tests.
 
 ```js
 // cypress/plugins/index.js
+const path = require('path')
+
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     const downloadDirectory = path.join(__dirname, '..', 'downloads')
@@ -278,6 +280,10 @@ module.exports = (on) => {
   })
 }
 ```
+
+{% note info %}
+{% url 'Check out our example recipe showing how to download and validate CSV and Excel files.' recipes#Testing-the-DOM %}
+{% endnote %}
 
 {% history %}
 {% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`

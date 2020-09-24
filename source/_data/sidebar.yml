@@ -37,6 +37,8 @@ guides:
     launching-browsers: launching-browsers.html
     cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
+  component-testing:
+    component-testing-introduction: introduction.html
   tooling:
     IDE-integration: IDE-integration.html
     plugins-guide: plugins-guide.html
@@ -120,12 +122,14 @@ api:
     rightclick: rightclick.html
     root: root.html
     route: route.html
+    route2: route2.html
     screenshot: screenshot.html
     scrollintoview: scrollintoview.html
     scrollto: scrollto.html
     select: select.html
     server: server.html
     setcookie: setcookie.html
+    shadow: shadow.html
     should: should.html
     siblings: siblings.html
     spread: spread.html

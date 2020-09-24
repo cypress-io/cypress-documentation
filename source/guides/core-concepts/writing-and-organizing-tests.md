@@ -336,7 +336,7 @@ specify(name, config, fn)
 If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
 
 ```js
-describe('When in Chrome', {  browser: '!chrome' } () => {
+describe('When NOT in Chrome', {  browser: '!chrome' }, () => {
   it('Shows warning', () => {
     cy.get('.browser-warning')
       .should('contain', 'For optimal viewing, use Chrome browser')
@@ -345,7 +345,7 @@ describe('When in Chrome', {  browser: '!chrome' } () => {
   it('Links to browser compatibility doc', () => {
     cy.get('a.browser-compat')
       .should('have.attr', 'href')
-      .and('include', 'browser-compatibility)
+      .and('include', 'browser-compatibility')
   })
 })
 ```

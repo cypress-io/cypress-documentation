@@ -1,0 +1,58 @@
+.dashboard-ad-wrapper {
+  border-top: 1px solid #eee; 
+  margin-top: 1rem;
+}
+
+.dashboard-ad {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #f7fafc;
+
+  @media (min-width: 1000px) {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  img {
+    display: none;
+    max-width: 100%;
+
+    @media (min-width: 1000px) {
+      display: block;
+    }
+  }
+
+  ul {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .button {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    line-height: 1;
+  }
+}
+
+.dashboard-ad-content {
+  flex: 3;
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+.dashboard-ad-image {
+  flex: 2;
+}
+
+.dashboard-ad-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}

@@ -3,7 +3,6 @@
 {{ js('js/mobile_detect') }}
 {{ js('js/banners_actualization') }}
 {{ js('js/global_variable') }}
-{{ js('js/lang_select') }}
 {{ js('js/vendor/scrollingelement') }}
 {{ js('js/vendor/menuspy') }}
 {{ js('js/vendor/yall-2.0.1.min.js') }}
