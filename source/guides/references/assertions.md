@@ -24,7 +24,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | deep | `expect(obj).to.deep.equal({ name: 'Jane' })` |
 | nested | `expect({a: {b: ['x', 'y']}}).to.have.nested.property('a.b[1]')`<br>`expect({a: {b: ['x', 'y']}}).to.nested.include({'a.b[1]': 'y'})` |
 | ordered | `expect([1, 2]).to.have.ordered.members([1, 2]).but.not.have.ordered.members([2, 1])`
-| any | `expect(arr).to.have.any.keys('name', 'age')` |
+| any | `expect(arr).to.have.any.keys('age')` |
 | all | `expect(arr).to.have.all.keys('name', 'age')` |
 | a(*type*) {% aliases an %}| `expect('test').to.be.a('string')` |
 | include(*value*) {% aliases contain includes contains %} | `expect([1,2,3]).to.include(2)` |
@@ -52,7 +52,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
 | match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
-| key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
+| keys(*key1*, *[key2]*, *[...]*) {% aliases key %} | `expect({ pass: 1, fail: 2 }).to.have.keys('pass', 'fail')` |
 | throw(*constructor*) {% aliases throws Throw %} | `expect(fn).to.throw(Error)` |
 | respondTo(*method*) {% aliases respondsTo %} | `expect(obj).to.respondTo('getName')` |
 | itself | `expect(Foo).itself.to.respondTo('bar')` |

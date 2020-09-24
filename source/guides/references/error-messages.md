@@ -52,9 +52,10 @@ It's still useful to load a setup file before your test code. If you are setting
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
 - `cypress/support/index.js`
+- `cypress/support/index.ts`
 - `cypress/support/index.coffee`
 
-Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
+Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+, {% url "TypeScript" typescript-support %} or CoffeeScript and modules, so you can import/require other files as needed.
 
 # Command Errors
 
@@ -186,6 +187,10 @@ When we say *guard*, this usually means:
 
 - Writing an assertion
 - Waiting on an XHR
+
+### More info
+
+Read the blog post {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %} for another example of this error, and how to solve it.
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element cannot be interacted with
 

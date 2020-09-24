@@ -9,25 +9,48 @@
       <div class="article-content" itemprop="articleBody">
         {{ (page.content) }}
         {% for pluginType in order_by_name(site.data.plugins) %}
-          <h2 id="{{ id(pluginType.name) }}"><a href="#{{ id(pluginType.name) }}">{{ pluginType.name }}</a></h2>
-          {% if pluginType.description %}
-          <div class="plugin-type-description">{% markdown %}{{ pluginType.description }}{% endmarkdown %}</div>
-          {% endif %}
-          <ul class="plugins-list">
-            {% for plugin in order_by_name(pluginType.plugins) %}
-              <li>
-                <h3>
-                  <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a>
-                </h3>
-                <p>{{ plugin.description }}</p>
-                {% for keyword in plugin.keywords %}
-                  <span class="keyword">#{{ keyword }}</span>
-                {% endfor %}
-              </li>
-            {% endfor %}
-          </ul>
+          <section data-cy="plugin-{{ id(pluginType.name) }}">
+            <h2 id="{{ id(pluginType.name) }}"><a href="#{{ id(pluginType.name) }}">{{ pluginType.name }}</a></h2>
+            {% if pluginType.description %}
+            <div class="plugin-type-description">{% markdown %}{{ pluginType.description }}{% endmarkdown %}</div>
+            {% endif %}
+            <ul class="plugins-list">
+              {% for plugin in order_by_name(pluginType.plugins) %}
+                <li>
+                  <div class="plugin-title">
+                    <h3>
+                      <a href="{{plugin.link}}" target="_blank" rel="noopener noreferrer">{{ plugin.name }}</a> 
+                    </h3>
+                    <div class="plugin-badge">
+                      {% if plugin.badge %}
+                        {% if plugin.badge === 'community' %}
+                        <span class="badge badge-pill badge-community">
+                        {% endif %}
+                        {% if plugin.badge === 'experimental' %}
+                        <span class="badge badge-pill badge-experimental">
+                        {% endif %}
+                        {% if plugin.badge === 'official' %}
+                        <span class="badge badge-pill badge-official">
+                        {% endif %}
+                        {% if plugin.badge === 'verified' %}
+                        <span class="badge badge-pill badge-verified">
+                      {% endif %}
+                        {{ plugin.badge }}
+                      </span>
+                    {% endif %}
+                    </div>
+                  </div>
+                  <p>{{ plugin.description }}</p>
+                  {% for keyword in plugin.keywords %}
+                    <span class="keyword">#{{ keyword }}</span>
+                  {% endfor %}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
         {% endfor %}
       </div>
+      {{ partial('partial/dashboard-cta') }}
       <div class="article-footer-updated">
         <time datetime="{{ date_xml(page.updated) }}" itemprop="dateModified">{{ __('page.last-updated', date(page.updated)) }}</time>
       </div>

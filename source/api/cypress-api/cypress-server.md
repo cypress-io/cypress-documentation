@@ -28,8 +28,8 @@ Pass in an options object to change the default behavior of `Cypress.Server`.
 Cypress.Server.defaults({
   delay: 500,
   force404: false,
-  whitelist: (xhr) => {
-    // handle custom logic for whitelisting
+  ignore: (xhr) => {
+    // handle custom logic for filtering XHR requests
   }
 })
 ```

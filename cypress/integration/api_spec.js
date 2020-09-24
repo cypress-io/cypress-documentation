@@ -25,10 +25,9 @@ describe('API', () => {
 
       cy.get('.sidebar-link')
       .each((linkElement) => {
-        cy.log(linkElement[0].innerText)
-
-        cy.request(linkElement[0].href).its('body')
-        .then((body) => {
+        cy.task('log', `Requesting ${linkElement[0].innerText}`)
+        cy.request(linkElement[0].href).then((response) => {
+          const body = response.body
           const $body = Cypress.$(body)
 
           const $h1s = $body.find('.article h1').not('.article-title')

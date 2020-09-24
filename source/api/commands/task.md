@@ -277,6 +277,65 @@ See {% issue 2284 '#2284' %} for implementation.
 If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
 
+## Reset timeout via `Cypress.config()`
+
+You can change the timeout of `cy.task()` for the remainder of the tests by setting the new values for `taskTimeout` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('taskTimeout', 30000)
+Cypress.config('taskTimeout') // => 30000
+```
+
+## Set timeout in the test configuration
+
+You can configure the `cy.task()` timeout within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the timeout throughout the duration of the tests, then return it to the default `taskTimeout` when complete.
+
+```js
+describe('has data available from database', { taskTimeout: 90000 }, () => {
+  before(() => {
+    cy.task('seedDatabase')
+  })
+
+  // tests
+
+  after(() => {
+    cy.task('resetDatabase')
+  })
+})
+```
+
+## Argument should be serializable
+
+The argument `arg` sent via `cy.task(name, arg)` should be serializable; it cannot have circular dependencies (issue {% issue 5539 %}). If there are any special fields like `Date`, you are responsible for their conversion (issue {% issue 4980 %}):
+
+```javascript
+// in test
+cy.task('date', new Date())
+  .then((s) => {
+    // the yielded result is a string
+    // we need to convert it to Date object
+    const result = new Date(s)
+  })
+```
+
+```javascript
+// in plugins/index.js
+module.exports = (on, config) => {
+  on('task', {
+    date (s) {
+      // s is a string, so convert it to Date
+      const d = new Date(s)
+
+      // do something with the date
+      // and return it back
+      return d
+    }
+  })
+}
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

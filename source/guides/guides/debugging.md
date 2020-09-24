@@ -131,6 +131,21 @@ Cypress utilizes source maps to enhance the error experience. Stack traces are t
 
 By default, Cypress will include an inline source map in your spec file, so you will get the most out of the error experience. If you {% url "modify the preprocessor" preprocessors-api %}, ensure that inline source maps are enabled to get the same experience. With webpack and the {% url "webpack preprocessor" https://github.com/cypress-io/cypress-webpack-preprocessor %}, for example, set {% url "the `devtool` option" https://webpack.js.org/configuration/devtool/ %} to `inline-source-map`.
 
+# Debugging flake
+
+While Cypress is {% url "flake-resistant" key-differences#Flake-resistant %}, some users do experience flake, particularly when running in CI versus locally. Most often in cases of flaky tests, we see that there are not enough assertions surrounding test actions or network requests before moving on to the next assertion.
+
+If there is any variation in the speed of the network requests or responses when run locally versus in CI, then there can be failures in one over the other.
+
+Because of this, we recommend asserting on as many required steps as possible before moving forward with the test. This also helps later to isolate where the exact failure is when debugging.
+
+Flake can also occur when there are differences between your local and CI environments. You can use the following methods troubleshoot tests that pass locally but fail in CI.
+
+- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
+- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
+
+The Cypress Dashboard also offers {% url "Analytics" analytics %} that illustrate trends in your tests and can help identify the tests that fail most often. This could help narrow down what is causing the flake -- for example, seeing increased failures after a change to the test environment could indicate issues with the new environment.
+
 # Log Cypress events
 
 Cypress emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
@@ -157,4 +172,14 @@ While learning Cypress it may be a good idea to try small tests against some HTM
 
 # Troubleshooting Cypress
 
-There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking our out {% url "Troubleshooting Guide" troubleshooting %}.
+There are times when you will encounter errors or unexpected behavior with Cypress itself. In this situation, we recommend checking out our {% url "Troubleshooting Guide" troubleshooting %}.
+
+# More info
+
+Often debugging a failing Cypress test means understanding better how your own application works, and how the application might race against the test commands. We recommend reading these blog posts where we show common error scenarios and how to solve them:
+
+- {% url "When Can The Test Start?" https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/ %}
+- {% url "When Can The Test Stop?" https://www.cypress.io/blog/2020/01/16/when-can-the-test-stop/ %}
+- {% url "When Can The Test Click?" https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/ %}
+- {% url "When Can The Test Log Out?" https://www.cypress.io/blog/2020/06/25/when-can-the-test-log-out/ %}
+- {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %}

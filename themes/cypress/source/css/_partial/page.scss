@@ -1,6 +1,6 @@
 .article-wrapper {
   position: relative;
-  margin: 60px ($sidebar-width + 40px) 60px ($sidebar-width + 40px);
+  margin: 0 ($sidebar-width);
   display: flex;
   flex-direction: row;
 }
@@ -16,8 +16,9 @@
 
 .article {
   position: relative;
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 60px 30px;
   display: flex;
   flex-direction: column;
   right: 0;
@@ -178,6 +179,7 @@ a.article-edit-link {
   }
 
   table {
+    background-color: white;
     border: 1px solid #e8e8e8;
     display: block;
     margin: 15px 0;
@@ -269,12 +271,7 @@ a.article-edit-link {
   }
 
   h1.article-title {
-    font-family: $font-title;
-    font-weight: bold;
-    text-decoration: none;
-    color: $color-default;
-    line-height: 1.7em;
-    color: #282C34;
+    @include article-title;
     font-size: 2.6em;
   }
 
@@ -628,12 +625,7 @@ a.article-edit-link {
 }
 
 .article-title {
-  font-family: $font-title;
-  font-weight: bold;
-  text-decoration: none;
-  color: $color-default;
-  line-height: 1.7em;
-  color: #282C34;
+  @include article-title;
   font-size: 2.6em;
 }
 
@@ -649,7 +641,7 @@ a.article-edit-link {
   height: auto;
   margin: 2em 0;
   border: 1px solid #ddd;
-  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .embed-container iframe {

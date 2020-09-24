@@ -46,7 +46,7 @@ npm install cypress --save-dev
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
 
 {% note info Using the `--browser` command line argument %}
-You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
+You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path %}
 {% endnote %}
 
 You can see the full list of found browsers and their properties within the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
@@ -101,17 +101,17 @@ To make a browser installed at a different path be auto-detected, create a symbo
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 
-# Chrome extension whitelisting
+# Allow the Cypress Chrome extension
 
-Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company whitelist specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to whitelist the Cypress extension ID below:
+Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company block specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to allow the Cypress extension ID below:
 
 ```sh
 caljajdfkjjjdehjdoimjkkakekklcck
 ```
 
-# URL whitelisting on VPNs
+# Allow Cypress URLs on VPNs
 
-{% partial vpn_whitelist_list %}
+{% partial vpn_allowed_list %}
 
 # Clear App Data
 
@@ -251,7 +251,7 @@ Second, try a smoke test that verifies that the application has all its required
 101
 ```
 
-If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
+If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://www.electronjs.org/docs/api/command-line-switches %}:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101

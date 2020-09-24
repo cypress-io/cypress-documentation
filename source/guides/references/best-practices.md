@@ -3,6 +3,17 @@ title: Best Practices
 layout: toc-top
 ---
 
+{% note info %}
+### {% fa fa-graduation-cap %} Real World Practices
+
+The Cypress team maintains the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}, a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+
+The RWA achieves full {% url code-coverage code-coverage %} with end-to-end tests {% url "across multiple browsers" cross-browser-testing %} and {% url "device sizes" viewport %}, but also includes {% url "visual regression tests" visual-testing %}, API tests, unit tests, and runs them all in an {% url "efficient CI pipeline" https://dashboard.cypress.io/projects/7s5okt %}.
+
+The app is bundled with everything you need, {% url "just clone the repository" https://github.com/cypress-io/cypress-realworld-app %} and start testing.
+
+{% endnote %}
+
 ## Organizing Tests, Logging In, Controlling State
 
 {% note danger %}
@@ -79,6 +90,27 @@ When determining an unique selector it will automatically prefer elements with:
 - `data-testid`
 
 {% endnote %}
+
+#### {% fa fa-graduation-cap %} Real World Example
+
+The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses two useful custom commands for selecting elements for testing:
+
+- `getBySel` yields elements with a `data-test` attribute that **match** a specified selector.
+- `getBySelLike` yields elements with a `data-test` attribute that **contains** a specified selector.
+
+```ts
+// cypress/support/commands.ts
+
+Cypress.Commands.add("getBySel", (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args);
+});
+
+Cypress.Commands.add("getBySelLike", (selector, ...args) => {
+  return cy.get(`[data-test*=${selector}]`, ...args);
+});
+```
+
+> *{% fa fa-github %} Source: {% url "cypress/support/commands.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts %}*
 
 ### Text Content:
 
@@ -290,7 +322,7 @@ Now we can put an `.only` on this test and it will run successfully irrespective
 
 ```javascript
 describe('my form', () => {
-  beforeEach () => {
+  beforeEach(() => {
     cy.visit('/users/new')
     cy.get('#first').type('Johnny')
     cy.get('#last').type('Appleseed')
@@ -468,8 +500,6 @@ beforeEach(() => {
 })
 ```
 
-That's it!
-
 ### Is resetting the state necessary?
 
 One final question you should ask yourself is - is resetting the state even necessary? Remember, Cypress already automatically clears {% url "`localStorage`" clearlocalstorage %}, {% url "cookies" clearcookies %}, sessions, etc before each test. Make sure you are not trying to clean up state that is already cleaned up by Cypress automatically.
@@ -477,6 +507,37 @@ One final question you should ask yourself is - is resetting the state even nece
 If the state you are trying to clean lives on the server - by all means, clean that state. You will need to run these types of routines! But if the state is related to your application currently under test - you likely do not even need to clear it.
 
 The only times you **ever** need to clean up state, is if the operations that one test runs affects another test downstream. In only those cases do you need state cleanup.
+
+#### {% fa fa-graduation-cap %} Real World Example
+
+The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} resets and re-seeds its database via a custom {%url "Cypress task" task %} called `db:seed` in a `beforeEach` hook. This allows each test to start from a clean slate and a deterministic state. For example:
+
+```ts
+// cypress/tests/ui/auth.spec.ts
+
+beforeEach(function () {
+  cy.task("db:seed");
+  // ...
+});
+```
+> *{% fa fa-github %} Source: {% url "cypress/tests/ui/auth.spec.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts %}*
+
+The `db:seed` task is defined within the {% url "plugins file" writing-and-organizing-tests#Plugin-files %} of the project, and in this case sends a request to a dedicated back end API of the app to appropriately re-seed the database.
+```ts
+// cypress/plugins/index.ts
+
+on("task", {
+  async "db:seed"() {
+    // Send request to backend API to re-seed database with test data
+    const { data } = await axios.post(`${testDataApiEndpoint}/seed`);
+    return data;
+  },
+  //...
+});
+```
+> *{% fa fa-github %} Source: {% url "cypress/plugins/index.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts %}*
+
+The same practice above can be used for any type of database (PostgreSQL, MongoDB, etc.). In this example, a request is sent to a back end API, but you could also interact directly with your database with direct queries, custom libraries, etc. If you already have non-JavaScript methods of handling or interacting with your database, you can use `{% url cy.exec exec%}`, instead of `{% url cy.task task%}`, to execute any system command or script.
 
 ## Unnecessary Waiting
 

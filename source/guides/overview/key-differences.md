@@ -34,10 +34,10 @@ Having ultimate control over your application, the network traffic, and native a
 - {% url "Stub" stub %} the browser or your application's functions and force them to behave as needed in your test case.
 - Expose data stores (like in Redux) so you can programmatically alter the state of your application directly from your test code.
 - Test edge cases like 'empty views' by forcing your server to send empty responses.
-- Test how your application responds to errors on your server by {% url "modifying response status codes to be 500" route %>.
+- Test how your application responds to errors on your server by {% url "modifying response status codes to be 500" route %}.
 - Modify DOM elements directly - like forcing hidden elements to be shown.
 - Use 3rd party plugins programmatically. Instead of fussing with complex UI widgets like multi selects, autocompletes, drop downs, tree views or calendars, you can call methods directly from your test code to control them.
-- <% url "Prevent Google Analytics from loading *before* any of your application code executes" configuration#blacklistHosts %> when testing.
+- {% url "Prevent Google Analytics from loading *before* any of your application code executes" configuration#blockHosts %} when testing.
 - Get synchronous notifications whenever your application transitions to a new page or when it begins to unload.
 - {% url "Control time by moving forward or backward" clock %} so that timers or polls automatically fire without having to wait for the required time in your tests.
 - Add your own event listeners to respond to your application. You could update your application code to behave differently when under tests in Cypress. You can control WebSocket messages from within Cypress, conditionally load 3rd party scripts, or call functions directly on your application.
@@ -52,9 +52,9 @@ That means you do not have to visit a login page, type in a username and passwor
 
 # Flake resistant
 
-Cypress knows and understands everything that happens in your application synchronously. It is notified the moment the page loads and the moment the page unloads. It is impossible for Cypress to miss elements when it fires events. Cypress even knows how fast an element is animating and will {% url "wait for it to stop animating" interacting-with-elements#Animations %>. Additionally, it <% url "automatically waits for elements to become visible" interacting-with-elements#Visibility %>, to {% url "become enabled" interacting-with-elements#Disability %>, and to <% url "stop being covered" interacting-with-elements#Covering %>. When pages begin to transition, Cypress will pause command execution until the following page is fully loaded. You can even tell Cypress to {% url "wait" wait %} on specific network requests to finish.
+Cypress knows and understands everything that happens in your application synchronously. It is notified the moment the page loads and the moment the page unloads. It is impossible for Cypress to miss elements when it fires events. Cypress even knows how fast an element is animating and will {% url "wait for it to stop animating" interacting-with-elements#Animations %}. Additionally, it {% url "automatically waits for elements to become visible" interacting-with-elements#Visibility %}, to {% url "become enabled" interacting-with-elements#Disability %}, and to {% url "stop being covered" interacting-with-elements#Covering %}. When pages begin to transition, Cypress will pause command execution until the following page is fully loaded. You can even tell Cypress to {% url "wait" wait %} on specific network requests to finish.
 
-Cypress executes the vast majority of its commands inside the browser, so there is no network lag. Commands execute and drive your application as fast as it is capable of rendering. To deal with modern JavaScript frameworks with complex UI's, you use assertions to tell Cypress what the desired state of your application should be. Cypress will automatically wait for your application to reach this state before moving on. You are completely insulated from fussing with manual waits or retries. Cypress automatically waits for elements to exist and will never yield you stale elements that have been detached from the DOM.
+Cypress executes the vast majority of its commands inside the browser, so there is no network lag. Commands execute and drive your application as fast as it is capable of rendering. To deal with modern JavaScript frameworks with complex UIs, you use assertions to tell Cypress what the desired state of your application should be. Cypress will automatically wait for your application to reach this state before moving on. You are completely insulated from fussing with manual waits or retries. Cypress automatically waits for elements to exist and will never yield you stale elements that have been detached from the DOM.
 
 # Debuggability
 

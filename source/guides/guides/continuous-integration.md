@@ -83,10 +83,11 @@ If the server takes a very long time to start, we recommend trying the {% url st
 npm install --save-dev start-server-and-test
 ```
 
-Pass the command to boot your server, the url your server is hosted on and your Cypress test command.
+In your `package.json` scripts, pass the command to boot your server, the url your server is hosted on and your Cypress test command.
 
 ```json
 {
+  ...
   "scripts": {
     "start": "my-server -p 3030",
     "cy:run": "cypress run",
@@ -123,7 +124,7 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ## Record tests
 
-Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %}.
+Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
 
 ### Recording tests allow you to:
 
@@ -169,7 +170,7 @@ CI Provider | Example Project | Example Config
 {% url "Azure / VSTS CI / TeamFoundation" https://azure.microsoft.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "azure-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
 {% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
-{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
+{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".circleci/config.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml %}
 {% url "CodeShip Basic" https://codeship.com/features/basic %} (has {% issue 328 "cy.exec() issue" %}) | |
 {% url "CodeShip Pro" https://codeship.com/features/pro %} | {% url "cypress-example-docker-codeship" https://github.com/cypress-io/cypress-example-docker-codeship %} |
 {% url "Concourse" https://concourse-ci.org/ %} | |
@@ -214,9 +215,18 @@ Caching folders with npm modules saves a lot of time after the first build.
 {% video youtube J-xbNtKgXfY %}
 <!-- textlint-enable -->
 
-### {% badge success New %} Example CircleCI Orb
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
 
-The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the Circle CI {% url "Cypress Orb" https://github.com/cypress-io/circleci-orb %}, Codecov Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems with full code-coverage reporting and {% url "Cypress Dashboard recording" https://dashboard.cypress.io/projects/7s5okt %}.
+
+Check out the full {% fa fa-github %} {% url "RWA Circle CI configuration" https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml %}.
+
+{% endnote %}
+
+### Example CircleCI Orb
+
+The Cypress CircleCI Orb is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
@@ -261,14 +271,14 @@ In all cases, you are using `run` and `install` job definitions that Cypress pro
 
 You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
-### Example `circle.yml` v2 config file
+### Example `.circleci/config.yml` v2 config file
 
 ```yaml
 version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -292,14 +302,14 @@ jobs:
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-### Example `circle.yml` v2 config file with `yarn`
+### Example `.circleci/config.yml` v2 config file with `yarn`
 
 ```yaml
 version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -519,7 +529,7 @@ RUN $(npm bin)/cypress run
 Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -539,13 +549,7 @@ If you are not using one of the above CI providers then make sure your system ha
 
 ### Linux
 
-```shell
-# Ubuntu/Debian
-apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-
-# CentOS
-yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
-```
+{% partial linux_dependencies %}
 
 ## Caching
 
@@ -717,6 +721,7 @@ module.exports = (on, config) => {
   })
 }
 ```
+
 ## Xvfb
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
@@ -745,6 +750,16 @@ After all tests across all Cypress instances finish, kill the Xvfb background pr
 pkill Xvfb
 ```
 
+{% note warning %}
+In certain Linux environments, you may experience connection errors with your X11 server. In this case, you may need to start Xvfb with the following command:
+
+```shell
+Xvfb -screen 0 1024x768x24 :99 &
+```
+Cypress internally passes these Xvfb arguments, but if you are spawning your own Xvfb, you would need to pass these arguments. This is necessary to avoid using 8-bit color depth with Xvfb, which will prevent Chrome or Electron from crashing.
+
+{% endnote %}
+
 ## Colors
 
 If you want colors to be disabled, you can pass the `NO_COLOR` environment variable to disable colors. You may want to do this if ASCII characters or colors are not properly formatted in your CI.
@@ -754,7 +769,7 @@ NO_COLOR=1 cypress run
 ```
 
 # See also
-
+- {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
 - {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}

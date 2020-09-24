@@ -3,6 +3,19 @@ title: Introduction
 ---
 The {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %} is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
 
+<!-- textlint-disable -->
+{% video youtube ezp60FUnjGg %}
+<!-- textlint-enable -->
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} leverages the {% url "Cypress Dashboard in CI" https://dashboard.cypress.io/projects/7s5okt %} to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems.
+
+Check out the {% fa fa-github %} {% url "Real World App Dashboard" https://dashboard.cypress.io/projects/7s5okt %}.
+
+{% endnote %}
+
 # Features
 
 ## Organize projects
@@ -79,6 +92,7 @@ Once you log in to the {% url 'Dashboard Service' https://on.cypress.io/dashboar
 
 **Here are some of our own public projects you can view:**
 
+- [{% fa fa-folder-open-o %} cypress-realworld-app](https://dashboard.cypress.io/projects/7s5okt)
 - [{% fa fa-folder-open-o %} cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
 - [{% fa fa-folder-open-o %} cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
 - [{% fa fa-folder-open-o %} cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)

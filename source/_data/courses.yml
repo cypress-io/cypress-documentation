@@ -1,6 +1,14 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
+- title: "Test automatizácia v Cypress.io"
+  url: https://www.learn2code.sk/kurzy/test-automatizacia-v-cypress-io
+  author: Filip Hric
+  authorTwitter: filip_hric
+  sourceName: Learn2code
+  sourceUrl: https://www.learn2code.sk
+  language: Slovak
+  
 - title: "Cypress test automation for people in a hurry"
   url: https://www.udemy.com/course/cypress-test-automation-for-people-in-a-hurry/?referralCode=21A875FF429457CF641D
   author: Filip Hric
@@ -22,6 +30,13 @@
   sourceName: egghead.io
   sourceUrl: https://egghead.io
   free: true
+  
+- title: "The Ultimate Cypress Testing Hands-on Guide"
+  url: https://coursinator.com/course/the-ultimate-cypress-testing-hands-on-guide
+  author: Bogdan Vazzolla
+  authorTwitter: bogdanvazzolla
+  sourceName: Coursinator
+  sourceUrl: https://coursinator.com/
 
 - title: "Outside-In Frontend Development"
   url: https://outsidein.dev/

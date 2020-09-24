@@ -2,9 +2,395 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 5.0
+
+This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
+
+## Tests retries
+
+Test retries are available in Cypress 5.0. This means that tests can be re-run a number of times before potentially being marked as a failed test. Read the {% url "Test Retries" test-retries %} doc for more information on how this works and how to turn on test retries.
+
+When test retries are turned on, there will now be a screenshot taken for every failed attempt, so there could potentially be more than 1 screenshot per test failure. Read the {% url "Test Retries" test-retries %} doc for more information on how this works.
+
+The {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin has been deprecated in favor of test retries built into Cypress. There's guidance below on how to migrate from the {% url "`cypress-plugin-retries`" https://github.com/Bkucera/cypress-plugin-retries %} plugin to Cypress's built-in test retries.
+
+### Configure test retries via the CLI
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via env vars
+
+```shell
+CYPRESS_RETRIES=2 cypress run
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via env vars
+
+```shell
+CYPRESS_RETRIES=2 cypress run
+```
+
+### Configure test retries in the configuration file
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via configuration
+
+```json
+{
+  "env":
+  {
+    "RETRIES": 2
+  }
+}
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via configuration
+
+```json
+{
+  "retries": 1
+}
+```
+
+- `runMode` allows you to define the number of test retries when running `cypress run`
+- `openMode` allows you to define the number of test retries when running `cypress open`
+
+```json
+{
+  "retries": {
+    "runMode": 1,
+    "openMode": 3
+  }
+}
+```
+
+### Configure test retries per test
+
+{% badge danger Before %} Setting retries with `cypress-plugin-retries` via the test
+
+```js
+it('test', () => {
+  Cypress.currentTest.retries(2)
+})
+```
+
+{% badge success After %} Setting test retries in Cypress 5.0 via test options
+
+```js
+it('allows user to login', {
+  retries: 2
+}, () => {
+  // ...
+})
+```
+
+- `runMode` allows you to define the number of test retries when running `cypress run`
+- `openMode` allows you to define the number of test retries when running `cypress open`
+
+```js
+it('allows user to login', {
+  retries: {
+    runMode: 2,
+    openMode: 3
+  }
+}, () => {
+  // ...
+})
+```
+
+## Module API results
+
+To more accurately reflect result data for runs with {% url "test retries" test-retries %}, the structure of each run's `runs` array resolved from the `Promise` returned from `cypress.run()` of the Module API has changed.
+
+Mainly there is a new `attempts` Array on each `test` which will reflect the result of each test retry.
+
+{% badge danger Before %} `results.runs`  Module API results
+
+```json
+{
+  // ...
+  "runs": [{
+    // ...
+    "hooks": [{
+      "hookId": "h1",
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
+    // ...
+    "screenshots": [{
+      "screenshotId": "8ddmk",
+      "name": null,
+      "testId": "r2",
+      "takenAt": "2020-08-05T08:52:20.432Z",
+      "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+      "height": 720,
+      "width": 1280
+    }],
+    "stats": {
+      // ...
+      "wallClockStartedAt": "2020-08-05T08:38:37.589Z",
+      "wallClockEndedAt": "2018-07-11T17:53:35.675Z",
+      "wallClockDuration": 1171
+    },
+    "tests": [{
+      "testId": "r2",
+      "title": [ "test" ],
+      "state": "failed",
+      "body": "function () {\n  expect(true).to.be["false"];\n}",
+      "stack": "AssertionError: expected true to be false\n' +
+        '    at Context.eval (...cypress/integration/spec.js:5:21",
+      "error": "expected true to be false",
+      "timings": {
+        "lifecycle": 16,
+        "test": {...}
+      },
+      "failedFromHookId": null,
+      "wallClockStartedAt": "2020-08-05T08:38:37.589Z",
+      "wallClockDuration": 1171,
+      "videoTimestamp": 4486
+    }],
+  }],
+  // ...
+}
+```
+
+{% badge success After %} `results.runs` Module API results
+
+```json
+{
+  // ...
+  "runs": [{
+    // ...
+    "hooks": [{
+      "hookName": "before each",
+      "title": [ "before each hook" ],
+      "body": "function () {\n  expect(true).to.be["true"];\n}"
+    }],
+    // ...
+    "stats": {
+      // ...
+      "startedAt": "2020-08-05T08:38:37.589Z",
+      "endedAt": "2018-07-11T17:53:35.675Z",
+      "duration": 1171
+    },
+    "tests": [{
+      "title": [ "test" ],
+      "state": "failed",
+      "body": "function () {\n  expect(true).to.be["false"];\n}",
+      "displayError": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21",
+      "attempts": [{
+        "state": "failed",
+        "error": {
+          "message": "expected true to be false",
+          "name": "AssertionError",
+          "stack": "AssertionError: expected true to be false\n' +
+      '    at Context.eval (...cypress/integration/spec.js:5:21"
+        },
+        "screenshots": [{
+          "name": null,
+          "takenAt": "2020-08-05T08:52:20.432Z",
+          "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+          "height": 720,
+          "width": 1280
+        }],
+        "startedAt": "2020-08-05T08:38:37.589Z",
+        "duration": 1171,
+        "videoTimestamp": 4486
+      }]
+    }],
+  }],
+  // ...
+}
+```
+
+## Cookies `whitelist` option renamed
+
+The {% url "`Cypress.Cookies.defaults()`" cookies %} `whitelist` option has been renamed to `preserve` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+Cypress.Cookies.defaults({
+  whitelist: 'session_id'
+})
+```
+
+{% badge success After %} `preserve` option
+
+```js
+Cypress.Cookies.defaults({
+  preserve: 'session_id'
+})
+```
+
+## `blacklistHosts` configuration renamed
+
+The `blacklistHosts` configuration has been renamed to {% url "`blockHosts`" configuration#Notes %} to more closely reflect its behavior.
+
+This should be updated in all places where Cypress configuration can be set including the via the configuration file (`cypress.json` by default), command line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
+
+{% badge danger Before %} `blacklistHosts` configuration in `cypress.json`
+
+```json
+{
+  "blacklistHosts": "www.google-analytics.com"
+}
+```
+
+{% badge success After %} `blockHosts` configuration in `cypress.json`
+
+```json
+{
+  "blockHosts": "www.google-analytics.com"
+}
+```
+
+## Return type of `Cypress.Blob` changed
+
+We updated the {% url 'Blob' https://github.com/nolanlawson/blob-util %} library used behind {% url "`Cypress.Blob`" blob %} from `1.3.3` to `2.0.2`.
+
+The return type of the {% url "`Cypress.Blob`" blob %} methods `arrayBufferToBlob`, `base64StringToBlob`, `binaryStringToBlob`, and `dataURLToBlob` have changed from `Promise<Blob>` to `Blob`.
+
+{% badge danger Before %} `Cypress.Blob` methods returned a Promise
+
+```js
+Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+.then((blob) => {
+  // work with the returned blob
+})
+```
+
+{% badge success After %} `Cypress.Blob` methods return a Blob
+
+```js
+const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+
+// work with the returned blob
+```
+
+## `cy.server()` `whitelist` option renamed
+
+The {% url "`cy.server()`" server %} `whitelist` option has been renamed to `ignore` to more closely reflect its behavior.
+
+{% badge danger Before %} `whitelist` option
+
+```js
+cy.server({
+  whitelist: (xhr) => {
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  }
+})
+```
+
+{% badge success After %} `ignore` option
+
+```js
+cy.server({
+  ignore: (xhr) => {
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  }
+})
+```
+
+## Cookies `sameSite` property
+
+Values yielded by {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %} will now contain the `sameSite` property if specified.
+
+If you were using the `experimentalGetCookiesSameSite` configuration to get the `sameSite` property previously, this should be removed.
+
+{% badge danger Before %} Cookies yielded before had no `sameSite` property.
+
+```js
+cy.getCookie('token').then((cookie) => {
+  // cy.getCookie() yields a cookie object
+  // {
+  //   domain: "localhost",
+  //   expiry: 1593551644,
+  //   httpOnly: false,
+  //   name: "token",
+  //   path: "/commands",
+  //   secure: false,
+  //   value: "123ABC"
+  // }
+})
+```
+
+{% badge success After %} Cookies yielded now have `sameSite` property if specified.
+
+```js
+cy.getCookie('token').then((cookie) => {
+  // cy.getCookie() yields a cookie object
+  // {
+  //   domain: "localhost",
+  //   expiry: 1593551644,
+  //   httpOnly: false,
+  //   name: "token",
+  //   path: "/commands",
+  //   sameSite: "strict",
+  //   secure: false,
+  //   value: "123ABC"
+  // }
+})
+```
+
+## __dirname / __filename
+
+The globals `__dirname` and `__filename` no longer include a leading slash.
+
+{% badge danger Before %} `__dirname` / `__filename`
+
+```js
+// cypress/integration/app_spec.js
+it('include leading slash < 5.0', () => {
+  expect(__dirname).to.equal('/cypress/integration')
+  expect(__filename).to.equal('/cypress/integration/app_spec.js')
+})
+```
+
+{% badge success After %} `__dirname` / `__filename`
+
+```js
+// cypress/integration/app_spec.js
+it('do not include leading slash >= 5.0', () => {
+  expect(__dirname).to.equal('cypress/integration')
+  expect(__filename).to.equal('cypress/integration/app_spec.js')
+})
+```
+
+## Linux dependencies
+
+Running Cypress on Linux now requires the `libgbm` dependency (on Debian-based systems, this is available as `libgbm-dev`). To install all required dependencies on Ubuntu/Debian, you can run the script below:
+
+```shell
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+## TypeScript esModuleInterop
+
+Cypress no longer forces the `esModuleInterop` compiler option for TypeScript to be `true` for spec, support, and plugin files. We recommend setting it in your project's `tsconfig.json` instead if you need to.
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    /* ... other compiler options ... */
+  }
+}
+```
+
+## TypeScript 3.4+ support
+
+Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
+
+## Node.js 10+ support
+
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 8 reached its end of life on Dec 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
+
 # Migrating to Cypress 4.0
 
-This guide details the changes and how to change your code to migrate to Cypress 4.0.
+This guide details the changes and how to change your code to migrate to Cypress 4.0. {% url "See the full changelog for 4.0" changelog#4-0-0 %}.
 
 ## Mocha upgrade
 

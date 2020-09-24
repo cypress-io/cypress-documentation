@@ -93,6 +93,7 @@ Option | Description
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
+`--quiet`, `-q` | If passed, Cypress output will not be printed to `stdout`. Only output from the configured {% url "Mocha reporter" reporters %} will print.
 `--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
@@ -136,6 +137,15 @@ Set {% url 'configuration' configuration %} values. Separate multiple values wit
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses `--config` flag to easily specify {% url viewport configuration#Viewport %} sizes for responsive testing locally and in dedicated CI jobs. Examples:
+- {% fa fa-github %} {% url "npm scripts" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120 %} to run Cypress in mobile viewport.
+- {% fa fa-github %} {% url "Circle CI job configuration" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100 %} for running test suites in mobile viewport.
+
+{% endnote %}
 
 ### `cypress run --config-file <config-file>`
 
@@ -329,6 +339,53 @@ The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
+### Exit code
+
+When Cypress finishes running tests, it exits. If there are no failed tests, the exit code will be 0.
+
+```text
+# All tests pass
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✔  All specs passed!      00:16       17       17        0
+
+# print exit code on Mac or Linux
+$ echo $?
+0
+```
+
+If there are any test failures, then the exit code will match the number of tests that failed.
+
+```text
+# Spec with two failing tests
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✖  1 of 1 failed (100%)   00:22       17       14        2
+
+# print exit code on Mac or Linux
+$ echo $?
+2
+```
+
+If Cypress could not run for some reason (for example if no spec files were found) then the exit code will be 1.
+
+```text
+# No spec files found
+$ cypress run --spec not-found.js
+...
+Can't run because no spec files were found.
+
+We searched for any files matching this glob pattern:
+
+not-found.js
+
+# print exit code on Mac or Linux
+$ echo $?
+1
+```
+
 ## `cypress open`
 
 Opens the Cypress Test Runner.
@@ -512,7 +569,7 @@ Commands for managing the global Cypress cache. The Cypress cache applies to all
 
 ### `cypress cache path`
 
-Print the `path` to the Cypress cache folder.
+Print the `path` to the Cypress cache folder. You can change the path where the Cypress cache is located by following {% url "these instructions" installing-cypress#Binary-cache %}.
 
 ```shell
 cypress cache path
@@ -541,7 +598,6 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 ```shell
 cypress cache clear
 ```
-
 
 # Debugging commands
 
@@ -584,3 +640,7 @@ DEBUG=cypress:launcher cypress run
 ```shell
 DEBUG=cypress:server:project cypress run
 ```
+
+{% history %}
+{% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
+{% endhistory %}
