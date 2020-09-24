@@ -6,6 +6,7 @@
 - `defaultCommandTimeout`
 - `execTimeout`
 - `env`
+- `includeShadowDom`
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
