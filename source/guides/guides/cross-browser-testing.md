@@ -2,7 +2,7 @@
 title: Cross Browser Testing
 ---
 
-Cypress has the capability to run tests across multiple browsers. Currently, Cypress has support for {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron) and {% url "beta support for Firefox browsers and Microsoft Edge" https://circleci.com/orbs/registry/orb/cypress-io/cypress %}.
+Cypress has the capability to run tests across multiple browsers. Currently, Cypress has support for {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron) and {% url "beta support for Firefox browsers and Microsoft Edge" https://www.cypress.io/blog/2020/02/06/introducing-firefox-and-edge-support-in-cypress-4-0/ %}.
 
 {% note warning 'Web Security' %}
 Tests that require the {% url "`chromeWebSecurity` configuration option to be disabled" web-security#Disabling-Web-Security %} may experience issues in non-Chromium based browsers.
