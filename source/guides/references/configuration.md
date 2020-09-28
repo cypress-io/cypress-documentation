@@ -331,7 +331,7 @@ You can turn this option off if the application or site you're testing **does no
 ## firefoxGcInterval
 
 {% note warning %}
-The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since versions of Firefox newer than 80 do not have the bug. It is recommended to upgrade your version of Firefox to avoid this workaround.
+The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since the garbage collection bug was fixed in Firefox 80. It is recommended to upgrade your version of Firefox to avoid this workaround.
 {% endnote %}
 
 Firefox versions 79 and earlier have a {% url "bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing.
