@@ -409,8 +409,8 @@ it('does not work as we expect', () => {
   if (el.length) {              // evaluates immediately as 0
     cy.get('.another-selector')
   } else {
-    // this code will never run
-    // because the 'el' will never exist
+    // this will always run
+    // because the 'el.length' is 0
     // when the code executes
     cy.get('.optional-selector')
   }
