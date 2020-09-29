@@ -161,28 +161,32 @@ cy.route2('/users/**', (req) => {
 ```ts
 {
   /**
-    * Delete the original request
+    * Destroy the request and respond with a network error.
     */
   destroy(): void
 
   /**
-    * Continue the HTTP request, merging the supplied values with the original request.
+    * Control the response to this request.
+    * If a function is passed, the request will be sent outgoing, and the function will be called
+    * with the response from the upstream server.
+    * If a `StaticResponse` is passed, it will be used as the response, and no request will be made
+    * to the upstream server.
     */
   reply(interceptor?: StaticResponse | HttpResponseInterceptor): void
+  /**
+    * Shortcut to reply to the request with a body and optional headers.
+    */
   reply(body: string | object, headers?: { [key: string]: string }): void
+  /**
+    * Shortcut to reply to the request with an HTTP status code and optional body and headers.
+    */
   reply(status: number, body?: string | object, headers?: { [key: string]: string }): void
 
   /**
-    * Continue the HTTP request to the server
-    * If the RouteHandler returns a Promise, it will be implicitly called when the Promise resolves.
-    * Otherwise, it will be implicitly called once the RouteHandler finishes
+    * Respond to this request with a redirect to a new `location`.
+    * @param statusCode HTTP status code to redirect with. Default: 302
     */
-  reply(): void
-
-  /**
-    * Redirect original request to a new location
-    */
-  redirect(location: string, statusCode: number): void
+  redirect(location: string, statusCode?: number): void
 
   /**
     * Set if redirects should be followed when this request is made. By default, requests will
@@ -215,8 +219,6 @@ cy.route2('/users/**', (req) => {
 
   /**
     * Continue the HTTP response to the browser, including any modifications made to `res`.
-    * If the function returns a Promise, it will be implicitly called when the Promise resolves.
-    * Otherwise, it will be implicitly called once the function finishes
     */
   send(): void
 

@@ -306,6 +306,36 @@ describe('has data available from database', { taskTimeout: 90000 }, () => {
 })
 ```
 
+## Argument should be serializable
+
+The argument `arg` sent via `cy.task(name, arg)` should be serializable; it cannot have circular dependencies (issue {% issue 5539 %}). If there are any special fields like `Date`, you are responsible for their conversion (issue {% issue 4980 %}):
+
+```javascript
+// in test
+cy.task('date', new Date())
+  .then((s) => {
+    // the yielded result is a string
+    // we need to convert it to Date object
+    const result = new Date(s)
+  })
+```
+
+```javascript
+// in plugins/index.js
+module.exports = (on, config) => {
+  on('task', {
+    date (s) {
+      // s is a string, so convert it to Date
+      const d = new Date(s)
+
+      // do something with the date
+      // and return it back
+      return d
+    }
+  })
+}
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

@@ -676,3 +676,9 @@ Yes, absolutely. See an example in the {% url next-and-cypress-example https://g
 ## {% fa fa-angle-right %} Can I test Gatsby.js sites using Cypress?
 
 Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.com/docs/end-to-end-testing/ %}. You can also watch the "Cypress + Gatsby webinar" {% url recording https://www.youtube.com/watch?v=Tx6Lg9mwcCE %} and browse the webinar's {% url slides https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development %}.
+
+## {% fa fa-angle-right %} Can I test React applications using Cypress?
+
+Yes, absolutely. A good example of a fully tested React application is our {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} and {% url "TodoMVC Redux App" https://github.com/cypress-io/cypress-example-todomvc-redux %}. You can even use React DevTools while testing your application, read {% url "The easiest way to connect Cypress and React DevTools" https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm %}. If you really need to select React components by their name, props, or state, check out {% url cypress-react-selector https://github.com/abhinaba-ghosh/cypress-react-selector %}.
+
+Finally, you might want to check out the {% url "React Component Testing" component-testing %} adaptor that allows you to test your React components right inside Cypress.
