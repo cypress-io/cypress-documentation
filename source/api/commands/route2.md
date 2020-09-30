@@ -4,264 +4,261 @@ containerClass: experimental
 ---
 
 {% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must manually configure the {% url "`experimentalNetworkStubbing`" experiments %} option to `true`.** See {% issue 687 %} for more details.
+{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalNetworkStubbing`" experiments %} configuration option to `true`.** See {% issue 687 %} for more details.
 {% endnote %}
 
-Use `cy.route2()` to manage the behavior of network requests at the network layer.
+Use `cy.route2()` to manage the behavior of HTTP requests at the network layer.
+
+With `cy.route2()`, you can...
+
+* stub or spy on any type of HTTP request
+* [modify an HTTP request's body, headers, and URL](#Intercepting-a-request) before it is sent to the destination server
+* stub the response to an HTTP request, either dynamically or statically
+* [modify real HTTP responses](#Intercepting-a-response), changing the body, headers, or HTTP status code before they are received by the browser
+* and much much more - `cy.route2()` gives full access to all HTTP requests at all stages
 
 # Comparison to `cy.route()`
 
 Unlike {% url `cy.route()` route %}, `cy.route2()`:
 
-- can mock all types of network requests including Fetch API, page loads, XMLHttpRequests, etc.
-- does not require calling {% url `cy.server()` server %} before use
+* can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, reosurce loads...
+* does not require calling {% url `cy.server()` server %} before use - in fact, `cy.server()` does not influence `cy.route2()` at all
 
-# Syntax
+# Usage
 
-```javascript
-cy.route2(url: RouteMatcher, response?: RouteHandler)
+```ts
+cy.route2(routeMatcher)
+cy.route2(routeMatcher, routeHandler)
 
-// If you need to define a specific HTTP method
-cy.route2(method: string, url: RouteMatcher, response?: RouteHandler)
+// using shorthand instead of `RouteMatcher`
+cy.route2(url, routeHandler?)
+cy.route2(method, url, routeHandler?)
 ```
-
-{% note info %}
-To learn more about types, check out [the repo](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L209-L210) for more information.
-{% endnote %}
 
 ## Arguments
 
-**{% fa fa-angle-right %} url**
+**{% fa fa-angle-right %} url** **_(`string | RegExp`)_**
 
-- **Description**: Defines a filter for incoming HTTP requests to decide which requests will be handled by this route.
+Instead of passing a [`routeMatcher`][routeMatcher] object, you can use shorthand to specify the URL to match. See the documentation for [`routeMatcher`][routeMatcher] to get an idea of how URLs are matched. Usage example:
 
-- **Expects**: `String` | `RegExp` | `Object` | [`StaticResponse`](#StaticResponse)
-
-- **Type**: [`RouteMatcher`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L118)
-
-- **Examples**:
-
-```js
-// String
-cy.route2('/users')
-
-// Regex
-cy.route2(/users\/\d+/)
-
-// Glob
-// Match all paths in a given pattern
-// Cypress uses minimatch to match glob patterns
-// https://github.com/isaacs/minimatch
-// Cypress uses minimatch to match glob patterns
-// https://github.com/isaacs/minimatch
-cy.route2('/users/**')
-
-// The following would match the previous glob:
-// https://localhost:8080/users/johnsmith
-// https://localhost:8080/users/profile/edit
-// https://localhost:8080/users/transaction?month=03&day=20
-
-// RouteMatcher
-// For matching on properties of the request besides the URL.
-cy.route2({
-  path: '/users/**',
-  method: 'POST',
-})
-
-// StaticResponse
-// Allows you to define a response
-// that will be sent back to the browser
-// to fulfill the request
-cy.route2('/users', {
-  body: { message: 'Custom message' },
-  statusCode: 200
-})
+```ts
+cy.route2('http://example.com/widgets')
+cy.route2('http://example.com/widgets', { fixture: 'widgets.json' })
 ```
 
-The following contains a complete list of available properties you can match the request against:
+**{% fa fa-angle-right %} method** **_(`string`)_**
 
-{% note info %}
-When passing a `String` to properties such as (`auth.*`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
+Instead of passing a [`routeMatcher`][routeMatcher] object, you can use shorthand to specify the HTTP method to match on. Usage example:
 
-This means you can take advantage of `*` and `**` glob support. This makes it *much* easier to route against dynamic segments without having to build up a complex `RegExp`.
-{% endnote %}
+```ts
+cy.route2('POST', 'http://example.com/widgets', { statusCode: 200, body: 'it worked!' })
+```
 
-Option | Default | Type | Description
---- | --- | --- | ---
-`auth` | `null` | *Object* | Pass an object with `username` and `password` properties to match requests using HTTP basic auth.
-`headers` | `null` | *Object* | Pass an object with header names as keys to match against request headers
-`hostname` | `null` | *String, RegExp, Glob* | Match against request hostname (HTTP `Host` header)
-`method` | `'ALL'` | *String* | Match against HTTP method (`GET`, `POST`, `PUT`, etc.)
-`path` | `null` | *String, RegExp, Glob* | Match on requested path, including query params
-`pathname` | `null` | *String, RegExp, Glob* | Match on requested path, without query params
-`port` | `null` | *Number* | Match on requested port number
-`query` | `null` | *Object* | Pass an object to match against specified query parameters
-`url` | `null` | *String, RegExp, Glob* | Match against full request URL
+<a name="routeMatcher"></a>**{% fa fa-angle-right %} routeMatcher** **_(`RouteMatcher`)_**
 
-**{% fa fa-angle-right %} routeHandler**
+`routeMatcher` is an object that defines how to decide which incoming HTTP requests will be handled by this route.
 
-- **Description**: Define how this route should be handled, either by statically defining a response, or supplying a function for dynamic interception.
+All properties are optional. All properties that are set must match for the route to handle a request. The available `routeMatcher` properties are listed below:
 
-- **Expects**: `String` | `Object` | `Array` | `StaticResponse` | `Function`
-
-- **Type**: [`RouteHandler`](https://github.com/cypress-io/cypress/blob/0d60f7cd3ede4c5a79e151b646fa2377a7ddb16c/packages/net-stubbing/lib/external-types.ts#L171)
-
-- **Example**:
-
-```js
-// StaticResponse
-cy.route2('/users/**', {
-  statusCode: 200,
-  body: {
-    profile: {
-      firstName: 'Tony',
-      lastName: 'Jarvis'
-    }
+```ts
+{
+  /**
+   * Match against the username and password used in HTTP Basic authentication.
+   */
+  auth?: { username: string | RegExp, password: string | RegExp }
+  /**
+   * Match against HTTP headers on the request.
+   */
+  headers?: {
+    [name: string]: string | RegExp
   }
-})
+  /**
+   * Match against the requested HTTP hostname.
+   */
+  hostname?: string | RegExp
+  /**
+   * If `true`, only HTTPS requests will be matched.
+   * If `false`, only HTTP requests will be matched.
+   */
+  https?: boolean
+  /**
+   * Match against the request's HTTP method.
+   * @default 'GET'
+   */
+  method?: string | RegExp
+  /**
+   * Match on request path after the hostname, including query params.
+   */
+  path?: string | RegExp
+  /**
+   * Matches like `path`, but without query params.
+   */
+  pathname?: string | RegExp
+  /**
+   * Match based on requested port, or pass an array of ports to match against any in that array.
+   */
+  port?: number | number[]
+  /**
+   * Match on parsed querystring parameters.
+   */
+  query?: {
+    [key: string]: string | RegExp
+  }
+  /**
+   * Match against the full request URL.
+   * If a string is passed, it will be used as a substring match, not an equality match.
+   */
+  url?: string | RegExp
+}
+```
 
-// Function
-// You can supply a callback function which receives the request as the first argument
-cy.route2('/users/**', (req) => {
-  req.headers.accept = 'application/json'
+If a `string` is passed in any property, it will be glob-matched against the request using [`minimatch`][minimatch].
 
-  // To modify a JSON response,
-  // it will be provided as a string
-  // in req.body and must be
-  // parsed and stringified properly.
-  const requestBody = JSON.parse(req.body)
+`routeMatcher` usage examples:
 
-  req.body = JSON.stringify({
-    ...requestBody,
-    note: 'Custom note'
-  })
+```ts
+cy.route2({
+  pathname: '/search',
+  query: {
+    q: 'some terms'
+  }
+}).as('searchForTerms')
+// this `cy.wait` will only resolve once a request is made to `/search` including
+// the query paramater `q=some+terms`
+cy.wait('@searchForTerms')
+
+cy.route2({
+  // this RegExp matches any URL beginning with `http://api.example.com/widgets`
+  url: /^http:\/\/api\.example\.com\/widgets/
+  headers: {
+    'x-requested-with': 'fooClient'
+  }
+}, (req) => {
+  // only requests to URLs starting with `http://api.example.com/widgets` will be received
+  // here, and only if they have the header `x-requested-with: fooClient`
 })
 ```
 
-**{% fa fa-angle-right %} method**
+**{% fa fa-angle-right %} routeHandler** **_(`string | object | Function | StaticResponse`)_**
 
-- **Description**: Matches the route to a specific HTTP method (e.g., `GET`, `POST`, `PUT`, etc).
+The `routeHandler` defines what will happen with a request if the [`routeMatcher`][routeMatcher] matches. It can be used to [statically define a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
 
-- **Expects**: `String`
+If a string is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a `StaticResponse` object with `{ body: "foo" }`.
 
-- **Default Value**: Matches any HTTP method
+If a `StaticResponse` object is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object) for an example of how this is used.
+
+If an object with no `StaticResponse` keys is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
+
+If a function callback is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepting a request"](#Intercepting-a-request) and ["Intercepting a response"](#Intercepting-a-response) for examples of dynamic interception.
 
 ## Yields {% helper_icon yields %}
 
-{% yields null_alias cy.route2 %}
+* `cy.route2()` yields `null`.
+* `cy.route2()` can be aliased, but otherwise cannot be chained further.
+* Waiting on an aliased `cy.route2()` route will yield an object that contains information about the matching request/response cycle. See ["Using the yielded object"](#Using-the-yielded-object) for examples of how to use this object.
 
-## Relevant Types
+# Examples
 
-### {% fa fa-angle-right %} IncomingHttpRequest
+## Waiting on a request
 
-- **Description**: Allows user to intercept the HTTP request and track or modify the original request
+{% url `cy.wait()` wait %} can be used on `cy.route2()` aliases to wait for the request/response cycle to complete.
 
-- **Interface**:
+### With URL
 
-```ts
-{
-  /**
-    * Destroy the request and respond with a network error.
-    */
-  destroy(): void
-
-  /**
-    * Control the response to this request.
-    * If a function is passed, the request will be sent outgoing, and the function will be called
-    * with the response from the upstream server.
-    * If a `StaticResponse` is passed, it will be used as the response, and no request will be made
-    * to the upstream server.
-    */
-  reply(interceptor?: StaticResponse | HttpResponseInterceptor): void
-  /**
-    * Shortcut to reply to the request with a body and optional headers.
-    */
-  reply(body: string | object, headers?: { [key: string]: string }): void
-  /**
-    * Shortcut to reply to the request with an HTTP status code and optional body and headers.
-    */
-  reply(status: number, body?: string | object, headers?: { [key: string]: string }): void
-
-  /**
-    * Respond to this request with a redirect to a new `location`.
-    * @param statusCode HTTP status code to redirect with. Default: 302
-    */
-  redirect(location: string, statusCode?: number): void
-
-  /**
-    * Set if redirects should be followed when this request is made. By default, requests will
-    * not follow redirects before yielding the response (the 3xx redirect is yielded)
-    */
-  followRedirect?: boolean
-
-  /**
-    * Define a timeout for the upstream response in milliseconds. By default, this is `responseTimeout`
-    * from Cypress config.
-    */
-  responseTimeout?: number
-}
+```js
+cy.route2('http://example.com/foo').as('getFoo')
+// once a request is completed to http://example.com/foo, this `cy.wait` will complete
+cy.wait('@getFoo')
 ```
 
-### {% fa fa-angle-right %} IncomingHttpResponse
+### With RouteMatcher
 
-- **Description**: Allows user to intercept the HTTP response and track / modify what is being sent
+```js
+cy.route2({
+  url: 'http://example.com/search',
+  query: { q: 'expected terms' },
+}).as('login')
 
-- **Interface**:
-
-```ts
-{
-  /**
-    * Continue the HTTP response, merging the supplied values with the real response.
-    */
-  send(status: number, body?: string | number | object, headers?: { [key: string]: string }): void
-  send(body: string | object, headers?: { [key: string]: string }): void
-  send(staticResponse: StaticResponse): void
-
-  /**
-    * Continue the HTTP response to the browser, including any modifications made to `res`.
-    */
-  send(): void
-
-  /**
-    * Wait for `delayMs` milliseconds before sending the response to the client.
-    */
-  delay: (delayMs: number) => IncomingHttpResponse
-
-  /**
-    * Serve the response at `throttleKbps` kilobytes per second.
-    */
-  throttle: (throttleKbps: number) => IncomingHttpResponse
-}
+// once a POST request is completed to http://example.com/login with a querystring containing
+// `q=expected+terms`, this `cy.wait` will complete
+cy.wait('@login')
 ```
 
-### {% fa fa-angle-right %} StaticResponse
+### Using the yielded object
 
-- **Description**: Describes a response that will be sent back to the browser to fulfill the request.
+Using {% url `cy.wait()` wait %} on a `cy.route2()` route alias yields an object which represents the request/response cycle:
 
-- **Expects**: `Fixture` | `Body`
+```js
+cy.wait('@someRoute').then((request) => {
+  // `request` is an object with properties `id`, `request` and `response`
+})
+```
 
-- **Interface**:
+You can chain {% url `cy.its()` its %} and {% url `cy.should()` should %} to assert against request/response cycles:
+
+```js
+// assert that a request to this route was made with a body that included `foo`
+cy.wait('@someRoute').its('request.body').should('include', 'foo')
+
+// assert that a request to this route received a response with HTTP status 500
+cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
+
+// assert that a request to this route received a response with a body that included `foo`
+cy.wait('@someRoute').its('response.body').should('include', 'foo')
+```
+
+## Stubbing a response
+
+### With a string
+
+```js
+// requests to `/foo` will be fulfilled with a body of "success"
+cy.route2('/foo', 'success')
+```
+
+### With a fixture
+
+```js
+// requests to `/foo.json` will be fulfilled with the contents of the "foo.json" fixture
+cy.route2('/foo.json', { fixture: 'foo.json' })
+```
+
+### With a `StaticResponse` object
+
+A `StaticResponse` object represents a response to an HTTP request, and can be used to stub routes:
+
+```js
+const staticResponse = { /* some StaticResponse properties here... */ }
+
+cy.route2('/foo', staticResponse)
+```
+
+Here are the available properties on `StaticResponse`:
 
 ```ts
 {
   /**
    * If set, serve a fixture as the response body.
    */
-  fixture?: Fixture
+  fixture?: string
   /**
    * If set, serve a static string/JSON object as the response body.
    */
-  body?: Body
+  body?: string | object | object[]
   /**
+   * If set, these HTTP headers will accompany the response.
    * @default {}
    */
   headers?: { [key: string]: string }
   /**
+   * The HTTP status code to send.
    * @default 200
    */
   statusCode?: number
   /**
-   * If `forceNetworkError` is truthy, Cypress will destroy the connection to the browser and send no response. Useful for simulating a server that is not reachable. Must not be set in combination with other options.
+   * If `forceNetworkError` is truthy, Cypress will destroy the connection to the browser
+   * and send no response. Useful for simulating a server that is not reachable. Must not
+   * be set in combination with other options.
    */
   forceNetworkError?: boolean
   /**
@@ -275,268 +272,206 @@ cy.route2('/users/**', (req) => {
 }
 ```
 
-# Examples
+## Intercepting a request
 
-## Without Stubbing
-
-### Wait on `GET` request matching `url`
-
-```javascript
-cy.route2('**/users').as('getUsers')
-cy.visit('/users')
-cy.wait('@getUsers')
-```
-
-### Wait on matching `method` and `url`
-
-```javascript
-cy.route2('POST', '**/users').as('postUser')
-cy.visit('/users')
-cy.get('#first-name').type('Julius{enter}')
-cy.wait('@postUser')
-```
-
-### Match route against any UserId
-
-```javascript
-cy.route2('**/users/*/comments')
-
-// https://localhost:7777/users/123/comments     <-- matches
-// https://localhost:7777/users/123/comments/465 <-- does not match
-```
-
-### Use glob to match all segments
-
-```javascript
-cy.route2('**/posts/**')
-
-// https://localhost:7777/posts/1            <-- matches
-// https://localhost:7777/posts/foo/bar/baz  <-- matches
-// https://localhost:7777/posts/quuz?a=b&1=2 <-- matches
-```
-
-### Modify request
-
-Before a request gets sent to the actual endpoint, we can modify the request. The supplied `RouteHandler` callback receives the request object as a parameter.
-
-You can also (optionally) add a simulated {% urlHash 'delay' Simulate-delay %} or {% urlHash 'throttle' Simulate-throttle %} on the request to be sent out.
-
-```javascript
-cy.route2('/users', (req) => {
-  // modify the headers or body
-  req.headers.accept = 'application/json'
-
-  // To modify a JSON response,
-  // it will be provided as a string
-  // in req.body and must be
-  // parsed and stringified properly.
-  const requestBody = JSON.parse(req.body)
-
-  req.body = JSON.stringify({
-    ...requestBody,
-    note: 'Custom note'
-  })
-})
-```
-
-### Modify response
-
-After a request gets passed through, we can modify the response from the server. This is done by passing the `req.reply()` method, which is of type [`IncomingHttpRequest`](#IncomingHttpRequest), a callback function which receives the original response (i.e., `res`) as the first argument, which is of the type [`IncomingHttpResponse`](#IncomingHttpResponse).
+### Asserting on a request
 
 ```js
-cy.route2('/users', (req) => {
-  // passing a function to req.reply causes the request to pass through
-  // and allows the response from the origin server to be modified
-  req.reply((res) => {
-    res.status = 200
-    res.headers['x-new-headers'] = 'from-server'
+cy.route2('POST', '/foo', (req) => {
+  expect(req.body).to.include('someExpectedString')
+})
+```
 
-    // dynamically alter body
-    res.body = res.body.replace('window.top', 'window.self')
-    // now, the response will continue to the browser
-    // since res.send() will be be implicitly called once the function is finished
+### Modifying an outgoing request
+
+You can use the route callback to modify the request before it is sent.
+
+```js
+cy.route2('POST', '/login', (req) => {
+  // set the request body to something different before it is sent to the destination
+  req.body = 'username=foo&password=bar
+})
+```
+
+### Dynamically stubbing a response
+
+You can use the `req.reply()` function to dynamically control the response to a request.
+
+```js
+cy.route2('/foo', (req) => {
+  // functions on `req` can be used to dynamically respond to a request here
+
+  // send the request to the destination server
+  req.reply()
+
+  // respond to the request with a JSON object
+  req.reply({ foo: 'bar' })
+
+  // send the request to the destination server, and intercept the response
+  req.reply((res) => {
+    // `res` represents the real destination's response - see "Intercepting a response"
+    // for more details + examples of this
   })
 })
 ```
 
-## With Stubbing
+The available functions on `req` are:
 
-If you pass a `routeHandler` as the second argument to `cy.route2()`, Cypress will allow you to stub the response to the request.
-
-### `url` as a String
-
-When passing a `String` to properties such as (`auth.username`, `headers.*`, `hostname`, `path`, `pathname`, `url`, etc.), Cypress uses {% url 'minimatch' https://github.com/isaacs/minimatch %} for matching.
-
-```javascript
-cy.route2('https://localhost:7777/users/customer?email=john@doe.com', [
-  {
-    id: 1,
-    name: 'john'
-  }
-])
+```ts
+{
+  /**
+   * Destroy the request and respond with a network error.
+   */
+  destroy(): void
+  /**
+   * Control the response to this request.
+   * If a function is passed, the request will be sent outgoing, and the function will be called
+   * with the response from the upstream server.
+   * If a `StaticResponse` is passed, it will be used as the response, and no request will be made
+   * to the upstream server.
+   */
+  reply(interceptor?: StaticResponse | HttpResponseInterceptor): void
+  /**
+   * Shortcut to reply to the request with a body and optional headers.
+   */
+  reply(body: string | object, headers?: { [key: string]: string }): void
+  /**
+   * Shortcut to reply to the request with an HTTP status code and optional body and headers.
+   */
+  reply(status: number, body?: string | object, headers?: { [key: string]: string }): void
+  /**
+   * Respond to this request with a redirect to a new `location`.
+   * @param statusCode HTTP status code to redirect with. Default: 302
+   */
+  redirect(location: string, statusCode?: number): void
+}
 ```
 
-### `url` as a RegExp
+### Returning a Promise
 
-When passing a RegExp as the `url`, the url will be tested against the regular expression and will apply if it passes.
+If a Promise is returned from the route callback, it will be awaited before continuing with the request.
 
-```javascript
-cy.route2(/users\/\d+/, { id: 1, name: 'Phoebe' })
-```
-
-```javascript
-// Application Code
-$.get('https://localhost:7777/users/1337', (data) => {
-  console.log(data) // => {id: 1, name: "Phoebe"}
-})
-```
-
-### Response functions
-
-You can also use a function as a response which enables you to add logic and modify properties of the response. The function exposes a `req` object which contains the request as well as a way to `send` with a response.
-
-```javascript
-cy.route2('/login', 'Success')
-```
-
-```javascript
-// reply with body and headers
-cy.route2('/login', {
-  body: 'Success',
-  headers: { 'x-new-headers': 'from-server' }
-})
-```
-
-```javascript
-// reply with an object containing more response details
-cy.route2('/login', {
-  statusCode: 200,
-  body: {
-    some: 'response'
-  },
-  headers: {
-    'x-new-headers': 'from-server'
-  },
-  // If `forceNetworkError` is truthy, Cypress will destroy the connection
-  // to the browser and send no response. Useful for simulating a
-  // server that is not reachable. Must not be set in combination
-  // with other options.
-  forceNetworkError: false
-})
-```
-
-```javascript
-// continue the HTTP response to the browser
-// including any modifications made to the response
-cy.route2('/login')
-```
-
-### Matching requests and routes
-
-When a request matches any of the following route properties:
-
-- `method`
-- `url`
-- `auth`
-- `path`
-- `query`
-- `port`
-- and so forth
-
-The `RouteMatcher` will respond based on the configuration of that route.
-
-{% note bolt %}
-By default, all HTTP methods will be used to match routes. If you want to stub a route with a specific HTTP method such as `POST` then you {% urlHash 'must be explicit about the method' Arguments %}.
-{% endnote %}
-
-### Specify the method
-
-The below example matches all `DELETE` requests to "/users" and stubs a response with an empty JSON object.
-
-```javascript
-cy.route2('DELETE', '**/users/*', {})
-```
-
-### Making multiple requests to the same route
-
-You can test a route multiple times with unique response objects by using {% url 'aliases' variables-and-aliases#Aliases %} and {% url '`cy.wait()`' wait %}. Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
-
-```javascript
-// Define two HTTP methods on the same route
-cy.route2('GET', '/api/blog').as('getBlogPost')
-cy.route2('POST', '/api/blog').as('postBlogPost')
-
-cy.get('#search').type('Network Requests with Cypress')
-cy.get('#submit').click()
-
-// Wait for the first response to finish
-cy.wait('@getBlogPost')
-// Wait for the second response to finish
-cy.wait('@postBlogPost')
-```
-
-### Fixtures
-
-Instead of writing a response inline you can automatically connect a response with a {% url `cy.fixture()` fixture %}.
-
-```javascript
-cy.route2('**/posts/*', { fixture: 'logo.png' }).as('getLogo')
-cy.route2('**/users', { fixture: 'users/all.json' }).as('getUsers')
-cy.route2('**/admin', { fixture: 'users/admin.json' }).as('getAdmin')
-```
-
-You may want to define the `cy.route2()` after receiving the fixture and working with its data.
-
-```javascript
-cy.fixture('user').then((user) => {
-  user.firstName = 'Jane'
-  // work with the users array here
-
-  cy.route2('GET', '**/user/123', user)
-})
-
-cy.visit('/users')
-cy.get('.user').should('include', 'Jane')
-```
-
-## Options
-
-### Server redirect
-
-You can simulate a server redirect through the `redirect` method exposed by the handler function.
-
-```javascript
-cy.route2('/login', (req) => {
-  req.redirect('/register')
-})
-```
-
-### Simulate delay
-
-You can specify a delay (in ms) before the response is sent to the client.
-
-```javascript
-cy.route2('/users', (req) => {
-  req.reply((res) => {
-    res.delay(1000).send('Delayed by 1000ms')
+```js
+cy.route2('POST', '/login', (req) => {
+  // for example, you could asynchronously fetch test data...
+  return getLoginCredentials()
+  .then((credentials) => {
+    // ...and then, use it to supplement the outgoing request
+    req.headers['authorization'] = credentials
   })
 })
 ```
 
-### Simulate throttle
+### Passing a request to the next route handler
 
-You can specify the speed at which a response is served at (in kilobytes per second).
+If `req.reply()` is not explicitly called inside of a route callback, requests will pass to the next route callback until none are left.
 
-```javascript
-cy.route2('/users', (req) => {
+```js
+// for example, you could have a top-level route2 that sets an auth token on all requests
+cy.route2('http://api.foo.com/', (req) => {
+  req.headers['authorization'] = `token ${token}`
+})
+
+// and then another route2 that more narrowly asserts on certain requests
+cy.route2('POST', 'http://api.foo.com/widgets', (req) => {
+  expect(req.body).to.include('someExpectedString')
+})
+
+// a POST request to http://api.foo.com/widgets would hit both of those callbacks in order
+// then, it would be sent out with the modified request headers to the real destination
+```
+
+## Intercepting a response
+
+Inside of a callback passed to `req.reply()`, you can access the destination server's real response.
+
+```js
+cy.route2('/foo', (req) => {
+  // req.reply() with a callback will send the request to the destination server
   req.reply((res) => {
-    // response from upstream will be throttled to 1024kbps
-    res.throttle(1024).send()
+    // here, `res` represents the real destination response. you can manipulate `res` before
+    // it is sent to the browser
   })
 })
+```
+
+### Asserting on a response
+
+```js
+cy.route2('/foo', (req) => {
+  req.reply((res) => {
+    expect(res.body).to.include('someDesiredString')
+  })
+})
+```
+
+### Returning a Promise
+
+If a Promise is returned from the route callback, it will be awaited before sending the response to the browser.
+
+```js
+cy.route2('/foo', (req) => {
+  req.reply((res) => {
+    // the response will not be sent to the browser until `waitForSomething()` resolves
+    return waitForSomething()
+  })
+})
+```
+
+### Modifying an incoming response
+
+You can use the `res.send()` function to dynamically control the incoming response. Also, any modifications to `res` will be persisted when the response is sent to the browser.
+
+`res.send()` is implicitly called after the `req.reply` callback finishes if it has not already been called.
+
+```js
+cy.route2('/foo', (req) => {
+  req.reply((res) => {
+    // replaces `res.body` with "new body here" and sends the response to the browser
+    res.send('new body here')
+
+    // sends a fixture body instead of the existing `res.body`
+    res.send({ fixture: 'foo.json' })
+
+    // delays the response by 1000ms
+    res.delay(1000)
+
+    // throttles the response to 64kbps
+    res.throttle(64)
+  })
+})
+```
+
+The available functions on `res` are:
+
+```ts
+{
+  /**
+    * Continue the HTTP response, merging the supplied values with the real response.
+    */
+  send(status: number, body?: string | number | object, headers?: { [key: string]: string }): void
+  send(body: string | object, headers?: { [key: string]: string }): void
+  send(staticResponse: StaticResponse): void
+  /**
+    * Continue the HTTP response to the browser, including any modifications made to `res`.
+    */
+  send(): void
+  /**
+    * Wait for `delayMs` milliseconds before sending the response to the client.
+    */
+  delay: (delayMs: number) => IncomingHttpResponse
+  /**
+    * Serve the response at `throttleKbps` kilobytes per second.
+    */
+  throttle: (throttleKbps: number) => IncomingHttpResponse
+}
 ```
 
 # See also
 
-- {% url "cy.route2 recipe" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
-- {% url "open issues for experimentalNetworkStubbing" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for experimentalNetworkStubbing" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
+* [cy.route2 example recipes with real-world examples](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
+* [open issues for experimentalNetworkStubbing](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing) and [closed issues for experimentalNetworkStubbing](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing)
+
+
+[routeMatcher]: #routeMatcher
+[minimatch]: https://github.com/isaacs/minimatch
