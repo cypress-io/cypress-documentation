@@ -171,7 +171,7 @@ cy.route2('http://example.com/foo').as('getFoo')
 cy.wait('@getFoo')
 ```
 
-### With RouteMatcher
+### With [`RouteMatcher`][routeMatcher]
 
 ```js
 cy.route2({
