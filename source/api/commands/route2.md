@@ -52,8 +52,6 @@ cy.route2(/users\/\d+/)
 // Match all paths in a given pattern
 // Cypress uses minimatch to match glob patterns
 // https://github.com/isaacs/minimatch
-// Cypress uses minimatch to match glob patterns
-// https://github.com/isaacs/minimatch
 cy.route2('/users/**')
 
 // The following would match the previous glob:
