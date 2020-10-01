@@ -2,10 +2,10 @@
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `browser`
+- `browser` **note:** this is the only option that allows to skip a test or a suite of tests depending on the current browser
 - `defaultCommandTimeout`
 - `execTimeout`
-- `env`
+- `env` **note:** Cypress merges the object of environment variables
 - `includeShadowDom`
 - `requestTimeout`
 - `responseTimeout`
