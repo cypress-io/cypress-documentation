@@ -162,11 +162,14 @@ button, select, input, input[type="submit"]::-moz-focus-inner, input[type="butto
 
   .note.warning {
     border: 5px solid #f0ad4e;
+  }
+
+  code, .dashboard-ad, .note.warning {
     background-color: white;
   }
 
-  code {
-    background-color: white;
+  .dashboard-ad {
+    border: 1px solid #ddd;
   }
 
   pre code {
