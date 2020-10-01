@@ -4,7 +4,7 @@ containerClass: experimental
 ---
 
 {% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalNetworkStubbing`" experiments %} configuration option to `true`.** See {% issue 687 %} for more details.
+{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalNetworkStubbing`" experiments %} configuration option to `true`.**
 {% endnote %}
 
 Use `cy.route2()` to manage the behavior of HTTP requests at the network layer.
