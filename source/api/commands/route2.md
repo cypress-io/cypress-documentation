@@ -472,4 +472,3 @@ The available functions on `res` are:
 
 * {% url "`cy.route2()` example recipes with real-world examples" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
 * {% url "open issues for `experimentalNetworkStubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `experimentalNetworkStubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
-
