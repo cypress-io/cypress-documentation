@@ -605,7 +605,7 @@ This can happen for a number of reasons, including:
 - The browser is testing a memory-heavy application
 - Cypress is running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
 - There are problems with the GPU / GPU drivers
-- There is a bug in the browser involving memory management<!-- TODO: link to Firefox bug here? https://github.com/cypress-io/cypress/issues/6187 -->
+- There is a bug in the browser involving memory management
 - There is a memory leak in Cypress
 
 If the browser running Cypress tests crashes, currently, Cypress will abort any remaining tests and print out this error.
