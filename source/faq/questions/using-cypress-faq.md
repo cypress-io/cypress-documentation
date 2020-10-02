@@ -26,6 +26,12 @@ cy.get('div').should(($div) => {
 })
 ```
 
+If you need to convert text to a number before checking if it is greater than 10:
+
+```javascript
+cy.get('div').invoke('text').then(parseFloat).should('be.gt', 10)
+```
+
 If you need to hold a reference or compare values of text:
 
 ```javascript
@@ -275,7 +281,7 @@ Yes. {% url "You can override this with `userAgent` in your configuration file (
 
 ## {% fa fa-angle-right %} Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
-Yes. {% url "You can set this with `blacklistHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
+Yes. {% url "You can set this with `blockHosts` in your configuration file (`cypress.json` by default)." configuration#Browser %}
 
 Also, check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
@@ -313,13 +319,32 @@ If you're looking to abstract behavior or roll up a series of actions you can cr
 
 For those wanting to use page objects, we've highlighted the {% url 'best practices ' custom-commands#Best-Practices %} for replicating the page object pattern.
 
+## {% fa fa-angle-right %} Why do my Cypress tests pass locally but not in CI?
+
+There are many reasons why tests may fail in CI but pass locally. Some of these include:
+
+- There is a problem isolated to the Electron browser (`cypress run` by default runs in the Electron browser)
+- A test failure in CI could be highlighting a bug in your CI build process
+- Variability in timing when running your application in CI (For example, network requests that resolve within the timeout locally may take longer in CI)
+- Machine differences in CI versus your local machine -- CPU resources, environment variables, etc.
+
+To troubleshoot why tests are failing in CI but passing locally, you can try these strategies:
+
+- Test locally with Electron to identify if the issue is specific to the browser.
+- You can also identify browser-specific issues by running in a different browser in CI with the `--browser` flag.
+- Review your CI build process to ensure nothing is changing with your application that would result in failing tests.
+- Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
+- Ensure video recording and/or screenshots are enabled for the CI run and compare the recording to the Command Log when running the test locally.
+
+## {% fa fa-angle-right %} Why are my video recordings freezing or dropping frames when running in CI?
+
+Videos recorded on Continuous Integration may have frozen or dropped frames if there are not enough resources available when running the tests in your CI container. Like with any application, there needs to be the required CPU to run Cypress and record video. You can run your tests with {% url 'memory and CPU logs enabled' troubleshooting#Log-memory-and-CPU-usage %} to identify and evaluate the resource utilization within your CI.
+
+If you are experiencing this issue, we recommend switching to a more powerful CI container or provider.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% url 'here' parallelization %}.
-
-## {% fa fa-angle-right %} Is Cypress compatible with Sauce Labs and BrowserStack?
-
-Our goal is to offer full integration with Sauce Labs and BrowserStack in the future; however, complete integration is not yet available.
 
 ## {% fa fa-angle-right %} Can I run a single test or group of tests?
 
@@ -349,7 +374,7 @@ A *Record Key* is a GUID that's generated automatically by Cypress once you've {
 
 You can find your project's record key inside of the *Settings* tab in the Test Runner.
 
-{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg "Record Key in Configuration Tab" %}
 
 For further detail see the {% url Identification projects#Identification %} section of the {% url "Dashboard Service" dashboard-introduction%} docs.
 
@@ -389,13 +414,13 @@ We have an {% issue 685 'open proposal' %} to expand the APIs to support "switch
 
 By default, Cypress automatically {% url "clears all cookies **before** each test" clearcookies %} to prevent state from building up.
 
-You can whitelist specific cookies to be preserved across tests using the {% url "Cypress.Cookies api" cookies %}:
+You can preserve specific cookies across tests using the {% url "Cypress.Cookies api" cookies %}:
 
 ```javascript
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  whitelist: 'session_id'
+  preserve: 'session_id'
 })
 ```
 
@@ -459,7 +484,7 @@ describe('Logo', () => {
 
 The code you write in Cypress is executed in the browser, so you can import or require JS modules, *but* only those that work in a browser.
 
-You can `require` or `import` them as you're accustomed to. We preprocess your spec files with `babel` and `browserify`.
+You can `require` or `import` them as you're accustomed to. We preprocess your spec files with webpack and Babel.
 
 We recommend utilizing one of the following to execute code outside of the browser. Furthermore, you can use your own Node version during code excecution by setting the {% url "`nodeVersion`" configuration#Node-version %} in your configuration.
 
@@ -520,7 +545,7 @@ Not at the moment. {% issue 587 "There is an open issue for this." %}
 
 Yes. You can customize how specs are processed by using one of our {% url 'preprocessor plugins' plugins %} or by {% url 'writing your own custom preprocessor' preprocessors-api %}.
 
-Typically you'd reuse your existing `babel`, `webpack`, `typescript` configurations.
+Typically you'd reuse your existing Babel and webpack configurations.
 
 ## {% fa fa-angle-right %} How does one determine what the latest version of Cypress is?
 
@@ -600,3 +625,60 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
 
 Also, check out our {% url 'Stubbing `console` Receipe' recipes#Stubbing-and-spying %}.
+
+## {% fa fa-angle-right %} How do I use special characters with `cy.get()`?
+
+Special characters like `/`, `.` are valid characters for ids {% url "according to the CSS spec" https://www.w3.org/TR/html50/dom.html#the-id-attribute %}.
+
+To test elements with those characters in ids, they need to be escaped with {% url "`CSS.escape`" https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape %} or {% url "`Cypress.$.escapeSelector`" https://api.jquery.com/jQuery.escapeSelector/ %}.
+
+```html
+<!doctype html>
+<html lang="en">
+<body>
+  <div id="Configuration/Setup/TextField.id">Hello World</div>
+</body>
+</html>
+```
+
+```js
+it('test', () => {
+  cy.visit('index.html')
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
+
+  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`)
+    .contains('Hello World')
+})
+```
+
+Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. {% url "Learn more about why" $#Notes %}
+
+## {% fa fa-angle-right %} Can I use Cypress to test charts and graphs?
+
+Yes. You can leverage visual testing tools to test that charts and graphs are rendering as expected. For more information, check out the {% url "Visual Testing guide" visual-testing %} and the following blog posts.
+
+- see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
+- see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
+
+## {% fa fa-angle-right %} Can I use Cucumber to write tests?
+
+Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then coverts the scenarios and step definitions into "regular" JavaScript Cypress tests.
+
+- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url Plugins plugins %} page for additional helper plugins
+- read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
+- take a look at {% url "briebug/bba-cypress-quickstart" https://github.com/briebug/bba-cypress-quickstart %} example application
+
+## {% fa fa-angle-right %} Can I test Next.js sites using Cypress?
+
+Yes, absolutely. See an example in the {% url next-and-cypress-example https://github.com/bahmutov/next-and-cypress-example %} repository where we show how to instrument the application's source code to get {% url "code coverage" code-coverage %} from tests. You can learn how to set good Cypress tests for a Next.js application in this {% url tutorial https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress %}.
+
+## {% fa fa-angle-right %} Can I test Gatsby.js sites using Cypress?
+
+Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.com/docs/end-to-end-testing/ %}. You can also watch the "Cypress + Gatsby webinar" {% url recording https://www.youtube.com/watch?v=Tx6Lg9mwcCE %} and browse the webinar's {% url slides https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development %}.
+
+## {% fa fa-angle-right %} Can I test React applications using Cypress?
+
+Yes, absolutely. A good example of a fully tested React application is our {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} and {% url "TodoMVC Redux App" https://github.com/cypress-io/cypress-example-todomvc-redux %}. You can even use React DevTools while testing your application, read {% url "The easiest way to connect Cypress and React DevTools" https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm %}. If you really need to select React components by their name, props, or state, check out {% url cypress-react-selector https://github.com/abhinaba-ghosh/cypress-react-selector %}.
+
+Finally, you might want to check out the {% url "React Component Testing" component-testing %} adaptor that allows you to test your React components right inside Cypress.

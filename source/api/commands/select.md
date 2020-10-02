@@ -124,11 +124,53 @@ cy.get('select')
   .should('deep.equal', ['456', '457'])
 ```
 
+## Force select
+
+### Force select a hidden `<select>`
+
+```html
+<select style="display: none;">
+  <optgroup label="Fruits">
+    <option value="banana">Banana</option>
+    <option value="apple">Apple</option>
+  <optgroup>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select('banana', { force: true })
+  .invoke('val')
+  .should('eq', 'banana')
+```
+
+### Force select a disabled `<select>`
+
+Passing `{ force: true }` to `.select()` will override the actionability checks for selecting a disabled `<select>`. However, it will not override  the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
+
+```html
+<select disabled>
+  <optgroup label="Veggies">
+    <option value="okra">Okra</option>
+    <option value="zucchini">Zucchini</option>
+  <optgroup>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select('okra', { force: true })
+  .invoke('val')
+  .should('eq', 'okra')
+```
+
 # Notes
 
 ## Actionability
 
-`.select()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
+`.select()` is an action command that follows the rules {% url 'defined here' interacting-with-elements %}.
+
+However, passing `{ force: true }` to `.select()` will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
 
 # Rules
 
@@ -162,4 +204,5 @@ When clicking on `select` within the command log, the console outputs the follow
 
 # See also
 
+- Read {% url 'Working with Select elements and Select2 widgets in Cypress' https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/ %}
 - {% url `.click()` click %}

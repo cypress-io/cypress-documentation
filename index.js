@@ -5,7 +5,7 @@ process.on('unhandledRejection', function (reason, p) {
   process.exit(-1)
 })
 
-const { copyUntranslatedDocs } = require('./copy-english-docs')
+// const { copyUntranslatedDocs } = require('./copy-english-docs')
 const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
@@ -151,5 +151,4 @@ function initHexo () {
   })
 }
 
-copyUntranslatedDocs()
-.then(initHexo)
+initHexo()

@@ -77,8 +77,8 @@ Once that file is created, you should see it in the list of spec files.
 Now you'll need to add in the following code in your test file to visit your server:
 
 ```js
-describe('The Home Page', function() {
-  it('successfully loads', function() {
+describe('The Home Page', () => {
+  it('successfully loads', () => {
     cy.visit('http://localhost:8080') // change URL to match your dev URL
   })
 })
@@ -87,6 +87,13 @@ describe('The Home Page', function() {
 Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
+
+<!--
+To reproduce the following screenshot:
+it('successfully loads', () => {
+  cy.visit('https://localhost:8080')
+})
+-->
 
 {% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
@@ -119,8 +126,8 @@ Whenever you modify your configuration file, Cypress will automatically reboot i
 We can now visit a relative path and omit the hostname and port.
 
 ```js
-describe('The Home Page', function() {
-  it('successfully loads', function() {
+describe('The Home Page', () => {
+  it('successfully loads', () => {
     cy.visit('/')
   })
 })
@@ -165,13 +172,13 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
 
 ```js
-describe('The Home Page', function () {
-  beforeEach(function () {
+describe('The Home Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
   })
 
-  it('successfully loads', function() {
+  it('successfully loads', () => {
     cy.visit('/')
   })
 })
@@ -182,8 +189,8 @@ Instead of just executing a system command, you may want more flexibility and co
 **For instance, you could compose several requests together to tell your server exactly the state you want to create.**
 
 ```js
-describe('The Home Page', function () {
-  beforeEach(function () {
+describe('The Home Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -198,7 +205,7 @@ describe('The Home Page', function () {
     cy.request('POST', '/test/seed/user', { name: 'Jane' }).its('body').as('currentUser')
   })
 
-  it('successfully loads', function() {
+  it('successfully loads', () => {
     // this.currentUser will now point to the response
     // body of the cy.request() that we could use
     // to log in or work with in some way
@@ -257,8 +264,8 @@ Logging in is one of those features that are **mission critical** and should lik
 Here's an example alongside seeding your database:
 
 ```js
-describe('The Login Page', function () {
-  beforeEach(function () {
+describe('The Login Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -338,8 +345,8 @@ Because {% url `cy.request()` request %} automatically gets and sets cookies und
 Let's revisit the example from above but assume we're testing some other part of the system.
 
 ```js
-describe('The Dashboard Page', function () {
-  beforeEach(function () {
+describe('The Dashboard Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -396,5 +403,7 @@ From here you may want to explore some more of our guides:
 - {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
 - {% url "Cypress API" table-of-contents %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
-- {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
-- {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI
+- {% url "Command Line" command-line %} for running all your tests outside via `cypress run`
+- {% url "Continuous Integration" continuous-integration %} for running Cypress in CI
+- {% url "Cross Browser Testing" cross-browser-testing %} for optimally running tests in CI across Firefox and Chrome-family browsers
+- {% fa fa-github %} {% url "Cypress Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.

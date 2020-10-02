@@ -1,3 +1,5 @@
+import { MAIN_NAV } from '../support/defaults'
+
 describe('Main Nav', () => {
   beforeEach(() => {
     cy.server()
@@ -8,8 +10,8 @@ describe('Main Nav', () => {
       cy.visit('/')
     })
 
-    it('displays links to pages', function () {
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+    MAIN_NAV.forEach((nav) => {
+      it(`displays link to ${nav.name}`, function () {
         cy.contains('.main-nav-link', nav.name)
         .should('have.attr', 'href').and('include', nav.path)
       })
@@ -21,8 +23,8 @@ describe('Main Nav', () => {
       .and('eq', 'https://github.com/cypress-io/cypress')
     })
 
-    it('highlights main page links when navigated to', function () {
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+    MAIN_NAV.forEach((nav) => {
+      it(`highlights main page links when navigated to ${nav.name}`, function () {
         let path = `${nav.path}.html`
 
         if (nav.path === '/plugins/') {
@@ -84,6 +86,31 @@ describe('Main Nav', () => {
         cy.get('#search-input').type('g')
         cy.wait('@postAlgolia')
         cy.get('.ds-dropdown-menu').should('be.visible')
+      })
+    })
+  })
+
+  context.skip('Language selector', () => {
+    beforeEach(() => {
+      cy.visit('/')
+    })
+
+    it('displays laguage wrapper at desktop view', function () {
+      cy.get('#lang-select-wrap').should('be.visible')
+    })
+
+    describe('in tablet view', () => {
+      beforeEach(() => {
+        cy.viewport('ipad-mini')
+      })
+
+      it('not displays desktop laguage wrapper', function () {
+        cy.get('#lang-select-wrap').should('not.visible')
+      })
+
+      it('displays mobile laguage select', function () {
+        cy.get('#mobile-nav-toggle').click()
+        cy.get('#mobile-lang-select').should('be.visible')
       })
     })
   })

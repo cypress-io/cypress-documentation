@@ -20,7 +20,7 @@ When Cypress first loads, the internal Cypress web application is hosted on a ra
 After the first {% url `cy.visit()` visit %} command is issued in a test, Cypress changes its URL to match the origin of your remote application, thereby solving the first major hurdle of same-origin policy. Your application's code executes the same as it does outside of Cypress, and everything works as expected.
 
 {% note info How is HTTPS supported? %}
-Cypress does some pretty interesting things under the hood to make testing HTTPs sites work. Cypress enables you to control and stub at the network level. Therefore, Cypress must assign and manage browser certificates to be able to modify the traffic in real time.
+Cypress does some pretty interesting things under the hood to make testing HTTPS sites work. Cypress enables you to control and stub at the network level. Therefore, Cypress must assign and manage browser certificates to be able to modify the traffic in real time.
 
 You'll notice Chrome display a warning that the 'SSL certificate does not match'. This is normal and correct. Under the hood we act as our own CA authority and issue certificates dynamically in order to intercept requests otherwise impossible to access. We only do this for the superdomain currently under test, and bypass other traffic. That's why if you open a tab in Cypress to another host, the certificates match as expected.
 {% endnote %}
@@ -260,9 +260,17 @@ So if you cannot work around any of the issues using the suggested workarounds a
 
 One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to cross-origin errors that can otherwise be fixed. If you think you're experiencing a bug, {% open_an_issue 'open an issue' %}.
 
-To start, you will need to understand that *not all browsers expose a way to turn off web security*. Some do, some don't. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
+{% note warning 'Chrome only' %}
+Disabling web security is only supported in Chrome-based browsers. Settings in `chromeWebSecurity` will have no effect in other browsers. We will log a warning in this case.
 
-## Setting `chromeWebSecurity` to `false` allows you to do the following:
+{% imgTag /img/guides/chrome-web-security-stdout-warning.jpg 'chromeWebSecurity warning in stdout'%}
+
+If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.
+{% endnote %}
+
+## Set `chromeWebSecurity` to `false`
+
+Setting `chromeWebSecurity` to `false` in Chrome-based browsers allows you to do the following:
 
 - Display insecure content
 - Navigate to any superdomain without cross-origin errors
@@ -272,7 +280,7 @@ One thing you may notice though is that Cypress still enforces visiting a single
 
 Still here? That's cool, let's disable web security!
 
-### Set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %}` and we'll take care of the rest
+### Set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %}`
 
 ```json
 {

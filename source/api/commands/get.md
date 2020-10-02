@@ -47,11 +47,12 @@ When using aliases with DOM elements, Cypress will query the DOM again if the pr
 
 Pass in an options object to change the default behavior of `cy.get()`.
 
-| Option    | Default                                                  | Description                        |
-| --------- | -------------------------------------------------------- | ---------------------------------- |
-| `log`     | `true`                                                   | {% usage_options log %}            |
-| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %} |
-| `withinSubject` | null                                               | {% usage_options withinSubject %} |
+Option | Default | Description
+--- | --- | ---
+`log` | `true` | {% usage_options log %}
+`timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %}
+`withinSubject` | null | {% usage_options withinSubject %}
+`includeShadowDom` | {% url '`includeShadowDom`<br /> config option value' configuration#Global %} | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 
@@ -122,11 +123,11 @@ cy.get('@todos')
 ### Get the aliased 'submitBtn' element
 
 ```javascript
-beforeEach(function() {
+beforeEach(() => {
   cy.get('button[type=submit]').as('submitBtn')
 })
 
-it('disables on click', function() {
+it('disables on click', () => {
   cy.get('@submitBtn').should('be.disabled')
 })
 ```
@@ -134,11 +135,11 @@ it('disables on click', function() {
 ### Get the aliased 'users' fixture
 
 ```javascript
-beforeEach(function() {
+beforeEach(() => {
   cy.fixture('users.json').as('users')
 })
 
-it('disables on click', function() {
+it('disables on click', () => {
   // access the array of users
   cy.get('@users').then((users) => {
     // get the first user
@@ -178,6 +179,10 @@ The commands above will display in the Command Log as:
 When clicking on the `get` command within the command log, the console outputs the following:
 
 {% imgTag /img/api/get/console-log-get-command-and-elements-found.png "Console Log get" %}
+
+{% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
+{% endhistory %}
 
 # See also
 

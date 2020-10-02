@@ -52,8 +52,10 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 Option | Default | Description
 --- | --- | ---
+`matchCase` | `true` | Check case sensitivity
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .contains %}
+`includeShadowDom` | {% url '`includeShadowDom`<br /> config option value' configuration#Global %} | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 
@@ -186,6 +188,19 @@ cy.get('form')                  // yields <form>...</form>
 
 Without the explicit selector the subject would change to be the `<button>`. Using the explicit selector ensures that chained commands will have the `<form>` as the subject.
 
+## Case Sensitivity
+
+Here's an example using the `matchCase` option to ignore case sensitivity.
+
+```html
+<div>Capital Sentence</div>
+```
+
+```js
+cy.get('div').contains('capital sentence') // fail
+cy.get('div').contains('capital sentence', { matchCase: false }) // pass
+```
+
 # Notes
 
 ## Scopes
@@ -226,6 +241,35 @@ What you want to do is call `cy` again, which automatically creates a new chain 
 ```javascript
 cy.contains('Delete User').click()
 cy.contains('Yes, Delete!').click()
+```
+
+## Leading, trailing, duplicate whitespaces aren't ignored in `<pre>` tag
+
+Unlike other tags, `<pre>` doesn't ignore leading, trailing, or duplicate whitespaces as shown below:
+
+```html
+<!--Code for test-->
+<h2>Other tags</h2>
+<p>           Hello,          World   !</p>
+
+<h2>Pre tag</h2>
+<pre>                 Hello,           World      !</pre>
+```
+
+Rendered result:
+
+{% imgTag /img/api/contains/contains-pre-exception.png "The result of pre tag" %}
+
+To reflect this behavior, Cypress also doesn't ignore them.
+
+```js
+// test result for above code
+
+cy.get('p').contains('Hello, World !') // pass
+cy.get('p').contains('           Hello,          World   !') // fail
+
+cy.get('pre').contains('Hello, World !') // fail
+cy.get('pre').contains('                 Hello,           World      !') // pass
 ```
 
 ## Single Element
@@ -361,6 +405,11 @@ The commands above will display in the Command Log as:
 When clicking on the `contains` command within the command log, the console outputs the following:
 
 {% imgTag /img/api/contains/see-elements-found-from-contains-in-console.png "console.log contains" %}
+
+{% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
+{% url "4.0.0" changelog#4-0-0 %} | Added support for option `matchCase`.
+{% endhistory %}
 
 # See also
 

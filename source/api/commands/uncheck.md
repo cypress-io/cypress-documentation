@@ -98,7 +98,7 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements checkability .uncheck %}
+{% requirements uncheckability .uncheck %}
 
 ## Assertions {% helper_icon assertions %}
 

@@ -1,6 +1,58 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
+- title: "Test automatizácia v Cypress.io"
+  url: https://www.learn2code.sk/kurzy/test-automatizacia-v-cypress-io
+  author: Filip Hric
+  authorTwitter: filip_hric
+  sourceName: Learn2code
+  sourceUrl: https://www.learn2code.sk
+  language: Slovak
+  
+- title: "Cypress test automation for people in a hurry"
+  url: https://www.udemy.com/course/cypress-test-automation-for-people-in-a-hurry/?referralCode=21A875FF429457CF641D
+  author: Filip Hric
+  authorTwitter: filip_hric
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+  
+- title: "Cypress: End-to-end JavaScript Testing"
+  url: https://app.pluralsight.com/library/courses/cypress-end-to-end-javascript-testing/table-of-contents
+  author: Adhithi Ravichandran
+  authorTwitter: AdhithiRavi
+  sourceName: Pluralsight
+  sourceUrl: https://www.pluralsight.com
+
+- title: "Add e2e tests with cypress to a React application"
+  url: https://egghead.io/playlists/add-e2e-tests-with-cypress-to-a-react-application-7691?af=6p5abz
+  author: Tomasz Łakomy
+  authorTwitter: tlakomy
+  sourceName: egghead.io
+  sourceUrl: https://egghead.io
+  free: true
+  
+- title: "The Ultimate Cypress Testing Hands-on Guide"
+  url: https://coursinator.com/course/the-ultimate-cypress-testing-hands-on-guide
+  author: Bogdan Vazzolla
+  authorTwitter: bogdanvazzolla
+  sourceName: Coursinator
+  sourceUrl: https://coursinator.com/
+
+- title: "Outside-In Frontend Development"
+  url: https://outsidein.dev/
+  author: Josh Justice
+  authorTwitter: codingitwrong
+  sourceName: OutsideIn.dev
+  sourceUrl: https://outsidein.dev/
+  free: true
+
+- title: "End to End Testing with Cypress (Conference Talk)"
+  url: https://www.pluralsight.com/courses/codemash-session-01
+  author: Avindra Fernando
+  authorTwitter: avindrafernando
+  sourceName: Pluralsight
+  sourceUrl: https://www.pluralsight.com
+  free: true
 
 - title: "End-to-End JavaScript Testing with Cypress.io"
   url: https://www.lynda.com/Developer-tutorials/End-End-JavaScript-Testing-Cypress-io/2814152-2.html
@@ -18,8 +70,9 @@
 
 - title: "Cypress-Modern Automation Testing from Scratch + Framework"
   url: https://www.udemy.com/course/cypress-tutorial/?LSNPUBID=hh*FqEN*ZGw&ranEAID=hh*FqEN*ZGw&ranMID=39197&ranSiteID=hh.FqEN.ZGw-3od9TEk.GmnZ.QA2DzTmFA
+  author: Rahul Shetty
   sourceName: Udemy
-  sourceUrl: https://www.udemy.com/
+  sourceUrl: https://www.udemy.com
 
 - title: Introduction to Cypress
   url: https://testautomationu.applitools.com/cypress-tutorial/
@@ -55,6 +108,8 @@
   url: https://www.pluralsight.com/courses/ng-conf-19-testing-cypress-io
   author: Joe Eames
   authorTwitter: josepheames
+  sourceName: Pluralsight
+  sourceUrl: https://www.pluralsight.com
   company: pluralsight.com
 
 - title: End to End automation testing with Cypress
@@ -92,14 +147,21 @@
   free: true
 
 - title: Test Automation with Cypress basic
-  url: http://udemy.com/course/test-automation-with-cypress-basic
+  url: https://udemy.com/course/test-automation-with-cypress-basic
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+
+- title: Test Automation with Cypress intermediate
+  url: https://www.udemy.com/course/test-automation-with-cypress-intermediate
   author: Walmyr Lima e Silva Filho
   authorTwitter: walmyrlimaesilv
   sourceName: Udemy
   sourceUrl: https://www.udemy.com
 
 - title: Testes Automatizados com Cypress (básico)
-  url: http://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-basico
+  url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-basico
   author: Walmyr Lima e Silva Filho
   authorTwitter: walmyrlimaesilv
   sourceName: Coursify.me
@@ -107,9 +169,18 @@
   language: Portuguese
 
 - title: Testes Automatizados com Cypress (intermediário)
-  url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-intermediario#
+  url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-intermediario
   author: Walmyr Lima e Silva Filho
   authorTwitter: walmyrlimaesilv
   sourceName: Coursify.me
   sourceUrl: http://coursify.me
   language: Portuguese
+
+- title: Test end to end con Cypress.io (Webinar básico)
+  url: https://plataforma.keepcoding.io/p/curso-test-end-to-end-cypressio
+  author: Kevin Martínez Escobar
+  authorTwitter: kjmesc
+  sourceName: Keepcoding
+  sourceUrl: https://keepcoding.io
+  language: Spanish
+  free: true

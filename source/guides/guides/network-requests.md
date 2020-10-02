@@ -13,6 +13,9 @@ title: Network Requests
 - How to write declarative tests that resist flake
 {% endnote %}
 
+{% note info %}
+**Note:** If you're looking for a resource to make an HTTP request take a look at {% url "`cy.request()`" request %}
+{% endnote %}
 # Testing Strategies
 
 Cypress helps you test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
@@ -34,7 +37,7 @@ Within Cypress, you have the ability to choose whether to stub responses or allo
 
 Let's investigate both strategies, why you would use one versus the other, and why you should regularly use both.
 
-## Don't Stub Responses
+## Use Server Responses
 
 Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end-to-end* tests. This means you are driving your application the same way a real user would.
 
@@ -50,7 +53,7 @@ In other words, you can have confidence your server is sending the correct data 
 If you are writing a traditional server-side application where most of the responses are HTML you will likely have few stubbed responses. However, most modern applications that serve JSON can take advantage of stubbing.
 
 {% note success Benefits %}
-- Guaranteed to work in production
+- More likely to work in production
 - Test coverage around server endpoints
 - Great for traditional server-side HTML rendering
 {% endnote %}
@@ -94,6 +97,17 @@ You don't have to do any work on the server. Your application will have no idea 
 - Perfect for JSON APIs
 {% endnote %}
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} end-to-end tests predominately rely on server responses, and only stub network responses {% url "on a few occasions" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/notifications.spec.ts#L250-L264 %} to conveniently **create edge-case** or **hard-to-create application states**.
+
+This practice allows the project to achieve full {% url code-coverage code-coverage %} for the front end *and back end* of the app, but this has also required creating intricate database seeding or test data factory scripts that can generate appropriate data in compliance with the business-logic of the app.
+
+Check out any of the {% url "Real World App test suites" https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui %} to see Cypress network handling in action.
+
+{% endnote %}
+
 # Stubbing
 
 Cypress enables you to stub a response and control the `body`, `status`, `headers`, or even delay.
@@ -115,7 +129,7 @@ Cypress automatically indicates when an XHR request happens in your application.
 
 {% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
 
-By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
+By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default filtering in the {% url '`cy.server()` options' server#Options %}.
 
 Cypress automatically collects the request `headers` and the request `body` and will make this available to you.
 
@@ -271,6 +285,15 @@ cy.get('#results')
   .and('contain', 'Book 2')
 ```
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} has various tests for testing an auto-complete field within a large user journey test that properly await requests triggered upon auto-complete input changes. Check out the example:
+- {% fa fa-github %} {% url "Auto-complete test code" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50 %}
+- {% fa fa-video-camera %} {% url "Auto-complete test run video recording" https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video %} in Cypress Dashboard.
+
+{% endnote %}
+
 ## Failures
 
 In our example above, we added an assertion to the display of the search results.
@@ -284,6 +307,15 @@ In our example above, we added an assertion to the display of the search results
 In this example, there are many possible sources of failure. In most testing tools, if our request failed to go out, we would normally only ever get an error once we attempt to find the results in the DOM and see that there is no matching element. This is problematic because it's unknown *why* the results failed to be displayed. Was there a problem with our rendering code? Did we modify or change an attribute such as an `id` or `class` on an element? Perhaps our server sent us different Book items.
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
+
+<!--
+To reproduce the following screenshot:
+it('test', () => {
+  cy.server()
+  cy.route('foo/bar').as('getSearch')
+  cy.wait('@getSearch')
+})
+-->
 
 {% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
@@ -370,3 +402,5 @@ You can find more examples in our {% url "XHR Assertions" https://github.com/cyp
 # See also
 
 - {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
+- {% url "See how to make a request with `cy.request()`" request %}
+- {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} test suites to see Cypress network handling in action.

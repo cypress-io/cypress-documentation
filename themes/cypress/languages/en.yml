@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    slack-integration: Slack Integration
     analytics: Analytics
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
@@ -47,24 +48,30 @@ sidebar:
     screenshots-and-videos: Screenshots and Videos
     guides: Guides
     command-line: Command Line
+    test-retries: Test Retries
     continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Custom Commands
     web-security: Web Security
     references: References
+    component-testing: Component Testing
     configuration: Configuration
+    experiments: Experiments
     proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
     assertions: Assertions
     best-practices: Best Practices
     trade-offs: Trade-offs
+    troubleshooting: Troubleshooting
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roadmap
     tooling: Tooling
-    intelligent-code-completion: Intelligent Code Completion
+    IDE-integration: IDE Integration
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
@@ -72,6 +79,7 @@ sidebar:
     retry-ability: Retry-ability
     visual-testing: Visual Testing
     code-coverage: Code Coverage
+    component-testing-introduction: Introduction
   api:
     api: API
     table-of-contents: Table of Contents
@@ -130,12 +138,14 @@ sidebar:
     rightclick: rightclick
     root: root
     route: route
+    route2: route2
     screenshot: screenshot
     scrollintoview: scrollIntoView
     scrollto: scrollTo
     select: select
     server: server
     setcookie: setCookie
+    shadow: shadow
     should: should
     siblings: siblings
     spread: spread
@@ -172,9 +182,11 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
     iscy: isCy
     custom-commands: Commands
     cookies: Cookies

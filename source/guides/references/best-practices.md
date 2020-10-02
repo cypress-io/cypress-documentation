@@ -3,6 +3,17 @@ title: Best Practices
 layout: toc-top
 ---
 
+{% note info %}
+### {% fa fa-graduation-cap %} Real World Practices
+
+The Cypress team maintains the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}, a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+
+The RWA achieves full {% url code-coverage code-coverage %} with end-to-end tests {% url "across multiple browsers" cross-browser-testing %} and {% url "device sizes" viewport %}, but also includes {% url "visual regression tests" visual-testing %}, API tests, unit tests, and runs them all in an {% url "efficient CI pipeline" https://dashboard.cypress.io/projects/7s5okt %}.
+
+The app is bundled with everything you need, {% url "just clone the repository" https://github.com/cypress-io/cypress-realworld-app %} and start testing.
+
+{% endnote %}
+
 ## Organizing Tests, Logging In, Controlling State
 
 {% note danger %}
@@ -79,6 +90,27 @@ When determining an unique selector it will automatically prefer elements with:
 - `data-testid`
 
 {% endnote %}
+
+#### {% fa fa-graduation-cap %} Real World Example
+
+The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses two useful custom commands for selecting elements for testing:
+
+- `getBySel` yields elements with a `data-test` attribute that **match** a specified selector.
+- `getBySelLike` yields elements with a `data-test` attribute that **contains** a specified selector.
+
+```ts
+// cypress/support/commands.ts
+
+Cypress.Commands.add("getBySel", (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args);
+});
+
+Cypress.Commands.add("getBySelLike", (selector, ...args) => {
+  return cy.get(`[data-test*=${selector}]`, ...args);
+});
+```
+
+> *{% fa fa-github %} Source: {% url "cypress/support/commands.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts %}*
 
 ### Text Content:
 
@@ -239,20 +271,20 @@ Let's imagine the following test that is filling out the form.
 
 ```javascript
 // an example of what NOT TO DO
-describe('my form', function () {
-  it('visits the form', function () {
+describe('my form', () => {
+  it('visits the form', () => {
     cy.visit('/users/new')
   })
 
-  it('requires first name', function () {
+  it('requires first name', () => {
     cy.get('#first').type('Johnny')
   })
 
-  it('requires last name', function () {
+  it('requires last name', () => {
     cy.get('#last').type('Appleseed')
   })
 
-  it('can submit a valid form', function () {
+  it('can submit a valid form', () => {
     cy.get('form').submit()
   })
 })
@@ -268,8 +300,8 @@ Here's 2 ways we can fix this:
 
 ```javascript
 // a bit better
-describe('my form', function () {
-  it('can submit a valid form', function () {
+describe('my form', () => {
+  it('can submit a valid form', () => {
     cy.visit('/users/new')
 
     cy.log('filling out first name') // if you really need this
@@ -289,20 +321,20 @@ Now we can put an `.only` on this test and it will run successfully irrespective
 ### 2. Run shared code before each test
 
 ```javascript
-describe('my form', function () {
-  beforeEach(function () {
+describe('my form', () => {
+  beforeEach(() => {
     cy.visit('/users/new')
     cy.get('#first').type('Johnny')
     cy.get('#last').type('Appleseed')
   })
 
-  it('displays form validation', function () {
+  it('displays form validation', () => {
     cy.get('#first').clear() // clear out first name
     cy.get('form').submit()
     cy.get('#errors').should('contain', 'First name is required')
   })
 
-  it('can submit a valid form', function () {
+  it('can submit a valid form', () => {
     cy.get('form').submit()
   })
 })
@@ -325,21 +357,21 @@ We're also paving the way to make it less complicated to write multiple tests ag
 We've seen many users writing this kind of code:
 
 ```javascript
-describe('my form', function () {
-  before(function () {
+describe('my form', () => {
+  before(() => {
     cy.visit('/users/new')
     cy.get('#first').type('johnny')
   })
 
-  it('has validation attr', function () {
+  it('has validation attr', () => {
     cy.get('#first').should('have.attr', 'data-validation', 'required')
   })
 
-  it('has active class', function () {
+  it('has active class', () => {
     cy.get('#first').should('have.class', 'active')
   })
 
-  it('has formatted first name', function () {
+  it('has formatted first name', () => {
     cy.get('#first').should('have.value', 'Johnny') // capitalized first letter
   })
 })
@@ -365,12 +397,12 @@ It is common for tests in Cypress to issue 30+ commands. Because nearly every co
 How you should rewrite those tests:
 
 ```javascript
-describe('my form', function () {
-  before(function () {
+describe('my form', () => {
+  before(() => {
     cy.visit('/users/new')
   })
 
-  it('validates and formats first name', function () {
+  it('validates and formats first name', () => {
     cy.get('#first')
       .type('johnny')
       .should('have.attr', 'data-validation', 'required')
@@ -392,15 +424,15 @@ describe('my form', function () {
 
 We see many of our users adding code to an `after` or `afterEach` hook in order to clean up the state generated by the current test(s).
 
-We most often see test code that like this:
+We most often see test code that looks like this:
 
 ```js
-describe('logged in user', function () {
-  beforeEach(function () {
+describe('logged in user', () => {
+  beforeEach(() => {
     cy.login()
   })
 
-  afterEach(function () {
+  afterEach(() => {
     cy.logout()
   })
 
@@ -435,7 +467,7 @@ That is fine - but even if this is the case, it should not go in an `after` or `
 **With that in mind you write something like this:**
 
 ```js
-afterEach(function () {
+afterEach(() => {
   cy.resetDb()
 })
 ```
@@ -461,14 +493,12 @@ This is also a great opportunity to use {%url 'root level hooks in mocha' https:
 ```js
 // cypress/support/index.js
 
-beforeEach(function () {
+beforeEach(() => {
   // now this runs prior to every test
   // across all files no matter what
   cy.resetDb()
 })
 ```
-
-That's it!
 
 ### Is resetting the state necessary?
 
@@ -477,6 +507,37 @@ One final question you should ask yourself is - is resetting the state even nece
 If the state you are trying to clean lives on the server - by all means, clean that state. You will need to run these types of routines! But if the state is related to your application currently under test - you likely do not even need to clear it.
 
 The only times you **ever** need to clean up state, is if the operations that one test runs affects another test downstream. In only those cases do you need state cleanup.
+
+#### {% fa fa-graduation-cap %} Real World Example
+
+The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} resets and re-seeds its database via a custom {%url "Cypress task" task %} called `db:seed` in a `beforeEach` hook. This allows each test to start from a clean slate and a deterministic state. For example:
+
+```ts
+// cypress/tests/ui/auth.spec.ts
+
+beforeEach(function () {
+  cy.task("db:seed");
+  // ...
+});
+```
+> *{% fa fa-github %} Source: {% url "cypress/tests/ui/auth.spec.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts %}*
+
+The `db:seed` task is defined within the {% url "plugins file" writing-and-organizing-tests#Plugin-files %} of the project, and in this case sends a request to a dedicated back end API of the app to appropriately re-seed the database.
+```ts
+// cypress/plugins/index.ts
+
+on("task", {
+  async "db:seed"() {
+    // Send request to backend API to re-seed database with test data
+    const { data } = await axios.post(`${testDataApiEndpoint}/seed`);
+    return data;
+  },
+  //...
+});
+```
+> *{% fa fa-github %} Source: {% url "cypress/plugins/index.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts %}*
+
+The same practice above can be used for any type of database (PostgreSQL, MongoDB, etc.). In this example, a request is sent to a back end API, but you could also interact directly with your database with direct queries, custom libraries, etc. If you already have non-JavaScript methods of handling or interacting with your database, you can use `{% url cy.exec exec%}`, instead of `{% url cy.task task%}`, to execute any system command or script.
 
 ## Unnecessary Waiting
 
@@ -537,7 +598,7 @@ cy.get('table tr').should('have.length', 2)
 ## Web Servers
 
 {% note danger %}
-{% fa fa-warning red %} **Anti-Pattern:** Trying to a start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
+{% fa fa-warning red %} **Anti-Pattern:** Trying to start a web server from within Cypress scripts with {% url `cy.exec()` exec %} or {% url `cy.task()` task %}.
 {% endnote %}
 
 {% note success %}

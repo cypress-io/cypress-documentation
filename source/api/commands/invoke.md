@@ -24,13 +24,13 @@ If you want to get a property that is not a function on the previously yielded s
 
 ```javascript
 cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
-cy.get('.modal').invoke('show')          // Invoke the jQuery 'show' function
+cy.get('.modal').invoke('show')            // Invoke the jQuery 'show' function
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.invoke('convert')                   // Errors, cannot be chained off 'cy'
+cy.invoke('convert')                     // Errors, cannot be chained off 'cy'
 cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 ```
 
@@ -47,6 +47,7 @@ Pass in an options object to change the default behavior of `.invoke()`.
 | Option    | Default                                                  | Description                        |
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
+| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .invoke %}   |
 
 **{% fa fa-angle-right %} args...**
 
@@ -77,11 +78,11 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 In the example below, we use `.invoke()` to force a hidden div to be `'display: block'` so we can interact with its children elements.
 
 ```javascript
-cy.get('div.container').should('be.hidden') // true
-
+cy.get('div.container').should('be.hidden') // element is hidden
   .invoke('show') // call jquery method 'show' on the '.container'
-    .should('be.visible') // true
-    .find('input').type('Cypress is great')
+  .should('be.visible') // element is visible now
+  .find('input') // drill down into a child "input" element
+  .type('Cypress is great') // and type text
 ```
 
 ### Use `.invoke('show')` and `.invoke('trigger')`
@@ -132,6 +133,43 @@ const double = (n) => n * n
 cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 ```
 
+## Invoking an async function
+
+In this example we have a little text input field and we invoke an async action which will disable this input field.
+`.invoke()` will then wait until the Promise resolves and only then will continue executing to check if it really has been disabled.
+
+Our input field
+```html
+<input type="text" name="text" data-cy="my-text-input">
+```
+
+The Cypress Test with `cy.invoke()` awaiting the promise:
+```javascript
+function disableElementAsync (element) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      element.disabled = true
+      resolve()
+    }, 3000)
+  })
+}
+
+cy.get('[data-cy=my-text-input]').then((textElements) => {
+  cy.wrap({ disableElementAsync })
+    .invoke('disableElementAsync', textElements[0])
+})
+
+// log message appears after 3 seconds
+cy.log('after invoke')
+
+// assert UI
+cy.get('[data-cy=my-text-input]').should('be.disabled')
+```
+
+{% note info %}
+For a full example where invoke is used to await async Vuex store actions, visit the recipe: {% url "Vue + Vuex + REST" https://github.com/cypress-io/cypress-example-recipes %}
+{% endnote %}
+
 # Notes
 
 ## Third Party Plugins
@@ -157,6 +195,30 @@ cy
   .invoke('val').should('match', /apples/)
 ```
 
+## Retries
+
+`.invoke()` automatically retries invoking the specified method until the returned value satisfies the attached assertions. The example below passes after 1 second.
+
+```javascript
+let message = 'hello'
+const english = {
+  greeting () {
+    return message
+  }
+}
+
+setTimeout(() => {
+  message = 'bye'
+}, 1000)
+
+// initially the english.greeting() returns "hello" failing the assertion.
+// .invoke('greeting') tries again and again until after 1 second
+// the returned message becomes "bye" and the assertion passes
+cy.wrap(english).invoke('greeting').should('equal', 'bye')
+```
+
+{% imgTag /img/api/invoke/invoke-retries.gif "Invoke retries example" width-600 %}
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -169,7 +231,7 @@ cy
 
 ## Timeouts {% helper_icon timeout %}
 
-{% timeouts assertions .invoke %}
+{% timeouts invoke .invoke %}
 
 # Command Log
 

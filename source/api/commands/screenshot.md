@@ -69,8 +69,8 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ```javascript
 // cypress/integration/users.spec.js
 
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     // screenshot will be saved as
     // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
@@ -164,8 +164,8 @@ Screenshot naming follows these rules:
 For example, given a spec file located at `cypress/integration/users/login_spec.js`:
 
 ```javascript
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
@@ -188,7 +188,7 @@ You can get details about any given screenshot and manipulate it after it has be
 
 ### Automatic screenshots on test failure
 
-When running through `cypress run` or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
+When running through `cypress run` or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within your {% url `screenshotOnRunFailure` configuration#Screenshots %} or {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 ## Viewing Screenshots
 

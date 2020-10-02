@@ -136,6 +136,8 @@ cy.get('#book-results').should('have.length', 1)
 
 ### You can pass an array of aliases that will be waited on before resolving.
 
+When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
+
 ```javascript
 cy.server()
 cy.route('users/*').as('getUsers')
@@ -208,6 +210,10 @@ This means Cypress will now wait up to 20 seconds for the external server to res
 {% imgTag /img/api/wait/timeout-error-when-waiting-for-route-response.png "Error for no matching XHRTimeout error for XHR wait" %}
 
 This gives you the best of both worlds - a fast error feedback loop when requests never go out and a much longer duration for the actual external response.
+
+### Using an Array of Aliases
+
+When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 # Rules
 

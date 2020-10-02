@@ -34,13 +34,14 @@ Option | Default | Description
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the following properties:
 
-- `name`
-- `value`
-- `path`
 - `domain`
+- `expiry` *(if specified)*
 - `httpOnly`
+- `name`
+- `path`
+- `sameSite` *(if specified)*
 - `secure`
-- `expiry`
+- `value`
 
 # Examples
 
@@ -95,6 +96,11 @@ The commands above will display in the Command Log as:
 When clicking on `getCookies` within the command log, the console outputs the following:
 
 {% imgTag /img/api/getcookies/test-application-cookies.png "Console Log getcookies" %}
+
+{% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`.
+{% endhistory %}
 
 # See also
 

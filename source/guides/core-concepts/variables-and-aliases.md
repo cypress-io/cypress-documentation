@@ -125,7 +125,7 @@ you clicked button <span id='num'>0</span> times
 // app code
 let count = 0
 
-$('button').on('click', function () {
+$('button').on('click', () => {
   $('#num').text(count += 1)
 })
 ```
@@ -153,13 +153,13 @@ The reason for using `const` is because the `$span` object is mutable. Whenever 
 Using `.then()` callback functions to access the previous command values is great&mdash;but what happens when you're running code in hooks like `before` or `beforeEach`?
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   cy.button().then(($btn) => {
     const text = $btn.text()
   })
 })
 
-it('does not have access to text', function () {
+it('does not have access to text', () => {
   // how do we get access to text ?!?!
 })
 ```
@@ -173,19 +173,19 @@ This code below is just for demonstration.
 {% endnote %}
 
 ```js
-describe('a suite', function () {
+describe('a suite', () => {
   // this creates a closure around
   // 'text' so we can access it
   let text
 
-  beforeEach(function () {
+  beforeEach(() => {
     cy.button().then(($btn) => {
       // redefine text reference
       text = $btn.text()
     })
   })
 
-  it('does have access to text', function () {
+  it('does have access to text', () => {
     // now text is available to us
     // but this is not a great solution :(
     text
@@ -210,7 +210,7 @@ To alias something you'd like to share use the {% url `.as()` as %} command.
 Let's look at our previous example with aliases.
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the $btn.text() as 'text'
   cy.get('button').invoke('text').as('text')
 })
@@ -225,18 +225,18 @@ Under the hood, aliasing basic objects and primitives utilizes Mocha's shared {%
 Mocha automatically shares contexts for us across all applicable hooks for each test. Additionally these aliases and properties are automatically cleaned up after each test.
 
 ```js
-describe('parent', function () {
-  beforeEach(function () {
+describe('parent', () => {
+  beforeEach(() => {
     cy.wrap('one').as('a')
   })
 
-  context('child', function () {
-    beforeEach(function () {
+  context('child', () => {
+    beforeEach(() => {
       cy.wrap('two').as('b')
     })
 
-    describe('grandchild', function () {
-      beforeEach(function () {
+    describe('grandchild', () => {
+      beforeEach(() => {
         cy.wrap('three').as('c')
       })
 
@@ -257,7 +257,7 @@ The most common use case for sharing context is when dealing with {% url `cy.fix
 Often times you may load a fixture in a `beforeEach` hook but want to utilize the values in your tests.
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the users fixtures
   cy.fixture('users.json').as('users')
 })
@@ -318,7 +318,7 @@ Instead of using the `this.*` syntax, there is another way to access aliases.
 The {% url `cy.get()` get %} command is capable of accessing aliases with a special syntax using the `@` character:
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the users fixtures
   cy.fixture('users.json').as('users')
 })

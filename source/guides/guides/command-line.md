@@ -69,7 +69,7 @@ npx cypress run --record --spec "cypress/integration/my-spec.js"
 
 ## `cypress run`
 
-Runs Cypress tests to completion. By default, `cypress run` will run all tests headlessly in the `Electron` browser.
+Runs Cypress tests to completion. By default, `cypress run` will run all tests headlessly in the Electron browser.
 
 ```shell
 cypress run [options]
@@ -85,14 +85,15 @@ Option | Description
 `--config-file`, `-C`  | {% urlHash "Specify configuration file" cypress-run-config-file-lt-config-file-gt %}
 `--env`, `-e`  | {% urlHash "Specify environment variables" cypress-run-env-lt-env-gt %}
 `--group`  | {% urlHash "Group recorded tests together under a single run" cypress-run-group-lt-name-gt %}
-`--headed`  | {% urlHash "Displays the browser instead of running headlessly (defaults to true for Chrome-family browsers)" cypress-run-headed %}
-`--headless` | {% urlHash "Hide the browser instead of running headed (defaults to true for Electron)" cypress-run-headless %}
+`--headed`  | {% urlHash "Displays the browser instead of running headlessly (default for Firefox and Chromium-based browsers)" cypress-run-headed %}
+`--headless` | {% urlHash "Hide the browser instead of running headed (default for Electron)" cypress-run-headless %}
 `--help`, `-h`  | Output usage information
 `--key`, `-k`  | {% urlHash "Specify your secret record key" cypress-run-record-key-lt-record-key-gt %}
 `--no-exit` | {% urlHash "Keep Cypress Test Runner open after tests in a spec file run" cypress-run-no-exit %}
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
+`--quiet`, `-q` | If passed, Cypress output will not be printed to `stdout`. Only output from the configured {% url "Mocha reporter" reporters %} will print.
 `--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
@@ -105,7 +106,9 @@ Option | Description
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to "chrome", "canary", "chromium", or "electron" to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+The "browser" argument can be set to `chrome`, `chromium`, `edge`, `electron`, `firefox` to launch a browser detected on your system. Cypress will attempt to automatically find the installed browser for you.
+
+To launch non-stable browsers, add a colon and the desired release channel. For example, to launch Chrome Canary, use `chrome:canary`.
 
 You can also choose a browser by supplying a path:
 
@@ -113,9 +116,7 @@ You can also choose a browser by supplying a path:
 cypress run --browser /usr/bin/chromium
 ```
 
-Currently, only browsers in the Chrome family are supported.
-
-{% url "Having trouble with browser detection? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble with browser detection? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress run --ci-build-id <id>`
 
@@ -136,6 +137,15 @@ Set {% url 'configuration' configuration %} values. Separate multiple values wit
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses `--config` flag to easily specify {% url viewport configuration#Viewport %} sizes for responsive testing locally and in dedicated CI jobs. Examples:
+- {% fa fa-github %} {% url "npm scripts" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120 %} to run Cypress in mobile viewport.
+- {% fa fa-github %} {% url "Circle CI job configuration" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100 %} for running test suites in mobile viewport.
+
+{% endnote %}
 
 ### `cypress run --config-file <config-file>`
 
@@ -197,7 +207,7 @@ Specifying the `--ci-build-id` may also be necessary.
 
 By default, Cypress will run tests in Electron headlessly.
 
-Passing `--headed` will force Electron to be shown. This matches how you run Electron in interactive mode.
+Passing `--headed` will force Electron to be shown. This matches how you run Electron via `cypress open`.
 
 ```shell
 cypress run --headed
@@ -205,9 +215,9 @@ cypress run --headed
 
 ### `cypress run --headless`
 
-For backwards-compatibility reasons, when using Chrome, Cypress will run tests in headed mode by default.
+Cypress will run tests in Chrome and Firefox headed by default.
 
-Passing `--headless` will force Chrome to be hidden.
+Passing `--headless` will force the browser to be hidden.
 
 ```shell
 cypress run --headless --browser chrome
@@ -325,13 +335,60 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-The Dashboard will display any tags sent with the appropriate run. 
+The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
 
+### Exit code
+
+When Cypress finishes running tests, it exits. If there are no failed tests, the exit code will be 0.
+
+```text
+# All tests pass
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✔  All specs passed!      00:16       17       17        0
+
+# print exit code on Mac or Linux
+$ echo $?
+0
+```
+
+If there are any test failures, then the exit code will match the number of tests that failed.
+
+```text
+# Spec with two failing tests
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✖  1 of 1 failed (100%)   00:22       17       14        2
+
+# print exit code on Mac or Linux
+$ echo $?
+2
+```
+
+If Cypress could not run for some reason (for example if no spec files were found) then the exit code will be 1.
+
+```text
+# No spec files found
+$ cypress run --spec not-found.js
+...
+Can't run because no spec files were found.
+
+We searched for any files matching this glob pattern:
+
+not-found.js
+
+# print exit code on Mac or Linux
+$ echo $?
+1
+```
+
 ## `cypress open`
 
-Opens the Cypress Test Runner in interactive mode.
+Opens the Cypress Test Runner.
 
 ```shell
 cypress open [options]
@@ -365,9 +422,9 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Currently, only browsers in the Chrome family are supported.
+Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
 
-{% url "Having trouble launching a browser? Check out the debugging guide" debugging#Launching-browsers %}
+{% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ### `cypress open --config <config>`
 
@@ -433,6 +490,59 @@ To see this in action we've set up an {% url 'example repo to demonstrate this h
 cypress open --project ./some/nested/folder
 ```
 
+## `cypress info`
+
+Prints information about Cypress and the current environment such as:
+
+- A list of browsers Cypress detected on the machine.
+- Any environment variables that control {% url 'proxy configuration' proxy-configuration %}.
+- Any environment variables that start with the `CYPRESS` prefix (with sensitive variables like {% url 'record key' projects#Record-keys %} masked for security).
+- The location where run-time data is stored.
+- The location where the Cypress binary is cached.
+- Operating system information.
+- System memory including free space.
+
+```shell
+cypress info
+Displaying Cypress info...
+
+Detected 2 browsers installed:
+
+1. Chrome
+  - Name: chrome
+  - Channel: stable
+  - Version: 79.0.3945.130
+  - Executable: /path/to/google-chrome
+  - Profile: /user/profile/folder/for/google-chrome
+
+2. Firefox Nightly
+  - Name: firefox
+  - Channel: nightly
+  - Version: 74.0a1
+  - Executable: /path/to/firefox
+
+Note: to run these browsers, pass <name>:<channel> to the '--browser' field
+
+Examples:
+- cypress run --browser firefox:nightly
+- cypress run --browser chrome
+
+Learn More: https://on.cypress.io/launching-browsers
+
+Proxy Settings: none detected
+Environment Variables: none detected
+
+Application Data: /path/to/app/data/cypress/cy/development
+Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
+Binary Caches: /user/profile/path/.cache/Cypress
+
+Cypress Version: 4.1.0
+System Platform: darwin (19.2.0)
+System Memory: 17.2 GB free 670 MB
+```
+
+**Tip:** set {% url "DEBUG environment variable" troubleshooting#Print-DEBUG-logs %} to `cypress:launcher` when running `cypress info` to troubleshoot browser detection.
+
 ## `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.
@@ -459,7 +569,7 @@ Commands for managing the global Cypress cache. The Cypress cache applies to all
 
 ### `cypress cache path`
 
-Print the `path` to the Cypress cache folder.
+Print the `path` to the Cypress cache folder. You can change the path where the Cypress cache is located by following {% url "these instructions" installing-cypress#Binary-cache %}.
 
 ```shell
 cypress cache path
@@ -468,11 +578,17 @@ cypress cache path
 
 ### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a **space delimited** list of version numbers.
+Print all existing installed versions of Cypress. The output will be a table with cached versions and the last time the binary was used by the user, determined from the file's access time.
 
 ```shell
 cypress cache list
-3.0.0 3.0.1 3.0.2
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
 ```
 
 ### `cypress cache clear`
@@ -524,3 +640,7 @@ DEBUG=cypress:launcher cypress run
 ```shell
 DEBUG=cypress:server:project cypress run
 ```
+
+{% history %}
+{% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
+{% endhistory %}

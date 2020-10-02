@@ -2,21 +2,27 @@
 title: TypeScript
 ---
 
-Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript. All that is required is a little bit of configuration.
+Cypress ships with {% url "official type declarations" https://github.com/cypress-io/cypress/tree/develop/cli/types %} for {% url "TypeScript" https://www.typescriptlang.org/ %}. This allows you to write your tests in TypeScript.
 
-## Transpiling TypeScript test files
+## Install TypeScript
 
-Just as you would when writing TypeScript files in your project, you will have to handle transpiling your TypeScript test files. Cypress exposes a {% url "`file:preprocessor` event" preprocessors-api %} you can use to customize how your test code is transpiled and sent to the browser.
+You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
-### Examples
+### With npm
 
-- {% url "TypeScript with WebPack" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
-- {% url "TypeScript with Browserify" https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url "Repo of TypeScript with WebPack" https://github.com/omerose/cypress-support %}
+```shell
+npm install --save-dev typescript
+```
+
+### With yarn
+
+```shell
+yarn add --dev typescript
+```
 
 ## Set up your dev environment
 
-Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" intelligent-code-completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
+Please refer to your code editor in {% url "TypeScript's Editor Support doc" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support %} and follow the instructions for your IDE to get TypeScript support and {% url "intelligent code completion" IDE-integration#Intelligent-Code-Completion %} configured in your developer environment before continuing. TypeScript support is built in for {% url "Visual Studio Code" https://code.visualstudio.com/ %}, {% url "Visual Studio" https://www.visualstudio.com/ %}, and {% url "WebStorm" https://www.jetbrains.com/webstorm/ %} - all other editors require extra setup.
 
 ## Configure tsconfig.json
 
@@ -25,8 +31,6 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```json
 {
   "compilerOptions": {
-    "strict": true,
-    "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["cypress"]
@@ -60,7 +64,7 @@ When adding {% url "custom commands" custom-commands %} to the `cy` object, you 
 For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
 ```javascript
-// cypress/support/index.js
+// cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
@@ -90,10 +94,10 @@ A nice detailed JSDoc comment above the method type will be really appreciated b
 
 If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
 
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special tripple slash `reference path` comment.
+Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
 ```javascript
-// from your cypress/integration/spec.js
+// from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
@@ -113,8 +117,28 @@ it('works', () => {
 
 If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the {% url "Recipe: Adding Chai Assertions" recipes#Fundamentals %} for instructions.
 
-## Additional information
+## Types for plugins
 
-See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}. Take a look at {% url "this video" https://www.youtube.com/watch?v=1Vr1cAN_CLA %} Basarat has recorded and the accompanying repo {% url basarat/cypress-ts https://github.com/basarat/cypress-ts %}.
+You can utilize Cypress's type declarations in your {% url "plugins file" plugins-guide %} by annotating it like the following:
 
-{% fa fa-github %} We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.
+```javascript
+// cypress/plugins/index.ts
+
+/// <reference types="cypress" />
+
+/**
+ * @type {Cypress.PluginConfig}
+ */
+module.exports = (on, config) => {
+
+}
+```
+
+{% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Raised minimum required TypeScript version from 2.9+ to 3.4+
+{% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
+{% endhistory %}
+
+# See also
+
+- {% url "IDE Integration" IDE-integration %}

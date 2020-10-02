@@ -9,12 +9,7 @@ description: Cypress is a test engine that runs unit and integration tests in yo
 author: Cypress.io
 
 # https://hexo.io/docs/internationalization.html
-language:
-  - en
-  - zh-cn
-  - ja
-  - pt-br
-  - ru
+language: en
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -28,7 +23,7 @@ github: cypress-io/cypress
 # Directory
 source_dir: source
 public_dir: public
-i18n_dir: :lang
+# i18n_dir: :lang
 skip_render:
 
 # Generate alias pages for redirecting to posts, pages or URL
@@ -38,7 +33,13 @@ skip_render:
 # can also do outside page links here
 # plugins/index.html: https://github.com/cypress/cypress/wiki/Plugins
 alias:
+  # indices
   index.html: guides/overview/why-cypress.html
+  zh-cn/: guides/overview/why-cypress.html
+  ja/: guides/overview/why-cypress.html
+  pt-br/: guides/overview/why-cypress.html
+  ru/: guides/overview/why-cypress.html
+  es/: guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
   guides.html: guides/overview/why-cypress.html
@@ -56,6 +57,7 @@ alias:
   guides/core-concepts/screenshots-and-videos.html: guides/guides/screenshots-and-videos.html
   guides/guides/reporters.html: guides/tooling/reporters.html
   guides/guides/reporters/: guides/tooling/reporters.html
+  guides/test-retries.html: guides/guides/test-retries.html
   overview-of-test-runner/: guides/core-concepts/test-runner.html
   why-cypress/: guides/overview/why-cypress.html
 
@@ -146,9 +148,6 @@ alias:
   docs/finding-elements/: guides/core-concepts/introduction-to-cypress.html#Querying-Elements
 
   continuous-integration.html: guides/guides/continuous-integration.html
-
-  # for chinese translation
-  zh-cn/: zh-cn/guides/overview/why-cypress.html
 
   # obsolete content
   dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html

@@ -73,11 +73,10 @@ To use encoding with other options, have your options object be your third param
 If the path to the file does not exist, the file and its path will be created. If the file already exists, it will be over-written.
 
 ```javascript
-cy
-  .writeFile('path/to/message.txt', 'Hello World')
-  .then((text) => {
-    expect(text).to.equal('Hello World') // true
-  })
+cy.writeFile('path/to/message.txt', 'Hello World')
+cy.readFile('path/to/message.txt').then((text) => {
+  expect(text).to.equal('Hello World') // true
+})
 ```
 
 `{projectRoot}/path/to/message.txt` will be created with the following contents:
@@ -94,9 +93,9 @@ JavaScript arrays and objects are stringified and formatted into text.
 
 ```javascript
 cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
-  .then((user) => {
-    expect(user.name).to.equal('Eliza')
-  })
+cy.readFile('path/to/data.json').then((user) => {
+  expect(user.name).to.equal('Eliza') // true
+})
 ```
 
 `{projectRoot}/path/to/data.json` will be created with the following contents:
@@ -180,6 +179,7 @@ When clicking on the `writeFile` command within the command log, the console out
 {% imgTag /img/api/writefile/console-log-shows-contents-written-to-file.png "Console Log writeFile" %}
 
 {% history %}
+{% url "4.0.0" changelog#4-0-0 %} | `cy.writeFile()` now yields `null` instead of `contents`
 {% url "3.1.1" changelog#3-1-1 %} | Added `flag` option and appending with `a+`
 {% url "1.0.0" changelog#1.0.0 %} | `cy.writeFile()` command added
 {% endhistory %}

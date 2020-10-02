@@ -12,6 +12,7 @@ Thanks for taking the time to contribute! :smile:
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
   - [Writing the Changelog](#writing-the-changelog)
+  - [Translating](#translating)
 - [Committing Code](#committing-code)
   - [Linting](#linting)
   - [Pull Requests](#pull-requests)
@@ -103,8 +104,18 @@ To add a page such as a new guide or API documentation:
 - Link to your new page in the [`sidebar.yml`](/source/_data/sidebar.yml).
 - Add translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
-- Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
+- **REQUIRED**: Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
+
+### Deleting Pages
+
+To delete a page:
+
+- Delete the page from the relevant directory under [`source`](/source).
+- Remove the link from the the [`sidebar.yml`](/source/_data/sidebar.yml).
+- Remove the translations for the sidebar link for each supported language (for English, this is located in [`en.yml`](/themes/cypress/languages/en.yml)).
+- **REQUIRED**: Commit the change using git - we auto-remove the doc within each supported language, this auto-generation depends on the file being deleted in git, the build will not work until this is commited.
+- Build the documentation site locally so that you can visually inspect and make sure it was properly deleted.
 
 #### A Worked Example
 
@@ -157,7 +168,8 @@ When adding to the Changelog, create a new file in [`source/_changelogs`](/sourc
 
 1. Add a new language folder in [`source`](/source) folder. (All lower case). The folder name should correspond to the [language's abbreviation code](https://www.loc.gov/standards/iso639-2/php/code_list.php).
 1. Add the new language to [`source/_data/languages.yml`](/source/_data/languages.yml).
-1. Add the new language to [`_config.yml`](/_config.yml#L10) under `language`.
+1. Add the new language to [`_config.yml`](/_config.yml#L12) under `language`.
+1. Add the new language index page to [`_config.yml`](/_config.yml#L41) under `alias`.
 1. Copy Markdown and template files in [`source`](/source) folder to the new language folder.
 1. Copy `en.yml` in [`themes/cypress/languages`](/themes/cypress/languages) and rename to the abbreviated language name (all lower case).
 

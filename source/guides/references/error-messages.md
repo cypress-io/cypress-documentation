@@ -39,7 +39,7 @@ Cypress supports both ES2015 modules and CommonJS modules. You can import/requir
 import _ from 'lodash'
 import util from './util'
 
-it('uses modules', function () {
+it('uses modules', () => {
   expect(_.kebabCase('FooBar')).to.equal('foo-bar')
   expect(util.secretCode()).to.equal('1-2-3-4')
 })
@@ -52,9 +52,10 @@ It's still useful to load a setup file before your test code. If you are setting
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
 - `cypress/support/index.js`
+- `cypress/support/index.ts`
 - `cypress/support/index.coffee`
 
-Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
+Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+, {% url "TypeScript" typescript-support %} or CoffeeScript and modules, so you can import/require other files as needed.
 
 # Command Errors
 
@@ -67,16 +68,16 @@ This message means you tried to execute one or more Cypress commands outside of 
 Typically this happens accidentally, like in the following situation.
 
 ```javascript
-describe('Some Tests', function () {
-  it('is true', function () {
+describe('Some Tests', () => {
+  it('is true', () => {
     expect(true).to.be.true   // yup, fine
   })
 
-  it('is false', function () {
+  it('is false', () => {
     expect(false).to.be.false // yup, also fine
   })
 
-  context('some nested tests', function () {
+  context('some nested tests', () => {
     // oops you forgot to write an it(...) here!
     // these cypress commands below
     // are running outside of a test and cypress
@@ -93,7 +94,43 @@ If you are purposefully writing commands outside of a test, there is probably a 
 
 ## {% fa fa-exclamation-triangle red %} `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
-Getting this errors means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
+Getting this error means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
+
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
+
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
 
 {% imgTag /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
 
@@ -151,6 +188,10 @@ When we say *guard*, this usually means:
 - Writing an assertion
 - Waiting on an XHR
 
+### More info
+
+Read the blog post {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %} for another example of this error, and how to solve it.
+
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element cannot be interacted with
 
 You may see a variation of this message for 4 different reasons:
@@ -175,6 +216,22 @@ cy.get('[disabled]').click({force: true}).
 *Be careful with this option. It's possible to force your tests to pass when the element is actually not interactable in your application.*
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element is currently animating
+
+<!--
+To reproduce the following screenshot:
+describe('animating example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      Cypress.$('<input style="position: absolute;" />').appendTo($body)
+      .animate({ left: '+=1000000' }, 10)
+    })
+  })
+  it('is animating', () => {
+    cy.get('input')
+    .type('some text', { timeout: 20 })
+  })
+})
+-->
 
 {% imgTag /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
 
@@ -219,7 +276,7 @@ Even though we return a string in our test, Cypress automatically figures out th
 
 ```javascript
 // This test passes!
-it('Cypress is smart and this does not fail', function () {
+it('Cypress is smart and this does not fail', () => {
   cy.get('body').children().should('not.contain', 'foo') // <- no return here
 
   return 'foobarbaz'    // <- return here
@@ -230,7 +287,7 @@ The example below will fail because you've forcibly terminated the test early wi
 
 ```javascript
 // This test errors!
-it('but you can forcibly end the test early which does fail', function (done) {
+it('but you can forcibly end the test early which does fail', (done) => {
   cy.get('body')
     .then(() => {
       done() // forcibly end test even though there are commands below
@@ -253,7 +310,7 @@ describe('a complex example with async code', function() {
     }, 10)
   })
 
-  it('this test will fail due to the previous poorly written test', function() {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
     cy.wait(10)
   })
@@ -263,7 +320,7 @@ describe('a complex example with async code', function() {
 The correct way to write the above test code is using Mocha's `done` to signify it is asynchronous.
 
 ```javascript
-it('does not cause commands to bleed into the next test', function (done) {
+it('does not cause commands to bleed into the next test', (done) => {
   setTimeout(() => {
     cy.get('body').children().should('not.contain', 'foo').then(() => {
       done()
@@ -278,15 +335,15 @@ In the example below, we forget to return the `Promise` in our test. This means 
 This also causes the commands to be queued on the wrong test. We will get the error in the next test that Cypress detected it had commands in its command queue.
 
 ```javascript
-describe('another complex example using a forgotten "return"', function () {
-  it('forgets to return a promise', function () {
+describe('another complex example using a forgotten "return"', () => {
+  it('forgets to return a promise', () => {
     // This test passes...but...
     Cypress.Promise.delay(10).then(() => {
       cy.get('body').children().should('not.contain', 'foo')
     })
   })
 
-  it('this test will fail due to the previous poorly written test', function () {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
     cy.wait(10)
   })
@@ -296,7 +353,7 @@ describe('another complex example using a forgotten "return"', function () {
 The correct way to write the above test code would be to return our `Promise`:
 
 ```javascript
-it('does not forget to return a promise', function () {
+it('does not forget to return a promise', () => {
   return Cypress.Promise.delay(10).then(() => {
     return cy.get('body').children().should('not.contain', 'foo')
   })
@@ -352,6 +409,10 @@ The reason this is an error instead of a warning is because Cypress internally q
 While this works in practice, it's often indicative of an anti-pattern. You almost never need to return both a promise and also invoke `cy` commands.
 
 `cy` commands themselves are already promise like, and you can likely avoid the use of the separate Promise.
+
+## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked a done callback.
+
+The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade %}.
 
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
@@ -513,7 +574,7 @@ When your application navigates to a superdomain outside of the current origin-p
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can set this in your {% url "configuration file (`cypress.json` by default)" configuration %}. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %} when running in Chrome family browsers (this setting will not work in other browsers). Before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
 ```json
 {
@@ -529,15 +590,27 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 
 # Browser Errors
 
-## {% fa fa-exclamation-triangle red %} The Chromium Renderer process just crashed
+<!-- keep old hash -->
+<a name='The-Chromium-Renderer-process-just-crashed'></a>
 
-Browsers are enormously complex pieces of software, and from time to time they will inconsistently crash *for no good reason*. Crashes are just a part of running automated tests.
+## {% fa fa-exclamation-triangle red %} The browser process running your tests just exited unexpectedly
 
-{% imgTag /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
+This error can occur whenever Cypress detects that the launched browser has exited or crashed before the tests could finish running.
 
-At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
+This can happen for a number of reasons, including:
 
-If you are running `Docker` {% issue 350 'there is a one line fix for this problem documented here' %}.
+- The browser was exited manually, by clicking the "Quit" button or otherwise
+- Your test suite or application under test is starving the browser of resources, such as running an infinite loop
+- Cypress is running in a memory-starved environment
+- The browser is testing a memory-heavy application
+- Cypress is running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
+- There are problems with the GPU / GPU drivers
+- There is a bug in the browser involving memory management
+- There is a memory leak in Cypress
+
+If the browser running Cypress tests crashes, currently, Cypress will abort any remaining tests and print out this error.
+
+There is an {% issue 349 'open issue' %} to recover from browser crashes automatically, so tests can continue to run.
 
 # Test Runner errors
 

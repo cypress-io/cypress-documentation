@@ -313,32 +313,6 @@ Describe a command's requirements.
 </ul>
 ```
 
-The following requirements are supported:
-
-- `none`
-- `parent`
-- `child`
-- `dom`
-- `dual`
-- `dual_existence`
-- `dual_existence_single_dom`
-- `clearability`
-- `blurability`
-- `clearability`
-- `focusability`
-- `checkability`
-- `selectability`
-- `scrollability`
-- `submitability`
-- `spread`
-- `exec`
-- `task`
-- `read_file`
-- `write_file`
-- `page`
-- `tick`
-- `request`
-
 ### `timeouts`
 
 - [lib/tags/timeouts.js](lib/tags/timeouts.js)
@@ -362,22 +336,6 @@ Typically used inside the _Timeouts_ section when documenting a command.
 
 {% timeouts existence cy.get %}
 ```
-
-The following timeouts are supported:
-
-- `assertions`
-- `actions`
-- `existence`
-- `automation`
-- `its`
-- `exec`
-- `task`
-- `none`
-- `page`
-- `request`
-- `wait`
-- `promises`
-- `timeouts`
 
 ### `url`
 

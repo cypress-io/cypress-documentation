@@ -84,7 +84,7 @@ Option | Default | Description
 
 # Examples
 
-## Command
+## Event
 
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
@@ -176,6 +176,50 @@ module.exports = (on, config) => {
 }
 ```
 
+### Save a variable across non same-origin URL visits
+
+When visiting non same-origin URL, Cypress will {% url "change the hosted URL to the new URL" web-security %}, wiping the state of any local variables. We want to save a variable across visiting non same-origin URLs.
+
+We can save the variable and retrieve the saved variable outside of the test using `cy.task()` as shown below.
+
+```javascript
+// in test
+describe('Href visit', () => {
+  it('captures href', () => {
+    cy.visit('https://www.mywebapp.com')
+    cy.get('a').invoke('attr', 'href')
+      .then((href) => {
+        // href is not same-origin as current url
+        // like https://www.anotherwebapp.com
+        cy.task('setHref', href)
+      })
+  })
+
+  it('visit href', () => {
+    cy.task('getHref').then((href) => {
+      // visit non same-origin url https://www.anotherwebapp.com
+      cy.visit(href)
+    })
+  })
+})
+```
+
+```javascript
+// in plugins/index.js
+let href
+
+module.exports = (on, config) => {
+  on('task', {
+    setHref: (val) => {
+      return href = val
+    },
+    getHref: () => {
+      return href
+    }
+  })
+}
+```
+
 ## Options
 
 ### Change the timeout
@@ -232,6 +276,65 @@ See {% issue 2284 '#2284' %} for implementation.
 {% note warning Duplicate task keys %}
 If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
+
+## Reset timeout via `Cypress.config()`
+
+You can change the timeout of `cy.task()` for the remainder of the tests by setting the new values for `taskTimeout` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('taskTimeout', 30000)
+Cypress.config('taskTimeout') // => 30000
+```
+
+## Set timeout in the test configuration
+
+You can configure the `cy.task()` timeout within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the timeout throughout the duration of the tests, then return it to the default `taskTimeout` when complete.
+
+```js
+describe('has data available from database', { taskTimeout: 90000 }, () => {
+  before(() => {
+    cy.task('seedDatabase')
+  })
+
+  // tests
+
+  after(() => {
+    cy.task('resetDatabase')
+  })
+})
+```
+
+## Argument should be serializable
+
+The argument `arg` sent via `cy.task(name, arg)` should be serializable; it cannot have circular dependencies (issue {% issue 5539 %}). If there are any special fields like `Date`, you are responsible for their conversion (issue {% issue 4980 %}):
+
+```javascript
+// in test
+cy.task('date', new Date())
+  .then((s) => {
+    // the yielded result is a string
+    // we need to convert it to Date object
+    const result = new Date(s)
+  })
+```
+
+```javascript
+// in plugins/index.js
+module.exports = (on, config) => {
+  on('task', {
+    date (s) {
+      // s is a string, so convert it to Date
+      const d = new Date(s)
+
+      // do something with the date
+      // and return it back
+      return d
+    }
+  })
+}
+```
 
 # Rules
 

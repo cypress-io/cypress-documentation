@@ -73,7 +73,7 @@ If you're using source control, we recommend that you check your `cypress.json`,
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-## Record key {% fa fa-key %}
+## Record key
 
 The record key is used to authenticate that your project is *allowed* to record tests to the Dashboard Service. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
 
@@ -107,7 +107,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg "Record Key in Configuration Tab" %}
 
 # Record keys
 
@@ -150,6 +150,32 @@ You can integrate your project with GitHub and edit its settings from within the
 {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
 
 See our {% url "GitHub Integration guide" github-integration %} to learn more.
+
+# Slack Integration
+
+You can integrate your project with Slack and edit its settings from within the project settings page.
+
+{% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
+
+See our {% url "Slack Integration guide" slack-integration %} to learn more.
+
+# README Badges
+
+README badges allow you to increase visibility of your project's test status and test count to other developers viewing your project's README file. 
+
+## Create a README badge
+
+1. In your Cypress Dashboard account, select the project for which you’d like to create a README badge.
+1. On the Project Settings page, scroll down to the README Badges section and click “Configure Badge”. 
+  {% imgTag /img/dashboard/badges/dashboard-badge-configure-button.png "README Badge configure button" %}
+  - **Note**: README badges are currently only available for public projects.
+1. A configuration modal will appear. The Project ID will be pre-filled with the ID associated with the project you selected. You can choose to designate a specific branch, or leave this field blank to always use the latest build in the project.
+1. Next, style your badge. Flat is the default styling and is most commonly used, but 5 style options are available. 
+1. Select the badge type to change the amount and type of information that’s displayed. Simple status will show only whether tests are passing or failing. Detailed status will show the number of tests that were passed, failed, or skipped. Test count will show how many tests are included in your project.
+1. Once you’ve selected all your settings, check out the preview and make sure everything looks just the way you like it.  
+1. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the Configure Badge modal, and embed it in your project’s README file for everyone to see! 
+
+{% imgTag /img/dashboard/badges/dashboard-badge-configuration.png "README Badge configuration form" %}
 
 # Access to Runs
 

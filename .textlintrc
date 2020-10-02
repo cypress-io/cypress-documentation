@@ -15,6 +15,7 @@
         ["test runner", "Test Runner"],
 
         // Brands and Technologies
+        ["ansi", "ANSI"],
         "AppVeyor",
         "Babel",
         ["^Blob(?! %)", "Blob"],
@@ -22,6 +23,7 @@
         "BrowserStack",
         ["^chai", "Chai"],
         ["^chai-jquery", "chai-jquery"],
+        ["cross-browser", "cross browser"],
         ["cross origin", "cross-origin"],
         "ESLint",
         ["Express.js", "Express"],
@@ -40,7 +42,6 @@
         "Lodash",
         "minimatch",
         "Mocha",
-        ["node.js", "Node"],
         "node module",
         "npm",
         ["React[ .]js", "React"],
@@ -85,6 +86,8 @@
         ["craziest", "most complex"],
         ["dumb", "unintended"],
         ["insane", "outrageous"],
+        ["blacklist", "block"],
+        ["whitelist", "allow"],
 
         // Prefer American spelling
         ["behaviour", "behavior"],

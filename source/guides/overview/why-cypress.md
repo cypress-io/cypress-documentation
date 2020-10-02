@@ -71,6 +71,7 @@ Cypress comes fully baked, batteries included. Here is a list of things it can d
 - **Network Traffic Control:** Easily {% url 'control, stub, and test edge cases' network-requests %} without involving your server. You can stub network traffic however you like.
 - **Consistent Results:** Our architecture doesn’t use Selenium or WebDriver. Say hello to fast, consistent and reliable tests that are flake-free.
 - **Screenshots and Videos:** View screenshots taken automatically on failure, or videos of your entire test suite when run from the CLI.
+- **Cross browser Testing:** Run tests within Firefox and Chrome-family browsers (including Edge and Electron) locally and {% url "optimally in a Continuous Integration pipeline" cross-browser-testing %}.
 
 ## {% fa fa-cog %} Setting up tests
 
@@ -95,3 +96,15 @@ Cypress runs as fast as your browser can render content. You can watch tests run
 Readable error messages help you to debug quickly. You also have access to all the developer tools you know and love.
 
 {% video local /img/snippets/debugging.mp4 %}
+
+# Cypress in the Real World
+
+{% imgTag /img/guides/real-world-app.png  "Cypress Real World App" "no-border" %}
+
+Cypress makes it quick and easy to start testing, and as you begin to test your app, **you'll often wonder if you're using best practices or scalable strategies**.
+
+To guide the way, the Cypress team has created the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}, a full stack example application that demonstrates testing with **Cypress in practical and realistic scenarios**.
+
+The RWA achieves full {% url code-coverage code-coverage %} with end-to-end tests {% url "across multiple browsers" cross-browser-testing %} and {% url "device sizes" viewport %}, but also includes {% url "visual regression tests" visual-testing %}, API tests, unit tests, and runs them all in an {% url "efficient CI pipeline" https://dashboard.cypress.io/projects/7s5okt %}. Use the RWA to **learn, experiment, tinker, and practice** web application testing with Cypress.
+
+The app is bundled with everything you need, {% url "just clone the repository" https://github.com/cypress-io/cypress-realworld-app %} and start testing.

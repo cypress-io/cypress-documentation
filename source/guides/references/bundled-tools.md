@@ -51,6 +51,8 @@ When writing integration tests, you will likely work a lot with the DOM. Cypress
 
 When writing unit tests, or even in integration-like tests, you often need to ability to stub and spy methods. Cypress includes two methods, {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} that return Sinon stubs and spies, respectively.
 
+Cypress also exposes a utility so that `sinon` can be called anywhere inside of your tests using {% url `Cypress.sinon` sinon %}.
+
 {% note info %}
 {% url "Check out our guide for working with spies, stubs, and clocks." stubs-spies-and-clocks %}
 {% endnote %}

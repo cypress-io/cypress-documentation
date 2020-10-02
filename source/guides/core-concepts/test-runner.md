@@ -19,7 +19,13 @@ Cypress runs tests in a unique interactive runner that allows you to see command
 
 The lefthand side of the Test Runner is a visual representation of your test suite. Each test block is properly nested and each test, when clicked, displays every Cypress command and assertion executed within the test's block as well as any command or assertion executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
-{% imgTag /img/guides/command-log.png 436 "Cypress Test Runner" %}
+{% imgTag /img/guides/command-log.png "Cypress Test Runner" width-600 %}
+
+## Open files in your IDE
+
+There are some places in the Command Log that display a link to the relevant file where the code is located. Clicking on this link will open the file in your {% url "preferred file opener" IDE-integration#File-Opener-Preference %}.
+
+{% imgTag /img/guides/open-file-in-IDE.gif "Open file your IDE" %}
 
 ## Hovering on Commands
 
@@ -35,19 +41,25 @@ Each command, assertion, or error, when clicked on, displays extra information i
 
 {% imgTag /img/guides/clicking-commands.png "Click to console.log and to pin" %}
 
+# Errors
+
+Cypress prints several pieces of information when an error occurs during a Cypress test.
+
+{% partial errors_anatomy %}
+
 # Instrument Panel
 
 For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
 
-## Routes:
+## Routes
 
 {% imgTag /img/guides/instrument-panel-routes.png "Routes Instrument Panel" %}
 
-## Stubs:
+## Stubs
 
 {% imgTag /img/guides/instrument-panel-stubs.png "Stubs Instrument Panel" %}
 
-## Spies:
+## Spies
 
 {% imgTag /img/guides/instrument-panel-spies.png "Spies Instrument Panel" %}
 

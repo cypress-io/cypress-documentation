@@ -33,6 +33,14 @@ function checkToken (token) {
 }
 
 function getCircleCredentials () {
+  // the JSON file should have an object like
+  // { "token": "abc123..." }
+  // where the token is your personal API token from CircleCI
+  // alternatively, put the JSON object into environment variable
+  // with file shown by filenameToShellVariable(jsonFile) call
+  // which is something like _circle_credentials_json
+  // you can load such environment variable quickly from local terminal with
+  // https://github.com/bahmutov/as-a
   const jsonFile = path.join('support', '.circle-credentials.json')
   const config = configFromEnvOrJsonFile(jsonFile)
 

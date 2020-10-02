@@ -400,9 +400,52 @@ This is usually unnecessary because Cypress is already configured to swap out a 
 For more complex use cases feel free to overwrite existing commands.
 {% endnote %}
 
+### Overwrite `type` command
+
+If you are typing into a password field, the password input is masked automatically within your application. But {% url "`.type()`" type %} automatically logs any typed content into the Test Runner's Command Log.
+
+```js
+cy.get('#username').type('username@email.com')
+cy.get('#password').type('superSecret123')
+```
+
+{% imgTag "/img/api/custom-commands/custom-command-type-no-masked-password.png" %}
+
+You may want to mask some values passed to the {% url "`.type()`" type %} command so that sensitive data does not display in screenshots or videos of your test run. This example overwrites the {% url "`.type()`" type %} command to allow you to mask sensitive data in the Test Runner's Command Log.
+
+```js
+Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
+  if (options && options.sensitive) {
+    // turn off original log
+    options.log = false
+    // create our own log with masked message
+    Cypress.log({
+      $el: element,
+      name: 'type',
+      message: '*'.repeat(text.length),
+    })
+  }
+
+  return originalFn(element, text, options)
+})
+```
+
+```js
+cy.get('#username').type('username@email.com')
+cy.get('#password').type('superSecret123', { sensitive: true })
+```
+
+Now our sensitive password is not printed to the Test Runner's Command Log when `sensitive: true` is passed as an option to {% url "`.type()`" type %}.
+
+{% imgTag "/img/api/custom-commands/custom-command-type-masked-password.png" %}
+
+{% note info "Keep passwords secret blog" %}
+Check out {% url "this blog" https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/ %} to explore another way to keep passwords secret within your tests.
+{% endnote %}
+
 ### Overwrite `screenshot` command
 
-This example overwrites `screenshot` to always wait until a certain element is visible.
+This example overwrites {% url "`cy.screenshot()`" screenshot %} to always wait until a certain element is visible.
 
 ```javascript
 Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
@@ -417,6 +460,25 @@ Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) =>
         // return the original function so that cypress waits for it
         return originalFn(subject, name, options)
       })
+})
+```
+
+### Overwrite `contains` command
+
+This example overwrites {% url "`.contains()`" contains %} to always have the `matchCase` option set to `false`.
+
+```js
+Cypress.Commands.overwrite('contains', (originalFn, subject, filter, text, options = {}) => {
+  // determine if a filter argument was passed
+  if (typeof text === 'object') {
+    options = text
+    text = filter
+    filter = undefined
+  }
+
+  options.matchCase = false
+
+  return originalFn(subject, filter, text, options)
 })
 ```
 
@@ -583,7 +645,7 @@ const search = (term, options = {}) => {
     .wait('@getSearchResults')
 }
 
-it('displays a list of search results', function () {
+it('displays a list of search results', () => {
   cy
     .visit('/page')
     .then(() => {
@@ -607,7 +669,7 @@ it('displays a list of search results', function () {
     .get('#pagination').should('not.exist')
 })
 
-it('displays no search results', function () {
+it('displays no search results', () => {
   cy
     .visit('/page')
     .then(() => {
@@ -618,7 +680,7 @@ it('displays no search results', function () {
     .get('#results').should('contain', 'No results found')
 })
 
-it('paginates many search results', function () {
+it('paginates many search results', () => {
   cy
     .visit('/page')
     .then(() => {

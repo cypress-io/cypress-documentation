@@ -86,28 +86,28 @@ cy.viewport(1024, 768)
 ### Organize desktop vs mobile tests separately
 
 ```javascript
-describe('Nav Menus', function () {
-  context('720p resolution', function () {
-    beforeEach(function () {
+describe('Nav Menus', () => {
+  context('720p resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a desktop
       // browser with a 720p monitor
       cy.viewport(1280, 720)
     })
 
-    it('displays full header', function () {
+    it('displays full header', () => {
       cy.get('nav .desktop-menu').should('be.visible')
       cy.get('nav .mobile-menu').should('not.be.visible')
     })
   })
 
-  context('iphone-5 resolution', function () {
-    beforeEach(function () {
+  context('iphone-5 resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a mobile browser
       // and ensure our responsive UI is correct
       cy.viewport('iphone-5')
     })
 
-    it('displays mobile menu on click', function () {
+    it('displays mobile menu on click', () => {
       cy.get('nav .desktop-menu').should('not.be.visible')
       cy.get('nav .mobile-menu')
         .should('be.visible')
@@ -168,7 +168,7 @@ cy.viewport('iphone-6', 'landscape')
 
 ### `devicePixelRatio` is not simulated
 
-This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. {% open_an_issue %} if you need this to be fixed.
+This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. Follow {% issue 7075 %} if you need this supported.
 
 ## Restores
 
@@ -202,6 +202,36 @@ By default, if your screen is not large enough to display all of the current dim
 Scaling the app should not affect any calculations or behavior of your application (in fact it won't even know it's being scaled).
 
 The upsides to this are that tests should consistently pass or fail regardless of a developers' screen size. Tests will also consistently run in `CI` because all of the viewports will be the same no matter what machine Cypress runs on.
+
+## Reset viewport via `Cypress.config()`
+
+You can change the size of the viewport height and width for the remainder of the tests by setting the new values for `viewportHeight` or `viewportWidth` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('viewportWidth', 800)
+Cypress.config('viewportWidth') // => 800
+```
+
+## Set viewport in the test configuration
+
+You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the height and width throughout the duration of the tests, then return it to the default `viewportHeight` and `viewportWidth` when complete.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
 
 # Rules
 
@@ -249,4 +279,5 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 # See also
 
-- {% url 'configuration' configuration %}
+- {% url 'Configuration' configuration %}
+- {% url '`Cypress.config()`' config %}

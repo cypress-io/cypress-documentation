@@ -1,7 +1,6 @@
 # large links with thumbnails, links, embedded video
 large:
   - title: 'Automated testing made easy with Cypress.io'
-    url: https://www.youtube.com/watch?v=oriFMIb5pb8
     sourceName: Ember London
     sourceUrl: http://emberlondon.com/
     date: Sep 13, 2019
@@ -9,7 +8,6 @@ large:
     youtubeId: oriFMIb5pb8
 
   - title: "Componentizing end-to-end tests"
-    url: https://www.youtube.com/watch?v=Pv2YHXQOEJY
     sourceName: JSConf US 2019
     sourceUrl: https://2019.jsconf.us/
     date: Sept 11, 2019
@@ -17,7 +15,6 @@ large:
     youtubeId: Pv2YHXQOEJY	
     
   - title: "Documenting application behaviours with E2E tests"
-    url: https://www.youtube.com/watch?v=3oCDjj_AtaE
     sourceName: HolyJS 2019
     sourceUrl: https://holyjs.ru/en/
     date: Aug 28, 2019
@@ -73,7 +70,7 @@ large:
     youtubeId: I3WJhutZovw
     slides: https://slides.com/nikolalsvk/e2e-cypress
 
-	- title: 'Sleeping better at night with Cypress.io'
+  - title: 'Sleeping better at night with Cypress.io'
     sourceName: React Day Berlin
     sourceUrl: https://reactday.berlin/
     date: Dec 20, 2018
@@ -161,7 +158,7 @@ large:
     youtubeId: K445DtQ5oHY
     slides: https://github.com/mjfaga/react-boston-2018-lunar-launch
 
-	- title: 'Changing the Game with Cypress'
+  - title: 'Changing the Game with Cypress'
     sourceName: NG-Talks
     sourceUrl: https://ngtalks.io/
     date: Aug 27, 2018
@@ -169,7 +166,7 @@ large:
     youtubeId: B7cUpqUlqsU
     slides: https://speakerdeck.com/d3lm/changing-the-game-with-cypress
 
-	- title: "Frontend Development 2018 - What's in your stack?"
+  - title: "Frontend Development 2018 - What's in your stack?"
     sourceName: NDC Conferences
     sourceUrl: https://ndcconferences.com/
     date: Jul 31, 2018
@@ -212,7 +209,7 @@ large:
     img: /img/examples/automated-testing-for-the-modern.png
     slides: https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web
 
-	- title: 'Next-Generation Frontend Testing with Cypress.io'
+  - title: 'Next-Generation Frontend Testing with Cypress.io'
     sourceName: js.la
     sourceUrl: https://js.la/
     date: Jun 20, 2018

@@ -22,6 +22,12 @@ Oftentimes you can use {% url `.trigger()` trigger %}, {% url `.invoke()` invoke
 
 If the hover behavior depends on a JavaScript event like `mouseover`, you can trigger the event to achieve that behavior.
 
+{% note danger %}
+Using `.trigger()` will only affect events in JavaScript and will not trigger any effects in CSS. 
+{% endnote %}
+
+As a workaround, check out the {% url 'recipe leveraging Chrome remote debugging' recipes#Fundamentals %} to set pseudo classes like `hover`.
+
 ### Simulating `mouseover` event to get popover to display
 
 ```javascript

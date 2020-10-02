@@ -16,7 +16,7 @@ defaults: &defaults
     # the Docker image with Cypress dependencies
     # https://github.com/cypress-io/cypress-docker-images
     # Note: the image needs to have fonts with Chinese characters
-    - image: cypress/base:8.16.0
+    - image: cypress/base:12
       environment:
         <<: *env_defaults
 
@@ -137,6 +137,9 @@ jobs:
           path: cypress/screenshots
       - store_artifacts:
           path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
 
   "deploy-docs-production":
     <<: *defaults
@@ -150,6 +153,11 @@ jobs:
       # use script that just deploys without rebuilding the production docs
       - run: npm run deploy-prebuilt -- --environment production --scrape
       - run: cat public/build.json
+      - store_artifacts:
+          path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
 
 workflows:
   version: 2

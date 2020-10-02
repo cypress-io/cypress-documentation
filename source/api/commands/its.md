@@ -44,6 +44,7 @@ Pass in an options object to change the default behavior of `.its()`.
 | Option    | Default                                                  | Description                        |
 | --------- | -------------------------------------------------------- | ---------------------------------- |
 | `log`     | `true`                                                   | {% usage_options log %}            |
+| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .its %}   |
 
 ## Yields {% helper_icon yields %}
 

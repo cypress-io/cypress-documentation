@@ -43,7 +43,7 @@ cy.get('button').then(($button) => {
 ## Waiting for Promises
 
 ```javascript
-it('waits for promises to resolve', function () {
+it('waits for promises to resolve', () => {
   let waited = false
 
   function waitOneSecond() {
@@ -69,3 +69,7 @@ it('waits for promises to resolve', function () {
   })
 })
 ```
+
+# See also
+
+- {% url 'Bundled Tools' bundled-tools %}

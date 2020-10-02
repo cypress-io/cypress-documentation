@@ -22,7 +22,9 @@ Option | Default | Description
 `port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
 `reporter` | `spec` | The {% url 'reporter' reporters %} used during `cypress run`
 `reporterOptions` | `null` | The {% url 'reporter options' reporters#Reporter-Options %} used. Supported options depend on the reporter.
+`retries` | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See {% url "Test Retries" test-retries %} for more information.
 `watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
+`includeShadowDom` | `false` | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. {% url `cy.get()` get %})
 
 ## Timeouts
 
@@ -45,7 +47,7 @@ Option | Default | Description
 ----- | ---- | ----
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
-`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "http://globtester.com" http://globtester.com %} to test what files would match.
+`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "https://globster.xyz" https://globster.xyz %} to test what files would match.
 `integrationFolder` | `cypress/integration` | Path to folder containing integration test files
 `pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
@@ -57,6 +59,7 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
+`screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during `cypress run`.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
 `trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
 
@@ -76,10 +79,11 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
-`chromeWebSecurity`    | `true`    | Whether Chrome Web Security for same-origin policy and insecure mixed content is enabled. {% url 'Read more about this here' web-security %}
-`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
-`blacklistHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blacklistHosts %}
+`chromeWebSecurity`    | `true`    | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. {% url 'Read more about Web Security' web-security %}.
+`blockHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blockHosts %}
+`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
 `modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
+`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 
 ## Viewport
 
@@ -101,6 +105,22 @@ Option | Default | Description
 ----- | ---- | ----
 `nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your {% url plugins plugins-guide %}. Otherwise, Cypress will use the Node version bundled with Cypress.
 
+The Node version printed in the Node.js Version panel is used in Cypress to:
+
+- Build files in the {% url "`integrationFolder`" configuration#Folders-Files %}.
+- Build files in the {% url "`supportFolder`" configuration#Folders-Files %}.
+- Execute code in the {% url "`pluginsFile`" configuration#Folders-Files %}.
+
+Cypress comes automatically bundled with a set Node version by default.
+
+You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`.
+
+{% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
+
+## Experiments
+
+Configuration might include experimental options currently being tested. See {% url Experiments experiments %} page.
+
 # Overriding Options
 
 Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
@@ -111,22 +131,24 @@ This gives you the option to do things like override the `baseUrl` or environmen
 
 When {% url 'running Cypress from the Command Line' command-line %} you can pass a `--config` flag.
 
-**Examples:**
+### Examples:
 
 ```shell
-cypress open --config watchForFileChanges=false,waitForAnimations=false
+cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
 ```
 
 ```shell
-cypress run --config integrationFolder=tests,fixturesFolder=false
+cypress run --config integrationFolder=tests,videoUploadOnPasses=false
 ```
 
 ```shell
-cypress run --record --config viewportWidth=1280,viewportHeight=720
+cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
 
+For more complex configuration objects, you may want to consider passing a {% url "JSON.stringified" https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify %} object surrounded by single quotes.
+
 ```shell
-cypress open --config watchForFileChanges=false,testFiles=["**/*.js","**/*.coffee"]
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 ## Plugins
@@ -186,21 +208,68 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
+## Test Configuration
+
+To apply specific Cypress {% url "configuration" configuration %} values to a suite or test, pass a configuration object to the test or suite function as the second argument.
+
+The configuration values passed in will only take effect during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
+
+{% partial allowed_test_config %}
+
+### Suite configuration
+
+You can configure the number of times to retries a suite of tests if they fail during `cypress run` and `cypress open` separately.
+
+```js
+describe('login', {
+  retries: {
+    runMode: 3,
+    openMode: 2
+  }
+}, () => {
+  it('should redirect unauthenticated user to sign-in page', () => {
+    // ...
+  })
+
+  it('allows user to login', () => {
+    // ...
+  })
+})
+```
+
+### Single test configuration
+
+If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
+```js
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
+})
+```
+
 # Resolved Configuration
 
-When you open a Cypress project, clicking on the *Settings* tab will display the resolved configuration to you. This helps you to understand and see where different values came from.
+When you open a Cypress project, clicking on the **Settings** tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
+
+- Default value
+- The {% url "configuration file" configuration %}
+- The {% url "Cypress environment file" environment-variables#Option-2-cypress-env-json %}
+- System {% url "environment variables" environment-variables#Option-3-CYPRESS %}
+- {% url "Command Line arguments" command-line %}
+- {% url "Plugin file" configuration-api %}
 
 {% imgTag /img/guides/configuration/see-resolved-configuration.jpg "See resolved configuration" %}
 
 # Notes
 
-## blacklistHosts
+## blockHosts
 
 By passing a string or array of strings you can block requests made to one or more hosts.
 
 To see a working example of this please check out our {% url 'Stubbing Google Analytics Recipe' recipes#Stubbing-and-spying %}.
 
-To blacklist a host:
+To block a host:
 
 - {% fa fa-check-circle green %} Pass only the host
 - {% fa fa-check-circle green %} Use wildcard `*` patterns
@@ -210,7 +279,7 @@ To blacklist a host:
 {% note info %}
 Not sure what a part of the URL a host is? {% url 'Use this guide as a reference.' https://nodejs.org/api/url.html#url_url_strings_and_url_objects %}
 
-When blacklisting a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
+When blocking a host, we use {% url `minimatch` minimatch %} to check the host. When in doubt you can test whether something matches yourself.
 {% endnote %}
 
 Given the following URLs:
@@ -221,7 +290,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-This would match the following blacklisted hosts:
+This would match the following blocked hosts:
 
 ```text
 www.google-analytics.com
@@ -243,9 +312,9 @@ For instance given a URL: `https://google.com/search?q=cypress`
 - {% fa fa-exclamation-triangle red %} Does NOT match `*.google.com`
 {% endnote %}
 
-When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blacklist-host` header so you can see which rule it matched.
+When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blocked-host` header so you can see which rule it matched.
 
-{% imgTag /img/guides/blacklist-host.png "Network tab of dev tools with analytics.js request selected and the response header 'x-cypress-matched-blacklisted-host: www.google-analytics.com' highlighted " %}
+{% imgTag /img/guides/blocked-host.png "Network tab of dev tools with analytics.js request selected and the response header highlighted " %}
 
 ## modifyObstructiveCode
 
@@ -259,10 +328,91 @@ Cypress modifies these scripts at the network level, and therefore there is a ti
 
 You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
 
+## firefoxGcInterval
+
+{% note warning %}
+The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since the garbage collection bug was fixed in Firefox 80. It is recommended to upgrade your version of Firefox to avoid this workaround.
+{% endnote %}
+
+Firefox versions 79 and earlier have a {% url "bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing.
+
+Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
+
+Running GC is an expensive and **blocking** routine. It adds significant time to the overall run, and causes Firefox to "freeze" for the duration of GC cleanup. This causes the browser not to respond to any user input.
+
+Cypress runs GC cleanup during {% url "`cypress run`" command-line#cypress-run %} only because we don't expect users to interact with the browser - since this is typically run in CI. We've disabled running GC during {% url "`cypress open`" command-line#cypress-open %} because users typically interact with the browser.
+
+Because GC adds additional time to the overall run, we've added the amount of time this routine has taken to the bottom of the Command Log in the Test Runner.
+
+{% imgTag /img/guides/firefox-gc-interval-in-command-log.jpg %}
+
+### Configuration
+
+You can control how often GC cleanup runs via the `firefoxGcInterval` configuration value.
+
+`firefoxGcInterval` controls whether Cypress forces Firefox to run GC cleanup and how frequently.
+
+By default, we force GC cleanup between every test during {% url "`cypress run`" command-line#cypress-run %}, but do not run any GC cleanup during {% url "`cypress open`" command-line#cypress-open %} using the configuration value below:
+
+```json
+{
+  "firefoxGcInterval": {
+    "runMode": 1,
+    "openMode": null
+  }
+}
+```
+
+You can override how often Cypress runs GC cleanup by setting the `firefoxGcInterval` config value to:
+
+- `null`, to disable it for both {% url "`cypress run`" command-line#cypress-run %} and {% url "`cypress open`" command-line#cypress-open %}
+- a `number`, which sets the interval for both {% url "`cypress run`" command-line#cypress-run %} and {% url "`cypress open`" command-line#cypress-open %}
+- an `object` to set different intervals for each mode
+
+**Examples**
+
+Turn off GC cleanup all modes
+
+```json
+{
+  "firefoxGcInterval": null
+}
+```
+
+Run GC cleanup before every other test during {% url "`cypress run`" command-line#cypress-run %} and {% url "`cypress open`" command-line#cypress-open %}
+
+```json
+{
+  "firefoxGcInterval": 2
+}
+```
+
+Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#cypress-run %} and disable running GC cleanup during {% url "`cypress open`" command-line#cypress-open %}.
+
+```json
+{
+  "firefoxGcInterval": {
+    "runMode": 3,
+    "openMode": null
+  }
+}
+```
+
 ## Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." intelligent-code-completion %}
+IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
-{% url "3.5.0" changelog %} | Added support for option `nodeVersion`
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
+{% url "5.0.0" changelog %} | Added `retries` configuration.
+{% url "5.0.0" changelog %} | Renamed `blacklistHosts` configuration to `blockHosts`.
+{% url "4.1.0" changelog#4-12-0 %} | Added `screenshotOnRunFailure` configuration.
+{% url "4.0.0" changelog#4-0-0 %} | Added `firefoxGcInterval` configuration.
+{% url "3.5.0" changelog#3-5-0 %} | Added `nodeVersion` configuration.
 {% endhistory %}
+
+# See also
+
+- {% url "`Cypress.config()`" config %}
+- {% url "Environment variables" environment-variables %}
+- {% url "Environment Variables recipe" recipes#Fundamentals %}

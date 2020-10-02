@@ -13,13 +13,13 @@ title: Screenshots and Videos
 
 # Screenshots
 
-Cypress comes with the ability to take screenshots, whether you are running in interactive mode using `cypress open` or run mode using `cypress run`, even in CI.
+Cypress comes with the ability to take screenshots, whether you are running via `cypress open` or `cypress run`, even in CI.
 
 To take a manual screenshot you can use the {% url `cy.screenshot()` screenshot %} command.
 
-Additionally, Cypress will automatically capture screenshots when a failure happens during runs outside of interactive mode.
+Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress run`. Screenshots on failure are *not* automatically taken during `cypress open`.
 
-This behavior can be turned off by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
+Capturing of screenshots when a test fails can be turned off entirely by setting {% url `screenshotOnRunFailure` configuration#Screenshots %} to `false` from within your {% url "configuration" configuration %} or by setting `screenshotOnRunFailure` to `false` in the {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 Screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
 
@@ -27,7 +27,7 @@ Cypress clears any existing screenshots before `cypress run`. If you do not want
 
 # Videos
 
-Cypress also records videos when running tests.
+Cypress records a video for each spec file when running tests during `cypress run`. Videos are *not* automatically recorded during `cypress open`.
 
 Video recording can be turned off entirely by setting {% url `video` configuration#Videos %} to `false` from within your configuration.
 
@@ -73,6 +73,7 @@ So you are capturing screenshots and recording videos of your test runs, now wha
 
 ## Share Them With Your Team
 
+<!-- Line breaks removed to prevent random br elements -->
 Something you can take advantage of today is the {% url 'Cypress Dashboard Service' dashboard-introduction%}: our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
 
 ## Visual Regression Test / Screenshot Diffing

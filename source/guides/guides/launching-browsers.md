@@ -14,11 +14,18 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Canary" https://www.google.com/chrome/browser/canary.html %}
 - {% url "Chrome" https://www.google.com/chrome/browser/desktop/index.html %}
 - {% url "Chromium" https://www.chromium.org/Home %}
+- {% url "Edge" https://www.microsoft.com/edge %}
+- {% url "Edge Beta" https://www.microsoftedgeinsider.com/download %}
+- {% url "Edge Canary" https://www.microsoftedgeinsider.com/download %}
+- {% url "Edge Dev" https://www.microsoftedgeinsider.com/download %}
 - {% url "Electron" https://electron.atom.io/ %}
+- {% url "Firefox" https://www.mozilla.org/firefox/ %}
+- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
+- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
 
-{% imgTag /img/guides/select-browser.png "Select a different browser" %}
+{% imgTag /img/guides/browser-list-dropdown.png "Select a different browser" %}
 
 {% partial chromium_download %}
 
@@ -40,9 +47,9 @@ Because Electron is the default browser - it is typically run in CI. If you are 
 
 ## Chrome Browsers
 
-All Chrome* flavored browsers will be detected and are supported.
+All Chrome* flavored browsers will be detected and are supported above Chrome 64.
 
-### You can launch Chrome browsers:
+You can launch Chrome like this:
 
 ```shell
 cypress run --browser chrome
@@ -61,10 +68,43 @@ cypress run --browser chromium
 Or Chrome Canary:
 
 ```shell
-cypress run --browser canary
+cypress run --browser chrome:canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about debugging browser launching' debugging#Launching-browsers %}
+Or Microsoft Edge (Chromium-based):
+
+```shell
+cypress run --browser edge
+```
+
+Or Microsoft Edge Canary (Chromium-based):
+
+```shell
+cypress run --browser edge:canary
+```
+
+{% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}
+
+## Firefox Browsers
+
+Firefox-family browsers are supported by Cypress.
+
+You can launch Firefox like this:
+
+```shell
+cypress run --browser firefox
+```
+
+Or Firefox Developer/Nightly Edition:
+
+```shell
+cypress run --browser firefox:dev
+cypress run --browser firefox:nightly
+```
+
+To use this command in CI, you need to install these other browsers - or use one of our {% url 'docker images' docker %}.
+
+By default, we will launch Firefox in headed mode. To run Firefox headlessly, you can pass the `--headless` argument to `cypress run`.
 
 ## Launching by a path
 
@@ -93,8 +133,9 @@ In the plugins file, you can filter the list of browsers passed inside the `conf
 module.exports = (on, config) => {
   // inside config.browsers array each object has information like
   // {
-  //   name: 'canary',
-  //   family: 'chrome',
+  //   name: 'chrome',
+  //   channel: 'canary',
+  //   family: 'chromium',
   //   displayName: 'Canary',
   //   version: '80.0.3966.0',
   //   path:
@@ -102,7 +143,7 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === 'chrome')
+    browsers: config.browsers.filter((b) => b.family === 'chromium')
   }
 }
 ```
@@ -115,7 +156,7 @@ When you open the Test Runner in a project that uses the above modifications to 
 If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
 {% endnote %}
 
-If you have installed a Chromium-based browser like {% url Brave https://brave.com/ %}, {% url Vivaldi https://vivaldi.com/ %} and even the new {% url "Microsoft Edge Beta" https://www.microsoftedgeinsider.com/en-us/ %} you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
+If you have installed a Chromium-based browser like {% url Brave https://brave.com/ %}, {% url Vivaldi https://vivaldi.com/ %} you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
 
 ```javascript
 // cypress/plugins/index.js
@@ -134,7 +175,8 @@ const findBrowser = () => {
 
     return {
       name: 'Brave',
-      family: 'chrome',
+      channel: 'stable',
+      family: 'chromium',
       displayName: 'Brave',
       version,
       path: browserPath,
@@ -154,7 +196,7 @@ module.exports = (on, config) => {
 
 {% imgTag /img/guides/plugins/brave-browser.png "List of browsers includes Brave browser" %}
 
-Once selected, the Brave browser is detected using the same approach as any other browser of the `chrome` family.
+Once selected, the Brave browser is detected using the same approach as any other browser of the `chromium` family.
 
 {% imgTag /img/guides/plugins/brave-running-tests.png "Brave browser executing end-to-end tests" %}
 
@@ -162,7 +204,7 @@ If you modify the list of browsers, you can see the {% url "resolved configurati
 
 ## Unsupported Browsers
 
-Many browsers such as Firefox, Safari, and Internet Explorer are not currently supported. While it may be possible to modify the list of browsers found and run Cypress within them - we do not guarantee full functionality. Support for more browsers is on our roadmap. You can read an exhaustive explanation about our future cross browser testing strategy {% issue 310 'here' %}.
+Many browsers such as Safari and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an explanation about our future cross browser roadmap {% issue 310 'here' %}.
 
 # Browser Environment
 
@@ -174,8 +216,8 @@ When Cypress goes to launch your browser it will give you an opportunity to modi
 
 This enables you to do things like:
 
-- Load your own chrome extension
-- Enable or disable experimental chrome features
+- Load your own extension
+- Enable or disable experimental features
 
 {% url 'This part of the API is documented here.' browser-launch-api %}
 
@@ -210,16 +252,16 @@ You can see all of the default chrome command line switches we send {% url "here
 
 # Browser Icon
 
-You might notice that if you already have the browser open you will see two of the same browser icons in your Dock.
+You might notice that if you already have the browser open you will see two of the same browser icons in your dock.
 
 {% video local /img/snippets/switching-between-cypress-and-other-chrome-browser.mp4 %}
 
 We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
 
-For this reason we recommend {% url "downloading Chromium" https://www.chromium.org/Home %} or {% url "downloading Canary" https://www.google.com/chrome/browser/canary.html %}. These browsers both have different icons from the standard Chrome browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a Dock icon.
+For this reason you may find downloading and using a browser's release channel versions (Dev, Canary, etc) useful. These browsers have different icons from the standard stable browser, making them more distinguishable. You can also use the bundled {% urlHash "Electron browser" Electron-Browser %}, which does not have a dock icon.
 
 {% video local /img/snippets/switching-cypress-browser-and-canary-browser.mp4 %}
 
-Additionally, we've made the browsers spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
+Additionally, in Chrome-based browsers, we've made the browser spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
 {% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
