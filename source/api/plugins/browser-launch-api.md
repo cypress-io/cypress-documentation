@@ -143,13 +143,13 @@ You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH
 ### Linux/OSX
 
 ```shell
-export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 ### Windows
 
 ```shell
-set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.js" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js %}. There is no way to see all currently set switches after Electron's launch.
