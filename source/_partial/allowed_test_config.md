@@ -2,7 +2,7 @@
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `browser` **note:** this is the only option that allows to skip a test or a suite of tests depending on the current browser
+- `browser` **note:** filters whether the tests or a suite of tests runs depending on the current browser
 - `defaultCommandTimeout`
 - `execTimeout`
 - `env` **note:** Provided environment variables will be merged with current environment variables.
