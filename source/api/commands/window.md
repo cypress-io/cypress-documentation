@@ -160,7 +160,7 @@ it('test', (done) => {
 
 It fails. But the interesting thing is that the type of `event` is `KeyboardEvent` when you `console.log(event)`. 
 
-It's because Cypress Runner uses `iframe` to load the test application. In other words, `KeyboardEvent` used in the the code above and the `KeyboardEvent` class from which `event` variable is constructed are different `KeyboardEvent`s. 
+It's because the Test Runner uses an `iframe` to load the application under test. In other words, the `KeyboardEvent` used in the the code above and the `KeyboardEvent` class from which the `event` variable is constructed are different `KeyboardEvent`s. 
 
 That's why the test should be written like this. 
 
