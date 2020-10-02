@@ -661,6 +661,6 @@ Yes. You can leverage visual testing tools to test that charts and graphs are re
 - see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
 - see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
 
-## {% fa fa-angle-right %} Why doesn't `instanceof Event` work?
+## {% fa fa-angle-right %} Why doesn't the `instanceof Event` work?
 
 It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" /api/commands/window.html#Cypress-uses-2-different-windows %}.
