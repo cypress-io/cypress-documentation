@@ -5,7 +5,7 @@
 - `browser` **note:** this is the only option that allows to skip a test or a suite of tests depending on the current browser
 - `defaultCommandTimeout`
 - `execTimeout`
-- `env` **note:** Cypress merges the object of environment variables
+- `env` **note:** Provided environment variables will be merged with current environment variables.
 - `includeShadowDom`
 - `requestTimeout`
 - `responseTimeout`
