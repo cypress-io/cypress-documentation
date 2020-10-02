@@ -1,6 +1,6 @@
 .article-wrapper {
   position: relative;
-  margin: 60px ($sidebar-width + 40px) 60px ($sidebar-width + 40px);
+  margin: 0 ($sidebar-width);
   display: flex;
   flex-direction: row;
 }
@@ -16,8 +16,9 @@
 
 .article {
   position: relative;
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 60px 30px;
   display: flex;
   flex-direction: column;
   right: 0;
@@ -178,6 +179,7 @@ a.article-edit-link {
   }
 
   table {
+    background-color: white;
     border: 1px solid #e8e8e8;
     display: block;
     margin: 15px 0;

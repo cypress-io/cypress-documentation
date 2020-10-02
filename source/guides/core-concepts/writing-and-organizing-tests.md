@@ -331,33 +331,71 @@ specify(name, config, fn)
 
 {% partial allowed_test_config %}
 
-### Suite of test configuration
+### Suite configuration
 
-You can configure the size of the viewport height and width within a suite.
+If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+
+The following suite of tests will be skipped if running tests in Chrome browsers.
 
 ```js
-describe('page display on medium size screen', {
-  viewportHeight: 1000,
-  viewportWidth: 400
-}, () => {
-  it('does not display sidebar', () => {
-    cy.get('#sidebar').should('not.be.visible')
+describe('When NOT in Chrome', { browser: '!chrome' }, () => {
+  it('Shows warning', () => {
+    cy.get('.browser-warning')
+      .should('contain', 'For optimal viewing, use Chrome browser')
   })
 
-  it('shows hamburger menu', () => {
-    cy.get('#header').find('i.menu').should('be.visible')
+  it('Links to browser compatibility doc', () => {
+    cy.get('a.browser-compat')
+      .should('have.attr', 'href')
+      .and('include', 'browser-compatibility')
+  })
+})
+```
+
+The following suite of tests will only execute when running in the Firefox browser. It will overwrite the viewport resolution in one of the tests, and will merge any current environment variables with the provided ones.
+
+```js
+describe('When in Firefox', {
+  browser: 'firefox',
+  viewportWidth: 1024,
+  viewportHeight: 700,
+  env: {
+    DEMO: true,
+    API: 'http://localhost:9000'
+  }
+}, () => {
+  it('Sets the expected viewport and API url', () => {
+    expect(cy.config('viewportWidth')).to.equal(1024)
+    expect(cy.config('viewportHeight')).to.equal(700)
+    expect(cy.env('API')).to.equal('http://localhost:9000')
+  })
+
+  it('Uses the closest API environment variable', {
+    env: {
+      API: 'http://localhost:3003'
+    }
+  }, () => {
+    expect(cy.env('API')).to.equal('http://localhost:3003')
+    // other environment variables remain unchanged
+    expect(cy.env('DEMO')).to.be.true
   })
 })
 ```
 
 ### Single test configuration
 
-If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
+You can configure the number of retry attempts during `cypress run` or `cypress open`. See {% url "Test Retries" test-retries %} for more information.
 
 ```js
-it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
-  cy.get('.browser-warning')
-    .should('contain', 'For optimal viewing, use Chrome browser')
+it('should redirect unauthenticated user to sign-in page', {
+    retries: {
+      runMode: 3,
+      openMode: 2
+    }
+  } () => {
+    cy.visit('/')
+    // ...
+  })
 })
 ```
 
@@ -485,7 +523,7 @@ Set the {% url `watchForFileChanges` configuration#Global %} configuration prope
 The `watchForFileChanges` property is only in effect when running Cypress using {% url "`cypress open`" command-line#cypress-open %}.
 {% endnote %}
 
-The component responsible for the file-watching behavior in Cypress is the {% url 'Cypress Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}. This is the default file-watcher packaged with Cypress.
+The component responsible for the file-watching behavior in Cypress is the {% url '`cypress-webpack-preprocessor`' https://github.com/cypress-io/cypress-webpack-preprocessor %}. This is the default file-watcher packaged with Cypress.
 
 If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as _what_ is watched and the delay before emitting an "update" event after a change.
 

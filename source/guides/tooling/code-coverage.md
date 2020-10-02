@@ -378,7 +378,7 @@ Are our end-to-end tests that are so effective at covering the web application c
 **Long story short: yes.** You can collect the code coverage from the back end, and let the `@cypress/code-coverage` plugin merge it with the front end coverage, creating a single full stack report.
 
 {% note info %}
-The full source code for this section can be found in the {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} repository.
+The full source code for this section can be found in the {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %} repository.
 {% endnote %}
 
 You can run your Node server and instrument it using nyc on the fly. Instead of the "normal" server start command, you can run the command `npm run start:coverage` defined in the `package.json` like this:
@@ -441,11 +441,11 @@ In order for the `@cypress/code-coverage` plugin to know that it should request 
 }
 ```
 
-From now on, the front end code coverage collected during end-to-end tests will be merged with the code coverage from the instrumented back end code and saved in a single report. Here is an example report from the {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} example:
+From now on, the front end code coverage collected during end-to-end tests will be merged with the code coverage from the instrumented back end code and saved in a single report. Here is an example report from the {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %} example:
 
 {% imgTag /img/guides/code-coverage/full-coverage.png "Combined code coverage report from front and back end code" %}
 
-You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
+You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-conduit-app' https://coveralls.io/github/cypress-io/cypress-example-conduit-app %} dashboard.
 
 # Future work
 
@@ -489,9 +489,9 @@ There is a series of videos we have recorded showing code coverage in Cypress
 # Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
-
+- {% url 'cypress-io/cypress-realworld-app' https://github.com/cypress-io/cypress-realworld-app %} or RWA is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**. The RWA achieves full code coverage with end-to-end tests {% url "across multiple browsers" cross-browser-testing %} and {% url "device sizes" viewport %}.
 - {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} is the example code used in this guide.
-- {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
+- {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
 - {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
 - {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for a React App that uses TypeScript.
@@ -509,5 +509,3 @@ Find the full list of examples linked in {% url cypress-io/code-coverage#externa
 - {% url "Combined End-to-end and Unit Test Coverage" https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/ %}
 - {% url "Code Coverage by Parcel Bundler" https://glebbahmutov.com/blog/code-coverage-by-parcel/ %}
 - {% url "Code Coverage for End-to-end Tests" https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/ %}
-
-

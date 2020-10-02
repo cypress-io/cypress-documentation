@@ -19,9 +19,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Edge Canary" https://www.microsoftedgeinsider.com/download %}
 - {% url "Edge Dev" https://www.microsoftedgeinsider.com/download %}
 - {% url "Electron" https://electron.atom.io/ %}
-- {% url "Firefox" https://www.mozilla.org/firefox/ %} (Beta support)
-- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %} (Beta support)
-- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %} (Beta support)
+- {% url "Firefox" https://www.mozilla.org/firefox/ %}
+- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
+- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
 
@@ -47,7 +47,7 @@ Because Electron is the default browser - it is typically run in CI. If you are 
 
 ## Chrome Browsers
 
-All Chrome* flavored browsers will be detected and are supported.
+All Chrome* flavored browsers will be detected and are supported above Chrome 64.
 
 You can launch Chrome like this:
 
@@ -85,9 +85,9 @@ cypress run --browser edge:canary
 
 {% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}
 
-## Firefox Browsers (beta)
+## Firefox Browsers
 
-Firefox-family browsers have beta support.
+Firefox-family browsers are supported by Cypress.
 
 You can launch Firefox like this:
 

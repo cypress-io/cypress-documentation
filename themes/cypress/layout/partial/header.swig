@@ -22,16 +22,6 @@
 
       {% if not className %}
         <div class="main-nav-right">
-          {% if site.data.languages|length > 1 %}
-            <div id="lang-select-wrap">
-              <label aria-label="Select language" id="lang-select-label"><i class="fa fa-globe"></i><span>{{ lang_name(page.lang) }}</span><i class="fa fa-caret-down"></i></label>
-              <select aria-label="Select language" id="lang-select" data-canonical="{{ canonical_path_for_nav() }}">
-                {% for lang in site.data.languages %}
-                  <option value="{{ loop.key }}"{% if page.lang === loop.key %} selected{% endif %}>{{ lang_name(loop.key) }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          {% endif %}
           <div id="search-container">
             <div id="search-input-wrap">
               <div id="search-input-icon">

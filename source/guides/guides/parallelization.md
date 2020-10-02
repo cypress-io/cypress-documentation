@@ -243,14 +243,15 @@ Cypress currently uses the following CI environment variables to determine a CI 
 Provider  | Environment Variable
 --|--
 AppVeyor  | `APPVEYOR_BUILD_NUMBER`
-AWS CodeBuild | `CODEBUILD_BUILD_ID`
+AWS CodeBuild | `CODEBUILD_INITIATOR`
 Bamboo  | `bamboo_buildNumber`
+Bitbucket  | `BITBUCKET_BUILD_NUMBER`
 Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
 Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`
 Codeship Pro  | `CI_BUILD_ID`
 Drone  | `DRONE_BUILD_NUMBER`
-Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`
+Gitlab  | `CI_PIPELINE_ID`
 Jenkins  | `BUILD_NUMBER`
 Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
 Travis  | `TRAVIS_BUILD_ID`
@@ -294,17 +295,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 {% imgTag /img/guides/parallelization/machines-view.png "Machines view with parallelization" %}
 
 # Next Steps
-
-{% note info %}
-### Test and debug faster with the Cypress Dashboard
-
-- See exact point of failure of tests running in CI
-- Supercharge test times by running tests in parallel
-- Get instant test failure alerts via Slack or GitHub
-
-<a href="https://www.cypress.io/dashboard" class="button">Learn more</a>
-{% endnote %} 
-
+- {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
 - {% url "Continuous Integration Guide" continuous-integration %}
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}

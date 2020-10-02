@@ -138,6 +138,15 @@ Set {% url 'configuration' configuration %} values. Separate multiple values wit
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses `--config` flag to easily specify {% url viewport configuration#Viewport %} sizes for responsive testing locally and in dedicated CI jobs. Examples:
+- {% fa fa-github %} {% url "npm scripts" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120 %} to run Cypress in mobile viewport.
+- {% fa fa-github %} {% url "Circle CI job configuration" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100 %} for running test suites in mobile viewport.
+
+{% endnote %}
+
 ### `cypress run --config-file <config-file>`
 
 You can specify a path to a JSON file where {% url 'configuration' configuration %} values are set. This defaults to `cypress.json`.

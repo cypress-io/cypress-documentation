@@ -124,16 +124,6 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ## Record tests
 
-{% note info %}
-### Test and debug faster with the Cypress Dashboard
-
-- See exact point of failure of tests running in CI
-- Supercharge test times by running tests in parallel
-- Get instant test failure alerts via Slack or GitHub
-
-<a href="https://www.cypress.io/dashboard" class="button">Learn more</a>
-{% endnote %}
-
 Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
 
 ### Recording tests allow you to:
@@ -180,7 +170,7 @@ CI Provider | Example Project | Example Config
 {% url "Azure / VSTS CI / TeamFoundation" https://azure.microsoft.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "azure-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
 {% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
-{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
+{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".circleci/config.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml %}
 {% url "CodeShip Basic" https://codeship.com/features/basic %} (has {% issue 328 "cy.exec() issue" %}) | |
 {% url "CodeShip Pro" https://codeship.com/features/pro %} | {% url "cypress-example-docker-codeship" https://github.com/cypress-io/cypress-example-docker-codeship %} |
 {% url "Concourse" https://concourse-ci.org/ %} | |
@@ -225,9 +215,18 @@ Caching folders with npm modules saves a lot of time after the first build.
 {% video youtube J-xbNtKgXfY %}
 <!-- textlint-enable -->
 
-### {% badge success New %} Example CircleCI Orb
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
 
-The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the Circle CI {% url "Cypress Orb" https://github.com/cypress-io/circleci-orb %}, Codecov Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems with full code-coverage reporting and {% url "Cypress Dashboard recording" https://dashboard.cypress.io/projects/7s5okt %}.
+
+Check out the full {% fa fa-github %} {% url "RWA Circle CI configuration" https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml %}.
+
+{% endnote %}
+
+### Example CircleCI Orb
+
+The Cypress CircleCI Orb is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
@@ -272,14 +271,14 @@ In all cases, you are using `run` and `install` job definitions that Cypress pro
 
 You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
-### Example `circle.yml` v2 config file
+### Example `.circleci/config.yml` v2 config file
 
 ```yaml
 version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -303,14 +302,14 @@ jobs:
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-### Example `circle.yml` v2 config file with `yarn`
+### Example `.circleci/config.yml` v2 config file with `yarn`
 
 ```yaml
 version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -530,7 +529,7 @@ RUN $(npm bin)/cypress run
 Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -770,7 +769,7 @@ NO_COLOR=1 cypress run
 ```
 
 # See also
-
+- {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
 - {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
