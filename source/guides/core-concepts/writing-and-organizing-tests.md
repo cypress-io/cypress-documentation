@@ -335,8 +335,10 @@ specify(name, config, fn)
 
 If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser %}.
 
+The following suite of tests will be skipped if running tests in Chrome browsers.
+
 ```js
-describe('When NOT in Chrome', {  browser: '!chrome' }, () => {
+describe('When NOT in Chrome', { browser: '!chrome' }, () => {
   it('Shows warning', () => {
     cy.get('.browser-warning')
       .should('contain', 'For optimal viewing, use Chrome browser')
@@ -346,6 +348,36 @@ describe('When NOT in Chrome', {  browser: '!chrome' }, () => {
     cy.get('a.browser-compat')
       .should('have.attr', 'href')
       .and('include', 'browser-compatibility')
+  })
+})
+```
+
+The following suite of tests will only execute when running in the Firefox browser. It will overwrite the viewport resolution in one of the tests, and will merge any current environment variables with the provided ones.
+
+```js
+describe('When in Firefox', {
+  browser: 'firefox',
+  viewportWidth: 1024,
+  viewportHeight: 700,
+  env: {
+    DEMO: true,
+    API: 'http://localhost:9000'
+  }
+}, () => {
+  it('Sets the expected viewport and API url', () => {
+    expect(cy.config('viewportWidth')).to.equal(1024)
+    expect(cy.config('viewportHeight')).to.equal(700)
+    expect(cy.env('API')).to.equal('http://localhost:9000')
+  })
+
+  it('Uses the closest API environment variable', {
+    env: {
+      API: 'http://localhost:3003'
+    }
+  }, () => {
+    expect(cy.env('API')).to.equal('http://localhost:3003')
+    // other environment variables remain unchanged
+    expect(cy.env('DEMO')).to.be.true
   })
 })
 ```

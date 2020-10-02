@@ -94,8 +94,16 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
+First joint webinar with Applitools
+
 <!-- textlint-disable -->
 {% video youtube qVRjhABuyG0 %}
+<!-- textlint-enable -->
+
+Second joint webinar with Applitools with a focus on {% url 'Component Testing' ../component-testing/introduction.html %}
+
+<!-- textlint-disable -->
+{% video youtube Bxh_ebMk1aM %}
 <!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
@@ -116,7 +124,7 @@ Resource |  Description
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
 {% note info %}
-#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}
 
 The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the `cy.percySnapshot()` command provided by the {% url "Cypress Percy plugin" https://github.com/percy/percy-cypress %} to take visual snapshots throughout the user journey end-to-end tests
 
