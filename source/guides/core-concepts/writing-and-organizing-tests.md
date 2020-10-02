@@ -352,7 +352,7 @@ describe('When NOT in Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
-The following suite of tests will only execute when running in Firefox browser. It will overwrite the viewport resolution in one of the tests, and will merge any existing environment variables with the given ones.
+The following suite of tests will only execute when running in the Firefox browser. It will overwrite the viewport resolution in one of the tests, and will merge any current environment variables with the provided ones.
 
 ```js
 describe('When in Firefox', {
