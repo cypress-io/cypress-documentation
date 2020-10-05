@@ -118,6 +118,15 @@ cypress open --browser /usr/bin/chromium
 
 Cypress will automatically detect the type of browser supplied and launch it for you.
 
+Occasionally Cypress will have issues detecting the type of browser in Windows environments. To manually
+detect the browser type, append the browser type to the end of the path
+
+```shell
+cypres run --browser C:\foo\bar.exe:chromium
+# or
+cypress open --browser C:\foo\bar.exe:chromium
+``` 
+
 {% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
 
 ## Customize available browsers

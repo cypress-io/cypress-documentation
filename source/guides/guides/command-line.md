@@ -422,7 +422,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Optionally, you can also specify the browser manually: 
+In Windows environments, it's also possible to specify the browser directly:  
 
 ```shell
 cypress open --browser /usr/bin/browser:chromium
