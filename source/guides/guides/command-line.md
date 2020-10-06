@@ -591,7 +591,7 @@ cypress cache list
 └─────────┴──────────────┘
 ```
 
-You can calculate the size of every Cypress version folder by adding `--size` argument to the command. Note that calculating disk size is slow.
+You can calculate the size of every Cypress version folder by adding the `--size` argument to the command. Note that calculating the disk size can be slow.
 
 ```shell
 cypress cache list --size
