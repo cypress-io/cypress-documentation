@@ -689,4 +689,4 @@ Finally, you might want to check out the {% url "React Component Testing" compon
 
 ## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
 
-Yes, by using the newer API command {% url "cy.route2" route2 %} as described in {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post, or by utilizing the plugin {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %}.
+Yes, by using the newer API command {% url "cy.route2()" route2 %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
