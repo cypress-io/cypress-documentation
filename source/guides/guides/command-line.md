@@ -591,6 +591,19 @@ cypress cache list
 └─────────┴──────────────┘
 ```
 
+You can calculate the size of every Cypress version folder by adding the `--size` argument to the command. Note that calculating the disk size can be slow.
+
+```shell
+cypress cache list --size
+┌─────────┬──────────────┬─────────┐
+│ version │ last used    │ size    │
+├─────────┼──────────────┼─────────┤
+│ 5.0.0   │ 3 months ago │ 425.3MB │
+├─────────┼──────────────┼─────────┤
+│ 5.3.0   │ 5 days ago   │ 436.3MB │
+└─────────┴──────────────┴─────────┘
+```
+
 ### `cypress cache clear`
 
 Clear the contents of the Cypress cache. This is useful when you want Cypress to clear out all installed versions of Cypress that may be cached on your machine. After running this command, you will need to run `cypress install` before running Cypress again.
