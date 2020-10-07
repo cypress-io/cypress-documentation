@@ -81,7 +81,7 @@ Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. {% url 'Read more about Web Security' web-security %}.
 `blockHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blockHosts %}
-`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
+`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
 `modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 
@@ -330,7 +330,11 @@ You can turn this option off if the application or site you're testing **does no
 
 ## firefoxGcInterval
 
-Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can see progress on this issue {% issue 6187 'here' %}.
+{% note warning %}
+The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since the garbage collection bug was fixed in Firefox 80. It is recommended to upgrade your version of Firefox to avoid this workaround.
+{% endnote %}
+
+Firefox versions 79 and earlier have a {% url "bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing.
 
 Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
 

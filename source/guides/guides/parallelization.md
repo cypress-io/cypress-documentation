@@ -245,12 +245,13 @@ Provider  | Environment Variable
 AppVeyor  | `APPVEYOR_BUILD_NUMBER`
 AWS CodeBuild | `CODEBUILD_INITIATOR`
 Bamboo  | `bamboo_buildNumber`
+Bitbucket  | `BITBUCKET_BUILD_NUMBER`
 Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
 Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`
 Codeship Pro  | `CI_BUILD_ID`
 Drone  | `DRONE_BUILD_NUMBER`
-Gitlab  | `CI_PIPELINE_ID`, `CI_JOB_ID`, `CI_BUILD_ID`
+Gitlab  | `CI_PIPELINE_ID`
 Jenkins  | `BUILD_NUMBER`
 Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
 Travis  | `TRAVIS_BUILD_ID`

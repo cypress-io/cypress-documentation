@@ -2,14 +2,10 @@
 title: Cross Browser Testing
 ---
 
-Cypress has the capability to run tests across multiple browsers. Currently, Cypress has support for {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron) and beta support for Firefox browsers.
+Cypress has the capability to run tests across multiple browsers. Currently, Cypress has support for {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron and Chromium-based Microsoft Edge), and Firefox.
 
 {% note warning 'Web Security' %}
 Tests that require the {% url "`chromeWebSecurity` configuration option to be disabled" web-security#Disabling-Web-Security %} may experience issues in non-Chromium based browsers.
-{% endnote %}
-
-{% note warning 'Firefox Garbage Collection' %}
-Cypress triggers Firefox's internal garbage collection (GC) to better manage the browser's memory consumption. {% url "Learn more here" configuration#firefoxGcInterval %}.
 {% endnote %}
 
 Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.

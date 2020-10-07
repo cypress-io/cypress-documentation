@@ -661,6 +661,10 @@ Yes. You can leverage visual testing tools to test that charts and graphs are re
 - see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
 - see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
 
+## {% fa fa-angle-right %} Why doesn't the `instanceof Event` work?
+
+It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" /api/commands/window.html#Cypress-uses-2-different-windows %}.
+
 ## {% fa fa-angle-right %} Can I use Cucumber to write tests?
 
 Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then coverts the scenarios and step definitions into "regular" JavaScript Cypress tests.
@@ -682,3 +686,7 @@ Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.c
 Yes, absolutely. A good example of a fully tested React application is our {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} and {% url "TodoMVC Redux App" https://github.com/cypress-io/cypress-example-todomvc-redux %}. You can even use React DevTools while testing your application, read {% url "The easiest way to connect Cypress and React DevTools" https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm %}. If you really need to select React components by their name, props, or state, check out {% url cypress-react-selector https://github.com/abhinaba-ghosh/cypress-react-selector %}.
 
 Finally, you might want to check out the {% url "React Component Testing" component-testing %} adaptor that allows you to test your React components right inside Cypress.
+
+## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
+
+Yes, by using the newer API command {% url "cy.route2()" route2 %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
