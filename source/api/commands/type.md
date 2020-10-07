@@ -32,7 +32,7 @@ cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
 
 The text to be typed into the DOM element.
 
-Text passed to `.type()` may include any of the special character sequences below.
+Text passed to `.type()` may include any of the special character sequences below. These characters will pass along the correct `keyCode`, `key`, and `which` codes to any events issued during `.type()`. Some of the special character sequences may perform actions during typing such as `{movetoend}`, `{movetostart}`, or `{selectall}`.
 
 {% note info %}
 To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
@@ -50,6 +50,8 @@ Sequence | Notes
 `{home}` | Moves cursor to the start of the line
 `{insert}` | Inserts character to the right of the cursor
 `{leftarrow}` | Moves cursor left
+`{movetoend}` | Moves cursor to end of typeable element
+`{movetostart}` | Moves cursor to the start of typeable element
 `{pagedown}` | Scrolls down
 `{pageup}` | Scrolls up
 `{rightarrow}` | Moves cursor right
