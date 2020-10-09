@@ -471,4 +471,6 @@ The available functions on `res` are:
 # See also
 
 * {% url "`cy.route2()` example recipes with real-world examples" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
+* {% url "`cy.route` vs `cy.route2`" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
+* {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} blog post
 * {% url "open issues for `experimentalNetworkStubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `experimentalNetworkStubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
