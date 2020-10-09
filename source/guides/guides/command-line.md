@@ -601,6 +601,8 @@ cypress cache clear
 
 # Debugging commands
 
+## Enable Debug Logs
+
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
 **On Mac or Linux:**
@@ -639,6 +641,16 @@ DEBUG=cypress:launcher cypress run
 
 ```shell
 DEBUG=cypress:server:project cypress run
+```
+
+## Disable the Command Log
+
+In some cases the Command Log, responsible for rendering info about commands, assertions, and test status in the browser, causes performance issues resulting in slowed or crashing test suites. 
+
+In order to isolate these issues by disabling Command Log rendering, use `CYPRESS_NO_COMMAND_LOG=1`
+
+```shell
+CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
 
 {% history %}
