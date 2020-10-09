@@ -146,6 +146,8 @@ Flake can also occur when there are differences between your local and CI enviro
 
 The Cypress Dashboard also offers {% url "Analytics" analytics %} that illustrate trends in your tests and can help identify the tests that fail most often. This could help narrow down what is causing the flake -- for example, seeing increased failures after a change to the test environment could indicate issues with the new environment.
 
+For more advice on dealing with flake read a {% url "series of our blog posts" https://cypress.io/blog/tag/flake/ %} and {% url "Identifying Code Smells in Cypress" https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html %} by {% url "Cypress Ambassador" https://www.cypress.io/ambassadors/ %} Josh Justice.
+
 # Log Cypress events
 
 Cypress emits multiple events you can listen to as shown below. {% url 'Read more about logging events in the browser here' catalog-of-events#Logging-All-Events %}.
