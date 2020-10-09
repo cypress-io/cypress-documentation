@@ -693,5 +693,5 @@ Yes, by using the newer API command {% url "cy.route2()" route2 %} as described 
 
 ## {% fa fa-angle-right %} Can Cypress be used for model-based testing?
 
-Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful.
+Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful. Read {% url "Access XState from Cypress Test" https://glebbahmutov.com/blog/cypress-and-xstate/ %} for our start.
 
