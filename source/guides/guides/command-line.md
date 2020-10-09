@@ -612,6 +612,14 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
+### `cypress cache prune`
+
+Deletes all installed Cypress versions from the cache except for the currently-installed version.
+
+```shell
+cypress cache prune
+```
+
 # Debugging commands
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
@@ -655,5 +663,6 @@ DEBUG=cypress:server:project cypress run
 ```
 
 {% history %}
+{% url "5.4.0" changelog %} | Added `prune` subcommand to `cypress cache`
 {% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
 {% endhistory %}
