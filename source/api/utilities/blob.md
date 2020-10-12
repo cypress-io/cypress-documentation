@@ -58,10 +58,12 @@ cy.get('input[type=file]').then(function(el) {
 
   const file = new File([blob], 'images/logo.png', { type: 'image/png' })
   const list = new DataTransfer()
+  
   list.items.add(file)
   const myFileList = list.files
+  
   el[0].files = myFileList
-  el[0].dispatchEvent(new Event('change', { bubbles: true } ))
+  el[0].dispatchEvent(new Event('change', { bubbles: true }))
 })
 ```
 
