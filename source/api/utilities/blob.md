@@ -47,6 +47,24 @@ cy.get('input[type=file]').then(function($input) {
 })
 ```
 
+### Using an image fixture for upload
+
+```javascript
+// programmatically upload the logo
+cy.fixture('images/logo.png').as('logo')
+cy.get('input[type=file]').then(function(el) {
+  // convert the logo base64 string to a blob
+  const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+
+  const file = new File([blob], 'images/logo.png', { type: 'image/png' });
+  const list = new DataTransfer();
+  list.items.add(file);
+  const myFileList = list.files;
+  el[0].files = myFileList;
+  el[0].dispatchEvent(new Event('change', {bubbles: true}));
+});
+```
+
 ## Getting dataUrl string
 
 ### Create an `img` element and set its `src` to the `dataUrl`
