@@ -174,11 +174,11 @@ cy.wait('@getSettings')
 cy.route2({
   url: 'http://example.com/search',
   query: { q: 'expected terms' },
-}).as('login')
+}).as('search')
 
-// once a POST request to http://example.com/login with a querystring containing
+// once a GET request to http://example.com/search with a querystring containing
 // 'q=expected+terms' responds, this 'cy.wait' will resolve
-cy.wait('@login')
+cy.wait('@search')
 ```
 
 ### Using the yielded object
