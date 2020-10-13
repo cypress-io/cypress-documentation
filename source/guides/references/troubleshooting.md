@@ -101,6 +101,13 @@ To make a browser installed at a different path be auto-detected, create a symbo
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 
+Occasionally Cypress will have issues detecting the type of browser in Windows environments. To manually
+detect the browser type, append the browser type to the end of the path:
+
+```shell
+cypress open --browser C:/User/Application/browser.exe:chrome
+```
+
 # Allow the Cypress Chrome extension
 
 Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company block specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to allow the Cypress extension ID below:

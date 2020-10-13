@@ -422,13 +422,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-In Windows environments, it's also possible to specify the browser directly:  
-
-```shell
-cypress open --browser /usr/bin/browser:chromium
-```
-
-Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
+Currently, only browsers in the Chrome family (including the new Chromium-based Microsoft Edge and Brave) and Firefox are supported.
 
 {% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
