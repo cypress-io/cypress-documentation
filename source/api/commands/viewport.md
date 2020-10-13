@@ -49,8 +49,11 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `iphone-5`    | 320   | 568    |
 | `iphone-6`    | 375   | 667    |
 | `iphone-6+`   | 414   | 736    |
+| `iphone-7`    | 375   | 667    |
+| `iphone-8`    | 375   | 667    |
 | `iphone-x`    | 375   | 812    |
 | `iphone-xr`   | 414   | 896    |
+| `iphone-se2`  | 375   | 667    |
 | `macbook-11`  | 1366  | 768    |
 | `macbook-13`  | 1280  | 800    |
 | `macbook-15`  | 1440  | 900    |
