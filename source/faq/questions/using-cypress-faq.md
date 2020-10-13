@@ -685,7 +685,7 @@ Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.c
 
 Yes, absolutely. A good example of a fully tested React application is our {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} and {% url "TodoMVC Redux App" https://github.com/cypress-io/cypress-example-todomvc-redux %}. You can even use React DevTools while testing your application, read {% url "The easiest way to connect Cypress and React DevTools" https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm %}. If you really need to select React components by their name, props, or state, check out {% url cypress-react-selector https://github.com/abhinaba-ghosh/cypress-react-selector %}.
 
-Finally, you might want to check out the {% url "React Component Testing" component-testing %} adaptor that allows you to test your React components right inside Cypress.
+Finally, you might want to check out the {% url "React Component Testing" component-testing-introduction %} adaptor that allows you to test your React components right inside Cypress.
 
 ## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
 
