@@ -664,5 +664,6 @@ DEBUG=cypress:server:project cypress run
 
 {% history %}
 {% url "5.4.0" changelog %} | Added `prune` subcommand to `cypress cache`
+{% url "5.4.0" changelog %} | Added `--size` flag to `cypress cache list` subcommand
 {% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
 {% endhistory %}
