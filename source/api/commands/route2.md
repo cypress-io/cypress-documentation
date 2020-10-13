@@ -83,7 +83,7 @@ All properties are optional. All properties that are set must match for the rout
   https?: boolean
   /**
    * Match against the request's HTTP method.
-   * @default 'GET'
+   * @default '*'
    */
   method?: string | RegExp
   /**
@@ -176,7 +176,7 @@ cy.route2({
   query: { q: 'expected terms' },
 }).as('search')
 
-// once a GET request to http://example.com/search with a querystring containing
+// once any type of request to http://example.com/search with a querystring containing
 // 'q=expected+terms' responds, this 'cy.wait' will resolve
 cy.wait('@search')
 ```
