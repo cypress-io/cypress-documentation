@@ -137,11 +137,11 @@ describe('User bank accounts', {
 }, () => {
   // The per-suite configuration is applied to each test
   // If a test fails, it will be retried
-  it('allows a user to view their transactions, () => {
+  it('allows a user to view their transactions', () => {
     // ...
   }
 
-  it('allows a user to edit their transactions, () => {
+  it('allows a user to edit their transactions', () => {
     // ...
   }
 })
