@@ -422,7 +422,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
+Currently, only browsers in the Chrome family (including the new Chromium-based Microsoft Edge and Brave) and Firefox are supported.
 
 {% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
@@ -591,6 +591,19 @@ cypress cache list
 └─────────┴──────────────┘
 ```
 
+You can calculate the size of every Cypress version folder by adding the `--size` argument to the command. Note that calculating the disk size can be slow.
+
+```shell
+cypress cache list --size
+┌─────────┬──────────────┬─────────┐
+│ version │ last used    │ size    │
+├─────────┼──────────────┼─────────┤
+│ 5.0.0   │ 3 months ago │ 425.3MB │
+├─────────┼──────────────┼─────────┤
+│ 5.3.0   │ 5 days ago   │ 436.3MB │
+└─────────┴──────────────┴─────────┘
+```
+
 ### `cypress cache clear`
 
 Clear the contents of the Cypress cache. This is useful when you want Cypress to clear out all installed versions of Cypress that may be cached on your machine. After running this command, you will need to run `cypress install` before running Cypress again.
@@ -599,7 +612,17 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
+### `cypress cache prune`
+
+Deletes all installed Cypress versions from the cache except for the currently-installed version.
+
+```shell
+cypress cache prune
+```
+
 # Debugging commands
+
+## Enable Debug Logs
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
@@ -642,5 +665,7 @@ DEBUG=cypress:server:project cypress run
 ```
 
 {% history %}
+{% url "5.4.0" changelog %} | Added `prune` subcommand to `cypress cache`
+{% url "5.4.0" changelog %} | Added `--size` flag to `cypress cache list` subcommand
 {% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
 {% endhistory %}
