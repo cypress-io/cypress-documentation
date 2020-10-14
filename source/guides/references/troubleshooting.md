@@ -217,6 +217,16 @@ By default, process information is collected and summarized is printed once ever
 
 You can also obtain more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
+# Disable the Command Log
+
+In some cases the {% url "Command Log" test-runner#Command-Log %}, responsible for displaying test commands, assertions, and statuses in the Test Runner, may cause performance issues resulting in slower tests or the browser crashing.
+
+In order to isolate these issues, you can hide the Command Log by passing the environment variable below during `cypress open` or `cypress run`.
+
+```shell
+CYPRESS_NO_COMMAND_LOG=1 cypress run
+```
+
 # Additional information
 
 ## Write command log to the terminal

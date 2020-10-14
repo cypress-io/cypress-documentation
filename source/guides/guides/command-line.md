@@ -664,16 +664,6 @@ DEBUG=cypress:launcher cypress run
 DEBUG=cypress:server:project cypress run
 ```
 
-## Disable the Command Log
-
-In some cases the {% url "Command Log" test-runner#Command-Log %}, responsible for rendering test commands, assertions, and status in the Test Runner may cause performance issues resulting in slower tests or the browser crashing. 
-
-In order to isolate these issues, you can disable the Command Log rendering by passing the environment variable below.
-
-```shell
-CYPRESS_NO_COMMAND_LOG=1 cypress run
-```
-
 {% history %}
 {% url "5.4.0" changelog %} | Added `prune` subcommand to `cypress cache`
 {% url "5.4.0" changelog %} | Added `--size` flag to `cypress cache list` subcommand
