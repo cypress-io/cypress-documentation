@@ -101,6 +101,13 @@ To make a browser installed at a different path be auto-detected, create a symbo
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 
+Occasionally Cypress will have issues detecting the type of browser in Windows environments. To manually
+detect the browser type, append the browser type to the end of the path:
+
+```shell
+cypress open --browser C:/User/Application/browser.exe:chrome
+```
+
 # Allow the Cypress Chrome extension
 
 Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company block specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to allow the Cypress extension ID below:
@@ -209,6 +216,16 @@ In the resulting output, processes are grouped by their name.
 By default, process information is collected and summarized is printed once every 10 seconds. You can override this interval by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
 
 You can also obtain more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
+
+# Disable the Command Log
+
+In some cases the {% url "Command Log" test-runner#Command-Log %}, responsible for displaying test commands, assertions, and statuses in the Test Runner, may cause performance issues resulting in slower tests or the browser crashing.
+
+In order to isolate these issues, you can hide the Command Log by passing the environment variable below during `cypress open` or `cypress run`.
+
+```shell
+CYPRESS_NO_COMMAND_LOG=1 cypress run
+```
 
 # Additional information
 

@@ -685,7 +685,7 @@ Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.c
 
 Yes, absolutely. A good example of a fully tested React application is our {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} and {% url "TodoMVC Redux App" https://github.com/cypress-io/cypress-example-todomvc-redux %}. You can even use React DevTools while testing your application, read {% url "The easiest way to connect Cypress and React DevTools" https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm %}. If you really need to select React components by their name, props, or state, check out {% url cypress-react-selector https://github.com/abhinaba-ghosh/cypress-react-selector %}.
 
-Finally, you might want to check out the {% url "React Component Testing" component-testing %} adaptor that allows you to test your React components right inside Cypress.
+Finally, you might want to check out the {% url "React Component Testing" component-testing-introduction %} adaptor that allows you to test your React components right inside Cypress.
 
 ## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
 
@@ -693,5 +693,5 @@ Yes, by using the newer API command {% url "cy.route2()" route2 %} as described 
 
 ## {% fa fa-angle-right %} Can Cypress be used for model-based testing?
 
-Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful.
+Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful. Read {% url "Access XState from Cypress Test" https://glebbahmutov.com/blog/cypress-and-xstate/ %} for our start.
 
