@@ -5,7 +5,7 @@ title: get
 Get one or more DOM elements by selector or {% url 'alias' variables-and-aliases %}.
 
 {% note info %}
-The querying behavior of this command matches exactly how {% url `$(...)` http://api.jquery.com/jQuery/ %} works in jQuery.
+The querying behavior of this command is similar to how {% url `$(...)` http://api.jquery.com/jQuery/ %} works in jQuery.
 {% endnote %}
 
 # Syntax
