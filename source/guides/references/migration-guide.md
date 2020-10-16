@@ -525,7 +525,7 @@ An error will throw when a non-existent property is read. If there are typos in 
 
 ```javascript
 // Would pass in Cypress 3 but will fail correctly in 4
-expect(true).to.be.ture
+expect(true).to.be.true
 ```
 
 ### {% fa fa-warning red %} Breaking Change: `include` checks strict equality
