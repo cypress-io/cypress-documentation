@@ -62,6 +62,7 @@ Option | Default | Description
 `multiple` | `false` | {% usage_options multiple click %}
 `shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .click %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
