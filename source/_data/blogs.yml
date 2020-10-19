@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Identifying Code Smells in Cypress"
+    url: https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html
+    sourceName: CodingItwrong
+    sourceUrl: https://codingitwrong.com/
+    author: Josh Justice
+    date: October 09, 2020
+    img: /img/examples/code-smells.png
+
   - title: "Cypress + OneLogin: using API to authenticate before testing"
     url: https://medium.com/@jedicwb/cypress-io-onelogin-using-api-to-authenticate-before-testing-a6e2412b356c
     sourceName: Medium
