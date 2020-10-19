@@ -19,10 +19,12 @@ Some commands in Cypress are for interacting with the DOM such as:
 - {% url `.dblclick()` dblclick %}
 - {% url `.rightclick()` rightclick %}
 - {% url `.type()` type %}
+- {% url `.focus()` focus %}
 - {% url `.clear()` clear %}
 - {% url `.check()` check %}
 - {% url `.uncheck()` uncheck %}
 - {% url `.select()` select %}
+- {% url `.submit()` submit %}
 - {% url `.trigger()` trigger %}
 
 These commands simulate a user interacting with your application. Under the hood, Cypress fires the events a browser would fire thus causing your application's event bindings to fire.
