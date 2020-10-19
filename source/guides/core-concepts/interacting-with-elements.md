@@ -135,6 +135,8 @@ After scrolling the element, if we determine that it is still being covered up, 
 
 Our algorithm *should* always be able to scroll until the element is not covered.
 
+You can also turn off scrolling with the configuration option {% url `scrollToElement` configuration#scrolling %}. This can be useful if the scrolling whilst interacting with an element is causing problems. In this case it is up to you to manually scroll and note that if the element is scrolled out of view and this option is off then the visibility check will fail and the command will fail.
+
 ## Coordinates
 
 After we verify the element is actionable, Cypress will then fire all of the appropriate events and corresponding default actions. Usually these events' coordinates are fired at the center of the element, but most commands enable you to change the position it's fired to.

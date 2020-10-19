@@ -78,6 +78,7 @@ Option | Default | Description
 `force` | `false` | {% usage_options force type %}
 `parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
+`scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
 
 ## Yields {% helper_icon yields %}

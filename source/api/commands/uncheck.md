@@ -48,6 +48,7 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force uncheck %}
+`scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .uncheck %}
 
 ## Yields {% helper_icon yields %}

@@ -61,6 +61,7 @@ Option | Default | Description
 `bubbles` | `true` | Whether the event bubbles
 `cancelable` | `true` | Whether the event is cancelable
 `eventConstructor` | `Event` | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)
+`scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .trigger %}
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.

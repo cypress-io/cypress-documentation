@@ -99,6 +99,12 @@ Option | Default | Description
 `animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
 `waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
 
+## Scrolling
+
+Option | Default | Description
+----- | ---- | ----
+`scrollToElement` | `true` | Whether to automatically scroll to elements before executing commands
+
 ## Node version
 
 Option | Default | Description

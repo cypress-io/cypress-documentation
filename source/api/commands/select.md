@@ -46,6 +46,7 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force select %}
+`scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .select %}
 
 ## Yields {% helper_icon yields %}

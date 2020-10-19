@@ -60,6 +60,7 @@ Option | Default | Description
 `force` | `false` | {% usage_options force click %}
 `metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `false` | {% usage_options multiple click %}
+`scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .click %}
 
