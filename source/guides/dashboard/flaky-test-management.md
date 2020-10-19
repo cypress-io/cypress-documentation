@@ -5,7 +5,7 @@ title: Flaky Test Management
 By enabling {% url "test retries" test-retries %}, the Cypress Dashboard can detect, flag, and track flaky tests from your recorded Cypress test runs in your CI/CD pipeline.
 
 {% note info "What is a flaky test?"%}
-A test is considered to be **flaky** when it can pass and fail across multiple runs without any code changes.
+A test is considered to be **flaky** when it can pass and fail across multiple retry attempts without any code changes.
 
 For example, a test is executed and fails, then the test is executed again, without any change to the code, but this time it passes.
 {% endnote %}
