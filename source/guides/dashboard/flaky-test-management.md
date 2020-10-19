@@ -75,3 +75,27 @@ With this concept in mind, it is possible to always have zero final failure rate
 {% note success "Provide Feedback" %}
 Flake detection is new feature of the Cypress Dashboard and is part of our larger effort to minimize flake. {% url "Please provide any feedback within our public roadmap." https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/19-see-the-flakiest-tests-in-your-test-suite %}
 {% endnote %}
+
+## Flake Alerting
+
+The Dashboard can provide alerts via {% url "GitHub" github-integration %} and {% url "Slack integrations" slack-integration %}, to further assist with staying on top of flake occurrences.
+
+### GitHub
+
+Flake alerting via GitHub PR comments and status checks can be enabled within a project's GitHub integration settings:
+
+{% imgTag /img/dashboard/flaky-test-management/gh-flake.png "GitHub flake alert settings" %}
+
+After enabling GitHub flake alerting, GitHub PR comments will show the number of flaky tests associated with the PR within the test summary, and include a "Flakiness" section highlighting the specific tests that flaked.
+
+{% imgTag /img/dashboard/flaky-test-management/flake-pr-comment.png "GitHub flake alert pr comment" %}
+
+### Slack
+
+Flake alerting via Slack can be enabled within Slack integration settings:
+
+{% imgTag /img/dashboard/flaky-test-management/slack-flake.png "Slack flake alert settings" %}
+
+After enabling Slack alerts, the Dashboard will send Slack messages whenever flaky tests are detected:
+
+{% imgTag /img/dashboard/flaky-test-management/flake-slack-alert.png "Slack flake alert" %}
