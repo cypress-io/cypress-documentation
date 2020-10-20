@@ -44,11 +44,9 @@ Pass in an options object to change the default behavior of `.select()`.
 
 Option | Default | Description
 --- | --- | ---
-`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
 `force` | `false` | {% usage_options force select %}
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .select %}
-`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
