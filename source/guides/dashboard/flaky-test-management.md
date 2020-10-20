@@ -20,7 +20,7 @@ Test retries is **disabled by default**, and you can {% url "enable it within yo
 
 One way to battle flaky tests is to detect and monitor them as they occur in an organized and methodical manner such that you can assess their severity to assist with prioritizing their fix.
 
-{% note warning "Test Retries & Flak Detection"%}
+{% note warning "Test Retries & Flake Detection"%}
 Test retries is the *fundamental mechanism* that enables the detection of flaky tests by the Cypress Dashboard. Therefore, **enabling {% url "test retries" test-retries#Configure-Test-Retries %} is required** to take advantage of any flaky test management feature provided by the Cypress Dashboard.
 {% endnote %}
 
