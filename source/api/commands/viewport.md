@@ -57,6 +57,7 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `macbook-11`  | 1366  | 768    |
 | `macbook-13`  | 1280  | 800    |
 | `macbook-15`  | 1440  | 900    |
+| `macbook-16`  | 1536  | 960    |
 | `samsung-note9` | 414 | 846    |
 | `samsung-s10` | 360   | 760    |
 
