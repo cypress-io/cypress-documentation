@@ -155,10 +155,14 @@ DEBUG=cypress:* cypress run
 
 **On Windows:**
 
+On Windows, you'll need to run the command in a command prompt terminal (not Powershell).
+
 ```shell
 set DEBUG=cypress:*
 cypress run
 ```
+
+If you have issues with the logs not printing, it may be a permissions issue with setting the environment variable in your terminal. You may need to run your terminal in administrative mode or review your permission settings.
 
 Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.
 
