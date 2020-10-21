@@ -343,7 +343,7 @@ The following events will be fired based on what key was pressed identical to th
 - `input`
 - `keyup`
 
-<div >\* Firefox does not support the `beforeinput` event [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)</figcaption>
+\* Firefox does not support the `beforeinput` event [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)
 
 Additionally `change` events will be fired either when the `{enter}` key is pressed (and the value has changed since the last focus event), or whenever the element loses focus. This matches browser behavior.
 
