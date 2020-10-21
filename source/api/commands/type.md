@@ -338,11 +338,12 @@ The following events will be fired based on what key was pressed identical to th
 
 - `keydown`
 - `keypress`
+- `beforeinput`*
 - `textInput`
 - `input`
 - `keyup`
 
-`beforeinput` is *not* fired even though it is in the spec because no browser has adopted it.
+<div >\* Firefox does not support the `beforeinput` event [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)</figcaption>
 
 Additionally `change` events will be fired either when the `{enter}` key is pressed (and the value has changed since the last focus event), or whenever the element loses focus. This matches browser behavior.
 
@@ -486,6 +487,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
+{% url "5.5.0" changelog#5.5.0 %} | Support `beforeinput` event 
 {% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences
