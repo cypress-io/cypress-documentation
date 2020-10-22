@@ -175,6 +175,14 @@
   sourceName: Coursify.me
   sourceUrl: http://coursify.me
   language: Portuguese
+  
+- title: Testes Automatizados com Cypress e Percy (básico)
+  url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-e-percy-basico
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Coursify.me
+  sourceUrl: http://coursify.me
+  language: Portuguese
 
 - title: Test end to end con Cypress.io (Webinar básico)
   url: https://plataforma.keepcoding.io/p/curso-test-end-to-end-cypressio

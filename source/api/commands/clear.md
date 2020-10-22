@@ -41,8 +41,8 @@ Pass in an options object to change the default behavior of `.clear()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force clear %}
+`log` | `true` | {% usage_options log %}
 `scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .clear %}
 

@@ -44,8 +44,8 @@ Pass in an options object to change the default behavior of `.select()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force select %}
+`log` | `true` | {% usage_options log %}
 `scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .select %}
 

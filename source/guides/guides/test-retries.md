@@ -137,11 +137,11 @@ describe('User bank accounts', {
 }, () => {
   // The per-suite configuration is applied to each test
   // If a test fails, it will be retried
-  it('allows a user to view their transactions, () => {
+  it('allows a user to view their transactions', () => {
     // ...
   }
 
-  it('allows a user to edit their transactions, () => {
+  it('allows a user to edit their transactions', () => {
     // ...
   }
 })
@@ -182,8 +182,21 @@ describe('User Login', () => {
 
 # Dashboard
 
-If you are using the {% url "Cypress Dashboard" dashboard %}, information related to test retries is not currently shown. Showing this information and other analytics related to test retries is on our {% url "product roadmap" https://cypress-io.productboard.com/roadmap/1238172-product-roadmap %}.
+If you are using the {% url "Cypress Dashboard" dashboard %}, information related to test retries is displayed on the Test Results tab for a run. Selecting the Flaky filter will show tests that retried and then passed during the run.
 
+These tests are also indicated with a "Flaky" badge on the Latest Runs page and Test Results tab on the Run Details page.
+
+{% video local /img/guides/test-retries/flaky-test-filter.mp4 "Flaky test filter" %}
+
+Clicking on a Test Result will open the Test Case History screen. This demonstrates the number of failed attempts, the screenshots and/or videos of failed attempts, and the error for failed attempts. 
+
+{% imgTag /img/guides/test-retries/flake-artifacts-and-errors.png "Flake artifacts and errors" %}
+
+You can also see the Flaky Rate for a given test.
+
+{% imgTag /img/guides/test-retries/flaky-rate.png "Flaky rate" %}
+
+For a comprehensive view of how flake is affecting your overall test suite, you can review the {% url "Flake Detection" flaky-test-management#Flake-Detection %} and {% url "Flake Alerting" flaky-test-management#Flake-Alerting %} features highlighted in the Test Flake Management Guide. 
 
 # Frequently Asked Questions (FAQs)
 

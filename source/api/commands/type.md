@@ -73,13 +73,15 @@ Pass in an options object to change the default behavior of `.type()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
+`log` | `true` | {% usage_options log %}
 `parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
 `scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 

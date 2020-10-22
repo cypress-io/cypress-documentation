@@ -59,14 +59,16 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 Option | Default | Description
 --- | --- | ---
 `altKey` | `false` | {% usage_options altKey %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
 `ctrlKey` | `false` | {% usage_options ctrlKey %}
-`log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force rightclick %}
+`log` | `true` | {% usage_options log %}
 `metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `false` | {% usage_options multiple rightclick %}
 `scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
 `shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .rightclick %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 

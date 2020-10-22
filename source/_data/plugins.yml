@@ -368,6 +368,11 @@
       description: cypress custom commands to locate react elements by component, props and state
       link: https://github.com/abhinaba-ghosh/cypress-react-selector
       keywords: [react, commands, locator]
+
+    - name: cypress-mailosaur
+      description: Test email and SMS messages using Mailosaur
+      link: https://github.com/mailosaur/cypress-mailosaur
+      keywords: [email, sms, commands]
       badge: community
 
     - name: cypress-layout-inspector

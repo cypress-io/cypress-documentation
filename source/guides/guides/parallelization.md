@@ -246,7 +246,7 @@ AppVeyor  | `APPVEYOR_BUILD_NUMBER`
 AWS CodeBuild | `CODEBUILD_INITIATOR`
 Bamboo  | `bamboo_buildNumber`
 Bitbucket  | `BITBUCKET_BUILD_NUMBER`
-Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUMBER`
+Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUM`
 Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`
 Codeship Pro  | `CI_BUILD_ID`

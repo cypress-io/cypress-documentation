@@ -278,17 +278,17 @@ Some methods yield `null` and thus cannot be chained, such as {% url `cy.clearCo
 
 Some methods, such as {% url `cy.get()` get %} or {% url `cy.contains()` contains %}, yield a DOM element, allowing further commands to be chained onto them (assuming they expect a DOM subject) like {% url `.click()` click %} or even {% url `cy.contains()` contains %} again.
 
-### Some commands cannot be chained:
+### Some commands can be chained from...
 
-- From `cy` only, meaning they do not operate on a subject: {% url `cy.clearCookies()` clearcookies %}.
-- From commands yielding particular kinds of subjects (like DOM elements): {% url `.type()` type %}.
-- From both `cy` *or* from a subject-yielding command: {% url `cy.contains()` contains %}.
+- `cy` only, meaning they do not operate on a subject: {% url `cy.clearCookies()` clearcookies %}.
+- commands yielding particular kinds of subjects (like DOM elements): {% url `.type()` type %}.
+- both `cy` *and* from a subject-yielding command: {% url `cy.contains()` contains %}.
 
-### Some commands yield:
+### Some commands yield...
 
 - `null`, meaning no command can be chained after the command: {% url `cy.clearCookie()` clearcookie %}.
-- The same subject they were originally yielded: {% url `.click()` click %}.
-- A new subject, as appropriate for the command {% url `.wait()` wait %}.
+- the same subject they were originally yielded: {% url `.click()` click %}.
+- a new subject, as appropriate for the command {% url `.wait()` wait %}.
 
 This is actually much more intuitive than it sounds.
 

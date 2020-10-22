@@ -23,6 +23,7 @@ Unlike {% url "`cy.route()`" route %}, `cy.route2()`:
 
 * can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
 * does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.route2()` at all.
+* does not have method set to `GET` by default
 
 # Usage
 

@@ -114,7 +114,7 @@ Option | Default | Description
 The Node version printed in the Node.js Version panel is used in Cypress to:
 
 - Build files in the {% url "`integrationFolder`" configuration#Folders-Files %}.
-- Build files in the {% url "`supportFolder`" configuration#Folders-Files %}.
+- Build files in the {% url "`supportFile`" configuration#Folders-Files %}.
 - Execute code in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
 Cypress comes automatically bundled with a set Node version by default.
