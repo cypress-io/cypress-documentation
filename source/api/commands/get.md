@@ -58,6 +58,8 @@ Option | Default | Description
 
 {% yields sets_dom_subject cy.get %}
 
+Keep in mind, that cy.get() **always** returns an Array of DOM elements. (Same as JQuery does.) All chained methods work on all returned elements.
+
 # Examples
 
 ## Selector
