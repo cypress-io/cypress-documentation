@@ -275,6 +275,7 @@ When clicking on `viewport` within the command log, the console outputs the foll
 {% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
 
 {% history %}
+{% url "5.5.0" changelog#5-5-0 %} | Added support for `macbook-16` preset.
 {% url "5.4.0" changelog#5-4-0 %} | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.
 {% url "3.8.0" changelog#3-8-0 %} | Removed max viewport size and lowered min viewport size to `0`.
 {% url "3.5.0" changelog#3-5-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
