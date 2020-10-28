@@ -604,6 +604,12 @@
       keywords: [screenshots, image-diff, visual regression]
       badge: community
 
+    - name: Cypress Image Diff
+      description: Visual regression testing plugin maintained by DIT - UK Gov.
+      link: https://github.com/uktrade/cypress-image-diff
+      keywords: [screenshots, visual regression, image-diff]
+      badge: community
+
 - name: Reporting
   plugins:
     - name: cypress-failed-log
