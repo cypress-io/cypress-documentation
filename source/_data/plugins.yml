@@ -206,6 +206,12 @@
       keyboards: [permissions, notifications, geolocation, camera, microphone]
       badge: community
       
+    - name: cypress-repeat
+      description: Run Cypress multiple times in a row, great at finding test flake
+      link: https://github.com/bahmutov/cypress-repeat
+      keyboards: [cli, ci]
+      badge: community
+      
     - name: cypress-expect
       description: Cypress CLI wrapper where you can specify the total number of expected tests
       link: https://github.com/bahmutov/cypress-expect
