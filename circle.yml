@@ -72,9 +72,14 @@ jobs:
       - run: npm run build
       - run:
           name: Verify no escaped hexo tags
+          # -I flag skips binary files
           command: |
-            if grep --recursive ' %}' --exclude=public/img/** public; then
-              echo Found remaining Hexo tags
+            if grep --recursive ' %}' -I public; then
+              echo Found remaining closing Hexo tags
+              exit 1
+            fi
+            if grep --recursive '{% ' -I public; then
+              echo Found remaining closing Hexo tags
               exit 1
             fi
 
