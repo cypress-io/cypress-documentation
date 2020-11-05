@@ -70,6 +70,13 @@ jobs:
       - run: npm run md-lint
       - run: npm test
       - run: npm run build
+      - run:
+          name: Verify no escaped hexo tags
+          command: |
+            if grep --recursive ' %}' --exclude=public/img/** public; then
+              echo Found remaining Hexo tags
+              exit 1
+            fi
 
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
       - persist_to_workspace:
