@@ -2,10 +2,11 @@
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `browser`
+- `browser` **note:** filters whether the tests or a suite of tests runs depending on the current browser
 - `defaultCommandTimeout`
 - `execTimeout`
-- `env`
+- `env` **note:** Provided environment variables will be merged with current environment variables.
+- `includeShadowDom`
 - `requestTimeout`
 - `responseTimeout`
 - `retries`

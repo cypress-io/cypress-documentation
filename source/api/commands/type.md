@@ -32,7 +32,7 @@ cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
 
 The text to be typed into the DOM element.
 
-Text passed to `.type()` may include any of the special character sequences below.
+Text passed to `.type()` may include any of the special character sequences below. These characters will pass along the correct `keyCode`, `key`, and `which` codes to any events issued during `.type()`. Some of the special character sequences may perform actions during typing such as `{movetoend}`, `{movetostart}`, or `{selectall}`.
 
 {% note info %}
 To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
@@ -50,6 +50,8 @@ Sequence | Notes
 `{home}` | Moves cursor to the start of the line
 `{insert}` | Inserts character to the right of the cursor
 `{leftarrow}` | Moves cursor left
+`{movetoend}` | Moves cursor to end of typeable element
+`{movetostart}` | Moves cursor to the start of typeable element
 `{pagedown}` | Scrolls down
 `{pageup}` | Scrolls up
 `{rightarrow}` | Moves cursor right
@@ -71,12 +73,14 @@ Pass in an options object to change the default behavior of `.type()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
+`log` | `true` | {% usage_options log %}
 `parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -334,11 +338,12 @@ The following events will be fired based on what key was pressed identical to th
 
 - `keydown`
 - `keypress`
+- `beforeinput`*
 - `textInput`
 - `input`
 - `keyup`
 
-`beforeinput` is *not* fired even though it is in the spec because no browser has adopted it.
+\* Firefox does not support the `beforeinput` event [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)
 
 Additionally `change` events will be fired either when the `{enter}` key is pressed (and the value has changed since the last focus event), or whenever the element loses focus. This matches browser behavior.
 
@@ -482,6 +487,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
+{% url "5.5.0" changelog#5.5.0 %} | Support `beforeinput` event 
 {% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
 {% url "3.2.0" changelog#3-2-0 %} | Added `{home}` and `{end}` character sequences

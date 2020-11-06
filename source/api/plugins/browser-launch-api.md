@@ -143,13 +143,13 @@ You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH
 ### Linux/OSX
 
 ```shell
-export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 ### Windows
 
 ```shell
-set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.js" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js %}. There is no way to see all currently set switches after Electron's launch.
@@ -256,6 +256,8 @@ Change the download directory of files downloaded during Cypress tests.
 
 ```js
 // cypress/plugins/index.js
+const path = require('path')
+
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     const downloadDirectory = path.join(__dirname, '..', 'downloads')
@@ -278,6 +280,10 @@ module.exports = (on) => {
   })
 }
 ```
+
+{% note info %}
+{% url 'Check out our example recipe showing how to download and validate CSV and Excel files.' recipes#Testing-the-DOM %}
+{% endnote %}
 
 {% history %}
 {% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`

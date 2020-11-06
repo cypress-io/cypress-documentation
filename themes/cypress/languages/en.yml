@@ -41,6 +41,7 @@ sidebar:
     github-integration: GitHub Integration
     slack-integration: Slack Integration
     analytics: Analytics
+    flaky-test-management: Flaky Test Management
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -57,6 +58,7 @@ sidebar:
     custom-commands: Custom Commands
     web-security: Web Security
     references: References
+    component-testing: Component Testing
     configuration: Configuration
     experiments: Experiments
     proxy-configuration: Proxy Configuration
@@ -78,6 +80,7 @@ sidebar:
     retry-ability: Retry-ability
     visual-testing: Visual Testing
     code-coverage: Code Coverage
+    component-testing-introduction: Introduction
   api:
     api: API
     table-of-contents: Table of Contents
@@ -136,12 +139,14 @@ sidebar:
     rightclick: rightclick
     root: root
     route: route
+    route2: route2
     screenshot: screenshot
     scrollintoview: scrollIntoView
     scrollto: scrollTo
     select: select
     server: server
     setcookie: setCookie
+    shadow: shadow
     should: should
     siblings: siblings
     spread: spread

@@ -4,7 +4,7 @@ title: Cypress.Cookies
 
 `Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress' cookie behavior.
 
-`Cookies.debug()` enables you to log out whenever any cookies are modified.
+`Cookies.debug()` enables you to generate logs to the console whenever any cookies are modified.
 
 Cypress automatically clears all cookies **before** each test to prevent state from building up.
 
@@ -36,12 +36,12 @@ Set defaults for all cookies, such as preserving a set of cookies to bypass bein
 
 ## Debug
 
-### Log out when cookie values are created, modified or deleted
+### Log when cookie values are created, modified or deleted
 
-By turning on debugging, Cypress will automatically log out to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
+By turning on debugging, Cypress will automatically generate logs to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
 
 ```javascript
-Cypress.Cookies.debug(true) // now Cypress will log out when it alters cookies
+Cypress.Cookies.debug(true) // now Cypress will log when it alters cookies
 
 cy.clearCookie('foo')
 cy.setCookie('foo', 'bar')
@@ -51,7 +51,7 @@ cy.setCookie('foo', 'bar')
 
 ### Turn off verbose debugging output
 
-By default Cypress will log out the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
+By default Cypress will log the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
 
 ```javascript
 Cypress.Cookies.debug(true, { verbose: false })

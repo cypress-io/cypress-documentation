@@ -55,6 +55,7 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 Option | Default | Description
 --- | --- | ---
 `altKey` | `false` | {% usage_options altKey %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
 `ctrlKey` | `false` | {% usage_options ctrlKey %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force dblclick %}
@@ -62,6 +63,7 @@ Option | Default | Description
 `multiple` | `true` | {% usage_options multiple dblclick %}
 `shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .dblclick %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
