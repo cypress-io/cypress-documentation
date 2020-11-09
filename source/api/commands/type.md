@@ -199,15 +199,15 @@ You can also use key combinations during {% url "`.click()`" click#Click-with-ke
 
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then pressing b
-// The modifiers are released before typing 'foobar'
-cy.get('input').type('{shift+alt+b}foobar')
+// The modifiers are released before typing 'hello'
+cy.get('input').type('{shift+alt+b}hello')
 ```
 
 When a modifier is specified on its own, it will remain activated for the duration of the `.type()` command, and is released when all subsequent characters are typed. However, {% url '`{release: false}`' type#Options %} can be passed as an {% url 'option' type#Key-Combinations %}. 
 ```javascript
-// This is the same as a user holding down SHIFT and ALT, then typing 'foobar'
+// This is the same as a user holding down SHIFT and ALT, then typing 'hello'
 // The modifiers are held for the duration of the command.
-cy.get('input').type('{shift}{alt}foobar')
+cy.get('input').type('{shift}{alt}hello')
 ```
 
 ### Type literal `{` or `}` characters
