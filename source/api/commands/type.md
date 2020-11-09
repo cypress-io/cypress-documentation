@@ -499,7 +499,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
-{% url "5.6.0" changelog#5.6.0 %} | Support single key combinations syntax 
+{% url "5.6.0" changelog#5.6.0 %} | Support single key combination syntax 
 {% url "5.5.0" changelog#5.5.0 %} | Support `beforeinput` event 
 {% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
