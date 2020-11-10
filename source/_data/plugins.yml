@@ -223,6 +223,12 @@
       link: https://github.com/bahmutov/cy-search
       keywords: [cli]
       badge: community
+      
+    - name: cypress-tags
+      description: Use custom tags to slice up Cypress test runs
+      link: https://github.com/annaet/cypress-tags
+      keywords: [test, tag, browserify]
+      badge: community
 
 - name: Custom Commands
   plugins:
