@@ -21,7 +21,7 @@ Once you've read through the documentation below, we invite you to experience th
 
 ## Installed locally
 
-Custom reporters can be loaded through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
+{% url "Custom Mocha reporters" https://mochajs.org/api/tutorial-custom-reporter.html %} can be loaded through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
 
 For example, if you have the following directory structure:
 
