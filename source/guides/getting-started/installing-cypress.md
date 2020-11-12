@@ -37,6 +37,30 @@ We also have an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress
 
 # Installing
 
+## {% fa fa-terminal %} `create-cypress-tests`
+
+Install Cypress using interactive `create-cypress-tests` wizard. It will automatically identify intall cypress, create all required configuration files and setup `TypeScript` if applicable.
+
+```shell
+cd /your/project/path
+```
+
+Run the installation wizard via  {% url "`npx`" https://docs.npmjs.com/cli/v7/commands/npx %} (it comes together with npm@5.2+ and higher).
+
+```shell
+npx create-cypress-tests
+```
+
+If you are using `yarn` 
+
+```shell
+npx create cypress tests
+```
+
+{% note info %}
+Make sure to run this command from the existing project. If you are starting a new project please run {% url "`npm init`" https://docs.npmjs.com/cli/init %} before running installation wizard.
+{% endnote %}
+
 ## {% fa fa-terminal %} `npm install`
 
 Install Cypress via `npm`:
