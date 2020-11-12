@@ -38,7 +38,7 @@ Option | Default | Description
 `execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a {% url `cy.exec()` exec %} command
 `taskTimeout` | `60000` | Time, in milliseconds, to wait for a task to finish executing during a {% url `cy.task()` task %} command
 `pageLoadTimeout` | `60000` | Time, in milliseconds, to wait for `page transition events` or {% url `cy.visit()` visit %}, {% url `cy.go()` go %}, {% url `cy.reload()` reload %} commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.
-`requestTimeout` | `5000` | Time, in milliseconds, to wait for an XHR request to go out in a {% url `cy.wait()` wait %} command
+`requestTimeout` | `5000` | Time, in milliseconds, to wait for an request to go out in a {% url `cy.wait()` wait %} command
 `responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a {% url `cy.request()` request %}, {% url `cy.wait()` wait %}, {% url `cy.fixture()` fixture %}, {% url `cy.getCookie()` getcookie %}, {% url `cy.getCookies()` getcookies %}, {% url `cy.setCookie()` setcookie %}, {% url `cy.clearCookie()` clearcookie %}, {% url `cy.clearCookies()` clearcookies %}, and {% url `cy.screenshot()` screenshot %} commands
 
 ## Folders / Files

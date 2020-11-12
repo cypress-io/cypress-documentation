@@ -1,11 +1,6 @@
 ---
 title: route2
-containerClass: experimental
 ---
-
-{% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalNetworkStubbing`" experiments %} configuration option to `true`.**
-{% endnote %}
 
 Use `cy.route2()` to manage the behavior of HTTP requests at the network layer.
 
@@ -469,9 +464,13 @@ The available functions on `res` are:
 }
 ```
 
+{% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` option.
+{% endhistory %}
+
 # See also
 
 * {% url "`cy.route2()` example recipes with real-world examples" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
 * {% url "`cy.route` vs `cy.route2`" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
 * {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} blog post
-* {% url "open issues for `experimentalNetworkStubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `experimentalNetworkStubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
+* {% url "open issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}

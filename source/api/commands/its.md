@@ -203,13 +203,12 @@ cy.window().its('evilProp').should('not.exist')
 ***Get `responseBody` of aliased route***
 
 ```javascript
-cy.server()
-cy.route(/comments/, 'fixture:comments.json').as('getComments')
+cy.http(/comments/, { fixture: 'comments.json' }).as('getComments')
 cy.get('#fetch-comments').click()
-cy.wait('@getComments').its('responseBody').should('deep.eq', [
+cy.wait('@getComments').its('response.body').should('deep.eq', JSON.stringify([
   { id: 1, comment: 'hi' },
   { id: 2, comment: 'there' }
-])
+]))
 ```
 
 The commands above will display in the Command Log as:

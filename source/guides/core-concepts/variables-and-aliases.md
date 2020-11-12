@@ -412,19 +412,20 @@ Aliases can also be used with {% url routes route %}. Aliasing your routes enabl
 
 - ensure your application makes the intended requests
 - wait for your server to send the response
-- access the actual XHR object for assertions
+- access the actual request object for assertions
 
 {% imgTag /img/guides/aliasing-routes.jpg "Alias commands" %}
 
 Here's an example of aliasing a route and waiting on it to complete.
 
 ```js
-cy.server()
-cy.route('POST', '/users', { id: 123 }).as('postUser')
+cy.http('POST', '/users', { id: 123 }).as('postUser')
 
 cy.get('form').submit()
 
-cy.wait('@postUser').its('requestBody').should('have.property', 'name', 'Brian')
+cy.wait('@postUser').then(({ request }) => {
+  expect(JSON.parse(request.body)).to.have.property('name', 'Brian')
+})
 
 cy.contains('Successfully created user: Brian')
 ```

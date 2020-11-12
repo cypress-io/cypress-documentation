@@ -49,7 +49,7 @@ Cypress prints several pieces of information when an error occurs during a Cypre
 
 # Instrument Panel
 
-For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
+For certain commands like {% url `cy.http()` http %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
 
 ## Routes
 

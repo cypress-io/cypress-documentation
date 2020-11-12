@@ -158,7 +158,7 @@ We recommend these great modules for this use case:
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
+The prescribed way to do this is to define your routes using {% url '`cy.http()`' http %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
 
 ## {% fa fa-angle-right %} Can I test the HTML `<head>` element?
 
@@ -384,13 +384,12 @@ For further detail see the {% url Identification projects#Identification %} sect
 Don't try to use your UI to check email. Instead opt to programmatically use 3rd party APIs or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-external-sites %} here.
 {% endnote %}
 
-## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
+## {% fa fa-angle-right %} How do I wait for multiple requests to the same url?
 
-You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.route()` route %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching XHR requests there are.
+You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.http()` http %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.server()
-cy.route('users').as('getUsers')
+cy.http('users').as('getUsers')
 cy.wait('@getUsers')  // Wait for first GET to /users/
 cy.get('#list>li').should('have.length', 10)
 cy.get('#load-more-btn').click()
@@ -402,7 +401,7 @@ cy.get('#list>li').should('have.length', 20)
 
 You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your back end to seed data.
 
-You could also stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
+You could also stub requests directly using {% url `cy.http()` http %} which avoids ever even needing to fuss with your database.
 
 ## {% fa fa-angle-right %} How do I test elements inside an iframe?
 
@@ -694,4 +693,3 @@ Yes, by using the newer API command {% url "cy.route2()" route2 %} as described 
 ## {% fa fa-angle-right %} Can Cypress be used for model-based testing?
 
 Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful. Read {% url "Access XState from Cypress Test" https://glebbahmutov.com/blog/cypress-and-xstate/ %} for our start.
-
