@@ -1,5 +1,5 @@
 ---
-title: route2
+title: http
 containerClass: experimental
 ---
 
@@ -7,30 +7,30 @@ containerClass: experimental
 {% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalNetworkStubbing`" experiments %} configuration option to `true`.**
 {% endnote %}
 
-Use `cy.route2()` to manage the behavior of HTTP requests at the network layer.
+Use `cy.http()` to manage the behavior of HTTP requests at the network layer.
 
-With `cy.route2()`, you can:
+With `cy.http()`, you can:
 
 * stub or spy on any type of HTTP request.
 * {% urlHash "modify an HTTP request's body, headers, and URL" Intercepting-a-request %} before it is sent to the destination server.
 * stub the response to an HTTP request, either dynamically or statically.
 * {% urlHash "modify real HTTP responses" Intercepting-a-response %}, changing the body, headers, or HTTP status code before they are received by the browser.
-* and much more - `cy.route2()` gives full access to all HTTP requests at all stages.
+* and much more - `cy.http()` gives full access to all HTTP requests at all stages.
 
 # Comparison to `cy.route()`
 
-Unlike {% url "`cy.route()`" route %}, `cy.route2()`:
+Unlike {% url "`cy.route()`" route %}, `cy.http()`:
 
 * can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
-* does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.route2()` at all.
+* does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.http()` at all.
 * does not have method set to `GET` by default
 
 # Usage
 
 ```ts
-cy.route2(url, routeHandler?)
-cy.route2(method, url, routeHandler?)
-cy.route2(routeMatcher, routeHandler?)
+cy.http(url, routeHandler?)
+cy.http(method, url, routeHandler?)
+cy.http(routeMatcher, routeHandler?)
 ```
 
 ## Arguments
@@ -40,8 +40,8 @@ cy.route2(routeMatcher, routeHandler?)
 Specify the URL to match. See the documentation for {% urlHash "`routeMatcher`" routeMatcher-RouteMatcher %} to see how URLs are matched.
 
 ```ts
-cy.route2('http://example.com/widgets')
-cy.route2('http://example.com/widgets', { fixture: 'widgets.json' })
+cy.http('http://example.com/widgets')
+cy.http('http://example.com/widgets', { fixture: 'widgets.json' })
 ```
 
 ### **{% fa fa-angle-right %} method** **_(`string`)_**
@@ -49,7 +49,7 @@ cy.route2('http://example.com/widgets', { fixture: 'widgets.json' })
 Specify the HTTP method to match on.
 
 ```ts
-cy.route2('POST', 'http://example.com/widgets', {
+cy.http('POST', 'http://example.com/widgets', {
   statusCode: 200,
   body: 'it worked!'
 })
@@ -118,7 +118,7 @@ All properties are optional. All properties that are set must match for the rout
 `routeMatcher` usage examples:
 
 ```ts
-cy.route2({
+cy.http({
   pathname: '/search',
   query: {
     q: 'some terms'
@@ -128,7 +128,7 @@ cy.route2({
 // with the query paramater 'q=some+terms'
 cy.wait('@searchForTerms')
 
-cy.route2({
+cy.http({
   // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
   url: /^http:\/\/api\.example\.com\/widgets/
   headers: {
@@ -151,20 +151,20 @@ The `routeHandler` defines what will happen with a request if the {% urlHash "`r
 
 ## Yields {% helper_icon yields %}
 
-* `cy.route2()` yields `null`.
-* `cy.route2()` can be aliased, but otherwise cannot be chained further.
-* Waiting on an aliased `cy.route2()` route using {% url "`cy.wait()`" wait %} will yield an object that contains information about the matching request/response cycle. See {% urlHash "Using the yielded object" Using-the-yielded-object %} for examples of how to use this object.
+* `cy.http()` yields `null`.
+* `cy.http()` can be aliased, but otherwise cannot be chained further.
+* Waiting on an aliased `cy.http()` route using {% url "`cy.wait()`" wait %} will yield an object that contains information about the matching request/response cycle. See {% urlHash "Using the yielded object" Using-the-yielded-object %} for examples of how to use this object.
 
 # Examples
 
 ## Waiting on a request
 
-Use {% url "`cy.wait()`" wait %} with `cy.route2()` aliases to wait for the request/response cycle to complete.
+Use {% url "`cy.wait()`" wait %} with `cy.http()` aliases to wait for the request/response cycle to complete.
 
 ### With URL
 
 ```js
-cy.route2('http://example.com/settings').as('getSettings')
+cy.http('http://example.com/settings').as('getSettings')
 // once a request to http://example.com/settings responds, this 'cy.wait' will resolve
 cy.wait('@getSettings')
 ```
@@ -172,7 +172,7 @@ cy.wait('@getSettings')
 ### With {% urlHash "`RouteMatcher`" routeMatcher-RouteMatcher %}
 
 ```js
-cy.route2({
+cy.http({
   url: 'http://example.com/search',
   query: { q: 'expected terms' },
 }).as('search')
@@ -184,7 +184,7 @@ cy.wait('@search')
 
 ### Using the yielded object
 
-Using {% url "`cy.wait()`" wait %} on a `cy.route2()` route alias yields an object which represents the request/response cycle:
+Using {% url "`cy.wait()`" wait %} on a `cy.http()` route alias yields an object which represents the request/response cycle:
 
 ```js
 cy.wait('@someRoute').then((request) => {
@@ -211,7 +211,7 @@ cy.wait('@someRoute').its('response.body').should('include', 'id')
 
 ```js
 // requests to '/update' will be fulfilled with a body of "success"
-cy.route2('/update', 'success')
+cy.http('/update', 'success')
 ```
 
 ### With a fixture
@@ -219,7 +219,7 @@ cy.route2('/update', 'success')
 ```js
 // requests to '/users.json' will be fulfilled
 // with the contents of the "users.json" fixture
-cy.route2('/users.json', { fixture: 'users.json' })
+cy.http('/users.json', { fixture: 'users.json' })
 ```
 
 ### With a `StaticResponse` object
@@ -229,7 +229,7 @@ A `StaticResponse` object represents a response to an HTTP request, and can be u
 ```js
 const staticResponse = { /* some StaticResponse properties here... */ }
 
-cy.route2('/projects', staticResponse)
+cy.http('/projects', staticResponse)
 ```
 
 Here are the available properties on `StaticResponse`:
@@ -276,7 +276,7 @@ Here are the available properties on `StaticResponse`:
 ### Asserting on a request
 
 ```js
-cy.route2('POST', '/organization', (req) => {
+cy.http('POST', '/organization', (req) => {
   expect(req.body).to.include('Acme Company')
 })
 ```
@@ -286,7 +286,7 @@ cy.route2('POST', '/organization', (req) => {
 You can use the route callback to modify the request before it is sent.
 
 ```js
-cy.route2('POST', '/login', (req) => {
+cy.http('POST', '/login', (req) => {
   // set the request body to something different before it's sent to the destination
   req.body = 'username=janelane&password=secret123'
 })
@@ -297,7 +297,7 @@ cy.route2('POST', '/login', (req) => {
 You can use the `req.reply()` function to dynamically control the response to a request.
 
 ```js
-cy.route2('/billing', (req) => {
+cy.http('/billing', (req) => {
   // functions on 'req' can be used to dynamically respond to a request here
 
   // send the request to the destination server
@@ -352,7 +352,7 @@ The available functions on `req` are:
 If a Promise is returned from the route callback, it will be awaited before continuing with the request.
 
 ```js
-cy.route2('POST', '/login', (req) => {
+cy.http('POST', '/login', (req) => {
   // you could asynchronously fetch test data...
   return getLoginCredentials()
   .then((credentials) => {
@@ -367,13 +367,13 @@ cy.route2('POST', '/login', (req) => {
 If `req.reply()` is not explicitly called inside of a route callback, requests will pass to the next route callback until none are left.
 
 ```js
-// you could have a top-level route2 that sets an auth token on all requests
-cy.route2('http://api.company.com/', (req) => {
+// you could have a top-level http that sets an auth token on all requests
+cy.http('http://api.company.com/', (req) => {
   req.headers['authorization'] = `token ${token}`
 })
 
-// and then another route2 that more narrowly asserts on certain requests
-cy.route2('POST', 'http://api.company.com/widgets', (req) => {
+// and then another http that more narrowly asserts on certain requests
+cy.http('POST', 'http://api.company.com/widgets', (req) => {
   expect(req.body).to.include('analytics')
 })
 
@@ -387,7 +387,7 @@ cy.route2('POST', 'http://api.company.com/widgets', (req) => {
 Inside of a callback passed to `req.reply()`, you can access the destination server's real response.
 
 ```js
-cy.route2('/integrations', (req) => {
+cy.http('/integrations', (req) => {
   // req.reply() with a callback will send the request to the destination server
   req.reply((res) => {
     // 'res' represents the real destination response
@@ -399,7 +399,7 @@ cy.route2('/integrations', (req) => {
 ### Asserting on a response
 
 ```js
-cy.route2('/projects', (req) => {
+cy.http('/projects', (req) => {
   req.reply((res) => {
     expect(res.body).to.include('My Project')
   })
@@ -411,7 +411,7 @@ cy.route2('/projects', (req) => {
 If a Promise is returned from the route callback, it will be awaited before sending the response to the browser.
 
 ```js
-cy.route2('/users', (req) => {
+cy.http('/users', (req) => {
   req.reply((res) => {
     // the response will not be sent to the browser until 'waitForSomething()' resolves
     return waitForSomething()
@@ -426,7 +426,7 @@ You can use the `res.send()` function to dynamically control the incoming respon
 `res.send()` is implicitly called after the `req.reply` callback finishes if it has not already been called.
 
 ```js
-cy.route2('/notification', (req) => {
+cy.http('/notification', (req) => {
   req.reply((res) => {
     // replaces 'res.body' with "Success" and sends the response to the browser
     res.send('Success')
@@ -468,6 +468,11 @@ The available functions on `res` are:
   throttle: (throttleKbps: number) => IncomingHttpResponse
 }
 ```
+
+{% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Renamed `cy.route2` to `cy.http`.
+{% url "5.1.0" changelog#5-1-0 %} | Added experimental `cy.route2` command under `experimentalNetworkStubbing` option.
+{% endhistory %}
 
 # See also
 
