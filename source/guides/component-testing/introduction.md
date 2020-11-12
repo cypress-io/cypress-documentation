@@ -75,7 +75,7 @@ yarn create cypress-tests --component-tests
 This command will automatically install cypress if it is not installed, guess the framework and bundler that is using by the project and **automatically** inject all the required configuration.
 
 {% note warning %}
-Make sure to run this command from your existing project directory. 
+Make sure to run this command from your existing project directory.
 {% endnote %}
 
 ## Vue
@@ -93,13 +93,13 @@ Examples for testing different Vue applications (containing {% url "Vuex" https:
 ## React
 
 ```sh
-npm install --save-dev cypress cypress-react-unit-test
+npm install --save-dev cypress @cypress/react
 ```
 
 1. Include this plugin from your project's `cypress/support/index.js`
 
 ```js
-require("cypress-react-unit-test/support");
+import "@cypress/react/support";
 ```
 
 2. Tell Cypress how your React application is transpiled or bundled (using Webpack), so Cypress can load your components. For example, if you use `react-scripts` (even after ejecting) do:
@@ -107,7 +107,7 @@ require("cypress-react-unit-test/support");
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require("cypress-react-unit-test/plugins/react-scripts")(on, config);
+  require("@cypress/react/plugins/react-scripts")(on, config);
 
   // IMPORTANT to return the config object
   // with the any changed environment variables
@@ -115,7 +115,7 @@ module.exports = (on, config) => {
 };
 ```
 
-See {% url "Recipes" https://github.com/bahmutov/cypress-react-unit-test/blob/main/docs/recipes.md %} for more examples.
+See {% url "Recipes" https://github.com/cypress-io/cypress/blob/develop/npm/react/docs/recipes.md %} for more examples.
 
 3. ⚠️ Turn the experimental component support on in your `cypress.json`. You can also specify where component spec files are located. For example, to have them located in `src` folder use:
 
