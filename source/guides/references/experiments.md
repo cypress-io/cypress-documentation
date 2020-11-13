@@ -20,7 +20,7 @@ Option | Default | Description
 `experimentalNetworkStubbing` | `false` | Enables {% url "`cy.http()`" http %}: a new version of the `cy.route()` API that works on the HTTP layer, instead of stubbing out XMLHttpRequests. See {% issue 687 %} for details.
 
 {% history %}
-{% url "6.0.0" changelog#6-0-0 %} | Renamed command used in `experimentalNetworkStubbing` from `cy.route2()` to `cy.http()`.
+{% url "6.0.0" changelog#6-0-0 %} | Renamed command used in `experimentalNetworkStubbing` from `cy.route2()` to {% url "`cy.http()`" http %}.
 {% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
 {% url "5.1.0" changelog#5-1-0 %} | Added support for `experimentalNetworkStubbing`.
 {% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
