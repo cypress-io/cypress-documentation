@@ -187,7 +187,7 @@ Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 ## Key Combinations
 
-When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL+R` or `SHIFT+ALT+b`. Single key combinations can be specified with `{modifier+key}` syntax.   
+When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL+R` or `SHIFT+ALT+b`. Single key combinations can be specified with `{modifier+key}` syntax.
 
 A `keydown` event is fired when a modifier is activated and a `keyup` event is fired when it is released.
 
@@ -203,7 +203,8 @@ You can also use key combinations during {% url "`.click()`" click#Click-with-ke
 cy.get('input').type('{shift+alt+b}hello')
 ```
 
-When a modifier is specified on its own, it will remain activated for the duration of the `.type()` command, and is released when all subsequent characters are typed. However, {% url '`{release: false}`' type#Options %} can be passed as an {% url 'option' type#Key-Combinations %}. 
+When a modifier is specified on its own, it will remain activated for the duration of the `.type()` command, and is released when all subsequent characters are typed. However, {% urlHash '`{release: false}`' Options %} can be passed as an {% urlHash 'option' Key-Combinations %}.
+
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then typing 'hello'
 // The modifiers are held for the duration of the command.
