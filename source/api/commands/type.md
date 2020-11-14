@@ -187,7 +187,9 @@ Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
 
 ## Key Combinations
 
-When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL + R` or `SHIFT + ALT + Q`. The modifier(s) remain activated for the duration of the `.type()` command, and are released when all subsequent characters are typed, unless {% url '`{release: false}`' type#Options %} is passed as an {% url 'option' type#Key-Combinations %}. A `keydown` event is fired when a modifier is activated and a `keyup` event is fired when it is released.
+When using special character sequences, it's possible to activate modifier keys and type key combinations, such as `CTRL+R` or `SHIFT+ALT+b`. Single key combinations can be specified with `{modifier+key}` syntax.
+
+A `keydown` event is fired when a modifier is activated and a `keyup` event is fired when it is released.
 
 {% note info %}
 You can also use key combinations during {% url "`.click()`" click#Click-with-key-combinations %}, {% url "`.rightclick()`" rightclick#Right-click-with-key-combinations %} and {% url "`.dblclick()`" dblclick#Double-click-with-key-combinations %} through their options. See each doc for more information.
@@ -196,8 +198,17 @@ You can also use key combinations during {% url "`.click()`" click#Click-with-ke
 ### Type a key combination
 
 ```javascript
-// this is the same as a user holding down SHIFT and ALT, then pressing Q
-cy.get('input').type('{shift}{alt}Q')
+// This is the same as a user holding down SHIFT and ALT, then pressing b
+// The modifiers are released before typing 'hello'
+cy.get('input').type('{shift+alt+b}hello')
+```
+
+When a modifier is specified on its own, it will remain activated for the duration of the `.type()` command, and is released when all subsequent characters are typed. However, {% urlHash '`{release: false}`' Options %} can be passed as an {% urlHash 'option' Key-Combinations %}.
+
+```javascript
+// This is the same as a user holding down SHIFT and ALT, then typing 'hello'
+// The modifiers are held for the duration of the command.
+cy.get('input').type('{shift}{alt}hello')
 ```
 
 ### Type literal `{` or `}` characters
@@ -418,7 +429,9 @@ cy.get('input:first').type('{shift}a')
 
 In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
-This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but the letter `k`. {% open_an_issue %} if you need modifier effects to be implemented.
+This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but the letter `k`. 
+
+Similarly, modifiers will not affect arrow keys or deletion keys. For example `{ctrl}{backspace}` will not delete an entire word. {% open_an_issue %} if you need modifier effects to be implemented.
 
 ## Form Submission
 
@@ -487,6 +500,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
+{% url "5.6.0" changelog#5.6.0 %} | Support single key combination syntax 
 {% url "5.5.0" changelog#5.5.0 %} | Support `beforeinput` event 
 {% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option
 {% url "3.3.0" changelog#3-3-0 %} | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
