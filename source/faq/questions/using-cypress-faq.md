@@ -689,9 +689,8 @@ Finally, you might want to check out the {% url "React Component Testing" compon
 
 ## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
 
-Yes, by using the newer API command {% url "cy.route2()" route2 %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
+Yes, by using the newer API command {% url "cy.http()" http %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
 
 ## {% fa fa-angle-right %} Can Cypress be used for model-based testing?
 
 Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful. Read {% url "Access XState from Cypress Test" https://glebbahmutov.com/blog/cypress-and-xstate/ %} for our start.
-
