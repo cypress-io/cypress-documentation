@@ -277,7 +277,7 @@
     - name: cypress-graphql-mock-network
       description: Custom commands to mock your GraphQL API at the network level. Using service-workers for complete isolation of the mock server.
       link: https://github.com/warrenday/cypress-graphql-mock-network
-      keywords: [graphql]
+      keywords: [graphql, mocking, networking]
       badge: community
 
     - name: cypress-graphql-mock
