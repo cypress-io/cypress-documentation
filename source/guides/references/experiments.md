@@ -17,10 +17,12 @@ Option | Default | Description
 `experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See {% url "Component Testing" component-testing-introduction %} for more detail.
 `experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub.
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
-`experimentalNetworkStubbing` | `false` | Enables {% url "`cy.route2`" route2 %}: a new version of the `cy.route` API that works on the HTTP layer, instead of stubbing out XMLHttpRequests. See {% issue 687 %} for details.
+`experimentalNetworkStubbing` | `false` | Enables {% url "`cy.http()`" http %}: a new version of the `cy.route()` API that works on the HTTP layer, instead of stubbing out XMLHttpRequests. See {% issue 687 %} for details.
 
 {% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Renamed command used in `experimentalNetworkStubbing` from `cy.route2()` to {% url "`cy.http()`" http %}.
 {% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
+{% url "5.1.0" changelog#5-1-0 %} | Added support for `experimentalNetworkStubbing`.
 {% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
 {% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
 {% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.

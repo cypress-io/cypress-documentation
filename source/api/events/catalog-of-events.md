@@ -229,6 +229,8 @@ it('calls the "fail" callback when this test fails', () => {
 })
 ```
 
+Read {% url "Cypress Metaprogramming" https://glebbahmutov.com/blog/cy-metaprogramming/ %} for more examples.
+
 ## Page Navigation
 
 ### Test that your application was redirected

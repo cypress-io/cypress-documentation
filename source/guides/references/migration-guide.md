@@ -2,6 +2,75 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 6.0
+
+This guide details the changes and how to change your code to migrate to Cypress 6.0. {% url "See the full changelog for 6.0" changelog#6-0-0 %}.
+
+## Opacity visibility
+
+DOM elements with `opacity: 0` style are no longer considered to be visible. This includes elements with an ancestor that has `opacity: 0` since a child element can never have a computed opacity greater than that of an ancestor.
+
+### Assert visibility of `opacity: 0` element
+
+{% badge danger Before %} Failed assertion that `opacity: 0` element is not visible.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  // In < 5.0 this assertion would fail
+  cy.get('.hidden').should('not.be.visible)
+})
+```
+
+{% badge success After %} Passed assertion that `opacity: 0` element is not visible.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  // In 6.0 this assertion will pass
+  cy.get('.hidden').should('not.be.visible)
+})
+```
+
+Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  //
+  // In all versions of Cypress, you can interact
+  //  with elements that have 'opacity: 0' style.
+  cy.get('.hidden').click()       // ✅ clicks on element
+  cy.get('.hidden').type('hi')    // ✅ types into element
+  cy.get('.hidden').check()       // ✅ checks element
+  cy.get('.hidden').select('yes') // ✅ selects element
+})
+```
+
+## `cy.route2()` renamed to `cy.http()`
+
+`cy.route2()` was renamed to {% url "`cy.http()`" http %} and will be removed in a future release. While this is not a breaking change, we encourage you to update usages of `cy.route2()` to use {% url "`cy.http()`" http %}.
+
+### Assert visibility of `opacity: 0` element
+
+{% badge danger Before %} `cy.route2()` command
+
+```ts
+cy.route2('POST', 'http://example.com/widgets', {
+  statusCode: 200,
+  body: 'it worked!'
+})
+```
+
+{% badge success After %} `cy.http()` command
+
+```ts
+cy.http('POST', 'http://example.com/widgets', {
+  statusCode: 200,
+  body: 'it worked!'
+})
+```
+
 # Migrating to Cypress 5.0
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
