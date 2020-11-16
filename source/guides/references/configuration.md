@@ -113,7 +113,7 @@ The Node version printed in the Node.js Version panel is used in Cypress to:
 
 Cypress comes automatically bundled with a set Node version by default.
 
-You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`.
+You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`. For example, you need to use the system Node if you want to load `node-sass` or `sqlite3` modules from your plugins file.
 
 {% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
 

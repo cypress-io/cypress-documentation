@@ -283,7 +283,7 @@ node ./wrapper cypress run --browser chrome --config ...
 
 **Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
 
-We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky recipes" https://github.com/cypress-io/cypress-example-recipes/blob/master/test-repeat.js %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-react-unit-test/blob/main/scripts/cypress-expect.js %}.
+We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky tests" https://github.com/bahmutov/cypress-repeat %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-expect %}. Read {% url "Wrap Cypress Using npm Module API" https://glebbahmutov.com/blog/wrap-cypress-using-npm/ %} for more examples.
 
 {% history %}
 {% url "5.0.0" changelog %} | Test results returned from `cypress.run()` changed.

@@ -117,6 +117,7 @@ sidebar:
     go: go
     hash: hash
     hover: hover
+    http: http
     invoke: invoke
     its: its
     last: last
@@ -139,7 +140,6 @@ sidebar:
     rightclick: rightclick
     root: root
     route: route
-    route2: route2
     screenshot: screenshot
     scrollintoview: scrollIntoView
     scrollto: scrollTo

@@ -21,6 +21,7 @@ Option | Default | Description
 {% history %}
 {% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` and made it the default behavior.
 {% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
+{% url "5.1.0" changelog#5-1-0 %} | Added support for `experimentalNetworkStubbing`.
 {% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
 {% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
 {% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
