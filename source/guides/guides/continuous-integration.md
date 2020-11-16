@@ -216,7 +216,7 @@ Caching folders with npm modules saves a lot of time after the first build.
 <!-- textlint-enable -->
 
 {% note info %}
-#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}
 
 The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the Circle CI {% url "Cypress Orb" https://github.com/cypress-io/circleci-orb %}, Codecov Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems with full code-coverage reporting and {% url "Cypress Dashboard recording" https://dashboard.cypress.io/projects/7s5okt %}.
 
@@ -565,7 +565,9 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 
 - If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
-If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+- If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+
+- Make sure you are not restoring the previous cache using lax keys; then the Cypress binaries can "snowball", read {% url "Do Not Let Cypress Cache Snowball on CI" https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/ %}.
 
 **Tip:** you can find lots of CI examples with configured caching in our {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} repository.
 

@@ -161,21 +161,23 @@ See our {% url "Slack Integration guide" slack-integration %} to learn more.
 
 # README Badges
 
-README badges allow you to increase visibility of your project's test status and test count to other developers viewing your project's README file. 
+README badges allow you to increase visibility of your project's test status and test count to other developers viewing your project's README file.
 
 ## Create a README badge
 
 1. In your Cypress Dashboard account, select the project for which you’d like to create a README badge.
-1. On the Project Settings page, scroll down to the README Badges section and click “Configure Badge”. 
+1. On the Project Settings page, scroll down to the README Badges section and click “Configure Badge”.
   {% imgTag /img/dashboard/badges/dashboard-badge-configure-button.png "README Badge configure button" %}
   - **Note**: README badges are currently only available for public projects.
 1. A configuration modal will appear. The Project ID will be pre-filled with the ID associated with the project you selected. You can choose to designate a specific branch, or leave this field blank to always use the latest build in the project.
-1. Next, style your badge. Flat is the default styling and is most commonly used, but 5 style options are available. 
+1. Next, style your badge. Flat is the default styling and is most commonly used, but 5 style options are available.
 1. Select the badge type to change the amount and type of information that’s displayed. Simple status will show only whether tests are passing or failing. Detailed status will show the number of tests that were passed, failed, or skipped. Test count will show how many tests are included in your project.
-1. Once you’ve selected all your settings, check out the preview and make sure everything looks just the way you like it.  
-1. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the Configure Badge modal, and embed it in your project’s README file for everyone to see! 
+1. Once you’ve selected all your settings, check out the preview and make sure everything looks just the way you like it.
+1. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the Configure Badge modal, and embed it in your project’s README file for everyone to see!
 
 {% imgTag /img/dashboard/badges/dashboard-badge-configuration.png "README Badge configuration form" %}
+
+See also {% url "Highlight your project’s test status with Cypress README badges" https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/ %} announcement.
 
 # Access to Runs
 
