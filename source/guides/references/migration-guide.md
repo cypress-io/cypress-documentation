@@ -47,30 +47,6 @@ it('test', () => {
 })
 ```
 
-## `cy.route2()` renamed to `cy.http()`
-
-`cy.route2()` was renamed to {% url "`cy.http()`" http %} and will be removed in a future release. While this is not a breaking change, we encourage you to update usages of `cy.route2()` to use {% url "`cy.http()`" http %}.
-
-### Assert visibility of `opacity: 0` element
-
-{% badge danger Before %} `cy.route2()` command
-
-```ts
-cy.route2('POST', 'http://example.com/widgets', {
-  statusCode: 200,
-  body: 'it worked!'
-})
-```
-
-{% badge success After %} `cy.http()` command
-
-```ts
-cy.http('POST', 'http://example.com/widgets', {
-  statusCode: 200,
-  body: 'it worked!'
-})
-```
-
 # Migrating to Cypress 5.0
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
