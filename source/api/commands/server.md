@@ -6,10 +6,6 @@ Start a server to begin routing responses to {% url "`cy.route()`" route %} and 
 
 {% partial xhr_stubbing_deprecated %}
 
-{% note info %}
-**Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
-{% endnote %}
-
 {% partial network_stubbing_warning %}
 
 # Syntax
