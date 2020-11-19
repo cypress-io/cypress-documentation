@@ -1,12 +1,9 @@
-# Text labels for menu links
-
 menu:
   guides: Guides
   api: API
   plugins: Plugins
   faq: FAQ
   examples: Examples
-  dashboard: Dashboard
   search: Search
 
 index:
@@ -30,13 +27,21 @@ sidebar:
     writing-your-first-test: Writing Your First Test
     testing-your-app: Testing Your App
     interacting-with-elements: Interacting with Elements
-    next-steps: Next Steps
     core-concepts: Core Concepts
     introduction-to-cypress: Introduction to Cypress
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
-    dashboard-service: Dashboard Service
+    dashboard: Dashboard
+    dashboard-introduction: Introduction
+    projects: Projects
+    runs: Runs
+    organizations: Organizations
+    users: Users
+    github-integration: GitHub Integration
+    slack-integration: Slack Integration
+    analytics: Analytics
+    flaky-test-management: Flaky Test Management
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -44,38 +49,38 @@ sidebar:
     screenshots-and-videos: Screenshots and Videos
     guides: Guides
     command-line: Command Line
+    test-retries: Test Retries
     continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
-    advanced-cypress: Advanced
-    the-cypress-workflow: The Cypress Workflow
-    coming-from-selenium: Cypress vs Selenium
+    cross-browser-testing: Cross Browser Testing
     custom-commands: Custom Commands
     web-security: Web Security
-    how-cypress-really-works: How Cypress Really Works
-    talking-to-your-backend: Talking to Your Backend
-    spawning-processes: Spawning Processes
     references: References
+    component-testing: Component Testing
     configuration: Configuration
+    experiments: Experiments
+    proxy-configuration: Proxy Configuration
     error-messages: Error Messages
     bundled-tools: Bundled Tools
     assertions: Assertions
-    creating-fixtures: Creating Fixtures
     best-practices: Best Practices
-    anti-patterns: Anti-patterns
     trade-offs: Trade-offs
-    contributing: Contributing
+    troubleshooting: Troubleshooting
     changelog: Changelog
+    migration-guide: Migration Guide
     roadmap: Roadmap
-    cypress-api-design: API Design
-    all-videos: Videos
     tooling: Tooling
-    intelligent-code-completion: Intelligent Code Completion
+    IDE-integration: IDE Integration
     plugins-guide: Plugins
     reporters: Reporters
     typescript-support: TypeScript
     module-api: Module API
+    retry-ability: Retry-ability
+    visual-testing: Visual Testing
+    code-coverage: Code Coverage
+    component-testing-introduction: Introduction
   api:
     api: API
     table-of-contents: Table of Contents
@@ -112,6 +117,7 @@ sidebar:
     go: go
     hash: hash
     hover: hover
+    http: http
     invoke: invoke
     its: its
     last: last
@@ -131,6 +137,7 @@ sidebar:
     readfile: readFile
     reload: reload
     request: request
+    rightclick: rightclick
     root: root
     route: route
     screenshot: screenshot
@@ -139,6 +146,7 @@ sidebar:
     select: select
     server: server
     setcookie: setCookie
+    shadow: shadow
     should: should
     siblings: siblings
     spread: spread
@@ -175,9 +183,12 @@ sidebar:
     moment: moment
     blob: Blob
     promise: Promise
+    sinon: sinon
     cypress-api: Cypress API
     config: config
     env: env
+    isbrowser: isBrowser
+    iscy: isCy
     custom-commands: Commands
     cookies: Cookies
     dom: dom
@@ -203,12 +214,14 @@ sidebar:
     applications: Applications
     docker: Docker
     media: Media
+    courses-media: Courses
+    webinars-media: Webinars
+    blogs-media: Blogs
     talks-media: Talks
     podcasts-media: Podcasts
     screencasts-media: Screencasts
-    blogs-media: Blogs
-    extensions: Extensions
     workshop: Workshop
+    projects-media: Projects
   faq:
     questions: FAQ
     general-questions-faq: General Questions

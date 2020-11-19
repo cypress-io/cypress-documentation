@@ -1,6 +1,5 @@
 ---
 title: prev
-
 ---
 
 Get the immediately preceding sibling of each element in a set of the elements.
@@ -56,7 +55,7 @@ Option | Default | Description
 
 ## No Args
 
-***Find the previous element of the element with class of `active`***
+### Find the previous element of the element with class of `active`
 
 ```html
 <ul>
@@ -75,7 +74,7 @@ cy.get('.active').prev()
 
 ## Selector
 
-***Find the previous element with a class of `active`***
+### Find the previous element with a class of `active`
 
 ```html
 <ul>
@@ -116,11 +115,11 @@ cy.get('.left-nav').find('li.active').prev()
 
 The commands above will display in the Command Log as:
 
-![Command Log prev](/img/api/prev/find-prev-element-in-list-of-els.png)
+{% imgTag /img/api/prev/find-prev-element-in-list-of-els.png "Command Log prev" %}
 
 When clicking on `prev` within the command log, the console outputs the following:
 
-![Console Log](/img/api/prev/previous-element-in-console-log.png)
+{% imgTag /img/api/prev/previous-element-in-console-log.png "Console Log prev" %}
 
 # See also
 

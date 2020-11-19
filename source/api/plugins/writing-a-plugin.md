@@ -1,6 +1,5 @@
 ---
 title: Writing a Plugin
-
 ---
 
 The Plugins API allows you to hook into and extend Cypress behavior.
@@ -58,17 +57,25 @@ Each event documents its own argument signature. To understand how to use them, 
 
 This configuration contains all of the values that get passed into the browser for your project.
 
-{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.js %}
 
 Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
 
 You can programmatically modify these values and Cypress will then respect these changes. This enables you to swap out configuration based on things like the environment you're running in.
 
+{% note warning %}
+The `config` object also includes the following extra values that are not part of the standard configuration. **These values are read only and cannot be modified from the plugins file.**
+
+* `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
+* `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+* `version`: The version number of Cypress. This can be used to handle breaking changes.
+{% endnote %}
+
 {% url "Please check out our API docs for modifying configuration here." configuration-api %}
 
 ## List of events
 
-***The following events are available:***
+### The following events are available:
 
 Event | Description
 --- | ---
@@ -76,12 +83,6 @@ Event | Description
 {% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
 {% url `task` task %} | Occurs in conjunction with the `cy.task` command.
 {% url `after:screenshot` after-screenshot-api %} | Occurs after a screenshot is taken.
-
-{% note warning "More Coming Soon" %}
-The Plugins API is relatively new.
-
-We have many new plugin events {% issue 684 'we are adding' %}.
-{% endnote %}
 
 # Execution context
 
@@ -91,27 +92,25 @@ Cypress does this by spawning an independent `child_process` which then `require
 
 You will need to keep in mind it is **Cypress who is requiring your file** - not your local project, not your local Node version, and not anything else under your control.
 
-Because of this, this global context and the version of Node is controlled by Cypress.
+Because of this, this global context and the version of Node is controlled under Cypress.
 
 {% note warning "Node version" %}
+Keep in mind - code executed in plugins **may** be executed by the Node version that comes bundled in Cypress itself.
 
-Keep in mind - code executed in plugins is executed **by the Node version** that comes bundled in Cypress itself.
+This version of Node has **nothing to do** with your locally installed versions. Therefore you may want to write Node code which is compatible with this version or document that the user of your plugin will need to set a specific {% url "`nodeVersion`" configuration#Node-version %} in their configuration.
 
-This version of Node has **nothing to do** with your locally installed versions. Therefore you have to write Node code which is compatible with this version.
-
-You can find the current Node version we use {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
-
+You can find the current Node version we use when the `nodeVersion` is set to the default `bundled` {% url 'here' https://github.com/cypress-io/cypress/blob/master/.node-version %}.
 {% endnote %}
 
 ## npm modules
 
-When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any Node module** you have installed.
+When Cypress executes your `pluginsFile` it will execute with `process.cwd()` set to your project's path. Additionally - you will be able to `require` **any node module** you have installed.
 
 You can also `require` local files relative to your project.
 
 **For example, if your `package.json` looked like this:**
 
-```js
+```json
 {
   "name": "My Project",
   "dependencies": {
@@ -140,9 +139,9 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 # Error handling
 
-Cypress spawns your `pluginsFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress' own execution in any way.
+Cypress spawns your `pluginsFile` in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress's own execution in any way.
 
-If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
+If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, or a syntax error - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
 
 Errors from your plugins *will not crash* Cypress.
 

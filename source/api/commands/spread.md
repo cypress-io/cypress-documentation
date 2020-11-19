@@ -1,6 +1,5 @@
 ---
 title: spread
-
 ---
 
 Expand an array into multiple arguments.
@@ -53,7 +52,7 @@ Option | Default | Description
 
 ## Aliased Routes
 
-***Expand the array of aliased routes***
+### Expand the array of aliased routes
 
 ```javascript
 cy.server()
@@ -68,7 +67,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
 
 ## Cookies
 
-***Expand the array of cookies***
+### Expand the array of cookies
 
 ```javascript
 cy.getCookies().spread((cookie1, cookie2, cookie3) => {
@@ -93,6 +92,10 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 # Command Log
 
 `.spread()` does *not* log in the Command Log
+
+{% history %}
+{% url "0.5.9" changelog#0-5.9 %} | `.spread()` command added
+{% endhistory %}
 
 # See also
 

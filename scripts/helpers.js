@@ -8,18 +8,18 @@ const helpers = require('../lib/helpers')
 let pathFn = require('path')
 let _ = require('lodash')
 
-let localizedPath = ['guides', 'api']
-
 function startsWith (str, start) {
   return str.substring(0, start.length) === start
 }
 
 hexo.extend.helper.register('page_nav', function () {
-  let type = this.page.canonical_path.split('/')[0]
-  let sidebar = this.site.data.sidebar[type]
-  let path = pathFn.basename(this.path)
+  const lang = this.page.lang
+  const isEnglish = lang === 'en'
+  const type = this.page.canonical_path.split('/')[0]
+  const sidebar = this.site.data.sidebar[type]
+  const path = pathFn.basename(this.path)
+  const prefix = `sidebar.${type}.`
   let list = {}
-  let prefix = `sidebar.${type}.`
 
   for (let i in sidebar) {
     for (let j in sidebar[i]) {
@@ -31,20 +31,23 @@ hexo.extend.helper.register('page_nav', function () {
   let index = keys.indexOf(path)
   let result = ''
 
-  if (index > 0) {
+  const shouldShowPrevArticle = index > 0
+  const shouldShowNextArticle = index < keys.length - 1
+
+  if (shouldShowPrevArticle) {
     const group = list[keys[index - 1]].group
     const page = keys[index - 1]
     const title = list[keys[index - 1]].title
-    const href = [type, group, page].join('/')
+    const href = (!isEnglish ? [lang, type, group, page] : [type, group, page]).join('/')
 
     result += `<a href="${this.config.root + href}" title="Prev Article" class="article-footer-prev"><i class="fa fa-chevron-left"></i><span>${this.__(prefix + title)}</span></a>`
   }
 
-  if (index < keys.length - 1) {
+  if (shouldShowNextArticle) {
     const group = list[keys[index + 1]].group
     const page = keys[index + 1]
     const title = list[keys[index + 1]].title
-    const href = [type, group, page].join('/')
+    const href = (!isEnglish ? [lang, type, group, page] : [type, group, page]).join('/')
 
     result += `<a href="${this.config.root + href}" title="Next Article" class="article-footer-next"><span>${this.__(prefix + title)}</span><i class="fa fa-chevron-right"></i></a>`
   }
@@ -53,16 +56,18 @@ hexo.extend.helper.register('page_nav', function () {
 })
 
 hexo.extend.helper.register('doc_sidebar', function (className) {
-  let type = this.page.canonical_path.split('/')[0]
-  let sidebar = this.site.data.sidebar[type]
-  let path = pathFn.basename(this.path)
+  const lang = this.page.lang
+  const isEnglish = lang === 'en'
+  const type = this.page.canonical_path.split('/')[0]
+  const sidebar = this.site.data.sidebar[type]
+  const path = pathFn.basename(this.path)
+  const self = this
+  const prefix = `sidebar.${type}.`
   let result = ''
-  let self = this
-  let prefix = `sidebar.${type}.`
   let expandAll = false
 
   // IF the sidebar's categories aren't that many,
-  // just expand them all, since it's more of a hassle to expand one by one
+  // expand them all, since it's more of a hassle to expand one by one
   if (_.keys(sidebar).length <= 6) {
     expandAll = true
   }
@@ -72,6 +77,11 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 
     _.each(menu, function (link, text) {
       let href = [type, title, link].join('/')
+
+      if (!isEnglish) {
+        href = [lang, href].join('/')
+      }
+
       let itemClass = `${className}-link`
       let currentlyActive = link === path
 
@@ -98,17 +108,19 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
 })
 
 hexo.extend.helper.register('api_toc', function () {
-  let type = this.page.canonical_path.split('/')[0]
-  let sidebar = this.site.data.sidebar[type]
+  const lang = this.page.lang
+  const isEnglish = lang === 'en'
+  const type = this.page.canonical_path.split('/')[0]
+  const sidebar = this.site.data.sidebar[type]
+  const self = this
+  const prefix = `sidebar.${type}.`
   let result = ''
-  let self = this
-  let prefix = `sidebar.${type}.`
 
   _.each(sidebar, function (menu, title) {
     result += `<li class="api-title"><h2>${self.__(prefix + title)}</h2><ul class="api-links">`
 
     _.each(menu, function (link, text) {
-      let href = [type, title, link].join('/')
+      let href = (!isEnglish ? [lang, type, title, link] : [type, title, link]).join('/')
 
       result += `<li class='api-li api-li-${title}'><a href="${self.config.root + href}" class="api-link">
         ${self.__(prefix + text)}</a></li>`
@@ -122,15 +134,15 @@ hexo.extend.helper.register('api_toc', function () {
 })
 
 hexo.extend.helper.register('menu', function (type) {
-  let file = `${type}-menu`
-  let menu = this.site.data[file]
-  let self = this
-  let lang = this.page.lang
-  let isEnglish = lang === 'en'
-  let currentPathFolder = this.path.split('/')[0]
+  const lang = this.page.lang
+  const isEnglish = lang === 'en'
+  const file = `${type}-menu`
+  const menu = this.site.data[file]
+  const self = this
+  const currentPathFolder = this.path.split('/')[0]
 
   return _.reduce(menu, function (result, menuPath, title) {
-    if (!isEnglish && ~localizedPath.indexOf(title)) {
+    if (!isEnglish) {
       menuPath = lang + menuPath
     }
 
@@ -155,7 +167,7 @@ hexo.extend.helper.register('canonical_url', function (lang) {
 })
 
 hexo.extend.helper.register('url_for_lang', function (path) {
-  let lang = this.page.lang
+  const lang = this.page.lang
   let url = this.url_for(path)
 
   if (lang !== 'en' && url[0] === '/') url = `/${lang}${url}`
@@ -163,10 +175,10 @@ hexo.extend.helper.register('url_for_lang', function (path) {
   return url
 })
 
-hexo.extend.helper.register('raw_link', function (path) {
-  const branch = 'develop'
+hexo.extend.helper.register('raw_link', function () {
+  const source = this.page.source
 
-  return `https://github.com/cypress-io/cypress-documentation/edit/${branch}/source/${path}`
+  return `https://github.com/cypress-io/cypress-documentation/edit/develop/source/${source}`
 })
 
 hexo.extend.helper.register('add_page_anchors', helpers.addPageAnchors)
@@ -179,13 +191,6 @@ hexo.extend.helper.register('canonical_path_for_nav', function () {
   }
 
   return ''
-
-})
-
-hexo.extend.helper.register('lang_name', function (lang) {
-  let data = this.site.data.languages[lang]
-
-  return data.name || data
 })
 
 hexo.extend.helper.register('order_by_name', function (posts) {

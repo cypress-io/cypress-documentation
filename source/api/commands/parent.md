@@ -1,9 +1,10 @@
 ---
 title: parent
-
 ---
 
 Get the parent DOM element of a set of DOM elements.
+
+Please note that `.parent()` only travels a single level up the DOM tree as opposed to the {% url ".parents()" parents %} command.
 
 {% note info %}
 The querying behavior of this command matches exactly how {% url `.parent()` http://api.jquery.com/parent %} works in jQuery.
@@ -56,18 +57,46 @@ Option | Default | Description
 
 ## No Args
 
-***Get the parent of the active li***
+### Get the parent of the active `li`
+
+```html
+<ul class='main-nav'>
+  <li>Overview</li>
+  <li>Getting started
+    <ul class='sub-nav'>
+      <li>Install</li>
+      <li class='active'>Build</li>
+      <li>Test</li>
+    </ul>
+  </li>
+</ul>
+```
 
 ```javascript
+// yields .sub-nav
 cy.get('li.active').parent()
 ```
 
 ## Selector
 
-***Get the parent with class `nav` of the active li***
+### Get the parent with class `sub-nav` of all `li` elements
+
+```html
+<ul class='main-nav'>
+  <li>Overview</li>
+  <li>Getting started
+    <ul class='sub-nav'>
+      <li>Install</li>
+      <li class='active'>Build</li>
+      <li>Test</li>
+    </ul>
+  </li>
+</ul>
+```
 
 ```javascript
-cy.get('li.active').parent('.nav')
+// yields .sub-nav
+cy.get('li').parent('.sub-nav')
 ```
 
 # Rules
@@ -94,11 +123,11 @@ cy.get('li.active').parent().should('have.class', 'nav')
 
 The commands above will display in the Command Log as:
 
-![Command Log parent](/img/api/parent/get-parent-element-just-like-jquery.png)
+{% imgTag /img/api/parent/get-parent-element-just-like-jquery.png "Command Log parent" %}
 
 When clicking on the `parent` command within the command log, the console outputs the following:
 
-![Console Log parent](/img/api/parent/parent-command-found-elements-for-console-log.png)
+{% imgTag /img/api/parent/parent-command-found-elements-for-console-log.png "Console Log parent" %}
 
 # See also
 

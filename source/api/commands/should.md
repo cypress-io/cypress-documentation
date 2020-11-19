@@ -29,7 +29,6 @@ An alias of {% url `.and()` and %}
 cy.get('.error').should('be.empty')                    // Assert that '.error' is empty
 cy.contains('Login').should('be.visible')              // Assert that el is visible
 cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' property equals 'bar'
-
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -125,11 +124,20 @@ cy.get('button').should('have.id', 'new-user').then(($button) => {
 cy.get('#header a').should('have.attr', 'href', '/users')
 ```
 
+## Focus
+
+### Assert an input is focused after button click
+
+```javascript
+cy.get('#btn-focuses-input').click()
+cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be.focused')
+```
+
 ## Function
 
 Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to *massage* what you'd like to assert on.
 
-Just be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+Be sure *not* to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
 
 ### Verify length, content, and classes from multiple `<p>`
 
@@ -166,10 +174,9 @@ cy
   })
 ```
 
-{% note warning %}
-Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
+**{% fa fa-warning red %} Warning** Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
 
-```
+```js
 cy
   .get('p')
   .should(($p) => {
@@ -181,7 +188,6 @@ cy
     // the argument $p will be the 3 elements, not "foo"
   })
 ```
-{% endnote %}
 
 ### Assert class name contains `heading-`
 
@@ -228,9 +234,9 @@ cy.get('.docs-header')
   })
 ```
 
-### Assert text contents of 3 elements
+### Assert text content of 3 elements
 
-Example below first asserts that there are 3 elements, and then checks the text contents of each one.
+Example below first asserts that there are 3 elements, and then checks the text content of each one.
 
 ```html
 <ul class="connectors-list">
@@ -266,7 +272,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 
 These string messages will be shown in the Command Log giving each assertion more context.
 
-![Expect assertions with messages](/img/api/should/expect-with-message.png)
+{% imgTag /img/api/should/expect-with-message.png "Expect assertions with messages" %}
 
 ### Compare text values of two elements
 
@@ -283,7 +289,7 @@ The example below gets the text contained within one element and saves it in a c
 const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
 
 // will keep text from title element
-let text
+let titleText
 
 cy.get('.company-details')
   .find('.title')
@@ -307,7 +313,7 @@ cy.get('.company-details')
 
 ### Chaining multiple assertions
 
-Cypress makes it easy to chain assertions together.
+Cypress makes it easier to chain assertions together.
 
 In this example we use {% url `.and()` and %} which is identical to `.should()`.
 
@@ -403,11 +409,16 @@ cy.get('.left-nav>.nav').children().should('have.length', 8)
 
 The commands above will display in the Command Log as:
 
-![Command Log should](/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png)
+{% imgTag /img/api/should/should-command-shows-up-as-assert-for-each-assertion.png "Command Log should" %}
 
 When clicking on `assert` within the command log, the console outputs the following:
 
-![Console Log should](/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png)
+{% imgTag /img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png "Console Log should" %}
+
+{% history %}
+{% url "0.11.4" changelog#0-11-4 %} | Allows callback function argument
+{% url "< 0.3.3" changelog#0-3-3 %} | `.should()` command added
+{% endhistory %}
 
 # See also
 

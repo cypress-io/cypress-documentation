@@ -1,6 +1,5 @@
 ---
 title: Preprocessors API
-
 ---
 
 A preprocessor is the plugin responsible for preparing a {% url "support file" writing-and-organizing-tests#Support-file %} or a {% url "test file" writing-and-organizing-tests#Test-files %} for the browser.
@@ -15,43 +14,32 @@ We've created three preprocessors as examples for you to look at. These are full
 
 The code contains comments that explain how it utilizes the preprocessor API.
 
-* {% url 'Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
-* {% url 'Webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
-* {% url 'Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
-
-# Recipes
-
-We've also added some recipes showing how to utilize these preprocessors.
-
-Here are two recipes using both webpack and browserify to write your tests in TypeScript.
-
-- {% url 'TypeScript with Browserify Preprocessor' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify %}
-- {% url 'TypeScript with Webpack Preprocessor' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack %}
+* {% url 'webpack preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+* {% url 'Browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
+* {% url 'Watch preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 
 # Defaults
 
-By default, Cypress comes packaged with the **Browserify Preprocessor** already installed.
+By default, Cypress comes packaged with the **webpack preprocessor** already installed.
 
-The Browserify Preprocessor handles:
+The webpack preprocessor handles:
 
+- ES2015 and JSX via Babel
+- TypeScript
 - CoffeeScript `1.x.x`
-- ES2015 via Babel
-- JSX and CJSX
 - Watching and caching files
 
-The exact default configuration options {% url 'can be found here' https://github.com/cypress-io/cypress-browserify-preprocessor#browserifyoptions %}.
-
 {% note info %}
-Are you looking to change the **default options** for Browserify?
+Are you looking to change the **default options** for webpack?
 {% endnote %}
 
-Changing the Browserify options lets you:
+If you already use webpack in your project, you can pass in your webpack config as {% url 'shown here' https://github.com/cypress-io/cypress-webpack-preprocessor#options %}.
+
+If you don't use webpack in your project or would like to keep the majority of the default options, you can {% url 'modify the default options' https://github.com/cypress-io/cypress-webpack-preprocessor#modifying-default-options %}. Editing the options allows you to do things like:
 
 - Add your own Babel plugins
-- Add support for TypeScript
+- Modify options for TypeScript compilation
 - Add support for CoffeeScript `2.x.x`
-
-Please read this link in the {% url 'browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
 
 # Usage
 
@@ -66,7 +54,7 @@ module.exports = (on, config) => {
 }
 ```
 
-### The callback function should return one of the following:
+## The callback function should return one of the following:
 
 * A promise\* that eventually resolves the path to the **built file**\*\*.
 * A promise\* that eventually rejects with an error that occurred during processing.
@@ -104,7 +92,7 @@ Property | Description
 
 The `file` object passed to the callback function is an {% url "Event Emitter" https://nodejs.org/api/events.html#events_class_eventemitter %}.
 
-### Receiving 'close' event
+## Receiving 'close' event
 
 When the running spec, the project, or the browser is closed while running tests, the `close` event will be emitted. The preprocessor should do any necessary cleanup in this function, like closing the watcher when watching.
 
@@ -117,7 +105,7 @@ file.on('close', () => {
 })
 ```
 
-### Sending 'rerun' event
+## Sending 'rerun' event
 
 If watching for file changes, emit `rerun` after a file has finished being processed to let Cypress know to rerun the tests.
 

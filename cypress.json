@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:2222",
   "projectId": "ma3dkn",
-  "viewportWidth": 1300
+  "viewportWidth": 1500,
+  "blockHosts": ["trackcmp.net", "js.hs-analytics.net", "js.hs-scripts.com"]
 }

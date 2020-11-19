@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "3.9.0"
   },
   "engines": {
-    "node": "^8.4.0"
+    "node": "^12.8.1"
   },
   "license": "MIT",
   "bugs": "https://github.com/cypress-io/cypress-documentation/issues",
@@ -27,7 +27,7 @@
     "deploy-prebuilt": "node ./cy_scripts/deploy.js",
     "deploy": "echo Deploying built docs",
     "deps": "deps-ok && dependency-check . --no-default-entries --entry cy_scripts/deploy.js",
-    "lint": "echo 'Linting scripts...' && eslint --fix *.js cy_scripts/*.js scripts/*.js cypress/integration/*.js && echo 'Lint successful'",
+    "lint": "eslint --fix .",
     "md-lint": "textlint source/*",
     "postbuild": "gulp post:build && git-last -m -f public/build.json",
     "postdeploy": "npm run deploy-prebuilt",
@@ -35,16 +35,29 @@
     "predeploy": "NODE_ENV=production npm run build",
     "scrape": "node ./cy_scripts/scrape.js",
     "start-server": "node --stack-size=8192 ./index.js server --port 2222",
+    "prestart": "gulp pre:build",
     "start": "npm run start-server -- --no-validate",
-    "stop-only": "stop-only --folder cypress",
     "test-e2e": "start-server-and-test start http://localhost:2222 cypress:run",
+    "dev": "start-test 2222 cypress:open",
     "test-watch": "npm run test --silent -- --watch",
     "test": "jest",
-    "warn-only": "stop-only --warn --folder cypress"
+    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/cypress-documentation"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run md-lint && npm run warn-only"
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "source/**/*.md": [
+        "textlint --fix",
+        "git add"
+      ],
+      "*.js": [
+        "eslint --fix --max-warnings=0",
+        "git add"
+      ]
     }
   },
   "jest": {
@@ -52,99 +65,91 @@
       "node_modules/react"
     ],
     "testMatch": [
-      "<rootDir>/test/**/*spec.(js|coffee)"
+      "<rootDir>/test/**/*spec.js"
     ],
     "moduleFileExtensions": [
-      "coffee",
       "js"
-    ],
-    "transform": {
-      ".+\\.coffee": "./test/jest-coffee-preprocessor.js"
-    }
+    ]
   },
   "devDependencies": {
-    "@cypress/deploy-bits": "1.7.1",
+    "@cypress/deploy-bits": "1.8.0",
     "@cypress/env-or-json-file": "2.0.0",
+    "@cypress/eslint-plugin-dev": "5.0.0",
     "@cypress/questions-remain": "1.0.1",
+    "@cypress/skip-test": "2.5.0",
     "@keyv/redis": "github:bahmutov/keyv-redis#b64f44cd1d1e87893d989b1469068af8292299d5",
-    "@types/fluent-ffmpeg": "2.1.9",
-    "@types/jest": "23.3.13",
-    "beeper": "1.1.1",
-    "bin-up": "1.1.0",
+    "@types/fluent-ffmpeg": "2.1.14",
+    "@types/jest": "25.1.5",
+    "beeper": "2.0.0",
+    "bluebird": "3.7.2",
     "chai": "4.2.0",
-    "chalk": "2.4.2",
-    "cheerio": "1.0.0-rc.2",
-    "coffee-react": "5.0.1",
-    "colors": "1.3.3",
+    "chalk": "3.0.0",
+    "cheerio": "1.0.0-rc.3",
     "common-tags": "1.8.0",
-    "concurrent-transform": "1.0.0",
-    "cypress": "3.1.4",
-    "dependency-check": "3.3.0",
+    "cypress": "5.6.0",
+    "dependency-check": "3.4.1",
     "deps-ok": "1.4.1",
-    "eslint": "5.12.1",
-    "eslint-plugin-cypress": "2.2.0",
-    "eslint-plugin-cypress-dev": "2.0.0",
+    "eslint": "6.1.0",
+    "eslint-plugin-cypress": "2.11.1",
+    "eslint-plugin-json-format": "2.0.1",
+    "eslint-plugin-no-only-tests": "2.4.0",
+    "execa": "2.1.0",
     "fluent-ffmpeg": "2.1.2",
-    "fs-extra": "7.0.1",
-    "ggit": "2.4.11",
-    "git-last": "1.2.10",
-    "got": "8.3.2",
-    "gulp": "3.9.1",
-    "gulp-awspublish": "3.4.0",
+    "fs-extra": "8.1.0",
+    "ggit": "2.4.12",
+    "git-last": "1.2.14",
+    "got": "9.6.0",
+    "gulp": "4.0.2",
     "gulp-clean": "0.4.0",
-    "gulp-debug": "4.0.0",
-    "gulp-rev-all": "1.0.0",
-    "human-interval": "0.1.6",
-    "husky": "1.3.1",
-    "inquirer": "5.2.0",
-    "jest": "24.0.0",
-    "keyv": "3.1.0",
-    "marked": "0.6.0",
-    "minimist": "1.2.0",
-    "mocha": "5.2.0",
+    "gulp-rev-all": "2.0.3",
+    "husky": "3.1.0",
+    "inquirer": "6.5.2",
+    "jest": "25.1.0",
+    "keyv": "4.0.0",
+    "lint-staged": "8.2.1",
+    "make-empty-github-commit": "1.2.1",
+    "minimist": "1.2.5",
     "nock": "10.0.6",
-    "npm-run-all": "4.1.5",
-    "ora": "3.0.0",
-    "pluralize": "7.0.0",
+    "ora": "3.4.0",
+    "pluralize": "8.0.0",
     "prompt-confirm": "2.0.4",
-    "ramda": "0.26.1",
-    "request-promise": "4.2.2",
-    "run-sequence": "2.2.1",
-    "sinon": "7.2.3",
-    "sinon-chai": "3.3.0",
-    "snap-shot-it": "6.2.9",
-    "start-server-and-test": "1.7.11",
-    "stop-only": "3.0.1",
-    "textlint": "11.2.1",
+    "ramda": "0.27.0",
+    "request-promise": "4.2.5",
+    "sinon": "8.1.1",
+    "sinon-chai": "3.5.0",
+    "start-server-and-test": "1.10.11",
+    "textlint": "11.6.3",
     "textlint-filter-rule-comments": "1.2.2",
-    "textlint-rule-eslint": "3.1.0",
-    "textlint-rule-terminology": "1.1.30",
-    "underscore.string": "3.3.5",
-    "wait-on": "2.1.2",
+    "textlint-rule-eslint": "3.2.1",
+    "textlint-rule-terminology": "2.1.3",
+    "utf8": "3.0.0",
+    "wait-on": "4.0.1",
     "yamljs": "0.3.0"
   },
   "dependencies": {
-    "bluebird": "3.5.3",
+    "@contentful/rich-text-html-renderer": "13.4.0",
     "check-more-types": "2.24.0",
-    "debug": "3.2.6",
-    "docsearch.js": "2.6.2",
+    "contentful": "7.14.0",
+    "debug": "4.1.1",
+    "docsearch.js": "2.6.3",
     "font-awesome": "4.7.0",
-    "hexo": "3.8.0",
-    "hexo-algoliasearch": "0.3.0",
-    "hexo-cli": "1.1.0",
-    "hexo-filter-cleanup": "1.1.0",
+    "hexo": "3.9.0",
+    "hexo-algoliasearch": "0.4.2",
+    "hexo-cli": "3.1.0",
+    "hexo-filter-cleanup": "1.2.2",
     "hexo-generator-alias": "0.1.3",
-    "hexo-generator-seo-friendly-sitemap": "0.0.22",
+    "hexo-generator-seo-friendly-sitemap": "0.0.25",
     "hexo-prism-plugin": "2.3.0",
     "hexo-renderer-marked": "0.3.2",
     "hexo-renderer-scss": "1.2.0",
-    "hexo-server": "0.3.3",
+    "hexo-server": "1.0.0",
+    "js-yaml": "3.13.1",
     "lazy-ass": "1.6.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.19",
     "menuspy": "1.3.0",
+    "moment": "2.24.0",
     "roboto-fontface": "0.10.0",
     "scrollingelement": "1.5.2",
-    "set-immediate-shim": "2.0.0",
     "yall": "github:malchata/yall.js#1c782f1ab7a0becb1a88fd6f3b260e55d5e213a2"
   }
 }

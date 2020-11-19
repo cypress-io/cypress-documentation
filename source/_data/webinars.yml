@@ -1,0 +1,104 @@
+# small links with title and url
+# Using this to post subscribe to updates link
+small:
+  - title: "Get notified of upcoming webcasts by subscribing to emails from Cypress"
+    sourceUrl: https://go.cypress.io/subscribe
+  - title: "Follow us on Twitter!"
+    sourceUrl: https://twitter.com/Cypress_io
+
+# large links with thumbnails, links, embedded video
+large:
+  - title: "How GoFundMe’s QA Engineers and Developers Test 30x Faster with Cypress"
+    date: August 26, 2020
+    author: Cypress & GoFundMe with Gleb Bahmutov and Todd Williams
+    youtubeId: fIVZjlHUm8g
+
+  - title: "Build invincible integration tests using Cypress and cypress-testing-library"
+    date: July 8, 2020
+    author: Cypress & Fiverr with Gleb Bahmutov & Roman Sadler
+    youtubeId: F8LH9d9eN3M
+    slides: https://slides.com/romansandler/bulletproof-cypress/
+
+  - title: "How Optimizely Tests Features and Feature Flags 300% Faster with Cypress"
+    date: June 10, 2020
+    author: Cypress & Optimizely with Gleb Bahmutov, Jeff Sing, and Todd Seller
+    youtubeId: payZtbdv8R8
+
+  - title: "Keep your UI Sharp: Ensuring Functional and Visual Quality with Cypress.io + Happo.io"
+    date: May 20, 2020
+    author: Cypress & Happo with Gleb Bahmutov & Henric Trotzig
+    youtubeId: C_p12IvN5HU
+  
+  - title: "Shipping with Confidence: How DHL reduced test execution time by 50%"
+    date: May 7, 2020  
+    author: Cypress & DHL with Gleb Bahmutov & Rick Fleuren
+    youtubeId: TiLtELQ0hkI  
+
+  - title: "How Lightstep Quadrupled Deployment Velocity with Cypress"
+    date: April 15, 2020
+    author: Cypress & Lightstep with Gleb Bahmutov, Jonah Moses & Ted Pennings
+    youtubeId: FdF4FyzSiDE
+
+  - title: "How PlanGrid (Autodesk) Achieved Consistency in Automation Across 20 Development Teams"
+    date: Feb 12, 2020
+    author: Cypress & PlanGrid (Autodesk) with Gleb Bahmutov, Graeme Harvey & Brendan Drew
+    youtubeId: aaU41lsdX24
+    slides: https://cypress.slides.com/cypress-io/quality-in-1-million-projects
+
+  - title: "How Siemens SW Hub increased their test productivity by 38% with Cypress"
+    date: Dec 11, 2019
+    author: Cypress & Siemens with Gleb Bahmutov & Murat Ozcan
+    youtubeId: aMPkaLOpyns
+    slides: https://cypress.slides.com/cypress-io/siemens-case-study
+
+  - title: "Cypress + Gatsby: Confidently fast web development"
+    date: Sep 4, 2019
+    author: Cypress & Gatsby with Amir Rustamzadeh & Dustin Schau
+    youtubeId: Tx6Lg9mwcCE
+
+  - title: "Spotahome’s Test-First Engineering Culture Using Cypress"
+    date: Aug 13, 2019
+    author: Cypress & Spotahome with Borja Guzman, David Zambrana & Steven Yi
+    youtubeId: 3YODposgH5A
+
+  - title: "From Zero to Hero with Cypress: Slido’s journey of creating E2E tests without JS experience"
+    date: Aug 7, 2019
+    author: Cypress & sli.do with Filip Hric, Lubo Droby, & Steven Yi
+    youtubeId: Vnlwy-qF90c
+
+  - title: "Complete Code Coverage with Cypress"
+    date: Jul 31, 2019
+    author: Cypress with Amir Rustamzadeh and Gleb Bahmutov
+    youtubeId: C8g5X4vCZJA
+
+  - title: "Cypress in a Nutshell"
+    date: Jul 18, 2019
+    author: Cypress with Amir Rustamzadeh
+    youtubeId: LcGHiFnBh3Y
+
+  - title: "SaltStack’s QA Turnaround Using Cypress.io"
+    date: May 22, 2019
+    author: Cypress & Saltstack with Steve Yi & Nate Watts
+    youtubeId: 8iBna-2gIzM
+
+  - title: "Cypress.io + Percy = End-to-end functional and visual testing for the web"
+    date: Apr 10, 2019
+    author: Cypress & Percy with Mike Fotinakis & Gleb Bahmutov 
+    youtubeId: MXfZeE9RQDw
+
+  - title: "How GoDaddy Created A Culture of Quality Through Test Automation with Cypress"
+    date: Mar 28, 2019
+    author: Cypress & GoDaddy with Pablo Velasquez, Kolya Venturi, Stephen Commisso & Steve Yi
+    youtubeId: ZSbNT-Fff9A
+
+  - title: "CircleCI and Cypress.io: Easily integrate end to end web application testing"
+    date: Dec 10, 2018
+    author: Cypress & CircleCI with Gleb Bahmutov & Eddie Webb
+    youtubeId: J-xbNtKgXfY
+    slides: https://slides.com/bahmutov/circleci-cypress-orb
+
+  - title: "Get the latest updates from Cypress"
+    date: Oct 16, 2018
+    author: Cypress with Gleb Bahmutov & Brian Mann
+    youtubeId: FfqD1ExUGlw
+    slides: https://slides.com/bahmutov/cy-parallelization

@@ -1,11 +1,10 @@
 ---
 title: Cypress.Blob
-
 ---
 
 Cypress automatically includes a {% url 'Blob' https://github.com/nolanlawson/blob-util %} library and exposes it as `Cypress.Blob`.
 
-Use `Cypress.Blob` to convert `base64` strings to `blob` objects. Useful for testing uploads.
+Use `Cypress.Blob` to convert `base64` strings to Blob objects. Useful for testing uploads.
 
 # Syntax
 
@@ -31,28 +30,46 @@ cy.Blob.method() // Errors, cannot be chained off 'cy'
 
 ## Image Fixture
 
-**Using an image fixture**
+### Using an image fixture for jQuery plugin upload
 
 ```javascript
 // programmatically upload the logo
 cy.fixture('images/logo.png').as('logo')
-cy.get('input[type=file]').then(($input) => {
-
+cy.get('input[type=file]').then(function($input) {
   // convert the logo base64 string to a blob
-  return Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
-    .then((blob) => {
+  const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 
-      // pass the blob to the fileupload jQuery plugin
-      // used in your application's code
-      // which initiates a programmatic upload
-      $input.fileupload('add', { files: blob })
-    })
+  // pass the blob to the fileupload jQuery plugin
+  // https://github.com/blueimp/jQuery-File-Upload
+  // used in your application's code
+  // which initiates a programmatic upload
+  $input.fileupload('add', { files: blob })
+})
+```
+
+### Using an image fixture for upload
+
+```javascript
+// programmatically upload the logo
+cy.fixture('images/logo.png').as('logo')
+cy.get('input[type=file]').then(function(el) {
+  // convert the logo base64 string to a blob
+  const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
+
+  const file = new File([blob], 'images/logo.png', { type: 'image/png' })
+  const list = new DataTransfer()
+
+  list.items.add(file)
+  const myFileList = list.files
+
+  el[0].files = myFileList
+  el[0].dispatchEvent(new Event('change', { bubbles: true }))
 })
 ```
 
 ## Getting dataUrl string
 
-**Create an `img` element and set its `src` to the `dataUrl`**
+### Create an `img` element and set its `src` to the `dataUrl`
 
 ```javascript
 return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
@@ -65,3 +82,12 @@ return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
   cy.get('.utility-blob img').click().should('have.attr', 'src', dataUrl)
 })
 ```
+
+{% history %}
+{% url "5.0.0" changelog %} | Return type of `arrayBufferToBlob`, `base64StringToBlob`, `binaryStringToBlob`, and `dataURLToBlob` methods changed from `Promise<Blob>` to `Blob`
+{% url "5.0.0" changelog %} | Added `arrayBufferToBinaryString`, `binaryStringToArrayBuffer` methods.
+{% endhistory %}
+
+# See also
+
+- {% url 'Bundled Tools' bundled-tools %}

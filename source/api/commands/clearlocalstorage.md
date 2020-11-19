@@ -1,9 +1,8 @@
 ---
 title: clearLocalStorage
-
 ---
 
-Clear data in local storage for current domain and subdomain.
+Clear data in localStorage for current domain and subdomain.
 
 {% note warning %}
 Cypress automatically runs this command *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear localStorage inside a single test.
@@ -30,7 +29,7 @@ cy.clearLocalStorage()  // clear all local storage
 
 **{% fa fa-angle-right %} keys** ***(String, RegExp)***
 
-Specify key to be cleared in local storage.
+Specify key to be cleared in localStorage.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -48,7 +47,7 @@ Option | Default | Description
 
 ## No Args
 
-**Clear all local storage**
+### Clear all localStorage
 
 ```javascript
 cy.clearLocalStorage()
@@ -56,13 +55,13 @@ cy.clearLocalStorage()
 
 ## Specific Key
 
-***Clear local storage with key 'appName'***
+### Clear localStorage with the key 'appName'
 
 ```javascript
 cy.clearLocalStorage('appName')
 ```
 
-***Clear all local storage matching /app-/***
+### Clear all localStorage matching `/app-/` RegExp
 
 ```javascript
 cy.clearLocalStorage(/app-/)
@@ -94,11 +93,11 @@ cy.clearLocalStorage(/prop1|2/).then((ls) => {
 
 The commands above will display in the Command Log as:
 
-![Command log for clearLocalStorage](/img/api/clearlocalstorage/clear-ls-localstorage-in-command-log.png)
+{% imgTag /img/api/clearlocalstorage/clear-ls-localstorage-in-command-log.png "Command log for clearLocalStorage" %}
 
 When clicking on `clearLocalStorage` within the command log, the console outputs the following:
 
-![console.log for clearLocalStorage](/img/api/clearlocalstorage/local-storage-object-shown-in-console.png)
+{% imgTag /img/api/clearlocalstorage/local-storage-object-shown-in-console.png "console.log for clearLocalStorage" %}
 
 # See also
 

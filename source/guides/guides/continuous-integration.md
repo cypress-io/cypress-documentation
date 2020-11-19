@@ -15,6 +15,10 @@ title: Continuous Integration
 
 # Setting up CI
 
+<!-- textlint-disable -->
+{% video youtube saYovXS9Llk %}
+<!-- textlint-enable -->
+
 ## Basics
 
 Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:
@@ -79,10 +83,11 @@ If the server takes a very long time to start, we recommend trying the {% url st
 npm install --save-dev start-server-and-test
 ```
 
-Pass the command to boot your server, the url your server is hosted on and your Cypress test command.
+In your `package.json` scripts, pass the command to boot your server, the url your server is hosted on and your Cypress test command.
 
 ```json
 {
+  ...
   "scripts": {
     "start": "my-server -p 3030",
     "cy:run": "cypress run",
@@ -93,9 +98,33 @@ Pass the command to boot your server, the url your server is hosted on and your 
 
 In the example above, the `cy:run` command will only be executed when the URL `http://localhost:3030` responds with an HTTP status code of 200. The server will also shut down when the tests complete.
 
+*Gotchas*
+
+When [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users) that does not respond to `HEAD` requests, use an explicit `GET` method to ping the server like this:
+
+```json
+{
+  "scripts": {
+    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
+  }
+}
+```
+
+When working with local `https` in webpack, set an environment variable to allow local certificate:
+
+```json
+{
+  "scripts": {
+    "start": "my-server -p 3030 --https",
+    "cy:run": "cypress run",
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+  }
+}
+```
+
 ## Record tests
 
-Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' https://on.cypress.io/dashboard %}.
+Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
 
 ### Recording tests allow you to:
 
@@ -107,18 +136,18 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 
 ### To record tests:
 
-1. {% url 'Set up your project to record' dashboard-service#Setup %}
+1. {% url 'Set up your project to record' projects#Setup %}
 2. {% url 'Pass the `--record` flag to `cypress run`' command-line#cypress-run %} within CI.
 
 ```shell
 cypress run --record --key=abc123
 ```
 
-{% url 'Read the full guide on the Dashboard Service.' dashboard-service %}
+{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction%}
 
 ## Run tests in parallel
 
-Cypress can running tests in parallel across multiple machines.
+Cypress can run tests in parallel across multiple machines.
 
 You'll want to refer to your CI provider's documentation on how to set up multiple machines to run in your CI environment.
 
@@ -136,10 +165,12 @@ Cypress should run on **all** CI providers. We have provided some example projec
 
 CI Provider | Example Project | Example Config
 ----------- | --------------- | --------------
+{% url "AWS Amplify Console" https://aws.amazon.com/amplify/console %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "amplify.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml %}
 {% url "AppVeyor" https://appveyor.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "appveyor.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml %}
+{% url "Azure / VSTS CI / TeamFoundation" https://azure.microsoft.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "azure-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
-{% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
-{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "circle.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml %}
+{% url "Buildkite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
+{% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".circleci/config.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml %}
 {% url "CodeShip Basic" https://codeship.com/features/basic %} (has {% issue 328 "cy.exec() issue" %}) | |
 {% url "CodeShip Pro" https://codeship.com/features/pro %} | {% url "cypress-example-docker-codeship" https://github.com/cypress-io/cypress-example-docker-codeship %} |
 {% url "Concourse" https://concourse-ci.org/ %} | |
@@ -148,10 +179,7 @@ CI Provider | Example Project | Example Config
 {% url "Jenkins" https://jenkins.io/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "Jenkinsfile" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile %}
 {% url "Semaphore" https://semaphoreci.com/ %} | |
 {% url "Shippable" https://app.shippable.com/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "shippable.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/shippable.yml %}
-{% url "Solano" https://www.solanolabs.com/ %} | |
 {% url "TravisCI" https://travis-ci.org/ %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".travis.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml %}
-{% url "VSTS CI / TeamFoundation" https://visualstudio.microsoft.com/tfs/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "vsts-ci.yml" https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml %}
-
 
 ## Travis
 
@@ -161,9 +189,17 @@ CI Provider | Example Project | Example Config
 language: node_js
 node_js:
   - 10
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
 cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
   npm: true
   directories:
+    # we also need to cache folder with Cypress binary
     - ~/.cache
 install:
   - npm ci
@@ -175,17 +211,34 @@ Caching folders with npm modules saves a lot of time after the first build.
 
 ## CircleCI
 
-### {% badge success New %} Example CircleCI Orb
+<!-- textlint-disable -->
+{% video youtube J-xbNtKgXfY %}
+<!-- textlint-enable -->
 
-The Cypress CircleCI Orb is a piece of configuration set in your `circle.yml` file to correctly install, cache and run Cypress with very little effort.
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the Circle CI {% url "Cypress Orb" https://github.com/cypress-io/circleci-orb %}, Codecov Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems with full code-coverage reporting and {% url "Cypress Dashboard recording" https://dashboard.cypress.io/projects/7s5okt %}.
+
+Check out the full {% fa fa-github %} {% url "RWA Circle CI configuration" https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml %}.
+
+{% endnote %}
+
+### Example CircleCI Orb
+
+The Cypress CircleCI Orb is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the {% url "`cypress-io/circleci-orb`" https://github.com/cypress-io/circleci-orb %} repo.
 
-A typical project can simply have:
+A typical project can have:
 
 ```yaml
 version: 2.1
 orbs:
+  # "cypress-io/cypress@1" installs the latest published
+  # version "1.x.y" of the orb. We recommend you then use
+  # the strict explicit version "cypress-io/cypress@1.x.y"
+  # to lock the version and prevent unexpected CI changes
   cypress: cypress-io/cypress@1
 workflows:
   build:
@@ -193,7 +246,7 @@ workflows:
       - cypress/run # "run" job comes from "cypress" orb
 ```
 
-A more complex project that needs to install dependencies, build an application and run tests across 10 CI machines {% url "in parallel" parallelization %} may have:
+A more complex project that needs to install dependencies, build an application and run tests across 4 CI machines {% url "in parallel" parallelization %} may have:
 
 ```yaml
 version: 2.1
@@ -209,23 +262,23 @@ workflows:
             - cypress/install
           record: true        # record results on Cypress Dashboard
           parallel: true      # split all specs across machines
-          parallelism: 10     # use 10 CircleCI machines to finish quickly
+          parallelism: 4      # use 4 CircleCI machines to finish quickly
           group: 'all tests'  # name this group "all tests" on the dashboard
           start: 'npm start'  # start server before running tests
 ```
 
 In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
 
-You can find multiple examples at {% url "our examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %}.
+You can find multiple examples at {% url "our orb examples page" https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md %} and in the {% url cypress-example-circleci-orb https://github.com/cypress-io/cypress-example-circleci-orb %} project.
 
-### Example `circle.yml` v2 config file
+### Example `.circleci/config.yml` v2 config file
 
 ```yaml
 version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -242,20 +295,21 @@ jobs:
           command: npm ci
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          # cache NPM modules and the folder with the Cypress binary
           paths:
             - ~/.npm
             - ~/.cache
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-### Example `circle.yml` v2 config file with `yarn`
+### Example `.circleci/config.yml` v2 config file with `yarn`
 
 ```yaml
 version: 2
 jobs:
   build:
     docker:
-      - image: cypress/base:8
+      - image: cypress/base:10
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -279,9 +333,191 @@ jobs:
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
 
+## AWS Amplify
+
+### Example `amplify.yml`
+
+```yaml
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: app
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  artifacts:
+    baseDirectory: cypress
+    configFilePath: "**/mochawesome.json"
+    files:
+      - "**/*.png"
+      - "**/*.mp4"
+  phases:
+    preTest:
+      commands:
+        - npm install
+        - npm install wait-on
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
+        - "npm start & npx wait-on http://127.0.0.1:8080"
+    test:
+      commands:
+        - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+    postTest:
+      commands:
+        - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
+```
+
+### Example `amplify.yml` v2 with --record for Cypress Dashboard
+
+Add `CYPRESS_RECORD_KEY` Enviroment Variable in [Amplify Console](https://aws.amazon.com/amplify/console/).
+
+```yaml
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: app
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  artifacts:
+    baseDirectory: cypress
+    configFilePath: "**/mochawesome.json"
+    files:
+      - "**/*.png"
+      - "**/*.mp4"
+  phases:
+    preTest:
+      commands:
+        - npm install
+        - npm install wait-on
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
+        - "npm start & npx wait-on http://127.0.0.1:8080"
+    test:
+      commands:
+        - 'npx cypress run --record --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+    postTest:
+      commands:
+        - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
+```
+
+### Example `amplify.yml` for Create React App and Amplify Console
+
+```yaml
+version: 0.1
+backend:
+  phases:
+    build:
+      commands:
+        - "# Execute Amplify CLI with the helper script"
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yarn install
+    build:
+      commands:
+        - yarn run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  artifacts:
+    baseDirectory: cypress
+    configFilePath: "**/mochawesome.json"
+    files:
+      - "**/*.png"
+      - "**/*.mp4"
+  phases:
+    preTest:
+      commands:
+        - npm install
+        - npm install wait-on
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
+        - "npm start & npx wait-on http://localhost:3000"
+    test:
+      commands:
+        - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+    postTest:
+      commands:
+        - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
+```
+
+### Example `amplify.yml` for Create React App and Amplify Console with --record for Cypress Dashboard
+
+Add `CYPRESS_RECORD_KEY` Enviroment Variable in [Amplify Console](https://aws.amazon.com/amplify/console/).
+
+```yaml
+version: 0.1
+backend:
+  phases:
+    build:
+      commands:
+        - "# Execute Amplify CLI with the helper script"
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yarn install
+    build:
+      commands:
+        - yarn run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  artifacts:
+    baseDirectory: cypress
+    configFilePath: "**/mochawesome.json"
+    files:
+      - "**/*.png"
+      - "**/*.mp4"
+  phases:
+    preTest:
+      commands:
+        - npm install
+        - npm install wait-on
+        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
+        - "npm start & npx wait-on http://localhost:3000"
+    test:
+      commands:
+        - 'npx cypress run --record --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+    postTest:
+      commands:
+        - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
+```
+
 ## Docker
 
-We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
+We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
 
 ```text
 FROM cypress/base
@@ -293,7 +529,7 @@ RUN $(npm bin)/cypress run
 Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -311,13 +547,13 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
 
-```shell
-apt-get install xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
-```
+### Linux
+
+{% partial linux_dependencies %}
 
 ## Caching
 
-As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.
+As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can save minutes off install time by preventing a large binary download.
 
 ### We recommend users:
 
@@ -329,7 +565,11 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 
 - If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
-If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+- If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+
+- Make sure you are not restoring the previous cache using lax keys; then the Cypress binaries can "snowball", read {% url "Do Not Let Cypress Cache Snowball on CI" https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/ %}.
+
+**Tip:** you can find lots of CI examples with configured caching in our {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} repository.
 
 ## Environment variables
 
@@ -337,7 +577,7 @@ You can set various environment variables to modify how Cypress runs.
 
 ### Configuration Values
 
-You can set any configuration value as an environment variable. This overrides values in your `cypress.json`.
+You can set any configuration value as an environment variable. This overrides values in your configuration file (`cypress.json` by default).
 
 ***Typical use cases would be modifying things like:***
 
@@ -346,11 +586,11 @@ You can set any configuration value as an environment variable. This overrides v
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
 
-Refer to the {% url 'configuration' configuration#Environment-Variables %} for more examples.
+Refer to the {% url 'Environment Variables recipe' configuration#Environment-Variables %} for more examples.
 
 ***Record Key***
 
-If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' dashboard-service#Identification %}
+If you are {% urlHash 'recording your runs' Record-tests %} on a public project, you'll want to protect your Record Key. {% url 'Learn why.' projects#Identification %}
 
 Instead of hard coding it into your run command like this:
 
@@ -368,14 +608,15 @@ Typically you'd set this inside of your CI provider.
 
 ***CircleCI Environment Variable***
 
-![Record key environment variable](/img/guides/cypress-record-key-as-environment-variable.png)
+{% imgTag /img/guides/cypress-record-key-as-environment-variable.png "Record key environment variable" %}
 
 ***TravisCI Environment Variable***
 
-![Travis key environment variable](/img/guides/cypress-record-key-as-env-var-travis.png)
+{% imgTag /img/guides/cypress-record-key-as-env-var-travis.png "Travis key environment variable" %}
 
 ### Git information
-Cypress uses the {% url 'commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
+
+Cypress uses the {% url '@cypress/commit-info' https://github.com/cypress-io/commit-info %} package to extract git information to associate with the run (e.g. branch, commit message, author).
 
 It assumes there is a `.git` folder and uses Git commands to get each property, like `git show -s --pretty=%B` to get commit message, see {% url 'src/git-api.js' https://github.com/cypress-io/commit-info/blob/master/src/git-api.js %}.
 
@@ -387,6 +628,12 @@ Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` dir
 - Author: `COMMIT_INFO_AUTHOR`
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
+
+If the commit information is missing in the Dashboard run then {% url "GitHub Integration" github-integration %} or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+
+```shell
+DEBUG=commit-info,cypress:server:record
+```
 
 ### Custom Environment Variables
 
@@ -413,9 +660,9 @@ Refer to the dedicated {% url 'Environment Variables Guide' environment-variable
 
 ## Module API
 
-Oftentimes it can be much easier to simply programmatically control and boot your servers with a Node script.
+Oftentimes it can be less complex to programmatically control and boot your servers with a Node script.
 
-If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.
+If you're using our {% url 'Module API' module-api %} then you can write a script that boots and then shuts down the server later. As a bonus, you can work with the results and do other things.
 
 ```js
 // scripts/run-cypress-tests.js
@@ -439,14 +686,94 @@ return server.start()
 node scripts/run-cypress-tests.js
 ```
 
-# Known Issues
+# Common problems and solutions
 
-## Docker
+## Missing binary
+
+When npm or yarn install the `cypress` package, a `postinstall` hook is executed that downloads the platform-specific Cypress binary. If the hook is skipped for any reason the Cypress binary will be missing (unless it was already cached).
+
+To better diagnose the error, add {% url "commands to get information about the Cypress cache" command-line#cypress-cache-command %} to your CI setup. This will print where the binary is located and what versions are already present.
+
+```shell
+npx cypress cache path
+npx cypress cache list
+```
+
+If the required binary version is not found in the cache, you can try the following:
+
+1. Clean your CI's cache using your CI's settings to force a clean `npm install` on the next build.
+2. Run the binary install yourself by adding the command `npx cypress install` to your CI script. If there is a binary already present, it should finish quickly.
+
+See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-cache %} for an example that runs the `npx cypress install` command to ensure the Cypress binary is always present before the tests begin.
+
+## In Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
 
-# See also
+In a Docker container, the default size of the `/dev/shm` shared memory space is 64MB. This is not typically enough to run Chrome and can cause the browser to crash. You can fix this by passing the `--disable-dev-shm-usage` flag to Chrome with the following workaround:
 
+```javascript
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
+
+## Xvfb
+
+When running on Linux, Cypress needs an X11 server; otherwise it spawns its own X11 server during the test run. When running several Cypress instances in parallel, the spawning of multiple X11 servers at once can cause problems for some of them. In this case, you can separately start a single X11 server and pass the server's address to each Cypress instance using `DISPLAY` variable.
+
+First, spawn the X11 server in the background at some port, for example `:99`. If you have installed `xvfb` on Linux or if you are using one of our Docker images from {% url cypress-docker-images https://github.com/cypress-io/cypress-docker-images %}, the tools below should be available.
+
+```shell
+Xvfb :99 &
+```
+
+Second, set the X11 address in an environment variable
+
+```shell
+export DISPLAY=:99
+```
+
+Start Cypress as usual
+
+```shell
+npx cypress run
+```
+
+After all tests across all Cypress instances finish, kill the Xvfb background process using `pkill`
+
+```shell
+pkill Xvfb
+```
+
+{% note warning %}
+In certain Linux environments, you may experience connection errors with your X11 server. In this case, you may need to start Xvfb with the following command:
+
+```shell
+Xvfb -screen 0 1024x768x24 :99 &
+```
+Cypress internally passes these Xvfb arguments, but if you are spawning your own Xvfb, you would need to pass these arguments. This is necessary to avoid using 8-bit color depth with Xvfb, which will prevent Chrome or Electron from crashing.
+
+{% endnote %}
+
+## Colors
+
+If you want colors to be disabled, you can pass the `NO_COLOR` environment variable to disable colors. You may want to do this if ASCII characters or colors are not properly formatted in your CI.
+
+```shell
+NO_COLOR=1 cypress run
+```
+
+# See also
+- {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
 - {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} is set up to run on multiple CI providers.
+- {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress" https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/ %}
 - {% url "Blog: Record Test Artifacts from any Docker CI" https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/ %}
+- {% url "Continuous Integration with Cypress" https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/ %} webinar covering TeamCity, Travis and CircleCI setups, {% url slides https://cypress.slides.com/cypress-io/cypress-on-ci %}.

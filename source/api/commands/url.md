@@ -1,6 +1,5 @@
 ---
 title: url
-
 ---
 
 Get the current URL of the page that is currently active.
@@ -21,7 +20,7 @@ cy.url(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.url()    // Yields the current url as a string
+cy.url()    // Yields the current URL as a string
 ```
 
 ## Arguments
@@ -45,7 +44,7 @@ Option | Default | Description
 
 ## No Args
 
-***Assert the URL is `http://localhost:8000/users/1/edit`***
+### Assert the URL is `http://localhost:8000/users/1/edit`
 
 ```javascript
 // clicking the anchor causes the browser to follow the link
@@ -58,7 +57,7 @@ cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 
 ## Href Shorthand
 
-***Url is an alias for `cy.location('href')`***
+### URL is an alias for `cy.location('href')`
 
 `cy.url()` uses `href` under the hood.
 
@@ -69,7 +68,7 @@ cy.location('href')       // these yield the same string
 
 ## Differences
 
-***Url versus href***
+### URL versus href
 
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
 
@@ -83,22 +82,22 @@ cy.url().should('include', '/index.html')
 
 `href` and `toString` come from the `window.location` spec.
 
-But you may be wondering where the `url` property comes from.  Per the `window.location` spec, there actually isn't a `url` property on the `location` object.
+But you may be wondering where the URL property comes from.  Per the `window.location` spec, there actually isn't a URL property on the `location` object.
 
 `cy.url()` exists because it's what most developers naturally assume would return them the full current URL.  We almost never refer to the URL as an `href`.
 
-***Hardcoded versus using the configuration object***
+### Hardcoded versus using the configuration object
 
 Instead of hardcoding the URL you can use the `baseUrl` of the {% url 'Cypress configuration' configuration %}.
 
 Given the remote URL, `http://localhost:8000/index.html`, these assertions are the same.
 
 ```javascript
-cy.url().should('eq', 'http://localhost:8000//index.html')
+cy.url().should('eq', 'http://localhost:8000/index.html')
 cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
 ```
 
-***Assert that the url contains "#users/new"***
+### Assert that the url contains "#users/new"
 
 ```javascript
 cy.url().should('contain', '#users/new')
@@ -122,11 +121,15 @@ cy.url().should('contain', '#users/new')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/url/test-url-of-website-or-web-application.png)
+{% imgTag /img/api/url/test-url-of-website-or-web-application.png "Command Log url" %}
 
-When clicking on `url` within the command log, the console outputs the following:
+When clicking on URL within the Command Log, the console outputs the following:
 
-![Console Log](/img/api/url/console-log-of-browser-url-string.png)
+{% imgTag /img/api/url/console-log-of-browser-url-string.png "Console Log url" %}
+
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `cy.url()` command added
+{% endhistory %}
 
 # See also
 

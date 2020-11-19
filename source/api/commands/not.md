@@ -1,6 +1,5 @@
 ---
 title: not
-
 ---
 
 Filter DOM element(s) from a set of DOM elements.
@@ -58,7 +57,7 @@ Option | Default | Description
 
 ## Selector
 
-***Yield the elements that do not have class `active`.***
+### Yield the elements that do not have class `active`
 
 ```html
 <ul>
@@ -98,11 +97,11 @@ cy.get('form').find('button').not('[type="submit"]')
 
 The commands above will display in the Command Log as:
 
-![Command Log not](/img/api/not/filter-elements-with-not-and-optional-selector.png)
+{% imgTag /img/api/not/filter-elements-with-not-and-optional-selector.png "Command Log not" %}
 
 When clicking on `not` within the command log, the console outputs the following:
 
-![Console log not](/img/api/not/log-elements-found-when-using-cy-not.png)
+{% imgTag /img/api/not/log-elements-found-when-using-cy-not.png "Console Log not" %}
 
 # See also
 

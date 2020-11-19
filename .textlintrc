@@ -8,38 +8,105 @@
       "defaultTerms": false,
       "terms": [
         // Cypress product
+        ["^Cypress\.io", "Cypress"],
+        ["Cypress' ", "Cypress's "],
         ["the command log", "the Command Log"],
         ["dashboard service", "Dashboard Service"],
         ["test runner", "Test Runner"],
 
-        // "Brands"
+        // Brands and Technologies
+        ["ansi", "ANSI"],
         "AppVeyor",
+        "Babel",
+        ["^Blob(?! %)", "Blob"],
+        "Browserify",
         "BrowserStack",
+        ["^chai", "Chai"],
+        ["^chai-jquery", "chai-jquery"],
+        ["cross-browser", "cross browser"],
+        ["cross origin", "cross-origin"],
         "ESLint",
+        ["Express.js", "Express"],
+        "FFmpeg",
         "GitHub",
         "GraphQL",
-        "JavaScript",
-        "Lodash",
-        "TypeScript",
-        "YouTube",
+        ["Hapi.js", "hapi"],
+        ["iframe(s?)", "iframe$1"],
         "iOS",
+        "Istanbul",
+        "JavaScript",
+        "Jest",
         "jQuery",
+        "JSDoc",
+        ["local[ ]?storage", "localStorage"],
+        "Lodash",
+        "minimatch",
+        "Mocha",
+        "node module",
         "npm",
         ["React[ .]js", "React"],
+        "RegExp",
         ["SauceLabs", "Sauce Labs"],
+        ["session[ ]?storage", "sessionStorage"],
+        "Single sign-on",
+        ["^Sinon", "Sinon.JS"],
+        "Sinon–Chai",
+        "TypeScript",
+        "YouTube",
+        ["VSCode", "VS Code"],
+        ["^Vue", "Vue.JS"],
+        "webpack",
+        ["WebSocket(s?)", "WebSocket$1"],
 
         // Abbreviations
         "API",
+        ["API['’]?s", "APIs"],
         "Ajax",
         "CLI",
         "CSS",
+        "CORS",
+        ["^E2E", "E2E"],
         "gif",
-        ["API['’]?s", "APIs"],
+        ["^HTML", "HTML"],
+        ["^URL(s?)", "URL$1"],
+        ["^HTTP", "HTTP"],
+        ["^HTTPS", "HTTPS"],
+        "SSO",
+        ["^XHR(s?)", "XHR$1"],
+        ["^XHR['’]?s", "XHRs"],
+        "Xvfb",
+        "YAML",
 
         // Words and phrases
         ["\\(s\\)he", "they"],
         ["he or she", "they"],
         ["he/she", "they"],
+        ["crazy", "complex"],
+        ["crazier", "more complex"],
+        ["craziest", "most complex"],
+        ["dumb", "unintended"],
+        ["insane", "outrageous"],
+        ["blacklist", "block"],
+        ["whitelist", "allow"],
+
+        // Prefer American spelling
+        ["behaviour", "behavior"],
+        ["cancelled", "canceled"],
+        ["cancelling", "canceling"],
+        ["centre", "center"],
+        ["colour", "color"],
+        ["customise", "customize"],
+        ["customisation", "customization"],
+        ["favourite", "favorite"],
+        ["labelled", "labeled"],
+        ["licence", "license"],
+        ["organise", "organize"],
+
+        // Common misspellings
+        ["gaurantee", "guarantee"],
+
+        // Words we would like to not use altogether
+        ["simply", ""],
 
         // Single word
         ["change[- ]log(s?)", "changelog$1"],
@@ -50,12 +117,16 @@
         ["can[- ]not", "cannot$1"],
 
         // Multiple words
+        ["back-?end(s?)", "back end$1"],
         ["front-?end(s?)", "front end$1"],
+        ["full-?stack(s?)", "full stack$1"],
         ["open-?source(ed?)", "open source$1"],
         ["web-?page(s?)", "web page$1"],
 
         // Hyphenated
         ["end ?to ?end", "end-to-end"],
+        ["retryability", "retry-ability"],
+        ["retriability", "retry-ability"],
       ]
     }
   },

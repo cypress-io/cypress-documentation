@@ -1,6 +1,5 @@
 ---
 title: blur
-
 ---
 
 Blur a focused element.
@@ -52,7 +51,7 @@ Option | Default | Description
 
 ## No Args
 
-***Blur the comment input.***
+### Blur the comment input
 
 ```javascript
 cy.get('[name="comment"]').type('Nice Product!').blur()
@@ -60,7 +59,7 @@ cy.get('[name="comment"]').type('Nice Product!').blur()
 
 ## Options
 
-***Blur the first input***
+### Blur the first input
 
 Setting `force` to `true` in the options disables checking whether the input is focusable or currently has focus.
 
@@ -72,17 +71,17 @@ cy.get('input:first').blur({ force: true })
 
 ## Actionability
 
-***Blur is not an action command***
+### Blur is not an action command
 
 `.blur()` is not implemented like other action commands, and does not follow the same rules of {% url 'waiting for actionability' interacting-with-elements %}.
 
-`.blur()` is just a helpful command which is a simple shortcut. Normally there's no way for a user to simply "blur" an element. Typically the user would have to perform **another** action like clicking or tabbing to a different element. Needing to perform a separate action like this is very indirect.
+`.blur()` is a helpful command used as a shortcut. Normally there's no way for a user to "blur" an element. Typically the user would have to perform **another** action like clicking or tabbing to a different element. Needing to perform a separate action like this is very indirect.
 
-Therefore it's oftentimes much easier and simpler to test the blur behavior directly with `.blur()`.
+Therefore it's often much more efficient to test the blur behavior directly with `.blur()`.
 
 ## Timeouts
 
-***`.blur()` can time out because your browser did not receive any blur events.***
+### `.blur()` can time out because your browser did not receive any blur events
 
 If you see this error, you may want to ensure that the main browser window is currently focused. This means not being focused in debugger or any other window when the command is run.
 
@@ -104,7 +103,7 @@ Internally Cypress does account for this, and will polyfill the blur events when
 
 # Command Log
 
-**Blur a textarea after typing.**
+***Blur a textarea after typing.***
 
 ```javascript
 cy.get('[name="comment"]').focus().type('Nice Product!').blur()
@@ -112,11 +111,11 @@ cy.get('[name="comment"]').focus().type('Nice Product!').blur()
 
 The commands above will display in the Command Log as:
 
-![command log for blur](/img/api/blur/blur-input-command-log.png)
+{% imgTag /img/api/blur/blur-input-command-log.png "command log for blur" %}
 
 When clicking on the `blur` command within the command log, the console outputs the following:
 
-![console.log for blur](/img/api/blur/console-showing-blur-command.png)
+{% imgTag /img/api/blur/console-showing-blur-command.png "console.log for blur" %}
 
 # See also
 

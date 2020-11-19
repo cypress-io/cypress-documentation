@@ -14,7 +14,7 @@ title: Stubs, Spies, and Clocks
 
 # Capabilities
 
-Cypress comes built in with the ability to stub and spy with {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your application's time with {% url `cy.clock()` clock %} - which lets you manipulate `Date`, `setTimeout`, `setInterval`, amongst others.
+Cypress comes built in with the ability to stub and spy with {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your application's time with {% url `cy.clock()` clock %} - which lets you manipulate `Date`, `setTimeout`, `clearTimeout`, `setInterval`, or `clearInterval`.
 
 These commands are useful when writing both **unit tests** and **integration tests**.
 
@@ -33,7 +33,7 @@ You can refer to each of these libraries' documentation for more examples and ex
 # Common Scenarios
 
 {% note info Example test! %}
-{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-window-fetch %}
+{% url 'Check out our example recipe testing spying, stubbing and time' recipes#Stubbing-and-spying %}
 {% endnote %}
 
 ## Stubs
@@ -64,7 +64,7 @@ cy.stub(obj, 'method').rejects(new Error('foo'))
 
 You generally stub a function when it has side effects you are trying to control.
 
-***Common Scenarios:***
+### Common Scenarios:
 
 - You have a function that accepts a callback, and want to invoke the callback.
 - Your function returns a `Promise`, and you want to automatically resolve or reject it.
@@ -89,20 +89,22 @@ cy.spy(obj, 'method')
 ```
 
 {% note info cy.spy() %}
-{% url 'Read more about how to use `cy.spy()`' spy %}
+{% url 'Read more about how to use `cy.spy()`' spy %}.
 {% endnote %}
 
 ## Clock
 
 There are situations when it is useful to control your application's `date` and `time` in order to override its behavior or avoid slow tests.
 
-{% url `cy.clock()` clock %} gives you the ability to control:
+With {% url "`cy.clock()`" clock %} you can control:
 
 - `Date`
 - `setTimeout`
 - `setInterval`
 
-***Common Scenarios***
+### Common Scenarios
+
+#### Control `setInterval`
 
 - You're polling something in your application with `setInterval` and want to control that.
 - You have **throttled** or **debounced** functions which you want to control.
@@ -112,11 +114,35 @@ Once you've enabled {% url `cy.clock()` clock %} you can control time by **ticki
 ```javascript
 cy.clock()
 cy.visit('http://localhost:3333')
-cy.get('#search').type('foobarbaz')
+cy.get('#search').type('Acme Company')
 cy.tick(1000)
 ```
 
-{% url `cy.clock()` clock %} is special in that it can be called **prior** to visiting your application, and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} + {% url `cy.route()` route %}.
+You can call {% url `cy.clock()` clock %} **prior** to visiting your application and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} and {% url `cy.route()` route %}.
+
+#### Restore the clock
+
+You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
+// more test code here
+
+// restore the clock
+cy.clock().then((clock) => {
+  clock.restore()
+})
+// more test code here
+```
+
+You could also restore by using {% url "`.invoke()`" invoke %} to invoke the `restore` function.
+
+```js
+cy.clock().invoke('restore')
+```
 
 ## Assertions
 
@@ -175,7 +201,7 @@ expect(user.fail).to.have.thrown('Error')                  // true
 
 # Integration and Extensions
 
-Beyond just integrating these tools together we have also extended and improved collaboration between these tools.
+Beyond integrating these tools together, we have also extended and improved collaboration between these tools.
 
 ***Some examples:***
 
@@ -204,3 +230,9 @@ When you click on a stub or spy, we also output **remarkably** helpful debugging
 - The arguments, without transforming them (they are the real arguments)
 - The return value of the function
 - The context the function was invoked with
+
+# See also
+
+- {% url "Spies, stubs and clocks" https://example.cypress.io/commands/spies-stubs-clocks %} examples
+- {% url "Stub navigator API in end-to-end tests" https://glebbahmutov.com/blog/stub-navigator-api/ %}
+- {% url "Shrink the Untestable Code With App Actions And Effects" https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/ %}

@@ -1,6 +1,5 @@
 ---
 title: getCookie
-
 ---
 
 Get a browser cookie by its name.
@@ -24,7 +23,7 @@ cy.getCookie('auth_key')     // Get cookie with name 'auth_key'
 
 **{% fa fa-angle-right %} name** ***(String)***
 
-The name of the cookie to get.
+The name of the cookie to get. Required.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -39,23 +38,24 @@ Option | Default | Description
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
-- `name`
-- `value`
-- `path`
 - `domain`
+- `expiry` *(if specified)*
 - `httpOnly`
+- `name`
+- `path`
+- `sameSite` *(if specified)*
 - `secure`
-- `expiry`
+- `value`
 
-***When a cookie matching the name could not be found:***
+### When a cookie matching the name could not be found:
 
 `cy.getCookie()` yields `null`.
 
 # Examples
 
-## No Args
+## Session id
 
-***Get `session_id` cookie after logging in***
+### Get `session_id` cookie after logging in
 
 In this example, on first login, our server sends us back a session cookie.
 
@@ -63,14 +63,52 @@ In this example, on first login, our server sends us back a session cookie.
 // assume we just logged in
 cy.contains('Login').click()
 cy.url().should('include', 'profile')
+// retries until cookie with value=189jd09su
+// is found or default command timeout ends
 cy.getCookie('session_id')
   .should('have.property', 'value', '189jd09su')
+  .then((cookie) => {
+    // cookie is an object with "domain", "name" and other properties
+  })
 ```
 
-***Using `cy.getCookie()` to test logging in***
+You can check the cookie existence without comparing any of its properties
+
+```javascript
+cy.getCookie('my-session-cookie').should('exist')
+```
+
+If you need the cookie value, for example to use in a subsequent call
+
+```js
+let cookie
+
+cy.getCookie('session_id')
+  .should('exist')
+  .then((c) => {
+    // save cookie until we need it
+    cookie = c
+  })
+
+// some time later, force the "cy.request"
+// to run ONLY after the cookie has been set
+// by placing it inside ".then"
+cy.get('#submit')
+  .click()
+  .then(() => {
+    cy.request({
+      url: '/api/admin',
+      headers: {
+        'my-token-x': cookie.value
+      }
+    })
+  })
+```
+
+### Using `cy.getCookie()` to test logging in
 
 {% note info %}
-Check out our example recipes using `cy.getCookie()` to test {% url 'logging in using HTML web forms' recipes#HTML-Web-Forms %}, {% url 'logging in using XHR web forms' recipes#XHR-Web-Forms %} and {% url 'logging in with single sign on' recipes#Single-Sign-On %}
+Check out our example recipes using `cy.getCookie()` to test {% url 'logging in using HTML web forms' recipes#Logging-In %}, {% url 'logging in using XHR web forms' recipes#Logging-In %} and {% url 'logging in with single sign on' recipes#Logging-In %}
 {% endnote %}
 
 # Rules
@@ -95,11 +133,16 @@ cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png)
+{% imgTag /img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png "Command Log getcookie" %}
 
 When clicking on `getCookie` within the command log, the console outputs the following:
 
-![Console Log](/img/api/getcookie/inspect-cookie-object-properties-in-console.png)
+{% imgTag /img/api/getcookie/inspect-cookie-object-properties-in-console.png "Console Log getcookie" %}
+
+{% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
+{% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`.
+{% endhistory %}
 
 # See also
 

@@ -1,6 +1,5 @@
 ---
 title: viewport
-
 ---
 
 Control the size and orientation of the screen for your application.
@@ -31,11 +30,11 @@ cy.viewport('iphone-6')  // Set viewport to 375px x 667px
 
 **{% fa fa-angle-right %} width** ***(Number)***
 
-Width of viewport in pixels (must be between 20 and 3000).
+Width of viewport in pixels (must be a non-negative, finite number).
 
 **{% fa fa-angle-right %} height** ***(Number)***
 
-Height of viewport in pixels (must be between 20 and 3000).
+Height of viewport in pixels (must be a non-negative, finite number).
 
 **{% fa fa-angle-right %} preset** ***(String)***
 
@@ -43,16 +42,24 @@ A preset dimension to set the viewport. Preset supports the following options:
 
 | Preset | width | height |
 | ----------- | ----- | ------ |
-| `macbook-15`  | 1440  | 900    |
-| `macbook-13`  | 1280  | 800    |
-| `macbook-11`  | 1366  | 768    |
 | `ipad-2`      | 768   | 1024    |
 | `ipad-mini`   | 768   | 1024    |
-| `iphone-6+`   | 414   | 736    |
-| `iphone-6`    | 375   | 667    |
-| `iphone-5`    | 320   | 568    |
-| `iphone-4`    | 320   | 480    |
 | `iphone-3`    | 320   | 480    |
+| `iphone-4`    | 320   | 480    |
+| `iphone-5`    | 320   | 568    |
+| `iphone-6`    | 375   | 667    |
+| `iphone-6+`   | 414   | 736    |
+| `iphone-7`    | 375   | 667    |
+| `iphone-8`    | 375   | 667    |
+| `iphone-x`    | 375   | 812    |
+| `iphone-xr`   | 414   | 896    |
+| `iphone-se2`  | 375   | 667    |
+| `macbook-11`  | 1366  | 768    |
+| `macbook-13`  | 1280  | 800    |
+| `macbook-15`  | 1440  | 900    |
+| `macbook-16`  | 1536  | 960    |
+| `samsung-note9` | 414 | 846    |
+| `samsung-s10` | 360   | 760    |
 
 **{% fa fa-angle-right %} orientation** ***(String)***
 
@@ -74,48 +81,49 @@ Option | Default | Description
 
 ## Width, Height
 
-***Resize the viewport to 1024px x 768px***
+### Resize the viewport to 1024px x 768px
 
 ```javascript
 cy.viewport(1024, 768)
 ```
 
-***Organize desktop vs mobile tests separately***
+### Organize desktop vs mobile tests separately
 
 ```javascript
-describe('Nav Menus', function () {
-  context('720p resolution', function () {
-    beforeEach(function () {
+describe('Nav Menus', () => {
+  context('720p resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a desktop
       // browser with a 720p monitor
       cy.viewport(1280, 720)
     })
 
-    it('displays full header', function () {
+    it('displays full header', () => {
       cy.get('nav .desktop-menu').should('be.visible')
       cy.get('nav .mobile-menu').should('not.be.visible')
     })
   })
 
-  context('iphone-5 resolution', function () {
-    beforeEach(function () {
+  context('iphone-5 resolution', () => {
+    beforeEach(() => {
       // run these tests as if in a mobile browser
       // and ensure our responsive UI is correct
       cy.viewport('iphone-5')
     })
 
-    it('displays mobile menu on click', function () {
+    it('displays mobile menu on click', () => {
       cy.get('nav .desktop-menu').should('not.be.visible')
       cy.get('nav .mobile-menu')
         .should('be.visible')
         .find('i.hamburger').click()
+
       cy.get('ul.slideout-menu').should('be.visible')
     })
   })
 })
 ```
 
-***Dynamically test multiple viewports***
+### Dynamically test multiple viewports
 
 ```javascript
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
@@ -137,11 +145,12 @@ describe('Logo', () => {
   })
 })
 ```
-![Command Log of multiple viewports](/img/api/viewport/loop-through-an-array-of-multiple-viewports.png)
+
+{% imgTag /img/api/viewport/loop-through-an-array-of-multiple-viewports.png "Command Log of multiple viewports" %}
 
 ## Preset
 
-***Resize the viewport to iPhone 6 width and height***
+### Resize the viewport to iPhone 6 width and height
 
 ```javascript
 cy.viewport('iphone-6') // viewport will change to 414px x 736px
@@ -149,7 +158,7 @@ cy.viewport('iphone-6') // viewport will change to 414px x 736px
 
 ## Orientation
 
-***Change the orientation to landscape***
+### Change the orientation to landscape
 
 ```javascript
 // the viewport will now be changed to 736px x 414px
@@ -161,23 +170,23 @@ cy.viewport('iphone-6', 'landscape')
 
 ## devicePixelRatio
 
-***`devicePixelRatio` is not simulated***
+### `devicePixelRatio` is not simulated
 
-This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. {% open_an_issue %} if you need this to be fixed.
+This is something Cypress will eventually do, which will match how Chrome's responsive mobile browsing simulation works. Follow {% issue 7075 %} if you need this supported.
 
 ## Restores
 
-***Cypress will restore the viewport in the snapshot***
+### Cypress will restore the viewport in the snapshot
 
 When hovering over each command, Cypress will automatically display the snapshot in the viewport dimensions that existed when that command ran.
 
 ## Defaults
 
-***Default sizing***
+### Default sizing
 
 By default, until you issue a `cy.viewport()` command, Cypress sets the width to `1000px` and the height to `660px` by default.
 
-You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your `cypress.json`:
+You can {% url 'change these default dimensions' configuration#Viewport %} by adding the following to your configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -190,13 +199,43 @@ Additionally, Cypress automatically sets the viewport to its default size betwee
 
 ## Scaling
 
-***Auto Scaling***
+### Auto Scaling
 
 By default, if your screen is not large enough to display all of the current dimension's pixels, Cypress will scale and center your application within the Cypress runner to accommodate.
 
 Scaling the app should not affect any calculations or behavior of your application (in fact it won't even know it's being scaled).
 
 The upsides to this are that tests should consistently pass or fail regardless of a developers' screen size. Tests will also consistently run in `CI` because all of the viewports will be the same no matter what machine Cypress runs on.
+
+## Reset viewport via `Cypress.config()`
+
+You can change the size of the viewport height and width for the remainder of the tests by setting the new values for `viewportHeight` or `viewportWidth` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('viewportWidth', 800)
+Cypress.config('viewportWidth') // => 800
+```
+
+## Set viewport in the test configuration
+
+You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the height and width throughout the duration of the tests, then return it to the default `viewportHeight` and `viewportWidth` when complete.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
 
 # Rules
 
@@ -229,12 +268,22 @@ cy.get('.nav').find('a').should('be.visible')
 
 The commands above will display in the Command Log as:
 
-![Command Log viewport](/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png)
+{% imgTag /img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png "Command Log viewport" %}
 
 When clicking on `viewport` within the command log, the console outputs the following:
 
-![Console log viewport](/img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png)
+{% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
+
+{% history %}
+{% url "5.5.0" changelog#5-5-0 %} | Added support for `macbook-16` preset.
+{% url "5.4.0" changelog#5-4-0 %} | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.
+{% url "3.8.0" changelog#3-8-0 %} | Removed max viewport size and lowered min viewport size to `0`.
+{% url "3.5.0" changelog#3-5-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
+{% url "3.5.0" changelog#3-5-0 %} | Increased max viewport size to `4000`
+{% url "0.9.0" changelog#0-9-0 %} | `cy.viewport()` command added
+{% endhistory %}
 
 # See also
 
-- {% url 'configuration' configuration %}
+- {% url 'Configuration' configuration %}
+- {% url '`Cypress.config()`' config %}

@@ -92,6 +92,7 @@ With a custom selector strategy that favours classes, the selector value will be
 Cypress.SelectorPlayground.defaults({
   selectorPriority: ['class', 'id']
 })
+
 const $el = Cypress.$('button')
 const selector = Cypress.SelectorPlayground.getSelector($el) // '.number3'
 ```

@@ -2,34 +2,22 @@
 title: Roadmap
 ---
 
-# Upcoming Features
+# Upcoming features
 
-At any one time, our team is planning / working on really "big" upcoming features.
-
-Here is where Cypress is headed:
+Our team is always planning and working on really "big" upcoming features. Priorities can change as we move forward, but here is an outline of where Cypress is headed now.
 
 ## Test Runner
 
-Feature | Status
---- | ---
-{% issue 310 'Cross Browser Support - #310' %} | In progress
-{% issue 687 'Full Network Layer Stubbing - #687' %} | In progress
-{% issue 1313 'Retries - #1313' %} | In progress
-{% issue 318 'Unit Test Support - #318' %} | In progress, orthogonal to other features
-{% issue 685 'Iframe Switching APIs - #685' %} | Partially complete
-{% issue 1469 'Better Corporate Proxy Support - #1469' %} | Proposal complete
-{% issue 686 'Lifecycle Events - #686' %} | Proposal complete
-{% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
-{% issue 311 'Native Events - #311' %} | No proposal yet
+*Last updated Sep 14, 2020*
+
+Status               | Feature                            |  Issue            | PR           | Released
+---------------------| -----------------------------------|-------------------|--------------|------------
+*Work in progress*   | **Session API**                    |  {% issue 8301 %} |              |
+*Experimental*       | **Full network layer rewrite**     |  {% issue 687 %}  | {% PR 4176 %}| {% url "v5.1.0" changelog#5-1-0 %}
+*Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
+*Done*               | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}| {% url "v5.0.0" changelog#5-0-0 %}
+*Done*               | **Shadow DOM Support**             |  {% issue 144 %}  | {% PR 7469 %}| {% url "v5.2.0" changelog#5-2-0 %}
 
 ## Dashboard Service
 
-Feature | Status
---- | ---
-{% issue 981 'Zapier Integration - #981' %} | In progress
-{% issue 981 'GitHub Integration - #981' %} | In progress
-{% issue 448 'Capture Logs of Everything - #448' %} | Partially complete
-{% issue 495 'Screenshot Diffing - #495' %} | No proposal yet
-{% issue 688 'Improve Failure Workflow - #688' %} | No proposal yet
-{% issue 689 'Analytics - #689' %} | No proposal yet
-On-Prem | No proposal yet
+Please see our official {% url "Dashboard Product Board" https://portal.productboard.com/cypress-io/1-cypress-dashboard %}.

@@ -11,21 +11,19 @@ We've also added the two most common 3rd party reporters for Mocha. These are bu
 * {% url "`teamcity`" https://github.com/cypress-io/mocha-teamcity-reporter %}
 * {% url "`junit`" https://github.com/michaelleeallen/mocha-junit-reporter %}
 
-Finally we support creating your own custom reporters or using any kind of 3rd party reporter.
+Finally, we support creating your own custom reporters or using any kind of 3rd party reporter.
 
-{% note success %}
-Did you know that you can use {% urlHash 'multiple reporters' Multiple-Reporters %} with Mocha?
-
-This is especially useful when running in CI. Typically we see users using the default `spec` reporter to show up in `stdout` but then also generate an actual report file for `junit`.
+{% note %}
+Once you've read through the documentation below, we invite you to experience the power of Cypress reporters via {% url "Section 9" https://github.com/cypress-io/testing-workshop-cypress/blob/master/slides/09-reporters/PITCHME.md %} of our open source {% url "testing workshop for Cypress" https://github.com/cypress-io/testing-workshop-cypress %}.
 {% endnote %}
 
-# Custom Reporters
+# Custom reporter
 
-Cypress supports custom reporters, whether local to your project or installed through {% url "npm" https://www.npmjs.com/ %}.
+## Installed locally
 
-## Local Reporters
+{% url "Custom Mocha reporters" https://mochajs.org/api/tutorial-custom-reporter.html %} can be loaded through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
 
-Say you have the following directory structure:
+For example, if you have the following directory structure:
 
 ```txt
 > my-project
@@ -35,33 +33,29 @@ Say you have the following directory structure:
     - custom.js
 ```
 
-### To specify the path to your custom reporter:
+You would specify the path to your custom reporter in either of the ways below.
 
-```javascript
-// cypress.json
+### Config File
 
+```json
 {
   "reporter": "reporters/custom.js"
 }
 ```
 
-The path above is relative to where your `cypress.json` is located.
-
-### Command line
+### Command Line
 
 ```shell
 cypress run --reporter reporters/custom.js
 ```
 
-We also support passing an absolute path to the reporter.
+## Installed via npm
 
-## npm Reporters
+When using custom reporters via npm, specify the package name.
 
-If you installed a custom reporter through npm, specify the package name:
+### Config file
 
-```javascript
-// cypress.json
-
+```json
 {
   "reporter": "mochawesome"
 }
@@ -73,15 +67,15 @@ If you installed a custom reporter through npm, specify the package name:
 cypress run --reporter mochawesome
 ```
 
-{% note info  %}
-You need to install any peer dependencies the reporter requires, even if they're bundled with Cypress. For example, {% url "mochawesome" https://github.com/adamgruber/mochawesome %} requires `mocha` as a peer dependency. You will need to install `mocha` as a dev dependency of your own project for it to work.
-{% endnote %}
-
 # Reporter Options
 
-Some reporters accept options that customize their behavior. These can be specified in your `cypress.json` or via the command line:
+Some reporters accept options that customize their behavior. These can be specified in your configuration file (`cypress.json` by default) or via {% url "command line" command-line %} options.
 
-***cypress.json***
+Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
+
+The below configuration will output the JUnit report to `STDOUT` and save it into an XML file. 
+
+### Config file
 
 ```json
 {
@@ -96,23 +90,152 @@ Some reporters accept options that customize their behavior. These can be specif
 ### Command line
 
 ```shell
-cypress run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
+cypress run --reporter junit \
+  --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
 ```
 
-Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
+# Merging reports across spec files
 
-# Multiple Reporters
+Each spec file is processed completely separately during each `cypress run` execution. Thus each spec run _overwrites_ the previous report file. To preserve unique reports for each specfile, use the `[hash]` in the `mochaFile` filename.
 
-Oftentimes we see users wanting the ability to use multiple reporters. When running in CI, you might want to generate a report for `junit` or perhaps a `json` report. This is great, but by setting this reporter you won't receive any additional feedback while the tests are running!
+The following configuration will create separate XML files in the `results` folder. You can then merge the reported output in a separate step using a 3rd party tool. For example, for the {% url Mochawesome https://github.com/adamgruber/mochawesome %} reporter, you can use the {% url mochawesome-merge https://github.com/antontelesh/mochawesome-merge %} tool.
 
-The solution here is to use multiple reporters! You can have the benefit of both worlds.
+### Config file
 
-We suggest using the excellent npm module:
+```json
+{
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "results/my-test-output-[hash].xml"
+  }
+}
+```
 
-{% fa fa-github %} {% url 'https://github.com/stanleyhlng/mocha-multi-reporters' %}
+### Command line
+
+```shell
+cypress run --reporter junit \
+  --reporter-options "mochaFile=results/my-test-output-[hash].xml"
+```
+
+# Multiple reporters
+
+Oftentimes we see users wanting the ability to use multiple reporters. When running in CI, you might want to generate a report for `junit` and perhaps a `json` report. This is great, but by setting this reporter you won't receive any additional feedback while the tests are running!
+
+The solution here is to use multiple reporters. You will have the benefit of both worlds.
+
+We suggest using the npm module: {% fa fa-github %} {% url 'https://github.com/you54f/cypress-multi-reporters' %}
 
 We use multiple reporters for every single one of our internal projects.
 
-Here is an example for reference:
+The below examples were implemented in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}.
 
-{% fa fa-github %} {% url 'https://github.com/cypress-io/cypress-example-docker-circle#generate-just-xml-report' %}
+## Examples
+
+### Spec to `STDOUT`, save JUnit XML files
+
+We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON reports and then combine them into a single report.
+
+We need to install additional dependencies.
+
+```shell
+npm install --save-dev cypress-multi-reporters mocha-junit-reporter
+```
+
+Specify your reporter and reporterOptions in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
+
+### Config file
+
+```json
+{
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "reporter-config.json"
+  }
+}
+```
+
+### Command line
+
+```shell
+cypress run --reporter cypress-multi-reporters \
+  --reporter-options configFile=reporter-config.json
+```
+
+Then add the separate `reporter-config.json` file (defined in your configuration) to enable `spec` and `junit` reporters and direct the `junit` reporter to save separate XML files.
+
+```json
+{
+  "reporterEnabled": "spec, mocha-junit-reporter",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "cypress/results/results-[hash].xml"
+  }
+}
+```
+
+We recommend deleting all files from the `cypress/results` folder before running this command, since each run will output new XML files. For example, you can add the npm script commands below to your `package.json` then call `npm run report`.
+
+```json
+{
+  "scripts": {
+    "delete:reports": "rm cypress/results/* || true",
+    "prereport": "npm run delete:reports",
+    "report": "cypress run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json"
+  }
+}
+```
+
+### Spec to `STDOUT`, produce a combined Mochawesome JSON file
+
+This example is shown in the branch `spec-and-single-mochawesome-json` in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}. We want to output a "spec" report to `STDOUT`, save an individual Mochawesome JSON file per test file, and then combine all JSON reports into a single report.
+
+We need to install some additional dependencies.
+
+```shell
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+```
+
+We need to configure the reporter in your {% url "configuration file (`cypress.json` by default)" configuration %} to skip the HTML report generation and save each individual JSON file in the `cypress/results` folder.
+
+### Config file
+
+```json
+{
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/results",
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
+}
+```
+
+### Command line
+
+```shell
+cypress run --reporter mochawesome \
+  --reporter-options reportDir=reporter-config.json,overwrite=false,html=false,json=true
+```
+
+Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. Then we can combine them using the {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.
+
+```shell
+npx mochawesome-merge "cypress/results/*.json" > mochawesome.json
+```
+
+We can now generate a combined HTML report from the `mochawesome.json` file using the {% url https://github.com/adamgruber/mochawesome-report-generator %}:
+
+```shell
+npx marge mochawesome.json
+```
+
+It generates the beautiful standalone HTML report file `mochawesome-report/mochawesome.html` shown below. As you can see all test results, timing information, and even test bodies are included.
+
+{% imgTag /img/guides/mochawesome-report.png "Mochawesome HTML report" %}
+
+For more information, see {% url 'Integrating Mochawesome reporter with Cypress's http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html %}
+
+{% history %}
+{% url "4.4.2" changelog %} | Custom Mocha reporters updated to use the version of Mocha bundled with Cypress. No need to install `mocha` separately to use custom reporters.
+{% endhistory %}

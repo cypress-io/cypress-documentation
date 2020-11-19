@@ -13,7 +13,7 @@
   }
 }
 
-.media {
+.article-content .media {
   width: 48%;
   float: left;
 
@@ -27,7 +27,7 @@
   }
 
   h2 {
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-weight: 500;
     line-height: 1.3em;
     border-bottom: 0;
@@ -57,6 +57,6 @@
   }
 }
 
-.small-media {
+.media-small {
   margin-bottom: 100px;
 }

@@ -1,6 +1,5 @@
 ---
 title: uncheck
-
 ---
 
 Uncheck checkbox(es).
@@ -47,8 +46,8 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force uncheck %}
+`log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .uncheck %}
 
 ## Yields {% helper_icon yields %}
@@ -59,13 +58,13 @@ Option | Default | Description
 
 ## No Args
 
-***Uncheck all checkboxes***
+### Uncheck all checkboxes
 
 ```javascript
 cy.get(':checkbox').uncheck()
 ```
 
-***Uncheck element with the id 'saveUserName'***
+### Uncheck element with the id 'saveUserName'
 
 ```javascript
 cy.get('#saveUserName').uncheck()
@@ -73,7 +72,7 @@ cy.get('#saveUserName').uncheck()
 
 ## Value
 
-***Uncheck the checkbox with the value of 'ga'***
+### Uncheck the checkbox with the value of 'ga'
 
 ```javascript
 cy.get('input[type="checkbox"]').uncheck(['ga'])
@@ -81,7 +80,7 @@ cy.get('input[type="checkbox"]').uncheck(['ga'])
 
 ## Values
 
-***Uncheck the checkboxes with the values 'ga' and 'ca'***
+### Uncheck the checkboxes with the values 'ga' and 'ca'
 
 ```javascript
 cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
@@ -91,7 +90,7 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.uncheck()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
@@ -99,7 +98,7 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements checkability .uncheck %}
+{% requirements uncheckability .uncheck %}
 
 ## Assertions {% helper_icon assertions %}
 
@@ -114,18 +113,22 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 ***Uncheck the first checkbox***
 
 ```javascript
-cy
-  .get('[data-js="choose-all"]').click()
+cy.get('[data-js="choose-all"]').click()
   .find('input[type="checkbox"]').first().uncheck()
 ```
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/uncheck/test-unchecking-a-checkbox.png)
+{% imgTag /img/api/uncheck/test-unchecking-a-checkbox.png "Command Log uncheck" %}
 
 When clicking on `uncheck` within the command log, the console outputs the following:
 
-![Console Log](/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png)
+{% imgTag /img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png "Console Log uncheck" %}
+
+{% history %}
+{% url "0.6.12" changelog#0-6-12 %} | Added option `force`
+{% url "0.3.3" changelog#0-3-3 %} | `.uncheck()` command added
+{% endhistory %}
 
 # See also
 

@@ -5,25 +5,41 @@ title: Installing Cypress
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to install Cypress via `npm`.
-- How to install Cypress via direct download.
+- How to install Cypress via `npm`
+- How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
 
 {% endnote %}
 
 # System requirements
 
+### Operating System
+
 Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
-- **Mac OS** 10.9+ (Mavericks+), only 64bit binaries are provided for macOS.
-- **Linux** Ubuntu 12.04+, Fedora 21, Debian 8, 64-bit binaries
-- **Windows** 7+, only 32bit binaries are provided for Windows.
+- **macOS** 10.9 and above *(64-bit only)*
+- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 *(64-bit only)*
+- **Windows** 7 and above
+
+### Node.js
+
+If you're using `npm` to install Cypress, we support:
+
+- **Node.js** 10 or 12 and above
+
+### Linux
+
+If you're using Linux, you'll want to have the required dependencies installed on your system.
+
+We also have an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} Docker container with all of the required dependencies installed.
+
+{% partial linux_dependencies %}
 
 # Installing
 
 ## {% fa fa-terminal %} `npm install`
 
-Installing Cypress via `npm` is easy:
+Install Cypress via `npm`:
 
 ```shell
 cd /your/project/path
@@ -68,17 +84,21 @@ yarn add cypress --dev
 
 ## {% fa fa-download %} Direct download
 
-If you're not using Node.js or `npm` in your project or you just want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" http://download.cypress.io/desktop %}.
+If you're not using Node or `npm` in your project or you want to try Cypress out quickly, you can always {% url "download Cypress directly from our CDN" https://download.cypress.io/desktop %}.
+
+{% note warning %}
+Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
+{% endnote %}
 
 The direct download will always grab the latest available version. Your platform will be detected automatically.
 
-Just manually unzip and double click. Cypress will run without needing to install any dependencies.
+Then you can manually unzip and double click. Cypress will run without needing to install any dependencies.
 
 {% video local /img/snippets/installing-global.mp4 %}
 
 ## {% fa fa-refresh %} Continuous integration
 
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can just use our {% url 'Docker images' docker %} which have everything you need prebuilt.
+Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
 # Opening Cypress
 
@@ -113,6 +133,20 @@ yarn run cypress open
 ```
 
 After a moment, the Cypress Test Runner will launch.
+
+## Switching browsers
+
+The Cypress Test Runner attempts to find all compatible browsers on the user's machine. The drop down to select a different browser is in the top right corner of the Test Runner.
+
+{% imgTag /img/guides/browser-list-dropdown.png "Select a different browser" %}
+
+Read {% url "Launching Browsers" launching-browsers %} for more information on how Cypress controls a real browser during end-to-end tests.
+
+{% note info Cross Browser Support %}
+
+Cypress currently supports Firefox and Chrome-family browsers (including Edge and Electron). To run tests optimally across these browsers in CI, check out the strategies demonstrated in the {% url "cross browser Testing" cross-browser-testing %} guide.
+
+{% endnote %}
 
 ## Adding npm scripts
 
@@ -204,6 +238,13 @@ CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
 CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
 ```
 
+Cypress will automatically replace the `~` with the user's home directory. So you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for example:
+
+```yml
+environment:
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
+```
+
 See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
 
 {% note warning %}
@@ -238,31 +279,40 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, since it will affect every cypress module installed on your file system.
 {% endnote %}
 
-## Hosting
+## Download URLs
 
-If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN. You may also want to host Cypress yourself and serve it from a local network.
+If you want to download a specific Cypress version for a given platform (Operating System), you can get it from our CDN.
 
-The download server url is `https://download.cypress.io`.
+The download server URL is `https://download.cypress.io`.
+
+We currently have the following downloads available:
+
+- Windows 64-bit (`?platform=win32&arch=x64`)
+- Windows 32-bit (`?platform=win32&arch=ia32`, available since {% url "Cypress 3.3.0" changelog#3-3-0 %})
+- Linux 64-bit (`?platform=linux`)
+- macOS 64-bit (`?platform=darwin`)
+
+Here are the available download URLs:
 
 See {% url "https://download.cypress.io/desktop.json" https://download.cypress.io/desktop.json %} for all available platforms.
 
- Method | Url                            | Description
+ Method | URL                            | Description
  ------ | ------------------------------ | -------------------------------------------------------------------------
- `GET`  | `/desktop                 `    | Download Cypress at latest version (platform auto-detected)
- `GET`  | `/desktop.json            `    | Returns JSON containing latest available CDN destinations
- `GET`  | `/desktop?platform=p      `    | Download Cypress for a specific platform
+ `GET`  | `/desktop`                     | Download Cypress at latest version (platform auto-detected)
+ `GET`  | `/desktop.json`                | Returns JSON containing latest available CDN destinations
+ `GET`  | `/desktop?platform=p&arch=a`   | Download Cypress for a specific platform and/or architecture
  `GET`  | `/desktop/:version`            | Download Cypress with a specified version
- `GET`  | `/desktop/:version?platform=p` | Download Cypress with a specified version and platform
+ `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture
 
-**Example of downloading Cypress `3.0.0` for Windows platform:**
+**Example of downloading Cypress `3.0.0` for Windows 64-bit:**
 
-```
-https://download.cypress.io/desktop/3.0.0?platform=win
+```text
+https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
 ## Mirroring
 
-If you choose to mirror the entire Cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server url from `https://download.cypress.io` to your own mirror.
+If you choose to mirror the entire Cypress download site, you can specify `CYPRESS_DOWNLOAD_MIRROR` to set the download server URL from `https://download.cypress.io` to your own mirror.
 
 For example:
 
@@ -271,3 +321,53 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
 Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
+
+## Opt out of sending exception data to Cypress
+
+When an exception is thrown regarding Cypress, we send along the exception data to `https://api.cypress.io`. We solely use this information to help develop a better product.
+
+If you would like to opt out of sending any exception data to Cypress, you can do so by setting `CYPRESS_CRASH_REPORTS=0` in your system environment variables.
+
+### Opt out on Linux or macOS
+
+To opt out of sending exception data on Linux or macOS, run the following command in a terminal before installing Cypress:
+
+```shell
+export CYPRESS_CRASH_REPORTS=0
+```
+
+To make these changes permanent, you can add this command to your shell's `~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every login.
+
+### Opt out on Windows
+
+To opt out of sending exception data on Windows, run the following command in the Command Prompt before installing Cypress:
+
+```shell
+set CYPRESS_CRASH_REPORTS=0
+```
+
+To accomplish the same thing in Powershell:
+
+```shell
+$env:CYPRESS_CRASH_REPORTS = "0"
+```
+
+To save the `CYPRESS_CRASH_REPORTS` variable for use in all new shells, use `setx`:
+
+```shell
+setx CYPRESS_CRASH_REPORTS 0
+```
+
+## Install pre-release version
+
+If you would like to install a pre-release version of the Test Runner to test out functionality that has not yet been released, here is how:
+
+1. Open up the list of commits to `develop` on the Cypress repo: {% url https://github.com/cypress-io/cypress/commits/develop %}
+2. Find the commit that you would like to install the pre-release version of. Click the comment icon (highlighted in red below):
+    {% imgTag /img/guides/install/develop-commit-comment-link.png "Example of a commit for which pre-releases are available. Comment link highlighted in red." %}
+3. You should see several comments from the `cypress-bot` user with instructions for installing Cypress pre-releases. Pick the one that corresponds to your operating system and CPU architecture, and follow the instructions there to install the pre-release.
+
+Notes on pre-releases:
+
+- Cypress pre-releases are only available for about a month after they are built. Do not rely on these being available past one month.
+- If you already have a pre-release or official release installed for a specific version of Cypress, you may need to do `cypress cache clear` before Cypress will install a pre-release. This also applies to installing an official release over a pre-release - if you have a pre-release of Cypress vX.Y.Z installed, the official release of Cypress vX.Y.Z will not install until you do `cypress cache clear`.

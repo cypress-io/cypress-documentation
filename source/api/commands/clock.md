@@ -1,6 +1,5 @@
 ---
 title: clock
-
 ---
 
 `cy.clock()` overrides native global functions related to time allowing them to be controlled synchronously via {% url `cy.tick()` tick %} or the yielded `clock` object. This includes controlling:
@@ -68,7 +67,7 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 ## No Args
 
-***Create a clock and use it to trigger a setInterval***
+### Create a clock and use it to trigger a `setInterval`
 
 ```javascript
 // your app code
@@ -88,7 +87,7 @@ cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 ```
 
-***Access the clock object to synchronously move time***
+### Access the clock object to synchronously move time
 
 In most cases, it's easier to use {% url `cy.tick()` tick %} to move time, but you can also use the `clock` object yielded by `cy.clock()`.
 
@@ -118,7 +117,7 @@ cy.get('form').then(($form) => {
 })
 ```
 
-***Access the clock object to restore native functions***
+### Access the clock object to restore native functions
 
 In general, it should not be necessary to manually restore the native functions that `cy.clock()` overrides since this is done automatically between tests. But if you need to, the `clock` object yield has a `.restore()` method.
 
@@ -140,7 +139,7 @@ cy.get('.timer').then(($timer) => {
 
 ## Now
 
-***Specify a now timestamp***
+### Specify a now timestamp
 
 ```javascript
 // your app code
@@ -155,9 +154,9 @@ cy.visit('/index.html')
 cy.get('#date').contains('2017-04-14')
 ```
 
-## Function Names
+## Function names
 
-***Specify which functions to override***
+### Specify which functions to override
 
 This example below will only override `setTimeout` and `clearTimeout` and leave the other time-related functions as they are.
 
@@ -165,29 +164,53 @@ This example below will only override `setTimeout` and `clearTimeout` and leave 
 cy.clock(null, ['setTimeout', 'clearTimeout'])
 ```
 
-Note that you must specify `Date` in order to override the current datetime. The example below just affects the current datetime without affecting scheduled timers.
+Note that you must specify `Date` in order to override the current datetime. The example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
 cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 ```
 
-***Using cy.clock() and cy.tick()***
+### `Using cy.clock()` with `cy.tick()`
 
 {% note info %}
-{% url 'Check out our example recipe testing spying, stubbing and time.' recipes#Stubbing-window-fetch %}
+{% url 'Check out our example recipe testing spying, stubbing and time.' recipes#Stubbing-and-spying %}
 {% endnote %}
+
+## Restore clock
+
+You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
+// more test code here
+
+// restore the clock
+cy.clock().then((clock) => {
+  clock.restore()
+})
+// more test code here
+```
+
+You could also restore by using {% url "`.invoke()`" invoke %}  to invoke the `restore` function.
+
+```js
+cy.clock().invoke('restore')
+```
 
 # Notes
 
-## Iframes
+## iframes
 
-***iframes not supported***
+### iframes not supported
 
 Note that `cy.clock()` only applies to the `top` window on a web page. It will not override the time functions of any `iframe` embedded on the page.
 
 ## Behavior
 
-***clock behavior before `cy.visit()`***
+### clock behavior before `cy.visit()`
 
 If you call `cy.clock()` before visiting a page with {% url `cy.visit()` visit %}, the page's native global functions will be overridden on window load, before any of your app code runs, so even if `setTimeout`, for example, is called on page load, it can still be controlled via {% url `cy.tick()` tick %}. This also applies if, during the course of a test, the page under test is reloaded or changed.
 
@@ -216,11 +239,11 @@ cy.tick(1000)
 
 The command above will display in the Command Log as:
 
-![Command Log clock](/img/api/clock/clock-displays-in-command-log.png)
+{% imgTag /img/api/clock/clock-displays-in-command-log.png "Command Log clock" %}
 
 When clicking on the `clock` command within the command log, the console outputs the following:
 
-![console.log clock command](/img/api/clock/clock-displays-methods-replaced-in-console.png)
+{% imgTag /img/api/clock/clock-displays-methods-replaced-in-console.png "console.log clock command" %}
 
 # See also
 
@@ -228,4 +251,4 @@ When clicking on the `clock` command within the command log, the console outputs
 - {% url `cy.stub()` stub %}
 - {% url `cy.tick()` tick %}
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
-- {% url 'Recipe: Controlling Behavior with Spies, Stubs, and Clocks' recipes#Stubbing-window-fetch %}
+- {% url 'Recipe: Stubbing, Spying' recipes#Stubbing-and-spying %}

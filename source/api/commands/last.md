@@ -1,6 +1,5 @@
 ---
 title: last
-
 ---
 
 Get the last DOM element within a set of DOM elements.
@@ -50,7 +49,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the last list item in a list.***
+### Get the last list item in a list
 
 ```html
 <ul>
@@ -90,11 +89,11 @@ cy.get('form').find('button').last()
 
 The commands above will display in the Command Log as:
 
-![Command Log last](/img/api/last/find-the-last-button-in-a-form.png)
+{% imgTag /img/api/last/find-the-last-button-in-a-form.png "Command Log for last" %}
 
 When clicking on `last` within the command log, the console outputs the following:
 
-![Console log last](/img/api/last/inspect-last-element-in-console.png)
+{% imgTag /img/api/last/inspect-last-element-in-console.png "Console Log for last" %}
 
 # See also
 

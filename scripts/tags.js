@@ -16,63 +16,67 @@ const { badge } = require('../lib/tags/badge')
 const { url, urlHash } = require('../lib/tags/url')
 const { fa, helperIcon } = require('../lib/tags/icons')
 const video = require('../lib/tags/video')
+const imgTag = require('../lib/tags/image')
 const changelog = require('../lib/tags/changelog')
 const history = require('../lib/tags/history')
 const aliases = require('../lib/tags/aliases')
 
 const tags = {
-  // partials
-  partial: partial,
+  // aliases
+  aliases: aliases,
 
-  // issues
-  open_an_issue: openAnIssue,
-  issue: issue,
-  PR: PR,
-  user: user,
+  // assertions
+  assertions: assertions,
 
   // badge
   badge: badge,
+
+  // changelog
+  changelog: changelog,
 
   // icons
   fa: fa,
   helper_icon: helperIcon,
 
-  // usage_options
-  usage_options: usageOptions,
+  // images
+  imgTag: imgTag,
+
+  // github links
+  issue: issue,
+  open_an_issue: openAnIssue,
+  PR: PR,
+  user: user,
+
+  // partials
+  partial: partial,
+
+  // requirements
+  requirements: requirements,
+
+  // timeouts
+  timeouts: timeouts,
 
   // url
   url: url,
   urlHash: urlHash,
 
-  // yields
-  yields: yields,
-
-  // requirements
-  requirements: requirements,
-
-  // assertions
-  assertions: assertions,
-
-  // timeouts
-  timeouts: timeouts,
+  // usage_options
+  usage_options: usageOptions,
 
   // video
   video: video,
 
-  // changelog
-  changelog: changelog,
-
-  // aliases
-  aliases: aliases,
+  // yields
+  yields: yields,
 }
 
 // tags which require ending
 const endingTags = {
-  // note
-  note: note,
-
   // history
   history: history,
+
+  // note
+  note: note,
 }
 
 function promisify (fn) {

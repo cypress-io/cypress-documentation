@@ -16,7 +16,7 @@ title: Variables and Aliases
 New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs.
 
 {% note success 'Do not worry!' %}
-There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.
+There are many ways to reference, compare and utilize the objects that Cypress commands yield you.
 
 Once you get the hang of async code you'll realize you can do everything you could do synchronously, without your code doing any backflips.
 
@@ -34,15 +34,10 @@ The first and most important concept you should recognize is...
 {% endnote %}
 
 ```js
-// ...this won't work...
-
-// nope
+// this won't work the way you think it does
 const button = cy.get('button')
-
-// nope
 const form = cy.get('form')
 
-// nope
 button.click()
 ```
 
@@ -110,7 +105,6 @@ cy.get('button').then(($btn) => {
     })
   })
 })
-
 ```
 
 ## Variables
@@ -131,7 +125,7 @@ you clicked button <span id='num'>0</span> times
 // app code
 let count = 0
 
-$('button').on('click', function () {
+$('button').on('click', () => {
   $('#num').text(count += 1)
 })
 ```
@@ -159,13 +153,13 @@ The reason for using `const` is because the `$span` object is mutable. Whenever 
 Using `.then()` callback functions to access the previous command values is great&mdash;but what happens when you're running code in hooks like `before` or `beforeEach`?
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   cy.button().then(($btn) => {
     const text = $btn.text()
   })
 })
 
-it('does not have access to text', function () {
+it('does not have access to text', () => {
   // how do we get access to text ?!?!
 })
 ```
@@ -174,35 +168,37 @@ How will we get access to `text`?
 
 We could make our code do some ugly backflips using `let` to get access to it.
 
-{% note warning 'Do not do this' %}
+{% note danger 'Do not do this' %}
 This code below is just for demonstration.
 {% endnote %}
 
 ```js
-describe('a suite', function () {
+describe('a suite', () => {
   // this creates a closure around
   // 'text' so we can access it
   let text
 
-  beforeEach(function () {
+  beforeEach(() => {
     cy.button().then(($btn) => {
       // redefine text reference
       text = $btn.text()
     })
   })
 
-  it('does have access to text', function () {
-    text // now this is available to us
+  it('does have access to text', () => {
+    // now text is available to us
+    // but this is not a great solution :(
+    text
   })
 })
 ```
 
-Fortunately, you don't have to make your code do backflips. Cypress makes it easy to handle these situations.
+Fortunately, you don't have to make your code do backflips. With Cypress, we can better handle these situations.
 
 {% note success 'Introducing Aliases' %}
 Aliases are a powerful construct in Cypress that have many uses. We'll explore each of their capabilities below.
 
-At first, we'll use them to make it easy to share objects between your hooks and your tests.
+At first, we'll use them to share objects between your hooks and your tests.
 {% endnote %}
 
 ## Sharing Context
@@ -214,7 +210,7 @@ To alias something you'd like to share use the {% url `.as()` as %} command.
 Let's look at our previous example with aliases.
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the $btn.text() as 'text'
   cy.get('button').invoke('text').as('text')
 })
@@ -229,18 +225,18 @@ Under the hood, aliasing basic objects and primitives utilizes Mocha's shared {%
 Mocha automatically shares contexts for us across all applicable hooks for each test. Additionally these aliases and properties are automatically cleaned up after each test.
 
 ```js
-describe('parent', function () {
-  beforeEach(function () {
+describe('parent', () => {
+  beforeEach(() => {
     cy.wrap('one').as('a')
   })
 
-  context('child', function () {
-    beforeEach(function () {
+  context('child', () => {
+    beforeEach(() => {
       cy.wrap('two').as('b')
     })
 
-    describe('grandchild', function () {
-      beforeEach(function () {
+    describe('grandchild', () => {
+      beforeEach(() => {
         cy.wrap('three').as('c')
       })
 
@@ -254,14 +250,14 @@ describe('parent', function () {
 })
 ```
 
-***Accessing Fixtures:***
+### Accessing Fixtures:
 
 The most common use case for sharing context is when dealing with {% url `cy.fixture()` fixture %}.
 
 Often times you may load a fixture in a `beforeEach` hook but want to utilize the values in your tests.
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the users fixtures
   cy.fixture('users.json').as('users')
 })
@@ -301,7 +297,7 @@ The same principles we introduced many times before apply to this situation. If 
 // yup all good
 cy.fixture('users.json').then((users) => {
   // now we can avoid the alias altogether
-  // and just use a callback function
+  // and use a callback function
   const user = users[0]
 
   // passes
@@ -309,7 +305,7 @@ cy.fixture('users.json').then((users) => {
 })
 ```
 
-***Avoiding the use of `this`***
+### Avoiding the use of `this`
 
 {% note warning 'Arrow Functions' %}
 Accessing aliases as properties with `this.*` will not work if you use {% url 'arrow functions' https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions %} for your tests or hooks.
@@ -322,7 +318,7 @@ Instead of using the `this.*` syntax, there is another way to access aliases.
 The {% url `cy.get()` get %} command is capable of accessing aliases with a special syntax using the `@` character:
 
 ```js
-beforeEach(function () {
+beforeEach(() => {
   // alias the users fixtures
   cy.fixture('users.json').as('users')
 })
@@ -371,7 +367,7 @@ cy.get('@rows').first().click()
 
 Because we've used the `@` character in {% url `cy.get()` get %}, instead of querying the DOM for elements, {% url `cy.get()` get %} looks for an existing alias called `rows` and returns the reference (if it finds it).
 
-***Stale Elements:***
+### Stale Elements:
 
 In many single-page JavaScript applications the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call {% url `cy.get()` get %} with the alias, Cypress automatically re-queries the DOM to find these elements again.
 
@@ -399,7 +395,7 @@ cy.get('@firstTodo').should('have.class', 'editing')
 
 When we reference `@firstTodo`, Cypress checks to see if all of the elements it is referencing are still in the DOM. If they are, it returns those existing elements. If they aren't, Cypress replays the commands leading up to the alias definition.
 
-In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything just works because the new `<li>` is found.
+In our case it would re-issue the commands: `cy.get('#todos li').first()`. Everything works because the new `<li>` is found.
 
 {% note warning  %}
 *Usually*, replaying previous commands will return what you expect, but not always. It is recommended that you **alias elements as soon as possible** instead of further down a chain of commands.
@@ -418,7 +414,7 @@ Aliases can also be used with {% url routes route %}. Aliasing your routes enabl
 - wait for your server to send the response
 - access the actual XHR object for assertions
 
-![alias-commands](/img/guides/aliasing-routes.jpg)
+{% imgTag /img/guides/aliasing-routes.jpg "Alias commands" %}
 
 Here's an example of aliasing a route and waiting on it to complete.
 
@@ -436,3 +432,24 @@ cy.contains('Successfully created user: Brian')
 {% note info 'New to Cypress?' %}
 {% url 'We have a much more detailed and comprehensive guide on routing Network Requests.' network-requests %}
 {% endnote %}
+
+## Requests
+
+Aliases can also be used with {% url requests request %}.
+
+Here's an example of aliasing a request and accessing its properties later.
+
+```js
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+// other test code here
+
+cy.get('@comments').should((response) => {
+  if (response.status === 200) {
+      expect(response).to.have.property('duration')
+    } else {
+      // whatever you want to check here
+    }
+  })
+})
+```

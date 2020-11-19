@@ -1,6 +1,5 @@
 ---
 title: hash
-
 ---
 
 Get the current URL hash of the page that is currently active.
@@ -39,11 +38,11 @@ Option | Default | Description
 
 ## Yields {% helper_icon yields %}
 
-***When the current URL contains a hash:***
+### When the current URL contains a hash:
 
 {% yields sets_subject cy.hash "yields the current URL's hash (including the `#` character)" %}
 
-***When the current URL does not contain a hash:***
+### When the current URL does not contain a hash:
 
 {% yields sets_subject cy.hash "yields an empty string" %}
 
@@ -51,14 +50,14 @@ Option | Default | Description
 
 ## No Args
 
-***Assert that hash is `#/users/1` given remote URL: `http://localhost:8000/app/#/users/1`***
+### Assert that hash is `#/users/1` given remote URL: `http://localhost:8000/app/#/users/1`
 
 ```javascript
 // yields #/users/1
 cy.hash().should('eq', '#/users/1') // => true
 ```
 
-***Assert that the hash matches via RegExp***
+### Assert that the hash matches via RegExp
 
 ```html
 <ul id="users">
@@ -97,11 +96,11 @@ cy.hash().should('eq', '#users/new')
 
 The commands above will display in the Command Log as:
 
-![Command Log for hash](/img/api/hash/test-url-hash-for-users-page.png)
+{% imgTag /img/api/hash/test-url-hash-for-users-page.png "Command Log for hash" %}
 
 When clicking on `hash` within the command log, the console outputs the following:
 
-![Console Log for hash](/img/api/hash/hash-command-yields-url-after-hash.png)
+{% imgTag /img/api/hash/hash-command-yields-url-after-hash.png "Console Log for hash" %}
 
 # See also
 

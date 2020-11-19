@@ -1,15 +1,10 @@
 ---
 title: Cypress.log
-
 ---
 
-This is the internal API for controlling what get's printed to the Command Log.
+This is the internal API for controlling what gets printed to the Command Log.
 
 Useful when writing your own {% url "custom commands" custom-commands %}.
-
-{% note info WIP %}
-This page is currently a work in progress and is not fully documented.
-{% endnote %}
 
 # Syntax
 
@@ -33,21 +28,36 @@ Option | Default | Description
 
 # Examples
 
+We want the Command Log and the console in the DevTools to log specific properties of our custom command.
+
 ```javascript
-Cypress.Commands.add('myCustomCommand', (arg1, arg2) => {
+Cypress.Commands.add('setSessionStorage', (key, value) => {
+  // Turn off logging of the cy.window() to command log
+  cy.window({ log: false }).then((window) => {
+    window.sessionStorage.setItem(key, value)
+  })
+
   const log = Cypress.log({
+    name: 'setSessionStorage',
+    // shorter name for the Command Log
+    displayName: 'setSS',
+    message: `${key}, ${value}`,
     consoleProps: () => {
-      // return an object literal which will
-      // be printed to the dev tools console
-      // on click
+      // return an object which will
+      // print to dev tools console on click
       return {
-        'Some': 'values',
-        'For': 'debugging'
+        'Key': key,
+        'Value': value,
+        'Session Storage': window.sessionStorage
       }
     }
   })
 })
 ```
+
+The code above displays in the Command Log as shown below, with the console properties shown on click of the command.
+
+{% imgTag /img/api/Cypress.log-custom-logging-and-console.png "Custom logging of custom command" %}
 
 # See also
 

@@ -1,6 +1,5 @@
 ---
 title: trigger
-
 ---
 
 Trigger an event on a DOM element.  
@@ -41,7 +40,7 @@ The name of the `event` to be triggered on the DOM element.
 
 The position where the event should be triggered. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-{% img /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
+{% imgTag /img/api/coordinates-diagram.jpg "cypress-command-positions-diagram" %}
 
 **{% fa fa-angle-right %} x** ***(Number)***
 
@@ -57,11 +56,14 @@ Pass in an options object to change the default behavior of `.trigger()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
-`force` | `false` | {% usage_options force trigger %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
 `bubbles` | `true` | Whether the event bubbles
 `cancelable` | `true` | Whether the event is cancelable
+`eventConstructor` | `Event` | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)
+`force` | `false` | {% usage_options force trigger %}
+`log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .trigger %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.
 
@@ -88,9 +90,21 @@ cy.get('.target').trigger('mousedown')
 cy.wait(1000)
 cy.get('.target').trigger('mouseleave')
 ```
-### jQuery UI Sortable 
 
-To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.     
+### Trigger a `mousedown` from a specific mouse button
+
+```js
+// Main button pressed (usually the left button)
+cy.get('.target').trigger('mousedown', { button: 0 })
+// Auxiliary button pressed (usually the middle button)
+cy.get('.target').trigger('mousedown', { button: 1 })
+//Secondary button pressed (usually the right button)
+cy.get('.target').trigger('mousedown', { button: 2 })
+```
+
+### jQuery UI Sortable
+
+To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.
 
 ```javascript
 cy.get('[data-cy=draggable]')
@@ -102,7 +116,7 @@ cy.get('[data-cy=draggable]')
 ### Drag and Drop
 
 {% note info %}
-{% url 'Check out our example recipe triggering mouse and drag events to test dragging and dropping' recipes#Drag-and-Drop %}
+{% url 'Check out our example recipe triggering mouse and drag events to test drag and drop' recipes#Testing-the-DOM %}
 {% endnote %}
 
 ## Change Event
@@ -137,7 +151,7 @@ cy.get('button').trigger('mousedown', 'topRight')
 ### Specify explicit coordinates relative to the top left corner
 
 ```javascript
-cy.get('button').trigger('contextmenu', 15, 40)
+cy.get('button').trigger('mouseup', 15, 40)
 ```
 
 ## Options
@@ -158,6 +172,16 @@ This overrides the default auto-positioning based on the element itself. Useful 
 cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
 
+## Fire other Event types.
+
+By default, `cy.trigger()` fires {% url `Event` https://developer.mozilla.org/en-US/docs/Web/API/Event %}. But you may want to trigger other events like `MouseEvent` or `KeyboardEvent`. 
+
+In that case, use the `eventConstructor` option.
+
+```js
+cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
+```
+
 # Notes
 
 ## Actionability
@@ -171,6 +195,10 @@ cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ### What event should I fire?
 
 `cy.trigger()` is meant to be a low-level utility that makes triggering events easier than manually constructing and dispatching them. Since any arbitrary event can be triggered, Cypress tries not to make any assumptions about how it should be triggered. This means you'll need to know the implementation details (which may be in a 3rd party library) of the event handler(s) receiving the event and provide the necessary properties.
+
+### Why should I manually set the event type?
+
+As you can see the documentation of {% url `MouseEvent` https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent %}, most properties of event class instances are read-only. Because of that, it's sometimes impossible to set the value of some properties like `pageX`, `pageY`. This can be problematic in when testing some situations.
 
 ## Differences
 
@@ -210,7 +238,7 @@ That means that your event listener callbacks will be invoked, but don't expect 
 
 # Command Log
 
-### Trigger a `change` event on input type='range'
+***Trigger a `change` event on input type='range'***
 
 ```javascript
 cy.get('.trigger-input-range')
@@ -220,11 +248,16 @@ cy.get('.trigger-input-range')
 
 The commands above will display in the Command Log as:
 
-{% img /img/api/trigger/command-log-trigger.png "command log trigger" %}
+{% imgTag /img/api/trigger/command-log-trigger.png "command log trigger" %}
 
 When clicking on `trigger` within the command log, the console outputs the following:
 
-{% img /img/api/trigger/console-log-trigger.png "console log trigger" %}
+{% imgTag /img/api/trigger/console-log-trigger.png "console log trigger" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added `screenX` and `screenY` properties to events
+{% url "0.20.0" changelog#0-20-0 %} | `.trigger()` command added
+{% endhistory %}
 
 # See also
 
@@ -232,6 +265,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 - {% url `.check()` check %}
 - {% url `.click()` click %}
 - {% url `.focus()` focus %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.select()` select %}
 - {% url `.submit()` submit %}
 - {% url `.type()` type %}

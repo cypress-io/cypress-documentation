@@ -1,6 +1,5 @@
 ---
 title: filter
-
 ---
 
 Get the DOM elements that match a specific selector.
@@ -58,7 +57,7 @@ Option | Default | Description
 
 ## Selector
 
-***Filter the current subject to the elements with the class 'active'.***
+### Filter the current subject to the elements with the class 'active'
 
 ```html
 <ul>
@@ -99,11 +98,11 @@ cy.get('.left-nav>.nav').find('>li').filter('.active')
 
 The commands above will display in the Command Log as:
 
-![Command Log filter](/img/api/filter/filter-el-by-selector.png)
+{% imgTag /img/api/filter/filter-el-by-selector.png "Command Log filter" %}
 
 When clicking on the `filter` command within the command log, the console outputs the following:
 
-![console.log filter](/img/api/filter/console-shows-list-and-filtered-element.png)
+{% imgTag /img/api/filter/console-shows-list-and-filtered-element.png "console.log filter" %}
 
 # See also
 

@@ -1,6 +1,6 @@
 .article-wrapper {
   position: relative;
-  margin: 60px ($sidebar-width + 40px) 60px ($sidebar-width + 40px);
+  margin: 0 ($sidebar-width);
   display: flex;
   flex-direction: row;
 }
@@ -16,8 +16,9 @@
 
 .article {
   position: relative;
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 60px 30px;
   display: flex;
   flex-direction: column;
   right: 0;
@@ -101,6 +102,11 @@ a.article-edit-link {
     margin: 25px 0;
     word-wrap: break-word;
     font-family: $font-sans;
+
+    .badge {
+      position: relative;
+      top: -2px;
+    }
   }
 
   ol {
@@ -173,6 +179,7 @@ a.article-edit-link {
   }
 
   table {
+    background-color: white;
     border: 1px solid #e8e8e8;
     display: block;
     margin: 15px 0;
@@ -199,6 +206,18 @@ a.article-edit-link {
       padding: 15px 10px;
       font-size: 1em;
       line-height: 1.5em;
+    }
+
+    td:not(:last-child), th:not(:last-child) {
+      white-space: nowrap;
+    }
+
+    td:last-child, th:last-child {
+      width: 100%;
+
+      code {
+        white-space: normal;
+      }
     }
 
     tr:nth-child(2n) {
@@ -252,12 +271,7 @@ a.article-edit-link {
   }
 
   h1.article-title {
-    font-family: $font-title;
-    font-weight: bold;
-    text-decoration: none;
-    color: $color-default;
-    line-height: 1.7em;
-    color: #282C34;
+    @include article-title;
     font-size: 2.6em;
   }
 
@@ -403,6 +417,10 @@ a.article-edit-link {
     margin: 15px 0;
     box-shadow: 0 1px 2px #ddd;
 
+    &.width-600 {
+      max-width: 600px;
+    }
+
     &.no-border {
       border: 0;
       box-shadow: 0 0 0;
@@ -438,6 +456,10 @@ a.article-edit-link {
           color: color-grey;
         }
       }
+    }
+
+    p>img {
+      margin: 0;
     }
 
     &>h1, &>h2, &>h3 {
@@ -603,12 +625,7 @@ a.article-edit-link {
 }
 
 .article-title {
-  font-family: $font-title;
-  font-weight: bold;
-  text-decoration: none;
-  color: $color-default;
-  line-height: 1.7em;
-  color: #282C34;
+  @include article-title;
   font-size: 2.6em;
 }
 
@@ -624,7 +641,7 @@ a.article-edit-link {
   height: auto;
   margin: 2em 0;
   border: 1px solid #ddd;
-  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .embed-container iframe {
@@ -641,35 +658,8 @@ a.article-edit-link {
 }
 
 .history {
-  cursor: pointer;
-
-  thead, tbody, th, tr {
-    border-collapse: collapse;
-  }
-
-  summary {
-    color: transparent;
-    display: block;
-
-    h1.article-heading {
-      margin-top: 0;
-    }
-  }
-
   th:last-child {
     width: 100%;
-  }
-
-  .history-disclosure {
-    font-size: 0.7em;
-    padding-right: 0.5em;
-    transition: 0.3s;
-    transform-style: preserve-3d;
-    transform: rotateX(180deg);
-  }
-
-  &[open] .history-disclosure{
-    transform: rotateX(0deg);
   }
 }
 

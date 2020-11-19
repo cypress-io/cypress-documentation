@@ -1,6 +1,5 @@
 ---
 title: readFile
-
 ---
 
 Read a file and yield its contents.
@@ -26,7 +25,7 @@ cy.readFile('menu.json')
 
 **{% fa fa-angle-right %} filePath** ***(String)***
 
-A path to a file within the project root (the directory that contains `cypress.json`).
+A path to a file within the project root (the directory that contains the default `cypress.json` configuration file).
 
 **{% fa fa-angle-right %} encoding**  ***(String)***
 
@@ -61,7 +60,7 @@ Option | Default | Description
 
 ## Text
 
-***Read a `txt` file***
+### Read a `.txt` file
 
 For any file other than JSON, the contents of the file are returned.
 
@@ -94,7 +93,7 @@ cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 
 ## YAML
 
-***Get translation data from Yaml file***
+### Get translation data from a YAML file
 
 ```javascript
 const YAML = require('yamljs')
@@ -118,7 +117,7 @@ cy
 
 ## Encoding
 
-***Specify the encoding with the second argument.***
+### Specify the encoding with the second argument
 
 ```javascript
 cy.readFile('path/to/logo.png', 'base64').then((logo) => {
@@ -143,7 +142,7 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 
 ## Existence
 
-***Default Assertions: file existence***
+### Default file existence assertion
 
 By default, `cy.readFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
 
@@ -152,7 +151,7 @@ By default, `cy.readFile()` asserts that the file exists and will fail if it doe
 cy.readFile('does-not-exist.yaml')
 ```
 
-***Asserting file non-existence***
+### Asserting file non-existence
 
 You can assert that a file does not exist like so:
 
@@ -161,9 +160,13 @@ You can assert that a file does not exist like so:
 cy.readFile('does-not-exist.yaml').should('not.exist')
 ```
 
+### Read a file that might not exist
+
+{% url "See our example on using `cy.task()` to read a file that *may* not exist." task#Read-a-file-that-might-not-exist %}
+
 ## Retries
 
-***Automatic Retries***
+### Automatic retries
 
 `cy.readFile()` will continue to read the file until it passes all of its assertions.
 
@@ -189,7 +192,7 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 # Command Log
 
-***List the contents of cypress.json***
+***List the contents of the default `cypress.json` configuration file***
 
 ```javascript
 cy.readFile('cypress.json')
@@ -197,11 +200,11 @@ cy.readFile('cypress.json')
 
 The command above will display in the Command Log as:
 
-![Command Log](/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png)
+{% imgTag /img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png "Command Log readFile" %}
 
 When clicking on the `readFile` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png)
+{% imgTag /img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png "Console Log readFile" %}
 
 # See also
 

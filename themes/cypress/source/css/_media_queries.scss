@@ -37,10 +37,18 @@
     .main-nav-link {
       display: inline-block;
     }
+    .main-nav-right{
+      display: flex;
+      align-items: center;
+    }
   }
 
   #lang-select-wrap {
-    display: inline-block;
+    display: flex;
+    #lang-select-label{
+      display: flex;
+      align-items: center;
+    }
   }
 
   #sidebar {
@@ -67,14 +75,6 @@
 }
 
 @media screen and (max-width: 1351px) {
-
-  .examples.tutorial {
-
-    .article-wrapper {
-      margin:60px 100px 60px 330px;
-    }
-  }
-
   .media {
     h2 {
       font-size: 1.2em;
@@ -84,10 +84,6 @@
 
 
 @media screen and(max-width: 1300px) {
-  #lang-select-wrap {
-    display: none;
-  }
-
   .toc-top .article-wrapper {
     margin-right: 40px;
   }
@@ -100,7 +96,7 @@
 
 
 
-@media screen and(max-width: 1000px) {
+@media screen and(max-width: 1024px) {
 
   #content-wrap {
     padding-top: 0;
@@ -130,7 +126,7 @@
   }
 
   .article-wrapper {
-    margin-right: 30px;
+    margin-right: 0;
 
     .media {
       h2 {
@@ -169,16 +165,13 @@
     padding-top: 0;
   }
 
-  .examples.tutorial {
-     .article-wrapper {
-        margin-left: 30px;
-        margin-right: 30px;
-      }
+  #lang-select-wrap {
+    display: none;
   }
 
   .article-wrapper {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 0;
+    margin-right: 0;
   }
  
 

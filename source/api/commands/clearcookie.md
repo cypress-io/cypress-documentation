@@ -1,6 +1,5 @@
 ---
 title: clearCookie
-
 ---
 
 Clear a specific browser cookie.
@@ -47,7 +46,7 @@ Option | Default | Description
 
 ## No Args
 
-***Clear a cookie after logging in***
+### Clear a cookie after logging in
 
 In this example, on first login, our server sends us back a session cookie. After invoking `cy.clearCookie('session_id')`, this clears the session cookie. Then upon navigating to an unauthorized page, we asset that our server has redirected us back to login.
 
@@ -86,11 +85,11 @@ cy.getCookie('foo').should('be.null')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/clearcookie/clear-cookie-in-browser-tests.png)
+{% imgTag /img/api/clearcookie/clear-cookie-in-browser-tests.png "Command Log for clearcookie" %}
 
 When clicking on `clearCookie` within the command log, the console outputs the following:
 
-![Console Log](/img/api/clearcookie/cleared-cookie-shown-in-console.png)
+{% imgTag /img/api/clearcookie/cleared-cookie-shown-in-console.png "console.log for clearcookie" %}
 
 # See also
 

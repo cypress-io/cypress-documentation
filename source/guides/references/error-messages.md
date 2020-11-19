@@ -9,7 +9,7 @@ title: Error Messages
 
 This message means that Cypress was unable to find tests in the specified file. You'll likely get this message if you have an empty test file and have not yet written any tests.
 
-{% img /img/guides/no-tests-found.png "No tests found" %}
+{% imgTag /img/guides/no-tests-found.png "No tests found" %}
 
 ## {% fa fa-exclamation-triangle red %} We found an error preparing your test file
 
@@ -39,7 +39,7 @@ Cypress supports both ES2015 modules and CommonJS modules. You can import/requir
 import _ from 'lodash'
 import util from './util'
 
-it('uses modules', function () {
+it('uses modules', () => {
   expect(_.kebabCase('FooBar')).to.equal('foo-bar')
   expect(util.secretCode()).to.equal('1-2-3-4')
 })
@@ -51,32 +51,33 @@ It's still useful to load a setup file before your test code. If you are setting
 
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
-* `cypress/support/index.js`
-* `cypress/support/index.coffee`
+- `cypress/support/index.js`
+- `cypress/support/index.ts`
+- `cypress/support/index.coffee`
 
-Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
+Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+, {% url "TypeScript" typescript-support %} or CoffeeScript and modules, so you can import/require other files as needed.
 
 # Command Errors
 
 ## {% fa fa-exclamation-triangle red %} Cypress cannot execute commands outside a running test
 
-{% img /img/guides/cypress-cannot-execute.png "Cannot execute commands" %}
+{% imgTag /img/guides/cypress-cannot-execute.png "Cannot execute commands" %}
 
 This message means you tried to execute one or more Cypress commands outside of a currently running test. Cypress has to be able to associate commands to a specific test.
 
 Typically this happens accidentally, like in the following situation.
 
 ```javascript
-describe('Some Tests', function () {
-  it('is true', function () {
+describe('Some Tests', () => {
+  it('is true', () => {
     expect(true).to.be.true   // yup, fine
   })
 
-  it('is false', function () {
+  it('is false', () => {
     expect(false).to.be.false // yup, also fine
   })
 
-  context('some nested tests', function () {
+  context('some nested tests', () => {
     // oops you forgot to write an it(...) here!
     // these cypress commands below
     // are running outside of a test and cypress
@@ -87,17 +88,53 @@ describe('Some Tests', function () {
 })
 ```
 
-Simply move those Cypress commands into an `it(...)` block and everything will work correctly.
+Move those Cypress commands into an `it(...)` block and everything will work correctly.
 
 If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the {% url "Examples" examples/examples/recipes %}, {% url "chat with someone in our chat" https://gitter.im/cypress-io/cypress %}, or {% open_an_issue %}.
 
 ## {% fa fa-exclamation-triangle red %} `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
-Getting this errors means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
+Getting this error means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
 
-{% img /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
 
-Cypress errors because it can't interact with "dead" elements - just like a real user could not do this either. Understanding how this happens is very important - and it is often easy to prevent.
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
+
+{% imgTag /img/guides/cy-method-failed-element-is-detached.png "cy.method() failed because element is detached" %}
+
+Cypress errors because it can't interact with "dead" elements - much like a real user could not do this either. Understanding how this happens is very important - and it is often preventable.
 
 Let's take a look at an example below.
 
@@ -151,6 +188,10 @@ When we say *guard*, this usually means:
 - Writing an assertion
 - Waiting on an XHR
 
+### More info
+
+Read the blog post {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %} for another example of this error, and how to solve it.
+
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element cannot be interacted with
 
 You may see a variation of this message for 4 different reasons:
@@ -160,7 +201,7 @@ You may see a variation of this message for 4 different reasons:
 3. The element's center is hidden from view
 4. The element is disabled
 
-Cypress runs several calculations to ensure an element can *actually* be interacted with like a real user would. If you're seeing this error, the solution is often obvious. You may need to *guard* your commands (due to a timing or an animation issue).
+Cypress runs several calculations to ensure an element can *actually* be interacted with like a real user would. If you're seeing this error, you may need to *guard* your commands (due to a timing or an animation issue).
 
 There have been situations where Cypress does not correctly allow you to interact with an element that should be interactable. If that's the case, {% open_an_issue %}.
 
@@ -176,7 +217,23 @@ cy.get('[disabled]').click({force: true}).
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element is currently animating
 
-{% img /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
+<!--
+To reproduce the following screenshot:
+describe('animating example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      Cypress.$('<input style="position: absolute;" />').appendTo($body)
+      .animate({ left: '+=1000000' }, 10)
+    })
+  })
+  it('is animating', () => {
+    cy.get('input')
+    .type('some text', { timeout: 20 })
+  })
+})
+-->
+
+{% imgTag /img/guides/cy-method-failed-element-is-animating.png "cy.method() failed because element is animating" %}
 
 By default Cypress detects if an element you're trying to interact with is animating. This check ensures that an element is not animating too quickly for a real user to interact with the element. This also prevents some edge cases where actions, such as {% url `.type()` type %} or {% url `.click()` click %}, happened too fast during a transition.
 
@@ -190,9 +247,9 @@ Cypress will continuously attempt to interact with the element until it eventual
 cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
-You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %} in your {% url 'configuration' configuration %}.
+You can globally disable animation error checking, or increase the threshold by modifying the {% url 'configuration' configuration %}.
 
-### cypress.json
+### Configuration file (`cypress.json` by default)
 
 ```json
 {
@@ -205,13 +262,13 @@ You can globally disable animation error checking, or increase the threshold by 
 
 Let's examine several different ways you may get this error message. In every situation, you'll need to change something in your test code to prevent the error.
 
-{% img /img/guides/the-test-has-finished.png "The test has finished but Cypress still has commands" %}
+{% imgTag /img/guides/the-test-has-finished.png "The test has finished but Cypress still has commands" %}
 
 {% note warning Flaky tests below! %}
 Several of these tests are dependent on race conditions. You may have to run these tests multiple times before they will actually fail. You can also try tweaking some of the delays.
 {% endnote %}
 
-### Simple Example
+### Short Example
 
 This first test below will pass and shows you that Cypress tries to prevent leaving commands behind in the queue in every test.
 
@@ -219,7 +276,7 @@ Even though we return a string in our test, Cypress automatically figures out th
 
 ```javascript
 // This test passes!
-it('Cypress is smart and this does not fail', function () {
+it('Cypress is smart and this does not fail', () => {
   cy.get('body').children().should('not.contain', 'foo') // <- no return here
 
   return 'foobarbaz'    // <- return here
@@ -230,7 +287,7 @@ The example below will fail because you've forcibly terminated the test early wi
 
 ```javascript
 // This test errors!
-it('but you can forcibly end the test early which does fail', function (done) {
+it('but you can forcibly end the test early which does fail', (done) => {
   cy.get('body')
     .then(() => {
       done() // forcibly end test even though there are commands below
@@ -242,7 +299,7 @@ it('but you can forcibly end the test early which does fail', function (done) {
 
 ### Complex Async Example
 
-What's happening in this example is that because we have *NOT* told mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
+What's happening in this example is that because we have *NOT* told Mocha this is an asynchronous test, this test will pass *immediately* then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the *next* test.
 
 ```javascript
 describe('a complex example with async code', function() {
@@ -253,7 +310,7 @@ describe('a complex example with async code', function() {
     }, 10)
   })
 
-  it('this test will fail due to the previous poorly written test', function() {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
     cy.wait(10)
   })
@@ -263,7 +320,7 @@ describe('a complex example with async code', function() {
 The correct way to write the above test code is using Mocha's `done` to signify it is asynchronous.
 
 ```javascript
-it('does not cause commands to bleed into the next test', function (done) {
+it('does not cause commands to bleed into the next test', (done) => {
   setTimeout(() => {
     cy.get('body').children().should('not.contain', 'foo').then(() => {
       done()
@@ -278,15 +335,15 @@ In the example below, we forget to return the `Promise` in our test. This means 
 This also causes the commands to be queued on the wrong test. We will get the error in the next test that Cypress detected it had commands in its command queue.
 
 ```javascript
-describe('another complex example using a forgotten "return"', function () {
-  it('forgets to return a promise', function () {
+describe('another complex example using a forgotten "return"', () => {
+  it('forgets to return a promise', () => {
     // This test passes...but...
     Cypress.Promise.delay(10).then(() => {
       cy.get('body').children().should('not.contain', 'foo')
     })
   })
 
-  it('this test will fail due to the previous poorly written test', function () {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
     cy.wait(10)
   })
@@ -296,7 +353,7 @@ describe('another complex example using a forgotten "return"', function () {
 The correct way to write the above test code would be to return our `Promise`:
 
 ```javascript
-it('does not forget to return a promise', function () {
+it('does not forget to return a promise', () => {
   return Cypress.Promise.delay(10).then(() => {
     return cy.get('body').children().should('not.contain', 'foo')
   })
@@ -306,6 +363,14 @@ it('does not forget to return a promise', function () {
 ## {% fa fa-exclamation-triangle red %} `cy.visit()` failed because you are attempting to visit a second unique domain
 
 See our {% url "Web Security" web-security#Limitations %} documentation.
+
+## {% fa fa-exclamation-triangle red %} `cy.visit()` failed because you are attempting to visit a different origin domain
+
+Two URLs have the same origin if the `protocol`, `port` (if specified), and `host` are the same for both. You can only visit domains that are of the same-origin within a single test. You can read more about same-origin policy in general {% url "here" https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy %}.
+
+You can visit urls that are of different origin across different tests, so you may consider splitting your `cy.visit()` of different origin domains into separate tests.
+
+See our {% url "Web Security" web-security#Limitations %} documentation for more information and workarounds.
 
 ## {% fa fa-exclamation-triangle red %} `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
@@ -319,7 +384,7 @@ Please read our {% url "new documentation on writing custom commands" custom-com
 
 Because `cy` commands are asynchronous and are queued to be run later, it doesn't make sense to return anything else.
 
-For convenience, you can also simply omit any return value or return `undefined` and Cypress will not error.
+For convenience, you can also omit any return value or return `undefined` and Cypress will not error.
 
 In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically detected this and forced the `cy` commands to be returned. To make things less magical and clearer, we are now throwing an error.
 
@@ -327,7 +392,7 @@ In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically de
 
 Because cy commands are asynchronous and are queued to be run later, it doesn't make sense to return anything else.
 
-For convenience, you can also simply omit any return value or return `undefined` and Cypress will not error.
+For convenience, you can also omit any return value or return `undefined` and Cypress will not error.
 
 In versions before {% url "`0.20.0`" changelog %} of Cypress we automatically detected this and forced the `cy` commands to be returned. To make things less magical and clearer, we are now throwing an error.
 
@@ -345,9 +410,17 @@ While this works in practice, it's often indicative of an anti-pattern. You almo
 
 `cy` commands themselves are already promise like, and you can likely avoid the use of the separate Promise.
 
+## {% fa fa-exclamation-triangle red %} Cypress detected that you returned a promise in a test, but also invoked a done callback.
+
+The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows returning a promise and invoking a done callback. Read more about it in the {% url "4.0 migration guide" migration-guide#Mocha-upgrade %}.
+
 ## {% fa fa-exclamation-triangle red %} Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
 You can safely remove: `{stub: false}`.
+
+## {% fa fa-exclamation-triangle red %} CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+
+If you get this error in a case where the element is definitely visible in the DOM, your document might contain malformed HTML. In such cases, `document.querySelector()` will not find any elements that appear after the point where the HTML is malformed. Even if you feel certain your HTML is not malformed anywhere, check it anyway (line by line in the dev tools). Especially if you've exhausted all other possibilities.
 
 # CLI Errors
 
@@ -405,7 +478,7 @@ Check out our {% url "guide on parallelizing runs" parallelization %} and when t
 
 You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the {% url "Dashboard Service" dashboard-service %}.
+These flags can only be used when recording to the {% url "Dashboard Service" dashboard-introduction%}.
 
 Please review our {% url "parallelization" parallelization %} documentation to learn more.
 
@@ -463,11 +536,17 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 ## {% fa fa-exclamation-triangle red %} Cannot parallelize tests on a stale run
 
-You are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that was completed over 24 hours ago.
+This error is thrown when you are attempting to pass the {% url "`--parallel`" command-line#cypress-run-parallel %} flag to a run that Cypress detected was completed over 24 hours ago.
 
-You cannot run tests on a run that has been complete for that long.
+In order to uniquely identify each run during `cypress run`, Cypress attempts to read a unique identifier from your CI provider as described in our {% url "parallelization doc" parallelization#CI-Build-ID-environment-variables-by-provider %}.
 
-Please review our {% url "parallelization" parallelization %} documentation to learn more.
+You may encounter this error if Cypress is detecting the exact same CI Build ID matching a previous CI Build ID in a run that was completed over 24 hours ago. You cannot run tests on a run that has been complete for that long.
+​
+​You can see the CI Build ID that is detected for each completed run by looking at the details section at the top of your run in the {% url "Dashboard" https://on.cypress.io/dashboard %}.
+​
+​You can generate and pass in your own unique CI Build ID per run as described {% url "here" command-line#cypress-run-ci-build-id-lt-id-gt %}.
+
+Please also review our {% url "parallelization" parallelization %} documentation to learn more.
 
 ## {% fa fa-exclamation-triangle red %} Run is not accepting any new groups
 
@@ -479,33 +558,31 @@ Please review our {% url "parallelization" parallelization %} documentation to l
 
 # Page Load Errors
 
-## {% fa fa-exclamation-triangle red %} Cypress detected a cross origin error happened on page load
+## {% fa fa-exclamation-triangle red %} Cypress detected a cross-origin error happened on page load
 
 {% note info %}
 For a more thorough explanation of Cypress's Web Security model, {% url 'please read our dedicated guide to it' web-security %}.
 {% endnote %}
 
-This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's url to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypasses all same-origin security policies among other things.
+This error means that your application navigated to a superdomain that Cypress was not bound to. Initially when you {% url `cy.visit()` visit %}, Cypress changes the browser's URL to match the `url` passed to {% url `cy.visit()` visit %}. This enables Cypress to communicate with your application to bypass all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current origin-policy, Cypress is unable to communicate with it, and thus fails.
 
-### There are a few simple workarounds to these common situations:
+### There are a few workarounds to these common situations:
 
-1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So simply make an assertion about that. You can see more strategies on testing anchor links {% url 'in our Example Recipe' recipes#Tab-Handling-and-Links %}.
+1. Don't click `<a>` links in your tests that navigate outside of your application. Likely this isn't worth testing anyway. You should ask yourself: *What's the point of clicking and going to another app?* Likely all you care about is that the `href` attribute matches what you expect. So make an assertion about that. You can see more strategies on testing anchor links {% url 'in our "Tab Handling and Links" example recipe' recipes#Testing-the-DOM %}.
 
-2. You are testing a page that uses `Single sign-on (SSO)`. In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
+2. You are testing a page that uses Single sign-on (SSO). In this case your web server is likely redirecting you between superdomains, so you receive this error message. You can likely get around this redirect problem by using {% url `cy.request()` request %} to manually handle the session yourself.
 
-If you find yourself stuck and can't work around these issues you can just set this in your `cypress.json` file. But before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
+If you find yourself stuck and can't work around these issues you can set `chromeWebSecurity` to `false` in your {% url "configuration file (`cypress.json` by default)" configuration %} when running in Chrome family browsers (this setting will not work in other browsers). Before doing so you should really understand and {% url 'read about the reasoning here' web-security %}.
 
-```javascript
-// cypress.json
-
+```json
 {
   "chromeWebSecurity": false
 }
 ```
 
-## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross origin script.
+## {% fa fa-exclamation-triangle red %} Cypress detected that an uncaught error was thrown from a cross-origin script.
 
 Check your Developer Tools Console for the actual error - it should be printed there.
 
@@ -513,16 +590,27 @@ It's possible to enable debugging these scripts by adding the `crossorigin` attr
 
 # Browser Errors
 
-## {% fa fa-exclamation-triangle red %} The Chromium Renderer process just crashed
+<!-- keep old hash -->
+<a name='The-Chromium-Renderer-process-just-crashed'></a>
 
-Browsers are enormously complex pieces of software, and from time to time they will inconsistently crash *for no good reason*. Crashes are just a part of running automated tests.
+## {% fa fa-exclamation-triangle red %} The browser process running your tests just exited unexpectedly
 
-{% img /img/guides/chromium-renderer-crashed.png "Chromium Renderer process just crashed" %}
+This error can occur whenever Cypress detects that the launched browser has exited or crashed before the tests could finish running.
 
-At the moment, we haven't implemented an automatic way to recover from them, but it is actually possible for us to do so. We have an {% issue 349 'open issue documenting the steps' %} we could take to restart the renderer process and continue the run. If you're seeing consistent crashes and would like this implemented, please leave a note in the issue.
+This can happen for a number of reasons, including:
 
-If you are running `Docker` {% issue 350 'there is a simple one line fix for this problem documented here' %}.
+- The browser was exited manually, by clicking the "Quit" button or otherwise
+- Your test suite or application under test is starving the browser of resources, such as running an infinite loop
+- Cypress is running in a memory-starved environment
+- The browser is testing a memory-heavy application
+- Cypress is running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
+- There are problems with the GPU / GPU drivers
+- There is a bug in the browser involving memory management
+- There is a memory leak in Cypress
 
+If the browser running Cypress tests crashes, currently, Cypress will abort any remaining tests and print out this error.
+
+There is an {% issue 349 'open issue' %} to recover from browser crashes automatically, so tests can continue to run.
 
 # Test Runner errors
 
@@ -534,6 +622,29 @@ This error likely appeared because:
 
 1. You do not have internet. Please ensure you have connectivity then try again.
 2. You are a developer that has forked our codebase and do not have access to run our API locally. Please read more about this in our {% url "contributing doc" https://on.cypress.io/contributing %}.
+
+## {% fa fa-exclamation-triangle red %} Cypress detected policy settings on your computer that may cause issues
+
+When Cypress launches Chrome, it attempts to launch it with a custom proxy server and browser extension. Certain group policies (GPOs) on Windows can prevent this from working as intended, which can cause tests to break.
+
+If your administrator has set any of the following Chrome GPOs, it can prevent your tests from running in Chrome:
+
+- Proxy policies: `ProxySettings, ProxyMode, ProxyServerMode, ProxyServer, ProxyPacUrl, ProxyBypassList`
+- Extension policies: `ExtensionInstallBlacklist, ExtensionInstallWhitelist, ExtensionInstallForcelist, ExtensionInstallSources, ExtensionAllowedTypes, ExtensionAllowInsecureUpdates, ExtensionSettings, UninstallBlacklistedExtensions`
+
+Here are some potential workarounds:
+
+1. Ask your administrator to disable these policies so that you can use Cypress with Chrome.
+2. Use the built-in Electron browser for tests, since it is not affected by these policies. {% url 'See the guide to launching browsers for more information.' launching-browsers#Electron-Browser %}
+3. Try using Chromium instead of Google Chrome for your tests, since it may be unaffected by GPO. You can {% url "download the latest Chromium build here." https://download-chromium.appspot.com %}
+4. If you have Local Administrator access to your computer, you may be able to delete the registry keys that are affecting Chrome. Here are some instructions:
+    1. Open up Registry Editor by pressing WinKey+R and typing `regedit.exe`
+    2. Look in the following locations for the policy settings listed above:
+        - `HKEY_LOCAL_MACHINE\Software\Policies\Google\Chrome`
+        - `HKEY_LOCAL_MACHINE\Software\Policies\Google\Chromium`
+        - `HKEY_CURRENT_USER\Software\Policies\Google\Chrome`
+        - `HKEY_CURRENT_USER\Software\Policies\Google\Chromium`
+    3. Delete or rename any policy keys found. *Make sure to back up your registry before making any changes.*
 
 ## {% fa fa-exclamation-triangle red %} Uncaught exceptions from your application
 

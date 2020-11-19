@@ -48,7 +48,7 @@ The name of the alias to be referenced later within a {% url `cy.get()` get %} o
 Aliasing a DOM element and then using {% url `cy.get()` get %} to access the aliased element.
 
 ```javascript
-it('disables on click', function () {
+it('disables on click', () => {
   cy.get('button[type=submit]').as('submitBtn')
   cy.get('@submitBtn').click().should('be.disabled')
 })
@@ -70,7 +70,7 @@ cy.wait('@userPut')
 Aliasing {% url `cy.fixture()` fixture %} data and then using `this` to access it via the alias.
 
 ```javascript
-beforeEach(function () {
+beforeEach(() => {
   cy.fixture('users-admins.json').as('admins')
 })
 
@@ -101,7 +101,6 @@ Here are some further examples of using `.as()` that illustrate the asynchronous
 
 ```javascript
 describe('A fixture', () => {
-
   describe('alias can be accessed', () => {
     it('via get().', () => {
       cy.fixture('admin-users.json').as('admins')
@@ -121,7 +120,7 @@ describe('A fixture', () => {
   })
 
   describe('aliased in beforeEach()', () => {
-    beforeEach(function () {
+    beforeEach(() => {
       cy.fixture('admin-users.json').as('admins')
     })
 
@@ -160,7 +159,7 @@ cy.route('PUT', /^\/users\/\d+/, 'fixture:user').as('userPut')
 
 Aliases of routes display in the routes instrument panel:
 
-![Command log for route](/img/api/as/routes-table-in-command-log.png)
+{% imgTag /img/api/as/routes-table-in-command-log.png "Command log for route" %}
 
 # See also
 

@@ -7,6 +7,8 @@ title: Cypress Documentation
 subtitle: Testing, the way it should be.
 description: Cypress is a test engine that runs unit and integration tests in your browser. It makes it easy to write and debug web application tests.
 author: Cypress.io
+
+# https://hexo.io/docs/internationalization.html
 language: en
 
 # URL
@@ -21,7 +23,7 @@ github: cypress-io/cypress
 # Directory
 source_dir: source
 public_dir: public
-i18n_dir: :lang
+# i18n_dir: :lang
 skip_render:
 
 # Generate alias pages for redirecting to posts, pages or URL
@@ -31,15 +33,23 @@ skip_render:
 # can also do outside page links here
 # plugins/index.html: https://github.com/cypress/cypress/wiki/Plugins
 alias:
+  # indices
   index.html: guides/overview/why-cypress.html
+  zh-cn/: guides/overview/why-cypress.html
+  ja/: guides/overview/why-cypress.html
+  pt-br/: guides/overview/why-cypress.html
+  ru/: guides/overview/why-cypress.html
+  es/: guides/overview/why-cypress.html
 
   guides/index.html: guides/overview/why-cypress.html
-  guides.html/: guides/overview/why-cypress.html
+  guides.html: guides/overview/why-cypress.html
   guides/references/type/: api/commands/type.html
-  guides/integrating-cypress/features.html/: guides/guides/continuous-integration.html
+  guides/references/known-issues.html: 404.html
+  guides/integrating-cypress/features.html: guides/guides/continuous-integration.html
   guides/network-requests-xhr/: guides/guides/network-requests.html
   guides/issuing-commands/: guides/core-concepts/introduction-to-cypress.html#Subject-Management
   guides/installing-and-running/: guides/getting-started/installing-cypress.html
+  guides/core-concepts/aliases-and-references.html: guides/core-concepts/variables-and-aliases.html
   guides/core-concepts/overview-of-the-gui/: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-the-gui.html: guides/core-concepts/overview-of-test-runner.html
   guides/core-concepts/overview-of-test-runner.html: guides/core-concepts/test-runner.html
@@ -47,6 +57,7 @@ alias:
   guides/core-concepts/screenshots-and-videos.html: guides/guides/screenshots-and-videos.html
   guides/guides/reporters.html: guides/tooling/reporters.html
   guides/guides/reporters/: guides/tooling/reporters.html
+  guides/test-retries.html: guides/guides/test-retries.html
   overview-of-test-runner/: guides/core-concepts/test-runner.html
   why-cypress/: guides/overview/why-cypress.html
 
@@ -56,6 +67,7 @@ alias:
   api/assertions/assertions.html: guides/references/assertions.html
   api/commands/cypress-blob.html: api/utilities/blob.html
   api/commands/api-server.html: api/cypress-api/cypress-server.html
+  api/commands/route2.html: api/commands/http.html
 
   examples/index.html: examples/examples/recipes.html
 
@@ -98,17 +110,18 @@ alias:
 
   plugins/: plugins/index.html
 
-  dashboard/index.html: guides/core-concepts/dashboard-service.html
-  dashboard/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/features-dashboard/: guides/core-concepts/dashboard-service.html
-  dashboard/overview/features-dashboard.html: guides/core-concepts/dashboard-service.html
-  dashboard/overview/projects-dashboard.html: guides/core-concepts/dashboard-service.html
-  dashboard/overview/organizations-dashboard.html: guides/core-concepts/dashboard-service.html
+  dashboard/index.html: guides/dashboard/dashboard-introduction.html
+  dashboard/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/features-dashboard/: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/features-dashboard.html: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/projects-dashboard.html: guides/dashboard/dashboard-introduction.html
+  dashboard/overview/organizations-dashboard.html: guides/dashboard/dashboard-introduction.html
 
   faq/index.html: faq/questions/using-cypress-faq.html
 
-#from Google Search Console/Webmaster Tools since 7/3/2017 - https://docs.google.com/spreadsheets/d/1SHhjytMEzIxtdzFNXJHn_Q6p3xFFv_lFw0x_JtNtxt0/edit#gid=1581503717
+  #from Google Search Console/Webmaster Tools since 7/3/2017
+  # https://docs.google.com/spreadsheets/d/1SHhjytMEzIxtdzFNXJHn_Q6p3xFFv_lFw0x_JtNtxt0/edit#gid=1581503717
   v1.0/docs/promise/: api/utilities/promise.html
   v1.0/docs/getcookie/: api/commands/getcookie.html
   v1.0/docs/getcookies/: api/commands/getcookies.html
@@ -136,6 +149,10 @@ alias:
   docs/finding-elements/: guides/core-concepts/introduction-to-cypress.html#Querying-Elements
 
   continuous-integration.html: guides/guides/continuous-integration.html
+
+  # obsolete content
+  dashboard/overview/runs-dashboard.html: guides/dashboard/runs.html
+  guides/core-concepts/launching-browsers.html: guides/guides/launching-browsers.html
 
 
 # Include/Exclude Files/Folders
@@ -187,8 +204,8 @@ google:
   tag_manager_id: GTM-KNKBWLD
 
 # Crash reporting
-raygun:
-  apiKey: SG5ZJfQICgeechPbpRE1DQ==
+sentry:
+  dsn: https://b3169c504f3840d397b4987b3fd68697@sentry.io/1387466
 
 ## Algolia Search
 ## https://github.com/LouisBarranqueiro/hexo-algoliasearch

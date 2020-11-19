@@ -78,7 +78,6 @@ function scrapeDocs (env, branch) {
       return scrape()
     }
   })
-
 }
 
 function deployEnvironmentBranch (env, branch) {
@@ -89,7 +88,8 @@ function deployEnvironmentBranch (env, branch) {
   checkBranchEnvFolder(branch)(env)
 
   debug('uploading to S3 dist folder %s', distDir)
-  uploadToS3(distDir, env)
+
+  return uploadToS3(distDir, env)
   .then(() => scrapeDocs(env, branch))
   .then(() => {
     console.log(chalk.yellow('\n==============================\n'))
@@ -106,6 +106,7 @@ function doDeploy (env) {
   .then((branch) => {
     console.log('deploying branch %s to environment %s',
       chalk.green(branch), chalk.blue(env))
+
     la(is.unemptyString(branch), 'invalid branch name', branch)
 
     return deployEnvironmentBranch(env, branch)

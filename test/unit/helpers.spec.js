@@ -23,11 +23,11 @@ describe('lib/helpers', () => {
     })
   })
 
-  describe('addPageAnchors', () =>
-    it('does not wrap fragment in html tag', () => {
+  describe('addPageAnchors', () => {
+    return it('does not wrap fragment in html tag', () => {
       return snapshot(process('<p>foo</p>', false))
     })
-  )
+  })
 
   return describe('addPageAnchors', () => {
     it('is noop if no headings found', () => {

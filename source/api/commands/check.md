@@ -1,6 +1,5 @@
 ---
 title: check
-
 ---
 
 Check checkbox(es) or radio(s).
@@ -64,19 +63,19 @@ Option | Default | Description
 
 ## No Args
 
-***Check all checkboxes***
+### Check all checkboxes
 
 ```javascript
 cy.get('[type="checkbox"]').check()
 ```
 
-***Check all radios***
+### Select all radios
 
 ```javascript
 cy.get('[type="radio"]').check()
 ```
 
-***Check the element with id of 'saveUserName'***
+### Check the element with id of 'saveUserName'
 
 ```javascript
 cy.get('#saveUserName').check()
@@ -84,7 +83,16 @@ cy.get('#saveUserName').check()
 
 ## Value
 
-***Select the radio with the value of 'US'***
+### Select the radio with the value of 'US'
+
+```html
+<form>
+  <input type="radio" id="ca-country" value="CA">
+  <label for="ca-country">Canada</label>
+  <input type="radio" id="us-country" value="US">
+  <label for="us-country">United States</label>
+</form>
+```
 
 ```javascript
 cy.get('[type="radio"]').check('US')
@@ -92,15 +100,24 @@ cy.get('[type="radio"]').check('US')
 
 ## Values
 
-***Check the checkboxes with the values 'ga' and 'ca'***
+### Check the checkboxes with the values 'subscribe' and 'accept'
+
+```html
+<form>
+  <input type="checkbox" id="subscribe" value="subscribe">
+  <label for="subscribe">Subscribe to newsletter?</label>
+  <input type="checkbox" id="acceptTerms" value="accept">
+  <label for="acceptTerms">Accept terms and conditions.</label>
+</form>
+```
 
 ```javascript
-cy.get('[type="checkbox"]').check(['ga', 'ca'])
+cy.get('form input').check(['subscribe', 'accept'])
 ```
 
 ## Options
 
-***Check an invisible checkbox***
+### Check an invisible checkbox
 
 You can ignore Cypress' default behavior of checking that the element is visible, clickable and not disabled by setting `force` to `true` in the options.
 
@@ -113,7 +130,7 @@ cy.get('.action-checkboxes').should('not.be.visible') // Passes
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.check()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
@@ -133,7 +150,7 @@ cy.get('.action-checkboxes').should('not.be.visible') // Passes
 
 # Command Log
 
-**check the element with name of 'emailUser'**
+***check the element with name of 'emailUser'***
 
 ```javascript
 cy.get('form').find('[name="emailUser"]').check()
@@ -141,11 +158,11 @@ cy.get('form').find('[name="emailUser"]').check()
 
 The commands above will display in the Command Log as:
 
-![Command log for check](/img/api/check/check-checkbox-in-cypress.png)
+{% imgTag /img/api/check/check-checkbox-in-cypress.png "Command log for check" %}
 
 When clicking on `check` within the command log, the console outputs the following:
 
-![console.log for check](/img/api/check/console-showing-events-on-check.png)
+{% imgTag /img/api/check/console-showing-events-on-check.png "console.log for check" %}
 
 # See also
 

@@ -1,6 +1,5 @@
 ---
 title: find
-
 ---
 
 Get the descendent DOM elements of a specific selector.
@@ -45,6 +44,7 @@ Option | Default | Description
 --- | --- | ---
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .find %}
+`includeShadowDom` | {% url '`includeShadowDom`<br /> config option value' configuration#Global %} | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 
@@ -54,7 +54,7 @@ Option | Default | Description
 
 ## Selector
 
-***Get li's within parent***
+### Get li's within parent
 
 ```html
 <ul id="parent">
@@ -92,11 +92,15 @@ cy.get('.left-nav>.nav').find('>li')
 
 The commands above will display in the Command Log as:
 
-![Command Log find](/img/api/find/find-li-of-uls-in-test.png)
+{% imgTag /img/api/find/find-li-of-uls-in-test.png "Command Log find" %}
 
 When clicking on the `find` command within the command log, the console outputs the following:
 
-![console.log find](/img/api/find/find-in-console-shows-list-and-yields.png)
+{% imgTag /img/api/find/find-in-console-shows-list-and-yields.png "console.log find" %}
+
+{% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
+{% endhistory %}
 
 # See also
 

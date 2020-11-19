@@ -1,6 +1,5 @@
 ---
 title: siblings
-
 ---
 
 Get sibling DOM elements.
@@ -53,7 +52,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the siblings of each li***
+### Get the siblings of each `li`
 
 ```html
 <ul>
@@ -71,7 +70,7 @@ cy.get('.active').siblings()
 
 ## Selector
 
-***Get siblings of element with class `active`***
+### Get siblings of element with class `active`
 
 ```javascript
 // yields <li class="active">Services</li>
@@ -102,11 +101,15 @@ cy.get('.left-nav').find('li.active').siblings()
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/siblings/find-siblings-of-dom-elements-to-test.png)
+{% imgTag /img/api/siblings/find-siblings-of-dom-elements-to-test.png "Command Log siblings" %}
 
 When clicking on `siblings` within the command log, the console outputs the following:
 
-![Console Log](/img/api/siblings/console-log-of-sibling-elements.png)
+{% imgTag /img/api/siblings/console-log-of-sibling-elements.png "Console Log siblings" %}
+
+{% history %}
+{% url "< 0.3.3" changelog#0-3-3 %} | `.siblings()` command added
+{% endhistory %}
 
 # See also
 

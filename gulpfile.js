@@ -1,19 +1,18 @@
 const gulp = require('gulp')
 const RevAll = require('gulp-rev-all')
 const clean = require('gulp-clean')
-const runSequence = require('run-sequence')
 
 const revisionOpts = {
-  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png'],
+  dontGlobal: ['.ico', 'sitemap.xml', 'sitemap.xsl', 'logo.png', 'logo@2x.png', '.mp4', '.woff', '.woff2', '.less'],
   dontRenameFile: ['.html', 'CNAME'],
   dontUpdateReference: ['.html'],
   dontSearchFile: ['.js'],
-  debug: process.env.NODE_ENV === 'production',
+  debug: true,
 }
 
 function remove (folder) {
   return gulp
-  .src(folder)
+  .src(folder, { allowEmpty: true })
   .pipe(clean())
 }
 
@@ -50,9 +49,6 @@ gulp.task('move:doc:search:css', function () {
 })
 
 // move font files
-gulp.task('move:roboto:fonts', function (cb) {
-  runSequence('move:roboto:css', 'move:roboto:fonts:folder', cb)
-})
 
 gulp.task('move:roboto:fonts:folder', function () {
   return gulp
@@ -60,16 +56,13 @@ gulp.task('move:roboto:fonts:folder', function () {
   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto-fontface/fonts'))
 })
 
-
 gulp.task('move:roboto:css', function () {
   return gulp
   .src('./node_modules/roboto-fontface/css/**')
   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/roboto-fontface/css'))
 })
 
-gulp.task('move:font:awesome:fonts', (cb) => {
-  runSequence('move:font:awesome:css', 'move:font:awesome:fonts:folder', cb)
-})
+gulp.task('move:roboto:fonts', gulp.series('move:roboto:css', 'move:roboto:fonts:folder'))
 
 gulp.task('move:font:awesome:css', function () {
   return gulp
@@ -82,6 +75,8 @@ gulp.task('move:font:awesome:fonts:folder', function () {
   .src('./node_modules/font-awesome/fonts/*')
   .pipe(gulp.dest('./themes/cypress/source/fonts/vendor/font-awesome/fonts'))
 })
+
+gulp.task('move:font:awesome:fonts', gulp.series('move:font:awesome:css', 'move:font:awesome:fonts:folder'))
 
 gulp.task('revision', () => {
   return gulp
@@ -96,7 +91,12 @@ gulp.task('copy:tmp:to:public', () => {
   .pipe(gulp.dest('public'))
 })
 
-gulp.task('clean:js', ['clean:js:folders', 'clean:non:application:js'])
+// move robots.txt
+gulp.task('move:robots.txt:to:public', function () {
+  return gulp
+  .src('./robots.txt*')
+  .pipe(gulp.dest('public'))
+})
 
 gulp.task('clean:non:application:js', () => {
   return remove('public/js/!(application).js')
@@ -105,6 +105,8 @@ gulp.task('clean:non:application:js', () => {
 gulp.task('clean:js:folders', () => {
   return remove('public/js/vendor')
 })
+
+gulp.task('clean:js', gulp.parallel('clean:js:folders', 'clean:non:application:js'))
 
 gulp.task('clean:css', () => {
   return remove('public/css/!(style|prism-coy).css')
@@ -122,10 +124,8 @@ gulp.task('clean:public', () => {
   return remove('public')
 })
 
-gulp.task('pre:build', ['copy:static:assets'])
+gulp.task('copy:static:assets', gulp.parallel('move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:yall:js', 'move:doc:search:css', 'move:roboto:fonts', 'move:font:awesome:fonts'))
 
-gulp.task('post:build', (cb) => {
-  runSequence('clean:js', 'clean:css', 'clean:fonts:folders', 'revision', 'clean:public', 'copy:tmp:to:public', 'clean:tmp', cb)
-})
+gulp.task('pre:build', gulp.parallel('copy:static:assets'))
 
-gulp.task('copy:static:assets', ['move:menu:spy:js', 'move:scrolling:element:js', 'move:doc:search:js', 'move:doc:yall:js', 'move:doc:search:css', 'move:roboto:fonts', 'move:font:awesome:fonts'])
+gulp.task('post:build', gulp.series('clean:js', 'clean:css', 'clean:fonts:folders', 'revision', 'clean:public', 'copy:tmp:to:public', 'move:robots.txt:to:public', 'clean:tmp'))

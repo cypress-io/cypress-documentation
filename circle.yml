@@ -1,4 +1,5 @@
-version: 2
+# let's try using orbs, jobs, commands
+version: 2.1
 
 env_defaults: &env_defaults
   ## this enables colors + fixes failing unit tests
@@ -14,7 +15,8 @@ defaults: &defaults
   docker:
     # the Docker image with Cypress dependencies
     # https://github.com/cypress-io/cypress-docker-images
-    - image: cypress/base:8
+    # Note: the image needs to have fonts with Chinese characters
+    - image: cypress/base:12
       environment:
         <<: *env_defaults
 
@@ -64,11 +66,22 @@ jobs:
       #
       - run: ls -la
       - run: npm run deps
-      - run: npm run lint
+      - run: npm run lint -- --max-warnings=0
       - run: npm run md-lint
-      - run: npm run stop-only
       - run: npm test
       - run: npm run build
+      - run:
+          name: Verify no escaped hexo tags
+          # -I flag skips binary files
+          command: |
+            if grep --recursive ' %}' -I public; then
+              echo Found remaining closing Hexo tags
+              exit 1
+            fi
+            if grep --recursive '{% ' -I public; then
+              echo Found remaining closing Hexo tags
+              exit 1
+            fi
 
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
       - persist_to_workspace:
@@ -136,6 +149,9 @@ jobs:
           path: cypress/screenshots
       - store_artifacts:
           path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
 
   "deploy-docs-production":
     <<: *defaults
@@ -149,6 +165,11 @@ jobs:
       # use script that just deploys without rebuilding the production docs
       - run: npm run deploy-prebuilt -- --environment production --scrape
       - run: cat public/build.json
+      - store_artifacts:
+          path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
 
 workflows:
   version: 2
@@ -158,8 +179,8 @@ workflows:
       - docs-tests:
           requires:
             - build
-      # we can deploy development docs in parallel with
-      # unit testining them.
+      # we can deploy development docs in parallel
+      # with unit testing them.
       - deploy-docs-staging:
           filters:
             branches:

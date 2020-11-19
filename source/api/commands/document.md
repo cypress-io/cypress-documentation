@@ -1,6 +1,5 @@
 ---
 title: document
-
 ---
 
 Get the `window.document` of the page that is currently active.
@@ -39,7 +38,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get document and do some work***
+### Get document and do some work
 
 ```javascript
 cy.document().then((doc) => {
@@ -47,7 +46,7 @@ cy.document().then((doc) => {
 })
 ```
 
-***Make an assertion about the document***
+### Make an assertion about the document
 
 ```javascript
 cy.document().its('contentType').should('eq', 'text/html')
@@ -77,12 +76,13 @@ cy.document()
 
 The command above will display in the Command Log as:
 
-![Command log document](/img/api/document/get-document-of-application-in-command-log.png)
+{% imgTag /img/api/document/get-document-of-application-in-command-log.png "Command log document" %}
 
 When clicking on `document` within the command log, the console outputs the following:
 
-![console.log document](/img/api/document/console-yields-the-document-of-aut.png)
+{% imgTag /img/api/document/console-yields-the-document-of-aut.png "console.log document" %}
 
 # See also
 
 - {% url `cy.window()` window %}
+- {% url 'Cypress `should` callback' https://glebbahmutov.com/blog/cypress-should-callback/ %}

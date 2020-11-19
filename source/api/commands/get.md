@@ -5,7 +5,7 @@ title: get
 Get one or more DOM elements by selector or {% url 'alias' variables-and-aliases %}.
 
 {% note info %}
-The querying behavior of this command matches exactly how {% url `$(...)` http://api.jquery.com/jQuery/ %} works in jQuery.
+The querying behavior of this command is similar to how {% url `$(...)` http://api.jquery.com/jQuery/ %} works in jQuery.
 {% endnote %}
 
 # Syntax
@@ -47,10 +47,12 @@ When using aliases with DOM elements, Cypress will query the DOM again if the pr
 
 Pass in an options object to change the default behavior of `cy.get()`.
 
-| Option    | Default                                                  | Description                        |
-| --------- | -------------------------------------------------------- | ---------------------------------- |
-| `log`     | `true`                                                   | {% usage_options log %}            |
-| `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %} |
+Option | Default | Description
+--- | --- | ---
+`log` | `true` | {% usage_options log %}
+`timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout cy.get %}
+`withinSubject` | null | {% usage_options withinSubject %}
+`includeShadowDom` | {% url '`includeShadowDom`<br /> config option value' configuration#Global %} | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 
@@ -60,33 +62,39 @@ Pass in an options object to change the default behavior of `cy.get()`.
 
 ## Selector
 
-**_Get the input element_**
+### Get the input element
 
 ```javascript
 cy.get('input').should('be.disabled')
 ```
 
-**_Find the first `li` descendent within a `ul`_**
+### Find the first `li` descendent within a `ul`
 
 ```javascript
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-**_Find the dropdown-menu and click it._**
+### Find the dropdown-menu and click it
 
 ```javascript
 cy.get('.dropdown-menu').click()
 ```
 
-**_Find 5 elements with the given data attribute_**
+### Find 5 elements with the given data attribute
 
 ```javascript
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
 ```
 
-## Get in Within
+### Find the link with an href attribute containing the word "questions" and click it
 
-**_`cy.get()` in the {% url `.within()` within %} command_**
+```javascript
+cy.get('a[href*="questions"]').click()
+```
+
+## Get in `.within()`
+
+### `cy.get()` in the {% url `.within()` within %} command
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a {% url "`.within()`" within %} command.
 
@@ -101,7 +109,7 @@ cy.get('form').within(() => {
 
 For a detailed explanation of aliasing, {% url 'read more about aliasing here' variables-and-aliases#Aliases %}.
 
-**_Get the aliased 'todos' elements_**
+### Get the aliased 'todos' elements
 
 ```javascript
 cy.get('ul#todos').as('todos')
@@ -112,26 +120,26 @@ cy.get('ul#todos').as('todos')
 cy.get('@todos')
 ```
 
-**_Get the aliased 'submitBtn' element_**
+### Get the aliased 'submitBtn' element
 
 ```javascript
-beforeEach(function() {
+beforeEach(() => {
   cy.get('button[type=submit]').as('submitBtn')
 })
 
-it('disables on click', function() {
+it('disables on click', () => {
   cy.get('@submitBtn').should('be.disabled')
 })
 ```
 
-**_Get the aliased 'users' fixture_**
+### Get the aliased 'users' fixture
 
 ```javascript
-beforeEach(function() {
+beforeEach(() => {
   cy.fixture('users.json').as('users')
 })
 
-it('disables on click', function() {
+it('disables on click', () => {
   // access the array of users
   cy.get('@users').then((users) => {
     // get the first user
@@ -166,11 +174,15 @@ cy.get('input[name="firstName"]').should('have.value', 'Homer')
 
 The commands above will display in the Command Log as:
 
-![Command Log get](/img/api/get/get-element-and-make-an-assertion.png)
+{% imgTag /img/api/get/get-element-and-make-an-assertion.png "Command Log get" %}
 
 When clicking on the `get` command within the command log, the console outputs the following:
 
-![Console Log get](/img/api/get/console-log-get-command-and-elements-found.png)
+{% imgTag /img/api/get/console-log-get-command-and-elements-found.png "Console Log get" %}
+
+{% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
+{% endhistory %}
 
 # See also
 
@@ -178,3 +190,4 @@ When clicking on the `get` command within the command log, the console outputs t
 - {% url `cy.contains()` contains %}
 - {% url `.find()` find %}
 - {% url `.within()` within %}
+- {% url "Retry-ability" retry-ability %}

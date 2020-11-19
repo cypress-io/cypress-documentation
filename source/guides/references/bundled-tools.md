@@ -13,15 +13,15 @@ Cypress relies on many best-of-breed open source testing libraries to lend stabi
 
 Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both integration and unit testing. All of the tests you'll be writing sit on the fundamental harness Mocha provides, namely:
 
-* {% url '`describe()`' http://mochajs.org/#bdd %}
-* {% url '`context()`' http://mochajs.org/#bdd %}
-* {% url '`it()`' http://mochajs.org/#bdd %}
-* {% url '`before()`' http://mochajs.org/#hooks %}
-* {% url '`beforeEach()`' http://mochajs.org/#hooks %}
-* {% url '`afterEach()`' http://mochajs.org/#hooks %}
-* {% url '`after()`' http://mochajs.org/#hooks %}
-* {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
-* {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
+- {% url '`describe()`' http://mochajs.org/#bdd %}
+- {% url '`context()`' http://mochajs.org/#bdd %}
+- {% url '`it()`' http://mochajs.org/#bdd %}
+- {% url '`before()`' http://mochajs.org/#hooks %}
+- {% url '`beforeEach()`' http://mochajs.org/#hooks %}
+- {% url '`afterEach()`' http://mochajs.org/#hooks %}
+- {% url '`after()`' http://mochajs.org/#hooks %}
+- {% url '`.only()`' http://mochajs.org/#exclusive-tests %}
+- {% url '`.skip()`' http://mochajs.org/#exclusive-tests %}
 
 Additionally, Mocha gives us excellent {% url '`async` support' http://mochajs.org/#asynchronous-code %}. Cypress has extended Mocha, sanding off the rough edges, weird edge cases, bugs, and error messages. These fixes are all completely transparent.
 
@@ -45,11 +45,13 @@ When writing integration tests, you will likely work a lot with the DOM. Cypress
 
 > {% fa fa-chevron-right  %} {% url "List of available Chai-jQuery Assertions" assertions#Chai-jQuery %}
 
-# Sinon
+# Sinon.JS
 
 {% fa fa-github %} {% url http://sinonjs.org/ %}
 
 When writing unit tests, or even in integration-like tests, you often need to ability to stub and spy methods. Cypress includes two methods, {% url `cy.stub()` stub %} and {% url `cy.spy()` spy %} that return Sinon stubs and spies, respectively.
+
+Cypress also exposes a utility so that `sinon` can be called anywhere inside of your tests using {% url `Cypress.sinon` sinon %}.
 
 {% note info %}
 {% url "Check out our guide for working with spies, stubs, and clocks." stubs-spies-and-clocks %}
@@ -71,5 +73,5 @@ Cypress also bundles the following tools on the `Cypress` object. These can be u
 - {% url `Cypress.$` $ %} (jQuery)
 - {% url `Cypress.minimatch` minimatch %} (minimatch.js)
 - {% url `Cypress.moment` moment %} (moment.js)
-- {% url `Cypress.Blob` blob %} (blob utils)
+- {% url `Cypress.Blob` blob %} (Blob utils)
 - {% url `Cypress.Promise` promise %} (Bluebird)

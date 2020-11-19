@@ -17,6 +17,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 
 - {% url `.click()` click %}
 - {% url `.dblclick()` dblclick %}
+- {% url `.rightclick()` rightclick %}
 - {% url `.type()` type %}
 - {% url `.clear()` clear %}
 - {% url `.check()` check %}
@@ -35,6 +36,8 @@ Cypress will wait for the element to pass all of these checks for the duration o
 - {% urlHash 'Scroll the element into view.' Scrolling %}
 - {% urlHash 'Ensure the element is not hidden.' Visibility %}
 - {% urlHash 'Ensure the element is not disabled.' Disability %}
+- {% urlHash 'Ensure the element is not detached.' Detached %}
+- {% urlHash 'Ensure the element is not readonly.' Readonly %}
 - {% urlHash 'Ensure the element is not animating.' Animations %}
 - {% urlHash 'Ensure the element is not covered.' Covering %}
 - {% urlHash 'Scroll the page if still covered by an element with fixed position.' Scrolling %}
@@ -44,9 +47,7 @@ Whenever Cypress cannot interact with an element, it could fail at any of the ab
 
 ## Visibility
 
-Cypress checks a lot of things to determine an element's visibility.
-
-The following calculations factor in CSS translations and transforms.
+Cypress checks a lot of things to determine an element's visibility. The following calculations factor in CSS translations and transforms.
 
 ### An element is considered hidden if:
 
@@ -54,11 +55,8 @@ The following calculations factor in CSS translations and transforms.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and it's offscreen or covered up.
-
-### Additionally an element is considered hidden if:
-
 - Any of its ancestors **hides overflow**\*
-  - AND that ancestor has `width` or `height` of `0`
+  - AND that ancestor has a `width` or `height` of `0`
   - AND an element between that ancestor and the element is `position: absolute`
 - Any of its ancestors **hides overflow**\*
   - AND that ancestor or an ancestor between it and that ancestor is its offset parent
@@ -67,13 +65,27 @@ The following calculations factor in CSS translations and transforms.
   - AND the element is `position: relative`
   - AND it is positioned outside that ancestor's bounds
 
-\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
+\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y: hidden`, `overflow: scroll`, or `overflow: auto`
+
+{% note info "Opacity" %}
+Elements where the CSS property (or ancestors) is `opacity: 0` are considered hidden when {% url "asserting on the element's visibility directly" assertions#Visibility %}.
+
+However elements where the CSS property (or ancestors) is `opacity: 0` are considered actionable and any commands used to interact with the hidden element will perform the action.
+{% endnote %}
 
 ## Disability
 
 Cypress checks whether an element's `disabled` property is `true`.
 
-We don't look at whether an element has property `readonly` (but we probably should). {% open_an_issue %} if you'd like us to add this.
+## Detached
+
+When many applications rerender the DOM, they actually remove the DOM element and insert a new DOM element in its place with the newly change attributes.
+
+Cypress checks whether an element you are making assertions is detached from the DOM. This checks that the element is still within the `document` of the application under test.
+
+## Readonly
+
+Cypress checks whether an element's `readonly` property is set during {% url "`.type()`" type %}.
 
 ## Animations
 
@@ -134,11 +146,11 @@ cy.get('button').click({ position: 'topLeft' })
 
 The coordinates we fired the event at will generally be available when clicking the command in the {% url 'Command Log' test-runner#Command-Log %}.
 
-![event coordinates](/img/guides/coords.png)
+{% imgTag /img/guides/coords.png "Event coordinates" %}
 
 Additionally we'll display a red "hitbox" - which is a dot indicating the coordinates of the event.
 
-![hitbox](/img/guides/hitbox.png)
+{% imgTag /img/guides/hitbox.png "Hitbox" %}
 
 # Debugging
 
@@ -150,17 +162,17 @@ When you use the {% url "Command Log" test-runner#Command-Log %} to hover over a
 
 In fact we only ever scroll elements into view when actionable commands are running using the above algorithms. We *do not* scroll elements into view on regular DOM commands like {% url `cy.get()` get %} or {% url `.find()` find %}.
 
-The reason we scroll an element into view when hovering over a snapshot is just to help you to see which element(s) were found by that corresponding command. It's a purely visual feature and does not necessarily reflect what your page looked like when the command ran.
+The reason we scroll an element into view when hovering over a snapshot is to help you to see which element(s) were found by that corresponding command. It's a purely visual feature and does not necessarily reflect what your page looked like when the command ran.
 
 In other words, you cannot get a correct visual representation of what Cypress "saw" when looking at a previous snapshot.
 
-The only way for you to easily "see" and debug why Cypress thought an element was not visible is to use a `debugger` statement.
+The only way for you to "see" and debug why Cypress thought an element was not visible is to use a `debugger` statement.
 
 We recommend placing `debugger` or using the {% url `.debug()` debug %} command directly BEFORE the action.
 
 Make sure your Developer Tools are open and you can get pretty close to "seeing" the calculations Cypress is performing.
 
-As of `0.20.0`, you can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
+You can also {% url 'bind to Events' catalog-of-events %} that Cypress fires as it's working with your element. Using a debugger with these events will give you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command
@@ -177,9 +189,9 @@ Imagine you have a nested navigation structure where the user must hover over an
 
 Is this worth trying to replicate when you're testing?
 
-Maybe not! For these scenarios  we give you a simple escape hatch to bypass all of the checks above and just force events to happen!
+Maybe not! For these scenarios, we give you an escape hatch to bypass all of the checks above and force events to happen!
 
-You can simply pass `{ force: true }` to most action commands.
+You can pass `{ force: true }` to most action commands.
 
 ```js
 // force the click and all subsequent events
@@ -197,8 +209,9 @@ We will NOT perform these:
 
 - Scroll the element into view
 - Ensure it is visible
-- Ensure it is not readonly
 - Ensure it is not disabled
+- Ensure it is not detached
+- Ensure it is not readonly
 - Ensure it is not animating
 - Ensure it is not covered
 - Fire the event at a descendent
@@ -206,3 +219,7 @@ We will NOT perform these:
 {% endnote %}
 
 In summary, `{ force: true }` skips the checks, and it will always fire the event at the desired element.
+
+{% note warning "force `.select()` disabled options" %}
+Passing `{ force: true }` to {% url "`.select()`" select %} will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
+{% endnote %}

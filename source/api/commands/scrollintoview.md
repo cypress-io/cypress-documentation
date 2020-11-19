@@ -67,6 +67,12 @@ cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 cy.get('footer').scrollIntoView({ duration: 2000 })
 ```
 
+### Scroll 150px below an element
+
+```js
+cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
+```
+
 # Notes
 
 ## Snapshots
@@ -100,11 +106,11 @@ cy.get('#scroll-horizontal button').scrollIntoView()
 
 The commands above will display in the Command Log as:
 
-{% img /img/api/scrollintoview/command-log-for-scrollintoview.png "command log scrollintoview" %}
+{% imgTag /img/api/scrollintoview/command-log-for-scrollintoview.png "command log scrollintoview" %}
 
 When clicking on the `scrollintoview` command within the command log, the console outputs the following:
 
-{% img /img/api/scrollintoview/console-log-for-scrollintoview.png "console.log scrollintoview" %}
+{% imgTag /img/api/scrollintoview/console-log-for-scrollintoview.png "console.log scrollintoview" %}
 
 # See also
 

@@ -7,10 +7,13 @@
 
   <!-- Canonical links -->
   <link rel="canonical" href="{{ url }}">
-  <!-- Alternative links -->
+  <!-- Alternate links -->
   {% if page.layout == 'page' or page.layout == 'index' %}
     {% for lang in site.data.languages %}
-      <link rel="alternative" hreflang="{{ loop.key }}" href="{{ canonical_url(loop.key) }}">
+      <link rel="alternate" hreflang="{{ loop.key }}" href="{{ canonical_url(loop.key) }}">
+      {% if loop.key == 'en' %}
+        <link rel="alternate" hreflang="x-default" href="{{ canonical_url(loop.key) }}">
+      {% endif %}
     {% endfor %}
   {% endif %}
   <script type="text/javascript">

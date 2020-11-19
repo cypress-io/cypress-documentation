@@ -1,9 +1,11 @@
 ---
 title: parents
-
 ---
 
 Get the parent DOM elements of a set of DOM elements.
+
+Please note that `.parents()` travels multiple levels up the DOM tree as opposed to the {% url ".parent
+()" parent %} command which travels a single level up the DOM tree.
 
 {% note info %}
 The querying behavior of this command matches exactly how {% url `.parents()` http://api.jquery.com/parents %} works in jQuery.
@@ -56,18 +58,33 @@ Option | Default | Description
 
 ## No Args
 
-***Get the parents of the active li***
+### Get the parents of the active li
+
+```html
+<ul class='main-nav'>
+  <li>Overview</li>
+  <li>Getting started
+    <ul class='sub-nav'>
+      <li>Install</li>
+      <li class='active'>Build</li>
+      <li>Test</li>
+    </ul>
+  </li>
+</ul>
+```
 
 ```javascript
+// yields [.sub-nav, li, .main-nav]
 cy.get('li.active').parents()
 ```
 
 ## Selector
 
-***Get the parents with class `nav` of the active li***
+### Get the parents with class `main-nav` of the active li
 
 ```javascript
-cy.get('li.active').parents('.nav')
+// yields [.main-nav]
+cy.get('li.active').parents('.main-nav')
 ```
 
 # Rules
@@ -92,11 +109,11 @@ cy.get('li.active').parents('.nav')
 cy.get('li.active').parents()
 ```
 
-![Command Log parents](/img/api/parents/get-all-parents-of-a-dom-element.png)
+{% imgTag /img/api/parents/get-all-parents-of-a-dom-element.png "Command Log parents" %}
 
 When clicking on the `parents` command within the command log, the console outputs the following:
 
-![Console Log parents](/img/api/parents/parents-elements-displayed-in-devtools-console.png)
+{% imgTag /img/api/parents/parents-elements-displayed-in-devtools-console.png "Console Log parents" %}
 
 # See also
 

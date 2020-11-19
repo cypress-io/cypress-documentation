@@ -29,7 +29,7 @@ Option | Default | Description
 `capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
-`screenshotOnRunFailure` | `true` | When true, automatically takes a screenshot when there is a failure in Run mode.
+`screenshotOnRunFailure` | `true` | When true, automatically takes a screenshot when there is a failure during `cypress run`.
 `onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.
 `onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
 
@@ -37,7 +37,7 @@ Option | Default | Description
 
 ## Blackout elements before screenshot
 
-Elements that match the specified selectors will be blacked out from the screenshot, but only when the `capture` option is `viewport`. `blackout` is ignored is `capture` is `runner`.
+Elements that match the specified selectors will be blacked out from the screenshot, but only when the `capture` option is `viewport`. `blackout` is ignored if `capture` option is `runner`.
 
 ```javascript
 Cypress.Screenshot.defaults({
@@ -143,5 +143,6 @@ A great place to put this configuration is in your {% url "`cypress/support/inde
 # See also
 
 - {% url "`cy.screenshot()`" screenshot %}
-- {% url 'Dashboard Service' dashboard-service %}
+- {% url 'Dashboard Service' dashboard-introduction%}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
+- {% url 'Visual Testing' visual-testing %}

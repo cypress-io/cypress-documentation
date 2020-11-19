@@ -1,6 +1,5 @@
 ---
 title: clear
-
 ---
 
 Clear the value of an `input` or `textarea`.
@@ -42,8 +41,8 @@ Pass in an options object to change the default behavior of `.clear()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force clear %}
+`log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .clear %}
 
 ## Yields {% helper_icon yields %}
@@ -54,7 +53,7 @@ Option | Default | Description
 
 ## No Args
 
-**Clear the input and type a new value.**
+### Clear the input and type a new value
 
 ```javascript
 cy.get('textarea').clear().type('Hello, World')
@@ -64,13 +63,13 @@ cy.get('textarea').clear().type('Hello, World')
 
 ## Actionability
 
-***The element must first reach actionability***
+### The element must first reach actionability
 
 `.clear()` is an "action command" that follows all the rules {% url 'defined here' interacting-with-elements %}.
 
 ## Documentation
 
-`.clear()` is just an alias for {% url `.type({selectall}{backspace})` type %}.
+`.clear()` is an alias for {% url `.type({selectall}{backspace})` type %}.
 
 Please read the {% url `.type()` type %} documentation for more details.
 
@@ -90,7 +89,7 @@ Please read the {% url `.type()` type %} documentation for more details.
 
 # Command Log
 
-**Clear the input and type a new value**
+***Clear the input and type a new value***
 
 ```javascript
 cy.get('input[name="name"]').clear().type('Jane Lane')
@@ -98,11 +97,11 @@ cy.get('input[name="name"]').clear().type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-![Command log for clear](/img/api/clear/clear-input-in-cypress.png)
+{% imgTag /img/api/clear/clear-input-in-cypress.png "Command log for clear" %}
 
 When clicking on `clear` within the command log, the console outputs the following:
 
-![console.log for clear](/img/api/clear/one-input-cleared-in-tests.png)
+{% imgTag /img/api/clear/one-input-cleared-in-tests.png "console.log for clear" %}
 
 # See also
 

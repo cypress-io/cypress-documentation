@@ -5,7 +5,7 @@ title: Testing Your App
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- The relationship between Cypress and your back-end
+- The relationship between Cypress and your back end
 - How to configure Cypress to fit your app
 - Working with (or without!) your authentication mechanism
 - Effectively leveraging test data
@@ -41,7 +41,7 @@ Last but not least - trying to shoehorn tests to an already built application is
 
 The last, and probably most important reason why you want to test against local servers, is the ability to **control them**. When your application is running in production you can't control it.
 
-When it's running in development you can easily:
+When it's running in development you can:
 
 - take shortcuts
 - seed data by running executable scripts
@@ -58,7 +58,7 @@ Many of our users run the *majority* of their integration tests against a local 
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `examples` folder that Cypress created for you, since we learned about this in the previous tutorial.
+Let's delete the `sample_spec.js` file created in the previous tutorial now that it's no longer needed.
 
 ```shell
 rm cypress/integration/sample_spec.js
@@ -72,13 +72,13 @@ touch cypress/integration/home_page_spec.js
 
 Once that file is created, you should see it in the list of spec files.
 
-{% img 'no-border' /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" %}
+{% imgTag /img/guides/testing-your-app-home-page-spec.png  "List of files including home_page_spec.js" "no-border" %}
 
 Now you'll need to add in the following code in your test file to visit your server:
 
 ```js
-describe('The Home Page', function() {
-  it('successfully loads', function() {
+describe('The Home Page', () => {
+  it('successfully loads', () => {
     cy.visit('http://localhost:8080') // change URL to match your dev URL
   })
 })
@@ -88,7 +88,14 @@ Now click on the `home_page_spec.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 
-{% img /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
+<!--
+To reproduce the following screenshot:
+it('successfully loads', () => {
+  cy.visit('https://localhost:8080')
+})
+-->
+
+{% imgTag /img/guides/testing-your-app-visit-fail.png "Error in Test Runner showing cy.visit failed" %}
 
 If you've started your server, then you should see your application loaded and working.
 
@@ -96,8 +103,7 @@ If you've started your server, then you should see your application loaded and w
 
 If you think ahead, you'll quickly realize that you're going to be typing this URL a lot, since every test is going to need to visit some page of your application. Luckily, Cypress provides a {% url "configuration option" configuration %} for this. Let's leverage that now.
 
-Open up `cypress.json`, which you will find in your project root (where you installed Cypress.) It starts out empty:
-
+Open up your {% url "configuration file" configuration %} (`cypress.json` in your project directory, by default) It starts out empty:
 
 ```json
 {}
@@ -114,14 +120,14 @@ Let's add the `baseUrl` option.
 This will automatically **prefix** {% url `cy.visit()` visit %} and {% url `cy.request()` request %} commands with this baseUrl.
 
 {% note info %}
-Whenever you modify `cypress.json`, Cypress will automatically reboot itself and kill any open browsers. This is normal. Just click on the spec file again to relaunch the browser.
+Whenever you modify your configuration file, Cypress will automatically reboot itself and kill any open browsers. This is normal. Click on the spec file again to relaunch the browser.
 {% endnote %}
 
 We can now visit a relative path and omit the hostname and port.
 
 ```js
-describe('The Home Page', function() {
-  it('successfully loads', function() {
+describe('The Home Page', () => {
+  it('successfully loads', () => {
     cy.visit('/')
   })
 })
@@ -160,19 +166,19 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 **While there is a lot more to this strategy, you generally have three ways to facilitate this with Cypress:**
 
 - {% url `cy.exec()` exec %} - to run system commands
-- {% url `cy.task()` task %} - to run code in Node.js via the {% url "`pluginsFile`" configuration#Folders-Files %}
+- {% url `cy.task()` task %} - to run code in Node via the {% url "`pluginsFile`" configuration#Folders-Files %}
 - {% url `cy.request()` request %} - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
 
 ```js
-describe('The Home Page', function () {
-  beforeEach(function () {
+describe('The Home Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
   })
 
-  it('successfully loads', function() {
+  it('successfully loads', () => {
     cy.visit('/')
   })
 })
@@ -183,8 +189,8 @@ Instead of just executing a system command, you may want more flexibility and co
 **For instance, you could compose several requests together to tell your server exactly the state you want to create.**
 
 ```js
-describe('The Home Page', function () {
-  beforeEach(function () {
+describe('The Home Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -199,7 +205,7 @@ describe('The Home Page', function () {
     cy.request('POST', '/test/seed/user', { name: 'Jane' }).its('body').as('currentUser')
   })
 
-  it('successfully loads', function() {
+  it('successfully loads', () => {
     // this.currentUser will now point to the response
     // body of the cy.request() that we could use
     // to log in or work with in some way
@@ -217,11 +223,11 @@ The good news is that we aren't Selenium, nor are we a traditional e2e testing t
 
 ## Stubbing the server
 
-Another valid approach opposed to seeding and talking to your server is to just bypass it altogether. Much simpler!
+Another valid approach opposed to seeding and talking to your server is to bypass it altogether.
 
 While you'll still receive all of the regular HTML / JS / CSS assets from your server and you'll continue to {% url `cy.visit()` visit %} it in the same way - you can instead **stub** the JSON responses coming from it.
 
-This means that instead of resetting the database, or seeding it with the state we want, you can simply just force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
+This means that instead of resetting the database, or seeding it with the state we want, you can force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
 
 Another upside is that this enables you to **build out your application** without needing the *contract* of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
 
@@ -235,7 +241,7 @@ You could have the server generate all of the fixture stubs for you ahead of tim
 
 ### Write a single e2e test without stubs, and then stub the rest
 
-Another more balanced approach is just to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
+Another more balanced approach is to integrate both strategies. You likely want to have a **single test** that takes a true `e2e` approach and stubs nothing. It'll use the feature for real - including seeding the database and setting up state.
 
 Once you've established it's working you can then use stubs to test all of the edge cases and additional scenarios. There are no benefits to using real data in the vast majority of cases. We recommend that the vast majority of tests use stub data. They will be orders of magnitude faster, and much less complex.
 
@@ -253,13 +259,13 @@ Nothing slows a test suite down like having to log in, but all the good parts of
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
-As we just mentioned, logging in is one of those features that are **mission critical** and should likely involve your server.  We recommend you test signup and login using your UI as a real user would:
+Logging in is one of those features that are **mission critical** and should likely involve your server.  We recommend you test signup and login using your UI as a real user would:
 
 Here's an example alongside seeding your database:
 
 ```js
-describe('The Login Page', function () {
-  beforeEach(function () {
+describe('The Login Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -330,7 +336,7 @@ Don't use your UI to build up state! It's enormously slow, cumbersome, and unnec
 Read about {% url 'best practices' best-practices %} here.
 {% endnote %}
 
-Using your UI to **log in** is the *exact same scenario* as what we just described above. Logging in is just a prerequisite of state that comes before all of your other tests.
+Using your UI to **log in** is the *exact same scenario* as what we described previously. Logging in is a prerequisite of state that comes before all of your other tests.
 
 Because Cypress isn't Selenium, we can actually take a huge shortcut here and skip needing to use our UI by using {% url `cy.request()` request %}.
 
@@ -339,8 +345,8 @@ Because {% url `cy.request()` request %} automatically gets and sets cookies und
 Let's revisit the example from above but assume we're testing some other part of the system.
 
 ```js
-describe('The Dashboard Page', function () {
-  beforeEach(function () {
+describe('The Dashboard Page', () => {
+  beforeEach(() => {
     // reset and seed the database prior to every test
     cy.exec('npm run db:reset && npm run db:seed')
 
@@ -397,5 +403,7 @@ From here you may want to explore some more of our guides:
 - {% url "Tutorial Videos" tutorials %} to watch step-by-step tutorial videos
 - {% url "Cypress API" table-of-contents %} to learn what commands are available as you work
 - {% url "Introduction to Cypress" introduction-to-cypress %} explains how Cypress *really* works
-- {% url 'Command Line' command-line %} for running all your tests outside of interactive mode
-- {% url 'Continuous Integration' continuous-integration %} for running Cypress in CI
+- {% url "Command Line" command-line %} for running all your tests outside via `cypress run`
+- {% url "Continuous Integration" continuous-integration %} for running Cypress in CI
+- {% url "Cross Browser Testing" cross-browser-testing %} for optimally running tests in CI across Firefox and Chrome-family browsers
+- {% fa fa-github %} {% url "Cypress Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.

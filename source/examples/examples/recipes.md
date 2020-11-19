@@ -5,216 +5,124 @@ containerClass: examples
 
 Recipes show you how to test common scenarios in Cypress.
 
-{% fa fa-github %} {% url  https://github.com/cypress-io/cypress-example-recipes %}
+{% fa fa-github %} {% url https://github.com/cypress-io/cypress-example-recipes %}
 
-Recipe | Category | Description
---- | --- | ---
-{% urlHash 'Node Modules' Node-Modules %} | Fundamentals | Import your own Node modules
-{% urlHash 'Single Sign On' Single-Sign-On %} | Logging In | Log in across multiple servers or providers
-{% urlHash 'HTML Web Forms' HTML-Web-Forms %} | Logging In | Log in with a basic HTML form
-{% urlHash 'XHR Web Forms' XHR-Web-Forms %} | Logging In | Log in using an XHR
-{% urlHash 'CSRF Tokens' CSRF-Tokens %} | Logging In | Log in with a required CSRF token
-{% urlHash 'Tab Handling and Links' Tab-Handling-and-Links %} | Testing the DOM | Links that open in a new tab
-{% urlHash 'Hover and Hidden Elements' Hover-and-Hidden-Elements %} | Testing the DOM | Test hidden elements requiring hover
-{% urlHash 'Form Interactions' Form-Interactions %} | Testing the DOM | Test form elements like input type `range`
-{% urlHash 'Drag and Drop' Drag-and-Drop %} | Testing the DOM | Use `.trigger()` to test drag and drop
-{% urlHash 'TypeScript with Browserify' TypeScript-with-Browserify %} | Preprocessors | Add TypeScript support with browserify
-{% urlHash 'TypeScript with Webpack' TypeScript-with-Webpack %} | Preprocessors | Add TypeScript support with webpack
-{% urlHash 'Direct Control of AngularJS' Direct-Control-of-AngularJS %} | Blogs | Bypass the DOM and control AngularJS
-{% urlHash 'E2E API Testing' E2E-API-Testing %} | Blogs | Run your API Tests with a GUI
-{% urlHash 'Codepen.io Testing' Codepen-Testing %} | Blogs | Test a HyperApp Codepen demo
-{% urlHash 'Redux Testing' Redux-Testing %} | Blogs | Test an application that uses central Redux data store
-{% urlHash 'Vue + Vuex + REST Testing' Vue-Vuex-REST-Testing %} | Blogs | Test an application that uses central Vuex data store
-{% urlHash 'Stubbing Functions' Stubbing-Functions %} | Stubbing, Spying | Use `cy.stub()` to test function calls
-{% urlHash 'Stubbing `window.fetch`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` to control fetch requests
-{% urlHash 'Stub methods called on `window`' Stubbing-window-fetch %} | Stubbing, Spying | Use `cy.stub()` for methods called on `window`
-{% urlHash 'Stubbing Google Analytics' Stubbing-Google-Analytics %} | Stubbing, Spying | Use `cy.stub()` to test Google Analytics calls
-{% urlHash 'Application Code' Application-Code %} | Unit Testing | Import and test your own application code
-{% urlHash 'React with Enzyme' React-with-Enzyme %} | Unit Testing | Test your react components in isolation
-{% urlHash 'File Upload in React' File-Upload-in-React %} | Unit Testing | Test file upload in React application
-{% urlHash 'Adding Chai Assertions' Adding-Chai-Assertions %} | Extending Cypress | Add new or custom chai assertions
-{% urlHash 'Bootstrapping your App' Bootstrapping-your-App %} | Server Communication | Seed your application with test data
-{% urlHash 'Seeding your Database in Node' Seeding-your-Database-in-Node %} | Server Communication | Seed your database with test data
-{% urlHash 'Environment Variables' Environment-Variables %} | Server Communication | Pass environment variables to your tests
-{% urlHash 'Cypress CircleCI Orb' Cypress-CircleCI-Orb %} | Continuous Integration | Install, cache and run Cypress.io tests on CircleCI with minimal configuration.
+## Fundamentals
 
-## [Node Modules](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules)
+Recipe  | Description
+--- | ---
+{% url 'Node Modules' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules %} | Import your own Node modules
+{% url 'Environment variables' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__env-variables %} | Passing environment variables to tests
+{% url 'Dynamic tests' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__dynamic-tests %} | Create tests dynamically from data
+{% url 'Fixtures' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__fixtures %} | Loading single or multiple fixtures
+{% url 'Adding Chai Assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions %} | Add new or custom chai assertions
+{% url 'Cypress module API' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__module-api %} | Run Cypress via its module API
+{% url 'Custom browsers' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__custom-browsers %} | Control which browsers the project can use, or even add a custom browser into the list
+{% url 'Use Chrome Remote Interface' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__chrome-remote-debugging %} | Use Chrome debugger protocol to trigger hover state and print media style
+{% url 'File download' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download %} | Download and validate files
 
-- Import ES2015 modules.
-- Require CommonJS modules.
-- Organize reusable utility functions.
-- Import 3rd party `node_modules`.
+## Testing the DOM
 
-## [Single Sign On](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__single-sign-on)
+Recipe  | Description
+--- | ---
+{% url 'Tab Handling and Links' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__tab-handling-links %} |  Links that open in a new tab
+{% url 'Hover and Hidden Elements' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__hover-hidden-elements %} | Test hidden elements requiring hover
+{% url 'Form Interactions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__form-interactions %} |  Test form elements like input type `range`
+{% url 'Drag and Drop' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop %} | Use `.trigger()` to test drag and drop
+{% url 'Shadow DOM' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__shadow-dom %} | Test elements within shadow DOM
+{% url 'Website monitoring' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize `cypress` to monitor your website
+{% url 'Waiting for static resource' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__wait-for-resource %} | Shows how to wait for CSS, image, or any other static resource to load
+{% url 'CSV load and table test' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__csv-table %} | Loads CSV file and compares objects against cells in a table
+{% url 'Evaluate performance metrics' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize Cypress to monitor a website
+{% url 'Root style' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__root-style %} | Trigger input color change that modifies CSS variable
+{% url 'Select widgets' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__select2 %} | Working with `<select>` elements and [Select2](https://select2.org/) widgets
 
-- Login when authentication is done on a 3rd party server.
-- Parse tokens using {% url `cy.request()` request %}.
-- Manually set tokens on local storage.
-- Map external hosts and point to local servers.
+## Logging In
 
-## [HTML Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms)
+Recipe  | Description
+--- | ---
+{% url 'Single Sign On' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__single-sign-on %} | Log in across multiple servers or providers
+{% url 'HTML Web Forms' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms %} | Log in with a basic HTML form
+{% url 'XHR Web Forms' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__xhr-web-forms %} | Log in using an XHR
+{% url 'CSRF Tokens' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__csrf-tokens %} | Log in with a required CSRF token
+{% url 'Json Web Tokens' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__jwt %} | Log in using JWT
+{% url 'Using application code' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__using-app-code %} | Log in by calling the application code
 
-- Test a standard `username/password` HTML form.
-- Test errors submitting invalid data.
-- Test unauthenticated redirects.
-- Authenticate users with cookies.
-- Create a custom `cy.login()` test command.
-- Bypass needing to use your actual UI.
-- Increase speed of testing with {% url `cy.request()` request %}.
+Also see {% url 'Authentication plugins' plugins#authentication %} and watch {% url 'Organizing Tests, Logging In, Controlling State' https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
-## [XHR Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__xhr-web-forms)
+## Preprocessors
 
-- Test an Ajax backed `username/password` form.
-- Test errors submitting invalid data.
-- Stub JSON based XHR requests.
-- Stub application functions.
-- Create a custom `cy.login()` test command.
-- Bypass needing to use your actual UI.
-- Increase speed of testing with {% url `cy.request()` request %}.
+Recipe  | Description
+--- | ---
+{% url 'Grep tests' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep %} | Filter tests by name using Mocha-like `grep` syntax
+{% url 'Flow with Browserify' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify %} | Add flow support with Browserify
 
-## [CSRF Tokens](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__csrf-tokens)
+## Blogs
 
-- Use {% url `cy.request()` request %} to get around CSRF protections.
-- Parse CSRF tokens out of HTML.
-- Parse CSRF tokens out of response headers.
-- Expose CSRF via a route.
-- Disable CSRF when not in production.
+Demo recipes from the blog posts at {% url 'Cypress blog' https://www.cypress.io/blog %}.
 
-## [Tab Handling and Links](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__tab-handling-links)
+Recipe  | Description
+--- | ---
+{% url 'Application Actions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__application-actions %} | Application actions are a replacement for Page Objects
+{% url 'Direct Control of AngularJS' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__direct-control-angular %} | Bypass the DOM and control AngularJS
+{% url 'E2E API Testing' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__e2e-api-testing %} | Run your API Tests with a GUI
+{% url 'E2E Snapshots' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__e2e-snapshots %} | End-to-End Snapshot Testing
+{% url 'Element Coverage' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__element-coverage %} | Track elements covered by tests
+{% url 'Codepen.io Testing' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__codepen-demo %} | Test a HyperApp Codepen demo
+{% url 'Testing Redux Store' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__testing-redux-store %} | Test an application that uses central Redux data store
+{% url 'Vue + Vuex + REST Testing' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__vue-vuex-rest %} | Test an application that uses central Vuex data store
+{% url 'A11y Testing' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__a11y %} | Accessibility testing with {% url 'cypress-axe' https://github.com/avanslaars/cypress-axe %}
+{% url 'Automate Angular Testing' https://www.cypress.io/blog/2019/08/02/guest-post-angular-adding-cypress-ui-tests-to-your-devops-pipeline %} | Automate Angular Testing
+{% url 'React DevTools' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__use-react-devtools %} | Loads React DevTools Chrome extension automatically
+{% url 'Expect N assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__assertion-counting %} | How to expect a certain number of assertions in a test
+{% url 'Browser notifications' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__notification %} | How to test application that uses {% url '`Notification`' https://developer.mozilla.org/en-US/docs/Web/API/notification %}
+{% url 'Testing iframes' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__iframes %} | Accessing elements in 3rd party iframe, spy and stub network calls from iframe
 
-- Test anchor links opening in new tabs: `<a target="_blank">`.
-- Test anchor links that link to external domains: `<a href="...">`.
-- Prevent content from opening in a new tab.
-- Request external content that would open in a new tab using {% url "`cy.request()`" request%}.
-- Speed up tests by reducing loading times.
+## Stubbing and spying
+Recipe  | Description
+--- | ---
+{% url 'Stubbing Functions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions %} | Use `cy.stub()` to test function calls
+{% url 'Stubbing `window.fetch`' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch %} | Use `cy.stub()` to control fetch requests
+{% url 'Stub methods called on `window`' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window %}  | Use `cy.stub()` for methods called on `window`
+{% url 'Stubbing Google Analytics' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics %} | Use `cy.stub()` to test Google Analytics calls
+{% url 'Stub methods called on `console`' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__console %} | Use `cy.stub()` to test and control methods called on `console`
+{% url 'Stub resource loading' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing__resources %} | Use `MutationObserver` to stub resource loading like `img` tags
 
-## [Hover and Hidden Elements](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__hover-hidden-elements)
+## Unit Testing
+Recipe  | Description
+--- | ---
+{% url 'Application Code' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__application-code %} | Import and test your own application code
+{% url 'React' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react %} |  Test your react components in isolation
+{% url 'File Upload in React' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react %} | Test file upload in React application
 
-- Interact with elements that are hidden by CSS.
-- Use {% url "`.invoke()`" invoke %} and {% url "`.trigger()`" trigger %} to simulate hovering.
-- Trigger `mouseover`, `mouseout`, `mouseenter`, `mouseleave` events.
-Get around the lack of a `.hover()` command.
+## Server Communication
+Recipe  | Description
+--- | ---
+{% url 'Bootstrapping your App' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__bootstrapping-your-app %} | Seed your application with test data
+{% url 'Seeding your Database in Node' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node %} | Seed your database with test data
+{% url 'XHR assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__xhr-assertions %} | Spy and assert on application's network calls
 
-## [Form Interactions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__form-interactions)
+## Other Cypress Recipes
+Recipe | Description
+--- | ---
+{% url 'Visual Testing' visual-testing %} | Official Cypress guide to visual testing
+{% url 'Code Coverage' code-coverage %} | Official Cypress guide to code coverage
+{% url 'Detect Page Reload' https://glebbahmutov.com/blog/detect-page-reload/ %} | How to detect from Cypress test when a page reloads using object property assertions
+{% url 'Run in Docker' https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command/ %} | Run Cypress with a single Docker command
+{% url 'SSR E2E' https://glebbahmutov.com/blog/ssr-e2e/ %} | End-to-end Testing for Server-Side Rendered Pages
+{% url 'Using TS aliases' https://glebbahmutov.com/blog/using-ts-aliases-in-cypress-tests/ %} | Using TypeScript aliases in Cypress tests
+{% url 'Stub Navigator API' https://glebbahmutov.com/blog/stub-navigator-api/ %} | Stub navigator API in end-to-end tests
+{% url 'Readable Cypress.io tests' https://glebbahmutov.com/blog/readable-tests/ %} | How to write readable tests using custom commands and custom Chai assertions
+{% url 'Conditional Parallelization' https://glebbahmutov.com/blog/parallel-or-not/ %} | Run Cypress in parallel mode on CircleCI depending on environment variables
+{% url '`.should()` Callback' https://glebbahmutov.com/blog/cypress-should-callback/ %} | Examples of `.should(cb)` assertions
+{% url 'React component testing' https://glebbahmutov.com/blog/cypress-jump/ %} | Create a React component using JSX and inject it into live application from a Cypress test
+{% url 'Unit testing Vuex data store' https://dev.to/bahmutov/unit-testing-vuex-data-store-using-cypress-io-test-runner-3g4n %} | Complete walkthrough for anyone trying to unit test a data store
 
-- Use {% url "`.invoke()`" invoke %} and {% url "`.trigger()`" trigger %} to test a range input (slider).
+## Community Recipes
 
-## [Drag and Drop](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop)
-
-- Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses mouse events.
-- Use {% url "`.trigger()`" trigger %} to test drag-n-drop that uses drag events.
-
-## [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify)
-
-- Use {% url "`@cypress/browserify-preprocessor`" https://github.com/cypress-io/cypress-browserify-preprocessor %} to write Cypress tests in TypeScript
-
-## [TypeScript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack)
-
-- Use {% url "`@cypress/webpack-preprocessor`" https://github.com/cypress-io/cypress-webpack-preprocessor %} to write Cypress tests in TypeScript
-- Lint TypeScript spec code against Cypress type definitions
-
-## [Direct Control of AngularJS](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__direct-control-angular)
-
-- {% url "Blog article written here" https://www.cypress.io/blog/2017/11/15/Control-Angular-Application-From-E2E-Tests %}
-- Programmatically control AngularJS
-- Bypass the DOM, update scopes directly
-- Create custom command for controlling services
-
-## [E2E API Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__e2e-api-testing)
-
-- {% url "Blog article written here" https://www.cypress.io/blog/2017/11/07/Add-GUI-to-Your-E2E-API-Tests %}
-- Use {% url `cy.request()` request %} to perform API Testing
-- Use the Cypress Test Runner to help debug requests
-
-## [Codepen Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__codepen-demo)
-
-- Load Codepen and get around iframe security restrictions.
-- Use {% url "`cy.request()`" request %} to load a document into test iframe.
-- Test {% url "HyperApp.js" https://hyperapp.js.org/ %} application through the DOM and through actions.
-
-## [Redux Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__testing-redux-store)
-
-- control application via DOM and check the Redux store
-- use Redux actions directly from tests
-- load initial Redux state from a fixture file
-- use {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe#readme %} plugin
-- use {% url cypress-plugin-snapshots https://github.com/meinaart/cypress-plugin-snapshots#readme %} plugin
-
-## [Vue + Vuex + REST Testing](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__vue-vuex-rest)
-
-- Test a {% url "Vue.js" https://vuejs.org/ %} web application that uses central data store
-- Mock REST calls to the server
-- Dispatch actions to the {% url "Vuex" https://vuex.vuejs.org/en/ %} store
-- Test text file upload
-
-## [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions)
-
-- Use {% url `cy.stub()` stub %} to stub dependencies in a unit test.
-- Handle promises returned by stubbed functions.
-- Handle callbacks in stubbed functions.
-
-## [Stubbing `window.fetch`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch)
-
-- Use {% url `cy.spy()` spy %} to verify the behavior of a function.
-- Use {% url `cy.stub()` stub %} to verify and control the behavior of a function.
-- Use {% url `cy.clock()` clock %} and {% url `cy.tick()` tick %} to control time.
-- Stub `window.fetch` to control server responses.
-
-## [Stubbing methods called on `window`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window)
-
-- Use {% url "`cy.spy()`" spy %} to test `window.open` behavior.
-
-## [Stubbing Google Analytics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics)
-
-- Use {% url `blacklistHosts` configuration#Browser %} to block Google Analytics from receiving requests.
-- Use {% url `cy.stub()` stub %} to verify that `window.ga(...)` was called with the correct arguments
-
-## [Application Code](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__application-code)
-
-- Unit test your own application code libraries.
-- Import modules using ES2015.
-- Test simple math functions.
-- Test the canonical *fizzbuzz* test.
-
-## [React with Enzyme](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react-enzyme)
-
-- Unit test a React JSX Component using {% url "Enzyme" http://airbnb.io/enzyme/ %}.
-- Import `enzyme` from `node_modules`.
-- Extend chai assertions with {% url "`chai-enzyme`" https://github.com/producthunt/chai-enzyme %}.
-
-## [File Upload in React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react)
-
-- Passing synthetic test file to upload via an {% url "`.trigger('change')`" trigger %} event
-- Stub remote server using {% url "`cy.route()`" route %}
-- Alternatively stub `axios.post` method using {% url "`cy.stub()`" stub %}
-
-## [Adding Chai Assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions)
-
-- Extend {% url "`chai`" http://chaijs.com/ %} with the {% url "`chai-date-string`" http://chaijs.com/plugins/chai-date-string/ %} assertion plugin.
-- Extend {% url "`chai`" http://chaijs.com/ %} with the {% url "`chai-colors`" http://chaijs.com/plugins/chai-colors/ %} assertion plugin.
-- Globally extend {% url "`chai`" http://chaijs.com/ %} for all specs.
-
-## [Bootstrapping your App](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__bootstrapping-your-app)
-
-- Use {% url `cy.visit()` visit %} `onBeforeLoad` callback.
-- Start your application with test data.
-- Stub an XHR to seed with test data.
-- Wait on an XHR to finish.
-
-## [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node)
-
-- Use {% url `cy.task()` task %} to communicate with Node via the `pluginsFile`.
-- Seed your database with test data.
-- Wrap your `pluginsFile` so you can require files that use ES modules (`import`/`export`).
-
-## [Environment Variables](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__env-variables)
-
-- Pass values via `env` object in `cypress.json`.
-- Pass any variable that starts with `CYPRESS_`.
-- Extract any other variable from `process.env` using `cypress/plugins/index.js` callback.
-
-## [Cypress CircleCI Orb](https://github.com/cypress-io/cypress-example-circleci-orb)
-
-- Installs npm dependencies
-- Run Cypress tests
-- Record the output to the Cypress Dashboard
+Recipe | Description
+--- | ---
+{% url 'Visual Regression Testing' https://github.com/mjhea0/cypress-visual-regression %} | Adding visual regression testing to Cypress
+{% url 'Code coverage' https://github.com/paulfalgout/cypress-coverage-example %} | Cypress with Coverage reports
+{% url 'Cucumber' https://github.com/TheBrainFamily/cypress-cucumber-example %} | Example usage of Cypress with Cucumber
+{% url 'Jest' https://github.com/TheBrainFamily/jest-runner-cypress-example %} | Example for the jest-runner-cypress

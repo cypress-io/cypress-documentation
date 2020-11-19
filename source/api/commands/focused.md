@@ -1,6 +1,5 @@
 ---
 title: focused
-
 ---
 
 Get the DOM element that is currently focused.
@@ -39,7 +38,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the element that is focused***
+### Get the element that is focused
 
 ```javascript
 cy.focused().then(($el) => {
@@ -47,13 +46,13 @@ cy.focused().then(($el) => {
 })
 ```
 
-***Blur the element with focus***
+### Blur the element with focus
 
 ```javascript
 cy.focused().blur()
 ```
 
-***Make an assertion on the focused element***
+### Make an assertion on the focused element
 
 ```javascript
 cy.focused().should('have.attr', 'name', 'username')
@@ -83,11 +82,11 @@ cy.focused().should('have.attr', 'name').and('eq', 'num')
 
 The commands above will display in the Command Log as:
 
-![Command Log focused](/img/api/focused/make-assertion-about-focused-element.png)
+{% imgTag /img/api/focused/make-assertion-about-focused-element.png "Command Log focused" %}
 
 When clicking on the `focused` command within the command log, the console outputs the following:
 
-![console focused](/img/api/focused/currently-focused-element-in-an-input.png)
+{% imgTag /img/api/focused/currently-focused-element-in-an-input.png "console focused" %}
 
 # See also
 

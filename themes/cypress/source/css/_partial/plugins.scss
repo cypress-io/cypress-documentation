@@ -1,3 +1,5 @@
+$card-header-breakpoint: 1280px;
+
 .plugins {
   .wrapper {
     padding: 40px 40px;
@@ -10,18 +12,17 @@
 
   h3 {
     font-size: 1.3em;
-    margin: 0.6em 0;
+    margin: 0;
+    border-bottom: 0;
+    line-height: 1.3;
 
     a {
-
       border-bottom: 0;
+
       &:hover {
         border-bottom: 0;
       }
     }
-
-
-
   }
 }
 
@@ -38,10 +39,52 @@ ul.plugins-list {
     padding: 20px;
     width: 30%;
     border: 1px solid #e8e8e8;
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.15);
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 
     p {
       margin-bottom: 0.5em;
+    }
+  }
+
+  .plugin-badge {
+    // margin-top: -8px;
+    margin-bottom: 5px;
+
+    @include breakpoint($card-header-breakpoint) {
+      margin: 0;
+    }
+  }
+
+  .plugin-title {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0.6em;
+
+    @include breakpoint($card-header-breakpoint) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.5rem;
+    }
+
+    .badge-pill {
+      font-size: 12px;
+      color: white;
+
+      &.badge-community {
+        background-color: #737373;
+      }
+
+      &.badge-experimental {
+        background-color: #965cc1;
+      }
+
+      &.badge-official {
+        background-color: #257e8e;
+      }
+
+      &.badge-verified {
+        background-color: #00805b;
+      }
     }
   }
 

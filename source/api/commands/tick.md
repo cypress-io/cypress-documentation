@@ -1,6 +1,5 @@
 ---
 title: tick
-
 ---
 
 Move time after overriding a native time function with {% url `cy.clock()` clock %}.
@@ -47,7 +46,7 @@ You can also access the `clock` object via `this.clock` in a {% url `.then()` th
 
 ## Milliseconds
 
-***Create a clock and move time to trigger a `setTimeout`***
+### Create a clock and move time to trigger a `setTimeout`
 
 ```javascript
 // app code loaded by index.html
@@ -66,11 +65,35 @@ cy.tick(500)
 cy.get('#header').should('have.text', 'Hello, World')
 ```
 
-***Using `cy.clock()` and `cy.tick()`***
+### Using `cy.clock()` with `cy.tick()`
 
 {% note info %}
-{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-window-fetch %}
+{% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-and-spying %}
 {% endnote %}
+
+## Restore clock
+
+You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
+// more test code here
+
+// restore the clock
+cy.clock().then((clock) => {
+  clock.restore()
+})
+// more test code here
+```
+
+You could also restore by using {% url "`.invoke()`" invoke %}  to invoke the `restore` function.
+
+```js
+cy.clock().invoke('restore')
+```
 
 # Rules
 
@@ -97,11 +120,15 @@ cy.tick(1000)
 
 The command above will display in the Command Log as:
 
-![Command Log](/img/api/tick/tick-machine-clock-1-second-in-time.png)
+{% imgTag /img/api/tick/tick-machine-clock-1-second-in-time.png "Console Log tick" %}
 
 When clicking on the `tick` command within the command log, the console outputs the following:
 
-![Console Log](/img/api/tick/console-shows-same-clock-object-as-clock-command.png)
+{% imgTag /img/api/tick/console-shows-same-clock-object-as-clock-command.png "Console Log tick" %}
+
+{% history %}
+{% url "0.18.8" changelog#0-18-8 %} | `cy.tick()` command added
+{% endhistory %}
 
 # See also
 
@@ -109,4 +136,4 @@ When clicking on the `tick` command within the command log, the console outputs 
 - {% url `cy.spy()` spy %}
 - {% url `cy.stub()` stub %}
 - {% url 'Guide: Stubs, Spies and Clocks' stubs-spies-and-clocks %}
-- {% url "Recipe: Controlling Behavior with Spies, Stubs, and Clocks" recipes#Stubbing-window-fetch %}
+- {% url "Recipe: Stubbing, Spying" recipes#Stubbing-and-spying %}

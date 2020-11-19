@@ -1,7 +1,8 @@
 <!-- Scripts -->
 <!-- build:js /js/application.js -->
+{{ js('js/mobile_detect') }}
+{{ js('js/banners_actualization') }}
 {{ js('js/global_variable') }}
-{{ js('js/lang_select') }}
 {{ js('js/vendor/scrollingelement') }}
 {{ js('js/vendor/menuspy') }}
 {{ js('js/vendor/yall-2.0.1.min.js') }}
@@ -11,13 +12,8 @@
 {{ js('js/ac_tracking') }}
 {{ js('js/form-ac') }}
 {{ js('js/yall-init.js') }}
-{% if config.algolia[page.lang] %}
-  <!-- Algolia -->
-  {{ js('js/vendor/docsearch') }}
-{% endif %}
+{{ js('js/vendor/docsearch') }}
 <!-- endbuild -->
 
-<!-- Algolia -->
-{% if config.algolia[page.lang] %}
-  {{ partial('docsearch') }}
-{% endif %}
+{{ partial('docsearch') }}
+{{ partial('hs_tracking') }}

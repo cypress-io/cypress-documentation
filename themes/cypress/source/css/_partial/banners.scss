@@ -1,0 +1,150 @@
+.top-banners {
+  display: flex;
+  flex-direction: column;
+
+  .top-banners-item {
+    align-self: stretch;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow-wrap: break-word;
+    flex-wrap: nowrap;
+    background-color: $color-green;
+    border-bottom: 1px solid $color-link;
+    font-family: $font-title;
+    padding: 6px 20px;
+    display: none;
+
+    @media screen and(min-width: 768px) {
+      padding: 20px 30px;
+    }
+    @media screen and (min-width: 768px) and (max-width: 992px) {
+      padding-right: 65px;
+    }
+
+    .top-banners-item__body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      flex: 1;
+
+      @media screen and (min-width: 530px) {
+        flex-direction: row;
+      }
+      @media screen and (min-width: 768px) {
+        align-self: stretch;
+      }
+
+      .top-banners-item__body__text {
+        display: inline-flex;
+        margin-right: 5px;
+        align-items: center;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        padding: 0 5px;
+
+        @media screen and (min-width: 530px) and (max-width: 768px) {
+          flex: 2 0 175px;
+        }
+
+        p {
+          display: inline;
+          color: $white;
+          margin-bottom: 0;
+        }
+
+        a {
+          text-decoration: underline;
+          color: $white;
+
+          &:hover {
+            color: $white-90;
+          }
+        }
+      }
+
+      .top-banners-item__body__btn {
+        color: $white;
+        text-decoration: none;
+        white-space: nowrap;
+        align-self: center;
+        padding: 0 15px;
+        border-radius: 20px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 30px;
+        outline: none !important;
+        border: 1px solid transparent;
+        transition: background-color 0.2s cubic-bezier(0.6, 0.41, 0.47, 1.18),
+        color 0.3s cubic-bezier(0.6, 0.41, 0.47, 1.18);
+        max-width: 100%;
+        margin: 5px -35px 0 0;
+
+        @media screen and (min-width: 530px) {
+          margin: 5px 0 0;
+        }
+        @media screen and (min-width: 768px) {
+          margin: 0
+        }
+
+        &:hover {
+          filter: brightness(0.9) contrast(1.2);
+        }
+
+        &.top-banners-item__body__btn_blue {
+          background-color: $color-link;
+
+          &:hover {
+            background-color: $color-link-hover;
+          }
+        }
+      }
+    }
+
+    .top-banners-item__btn_close {
+      color: $white;
+      background: transparent;
+      border: 0;
+      outline: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: font-size 0.2s linear;
+      display: none;
+      padding: 0 0 0 20px;
+
+      @media screen and (min-width: 768px) {
+        position: absolute;
+        top: 20px;
+        right: 15px;
+      }
+
+      &:hover {
+        color: $white-90;
+      }
+    }
+
+    // only for actual .top-banners_item
+    &.top-banners-item_visible {
+      display: flex;
+    }
+    // only if browser have localStorage
+    &.top-banners-item_can-close {
+      transform-style: preserve-3d;
+      transition: all 0.2s linear;
+      transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+
+      &.top-banners-item_is-closed {
+        transform: translate3d(0px, -100%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+      }
+
+      .top-banners-item__btn_close {
+        display: block;
+      }
+    }
+  }
+}

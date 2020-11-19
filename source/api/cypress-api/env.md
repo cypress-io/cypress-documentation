@@ -14,6 +14,8 @@ Environment variables set using `Cypress.env` _are only in scope for the current
 Cypress runs each spec file in isolation: the browser is exited between specs. Environment variables added or changed in one spec won't be visible in other specs.
 {% endnote %}
 
+{% partial cypress_env_var_warning %}
+
 # Syntax
 
 ```javascript
@@ -41,10 +43,9 @@ Set multiple environment variables with an object literal.
 
 ## No Arguments
 
-**Get all environment variables.**
+### Get all environment variables from configuration file (`cypress.json` by default)
 
-```javascript
-// cypress.json
+```json
 {
   "env": {
     "foo": "bar",
@@ -59,33 +60,31 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 ## Name
 
-**Return a single environment variable value.**
+### Return a single environment variable from configuration file (`cypress.json` by default)
+
+{% note warning Boolean %}
+We automatically normalize both the key and the value when passed via the command line. Cypress will automatically convert values into Number or Boolean.
+{% endnote %}
 
 ```javascript
-// cypress.json
-{
-  "env": {
-    "foo": "bar",
-    "baz": "quux"
-  }
-}
+CYPRESS_HOST=laura.dev CYPRESS_IS_CI=true CYPRESS_MY_ID=123 cypress run
 ```
 
 ```javascript
-Cypress.env('foo') // => bar
-Cypress.env('baz') // => quux
+Cypress.env('HOST')  // => "laura.dev"
+Cypress.env('IS_CI') // => true
+Cypress.env('MY_ID') // => 123
 ```
 
 ## Name and Value
 
-**Cypress allows you to change the values of your environment variables from within your tests.**
+### Change environment variables from configuration file (`cypress.json` by default) from within your tests
 
 {% note warning Scope %}
 Remember, any changes that you make to environment variables using this API will only be in effect for the remainder of the tests _in the same spec file._
 {% endnote %}
 
-```javascript
-// cypress.json
+```json
 {
   "env": {
     "foo": "bar",
@@ -102,7 +101,7 @@ Cypress.env('host') // => http://server.dev.local
 
 ## Object
 
-**You can set multiple values by passing an object literal.**
+### Override multiple values from configuration file (`cypress.json` by default) by passing an object literal.
 
 ```javascript
 // cypress.json
@@ -132,7 +131,6 @@ Use this approach to grab the value of an environment variable _once_ before any
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-
   config.env.sharedSecret = process.env.NODE_ENV === 'qa'
     ? 'hoop brick tort'
     : 'sushi cup lemon'
@@ -140,10 +138,10 @@ module.exports = (on, config) => {
   return config
 }
 ```
+
 ```js
 // cypress/integration/secrets_spec.js
 describe('Environment variable set in plugin', () => {
-
   let sharedSecret
 
   before(() => {
@@ -158,17 +156,17 @@ describe('Environment variable set in plugin', () => {
 
 # Notes
 
-**Why would I ever need to use environment variables?**
+## Why would I ever need to use environment variables?
 
 The {% url 'Environment Variables' environment-variables %} guide explains common use cases.
 
-**Can I pass in environment variables from the command line?**
+## Can I pass in environment variables from the command line?
 
 Yes. You can do that and much more.
 
 The {% url 'Environment Variables' environment-variables %} guide explains the other ways you can set environment variables for your tests.
 
-**Why is it `Cypress.env` and not `cy.env`?**
+## Why is it `Cypress.env` and not `cy.env`?
 
 As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
 

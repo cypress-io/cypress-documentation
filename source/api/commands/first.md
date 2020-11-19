@@ -1,6 +1,5 @@
 ---
 title: first
-
 ---
 
 Get the first DOM element within a set of DOM elements.
@@ -50,7 +49,7 @@ Option | Default | Description
 
 ## No Args
 
-***Get the first list item in a list.***
+### Get the first list item in a list
 
 ```html
 <ul>
@@ -90,11 +89,11 @@ cy.get('form').find('input').first()
 
 The commands above will display in the Command Log as:
 
-![Command Log first](/img/api/first/get-the-first-in-list-of-elements.png)
+{% imgTag /img/api/first/get-the-first-in-list-of-elements.png "Command Log first" %}
 
 When clicking on `first` within the command log, the console outputs the following:
 
-![console.log first](/img/api/first/console-log-the-first-element.png)
+{% imgTag /img/api/first/console-log-the-first-element.png "console.log first" %}
 
 # See also
 

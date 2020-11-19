@@ -1,6 +1,5 @@
 ---
 title: Cypress.arch
-
 ---
 
 `Cypress.arch` returns you the CPU architecture name of the underlying OS, as returned from Node's {% url "`os.arch()`" https://nodejs.org/api/os.html#os_os_arch %}.
@@ -18,7 +17,7 @@ Cypress.arch // 'x64'
 ## CPU Architecture
 
 ```javascript
-it('has expected CPU architecture', function () {
+it('has expected CPU architecture', () => {
   expect(Cypress.arch).to.be.oneOf(['x64', 'ia32'])
 })
 ```
@@ -26,7 +25,7 @@ it('has expected CPU architecture', function () {
 ## Conditionals
 
 ```javascript
-it('does something differently', function () {
+it('does something differently', () => {
   if (Cypress.arch === 'x64') {
     cy.exec('something')
   } else {
@@ -34,3 +33,7 @@ it('does something differently', function () {
   }
 })
 ```
+
+{% history %}
+{% url "1.1.3" changelog#1-1-3 %} | `Cypress.arch` added
+{% endhistory %}

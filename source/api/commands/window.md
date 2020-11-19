@@ -76,6 +76,7 @@ it('equals bar', () => {
     .then((win) => {
       foo = win.foo
     })
+
   // variable "foo" is still undefined
   // because the above "then" callback
   // has not been executed yet
@@ -93,10 +94,10 @@ it('equals bar', () => {
     .then((win) => {
       foo = win.foo
     })
-    .then(() =>
+    .then(() => {
       // variable "foo" has been set
       expect(foo).to.equal('bar') // test passes
-    )
+    })
 })
 ```
 
@@ -136,6 +137,50 @@ See {% url '"Set flag to start tests"' https://glebbahmutov.com/blog/set-flag-to
 cy.window({ timeout: 10000 }).should('have.property', 'foo')
 ```
 
+# Notes 
+
+## Cypress uses 2 different windows.
+
+Let's say you want to check the type of the events. You might write code like below:
+
+```js
+it('test', (done) => {
+  cy.get('#test-input').then((jQueryElement) => {
+    let elemHtml = jQueryElement.get(0)
+
+    elemHtml.addEventListener('keydown', (event) => {
+      expect(event instanceof KeyboardEvent).to.be.true
+      done()
+    })
+  })
+
+  cy.get('#test-input').type('A')
+})
+```
+
+It fails. But the interesting thing is that the type of `event` is `KeyboardEvent` when you `console.log(event)`. 
+
+It's because the Test Runner uses an `iframe` to load the application under test. In other words, the `KeyboardEvent` used in the the code above and the `KeyboardEvent` class from which the `event` variable is constructed are different `KeyboardEvent`s. 
+
+That's why the test should be written like this. 
+
+```js
+it('should trigger KeyboardEvent with .type inside Cypress event listener', (done) => {
+  cy.window().then((win) => {
+    cy.get('#test-input').then((jQueryElement) => {
+      let elemHtml = jQueryElement.get(0)
+
+      elemHtml.addEventListener('keydown', (event) => {
+        expect(event instanceof win['KeyboardEvent']).to.be.true
+        done()
+      })
+    })
+  })
+
+  cy.get('#test-input').type('A')
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -160,11 +205,16 @@ cy.window()
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/window/window-command-log-for-cypress-tests.png)
+{% imgTag /img/api/window/window-command-log-for-cypress-tests.png "Command Log window" %}
 
 When clicking on `window` within the command log, the console outputs the following:
 
-![Console Log](/img/api/window/console-shows-the-applications-window-object-being-tested.png)
+{% imgTag /img/api/window/console-shows-the-applications-window-object-being-tested.png "Console Log window" %}
+
+{% history %}
+{% url "0.20.0" changelog#0-20-0 %} | Can call {% url "`.focus()`" focus %} and {% url "`.blur()`" blur %} on `cy.window()`
+{% url "0.11.6" changelog#0-11-6 %} | `cy.window()` logs to Command Log
+{% endhistory %}
 
 # See also
 
@@ -172,3 +222,4 @@ When clicking on `window` within the command log, the console outputs the follow
 - {% url `cy.document()` document %}
 - {% url `cy.its()` its %}
 - {% url 'Adding custom properties to the global `window` with the right TypeScript type' https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense %}
+- {% url 'Set flag to start tests' https://glebbahmutov.com/blog/set-flag-to-start-tests/ %}

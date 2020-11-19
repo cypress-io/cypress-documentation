@@ -1,6 +1,5 @@
 ---
 title: screenshot
-
 ---
 
 Take a screenshot of the application under test and, optionally, the {% url "Cypress Command Log" test-runner#Command-Log %}.
@@ -47,10 +46,11 @@ Option |Default | Description
 `capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
 `clip` | `null` | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`
 `disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
+`padding` | `null` | Padding used to alter the dimensions of a screenshot of an element. It can either be a number, or an array of up to four numbers [using CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). This property is only applied for element screenshots and is ignored for all other types.
 `scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout .screenshot %}
-`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.
-`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
+`onBeforeScreenshot` | `null` | A callback before a non-failure screenshot is taken. When capturing screenshots of an element, the argument is the element being captured. For other screenshots, the argument is the `document`.
+`onAfterScreenshot` | `null` | A callback after a non-failure screenshot is taken. When capturing  screenshots of an element, the first argument is the element being captured. For other screenshots, the first argument is the `document`. The second argument is properties concerning the screenshot, including the `path` it was saved to and the `dimensions` of the saved screenshot.
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the {% url 'Cypress.Screenshot API doc' screenshot-api %}.
 
@@ -69,8 +69,8 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ```javascript
 // cypress/integration/users.spec.js
 
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     // screenshot will be saved as
     // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
     cy.screenshot()
@@ -112,6 +112,12 @@ cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
 
 ```javascript
 cy.get('.post').first().screenshot()
+```
+
+### Take a screenshot of the first `.post` element with 10px of padding around it
+
+```javascript
+cy.get('.post').first().screenshot({ padding: 10 })
 ```
 
 ### Chain off the screenshot to click the element captured
@@ -158,8 +164,8 @@ Screenshot naming follows these rules:
 For example, given a spec file located at `cypress/integration/users/login_spec.js`:
 
 ```javascript
-describe('my tests', function () {
-  it('takes a screenshot', function () {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
     cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
@@ -182,7 +188,7 @@ You can get details about any given screenshot and manipulate it after it has be
 
 ### Automatic screenshots on test failure
 
-When running through `cypress run` or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
+When running through `cypress run` or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within your {% url `screenshotOnRunFailure` configuration#Screenshots %} or {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 ## Viewing Screenshots
 
@@ -238,17 +244,22 @@ cy.screenshot('my-image')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png)
+{% imgTag /img/api/screenshot/command-log-shows-name-of-screenshot-taken.png "Command Log screenshot" %}
 
 When clicking on `screenshot` within the command log, the console outputs the following:
 
-![Console Log](/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png)
+{% imgTag /img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png "Console Log screenshot" %}
+
+{% history %}
+{% url "3.5.0" changelog#3-5-0 %} | Added support for option `padding`.
+{% endhistory %}
 
 # See also
 
-- {% url `Cypress.Screenshot` screenshot-api %}
 - {% url 'After Screenshot API' after-screenshot-api %}
 - {% url `cy.debug()` debug %}
-- {% url 'Dashboard Service' dashboard-service %}
-- {% url 'Screenshots and Videos' screenshots-and-videos %}
+- {% url `Cypress.Screenshot` screenshot-api %}
+- {% url 'Dashboard Service' dashboard-introduction%}
 - {% url `.pause()` pause %}
+- {% url 'Screenshots and Videos' screenshots-and-videos %}
+- {% url 'Visual Testing' visual-testing %}

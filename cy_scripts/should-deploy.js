@@ -2,7 +2,6 @@
 
 const got = require('got')
 const git = require('ggit')
-const pluralize = require('pluralize')
 const debug = require('debug')('deploy')
 const { isEmpty, complement, tap, path, all, equals, T, values } = require('ramda')
 const la = require('lazy-ass')
@@ -11,7 +10,28 @@ const Promise = require('bluebird')
 
 const docsChanged = complement(isEmpty)
 
-const isForced = process.argv.some(equals('--force'))
+/**
+ * Checks if a given environment variable is present
+ * and has a string value that can be considered truthy, like
+ * "true", "TRUE", "on", "1", "yes"
+ *
+ * @param {string} name of the environment variable to check
+ * @returns boolean
+*/
+const isEnvVariableOn = (name) => {
+  const value = process.env[name]
+
+  if (!value) {
+    return false
+  }
+
+  return value === 'true'
+    || value === 'TRUE'
+    || value === 'on'
+    || value === '1'
+    || value === 'yes'
+}
+const isForced = process.argv.some(equals('--force')) || isEnvVariableOn('FORCE_DEPLOY')
 
 const isValidEnvironment = is.oneOf(['staging', 'production'])
 
@@ -27,15 +47,16 @@ function isRightBranch (env) {
   la(is.unemptyString(env), 'expected environment name', env)
 
   // allow multiple branches to deploy to staging environment,
-  // just add to the keys in this object
+  // add to the keys in this object
   // "my-fix-branch": "staging"
   const branchToEnv = {
     develop: 'staging',
     master: 'production',
   }
 
-  const isDocsToStagingBranch = (branch) =>
-    branch.startsWith('docs-') && env === 'staging'
+  const isDocsToStagingBranch = (branch) => {
+    return branch.startsWith('docs-') && env === 'staging'
+  }
 
   const isBranchAllowedToDeploy = (branch) => {
     debug('checking if branch "%s" allowed to deploy?', branch)
@@ -120,16 +141,19 @@ function lastDeployedCommit (env) {
   }))
 }
 
-const changedFilesSince = (branchName) => (sha) => {
-  la(is.unemptyString(branchName), 'missing branch name', branchName)
-  debug('finding files changed in branch %s since commit %s', branchName, sha)
+const changedFilesSince = (branchName) => {
+  return (sha) => {
+    la(is.unemptyString(branchName), 'missing branch name', branchName)
+    debug('finding files changed in branch %s since commit %s', branchName, sha)
 
-  return git.changedFilesAfter(sha, branchName)
-  .then(tap((list) => {
-    debug('%s changed since last docs deploy in branch %s',
-      pluralize('file', list.length, true), branchName)
-    debug(list.join('\n'))
-  }))
+    return git.changedFilesAfter(sha, branchName)
+    .then(tap((list) => {
+      debug('%s changed since last docs deploy in branch %s',
+        `${list.length} ${list.length === 1 ? 'file' : 'files'}`, branchName)
+
+      debug(list.join('\n'))
+    }))
+  }
 }
 
 function docsFilesChangedSinceLastDeploy (env, branchName) {
@@ -139,7 +163,8 @@ function docsFilesChangedSinceLastDeploy (env, branchName) {
     console.log('changed files')
     console.log(list.join('\n'))
     console.log('%d documentation %s changed since last doc deploy',
-      list.length, pluralize('file', list.length))
+      list.length, list.length === 1 ? 'file' : 'files')
+
     console.log('in branch %s against environment %s', branchName, env)
   }))
   .then(docsChanged)

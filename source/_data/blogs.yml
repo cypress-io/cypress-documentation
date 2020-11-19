@@ -1,4 +1,4 @@
-# small links with just title and url
+# small links with title and url
 small:
   - title: "Cypress Technology Blog"
     sourceUrl: https://www.cypress.io/blog
@@ -8,16 +8,848 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
-  - title: "Cypress com Cucumber nos testes E2E"
-    url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
-    sourceName: Concrete
-    sourceUrl: https://www.concrete.com.br/
+  - title: "Identifying Code Smells in Cypress"
+    url: https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html
+    sourceName: CodingItwrong
+    sourceUrl: https://codingitwrong.com/
+    author: Josh Justice
+    date: October 09, 2020
+    img: /img/examples/code-smells.png
+
+  - title: "Cypress + OneLogin: using API to authenticate before testing"
+    url: https://medium.com/@jedicwb/cypress-io-onelogin-using-api-to-authenticate-before-testing-a6e2412b356c
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Jonathan Machado
+    date: August 24, 2020
+    img: /img/examples/cypress-plus-onelogin.png
+  
+  - title: "Controlling Browser Permissions in Cypress End-to-End Tests"
+    url: https://dev.to/kamranayub/controlling-browser-permissions-in-cypress-end-to-end-tests-5d7b
+    sourceName: Dev.to
+    sourceUrl: https://dev.to/
+    author: Kamran Ayub
+    date: July 17, 2020
+    img: /img/examples/cypress-browser-permissions.png
+
+  - title: "How to Write Automation Tests for Feature Flags with Cypress.io and Selenium"
+    url: https://medium.com/engineers-optimizely/how-to-write-automation-tests-for-feature-flags-with-cypress-io-and-selenium-98493b5c46bc
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Todd Seller
+    date: April 3, 2020
+    img: /img/examples/cypress-optimizely.png
+
+  - title: "Cypress in Action: A Few Months In"
+    url: https://blog.noredink.com/post/190625483798/cypress-in-action-a-few-months-in-three-months
+    sourceName: "NoRedInk"
+    sourceUrl: https://blog.noredink.com/
+    author: Matt Charlton
+    date: Feb 3, 2020
+    img: /img/examples/calendar.png 
+
+  - title: "End-to-End Testing with Cypress.io — A Lowdown"
+    url: "https://madebyextreme.com/insights/end-to-end-testing-with-cypress-io"
+    sourceName: madebyextreme
+    sourceUrl: https://madebyextreme.com/
+    author: Neil Charlton
+    date: February 07, 2020
+    img: /img/examples/madebyextreme-cypress-testing.png
+    
+  - title: "Testing WebSocket connections with Cypress"
+    url: "https://medium.com/@SebDragomir/testing-websocket-connections-with-cypress-2100ab369945"
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Sebastian Dragomir
+    date: Nov 25, 2019
+    img: /img/examples/cypress-websocket-testing.png
+
+  - title: "I did a Cypress workshop and this is what I learned"
+    url: https://medium.com/@filiphric/i-did-a-cypress-workshop-and-this-is-what-i-learned-8de28b2fbaeb
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Filip Hric
+    date: Slido
+    img: /img/examples/cypress-workshop.png
+
+  - title: "How Cross-Browser Testing Is Evolving"
+    url: https://applitools.com/blog/cross-browser-testing-cypress
+    sourceName: Applitools
+    sourceUrl: https://applitools.com/
+    author: Bilal Haidar
+    date: Oct 29, 2019
+    img: /img/examples/cross-browser-testing-cypress.png
+ 
+  - title: "Summary of 5 cool new features that come with Cypress 3.5.0"
+    url: "https://medium.com/@nottyo/%E0%B8%AA%E0%B8%A3%E0%B8%B8%E0%B8%9B-5-features-%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B9%80%E0%B8%88%E0%B9%8B%E0%B8%87%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A1%E0%B8%B2%E0%B8%9E%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%81%E0%B8%B1%E0%B8%9A-cypress-3-5-0-a5b646f006ad"
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Traitanit Huangsri
+    date: Oct 27, 2019
+    img: /img/examples/cool-new-features-cypress-350.png
+ 
+  - title: "Test/Blog Driven Development for a Status indicator using Uptime Robot APIs and Svelte"
+    url: https://lacourt.dev/2019/10/27
+    sourceName: David's Blog
+    sourceUrl: https://lacourt.dev/
+    author: David Lacourt
+    date: Oct 27, 2019
+    img: /img/examples/test-blog-driven-development-cypress.png
+ 
+  - title: "Sanity Check Script"
+    url: https://www.gerrypass.com/sanity-check-script
+    sourceName: Gerry Pass
+    sourceUrl: https://www.gerrypass.com
+    author: Gerry Pass
+    date: Oct 26, 2019
+    img: /img/examples/sanity-check-script.png
+ 
+  - title: "Cypress + LaunchDarkly (or any Feature Flag Tool)"
+    url: https://www.gerrypass.com/cypress-launch-darkly-or-any-feature-flag-tool
+    sourceName: Gerry Pass
+    sourceUrl: https://www.gerrypass.com
+    author: Gerry Pass
+    date: Oct 26, 2019
+    img: /img/examples/cypress-launch-darkly-or-any-feature-flag-tool.png
+ 
+  - title: "Red, Green, Refactor!"
+    url: https://medium.com/@tunkhine126/red-green-refactor-42b5b643b506
+    sourceName: Medium
+    sourceUrl: https://medium.com
+    author: Tun Khine
+    date: Oct 26, 2019
+    img: /img/examples/red-green-refactor-cypress.png
+
+  - title: "Improve Your App Testing With Amplify Console’s Pull Request Previews and Cypress Testing"
+    url: https://aws.amazon.com/blogs/aws/improve-your-app-testing-with-amplify-consoles-pull-requests-previews-and-cypress-testing/
+    sourceName: AWS News Blog
+    sourceUrl: https://aws.amazon.com/
+    author: Sebastien Stormacq
+    date: Oct 22, 2019
+    img: /img/examples/improve-your-app-testing-with-amplify.png
+
+  - title: "Cypress e2e testing : My talk at Node.JS Meetup Berlin in Germany"
+    url: https://dev.to/destro_mas/cypress-my-talk-at-node-js-meetup-berlin-in-germany-2g0e
+    sourceName: DEV.to
+    sourceUrl: https://dev.to/
+    author: Shahjada Talukdar
+    date: Oct 17, 2019
+    img: /img/examples/cypress-my-talk-at-node-js-meetup-berlin-in-germany.png
+
+  - title: "6 steps to end-to-end testing with Cypress"
+    url: https://blog.angulartraining.com/6-steps-to-end-to-end-testing-with-cypress-5c11f50a378c
+    sourceName: Angular Training
+    sourceUrl: https://blog.angulartraining.com
+    author: Alain Chautard
+    date: Oct 10, 2019
+    img: /img/examples/6-steps-to-end-to-end-testing-with-cypress.png
+
+  - title: "New to front-end testing? Start from the top of the pyramid!"
+    url: https://itnext.io/new-to-front-end-testing-start-from-the-top-of-the-pyramid-a0039615353c
+    sourceName: IT Next
+    sourceUrl: https://itnext.io/
+    author: Stefano Magni
+    date: Oct 9, 2019
+    img: /img/examples/new-to-front-end-testing-start-from-the-top-of-the-pyramid.png
+
+  - title: "My experience moving from Selenium to Cypress"
+    url: https://medium.com/@arnonaxelrod/my-experience-moving-from-selenium-to-cypress-2a23072993e5
+    sourceName: Medium
+    sourceUrl: https://medium.com
+    author: Arnon Axelrod
+    date: Oct 2, 2019
+    img: /img/examples/my-experience-moving-from-selenium-to-cypress.png
+
+  - title: "Running end-to-end Cypress tests for your fullstack CI/CD deployment with Amplify Console"
+    url: https://aws.amazon.com/blogs/mobile/running-end-to-end-cypress-tests-for-your-fullstack-ci-cd-deployment-with-amplify-console/
+    sourceName: AWS Mobile Blog
+    sourceUrl: https://aws.amazon.com/
+    author: Nader Dabit
+    date: Oct 1, 2019
+    img: /img/examples/running-end-to-end-cypress-tests-for-your-fullstack.png
+
+  - title: "Dynamically generate data in Cypress from CSV/XLSX"
+    url: https://blog.you54f.com/2019/09/30/dynamically-generate-data-in-cypress-from-csv-xlsx/
+    sourceName: You54f
+    sourceUrl: https://blog.you54f.com/
+    author: Yousaf
+    date: Sep 30,2019
+    img: /img/examples/dynamically-generate-data-in-cypress-from-csv.png
+
+  - title: "Cypress - Automation tool for modern web"
+    url: https://www.qed42.com/blog/cypress-automation-tool-modern-web
+    sourceName: QED42
+    sourceUrl: https://www.qed42.com
+    author: Jeevan Bhushetty
+    date: Sep 27, 2019
+    img: /img/examples/cypress-automation-tool-modern-web.png
+
+  - title: "4 Automated End to End Testing Solutions Compared"
+    url: https://hackernoon.com/tear-free-guide-for-end-to-end-testing-t9in44v9
+    sourceName: Hacker Noon
+    sourceUrl: https://hackernoon.com/
+    author: Dennis Mathew Philip
+    date: Sep 25, 2019
+    img: /img/examples/tear-free-guide-for-end-to-end-testing.png
+
+  - title: "Configuring Cypress to work with iFrames & cross-origin sites"
+    url: https://blog.you54f.com/2019/09/23/configuring-cypress-to-work-with-iframes-cross-origin-sites
+    sourceName: You54f
+    sourceUrl: https://blog.you54f.com
+    author: Yousaf
+    date: Sep 23, 2019
+    img: /img/examples/configuring-cypress-to-work-with-iframes.png
+
+  - title: "Testing React - Setup, Unit, Integration and E2E using Jest and Cypress"
+    url: https://dev.to/rxassim/testing-react-setup-unit-integration-and-e2e-using-jest-and-cypress-feat-graphql-4fj7
+    sourceName: DEV.to
+    sourceUrl: https://dev.to/
+    author: Assim El Hammouti
+    date: Sep 22, 2019
+    img: /img/examples/testing-react-setup-unit-integration-and-e2e-using-jest-and-cypress.png
+
+  - title: "Using Graphical User Interfaces like Cypress' in WSL2"
+    url: https://dev.to/nickymeuleman/using-graphical-user-interfaces-like-cypress-in-wsl2-249j
+    sourceName: DEV.to
+    sourceUrl: https://dev.to/
+    author: Nicky Meuleman
+    date: Sep 19, 2019
+    img: /img/examples/using-graphical-user-interfaces-like-cypress.png
+
+  - title: "E2E Test Experiments With Cypress"
+    url: https://thebespectacledtester.wordpress.com/2019/09/18/e2e-test-experiments-with-cypress
+    sourceName: The Bespectacled Tester
+    sourceUrl: https://thebespectacledtester.wordpress.com
+    author: Manisha Awasthi
+    date: Sep 18, 2019
+    img: /img/examples/e2e-test-experiments-with-cypress.png
+
+  - title: "Cypress Tips No. 2 - Testing Email with Mailosaur"
+    url: https://medium.com/slido-dev-blog/cypress-tips-2-testing-email-flows-with-mailosaur-63739261c1ae
+    sourceName: Medium
+    sourceUrl: https://medium.com/slido-dev-blog/
+    author: Filip Hric
+    date: Sep 13, 2019
+    img: /img/examples/cypress-tips-2-testing-email-flows-with-mailosaur.png
+
+  - title: "How to go about front-end testing with Cypress.io — a success story"
+    url: https://medium.com/asos-techblog/how-to-go-about-front-end-testing-with-cypress-io-a-success-story-898451ff1c79
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Sherrylene Gauci
+    date: Sp 13, 2019
+    img: /img/examples/go-about-front-end-testing-with-cypress.png
+
+  - title: "Vue.js Tutorial: Visual Testing With Cypress.io and Applitools"
+    url: https://dzone.com/articles/how-to-visually-test-vuejs-apps-using-cypressio-an
+    sourceName: DZone
+    sourceUrl: https://dzone.com
+    author: Bilal Haidar
+    date: Sep 11, 2019
+    img: /img/examples/visually-test-vuejs-apps-using-cypressio.png
+
+  - title: "E2E tests with Cypress.io"
+    url: https://alexandrempsantos.com/e2e-tests-with-cypress/
+    sourceName: Alexandrempsantos
+    sourceUrl: https://alexandrempsantos.com/
+    author: Alexandre Portela dos Santos
+    date: Sep 4, 2019
+    img: /img/examples/e2e-tests-with-cypress.png
+
+  - title: "Cypress for Ruby on Rails developers"
+    url: https://nebulab.it/blog/cypress-for-rails-developers/
+    sourceName: Nebulab
+    sourceUrl: https://nebulab.it/
+    author: Georgy Shabunin
+    date: Sep 1, 2019
+    img: /img/examples/cypress_ruby_on_rails_nebulab.png
+
+  - title: "8 Tricks I Learned From Cypress"
+    url: https://blog.servmask.com/8-tricks-i-learned-from-cypress/
+    sourceName: ServMask
+    sourceUrl: https://blog.servmask.com/8-tricks-i-learned-from-cypress/
+    author: Gene Surov
+    date: Aug 28,2019
+    img: /img/examples/tricks-learned-from-cypress.png
+
+  - title: "Avoiding issues with Promises in your Cypress E2E tests"
+    url: https://brucelefebvre.com/blog/2019/08/26/cypress-gotchas-with-promises/
+    sourceName: Bruce Lefebvre
+    sourceUrl: https://brucelefebvre.com
+    author: Bruce Lefebvre
+    date: Aug 26, 2019
+    img: /img/examples/promises-in-cypress-e2e-tests.png
+
+  - title: "Testing your Amplify Application with Jest and Cypress"
+    url: https://dev.to/rakannimer/testing-your-amplify-application-with-jest-and-cypress-1g0i
+    sourceName: DEV.to
+    sourceUrl: https://dev.to/
+    author: Rakan Nimer
+    date: Aug 23, 2019
+    img: /img/examples/testing-amplify-app-jest-cypress.png
+
+  - title: "Going Automotive: Increasing Quality"
+    url: https://blog.noredink.com/post/186956536122/going-automotive-increasing-quality-to-misquote
+    sourceName: "NoRedInk"
+    sourceUrl: https://blog.noredink.com/
+    author: Matt Charlton
+    date: Aug 12, 2019
+    img: /img/examples/no-red-ink-automating-with-cypress-tests-adnvantages.jpg 
+    
+  - title: "How to write useful end-to-end tests with Cypress"
+    url: https://blog.logrocket.com/how-to-write-useful-end-to-end-tests-with-cypress/
+    sourceName: LogRocket
+    sourceUrl: https://blog.logrocket.com/
+    author: Ovie Okeh
+    date: Aug 6, 2019
+    img: /img/examples/end-to-end-tests-cypress-logrocket.png
+
+  - title: "Setting up a Gatsby Themes workspace with TypeScript, ESLint & Cypress"
+    url: https://www.lekoarts.de/en/blog/setting-up-a-gatsby-themes-workspace-with-typescript-eslint-and-cypress
+    sourceName: Lekoarts
+    sourceUrl: https://www.lekoarts.de/
+    author: Lennart
+    date: Aug 5, 2019
+    img: /img/examples/setup-gatsby-with-typescript-eslint-cypress.png
+
+  - title: "Understand Stub & Spy: APIs that will make your test better than ever on Cypress.io"
+    url: https://medium.com/@nottyo/understand-stub-spy-apis-that-will-make-your-test-better-than-ever-on-cypress-io-797cb9eb205a
+    sourceName: LINE Thailand
+    sourceUrl: https://medium.com
+    author: Traitanit Huangsri
+    date: Aug 4, 2019
+    img: /img/examples/traitanit-stub-spy-apis.png    
+
+  - title: "The concept of Monitoring Tests"
+    url: https://dev.to/noriste/the-concept-of-monitoring-tests-4l5j
+    sourceName: "DEV.to"
+    sourceUrl: https://dev.to/
+    author: Stefano Magni
+    date: Jul 30, 2019
+    img: /img/examples/conio-devto-monitoring-tests.png        
+
+  - title: "Sleeping better at night with Cypress.io"
+    url: https://dev.to/tlakomy/sleeping-better-at-night-with-cypress-io-59m2
+    sourceName: "DEV.to"
+    sourceUrl: https://dev.to/
+    author: Tomasz Lakomy
+    date: Jul 29, 2019
+    img: /img/examples/devto-sleep-at-night-cypress.png
+
+  - title: "Cypress.io: the Selenium killer"
+    url: https://blog.logrocket.com/cypress-io-the-selenium-killer/
+    sourceName: LogRocket
+    sourceUrl: https://blog.logrocket.com
+    author: Paul Cowan
+    date: Jul 29, 2019
+    img: /img/examples/logrocket-selenium-cypress.png
+
+  - title: "Await, do not make your E2E tests sleep"
+    url: https://itnext.io/await-do-not-sleep-your-e2e-tests-df67e051b409
+    sourceName: ITNext
+    sourceUrl: https://itnext.io/
+    author: Stefano Magni
+    date: Jul 25, 2019
+    img: /img/examples/itnext-await-e2e-cypress.png 
+
+  - title: "Cypress: A New Kid On The E2E Block"
+    url: https://ordina-jworks.github.io/testing/2019/07/18/Cypress.html
+    sourceName: JWorks Tech Blog
+    sourceUrl: https://ordina-jworks.github.io/
+    author: Tim Vierbergen
+    date: Jul 18, 2019
+    img: /img/examples/ordina-cypress-new-kid-e2e-block.png
+
+  - title: "Generate a Beautiful Test Report from running Tests on Cypress.io"
+    url: https://medium.com/@nottyo/generate-a-beautiful-test-report-from-running-tests-on-cypress-io-371c00d7865a
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Traitanit Huangsri
+    date: Jul 16, 2019
+    img: /img/examples/generate-test-reports-cypress.png
+
+  - title: "Challenging the Testing Pyramid"
+    url: https://juristr.com/blog/2019/07/testing-cypress-intro/
+    sourceName: Juri Strumpflohner
+    sourceUrl: https://juristr.com/
+    author: Juri Strumpflohner
+    date: Jul 16, 2019
+    img: /img/examples/challenging-testing-pyramid.png
+
+  - title: "Integrating Cypress.io into Fundbox’s core products"
+    url: https://medium.com/fundbox-engineering/integrating-cypress-io-into-fundboxs-core-products-61ba9db3c32c
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Itay Kotler
+    date: Jul 15, 2019
+    img: /img/examples/fundbox-cypress-integration.png
+
+  - title: "Nx, mono repositories in Angular"
+    url: https://academia-binaria.com/nx-mono-repositorios-en-Angular/
+    sourceName: Academia Binaria
+    sourceUrl: https://academia-binaria.com/
+    author: Alberto Basalo
+    date: Jul 11, 2019
+    img: /img/examples/monorepo-angular-cypress.png   
+
+  - title: "[2019 update] Using Cypress in GitLab CI"
+    url: https://lcx.wien/blog/cypress-gitlab-ci/
+    sourceName: "LcX.wien IT Solutions"
+    sourceUrl: https://lcx.wien/
+    author: Cristian Livadaru
+    date: Jul 11, 2019
+    img: /img/examples/cypress-gitlab-ci-2019.png
+
+  - title: "End-to-end testing using Cypress"
+    url: https://tevpro.com/blog/end-to-end-testing-using-cypress
+    sourceName: Tevpro
+    sourceUrl: https://tevpro.com/
+    author: Justin Waldrip
+    date: Jul 8, 2019
+    img: /img/examples/tevpro-e2e-testing-cypress.png
+
+  - title: "My Thoughts on Cypress.io"
+    url: https://watirmelon.blog/2019/07/06/my-thoughts-on-cypress-io/
+    sourceName: WatirMelon
+    sourceUrl: https://watirmelon.blog/
+    author: Alister Scott
+    date: Jul 6, 2019
+    img: /img/examples/watirmelon-thoughts-cypress.png
+
+  - title: "Create Code Coverage Report from running End-to-End Test with Cypress.io"
+    url: https://medium.com/@nottyo/generate-a-beautiful-test-report-from-running-tests-on-cypress-io-371c00d7865a
+    sourceName: Medium
+    sourceUrl: https://medium.com
+    author: Traitanit Huangsri
+    date: Jul 6, 2019
+    img: /img/examples/code-coverage-e2e-cypress.png
+
+  - title: "How to test for accessibility with Cypress"
+    url: https://www.deque.com/blog/how-to-test-for-accessibility-with-cypress/
+    sourceName: Deque
+    sourceUrl: https://www.deque.com/
+    author: Josh McClure
+    date: Jul 02, 2019
+    img: /img/examples/deque-accessibility-cypress.png
+
+  - title: "Testing mobile, tablet and desktop devices with Cypress"
+    url: https://maximilianschmitt.me/posts/cypress-testing-mobile-tablet-desktop/
+    sourceName: Max Schmitt
+    sourceUrl: https://maximilianschmitt.me/
+    author: Max Schmitt
+    date: Jul 1, 2019
+    img: /img/examples/max-schmitt-test-devices-cypress.png 
+    
+  - title: "Making a random string and running in cypress"
+    url: https://medium.com/prontotools/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B3-random-string-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%81%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B9%83%E0%B8%99-cypress-3d0b80ed3d20
+    sourceName: Medium
+    sourceUrl: https://medium.com
+    author: Poomjai Saeyong
+    date: Jun 30, 2019
+    img: /img/examples/random-string-running-cypress.png
+
+  - title: "migrating to Sapper part 2 bis - Netlify, GitHub Actions with Cypress.io"
+    url: https://lacourt.dev/2019/06/30
+    sourceName: David's Blog
+    sourceUrl: https://lacourt.dev/
+    author: David Lacourt
+    date: Jun 30, 2019
+    img: /img/examples/lacourt-sapper-migration-cypress-part2.png
+
+  - title: "Testing with Cypress - Custom logging of errors and JUnit results"
+    url: https://automationrhapsody.com/testing-with-cypress-custom-logging-of-errors-and-junit-results/
+    sourceName: Automation Rhapsody
+    sourceUrl: https://automationrhapsody.com
+    author: Lyudmil Latinov
+    date: Jun 28, 2019
+    img: /img/examples/automation-rhapsody-junit-cypress.png     
+
+  - title: "Cypress Framework: The Swiss Army Knife For Your Tests"
+    url: https://apiumhub.com/tech-blog-barcelona/cypress-framework-swiss-knife-tests/
+    sourceName: Apiumhub
+    sourceUrl: https://apiumhub.com/
+    author: Serhii Zabolennyi
+    date: Jun 25, 2019
+    img: /img/examples/apiumhub-swiss-army-cypress.png
+
+  - title: "React.js, UnForm, validations and Cypress.io tests"
+    url: https://joaovanzuita.me/blog/react-js-unform-validations-and-cypress-io-tests
+    sourceName: Joao Vanzuita
+    sourceUrl: https://joaovanzuita.me/
+    author: Joao Vanzuita
+    date: Jun 21, 2019
+    img: /img/examples/joao-react-unform-cypress.png   
+
+  - title: "migrating to Sapper part 2 - TDD with Cypress.io"
+    url: https://lacourt.dev/2019/06/21
+    sourceName: David's Blog
+    sourceUrl: https://lacourt.dev/
+    author: David Lacourt
+    date: Jun 21, 2019
+    img: /img/examples/lacourt-sapper-migration-cypress.png
+
+  - title: "Waiting for network resources in Cypress"
+    url: https://www.artmann.co/articles/waiting-for-network-resources-in-cypress-c9cb5cca-b5d6-49df-bd30-c8c744bad147
+    sourceName: Christoffer Artmann
+    sourceUrl: https://www.artmann.co/
+    author: Christoffer Artmann
+    date: Jun 20, 2019
+    img: /img/examples/artmann-network-resources-cypress.png     
+
+  - title: "E2E Testing without the boring part — A tutorial on Cypress (part 1)"
+    url: https://medium.com/softup-technologies/e2e-testing-without-the-boring-part-a-tutorial-with-cypress-part-1-1c8e81e61d14
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Shpetim Selaci
+    date: Jun 17, 2019
+    img: /img/examples/e2e-tests-without-boring-parts.png
+
+  - title: "Reliable test automation with Cypress.io"
+    url: https://www.linkedin.com/pulse/reliable-test-automation-cypressio-abdi-saeed/
+    sourceName: LinkedIn
+    sourceUrl: https://www.linkedin.com/pulse/
+    author: Abdi Saeed
+    date: Jun 17, 2019
+    img: /img/examples/reliable-test-automation-cypress.png
+
+  - title: "Running Cypress tests with TestContainers for a Spring Boot with Thymeleaf application"
+    url: https://wimdeblauwe.wordpress.com/2019/06/15/running-cypress-tests-with-testcontainers-for-a-spring-boot-with-thymeleaf-application/
+    sourceName: Wim Deblauwe's Blog
+    sourceUrl: https://wimdeblauwe.wordpress.com/
+    author: Wim Deblauwe
+    date: Jun 15, 2019
+    img: /img/examples/wimdeblauwe-testcontainer-spring-boot-thymeleaf-cypress.png 
+    
+  - title: "Unit testing APEX - 3 methods to bypass login (with Cypress.io)"
+    url: https://insum.ca/unit-testing-apex-3-methods-bypass-login-using-cypress-io/
+    sourceName: Insum
+    sourceUrl: https://insum.ca/
+    author: Hayden Hudson	
+    date: Jun 14, 2019 
+    img: /img/examples/insum-unit-test-apex-cypress.png
+
+  - title: "Using Cypress to Write Tests for a React Application"
+    url: https://css-tricks.com/using-cypress-to-write-tests-for-a-react-application/
+    sourceName: CSS Tricks
+    sourceUrl: https://css-tricks.com/
+    author: Kingsley Silas
+    date: Jun 12, 2019
+    img: /img/examples/csstricks-write-tests-react-app.png       
+
+  - title: "Writing e2e tests using Cypress"
+    url: https://engineering.hashnode.com/writing-e2e-tests-using-cypress-cjwm1xfxx003osws1dlxp3e5s
+    sourceName: Hashnode Engineering
+    sourceUrl: https://engineering.hashnode.com/
+    author: Aravind
+    date: Jun 7, 2019
+    img: /img/examples/hashnode-e2e-tests-cypress.png         
+
+  - title: "How to test Next.js apps"
+    url: https://buttercms.com/blog/how-to-test-nextjs-apps
+    sourceName: ButterCMS
+    sourceUrl: https://buttercms.com/
+    author: Nirmalya Ghosh
+    date: Jun 5, 2019
+    img: /img/examples/buttercms-test-nextjs-apps.png    
+
+  - title: "React, Cypress.io and Applitools for Functional and Visual Testing"
+    url: https://applitools.com/blog/react-cypress-visual-testing
+    sourceName: Applitools
+    sourceUrl: https://applitools.com/
+    author: Bilal Haidar
+    date: Jun 3, 2019
+    img: /img/examples/applitools-react-cypress-visual-testing.png    
+
+  - title: "Adventures in End-to-End Testing with Cypress"
+    url: https://engineering.brighthr.com/blog-posts/adventures-in-end-to-end-testing-with-cypress/
+    sourceName: Bright HR
+    sourceUrl: https://engineering.brighthr.com/
+    author: Daniel Smith
+    date: Jun 03, 2019
+    img: /img/examples/bright-hr-e2e-with-cypress.png    
+
+  - title: "Testing accessibility with Cypress"
+    url: https://dev.to/stereobooster/testing-accessibility-with-cypress-2dfo
+    sourceName: DEV.to
+    sourceUrl: https://dev.to
+    author: Stereobooster
+    date: Jun 1, 2019
+    img: /img/examples/stereobooster-testing-accessibility-cypress.png
+
+  - title: "Visual Testing with Cypress"
+    url: https://medium.com/briebug-blog/visual-testing-with-cypress-9a0b7443e427
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Jesse Sanders
+    date: May 30, 2019
+    img: /img/examples/briebug-visual-testing-with-cypress.png
+
+  - title: "End-To-End Testing React Applications With Cypress"
+    url: https://formidable.com/blog/2019/cypress/
+    sourceName: Formidable
+    sourceUrl: https://formidable.com/
+    author: Parker Ziegler
+    date: May 29, 2019
+    img: /img/examples/formidable-end-to-end-testing-react-apps-cypress.png
+
+  - title: "Cypress: Page Object Structure w/ Examples"
+    url: http://blerdeyeview.com/cypress-page-objects/
+    sourceName: Blerd Eye View
+    sourceUrl: http://blerdeyeview.com/
+    author: Courtney Hurt
+    date: May 24, 2019
+    img: /img/examples/page-object-structure-cypress.png    
+
+  - title: "Réaliser des tests fonctionnels avec Cypress"
+    url: https://blog.ineat-conseil.fr/2019/05/realiser-des-tests-fonctionnels-avec-cypress/
+    sourceName: Ineat Blog
+    sourceUrl: https://blog.ineat-conseil.fr/
+    author: "Nicolas Fourré"
+    date: May 24, 2019
+    img: /img/examples/ineat-blog-realiser-des-tests-fonctionnels-avec-cypress.png
+
+  - title: "Learning Visual Testing as a Junior Developer with Applitools and Cypress"
+    url: https://dev.to/megsachdev/learning-visual-testing-as-a-junior-developer-with-applitools-and-cypress-h3c
+    sourceName: DEV.to
+    sourceUrl: https://dev.to/
+    author: Megha Sachdev
+    date: May 23, 2019
+    img: /img/examples/devto-learn-visual-testing-applitools-cypress.png
+
+  - title: "Why we should start writing our visual unit tests with Cypress"
+    url: https://medium.com/razroo/visual-unit-tests-with-cypress-6f310095e10b
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Aphinya Dechalert 
+    date: May 20, 2019
+    img: /img/examples/razroo-visual-unit-tests-cypress.png
+
+  - title: "The new Chromium-based Microsoft Edge for Mac has been leaked - And it works with Cypress"
+    url: https://blog.you54f.com/2019/05/16/the-new-chromium-based-microsoft-edge-for-mac-has-been-leaked%e2%80%8a-%e2%80%8aand-it-works-with-cypress-and-now-you-can-test-it-too/
+    sourceName: YOU54F
+    sourceUrl: https://blog.you54f.com/
+    author: YOU54F
+    date: May 16, 2019
+    img: /img/examples/you54f-chromium-microsoft-edge-cypress.png
+
+  - title: "Gleb Bahmutov: When I First Saw the Cypress.io Test Runner, I Knew It Was Special"
+    url: https://medium.com/@amsterdamjs/gleb-bahmutov-when-i-first-saw-the-cypress-io-test-runner-i-knew-it-was-special-ae67615e0028
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Amsterdam JSNation
+    date: May 15, 2019
+    img: /img/examples/amsterdamjs-gleb-bahmutov-interview.png    
+
+  - title: "5 awesome tricks to turbocharge your React automated tests"
+    url: https://medium.com/craft-academy/5-awesome-tricks-to-turbocharge-your-react-automated-tests-147776289c55
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Aditya Naik
+    date: May 9, 2019
+    img: /img/examples/craft-academy-awesome-tricks-turbocharge-react-tests.png
+
+  - title: "How to hack log-in in React Automated testing"
+    url: https://medium.com/craft-academy/how-to-leverage-localstorage-in-cypress-testing-3fdc04628868
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Greg Kallai
+    date: May 6, 2019
+    img: /img/examples/craft-academy-hack-login-react-automated-testing.png    
+
+  - title: "End-to-End testing with Cypress"
+    url: https://medium.com/better-practices/end-to-end-testing-with-cypress-bfcd59633f1a
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Steve Fuller
+    date: May 3, 2019
+    img: /img/examples/better-practices-testing-with-cypress.png    
+
+  - title: "End-to-End Testing Web Apps: The Painless Way"
+    url: https://mtlynch.io/painless-web-app-testing/
+    sourceName: Michael Lynch
+    sourceUrl: https://mtlynch.io/
+    author: Michael Lynch
+    date: May 1, 2019
+    img: /img/examples/end-to-end-testing-apps-painless-way.png
+
+  - title: "How to test Vue apps with the popular Cypress framework"
+    url: https://dev.to/napoleon039/how-to-test-vue-apps-with-the-popular-cypress-framework-4jfg
+    sourceName: DEV.to
+    sourceUrl: https://dev.to
+    author: Nihar Raote
+    date: Apr 29, 2019
+    img: /img/examples/test-vue-apps-with-cypress.png 
+
+  - title: "Testing with Cypress"
+    url: https://medium.com/@genedarocha/testing-with-cypress-8b62debe4ac6
+    sourceName: "Medium"
+    sourceUrl: https://medium.com/@genedarocha
+    author: Gene Da Rocha
+    date: Apr 27, 2019
+    img: /img/examples/testing-in-cypress-palm-trees.jpg
+
+  - title: "Pragmatic Front-End Testing Strategies (3)"
+    url: https://medium.com/@toastui/pragmatic-front-end-testing-strategies-3-969469349043
+    sourceName: Medium
+    sourceUrl: https://medium.com/@toastui
+    author: DongWoo Kim
+    date: Apr 19, 2019
+    img: /img/examples/pragmatic-front-end-testing-strategies-3.png
+
+  - title: "How We Enhanced Our End-to-End Testing with Cypress.io"
+    url: https://www.monterail.com/blog/end-to-end-testing-with-cypress
+    sourceName: Monterail
+    sourceUrl: https://www.monterail.com/blog/end-to-end-testing-with-cypress
+    author: Robert Gacek
+    date: Apr 12, 2019
+    img: /img/examples/enhanced-end-to-end-testing-with-cypress.png		
+
+  - title: "What Is Front End Testing in 2019?"
+    url: https://applitools.com/blog/what-is-front-end-testing-in-2019
+    sourceName: Applitools
+    sourceUrl: https://applitools.com/blog/
+    author: Michael Battat
+    date: Apr 9, 2019
+    img: /img/examples/whats-frontend-testing-applitools.png
+
+  - title: "Visual UI testing with Percy.io + Cypress (Graph, PDF, DOM UI changes can now be automated)"
+    url: https://medium.com/executeautomation/visual-ui-testing-with-percy-io-cypress-graph-pdf-dom-ui-changes-can-now-be-automated-186aafb53517
+    sourceName: Medium
+    sourceUrl: https://medium.com/executeautomation
+    author: Karthik kk
+    date: Apr 8, 2019
+    img: /img/examples/visual-ui-testing-percy-cypress.png
+
+  - title: "Testing using Cypress in JavaScript"
+    url: https://confluence.xpand-it.com/display/public/XRAY/Testing+using+Cypress+in+JavaScript
+    sourceName: Confluence
+    sourceUrl: https://confluence.xpand-it.com/display/public/XRAY/Xray+Documentation+Home
+    author: Sergio Freire
+    date: Apr 01, 2019
+    img: /img/examples/testing-using-cypress-in-javascript.png	
+
+  - title: "How to Create and Use Fixtures in Cypress Tests"
+    url: https://chipcullen.com/how-to-create-and-use-fixtures-in-cypress-tests/
+    sourceName: Chip Cullen
+    sourceUrl: https://chipcullen.com
+    author: Chip Cullen
+    date: Mar 28, 2019
+    img: /img/examples/create-use-fixtures-in-cypress.png
+
+  - title: "Cypress Parallelization — Case Study + Results"
+    url: https://valor-software.com/articles/cypress-parallelization-case-study-results.html
+    sourceName: Valor Software
+    sourceUrl: https://valor-software.com/articles/
+    author: Ludmila Nesvitiy
+    date: Mar 25, 2019
+    img: /img/examples/cypress-parallelization-case-study-results.png	
+
+  - title: "Cypress on AWS Lambda Part 1"
+    url: https://stuartsandine.com/cypress-on-aws-lambda-part-1/
+    sourceName: Stuart Sandine
+    sourceUrl: https://stuartsandine.com
+    author: Stuart Sandine
+    date: Mar 15, 2019
+    img: /img/examples/cypress-aws-lambda.png
+
+  - title: "Write tests without the pain"
+    url: https://slides.com/simonhen/cypress
+    sourceName: Slides
+    sourceUrl: https://simonhenrotte.com/
+    author: Simon Henrotte
+    date: Mar 7, 2019
+    img: /img/examples/write-tests-without-pain.png
+
+  - title: "Testing an email workflow from end to end with Cypress"
+    url: https://humble.dev/testing-an-email-workflow-from-end-to-end-with-cypress
+    sourceName: humbledev
+    sourceUrl: https://humble.dev/
+    author: Maxime Khoy
+    date: Mar 6, 2019
+    img: /img/examples/testing-email-workflow-with-cypress.png
+
+  - title: "Configuring Cypress in CI with Azure DevOps Pipelines"
+    url: https://mariocardinal.wordpress.com/2019/03/05/configuring-cypress-in-ci-with-azure-devops-pipelines/
+    sourceName: Mario Cardinal
+    sourceUrl: https://mariocardinal.wordpress.com/
+    author: Mario Cardinal
+    date: Mar 5, 2019
+    img: /img/examples/ci-with-azure-devops.png
+
+  - title: "How to poll a Gmail inbox using cypress.io"
+    url: https://medium.com/@levz0r/how-to-poll-a-gmail-inbox-in-cypress-io-a4286cfdb888
+    sourceName: Medium
+    sourceUrl: https://medium.com/@levz0r
+    author: Lev Gelfenbuim
+    date: Mar 4, 2019
+    img: /img/examples/poll-gmail-inbox-in-cypress.png
+    
+  - title: "Cypress.io: A hands-on overview"
+    url: https://medium.com/@klmlfl/cypress-io-a-hands-on-overview-ad4d498944ee
+    sourceName: Medium
+    sourceUrl: https://medium.com/@klmlfl
+    author: Shaban Rahman
+    date: Mar 2, 2019
+    img: /img/examples/hands-on-overview-cypress.png   
+
+  - title: "Angular: Adding Cypress UI Tests to Your DevOps Pipeline"
+    url: https://medium.com/ngconf/angular-adding-cypress-ui-tests-to-your-devops-pipeline-c7613e67d37d
+    sourceName: Medium
+    sourceUrl: https://medium.com/ngconf
+    author: Justin James
+    date: Feb 20, 2019
+    img: /img/examples/angular-adding-cypress-ui-testing.png     
+
+  - title: "Running Cypress Tests in Parallel"
+    url: https://testdriven.io/blog/running-cypress-tests-in-parallel/
+    sourceName: TestDriven
+    sourceUrl: https://testdriven.io/
+    author: Michael Herman
+    date: Feb 19, 2019
+    img: /img/examples/running-cypress-tests-in-parallel.png 
+
+  - title: "I saw Jesse Sanders speak at AngularMN on Cypress testing on Wednesday night"
+    url: http://tom-jaeschke.blogspot.com/2019/02/i-saw-jesse-sanders-speak-at-angularmn.html
+    sourceName: Spaghetti Tom
+    sourceUrl: http://tom-jaeschke.blogspot.com/
+    author: Tom Jaeschke
+    date: Feb 10, 2019
+    img: /img/examples/jesse-sanders-at-angularmn-on-cypress.png 
+
+  - title: "I'm so done with E2E Testing....Until Now"
+    url: http://briebug.github.io/presentations/ng-meetup/2018/10/cypress/#/
+    sourceName: Briebug
+    sourceUrl: https://www.briebug.github.io/
+    author: Jesse Sanders
+    date: Feb 7, 2019
+    img: /img/examples/Im-so-done.jpg
+
+  - title: "Modern Front-End Testing with Cypress"
+    url: https://testdriven.io/blog/modern-frontend-testing-with-cypress/
+    sourceName: TestDriven
+    sourceUrl: https://testdriven.io/
+    author: Michael Herman
+    date: Jan 31, 2019
+    img: /img/examples/modern-front-end-testing-with-cypress.png 
+
+  - title: "Tendências para a área de Quality Assurance em 2019"
+    url: https://medium.com/invillia-insights/tend%C3%AAncias-para-a-%C3%A1rea-de-quality-assurance-em-2019-51c61b36e955
+    sourceName: Medium
+    sourceUrl: https://medium.com/invillia-insights
+    author: Thiago Grespi
+    date: Jan 30, 2019
+    img: /img/examples/tendencias-quality-assurance.png
+
+  - title: "Setting Cypress and Cucumber in e2e tests"
+    url: https://medium.com/assertqualityassurance/setting-cypress-and-cucumber-in-e2e-tests-6239adac1077
+    sourceName: Medium
+    sourceUrl: https://www.medium.com
     author: Lucas Fraga
-    date: Jan 24, 2019
+    date: April 3, 2019
     img: /img/examples/cypress-com-cucumber.jpg
 
   - title: "Testes E2E com CyPress no Quasar Framework"
-    url: https://www.concrete.com.br/2019/01/24/cypress-com-cucumber-nos-testes-e2e/
+    url: https://imasters.com.br/front-end/testes-e2e-com-cypress-no-quasar-framework
     sourceName: iMasters
     sourceUrl: https://imasters.com.br/
     author: Patrick Pinheiro Mmonteiro
@@ -39,6 +871,14 @@ large:
     author: Cameron Choi
     date: Jan 18, 2019
     img: /img/examples/what-i-learned-cypress-3-weeks.jpg
+
+  - title: "Integrating Cypress.io into Solar Monkey's codebase"
+    url: http://engineering.solarmonkey.nl/blog/integrating-cypress-into-solar-monkey/
+    sourceName: Solar Monkey Engineering
+    sourceUrl: http://engineering.solarmonkey.nl/
+    author: Solar Monkey Engineering
+    date: Jan 18, 2019
+    img: /img/examples/cypress-into-solar-monkey-codebase.png
 
   - title: "Introducción a la automatización de tests E2E con Cypress.io"
     url: https://blog.irontec.com/introduccion-automatizacion-tests-e2e-cypress-io/
@@ -224,6 +1064,14 @@ large:
     author: Kyle Galbraith
     img: /img/examples/kyle-galbraith-how-to-run.png
 
+  - title: "Spend more time coding, less time testing: Our Investment in Cypress.io"
+    url: https://www.linkedin.com/pulse/spend-more-time-coding-less-testing-our-investment-michael-droesch
+    sourceName: LinkedIn Pulse
+    sourceUrl:
+    date: Aug 6, 2018
+    author: Michael Droesch
+    img: /img/examples/more-time-coding-less-time-testing.png
+
   - title: "Setting up Bitbucket Pipelines with proper caching of NPM and Cypress"
     url: https://medium.com/@ondrej.janosik42/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress-74d033888186
     sourceName: Medium
@@ -286,7 +1134,15 @@ large:
     sourceUrl: https://applitools.com/blog/
     date: June 25, 2018
     author: Gil Tayar
-    img: https://applitools.com/blog/wp-content/uploads/2018/06/so-many-choices-s.jpg
+    img: /img/examples/applitools-so-many-choices.jpg
+
+  - title: "Selenium vs. Cypress: Is WebDriver on Its Way Out?"
+    url: https://crossbrowsertesting.com/blog/test-automation/selenium-vs-cypress/
+    sourceName: CrossBrowserTesting
+    sourceUrl: https://crossbrowsertesting.com/blog/
+    date: June 12, 2018
+    author: Alex McPeak
+    img: /img/examples/selenium-vs-cypress-webdriver-on-its-way.png
 
   - title: "How We Built Our Automated UI Testing Framework"
     url: https://www.endgame.com/blog/technical-blog/how-we-built-our-automated-ui-testing-framework
@@ -328,8 +1184,7 @@ large:
     author: Fabian Gosebrink
     img: /img/examples/e2e-with-angular-and-cypress.jpg
 
-  - title: "Testing React Apps with Cypress:
-  A brief guide on how to run End-To-End testing on React apps with Cypress."
+  - title: "Testing React Apps with Cypress: A brief guide on how to run End-To-End testing on React apps with Cypress."
     url: https://blog.bitsrc.io/testing-react-apps-with-cypress-658bc482678
     sourceName: Bits and Pieces
     sourceUrl: https://blog.bitsrc.io/
@@ -401,7 +1256,7 @@ large:
     author: Christoph Benjamin Weber
     img: /img/examples/cloud-and-hand.jpg
 
-  - title: "Cypress.io — Use the Log API with custom commands"
+  - title: "Cypress.io — Use the Log API with custom commands"
     url: https://medium.com/@NicholasBoll/cypress-io-use-the-log-api-with-custom-commands-b4bffca0d4c5
     sourceName: "Medium @NicholasBoll"
     sourceUrl: https://medium.com/@NicholasBoll
@@ -457,7 +1312,7 @@ large:
     author: Gonzalo Pozzo
     img: /img/examples/cypress-lesson-in-espanol-with-emojis.jpg
 
-  - title: "Cypress.io — Scaling E2E testing with custom commands"
+  - title: "Cypress.io — Scaling E2E testing with custom commands"
     url: https://medium.com/@NicholasBoll/cypress-io-scaling-e2e-testing-with-custom-commands-6b72b902aab
     sourceName: Medium
     sourceUrl: https://medium.com/@NicholasBoll
@@ -553,7 +1408,7 @@ large:
     author: Joe Colantonio
     img: /img/examples/selenium-versus-robot-boxing.jpg
 
-  - title: "No-Brainer HTML, JS, CSS and cypress.io testing starter tutorial — Part 8"
+  - title: "No-Brainer HTML, JS, CSS and cypress.io testing starter tutorial — Part 8"
     url: https://medium.com/oke-software-poland/no-brainer-html-js-css-and-cypress-io-testing-starter-tutorial-part-7-e0434f4422d6
     sourceName: OKE Software Poland
     sourceUrl: https://medium.com/oke-software-poland
@@ -561,7 +1416,7 @@ large:
     author: Wojciech Bilicki
     img: /img/examples/no-brainer-html-css-javascript-testing-cypress.jpg
 
-  - title: "No-Brainer HTML, JS, CSS and cypress.io testing starter tutorial — Part 7"
+  - title: "No-Brainer HTML, JS, CSS and cypress.io testing starter tutorial — Part 7"
     url: https://medium.com/oke-software-poland/no-brainer-html-js-css-and-cypress-io-testing-starter-tutorial-part-7-e19dbbcfb090
     sourceName: OKE Software Poland
     sourceUrl: https://medium.com/oke-software-poland
@@ -703,6 +1558,14 @@ large:
     author: Kamil Ogórek
     img: /img/examples/corgibytes-cypress-browser-tests-graph.jpg
 
+  - title: "The Right Way to Test React Components"
+    url: https://medium.freecodecamp.org/the-right-way-to-test-react-components-548a4736ab22
+    sourceName: freeCodeCamp
+    sourceUrl: https://medium.freecodecamp.org/
+    author: Lily Scott
+    date: Feb 4, 2017
+    img: /img/examples/right-way-to-test-react-components.png
+
   - title: Cypress will change the way you develop
     url: https://hackernoon.com/cypress-will-change-the-way-you-develop-47a194d2a33f
     sourceName: Hackernoon
@@ -750,5 +1613,3 @@ large:
     date: Jan 27, 2016
     author: Kiki Roeder
     img: /img/examples/hypepotamus-guy-testing-website.jpg
-
-

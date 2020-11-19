@@ -63,9 +63,7 @@ Option | Default | Description
 
 {% yields sets_subject cy.wait 'yields an object containing the HTTP request and response properties of the XHR' %}
 
-{% note warning %}
-Please be aware that Cypress does NOT currently support the Fetch API. See {% issue 95 %} for more details and temporary workarounds.
-{% endnote %}
+{% partial network_stubbing_warning %}
 
 # Examples
 
@@ -83,7 +81,7 @@ You almost **never** need to wait for an arbitrary period of time. There are alw
 Read about {% url 'best practices' best-practices#Unnecessary-Waiting %} here.
 {% endnote %}
 
-Additionally, its often much easier to use {% url `cy.debug()` debug %} or {% url `cy.pause()` pause %} when debugging your test code.
+Additionally, it is often much easier to use {% url `cy.debug()` debug %} or {% url `cy.pause()` pause %} when debugging your test code.
 
 ## Alias
 
@@ -138,6 +136,8 @@ cy.get('#book-results').should('have.length', 1)
 
 ### You can pass an array of aliases that will be waited on before resolving.
 
+When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
+
 ```javascript
 cy.server()
 cy.route('users/*').as('getUsers')
@@ -168,6 +168,29 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
 
 # Notes
 
+## Nesting
+
+Cypress automatically waits for the network call to complete before proceeding to the next command.
+
+```js
+// Anti-pattern: placing Cypress commands inside .then callbacks
+cy.wait('@alias')
+  .then(() => {
+    cy.get(...)
+  })
+
+// Recommended practice: write Cypress commands serially
+cy.wait('@alias')
+cy.get(...)
+
+// Example: assert response property before proceeding
+cy.wait('@alias').its('status').should('eq', 200)
+cy.get(...)
+```
+
+Read {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Commands-Run-Serially %}
+
+
 ## Timeouts
 
 ### `requestTimeout` and `responseTimeout`
@@ -178,21 +201,25 @@ The first period waits for a matching request to leave the browser. This duratio
 
 This means that when you begin waiting for an aliased XHR, Cypress will wait up to 5 seconds for a matching XHR to be created. If no matching XHR is found, you will get an error message that looks like this:
 
-![Error for no matching XHR](/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png)
+{% imgTag /img/api/wait/error-for-no-matching-route-when-waiting-in-test.png "Error for no matching XHR" %}
 
 Once Cypress detects that a matching XHR has begun its request, it then switches over to the 2nd waiting period. This duration is configured by the {% url `responseTimeout` configuration#Timeouts %} option - which has a default of `20000` ms.
 
 This means Cypress will now wait up to 20 seconds for the external server to respond to this XHR. If no response is detected, you will get an error message that looks like this:
 
-![Timeout error for XHR wait](/img/api/wait/timeout-error-when-waiting-for-route-response.png)
+{% imgTag /img/api/wait/timeout-error-when-waiting-for-route-response.png "Error for no matching XHRTimeout error for XHR wait" %}
 
 This gives you the best of both worlds - a fast error feedback loop when requests never go out and a much longer duration for the actual external response.
+
+### Using an Array of Aliases
+
+When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 # Rules
 
 ## Requirements {% helper_icon requirements %}
 
-{% requirements parent cy.wait %}
+{% requirements wait cy.wait %}
 
 ## Assertions {% helper_icon assertions %}
 
@@ -215,14 +242,15 @@ cy.wait('@userPut').its('url').should('include', 'users')
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/wait/command-log-when-waiting-for-aliased-route.png)
+{% imgTag /img/api/wait/command-log-when-waiting-for-aliased-route.png "Command Log wait" %}
 
 When clicking on `wait` within the command log, the console outputs the following:
 
-![Console Log](/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png)
+{% imgTag /img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png "Console Log wait" %}
 
 {% history %}
-| 3.1.3 | Added `requestTimeout` and `responseTimout` option
+{% url "3.1.3" changelog#3-1-3 %} | Added `requestTimeout` and `responseTimout` option
+{% url "< 0.3.3" changelog#0.3.3 %} | `cy.wait()` command added
 {% endhistory %}
 
 # See also

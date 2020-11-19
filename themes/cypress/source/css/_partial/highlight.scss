@@ -1,6 +1,6 @@
 code {
   margin: 0;
-  padding: 0px 4px;
+  padding: 0 4px;
   display: inline-block;
   line-height: 1.5;
   border: 0;
@@ -126,24 +126,16 @@ a code {
         color: $highlight-comment;
       }
 
-      &.string {
+      &.string, &.selector {
         color: $highlight-green;
       }
 
-      &.regex, &.boolean, &.number  {
+      &.regex, &.boolean, &.number, &.property, .interpolation  {
         color: $highlight-red;
       }
 
-      .attr-value {
+      .attr-value, .interpolation-punctuation {
         color: $highlight-purple;
-      }
-
-      .interpolation {
-        color: $highlight-red;
-      }
-
-      .interpolation-punctuation {
-         color: $highlight-purple;
       }
     }
   }
@@ -153,6 +145,7 @@ a code {
   &[class*="language-"] {
     padding: 15px 0;
     margin: 25px 0;
+    border-radius: 6px;
 
     .token.punctuation {
       color: #ddd;

@@ -1,6 +1,5 @@
 ---
 title: location
-
 ---
 
 Get the global `window.location` object of the page that is currently active.
@@ -54,7 +53,7 @@ Option | Default | Description
 - `search`
 - `toString`
 
-***When given a `key` argument:***
+### When given a `key` argument:
 
 {% yields sets_subject cy.location 'yields the value of the location property as a string' %}
 
@@ -62,7 +61,7 @@ Option | Default | Description
 
 ## No Args
 
-***Make assertions about every location property***
+### Make assertions about every location property
 
 ```javascript
 cy.visit('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
@@ -81,7 +80,7 @@ cy.location().should((loc) => {
 })
 ```
 
-***Check location for query params and pathname***
+### Check location for query params and pathname
 
 We can yield the location object within a {% url `.should()` should %} command and work with it directly.
 
@@ -95,7 +94,7 @@ cy.location().should((loc) => {
 
 ## Key
 
-***Assert that a redirect works***
+### Assert that a redirect works
 
 Grab only the `pathname` and add an assertion.
 
@@ -108,13 +107,13 @@ cy.location('pathname').should('eq', '/login')
 
 ## Native Location
 
-***No need to use `window.location`***
+### No need to use `window.location`
 
-Cypress automatically normalizes the `cy.location()` command and strips out extraneous values and properties found in `window.location`. Also, the object literal yielded by `cy.location()` is just a basic object literal, not the special `window.location` object.
+Cypress automatically normalizes the `cy.location()` command and strips out extraneous values and properties found in `window.location`. Also, the object literal yielded by `cy.location()` is a basic object literal, not the special `window.location` object.
 
 When changing properties on the real `window.location` object, it forces the browser to navigate away. In Cypress, the object yielded is a plain object, so changing its properties will have no effect on navigation.
 
-***Console output of `window.location`***
+### Console output of `window.location`
 
 ```javascript
 cy.window().then((win) => {
@@ -122,9 +121,9 @@ cy.window().then((win) => {
 })
 ```
 
-![Console.log of window.location](/img/api/location/window-location-object-printed-in-console-log.png)
+{% imgTag /img/api/location/window-location-object-printed-in-console-log.png "Console.log of window.location" %}
 
-***Console output of `.location()`***
+### Console output of `.location()`
 
 ```javascript
 cy.location().then((loc) => {
@@ -132,7 +131,7 @@ cy.location().then((loc) => {
 })
 ```
 
-![Console Log of Cypress location command](/img/api/location/special-cypress-location-object-logged-in-console-output.png)
+{% imgTag /img/api/location/special-cypress-location-object-logged-in-console-output.png "Console Log of Cypress location command" %}
 
 # Rules
 
@@ -160,11 +159,11 @@ cy.location().should((loc) => {
 
 The commands above will display in the Command Log as:
 
-![Command Log](/img/api/location/make-assertion-about-location-url-in-tests.png)
+{% imgTag /img/api/location/make-assertion-about-location-url-in-tests.png "Command Log of Cypress location command" %}
 
 When clicking on `location` within the command log, the console outputs the following:
 
-![Console Log](/img/api/location/location-object-in-console-log.png)
+{% imgTag /img/api/location/location-object-in-console-log.png "Console Log of Cypress location command" %}
 
 # See also
 

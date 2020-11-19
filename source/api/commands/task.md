@@ -2,7 +2,7 @@
 title: task
 ---
 
-Execute code in {% url "Node.js" https://nodejs.org %} via the `task` plugin event.
+Execute code in {% url "Node" https://nodejs.org %} via the `task` plugin event.
 
 {% note warning 'Anti-Pattern' %}
 We do not recommend starting a web server using `cy.task()`. Read about {% url 'best practices' best-practices#Web-Servers %} here.
@@ -24,15 +24,18 @@ cy.task(event, arg, options)
 // in test
 cy.task('log', 'This will be output to the terminal')
 ```
+
 ```javascript
 // in plugins file
-on('task', {
-  log (message) {
-    console.log(message)
+module.exports = (on, config) => {
+  on('task', {
+    log (message) {
+      console.log(message)
 
-    return null
-  }
-})
+      return null
+    }
+  })
+}
 ```
 
 ## Arguments
@@ -54,14 +57,16 @@ cy.task('hello', { greeting: 'Hello', name: 'World' })
 
 ```javascript
 // in plugins/index.js
-on('task', {
-  // deconstruct the individual properties
-  hello ({ greeting, name }) {
-    console.log('%s, %s', greeting, name)
+module.exports = (on, config) => {
+  on('task', {
+    // deconstruct the individual properties
+    hello ({ greeting, name }) {
+      console.log('%s, %s', greeting, name)
 
-    return null
-  }
-})
+      return null
+    }
+  })
+}
 ```
 
 **{% fa fa-angle-right %} options** ***(Object)***
@@ -79,7 +84,7 @@ Option | Default | Description
 
 # Examples
 
-## Command
+## Event
 
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
@@ -105,15 +110,17 @@ cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 // in plugins/index.js
 const fs = require('fs')
 
-on('task', {
-  readFileMaybe (filename) {
-    if (fs.existsSync(filename)) {
-      return fs.readFileSync(filename, 'utf8')
-    }
+module.exports = (on, config) => {
+  on('task', {
+    readFileMaybe (filename) {
+      if (fs.existsSync(filename)) {
+        return fs.readFileSync(filename, 'utf8')
+      }
 
-    return null
-  }
-})
+      return null
+    }
+  })
+}
 ```
 
 ### Seed a database
@@ -143,6 +150,71 @@ module.exports = (on, config) => {
   on('task', {
     'defaults:db': () => {
       return db.seed('defaults')
+    }
+  })
+}
+```
+
+### Return a Promise from an asynchronous task
+
+```javascript
+// in test
+cy.task('pause', 1000)
+```
+
+```javascript
+// in plugins/index.js
+module.exports = (on, config) => {
+  on('task', {
+    pause (ms) {
+      return new Promise((resolve) => {
+        // tasks should not resolve with undefined
+        setTimeout(() => resolve(null), ms)
+      })
+    }
+  })
+}
+```
+
+### Save a variable across non same-origin URL visits
+
+When visiting non same-origin URL, Cypress will {% url "change the hosted URL to the new URL" web-security %}, wiping the state of any local variables. We want to save a variable across visiting non same-origin URLs.
+
+We can save the variable and retrieve the saved variable outside of the test using `cy.task()` as shown below.
+
+```javascript
+// in test
+describe('Href visit', () => {
+  it('captures href', () => {
+    cy.visit('https://www.mywebapp.com')
+    cy.get('a').invoke('attr', 'href')
+      .then((href) => {
+        // href is not same-origin as current url
+        // like https://www.anotherwebapp.com
+        cy.task('setHref', href)
+      })
+  })
+
+  it('visit href', () => {
+    cy.task('getHref').then((href) => {
+      // visit non same-origin url https://www.anotherwebapp.com
+      cy.visit(href)
+    })
+  })
+})
+```
+
+```javascript
+// in plugins/index.js
+let href
+
+module.exports = (on, config) => {
+  on('task', {
+    setHref: (val) => {
+      return href = val
+    },
+    getHref: () => {
+      return href
     }
   })
 }
@@ -202,8 +274,67 @@ on('task', myTask)
 See {% issue 2284 '#2284' %} for implementation.
 
 {% note warning Duplicate task keys %}
-If multiple task objects use the same key, the later registration will overwrite that particular key, just like merging multiple objects with duplicate keys will overwrite the first one.
+If multiple task objects use the same key, the later registration will overwrite that particular key, similar to how merging multiple objects with duplicate keys will overwrite the first one.
 {% endnote %}
+
+## Reset timeout via `Cypress.config()`
+
+You can change the timeout of `cy.task()` for the remainder of the tests by setting the new values for `taskTimeout` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('taskTimeout', 30000)
+Cypress.config('taskTimeout') // => 30000
+```
+
+## Set timeout in the test configuration
+
+You can configure the `cy.task()` timeout within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the timeout throughout the duration of the tests, then return it to the default `taskTimeout` when complete.
+
+```js
+describe('has data available from database', { taskTimeout: 90000 }, () => {
+  before(() => {
+    cy.task('seedDatabase')
+  })
+
+  // tests
+
+  after(() => {
+    cy.task('resetDatabase')
+  })
+})
+```
+
+## Argument should be serializable
+
+The argument `arg` sent via `cy.task(name, arg)` should be serializable; it cannot have circular dependencies (issue {% issue 5539 %}). If there are any special fields like `Date`, you are responsible for their conversion (issue {% issue 4980 %}):
+
+```javascript
+// in test
+cy.task('date', new Date())
+  .then((s) => {
+    // the yielded result is a string
+    // we need to convert it to Date object
+    const result = new Date(s)
+  })
+```
+
+```javascript
+// in plugins/index.js
+module.exports = (on, config) => {
+  on('task', {
+    date (s) {
+      // s is a string, so convert it to Date
+      const d = new Date(s)
+
+      // do something with the date
+      // and return it back
+      return d
+    }
+  })
+}
+```
 
 # Rules
 
@@ -221,7 +352,7 @@ If multiple task objects use the same key, the later registration will overwrite
 
 # Command Log
 
-### List the contents of `cypress.json`
+### List the contents of the default `cypress.json` configuration file
 
 ```javascript
 cy.task('readJson', 'cypress.json')
@@ -229,11 +360,15 @@ cy.task('readJson', 'cypress.json')
 
 The command above will display in the Command Log as:
 
-![Command Log task](/img/api/task/task-read-cypress-json.png)
+{% imgTag /img/api/task/task-read-cypress-json.png "Command Log task" %}
 
 When clicking on the `task` command within the command log, the console outputs the following:
 
-![console.log task](/img/api/task/console-shows-task-result.png)
+{% imgTag /img/api/task/console-shows-task-result.png "Console Log task" %}
+
+{% history %}
+{% url "3.0.0" changelog#3-0-0 %} | `cy.task()` command added
+{% endhistory %}
 
 # See also
 
@@ -244,3 +379,4 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url `cy.writeFile()` writefile %}
 - {% url "Blog: Incredibly Powerful cy.task()" https://glebbahmutov.com/blog/powerful-cy-task/ %}
 - {% url "Blog: Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %}
+- {% url "Universal Code Test with Cypress" https://glebbahmutov.com/blog/universal-code-test/ %}

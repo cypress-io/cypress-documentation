@@ -6,52 +6,60 @@ guides:
     installing-cypress: installing-cypress.html
     writing-your-first-test: writing-your-first-test.html
     testing-your-app: testing-your-app.html
-    # next-steps: next-steps.html
   core-concepts:
     introduction-to-cypress: introduction-to-cypress.html
     writing-and-organizing-tests: writing-and-organizing-tests.html
+    retry-ability: retry-ability.html
     interacting-with-elements: interacting-with-elements.html
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
     test-runner: test-runner.html
-    dashboard-service: dashboard-service.html
+  dashboard:
+    dashboard-introduction: introduction.html
+    projects: projects.html
+    runs: runs.html
+    organizations: organizations.html
+    users: users.html
+    github-integration: github-integration.html
+    slack-integration: slack-integration.html
+    analytics: analytics.html
+    flaky-test-management: flaky-test-management.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
     debugging: debugging.html
     network-requests: network-requests.html
+    test-retries: test-retries.html
     continuous-integration: continuous-integration.html
     parallelization: parallelization.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
     screenshots-and-videos: screenshots-and-videos.html
     launching-browsers: launching-browsers.html
+    cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
+  component-testing:
+    component-testing-introduction: introduction.html
   tooling:
-    intelligent-code-completion: intelligent-code-completion.html
+    IDE-integration: IDE-integration.html
     plugins-guide: plugins-guide.html
     reporters: reporters.html
     typescript-support: typescript-support.html
-
-  # advanced-cypress:
-    # the-cypress-workflow: the-cypress-workflow.html
-    # coming-from-selenium: coming-from-selenium.html
-    # custom-commands: custom-commands.html
-    # how-cypress-really-works: how-cypress-really-works.html
-    # talking-to-your-backend: talking-to-your-backend.html
-    # spawning-processes: spawning-processes.html
+    visual-testing: visual-testing.html
+    code-coverage: code-coverage.html
   references:
     assertions: assertions.html
     configuration: configuration.html
+    proxy-configuration: proxy-configuration.html
     best-practices: best-practices.html
     error-messages: error-messages.html
     bundled-tools: bundled-tools.html
-    # creating-fixtures: creating-fixtures.html
-    # cypress-api-design: cypress-api-design.html
     trade-offs: trade-offs.html
-    # contributing: contributing.html
+    troubleshooting: troubleshooting.html
     changelog: changelog.html
+    migration-guide: migration-guide.html
     roadmap: roadmap.html
+    experiments: experiments.html
 
 api:
   api:
@@ -93,6 +101,7 @@ api:
     go: go.html
     hash: hash.html
     hover: hover.html
+    http: http.html
     invoke: invoke.html
     its: its.html
     last: last.html
@@ -112,6 +121,7 @@ api:
     readfile: readfile.html
     reload: reload.html
     request: request.html
+    rightclick: rightclick.html
     root: root.html
     route: route.html
     screenshot: screenshot.html
@@ -120,6 +130,7 @@ api:
     select: select.html
     server: server.html
     setcookie: setcookie.html
+    shadow: shadow.html
     should: should.html
     siblings: siblings.html
     spread: spread.html
@@ -148,6 +159,7 @@ api:
     minimatch: minimatch.html
     moment: moment.html
     promise: promise.html
+    sinon: sinon.html
   cypress-api:
     custom-commands: custom-commands.html
     cookies: cookies.html
@@ -159,6 +171,8 @@ api:
     config: config.html
     dom: dom.html
     env: env.html
+    isbrowser: isbrowser.html
+    iscy: iscy.html
     cypress-log: cypress-log.html
     platform: platform.html
     spec: spec.html
@@ -180,7 +194,10 @@ examples:
     applications: applications.html
     docker: docker.html
     workshop: workshop.html
+    projects-media: projects-media.html
   media:
+    courses-media: courses-media.html
+    webinars-media: webinars-media.html
     blogs-media: blogs-media.html
     talks-media: talks-media.html
     podcasts-media: podcasts-media.html
