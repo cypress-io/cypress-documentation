@@ -1,5 +1,5 @@
 ---
-title: route2
+title: http
 ---
 
 Use `cy.http()` to manage the behavior of HTTP requests at the network layer.
