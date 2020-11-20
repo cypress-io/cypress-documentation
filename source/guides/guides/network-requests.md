@@ -274,6 +274,14 @@ In this example, there are many possible sources of failure. In most testing too
 
 With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoint your specific problem. If the response never came back, you'll receive an error like this:
 
+<!--
+To reproduce the following screenshot:
+it('test', () => {
+  cy.http('foo/bar').as('getSearch')
+  cy.wait('@getSearch')
+})
+-->
+
 {% imgTag /img/guides/clear-source-of-failure.png "Wait Failure" %}
 
 Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.
