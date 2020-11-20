@@ -29,7 +29,6 @@ Many of these issues are currently being worked on or are on our {% url "Roadmap
 - {% issue 170#issuecomment-340012621 "Testing file uploads is application specific." %}
 - {% issue 433#issuecomment-280465552 "Testing file downloads is application specific." %}
 - {% issue 685 "iframe support is somewhat limited, but does work." %}
-- {% issue 144 "There is no shadow DOM support, but there are workarounds." %} See {% url "this comment." https://github.com/cypress-io/cypress/issues/830#issuecomment-449411701 %}
 
 # Permanent trade-offs
 
