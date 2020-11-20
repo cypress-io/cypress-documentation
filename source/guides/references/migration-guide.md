@@ -6,6 +6,58 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 6.0. {% url "See the full changelog for 6.0" changelog#6-0-0 %}.
 
+## Non-existent element assertions
+
+In previous versions of Cypress, there was a possibility for tests to falsely pass when asserting a negative state on non-existent elements.
+
+For example, in the tests below we want to test that the search dropdown is no longer visible when the search input is blurred because we hide the element in CSS styles. Except in this test, we've mistakenly misspelled one of our selectors.
+
+```js
+cy.get('input[type=search]').type('Cypress')
+cy.get('#dropdown').should('be.visible')
+cy.get('input[type=search]').blur()
+
+// below we misspelled "dropdown" in the selector 😞
+// the assertions falsely pass in Cypress < 6.0
+// and will correctly fail in Cypress 6.0 +
+cy.get('#dropdon').should('not.be.visible')
+cy.get('#dropdon').should('not.have.class', 'open')
+cy.get('#dropdon').should('not.contain', 'Cypress')
+```
+
+{% imgTag /img/guides/el-incorrectly-passes-existence-check.png "non-existent element before 6.0" "width-600" %}
+
+In 6.0, these assertions will now correctly fail, telling us that the `#dropdon` element doesn't exist in the DOM.
+
+{% imgTag /img/guides/el-correctly-fails-existence-check.png "non-existent element in 6.0" "width-600" %}
+
+### Assertions on non-existent elements
+
+This fix may cause some breaking changes in your tests if you are relying on assertions such as `not.be.visible` or `not.contains` to test that the DOM element did not *exist* in the DOM. This means you'll need to update your test code to be more specific about your assertions on non-existent elements.
+
+{% badge danger Before %} Assert that non existent element was not visible
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // assertions below pass in < 6.0, but properly fail in 6.0+
+  cy.get('.modal').should('not.be.visible')
+  cy.get('.modal').should('not.contain', 'Upgrade')
+})
+```
+
+{% badge success After %} Assert that non existent element does not exist
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // we should instead assert that the element doesn't exist
+  cy.get('.modal').should('not.exist')
+})
+```
+
 ## Opacity visibility
 
 DOM elements with `opacity: 0` style are no longer considered to be visible. This includes elements with an ancestor that has `opacity: 0` since a child element can never have a computed opacity greater than that of an ancestor.
@@ -44,30 +96,6 @@ it('test', () => {
   cy.get('.hidden').type('hi')    // ✅ types into element
   cy.get('.hidden').check()       // ✅ checks element
   cy.get('.hidden').select('yes') // ✅ selects element
-})
-```
-
-## `cy.route2()` renamed to `cy.http()`
-
-`cy.route2()` was renamed to {% url "`cy.http()`" http %} and will be removed in a future release. While this is not a breaking change, we encourage you to update usages of `cy.route2()` to use {% url "`cy.http()`" http %}.
-
-### Assert visibility of `opacity: 0` element
-
-{% badge danger Before %} `cy.route2()` command
-
-```ts
-cy.route2('POST', 'http://example.com/widgets', {
-  statusCode: 200,
-  body: 'it worked!'
-})
-```
-
-{% badge success After %} `cy.http()` command
-
-```ts
-cy.http('POST', 'http://example.com/widgets', {
-  statusCode: 200,
-  body: 'it worked!'
 })
 ```
 
