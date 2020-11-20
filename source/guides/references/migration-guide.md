@@ -62,6 +62,8 @@ it('test', () => {
 
 DOM elements with `opacity: 0` style are no longer considered to be visible. This includes elements with an ancestor that has `opacity: 0` since a child element can never have a computed opacity greater than that of an ancestor.
 
+Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} however and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
+
 ### Assert visibility of `opacity: 0` element
 
 {% badge danger Before %} Failed assertion that `opacity: 0` element is not visible.
@@ -84,19 +86,45 @@ it('test', () => {
 })
 ```
 
-Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
+### Perform actions on `opacity: 0` element
 
 ```js
 it('test', () => {
   // '.hidden' has 'opacity: 0' style.
   //
   // In all versions of Cypress, you can interact
-  //  with elements that have 'opacity: 0' style.
+  // with elements that have 'opacity: 0' style.
   cy.get('.hidden').click()       // ✅ clicks on element
   cy.get('.hidden').type('hi')    // ✅ types into element
   cy.get('.hidden').check()       // ✅ checks element
   cy.get('.hidden').select('yes') // ✅ selects element
 })
+```
+
+## `—disable-dev-shm-usage`
+
+We now pass `—disable-dev-shm-usage` to the Chrome browser flags by default. If you're passing this flag in your `plugins` file, you can now remove this code.
+
+{% badge danger Before %} Passing flag in plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
+
+{% badge success After %} Remove flag from plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {}
 ```
 
 # Migrating to Cypress 5.0
