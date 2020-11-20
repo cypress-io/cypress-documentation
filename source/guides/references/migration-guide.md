@@ -8,6 +8,10 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## Non-existent element assertions
 
+{% note info %}
+**Key takeway:** Use `.should('not.exist')` to assert that an element does not exist in the DOM (not `.should('not.be.visible')`, etc).
+{% endnote %}
+
 In previous versions of Cypress, there was a possibility for tests to falsely pass when asserting a negative state on non-existent elements.
 
 For example, in the tests below we want to test that the search dropdown is no longer visible when the search input is blurred because we hide the element in CSS styles. Except in this test, we've mistakenly misspelled one of our selectors.
