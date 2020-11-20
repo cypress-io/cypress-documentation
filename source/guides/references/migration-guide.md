@@ -131,6 +131,24 @@ module.exports = (on, config) => {
 module.exports = (on, config) => {}
 ```
 
+## Type yielded by `cy.wait(alias)` changed
+
+As part of the process of encouraging users to try out {% url "`cy.http()`" http %} and the deprecation of {% url "`cy.route()`" route %}, the type yielded by `cy.wait(alias)` has been changed.
+
+Before 6.0.0, `cy.wait(alias)` would yield an object of type `WaitXHR`. In 6.0.0 and onwards, it will yield an object of type `Request`. This matches the new request object type used for {% url "`cy.http()`" http %}.
+
+To restore the pre-6.0.0 type behavior for `cy.wait(alias)`, you can declare a global override for `cy.wait` like so:
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject = any> {
+      wait(alias: string): Chainable<Cypress.WaitXHR>
+    }
+  }
+}
+```
+
 # Migrating to Cypress 5.0
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
