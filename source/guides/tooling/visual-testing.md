@@ -270,3 +270,4 @@ If you are working on React components, read {% url "Visual testing for React co
 - {% url "Visual Testing Plugins" plugins#visual-testing %}
 - {% url "Writing a Plugin" writing-a-plugin %}
 - {% fa fa-github %} {% url 'Cypress Real World App (RWA)' https://github.com/cypress-io/cypress-realworld-app %} is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+- Read the blog post {% url "Debug a Flaky Visual Regression Test" https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/ %}
