@@ -566,7 +566,7 @@ Electron version: 10.1.5
 Bundled Node version: 12.14.1
 ```
 
-You can print individual component's version number
+You can print each individual component's version number also.
 
 ```shell
 cypress version --component package
