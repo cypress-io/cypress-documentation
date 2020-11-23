@@ -203,13 +203,25 @@
     - name: cypress-browser-permissions
       description: Controls permissions for desktop notifications, geolocation, and other browser APIs
       link: https://github.com/kamranayub/cypress-browser-permissions
-      keyboards: [permissions, notifications, geolocation, camera, microphone]
+      keywords: [permissions, notifications, geolocation, camera, microphone]
+      badge: community
+      
+    - name: cypress-repeat
+      description: Run Cypress multiple times in a row, great at finding test flake
+      link: https://github.com/bahmutov/cypress-repeat
+      keyboards: [cli, ci]
       badge: community
       
     - name: cypress-expect
       description: Cypress CLI wrapper where you can specify the total number of expected tests
       link: https://github.com/bahmutov/cypress-expect
-      keyboards: [cli]
+      keywords: [cli]
+      badge: community
+      
+    - name: cy-search
+      description: Search Cypress documentation from the terminal
+      link: https://github.com/bahmutov/cy-search
+      keywords: [cli]
       badge: community
 
 - name: Custom Commands
@@ -602,6 +614,12 @@
       description: Integration with open source service for visual testing and managing its results.
       link: https://github.com/Visual-Regression-Tracker/agent-cypress
       keywords: [screenshots, image-diff, visual regression]
+      badge: community
+
+    - name: Cypress Image Diff
+      description: Visual regression testing plugin maintained by DIT - UK Gov.
+      link: https://github.com/uktrade/cypress-image-diff
+      keywords: [screenshots, visual regression, image-diff]
       badge: community
 
 - name: Reporting

@@ -404,3 +404,5 @@ You can find more examples in our {% url "XHR Assertions" https://github.com/cyp
 - {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
 - {% url "See how to make a request with `cy.request()`" request %}
 - {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} test suites to see Cypress network handling in action.
+- Read {% url "Difference between cy.route and cy.route2" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
+- If you want to test the application in offline mode, read {% url "Testing an Application in Offline Network Mode" https://www.cypress.io/blog/2020/11/12/testing-application-in-offline-network-mode/ %}

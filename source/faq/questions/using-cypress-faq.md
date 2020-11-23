@@ -695,3 +695,14 @@ Yes, by using the newer API command {% url "cy.route2()" route2 %} as described 
 
 Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful. Read {% url "Access XState from Cypress Test" https://glebbahmutov.com/blog/cypress-and-xstate/ %} for our start.
 
+## {% fa fa-angle-right %} Can Cypress be used for performance testing?
+
+Cypress is not built for performance testing. Because Cypress instruments the page under test, proxies the network requests, and tightly controls the test steps, the Test Runner adds its own overhead. Thus the performance numbers you get from Cypress tests are slower than "normal" use. Still, you can access the native `window.performance` object and grab the page time measurements, see the [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom) recipe. You can also [run Lighthouse audit straight from Cypress](https://www.mariedrake.com/post/web-performance-testing-with-google-lighthouse) via [cypress-audit](https://www.npmjs.com/package/cypress-audit) community plugin.
+
+## {% fa fa-angle-right %} Can Cypress test WASM code?
+
+Yes, read the blog post {% url "Cypress WASM Example" https://glebbahmutov.com/blog/cypress-wasm-example/ %}. We welcome more user feedback to make WASM testing simpler.
+
+## {% fa fa-angle-right %} Can I use Cypress to document my application?
+
+End-to-end tests are an excellent way to keep your application's documentation accurate and up-to-date. Read {% url "Cypress Book" https://glebbahmutov.com/blog/cypress-book/ %} blog post, and take a look at {% url "cypress-movie" https://github.com/bahmutov/cypress-movie %} project.
