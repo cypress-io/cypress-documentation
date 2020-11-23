@@ -424,7 +424,7 @@ cy.http('POST', '/users', { id: 123 }).as('postUser')
 cy.get('form').submit()
 
 cy.wait('@postUser').then(({ request }) => {
-  expect(JSON.parse(request.body)).to.have.property('name', 'Brian')
+  expect(request.body).to.have.property('name', 'Brian')
 })
 
 cy.contains('Successfully created user: Brian')
