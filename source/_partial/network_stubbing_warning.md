@@ -1,4 +1,8 @@
-{% note danger %}
-🚨 Please be aware that `cy.route()` and `cy.server()` only currently supports intercepting XMLHttpRequests. **Requests using the Fetch API and other types of network requests like page loads and `<script>` tags will not be intercepted by `cy.route()` and `cy.server()`.** You can polyfill `window.fetch` to spy on and stub requests using `cy.route()` and `cy.server()` by enabling the [experimental](https://on.cypress.io/experimental) feature `experimentalFetchPolyfill`. See {% issue 95 %} for more details and temporary workarounds.
+{% note warning %}
+⚠️ `cy.route()` and `cy.server()` only support intercepting XMLHttpRequests. Requests using the Fetch API and other types of network requests like page loads and `<script>` tags will not be intercepted by `cy.route()` and `cy.server()`.
 
-Cypress also has a new [`cy.http()`](/api/commands/http.html) command that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [`cy.http()` documentation](/api/commands/http.html).{% endnote %}
+**To support requests using the Fetch API you can use one of the solutions below:**
+
+- Use [`cy.http()`](/api/commands/http.html) which supports requests using the Fetch API and other types of network requests like page loads. See [`cy.http()`](/api/commands/http.html).
+- Polyfill `window.fetch` to spy on and stub requests using `cy.route()` and `cy.server()` by enabling [`experimentalFetchPolyfill`](https://on.cypress.io/experimental). See {% issue 95 %} for more details and temporary workarounds.
+{% endnote %}
