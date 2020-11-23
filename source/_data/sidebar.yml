@@ -101,7 +101,7 @@ api:
     go: go.html
     hash: hash.html
     hover: hover.html
-    http: http.html
+    intercept: intercept.html
     invoke: invoke.html
     its: its.html
     last: last.html
