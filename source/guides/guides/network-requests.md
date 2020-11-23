@@ -5,7 +5,7 @@ title: Network Requests
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How Cypress enables you to stub out the back end with {% url `cy.http()` http %}
+- How Cypress enables you to stub out the back end with {% url `cy.intercept()` intercept %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
 - How to use Aliases to refer back to requests and wait on them
@@ -109,16 +109,16 @@ Check out any of the {% url "Real World App test suites" https://github.com/cypr
 
 Cypress enables you to stub a response and control the `body`, `status`, `headers`, or even delay.
 
-{% url `cy.http()` http %} is used to control the behavior of HTTP requests. You can statically define the body, HTTP status code, headers, and other response characteristics.
+{% url `cy.intercept()` intercept %} is used to control the behavior of HTTP requests. You can statically define the body, HTTP status code, headers, and other response characteristics.
 
 {% note info %}
-See {% url '`cy.http()`' http %} for more information and for examples on stubbing responses.
+See {% url '`cy.intercept()`' intercept %} for more information and for examples on stubbing responses.
 {% endnote %}
 
 # Routing
 
 ```javascript
-cy.http(
+cy.intercept(
   {
     method: 'GET',      // Route all GET requests
     url: '/users/*',    // that have a URL that matches '/users/*'
@@ -127,11 +127,11 @@ cy.http(
 )
 ```
 
-When you use {% url `cy.http()` http %} to define a route, Cypress displays this under "Routes" in the Command Log.
+When you use {% url `cy.intercept()` intercept %} to define a route, Cypress displays this under "Routes" in the Command Log.
 
 {% imgTag /img/guides/server-routing-table.png "Routing Table" %}
 
-When a new test runs, Cypress will restore the default behavior and remove all routes and stubs. For a complete reference of the API and options, refer to the documentation for {% url `cy.http()` http %}.
+When a new test runs, Cypress will restore the default behavior and remove all routes and stubs. For a complete reference of the API and options, refer to the documentation for {% url `cy.intercept()` intercept %}.
 
 # Fixtures
 
@@ -143,7 +143,7 @@ When stubbing a response, you typically need to manage potentially large and com
 
 ```javascript
 // we set the response to be the activites.json fixture
-cy.http('GET', 'activities/*', { fixture: 'activities.json' })
+cy.intercept('GET', 'activities/*', { fixture: 'activities.json' })
 ```
 
 ## Organizing
@@ -179,8 +179,8 @@ This following section utilizes a concept known as {% url 'Aliasing' variables-a
 Here is an example of aliasing requests and then subsequently waiting on them:
 
 ```javascript
-cy.http('activities/*', { fixture: 'activities' }).as('getActivities')
-cy.http('messages/*', { fixture: 'messages' }).as('getMessages')
+cy.intercept('activities/*', { fixture: 'activities' }).as('getActivities')
+cy.intercept('messages/*', { fixture: 'messages' }).as('getMessages')
 
 // visit the dashboard, which should make requests that match
 // the two routes above
@@ -198,7 +198,7 @@ cy.get('h1').should('contain', 'Dashboard')
 If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
 
 ```javascript
-cy.http({
+cy.intercept({
   method: 'POST',
   url: '/myApi',
 }).as('apiCheck')
@@ -234,7 +234,7 @@ One advantage of declaratively waiting for responses is that it decreases test f
 What makes this example below so powerful is that Cypress will automatically wait for a request that matches the `getSearch` alias. Instead of forcing Cypress to test the *side effect* of a successful request (the display of the Book results), you can test the actual *cause* of the results.
 
 ```javascript
-cy.http('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
+cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
@@ -277,7 +277,7 @@ With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoi
 <!--
 To reproduce the following screenshot:
 it('test', () => {
-  cy.http('foo/bar').as('getSearch')
+  cy.intercept('foo/bar').as('getSearch')
   cy.wait('@getSearch')
 })
 -->
@@ -295,7 +295,7 @@ In our example above we can assert about the request object to verify that it se
 ```javascript
 // any request to "search/*" endpoint will automatically receive
 // an array with two book objects
-cy.http('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
+cy.intercept('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 
@@ -323,7 +323,7 @@ cy.get('#results')
 
 ```javascript
 // spy on POST requests to /users endpoint
-cy.http('POST', '/users').as('new-user')
+cy.intercept('POST', '/users').as('new-user')
 // trigger network calls by manipulating web app's user interface, then
 cy.wait('@new-user')
   .should('have.property', 'response.statusCode', 201)

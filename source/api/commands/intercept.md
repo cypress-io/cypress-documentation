@@ -1,31 +1,31 @@
 ---
-title: http
+title: intercept
 ---
 
-Use `cy.http()` to manage the behavior of HTTP requests at the network layer.
+Use `cy.intercept()` to manage the behavior of HTTP requests at the network layer.
 
-With `cy.http()`, you can:
+With `cy.intercept()`, you can:
 
 * stub or spy on any type of HTTP request.
 * {% urlHash "modify an HTTP request's body, headers, and URL" Intercepting-a-request %} before it is sent to the destination server.
 * stub the response to an HTTP request, either dynamically or statically.
 * {% urlHash "modify real HTTP responses" Intercepting-a-response %}, changing the body, headers, or HTTP status code before they are received by the browser.
-* and much more - `cy.http()` gives full access to all HTTP requests at all stages.
+* and much more - `cy.intercept()` gives full access to all HTTP requests at all stages.
 
 # Comparison to `cy.route()`
 
-Unlike {% url "`cy.route()`" route %}, `cy.http()`:
+Unlike {% url "`cy.route()`" route %}, `cy.intercept()`:
 
 * can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
-* does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.http()` at all.
+* does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 * does not have method set to `GET` by default
 
 # Usage
 
 ```ts
-cy.http(url, routeHandler?)
-cy.http(method, url, routeHandler?)
-cy.http(routeMatcher, routeHandler?)
+cy.intercept(url, routeHandler?)
+cy.intercept(method, url, routeHandler?)
+cy.intercept(routeMatcher, routeHandler?)
 ```
 
 ## Arguments
@@ -35,8 +35,8 @@ cy.http(routeMatcher, routeHandler?)
 Specify the URL to match. See the documentation for {% urlHash "`routeMatcher`" routeMatcher-RouteMatcher %} to see how URLs are matched.
 
 ```ts
-cy.http('http://example.com/widgets')
-cy.http('http://example.com/widgets', { fixture: 'widgets.json' })
+cy.intercept('http://example.com/widgets')
+cy.intercept('http://example.com/widgets', { fixture: 'widgets.json' })
 ```
 
 ### **{% fa fa-angle-right %} method** **_(`string`)_**
@@ -44,7 +44,7 @@ cy.http('http://example.com/widgets', { fixture: 'widgets.json' })
 Specify the HTTP method to match on.
 
 ```ts
-cy.http('POST', 'http://example.com/widgets', {
+cy.intercept('POST', 'http://example.com/widgets', {
   statusCode: 200,
   body: 'it worked!'
 })
@@ -113,7 +113,7 @@ All properties are optional. All properties that are set must match for the rout
 `routeMatcher` usage examples:
 
 ```ts
-cy.http({
+cy.intercept({
   pathname: '/search',
   query: {
     q: 'some terms'
@@ -123,7 +123,7 @@ cy.http({
 // with the query paramater 'q=some+terms'
 cy.wait('@searchForTerms')
 
-cy.http({
+cy.intercept({
   // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
   url: /^http:\/\/api\.example\.com\/widgets/
   headers: {
@@ -146,20 +146,20 @@ The `routeHandler` defines what will happen with a request if the {% urlHash "`r
 
 ## Yields {% helper_icon yields %}
 
-* `cy.http()` yields `null`.
-* `cy.http()` can be aliased, but otherwise cannot be chained further.
-* Waiting on an aliased `cy.http()` route using {% url "`cy.wait()`" wait %} will yield an object that contains information about the matching request/response cycle. See {% urlHash "Using the yielded object" Using-the-yielded-object %} for examples of how to use this object.
+* `cy.intercept()` yields `null`.
+* `cy.intercept()` can be aliased, but otherwise cannot be chained further.
+* Waiting on an aliased `cy.intercept()` route using {% url "`cy.wait()`" wait %} will yield an object that contains information about the matching request/response cycle. See {% urlHash "Using the yielded object" Using-the-yielded-object %} for examples of how to use this object.
 
 # Examples
 
 ## Waiting on a request
 
-Use {% url "`cy.wait()`" wait %} with `cy.http()` aliases to wait for the request/response cycle to complete.
+Use {% url "`cy.wait()`" wait %} with `cy.intercept()` aliases to wait for the request/response cycle to complete.
 
 ### With URL
 
 ```js
-cy.http('http://example.com/settings').as('getSettings')
+cy.intercept('http://example.com/settings').as('getSettings')
 // once a request to http://example.com/settings responds, this 'cy.wait' will resolve
 cy.wait('@getSettings')
 ```
@@ -167,7 +167,7 @@ cy.wait('@getSettings')
 ### With {% urlHash "`RouteMatcher`" routeMatcher-RouteMatcher %}
 
 ```js
-cy.http({
+cy.intercept({
   url: 'http://example.com/search',
   query: { q: 'expected terms' },
 }).as('search')
@@ -179,7 +179,7 @@ cy.wait('@search')
 
 ### Using the yielded object
 
-Using {% url "`cy.wait()`" wait %} on a `cy.http()` route alias yields an object which represents the request/response cycle:
+Using {% url "`cy.wait()`" wait %} on a `cy.intercept()` route alias yields an object which represents the request/response cycle:
 
 ```js
 cy.wait('@someRoute').then((request) => {
@@ -221,7 +221,7 @@ cy.wait('@gqlMutation')
 
 ```js
 // requests to '/update' will be fulfilled with a body of "success"
-cy.http('/update', 'success')
+cy.intercept('/update', 'success')
 ```
 
 ### With a fixture
@@ -229,7 +229,7 @@ cy.http('/update', 'success')
 ```js
 // requests to '/users.json' will be fulfilled
 // with the contents of the "users.json" fixture
-cy.http('/users.json', { fixture: 'users.json' })
+cy.intercept('/users.json', { fixture: 'users.json' })
 ```
 
 ### With a `StaticResponse` object
@@ -239,7 +239,7 @@ A `StaticResponse` object represents a response to an HTTP request, and can be u
 ```js
 const staticResponse = { /* some StaticResponse properties here... */ }
 
-cy.http('/projects', staticResponse)
+cy.intercept('/projects', staticResponse)
 ```
 
 Here are the available properties on `StaticResponse`:
@@ -286,7 +286,7 @@ Here are the available properties on `StaticResponse`:
 ### Asserting on a request
 
 ```js
-cy.http('POST', '/organization', (req) => {
+cy.intercept('POST', '/organization', (req) => {
   expect(req.body).to.include('Acme Company')
 })
 ```
@@ -296,7 +296,7 @@ cy.http('POST', '/organization', (req) => {
 You can use the route callback to modify the request before it is sent.
 
 ```js
-cy.http('POST', '/login', (req) => {
+cy.intercept('POST', '/login', (req) => {
   // set the request body to something different before it's sent to the destination
   req.body = 'username=janelane&password=secret123'
 })
@@ -307,7 +307,7 @@ cy.http('POST', '/login', (req) => {
 You can use the `req.reply()` function to dynamically control the response to a request.
 
 ```js
-cy.http('/billing', (req) => {
+cy.intercept('/billing', (req) => {
   // functions on 'req' can be used to dynamically respond to a request here
 
   // send the request to the destination server
@@ -362,7 +362,7 @@ The available functions on `req` are:
 If a Promise is returned from the route callback, it will be awaited before continuing with the request.
 
 ```js
-cy.http('POST', '/login', (req) => {
+cy.intercept('POST', '/login', (req) => {
   // you could asynchronously fetch test data...
   return getLoginCredentials()
   .then((credentials) => {
@@ -378,12 +378,12 @@ If `req.reply()` is not explicitly called inside of a route callback, requests w
 
 ```js
 // you could have a top-level http that sets an auth token on all requests
-cy.http('http://api.company.com/', (req) => {
+cy.intercept('http://api.company.com/', (req) => {
   req.headers['authorization'] = `token ${token}`
 })
 
 // and then another http that more narrowly asserts on certain requests
-cy.http('POST', 'http://api.company.com/widgets', (req) => {
+cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
   expect(req.body).to.include('analytics')
 })
 
@@ -397,7 +397,7 @@ cy.http('POST', 'http://api.company.com/widgets', (req) => {
 Inside of a callback passed to `req.reply()`, you can access the destination server's real response.
 
 ```js
-cy.http('/integrations', (req) => {
+cy.intercept('/integrations', (req) => {
   // req.reply() with a callback will send the request to the destination server
   req.reply((res) => {
     // 'res' represents the real destination response
@@ -409,7 +409,7 @@ cy.http('/integrations', (req) => {
 ### Asserting on a response
 
 ```js
-cy.http('/projects', (req) => {
+cy.intercept('/projects', (req) => {
   req.reply((res) => {
     expect(res.body).to.include('My Project')
   })
@@ -421,7 +421,7 @@ cy.http('/projects', (req) => {
 If a Promise is returned from the route callback, it will be awaited before sending the response to the browser.
 
 ```js
-cy.http('/users', (req) => {
+cy.intercept('/users', (req) => {
   req.reply((res) => {
     // the response will not be sent to the browser until 'waitForSomething()' resolves
     return waitForSomething()
@@ -436,7 +436,7 @@ You can use the `res.send()` function to dynamically control the incoming respon
 `res.send()` is implicitly called after the `req.reply` callback finishes if it has not already been called.
 
 ```js
-cy.http('/notification', (req) => {
+cy.intercept('/notification', (req) => {
   req.reply((res) => {
     // replaces 'res.body' with "Success" and sends the response to the browser
     res.send('Success')
@@ -480,7 +480,7 @@ The available functions on `res` are:
 ```
 
 {% history %}
-{% url "6.0.0" changelog#6-0-0 %} | Renamed `cy.route2()` to `cy.http()`.
+{% url "6.0.0" changelog#6-0-0 %} | Renamed `cy.route2()` to `cy.intercept()`.
 {% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` option and made it the default behavior.
 {% url "5.1.0" changelog#5-1-0 %} | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.
 {% endhistory %}

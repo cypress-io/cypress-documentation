@@ -137,7 +137,7 @@ cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
 
 ```javascript
 cy.fixture('users').then((json) => {
-  cy.http('GET', '/users/**', json)
+  cy.intercept('GET', '/users/**', json)
 })
 ```
 
@@ -154,7 +154,7 @@ You can modify fixture data directly before passing it along to a route.
 ```javascript
 cy.fixture('user').then((user)  => {
   user.firstName = 'Jane'
-  cy.http('GET', '/users/1', user).as('getUser')
+  cy.intercept('GET', '/users/1', user).as('getUser')
 })
 
 cy.visit('/users')
@@ -169,10 +169,10 @@ cy.wait('@getUser').then(({ request })  => {
 
 ### Using the `fixture` `StaticResponse` property
 
-Fixtures can also be referenced directly without using the `.fixture()` command by using the special property `fixture` on the {% url `cy.http()` http %} `StaticResponse` object.
+Fixtures can also be referenced directly without using the `.fixture()` command by using the special property `fixture` on the {% url `cy.intercept()` intercept %} `StaticResponse` object.
 
 ```javascript
-cy.http('GET', '/users/**', { fixture: 'users' })
+cy.intercept('GET', '/users/**', { fixture: 'users' })
 ```
 
 ## Validation
@@ -246,7 +246,7 @@ describe('User page', () => {
 
 # See also
 
-- {% url `cy.http()` http %}
+- {% url `cy.intercept()` intercept %}
 - {% url `.then()` then %}
 - {% url 'Recipe: Bootstrapping App Test Data' recipes#Server-Communication %}
 - {% url 'Fixtures' https://github.com/cypress-io/testing-workshop-cypress#fixtures %} section of the Cypress Testing Workshop

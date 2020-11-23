@@ -117,7 +117,7 @@ sidebar:
     go: go
     hash: hash
     hover: hover
-    http: http
+    intercept: intercept
     invoke: invoke
     its: its
     last: last

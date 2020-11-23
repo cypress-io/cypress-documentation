@@ -89,7 +89,7 @@ cy.exec('npm run my-script').its('stdout').should('contain', 'Done running the s
 ### Write to a file to create a fixture from response body
 
 ```javascript
-cy.http('POST', '/comments').as('postComment')
+cy.intercept('POST', '/comments').as('postComment')
 cy.get('.add-comment').click()
 cy.wait('@postComment').then(({ response }) => {
   cy.exec(`echo ${JSON.stringify(response.body)} >cypress/fixtures/comment.json`)
