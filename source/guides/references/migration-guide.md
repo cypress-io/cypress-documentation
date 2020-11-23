@@ -92,17 +92,38 @@ it('test', () => {
 
 ### Perform actions on `opacity: 0` element
 
+In all versions of Cypress, you can interact with elements that have `opacity: 0` style.
+
 ```js
 it('test', () => {
   // '.hidden' has 'opacity: 0' style.
-  //
-  // In all versions of Cypress, you can interact
-  // with elements that have 'opacity: 0' style.
   cy.get('.hidden').click()       // ✅ clicks on element
   cy.get('.hidden').type('hi')    // ✅ types into element
   cy.get('.hidden').check()       // ✅ checks element
   cy.get('.hidden').select('yes') // ✅ selects element
 })
+```
+
+## `cy.wait(alias)` type
+
+{% url "`cy.route()`" route %} is deprecated in 6.0.0. We encourage the use of {% url "`cy.http()`" http %} instead. Due to this deprecation, the type yielded by {% url "`cy.wait(alias)`" wait %} has changed.
+
+{% badge danger Before %} Before 6.0.0, {% url "`cy.wait(alias)`" wait %} would yield an object of type `WaitXHR`.
+
+{% badge success After %} In 6.0.0 and onwards, {% url "`cy.wait(alias)`" wait %} will yield an object of type `Request`. This matches the new request object type used for {% url "`cy.http()`" http %}.
+
+### Restore old behavior
+
+If you need to restore the type behavior prior to 6.0.0 for {% url "`cy.wait(alias)`" wait %}, you can declare a global override for {% url "`cy.wait()`" wait %} like so:
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject = any> {
+      wait(alias: string): Chainable<Cypress.WaitXHR>
+    }
+  }
+}
 ```
 
 ## `—disable-dev-shm-usage`
@@ -130,6 +151,10 @@ module.exports = (on, config) => {
 // cypress/plugins/index.js
 module.exports = (on, config) => {}
 ```
+
+### Restore old behavior
+
+If you need to remove the flag in 6.0.0+, you can follow the workaround documented here: {% issue 9242 %}.
 
 # Migrating to Cypress 5.0
 
