@@ -302,7 +302,7 @@ cy.get('#autocomplete').type('Book')
 // this yields us the interception cycle object which includes
 // fields for the request and response
 cy.wait('@getSearch')
-  .its('interception.url').should('include', '/search?query=Book')
+  .its('request.url').should('include', '/search?query=Book')
 
 cy.get('#results')
   .should('contain', 'Book 1')
@@ -331,7 +331,7 @@ cy.wait('@new-user')
 // we can grab the completed interception object again to run more assertions
 // using cy.get(<alias>)
 cy.get('@new-user') // yields the same interception object
-  .its('interception.body')
+  .its('request.body')
   .should('deep.equal', JSON.stringify({
     id: '101',
     firstName: 'Joe',

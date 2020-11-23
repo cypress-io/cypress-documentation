@@ -205,7 +205,7 @@ cy.window().its('evilProp').should('not.exist')
 ```javascript
 cy.intercept(/comments/, { fixture: 'comments.json' }).as('getComments')
 cy.get('#fetch-comments').click()
-cy.wait('@getComments').its('interception.body').should('deep.eq', JSON.stringify([
+cy.wait('@getComments').its('response.body').should('deep.eq', JSON.stringify([
   { id: 1, comment: 'hi' },
   { id: 2, comment: 'there' }
 ]))
