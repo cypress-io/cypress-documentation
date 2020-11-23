@@ -158,7 +158,7 @@ We recommend these great modules for this use case:
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to define your routes using {% url '`cy.http()`' http %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
+The prescribed way to do this is to define your routes using {% url '`cy.intercept()`' intercept %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
 
 ## {% fa fa-angle-right %} Can I test the HTML `<head>` element?
 
@@ -386,10 +386,10 @@ Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 
 ## {% fa fa-angle-right %} How do I wait for multiple requests to the same url?
 
-You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.http()` http %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching requests there are.
+You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.intercept()` intercept %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.http('users').as('getUsers')
+cy.intercept('users').as('getUsers')
 cy.wait('@getUsers')  // Wait for first GET to /users/
 cy.get('#list>li').should('have.length', 10)
 cy.get('#load-more-btn').click()
@@ -401,7 +401,7 @@ cy.get('#list>li').should('have.length', 20)
 
 You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your back end to seed data.
 
-You could also stub requests directly using {% url `cy.http()` http %} which avoids ever even needing to fuss with your database.
+You could also stub requests directly using {% url `cy.intercept()` intercept %} which avoids ever even needing to fuss with your database.
 
 ## {% fa fa-angle-right %} How do I test elements inside an iframe?
 
@@ -688,7 +688,7 @@ Finally, you might want to check out the {% url "React Component Testing" compon
 
 ## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
 
-Yes, by using the newer API command {% url "cy.http()" http %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
+Yes, by using the newer API command {% url "cy.intercept()" intercept %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
 
 ## {% fa fa-angle-right %} Can Cypress be used for model-based testing?
 

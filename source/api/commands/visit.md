@@ -261,18 +261,18 @@ You may think this works:
 ```javascript
 // this code may not work depending on implementation
 cy.visit('http://localhost:8000/#/app')
-cy.http('/users/**', { fixture: 'users' })
+cy.intercept('/users/**', { fixture: 'users' })
 ```
 
-But if your app makes a request upon being initialized, *the above code will not work*. `cy.visit()` will resolve once its `load` event fires.  The {% url `cy.http()` http %} command is not processed until *after* `cy.visit()` resolves.
+But if your app makes a request upon being initialized, *the above code will not work*. `cy.visit()` will resolve once its `load` event fires.  The {% url `cy.intercept()` intercept %} command is not processed until *after* `cy.visit()` resolves.
 
-Many applications will have already begun routing, initialization, and requests by the time the `cy.visit()` in the above code resolves. Therefore creating a {% url `cy.http()` http %} route will happen too late, and Cypress will not process the requests.
+Many applications will have already begun routing, initialization, and requests by the time the `cy.visit()` in the above code resolves. Therefore creating a {% url `cy.intercept()` intercept %} route will happen too late, and Cypress will not process the requests.
 
 Luckily Cypress supports this use case. Reverse the order of the commands:
 
 ```javascript
 // this code is probably what you want
-cy.http('/users/**', {...})
+cy.intercept('/users/**', {...})
 cy.visit('http://localhost:8000/#/app')
 ```
 

@@ -67,7 +67,7 @@ alias:
   api/assertions/assertions.html: guides/references/assertions.html
   api/commands/cypress-blob.html: api/utilities/blob.html
   api/commands/api-server.html: api/cypress-api/cypress-server.html
-  api/commands/route2.html: api/commands/http.html
+  api/commands/route2.html: api/commands/intercept.html
 
   examples/index.html: examples/examples/recipes.html
 

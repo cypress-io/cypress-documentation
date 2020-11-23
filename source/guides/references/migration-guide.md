@@ -110,7 +110,7 @@ it('test', () => {
 
 {% badge danger Before %} Before 6.0.0, {% url "`cy.wait(alias)`" wait %} would yield an object of type `WaitXHR`.
 
-{% badge success After %} In 6.0.0 and onwards, {% url "`cy.wait(alias)`" wait %} will yield an object of type `Request`. This matches the new request object type used for {% url "`cy.http()`" http %}.
+{% badge success After %} In 6.0.0 and onwards, {% url "`cy.wait(alias)`" wait %} will yield an object of type `Interception`. This matches the new interception object type used for {% url "`cy.http()`" http %}.
 
 ### Restore old behavior
 

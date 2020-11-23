@@ -419,7 +419,7 @@ Aliases can also be used with {% url routes route %}. Aliasing your routes enabl
 Here's an example of aliasing a route and waiting on it to complete.
 
 ```js
-cy.http('POST', '/users', { id: 123 }).as('postUser')
+cy.intercept('POST', '/users', { id: 123 }).as('postUser')
 
 cy.get('form').submit()
 

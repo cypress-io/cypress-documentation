@@ -20,7 +20,7 @@ Assign an alias for later use. Reference the alias later within a {% url `cy.get
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
-cy.http('PUT', 'users').as('putUser')                 // Alias route as @putUser
+cy.intercept('PUT', 'users').as('putUser')            // Alias route as @putUser
 cy.stub(api, 'onUnauth').as('unauth')                 // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch')                   // Alias spy as @winFetch
 ```
@@ -59,7 +59,7 @@ it('disables on click', () => {
 Aliasing a route and then using {% url `cy.wait()` wait %} to wait for the aliased route.
 
 ```javascript
-cy.http('PUT', 'users', { fixture: 'user' }).as('putUser')
+cy.intercept('PUT', 'users', { fixture: 'user' }).as('putUser')
 cy.get('form').submit()
 cy.wait('@putUser')
   .its('url').should('contain', 'users')
@@ -150,11 +150,11 @@ describe('A fixture', () => {
 ***Alias several routes***
 
 ```javascript
-cy.http(/company/).as('companyGet')
-cy.http(/roles/).as('rolesGet')
-cy.http(/teams/).as('teamsGet')
-cy.http(/users\/\d+/).as('userGet')
-cy.http('PUT', /^\/users\/\d+/).as('userPut')
+cy.intercept(/company/).as('companyGet')
+cy.intercept(/roles/).as('rolesGet')
+cy.intercept(/teams/).as('teamsGet')
+cy.intercept(/users\/\d+/).as('userGet')
+cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
 ```
 
 Aliases of routes display in the routes instrument panel:

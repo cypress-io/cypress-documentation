@@ -23,7 +23,7 @@ This is an example app which is used to showcase every command available in Cypr
 - {% url "`.type()`" type %} into forms, {% url "`.click()`" click %} elements, {% url "`.select()`" select %} dropdowns, and other actions.
 - Change the size of the viewport using {% url "`cy.viewport()`" viewport %}.
 - Navigate to other pages.
-- {% url "`cy.http()`" http %} network requests, {% url "`cy.wait()`" wait %} on responses, and stub response data using {% url "`cy.fixture()`" fixture %}.
+- {% url "`cy.intercept()`" intercept %} network requests, {% url "`cy.wait()`" wait %} on responses, and stub response data using {% url "`cy.fixture()`" fixture %}.
 - Inspect and manipulate cookies and localStorage.
 
 {% imgTag /img/examples/public-project-kitchen-sink.png "kitchensink running" %}
