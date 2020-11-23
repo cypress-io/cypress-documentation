@@ -229,7 +229,7 @@ When passing an array of aliases to `cy.wait()`, Cypress will wait for all reque
 ```javascript
 cy.intercept('PUT', /users/, {}).as('userPut')
 cy.get('form').submit()
-cy.wait('@userPut').its('response.url').should('include', 'users')
+cy.wait('@userPut').its('request.url').should('include', 'users')
 ```
 
 The commands above will display in the Command Log as:

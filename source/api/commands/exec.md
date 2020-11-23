@@ -91,9 +91,9 @@ cy.exec('npm run my-script').its('stdout').should('contain', 'Done running the s
 ```javascript
 cy.intercept('POST', '/comments').as('postComment')
 cy.get('.add-comment').click()
-cy.wait('@postComment').then(({ interception }) => {
-  cy.exec(`echo ${JSON.stringify(interception.body)} >cypress/fixtures/comment.json`)
-  cy.fixture('comment.json').should('deep.eq', interception.body)
+cy.wait('@postComment').then(({ response }) => {
+  cy.exec(`echo ${JSON.stringify(response.body)} >cypress/fixtures/comment.json`)
+  cy.fixture('comment.json').should('deep.eq', response.body)
 })
 ```
 
