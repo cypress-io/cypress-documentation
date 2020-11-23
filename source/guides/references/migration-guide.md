@@ -6,9 +6,67 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 6.0. {% url "See the full changelog for 6.0" changelog#6-0-0 %}.
 
+## Non-existent element assertions
+
+{% note info %}
+**Key takeway:** Use `.should('not.exist')` to assert that an element does not exist in the DOM (not `.should('not.be.visible')`, etc).
+{% endnote %}
+
+In previous versions of Cypress, there was a possibility for tests to falsely pass when asserting a negative state on non-existent elements.
+
+For example, in the tests below we want to test that the search dropdown is no longer visible when the search input is blurred because we hide the element in CSS styles. Except in this test, we've mistakenly misspelled one of our selectors.
+
+```js
+cy.get('input[type=search]').type('Cypress')
+cy.get('#dropdown').should('be.visible')
+cy.get('input[type=search]').blur()
+
+// below we misspelled "dropdown" in the selector 😞
+// the assertions falsely pass in Cypress < 6.0
+// and will correctly fail in Cypress 6.0 +
+cy.get('#dropdon').should('not.be.visible')
+cy.get('#dropdon').should('not.have.class', 'open')
+cy.get('#dropdon').should('not.contain', 'Cypress')
+```
+
+{% imgTag /img/guides/el-incorrectly-passes-existence-check.png "non-existent element before 6.0" "width-600" %}
+
+In 6.0, these assertions will now correctly fail, telling us that the `#dropdon` element doesn't exist in the DOM.
+
+{% imgTag /img/guides/el-correctly-fails-existence-check.png "non-existent element in 6.0" "width-600" %}
+
+### Assertions on non-existent elements
+
+This fix may cause some breaking changes in your tests if you are relying on assertions such as `not.be.visible` or `not.contains` to test that the DOM element did not *exist* in the DOM. This means you'll need to update your test code to be more specific about your assertions on non-existent elements.
+
+{% badge danger Before %} Assert that non existent element was not visible
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // assertions below pass in < 6.0, but properly fail in 6.0+
+  cy.get('.modal').should('not.be.visible')
+  cy.get('.modal').should('not.contain', 'Upgrade')
+})
+```
+
+{% badge success After %} Assert that non existent element does not exist
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // we should instead assert that the element doesn't exist
+  cy.get('.modal').should('not.exist')
+})
+```
+
 ## Opacity visibility
 
 DOM elements with `opacity: 0` style are no longer considered to be visible. This includes elements with an ancestor that has `opacity: 0` since a child element can never have a computed opacity greater than that of an ancestor.
+
+Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} however and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
 
 ### Assert visibility of `opacity: 0` element
 
@@ -32,19 +90,45 @@ it('test', () => {
 })
 ```
 
-Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
+### Perform actions on `opacity: 0` element
 
 ```js
 it('test', () => {
   // '.hidden' has 'opacity: 0' style.
   //
   // In all versions of Cypress, you can interact
-  //  with elements that have 'opacity: 0' style.
+  // with elements that have 'opacity: 0' style.
   cy.get('.hidden').click()       // ✅ clicks on element
   cy.get('.hidden').type('hi')    // ✅ types into element
   cy.get('.hidden').check()       // ✅ checks element
   cy.get('.hidden').select('yes') // ✅ selects element
 })
+```
+
+## `—disable-dev-shm-usage`
+
+We now pass `—disable-dev-shm-usage` to the Chrome browser flags by default. If you're passing this flag in your `plugins` file, you can now remove this code.
+
+{% badge danger Before %} Passing flag in plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
+
+{% badge success After %} Remove flag from plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {}
 ```
 
 # Migrating to Cypress 5.0
