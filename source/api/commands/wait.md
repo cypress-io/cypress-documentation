@@ -92,8 +92,8 @@ For a detailed explanation of aliasing, {% url 'read more about waiting on route
 // without changing or stubbing its response
 cy.intercept('/accounts/*').as('getAccount')
 cy.visit('/accounts/123')
-cy.wait('@getAccount').then((request) => {
-  // we can now access the low level request
+cy.wait('@getAccount').then((interception) => {
+  // we can now access the low level interception
   // that contains the request body,
   // response body, status, etc
 })
@@ -140,11 +140,11 @@ cy.intercept('activities/*').as('getActivities')
 cy.intercept('comments/*').as('getComments')
 cy.visit('/dashboard')
 
-cy.wait(['@getUsers', '@getActivities', '@getComments']).then((requests) => {
-  // requests will now be an array of matching requests
-  // requests[0] <-- getUsers
-  // requests[1] <-- getActivities
-  // requests[2] <-- getComments
+cy.wait(['@getUsers', '@getActivities', '@getComments']).then((interceptions) => {
+  // interceptions will now be an array of matching requests
+  // interceptions[0] <-- getUsers
+  // interceptions[1] <-- getActivities
+  // interceptions[2] <-- getComments
 })
 ```
 
@@ -156,7 +156,7 @@ cy.intercept('activities/*').as('getActivities')
 cy.intercept('comments/*').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments'])
   .spread((getUsers, getActivities, getComments) => {
-    // each request is now an individual argument
+    // each interception is now an individual argument
   })
 ```
 
@@ -229,7 +229,7 @@ When passing an array of aliases to `cy.wait()`, Cypress will wait for all reque
 ```javascript
 cy.intercept('PUT', /users/, {}).as('userPut')
 cy.get('form').submit()
-cy.wait('@userPut').its('request.url').should('include', 'users')
+cy.wait('@userPut').its('interception.url').should('include', 'users')
 ```
 
 The commands above will display in the Command Log as:

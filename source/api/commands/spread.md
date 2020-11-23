@@ -60,7 +60,7 @@ cy.intercept('/activities/').as('getActivities')
 cy.intercept('/comments/').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments'])
   .spread((getUsers, getActivities, getComments) => {
-    // each request is now an individual argument
+    // each interception is now an individual argument
   })
 ```
 

@@ -182,8 +182,8 @@ cy.wait('@search')
 Using {% url "`cy.wait()`" wait %} on a `cy.intercept()` route alias yields an object which represents the request/response cycle:
 
 ```js
-cy.wait('@someRoute').then((request) => {
-  // 'request' is an object with properties 'id', 'request' and 'response'
+cy.wait('@someRoute').then((interception) => {
+  // 'interception' is an object with properties 'id', 'request' and 'response'
 })
 ```
 
@@ -194,10 +194,10 @@ You can chain {% url `.its()` its %} and {% url `.should()` should %} to assert 
 cy.wait('@someRoute').its('request.body').should('include', 'user')
 
 // assert that a request to this route received a response with HTTP status 500
-cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
+cy.wait('@someRoute').its('interception.statusCode').should('eq', 500)
 
 // assert that a request to this route received a response body that includes 'id'
-cy.wait('@someRoute').its('response.body').should('include', 'id')
+cy.wait('@someRoute').its('interception.body').should('include', 'id')
 ```
 
 ### Aliasing individual requests

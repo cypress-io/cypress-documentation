@@ -423,8 +423,8 @@ cy.intercept('POST', '/users', { id: 123 }).as('postUser')
 
 cy.get('form').submit()
 
-cy.wait('@postUser').then(({ request }) => {
-  expect(request.body).to.have.property('name', 'Brian')
+cy.wait('@postUser').then(({ interception }) => {
+  expect(interception.body).to.have.property('name', 'Brian')
 })
 
 cy.contains('Successfully created user: Brian')

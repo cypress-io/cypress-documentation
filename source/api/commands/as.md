@@ -20,7 +20,7 @@ Assign an alias for later use. Reference the alias later within a {% url `cy.get
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
-cy.intercept('PUT', 'users').as('putUser')                 // Alias route as @putUser
+cy.intercept('PUT', 'users').as('putUser')            // Alias route as @putUser
 cy.stub(api, 'onUnauth').as('unauth')                 // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch')                   // Alias spy as @winFetch
 ```

@@ -204,16 +204,16 @@ cy.intercept({
 }).as('apiCheck')
 
 cy.visit('/')
-cy.wait('@apiCheck').then((request) => {
-  assert.isNotNull(request.response.body, '1st API call has data')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '1st API call has data')
 })
 
-cy.wait('@apiCheck').then((request) => {
-  assert.isNotNull(request.response.body, '2nd API call has data')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '2nd API call has data')
 })
 
-cy.wait('@apiCheck').then((request) => {
-  assert.isNotNull(request.response.body, '3rd API call has data')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '3rd API call has data')
 })
 ```
 
@@ -299,17 +299,17 @@ cy.intercept('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch
 
 cy.get('#autocomplete').type('Book')
 
-// this yields us the request cycle object which includes
+// this yields us the interception cycle object which includes
 // fields for the request and response
 cy.wait('@getSearch')
-  .its('request.url').should('include', '/search?query=Book')
+  .its('interception.url').should('include', '/search?query=Book')
 
 cy.get('#results')
   .should('contain', 'Book 1')
   .and('contain', 'Book 2')
 ```
 
-***The request object that {% url `cy.wait()` wait %} yields you has everything you need to make assertions including:***
+***The interception object that {% url `cy.wait()` wait %} yields you has everything you need to make assertions including:***
 
 - URL
 - Method
@@ -328,10 +328,10 @@ cy.intercept('POST', '/users').as('new-user')
 cy.wait('@new-user')
   .should('have.property', 'response.statusCode', 201)
 
-// we can grab the completed request object again to run more assertions
+// we can grab the completed interception object again to run more assertions
 // using cy.get(<alias>)
-cy.get('@new-user') // yields the same request object
-  .its('request.body')
+cy.get('@new-user') // yields the same interception object
+  .its('interception.body')
   .should('deep.equal', JSON.stringify({
     id: '101',
     firstName: 'Joe',
