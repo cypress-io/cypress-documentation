@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Exploring Cypress and its Features"
+    url: https://testersdock.com/cypress-tutorial/
+    sourceName: Testersdock
+    sourceUrl: https://testersdock.com/
+    author: Alapan Das
+    date: November 13, 2020
+    img: /img/examples/exploring-cypress and-its-features.jpg
+
   - title: "Identifying Code Smells in Cypress"
     url: https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html
     sourceName: CodingItwrong
