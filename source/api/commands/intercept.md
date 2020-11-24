@@ -233,6 +233,7 @@ Without `operationName` property:
 ```js
 cy.intercept('POST', '/graphql', (req) => {
   const { body } = req
+
   if (body.hasOwnProperty('query') && body.query.includes('ListPosts')) {
     req.alias = 'gqlListPostsQuery'
   }
@@ -245,6 +246,7 @@ cy.wait('@gqlListPostsQuery')
 ```js
 cy.intercept('POST', '/graphql', (req) => {
   const { body } = req
+
   if (body.hasOwnProperty('mutation') && body.query.includes('CreatePost')) {
     req.alias = 'gqlCreatePostMutation'
   }
