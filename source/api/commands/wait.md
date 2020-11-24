@@ -241,7 +241,7 @@ When clicking on `wait` within the command log, the console outputs the followin
 {% imgTag /img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png "Console Log wait" %}
 
 {% history %}
-{% url "3.1.3" changelog#3-1-3 %} | Added `requestTimeout` and `responseTimout` option
+{% url "3.1.3" changelog#3-1-3 %} | Added `requestTimeout` and `responseTimeout` option
 {% url "< 0.3.3" changelog#0.3.3 %} | `cy.wait()` command added
 {% endhistory %}
 
