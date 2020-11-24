@@ -217,7 +217,7 @@ cy.wait('@gqlMutation')
 
 ### Aliasing individual GraphQL requests
 
-Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
+Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request.
 
 This is useful against GraphQL endpoints to wait for specific Queries and Mutations.
 
