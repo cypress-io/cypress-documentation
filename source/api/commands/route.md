@@ -4,9 +4,7 @@ title: route
 
 Use `cy.route()` to manage the behavior of network requests.
 
-{% note info %}
-**Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
-{% endnote %}
+{% partial xhr_stubbing_deprecated %}
 
 {% partial network_stubbing_warning %}
 

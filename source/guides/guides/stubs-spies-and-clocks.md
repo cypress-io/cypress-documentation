@@ -218,7 +218,7 @@ We also integrated all of these APIs directly into the Command Log, so you can v
 - A `spy` is called
 - A `clock` is ticked
 
-When you use aliasing with the {% url `.as()` as %} command, we also correlate those aliases with the calls. This works identically to aliasing a {% url `cy.route()` route %}.
+When you use aliasing with the {% url `.as()` as %} command, we also correlate those aliases with the calls. This works identically to aliasing {% url `cy.intercept()` intercept %}.
 
 When stubs are created by calling the method `.withArgs(...)` we also visually link these together.
 

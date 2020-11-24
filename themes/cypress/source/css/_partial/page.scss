@@ -237,9 +237,16 @@ a.article-edit-link {
     background-color: #f7f7f7;
     font-style: italic;
 
-    &>p:first-of-type:last-of-type {
-      margin-bottom: 0;
+    &>p:first-child {
       margin-top: 0;
+    }
+
+    &>p:last-child {
+      margin-bottom: 0;
+    }
+
+    br {
+      display: none;
     }
 
     code {
