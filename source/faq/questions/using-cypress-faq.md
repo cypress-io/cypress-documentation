@@ -705,3 +705,7 @@ Yes, read the blog post {% url "Cypress WASM Example" https://glebbahmutov.com/b
 ## {% fa fa-angle-right %} Can I use Cypress to document my application?
 
 End-to-end tests are an excellent way to keep your application's documentation accurate and up-to-date. Read {% url "Cypress Book" https://glebbahmutov.com/blog/cypress-book/ %} blog post, and take a look at {% url "cypress-movie" https://github.com/bahmutov/cypress-movie %} project.
+
+## {% fa fa-angle-right %} Can I use Jest snapshots?
+
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %} that seems to work very well. There might be other snapshot plugins, search the {% url Plugins %} page.
