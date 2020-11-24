@@ -224,6 +224,11 @@
       keywords: [cli]
       badge: community
       
+    - name: cypress-tags
+      description: Use custom tags to slice up Cypress test runs
+      link: https://github.com/annaet/cypress-tags
+      keywords: [test, tag, browserify]
+      
     - name: '@swimlane/cy-mockapi'
       description: Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.
       link: https://github.com/swimlane/cy-mockapi
