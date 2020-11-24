@@ -205,7 +205,7 @@ cy.wait('@someRoute').its('response.body').should('include', 'id')
 Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
 
 ```js
-cy.route2('POST', '/graphql', (req) => {
+cy.intercept('POST', '/graphql', (req) => {
   if (req.body.includes('mutation')) {
     req.alias = 'gqlMutation'
   }
