@@ -1,10 +1,6 @@
 import { MAIN_NAV } from '../support/defaults'
 
 describe('Main Nav', () => {
-  beforeEach(() => {
-    cy.server()
-  })
-
   context('Nav Bar', () => {
     beforeEach(() => {
       cy.visit('/')
@@ -43,10 +39,13 @@ describe('Main Nav', () => {
     beforeEach(() => {
       cy.visit('/')
 
-      cy.route({
-        method: 'POST',
-        url: /algolia/,
-        response: {
+      cy.intercept(/algolia/, {
+        // remove when https://github.com/cypress-io/cypress/issues/9264 is delivered
+        headers: {
+          'access-control-allow-origin': window.location.origin,
+          'Access-Control-Allow-Credentials': 'true',
+        },
+        body: {
           'results': [
             {
               'hits': [
@@ -64,8 +63,9 @@ describe('Main Nav', () => {
     it('posts to Algolia api with correct index on search', () => {
       cy.get('#search-input').type('g')
 
-      cy.wait('@postAlgolia').then((xhr) => {
-        expect(xhr.requestBody.requests[0].indexName).to.eq('cypress')
+      cy.wait('@postAlgolia').then(({ request, response }) => {
+        // remove JSON.parse once https://github.com/cypress-io/cypress/issues/9300 is deployed
+        expect(JSON.parse(request.body).requests[0].indexName).to.eq('cypress')
       })
     })
 
