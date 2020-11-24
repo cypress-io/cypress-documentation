@@ -200,11 +200,30 @@ cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
 cy.wait('@someRoute').its('response.body').should('include', 'id')
 ```
 
+### Aliasing individual requests
+
+Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.hasOwnProperty('mutation')) {
+    req.alias = 'gqlMutation'
+  }
+})
+
+// assert that a matching request has been made
+cy.wait('@gqlMutation')
+```
+
 ### Aliasing individual GraphQL requests
 
 Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
 
-With`operationName` property:
+This is useful against GraphQL endpoints to wait for specific Queries and Mutations.
+
+Given that the `operationName` attribute is optional in GraphQL requests, we can `alias` with or without this attribute.
+
+With `operationName` property:
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
