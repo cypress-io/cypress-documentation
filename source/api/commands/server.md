@@ -4,9 +4,7 @@ title: server
 
 Start a server to begin routing responses to {% url "`cy.route()`" route %} and to change the behavior of network requests.
 
-{% note info %}
-**Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
-{% endnote %}
+{% partial xhr_stubbing_deprecated %}
 
 {% partial network_stubbing_warning %}
 

@@ -11,16 +11,16 @@ large:
     sourceName: JSConf US 2019
     sourceUrl: https://2019.jsconf.us/
     date: Sept 11, 2019
-    author: Nicholas Boll 
-    youtubeId: Pv2YHXQOEJY	
-    
+    author: Nicholas Boll
+    youtubeId: Pv2YHXQOEJY
+
   - title: "Documenting application behaviours with E2E tests"
     sourceName: HolyJS 2019
     sourceUrl: https://holyjs.ru/en/
     date: Aug 28, 2019
-    author: Basarat Ali Syed 
+    author: Basarat Ali Syed
     youtubeId: 3oCDjj_AtaE
-    
+
   - title: "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37"
     sourceUrl: https://speakerdeck.com/mrcube42
     url: https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37
@@ -28,7 +28,7 @@ large:
     author: David Wurfel
     date: Apr 04, 2019
     img: /img/examples/next-level-e2e-testing-with-cypress.png
-    
+
   - title: 'Cypress: testing without Selenium, part 1'
     sourceName: Selenium Camp
     sourceUrl: https://seleniumcamp.com
@@ -44,23 +44,23 @@ large:
     author: Gleb Bahmutov
     youtubeId: 8pcx0XitUCc
     slides: https://slides.com/bahmutov/hyperapp-intro#/
-    
+
   - title: 'Continuous Integration with GitLab CI'
     sourceName: NERD Summit
     sourceUrl: https://nerd.ngo/
     date: Mar 10, 2019
     author: Pete Johanson
     youtubeId: EuwLdbCu3DE
-    slides: https://petejohanson.gitlab.io/nerdsummit-2019-gitlab-ci-cd/#/	 
+    slides: https://petejohanson.gitlab.io/nerdsummit-2019-gitlab-ci-cd/#/
 
   - title: 'Less painful E2E tests with Cypress.io'
-    url: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/ 
+    url: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/
     sourceName: FOSDEM 2019
     sourceUrl: https://fosdem.org/2019/schedule/event/keynotes_welcome/
     date: Feb 3, 2019
     author: Pavel Kruhlei
-    slides: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/attachments/slides/3010/export/events/attachments/e2e_tests_cypress/slides/3010/Slides.pdf 
-    img: /img/examples/painless-e2e-with-cypress.png  
+    slides: https://fosdem.org/2019/schedule/event/e2e_tests_cypress/attachments/slides/3010/export/events/attachments/e2e_tests_cypress/slides/3010/Slides.pdf
+    img: /img/examples/painless-e2e-with-cypress.png
 
   - title: 'There and Back Again: e2e Testing React with Cypress'
     sourceName: Grow IT Conf
@@ -215,7 +215,7 @@ large:
     date: Jun 20, 2018
     author: Amir Rustamzadeh
     youtubeId: UJICwHNb4BQ
-    
+
   - title: "Cypress"
     sourceName: Bluesoft Labs
     date: May 24, 2018

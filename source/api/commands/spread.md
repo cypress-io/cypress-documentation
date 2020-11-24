@@ -55,13 +55,12 @@ Option | Default | Description
 ### Expand the array of aliased routes
 
 ```javascript
-cy.server()
-cy.route('/users/').as('getUsers')
-cy.route('/activities/').as('getActivities')
-cy.route('/comments/').as('getComments')
+cy.intercept('/users/').as('getUsers')
+cy.intercept('/activities/').as('getActivities')
+cy.intercept('/comments/').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments'])
   .spread((getUsers, getActivities, getComments) => {
-    // each XHR is now an individual argument
+    // each interception is now an individual argument
   })
 ```
 

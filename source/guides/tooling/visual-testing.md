@@ -235,11 +235,10 @@ cy.mySnapshotCommand()
 {% fa fa-check-circle green %} **Best Practice:** Use {% url "`cy.fixture()`" fixture %} and network mocking to set the application state.
 {% endnote %}
 
-Below we stub network calls using {% url "`cy.route()`" route %} to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
+Below we stub network calls using {% url "`cy.intercept()`" intercept %} to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
 
 ```js
-cy.server()
-cy.route('/api/items', 'fixture:items').as('getItems')
+cy.intercept('/api/items', { fixture: 'items' }).as('getItems')
 // ... action
 cy.wait('@getUsers')
 cy.mySnapshotCommand()

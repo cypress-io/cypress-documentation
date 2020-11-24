@@ -554,13 +554,29 @@ cypress verify
 
 ## `cypress version`
 
-Output both the versions of the installed Cypress binary application and the npm module.
-In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
+Prints the installed Cypress binary version, the Cypress package version, the version of Electron used to build Cypress, and the bundled Node version.
+
+In most cases the binary and the package versions will be the same, but they could be different if you have installed a different version of the package and for some reason failed to install the matching binary version.
 
 ```shell
 cypress version
-Cypress package version: 3.0.0
-Cypress binary version: 3.0.0
+Cypress package version: 6.0.0
+Cypress binary version: 6.0.0
+Electron version: 10.1.5
+Bundled Node version: 12.14.1
+```
+
+You can print each individual component's version number also.
+
+```shell
+cypress version --component package
+6.0.0
+cypress version --component binary
+6.0.0
+cypress version --component electron
+10.1.5
+cypress version --component node
+12.14.1
 ```
 
 ## `cypress cache [command]`
