@@ -578,8 +578,7 @@ Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy
 Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
 
 ```javascript
-cy.server()
-cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
+cy.intercept('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
 cy.get('#fetch').click()
 cy.wait(4000)     // <--- this is unnecessary
 cy.get('table tr').should('have.length', 2)
@@ -588,8 +587,7 @@ cy.get('table tr').should('have.length', 2)
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
-cy.server()
-cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
+cy.intercept('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
 cy.get('#fetch').click()
 cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)

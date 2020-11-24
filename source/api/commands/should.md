@@ -346,10 +346,6 @@ cy.get('button').click()
 
 # Notes
 
-## Effect on default DOM assertions
-
-When you chain `.should()` on a DOM-based command, the default `.should('exist')` assertion is skipped. This may result in an unexpected behavior such as negative assertions passing even when the element doesn't exist in the DOM. See {% url 'Default Assertions' introduction-to-cypress#Default-Assertions %} for more.
-
 ## Subjects
 
 ### How do I know which assertions change the subject and which keep it the same?

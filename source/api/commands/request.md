@@ -317,9 +317,9 @@ Before sending the HTTP request, we automatically attach cookies that would have
 
 In other words, `cy.request()` transparently performs all of the underlying functions as if it came from the browser.
 
-## {% url `cy.server()` server %} and {% url `cy.route()` route %}
+## {% url `cy.intercept()` intercept %}, {% url `cy.server()` server %}, and {% url `cy.route()` route %}
 
-### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`
+### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()` or `cy.intercept()`
 
 `cy.server()` and any configuration passed to {% url `cy.server()` server %} has no effect on `cy.request()`.
 

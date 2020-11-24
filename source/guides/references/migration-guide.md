@@ -2,6 +2,160 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 6.0
+
+This guide details the changes and how to change your code to migrate to Cypress 6.0. {% url "See the full changelog for 6.0" changelog#6-0-0 %}.
+
+## Non-existent element assertions
+
+{% note info %}
+**Key takeway:** Use `.should('not.exist')` to assert that an element does not exist in the DOM (not `.should('not.be.visible')`, etc).
+{% endnote %}
+
+In previous versions of Cypress, there was a possibility for tests to falsely pass when asserting a negative state on non-existent elements.
+
+For example, in the tests below we want to test that the search dropdown is no longer visible when the search input is blurred because we hide the element in CSS styles. Except in this test, we've mistakenly misspelled one of our selectors.
+
+```js
+cy.get('input[type=search]').type('Cypress')
+cy.get('#dropdown').should('be.visible')
+cy.get('input[type=search]').blur()
+
+// below we misspelled "dropdown" in the selector 😞
+// the assertions falsely pass in Cypress < 6.0
+// and will correctly fail in Cypress 6.0 +
+cy.get('#dropdon').should('not.be.visible')
+cy.get('#dropdon').should('not.have.class', 'open')
+cy.get('#dropdon').should('not.contain', 'Cypress')
+```
+
+{% imgTag /img/guides/el-incorrectly-passes-existence-check.png "non-existent element before 6.0" "width-600" %}
+
+In 6.0, these assertions will now correctly fail, telling us that the `#dropdon` element doesn't exist in the DOM.
+
+{% imgTag /img/guides/el-correctly-fails-existence-check.png "non-existent element in 6.0" "width-600" %}
+
+### Assertions on non-existent elements
+
+This fix may cause some breaking changes in your tests if you are relying on assertions such as `not.be.visible` or `not.contains` to test that the DOM element did not *exist* in the DOM. This means you'll need to update your test code to be more specific about your assertions on non-existent elements.
+
+{% badge danger Before %} Assert that non existent element was not visible
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // assertions below pass in < 6.0, but properly fail in 6.0+
+  cy.get('.modal').should('not.be.visible')
+  cy.get('.modal').should('not.contain', 'Upgrade')
+})
+```
+
+{% badge success After %} Assert that non existent element does not exist
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // we should instead assert that the element doesn't exist
+  cy.get('.modal').should('not.exist')
+})
+```
+
+## Opacity visibility
+
+DOM elements with `opacity: 0` style are no longer considered to be visible. This includes elements with an ancestor that has `opacity: 0` since a child element can never have a computed opacity greater than that of an ancestor.
+
+Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} however and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
+
+### Assert visibility of `opacity: 0` element
+
+{% badge danger Before %} Failed assertion that `opacity: 0` element is not visible.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  // In < 5.0 this assertion would fail
+  cy.get('.hidden').should('not.be.visible)
+})
+```
+
+{% badge success After %} Passed assertion that `opacity: 0` element is not visible.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  // In 6.0 this assertion will pass
+  cy.get('.hidden').should('not.be.visible)
+})
+```
+
+### Perform actions on `opacity: 0` element
+
+In all versions of Cypress, you can interact with elements that have `opacity: 0` style.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  cy.get('.hidden').click()       // ✅ clicks on element
+  cy.get('.hidden').type('hi')    // ✅ types into element
+  cy.get('.hidden').check()       // ✅ checks element
+  cy.get('.hidden').select('yes') // ✅ selects element
+})
+```
+
+## `cy.wait(alias)` type
+
+{% url "`cy.route()`" route %} is deprecated in 6.0.0. We encourage the use of {% url "`cy.intercept()`" http %} instead. Due to this deprecation, the type yielded by {% url "`cy.wait(alias)`" wait %} has changed.
+
+{% badge danger Before %} Before 6.0.0, {% url "`cy.wait(alias)`" wait %} would yield an object of type `WaitXHR`.
+
+{% badge success After %} In 6.0.0 and onwards, {% url "`cy.wait(alias)`" wait %} will yield an object of type `Interception`. This matches the new interception object type used for {% url "`cy.intercept()`" http %}.
+
+### Restore old behavior
+
+If you need to restore the type behavior prior to 6.0.0 for {% url "`cy.wait(alias)`" wait %}, you can declare a global override for {% url "`cy.wait()`" wait %} like so:
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject = any> {
+      wait(alias: string): Chainable<Cypress.WaitXHR>
+    }
+  }
+}
+```
+
+## `—disable-dev-shm-usage`
+
+We now pass `—disable-dev-shm-usage` to the Chrome browser flags by default. If you're passing this flag in your `plugins` file, you can now remove this code.
+
+{% badge danger Before %} Passing flag in plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
+
+{% badge success After %} Remove flag from plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {}
+```
+
+### Restore old behavior
+
+If you need to remove the flag in 6.0.0+, you can follow the workaround documented here: {% issue 9242 %}.
+
 # Migrating to Cypress 5.0
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.

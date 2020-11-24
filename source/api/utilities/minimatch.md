@@ -10,7 +10,7 @@ Use `Cypress.minimatch` to test out glob patterns against strings.
 # Syntax
 
 ```javascript
-Cypress.minimatch()
+Cypress.minimatch(target: string, pattern: string, options?: MinimatchOptions);
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ Cypress.minimatch()
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-Cypress.minimatch()
+Cypress.minimatch('/users/1/comments/2', '/users/*/comments', { matchBase: true })
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
@@ -29,12 +29,12 @@ cy.minimatch() // Errors, cannot be chained off 'cy'
 
 # Examples
 
-By default Cypress uses `minimatch` to test glob patterns against XHR URLs.
+By default Cypress uses `minimatch` to test glob patterns against request URLs.
 
 If you're struggling with writing the correct pattern you can iterate much faster by testing directly in your Developer Tools console.
 
 ```javascript
-// test that the glob you're writing matches the XHR's url
+// test that the glob you're writing matches the request's url
 
 // returns true
 Cypress.minimatch('/users/1/comments', '/users/*/comments', {

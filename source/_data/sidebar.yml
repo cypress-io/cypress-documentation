@@ -101,6 +101,7 @@ api:
     go: go.html
     hash: hash.html
     hover: hover.html
+    intercept: intercept.html
     invoke: invoke.html
     its: its.html
     last: last.html
@@ -123,7 +124,6 @@ api:
     rightclick: rightclick.html
     root: root.html
     route: route.html
-    route2: route2.html
     screenshot: screenshot.html
     scrollintoview: scrollintoview.html
     scrollto: scrollto.html

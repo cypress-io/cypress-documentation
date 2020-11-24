@@ -228,6 +228,11 @@
       description: Use custom tags to slice up Cypress test runs
       link: https://github.com/annaet/cypress-tags
       keywords: [test, tag, browserify]
+      
+    - name: '@swimlane/cy-mockapi'
+      description: Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.
+      link: https://github.com/swimlane/cy-mockapi
+      keywords: [mock, rest, api]
       badge: community
 
 - name: Custom Commands
@@ -399,6 +404,12 @@
       keywords: [testing, ui, dom, assertions]
       badge: community
 
+    - name: '@swimlane/cy-dom-diff'
+      description: cy-dom-diff allows matching chunks of DOM against HTML; including dynamic content.
+      link: https://github.com/swimlane/cy-dom-diff
+      keywords: [dom, assertions]
+      badge: community
+      
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
