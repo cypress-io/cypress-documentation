@@ -18,7 +18,7 @@ Cypress.minimatch(target: string, pattern: string, options?: MinimatchOptions);
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-Cypress.minimatch('/users/1/comments/2', '/users/*/comments', {matchBase: true});
+Cypress.minimatch('/users/1/comments/2', '/users/*/comments', { matchBase: true })
 ```
 
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
