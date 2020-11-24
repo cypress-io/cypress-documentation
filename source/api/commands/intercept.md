@@ -221,7 +221,7 @@ Aliases can be set on a per-request basis by setting the `alias` property of the
 
 This is useful against GraphQL endpoints to wait for specific Queries and Mutations.
 
-Given that the `operationName` attribute is optional in GraphQL requests, we can `alias` with or without this attribute.
+Given that the `operationName` property is optional in GraphQL requests, we can `alias` with or without this property.
 
 With `operationName` property:
 
