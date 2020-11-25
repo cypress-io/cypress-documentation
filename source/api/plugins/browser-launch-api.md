@@ -7,7 +7,7 @@ Before Cypress launches a browser, it gives you the opportunity to modify the br
 # Syntax
 
 ```js
-on('before:browser:launch', (browser = {}, launchOptions) => { /* ... */ })
+on('before:browser:launch', (browser = {}, args) => { /* ... */ })
 ```
 
 **{% fa fa-angle-right %} browser** ***(object)***
@@ -27,25 +27,19 @@ Property | Type | Description
 `isHeadless` | `boolean` | Whether the browser is running headlessly.
 `isHeaded` | `boolean` | Whether the browser displays headed.
 
-**{% fa fa-angle-right %} launchOptions** ***(object)***
+**{% fa fa-angle-right %} args** ***(string[])***
 
-Options that can be modified to control how the browser is launched, with the following properties:
-
-Property | Type | Description
---- | --- | ---
-`preferences` | `object` | An object describing browser preferences. Differs between browsers. See {% urlHash "Changing browser preferences" Changing-browser-preferences %} for details.
-`args` | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See {% urlHash "Modify browser launch arguments" Modify-browser-launch-arguments %} for details.
-`extensions` | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See {% urlHash "Add browser extensions" Add-browser-extensions %} for details.
+An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See {% urlHash "Modify browser launch arguments" Modify-browser-launch-arguments %} for details.
 
 # Usage
 
-## Modify browser launch arguments, preferences, and extensions
+## Modify browser launch arguments,preferences and extensions
 
 Using your {% url "`pluginsFile`" plugins-guide %} you can tap into the `before:browser:launch` event and modify how Cypress launches the browser (e.g. modify arguments, user preferences, and extensions).
 
-This event will yield you the `browser` object, which gives you information about the browser, and the `launchOptions` object, which allows you to modify how the browser is launched.
+This event will yield you the `browser` object, which gives you information about the browser, and the `args` string array, which allows you to modify how the browser is launched.
 
-The returned `launchOptions` object will become the new launch options for the browser.
+The returned `args` string array will become the new launch options for the browser.
 
 ### Modify browser launch arguments:
 
@@ -57,24 +51,24 @@ Here are args available for the currently supported browsers:
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
+  on('before:browser:launch', (browser = {}, args) => {
     // `args` is an array of all the arguments that will
     // be passed to browsers when it launches
-    console.log(launchOptions.args) // print all current args
+    console.log(args) // print all current args
 
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // auto open devtools
-      launchOptions.args.push('--auto-open-devtools-for-tabs')
+      args.push('--auto-open-devtools-for-tabs')
 
-      // whatever you return here becomes the launchOptions
-      return launchOptions
+      // whatever you return here becomes the args
+      return args
     }
 
     if (browser.family === 'firefox') {
       // auto open devtools
-      launchOptions.args.push('-devtools')
+      args.push('-devtools')
 
-      return launchOptions
+      return args
     }
   })
 }
@@ -85,12 +79,12 @@ module.exports = (on, config) => {
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser, launchOptions) => {
+  on('before:browser:launch', (browser, args) => {
     // supply the absolute path to an unpacked extension's folder
     // NOTE: extensions cannot be loaded in headless Chrome
-    launchOptions.extensions.push('Users/jane/path/to/extension')
+    args.push('Users/jane/path/to/extension')
 
-    return launchOptions
+    return args
   })
 }
 ```
