@@ -694,3 +694,9 @@
       link: https://github.com/Shelex/cypress-allure-plugin
       keywords: [reporter, allure]
       badge: community
+      
+    - name: cypress-mochawesome-reporter
+      description: Zero config Mochawesome reporter for Cypress with screenshots.
+      link: https://github.com/LironEr/cypress-mochawesome-reporter
+      keywords: [reporter, mochawesome, screenshot]
+      badge: community
