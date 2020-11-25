@@ -76,7 +76,7 @@ Elements where the CSS property (or ancestors) is `opacity: 0` are still conside
 it('test', () => {
   // '.hidden' has 'opacity: 0' style.
   // In < 5.0 this assertion would fail
-  cy.get('.hidden').should('not.be.visible)
+  cy.get('.hidden').should('not.be.visible')
 })
 ```
 
@@ -86,7 +86,7 @@ it('test', () => {
 it('test', () => {
   // '.hidden' has 'opacity: 0' style.
   // In 6.0 this assertion will pass
-  cy.get('.hidden').should('not.be.visible)
+  cy.get('.hidden').should('not.be.visible')
 })
 ```
 

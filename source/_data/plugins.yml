@@ -285,6 +285,12 @@
       keywords: [firebase, database, commands]
       badge: community
 
+    - name: cypress-graphql-mock-network
+      description: Custom commands to mock your GraphQL API at the network level. Using service-workers for complete isolation of the mock server.
+      link: https://github.com/warrenday/cypress-graphql-mock-network
+      keywords: [graphql, mocking, networking, commands]
+      badge: community
+
     - name: cypress-graphql-mock
       description: Adds commands for executing a mocked GraphQL server using only the client
       link: https://github.com/tgriesser/cypress-graphql-mock
@@ -659,6 +665,12 @@
       keywords: [testrail, reporter]
       badge: community
 
+    - name: cypress-teamcity-reporter
+      description: Custom reporter for Teamcity which makes it possible to display test results in real-time and add them on the Tests tab of the Build Results page
+      link: https://github.com/prma85/cypress-teamcity-reporter
+      keywords: [teamcity, reporter]
+      badge: community
+
     - name: mochawesome-merge
       description: Merges multiple mochawesome JSON reports
       link: https://github.com/antontelesh/mochawesome-merge
@@ -687,4 +699,10 @@
       description: Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.
       link: https://github.com/Shelex/cypress-allure-plugin
       keywords: [reporter, allure]
+      badge: community
+      
+    - name: cypress-mochawesome-reporter
+      description: Zero config Mochawesome reporter for Cypress with screenshots.
+      link: https://github.com/LironEr/cypress-mochawesome-reporter
+      keywords: [reporter, mochawesome, screenshot]
       badge: community
