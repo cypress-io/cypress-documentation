@@ -55,16 +55,16 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 Option | Default | Description
 --- | --- | ---
 `altKey` | `false` | {% usage_options altKey %}
-`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
 `ctrlKey` | `false` | {% usage_options ctrlKey %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force dblclick %}
 `metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `true` | {% usage_options multiple dblclick %}
-`scrollToElement` | {% url `scrollToElement` configuration#Scrolling %} | {% usage_options scrollToElement %}
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
 `shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .dblclick %}
-`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -197,6 +197,7 @@ When clicking on `dblclick` within the command log, the console outputs the foll
 {% imgTag /img/api/dblclick/element-double-clicked-on.png "console.log dblclick" %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "3.5.0" changelog#3-5-0 %} | Added support for options `force` and `multiple`.
 {% url "3.5.0" changelog#3-5-0 %} | Added support for `position`, `x`, and `y` arguments.
 {% url "3.5.0" changelog#3-5-0 %} | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`.

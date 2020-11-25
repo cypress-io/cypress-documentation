@@ -92,18 +92,15 @@ Option | Default | Description
 `viewportHeight` | `660` | Default height in pixels for the application under tests' viewport (Override with {% url `cy.viewport()` viewport %} command)
 `viewportWidth` | `1000` | Default width in pixels for the application under tests' viewport. (Override with {% url `cy.viewport()` viewport %} command)
 
-## Animations
+## Actionability
 
 Option | Default | Description
 ----- | ---- | ----
 `animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
 `waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
+`scrollBehavior` | `top` | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling.
 
-## Scrolling
-
-Option | Default | Description
------ | ---- | ----
-`scrollToElement` | `true` | Whether to automatically scroll to elements before executing commands
+For more information, see the docs on {% url 'actionability' interacting-with-elements#Actionability %}.
 
 ## Node version
 
@@ -409,6 +406,7 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
 {% url "5.0.0" changelog %} | Added `retries` configuration.
 {% url "5.0.0" changelog %} | Renamed `blacklistHosts` configuration to `blockHosts`.
