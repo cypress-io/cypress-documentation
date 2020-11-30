@@ -21,7 +21,7 @@ Unlike {% url "`cy.route()`" route %}, `cy.intercept()`:
 * can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
 * does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 * does not have method set to `GET` by default, but intercepts `*` methods.
-* uses plain substring match or RegExp to match URL and does not use `minimatch` or wildcards.
+* uses plain substring match, or RegExp, or {% url minimatch %} to match URL.
 
 # Usage
 
@@ -154,6 +154,65 @@ The `routeHandler` defines what will happen with a request if the {% urlHash "`r
 * Waiting on an aliased `cy.intercept()` route using {% url "`cy.wait()`" wait %} will yield an object that contains information about the matching request/response cycle. See {% urlHash "Using the yielded object" Using-the-yielded-object %} for examples of how to use this object.
 
 # Examples
+
+## Matching URL
+
+You can provide a substring of the URL to match
+
+```js
+// will match any request that contains "users" substring, like
+//   GET <domain>/users?_limit=3 and POST <domain>/users
+cy.intercept('users')
+```
+
+You can provide a {% url minimatch %} pattern
+
+```javascript
+// will match any HTTP method to urls that end with 3 or 5
+cy.intercept('**/users?_limit=+(3|5)')
+```
+
+**Tip:** you can evaluate your URL using DevTools console to see if the {% url 'minimatch pattern' https://www.npmjs.com/package/minimatch %} is correct.
+
+```javascript
+// paste into the DevTools console while Cypress is running
+Cypress.minimatch(
+  'https://jsonplaceholder.cypress.io/users?_limit=3',
+  '**/users?_limit=+(3|5)'
+) // true
+
+// print verbose debug information
+Cypress.minimatch(
+  'https://jsonplaceholder.cypress.io/users?_limit=3',
+  '**/users?_limit=+(3|5)',
+  { debug: true }
+) // true + lots of debug messages
+```
+
+You can even add an assertion to the test itself to ensure the URL is matched
+
+```javascript
+// arguments are url and the pattern
+expect(
+  Cypress.minimatch(
+    'https://jsonplaceholder.cypress.io/users?_limit=3',
+    '**/users?_limit=+(3|5)'
+  ),
+  'Minimatch test'
+).to.be.true
+```
+
+For the most powerful matching, provide a regular expression
+
+```javascript
+cy.intercept(/\/users\?_limit=(3|5)$/).as('users')
+cy.get('#load-users').click()
+cy.wait('@users').its('response.body').should('have.length', 3)
+
+// intercepts _limit=5 requests
+cy.get('#load-five-users').click()
+cy.wait('@users').its('response.body').should('have.length', 5)
+```
 
 ## Waiting on a request
 
