@@ -62,7 +62,7 @@ cy.get('input[type=file]').then(function(el) {
   list.items.add(file)
   const myFileList = list.files
 
-  el[0].files = myFileList
+  (<HTMLInputElement>el[0]).files = myFileList
   el[0].dispatchEvent(new Event('change', { bubbles: true }))
 })
 ```
