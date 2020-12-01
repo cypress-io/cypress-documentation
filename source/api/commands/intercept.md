@@ -7,6 +7,8 @@ Use `cy.intercept()` to manage the behavior of HTTP requests at the network laye
 With `cy.intercept()`, you can:
 
 * stub or spy on any type of HTTP request.
+  * If `cy.intercept` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
+  * Otherwise the request will go out to the server, and the test spies on the network call. The spying intercept can even modify the real response from the server before it is returned to the web application under test.
 * {% urlHash "modify an HTTP request's body, headers, and URL" Intercepting-a-request %} before it is sent to the destination server.
 * stub the response to an HTTP request, either dynamically or statically.
 * {% urlHash "modify real HTTP responses" Intercepting-a-response %}, changing the body, headers, or HTTP status code before they are received by the browser.
@@ -18,7 +20,8 @@ Unlike {% url "`cy.route()`" route %}, `cy.intercept()`:
 
 * can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
 * does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
-* does not have method set to `GET` by default
+* does not have method set to `GET` by default, but intercepts `*` methods.
+* uses plain substring match, or RegExp, or {% url minimatch %} to match URL.
 
 # Usage
 
@@ -151,6 +154,65 @@ The `routeHandler` defines what will happen with a request if the {% urlHash "`r
 * Waiting on an aliased `cy.intercept()` route using {% url "`cy.wait()`" wait %} will yield an object that contains information about the matching request/response cycle. See {% urlHash "Using the yielded object" Using-the-yielded-object %} for examples of how to use this object.
 
 # Examples
+
+## Matching URL
+
+You can provide a substring of the URL to match
+
+```js
+// will match any request that contains "users" substring, like
+//   GET <domain>/users?_limit=3 and POST <domain>/users
+cy.intercept('users')
+```
+
+You can provide a {% url minimatch %} pattern
+
+```javascript
+// will match any HTTP method to urls that end with 3 or 5
+cy.intercept('**/users?_limit=+(3|5)')
+```
+
+**Tip:** you can evaluate your URL using DevTools console to see if the {% url 'minimatch pattern' https://www.npmjs.com/package/minimatch %} is correct.
+
+```javascript
+// paste into the DevTools console while Cypress is running
+Cypress.minimatch(
+  'https://jsonplaceholder.cypress.io/users?_limit=3',
+  '**/users?_limit=+(3|5)'
+) // true
+
+// print verbose debug information
+Cypress.minimatch(
+  'https://jsonplaceholder.cypress.io/users?_limit=3',
+  '**/users?_limit=+(3|5)',
+  { debug: true }
+) // true + lots of debug messages
+```
+
+You can even add an assertion to the test itself to ensure the URL is matched
+
+```javascript
+// arguments are url and the pattern
+expect(
+  Cypress.minimatch(
+    'https://jsonplaceholder.cypress.io/users?_limit=3',
+    '**/users?_limit=+(3|5)'
+  ),
+  'Minimatch test'
+).to.be.true
+```
+
+For the most powerful matching, provide a regular expression
+
+```javascript
+cy.intercept(/\/users\?_limit=(3|5)$/).as('users')
+cy.get('#load-users').click()
+cy.wait('@users').its('response.body').should('have.length', 3)
+
+// intercepts _limit=5 requests
+cy.get('#load-five-users').click()
+cy.wait('@users').its('response.body').should('have.length', 5)
+```
 
 ## Waiting on a request
 
