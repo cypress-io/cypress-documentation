@@ -366,4 +366,5 @@ cy.wait('@new-user').then(console.log)
 - {% url "See how to make a request with `cy.request()`" request %}
 - {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} test suites to see Cypress network handling in action.
 - Read {% url "Difference between cy.route and cy.route2" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
+- Read the blog post {% url "Asserting Network Calls from Cypress Tests" https://www.cypress.io/blog/2019/12/23/asserting-network-calls-from-cypress-tests/ %}
 - If you want to test the application in offline mode, read {% url "Testing an Application in Offline Network Mode" https://www.cypress.io/blog/2020/11/12/testing-application-in-offline-network-mode/ %}
