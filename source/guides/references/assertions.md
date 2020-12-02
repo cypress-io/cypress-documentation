@@ -252,7 +252,7 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 ```
 
 ```javascript
-// retry until .accordion css have display: none
+// retry while .accordion css has the "display: none" property
 cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
