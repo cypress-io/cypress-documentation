@@ -268,13 +268,73 @@ Aliases can be set on a per-request basis by setting the `alias` property of the
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
-  if (req.body.includes('mutation')) {
+  if (req.body.hasOwnProperty('mutation')) {
     req.alias = 'gqlMutation'
   }
 })
 
 // assert that a matching request has been made
 cy.wait('@gqlMutation')
+```
+
+### Aliasing individual GraphQL requests
+
+Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request.
+
+This is useful against GraphQL endpoints to wait for specific Queries and Mutations.
+
+Given that the `operationName` property is optional in GraphQL requests, we can `alias` with or without this property.
+
+With `operationName` property:
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.operationName.includes('ListPosts')) {
+    req.alias = 'gqlListPostsQuery'
+  }
+})
+
+// assert that a matching request for the ListPosts Query has been made
+cy.wait('@gqlListPostsQuery')
+```
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.operationName.includes('CreatePost')) {
+    req.alias = 'gqlCreatePostMutation'
+  }
+})
+
+// assert that a matching request for the CreatePost Mutation has been made
+cy.wait('@gqlCreatePostMutation')
+```
+
+Without `operationName` property:
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  const { body } = req
+
+  if (body.hasOwnProperty('query') && body.query.includes('ListPosts')) {
+    req.alias = 'gqlListPostsQuery'
+  }
+})
+
+// assert that a matching request for the ListPosts Query has been made
+cy.wait('@gqlListPostsQuery')
+```
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  const { body } = req
+
+  if (body.hasOwnProperty('mutation') && body.query.includes('CreatePost')) {
+    req.alias = 'gqlCreatePostMutation'
+  }
+})
+
+// assert that a matching request for the CreatePost Mutation has been made
+cy.wait('@gqlCreatePostMutation')
 ```
 
 ## Stubbing a response
