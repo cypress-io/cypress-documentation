@@ -107,6 +107,7 @@ cy.wrap(1).then((num) => {
 ```javascript
 cy.wrap(1).then((num) => {
   cy.wrap(num).should('equal', 1) // true
+  
   return 2
 }).should('equal', 2) // true
 ```
