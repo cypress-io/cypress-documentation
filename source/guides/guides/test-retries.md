@@ -213,17 +213,13 @@ You can always see how many tests you've recorded from your organization's Billi
 Yes, although ordinarily you would not have to, since this is a low-level detail. But if you want to use the current attempt number and the total allowed attempts you could do the following:
 
 ```javascript
-it('passes on the last attempt', { retries: 3 }, () => {
+it('does something differently on retry', { retries: 3 }, () => {
   // cy.state('runnable') returns the current test object
   // we can grab the current attempt and
   // the total allowed attempts from its properties
   const attempt = cy.state('runnable')._currentRetry
   const retries = cy.state('runnable')._retries
-
-  if (attempt < retries) {
-    expect(true).to.be.false // fail the test
-  }
-  // passes on the last attempt
+  // use the "attempt" and "retries" values somehow
 })
 ```
 
