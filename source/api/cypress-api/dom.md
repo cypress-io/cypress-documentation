@@ -173,3 +173,7 @@ cy.get('p').then(($el) => {
   Cypress.dom.wrap($el)
 })
 ```
+
+# See also
+
+- read the blog post {% url "Debug the Element Visibility Problems in Cypress" https://glebbahmutov.com/blog/debug-visibility/ %} to see how you can call these methods from the DevTools console to step through their logic.
