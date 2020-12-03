@@ -205,30 +205,30 @@
       link: https://github.com/kamranayub/cypress-browser-permissions
       keywords: [permissions, notifications, geolocation, camera, microphone]
       badge: community
-      
+
     - name: cypress-repeat
       description: Run Cypress multiple times in a row, great at finding test flake
       link: https://github.com/bahmutov/cypress-repeat
       keyboards: [cli, ci]
       badge: community
-      
+
     - name: cypress-expect
       description: Cypress CLI wrapper where you can specify the total number of expected tests
       link: https://github.com/bahmutov/cypress-expect
       keywords: [cli]
       badge: community
-      
+
     - name: cy-search
       description: Search Cypress documentation from the terminal
       link: https://github.com/bahmutov/cy-search
       keywords: [cli]
       badge: community
-      
+
     - name: cypress-tags
       description: Use custom tags to slice up Cypress test runs
       link: https://github.com/annaet/cypress-tags
       keywords: [test, tag, browserify]
-      
+
     - name: '@swimlane/cy-mockapi'
       description: Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.
       link: https://github.com/swimlane/cy-mockapi
@@ -415,7 +415,7 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
-      
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -479,7 +479,7 @@
 
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
-      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
+      link: https://github.com/shakacode/cypress-on-rails
       keywords: [ruby-rack, ruby-on-rails]
       badge: community
 
@@ -700,7 +700,7 @@
       link: https://github.com/Shelex/cypress-allure-plugin
       keywords: [reporter, allure]
       badge: community
-      
+
     - name: cypress-mochawesome-reporter
       description: Zero config Mochawesome reporter for Cypress with screenshots.
       link: https://github.com/LironEr/cypress-mochawesome-reporter
