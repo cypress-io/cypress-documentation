@@ -224,3 +224,14 @@ it('does something differently on retry', { retries: 3 }, () => {
 ```
 
 The above `attempt` variable will have values 0 through 3 (the first default test execution plus three allowed retries). The `retries` constant in this case is always 3.
+
+**Tip:** Cypress {% url `bundles Lodash` _ %} library. Use its helper methods to safely access a property of an object. Let's make sure the function supports different Cypress versions by falling back to the default values.
+
+```javascript
+it('does something differently on retry', { retries: 3 }, () => {
+  // _.get: if the object or property is missing use the provided default value
+  const attempt = Cypress._.get(cy.state('runnable'), '_currentRetry', 0)
+  const retries = Cypress._.get(cy.state('runnable'), '_retries', 0)
+  // use the "attempt" and "retries" values somehow
+})
+```
