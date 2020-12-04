@@ -31,6 +31,8 @@ cy.intercept(method, url, routeHandler?)
 cy.intercept(routeMatcher, routeHandler?)
 ```
 
+**Note:** all intercepts are automatically cleared before every test.
+
 ## Arguments
 
 ### **{% fa fa-angle-right %} url** **_(`string | RegExp`)_**
