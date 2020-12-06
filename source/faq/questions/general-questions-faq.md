@@ -110,7 +110,7 @@ No. There are already lots of tools to do that. Using Cypress to test against a 
 
 ## {% fa fa-angle-right %} Is there code coverage?
 
-There is a plugin and detailed documentation how to get end-to-end, unit and full-stack code coverage
+There is a plugin and detailed documentation how to get end-to-end, unit and full stack code coverage
 - read our {% url "Code Coverage guide" https://on.cypress.io/code-coverage %}
 - use {% url @cypress/code-coverage https://github.com/cypress-io/code-coverage %} plugin
 
