@@ -188,7 +188,7 @@ These tests are also indicated with a "Flaky" badge on the Latest Runs page and 
 
 {% video local /img/guides/test-retries/flaky-test-filter.mp4 "Flaky test filter" %}
 
-Clicking on a Test Result will open the Test Case History screen. This demonstrates the number of failed attempts, the screenshots and/or videos of failed attempts, and the error for failed attempts. 
+Clicking on a Test Result will open the Test Case History screen. This demonstrates the number of failed attempts, the screenshots and/or videos of failed attempts, and the error for failed attempts.
 
 {% imgTag /img/guides/test-retries/flake-artifacts-and-errors.png "Flake artifacts and errors" %}
 
@@ -196,7 +196,7 @@ You can also see the Flaky Rate for a given test.
 
 {% imgTag /img/guides/test-retries/flaky-rate.png "Flaky rate" %}
 
-For a comprehensive view of how flake is affecting your overall test suite, you can review the {% url "Flake Detection" flaky-test-management#Flake-Detection %} and {% url "Flake Alerting" flaky-test-management#Flake-Alerting %} features highlighted in the Test Flake Management Guide. 
+For a comprehensive view of how flake is affecting your overall test suite, you can review the {% url "Flake Detection" flaky-test-management#Flake-Detection %} and {% url "Flake Alerting" flaky-test-management#Flake-Alerting %} features highlighted in the Test Flake Management Guide.
 
 # Frequently Asked Questions (FAQs)
 
@@ -207,3 +207,31 @@ No. Tests recorded during `cypress run` with the `--record` flag will be counted
 We consider each time the `it()` function is called to be a single test for billing purposes. The test retrying will not count as extra test recordings in your billing.
 
 You can always see how many tests you've recorded from your organization's Billing & Usage page within the {% url "Dashboard" https://on.cypress.io/dashboard %}.
+
+## Can I access the current attempt counter from the test?
+
+Yes, although ordinarily you would not have to, since this is a low-level detail. But if you want to use the current attempt number and the total allowed attempts you could do the following:
+
+```javascript
+it('does something differently on retry', { retries: 3 }, () => {
+  // cy.state('runnable') returns the current test object
+  // we can grab the current attempt and
+  // the total allowed attempts from its properties
+  const attempt = cy.state('runnable')._currentRetry
+  const retries = cy.state('runnable')._retries
+  // use the "attempt" and "retries" values somehow
+})
+```
+
+The above `attempt` variable will have values 0 through 3 (the first default test execution plus three allowed retries). The `retries` constant in this case is always 3.
+
+**Tip:** Cypress {% url `bundles Lodash` _ %} library. Use its helper methods to safely access a property of an object. Let's make sure the function supports different Cypress versions by falling back to the default values.
+
+```javascript
+it('does something differently on retry', { retries: 3 }, () => {
+  // _.get: if the object or property is missing use the provided default value
+  const attempt = Cypress._.get(cy.state('runnable'), '_currentRetry', 0)
+  const retries = Cypress._.get(cy.state('runnable'), '_retries', 0)
+  // use the "attempt" and "retries" values somehow
+})
+```
