@@ -135,7 +135,7 @@ After scrolling the element, if we determine that it is still being covered up, 
 
 Our algorithm *should* always be able to scroll until the element is not covered.
 
-To change the position in the viewport to where we scroll an element, you can use the {% url `scrollBehavior` configuration#Actionability %} configuration option. This can be useful if the element is covered up when aligned to the top of the viewport, or if you just prefer seeing the element centered during commands. Accepted values are `'center'`, `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling altogether.
+To change the position in the viewport to where we scroll an element, you can use the {% url `scrollBehavior` configuration#Actionability %} configuration option. This can be useful if the element is covered up when aligned to the top of the viewport, or if you just prefer the element to be centered during scrolling of action commands. Accepted values are `'center'`, `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling altogether.
 
 ## Coordinates
 
