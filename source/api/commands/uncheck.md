@@ -46,9 +46,12 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 
 Option | Default | Description
 --- | --- | ---
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
 `force` | `false` | {% usage_options force uncheck %}
 `log` | `true` | {% usage_options log %}
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .uncheck %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -126,6 +129,7 @@ When clicking on `uncheck` within the command log, the console outputs the follo
 {% imgTag /img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png "Console Log uncheck" %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "0.6.12" changelog#0-6-12 %} | Added option `force`
 {% url "0.3.3" changelog#0-3-3 %} | `.uncheck()` command added
 {% endhistory %}
