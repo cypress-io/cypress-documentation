@@ -1,11 +1,14 @@
 ---
 title: Cypress.moment
-
 ---
 
 Cypress automatically includes {% url 'moment.js' http://momentjs.com/ %} and exposes it as `Cypress.moment`.
 
 Use `Cypress.moment` to help format or parse dates.
+
+{% note warning %}
+⚠️ **`Cypress.moment` is deprecated in Cypress 6.1.0 and will be replaced in a future release.** Consider migrating to a different datetime formatter.
+{% endnote %}
 
 # Syntax
 

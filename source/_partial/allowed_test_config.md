@@ -10,6 +10,7 @@
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
+- `scrollBehavior`
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`
