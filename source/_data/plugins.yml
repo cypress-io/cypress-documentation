@@ -234,6 +234,12 @@
       link: https://github.com/swimlane/cy-mockapi
       keywords: [mock, rest, api]
       badge: community
+      
+    - name: cypress-timings
+      description: A Cypress plugin for reporting individual command timings.
+      link: https://github.com/bahmutov/cypress-timings
+      keywords: [commands, performance]
+      badge: community
 
 - name: Custom Commands
   plugins:
