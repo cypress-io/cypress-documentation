@@ -17,27 +17,24 @@ Cypress Studio provides users with an easy way to generate tests in the Test Run
 
 ## Supported Commands
 
-- cy.click()
-- cy.dblclick()
-- cy.type()
-- cy.select()
+The following Cypress commands are supported. Test code will be generated when interacting with the DOM inside of the Cypress Studio:
+
+- {% url `.click()` click %}
+- {% url `.dblclick()` dblclick %}
+- {% url `.type()` type %}
+- {% url `.select()` select %}
 
 
 ## Extending a Test
 
 Cypress Studio is directly integrated with the {% url 'Command Log' test-runner#Command-Log %}.
 
-First, launch the Test Runner and run a spec.  Once the tests complete the run, hovering over the test in the Command Log will reveal an "Extend Test" button.
+First, launch the Test Runner and run a spec.  Once the tests complete the run, hovering over the test in the Command Log will reveal an "Extend Test" button. Clicking on "Extend Test" will launch the Cypress Studio.
 
 {% imgTag /img/guides/cypress-studio/extend-test-1.png "Cypress Studio" "no-border" %}
 
-
-Clicking on "Extend Test" will launch the Cypress Studio.
-
+Click the "Get Started" button to begin interacting with your site to generate tests.
 {% imgTag /img/guides/cypress-studio/extend-test-2.png "Cypress Studio Get Started" "no-border" %}
 
-Click the "Get Started" button to begin interacting with your site to generate tests.
-
-The Test Runner will execute the test in isolation and pause after the last line in the test.
-
-{% imgTag /img/guides/cypress-studio/extend-test-3.png "Cypress Studio Launch" "no-border" %}
+Next, the Test Runner will execute the test in isolation and pause after the last command in the test.
+{% imgTag /img/guides/cypress-studio/extend-test-3.png "Cypress Studio Extend Test" "no-border" %}
