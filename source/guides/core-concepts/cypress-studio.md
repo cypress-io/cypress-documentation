@@ -38,3 +38,11 @@ Click the "Get Started" button to begin interacting with your site to generate t
 
 Next, the Test Runner will execute the test in isolation and pause after the last command in the test.
 {% imgTag /img/guides/cypress-studio/extend-test-3.png "Cypress Studio Extend Test" "no-border" %}
+
+To record actions, begin interacting with the application.  Here we will click on the first name input and as a result we will see the click recorded in the Command Log.
+
+{% imgTag /img/guides/cypress-studio/extend-test-4.png "Cypress Studio Extend Test" "no-border" %}
+
+Next, we can type a new name and see that action recorded.
+
+{% imgTag /img/guides/cypress-studio/extend-test-5.png "Cypress Studio Extend Test" "no-border" %}
