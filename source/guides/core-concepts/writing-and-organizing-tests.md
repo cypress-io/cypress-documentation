@@ -523,11 +523,11 @@ Set the {% url `watchForFileChanges` configuration#Global %} configuration prope
 The `watchForFileChanges` property is only in effect when running Cypress using {% url "`cypress open`" command-line#cypress-open %}.
 {% endnote %}
 
-The component responsible for the file-watching behavior in Cypress is the {% url '`cypress-webpack-preprocessor`' https://github.com/cypress-io/cypress-webpack-preprocessor %}. This is the default file-watcher packaged with Cypress.
+The component responsible for the file-watching behavior in Cypress is the {% url '`webpack-preprocessor`' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %}. This is the default file-watcher packaged with Cypress.
 
 If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as _what_ is watched and the delay before emitting an "update" event after a change.
 
 Cypress also ships other {% url "file-watching preprocessors" plugins %}; you'll have to configure these explicitly if you want to use them.
 
 - {% url 'Cypress Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
-- {% url 'Cypress webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+- {% url 'Cypress webpack Preprocessor' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %}

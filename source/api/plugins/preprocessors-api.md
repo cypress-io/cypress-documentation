@@ -14,7 +14,7 @@ We've created three preprocessors as examples for you to look at. These are full
 
 The code contains comments that explain how it utilizes the preprocessor API.
 
-* {% url 'webpack preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
+* {% url 'webpack preprocessor' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %}
 * {% url 'Browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
 * {% url 'Watch preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 
@@ -33,9 +33,9 @@ The webpack preprocessor handles:
 Are you looking to change the **default options** for webpack?
 {% endnote %}
 
-If you already use webpack in your project, you can pass in your webpack config as {% url 'shown here' https://github.com/cypress-io/cypress-webpack-preprocessor#options %}.
+If you already use webpack in your project, you can pass in your webpack config as {% url 'shown here' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor#options %}.
 
-If you don't use webpack in your project or would like to keep the majority of the default options, you can {% url 'modify the default options' https://github.com/cypress-io/cypress-webpack-preprocessor#modifying-default-options %}. Editing the options allows you to do things like:
+If you don't use webpack in your project or would like to keep the majority of the default options, you can {% url 'modify the default options' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor#modifying-default-options %}. Editing the options allows you to do things like:
 
 - Add your own Babel plugins
 - Modify options for TypeScript compilation
