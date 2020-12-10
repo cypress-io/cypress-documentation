@@ -301,3 +301,6 @@ You can {% url 'read more about how environment variables can change configurati
 - {% url "Configuration API" configuration-api %}
 - {% url "Environment Variables recipe" recipes#Fundamentals %}
 - {% url "Test Configuration" configuration#Test-Configuration %}
+- {% url "Pass environment variables: tips and tricks" https://glebbahmutov.com/blog/cypress-tips-and-tricks/#pass-the-environment-variables-correctly %}
+- {% url "Keep passwords secret in E2E tests" https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/ %}
+
