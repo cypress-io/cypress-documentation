@@ -32,7 +32,7 @@
 
     - name: Webpack
       description: Watches and bundles your spec files via webpack.
-      link: https://github.com/cypress-io/cypress-webpack-preprocessor
+      link: https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor
       keywords: [webpack]
       badge: official
 
