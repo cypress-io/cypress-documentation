@@ -498,6 +498,7 @@ When clicking on `XHR Stub` within the Command Log, the console outputs the foll
 
 # See also
 
+- {% url "Migrating `cy.route()` to `cy.intercept()`" migration-guide#Migrating-cy-route-to-cy-intercept %}
 - {% url `.as()` as %}
 - {% url `cy.fixture()` fixture %}
 - {% url `cy.server()` server %}

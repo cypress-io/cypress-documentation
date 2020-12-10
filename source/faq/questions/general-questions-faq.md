@@ -110,14 +110,17 @@ No. There are already lots of tools to do that. Using Cypress to test against a 
 
 ## {% fa fa-angle-right %} Is there code coverage?
 
-There is nothing currently built into Cypress to do this. Adding code coverage around end-to-end tests is much harder than unit tests and it may not be feasible to do in a generic way. You can read in more detail about code coverage {% issue 346 'here' %}. You may find some other coverage utilities useful when writing end-to-end tests like:
+There is a plugin and detailed documentation on how to get end-to-end, unit and full stack code coverage.
+- Read our {% url "Code Coverage guide" https://on.cypress.io/code-coverage %}
+- Use the {% url @cypress/code-coverage https://github.com/cypress-io/code-coverage %} plugin
 
+You may also find the following resources helpful when writing end-to-end tests:
 - {% url "element coverage" https://glebbahmutov.com/blog/element-coverage/ %}
 - {% url "application state coverage" https://glebbahmutov.com/blog/hyperapp-state-machine/ %}
 
 ## {% fa fa-angle-right %} Are there driver bindings in my language?
 
-Cypress does *not* utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure {% url "Cypress webpack preprocessor" https://github.com/cypress-io/cypress-webpack-preprocessor %} or {% url "Cypress Browserify preprocessor" https://github.com/cypress-io/cypress-browserify-preprocessor %} to transpile your tests to JavaScript that Cypress can run.
+Cypress does *not* utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure {% url "Cypress webpack preprocessor" https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %} or {% url "Cypress Browserify preprocessor" https://github.com/cypress-io/cypress-browserify-preprocessor %} to transpile your tests to JavaScript that Cypress can run.
 
 ## {% fa fa-angle-right %} So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
 

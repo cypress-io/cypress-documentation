@@ -56,14 +56,15 @@ Pass in an options object to change the default behavior of `.trigger()`.
 
 Option | Default | Description
 --- | --- | ---
-`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
 `bubbles` | `true` | Whether the event bubbles
 `cancelable` | `true` | Whether the event is cancelable
 `eventConstructor` | `Event` | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)
 `force` | `false` | {% usage_options force trigger %}
 `log` | `true` | {% usage_options log %}
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .trigger %}
-`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.
 
@@ -255,6 +256,7 @@ When clicking on `trigger` within the command log, the console outputs the follo
 {% imgTag /img/api/trigger/console-log-trigger.png "console log trigger" %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "3.5.0" changelog#3-5-0 %} | Added `screenX` and `screenY` properties to events
 {% url "0.20.0" changelog#0-20-0 %} | `.trigger()` command added
 {% endhistory %}

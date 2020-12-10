@@ -93,11 +93,11 @@ Cypress will automatically determine if an element is animating and wait until i
 
 To calculate whether an element is animating we take a sample of the last positions it was at and calculate the element's slope. You might remember this from 8th grade algebra. 😉
 
-To calculate whether an element is animating we check the current and previous positions of the element itself. If the distance exceeds the {% url `animationDistanceThreshold` configuration#Animations %}, then we consider the element to be animating.
+To calculate whether an element is animating we check the current and previous positions of the element itself. If the distance exceeds the {% url `animationDistanceThreshold` configuration#Actionability %}, then we consider the element to be animating.
 
-When coming up with this value, we did a few experiments to find a speed that "feels" too fast for a user to interact with. You can always {% url "increase or decrease this threshold" configuration#Animations %}.
+When coming up with this value, we did a few experiments to find a speed that "feels" too fast for a user to interact with. You can always {% url "increase or decrease this threshold" configuration#Actionability %}.
 
-You can also turn off our checks for animations with the configuration option {% url `waitForAnimations` configuration#Animations %}.
+You can also turn off our checks for animations with the configuration option {% url `waitForAnimations` configuration#Actionability %}.
 
 ## Covering
 
@@ -130,11 +130,13 @@ Before interacting with an element, we will *always* scroll it into view (includ
 This scrolling logic only applies to {% urlHash "commands that are actionable above" Actionability %}. **We do not scroll elements** into view when using DOM commands such as {% url "`cy.get()`" get %} or {% url "`.find()`" find %}.
 {% endnote %}
 
-The scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of its scrollable container.
+By default, the scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of its scrollable container.
 
 After scrolling the element, if we determine that it is still being covered up, we will continue to scroll and "nudge" the page until it becomes visible. This most frequently happens when you have `position: fixed` or `position: sticky` navigation elements which are fixed to the top of the page.
 
 Our algorithm *should* always be able to scroll until the element is not covered.
+
+To change the position in the viewport to where we scroll an element, you can use the {% url `scrollBehavior` configuration#Actionability %} configuration option. This can be useful if the element is covered up when aligned to the top of the viewport, or if you just prefer the element to be centered during scrolling of action commands. Accepted values are `'center'`, `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling altogether.
 
 ## Coordinates
 

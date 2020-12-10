@@ -73,14 +73,15 @@ Pass in an options object to change the default behavior of `.type()`.
 
 Option | Default | Description
 --- | --- | ---
-`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Animations %} | {% usage_options animationDistanceThreshold %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
 `delay` | `10` | Delay after each keypress
 `force` | `false` | {% usage_options force type %}
 `log` | `true` | {% usage_options log %}
 `parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
 `release` | `true` | Keep a modifier activated between commands
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .type %}
-`waitForAnimations` | {% url `waitForAnimations` configuration#Animations %} | {% usage_options waitForAnimations %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -500,6 +501,7 @@ When clicking on `type` within the command log, the console outputs the followin
 {% imgTag /img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png "Console Log type" %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "5.6.0" changelog#5.6.0 %} | Support single key combination syntax 
 {% url "5.5.0" changelog#5.5.0 %} | Support `beforeinput` event 
 {% url "3.4.1" changelog#3-4-1 %} | Added `parseSpecialCharSequences` option

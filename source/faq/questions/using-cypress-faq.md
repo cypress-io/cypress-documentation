@@ -666,7 +666,7 @@ It might be because of the 2 different windows in Cypress Test Runner. For more 
 
 ## {% fa fa-angle-right %} Can I use Cucumber to write tests?
 
-Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then coverts the scenarios and step definitions into "regular" JavaScript Cypress tests.
+Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then converts the scenarios and step definitions into "regular" JavaScript Cypress tests.
 
 - try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url Plugins plugins %} page for additional helper plugins
 - read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
@@ -696,7 +696,7 @@ Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BK
 
 ## {% fa fa-angle-right %} Can Cypress be used for performance testing?
 
-Cypress is not built for performance testing. Because Cypress instruments the page under test, proxies the network requests, and tightly controls the test steps, the Test Runner adds its own overhead. Thus the performance numbers you get from Cypress tests are slower than "normal" use. Still, you can access the native `window.performance` object and grab the page time measurements, see the [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom) recipe. You can also [run Lighthouse audit straight from Cypress](https://www.mariedrake.com/post/web-performance-testing-with-google-lighthouse) via [cypress-audit](https://www.npmjs.com/package/cypress-audit) community plugin.
+Cypress is not built for performance testing. Because Cypress instruments the page under test, proxies the network requests, and tightly controls the test steps, the Test Runner adds its own overhead. Thus, the performance numbers you get from Cypress tests are slower than "normal" use. Still, you can access the native `window.performance` object and grab the page time measurements, see the [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom) recipe. You can also [run Lighthouse audit straight from Cypress](https://www.mariedrake.com/post/web-performance-testing-with-google-lighthouse) via [cypress-audit](https://www.npmjs.com/package/cypress-audit) community plugin.
 
 ## {% fa fa-angle-right %} Can Cypress test WASM code?
 
