@@ -668,7 +668,7 @@
     - name: autoset-status-cypress-testrail-reporter
       description: TestRail Reporter which auto-set status for specific TestRun for Cypress.
       link: https://github.com/dkuznetsov21/autoset-status-cypress-testrail-reporter
-      keywords: [ testrail, reporter ]
+      keywords: [ testrail, reporter, autoset, status ]
       badge: community
 
     - name: cypress-testrail-reporter
