@@ -339,6 +339,17 @@ cy.intercept('POST', '/graphql', (req) => {
 cy.wait('@gqlCreatePostMutation')
 ```
 
+### Waiting on errors
+
+You can use {% url "`cy.wait()`" wait %} to wait on requests that end with network errors:
+
+```js
+cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
+
+// assert that this request happened, and that it ended in an error
+cy.wait('@err').should('have.property', 'error')
+```
+
 ## Stubbing a response
 
 ### With a string
