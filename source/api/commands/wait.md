@@ -177,8 +177,8 @@ cy.wait('@alias')
 cy.wait('@alias')
 cy.get(...)
 
-// Example: assert response property before proceeding
-cy.wait('@alias').its('status').should('eq', 200)
+// Example: assert status from cy.intercept() before proceeding
+cy.wait('@alias').its('response.statusCode').should('eq', 200)
 cy.get(...)
 ```
 
