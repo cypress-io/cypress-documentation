@@ -10,7 +10,7 @@ title: Cypress Studio
 
 # Overview
 
-Cypress Studio provides users with an easy way to generate tests in the Test Runner,  by interacting with their web app, directly inside the Test Runner.
+Cypress Studio provides a visual way to generate tests within the Test Runner, by *recording interactions* against the application under test.
 
 
 {% imgTag /img/guides/cypress-studio/cypress-studio-overview.png "Cypress Studio" "no-border" %}
@@ -36,18 +36,20 @@ Create a file under `cypress/integration` with the following test scaffolding.
 ```js
 describe('Cypress Studio Demo', function () {
   beforeEach(function () {
-    cy.task("db:seed")
+    cy.task('db:seed')
 
     cy.database('find', 'users').then((user) => {
       cy.login(user.username, 's3cret', true)
-    });
+    })
   })
+
   it('create new transaction', function () {
     // Extend test with Cypress Studio
   })
+
   it('create new bank account', function () {
     // Extend test with Cypress Studio
-  });
+  })
 })
 ```
 
