@@ -12,8 +12,9 @@ title: Cypress Studio
 
 Cypress Studio provides a visual way to generate tests within the Test Runner, by *recording interactions* against the application under test.
 
-
 {% imgTag /img/guides/cypress-studio/cypress-studio-overview.png "Cypress Studio" "no-border" %}
+
+The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %} and {% url `.select()` select %} Cypress commands are supported will generate test code when interacting with the DOM inside of the Cypress Studio.
 
 ## Using Cypress Studio
 
@@ -100,11 +101,3 @@ Finally, we will click the "Pay" button.
 We are presented with a confirmation page of our new transaction.
 {% imgTag /img/guides/cypress-studio/extend-test-9.png "Cypress Studio Extend Test Confirmation" "no-border" %}
 
-## Supported Commands
-
-The following Cypress commands are supported. Test code will be generated when interacting with the DOM inside of the Cypress Studio:
-
-- {% url `.click()` click %}
-- {% url `.dblclick()` dblclick %}
-- {% url `.type()` type %}
-- {% url `.select()` select %}
