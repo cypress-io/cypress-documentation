@@ -17,11 +17,11 @@ Cypress Studio provides a visual way to generate tests within the Test Runner, b
 
 ## Using Cypress Studio
 
-The Cypress {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is an open source project implementing a payment application to demonstrate real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio. 
+The Cypress {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is an open source project implementing a payment application to demonstrate real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio.
 
 ### Extending a Test
 
-1. You can extend any preexisting test or start by creating a new test under `cypress/integration` with the following test scaffolding.
+You can extend any preexisting test or start by creating a new test under `cypress/integration` with the following test scaffolding.
 
 ```js
 describe('Cypress Studio Demo', function () {
@@ -47,30 +47,37 @@ describe('Cypress Studio Demo', function () {
 
 {% note info %}
 #### {% fa fa-graduation-cap %} Real World Example
-You can clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "cypress/tests/demo/cypress-studio.spec.ts" https://github.com/cypress-io/cypress-realworld-app/cypress/tests/demo/cypress-studio.spec.ts %} file.
+Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "cypress/tests/demo/cypress-studio.spec.ts" https://github.com/cypress-io/cypress-realworld-app/cypress/tests/demo/cypress-studio.spec.ts %} file.
 {% endnote %}
 
-We will use Cypress Studio to perform a New Transaction user journey.
-
-We are logged into the application inside the `beforeEach` block.
-
-Cypress Studio is directly integrated with the {% url 'Command Log' test-runner#Command-Log %}.
-
-First, launch the Test Runner and run the spec created in the previous step.
+#### Step 1 - Run the spec
+We will use Cypress Studio to perform a "New Transaction" user journey. First, launch the Test Runner and run the spec created in the previous step.
 
 {% imgTag /img/guides/cypress-studio/extend-test-1.png "Cypress Studio" "no-border" %}
 
-Once the tests complete the run, hovering over the test in the Command Log will reveal an "Extend Test" button. Clicking on "Extend Test" will launch the Cypress Studio.
+Once the tests complete their run, hover over the test in the Command Log to reveal an "Extend Test" button. Clicking on "Extend Test" will launch the Cypress Studio.
+
+{% note info %}
+Cypress Studio is directly integrated with the {% url 'Command Log' test-runner#Command-Log %}.
+{% endnote %}
 
 {% imgTag /img/guides/cypress-studio/extend-test-2.png "Cypress Studio" "no-border" %}
 
+#### Step 2 - Launch Cypress Studio for a test
+
 Click the "Get Started" button to begin interacting with your site to generate tests.
 {% imgTag /img/guides/cypress-studio/extend-test-3.png "Cypress Studio Get Started" "no-border" %}
+
+{% note success %}
+Cypress will automatically execute all hooks and currently present test code, and then the test can be extended from that point on (e.g. We are logged into the application inside the `beforeEach` block).
+{% endnote %}
 
 Next, the Test Runner will execute the test in isolation and pause after the last command in the test.
 {% imgTag /img/guides/cypress-studio/extend-test-4.png "Cypress Studio Extend Test" "no-border" %}
 
 Now, we can begin updating the test to create a new transaction between users.
+
+#### Step 3 - Interact with the Application
 
 To record actions, begin interacting with the application.  Here we will click on the first name input and as a result we will see the click recorded in the Command Log.
 
@@ -80,10 +87,12 @@ Next, we can type the name of a user to pay and click on the user in the results
 
 {% imgTag /img/guides/cypress-studio/extend-test-6.png "Cypress Studio Extend Test" "no-border" %}
 
-
-Next, we will complete the transaction form clicking on and typing in the amount and description inputs.  Notice the commands generated in the command log.
+We will complete the transaction form by clicking on and typing in the amount and description inputs.  
 {% imgTag /img/guides/cypress-studio/extend-test-7.png "Cypress Studio Extend Test" "no-border" %}
 
+{% note success %}
+Notice the commands generated in the command log.
+{% endnote %}
 
 Finally, we will click the "Pay" button.
 {% imgTag /img/guides/cypress-studio/extend-test-8.png "Cypress Studio Extend Test" "no-border" %}
