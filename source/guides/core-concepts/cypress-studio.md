@@ -17,11 +17,11 @@ Cypress Studio provides a visual way to generate tests within the Test Runner, b
 
 ## Using Cypress Studio
 
-The Cypress {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} will be use to demo the functionality of Cypress Studio.
+The Cypress {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is an open source project implementing a payment application to demonstrate real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio. 
 
 ### Extending a Test
 
-Create a file under `cypress/integration` with the following test scaffolding.
+1. You can extend any preexisting test or start by creating a new test under `cypress/integration` with the following test scaffolding.
 
 ```js
 describe('Cypress Studio Demo', function () {
@@ -44,6 +44,11 @@ describe('Cypress Studio Demo', function () {
   })
 })
 ```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+You can clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "cypress/tests/demo/cypress-studio.spec.ts" https://github.com/cypress-io/cypress-realworld-app/cypress/tests/demo/cypress-studio.spec.ts %} file.
+{% endnote %}
 
 We will use Cypress Studio to perform a New Transaction user journey.
 
