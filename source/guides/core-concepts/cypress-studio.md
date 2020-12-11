@@ -14,7 +14,7 @@ Cypress Studio provides a visual way to generate tests within the Test Runner, b
 
 {% imgTag /img/guides/cypress-studio/cypress-studio-overview.png "Cypress Studio" "no-border" %}
 
-The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %} and {% url `.select()` select %} Cypress commands are supported will generate test code when interacting with the DOM inside of the Cypress Studio.
+The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %} and {% url `.select()` select %} Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
 
 ## Using Cypress Studio
 
