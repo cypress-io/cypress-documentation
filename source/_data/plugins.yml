@@ -241,6 +241,12 @@
       keywords: [commands, performance]
       badge: community
 
+    - name: cypress-fail-fast
+      description: Enables fail fast in Cypress, skipping the rest of tests on first failure.
+      link: https://github.com/javierbrea/cypress-fail-fast
+      keywords: [fail-fast, failure, skip, config]
+      badge: community
+
 - name: Custom Commands
   plugins:
     - name: cy-view
