@@ -19,15 +19,17 @@ Cypress Studio provides a visual way to generate tests within the Test Runner, b
 
 The Cypress {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} will be use to demo the functionality of Cypress Studio.
 
-## Test Scaffolding
+### Extending a Test
 
 Create a file under `cypress/integration` with the following test scaffolding.
 
 ```js
 describe('Cypress Studio Demo', function () {
   beforeEach(function () {
+    // Seed database with test data
     cy.task('db:seed')
 
+    // Login test user
     cy.database('find', 'users').then((user) => {
       cy.login(user.username, 's3cret', true)
     })
@@ -42,8 +44,6 @@ describe('Cypress Studio Demo', function () {
   })
 })
 ```
-
-## Extending a Test
 
 We will use Cypress Studio to perform a New Transaction user journey.
 
