@@ -1,7 +1,7 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
-- title:
+- title: "Test Automation for Accessibility"
   url: https://testautomationu.applitools.com/accessibility-testing-tutorial/
   author: Marie Drake
   authorTwitter: mcruzdrake
