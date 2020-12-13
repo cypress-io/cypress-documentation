@@ -48,6 +48,12 @@
       keywords: [rollup]
       badge: community
 
+    - name: cypress-clojurescript-preprocessor
+      description: Cypress preprocessor for ClojureScript via shadow-cljs
+      link: https://github.com/viesti/cypress-clojurescript-preprocessor
+      keywords: [ClojureScript]
+      badge: community
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
