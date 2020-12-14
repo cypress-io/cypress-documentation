@@ -1,5 +1,5 @@
 ---
-title: before:spec
+title: Before Spec API
 ---
 
 The `before:spec` event fires before a spec file is run. The event only fires when running via `cypress run`.

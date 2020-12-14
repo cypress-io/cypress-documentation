@@ -198,6 +198,7 @@ sidebar:
     writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
     browser-launch-api: Browser Launching
+    before-spec-api: Before Spec
     configuration-api: Configuration
     version: version
     arch: arch
