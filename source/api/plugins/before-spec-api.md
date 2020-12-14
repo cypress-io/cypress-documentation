@@ -4,11 +4,10 @@ title: before:spec
 
 The `before:spec` event fires before a spec file is run.
 
-The event timing is different depending on if Cypress is run via `cypress run` (run mode) or `cypress open` (interactive mode).
+The event timing is different depending on if Cypress is run via `cypress run` or `cypress open`.
 
-In run mode, the event is fired as soon as possible when a spec is about to be run.
-
-In interactive mode, since there is not a discreet before or after to a spec running, the event is fired once before the browser is launched for a spec.
+- During `cypress run`, the event is fired as soon as possible when a spec is about to run.
+- During `cypress open`, since there is not a discreet before or after to a spec running, the event is fired once before the browser is launched for a spec.
 
 # Syntax
 
@@ -47,7 +46,7 @@ module.exports = (on, config) => {
 
 ## Log the absolute spec path, but only when in run mode
 
-You can utilize `config.isInteractive` flag to determine if currently running via `cypress run` (run mode) or `cypress open` (interactive mode).
+You can utilize the `config.isInteractive` flag to determine if the spec is currently running via `cypress run` (run mode) or `cypress open` (interactive mode).
 
 ```javascript
 module.exports = (on, config) => {
@@ -59,3 +58,8 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+# See also
+
+- {% url "Plugins Guide" plugins-guide %}
+- {% url "Writing a Plugin" writing-a-plugin %}
