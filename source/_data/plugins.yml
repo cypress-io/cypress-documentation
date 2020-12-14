@@ -32,7 +32,7 @@
 
     - name: Webpack
       description: Watches and bundles your spec files via webpack.
-      link: https://github.com/cypress-io/cypress-webpack-preprocessor
+      link: https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor
       keywords: [webpack]
       badge: official
 
@@ -233,6 +233,18 @@
       description: Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.
       link: https://github.com/swimlane/cy-mockapi
       keywords: [mock, rest, api]
+      badge: community
+      
+    - name: cypress-timings
+      description: A Cypress plugin for reporting individual command timings.
+      link: https://github.com/bahmutov/cypress-timings
+      keywords: [commands, performance]
+      badge: community
+
+    - name: cypress-fail-fast
+      description: Enables fail fast in Cypress, skipping the rest of tests on first failure.
+      link: https://github.com/javierbrea/cypress-fail-fast
+      keywords: [fail-fast, failure, skip, config]
       badge: community
 
 - name: Custom Commands
