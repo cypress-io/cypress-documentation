@@ -2,12 +2,11 @@
 title: before:spec
 ---
 
-The `before:spec` event fires before a spec file is run.
+The `before:spec` event fires before a spec file is run. The event only fires when running via `cypress run`.
 
-The event timing is different depending on if Cypress is run via `cypress run` or `cypress open`.
-
-- During `cypress run`, the event is fired as soon as possible when a spec is about to run.
-- During `cypress open`, since there is not a discreet before or after to a spec running, the event is fired once before the browser is launched for a spec.
+{% note warning %}
+{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalRunEvents`" experiments %} configuration option to `true`.**
+{% endnote %}
 
 # Syntax
 
@@ -40,21 +39,6 @@ module.exports = (on, config) => {
     // }
 
     console.log('Running', spec.relative)
-  })
-}
-```
-
-## Log the absolute spec path, but only when in run mode
-
-You can utilize the `config.isInteractive` flag to determine if the spec is currently running via `cypress run` (run mode) or `cypress open` (interactive mode).
-
-```javascript
-module.exports = (on, config) => {
-  on('before:spec', (spec) => {
-    // only log if in run mode
-    if (!config.isInteractive) {
-      console.log('Running', spec.relative)
-    }
   })
 }
 ```
