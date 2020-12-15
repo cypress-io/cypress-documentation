@@ -26,6 +26,8 @@ Property | Description
 
 # Usage
 
+You can return a promise from the `before:spec` event handler and it will be awaited before Cypress proceeds running the spec.
+
 ## Log the relative spec path to stdout before the spec is run
 
 ```javascript
