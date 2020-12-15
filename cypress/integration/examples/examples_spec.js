@@ -163,51 +163,6 @@ describe('Examples', () => {
     })
   })
 
-  describe('Blogs', function () {
-    let blogs = []
-
-    before(() => {
-      cy.readFile('source/_data/blogs.yml')
-      .then(function (yamlString) {
-        blogs = YAML.parse(yamlString)
-      })
-    })
-
-    beforeEach(() => {
-      cy.visit('/examples/media/blogs-media.html')
-      cy.contains('.article-title', 'Blogs').should('be.visible')
-    })
-
-    it('lists small links', () => {
-      cy.get('.media-small').each((blogEl, i) => {
-        cy.wrap(blogs.small[i]).then((blog) => {
-          cy.wrap(blogEl)
-          .contains('a', blog.title)
-          .should('have.attr', 'href', blog.sourceUrl)
-        })
-      })
-    })
-
-    it('lists large blog urls', () => {
-      cy.get('.media-large .media h2 a').each((blogTitle, i) => {
-        expect(blogTitle).to.have.attr('href', blogs.large[i].url)
-        expect(blogTitle).to.contain(blogs.large[i].title)
-      })
-    })
-
-    it('displays large blog imgs', () => {
-      cy.get('.media-large .media img').each(($img, i) => {
-        const assetHash = getAssetCacheHash($img)
-        const imgSrc = assetHash.length
-          ? addAssetCacheHash(blogs.large[i].img, assetHash)
-          : blogs.large[i].img
-
-        expect($img).to.have.attr('src', imgSrc)
-        cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
-      })
-    })
-  })
-
   describe('Talks', () => {
     let talks = []
 
