@@ -98,7 +98,7 @@ jobs:
 
   "docs-tests":
     <<: *defaults
-    parallelism: 5
+    parallelism: 8
     steps:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
