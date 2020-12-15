@@ -84,6 +84,9 @@ jobs:
             fi
 
       # see how large are the folders in the workspace
+      # and delete the folders we do not need to persist
+      - run: du -h -d 1
+      - run: rm -rf .git
       - run: du -h -d 1
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
       - persist_to_workspace:
@@ -91,7 +94,6 @@ jobs:
           paths:
             - cypress-documentation
             - .cache/Cypress
-            - '!cypress-documentation/.git'
 
   "docs-tests":
     <<: *defaults
