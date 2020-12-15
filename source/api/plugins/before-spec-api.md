@@ -45,5 +45,6 @@ module.exports = (on, config) => {
 
 # See also
 
+- {% url "After Spec API" after-spec-api %}
 - {% url "Plugins Guide" plugins-guide %}
 - {% url "Writing a Plugin" writing-a-plugin %}

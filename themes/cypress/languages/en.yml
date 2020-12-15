@@ -199,6 +199,7 @@ sidebar:
     preprocessors-api: Preprocessors
     browser-launch-api: Browser Launching
     before-spec-api: Before Spec
+    after-spec-api: After Spec
     configuration-api: Configuration
     version: version
     arch: arch
