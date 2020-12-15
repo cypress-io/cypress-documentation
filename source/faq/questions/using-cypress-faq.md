@@ -528,7 +528,9 @@ There are a lot of ways to test this, so it depends. You'll need to be aware of 
 
 If your server sends specific disposition headers which cause a browser to prompt for download, you can figure out what URL this request is made to, and use {% url "cy.request()" request %} to hit that directly. Then you can test that the server send the right response headers.
 
-If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, there's nothing else to test for.
+If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, that might be enough to test for.
+
+Finally, if you want to really download the file and verify its contents, see our {% url "File download" https://github.com/cypress-io/cypress-example-recipes#testing-the-dom %} recipe.
 
 In the end, it's up to you to know your implementation and to test enough to cover everything.
 

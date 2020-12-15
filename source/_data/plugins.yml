@@ -205,40 +205,46 @@
       link: https://github.com/kamranayub/cypress-browser-permissions
       keywords: [permissions, notifications, geolocation, camera, microphone]
       badge: community
-      
+
     - name: cypress-repeat
       description: Run Cypress multiple times in a row, great at finding test flake
       link: https://github.com/bahmutov/cypress-repeat
       keyboards: [cli, ci]
       badge: community
-      
+
     - name: cypress-expect
       description: Cypress CLI wrapper where you can specify the total number of expected tests
       link: https://github.com/bahmutov/cypress-expect
       keywords: [cli]
       badge: community
-      
+
     - name: cy-search
       description: Search Cypress documentation from the terminal
       link: https://github.com/bahmutov/cy-search
       keywords: [cli]
       badge: community
-      
+
     - name: cypress-tags
       description: Use custom tags to slice up Cypress test runs
       link: https://github.com/annaet/cypress-tags
       keywords: [test, tag, browserify]
-      
+
     - name: '@swimlane/cy-mockapi'
       description: Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.
       link: https://github.com/swimlane/cy-mockapi
       keywords: [mock, rest, api]
       badge: community
-      
+
     - name: cypress-timings
       description: A Cypress plugin for reporting individual command timings.
       link: https://github.com/bahmutov/cypress-timings
       keywords: [commands, performance]
+      badge: community
+
+    - name: cypress-fail-fast
+      description: Enables fail fast in Cypress, skipping the rest of tests on first failure.
+      link: https://github.com/javierbrea/cypress-fail-fast
+      keywords: [fail-fast, failure, skip, config]
       badge: community
 
 - name: Custom Commands
@@ -421,7 +427,7 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
-      
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -665,6 +671,12 @@
       keywords: [logging]
       badge: community
 
+    - name: autoset-status-cypress-testrail-reporter
+      description: TestRail Reporter which auto-set status for specific TestRun for Cypress.
+      link: https://github.com/dkuznetsov21/autoset-status-cypress-testrail-reporter
+      keywords: [ testrail, reporter, autoset, status ]
+      badge: community
+
     - name: cypress-testrail-reporter
       description: Custom reporter for publishing Cypress results to a TestRail test run.
       link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
@@ -706,7 +718,7 @@
       link: https://github.com/Shelex/cypress-allure-plugin
       keywords: [reporter, allure]
       badge: community
-      
+
     - name: cypress-mochawesome-reporter
       description: Zero config Mochawesome reporter for Cypress with screenshots.
       link: https://github.com/LironEr/cypress-mochawesome-reporter
