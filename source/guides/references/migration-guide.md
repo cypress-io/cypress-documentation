@@ -49,6 +49,9 @@ cy.wait('@createUser')
   })
 ```
 
+## overriding route matchers
+Unlike `cy.route`, `cy.intercept` currently does _not_ allow you to override a previous interceptor. For more information on this, see https://github.com/cypress-io/cypress/issues/9302 and https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors.
+
 {% badge success After %}
 
 ```js
