@@ -616,6 +616,20 @@ The available functions on `res` are:
 * {% url `cy.wait()` wait %}
 * {% url "Migrating `cy.route()` to `cy.intercept()`" migration-guide#Migrating-cy-route-to-cy-intercept %}
 * {% url "`cy.intercept()` example recipes with real-world examples" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
+  * spying on requests
+  * stubbing any request
+  * changing the response from the server
+  * intercepting static resources like HTML and CSS
+  * redirecting requests
+  * replying with different responses
+* {% url "Cypress cy.intercept Problems" https://glebbahmutov.com/blog/cypress-intercept-problems/ %} with advanced `cy.intercept` tips to solve the common problems:
+  * The intercept was registered too late
+  * `cy.wait` uses the intercept
+  * The response was cached
+  * The request matched multiple intercepts
+  * How to overwrite interceptors
+  * How to avoid using Cypress commands inside the interceptor
+  * Sending different responses
 * {% url "`cy.route()` vs `cy.route2()`" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
 * {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} blog post
 * {% url "Open issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
