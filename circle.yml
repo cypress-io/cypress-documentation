@@ -83,12 +83,15 @@ jobs:
               exit 1
             fi
 
+      # see how large are the folders in the workspace
+      - run: du -h -d 1
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
       - persist_to_workspace:
           root: ~/
           paths:
             - cypress-documentation
             - .cache/Cypress
+            - '!cypress-documentation/.git'
 
   "docs-tests":
     <<: *defaults
