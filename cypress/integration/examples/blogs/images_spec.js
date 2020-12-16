@@ -13,14 +13,21 @@ describe('Blogs', function () {
   beforeEach(visitBlogsPage)
 
   it('displays large blog imgs', () => {
-    cy.get('.media-large .media img').each(($img, i) => {
+    let urls = []
+
+    cy.get('.media-large .media img')
+    .should('have.length.gt', 10)
+    .each(($img, i) => {
       const assetHash = getAssetCacheHash($img)
       const imgSrc = assetHash.length
         ? addAssetCacheHash(blogs.large[i].img, assetHash)
         : blogs.large[i].img
 
       expect($img).to.have.attr('src', imgSrc)
-      cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
+      const url = Cypress.config('baseUrl') + imgSrc
+
+      urls.push(url)
     })
+    .task('checkUrls', urls)
   })
 })
