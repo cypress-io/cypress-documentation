@@ -348,10 +348,11 @@ function queryDB (connectionInfo, query) {
     connection.query(query, (error, results) => {
       if (error) {
         return reject(error)
-      } 
-        connection.end()
-        return resolve(results)
-      
+      }
+
+      connection.end()
+
+      return resolve(results)
     })
   })
 }
