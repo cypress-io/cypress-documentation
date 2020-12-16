@@ -1,20 +1,7 @@
 /// <reference types="cypress" />
+import { getAssetCacheHash, addAssetCacheHash } from './utils'
 
 const YAML = require('yamljs')
-
-const getAssetCacheHash = ($img) => {
-  const src = $img.attr('src').split('.')
-
-  return src.length >= 3 ? src.slice(-2, -1).pop() : ''
-}
-
-const addAssetCacheHash = (assetSrc, hash) => {
-  let parsedSrc = assetSrc.split('.')
-
-  parsedSrc.splice(-1, 0, hash)
-
-  return parsedSrc.join('.')
-}
 
 describe('Examples', () => {
   describe('Test Utilities', () => {

@@ -1,35 +1,16 @@
 /// <reference types="cypress" />
-
-const YAML = require('yamljs')
-
-const getAssetCacheHash = ($img) => {
-  const src = $img.attr('src').split('.')
-
-  return src.length >= 3 ? src.slice(-2, -1).pop() : ''
-}
-
-const addAssetCacheHash = (assetSrc, hash) => {
-  let parsedSrc = assetSrc.split('.')
-
-  parsedSrc.splice(-1, 0, hash)
-
-  return parsedSrc.join('.')
-}
+import { getBlogs, visitBlogsPage, getAssetCacheHash, addAssetCacheHash } from '../utils'
 
 describe('Blogs', function () {
   let blogs = []
 
   before(() => {
-    cy.readFile('source/_data/blogs.yml')
-    .then(function (yamlString) {
-      blogs = YAML.parse(yamlString)
+    getBlogs().then((list) => {
+      blogs = list
     })
   })
 
-  beforeEach(() => {
-    cy.visit('/examples/media/blogs-media.html')
-    cy.contains('.article-title', 'Blogs').should('be.visible')
-  })
+  beforeEach(visitBlogsPage)
 
   it('displays large blog imgs', () => {
     cy.get('.media-large .media img').each(($img, i) => {
