@@ -306,6 +306,71 @@ describe('has data available from database', { taskTimeout: 90000 }, () => {
 })
 ```
 
+## Allows a single argument only
+
+The syntax `cy.task(name, arg, options)` only has place for a single argument to be passed from the test code to the plugins code. In the situations where you would like to pass multiple arguments, place them into an object to be destructured inside the task code. For example, if you would like to execute a database query and pass the database profile name you could do:
+
+```javascript
+// in test
+const dbName = 'stagingA'
+const query = 'SELECT * FROM users'
+
+cy.task('queryDatabase', { dbName, query })
+```
+
+```javascript
+// in plugins/index.js
+const mysql = require('mysql')
+// the connection strings for different databases could
+// come from a config file, or from environment variables
+const connections = {
+  stagingA: {
+    host: 'staging.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users'
+  },
+  stagingB: {
+    host: 'staging-b.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users'
+  }
+}
+
+// querying the database from Node
+function queryDB (connectionInfo, query) {
+  const connection = mysql.createConnection(connectionInfo)
+
+  connection.connect()
+
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) {
+        return reject(error)
+      } 
+        connection.end()
+        return resolve(results)
+      
+    })
+  })
+}
+module.exports = (on, config) => {
+  on('task', {
+    // destructure the argument into the individual fields
+    queryDatabase ({ dbName, query }) {
+      const connectionInfo = connections[dbName]
+
+      if (!connectionInfo) {
+        throw new Error(`Do not have DB connection under name ${dbName}`)
+      }
+
+      return queryDB(connectionInfo, query)
+    }
+  })
+}
+```
+
 ## Argument should be serializable
 
 The argument `arg` sent via `cy.task(name, arg)` should be serializable; it cannot have circular dependencies (issue {% issue 5539 %}). If there are any special fields like `Date`, you are responsible for their conversion (issue {% issue 4980 %}):
