@@ -724,3 +724,28 @@ End-to-end tests are an excellent way to keep your application's documentation a
 ## {% fa fa-angle-right %} Can I use Jest snapshots?
 
 While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url Plugins %} page.
+
+## {% fa fa-angle-right %} Can I use Testing Library?
+
+Absolutely! Feel free to add the {% url '@testing-library/cypress' https://testing-library.com/docs/cypress-testing-library/intro/ %} to your setup and use its methods like `findByRole`, `findByLabelText`, `findByText`, and others to find the DOM elements.
+
+The following example comes from the Testing Library's documentation
+
+```js
+cy.findByRole('button', { name: /Jackie Chan/i }).click()
+cy.findByRole('button', { name: /Button Text/i }).should('exist')
+cy.findByRole('button', { name: /Non-existing Button Text/i }).should(
+  'not.exist'
+)
+
+cy.findByLabelText(/Label text/i, { timeout: 7000 }).should('exist')
+
+// findAllByText _inside_ a form element
+cy.get('form')
+  .findByText('button', { name: /Button Text/i })
+  .should('exist')
+
+cy.findByRole('dialog').within(() => {
+  cy.findByRole('button', { name: /confirm/i })
+})
+```
