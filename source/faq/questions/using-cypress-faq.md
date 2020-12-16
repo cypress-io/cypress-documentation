@@ -342,6 +342,12 @@ Videos recorded on Continuous Integration may have frozen or dropped frames if t
 
 If you are experiencing this issue, we recommend switching to a more powerful CI container or provider.
 
+## {% fa fa-angle-right %} What can I do if my tests crash or hang on CI?
+
+As some users have noted, a longer test has a higher chance of hanging or even crashing when running on CI. When a test runs for a long period of time, its commands and the application itself might allocate more memory than available, causing the crash. There is no single time limit that would solve this problem, of course. The exact risk of crashing depends on the application and the available hardware resources. But in general, we try to split our spec files to run under one minute each. You can read the blog post {% url "Make Cypress Run Faster by Splitting Specs" https://glebbahmutov.com/blog/split-spec/ %} to learn how to split a spec file.
+
+You can further split individual long running tests. For example, you can verify parts of the longer user feature in the separate tests as described in {% url "Split a very long Cypress test into shorter ones using App Actions" https://www.cypress.io/blog/2019/10/29/split-a-very-long-cypress-test-into-shorter-ones-using-app-actions/ %}.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% url 'here' parallelization %}.
