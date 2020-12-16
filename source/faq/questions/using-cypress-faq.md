@@ -749,3 +749,5 @@ cy.findByRole('dialog').within(() => {
   cy.findByRole('button', { name: /confirm/i })
 })
 ```
+
+We have had a webinar with {% url 'Roman Sandler' https://twitter.com/RomanSndlr %} where he has given practical advice on writing effective tests using the Testing Library. You can find the recording and the slides {% url here https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/ %}.
