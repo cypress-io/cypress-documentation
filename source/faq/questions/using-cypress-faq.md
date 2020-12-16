@@ -360,7 +360,14 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
-It is possible to upload files in your application but it's different based on how you've written your own upload code. You can read more about this {% issue 170 'here' %}
+It is possible to upload files in your application but it's different based on how you've written your own upload code. Many people had success by using the community plugin {% url cypress-file-upload https://github.com/abramenal/cypress-file-upload %}. This plugin adds a custom child command `.attachFile` that you call from the test.
+
+```javascript
+// attaches the file cypress/fixtures/data.json
+cy.get('[data-cy="file-input"]').attachFile('data.json')
+```
+
+You can read more about uploading files {% issue 170 'here' %}.
 
 ## {% fa fa-angle-right %} What is the projectId for?
 
