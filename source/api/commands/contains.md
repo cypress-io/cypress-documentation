@@ -272,6 +272,21 @@ cy.get('pre').contains('Hello, World !') // fail
 cy.get('pre').contains('                 Hello,           World      !') // pass
 ```
 
+## Non-breaking space
+
+Non-breaking space entity `&nbsp;` in the HTML is considered a whitespace and `cy.contains` automatically handles it. Thus you can use space character in the test to match the text where the application might have used `&nbsp;`
+
+```html
+<div data-testid="testattr">
+  <div><span>GBP&nbsp;0.50</span></div>
+</div>
+```
+
+```javascript
+// finds the right element
+cy.contains('[data-testid=testattr]', 'GBP 0.50')
+```
+
 ## Single Element
 
 ### Only the *first* matched element will be returned

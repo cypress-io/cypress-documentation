@@ -74,6 +74,45 @@ Option | Default | Description
 cy.get('ul').find('>li').filter('.active')
 ```
 
+## Contains
+
+### Filter by text
+
+You can use the {% url "jQuery :contains" https://api.jquery.com/contains-selector/ %} selector to perform a case-sensitive text substring match.
+
+```html
+<ul>
+  <li>Home</li>
+  <li>Services</li>
+  <li>Advanced Services</li>
+  <li>Pricing</li>
+  <li>Contact</li>
+</ul>
+```
+
+Let's find both list items that contain the work "Services"
+
+```javascript
+cy.get('li')
+  .filter(':contains("Services")')
+  .should('have.length', 2)
+```
+
+### Non-breaking space
+
+If the application HTML uses {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity, and the test wants to use {% url "jQuery :contains" https://api.jquery.com/contains-selector/ %} selector, then the test needs to use the Unicode value `\u00a0` instead of `&nbsp;`
+
+```html
+<div data-testid="testattr">
+  <div><span>GBP&nbsp;0.50</span></div>
+</div>
+```
+
+```javascript
+cy.get('[data-testid=testattr]')
+  .filter(':contains("GBP\u00a00.50")')
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
