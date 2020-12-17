@@ -14,6 +14,16 @@ If you're trying to assert on an element's text content:
 cy.get('div').should('have.text', 'foobarbaz')
 ```
 
+If the text contains the {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity `&nbsp;` then use the Unicode character `\u00a0` instead of `&nbsp;`
+
+```html
+<div>GBP&nbsp;0.50</div>
+```
+
+```javascript
+cy.get('div').should('have.text', 'GBP\u00a00.50')
+```
+
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
