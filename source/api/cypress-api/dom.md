@@ -144,7 +144,7 @@ cy.get('img').then(($el) => {
 })
 ```
 
-**Tip:** if a Cypress test fails with "element is invisible" error, but you are sure the element should be visible, you can debug visibility check yourself by stepping through the `Cypress.dom.isVisible` code, see {% url "Debug the Element Visibility Problems in Cypress" https://glebbahmutov.com/blog/debug-visibility/ %}.
+**Tip:** if a Cypress test fails with "element is not visible" error, but you are sure the element should be visible, you can debug the visibility check yourself by stepping through the `Cypress.dom.isVisible` code, see {% url "Debug the Element Visibility Problems in Cypress" https://glebbahmutov.com/blog/debug-visibility/ %}.
 
 ## Is window
 
