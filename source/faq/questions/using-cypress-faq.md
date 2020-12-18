@@ -670,13 +670,13 @@ Yes. You can leverage visual testing tools to test that charts and graphs are re
 
 ## {% fa fa-angle-right %} Why doesn't the `instanceof Event` work?
 
-It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" /api/commands/window.html#Cypress-uses-2-different-windows %}.
+It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" window#Cypress-uses-2-different-windows %}.
 
 ## {% fa fa-angle-right %} Can I use Cucumber to write tests?
 
 Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then converts the scenarios and step definitions into "regular" JavaScript Cypress tests.
 
-- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url Plugins plugins %} page for additional helper plugins
+- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url "Plugins" plugins %} page for additional helper plugins
 - read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
 - take a look at {% url "briebug/bba-cypress-quickstart" https://github.com/briebug/bba-cypress-quickstart %} example application
 
@@ -716,4 +716,4 @@ End-to-end tests are an excellent way to keep your application's documentation a
 
 ## {% fa fa-angle-right %} Can I use Jest snapshots?
 
-While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url Plugins %} page.
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url "Plugins" plugins %} page.
