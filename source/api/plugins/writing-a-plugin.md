@@ -79,10 +79,11 @@ The `config` object also includes the following extra values that are not part o
 
 Event | Description
 --- | ---
-{% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
-{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
-{% url `task` task %} | Occurs in conjunction with the `cy.task` command.
 {% url `after:screenshot` after-screenshot-api %} | Occurs after a screenshot is taken.
+{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
+{% url `before:spec` before-spec-api %} | Occurs when spec is about to be run.
+{% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
+{% url `task` task %} | Occurs in conjunction with the `cy.task` command.
 
 # Execution context
 

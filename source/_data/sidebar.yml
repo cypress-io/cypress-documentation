@@ -181,6 +181,7 @@ api:
     writing-a-plugin: writing-a-plugin.html
     configuration-api: configuration-api.html
     preprocessors-api: preprocessors-api.html
+    before-spec-api: before-spec-api.html
     browser-launch-api: browser-launch-api.html
     after-screenshot-api: after-screenshot-api.html
 
