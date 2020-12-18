@@ -37,7 +37,7 @@ cy.intercept(routeMatcher, routeHandler?)
 
 ### **{% fa fa-angle-right %} url** **_(`string | RegExp`)_**
 
-Specify the URL to match. See the documentation for {% urlHash "`routeMatcher`" routeMatcher-RouteMatcher %} to see how URLs are matched.
+Specify the URL to match. See the examples for {% urlHash "Matching URL" Matching-URL %} to see how URLs are matched.
 
 ```ts
 cy.intercept('http://example.com/widgets')
@@ -82,6 +82,11 @@ All properties are optional. All properties that are set must match for the rout
    * If 'false', only HTTP requests will be matched.
    */
   https?: boolean
+  /**
+   * If `true`, will match the supplied `url` against incoming `path`s.
+   * Cannot be set without `url` or with `path`.
+   */
+  matchUrlAgainstPath?: boolean
   /**
    * Match against the request's HTTP method.
    * @default '*'
@@ -174,6 +179,8 @@ You can provide a {% url minimatch %} pattern
 cy.intercept('**/users?_limit=+(3|5)')
 ```
 
+**Note:** passing a URL as a string to `cy.intercept` will automatically set `matchUrlAgainstPath` to `true`, which means that request matching will fall back to trying to match the supplied string against the path if matching it against the URL fails.
+
 **Tip:** you can evaluate your URL using DevTools console to see if the {% url 'minimatch pattern' https://www.npmjs.com/package/minimatch %} is correct.
 
 ```javascript
@@ -215,6 +222,8 @@ cy.wait('@users').its('response.body').should('have.length', 3)
 cy.get('#load-five-users').click()
 cy.wait('@users').its('response.body').should('have.length', 5)
 ```
+
+**Note:** passing a URL as a RegExp to `cy.intercept` will automatically set `matchUrlAgainstPath` to `true`, which means that request matching will fall back to trying to match the supplied RegExp against the path if matching it against the URL fails.
 
 ## Waiting on a request
 
