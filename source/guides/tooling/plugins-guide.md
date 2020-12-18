@@ -48,20 +48,20 @@ Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which des
 
 ## Spec Lifecycle
 
-The events `before:spec` and `after:spec` run before and after a single spec is run, respectively.
+The events {% url `before:spec` before-spec-api %} and {% url `after:spec` after-spec-api %} run before and after a single spec is run, respectively.
 
-You can use `before:spec` to do things like:
+You can use {% url `before:spec` before-spec-api %} to do things like:
 
 - Set up reporting on a spec running
 - Start a timer for the spec to time how long it takes
 
-You can use `after:spec` to do things like:
+You can use {% url `after:spec` after-spec-api %} to do things like:
 
 - Finish up reporting set up in `before:spec`
 - Stop the timer for the spec set up in `before:spec`
 - Delete the video recorded for the spec. This prevents it from taking time and computing resources for compressing and uploading the video. You can do this conditionally based on the results of the spec, such as if it passes (so videos for failing tests are preserved for debugging purposes).
 
-Check out the {% url 'Before Spec API doc' before-spec-api %} and {% url 'After Spec API doc' after-spec-api %}, which describe how to use these events.
+Check out the {% url 'Before Spec API doc' before-spec-api %} and {% url 'After Spec API doc' after-spec-api %} which describe how to use these events.
 
 ## Browser Launching
 
