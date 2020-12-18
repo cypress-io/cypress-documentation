@@ -360,7 +360,14 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
-It is possible to upload files in your application but it's different based on how you've written your own upload code. You can read more about this {% issue 170 'here' %}
+It is possible to upload files in your application but it's different based on how you've written your own upload code. Many people had success by using the community plugin {% url cypress-file-upload https://github.com/abramenal/cypress-file-upload %}. This plugin adds a custom child command `.attachFile` that you call from the test.
+
+```javascript
+// attaches the file cypress/fixtures/data.json
+cy.get('[data-cy="file-input"]').attachFile('data.json')
+```
+
+You can read more about uploading files {% issue 170 'here' %}.
 
 ## {% fa fa-angle-right %} What is the projectId for?
 
@@ -716,4 +723,32 @@ End-to-end tests are an excellent way to keep your application's documentation a
 
 ## {% fa fa-angle-right %} Can I use Jest snapshots?
 
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url Plugins %} page.
+
+## {% fa fa-angle-right %} Can I use Testing Library?
+
+Absolutely! Feel free to add the {% url '@testing-library/cypress' https://testing-library.com/docs/cypress-testing-library/intro/ %} to your setup and use its methods like `findByRole`, `findByLabelText`, `findByText`, and others to find the DOM elements.
+
+The following example comes from the Testing Library's documentation
+
+```js
+cy.findByRole('button', { name: /Jackie Chan/i }).click()
+cy.findByRole('button', { name: /Button Text/i }).should('exist')
+cy.findByRole('button', { name: /Non-existing Button Text/i }).should(
+  'not.exist'
+)
+
+cy.findByLabelText(/Label text/i, { timeout: 7000 }).should('exist')
+
+// findAllByText _inside_ a form element
+cy.get('form')
+  .findByText('button', { name: /Button Text/i })
+  .should('exist')
+
+cy.findByRole('dialog').within(() => {
+  cy.findByRole('button', { name: /confirm/i })
+})
+```
+
+We have had a webinar with {% url 'Roman Sandler' https://twitter.com/RomanSndlr %} where he has given practical advice on writing effective tests using the Testing Library. You can find the recording and the slides {% url here https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/ %}.
 While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url "Plugins" plugins %} page.
