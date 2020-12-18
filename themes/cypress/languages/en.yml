@@ -81,6 +81,10 @@ sidebar:
     visual-testing: Visual Testing
     code-coverage: Code Coverage
     component-testing-introduction: Introduction
+    testing-strategies: Testing Strategies
+    auth0: Auth0
+    okta: Okta
+    aws-cognito: AWS Cognito
   api:
     api: API
     table-of-contents: Table of Contents
