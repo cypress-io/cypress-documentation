@@ -100,17 +100,17 @@ cy.get('li')
 
 ### Non-breaking space
 
-If the application HTML uses {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity, and the test wants to use {% url "jQuery :contains" https://api.jquery.com/contains-selector/ %} selector, then the test needs to use the Unicode value `\u00a0` instead of `&nbsp;`
+If the HTML contains a {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity `&nbsp;` and the test uses the {% url "jQuery :contains" https://api.jquery.com/contains-selector/ %} selector, then the test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
 
 ```html
 <div data-testid="testattr">
-  <div><span>GBP&nbsp;0.50</span></div>
+  <span>Hello&nbsp;world</span>
 </div>
 ```
 
 ```javascript
 cy.get('[data-testid=testattr]')
-  .filter(':contains("GBP\u00a00.50")')
+  .filter(':contains("Hello\u00a0world")')
 ```
 
 # Rules

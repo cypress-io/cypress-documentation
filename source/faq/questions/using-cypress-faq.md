@@ -14,14 +14,14 @@ If you're trying to assert on an element's text content:
 cy.get('div').should('have.text', 'foobarbaz')
 ```
 
-If the text contains the {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity `&nbsp;` then use the Unicode character `\u00a0` instead of `&nbsp;`
+If the text contains a {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity `&nbsp;` then use the Unicode character `\u00a0` instead of `&nbsp;`.
 
 ```html
-<div>GBP&nbsp;0.50</div>
+<div>Hello&nbsp;world</div>
 ```
 
 ```javascript
-cy.get('div').should('have.text', 'GBP\u00a00.50')
+cy.get('div').should('have.text', 'Hello\u00a0world')
 ```
 
 If you'd like to work with the text prior to an assertion:
