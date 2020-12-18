@@ -74,9 +74,13 @@ module.exports = (on, config) => {
 }
 ```
 
-## Delete the recorded video after the spec is run if the spec passed
+# Examples
 
-You can delete the video created for the spec and it will not be compressed or uploaded (if recording). Using the spec results, you can choose to only do this when the tests passes, so that videos for failed specs will remain for debugging purposes.
+## Delete the recorded video if the spec passed
+
+You can delete the recorded video for a spec. This will skip the compression and uploading of the video when recording to the Dashboard.
+
+The example below shows how to delete the recorded video for a spec with no failing tests.
 
 ```javascript
 const del = require('del')
