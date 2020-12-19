@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    gitlab-integration: Gitlab Integration
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
