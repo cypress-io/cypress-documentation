@@ -60,7 +60,6 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
   const isEnglish = lang === 'en'
   const type = this.page.canonical_path.split('/')[0]
   const sidebar = this.site.data.sidebar[type]
-  const path = pathFn.basename(this.path)
   const self = this
   const prefix = `sidebar.${type}.`
   let result = ''
@@ -83,7 +82,7 @@ hexo.extend.helper.register('doc_sidebar', function (className) {
       }
 
       let itemClass = `${className}-link`
-      let currentlyActive = link === path
+      let currentlyActive = href === self.path
 
       if (currentlyActive) {
         itemClass += ' current'

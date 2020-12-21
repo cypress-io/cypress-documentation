@@ -158,6 +158,16 @@ But when you click on "Run all specs" button after {% url "`cypress open`" comma
 Having a single support file when running all specs together might execute `before` and `beforeEach` hooks in ways you may not anticipate. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %} for examples.
 {% endnote %}
 
+## Troubleshooting
+
+If Cypress does not find the spec files for some reason, you can troubleshoot its logic by opening or running Cypress with {% url "debug logs" troubleshooting#Print-DEBUG-logs %} enabled:
+
+```shell
+DEBUG=cypress:server:specs npx cypress open
+# or
+DEBUG=cypress:server:specs npx cypress run
+```
+
 # Writing tests
 
 Cypress is built on top of {% url 'Mocha' bundled-tools#Mocha %} and {% url 'Chai' bundled-tools#Chai %}. We support both Chai's `BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere to this style.

@@ -53,7 +53,7 @@ The `prevSubject` accepts the following values:
 - `true`: receives the previous subject: ***(child command)***
 - `optional`: may start a chain, or use an existing chain: ***(dual command)***
 
-In additional to controlling the command's implicit behavior you can also add declarative subject validations such as:
+In addition to controlling the command's implicit behavior you can also add declarative subject validations such as:
 
 - `element`: requires the previous subject be a DOM element
 - `document`: requires the previous subject be the document
