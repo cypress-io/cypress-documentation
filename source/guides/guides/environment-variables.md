@@ -223,6 +223,7 @@ USER_NAME=aTester
 ```js
 // plugins/index.js
 require('dotenv').config()
+
 module.exports = (on, config) => {
   // copy any needed variables from process.env to config.env
   config.env.username = process.env.USER_NAME
