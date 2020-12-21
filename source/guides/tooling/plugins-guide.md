@@ -48,12 +48,17 @@ Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which des
 
 ## Run Lifecycle
 
-The event {% url `before:spec` before-spec-api %} occurs before a run starts.
+The events {% url `before:run` before-run-api %} and {% url `after:run` after-run-api %} occur before and after a run, respectively.
 
 You can use {% url `before:run` before-run-api %} to do things like:
 
 - Set up reporting on a run
 - Start a timer for the run to time how long it takes
+
+You can use {% url `after:run` after-run-api %} to do things like:
+
+- Finish up reporting on a run set up in `before:run`
+- Stop the timer for the run set up in `before:run`
 
 ## Spec Lifecycle
 

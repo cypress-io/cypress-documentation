@@ -100,5 +100,6 @@ module.exports = (on, config) => {
 
 - {% url "Before Spec API" before-spec-api %}
 - {% url "Before Run API" before-run-api %}
+- {% url "After Run API" after-run-api %}
 - {% url "Plugins Guide" plugins-guide %}
 - {% url "Writing a Plugin" writing-a-plugin %}
