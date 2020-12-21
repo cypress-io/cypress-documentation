@@ -4,18 +4,18 @@ title: Amazon Cognito Programmatic Authentication
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
-
+- Programmatically authenticate with {% url "Amazon Cognito" https://aws.amazon.com/cognito %} via a custom Cypress command
+- Adapting your {% url "Amazon Cognito" https://aws.amazon.com/cognito %} application for programmatic authentication during testing
 
 {% endnote %}
 
-```
-1. Describe the 3rd party: what it is, its purpose
-2. 
-```
+## What is Amazon Cognito?
 
 [Amazon Cognito][cognito] is an authentication provider apart of [Amazon Web Services (AWS)][aws].  It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
 
 Testing applications deployed with [Amazon Cognito][cognito] can use different strategies; mocking and testing the full stack.
+
+## Programmatic Authentication with Amazon Cognito
 
 The documentation for [Amazon Cognito][cognito] recommends using the [Auth library][awsamplifyauth] from the [AWS Amplify Framework][awsamplifyframework] to interact with a deployed [Amazon Cognito][cognito] instance.
 
@@ -40,7 +40,9 @@ Auth.signIn(username, password)
   .catch((err) => console.log(err))
 ```
 
-In a project using [AWS Amplify][awsamplifyframework], we can build two ways to login to our application: using our UI or programmatically via API.
+## Amazon Cognito Setup
+
+If not already setup, you will need to [create an account][awsCreateAccount] with [Amazon Web Services][aws].
 
 An implementation for use with [AWS Cognito](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx) is available in the [Cypress Real World App][cypressrwa].
 
@@ -50,160 +52,118 @@ Clone the [Cypress Real World App][cypressrwa] and install the [AWS Amplify CLI]
 npm install -g @aws-amplify/cli
 ```
 
-The [Cypress Real World App][cypressrwa] is initialized with the [AWS Cognito][cognito] setup via the [Amplify Authentication][amplifyauth].
+The [Cypress Real World App][cypressrwa] is configured with an optional [AWS Cognito][cognito] instance via the [Amplify Authentication][amplifyauth] library.
 
-With the [Amplify CLI][awsamplifycliconfig] configured for your environment, run the [amplify push][amplifypush] command to create the [Amplify Authentication][amplifyauth] resources in the cloud:
+The [Amplify CLI][awsamplifycliconfig] is used to provision the [AWS][aws] infrastructure needed to configure your environment and cloud resources.
+
+First, run the [amplify init][amplifyinit] command to initialize the [Cypress RWA][cypressrwa].  This will provision the project with your [AWS][aws] credentials.
+
+```jsx
+amplify init
+```
+
+Next, run the [amplify push][amplifypush] command to create the [AWS Cognito][cognito] resources in the cloud:
 
 ```jsx
 amplify push
 ```
 
-## Login to Amazon Cognito via API
+## Setting Amazon Cognito app credentials in Cypress
 
-Since this functionality will be use throughout our tests, it is best to define it's functionality in a reusable [Cypress Task][cypresstask].
-
-We can create a [Cypress Task][cypresstask], `loginCognitoUserByApi`, to login via API to our application, thus bypassing the authentication UI and speeding up our tests.
-
-First, we'll need to import configuration for our [AWS Cognito][cognito] instance.  Here, we are using the `aws-exports.js` supplied during the [AWS Amplify][awsamplify] build process. In addition, we required the necessary AWS modules and set their configuration.
+First, we need to configure Cypress to use the {% url "AWS Cognito" https://aws.amazon.com/cognito %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file. In addition, we are using the `aws-exports.js` supplied during the [AWS Amplify][awsamplify] build process.
 
 ```jsx
 // cypress/plugins/index.js
+// initial imports ...
 
-const awsConfig = require('../../aws-exports').default
-const AWS = require("aws-sdk")
-const Amplify = require('aws-amplify').default
-const { default: Auth } = require("@aws-amplify/auth")
+const awsConfig = require(path.join(__dirname, '../../aws-exports-es5.js'))
 
-const {
-  aws_project_region,
-  aws_cognito_identity_pool_id,
-  aws_cognito_region,
-  aws_user_pools_id,
-  aws_user_pools_web_client_id,
-} = awsConfig
+dotenv.config()
 
-AWS.config.update({ region: aws_project_region })
-Amplify.configure(awsConfig)
+export default (on, config) => {
+  // ...
+  config.env.cognito_username = process.env.AWS_COGNITO_USERNAME
+  config.env.cognito_password = process.env.AWS_COGNITO_PASSWORD
+  config.env.awsConfig = awsConfig.default
+
+  // plugins code ...
+
+  return config
+}
 ```
+## Custom Command for Amazon Cognito Authentication
 
-Once complete, we can define our [Cypress Task][cypresstask] for `loginCognitoUserByApi` and dynamically set our [Amazon Cognito][cognito] environment variables for use throughout our tests. 
+Next, we'll write a command to perform a programmatic login into [Amazon Cognito][cognito] and set items in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
+
+In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that response to set the items inside of localStorage for the UI to know that our user is logged into the application.
 
 ```jsx
-// cypress/plugins/index.js
+// cypress/support/auth-provider-commands/cognito.ts
 
-// ...
+import Amplify, { Auth } from "aws-amplify"
 
-const loginCognitoUserByApi = async ({ username, password }) => {
-  global.fetch = require("node-fetch");
+Amplify.configure(Cypress.env('awsConfig'))
 
-  return await Auth.signIn({ username, password });
-};
-
-module.exports = (on, config) => {
-  on("task", {
-    loginCognitoUserByApi,
-  });
-
-  return config;
-};
-```
-
-The complete plugins file defining our task.
-
-```jsx
-// cypress/plugins/index.js
-
-const awsConfig = require("../../aws-exports").default;
-const AWS = require("aws-sdk");
-const Amplify = require("aws-amplify").default;
-const { default: Auth } = require("@aws-amplify/auth");
-
-const {
-  aws_project_region,
-  aws_cognito_identity_pool_id,
-  aws_cognito_region,
-  aws_user_pools_id,
-  aws_user_pools_web_client_id,
-} = awsConfig;
-
-AWS.config.update({ region: aws_project_region });
-Amplify.configure(awsConfig);
-
-const loginCognitoUserByApi = async ({ username, password }) => {
-  global.fetch = require("node-fetch");
-
-  return await Auth.signIn({ username, password });
-};
-
-module.exports = (on, config) => {
-  on("task", {
-    loginCognitoUserByApi,
-  });
-
-  return config;
-};
-```
-
-Once we have our `loginByCognitoApi` [Cypress Task][cypresstask] to perform the login, we can write a [Cypress Command][cypresscommands] to use the task and set the appropriate items in localStorage.
-
-In this `loginByCognitoApi` command, we call our `loginByCognitoApi` task, save it to an alias (cognitoResponse), then use that response to set the items inside of localStorage for the UI to know that our user is logged into the application.
-
-```jsx
-// cypress/support/commands.js
-
-Cypress.Commands.add('loginByCognitoApi', (username, password) =>
-  {return cy
-    .task("loginByCognitoApi", {
-      username,
-      password,
-    })
-    .as("cognitoResponse")
-    .get("@cognitoResponse")
-    .then((cognitoResponse) => {
-      const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`;
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.idToken`,
-        cognitoResponse.signInUserSession.idToken.jwtToken
-      );
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.accessToken`,
-        cognitoResponse.signInUserSession.accessToken.jwtToken
-      );
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.refreshToken`,
-        cognitoResponse.signInUserSession.refreshToken.token
-      );
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.clockDrift`,
-        cognitoResponse.signInUserSession.clockDrift
-      );
-      window.localStorage.setItem(
-        `${cognitoResponse.keyPrefix}.LastAuthUser`,
-        cognitoResponse.username
-      );
-      window.localStorage.setItem("amplify-authenticator-authState", "signedIn");
-
-      cy.visit("/");
-    })}
-)
-```
-
-Using our `loginByCognitoApi` command, we can write a test bypassing the login UI.
-
-Before each test, we login to our application using a [fixture][cypressfixture] of predefined [Amazon Cognito][cognito] accounts previously provisioned for testing.
-
-```jsx
-describe('Cognito Authentication by API', () => {
-  beforeEach(() => {
-    cy.fixture('cognito-users').then((users) => {
-      const user = users[0]
-      cy.loginByCognitoApi(user.username, `s3cret123$`)
-    });
+// Amazon Cognito
+Cypress.Commands.add('loginByCognitoApi', (username, password) => {
+  const log = Cypress.log({
+    displayName: 'COGNITO LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    // @ts-ignore
+    autoEnd: false,
   })
 
-  it('display the home page after logged in', () => {
-    cy.getBySel('new-post-button').should("be.visible")
-  });
+  log.snapshot("before")
+
+  const signIn = Auth.signIn({ username, password })
+
+  cy.wrap(signIn, { log: false }).then((cognitoResponse) => {
+    const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`
+    window.localStorage.setItem(
+      `${keyPrefixWithUsername}.idToken`,
+      cognitoResponse.signInUserSession.idToken.jwtToken
+    )
+    window.localStorage.setItem(
+      `${keyPrefixWithUsername}.accessToken`,
+      cognitoResponse.signInUserSession.accessToken.jwtToken
+    )
+    window.localStorage.setItem(
+      `${keyPrefixWithUsername}.refreshToken`,
+      cognitoResponse.signInUserSession.refreshToken.token
+    )
+    window.localStorage.setItem(
+      `${keyPrefixWithUsername}.clockDrift`,
+      cognitoResponse.signInUserSession.clockDrift
+    )
+    window.localStorage.setItem(
+      `${cognitoResponse.keyPrefix}.LastAuthUser`,
+      cognitoResponse.username
+    )
+
+    window.localStorage.setItem('amplify-authenticator-authState', "signedIn")
+    log.snapshot("after")
+    log.end();
+  })
+
+  cy.visit('/');
+})
+```
+
+
+Finally, we can use our `loginByCognitoApi` command in at test.  Below is our test to login as a user via [Amazon Cognito][cognito], complete the onboarding process and logout.
+
+Note: The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts) is in the [Cypress Real World App][cypressrwa].
+
+```jsx
+describe('Cognito', function () {
+  beforeEach(function () {
+    cy.task('db:seed')
+    cy.loginByOktaApi(Cypress.env('cognito_username'), Cypress.env('cognito_password'))
+  })
+
+  it('shows onboarding', function () {
+    cy.contains('Get Started').should('be.visible')
+  })
 })
 ```
 
@@ -214,6 +174,7 @@ describe('Cognito Authentication by API', () => {
 [cypresstask]: https://on.cypress.io/api/task
 [cypressfixture]: https://on.cypress.io/api/fixture
 [aws]: https://aws.amazon.com
+[awsCreateAccount]: https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account
 [cognito]: https://aws.amazon.com/cognito
 [awsamplifyframework]: https://aws.amazon.com/amplify/framework/ 
 [awsamplifyauth]: https://aws-amplify.github.io/amplify-js/api/classes/authclass.html
