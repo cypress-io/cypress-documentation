@@ -274,7 +274,7 @@ cy.get('pre').contains('                 Hello,           World      !') // pass
 
 ## Non-breaking space
 
-You can use a space character in `cy.contains()` to match text in the HTML that uses a non-braking space entity `&nbsp;`.
+You can use a space character in `cy.contains()` to match text in the HTML that uses a non-breaking space entity `&nbsp;`.
 
 ```html
 <span>Hello&nbsp;world</span>
