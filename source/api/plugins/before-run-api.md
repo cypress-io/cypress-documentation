@@ -1,5 +1,6 @@
 ---
 title: Before Run API
+containerClass: experimental
 ---
 
 The `before:run` event fires before a run starts. The event only fires when running via `cypress run`.

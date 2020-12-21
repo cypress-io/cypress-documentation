@@ -1,5 +1,6 @@
 ---
 title: After Spec API
+containerClass: experimental
 ---
 
 The `after:spec` event fires after a spec file is run. The event only fires when running via `cypress run`.

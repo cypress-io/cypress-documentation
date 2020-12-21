@@ -1,5 +1,6 @@
 ---
 title: After Run API
+containerClass: experimental
 ---
 
 The `after:run` event fires after a run is finished. The event only fires when running via `cypress run`.
