@@ -11,17 +11,18 @@ title: Amazon Cognito Programmatic Authentication
 
 ## What is Amazon Cognito?
 
-[Amazon Cognito][cognito] is an authentication provider apart of [Amazon Web Services (AWS)][aws].  It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
+{% url "Amazon Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.  It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
 
-Testing applications deployed with [Amazon Cognito][cognito] can use different strategies; mocking and testing the full stack.
+Testing applications deployed with {% url "Amazon Cognito" https://aws.amazon.com/cognito %} can use different strategies; mocking and testing the full stack.
 
 ## Programmatic Authentication with Amazon Cognito
 
-The documentation for [Amazon Cognito][cognito] recommends using the [Auth library][awsamplifyauth] from the [AWS Amplify Framework][awsamplifyframework] to interact with a deployed [Amazon Cognito][cognito] instance.
+The documentation for {% url "Amazon Cognito" https://aws.amazon.com/cognito %} recommends using the 
+{% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %} from the {% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %} to interact with a deployed {% url "Amazon Cognito" https://aws.amazon.com/cognito %} instance.
 
-Using the [AWS Amplify Framework Auth library][awsamplifyauth], we are able to programmatically drive the creation and authentication of users against a fully deployed back end.
+Using the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}, we are able to programmatically drive the creation and authentication of users against a fully deployed back end.
 
-This illustrates the limited code from the [AWS Amplify Framework][awsamplifyframework] needed to programmatically log an existing a user into an application.
+This illustrates the limited code from the {% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %} needed to programmatically log an existing a user into an application.
 
 ```jsx
 // Add 'aws-amplify' library into your application
@@ -310,3 +311,8 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 [awsamplifycliconfig]: https://docs.amplify.aws/cli/start/install#configure-the-amplify-cli
 [amplifyauth]: https://docs.amplify.aws/cli/auth/overview 
 [amplifypush]: https://docs.amplify.aws/cli/start/workflows#amplify-push 
+
+{% url "" https:// %}
+{% url "Amazon Cognito" https://aws.amazon.com/cognito %}
+{% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}
+{% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %}
