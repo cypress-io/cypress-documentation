@@ -1,6 +1,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 const fs = require('fs')
+const got = require('got')
 
 const baseUrlEnvMap = {
   'https://docs-staging.cypress.io': 'staging',
@@ -35,6 +36,19 @@ module.exports = (on, config) => {
     log (message) {
       // eslint-disable-next-line no-console
       console.log(message)
+
+      return null
+    },
+
+    async checkUrls (urls) {
+      // eslint-disable-next-line no-console
+      console.log('checking %d urls', urls.length)
+
+      for await (const url of urls) {
+        await got(url)
+        // eslint-disable-next-line no-console
+        console.log('✅ %s', url)
+      }
 
       return null
     },
