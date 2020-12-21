@@ -46,6 +46,15 @@ You can use the `file:preprocessor` event to do things like:
 
 Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which describe how to use this event.
 
+## Run Lifecycle
+
+The event {% url `before:spec` before-spec-api %} occurs before a run starts.
+
+You can use {% url `before:run` before-run-api %} to do things like:
+
+- Set up reporting on a run
+- Start a timer for the run to time how long it takes
+
 ## Spec Lifecycle
 
 The events {% url `before:spec` before-spec-api %} and {% url `after:spec` after-spec-api %} run before and after a single spec is run, respectively.
