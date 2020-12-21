@@ -1,5 +1,6 @@
 ---
 title: After Spec API
+containerClass: experimental
 ---
 
 The `after:spec` event fires after a spec file is run. The event only fires when running via `cypress run`.
@@ -100,5 +101,6 @@ module.exports = (on, config) => {
 
 - {% url "Before Spec API" before-spec-api %}
 - {% url "Before Run API" before-run-api %}
+- {% url "After Run API" after-run-api %}
 - {% url "Plugins Guide" plugins-guide %}
 - {% url "Writing a Plugin" writing-a-plugin %}

@@ -1,5 +1,6 @@
 ---
 title: Before Run API
+containerClass: experimental
 ---
 
 The `before:run` event fires before a run starts. The event only fires when running via `cypress run`.
@@ -72,6 +73,7 @@ module.exports = (on, config) => {
 
 # See also
 
+- {% url "After Run API" after-run-api %}
 - {% url "Before Spec API" before-spec-api %}
 - {% url "After Spec API" after-spec-api %}
 - {% url "Plugins Guide" plugins-guide %}

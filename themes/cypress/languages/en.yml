@@ -200,6 +200,7 @@ sidebar:
     preprocessors-api: Preprocessors
     browser-launch-api: Browser Launching
     before-run-api: Before Run
+    after-run-api: After Run
     before-spec-api: Before Spec
     after-spec-api: After Spec
     configuration-api: Configuration
