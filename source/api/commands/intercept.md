@@ -7,7 +7,7 @@ Use `cy.intercept()` to manage the behavior of HTTP requests at the network laye
 With `cy.intercept()`, you can:
 
 * stub or spy on any type of HTTP request.
-  * If `cy.intercept` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
+  * If `cy.intercept()` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
   * Otherwise the request will go out to the server, and the test spies on the network call. The spying intercept can even modify the real response from the server before it is returned to the web application under test.
 * {% urlHash "modify an HTTP request's body, headers, and URL" Intercepting-a-request %} before it is sent to the destination server.
 * stub the response to an HTTP request, either dynamically or statically.
@@ -164,6 +164,19 @@ The `routeHandler` defines what will happen with a request if the {% urlHash "`r
 
 ## Matching URL
 
+{% note info %}
+**Note:** passing a URL as a string or RegExp to `cy.intercept()` will automatically set `matchUrlAgainstPath` to `true`. This means that the supplied string or RegExp will be matched against the **path** if matching against the **URL** fails.
+{% endnote %}
+
+You can provide the entire URL to match
+
+```js
+// will match any request that exactly matches the URL
+//   matches GET https://prod.cypress.io/users
+//   won't match GET https://staging.cypress.io/users
+cy.intercept('https://prod.cypress.io/users')
+```
+
 You can provide a substring of the URL to match
 
 ```js
@@ -178,8 +191,6 @@ You can provide a {% url minimatch %} pattern
 // will match any HTTP method to urls that end with 3 or 5
 cy.intercept('**/users?_limit=+(3|5)')
 ```
-
-**Note:** passing a URL as a string to `cy.intercept` will automatically set `matchUrlAgainstPath` to `true`, which means that request matching will fall back to trying to match the supplied string against the path if matching it against the URL fails.
 
 **Tip:** you can evaluate your URL using DevTools console to see if the {% url 'minimatch pattern' https://www.npmjs.com/package/minimatch %} is correct.
 
@@ -222,8 +233,6 @@ cy.wait('@users').its('response.body').should('have.length', 3)
 cy.get('#load-five-users').click()
 cy.wait('@users').its('response.body').should('have.length', 5)
 ```
-
-**Note:** passing a URL as a RegExp to `cy.intercept` will automatically set `matchUrlAgainstPath` to `true`, which means that request matching will fall back to trying to match the supplied RegExp against the path if matching it against the URL fails.
 
 ## Waiting on a request
 
