@@ -162,6 +162,8 @@ sidebar:
     type: type
     uncheck: uncheck
     url: url
+    useSession: useSession
+    defineSession: defineSession
     viewport: viewport
     visit: visit
     wait: wait

@@ -146,6 +146,8 @@ api:
     type: type.html
     uncheck: uncheck.html
     url: url.html
+    useSession: useSession.html
+    defineSession: defineSession.html
     viewport: viewport.html
     visit: visit.html
     wait: wait.html
