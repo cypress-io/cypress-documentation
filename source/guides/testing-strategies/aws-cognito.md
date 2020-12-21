@@ -187,7 +187,7 @@ In order to validate API requests from the frontend, we install [express-jwt](ht
 ```jsx
 // backend/helpers.ts
 // ... initial imports
-import jwt from "express-jwt"
+import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
 
 // ...
@@ -218,6 +218,81 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 }
 
 // routes ...
+```
+### Adapting the front end
+
+We need to update our front end React app to allow for authentication with [Amazon Cognito][cognito] using the [Amplify Authentication Library][awsamplifyauth].
+
+First, we create a `AppCognito.tsx` container, based off of the `App.tsx` component.
+
+A `useEffect` hook is added to get the access token for the authenticated user and send an `COGNITO` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).  We use the `AmplifyAuthenticator` component to provide the login form from [Amazon Cognito][cognito].
+
+```jsx
+// src/containers/AppOkta.tsx
+// initial imports ...
+import Amplify from "aws-amplify";
+import { AmplifyAuthenticator, AmplifySignUp, AmplifySignIn } from "@aws-amplify/ui-react";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+
+import awsConfig from "../aws-exports";
+
+Amplify.configure(awsConfig);
+
+// ...
+
+const AppCognito: React.FC = () => {
+
+  // ...
+
+  useEffect(() => {
+    return onAuthUIStateChange((nextAuthState, authData) => {
+      if (nextAuthState === AuthState.SignedIn) {
+        authService.send("COGNITO", { user: authData });
+      }
+    });
+  }, []);
+
+  // ...
+
+  return isLoggedIn ? (
+    // ...
+  ) : (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <AmplifyAuthenticator usernameAlias="email">
+        <AmplifySignUp slot="sign-up" usernameAlias="email" />
+        <AmplifySignIn slot="sign-in" usernameAlias="email" />
+      </AmplifyAuthenticator>
+    </Container>
+  );
+};
+
+export default AppCognito;
+```
+
+{% note success %}
+Note: The full [AppCognito.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx) is in the [Cypress Real World App][cypressrwa].
+{% endnote %}
+
+Next, we update our entry point (`index.tsx`) to use our `AppCognito.tsx` component.
+
+```jsx
+// src/index.tsx
+// ... initial imports
+import AppCognito from "./containers/AppCognito"
+
+// ...
+
+if (process.env.REACT_APP_AWS_COGNITO) {
+  ReactDOM.render(
+    <Router history={history}>
+      <ThemeProvider theme={theme}>
+        <AppCognito />
+      </ThemeProvider>
+    </Router>,
+    document.getElementById("root")
+  );
+}
 ```
 
 
