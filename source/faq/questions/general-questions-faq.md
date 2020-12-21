@@ -18,7 +18,7 @@ You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Window
 
 Cypress will never be able to run on a native mobile app, but we can test some functionality of mobile web browsers and test mobile applications that are developed in a browser, such as with {% url "the Ionic framework" https://ionicframework.com/ %}.
 
-Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application. You can also mimic certain behaviors like swiping using {% url "custom commands" custom-commands %}. 
+Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application. You can also mimic certain behaviors like swiping using {% url "custom commands" custom-commands %}.
 
 You can read about testing mobile applications with Ionic and Cypress {% url "here" https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/ %} and see how we manage testing the mobile viewport in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 
@@ -168,3 +168,7 @@ You can follow through these links:
 - {% url "GitHub (Releases & changelog)" https://github.com/cypress-io/cypress/releases %}
 - {% url "npm (Releases)" https://www.npmjs.com/package/cypress %}
 - {% url "Changelog at Cypress Docs" changelog %}
+
+## {% fa fa-angle-right %} How often are new Cypress versions released?
+
+We strive to release a new minor version of Cypress with new features and bug fixes every two weeks on a Monday. We place all breaking changes in major releases that happen approximately every 3 months. Of course, if there are significant bugs after the release we try to release a patch as soon as possible.
