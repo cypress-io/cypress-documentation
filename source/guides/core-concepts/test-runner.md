@@ -91,7 +91,7 @@ The image below shows that our application is displaying at `1000px` width, `660
 
 {% imgTag /img/guides/errors.png "Errors" %}
 
-*Note: Internally, the AUT renders within an iframe. This can sometimes cause unexpected behaviors {% url "explained here." /api/commands/window.html#Cypress-uses-2-different-windows %}*
+*Note: Internally, the AUT renders within an iframe. This can sometimes cause unexpected behaviors {% url "explained here." window#Cypress-uses-2-different-windows %}*
 
 # Selector Playground
 
