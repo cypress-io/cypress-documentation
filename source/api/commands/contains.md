@@ -283,6 +283,7 @@ You can use a space character in `cy.contains()` to match text in the HTML that 
 ```javascript
 // finds the span element
 cy.contains('Hello world')
+```
 
 ## Single Element
 
