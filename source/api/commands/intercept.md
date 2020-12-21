@@ -84,7 +84,7 @@ All properties are optional. All properties that are set must match for the rout
   https?: boolean
   /**
    * If `true`, will match the supplied `url` against incoming `path`s.
-   * Cannot be set without `url` or with `path`.
+   * Requires a `url` argument. Cannot be used with a `path` argument.
    */
   matchUrlAgainstPath?: boolean
   /**
