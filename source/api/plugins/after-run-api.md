@@ -18,7 +18,7 @@ on('after:run', (results) => { /* ... */ })
 
 **{% fa fa-angle-right %} results** ***(Object)***
 
-Results of the run, including the total number of passes/failures/etc, the project config, and details about the browser and system. It is the same as the results object resolved by the {% url "module API" module-api#Results %}.
+Results of the run, including the total number of passes/failures/etc, the project config, and details about the browser and system. It is the same as the results object resolved by the {% url "Module API" module-api#Results %}.
 
 # Usage
 
