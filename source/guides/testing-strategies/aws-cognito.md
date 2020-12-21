@@ -100,7 +100,7 @@ In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that respon
 ```jsx
 // cypress/support/auth-provider-commands/cognito.ts
 
-import Amplify, { Auth } from "aws-amplify"
+import Amplify, { Auth } from 'aws-amplify'
 
 Amplify.configure(Cypress.env('awsConfig'))
 
@@ -113,46 +113,53 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
     autoEnd: false,
   })
 
-  log.snapshot("before")
+  log.snapshot('before')
 
   const signIn = Auth.signIn({ username, password })
 
   cy.wrap(signIn, { log: false }).then((cognitoResponse) => {
     const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`
+
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.idToken`,
       cognitoResponse.signInUserSession.idToken.jwtToken
     )
+
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.accessToken`,
       cognitoResponse.signInUserSession.accessToken.jwtToken
     )
+
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.refreshToken`,
       cognitoResponse.signInUserSession.refreshToken.token
     )
+
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.clockDrift`,
       cognitoResponse.signInUserSession.clockDrift
     )
+
     window.localStorage.setItem(
       `${cognitoResponse.keyPrefix}.LastAuthUser`,
       cognitoResponse.username
     )
 
-    window.localStorage.setItem('amplify-authenticator-authState', "signedIn")
-    log.snapshot("after")
-    log.end();
+    window.localStorage.setItem('amplify-authenticator-authState', 'signedIn')
+    log.snapshot('after')
+    log.end()
   })
 
-  cy.visit('/');
+  cy.visit('/')
 })
 ```
 
 
 Finally, we can use our `loginByCognitoApi` command in at test.  Below is our test to login as a user via [Amazon Cognito][cognito], complete the onboarding process and logout.
 
-Note: The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts) is in the [Cypress Real World App][cypressrwa].
+{% note success Runnable Test %}
+The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts) is in the [Cypress Real World App][cypressrwa].
+{% endnote %}
 
 ```jsx
 describe('Cognito', function () {
@@ -165,6 +172,52 @@ describe('Cognito', function () {
     cy.contains('Get Started').should('be.visible')
   })
 })
+```
+
+## Adapting an Amazon Cognito App for Testing
+
+The [Cypress Real World App][cypressrwa] is used and provides configuration and runnable code for both the React SPA and the Express back end.
+
+The front end uses the [Amplify Authentication Library][awsamplifyauth]. The back end uses the [express-jwt][expressjwt] to validate JWTs from [Amazon Cognito][cognito].
+
+### Adapting the back end
+
+In order to validate API requests from the frontend, we install [express-jwt](https://github.com/auth0/express-jwt) and [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for JWT's from [Amazon Cognito][cognito].
+
+```jsx
+// backend/helpers.ts
+// ... initial imports
+import jwt from "express-jwt"
+import jwksRsa from 'jwks-rsa'
+
+// ...
+
+const awsCognitoJwtConfig = {
+  secret: jwksRsa.expressJwtSecret({
+    jwksUri: `https://cognito-idp.${awsConfig.aws_cognito_region}.amazonaws.com/${awsConfig.aws_user_pools_id}/.well-known/jwks.json`,
+  }),
+
+  issuer: `https://cognito-idp.${awsConfig.aws_cognito_region}.amazonaws.com/${awsConfig.aws_user_pools_id}`,
+  algorithms: ['RS256'],
+}
+
+export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({ path: ['/testData/*'] })
+```
+
+Once this helper is defined, we can use globally to apply to all routes:
+
+```jsx
+// backend/app.ts
+// initial imports ...
+import { checkCognitoJwt } from './helpers'
+
+// ...
+
+if (process.env.REACT_APP_AWS_COGNITO) {
+  app.use(checkCognitoJwt)
+}
+
+// routes ...
 ```
 
 

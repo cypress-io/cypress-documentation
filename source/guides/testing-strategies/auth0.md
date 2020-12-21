@@ -46,14 +46,14 @@ With our [Auth0][auth0] application and tenant setup, we need to add environment
 
 ```jsx
 // .env
-AUTH_USERNAME='username@domain.com'
-AUTH_PASSWORD='s3cret1234$'
-AUTH0_CLIENT_SECRET='your-auth0-client-secret'
-REACT_APP_AUTH_TOKEN_NAME='authAccessToken'
-REACT_APP_AUTH0_DOMAIN='your-auth0-domain.auth0.com'
-REACT_APP_AUTH0_CLIENTID='1234567890'
-REACT_APP_AUTH0_AUDIENCE='https://your-auth0-domain.auth0.com/api/v2/'
-REACT_APP_AUTH0_SCOPE='openid email profile'
+AUTH_USERNAME = 'username@domain.com'
+AUTH_PASSWORD = 's3cret1234$'
+AUTH0_CLIENT_SECRET = 'your-auth0-client-secret'
+REACT_APP_AUTH_TOKEN_NAME = 'authAccessToken'
+REACT_APP_AUTH0_DOMAIN = 'your-auth0-domain.auth0.com'
+REACT_APP_AUTH0_CLIENTID = '1234567890'
+REACT_APP_AUTH0_AUDIENCE = 'https://your-auth0-domain.auth0.com/api/v2/'
+REACT_APP_AUTH0_SCOPE = 'openid email profile'
 ```
 
 ## Adapting the Real World App back end
@@ -62,8 +62,8 @@ In order to validate API requests from the frontend, we install [express-jwt](ht
 
 ```jsx
 // backend/helpers.ts
-import jwt from "express-jwt"
-import jwksRsa from "jwks-rsa"
+import jwt from 'express-jwt'
+import jwksRsa from 'jwks-rsa'
 
 dotenv.config()
 
@@ -323,53 +323,53 @@ Below is our test to login as a user via [Auth0][auth0], complete the onboarding
 Note: The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts) is in the [Cypress Real World App][cypressrwa].
 
 ```jsx
-import { isMobile } from "../../support/utils"
+import { isMobile } from '../../support/utils'
 
 describe('Auth0', function () {
   beforeEach(function () {
-    cy.task("db:seed")
+    cy.task('db:seed')
 
     cy.server()
-    cy.route('POST', '/bankAccounts').as("createBankAccount")
+    cy.route('POST', '/bankAccounts').as('createBankAccount')
 
-    cy.loginByAuth0Api(Cypress.env('auth_username'), Cypress.env('auth_password'));
+    cy.loginByAuth0Api(Cypress.env('auth_username'), Cypress.env('auth_password'))
   })
 
   it('should allow a visitor to login, onboard and logout', function () {
-    cy.contains('Get Started').should("be.visible")
+    cy.contains('Get Started').should('be.visible')
 
     // Onboarding
-    cy.getBySel('user-onboarding-dialog').should("be.visible")
+    cy.getBySel('user-onboarding-dialog').should('be.visible')
     cy.getBySel('user-onboarding-next').click()
 
-    cy.getBySel('user-onboarding-dialog-title').should('contain', "Create Bank Account")
+    cy.getBySel('user-onboarding-dialog-title').should('contain', 'Create Bank Account')
 
-    cy.getBySelLike('bankName-input').type("The Best Bank")
-    cy.getBySelLike('accountNumber-input').type("123456789")
-    cy.getBySelLike('routingNumber-input').type("987654321")
+    cy.getBySelLike('bankName-input').type('The Best Bank')
+    cy.getBySelLike('accountNumber-input').type('123456789')
+    cy.getBySelLike('routingNumber-input').type('987654321')
     cy.getBySelLike('submit').click()
 
-    cy.wait("@createBankAccount")
+    cy.wait('@createBankAccount')
 
-    cy.getBySel('user-onboarding-dialog-title').should('contain', "Finished")
-    cy.getBySel('user-onboarding-dialog-content').should('contain', "You're all set!")
+    cy.getBySel('user-onboarding-dialog-title').should('contain', 'Finished')
+    cy.getBySel('user-onboarding-dialog-content').should('contain', 'You\'re all set!')
     cy.getBySel('user-onboarding-next').click()
 
-    cy.getBySel('transaction-list').should("be.visible")
+    cy.getBySel('transaction-list').should('be.visible')
 
     // Logout User
     if (isMobile()) {
-      cy.getBySel('sidenav-toggle').click();
+      cy.getBySel('sidenav-toggle').click()
     }
 
     cy.getBySel('sidenav-signout').click()
 
-    cy.location('pathname').should('eq', '/');
+    cy.location('pathname').should('eq', '/')
   })
 
   it('shows onboarding', function () {
-    cy.contains('Get Started').should("be.visible")
-  });
+    cy.contains('Get Started').should('be.visible')
+  })
 })
 ```
 
@@ -390,7 +390,7 @@ Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our [Cypress Re
 ```jsx
 // .env
 // ... additional keys
-AUTH0_MGMT_API_TOKEN='YOUR-MANAGEMENT-API-TOKEN'
+AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 ```
 
 With this token in place, we can add interaction with the [Auth0 Anomaly remove the blocked IP address endpoint][auth0mgmtremoveip] to our `loginByAuth0Api` command.  This will send a delete request to [Auth0 Management API][auth0mgmtapi] anomaly endpoint to unblock an IP that may become blocked during the test run.
@@ -410,7 +410,7 @@ Cypress.Commands.add('loginByAuth0Api', (username, password) => {
           bearer: Cypress.env('auth0_mgmt_api_token'),
         },
       })
-    });
+    })
 
   // ... remaining loginByAuth0Api command
 })
