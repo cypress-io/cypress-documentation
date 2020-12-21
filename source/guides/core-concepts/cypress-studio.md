@@ -101,3 +101,7 @@ Finally, we will click the "Pay" button.
 We are presented with a confirmation page of our new transaction.
 {% imgTag /img/guides/cypress-studio/extend-test-9.png "Cypress Studio Extend Test Confirmation" "no-border" %}
 
+#### Run or Save Test
+
+
+#### Generated Test Code
