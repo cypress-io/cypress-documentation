@@ -11,9 +11,9 @@ title: Amazon Cognito Programmatic Authentication
 
 ## What is Amazon Cognito?
 
-{% url "Amazon Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.  It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
+{% url "Amazon Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
 
-Testing applications deployed with {% url "Amazon Cognito" https://aws.amazon.com/cognito %} can use different strategies; mocking and testing the full stack.
+It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
 
 ## Programmatic Authentication with Amazon Cognito
 
@@ -159,8 +159,8 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 
 Finally, we can use our `loginByCognitoApi` command in at test.  Below is our test to login as a user via {% url "Amazon Cognito" https://aws.amazon.com/cognito %}, complete the onboarding process and logout.
 
-{% note success Runnable Test %}
-The {% "runnable version of this test" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts %} is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% note success %}
+The {% url "runnable version of this test" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts %} is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 {% endnote %}
 
 ```jsx
