@@ -169,6 +169,10 @@ You can follow through these links:
 - {% url "npm (Releases)" https://www.npmjs.com/package/cypress %}
 - {% url "Changelog at Cypress Docs" changelog %}
 
-## {% fa fa-angle-right %} How often are new Cypress versions released?
+## {% fa fa-angle-right %} How often are Cypress Test Runner versions released?
 
-We strive to release a new minor version of Cypress with new features and bug fixes every two weeks on a Monday. We place all breaking changes in major releases that happen approximately every 3 months. Of course, if there are significant bugs after the release we try to release a patch as soon as possible.
+We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time.
+
+We schedule major releases with breaking changes approximately every 3 months. 
+
+If there is a significant bug outside of our release schedule then we release a patch as soon as possible.
