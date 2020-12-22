@@ -761,4 +761,3 @@ cy.findByRole('dialog').within(() => {
 ```
 
 We have had a webinar with {% url 'Roman Sandler' https://twitter.com/RomanSndlr %} where he has given practical advice on writing effective tests using the Testing Library. You can find the recording and the slides {% url here https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/ %}.
-While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url "Plugins" plugins %} page.
