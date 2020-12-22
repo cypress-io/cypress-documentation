@@ -184,7 +184,7 @@ The front end uses the {% url "AWS Amplify Framework Authentication Library" htt
 
 ### Adapting the back end
 
-In order to validate API requests from the frontend, we install [express-jwt](https://github.com/auth0/express-jwt) and [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for JWT's from [Amazon Cognito][cognito].
+In order to validate API requests from the frontend, we install {% url "express-jwt" https://github.com/auth0/express-jwt %} and {% url "jwks-rsa" https://github.com/auth0/node-jwks-rsa %} and configure validation for JWT's from {% url "Amazon Cognito" https://aws.amazon.com/cognito %}.
 
 ```jsx
 // backend/helpers.ts
@@ -223,11 +223,11 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 ```
 ### Adapting the front end
 
-We need to update our front end React app to allow for authentication with [Amazon Cognito][cognito] using the [Amplify Authentication Library][awsamplifyauth].
+We need to update our front end React app to allow for authentication with {% url "Amazon Cognito" https://aws.amazon.com/cognito %} using the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}.
 
 First, we create a `AppCognito.tsx` container, based off of the `App.tsx` component.
 
-A `useEffect` hook is added to get the access token for the authenticated user and send an `COGNITO` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).  We use the `AmplifyAuthenticator` component to provide the login form from [Amazon Cognito][cognito].
+A `useEffect` hook is added to get the access token for the authenticated user and send an `COGNITO` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).  We use the `AmplifyAuthenticator` component to provide the login form from {% url "Amazon Cognito" https://aws.amazon.com/cognito %}.
 
 ```jsx
 // src/containers/AppOkta.tsx
@@ -273,7 +273,7 @@ export default AppCognito;
 ```
 
 {% note success %}
-Note: The full [AppCognito.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx) is in the [Cypress Real World App][cypressrwa].
+Note: The complete {% url "AppCognito.tsx component" https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx %} is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 {% endnote %}
 
 Next, we update our entry point (`index.tsx`) to use our `AppCognito.tsx` component.
@@ -296,24 +296,3 @@ if (process.env.REACT_APP_AWS_COGNITO) {
   );
 }
 ```
-
-
-[cypressrecipes]: https://github.com/cypress-io/cypress-example-recipes
-[cypresscommands]: https://on.cypress.io/api/commands
-[cypresstask]: https://on.cypress.io/api/task
-[cypressfixture]: https://on.cypress.io/api/fixture
-
-[awsamplifycliconfig]: https://docs.amplify.aws/cli/start/install#configure-the-amplify-cli
-[amplifyauth]: https://docs.amplify.aws/cli/auth/overview 
-
-{% url "" https:// %}
-{% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}
-{% url "Amazon Web Services (AWS)" https://aws.amazon.com %}
-{% url "Amazon Cognito" https://aws.amazon.com/cognito %}
-{% url "AWS Amplify CLI" https://docs.amplify.aws/CLI %}
-{% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}
-{% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %}
-{% url "amplify init" https://docs.amplify.aws/cli/start/workflows#initialize-new-project %}
-{% url "amplify push" https://docs.amplify.aws/cli/start/workflows#amplify-push %}
-{% url "create an account" https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account %}
-{% url "express-jwt" https://github.com/auth0/express-jwt %}
