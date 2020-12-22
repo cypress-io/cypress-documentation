@@ -215,7 +215,7 @@ We need to configure the reporter in your {% url "configuration file (`cypress.j
 
 ```shell
 cypress run --reporter mochawesome \
-  --reporter-options reportDir=results,overwrite=false,html=false,json=true
+  --reporter-options reportDir="cypress/results",overwrite=false,html=false,json=true
 ```
 
 Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. Then we can combine them using the {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.
