@@ -59,7 +59,7 @@ We currently support Vue and React and intend to support other frameworks in the
 
 ## Vue
 
-We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" https://github.com/bahmutov/cypress-vue-unit-test %}.
+We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" https://github.com/cypress-io/cypress/tree/master/npm/vue %}.
 
 ```sh
 vue add cypress-experimental
