@@ -43,27 +43,28 @@ Auth.signIn(username, password)
 
 ## Amazon Cognito Setup
 
-If not already setup, you will need to [create an account][awsCreateAccount] with [Amazon Web Services][aws].
+If not already setup, you will need to {% url "create an account" https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account %} with {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
 
-An implementation for use with [AWS Cognito](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx) is available in the [Cypress Real World App][cypressrwa].
+An {% url "Amazon Cognito" https://aws.amazon.com/cognito %} integration is available in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 
-Clone the [Cypress Real World App][cypressrwa] and install the [AWS Amplify CLI][awsamplifycli] as follows:
+Clone the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} and install the {% url "AWS Amazon Amplify CLI" https://docs.amplify.aws/CLI %} as follows:
 
 ```jsx
 npm install -g @aws-amplify/cli
 ```
 
-The [Cypress Real World App][cypressrwa] is configured with an optional [AWS Cognito][cognito] instance via the [Amplify Authentication][amplifyauth] library.
+The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is configured with an optional 
+{% url "Amazon Cognito" https://aws.amazon.com/cognito %} instance via the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}.
 
-The [Amplify CLI][awsamplifycliconfig] is used to provision the [AWS][aws] infrastructure needed to configure your environment and cloud resources.
+The {% url "AWS Amazon Amplify CLI" https://docs.amplify.aws/CLI %} is used to provision the {% url "Amazon Web Services (AWS)" https://aws.amazon.com %} infrastructure needed to configure your environment and cloud resources.
 
-First, run the [amplify init][amplifyinit] command to initialize the [Cypress RWA][cypressrwa].  This will provision the project with your [AWS][aws] credentials.
+First, run the {% url "amplify init" https://docs.amplify.aws/cli/start/workflows#initialize-new-project %} command to initialize the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.  This will provision the project with your {% url "AWS" https://aws.amazon.com %} credentials.
 
 ```jsx
 amplify init
 ```
 
-Next, run the [amplify push][amplifypush] command to create the [AWS Cognito][cognito] resources in the cloud:
+Next, run the {% url "amplify push" https://docs.amplify.aws/cli/start/workflows#amplify-push %} command to create the {% url "Amazon Cognito" https://aws.amazon.com/cognito %} resources in the cloud:
 
 ```jsx
 amplify push
@@ -71,7 +72,7 @@ amplify push
 
 ## Setting Amazon Cognito app credentials in Cypress
 
-First, we need to configure Cypress to use the {% url "AWS Cognito" https://aws.amazon.com/cognito %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file. In addition, we are using the `aws-exports.js` supplied during the [AWS Amplify][awsamplify] build process.
+First, we need to configure Cypress to use the {% url "AWS Cognito" https://aws.amazon.com/cognito %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file. In addition, we are using the `aws-exports.js` supplied during the {% url "AWS Amplify CLI" https://docs.amplify.aws/CLI %} build process.
 
 ```jsx
 // cypress/plugins/index.js
@@ -94,7 +95,7 @@ export default (on, config) => {
 ```
 ## Custom Command for Amazon Cognito Authentication
 
-Next, we'll write a command to perform a programmatic login into [Amazon Cognito][cognito] and set items in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
+Next, we'll write a command to perform a programmatic login into {% url "Amazon Cognito" https://aws.amazon.com/cognito %} and set items in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
 
 In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that response to set the items inside of localStorage for the UI to know that our user is logged into the application.
 
@@ -156,10 +157,10 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 ```
 
 
-Finally, we can use our `loginByCognitoApi` command in at test.  Below is our test to login as a user via [Amazon Cognito][cognito], complete the onboarding process and logout.
+Finally, we can use our `loginByCognitoApi` command in at test.  Below is our test to login as a user via {% url "Amazon Cognito" https://aws.amazon.com/cognito %}, complete the onboarding process and logout.
 
 {% note success Runnable Test %}
-The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts) is in the [Cypress Real World App][cypressrwa].
+The {% "runnable version of this test" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts %} is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 {% endnote %}
 
 ```jsx
@@ -177,9 +178,9 @@ describe('Cognito', function () {
 
 ## Adapting an Amazon Cognito App for Testing
 
-The [Cypress Real World App][cypressrwa] is used and provides configuration and runnable code for both the React SPA and the Express back end.
+The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is used and provides configuration and runnable code for both the React SPA and the Express back end.
 
-The front end uses the [Amplify Authentication Library][awsamplifyauth]. The back end uses the [express-jwt][expressjwt] to validate JWTs from [Amazon Cognito][cognito].
+The front end uses the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}. The back end uses the {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWTs from {% url "Amazon Cognito" https://aws.amazon.com/cognito %}.
 
 ### Adapting the back end
 
@@ -297,22 +298,22 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 ```
 
 
-[cypressrwa]: https://github.com/cypress-io/cypress-realworld-app
 [cypressrecipes]: https://github.com/cypress-io/cypress-example-recipes
 [cypresscommands]: https://on.cypress.io/api/commands
 [cypresstask]: https://on.cypress.io/api/task
 [cypressfixture]: https://on.cypress.io/api/fixture
-[aws]: https://aws.amazon.com
-[awsCreateAccount]: https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account
-[cognito]: https://aws.amazon.com/cognito
-[awsamplifyframework]: https://aws.amazon.com/amplify/framework/ 
-[awsamplifyauth]: https://aws-amplify.github.io/amplify-js/api/classes/authclass.html
-[awsamplifycli]: https://docs.amplify.aws/cli
+
 [awsamplifycliconfig]: https://docs.amplify.aws/cli/start/install#configure-the-amplify-cli
 [amplifyauth]: https://docs.amplify.aws/cli/auth/overview 
-[amplifypush]: https://docs.amplify.aws/cli/start/workflows#amplify-push 
 
 {% url "" https:// %}
+{% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}
+{% url "Amazon Web Services (AWS)" https://aws.amazon.com %}
 {% url "Amazon Cognito" https://aws.amazon.com/cognito %}
+{% url "AWS Amplify CLI" https://docs.amplify.aws/CLI %}
 {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}
 {% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %}
+{% url "amplify init" https://docs.amplify.aws/cli/start/workflows#initialize-new-project %}
+{% url "amplify push" https://docs.amplify.aws/cli/start/workflows#amplify-push %}
+{% url "create an account" https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account %}
+{% url "express-jwt" https://github.com/auth0/express-jwt %}
