@@ -11,14 +11,13 @@ title: Amazon Cognito Programmatic Authentication
 
 ## What is Amazon Cognito?
 
-{% url "Amazon Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
+Amazon {% url "Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
 
-It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
+It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and "scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
 
 ## Programmatic Authentication with Amazon Cognito
 
-The documentation for {% url "Amazon Cognito" https://aws.amazon.com/cognito %} recommends using the 
-{% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %} from the {% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %} to interact with a deployed {% url "Amazon Cognito" https://aws.amazon.com/cognito %} instance.
+The documentation for {% url "Amazon Cognito" https://aws.amazon.com/cognito %} recommends using the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %} from the {% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %} to interact with a deployed {% url "Amazon Cognito" https://aws.amazon.com/cognito %} instance.
 
 Using the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}, we are able to programmatically drive the creation and authentication of users against a fully deployed back end.
 
