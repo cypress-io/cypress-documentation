@@ -415,6 +415,18 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 {% url "3.5.0" changelog#3-5-0 %} | Added `nodeVersion` configuration.
 {% endhistory %}
 
+## isInteractive
+
+You can open Cypress in the interactive mode via `cypress open` command, and in the non-interactive mode via `cypress run` command. To detect the mode from your test code you can query the config object
+
+```javascript
+if (Cypress.config('isInteractive')) {
+  // interactive "cypress open" mode!
+} else {
+  // "cypress run" mode
+}
+```
+
 # See also
 
 - {% url "`Cypress.config()`" config %}
