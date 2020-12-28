@@ -122,17 +122,15 @@ However, it will make your Dashboard subject to the limitations of your new plan
 
 ## {% fa fa-angle-right %} What happens once I reach the test recording limit?
 
-On the free Seed plan (500 recordings), tests running with the `--record` flag will fail and exit when the test recording limit is reached. You can upgrade to a paid plan, wait until your usage resets at the next month, or remove the `--record` flag to continue running your tests.
-
-On a paid plan, tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded.
+Tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded or a new usage cycle begins. The usage cycle resets each month.
 
 In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
 
 1. Logging into the {% url "Dashboard" https://dashboard.cypress.io %}
 2. Select your organization
-3. Navigate to the Billing and Usage tab
-4. Review your organization’s usage
-5. Scroll down and select *Upgrade* under your plan of choice
+3. Navigate to the **Billing and Usage** tab
+4. Review your organization's usage
+5. Scroll down and select **Upgrade** under your plan of choice
 
 ## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for the Dashboard to work properly?
 
