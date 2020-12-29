@@ -401,6 +401,18 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 }
 ```
 
+## isInteractive
+
+You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on {% url "`Cypress.config`" config %}.
+
+```javascript
+if (Cypress.config('isInteractive')) {
+  // interactive "cypress open" mode!
+} else {
+  // "cypress run" mode
+}
+```
+
 ## Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
@@ -414,18 +426,6 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 {% url "4.0.0" changelog#4-0-0 %} | Added `firefoxGcInterval` configuration.
 {% url "3.5.0" changelog#3-5-0 %} | Added `nodeVersion` configuration.
 {% endhistory %}
-
-## isInteractive
-
-You can open Cypress in the interactive mode via `cypress open` command, and in the non-interactive mode via `cypress run` command. To detect the mode from your test code you can query the config object
-
-```javascript
-if (Cypress.config('isInteractive')) {
-  // interactive "cypress open" mode!
-} else {
-  // "cypress run" mode
-}
-```
 
 # See also
 
