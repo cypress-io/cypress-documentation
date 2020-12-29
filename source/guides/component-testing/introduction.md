@@ -65,7 +65,7 @@ We highly suggest using Vue CLI for a quick start. For manual installation, plea
 vue add cypress-experimental
 ```
 
-Cypress component testing with Vue currently supports Vue 2.x. Support for Vue 3 is in progress.
+Cypress component testing with Vue currently supports Vue 2.x. Support for Vue 3 is in progress.
 
 Examples for testing different Vue applications (containing {% url "Vuex" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/counter-vuex %}, {% url "VueRouter" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/router-example %}, {% url "VueI18n" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/advanced/i18n %}) exist in the component testing directory for {% url "@cypress/vue" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component %}.
 
