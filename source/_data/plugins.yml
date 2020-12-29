@@ -332,6 +332,12 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
       badge: verified
+      
+    - name: cypress-plugin-stripe-elements
+      description: Simple commands that make it easy to target and fill in Stripe Elements input fields
+      link: https://github.com/dbalatero/cypress-plugin-stripe-elements
+      keywords: [stripe, commands, elements, inputs]
+      badge: community
 
     - name: cypress-xpath
       description: Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.
