@@ -94,7 +94,7 @@ module.exports = (on, config) => {
 }
 ```
 
-See {% url "Recipes" https://github.com/bahmutov/cypress-react-unit-test/blob/main/docs/recipes.md %} for more examples.
+See {% url "Recipes" https://github.com/cypress-io/cypress/blob/master/npm/react/docs/recipes.md %} for more examples.
 
 3. ⚠️ Turn the experimental component support on in your `cypress.json`. You can also specify where component spec files are located. For example, to have them located in `src` folder use:
 
