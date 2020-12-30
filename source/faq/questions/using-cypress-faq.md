@@ -14,6 +14,16 @@ If you're trying to assert on an element's text content:
 cy.get('div').should('have.text', 'foobarbaz')
 ```
 
+If the text contains a {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity `&nbsp;` then use the Unicode character `\u00a0` instead of `&nbsp;`.
+
+```html
+<div>Hello&nbsp;world</div>
+```
+
+```javascript
+cy.get('div').should('have.text', 'Hello\u00a0world')
+```
+
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
@@ -342,6 +352,12 @@ Videos recorded on Continuous Integration may have frozen or dropped frames if t
 
 If you are experiencing this issue, we recommend switching to a more powerful CI container or provider.
 
+## {% fa fa-angle-right %} What can I do if my tests crash or hang on CI?
+
+As some users have noted, a longer test has a higher chance of hanging or even crashing when running on CI. When a test runs for a long period of time, its commands and the application itself might allocate more memory than available, causing the crash. The exact risk of crashing depends on the application and the available hardware resources. While there is no single time limit that would solve this problem, in general we recommend splitting spec files to run in under one minute each. You can read the blog post {% url "Make Cypress Run Faster by Splitting Specs" https://glebbahmutov.com/blog/split-spec/ %} to learn how to split a spec file.
+
+You can further split individual long-running tests. For example, you can verify parts of the longer user feature in the separate tests as described in {% url "Split a very long Cypress test into shorter ones using App Actions" https://www.cypress.io/blog/2019/10/29/split-a-very-long-cypress-test-into-shorter-ones-using-app-actions/ %}.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% url 'here' parallelization %}.
@@ -354,7 +370,14 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
-It is possible to upload files in your application but it's different based on how you've written your own upload code. You can read more about this {% issue 170 'here' %}
+It is possible to upload files in your application but it's different based on how you've written your own upload code. Many people had success by using the community plugin {% url cypress-file-upload https://github.com/abramenal/cypress-file-upload %}. This plugin adds a custom child command `.attachFile` that you call from the test.
+
+```javascript
+// attaches the file cypress/fixtures/data.json
+cy.get('[data-cy="file-input"]').attachFile('data.json')
+```
+
+You can read more about uploading files {% issue 170 'here' %}.
 
 ## {% fa fa-angle-right %} What is the projectId for?
 
@@ -528,7 +551,9 @@ There are a lot of ways to test this, so it depends. You'll need to be aware of 
 
 If your server sends specific disposition headers which cause a browser to prompt for download, you can figure out what URL this request is made to, and use {% url "cy.request()" request %} to hit that directly. Then you can test that the server send the right response headers.
 
-If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, there's nothing else to test for.
+If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, that might be enough to test for.
+
+Finally, if you want to really download the file and verify its contents, see our {% url "File download" https://github.com/cypress-io/cypress-example-recipes#testing-the-dom %} recipe.
 
 In the end, it's up to you to know your implementation and to test enough to cover everything.
 
@@ -662,13 +687,13 @@ Yes. You can leverage visual testing tools to test that charts and graphs are re
 
 ## {% fa fa-angle-right %} Why doesn't the `instanceof Event` work?
 
-It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" /api/commands/window.html#Cypress-uses-2-different-windows %}.
+It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" window#Cypress-uses-2-different-windows %}.
 
 ## {% fa fa-angle-right %} Can I use Cucumber to write tests?
 
 Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then converts the scenarios and step definitions into "regular" JavaScript Cypress tests.
 
-- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url Plugins plugins %} page for additional helper plugins
+- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url "Plugins" plugins %} page for additional helper plugins
 - read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
 - take a look at {% url "briebug/bba-cypress-quickstart" https://github.com/briebug/bba-cypress-quickstart %} example application
 
@@ -709,3 +734,30 @@ End-to-end tests are an excellent way to keep your application's documentation a
 ## {% fa fa-angle-right %} Can I use Jest snapshots?
 
 While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url Plugins %} page.
+
+## {% fa fa-angle-right %} Can I use Testing Library?
+
+Absolutely! Feel free to add the {% url '@testing-library/cypress' https://testing-library.com/docs/cypress-testing-library/intro/ %} to your setup and use its methods like `findByRole`, `findByLabelText`, `findByText`, and others to find the DOM elements.
+
+The following example comes from the Testing Library's documentation
+
+```js
+cy.findByRole('button', { name: /Jackie Chan/i }).click()
+cy.findByRole('button', { name: /Button Text/i }).should('exist')
+cy.findByRole('button', { name: /Non-existing Button Text/i }).should(
+  'not.exist'
+)
+
+cy.findByLabelText(/Label text/i, { timeout: 7000 }).should('exist')
+
+// findAllByText _inside_ a form element
+cy.get('form')
+  .findByText('button', { name: /Button Text/i })
+  .should('exist')
+
+cy.findByRole('dialog').within(() => {
+  cy.findByRole('button', { name: /confirm/i })
+})
+```
+
+We have had a webinar with {% url 'Roman Sandler' https://twitter.com/RomanSndlr %} where he has given practical advice on writing effective tests using the Testing Library. You can find the recording and the slides {% url here https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/ %}.

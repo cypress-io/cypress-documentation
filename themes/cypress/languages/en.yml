@@ -39,6 +39,7 @@ sidebar:
     organizations: Organizations
     users: Users
     github-integration: GitHub Integration
+    gitlab-integration: Gitlab Integration
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
@@ -198,6 +199,10 @@ sidebar:
     writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
     browser-launch-api: Browser Launching
+    before-run-api: Before Run
+    after-run-api: After Run
+    before-spec-api: Before Spec
+    after-spec-api: After Spec
     configuration-api: Configuration
     version: version
     arch: arch

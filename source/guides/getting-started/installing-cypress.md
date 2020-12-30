@@ -58,8 +58,7 @@ Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/c
 {% video local /img/snippets/installing-cli.mp4 %}
 
 {% note info %}
-Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
-As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
+Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded. As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 {% endnote %}
 
 {% note success Best Practice %}

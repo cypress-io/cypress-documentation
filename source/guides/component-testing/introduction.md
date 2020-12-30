@@ -59,13 +59,13 @@ We currently support Vue and React and intend to support other frameworks in the
 
 ## Vue
 
-We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" https://github.com/bahmutov/cypress-vue-unit-test %}.
+We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" https://github.com/cypress-io/cypress/tree/master/npm/vue %}.
 
 ```sh
 vue add cypress-experimental
 ```
 
-Cypress component testing with Vue currently supports Vue 2.x. Support for Vue 3 is in progress.
+Cypress component testing with Vue currently supports Vue 2.x. Support for Vue 3 is in progress.
 
 Examples for testing different Vue applications (containing {% url "Vuex" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/counter-vuex %}, {% url "VueRouter" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/router-example %}, {% url "VueI18n" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/advanced/i18n %}) exist in the component testing directory for {% url "@cypress/vue" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component %}.
 
@@ -94,7 +94,7 @@ module.exports = (on, config) => {
 }
 ```
 
-See {% url "Recipes" https://github.com/bahmutov/cypress-react-unit-test/blob/main/docs/recipes.md %} for more examples.
+See {% url "Recipes" https://github.com/cypress-io/cypress/blob/master/npm/react/docs/recipes.md %} for more examples.
 
 3. ⚠️ Turn the experimental component support on in your `cypress.json`. You can also specify where component spec files are located. For example, to have them located in `src` folder use:
 
