@@ -84,7 +84,7 @@ cy.intercept('GET', '/projects', {
 ```
 
 ## overriding route matchers
-Unlike `cy.route`, `cy.intercept` currently does _not_ allow you to override a previous interceptor. For more information on this, see https://github.com/cypress-io/cypress/issues/9302 and https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors.
+Unlike `cy.route`, `cy.intercept` currently does _not_ allow you to override a previous response. For more information on this, see https://github.com/cypress-io/cypress/issues/9302 and https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors. Overriding responses will be added in a future release.
 
 # Migrating to Cypress 6.0
 
