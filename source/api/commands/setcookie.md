@@ -39,6 +39,7 @@ Option | Default | Description
 `domain` | `window.location.hostname` | The domain the cookie is visible to
 `expiry` | 20 years into the future | When the cookie expires, specified in seconds since {% url 'Unix Epoch' https://en.wikipedia.org/wiki/Unix_time %}.
 `httpOnly` | `false` | Whether the cookie is an HTTP only cookie
+`hostOnly` | `false` | Whether the cookie should apply only to the supplied domain, not subdomains.
 `path` | `/` | The cookie path
 `secure` | `false` | Whether the cookie is a secure cookie
 `timeout` | {% url `responseTimeout` configuration#Timeouts %} | {% usage_options timeout cy.setCookie %}
@@ -100,6 +101,7 @@ When clicking on `setCookie` within the command log, the console outputs the fol
 {% imgTag /img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png "Console Log setcookie" %}
 
 {% history %}
+{% url "6.3.0" changelog#6-3-0 %} | Added the `hostOnly` property.
 {% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
 {% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`.
 {% url "0.16.0" changelog#0-16-0 %} | `cy.setCookie()` command added

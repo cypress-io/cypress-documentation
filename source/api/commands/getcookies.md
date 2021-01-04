@@ -42,6 +42,7 @@ Option | Default | Description
 - `sameSite` *(if specified)*
 - `secure`
 - `value`
+- `hostOnly` *(if specified)*
 
 # Examples
 
@@ -98,6 +99,7 @@ When clicking on `getCookies` within the command log, the console outputs the fo
 {% imgTag /img/api/getcookies/test-application-cookies.png "Console Log getcookies" %}
 
 {% history %}
+{% url "6.3.0" changelog#6-3-0 %} | Added the `hostOnly` property.
 {% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
 {% url "4.3.0" changelog#4-3-0 %} | Added `sameSite` property when the {% url "`experimentalGetCookiesSameSite`" configuration#Experiments %} configuration value is `true`.
 {% endhistory %}

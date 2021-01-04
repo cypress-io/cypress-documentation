@@ -46,6 +46,7 @@ Option | Default | Description
 - `sameSite` *(if specified)*
 - `secure`
 - `value`
+- `hostOnly` *(if specified)*
 
 ### When a cookie matching the name could not be found:
 
