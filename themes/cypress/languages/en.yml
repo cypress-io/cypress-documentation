@@ -162,8 +162,6 @@ sidebar:
     type: type
     uncheck: uncheck
     url: url
-    useSession: useSession
-    defineSession: defineSession
     viewport: viewport
     visit: visit
     wait: wait
@@ -180,6 +178,8 @@ sidebar:
     removelistener: removeListener
     removealllisteners: removeAllListeners
     utilities: Utilities
+    useSession: useSession
+    defineSession: defineSession
     _: _
     $: $
     minimatch: minimatch

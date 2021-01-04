@@ -21,7 +21,7 @@ Option | Default | Description
 `experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
 
 {% history %}
-{% url "6.2.0" changelog#6-2-0 %} | Added `experimentSessionSupport`.
+{% url "6.3.0" changelog#6-3-0 %} | Added `experimentSessionSupport`.
 {% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` and made it the default behavior when using {% url "`cy.intercept()`" intercept %}.
 {% url "6.0.0" changelog#6-0-0 %} | Deprecated `experimentalFetchPolyfill`.
 {% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
