@@ -168,6 +168,13 @@
   sourceName: Udemy
   sourceUrl: https://www.udemy.com
 
+- title: Visual regression testing with Cypress and Percy (basic)
+  url: https://www.udemy.com/course/visual-regression-testing-with-cypress-percy-basic/
+  author: Walmyr Lima e Silva Filho
+  authorTwitter: walmyrlimaesilv
+  sourceName: Udemy
+  sourceUrl: http://udemy.com
+
 - title: Testes Automatizados com Cypress (básico)
   url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-basico
   author: Walmyr Lima e Silva Filho
@@ -184,7 +191,7 @@
   sourceUrl: http://coursify.me
   language: Portuguese
   
-- title: Testes Automatizados com Cypress e Percy (básico)
+- title: Testes de regressão visual com Cypress e Percy (básico)
   url: https://talkingabouttesting.coursify.me/courses/testes-automatizados-com-cypress-e-percy-basico
   author: Walmyr Lima e Silva Filho
   authorTwitter: walmyrlimaesilv
