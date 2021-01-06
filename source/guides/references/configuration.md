@@ -117,7 +117,7 @@ The Node version printed in the Node.js Version panel is used in Cypress to:
 Cypress comes automatically bundled with a set Node version by default. You can see the bundled version by running the {% url `cypress version` command-line#cypress-version %} command, for example:
 
 ```shell
-$ npx cypress version
+npx cypress version
 Cypress package version: 6.2.1
 Cypress binary version: 6.2.1
 Electron version: 11.1.1
