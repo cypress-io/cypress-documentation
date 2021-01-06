@@ -5,7 +5,6 @@
   ],
   "extends": [
     "plugin:@cypress/dev/general",
-    "plugin:@cypress/dev/tests",
     "plugin:cypress/recommended"
   ],
   "env": {
