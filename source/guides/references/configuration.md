@@ -114,7 +114,7 @@ The Node version printed in the Node.js Version panel is used in Cypress to:
 - Build files in the {% url "`supportFile`" configuration#Folders-Files %}.
 - Execute code in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
-Cypress comes automatically bundled with a set Node version by default. You can see the bundled version by running {% url `cypress version` command-line#cypress-version %} command, for example:
+Cypress comes automatically bundled with a set Node version by default. You can see the bundled version by running the {% url `cypress version` command-line#cypress-version %} command, for example:
 
 ```shell
 $ npx cypress version
