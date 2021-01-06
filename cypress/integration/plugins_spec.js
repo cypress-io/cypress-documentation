@@ -1,6 +1,7 @@
 const yaml = require('yamljs')
 const _ = require('lodash')
 
+// NOTE: skip plugins tests
 describe.skip('Plugins', () => {
   let plugins = []
 
