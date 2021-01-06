@@ -54,6 +54,8 @@ Here are args available for the currently supported browsers:
 * {% url 'Chromium-based browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
 * {% url 'Firefox' "https://developer.mozilla.org/docs/Mozilla/Command_Line_Options" %}
 
+#### Open devtools by default
+
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
@@ -65,17 +67,20 @@ module.exports = (on, config) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // auto open devtools
       launchOptions.args.push('--auto-open-devtools-for-tabs')
-
-      // whatever you return here becomes the launchOptions
-      return launchOptions
     }
 
     if (browser.family === 'firefox') {
       // auto open devtools
       launchOptions.args.push('-devtools')
-
-      return launchOptions
     }
+
+    if (browser.name === 'electron') {
+      // auto open devtools
+      launchOptions.preferences.devTools = true
+    }
+
+    // whatever you return here becomes the launchOptions
+    return launchOptions
   })
 }
 ```
