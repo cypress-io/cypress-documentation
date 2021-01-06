@@ -108,14 +108,14 @@ cy.get('input[type=search]').blur()
 // below we misspelled "dropdown" in the selector 😞
 // the assertions falsely pass in Cypress < 6.0
 // and will correctly fail in Cypress 6.0 +
-cy.get('#dropdon').should('not.be.visible')
-cy.get('#dropdon').should('not.have.class', 'open')
-cy.get('#dropdon').should('not.contain', 'Cypress')
+cy.get('#dropdown').should('not.be.visible')
+cy.get('#dropdown').should('not.have.class', 'open')
+cy.get('#dropdown').should('not.contain', 'Cypress')
 ```
 
 {% imgTag /img/guides/el-incorrectly-passes-existence-check.png "non-existent element before 6.0" "width-600" %}
 
-In 6.0, these assertions will now correctly fail, telling us that the `#dropdon` element doesn't exist in the DOM.
+In 6.0, these assertions will now correctly fail, telling us that the `#dropdown` element doesn't exist in the DOM.
 
 {% imgTag /img/guides/el-correctly-fails-existence-check.png "non-existent element in 6.0" "width-600" %}
 
