@@ -455,7 +455,7 @@ From now on, the front end code coverage collected during end-to-end tests will 
 
 You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-conduit-app' https://coveralls.io/github/cypress-io/cypress-example-conduit-app %} dashboard. You can also find full stack code coverage in our {% url 'RealWorld App' https://github.com/cypress-io/cypress-realworld-app %}.
 
-Even if you only want to measure the backend code coverage Cypress can help. Read the blog post {% url 'Backend Code Coverage from Cypress API tests' https://glebbahmutov.com/blog/backend-coverage/ %} for the full tutorial.
+Even if you only want to measure the back end code coverage Cypress can help. Read the blog post {% url 'Back end Code Coverage from Cypress API tests' https://glebbahmutov.com/blog/backend-coverage/ %} for the full tutorial.
 
 # Future work
 
