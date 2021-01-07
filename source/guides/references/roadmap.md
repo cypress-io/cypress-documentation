@@ -15,8 +15,8 @@ Status               | Feature                            |  Issue            | 
 *Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
 *Work in progress*   | **Session API**                    |  {% issue 8301 %} | {% PR 8765 %}|
 *Work in progress*   | **New plugin events**              |  {% issue 6665 %} |              |
+*Work in progress*   | **File download support**          |  {% issue 949 %}  |              |
 *Work in progress*   | **Visit multiple superdomains**    |  {% issue 944 %}  |              |
-*Upcoming*           | **File download support**          |  {% issue 949 %}  |              |
 *Upcoming*           | **Iframe Support**                 |  {% issue 136 %}  |              |
 
 ## Dashboard Service
