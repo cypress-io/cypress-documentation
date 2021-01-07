@@ -433,6 +433,12 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
+    
+    - name: cypress-maildev
+      description: A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.
+      link: https://github.com/Clebiez/cypress-maildev
+      keywords: [email, sms, commands]
+      badge: community
 
 - name: Extending other testing frameworks
   plugins:
