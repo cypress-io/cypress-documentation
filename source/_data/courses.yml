@@ -1,6 +1,13 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
+- title: "Cypress на реальном проекте для начинающих QA Automation"
+  url: https://www.udemy.com/course/cypress-qa-automation/?referralCode=30DB8B5087D5A1CF4B46
+  author: Sergei Semenov
+  sourceName: Udemy
+  sourceUrl: https://www.udemy.com
+  language: Russian
+
 - title: "Test Automation for Accessibility"
   url: https://testautomationu.applitools.com/accessibility-testing-tutorial/
   author: Marie Drake
