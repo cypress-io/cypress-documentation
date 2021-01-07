@@ -277,7 +277,57 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 - Debug the error instance itself
 - Prevent Cypress from failing the test
 
-This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
+This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page and the recipe {% url 'Handling errors' recipes#Fundamentals %}.
+
+## {% fa fa-angle-right %} Does Cypress test fail when an application has unhandled rejected promise?
+
+By default no, Cypress does not listen to the unhandled promise rejection event in your application, and thus does not fail the test. You can set up your own listener though and fail the test, see our recipe {% url 'Handling errors' recipes#Fundamentals %}:
+
+```js
+// register listener during cy.visit
+it('fails on unhandled rejection', () => {
+  cy.visit('/', {
+    onBeforeLoad (win) {
+      win.addEventListener('unhandledrejection', (event) => {
+        const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+        // fail the test
+        throw new Error(msg)
+      })
+    },
+  })
+})
+
+// ALTERNATIVE: register listener for this test
+it('fails on unhandled rejection', () => {
+  cy.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+      // fail the test
+      throw new Error(msg)
+    })
+  })
+
+  cy.visit('/')
+})
+
+// ALTERNATIVE: register listener in every test
+before(() => {
+  Cypress.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+      // fail the test
+      throw new Error(msg)
+    })
+  })
+})
+
+it('fails on unhandled rejection', () => {
+  cy.visit('/')
+})
+```
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 
