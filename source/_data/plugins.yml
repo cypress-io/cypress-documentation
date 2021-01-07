@@ -730,3 +730,9 @@
       link: https://github.com/LironEr/cypress-mochawesome-reporter
       keywords: [reporter, mochawesome, screenshot]
       badge: community
+
+    - name: cypress-msteams-reporter
+      description: A Microsoft Teams reporting tool which provides a fast feedback of the latest cypress test execution.
+      link: https://github.com/maritome/cypress-msteams-reporter
+      keywords: [reporter, ms-teams, allure report]
+      badge: community
