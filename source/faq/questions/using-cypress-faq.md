@@ -279,7 +279,7 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 
 This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page and the recipe {% url 'Handling errors' recipes#Fundamentals %}.
 
-## {% fa fa-angle-right %} Does Cypress test fail when an application has unhandled rejected promise?
+## {% fa fa-angle-right %} Will Cypress fail the test when an application has unhandled rejected promise?
 
 By default no, Cypress does not listen to the unhandled promise rejection event in your application, and thus does not fail the test. You can set up your own listener though and fail the test, see our recipe {% url 'Handling errors' recipes#Fundamentals %}:
 
