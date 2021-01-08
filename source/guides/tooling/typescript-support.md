@@ -31,6 +31,7 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```json
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["cypress"]
@@ -65,47 +66,40 @@ For example if you add the command `cy.dataCy` into your {% url "`supportFile`" 
 
 ```javascript
 // cypress/support/index.ts
+
+import { MyModule } from "@foo/bar";
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to select DOM element by data-cy attribute.
+       * @example cy.dataCy('greeting')
+      */
+      dataCy(value: string): Chainable<Element>;
+      /**
+      * Custom command to wrap an instance of enternal module.
+      * @example cy.getMyMod().simulateClick();
+      * @example cy.getMyMod().simulateDoubleClick();
+      */
+      getMyMod(): MyModule;
+    }
+  }
+}
+
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
-```
 
-Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your {% url "`supportFile`" configuration#Folders-Files %}, in this case at `cypress/support/index.d.ts`.
+Cypress.Commands.add('getMyMod', () => {
+  return new MyModule();
+});
 
-```typescript
-// in cypress/support/index.d.ts
-// load type definitions that come with Cypress module
-/// <reference types="cypress" />
-
-declare namespace Cypress {
-  interface Chainable {
-    /**
-     * Custom command to select DOM element by data-cy attribute.
-     * @example cy.dataCy('greeting')
-    */
-    dataCy(value: string): Chainable<Element>
-  }
-}
 ```
 
 {% note info %}
 A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
 {% endnote %}
-
-If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
-
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
-
-```javascript
-// from your cypress/integration/spec.ts
-/// <reference path="../support/index.d.ts" />
-it('works', () => {
-  cy.visit('/')
-  // IntelliSense and TS compiler should
-  // not complain about unknown method
-  cy.dataCy('greeting')
-})
-```
 
 ### Examples:
 
