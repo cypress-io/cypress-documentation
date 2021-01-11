@@ -54,7 +54,7 @@ Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cy
 #### Step 1 - Run the spec
 We will use Cypress Studio to perform a "New Transaction" user journey. First, launch the Test Runner and run the spec created in the previous step.
 
-{% imgTag /img/guides/cypress-studio/extend-test-1.png "Cypress Studio" "no-border" %}
+{% imgTag /img/guides/cypress-studio/run-spec-1.png "Cypress Studio" "no-border" %}
 
 Once the tests complete their run, hover over a test in the Command Log to reveal a "Add Commands to Test" button.
 
@@ -64,19 +64,16 @@ Clicking on "Add Commands to Test" will launch the Cypress Studio.
 Cypress Studio is directly integrated with the {% url 'Command Log' test-runner#Command-Log %}.
 {% endnote %}
 
-{% imgTag /img/guides/cypress-studio/extend-test-2.png "Cypress Studio" "no-border" %}
+{% imgTag /img/guides/cypress-studio/run-spec-2.png "Cypress Studio" "no-border" %}
 
-#### Step 2 - Launch Cypress Studio for a test
-
-Click the "Get Started" button to begin interacting with your site to generate tests.
-{% imgTag /img/guides/cypress-studio/extend-test-3.png "Cypress Studio Get Started" "no-border" %}
+#### Step 2 - Launch Cypress Studio
 
 {% note success %}
 Cypress will automatically execute all hooks and currently present test code, and then the test can be extended from that point on (e.g. We are logged into the application inside the `beforeEach` block).
 {% endnote %}
 
 Next, the Test Runner will execute the test in isolation and pause after the last command in the test.
-{% imgTag /img/guides/cypress-studio/extend-test-4.png "Cypress Studio Extend Test" "no-border" %}
+{% imgTag /img/guides/cypress-studio/extend-new-transaction-ready.png "Cypress Studio Ready" "no-border" %}
 
 Now, we can begin updating the test to create a new transaction between users.
 
@@ -84,26 +81,60 @@ Now, we can begin updating the test to create a new transaction between users.
 
 To record actions, begin interacting with the application.  Here we will click on the first name input and as a result we will see the click recorded in the Command Log.
 
-{% imgTag /img/guides/cypress-studio/extend-test-5.png "Cypress Studio Extend Test" "no-border" %}
+{% imgTag /img/guides/cypress-studio/extend-new-transaction-user-list.png "Cypress Studio Extend Test" "no-border" %}
 
 Next, we can type the name of a user to pay and click on the user in the results.
 
-{% imgTag /img/guides/cypress-studio/extend-test-6.png "Cypress Studio Extend Test" "no-border" %}
+{% imgTag /img/guides/cypress-studio/extend-new-transaction-click-user.png "Cypress Studio Extend Test" "no-border" %}
 
 We will complete the transaction form by clicking on and typing in the amount and description inputs.  
-{% imgTag /img/guides/cypress-studio/extend-test-7.png "Cypress Studio Extend Test" "no-border" %}
+{% imgTag /img/guides/cypress-studio/extend-new-transaction-form.png "Cypress Studio Extend Test" "no-border" %}
 
 {% note success %}
 Notice the commands generated in the command log.
 {% endnote %}
 
 Finally, we will click the "Pay" button.
-{% imgTag /img/guides/cypress-studio/extend-test-8.png "Cypress Studio Extend Test" "no-border" %}
+{% imgTag /img/guides/cypress-studio/extend-new-transaction-pay.png "Cypress Studio Extend Test" "no-border" %}
 
 We are presented with a confirmation page of our new transaction.
-{% imgTag /img/guides/cypress-studio/extend-test-9.png "Cypress Studio Extend Test Confirmation" "no-border" %}
+{% imgTag /img/guides/cypress-studio/extend-new-transaction-confirmation.png "Cypress Studio Extend Test Confirmation" "no-border" %}
 
 #### Run or Save Test
 
 
 #### Generated Test Code
+
+
+Our test is updated after clicking "Save Commands" with the actions recorded in Cypress Studio.
+
+```js
+describe('Cypress Studio Demo', function () {
+  beforeEach(function () {
+    // Seed database with test data
+    cy.task('db:seed')
+
+    // Login test user
+    cy.database('find', 'users').then((user) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
+
+  it('create new transaction', function () {
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get('[data-test=nav-top-new-transaction]').click()
+    cy.get('[data-test=user-list-search-input]').click()
+    cy.get('[data-test=user-list-search-input]').type("dev")
+    cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
+    cy.get('#amount').type("$25")
+    cy.get('#transaction-create-description-input').click()
+    cy.get('#transaction-create-description-input').type("Sushi dinner")
+    cy.get('[data-test=transaction-create-submit-payment] > .MuiButton-label').click();
+    /* ==== End Cypress Studio ==== */
+  })
+
+  it('create new bank account', function () {
+    // Extend test with Cypress Studio
+  })
+})
+```
