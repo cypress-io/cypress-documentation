@@ -76,6 +76,13 @@ Option | Default | Description
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
 `videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction%} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
 
+## Downloads
+
+Option | Default | Description
+----- | ---- | ----
+`downloadsFolder` | `cypress/downloads` | Path to folder where files downloaded during a test are saved
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
+
 ## Browser
 
 Option | Default | Description

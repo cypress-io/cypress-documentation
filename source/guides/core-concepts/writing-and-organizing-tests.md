@@ -99,7 +99,7 @@ You may consider adding these folders to your `.gitignore` file to ignore checki
 
 ### Download Files
 
-Any files downloaded while testing an application's file download feature will be stored in the {% url `downloadsFolder` configuration#Folders-Files %} which is set to `cypress/downloads` by default.
+Any files downloaded while testing an application's file download feature will be stored in the {% url `downloadsFolder` configuration#Downloads %} which is set to `cypress/downloads` by default.
 
 ```text
 /cypress
