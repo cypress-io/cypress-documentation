@@ -45,6 +45,7 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
+`downloadsFolder`    | `cypress/downloads`    | Path to folder where files downloaded during a test are saved
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "https://globster.xyz" https://globster.xyz %} to test what files would match.
@@ -61,7 +62,7 @@ Option | Default | Description
 ----- | ---- | ----
 `screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during `cypress run`.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 
 For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
 
@@ -69,7 +70,7 @@ For more options regarding screenshots, view the {% url 'Cypress.Screenshot API'
 
 Option | Default | Description
 ----- | ---- | ----
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
