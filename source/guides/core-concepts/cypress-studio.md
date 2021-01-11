@@ -56,7 +56,9 @@ We will use Cypress Studio to perform a "New Transaction" user journey. First, l
 
 {% imgTag /img/guides/cypress-studio/extend-test-1.png "Cypress Studio" "no-border" %}
 
-Once the tests complete their run, hover over the test in the Command Log to reveal an "Extend Test" button. Clicking on "Extend Test" will launch the Cypress Studio.
+Once the tests complete their run, hover over a test in the Command Log to reveal a "Add Commands to Test" button.
+
+Clicking on "Add Commands to Test" will launch the Cypress Studio.
 
 {% note info %}
 Cypress Studio is directly integrated with the {% url 'Command Log' test-runner#Command-Log %}.
