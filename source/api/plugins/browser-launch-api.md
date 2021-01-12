@@ -16,7 +16,7 @@ An object describing the browser being launched, with the following properties:
 
 Property | Type | Description
 --- | --- | ---
-`name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
+`name`| `string` | Machine-friendly name, like `chrome`, `electron`, `edge`, or `firefox`.
 `family` | `string` | Rendering engine being used. `chromium` or `firefox`.
 `channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
 `displayName` | `string` | Human-readable display name for the browser.
