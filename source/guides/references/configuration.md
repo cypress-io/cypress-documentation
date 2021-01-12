@@ -425,6 +425,32 @@ if (Cypress.config('isInteractive')) {
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
+# Common problems
+
+### {% fa fa-angle-right %} `baseUrl` is not set
+
+Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following is <i>incorrect</i> and won't work:
+
+```json
+{
+  "env": {
+    "baseUrl": "http://localhost:3030",
+    "FOO": "bar"
+  }
+}
+```
+
+Instead place the `baseUrl` at the top level, outside the `env` object.
+
+```json
+{
+  "baseUrl": "http://localhost:3030",
+  "env": {
+    "FOO": "bar"
+  }
+}
+```
+
 {% history %}
 {% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
