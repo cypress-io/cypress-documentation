@@ -18,6 +18,16 @@ The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type(
 
 ## Using Cypress Studio
 
+{% note info %}
+Cypress Studio is an experimental feature and can be enabled by adding the `experimentalStudio` attribute to your `cypress.json`.
+{% endnote %}
+
+```json
+{
+  "experimentalStudio": true,
+}
+```
+
 The Cypress {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is an open source project implementing a payment application to demonstrate real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio.
 
 ### Extending a Test
@@ -124,12 +134,12 @@ describe('Cypress Studio Demo', function () {
     /* ==== Generated with Cypress Studio ==== */
     cy.get('[data-test=nav-top-new-transaction]').click()
     cy.get('[data-test=user-list-search-input]').click()
-    cy.get('[data-test=user-list-search-input]').type("dev")
+    cy.get('[data-test=user-list-search-input]').type('dev')
     cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
-    cy.get('#amount').type("$25")
+    cy.get('#amount').type('$25')
     cy.get('#transaction-create-description-input').click()
-    cy.get('#transaction-create-description-input').type("Sushi dinner")
-    cy.get('[data-test=transaction-create-submit-payment] > .MuiButton-label').click();
+    cy.get('#transaction-create-description-input').type('Sushi dinner')
+    cy.get('[data-test=transaction-create-submit-payment] > .MuiButton-label').click()
     /* ==== End Cypress Studio ==== */
   })
 
