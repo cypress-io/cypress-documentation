@@ -38,6 +38,7 @@ sidebar:
     runs: Runs
     organizations: Organizations
     users: Users
+    bitbucket-integration: Bitbucket Integration
     github-integration: GitHub Integration
     gitlab-integration: Gitlab Integration
     slack-integration: Slack Integration
