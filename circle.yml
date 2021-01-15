@@ -66,7 +66,7 @@ jobs:
       #
       - run: ls -la
       - run: npm run deps
-      - run: npm run lint -- --max-warnings=0
+      - run: npm run lint
       - run: npm run md-lint
       - run: npm test
       - run: npm run build
@@ -83,6 +83,8 @@ jobs:
               exit 1
             fi
 
+      # see how large are the folders in the workspace
+      - run: du -h -d 1
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
       - persist_to_workspace:
           root: ~/
@@ -119,6 +121,7 @@ jobs:
       - store_artifacts:
           path: npm-debug.log
 
+  # TODO: deploy in a single job and then trigger parallel jobs to test the deployed docs
   "deploy-docs-staging":
     <<: *defaults
     steps:

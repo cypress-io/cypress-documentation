@@ -21,6 +21,15 @@ context('Sidebar', function () {
     })
   })
 
+  it('highlights only current page in sidebar by full path', function () {
+    const targetPath = '/guides/dashboard/introduction.html'
+
+    cy.visit(targetPath)
+    cy.get('#sidebar').find('a.current')
+    .should('have.length', 1)
+    .should('have.attr', 'href').and('include', targetPath)
+  })
+
   context('Titles and links', () => {
     MAIN_NAV.forEach((nav) => {
       if (nav.name === 'Plugins') return

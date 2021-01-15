@@ -83,8 +83,6 @@ Or Microsoft Edge Canary (Chromium-based):
 cypress run --browser edge:canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}
-
 ## Firefox Browsers
 
 Firefox-family browsers are supported by Cypress.
@@ -269,3 +267,7 @@ For this reason you may find downloading and using a browser's release channel v
 Additionally, in Chrome-based browsers, we've made the browser spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
 {% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
+
+# Troubleshooting
+
+{% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}

@@ -24,7 +24,7 @@ Event | Details
 --- | ---
 **Name:** | `uncaught:exception`
 **Yields:** | the error **(Object)**, Mocha runnable **(Object)**
-**Description:** | Fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you.
+**Description:** | Fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you. See our recipe {% url 'Handling errors' recipes#Fundamentals %}.
 
 Event | Details
 --- | ---
@@ -76,7 +76,7 @@ Event | Details
 --- | ---
 **Name:** | `fail`
 **Yields:** | the error **(Object)**, Mocha runnable **(Object)**
-**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
+**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes. See our recipe {% url 'Handling errors' recipes#Fundamentals %}.
 
 Event | Details
 --- | ---

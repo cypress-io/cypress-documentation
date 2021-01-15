@@ -2,6 +2,90 @@
 title: Migration Guide
 ---
 
+# Migrating `cy.route()` to `cy.intercept()`
+
+This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+
+Please also refer to the full documentation for {% url "`cy.intercept()`" intercept %}.
+
+## Simple route matching
+
+In many use cases, you can replace `cy.route()` with {% url "`cy.intercept()`" intercept %} and remove the call to `cy.server()` (which is no longer necessary).
+
+{% badge danger Before %}
+
+```js
+// Set up XHR listeners using cy.route()
+cy.server()
+cy.route('/users').as('getUsers')
+cy.route('POST', '/project').as('createProject')
+cy.route('PATCH', '/projects/*').as('updateProject')
+```
+
+{% badge success After %}
+
+```js
+// Intercept HTTP requests
+cy.intercept('/users').as('getUsers')
+cy.intercept('POST', '/project').as('createProject')
+cy.intercept('PATCH', '/projects/*').as('updateProject')
+```
+
+## `cy.wait()` object
+
+The object returned by `cy.wait()` is different from intercepted HTTP requests using `cy.intercept()` than the object returned from an awaited `cy.route()` XHR.
+
+{% badge danger Before %}
+
+```js
+// Wait for XHR from cy.route()
+cy.route('POST', '/users').as('createUser')
+// ...
+cy.wait('@createUser')
+  .then(({ requestBody, responseBody, status }) => {
+    expect(status).to.eq(200)
+    expect(requestBody.firstName).to.eq('Jane')
+    expect(responseBody.firstName).to.eq('Jane')
+  })
+```
+
+{% badge success After %}
+
+```js
+// Wait for intercepted HTTP request
+cy.intercept('POST', '/users').as('createUser')
+// ...
+cy.wait('@createUser')
+  .then(({ request, response }) => {
+    expect(response.statusCode).to.eq(200)
+    expect(request.body.name).to.eq('Jane')
+    expect(response.body.name).to.eq('Jane')
+  })
+```
+
+## Fixtures
+
+You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for `cy.intercept()`.
+
+{% badge danger Before %}
+
+```js
+// Stub response with fixture data using cy.route()
+cy.route('GET', '/projects', 'fx:projects')
+```
+
+{% badge success After %}
+
+```js
+// Stub response with fixture data using cy.intercept()
+cy.intercept('GET', '/projects', {
+  fixture: 'projects'
+})
+```
+
+## overriding route matchers
+Unlike `cy.route`, `cy.intercept` currently does _not_ allow you to override a previous response. For more information on this, see https://github.com/cypress-io/cypress/issues/9302 and https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors. Overriding responses will be added in a future release.
+
 # Migrating to Cypress 6.0
 
 This guide details the changes and how to change your code to migrate to Cypress 6.0. {% url "See the full changelog for 6.0" changelog#6-0-0 %}.

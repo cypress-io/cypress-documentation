@@ -7,7 +7,7 @@ Use `cy.intercept()` to manage the behavior of HTTP requests at the network laye
 With `cy.intercept()`, you can:
 
 * stub or spy on any type of HTTP request.
-  * If `cy.intercept` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
+  * If `cy.intercept()` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
   * Otherwise the request will go out to the server, and the test spies on the network call. The spying intercept can even modify the real response from the server before it is returned to the web application under test.
 * {% urlHash "modify an HTTP request's body, headers, and URL" Intercepting-a-request %} before it is sent to the destination server.
 * stub the response to an HTTP request, either dynamically or statically.
@@ -22,6 +22,7 @@ Unlike {% url "`cy.route()`" route %}, `cy.intercept()`:
 * does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 * does not have method set to `GET` by default, but intercepts `*` methods.
 * uses plain substring match, or RegExp, or {% url minimatch %} to match URL.
+* Currently, cannot override previously-defined responses: see https://github.com/cypress-io/cypress/issues/9302 and https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors for more information. Overriding responses will be added in a future release.
 
 # Usage
 
@@ -37,7 +38,7 @@ cy.intercept(routeMatcher, routeHandler?)
 
 ### **{% fa fa-angle-right %} url** **_(`string | RegExp`)_**
 
-Specify the URL to match. See the documentation for {% urlHash "`routeMatcher`" routeMatcher-RouteMatcher %} to see how URLs are matched.
+Specify the URL to match. See the examples for {% urlHash "Matching URL" Matching-URL %} to see how URLs are matched.
 
 ```ts
 cy.intercept('http://example.com/widgets')
@@ -82,6 +83,11 @@ All properties are optional. All properties that are set must match for the rout
    * If 'false', only HTTP requests will be matched.
    */
   https?: boolean
+  /**
+   * If `true`, will match the supplied `url` against incoming `path`s.
+   * Requires a `url` argument. Cannot be used with a `path` argument.
+   */
+  matchUrlAgainstPath?: boolean
   /**
    * Match against the request's HTTP method.
    * @default '*'
@@ -158,6 +164,19 @@ The `routeHandler` defines what will happen with a request if the {% urlHash "`r
 # Examples
 
 ## Matching URL
+
+{% note info %}
+**Note:** passing a URL as a string or RegExp to `cy.intercept()` will automatically set `matchUrlAgainstPath` to `true`. This means that the supplied string or RegExp will be matched against the **path** if matching against the **URL** fails.
+{% endnote %}
+
+You can provide the entire URL to match
+
+```js
+// will match any request that exactly matches the URL
+//   matches GET https://prod.cypress.io/users
+//   won't match GET https://staging.cypress.io/users
+cy.intercept('https://prod.cypress.io/users')
+```
 
 You can provide a substring of the URL to match
 
@@ -337,6 +356,17 @@ cy.intercept('POST', '/graphql', (req) => {
 
 // assert that a matching request for the CreatePost Mutation has been made
 cy.wait('@gqlCreatePostMutation')
+```
+
+### Waiting on errors
+
+You can use {% url "`cy.wait()`" wait %} to wait on requests that end with network errors:
+
+```js
+cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
+
+// assert that this request happened, and that it ended in an error
+cy.wait('@err').should('have.property', 'error')
 ```
 
 ## Stubbing a response
@@ -604,6 +634,7 @@ The available functions on `res` are:
 ```
 
 {% history %}
+{% url "6.2.0" changelog#6-2-0 %} | Added `matchUrlAgainstPath` option to `RouteMatcher`.
 {% url "6.0.0" changelog#6-0-0 %} | Renamed `cy.route2()` to `cy.intercept()`.
 {% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` option and made it the default behavior.
 {% url "5.1.0" changelog#5-1-0 %} | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.
@@ -611,7 +642,25 @@ The available functions on `res` are:
 
 # See also
 
+* {% url `.as()` as %}
+* {% url `cy.fixture()` fixture %}
+* {% url `cy.wait()` wait %}
+* {% url "Migrating `cy.route()` to `cy.intercept()`" migration-guide#Migrating-cy-route-to-cy-intercept %}
 * {% url "`cy.intercept()` example recipes with real-world examples" https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying %}
+  * spying on requests
+  * stubbing any request
+  * changing the response from the server
+  * intercepting static resources like HTML and CSS
+  * redirecting requests
+  * replying with different responses
+* {% url "Cypress cy.intercept Problems" https://glebbahmutov.com/blog/cypress-intercept-problems/ %} with advanced `cy.intercept` tips to solve the common problems:
+  * The intercept was registered too late
+  * `cy.wait` uses the intercept
+  * The response was cached
+  * The request matched multiple intercepts
+  * How to overwrite interceptors
+  * How to avoid using Cypress commands inside the interceptor
+  * Sending different responses
 * {% url "`cy.route()` vs `cy.route2()`" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
 * {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} blog post
-* {% url "open issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}
+* {% url "Open issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing %} and {% url "closed issues for `net stubbing`" https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing %}

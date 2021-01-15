@@ -53,7 +53,7 @@ The `prevSubject` accepts the following values:
 - `true`: receives the previous subject: ***(child command)***
 - `optional`: may start a chain, or use an existing chain: ***(dual command)***
 
-In additional to controlling the command's implicit behavior you can also add declarative subject validations such as:
+In addition to controlling the command's implicit behavior you can also add declarative subject validations such as:
 
 - `element`: requires the previous subject be a DOM element
 - `document`: requires the previous subject be the document
@@ -744,6 +744,7 @@ You can describe the method signature for your custom command, allowing IntelliS
 
 # See also
 
+- Blog post {% url "Writing a Custom Cypress Command" https://glebbahmutov.com/blog/writing-custom-cypress-command/ %}
 - {% url "Plugins using custom commands" plugins#custom-commands %}
 - {% url `cypress-xpath` https://github.com/cypress-io/cypress-xpath %} adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - {% url 'Cypress.log()' cypress-log %}

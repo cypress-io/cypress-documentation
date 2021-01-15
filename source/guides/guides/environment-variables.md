@@ -211,7 +211,32 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ## Option #5: Plugins
 
-Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them. 
+
+For example, if you use the {% url dotenv https://github.com/motdotla/dotenv#readme %} package to read the `.env` file, you could then grab the needed environment variables from the `process.env` object and place them into `config.env` to make available in the tests:
+
+```
+// .env file
+USER_NAME=aTester
+```
+
+```js
+// plugins/index.js
+require('dotenv').config()
+
+module.exports = (on, config) => {
+  // copy any needed variables from process.env to config.env
+  config.env.username = process.env.USER_NAME
+
+  // do not forget to return the changed config object!
+  return config
+}
+
+// integration/spec.js
+it('has username to use', () => {
+  expect(Cypress.env('username')).to.be.a('string')
+})
+```
 
 {% url "We've fully documented how to do this here." configuration-api %}
 
@@ -301,3 +326,5 @@ You can {% url 'read more about how environment variables can change configurati
 - {% url "Configuration API" configuration-api %}
 - {% url "Environment Variables recipe" recipes#Fundamentals %}
 - {% url "Test Configuration" configuration#Test-Configuration %}
+- {% url "Pass environment variables: tips and tricks" https://glebbahmutov.com/blog/cypress-tips-and-tricks/#pass-the-environment-variables-correctly %}
+- {% url "Keep passwords secret in E2E tests" https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/ %}

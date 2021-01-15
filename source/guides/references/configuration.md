@@ -114,7 +114,15 @@ The Node version printed in the Node.js Version panel is used in Cypress to:
 - Build files in the {% url "`supportFile`" configuration#Folders-Files %}.
 - Execute code in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
-Cypress comes automatically bundled with a set Node version by default.
+Cypress comes automatically bundled with a set Node version by default. You can see the bundled version by running the {% url `cypress version` command-line#cypress-version %} command, for example:
+
+```shell
+npx cypress version
+Cypress package version: 6.2.1
+Cypress binary version: 6.2.1
+Electron version: 11.1.1
+Bundled Node version: 12.18.3
+```
 
 You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`. For example, you need to use the system Node if you want to load `node-sass` or `sqlite3` modules from your plugins file.
 
@@ -398,6 +406,18 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
     "runMode": 3,
     "openMode": null
   }
+}
+```
+
+## isInteractive
+
+You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on {% url "`Cypress.config`" config %}.
+
+```javascript
+if (Cypress.config('isInteractive')) {
+  // interactive "cypress open" mode!
+} else {
+  // "cypress run" mode
 }
 ```
 
