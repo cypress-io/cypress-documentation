@@ -5,14 +5,13 @@ title: Cypress Studio
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
+- How to add new tests interactively using the Cypress Studio
 - How to extend tests interactively using the Cypress Studio
 {% endnote %}
 
 # Overview
 
 Cypress Studio provides a visual way to generate tests within the Test Runner, by *recording interactions* against the application under test.
-
-{% imgTag /img/guides/cypress-studio/cypress-studio-overview.png "Cypress Studio" "no-border" %}
 
 The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %} and {% url `.select()` select %} Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
 
@@ -47,10 +46,6 @@ describe('Cypress Studio Demo', function () {
   })
 
   it('create new transaction', function () {
-    // Extend test with Cypress Studio
-  })
-
-  it('create new bank account', function () {
     // Extend test with Cypress Studio
   })
 })
@@ -110,13 +105,11 @@ Finally, we will click the "Pay" button.
 We are presented with a confirmation page of our new transaction.
 {% imgTag /img/guides/cypress-studio/extend-new-transaction-confirmation.png "Cypress Studio Extend Test Confirmation" "no-border" %}
 
-#### Run or Save Test
-
+To discard the interactions, click the "Cancel" button to exit Cypress Studio. If satisfied with the interactions with the application, click "Save Commands" and the test code will be saved to the file.
 
 #### Generated Test Code
 
-
-Our test is updated after clicking "Save Commands" with the actions recorded in Cypress Studio.
+Viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
 
 ```js
 describe('Cypress Studio Demo', function () {
@@ -142,9 +135,63 @@ describe('Cypress Studio Demo', function () {
     cy.get('[data-test=transaction-create-submit-payment] > .MuiButton-label').click()
     /* ==== End Cypress Studio ==== */
   })
+})
+```
 
-  it('create new bank account', function () {
+### Adding a New Test
+
+Next, we can add a new test, by clicking "Add New Test" beside the test file header.
+{% imgTag /img/guides/cypress-studio/add-test-1.png "Cypress Studio Add Test" "no-border" %}
+
+We are launched into Cypress Studio and can begin interacting with our application to generate the test.
+
+{% imgTag /img/guides/cypress-studio/add-test-2.png "Cypress Studio Add Test" "no-border" %}
+
+For this test, we will add a new bank account.
+
+Our interactions are as follows:
+
+1. Click "Bank Accounts" in left hand navigation
+2. Click the "Create" button on Bank Accounts page
+3. Fill out the bank account information
+4. Click the "Save" button
+
+To discard the interactions, click the "Cancel" button to exit Cypress Studio.
+
+If satisfied with the interactions with the application, click "Save Commands" and prompt will ask for the name of the test.  Click "Save Test" and the test will be saved to the file.
+
+
+Viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
+
+```js
+import { User } from "models";
+
+describe("Cypress Studio Demo", function () {
+  beforeEach(function () {
+    cy.task("db:seed");
+
+    cy.database("find", "users").then((user: User) => {
+      cy.login(user.username, "s3cret", true);
+    });
+  });
+
+  it("create new transaction", function () {
     // Extend test with Cypress Studio
-  })
+  });
+
+  /* === Test Created with Cypress Studio === */
+  it('create bank account', function() {
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get('[data-test=sidenav-bankaccounts]').click();
+    cy.get('[data-test=bankaccount-new] > .MuiButton-label').click();
+    cy.get('#bankaccount-bankName-input').click();
+    cy.get('#bankaccount-bankName-input').type('Test Bank Account');
+    cy.get('#bankaccount-routingNumber-input').click();
+    cy.get('#bankaccount-routingNumber-input').type('987654321');
+    cy.get('#bankaccount-accountNumber-input').click();
+    cy.get('#bankaccount-accountNumber-input').type('123456789');
+    cy.get('[data-test=bankaccount-submit] > .MuiButton-label').click();
+    /* ==== End Cypress Studio ==== */
+  });
 })
 ```
