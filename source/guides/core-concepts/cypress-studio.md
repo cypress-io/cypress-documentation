@@ -5,15 +5,16 @@ title: Cypress Studio
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to add new tests interactively using the Cypress Studio
 - How to extend tests interactively using the Cypress Studio
+- How to add new tests interactively using the Cypress Studio
+
 {% endnote %}
 
 # Overview
 
 Cypress Studio provides a visual way to generate tests within the Test Runner, by *recording interactions* against the application under test.
 
-The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %} and {% url `.select()` select %} Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
+The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %}, {% url `.check()` check %}{% url `.uncheck()` uncheck %} and {% url `.select()` select %} Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
 
 ## Using Cypress Studio
 
@@ -145,23 +146,28 @@ Next, we can add a new test, by clicking "Add New Test" beside the test file hea
 
 We are launched into Cypress Studio and can begin interacting with our application to generate the test.
 
-{% imgTag /img/guides/cypress-studio/add-test-2.png "Cypress Studio Add Test" "no-border" %}
-
-For this test, we will add a new bank account.
-
-Our interactions are as follows:
+For this test, we will add a new bank account. Our interactions are as follows:
 
 1. Click "Bank Accounts" in left hand navigation
+{% imgTag /img/guides/cypress-studio/add-test-2.png "Cypress Studio Begin Add Test" "no-border" %}
 2. Click the "Create" button on Bank Accounts page
+{% imgTag /img/guides/cypress-studio/add-test-create.png "Cypress Studio Add Test Create Bank Account" "no-border" %}
 3. Fill out the bank account information
+{% imgTag /img/guides/cypress-studio/add-test-form-complete.png "Cypress Studio Add Test Complete Bank Account Form" "no-border" %}
 4. Click the "Save" button
+{% imgTag /img/guides/cypress-studio/add-test-form-saving.png "Cypress Studio Add Test Saving Bank Account" "no-border" %}
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
 
 If satisfied with the interactions with the application, click "Save Commands" and prompt will ask for the name of the test.  Click "Save Test" and the test will be saved to the file.
 
+{% imgTag /img/guides/cypress-studio/add-test-save-test.png "Cypress Studio Add Test Completed Run" "no-border" %}
 
-Viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
+Once saved, the file will be run again in Cypress.
+
+{% imgTag /img/guides/cypress-studio/add-test-final.png "Cypress Studio Add Test Completed Run" "no-border" %}
+
+Finally, viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
 
 ```js
 import { User } from "models";
@@ -195,3 +201,8 @@ describe("Cypress Studio Demo", function () {
   });
 })
 ```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "cypress/tests/demo/cypress-studio.spec.ts" https://github.com/cypress-io/cypress-realworld-app/cypress/tests/demo/cypress-studio.spec.ts %} file.
+{% endnote %}
