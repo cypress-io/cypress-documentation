@@ -5,7 +5,7 @@ title: eq
 Get A DOM element at a specific index in an array of elements.
 
 {% note info %}
-The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery. Its behavior is also similar to that of the CSS pseudo-class {% url `:nth-child()` https://api.jquery.com/nth-child-selector/ %} selector. 
+The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery.
 {% endnote %}
 
 # Syntax
