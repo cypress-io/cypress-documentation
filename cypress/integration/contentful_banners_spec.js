@@ -240,11 +240,6 @@ describe('Contentful driven banners', () => {
 
   it('Displays Algolia dropdown on focus after close all banners', function () {
     cy.intercept(/algolia/, {
-      // remove when https://github.com/cypress-io/cypress/issues/9264 is delivered
-      headers: {
-        'access-control-allow-origin': window.location.origin,
-        'Access-Control-Allow-Credentials': 'true',
-      },
       body: {
         'results': [
           {
