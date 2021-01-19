@@ -5,7 +5,7 @@ title: eq
 Get A DOM element at a specific index in an array of elements.
 
 {% note info %}
-The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery. Its behavior is also similar to that of the CSS pseudo-class {% url `:nth-child()` https://api.jquery.com/nth-child-selector/ %} selector. 
+The querying behavior of this command matches exactly how {% url `.eq()` http://api.jquery.com/eq %} works in jQuery. Its behavior is also similar to that of the CSS pseudo-class {% url `:nth-child()` https://api.jquery.com/nth-child-selector/ %} selector.
 {% endnote %}
 
 # Syntax
@@ -37,7 +37,7 @@ cy.getCookies().eq(4)     // Errors, 'getCookies' does not yield DOM element
 
 **{% fa fa-angle-right %} index**  ***(Number)***
 
-A number indicating the index to find the element at within an array of elements.
+A number indicating the index to find the element at within an array of elements. Starts with 0.
 
 **{% fa fa-angle-right %} indexFromEnd**  ***(Number)***
 
