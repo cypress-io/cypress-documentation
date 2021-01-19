@@ -14,7 +14,7 @@ title: Cypress Studio
 
 Cypress Studio provides a visual way to generate tests within the Test Runner, by *recording interactions* against the application under test.
 
-The {% url `.click()` click %}, {% url `.dblclick()` dblclick %}, {% url `.type()` type %}, {% url `.check()` check %}{% url `.uncheck()` uncheck %} and {% url `.select()` select %} Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
+The {% url `.click()` click %}, {% url `.type()` type %}, {% url `.check()` check %}{% url `.uncheck()` uncheck %} and {% url `.select()` select %} Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
 
 ## Using Cypress Studio
 
