@@ -20,6 +20,7 @@ guides:
     runs: runs.html
     organizations: organizations.html
     users: users.html
+    bitbucket-integration: bitbucket-integration.html
     github-integration: github-integration.html
     gitlab-integration: gitlab-integration.html
     slack-integration: slack-integration.html
