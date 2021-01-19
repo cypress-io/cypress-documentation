@@ -50,14 +50,14 @@ cy.route({
 
 ```js
 // Match HTTP requests with a path of /users
-cy.route({
+cy.intercept({
   method: 'POST',
   path: '/users'
 }).as('getUsers')
 
 // OR
 // Match HTTP requests with an exact url of https://example.cypress.io/users
-cy.route({
+cy.intercept({
   method: 'POST',
   url: 'https://example.cypress.io/users'
 }).as('getUsers')
