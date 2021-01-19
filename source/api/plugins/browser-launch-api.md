@@ -255,30 +255,20 @@ module.exports = (on, config) => {
 }
 ```
 
-## Change download directory
+## Support unique file download mime types
 
-Change the download directory of files downloaded during Cypress tests.
+Cypress supports a myriad of mime types when testing file downloads, but in case you have a unique one, you can add support for it.
 
 ```js
-// cypress/plugins/index.js
-const path = require('path')
-
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
-    const downloadDirectory = path.join(__dirname, '..', 'downloads')
-
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      options.preferences.default['download'] = { default_directory: downloadDirectory }
-
-      return options
-    }
-
+    // only Firefox requires all mime types to be listed
     if (browser.family === 'firefox') {
-      options.preferences['browser.download.dir'] = downloadDirectory
-      options.preferences['browser.download.folderList'] = 2
+      const existingMimeTypes = options.preferences['browser.helperApps.neverAsk.saveToDisk']
+      const myMimeType = 'my/mimetype'
 
-      // needed to prevent download prompt for text/csv files.
-      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
+      // prevents the browser download prompt
+      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = `${existingMimeTypes},${myMimeType}`
 
       return options
     }
