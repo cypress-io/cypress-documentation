@@ -22,7 +22,7 @@ Unlike {% url "`cy.route()`" route %}, `cy.intercept()`:
 * does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 * does not have method set to `GET` by default, but intercepts `*` methods.
 * uses plain substring match, or RegExp, or {% url minimatch %} to match URL.
-* Currently, cannot override previously-defined responses: see {% issue 9302 %} and {% url "Cypress intercept problems blog https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors %} for more information. Overriding responses will be added in a future release.
+* Currently, cannot override previously-defined responses: see {% issue 9302 %} and {% url "Cypress intercept problems blog" https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors %} for more information. Overriding responses will be added in a future release.
 
 # Usage
 
