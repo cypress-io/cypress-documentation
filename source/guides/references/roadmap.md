@@ -13,9 +13,10 @@ Our team is always planning and working on really "big" upcoming features. Prior
 Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------
 *Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
+*Experimental*       | **Cypress Studio**              |  {% issue 73 %} | {% PR 9542 %}| {% url "v6.3.0" changelog#6-3-0 %}
+*Released*   | **File download support**                  |  {% issue 949 %}  | {% PR 14431 %} | {% url "v6.3.0" changelog#6-3-0 %}
 *Work in progress*   | **Session API**                    |  {% issue 8301 %} | {% PR 8765 %}|
 *Work in progress*   | **New plugin events**              |  {% issue 6665 %} |              |
-*Work in progress*   | **File download support**          |  {% issue 949 %}  |              |
 *Work in progress*   | **Visit multiple superdomains**    |  {% issue 944 %}  |              |
 *Upcoming*           | **Iframe Support**                 |  {% issue 136 %}  |              |
 

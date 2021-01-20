@@ -429,6 +429,6 @@ If you'd like to see (the huge) stream of events that Cypress emits you can pop 
 localStorage.debug = 'cypress:*'
 ```
 
-After you refresh the page you'll see something that looks like this in your console:
+Reload the browser and turn on 'Verbose' logs to see debug messages within the Developer Tools console.
 
 {% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}
