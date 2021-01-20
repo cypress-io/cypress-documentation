@@ -128,6 +128,59 @@ jobs:
       - store_artifacts:
           path: npm-debug.log
 
+  # TODO: deploy in a single job and then trigger parallel jobs to test the deployed docs
+  deploy-docs-staging:
+    <<: *defaults
+    steps:
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
+      - run: npm ls || true
+      # need to build the app for STAGING environment
+      - run: NODE_ENV=staging npm run build
+      - run: ls -Rl themes/cypress/source/js
+      - run: ls public
+      - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
+      - run:
+          name: Print deployed version
+          command: cat public/build.json
+      - run:
+          name: Test deployed docs
+          command: |
+            export CYPRESS_baseUrl=https://docs-staging.cypress.io
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              $(npm bin)/cypress run --record --key $DOCS_RECORD_KEY --parallel --group "staging" --ci-build-id $CIRCLE_WORKFLOW_ID-$CIRCLE_BUILD_NUM
+            else
+              $(npm bin)/cypress run
+            fi
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
+      - store_artifacts:
+          path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
+
+  deploy-docs-production:
+    <<: *defaults
+    steps:
+      # restore application and Cypress binary before running the test command
+      - attach_workspace:
+          at: ~/
+      # need to build the app for PRODUCTION environment
+      - run: NODE_ENV=production npm run build
+      # because we already built docs for production
+      # use script that just deploys without rebuilding the production docs
+      - run: npm run deploy-prebuilt -- --environment production --scrape
+      - run: cat public/build.json
+      - store_artifacts:
+          path: npm-debug.log
+      # store NPM logs in case there was a problem
+      - store_artifacts:
+          path: ~/.npm/_logs
+
 workflows:
   version: 2
   build_and_test:
@@ -136,3 +189,21 @@ workflows:
       - docs-tests:
           requires:
             - build
+      # we can deploy development docs in parallel
+      # with unit testing them.
+      - deploy-docs-staging:
+          filters:
+            branches:
+              only:
+                # allow deploying to staging from "develop"
+                # and branches starting with special prefix
+                - develop
+                - /docs-.*/
+          requires:
+            - docs-tests
+      - deploy-docs-production:
+          filters:
+            branches:
+              only: master
+          requires:
+            - docs-tests
