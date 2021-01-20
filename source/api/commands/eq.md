@@ -37,7 +37,7 @@ cy.getCookies().eq(4)     // Errors, 'getCookies' does not yield DOM element
 
 **{% fa fa-angle-right %} index**  ***(Number)***
 
-A number indicating the index to find the element at within an array of elements.
+A number indicating the index to find the element at within an array of elements. Starts with 0.
 
 **{% fa fa-angle-right %} indexFromEnd**  ***(Number)***
 
