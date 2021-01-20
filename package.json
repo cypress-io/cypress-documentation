@@ -74,7 +74,7 @@
     "@cypress/env-or-json-file": "2.0.0",
     "@cypress/eslint-plugin-dev": "5.0.2",
     "@cypress/questions-remain": "1.0.1",
-    "@cypress/skip-test": "2.5.0",
+    "@cypress/skip-test": "2.6.0",
     "@keyv/redis": "github:bahmutov/keyv-redis#b64f44cd1d1e87893d989b1469068af8292299d5",
     "@types/fluent-ffmpeg": "2.1.14",
     "@types/jest": "25.1.5",
