@@ -56,7 +56,7 @@ jobs:
 
       # store NPM logs in case there was a problem
       - store_artifacts:
-          path: ~/.npm/_logs
+          path: .npm/_logs
 
       # cache NPM modules and folder with Cypress v3+ binary
       # https://on.cypress.io/continuous-integration
@@ -134,11 +134,10 @@ jobs:
     steps:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
-          at: ~/
+          at: /mnt
       - run: npm ls || true
       # need to build the app for STAGING environment
       - run: NODE_ENV=staging npm run build
-      - run: ls -Rl themes/cypress/source/js
       - run: ls public
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
@@ -161,14 +160,14 @@ jobs:
           path: npm-debug.log
       # store NPM logs in case there was a problem
       - store_artifacts:
-          path: ~/.npm/_logs
+          path: .npm/_logs
 
   deploy-docs-production:
     <<: *defaults
     steps:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
-          at: ~/
+          at: /mnt
       # need to build the app for PRODUCTION environment
       - run: NODE_ENV=production npm run build
       # because we already built docs for production
@@ -179,7 +178,7 @@ jobs:
           path: npm-debug.log
       # store NPM logs in case there was a problem
       - store_artifacts:
-          path: ~/.npm/_logs
+          path: .npm/_logs
 
 workflows:
   version: 2
