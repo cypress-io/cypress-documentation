@@ -32,6 +32,7 @@ sidebar:
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
+    cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
     projects: Projects
