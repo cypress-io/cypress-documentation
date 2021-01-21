@@ -10,8 +10,12 @@ env_defaults: &env_defaults
   # need to set unsafe perm to be able to do `npm postinstall`
   npm_config_unsafe-perm: true
 
+  # set Cypress to cache its binary on RAM disk
+  CYPRESS_CACHE_FOLDER: /mnt/ramdisk/.cache/Cypress
+
 defaults: &defaults
-  working_directory: ~/cypress-documentation
+  # use CircleCI RAM disk
+  working_directory: /mnt/ramdisk
   docker:
     # the Docker image with Cypress dependencies
     # https://github.com/cypress-io/cypress-docker-images
@@ -42,24 +46,26 @@ jobs:
       # need to restore previously caches files, if any to speed up the build
       # we want to use new cache if package or circle files change
       - restore_cache:
-          key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
+          key: v1-ram-disk-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
 
+      # set NPM to cache its dependencies on RAM disk
+      - run: npm config --global set cache /mnt/ramdisk/.npm
       - run: npm ci
       # run Cypress verify command to cache its status
       - run: npm run cypress:verify
 
       # store NPM logs in case there was a problem
       - store_artifacts:
-          path: ~/.npm/_logs
+          path: .npm/_logs
 
       # cache NPM modules and folder with Cypress v3+ binary
       # https://on.cypress.io/continuous-integration
       # this ensures that this job can start quickly next time
       - save_cache:
-          key: v2-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
+          key: v1-ram-disk-deps-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
           paths:
-            - /root/.npm
-            - /root/.cache
+            - /mnt/ramdisk/.npm
+            - /mnt/ramdisk/.cache
 
       #
       # build the static content
@@ -83,23 +89,24 @@ jobs:
               exit 1
             fi
 
+      # when passing files to run the app and the tests
+      # we do NOT need the NPM cache since everything has been installed already
+      - run: rm -rf .npm
       # see how large are the folders in the workspace
       - run: du -h -d 1
       ## save entire folder + Cypress binary as the workspace for other jobs to continue
       - persist_to_workspace:
-          root: ~/
+          root: /mnt
           paths:
-            - cypress-documentation
-            - .cache/Cypress
+            - ramdisk
 
-  "docs-tests":
+  docs-tests:
     <<: *defaults
     parallelism: 4
     steps:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
-          at: ~/
-      - run: ls -Rl themes/cypress/source/js
+          at: /mnt
       - run:
           command: npm start
           background: true
@@ -122,16 +129,15 @@ jobs:
           path: npm-debug.log
 
   # TODO: deploy in a single job and then trigger parallel jobs to test the deployed docs
-  "deploy-docs-staging":
+  deploy-docs-staging:
     <<: *defaults
     steps:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
-          at: ~/
+          at: /mnt
       - run: npm ls || true
       # need to build the app for STAGING environment
       - run: NODE_ENV=staging npm run build
-      - run: ls -Rl themes/cypress/source/js
       - run: ls public
       - run: DEBUG=ggit,deploy npm run deploy-prebuilt -- --environment staging --force
       - run:
@@ -154,14 +160,14 @@ jobs:
           path: npm-debug.log
       # store NPM logs in case there was a problem
       - store_artifacts:
-          path: ~/.npm/_logs
+          path: .npm/_logs
 
-  "deploy-docs-production":
+  deploy-docs-production:
     <<: *defaults
     steps:
       # restore application and Cypress binary before running the test command
       - attach_workspace:
-          at: ~/
+          at: /mnt
       # need to build the app for PRODUCTION environment
       - run: NODE_ENV=production npm run build
       # because we already built docs for production
@@ -172,7 +178,7 @@ jobs:
           path: npm-debug.log
       # store NPM logs in case there was a problem
       - store_artifacts:
-          path: ~/.npm/_logs
+          path: .npm/_logs
 
 workflows:
   version: 2
