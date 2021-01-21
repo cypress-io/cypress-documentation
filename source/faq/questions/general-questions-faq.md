@@ -122,6 +122,21 @@ You may also find the following resources helpful when writing end-to-end tests:
 
 Cypress does *not* utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure {% url "Cypress webpack preprocessor" https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %} or {% url "Cypress Browserify preprocessor" https://github.com/cypress-io/cypress-browserify-preprocessor %} to transpile your tests to JavaScript that Cypress can run.
 
+## {% fa fa-angle-right %} What resources do you recommend to learn JavaScript before writing Cypress tests?
+
+We hope that Cypress makes test writing simple and fun, even for people with a minimal knowledge of JavaScript. If you would like to develop your JS skills, we recommend the following free online resources:
+
+- Online tutorial {% url 'Learn Javascript' https://gitbookio.gitbooks.io/JavaScript %} with small exercises
+- Book {% url 'Eloquent JavaScript' https://eloquentjavascript.net/ %}
+- Book {% url 'Human JavaScript' http://read.humanjavascript.com/ %}
+- an entire collection of free JavaScript books at the {% url 'Free Frontend' https://freefrontend.com/javascript-books/ %} site
+- {% url 'The Modern JavaScript Tutorial' https://javascript.info/ %} teaches you both JavaScript and HTML programming, and is available in several translations
+
+You can also learn JavaScript by watching these videos:
+
+- {% url 'Learn JavaScript - Full Course for Beginners' https://www.youtube.com/watch?v=PkZNo7MFNFg %} from freeCodeCamp
+- {% url 'Learn JavaScript' https://www.codecademy.com/learn/introduction-to-javascript %} by CodeAcademy
+
 ## {% fa fa-angle-right %} So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
 
 Unit tests are not something we are really trying to solve right now. Most of the `cy` API commands are useless in unit tests. The biggest benefit of writing unit tests in Cypress is that they run in a browser, which has debugger support built in.
@@ -173,6 +188,6 @@ You can follow through these links:
 
 We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time.
 
-We schedule major releases with breaking changes approximately every 3 months. 
+We schedule major releases with breaking changes approximately every 3 months.
 
 If there is a significant bug outside of our release schedule then we release a patch as soon as possible.
