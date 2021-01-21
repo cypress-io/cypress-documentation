@@ -333,6 +333,10 @@ jobs:
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
 
+### RAM Disk
+
+You can speed up Cypress test jobs by using CircleCI RAM disk, read {% url 'Start CircleCI Machines Faster by Using RAM Disk' https://glebbahmutov.com/blog/circle-ram-disk/ %} blog post.
+
 ## AWS Amplify
 
 ### Example `amplify.yml`
