@@ -276,6 +276,38 @@ cy.get('div')
   })
 ```
 
+# Multiple assertions
+
+You can attach multiple assertions to the same command.
+
+```html
+<a class="assertions-link active"
+  href="https://on.cypress.io"
+  target="_blank">Cypress Docs</a>
+```
+
+```js
+cy.get('.assertions-link')
+  .should('have.class', 'active')
+  .and('have.attr', 'href')
+  .and('include', 'cypress.io')
+```
+
+Note that all assertions must pass with the same subject in order for the command to pass. For example, if you have a loading element that first appears and then disappears, the following WILL NOT WORK because the same element cannot be visible and invisible at the same time:
+
+```js
+// ⛔️ DOES NOT WORK
+cy.get('#loading').should('be.visible').and('not.be.visible')
+```
+
+Instead you should split the assertions and re-query the element:
+
+```js
+// ✅ THE CORRECT WAY
+cy.get('#loading').should('be.visible')
+cy.get('#loading').should('not.be.visible')
+```
+
 # See also
 
 - {% url 'Guide: Introduction to Cypress' introduction-to-cypress#Assertions %}
