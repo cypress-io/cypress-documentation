@@ -543,6 +543,17 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 # Advanced setup
 
+## Machine requirements
+
+There are no hard minimal hardware requirements for running Cypress. The successful test runs depend on the application itself and how much memory the browser and the server (if running it locally) need to finish without crashing. If the CI machine does not have enough CPU or memory, you will see video artifacts like random pauses and dropped frames. If the browser runs out of memory, it might even crash.
+
+Here are a few of our large example projects and the machine configurations used to run them on CI
+
+- the {% url 'Cypress Documentation' https://github.com/cypress-io/cypress-documentation %} project (the one you are reading) has its tests running on the default CircleCI machine
+- {% url 'Cypress RealWorld App' https://github.com/cypress-io/cypress-realworld-app %} runs its tests on CircleCI using the {% url 'Docker executor' https://circleci.com/docs/2.0/executor-types/ %} on the {% url 'default medium size machine' https://circleci.com/docs/2.0/configuration-reference/#resource_class %} with 2 vCPUs and 4GB of RAM.
+
+**Tip:** if there are problems with longer specs, try splitting them into shorter ones, following {% url 'this example' https://glebbahmutov.com/blog/split-spec/ %}.
+
 ## Dependencies
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
