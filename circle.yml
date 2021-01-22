@@ -108,6 +108,10 @@ jobs:
       - attach_workspace:
           at: /mnt
       - run:
+          name: Show Cypress info ℹ️
+          command: npx cypress info
+      - run:
+          name: Start local server 🚜
           command: npm start
           background: true
       - run:
