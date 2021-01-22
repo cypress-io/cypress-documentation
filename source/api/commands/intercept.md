@@ -634,6 +634,7 @@ The available functions on `res` are:
 ```
 
 {% history %}
+{% url "7.0.0" changelog#7-0-0 %} | Removed `cy.route2()` alias for `cy.intercept()`.
 {% url "6.2.0" changelog#6-2-0 %} | Added `matchUrlAgainstPath` option to `RouteMatcher`.
 {% url "6.0.0" changelog#6-0-0 %} | Renamed `cy.route2()` to `cy.intercept()`.
 {% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` option and made it the default behavior.
