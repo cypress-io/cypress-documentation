@@ -273,35 +273,41 @@ cy.contains('first todo').should('not.have.class', 'completed')
 cy.get('#loading').should('not.be.visible')
 ```
 
-A word of caution: negative assertions can pass for unexpected reasons. For example, when adding an element to the list and using a positive assertion, the test is restricting the application to a very specific output:
+⚠️ A word of caution: negative assertions can pass for unexpected reasons. For example, when adding an element to the list and using a positive assertion, the test is restricting the application to a specific result:
 
-```js
+```javascript
 cy.get('li.todo').should('have.length', 2)
-cy.get('input#new-todo').type('write tests{enter}')
+cy.get('input#new-todo').type('Write tests{enter}')
 // using positive assertion to check the number of items
 cy.get('li.todo').should('have.length', 3)
 ```
 
-On the other hand, using a negative assertion relaxes the test in potentially unexpected ways:
+The above test can still pass even if the application behaves unexpectedly, like duplicating the last item, instead of adding the item "Write tests" we have entered, but the chances of that are low. On the other hand, when using a negative assertion the test can pass even if the application behaves in multiple unexpected ways:
 
-```js
+```javascript
 cy.get('li.todo').should('have.length', 2)
 cy.get('input#new-todo').type('Write tests{enter}')
-// using negative assertion
+// using negative assertion to check the number of items
 cy.get('li.todo').should('not.have.length', 2)
 ```
 
-The above test can pass even if the application is completely broken. The negative assertion will pass even if the entire list of items is deleted, or if the application deletes an item instead of adding one, or if the application duplicates the new item and adds a pair of identical items.
+The above test can pass even if the application is completely broken. The negative assertion will pass even if:
+- the application deletes the entire list of items instead of inserting the 3rd item
+- the application deletes an item instead of adding one
+- the application duplicates the new item and adds a pair of identical items
+- an infinite variety of possible application mistakes
 
 We recommend using negative assertions to verify that a specific condition is no longer present after the application performs an action. For example, when a previously completed item is unchecked, we might verify that a CSS class is removed.
 
 ```javascript
 // at first the item is marked completed
-cy.contains('li.todo', 'Write tests').should('have.class', 'completed')
+cy.contains('li.todo', 'Write tests')
+  .should('have.class', 'completed')
   .find('.toggle').click()
 
 // the CSS class has been removed
-cy.contains('li.todo', 'Write tests').should('not.have.class', 'completed')
+cy.contains('li.todo', 'Write tests')
+  .should('not.have.class', 'completed')
 ```
 
 Read the blog post {% url 'Be Careful With Negative Assertions' https://glebbahmutov.com/blog/negative-assertions/ %} for more examples.
