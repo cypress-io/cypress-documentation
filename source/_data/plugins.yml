@@ -246,6 +246,12 @@
       link: https://github.com/javierbrea/cypress-fail-fast
       keywords: [fail-fast, failure, skip, config]
       badge: community
+      
+    - name: cypress-fail-on-console-error
+      description: Fail cypress test on console error.
+      link: https://github.com/nils-hoyer/cypress-fail-on-console-error
+      keywords: [console, error, fail]
+      badge: community
 
 - name: Custom Commands
   plugins:

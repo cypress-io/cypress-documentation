@@ -6,6 +6,8 @@ Because Cypress is built on top of Mocha, that means any reporter built for Moch
 
 * {% url "Mocha's built-in reporters" https://mochajs.org/#reporters %}
 
+By default, Cypress uses the `spec` reporter to output information to `STDOUT`.
+
 We've also added the two most common 3rd party reporters for Mocha. These are built into Cypress and you can use them without installing anything.
 
 * {% url "`teamcity`" https://github.com/cypress-io/mocha-teamcity-reporter %}
@@ -134,9 +136,12 @@ The below examples were implemented in {% url https://github.com/cypress-io/cypr
 
 ### Spec to `STDOUT`, save JUnit XML files
 
-We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON reports and then combine them into a single report.
+We want to output a `spec` report to `STDOUT`, while saving a JUnit XML file for each spec file.
 
-We need to install additional dependencies.
+We need to install additional dependencies:  
+
+* {% url "`cypress-multi-reporters`" https://github.com/you54f/cypress-multi-reporters %}: enables multiple reporters
+* {% url "`mocha-junit-reporter`" https://github.com/michaelleeallen/mocha-junit-reporter %} the actual junit reporter, as we cannot use the `junit` reporter that comes with Cypress
 
 ```shell
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
