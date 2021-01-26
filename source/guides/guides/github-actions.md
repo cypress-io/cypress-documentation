@@ -133,6 +133,45 @@ GitHub Actions offers a {% url "matrix strategy" https://docs.github.com/en/acti
 
 ## Installation Job
 
+The separation of installation from run is necessary when running parallel jobs.  It allows for reuse of various build steps aided by caching.
+
+First, we'll define the `install` step that will be used by the worker jobs defined in the matrix strategy.
+
+Notice that we pass `runTests: false` to the Cypress GitHub Action to instruct it to only install dependencies without running the tests.
+
+The {% url "cache" https://github.com/marketplace/actions/cache %} GitHub Action is included and will save the state of the `node_modules`, `~/.cache/Cypress` and `build` directories for the worker jobs.
+
+```md
+name: Cypress Tests with installation job
+
+on: [push]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        id: yarn-and-build-cache
+        with:
+          path: |
+            ~/.cache/Cypress
+            build
+            node_modules
+          key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-build-
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+          build: yarn build
+```
+
 ## Caching for Parallel Jobs
 
 ## Organizing by Jobs with Grouping
