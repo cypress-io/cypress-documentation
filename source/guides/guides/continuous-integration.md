@@ -551,7 +551,7 @@ Hardware requirements to run Cypress depend how much memory the browser, the app
 
 - The recorded video artifacts have random pauses or dropped frames.
 - {% url "Debug logs of the CPU and memory" troubleshooting#Log-memory-and-CPU-usage %} frequently show CPU percent above 100%.
-- {% url "The browser crashes" error-messages#The-browser-process-running-your-tests-just-exited-unexpectedly %}.
+- The browser crashes.
 
 You can see the total available machine memory and the current free memory by running the {% url '`cypress info`' https://on.cypress.io/command-line#cypress-info %} command.
 
