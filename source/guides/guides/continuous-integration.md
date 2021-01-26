@@ -545,9 +545,15 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 ## Machine requirements
 
-There are no hard minimum hardware requirements for running Cypress. The successful test runs depend on the application itself and how much memory the browser and the server (if running it locally) need to finish without crashing. If the CI machine does not have enough CPU or memory, you will see video artifacts like random pauses and dropped frames. If the browser runs out of memory, it might even crash.
+Hardware requirements to run Cypress depend how much memory the browser, the application under test, and the server (if running it locally) need to run the tests without crashing.
 
-You can see the total available machine memory and the current free memory by running the {% url 'cypress info' https://on.cypress.io/command-line#cypress-info %} command.
+**Some signs that your machine may not have enough CPU or memory to run Cypress:**
+
+- The recorded video artifacts have random pauses or dropped frames.
+- {% url "Debug logs of the CPU and memory" troubleshooting#Log-memory-and-CPU-usage %} frequently show CPU percent above 100%.
+- {% url "The browser crashes" error-messages#The-browser-process-running-your-tests-just-exited-unexpectedly %}.
+
+You can see the total available machine memory and the current free memory by running the {% url '`cypress info`' https://on.cypress.io/command-line#cypress-info %} command.
 
 ```shell
 npx cypress info
@@ -557,7 +563,7 @@ System Platform: linux (Debian - 10.5)
 System Memory: 73.8 GB free 25 GB
 ```
 
-You can see the CPU parameters on the CI machines by executing command
+You can see the CPU parameters on the CI machines by executing the command below.
 
 ```shell
 node -p 'os.cpus()'
@@ -571,10 +577,10 @@ node -p 'os.cpus()'
 ]
 ```
 
-Here are a few of our large example projects and the machine configurations used to run them on CI
+**Example projects and the machine configurations used to run them on CI:**
 
-- the {% url 'Cypress Documentation' https://github.com/cypress-io/cypress-documentation %} and {% url 'Cypress RealWorld App' https://github.com/cypress-io/cypress-realworld-app %} projects run their tests on the default CircleCI machine using the {% url 'Docker executor' https://circleci.com/docs/2.0/executor-types/ %} on the {% url 'default medium size machine' https://circleci.com/docs/2.0/configuration-reference/#resource_class %} with 2 vCPUs and 4GB of RAM. The `cypress info` reports "System Memory: 73.8 GB free 25 GB" with CPUs reported as "Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz". Note that the free memory varies on CircleCI, typically we see values anywhere from 6GB to 30GB.
-- {% url 'Cypress RealWorld App' https://github.com/cypress-io/cypress-realworld-app %} also executes its tests using GitHub Actions using the {% url 'default hosted runner' https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners %} with 2 vCPUs and 7GB of RAM. The `cypress info` reports "System Memory: 7.29 GB free 632 MB" with CPUs reported as "Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz".
+- {% url 'Cypress Documentation' https://github.com/cypress-io/cypress-documentation %} and {% url 'Real World App' https://github.com/cypress-io/cypress-realworld-app %} projects run tests on the default CircleCI machine using the {% url 'Docker executor' https://circleci.com/docs/2.0/executor-types/ %} on the {% url 'default medium size machine' https://circleci.com/docs/2.0/configuration-reference/#resource_class %} with 2 vCPUs and 4GB of RAM. `cypress info` reports `System Memory: 73.8 GB free 25 GB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz`. Note that the free memory varies on CircleCI, typically we see values anywhere from 6GB to 30GB.
+- {% url 'Real World App' https://github.com/cypress-io/cypress-realworld-app %} also executes its tests using {% url "GitHub Actions" https://github.com/cypress-io/github-action %} with the {% url 'default hosted runner' https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners %} with 2 vCPUs and 7GB of RAM. `cypress info` reports `System Memory: 7.29 GB free 632 MB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz`.
 
 **Tip:** if there are problems with longer specs, try splitting them into shorter ones, following {% url 'this example' https://glebbahmutov.com/blog/split-spec/ %}.
 
