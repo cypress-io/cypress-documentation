@@ -58,7 +58,7 @@ name: Cypress Tests using Cypress Docker Image
 on: [push]
 
 jobs:
-  install:
+  cypress-run:
     runs-on: ubuntu-latest
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
@@ -80,15 +80,13 @@ Dependencies and build artifacts maybe cache between jobs using the {% url "cach
 
 The job below includes a cache of `node_modules`, the Cypress binary in `~/.cache/Cypress` and the `build` directory.  In addition, the `build` attribute is added to the Cypress GitHub Action to generate the build artifacts prior to the test run.
 
-The Cypress 
-
 ```md
 name: Cypress Tests with Dependency and Artifact Caching
 
 on: [push]
 
 jobs:
-  install:
+  cypress-run:
     runs-on: ubuntu-latest
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
