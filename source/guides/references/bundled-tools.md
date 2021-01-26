@@ -72,6 +72,5 @@ Cypress also bundles the following tools on the `Cypress` object. These can be u
 - {% url `Cypress._` _ %} (lodash)
 - {% url `Cypress.$` $ %} (jQuery)
 - {% url `Cypress.minimatch` minimatch %} (minimatch.js)
-- {% url `Cypress.moment` moment %} (moment.js)
 - {% url `Cypress.Blob` blob %} (Blob utils)
 - {% url `Cypress.Promise` promise %} (Bluebird)
