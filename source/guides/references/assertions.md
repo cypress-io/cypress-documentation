@@ -256,6 +256,75 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
+# Negative assertions
+
+There are positive and negative assertions. Examples of positive assertions are:
+
+```javascript
+cy.get('.todo-item')
+  .should('have.length', 2)
+  .and('have.class', 'completed')
+```
+
+The negative assertions have the "not" chainer prefixed to the assertion. Examples of negative assertions are:
+
+```javascript
+cy.contains('first todo').should('not.have.class', 'completed')
+cy.get('#loading').should('not.be.visible')
+```
+
+### ⚠️ False passing tests 
+
+Negative assertions may pass for reasons you weren't expecting. Let's say we want to test that a Todo list app adds a new Todo item after typing the Todo and pressing enter.
+
+**Postitive assertions**
+
+When adding an element to the list and using a **positive assertion**, the test asserts a specific number of Todo items in our application.
+
+The test below may still falsely pass if the application behaves unexpectedly, like adding a blank Todo, instead of adding the new Todo with the text "Write tests".
+
+```javascript
+cy.get('li.todo').should('have.length', 2)
+cy.get('input#new-todo').type('Write tests{enter}')
+
+// using a positive assertion to check the exact number of items
+cy.get('li.todo').should('have.length', 3)
+```
+
+**Negative assertions**
+
+But when using a **negative assertion** in the test below, the test can falsely pass when the application behaves in multiple unexpected ways:
+
+- The app deletes the entire list of Todo items instead of inserting the 3rd Todo
+- The app deletes a Todo instead of adding a new Todo
+- The app adds a blank Todo
+- An infinite variety of possible application mistakes
+
+```javascript
+cy.get('li.todo').should('have.length', 2)
+cy.get('input#new-todo').type('Write tests{enter}')
+
+// using negative assertion to check it's not a number of items
+cy.get('li.todo').should('not.have.length', 2)
+```
+
+**Recommendation**
+
+We recommend using negative assertions to verify that a specific condition is no longer present after the application performs an action. For example, when a previously completed item is unchecked, we might verify that a CSS class is removed.
+
+```javascript
+// at first the item is marked completed
+cy.contains('li.todo', 'Write tests')
+  .should('have.class', 'completed')
+  .find('.toggle').click()
+
+// the CSS class has been removed
+cy.contains('li.todo', 'Write tests')
+  .should('not.have.class', 'completed')
+```
+
+For more examples, please read the blog post {% url 'Be Careful With Negative Assertions' https://glebbahmutov.com/blog/negative-assertions/ %}.
+
 # Should callback
 
 If built-in assertions are not enough, you can write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically {% url "retry" retry-ability %} the callback function until it passes or the command times out. See the {% url `.should()` should#Function %} documentation.
