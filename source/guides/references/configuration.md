@@ -437,9 +437,10 @@ IntelliSense is available for Cypress while editing your configuration file. {% 
 
 ### {% fa fa-angle-right %} `baseUrl` is not set
 
-Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following is <i>incorrect</i> and won't work:
+Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following configuration is <i>incorrect</i> and WILL NOT WORK:
 
-```json
+```javascript
+// ⛔️ DOES NOT WORK
 {
   "env": {
     "baseUrl": "http://localhost:3030",
@@ -448,9 +449,10 @@ Make sure you do not accidentally place the <code>baseUrl</code> or another top-
 }
 ```
 
-Instead place the `baseUrl` at the top level, outside the `env` object.
+Solution: place the `baseUrl` property at the top level, outside the `env` object.
 
-```json
+```javascript
+// ✅ THE CORRECT WAY
 {
   "baseUrl": "http://localhost:3030",
   "env": {
@@ -458,6 +460,8 @@ Instead place the `baseUrl` at the top level, outside the `env` object.
   }
 }
 ```
+
+You can also find a few tips on setting the `baseUrl` in this {% url 'short video' https://www.youtube.com/watch?v=f5UaXuAc52c %}.
 
 {% history %}
 {% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
