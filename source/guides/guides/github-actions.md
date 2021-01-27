@@ -9,18 +9,21 @@ title: GitHub Actions
 
 {% endnote %}
 
-# What is GitHub Actions
+## What is GitHub Actions
+
 
 {% url "GitHub Actions" https://github.com/features/actions %} provide a way to "automate, customize, and execute your software development workflows" within your GitHub repository.  Detailed documentation is available in the {% url "GitHub Action Documentation" https://docs.github.com/en/actions %}.
 
-# What is the Cypress GitHub Action
+
+## What is the Cypress GitHub Action
 
 GitHub Actions can be packaged and shared through GitHub itself.  GitHub maintains many, such as the {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions used below.
 
 The Cypress team maintains a {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} for running Cypress end-to-end tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
 
-# Simple Setup
+## Simple Setup
+
 
 The example below shows the simplest setup and job using the Cypress GitHub Action to run end-to-end tests with Cypress and Electron.
 
@@ -30,9 +33,15 @@ The {% url "GitHub checkout Action" https://github.com/marketplace/actions/check
 
 Finally, our Cypress GitHub Action will be used to install dependencies and run the tests against Electron.
 
-```jsx
+{% note info %}
+Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example and place the following config in `.github/workflows/main.yml.
+{% endnote %}
+
+```yaml
 name: Cypress Tests
+
 on: [push]
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -43,6 +52,9 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
 ```
 
 # Testing against Chrome and Firefox with Cypress Docker Images
@@ -53,7 +65,7 @@ Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypr
 
 Below we add the `container` attribute using a {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} built with Google Chrome and Firefox.
 
-```md
+```yaml
 name: Cypress Tests using Cypress Docker Image
 
 on: [push]
@@ -86,7 +98,7 @@ The job below includes a cache of `node_modules`, the Cypress binary in `~/.cach
 Caching of dependencies and build artifacts can be accomplish with {% url "GitHub Actions Artifact Actions" https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts %}, but uploading takes more time than using the {% url "cache GitHub Action" https://github.com/marketplace/actions/cache %}.
 {% endnote %}
 
-```md
+```yaml
 name: Cypress Tests with Dependency and Artifact Caching
 
 on: [push]
@@ -137,7 +149,7 @@ For the steps, notice that we pass `runTests: false` to the Cypress GitHub Actio
 
 The {% url "cache" https://github.com/marketplace/actions/cache %} GitHub Action is included and will save the state of the `node_modules`, `~/.cache/Cypress` and `build` directories for the worker jobs.
 
-```md
+```yaml
 name: Cypress Tests with installation job
 
 on: [push]
@@ -194,7 +206,7 @@ Finally, we tell the Cypress GitHub Actions to record results to the {% url "Cyp
 
 Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 
-```md
+```yaml
 name: Cypress Tests with Install Job and UI Chrome Job x 5
 
 on: [push]
