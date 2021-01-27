@@ -4,13 +4,11 @@ title: GitHub Actions
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
-
 - How to GitHub Actions for Cypress Tests
 
 {% endnote %}
 
-## What is GitHub Actions
-
+# What is GitHub Actions
 
 {% url "GitHub Actions" https://github.com/features/actions %} provide a way to "automate, customize, and execute your software development workflows" within your GitHub repository.  Detailed documentation is available in the {% url "GitHub Action Documentation" https://docs.github.com/en/actions %}.
 
@@ -23,7 +21,6 @@ The Cypress team maintains a {% url "Cypress GitHub Action" https://github.com/m
 
 
 ## Simple Setup
-
 
 The example below shows the simplest setup and job using the Cypress GitHub Action to run end-to-end tests with Cypress and Electron.
 
