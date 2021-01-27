@@ -293,7 +293,7 @@ cy.get('.assertions-link')
   .and('include', 'cypress.io')
 ```
 
-Note that all assertions must pass with the same subject in order for the command to pass. For example, if you have a loading element that first appears and then disappears, the following WILL NOT WORK because the same element cannot be visible and invisible at the same time:
+Note that all chained assertions will use the same reference to the original subject. For example, if you wanted to test a loading element that first appears and then disappears, the following WILL NOT WORK because the same element cannot be visible and invisible at the same time:
 
 ```js
 // ⛔️ DOES NOT WORK
