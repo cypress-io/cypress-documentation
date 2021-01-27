@@ -14,12 +14,14 @@ guides:
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
     test-runner: test-runner.html
+    cypress-studio: cypress-studio.html
   dashboard:
     dashboard-introduction: introduction.html
     projects: projects.html
     runs: runs.html
     organizations: organizations.html
     users: users.html
+    bitbucket-integration: bitbucket-integration.html
     github-integration: github-integration.html
     gitlab-integration: gitlab-integration.html
     slack-integration: slack-integration.html
