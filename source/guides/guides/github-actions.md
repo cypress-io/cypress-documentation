@@ -19,17 +19,18 @@ GitHub Actions can be packaged and shared through GitHub itself.  GitHub maintai
 
 The Cypress team maintains a {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} for running Cypress end-to-end tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
+
 # Simple Setup
 
 The example below shows the simplest setup and job using the Cypress GitHub Action to run end-to-end tests with Cypress and Electron.
 
 On push to this repository, this job will run a GitHub-hosted runner for Ubuntu Linux.
 
-It uses the checkout action - https://github.com/marketplace/actions/checkout
+The {% url "GitHub checkout Action" https://github.com/marketplace/actions/checkout %} is used to checkout our code from our GitHub repository.
 
 Finally, our Cypress GitHub Action will be used to install dependencies and run the tests against Electron.
 
-```md
+```jsx
 name: Cypress Tests
 on: [push]
 jobs:
@@ -119,8 +120,6 @@ jobs:
           build: yarn build
       
 ```
-
-
 
 # Parallelization
 
