@@ -35,6 +35,7 @@ sidebar:
     cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
