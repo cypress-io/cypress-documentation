@@ -333,6 +333,10 @@ jobs:
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
 
+### RAM Disk
+
+You can speed up Cypress test jobs by using CircleCI RAM disk, read {% url 'Start CircleCI Machines Faster by Using RAM Disk' https://glebbahmutov.com/blog/circle-ram-disk/ %} blog post.
+
 ## AWS Amplify
 
 ### Example `amplify.yml`
@@ -542,6 +546,47 @@ Instead, you should build a docker container for your project's version of cypre
 See our {% url 'examples' docker %} for additional information on our maintained images and configurations on several CI providers.
 
 # Advanced setup
+
+## Machine requirements
+
+Hardware requirements to run Cypress depend how much memory the browser, the application under test, and the server (if running it locally) need to run the tests without crashing.
+
+**Some signs that your machine may not have enough CPU or memory to run Cypress:**
+
+- The recorded video artifacts have random pauses or dropped frames.
+- {% url "Debug logs of the CPU and memory" troubleshooting#Log-memory-and-CPU-usage %} frequently show CPU percent above 100%.
+- The browser crashes.
+
+You can see the total available machine memory and the current free memory by running the {% url '`cypress info`' https://on.cypress.io/command-line#cypress-info %} command.
+
+```shell
+npx cypress info
+...
+Cypress Version: 6.3.0
+System Platform: linux (Debian - 10.5)
+System Memory: 73.8 GB free 25 GB
+```
+
+You can see the CPU parameters on the CI machines by executing the command below.
+
+```shell
+node -p 'os.cpus()'
+[
+  {
+    model: 'Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz',
+    speed: 3399,
+    times: { user: 760580, nice: 1010, sys: 158130, idle: 1638340, irq: 0 }
+  }
+  ...
+]
+```
+
+**Example projects and the machine configurations used to run them on CI:**
+
+- {% url 'Cypress Documentation' https://github.com/cypress-io/cypress-documentation %} and {% url 'Real World App' https://github.com/cypress-io/cypress-realworld-app %} projects run tests on the default CircleCI machine using the {% url 'Docker executor' https://circleci.com/docs/2.0/executor-types/ %} on the {% url 'default medium size machine' https://circleci.com/docs/2.0/configuration-reference/#resource_class %} with 2 vCPUs and 4GB of RAM. `cypress info` reports `System Memory: 73.8 GB free 25 GB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz`. Note that the free memory varies on CircleCI, typically we see values anywhere from 6GB to 30GB.
+- {% url 'Real World App' https://github.com/cypress-io/cypress-realworld-app %} also executes its tests using {% url "GitHub Actions" https://github.com/cypress-io/github-action %} with the {% url 'default hosted runner' https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners %} with 2 vCPUs and 7GB of RAM. `cypress info` reports `System Memory: 7.29 GB free 632 MB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz`.
+
+**Tip:** if there are problems with longer specs, try splitting them into shorter ones, following {% url 'this example' https://glebbahmutov.com/blog/split-spec/ %}.
 
 ## Dependencies
 
