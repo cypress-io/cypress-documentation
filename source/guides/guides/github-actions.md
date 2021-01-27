@@ -80,6 +80,11 @@ Dependencies and build artifacts maybe cache between jobs using the {% url "cach
 
 The job below includes a cache of `node_modules`, the Cypress binary in `~/.cache/Cypress` and the `build` directory.  In addition, the `build` attribute is added to the Cypress GitHub Action to generate the build artifacts prior to the test run.
 
+
+{% note info %}
+Caching of dependencies and build artifacts can be accomplish with {% url "GitHub Actions Artifact Actions" https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts %}, but uploading takes more time than using the {% url "cache GitHub Action" https://github.com/marketplace/actions/cache %}.
+{% endnote %}
+
 ```md
 name: Cypress Tests with Dependency and Artifact Caching
 
