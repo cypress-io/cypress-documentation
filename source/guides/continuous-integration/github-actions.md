@@ -4,23 +4,22 @@ title: GitHub Actions
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
+
 - How to GitHub Actions for Cypress Tests
 
 {% endnote %}
 
-# What is GitHub Actions
+# GitHub Actions
 
-{% url "GitHub Actions" https://github.com/features/actions %} provide a way to "automate, customize, and execute your software development workflows" within your GitHub repository.  Detailed documentation is available in the {% url "GitHub Action Documentation" https://docs.github.com/en/actions %}.
+{% url "GitHub Actions" https://github.com/features/actions %} provide a way to **automate, customize, and execute your software development workflows** within your GitHub repository.  Detailed documentation is available in the {% url "GitHub Action Documentation" https://docs.github.com/en/actions %}.
 
-
-## What is the Cypress GitHub Action
+## Cypress GitHub Action
 
 GitHub Actions can be packaged and shared through GitHub itself.  GitHub maintains many, such as the {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions used below.
 
 The Cypress team maintains a {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} for running Cypress end-to-end tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
-
-## Basic Setup
+# Basic Setup
 
 The example below shows a basic setup and job using the Cypress GitHub Action to run end-to-end tests with Cypress and Electron.
 
@@ -54,7 +53,7 @@ jobs:
           start: npm start
 ```
 
-# Testing against Chrome and Firefox with Cypress Docker Images
+# Chrome and Firefox with Cypress Docker Images
 
 GitHub Actions provides the option to specify a container image for the job.
 
@@ -267,7 +266,6 @@ Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cy
 
 {% imgTag /img/guides/github-actions/rwa-run-matrix.png "Cypress Real World App GitHub Actions Matrix" "no-border" %}
 
-
-# Debug End-to-End Test Runs with the Cypress Dashboard
+# Debugging with the Cypress Dashboard
 
 Talk about debugging failures with the Cypress Dashboard in a general way.
