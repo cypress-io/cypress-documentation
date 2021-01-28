@@ -9,7 +9,7 @@ Gitlab integration is currently in private beta.
 The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate your Cypress tests with your Gitlab workflow via {% urlHash 'commit statuses' Commit-statuses %} and {% urlHash 'merge request comments' Merge-Request-comments %}. A project first needs to be {% url "setup to record" projects %} to the Cypress Dashboard to use Gitlab integration.
 
 {% note warning %}
-Gitlab Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing Gitlab integration issues with your CI setup, please make sure the git information is being sent properly by following {% url "these guidelines" continuous-integration#Git-information %}. If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
+Gitlab Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing Gitlab integration issues with your CI setup, please make sure the git information is being sent properly by following {% url "these guidelines" continuous-integration-introduction#Git-information %}. If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 {% endnote %}
 
 ## Installing the Gitlab integration

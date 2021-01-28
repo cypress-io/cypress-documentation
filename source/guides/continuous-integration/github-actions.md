@@ -5,7 +5,7 @@ title: GitHub Actions
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to GitHub Actions for Cypress Tests
+- How to use GitHub Actions for Cypress Tests
 
 {% endnote %}
 

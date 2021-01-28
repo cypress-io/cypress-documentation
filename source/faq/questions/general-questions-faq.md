@@ -66,7 +66,7 @@ You can read about our currently available browsers {% url "here" launching-brow
 
 ## {% fa fa-angle-right %} Will Cypress work in my CI provider?
 
-Cypress works in any {% url "CI provider" continuous-integration %}.
+Cypress works in any {% url "CI provider" continuous-integration-introduction %}.
 
 ## {% fa fa-angle-right %} Does Cypress require me to change any of my existing code?
 
@@ -168,7 +168,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are able to run both locally and on a {% url "continuous integration" continuous-integration %} server.
+- Are able to run both locally and on a {% url "continuous integration" continuous-integration-introduction %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 

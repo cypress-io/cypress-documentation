@@ -682,7 +682,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration-introduction#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 

@@ -183,7 +183,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 ## Environment Variables
 
-You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration-introduction %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
