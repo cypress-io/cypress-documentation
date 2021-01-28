@@ -29,8 +29,11 @@ How this action works:
 
 - On push to this repository, this job will run a GitHub-hosted runner for Ubuntu Linux.
 - The {% url "GitHub checkout Action" https://github.com/marketplace/actions/checkout %} is used to checkout our code from our GitHub repository.
-- Finally, our Cypress GitHub Action will be used to install dependencies and run the tests against Electron.
-
+- Finally, our Cypress GitHub Action will be used to:
+  - Install dependencies (npm/yarn)
+  - Run the build (`npm run build`)
+  - Start the web server (`npm start`)
+  - Run the tests against Electron.
 
 ```yaml
 name: Cypress Tests
