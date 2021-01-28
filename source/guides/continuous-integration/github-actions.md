@@ -9,29 +9,28 @@ title: GitHub Actions
 
 {% endnote %}
 
-# GitHub Actions
+GitHub offers developers {% url "Actions" https://github.com/features/actions %} that provide a way to **automate, customize, and execute your software development workflows** within your GitHub repository.  Detailed documentation is available in the {% url "GitHub Action Documentation" https://docs.github.com/en/actions %}.
 
-{% url "GitHub Actions" https://github.com/features/actions %} provide a way to **automate, customize, and execute your software development workflows** within your GitHub repository.  Detailed documentation is available in the {% url "GitHub Action Documentation" https://docs.github.com/en/actions %}.
+# Cypress GitHub Action
 
-## Cypress GitHub Action
-
-GitHub Actions can be packaged and shared through GitHub itself.  GitHub maintains many, such as the {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions used below.
+Workflows can be packaged and shared as {% url "GitHub Actions" https://github.com/features/actions %}.  GitHub maintains many, such as the {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions used below.
 
 The Cypress team maintains a {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} for running Cypress end-to-end tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
 # Basic Setup
 
-The example below shows a basic setup and job using the Cypress GitHub Action to run end-to-end tests with Cypress and Electron.
-
-On push to this repository, this job will run a GitHub-hosted runner for Ubuntu Linux.
-
-The {% url "GitHub checkout Action" https://github.com/marketplace/actions/checkout %} is used to checkout our code from our GitHub repository.
-
-Finally, our Cypress GitHub Action will be used to install dependencies and run the tests against Electron.
+The example below shows a basic setup and job using the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} to run end-to-end tests with Cypress and Electron.
 
 {% note info %}
 Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example and place the following config in `.github/workflows/main.yml.
 {% endnote %}
+
+How this action works:
+
+- On push to this repository, this job will run a GitHub-hosted runner for Ubuntu Linux.
+- The {% url "GitHub checkout Action" https://github.com/marketplace/actions/checkout %} is used to checkout our code from our GitHub repository.
+- Finally, our Cypress GitHub Action will be used to install dependencies and run the tests against Electron.
+
 
 ```yaml
 name: Cypress Tests
@@ -55,11 +54,9 @@ jobs:
 
 # Chrome and Firefox with Cypress Docker Images
 
-GitHub Actions provides the option to specify a container image for the job.
+GitHub Actions provides the option to specify a container image for the job. Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI.
 
-Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI.
-
-Below we add the `container` attribute using a {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} built with Google Chrome and Firefox.
+Below we add the `container` attribute using a {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `browser: firefox` attribute to the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %}.
 
 ```yaml
 name: Cypress Tests using Cypress Docker Image
