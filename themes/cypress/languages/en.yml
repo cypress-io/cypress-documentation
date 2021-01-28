@@ -35,11 +35,13 @@ sidebar:
     cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
     users: Users
     bitbucket-integration: Bitbucket Integration
+    aws-codebuild: AWS CodeBuild
     github-integration: GitHub Integration
     gitlab-integration: Gitlab Integration
     slack-integration: Slack Integration
