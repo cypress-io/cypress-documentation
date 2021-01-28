@@ -59,18 +59,21 @@ Option | Type | Description
 `record` | *boolean* | Whether to record the test run
 `reporter` | *string* | Specify a {% url "Mocha reporter" reporters %}
 `reporterOptions` | *object* | Specify {% url "Mocha reporter" reporters %} options
-`spec` | *string* | Specify the specs to run
+`spec` | *string* | Specify the specs to run, see examples below
 `tag` | *string* | Identify a run with a tag or tags
 
-## Example
+## Examples
 
-Here is an example of programmatically running a spec file:
+### Run a single spec file
+
+Here is an example of programmatically running a spec file. Note that the file path is relative to the current working directory.
 
 ```js
 // e2e-run-tests.js
 const cypress = require('cypress')
 
 cypress.run({
+  // the path is relative to the current working directory
   spec: './cypress/integration/examples/actions.spec.js'
 })
 .then((results) => {
@@ -85,6 +88,19 @@ You can then run Cypress by running the following in your terminal or an npm scr
 
 ```shell
 node e2e-run-tests.js
+```
+
+### Run specs using wildcard
+
+You can pass a wildcard pattern to run all matching spec files
+
+```js
+const cypress = require('cypress')
+
+cypress.run({
+  // the wildcard path is relative to the current working directory
+  spec: './cypress/integration/**/api*.js'
+})
 ```
 
 ## Results

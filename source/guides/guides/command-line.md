@@ -303,7 +303,7 @@ cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=t
 
 ### `cypress run --spec <spec>`
 
-Run tests specifying a single test file to run instead of all tests.
+Run tests specifying a single test file to run instead of all tests. The path should be relative to the current working directory.
 
 ```shell
 cypress run --spec "cypress/integration/examples/actions.spec.js"
