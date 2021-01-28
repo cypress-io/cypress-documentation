@@ -103,6 +103,19 @@ cypress.run({
 })
 ```
 
+### Use modern syntax
+
+If your Node version allows you can use the modern `async / await` syntax to wait for the Promise returned by the `cypress.run` method.
+
+```js
+const cypress = require('cypress');
+
+(async () => {
+  const results = await cypress.run()
+  // use the results object
+}) ()
+```
+
 ## Results
 
 `cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run could return something like this:
