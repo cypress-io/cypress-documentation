@@ -27,11 +27,27 @@ How this buildspec works:
 - Our code from our GitHub repository.
 - Our action runs as follows:
   - Install dependencies (npm/yarn)
-  - Run the build (`npm run build`)
-  - Start the web server (`npm start`)
-  - Run the tests against Electron.
+  - Start the web server (`npm start:ci`)
+  - Run the tests against Electron
 
 ```yaml
+# buildspec.yml
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - npm ci
+  pre_build:
+    commands:
+      - npm run cy:verify
+      - npm run cy:info
+  build:
+    commands:
+        - npm run start:ci &
+        - npx cypress run --record
 ```
 
 # Chrome and Firefox with Cypress Docker Images
