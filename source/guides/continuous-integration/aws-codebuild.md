@@ -150,12 +150,9 @@ batch:
 
 ```
 
-During the install phase, we utilize shell scripting to 
+During the install phase, we utilize shell scripting with the {% url "cut command" https://en.wikipedia.org/wiki/Cut_(Unix) %} to assign values from the delimited `CY_GROUP_SPEC` passed to the worker into shell variables that will be used in the `build` phase when running `cypress run`.
 
 ```yaml
-# Cypress Tests with Install Job and UI Chrome Job x 5
-version: 0.2
-
 batch:
   # ...
 
@@ -170,9 +167,9 @@ phases:
 # ...
 ```
 
-To parallelize the runs, we need to add an additional variable to the {% url "build-matrix strategy" %}.
+To parallelize the runs, we need to add an additional variable to the {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix %} .
 
-In the code below, 5 workers have been defined by the `WORKERS` variable. This will provide 5 workers to each group.
+In the code below, the number of workers have been defined by the `WORKERS` variable. When run in the {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %}, this will provide 5 workers to each group defined in the `CY_GROUP_SPEC`.
 
 ```yaml
 batch:
@@ -193,6 +190,7 @@ batch:
             - 5
 ```
 
+The complete {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix %} is below.
 
 ```yaml
 # Cypress Tests with Install Job and UI Chrome Job x 5
