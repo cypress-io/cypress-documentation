@@ -111,14 +111,137 @@ The following configuration with `--parallel` and `--record` options to Cypress 
 
 Below we define a job for "UI Chrome Tests" that will run tests under the `cypress/tests/ui/` path against Google Chrome.
 
-It has a {% url "build-matrix strategy" %} for 5 workers.
 
 Our command records results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} in parallel, using the `CYPRESS_RECORD_KEY` environment variable.
 
-Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+Jobs can be organized by groups by passing a `--group` attribute and value to `cypress run`.
+
+The results from each worker will be consolidated into the group name in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+## Parallelizing the build
+
+The matrix configuration uses a variable `CY_GROUP_SPEC` with a list of items specific to each group for the build.
+
+The fields are delimited by a pipe (|) character as follows:
 
 ```yaml
-name: Cypress Tests with Install Job and UI Chrome Job x 5
+# Group Name | Browser | Specs | Cypress Configuration options (optional)
+
+"UI - Chrome - Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667"
+```
+
+The `build-matrix` will run all permutations delimited items.  
+
+```yaml
+batch:
+  fast-fail: false
+  build-matrix:
+    # ...
+    dynamic:
+      env:
+        # ...
+        variables:
+          CY_GROUP_SPEC:
+            - "UI - Chrome|chrome|cypress/tests/ui/*"
+            - "UI - Chrome - Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667"
+            - "API|chrome|cypress/tests/api/*"
+            - "UI - Firefox|firefox|cypress/tests/ui/*"
+            - "UI - Firefox - Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667"
+
+```
+
+During the install phase, we utilize shell scripting to 
+
+```yaml
+# Cypress Tests with Install Job and UI Chrome Job x 5
+version: 0.2
+
+batch:
+  # ...
+
+phases:
+  install:
+    commands:
+      - CY_GROUP=$(echo $CY_GROUP_SPEC | cut -d'|' -f1)
+      - CY_BROWSER=$(echo $CY_GROUP_SPEC | cut -d'|' -f2)
+      - CY_SPEC=$(echo $CY_GROUP_SPEC | cut -d'|' -f3)
+      - CY_CONFIG=$(echo $CY_GROUP_SPEC | cut -d'|' -f4)
+      - yarn install --frozen-lockfile
+# ...
+```
+
+To parallelize the runs, we need to add an additional variable to the {% url "build-matrix strategy" %}.
+
+In the code below, 5 workers have been defined by the `WORKERS` variable. This will provide 5 workers to each group.
+
+```yaml
+batch:
+  fast-fail: false
+  build-matrix:
+    # ...
+    dynamic:
+      env:
+        # ...
+        variables:
+          CY_GROUP_SPEC:
+            # ...
+          WORKERS:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+```
+
+
+```yaml
+# Cypress Tests with Install Job and UI Chrome Job x 5
+version: 0.2
+
+batch:
+  fast-fail: false
+  build-matrix:
+    static:
+      ignore-failure: false
+      env:
+        type: LINUX_CONTAINER
+        privileged-mode: true
+        compute-type: BUILD_GENERAL1_MEDIUM
+    dynamic:
+      env:
+        compute-type:
+          - BUILD_GENERAL1_MEDIUM
+        image:
+          - public.ecr.aws/s9l6w2o6/cypress-browsers-node14.15.0-chrome86-ff82
+        variables:
+          CY_GROUP_SPEC:
+            - "UI - Chrome|chrome|cypress/tests/ui/*"
+            - "UI - Chrome - Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667"
+            - "API|chrome|cypress/tests/api/*"
+            - "UI - Firefox|firefox|cypress/tests/ui/*"
+            - "UI - Firefox - Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667"
+          WORKERS:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+
+phases:
+  install:
+    commands:
+      - CY_GROUP=$(echo $CY_GROUP_SPEC | cut -d'|' -f1)
+      - CY_BROWSER=$(echo $CY_GROUP_SPEC | cut -d'|' -f2)
+      - CY_SPEC=$(echo $CY_GROUP_SPEC | cut -d'|' -f3)
+      - CY_CONFIG=$(echo $CY_GROUP_SPEC | cut -d'|' -f4)
+      - yarn install --frozen-lockfile
+  pre_build:
+    commands:
+      - yarn run build
+  build:
+    commands:
+      - yarn start:ci & npx wait-on http://localhost:3000
+      - npx cypress run --record --parallel --browser $CY_BROWSER --ci-build-id $CODEBUILD_INITIATOR --group "$CY_GROUP" --spec "$CY_SPEC" --config "$CY_CONFIG"
 ```
 
 
