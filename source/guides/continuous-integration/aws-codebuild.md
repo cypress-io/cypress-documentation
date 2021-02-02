@@ -98,17 +98,15 @@ phases:
 
 Caching with {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} directly can be challenging.
 
-The {% url "Build caching in AWS CodeBuild" https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html %} offers a Local cache and caching on Amazon S3.
+The {% url "Build caching in AWS CodeBuild" https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html %} document offers details on local or Amazon S3 caching.
 
 Per the documentation, "Local caching stores a cache locally on a build host that is available to that build host only".  This will not be useful during parallel test runs.
 
 The "Amazon S3 caching stores the cache in an Amazon S3 bucket that is available across multiple build hosts".  While this may sound useful, in practice the upload of cached dependencies can take some time.  Furthermore, each worker will attempt to save it's dependency cache to Amazon S3, which increases build time significantly.
 
-Beyond the scope of this guide, but {% url "AWS CodePipeline" https://aws.amazon.com/codepipeline %} may be of use to cache the initial source, dependencies and build output.
+Beyond the scope of this guide, but {% url "AWS CodePipeline" https://aws.amazon.com/codepipeline %} may be of use to cache the initial source, dependencies and build output for use in AWS CodeBuild jobs using {% url "AWS CodePipeline Input and Output Artifacts" https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome-introducing-artifacts.html %}.
 
- {% url "AWS CodePipeline" https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html %}
-
-
+Reference the {% url "AWS CodePipeline integration with CodeBuild and multiple input sources and output artifacts sample" https://docs.aws.amazon.com/codebuild/latest/userguide/sample-pipeline-multi-input-output.html" %} example for details on how to configure a CodePipeline with an output artifact.
 
 # Parallelization
 
