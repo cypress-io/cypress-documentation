@@ -163,7 +163,7 @@ phases:
       - CY_BROWSER=$(echo $CY_GROUP_SPEC | cut -d'|' -f2)
       - CY_SPEC=$(echo $CY_GROUP_SPEC | cut -d'|' -f3)
       - CY_CONFIG=$(echo $CY_GROUP_SPEC | cut -d'|' -f4)
-      - yarn install --frozen-lockfile
+      - npm ci
 # ...
 ```
 
@@ -188,6 +188,18 @@ batch:
             - 3
             - 4
             - 5
+```
+
+Finally, the script variables are passed to the call to `cypress run`.
+
+```yaml
+phases:
+  install:
+    # ...
+  build:
+    commands:
+      - npm start:ci &
+      - npx cypress run --record --parallel --browser $CY_BROWSER --ci-build-id $CODEBUILD_INITIATOR --group "$CY_GROUP" --spec "$CY_SPEC" --config "$CY_CONFIG"
 ```
 
 The complete {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix %} is below.
