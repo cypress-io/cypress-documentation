@@ -84,7 +84,7 @@
     "chalk": "3.0.0",
     "cheerio": "1.0.0-rc.3",
     "common-tags": "1.8.0",
-    "cypress": "6.3.0",
+    "cypress": "6.4.0",
     "dayjs": "1.10.4",
     "dependency-check": "3.4.1",
     "deps-ok": "1.4.1",
