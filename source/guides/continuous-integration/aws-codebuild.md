@@ -96,6 +96,19 @@ phases:
 
 # Caching Dependencies and Build Artifacts
 
+Caching with {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} directly can be challenging.
+
+The {% url "Build caching in AWS CodeBuild" https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html %} offers a Local cache and caching on Amazon S3.
+
+Per the documentation, "Local caching stores a cache locally on a build host that is available to that build host only".  This will not be useful during parallel test runs.
+
+The "Amazon S3 caching stores the cache in an Amazon S3 bucket that is available across multiple build hosts".  While this may sound useful, in practice the upload of cached dependencies can take some time.  Furthermore, each worker will attempt to save it's dependency cache to Amazon S3, which increases build time significantly.
+
+Beyond the scope of this guide, but {% url "AWS CodePipeline" https://aws.amazon.com/codepipeline %} may be of use to cache the initial source, dependencies and build output.
+
+ {% url "AWS CodePipeline" https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html %}
+
+
 
 # Parallelization
 
@@ -122,7 +135,7 @@ The results from each worker will be consolidated into the group name in the {% 
 
 The matrix configuration uses a variable `CY_GROUP_SPEC` with a list of items specific to each group for the build.
 
-The fields are delimited by a pipe (|) character as follows:
+The fields are delimited by a pipe (`|`) character as follows:
 
 ```yaml
 # Group Name | Browser | Specs | Cypress Configuration options (optional)
