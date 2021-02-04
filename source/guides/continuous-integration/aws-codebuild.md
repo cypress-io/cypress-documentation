@@ -24,7 +24,7 @@ Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-ex
 How this buildspec works:
 
 - On push to this repository, this job will run an Amazon Linux container.
-- Our code from our GitHub repository.
+- Our code is cloned from our GitHub repository.
 - Our action runs as follows:
   - Install dependencies (npm/yarn)
   - Start the web server (`npm start:ci`)
@@ -216,7 +216,7 @@ phases:
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
-Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url ".buildspec.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml %} file.
+Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "buildspec.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml %} file.
 {% endnote %}
 
 # Debugging with the Cypress Dashboard
