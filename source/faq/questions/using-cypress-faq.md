@@ -220,15 +220,52 @@ describe('The Document Metadata', () => {
 
 You certainly can.
 
-```javascript
-it('check validation message on invalid input', () => {
-  cy.get('input:invalid').should('have.length', 0)
-  cy.get('[type="email"]').type('not_an_email')
-  cy.get('[type="submit"]').click()
-  cy.get('input:invalid').should('have.length', 1)
-  cy.get('[type="email"]').then(($input) => {
-    expect($input[0].validationMessage).to.eq('I expect an email!')
+**Test default validation error**
+
+```html
+<form>
+  <input type="text" id="name" name="name" required />
+  <button type="submit">Submit</button>
+</form>
+```
+
+```js
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('#name').then(($input) => {
+  expect($input[0].validationMessage).to.eq('Please fill out this field.')
+})
+```
+
+**Test custom validation error**
+
+```html
+<body>
+<form>
+  <input type="email" id="email" name="email" />
+  <button type="submit">Submit</button>
+</form>
+<script>
+  const email = document.getElementById("email")
+
+  email.addEventListener("input", function (event) {
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("I expect an email!")
+    } else {
+      email.setCustomValidity("")
+    }
   })
+</script>
+</body>
+```
+
+```javascript
+cy.get('input:invalid').should('have.length', 0)
+cy.get('[type="email"]').type('not_an_email')
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('[type="email"]').then(($input) => {
+  expect($input[0].validationMessage).to.eq('I expect an email!')
 })
 ```
 

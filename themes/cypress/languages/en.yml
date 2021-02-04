@@ -32,12 +32,14 @@ sidebar:
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
+    cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
     users: Users
+    bitbucket-integration: Bitbucket Integration
     github-integration: GitHub Integration
     gitlab-integration: Gitlab Integration
     slack-integration: Slack Integration

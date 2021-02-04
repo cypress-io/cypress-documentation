@@ -45,6 +45,7 @@ Option | Default | Description
 
 Option | Default | Description
 ----- | ---- | ----
+`downloadsFolder`    | `cypress/downloads`    | Path to folder where files downloaded during a test are saved
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "https://globster.xyz" https://globster.xyz %} to test what files would match.
@@ -61,7 +62,7 @@ Option | Default | Description
 ----- | ---- | ----
 `screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during `cypress run`.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 
 For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
 
@@ -69,11 +70,18 @@ For more options regarding screenshots, view the {% url 'Cypress.Screenshot API'
 
 Option | Default | Description
 ----- | ---- | ----
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
 `videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction%} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+
+## Downloads
+
+Option | Default | Description
+----- | ---- | ----
+`downloadsFolder` | `cypress/downloads` | Path to folder where files downloaded during a test are saved
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 
 ## Browser
 
@@ -424,6 +432,36 @@ if (Cypress.config('isInteractive')) {
 ## Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
+
+# Common problems
+
+### {% fa fa-angle-right %} `baseUrl` is not set
+
+Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following configuration is <i>incorrect</i> and WILL NOT WORK:
+
+```javascript
+// ⛔️ DOES NOT WORK
+{
+  "env": {
+    "baseUrl": "http://localhost:3030",
+    "FOO": "bar"
+  }
+}
+```
+
+Solution: place the `baseUrl` property at the top level, outside the `env` object.
+
+```javascript
+// ✅ THE CORRECT WAY
+{
+  "baseUrl": "http://localhost:3030",
+  "env": {
+    "FOO": "bar"
+  }
+}
+```
+
+You can also find a few tips on setting the `baseUrl` in this {% url 'short video' https://www.youtube.com/watch?v=f5UaXuAc52c %}.
 
 {% history %}
 {% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`

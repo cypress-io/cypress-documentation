@@ -15,7 +15,7 @@ Sometimes an element has specific logic on hover and you *do* need to "hover" in
 Oftentimes you can use {% url `.trigger()` trigger %}, {% url `.invoke()` invoke %} or {% url `cy.wrap()` wrap %} to show the element before you perform the action.
 
 {% note info %}
-{% url 'Check out our example recipe on testing hover and working with hidden elements' recipes#Testing-the-DOM %}
+{% url 'Check out our example recipe on testing hover and working with hidden elements' recipes#Testing-the-DOM %}. Also take a look at the {% url 'cypress-real-events' https://github.com/dmtrKovalenko/cypress-real-events %} plugin that provides native events like hover and swipe in Chromium browsers.
 {% endnote %}
 
 ## Trigger
@@ -23,7 +23,7 @@ Oftentimes you can use {% url `.trigger()` trigger %}, {% url `.invoke()` invoke
 If the hover behavior depends on a JavaScript event like `mouseover`, you can trigger the event to achieve that behavior.
 
 {% note danger %}
-Using `.trigger()` will only affect events in JavaScript and will not trigger any effects in CSS. 
+Using `.trigger()` will only affect events in JavaScript and will not trigger any effects in CSS.
 {% endnote %}
 
 As a workaround, check out the {% url 'recipe leveraging Chrome remote debugging' recipes#Fundamentals %} to set pseudo classes like `hover`.
