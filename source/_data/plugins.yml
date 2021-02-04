@@ -439,7 +439,13 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
-
+      
+    - name: cypress-real-events
+      description: Fire native system events from Cypress like hover, swipe, etc
+      link: https://github.com/dmtrKovalenko/cypress-real-events
+      keywords: [commands]
+      badge: community
+      
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
