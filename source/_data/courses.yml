@@ -1,6 +1,13 @@
 # Online courses that teach end-to-end testing using Cypress.io
 # over multiple videos. The courses appear in the order
 # listed here, so place most recent courses first
+- title: "Introduction to Cypress"
+  url: https://www.ministryoftesting.com/dojo/courses/introduction-to-cypress?goal=0_02cca1920b-ef8df17a7d-289508933&mc_cid=ef8df17a7d&mc_eid=1e83fcd2d8
+  author: Marie Drake
+  authorTwitter: mcruzdrake
+  sourceName: Ministry of Testing
+  sourceUrl: https://www.ministryoftesting.com
+
 - title: "Cypress на реальном проекте для начинающих QA Automation"
   url: https://www.udemy.com/course/cypress-qa-automation/?referralCode=30DB8B5087D5A1CF4B46
   author: Sergei Semenov
