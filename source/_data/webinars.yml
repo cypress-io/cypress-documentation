@@ -1,6 +1,8 @@
 # small links with title and url
 # Using this to post subscribe to updates link
 small:
+  - title: "Cypress webinars YouTube playlist"
+    sourceUrl: https://www.youtube.com/playlist?list=PL8GlT7H3xOcKHZlXjWjWUQl2fnedXuT14
   - title: "Get notified of upcoming webcasts by subscribing to emails from Cypress"
     sourceUrl: https://go.cypress.io/subscribe
   - title: "Follow us on Twitter!"
@@ -58,11 +60,11 @@ large:
     date: May 20, 2020
     author: Cypress & Happo with Gleb Bahmutov & Henric Trotzig
     youtubeId: C_p12IvN5HU
-  
+
   - title: "Shipping with Confidence: How DHL reduced test execution time by 50%"
-    date: May 7, 2020  
+    date: May 7, 2020
     author: Cypress & DHL with Gleb Bahmutov & Rick Fleuren
-    youtubeId: TiLtELQ0hkI  
+    youtubeId: TiLtELQ0hkI
 
   - title: "How Lightstep Quadrupled Deployment Velocity with Cypress"
     date: April 15, 2020
@@ -113,7 +115,7 @@ large:
 
   - title: "Cypress.io + Percy = End-to-end functional and visual testing for the web"
     date: Apr 10, 2019
-    author: Cypress & Percy with Mike Fotinakis & Gleb Bahmutov 
+    author: Cypress & Percy with Mike Fotinakis & Gleb Bahmutov
     youtubeId: MXfZeE9RQDw
 
   - title: "How GoDaddy Created A Culture of Quality Through Test Automation with Cypress"
