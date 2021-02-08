@@ -8,6 +8,36 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Ship safer code with Cypress and Codecov"
+    date: January 13, 2021
+    author: Cypress & Codecov with Gleb Bahmutov and Tom Hu
+    youtubeId: -3N4WZRrpv4
+    slides: https://cypress.slides.com/cypress-io/codecov
+
+  - title: "Introduction to the Cypress Dashboard"
+    date: November 18, 2020
+    author: Cypress with Cecelia Martinez
+    youtubeId: 4JT5z0ng2E0
+    slides: https://link.cypress.io/35HgCFH
+
+  - title: "Using Code Smells to Fix Flaky Tests in Cypress"
+    date: November 18, 2020
+    author: Cypress & Big Nerd Ranch with Gleb Bahmutov and Josh Justice
+    youtubeId: JlBCdRlvPWk
+    slides: https://cypress.slides.com/cypress-io/code-smells
+
+  - title: "How Userlane dramatically reduced flaky E2E tests with Cypress"
+    date: October 28, 2020
+    author: Cypress & Userlane with Gleb Bahmutov, Tobias Muelller and Haydeé Muñoz De la Rocha
+    youtubeId: pLC4zr6Yfvo
+    slides: https://cypress.slides.com/cypress-io/userlane
+
+  - title: "Cypress Patterns and Practices"
+    date: September 30, 2020
+    author: Cypress with Amir Rustamzadeh and Kevin Old
+    youtubeId: V-o8WzlwKmM
+    slides: https://cypress.slides.com/amirrustam/patterns-practices
+
   - title: "How GoFundMe’s QA Engineers and Developers Test 30x Faster with Cypress"
     date: August 26, 2020
     author: Cypress & GoFundMe with Gleb Bahmutov and Todd Williams
