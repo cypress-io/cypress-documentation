@@ -2,10 +2,6 @@
 title: Gitlab Integration
 ---
 
-{% note info %}
-Gitlab integration is currently in private beta.
-{% endnote %}
-
 The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate your Cypress tests with your Gitlab workflow via {% urlHash 'commit statuses' Commit-statuses %} and {% urlHash 'merge request comments' Merge-Request-comments %}. A project first needs to be {% url "setup to record" projects %} to the Cypress Dashboard to use Gitlab integration.
 
 {% note warning %}
