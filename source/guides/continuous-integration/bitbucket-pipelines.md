@@ -91,3 +91,32 @@ pipelines:
           - cypress/screenshots/**
           - cypress/videos/**
 ```
+
+# Parallelization
+
+The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
+
+{% note info %}
+The following configuration with `--parallel` and `--record` options to Cypress requires a subscription to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+{% endnote %}
+
+Our command records results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} in parallel, using the `CYPRESS_RECORD_KEY` environment variable.
+
+Jobs can be organized by groups by passing a `--group` attribute and value to `cypress run`.
+
+Below we pass the `parallel` attribute with a numerical value for the number of workers.
+
+The results from each worker will be consolidated into the group name in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+```yaml
+```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
+
+Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "bitbucket-pipelines.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml %} file.
+{% endnote %}
+
+# Debugging with the Cypress Dashboard
