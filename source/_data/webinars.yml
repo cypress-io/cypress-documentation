@@ -1,6 +1,8 @@
 # small links with title and url
 # Using this to post subscribe to updates link
 small:
+  - title: "Cypress webinars YouTube playlist"
+    sourceUrl: https://www.youtube.com/playlist?list=PL8GlT7H3xOcKHZlXjWjWUQl2fnedXuT14
   - title: "Get notified of upcoming webcasts by subscribing to emails from Cypress"
     sourceUrl: https://go.cypress.io/subscribe
   - title: "Follow us on Twitter!"
@@ -8,6 +10,36 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Ship safer code with Cypress and Codecov"
+    date: January 13, 2021
+    author: Cypress & Codecov with Gleb Bahmutov and Tom Hu
+    youtubeId: -3N4WZRrpv4
+    slides: https://cypress.slides.com/cypress-io/codecov
+
+  - title: "Introduction to the Cypress Dashboard"
+    date: November 18, 2020
+    author: Cypress with Cecelia Martinez
+    youtubeId: 4JT5z0ng2E0
+    slides: https://link.cypress.io/35HgCFH
+
+  - title: "Using Code Smells to Fix Flaky Tests in Cypress"
+    date: November 18, 2020
+    author: Cypress & Big Nerd Ranch with Gleb Bahmutov and Josh Justice
+    youtubeId: JlBCdRlvPWk
+    slides: https://cypress.slides.com/cypress-io/code-smells
+
+  - title: "How Userlane dramatically reduced flaky E2E tests with Cypress"
+    date: October 28, 2020
+    author: Cypress & Userlane with Gleb Bahmutov, Tobias Muelller and Haydeé Muñoz De la Rocha
+    youtubeId: pLC4zr6Yfvo
+    slides: https://cypress.slides.com/cypress-io/userlane
+
+  - title: "Cypress Patterns and Practices"
+    date: September 30, 2020
+    author: Cypress with Amir Rustamzadeh and Kevin Old
+    youtubeId: V-o8WzlwKmM
+    slides: https://cypress.slides.com/amirrustam/patterns-practices
+
   - title: "How GoFundMe’s QA Engineers and Developers Test 30x Faster with Cypress"
     date: August 26, 2020
     author: Cypress & GoFundMe with Gleb Bahmutov and Todd Williams
@@ -28,11 +60,11 @@ large:
     date: May 20, 2020
     author: Cypress & Happo with Gleb Bahmutov & Henric Trotzig
     youtubeId: C_p12IvN5HU
-  
+
   - title: "Shipping with Confidence: How DHL reduced test execution time by 50%"
-    date: May 7, 2020  
+    date: May 7, 2020
     author: Cypress & DHL with Gleb Bahmutov & Rick Fleuren
-    youtubeId: TiLtELQ0hkI  
+    youtubeId: TiLtELQ0hkI
 
   - title: "How Lightstep Quadrupled Deployment Velocity with Cypress"
     date: April 15, 2020
@@ -83,7 +115,7 @@ large:
 
   - title: "Cypress.io + Percy = End-to-end functional and visual testing for the web"
     date: Apr 10, 2019
-    author: Cypress & Percy with Mike Fotinakis & Gleb Bahmutov 
+    author: Cypress & Percy with Mike Fotinakis & Gleb Bahmutov
     youtubeId: MXfZeE9RQDw
 
   - title: "How GoDaddy Created A Culture of Quality Through Test Automation with Cypress"
