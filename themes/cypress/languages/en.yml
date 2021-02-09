@@ -40,6 +40,7 @@ sidebar:
     organizations: Organizations
     users: Users
     bitbucket-integration: Bitbucket Integration
+    bitbucket-pipelines: Bitbucket Pipelines
     github-integration: GitHub Integration
     gitlab-integration: GitLab Integration
     slack-integration: Slack Integration

@@ -27,6 +27,8 @@ guides:
     slack-integration: slack-integration.html
     analytics: analytics.html
     flaky-test-management: flaky-test-management.html
+  continuous-integration:
+    bitbucket-pipelines: bitbucket-pipelines.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
