@@ -191,3 +191,7 @@ We schedule releases of the Test Runner on Monday every two weeks. This new vers
 We schedule major releases with breaking changes approximately every 3 months.
 
 If there is a significant bug outside of our release schedule then we release a patch as soon as possible.
+
+## {% fa fa-angle-right %} What information is captured or transmitted when using the Cypress Test Runner?
+
+The Cypress Test Runner runs locally so no data is sent to Cypress aside from exception data, which can be disabled using the instructions {% url "here" https://docs.cypress.io/guides/getting-started/installing-cypress.html#Opt-out-of-sending-exception-data-to-Cypress %}.
