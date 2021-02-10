@@ -463,6 +463,14 @@ Solution: place the `baseUrl` property at the top level, outside the `env` objec
 
 You can also find a few tips on setting the `baseUrl` in this {% url 'short video' https://www.youtube.com/watch?v=f5UaXuAc52c %}.
 
+### {% fa fa-angle-right %} Test files not found when using `spec` parameter
+
+When using the `--spec <path or mask>` argument, make it relative to the project's folder. If the specs are still missing, run Cypress with {% url 'DEBUG logs' troubleshooting#Print-DEBUG-logs %} with the following setting to see how the Test Runner is looking for spec files:
+
+```shell
+DEBUG=cypress:cli,cypress:server:specs
+```
+
 {% history %}
 {% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
