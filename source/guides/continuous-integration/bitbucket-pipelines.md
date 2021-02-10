@@ -92,6 +92,14 @@ pipelines:
           - cypress/videos/**
 ```
 
+Using the {% url "definitions" https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/#Global-configuration-options %} block we can define additional caches for npm and Cypress.
+
+```yaml
+definitions:
+  caches:
+    npm: $HOME/.npm
+    cypress: $HOME/.cache/Cypress
+```
 # Parallelization
 
 The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
