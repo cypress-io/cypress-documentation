@@ -108,7 +108,97 @@ Below we pass the `parallel` attribute with a numerical value for the number of 
 
 The results from each worker will be consolidated into the group name in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 
+Here we break the pipeline up into reusable chunks of configuration using a {% url "YAML anchor" https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/ %}, `&e2e`.
+
 ```yaml
+image: cypress/base:10
+
+# job definition for running E2E tests in parallel
+e2e: &e2e
+  name: E2E tests
+  caches:
+    - node
+    - cypress
+  script:
+    - npm run start:ci &
+    - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
+  artifacts:
+    # store any generates images and videos as artifacts
+    - cypress/screenshots/**
+    - cypress/videos/**
+```
+
+We can use the `e2e` {% url "YAML anchor" https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/ %} in our definition of the pipeline to execute parallel jobs using the `parallel` attribute.
+
+```yaml
+# job definition for running E2E tests in parallel
+# ...
+
+pipelines:
+  default:
+    - step:
+        name: Install dependencies
+        caches:
+          - npm
+          - cypress
+          - node
+        script:
+          - npm ci
+    - parallel:
+      # run N steps in parallel
+      - step:
+          <<: *e2e
+      - step:
+          <<: *e2e
+      - step:
+          <<: *e2e
+definitions:
+  caches:
+    npm: $HOME/.npm
+    cypress: $HOME/.cache/Cypress
+```
+
+The full `bitbucket-pipelines.yml` is below:
+
+```yaml
+image: cypress/base:10
+
+# job definition for running E2E tests in parallel
+e2e: &e2e
+  name: E2E tests
+  caches:
+    - node
+    - cypress
+  script:
+    - npm run start:ci &
+    - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
+  artifacts:
+    # store any generates images and videos as artifacts
+    - cypress/screenshots/**
+    - cypress/videos/**
+
+pipelines:
+  default:
+    - step:
+        name: Install dependencies
+        caches:
+          - npm
+          - cypress
+          - node
+        script:
+          - npm ci
+    - parallel:
+      # run N steps in parallel
+      - step:
+          <<: *e2e
+      - step:
+          <<: *e2e
+      - step:
+          <<: *e2e
+definitions:
+  caches:
+    npm: $HOME/.npm
+    cypress: $HOME/.cache/Cypress
 ```
 
 {% note info %}
