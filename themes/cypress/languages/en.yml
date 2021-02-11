@@ -42,6 +42,7 @@ sidebar:
     bitbucket-integration: Bitbucket Integration
     github-integration: GitHub Integration
     gitlab-integration: GitLab Integration
+    jira-integration: Jira Integration
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
