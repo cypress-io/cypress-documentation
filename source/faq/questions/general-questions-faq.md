@@ -186,7 +186,7 @@ You can follow through these links:
 
 ## {% fa fa-angle-right %} How often are Cypress Test Runner versions released?
 
-We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time.
+We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time. You can see all issues merged into the default code branch but not yet released by looking at the issues with the label {% url 'stage: pending release' https://github.com/cypress-io/cypress/issues?q=label%3A%22stage%3A+pending+release%22+is%3Aclosed %}.
 
 We schedule major releases with breaking changes approximately every 3 months.
 
