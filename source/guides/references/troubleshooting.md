@@ -194,7 +194,8 @@ Set `DEBUG` to value | To enable debugging
 `cypress:server:browsers` | Finding installed browsers
 `cypress:launcher` | Launching the found browser
 `cypress:server:video` | Video recording
-`cypress:net-stubbing*` | Network interception
+`cypress:network:*` | Adding network interceptors
+`cypress:net-stubbing*` | Network interception in the proxy layer
 `cypress:server:reporter` | Problems with test reporters
 `cypress:server:preprocessor` | Processing specs
 `cypress:server:plugins` | Running the plugin file and bundling specs
