@@ -103,18 +103,7 @@ test:
 
 The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
-{% note info %}
-The following configuration with `--parallel` and `--record` options to Cypress requires a subscription to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
-{% endnote %}
-
-Our command records results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} in parallel, using the `CYPRESS_RECORD_KEY` environment variable.
-
-Jobs can be organized by groups by passing a `--group` attribute and value to `cypress run`.
-
-Below we pass the `parallel` attribute with a numerical value for the number of workers.
-
-The results from each worker will be consolidated into the group name in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
-
+The addition of the `parallel` attribute will start 5 instances of the defined `image`, which enables us run multiples instances of Cypress at same time.
 
 ```yaml
 stages:
