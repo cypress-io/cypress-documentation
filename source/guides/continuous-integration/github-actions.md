@@ -265,7 +265,3 @@ Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cy
 {% endnote %}
 
 {% imgTag /img/guides/github-actions/rwa-run-matrix.png "Cypress Real World App GitHub Actions Matrix" "no-border" %}
-
-# Debugging with the Cypress Dashboard
-
-Talk about debugging failures with the Cypress Dashboard in a general way.
