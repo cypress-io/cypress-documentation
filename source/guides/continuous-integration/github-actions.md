@@ -16,7 +16,7 @@ GitHub offers developers {% url "Actions" https://github.com/features/actions %}
 
 Workflows can be packaged and shared as {% url "GitHub Actions" https://github.com/features/actions %}.  GitHub maintains many, such as the {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions used below.
 
-The Cypress team maintains a {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} for running Cypress end-to-end tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
+The Cypress team maintains the official {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} for running Cypress tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
 # Basic Setup
 
