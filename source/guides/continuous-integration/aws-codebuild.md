@@ -39,26 +39,18 @@ phases:
 ```
 
 {% note success Try it out %}
-To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above AWS CodeBuild configuration in `buildspec.yml`.
+To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} configuration in `buildspec.yml`.
 {% endnote %}
 
 **How this action works:**
 
 How this buildspec works:
 
-- On push to this repository, this job will run an Amazon Linux container.
-- Our code is cloned from our GitHub repository.
-- Our action runs as follows:
-  - Install dependencies (npm/yarn)
-  - Start the web server (`npm start:ci`)
-  - Run the tests against Electron
-
-- On *push* to this repository, this job will provision and start AWS-hosted Linux instance with Node.js for running the outlined `pre_build` and `build` for the declared commands within the `commands` section of the configuration.
-- AWS CodeBuild will checkout our code from our GitHub repository.
+- On *push* to this repository, this job will provision and start AWS-hosted Amazon Linux instance with Node.js for running the outlined `pre_build` and `build` for the declared commands within the `commands` section of the configuration.
+- {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} will checkout our code from our GitHub repository.
 - Finally, our `buildspec.yml` configuration will:
   - Install npm dependencies
-  - Build the project (`npm run build`)
-  - Start the project web server (`npm start`)
+  - Start the project web server (`npm start:ci`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
 # Testing in Chrome and Firefox with Cypress Docker Images
@@ -71,7 +63,7 @@ AWS CodeBuild offers a {% url "build-list strategy" https://docs.aws.amazon.com/
 
 The {% url "build-list strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list %} offers a way to specify an image hosted on DockerHub or the {% url "Amazon Elastic Container Registry (ECR)" https://aws.amazon.com/ecr/ %}.
 
-The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
+The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. For example, this allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
 ```yaml
 # buildspec.yml
@@ -123,24 +115,18 @@ Reference the {% url "AWS CodePipeline integration with CodeBuild and multiple i
 
 The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
-AWS CodeBuild offers a {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %} of different job configurations for a single job definition.  The {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %} provides an option to specify a container image for the job.
+AWS CodeBuild offers a {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %} for declaring different job configurations for a single job definition.  The {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %} provides an option to specify a container image for the job. Jobs declared within a build-matrix strategy can run in parallel which enables us run multiples instances of Cypress at same time as we will see later in this section.
 
 The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
-{% note info %}
+{% note bolt %}
 The following configuration with `--parallel` and `--record` options to Cypress requires a subscription to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 {% endnote %}
 
 
-Our command records results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} in parallel, using the `CYPRESS_RECORD_KEY` environment variable.
-
-Jobs can be organized by groups by passing a `--group` attribute and value to `cypress run`.
-
-The results from each worker will be consolidated into the group name in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
-
 ## Parallelizing the build
 
-The matrix configuration uses a variable `CY_GROUP_SPEC` with a list of items specific to each group for the build.
+To setup multiple containers to run in parallel, the `build-matrix` configuration uses a set of variables (`CY_GROUP_SPEC` and `WORKERS`) with a list of items specific to each group for the build.
 
 The fields are delimited by a pipe (`|`) character as follows:
 
@@ -187,9 +173,7 @@ phases:
 # ...
 ```
 
-To parallelize the runs, we need to add an additional variable to the {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix %} .
-
-In the code below, the number of workers have been defined by the `WORKERS` variable. When run in the {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %}, this will provide 5 workers to each group defined in the `CY_GROUP_SPEC`.
+To parallelize the runs, we need to add an additional variable to the {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix %}, `WORKERS`.
 
 ```yaml
 batch:
@@ -209,6 +193,9 @@ batch:
             - 4
             - 5
 ```
+{% note info Note %}
+The `WORKERS` array is filled with filler (or *dummy*) items to provision the desired number of CI machine instances within the {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix %} and will provide 5 workers to each group defined in the `CY_GROUP_SPEC`.
+{% endnote %}
 
 Finally, the script variables are passed to the call to `cypress run`.
 
@@ -223,13 +210,15 @@ phases:
 ```
 
 {% note info %}
-#### {% fa fa-graduation-cap %} Real World Example
+
+# Using the Cypress Dashboard with AWS CodeBuild
+Finally, we tell Cypress command to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
+
+Jobs can be organized by groups and in this job we specify a `--group "$CY_GROUP"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+# Cypress Real World Example with AWS CodeBuild
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
 Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "buildspec.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml %} file.
 {% endnote %}
-
-# Debugging with the Cypress Dashboard
-
-Talk about debugging failures with the Cypress Dashboard in a general way.
