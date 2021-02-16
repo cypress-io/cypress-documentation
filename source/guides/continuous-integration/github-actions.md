@@ -56,7 +56,7 @@ To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" ht
   - Start the project web server (`npm start`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
-# Chrome and Firefox with Cypress Docker Images
+# Testing in Chrome and Firefox with Cypress Docker Images
 
 GitHub Actions provides the option to specify a container image for the job. Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI.
 
@@ -133,15 +133,19 @@ jobs:
 
 The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
-GitHub Actions offers a {% url "matrix strategy" https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix %} of different job configurations for a single job definition.
+GitHub Actions offers a {% url "matrix strategy" https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix %} for declaring different job configurations for a single job definition. Jobs declared within a matrix strategy can run in parallel which enables us run multiples instances of Cypress at same time as we will see later in this section.
 
-## Installation Job
+Before diving into an example of a parallelization setup, it is important to understand the two different types of GitHub Action jobs that we will declare:
+- **Install Job**: A job that installs and caches dependencies that will used by subsequent jobs later in the GitHub Action workflow.
+- **Worker Job**: A job that handles execution of Cypress tests and depends on the *install job*. 
 
-The separation of installation from run is necessary when running parallel jobs.  It allows for reuse of various build steps aided by caching.
+## Install Job
+
+The separation of installation from test running is necessary when running parallel jobs. It allows for reuse of various build steps aided by caching.
 
 First, we'll define the `install` step that will be used by the worker jobs defined in the matrix strategy.
 
-For the steps, notice that we pass `runTests: false` to the Cypress GitHub Action to instruct it to only install dependencies without running the tests.
+For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub Action to instruct it to only install dependencies *without running the tests*.
 
 The {% url "cache" https://github.com/marketplace/actions/cache %} GitHub Action is included and will save the state of the `node_modules`, `~/.cache/Cypress` and `build` directories for the worker jobs.
 
@@ -262,6 +266,6 @@ jobs:
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
 Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url ".github/workflows/main.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/github/workflows/main.yml %} file.
-{% endnote %}
 
 {% imgTag /img/guides/github-actions/rwa-run-matrix.png "Cypress Real World App GitHub Actions Matrix" "no-border" %}
+{% endnote %}
