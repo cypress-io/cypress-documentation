@@ -11,17 +11,29 @@ The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate 
 
 1. Visit **Integrations → Jira** in the Cypress Dashboard
 
-## Creating a Jira issue from a test failure
+## Creating a Jira issue for a test case
 
-1. Click on a failing test in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} 
+{% note info When to create issues for tests?%}
+Jira issues can be created for both passing and failing tests. The most common use case would be to create Jira issues for failing tests to better track and prioritize fixing of pipeline failures within projects managed by Jira workflows.
+{% endnote %}
+
+Let's walk through creating a Jira issue for a failing test:
+
+1. Click on a failed test within the "Test Results" view of a test run to open its results panel.
+
+2. Click on the "Create Issue" button within the results panel, which will present the form for creating a Jira issue for the test.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-integration-create-issue.png "Create Jira Issue Button" %}
 
-2. Complete the resulting modal assigning to the Jira project, issue type, assignee and additional fields.
+3. Complete and submit the Jira issue creation form by selecting the Jira project, issue type, assignee, and additional fields.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-integration-modal.png "Create Jira Issue Modal" %}
 
-3. Once created, the issue appears in context of the failure and contains a link to the Jira issue created.
+4. Once the issue is created, a log and reference of the issue will appear within results panel of test.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-integration-inline-issue.png "Jira Issue in Cypress Failure Context" %}
+
+   {% note info Note%}
+   The create issue within Jira will include a link back the Cypress Dashboard for the associated test.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-integration-jira-issue.png "Jira Issue of Cypress Failure" %}
+   {% endnote %}
 
 ## Uninstalling the Jira integration
 
