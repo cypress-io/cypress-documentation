@@ -10,7 +10,7 @@ title: Auth0 Programmatic Authentication
 
 This guide demonstrates testing an application authenticated by [Auth0][auth0].
 
-The [Cypress Real World App][cypressrwa] is used and provides configuration and runnable code for both the React SPA and the Express back end.
+The [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is used and provides configuration and runnable code for both the React SPA and the Express back end.
 
 The front end uses the [auth0-react SDK][auth0react] for React Single Page Applications (SPA), which uses the [auth0-spa-js SDK][auth0spajs] underneath.  The back end uses [express-jwt][expressjwt] to validate JWT's against [auth0][auth0].
 
@@ -42,7 +42,7 @@ Refer to the [Auth0 Tenant Settings documentation][auth0tenantsettingsdoc] for a
 
 ## Real World App Application Configuration
 
-With our [Auth0][auth0] application and tenant setup, we need to add environment variables to our [Cypress Real World App][cypressrwa] `.env` or with the values from our [Auth0][auth0] application and for our test user.
+With our [Auth0][auth0] application and tenant setup, we need to add environment variables to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` or with the values from our [Auth0][auth0] application and for our test user.
 
 ```jsx
 // .env
@@ -155,7 +155,7 @@ const AppAuth0 = () => {
 export default withAuthenticationRequired(AppAuth0);
 ```
 
-Note: The full [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is in the [Cypress Real World App][cypressrwa].
+Note: The full [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is in the [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app.
 
 Next, we update our entry point (`index.tsx`) to wrap our application with the `<Auth0Provider>` from the [auth0-react][auth0react] SDK providing a custom `onRedirectCallback`.  We pass props for the Auth0 environment variables set in `.env` above, and render our `<AppAuth0>` component as the application.
 
@@ -320,7 +320,7 @@ export default appAuth0
 
 Below is our test to login as a user via [Auth0][auth0], complete the onboarding process and logout.
 
-Note: The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts) is in the [Cypress Real World App][cypressrwa].
+Note: The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts) is in the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
 ```jsx
 import { isMobile } from '../../support/utils'
@@ -385,7 +385,7 @@ If you run into this rate limit, a programmatic approach can be added to the `lo
 
 Next you'll need to obtain a [API token][auth0mgmtapiaccesstoken] to interact with the [Auth0 Management API][auth0mgmtapi]. This token is a JSON Web Token (JWT) and it contains specific granted permissions for the API.
 
-Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our [Cypress Real World App][cypressrwa] `.env` with your API token.
+Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` with your API token.
 
 ```jsx
 // .env
@@ -416,7 +416,7 @@ Cypress.Commands.add('loginByAuth0Api', (username, password) => {
 })
 ```
 
-[cypressrwa]: https://github.com/cypress-io/cypress-realworld-app
+https://github.com/cypress-io/cypress-realworld-app: https://github.com/cypress-io/cypress-realworld-app
 [cypressrecipes]: https://github.com/cypress-io/cypress-example-recipes
 [cypresscommands]: https://on.cypress.io/api/commands
 [cypresstask]: https://on.cypress.io/api/task

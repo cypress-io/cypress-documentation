@@ -39,9 +39,9 @@ guides:
     cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
   testing-strategies:
-    auth0: auth0.html
-    aws-cognito: aws-cognito.html
-    okta: okta.html
+    auth0-authentication: auth0-authentication.html
+    amazon-cognito-authentication: amazon-cognito-authentication.html
+    okta-authentication: okta-authentication.html
   component-testing:
     component-testing-introduction: introduction.html
   tooling:

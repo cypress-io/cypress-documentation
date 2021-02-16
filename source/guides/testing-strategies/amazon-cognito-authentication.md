@@ -1,5 +1,5 @@
 ---
-title: Amazon Cognito Programmatic Authentication
+title: Amazon Cognito Authentication
 ---
 
 {% note info %}
@@ -9,13 +9,13 @@ title: Amazon Cognito Programmatic Authentication
 
 {% endnote %}
 
-## What is Amazon Cognito?
+# What is Amazon Cognito?
 
 Amazon {% url "Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
 
 It "lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily" and "scales to millions of users and supports sign-in with social identity providers, such as Facebook, Google, and Amazon, and enterprise identity providers via SAML 2.0."
 
-## Programmatic Authentication with Amazon Cognito
+# Programmatic Authentication with Amazon Cognito
 
 The documentation for {% url "Amazon Cognito" https://aws.amazon.com/cognito %} recommends using the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %} from the {% url "AWS Amplify Framework" https://aws.amazon.com/amplify/framework/ %} to interact with a deployed {% url "Amazon Cognito" https://aws.amazon.com/cognito %} instance.
 
@@ -40,7 +40,7 @@ Auth.signIn(username, password)
   .catch((err) => console.log(err))
 ```
 
-## Amazon Cognito Setup
+# Amazon Cognito Setup
 
 If not already setup, you will need to {% url "create an account" https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account %} with {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
 
@@ -69,7 +69,7 @@ Next, run the {% url "amplify push" https://docs.amplify.aws/cli/start/workflows
 amplify push
 ```
 
-## Setting Amazon Cognito app credentials in Cypress
+# Setting Amazon Cognito app credentials in Cypress
 
 First, we need to configure Cypress to use the {% url "AWS Cognito" https://aws.amazon.com/cognito %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file. In addition, we are using the `aws-exports.js` supplied during the {% url "AWS Amplify CLI" https://docs.amplify.aws/CLI %} build process.
 
@@ -92,7 +92,8 @@ export default (on, config) => {
   return config
 }
 ```
-## Custom Command for Amazon Cognito Authentication
+
+# Custom Command for Amazon Cognito Authentication
 
 Next, we'll write a command to perform a programmatic login into {% url "Amazon Cognito" https://aws.amazon.com/cognito %} and set items in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
 
@@ -155,7 +156,6 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 })
 ```
 
-
 Finally, we can use our `loginByCognitoApi` command in at test.  Below is our test to login as a user via {% url "Amazon Cognito" https://aws.amazon.com/cognito %}, complete the onboarding process and logout.
 
 {% note success %}
@@ -175,13 +175,13 @@ describe('Cognito', function () {
 })
 ```
 
-## Adapting an Amazon Cognito App for Testing
+# Adapting an Amazon Cognito App for Testing
 
 The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is used and provides configuration and runnable code for both the React SPA and the Express back end.
 
 The front end uses the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}. The back end uses the {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWTs from {% url "Amazon Cognito" https://aws.amazon.com/cognito %}.
 
-### Adapting the back end
+## Adapting the back end
 
 In order to validate API requests from the frontend, we install {% url "express-jwt" https://github.com/auth0/express-jwt %} and {% url "jwks-rsa" https://github.com/auth0/node-jwks-rsa %} and configure validation for JWT's from {% url "Amazon Cognito" https://aws.amazon.com/cognito %}.
 
@@ -220,7 +220,8 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 
 // routes ...
 ```
-### Adapting the front end
+
+## Adapting the front end
 
 We need to update our front end React app to allow for authentication with {% url "Amazon Cognito" https://aws.amazon.com/cognito %} using the {% url "AWS Amplify Framework Authentication Library" https://aws-amplify.github.io/amplify-js/api/classes/authclass.html %}.
 
@@ -271,8 +272,8 @@ const AppCognito: React.FC = () => {
 export default AppCognito;
 ```
 
-{% note success %}
-Note: The complete {% url "AppCognito.tsx component" https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx %} is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% note success Try it out %}
+The complete {% url "AppCognito.tsx component" https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx %} is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 {% endnote %}
 
 Next, we update our entry point (`index.tsx`) to use our `AppCognito.tsx` component.
