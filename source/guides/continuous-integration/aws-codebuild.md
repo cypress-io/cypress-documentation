@@ -5,7 +5,8 @@ title: AWS CodeBuild
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to use AWS CodeBuild for Cypress Tests
+- How to run Cypress tests with AWS CodeBuild as part of CI/CD pipeline
+- How to parallelize Cypress test runs within AWS CodeBuild
 
 {% endnote %}
 
@@ -15,20 +16,7 @@ Detailed documentation is available in the {% url "AWS CodeBuild Documentation" 
 
 # Basic Setup
 
-The example below shows a basic setup and job to use {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} to run end-to-end tests with Cypress and Electron.
-
-{% note info %}
-Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example and place the following config in `buildspec.yml` in the root of the project.
-{% endnote %}
-
-How this buildspec works:
-
-- On push to this repository, this job will run an Amazon Linux container.
-- Our code is cloned from our GitHub repository.
-- Our action runs as follows:
-  - Install dependencies (npm/yarn)
-  - Start the web server (`npm start:ci`)
-  - Run the tests against Electron
+The example below is basic CI setup and job using the {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} to run Cypress tests within the Electron browser. This AWS CodeBuild configuration is placed within `buildspec.yml`.
 
 ```yaml
 # buildspec.yml
@@ -50,7 +38,30 @@ phases:
         - npx cypress run --record
 ```
 
-# Chrome and Firefox with Cypress Docker Images
+{% note success Try it out %}
+To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above AWS CodeBuild configuration in `buildspec.yml`.
+{% endnote %}
+
+**How this action works:**
+
+How this buildspec works:
+
+- On push to this repository, this job will run an Amazon Linux container.
+- Our code is cloned from our GitHub repository.
+- Our action runs as follows:
+  - Install dependencies (npm/yarn)
+  - Start the web server (`npm start:ci`)
+  - Run the tests against Electron
+
+- On *push* to this repository, this job will provision and start AWS-hosted Linux instance with Node.js for running the outlined `pre_build` and `build` for the declared commands within the `commands` section of the configuration.
+- AWS CodeBuild will checkout our code from our GitHub repository.
+- Finally, our `buildspec.yml` configuration will:
+  - Install npm dependencies
+  - Build the project (`npm run build`)
+  - Start the project web server (`npm start`)
+  - Run the Cypress tests within our GitHub repository within Electron.
+
+# Testing in Chrome and Firefox with Cypress Docker Images
 
 {% note info %}
 As of version 0.2, CodeBuild does not provide a way to specify a custom image for single build configurations.  One way to solve this is using an {% url "AWS CodeBuild build-list strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list %}.
@@ -60,7 +71,7 @@ AWS CodeBuild offers a {% url "build-list strategy" https://docs.aws.amazon.com/
 
 The {% url "build-list strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list %} offers a way to specify an image hosted on DockerHub or the {% url "Amazon Elastic Container Registry (ECR)" https://aws.amazon.com/ecr/ %}.
 
-Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
+The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
 ```yaml
 # buildspec.yml
@@ -114,7 +125,7 @@ The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'para
 
 AWS CodeBuild offers a {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %} of different job configurations for a single job definition.  The {% url "build-matrix strategy" https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix  %} provides an option to specify a container image for the job.
 
-Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
+The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
 {% note info %}
 The following configuration with `--parallel` and `--record` options to Cypress requires a subscription to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
