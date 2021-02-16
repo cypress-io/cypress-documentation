@@ -20,21 +20,7 @@ The Cypress team maintains the official {% url "Cypress GitHub Action" https://g
 
 # Basic Setup
 
-The example below shows a basic setup and job using the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} to run end-to-end tests with Cypress and Electron.
-
-{% note info %}
-Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example and place the following config in `.github/workflows/main.yml.
-{% endnote %}
-
-How this action works:
-
-- On push to this repository, this job will run a GitHub-hosted runner for Ubuntu Linux.
-- The {% url "GitHub checkout Action" https://github.com/marketplace/actions/checkout %} is used to checkout our code from our GitHub repository.
-- Finally, our Cypress GitHub Action will be used to:
-  - Install dependencies (npm/yarn)
-  - Run the build (`npm run build`)
-  - Start the web server (`npm start`)
-  - Run the tests against Electron.
+The example below is basic CI setup and job using the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} to run Cypress tests within the Electron browser. This GitHub Action configuration is placed within `.github/workflows/main.yml`.
 
 ```yaml
 name: Cypress Tests
@@ -56,11 +42,25 @@ jobs:
           start: npm start
 ```
 
+{% note success Try it out%}
+To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above GitHub Action configuration in `.github/workflows/main.yml`.
+{% endnote %}
+
+**How this action works:**
+
+- On *push* to this repository, this job will provision and start GitHub-hosted Ubuntu Linux instance for running the outlined `steps` for the declared `cypress-run` job within the `jobs` section of the configuration.
+- The {% url "GitHub checkout Action" https://github.com/marketplace/actions/checkout %} is used to checkout our code from our GitHub repository.
+- Finally, our Cypress GitHub Action will:
+  - Install npm dependencies
+  - Build the project (`npm run build`)
+  - Start the project web server (`npm start`)
+  - Run the Cypress tests within our GitHub repository within Electron.
+
 # Chrome and Firefox with Cypress Docker Images
 
 GitHub Actions provides the option to specify a container image for the job. Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI.
 
-Below we add the `container` attribute using a {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `browser: firefox` attribute to the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %}.
+Below we add the `container` attribute using a {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} built with Google Chrome and Firefox. For example, this allows us to run the tests in Firefox by passing the `browser: firefox` attribute to the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %}.
 
 ```yaml
 name: Cypress Tests using Cypress Docker Image
@@ -86,13 +86,12 @@ jobs:
 
 # Caching Dependencies and Build Artifacts
 
-Dependencies and build artifacts maybe cache between jobs using the {% url "cache" https://github.com/marketplace/actions/cache %} GitHub Action.
+Dependencies and build artifacts maybe cached between jobs using the {% url "cache" https://github.com/marketplace/actions/cache %} GitHub Action.
 
 The job below includes a cache of `node_modules`, the Cypress binary in `~/.cache/Cypress` and the `build` directory.  In addition, the `build` attribute is added to the Cypress GitHub Action to generate the build artifacts prior to the test run.
 
-
 {% note info %}
-Caching of dependencies and build artifacts can be accomplish with {% url "GitHub Actions Artifact Actions" https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts %}, but uploading takes more time than using the {% url "cache GitHub Action" https://github.com/marketplace/actions/cache %}.
+Caching of dependencies and build artifacts can be accomplished with the GitHub Actions {% url " Upload/Download Artifact Actions" https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts %}, but uploading takes more time than using the {% url "cache GitHub Action" https://github.com/marketplace/actions/cache %}.
 {% endnote %}
 
 ```yaml
