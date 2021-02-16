@@ -82,9 +82,9 @@ sidebar:
     code-coverage: Code Coverage
     component-testing-introduction: Introduction
     testing-strategies: Testing Strategies
-    auth0: Auth0
-    okta: Okta
-    aws-cognito: AWS Cognito
+    auth0-authentication: Auth0 Authentication
+    okta-authentication: Okta Authentication
+    amazon-cognito: Amazon Cognito Authentication
   api:
     api: API
     table-of-contents: Table of Contents
