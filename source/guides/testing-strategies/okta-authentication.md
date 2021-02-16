@@ -16,9 +16,6 @@ The scope of this guide is to demonstrate authentication solely against the {% u
 {% note success Why authenticate programmatically? %}
 Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
 
-Programmatic authentication is a often a viable solution for a few reasons:
-- 
-
 {% endnote %}
 
 # Okta Developer Console Setup
@@ -125,7 +122,7 @@ The [runnable version of this test](https://github.com/cypress-io/cypress-realwo
 # Adapting an Okta App for Testing
 
 {% note info Note %}
-The previous sections focused on the recommended Okta authentication practice within Cypress tests. To use this practice, it is assumed you are testing an app with a front end and back end appropriately built or adapted to use Okta.
+The previous sections focused on the recommended Okta authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Okta.
 
 The following sections provides guidance on building or adapting an app to use Okta authentication.
 {% endnote %}

@@ -1,10 +1,16 @@
 ---
-title: Auth0 Programmatic Authentication
+title: Auth0 Authentication
 ---
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
+- Programmatically authenticate with  {% url "Auth0" https://auth0.com %} via a custom Cypress command
+- Adapting your  {% url "Auth0" https://auth0.com %} application for programmatic authentication during testing
 
+{% endnote %}
+
+{% note success Why authenticate programmatically? %}
+Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
 
 {% endnote %}
 
@@ -18,7 +24,7 @@ In addition, setup and configuration of [Auth0][auth0] and Cypress against and [
 
 **Note: This guide is setup for testing against an [Auth0][auth0] Single Page Application using the [Classic Universal Login Experience][auth0classiclogin].  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.**
 
-## Configure Auth0 Application for Testing with Cypress
+# Configure Auth0 Application for Testing with Cypress
 
 On the Auth0 Dashboard, click the "Create Application" button, name your application and select "Single Page Application".
 
@@ -40,163 +46,7 @@ On the [General][auth0tenantgeneral] tab go to the [API Authorization Settings][
 
 Refer to the [Auth0 Tenant Settings documentation][auth0tenantsettingsdoc] for additional details.
 
-## Real World App Application Configuration
-
-With our [Auth0][auth0] application and tenant setup, we need to add environment variables to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` or with the values from our [Auth0][auth0] application and for our test user.
-
-```jsx
-// .env
-AUTH_USERNAME = 'username@domain.com'
-AUTH_PASSWORD = 's3cret1234$'
-AUTH0_CLIENT_SECRET = 'your-auth0-client-secret'
-REACT_APP_AUTH_TOKEN_NAME = 'authAccessToken'
-REACT_APP_AUTH0_DOMAIN = 'your-auth0-domain.auth0.com'
-REACT_APP_AUTH0_CLIENTID = '1234567890'
-REACT_APP_AUTH0_AUDIENCE = 'https://your-auth0-domain.auth0.com/api/v2/'
-REACT_APP_AUTH0_SCOPE = 'openid email profile'
-```
-
-## Adapting the Real World App back end
-
-In order to validate API requests from the frontend, we install [express-jwt](https://github.com/auth0/express-jwt) and [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for JWT's from [Auth0](https://auth0.com).
-
-```jsx
-// backend/helpers.ts
-import jwt from 'express-jwt'
-import jwksRsa from 'jwks-rsa'
-
-dotenv.config()
-
-const auth0JwtConfig = {
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`,
-  }),
-
-  // Validate the audience and the issuer.
-  audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-  issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
-  algorithms: ['RS256'],
-}
-```
-
-Next, we'll define an Express middleware function to be use in our routes to verify the [Auth0][auth0] JWT sent by the front end API requests as the `Bearer` token.
-
-```jsx
-// backend/helpers.ts
-
-// ...
-
-export const checkJwt = jwt(auth0JwtConfig).unless({ path: ['/testData/*'] })
-```
-
-Once this helper is defined, we can use globally to apply to all routes:
-
-```jsx
-// backend/app.ts
-// initial imports ...
-import { checkJwt } from './helpers'
-
-// ...
-
-if (process.env.REACT_APP_AUTH0) {
-  app.use(checkJwt)
-}
-
-// routes ...
-```
-
-## Adapting the Real World App front end
-
-We need to update our front end React app to allow for authentication with [Auth0][auth0]. As mentioned above, the [auth0-react][auth0react] SDK for React Single Page Applications (SPA) is used.
-
-First, we create a `AppAuth0.tsx` container to render our application as it is authenticated with [Auth0][auth0].  The component is identical to the `App.tsx` component, but uses the `useAuth0` React Hook, removes the need for the Sign Up and Sign In routes and wraps the component with the `withAuthenticationRequired` higher order function (HOC).
-
-A `useEffect` hook is added to get the access token for the authenticated user and send an `AUTH0` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).
-
-```jsx
-// src/containers/AppAuth0.tsx
-
-// initial imports ...
-
-import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
-
-// ...
-
-const AppAuth0 = () => {
-  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-
-  // ...
-
-  useEffect(() => {
-      (async function waitForToken() {
-        const token = await getAccessTokenSilently();
-        authService.send("AUTH0", { user, token });
-      })();
-    }, [user, getAccessTokenSilently]);
-
-  // ...
-
-  const isLoggedIn =
-    isAuthenticated &&
-    (authState.matches("authorized") ||
-      authState.matches("refreshing") ||
-      authState.matches("updating"));
-
-  return (
-    <div className={classes.root}>
-      // ...
-    </div>
-  );
-};
-
-export default withAuthenticationRequired(AppAuth0);
-```
-
-Note: The full [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is in the [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app.
-
-Next, we update our entry point (`index.tsx`) to wrap our application with the `<Auth0Provider>` from the [auth0-react][auth0react] SDK providing a custom `onRedirectCallback`.  We pass props for the Auth0 environment variables set in `.env` above, and render our `<AppAuth0>` component as the application.
-
-```jsx
-// src/index.tsx
-
-// initial imports ...
-
-import AppAuth0 from "./containers/AppAuth0";
-
-// ..
-
-const onRedirectCallback = (appState: any) => {
-  history.replace((appState && appState.returnTo) || window.location.pathname);
-};
-
-if (process.env.REACT_APP_AUTH0) {
-  ReactDOM.render(
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN!}
-      clientId={process.env.REACT_APP_AUTH0_CLIENTID!}
-      redirectUri={window.location.origin}
-      audience={process.env.REACT_APP_AUTH0_AUDIENCE}
-      scope={process.env.REACT_APP_AUTH0_SCOPE}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <Router history={history}>
-        <ThemeProvider theme={theme}>
-          <AppAuth0 />
-        </ThemeProvider>
-      </Router>
-    </Auth0Provider>,
-    document.getElementById("root")
-  );
-} else {
-  // render passport-local App.tsx
-}
-```
-
-
-## Cypress Setup for Testing Auth0
+# Cypress Setup for Testing Auth0
 
 Below is a command to programmatically login into [Auth0][auth0], using the [/oauth/token endpoint][auth0OauthTokenEndpoint] and set an item in localStorage with the `access_token` and `id_token` it returns.  These will be used in our application code to verify we are authenticated under test.
 
@@ -373,7 +223,163 @@ describe('Auth0', function () {
 })
 ```
 
-## Auth0 Rate Limiting Logins
+# Adapting an Auth0 App for Testing
+## Real World App Application Configuration
+
+With our [Auth0][auth0] application and tenant setup, we need to add environment variables to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` or with the values from our [Auth0][auth0] application and for our test user.
+
+```jsx
+// .env
+AUTH_USERNAME = 'username@domain.com'
+AUTH_PASSWORD = 's3cret1234$'
+AUTH0_CLIENT_SECRET = 'your-auth0-client-secret'
+REACT_APP_AUTH_TOKEN_NAME = 'authAccessToken'
+REACT_APP_AUTH0_DOMAIN = 'your-auth0-domain.auth0.com'
+REACT_APP_AUTH0_CLIENTID = '1234567890'
+REACT_APP_AUTH0_AUDIENCE = 'https://your-auth0-domain.auth0.com/api/v2/'
+REACT_APP_AUTH0_SCOPE = 'openid email profile'
+```
+
+## Adapting the back end
+
+In order to validate API requests from the frontend, we install [express-jwt](https://github.com/auth0/express-jwt) and [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for JWT's from [Auth0](https://auth0.com).
+
+```jsx
+// backend/helpers.ts
+import jwt from 'express-jwt'
+import jwksRsa from 'jwks-rsa'
+
+dotenv.config()
+
+const auth0JwtConfig = {
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
+
+  // Validate the audience and the issuer.
+  audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
+  algorithms: ['RS256'],
+}
+```
+
+Next, we'll define an Express middleware function to be use in our routes to verify the [Auth0][auth0] JWT sent by the front end API requests as the `Bearer` token.
+
+```jsx
+// backend/helpers.ts
+
+// ...
+
+export const checkJwt = jwt(auth0JwtConfig).unless({ path: ['/testData/*'] })
+```
+
+Once this helper is defined, we can use globally to apply to all routes:
+
+```jsx
+// backend/app.ts
+// initial imports ...
+import { checkJwt } from './helpers'
+
+// ...
+
+if (process.env.REACT_APP_AUTH0) {
+  app.use(checkJwt)
+}
+
+// routes ...
+```
+
+## Adapting the front end
+
+We need to update our front end React app to allow for authentication with [Auth0][auth0]. As mentioned above, the [auth0-react][auth0react] SDK for React Single Page Applications (SPA) is used.
+
+First, we create a `AppAuth0.tsx` container to render our application as it is authenticated with [Auth0][auth0].  The component is identical to the `App.tsx` component, but uses the `useAuth0` React Hook, removes the need for the Sign Up and Sign In routes and wraps the component with the `withAuthenticationRequired` higher order function (HOC).
+
+A `useEffect` hook is added to get the access token for the authenticated user and send an `AUTH0` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).
+
+```jsx
+// src/containers/AppAuth0.tsx
+
+// initial imports ...
+
+import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
+
+// ...
+
+const AppAuth0 = () => {
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+
+  // ...
+
+  useEffect(() => {
+      (async function waitForToken() {
+        const token = await getAccessTokenSilently();
+        authService.send("AUTH0", { user, token });
+      })();
+    }, [user, getAccessTokenSilently]);
+
+  // ...
+
+  const isLoggedIn =
+    isAuthenticated &&
+    (authState.matches("authorized") ||
+      authState.matches("refreshing") ||
+      authState.matches("updating"));
+
+  return (
+    <div className={classes.root}>
+      // ...
+    </div>
+  );
+};
+
+export default withAuthenticationRequired(AppAuth0);
+```
+
+Note: The full [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is in the [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app.
+
+Next, we update our entry point (`index.tsx`) to wrap our application with the `<Auth0Provider>` from the [auth0-react][auth0react] SDK providing a custom `onRedirectCallback`.  We pass props for the Auth0 environment variables set in `.env` above, and render our `<AppAuth0>` component as the application.
+
+```jsx
+// src/index.tsx
+
+// initial imports ...
+
+import AppAuth0 from "./containers/AppAuth0";
+
+// ..
+
+const onRedirectCallback = (appState: any) => {
+  history.replace((appState && appState.returnTo) || window.location.pathname);
+};
+
+if (process.env.REACT_APP_AUTH0) {
+  ReactDOM.render(
+    <Auth0Provider
+      domain={process.env.REACT_APP_AUTH0_DOMAIN!}
+      clientId={process.env.REACT_APP_AUTH0_CLIENTID!}
+      redirectUri={window.location.origin}
+      audience={process.env.REACT_APP_AUTH0_AUDIENCE}
+      scope={process.env.REACT_APP_AUTH0_SCOPE}
+      onRedirectCallback={onRedirectCallback}
+    >
+      <Router history={history}>
+        <ThemeProvider theme={theme}>
+          <AppAuth0 />
+        </ThemeProvider>
+      </Router>
+    </Auth0Provider>,
+    document.getElementById("root")
+  );
+} else {
+  // render passport-local App.tsx
+}
+```
+
+# Auth0 Rate Limiting Logins
 
 Be aware of the rate limit statement in the Auth0 documentation:
 

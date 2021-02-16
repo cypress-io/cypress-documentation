@@ -9,6 +9,11 @@ title: Amazon Cognito Authentication
 
 {% endnote %}
 
+{% note success Why authenticate programmatically? %}
+Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
+
+{% endnote %}
+
 # What is Amazon Cognito?
 
 Amazon {% url "Cognito" https://aws.amazon.com/cognito %} is an authentication provider apart of {% url "Amazon Web Services (AWS)" https://aws.amazon.com %}.
