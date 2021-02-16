@@ -150,12 +150,12 @@ The above configuration using the `--parallel` and `--record` flags to {% '`cypr
 {% endnote %}
 
 {% note info %}
-# Using the Cypress Dashboard with GitHub Actions
+# Using the Cypress Dashboard with GitLab CI/CD
 Finally, we tell the to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
 
 Jobs can be organized by groups and in this job we specify a `group: "UI - Firefox"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 
-# Cypress Real World Example with GitHub Actions
+# Cypress Real World Example with GitLab CI/CD
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
