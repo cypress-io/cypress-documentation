@@ -199,7 +199,10 @@ Set `DEBUG` to value | To enable debugging
 `cypress:server:reporter` | Problems with test reporters
 `cypress:server:preprocessor` | Processing specs
 `cypress:server:plugins` | Running the plugin file and bundling specs
+`cypress:server:socket-e2e` | Watching spec files
+`cypress:server:task` | Invoking the `cy.task` command
 `cypress:webpack` | Bundling specs using webpack
+`cypress:server:fixture` | Loading fixture files
 
 You can combine several areas together using the comma character. For example, to debug specs not being found, use:
 
