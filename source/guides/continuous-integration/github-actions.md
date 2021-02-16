@@ -5,7 +5,8 @@ title: GitHub Actions
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to use GitHub Actions for Cypress Tests
+- How to run Cypress tests with GitHub Actions as part of CI/CD pipeline
+- How to parallelize Cypress test runs within GitHub Actions
 
 {% endnote %}
 
