@@ -2,7 +2,10 @@
 title: Jira Integration
 ---
 
-The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate your Cypress tests with your Jira workflow by enabling the creation of Jira issues from a test failure.
+The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate with your Jira workflow to enable:
+
+- Creating one or more Jira issues for a given a test case directly from the Cypress Dashboard.
+- Viewing of historical log of Jira issues created for or associated for a given test case across test runs.
 
 ## Installing the Jira integration
 
