@@ -84,7 +84,7 @@ sidebar:
     testing-strategies: Testing Strategies
     auth0-authentication: Auth0 Authentication
     okta-authentication: Okta Authentication
-    amazon-cognito: Amazon Cognito Authentication
+    amazon-cognito-authentication: Amazon Cognito Authentication
   api:
     api: API
     table-of-contents: Table of Contents
