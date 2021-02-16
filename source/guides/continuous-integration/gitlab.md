@@ -70,11 +70,7 @@ test:
 
 # Caching Dependencies and Build Artifacts
 
-Per the {% url "GitLab documentation" https://docs.gitlab.com/ee/ci/caching/ %}, {% url "GitLab CI/CD" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %} offers options for caching dependencies and build artifacts across many different workflows.
-
-To cache `node_modules`, the npm cache across builds, the `cache` attribute and configuration has been added below.
-
-Artifacts from a job can be defined by providing paths and an optional expiry time.
+Caching of dependencies and build artifacts can be accomplished with the `cache` configuration.  The {% url "caching documentation" https://docs.gitlab.com/ee/ci/caching/ %} contains all options for caching dependencies and build artifacts across many different workflows. Artifacts from a job can be defined by providing paths and an optional expiry time.
 
 ```yaml
 stages:
@@ -149,12 +145,18 @@ test:
     expire_in: 1 day
 ```
 
+{% note bolt %}
+The above configuration using the `--parallel` and `--record` flags to {% '`cypress run`' command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+{% endnote %}
+
 {% note info %}
-#### {% fa fa-graduation-cap %} Real World Example
+# Using the Cypress Dashboard with GitHub Actions
+Finally, we tell the to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
+
+Jobs can be organized by groups and in this job we specify a `group: "UI - Firefox"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+# Cypress Real World Example with GitHub Actions
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
 Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url ".gitlab-ci.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/.gitlab-ci.yml %} file.
-{% endnote %}
-
-# Debugging with the Cypress Dashboard
