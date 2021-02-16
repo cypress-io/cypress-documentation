@@ -5,7 +5,8 @@ title: GitLab CI/CD
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to use GitLab CI/CD for Cypress Tests
+- How to run Cypress tests with GitLab as part of CI/CD pipeline
+- How to parallelize Cypress test runs within GitLab CI/CD
 
 {% endnote %}
 
@@ -15,20 +16,7 @@ Detailed documentation is available in the {% url "GitLab CI/CD Documentation" h
 
 # Basic Setup
 
-The example below shows a basic setup and job to use {% url "GitLab CI/CD" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %} to run end-to-end tests with Cypress and Electron.
-
-{% note info %}
-Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example and place the following config in `.gitlab-ci.yml` in the root of the project.
-{% endnote %}
-
-How this `gitlab-ci.yml` works:
-
-- On push to this repository, this job will run a {% url "GitLab CI/CD" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %} container.
-- Our code is cloned from the GitLab/GitHub repository.
-- Our action runs as follows:
-  - Install dependencies (npm/yarn)
-  - Start the web server (`npm start:ci`)
-  - Run the tests against Electron
+The example below is basic CI setup and job using {% url "GitLab CI/CD" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %} to run Cypress tests within the Electron browser. This GitHub Action configuration is placed within `.gitlab-ci.yml`.
 
 ```yaml
 stages:
@@ -46,9 +34,23 @@ test:
     - npm run e2e
 ```
 
-# Chrome and Firefox with Cypress Docker Images
+{% note info Try it out %}
+To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above GitHub Action configuration in `.gitlab-ci.yml`.
+{% endnote %}
 
-Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
+
+**How this configuration works:**
+
+- On *push* to this repository, this job will provision and start GitLab-hosted Linux instance for running the outlined `stages` declared in `script` with in the `test` job section of the configuration.
+- The code is checked out from our GitHub/GitLab repository.
+- Finally, our scripts will:
+  - Install npm dependencies
+  - Start the project web server (`npm start`)
+  - Run the Cypress tests within our GitHub repository within Electron.
+
+# Testing in Chrome and Firefox with Cypress Docker Images
+
+The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress tests locally and in CI, which are built with Google Chrome and Firefox. For example, this allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
 ```yaml
 stages:
