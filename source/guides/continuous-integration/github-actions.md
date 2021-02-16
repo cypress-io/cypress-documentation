@@ -176,35 +176,17 @@ jobs:
       - name: Cypress install
         uses: cypress-io/github-action@v2
         with:
+          # Disable running of tests within install job
           runTests: false
           build: yarn build
 ```
 
 ## Worker Jobs
-{% note info %}
-The following configuration with `parallel` and `record` options to the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} requires a subscription to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+Next, we define the worker job named `ui-chrome-tests` that will run Cypress tests with Chrome as part of a parallelized matrix strategy.
+
+{% note info Note %}
+Using our {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} we specify `install: false` since our dependencies and build were cached in our `install` job.
 {% endnote %}
-
-Next we define the worker jobs.
-
-Below we define a job for "UI Chrome Tests" that will run tests under the `cypress/tests/ui/` path against Google Chrome.
-
-It has a {% url "matrix strategy" https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix %} for 5 workers.
-
-{% note info %}
-We must specify the `container` attribute using a {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} in the worker configuration that was used in the install job.
-{% endnote %}
-
-{% note info %}
-The {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions must be declared in each job as there is no state between the `install` job and other jobs (e.g. `ui-chrome-tests`) except what is persisted by cache.
-{% endnote %}
-
-Using our {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} we specify `install: false` since our dependencies and build were cache in our `install` job.
-
-Finally, we tell the Cypress GitHub Actions to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
-
-
-Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 
 ```yaml
 name: Cypress Tests with Install Job and UI Chrome Job x 5
@@ -259,13 +241,63 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+{% note bolt %}
+The above configuration using the `parallel` and `record` options of the {% url "Cypress GitHub Action" https://github.com/marketplace/actions/cypress-io %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+{% endnote %}
 
-{% note info %}
-#### {% fa fa-graduation-cap %} Real World Example
+### Setting up Parallelization
+To setup multiple containers to run in parallel, the `matrix` option of the `strategy` configuration can be set to `containers: [1, 2, 3, 4, 5]`, which will start 5 instances of the defined `container` image.
+
+{% note info Note %}
+The `containers` array is filled with filler (or *dummy*) items to provision the desired number of CI machine instances within GitHub Actions.
+{% endnote %}
+
+{% note warning Ensure Correct Container %}
+The `container` attribute must be specified using the {% url "Cypress Docker Image" https://github.com/cypress-io/cypress-docker-images %} in the configuration that was used in the install job.
+{% endnote %}
+
+```yaml
+#...
+ui-chrome-tests:
+  runs-on: ubuntu-latest
+  container: cypress/browsers:node12.18.3-chrome87-ff82
+  needs: install
+  strategy:
+    fail-fast: false
+    matrix:
+      # run copies of the current job in parallel
+      containers: [1, 2, 3, 4, 5]
+```
+
+### Ensure Cache Usage
+The {% url "checkout" https://github.com/marketplace/actions/checkout %} and {% url "cache" https://github.com/marketplace/actions/cache %} actions must be declared in each job as there is no state between the `install` job and other jobs (e.g. `ui-chrome-tests`) except what is persisted by cache.
+
+```yaml
+steps:
+- name: Checkout
+  uses: actions/checkout@v2
+
+- uses: actions/cache@v2
+  id: yarn-and-build-cache
+  with:
+    path: |
+      ~/.cache/Cypress
+      build
+      node_modules
+    key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/yarn.lock') }}
+    restore-keys: |
+      ${{ runner.os }}-node_modules-build-
+```
+
+# Using the Cypress Dashboard with GitHub Actions
+Finally, we tell the Cypress GitHub Actions to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
+
+Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+
+# Cypress Real World Example with GitHub Actions
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
 Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url ".github/workflows/main.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/github/workflows/main.yml %} file.
 
 {% imgTag /img/guides/github-actions/rwa-run-matrix.png "Cypress Real World App GitHub Actions Matrix" "no-border" %}
-{% endnote %}
