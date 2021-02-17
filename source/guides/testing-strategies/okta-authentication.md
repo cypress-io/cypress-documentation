@@ -55,7 +55,7 @@ The `loginByOktaApi` command will execute the following steps:
 
 ```jsx
 // cypress/support/commands.js
-import OktaAuth from '@okta/okta-auth-js'
+import { OktaAuth } from '@okta/okta-auth-js'
 
 // Okta
 Cypress.Commands.add('loginByOktaApi', (username, password) => {
@@ -223,17 +223,17 @@ import { LoginCallback, SecureRoute, useOktaAuth, withOktaAuth } from "@okta/okt
 // ...
 
 const AppOkta: React.FC = () => {
-  const { authState, authService } = useOktaAuth();
+  const { authState, oktaAuth } = useOktaAuth();
 
   // ...
 
   useEffect(() => {
-    if (oktaAuthState.isAuthenticated) {
-      oktaAuthService.getUser().then((user) => {
+    if (authState.isAuthenticated) {
+      oktaAuth.getUser().then((user) => {
         authService.send("OKTA", { user, token: oktaAuthState.accessToken });
       });
     }
-  }, [oktaAuthState, oktaAuthService]);
+  }, [authState, oktaAuth]);
 
   // ...
 
@@ -265,20 +265,23 @@ Next, we update our entry point (`index.tsx`) to wrap our application with the `
 // src/index.tsx
 
 // initial imports ...
+import { OktaAuth } from "@okta/okta-auth-js";
 import { Security } from "@okta/okta-react";
 import AppOkta from "./containers/AppOkta";
 
 // ...
 
+const oktaAuth = new OktaAuth({
+  issuer: `https://${process.env.REACT_APP_OKTA_DOMAIN}/oauth2/default`,
+  clientId: process.env.REACT_APP_OKTA_CLIENTID,
+  redirectUri: window.location.origin + "/implicit/callback",
+});
+
 ReactDOM.render(
   <Router history={history}>
     <ThemeProvider theme={theme}>
       {process.env.REACT_APP_OKTA ? (
-        <Security
-          issuer={`https://${process.env.REACT_APP_OKTA_DOMAIN}/oauth2/default`}
-          clientId={process.env.REACT_APP_OKTA_CLIENTID}
-          redirectUri={window.location.origin + "/implicit/callback"}
-        >
+        <Security oktaAuth={oktaAuth}>
           <AppOkta />
         </Security>
       ) : (
@@ -304,7 +307,7 @@ import { LoginCallback, SecureRoute, useOktaAuth, withOktaAuth } from "@okta/okt
 // ...
 
 const AppOkta: React.FC = () => {
-  const { authState, authService } = useOktaAuth();
+  const { authState, oktaAuth } = useOktaAuth();
 
   // ...
 
@@ -319,12 +322,12 @@ const AppOkta: React.FC = () => {
     }, []);
   } else {
     useEffect(() => {
-      if (oktaAuthState.isAuthenticated) {
-        oktaAuthService.getUser().then((user) => {
+      if (authState.isAuthenticated) {
+        oktaAuth.getUser().then((user) => {
           authService.send("OKTA", { user, token: oktaAuthState.accessToken });
         });
       }
-    }, [oktaAuthState, oktaAuthService]);
+    }, [authState, oktaAuth]);
   }
 
   // ...
