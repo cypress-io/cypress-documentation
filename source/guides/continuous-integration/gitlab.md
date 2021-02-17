@@ -101,7 +101,7 @@ test:
 
 # Parallelization
 
-The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url "parallelize and group test runs" parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
+The {% url "Cypress Dashboard" dashboard %} offers the ability to {% url "parallelize and group test runs" parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
 The addition of the `parallel` attribute will start 5 instances of the defined `image`, which enables us run multiples instances of Cypress at same time.
 
@@ -135,7 +135,7 @@ test:
 ```
 
 {% note bolt %}
-The above configuration using the `--parallel` and `--record` flags to {% '`cypress run`' command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+The above configuration using the `--parallel` and `--record` flags to {% url '`cypress run`' command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 {% endnote %}
 
 # Using the Cypress Dashboard with GitLab CI/CD
