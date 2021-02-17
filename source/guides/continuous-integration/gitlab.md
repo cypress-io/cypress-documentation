@@ -38,7 +38,6 @@ test:
 To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above GitHub Action configuration in `.gitlab-ci.yml`.
 {% endnote %}
 
-
 **How this configuration works:**
 
 - On *push* to this repository, this job will provision and start GitLab-hosted Linux instance for running the outlined `stages` declared in `script` with in the `test` job section of the configuration.
@@ -70,7 +69,7 @@ test:
 
 # Caching Dependencies and Build Artifacts
 
-Caching of dependencies and build artifacts can be accomplished with the `cache` configuration.  The {% url "caching documentation" https://docs.gitlab.com/ee/ci/caching/ %} contains all options for caching dependencies and build artifacts across many different workflows. Artifacts from a job can be defined by providing paths and an optional expiry time.
+Caching of dependencies and build artifacts can be accomplished with the `cache` configuration. The {% url "caching documentation" https://docs.gitlab.com/ee/ci/caching/ %} contains all options for caching dependencies and build artifacts across many different workflows. Artifacts from a job can be defined by providing paths and an optional expiry time.
 
 ```yaml
 stages:
@@ -99,9 +98,10 @@ test:
       - cypress/screenshots/**/*.png
     expire_in: 1 day
 ```
+
 # Parallelization
 
-The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
+The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url "parallelize and group test runs" parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
 The addition of the `parallel` attribute will start 5 instances of the defined `image`, which enables us run multiples instances of Cypress at same time.
 
@@ -138,7 +138,6 @@ test:
 The above configuration using the `--parallel` and `--record` flags to {% '`cypress run`' command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 {% endnote %}
 
-{% note info %}
 # Using the Cypress Dashboard with GitLab CI/CD
 Finally, we tell the to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
 
