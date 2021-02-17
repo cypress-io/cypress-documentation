@@ -16,7 +16,7 @@ Detailed documentation is available in the {% url "GitLab CI/CD Documentation" h
 
 # Basic Setup
 
-The example below is basic CI setup and job using {% url "GitLab CI/CD" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %} to run Cypress tests within the Electron browser. This GitHub Action configuration is placed within `.gitlab-ci.yml`.
+The example below is basic CI setup and job using {% url "GitLab CI/CD" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %} to run Cypress tests within the Electron browser. This GitLab CI configuration is placed within `.gitlab-ci.yml`.
 
 ```yaml
 stages:
