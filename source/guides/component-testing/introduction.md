@@ -32,7 +32,7 @@ import TodoList from '@/components/TodoList'
 
 describe('TodoList', () => {
   it('renders the todo list', () => {
-    mount(TodoList)
+    mount(TodoList) // or <TodoList /> with React
     cy.get('[data-testid=todo-list]').should('exist')
   })
 
