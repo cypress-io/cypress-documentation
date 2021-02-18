@@ -17,11 +17,11 @@ Typically logging in a user by authenticating via a third-party provider require
 
 # Configure Auth0 Application for Testing with Cypress
 
-**Note: This guide is setup for testing against an [Auth0][auth0] Single Page Application using the [Classic Universal Login Experience][auth0classiclogin].  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.**
+**Note: This guide is setup for testing against an {% url "Auth0" https://auth0.com %}  Single Page Application using the {% url "Classic Universal Login Experience" https://auth0.com/docs/universal-login/classic %}.  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.**
 
 On the Auth0 Dashboard, click the "Create Application" button, name your application and select "Single Page Application".
 
-Once created, visit the [Application Settings][auth0applicationsettings] tab under your application.
+Once created, visit the {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %} tab under your application.
 
 Add your local development URL and port (e.g "http://localhost:3000") under the following sections:
   - Allowed Callback URLs
@@ -29,7 +29,7 @@ Add your local development URL and port (e.g "http://localhost:3000") under the 
   - Allowed Web Origins
   - Allowed Origins (CORS)
 
-In the bottom of [Application Settings][auth0applicationsettings], click [Show Advanced Settings][auth0appadvancedsettings], select "Grant Types" tab and check "Password" (unchecked by default).
+In the bottom of {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %}, click {% url "Show Advanced Settings" https://auth0.com/docs/dashboard/reference/settings-application#advanced-settings %}, select "Grant Types" tab and check "Password" (unchecked by default).
 
 Next, click your Tenant icon (upper right avatar menu) to go to your [Tenant Settings][auth0tenantsettings].
 
@@ -441,12 +441,10 @@ https://github.com/cypress-io/cypress-realworld-app: https://github.com/cypress-
 [auth0mgmtapi]: https://auth0.com/docs/api/management/v2
 [auth0mgmtremoveip]: https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id
 [auth0mgmtapiaccesstoken]: https://auth0.com/docs/api/management/v2/tokens
-[auth0classiclogin]: https://auth0.com/docs/universal-login/classic
 [auth0tenantsettings]: https://manage.auth0.com/#/tenant
 [auth0tenantsettingsdoc]: https://auth0.com/docs/dashboard/reference/settings-tenant
 [auth0tenantgeneral]: https://auth0.com/docs/dashboard/reference/settings-tenant#general
 [auth0tenantapiauth]: https://auth0.com/docs/dashboard/reference/settings-tenant#api-authorization-settings 
 [auth0tenantsettingsmigrations]: https://auth0.com/docs/dashboard/reference/settings-tenant#migrations
-[auth0applicationsettings]: https://auth0.com/docs/dashboard/reference/settings-application
-[auth0appadvancedsettings]: https://auth0.com/docs/dashboard/reference/settings-application#advanced-settings
+[auth0appadvancedsettings]: 
 [auth0OauthTokenEndpoint]: https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint
