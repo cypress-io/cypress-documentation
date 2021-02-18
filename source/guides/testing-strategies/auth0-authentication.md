@@ -15,11 +15,13 @@ Typically logging in a user by authenticating via a third-party provider require
 
 {% endnote %}
 
-# Configure Auth0 Application for Testing with Cypress
+{% note warning %}
+This guide is setup for testing against an {% url "Auth0" https://auth0.com %}  Single Page Application using the {% url "Classic Universal Login Experience" https://auth0.com/docs/universal-login/classic %}.  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.
 
-**Note: This guide is setup for testing against an {% url "Auth0" https://auth0.com %}  Single Page Application using the {% url "Classic Universal Login Experience" https://auth0.com/docs/universal-login/classic %}.  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.**
+{% endnote %}
+# Auth0 Application Setup
 
-On the Auth0 Dashboard, click the "Create Application" button, name your application and select "Single Page Application".
+On the [Auth0 Dashboard](https://manage.auth0.com/dashboard), click the "Create Application" button, name your application and select "Single Page Application".
 
 Once created, visit the {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %} tab under your application.
 
@@ -39,7 +41,53 @@ On the {% url "General" https://auth0.com/docs/dashboard/reference/settings-tena
 
 Refer to the {% url "Auth0 Tenant Settings documentation" https://auth0.com/docs/dashboard/reference/settings-tenant %} for additional details.
 
-# Cypress Setup for Testing Auth0
+Finally, create a user in the [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) for testing with Cypress.
+
+
+
+# Setting Auth0 app credentials in Cypress
+
+With our {% url "Auth0" https://auth0.com %} application and tenant setup, we need to add environment variables to our [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) `.env` or with the values from our {% url "Auth0" https://auth0.com %} application and for our test user.
+
+```jsx
+// .env
+AUTH_USERNAME = 'username@domain.com'
+AUTH_PASSWORD = 's3cret1234$'
+AUTH0_CLIENT_SECRET = 'your-auth0-client-secret'
+REACT_APP_AUTH_TOKEN_NAME = 'authAccessToken'
+REACT_APP_AUTH0_DOMAIN = 'your-auth0-domain.auth0.com'
+REACT_APP_AUTH0_CLIENTID = '1234567890'
+REACT_APP_AUTH0_AUDIENCE = 'https://your-auth0-domain.auth0.com/api/v2/'
+REACT_APP_AUTH0_SCOPE = 'openid email profile'
+```
+
+
+To have access to test user credentials within our tests we need to configure Cypress to use the {% url "Auth0" https://auth0.com %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file.
+
+```jsx
+// cypress/plugins/index.js
+// initial imports ...
+
+dotenv.config()
+
+export default (on, config) => {
+  // ...
+  config.env.auth0_username = process.env.AUTH0_USERNAME
+  config.env.auth0_password = process.env.AUTH0_PASSWORD
+  config.env.auth0_domain = process.env.REACT_APP_AUTH0_DOMAIN
+  config.env.auth0_audience = process.env.REACT_APP_AUTH0_AUDIENCE
+  config.env.auth0_scope = process.env.REACT_APP_AUTH0_SCOPE
+  config.env.auth0_client_id = process.env.REACT_APP_AUTH0_CLIENTID
+  config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRETD
+
+  // plugins code ...
+
+  return config
+}
+```
+
+
+# Custom Command for Auth0 Authentication
 
 Below is a command to programmatically login into {% url "Auth0" https://auth0.com %}, using the {% url "/oauth/token endpoint" https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint %} and set an item in localStorage with the `access_token` and `id_token` it returns.  These will be used in our application code to verify we are authenticated under test.
 
@@ -94,71 +142,6 @@ cy.log(`Logging in as ${username}`);
     cy.visit("/");
   });
 });
-```
-
-An update to our [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is needed to conditionally use the `auth0Cypress` localStorage item.
-
-In the code below, we conditionally apply a `useEffect` block based on being under test with Cypress (using `window.Cypress`).
-
-In addition, we will update the export to be wrapped with `withAuthenticationRequired` if we are not under test in Cypress.  This allows our application to work with the {% url "Auth0" https://auth0.com %} redirect login flow in development/production but not when under test in Cypress.
-
-```jsx
-// src/containers/AppAuth0.tsx
-
-// initial imports ...
-
-import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
-
-// ...
-
-const AppAuth0 = () => {
-  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-
-  // ...
-
-  useEffect(() => {
-      (async function waitForToken() {
-        const token = await getAccessTokenSilently();
-        authService.send("AUTH0", { user, token });
-      })();
-    }, [user, getAccessTokenSilently]);
-
-  // If under test in Cypress, get credentials from "auth0Cypress" localstorage item and send event to our state management to log the user into the SPA
-  if (window.Cypress) {
-    useEffect(() => {
-      const auth0 = JSON.parse(localStorage.getItem("auth0Cypress")!);
-      authService.send("AUTH0", {
-        user: auth0.body.decodedToken.user,
-        token: auth0.body.access_token,
-      });
-    }, []);
-  } else {
-    useEffect(() => {
-      (async function waitForToken() {
-        const token = await getAccessTokenSilently();
-        authService.send("AUTH0", { user, token });
-      })();
-    }, [isAuthenticated, user, getAccessTokenSilently]);
-  }
-
-  // ...
-
-  const isLoggedIn =
-    isAuthenticated &&
-    (authState.matches("authorized") ||
-      authState.matches("refreshing") ||
-      authState.matches("updating"));
-
-  return (
-    <div className={classes.root}>
-      // ...
-    </div>
-  );
-};
-
-// Conditional export wrapped with `withAuthenticationRequired` if we are not under test in Cypress.
-let appAuth0 = window.Cypress ? AppAuth0 : withAuthenticationRequired(AppAuth0);
-export default appAuth0
 ```
 
 Below is our test to login as a user via {% url "Auth0" https://auth0.com %}, complete the onboarding process and logout.
@@ -221,9 +204,9 @@ The [runnable version of this test](https://github.com/cypress-io/cypress-realwo
 # Adapting an Auth0 App for Testing
 
 {% note info Note %}
-The previous sections focused on the recommended Okta authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Okta.
+The previous sections focused on the recommended Auth0 authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Auth0.
 
-The following sections provides guidance on building or adapting an app to use Okta authentication.
+The following sections provides guidance on building or adapting an app to use Auth0 authentication.
 
 {% endnote %}
 
@@ -231,25 +214,6 @@ The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realwo
 
 The front end uses the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} for React Single Page Applications (SPA), which uses the {% url "auth0-spa-js SDK" https://github.com/auth0/auth0-spa-js %} underneath.  The back end uses {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWT's against {% url "Auth0" https://auth0.com %}.
 
-
-In addition, setup and configuration of {% url "Auth0" https://auth0.com %} and Cypress against and [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) and authenticates users with an email/username and password are provided.
-
-
-## Real World App Application Configuration
-
-With our {% url "Auth0" https://auth0.com %} application and tenant setup, we need to add environment variables to our [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) `.env` or with the values from our {% url "Auth0" https://auth0.com %} application and for our test user.
-
-```jsx
-// .env
-AUTH_USERNAME = 'username@domain.com'
-AUTH_PASSWORD = 's3cret1234$'
-AUTH0_CLIENT_SECRET = 'your-auth0-client-secret'
-REACT_APP_AUTH_TOKEN_NAME = 'authAccessToken'
-REACT_APP_AUTH0_DOMAIN = 'your-auth0-domain.auth0.com'
-REACT_APP_AUTH0_CLIENTID = '1234567890'
-REACT_APP_AUTH0_AUDIENCE = 'https://your-auth0-domain.auth0.com/api/v2/'
-REACT_APP_AUTH0_SCOPE = 'openid email profile'
-```
 
 ## Adapting the back end
 
@@ -388,6 +352,71 @@ if (process.env.REACT_APP_AUTH0) {
 } else {
   // render passport-local App.tsx
 }
+```
+
+An update to our [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is needed to conditionally use the `auth0Cypress` localStorage item.
+
+In the code below, we conditionally apply a `useEffect` block based on being under test with Cypress (using `window.Cypress`).
+
+In addition, we will update the export to be wrapped with `withAuthenticationRequired` if we are not under test in Cypress.  This allows our application to work with the {% url "Auth0" https://auth0.com %} redirect login flow in development/production but not when under test in Cypress.
+
+```jsx
+// src/containers/AppAuth0.tsx
+
+// initial imports ...
+
+import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
+
+// ...
+
+const AppAuth0 = () => {
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+
+  // ...
+
+  useEffect(() => {
+      (async function waitForToken() {
+        const token = await getAccessTokenSilently();
+        authService.send("AUTH0", { user, token });
+      })();
+    }, [user, getAccessTokenSilently]);
+
+  // If under test in Cypress, get credentials from "auth0Cypress" localstorage item and send event to our state management to log the user into the SPA
+  if (window.Cypress) {
+    useEffect(() => {
+      const auth0 = JSON.parse(localStorage.getItem("auth0Cypress")!);
+      authService.send("AUTH0", {
+        user: auth0.body.decodedToken.user,
+        token: auth0.body.access_token,
+      });
+    }, []);
+  } else {
+    useEffect(() => {
+      (async function waitForToken() {
+        const token = await getAccessTokenSilently();
+        authService.send("AUTH0", { user, token });
+      })();
+    }, [isAuthenticated, user, getAccessTokenSilently]);
+  }
+
+  // ...
+
+  const isLoggedIn =
+    isAuthenticated &&
+    (authState.matches("authorized") ||
+      authState.matches("refreshing") ||
+      authState.matches("updating"));
+
+  return (
+    <div className={classes.root}>
+      // ...
+    </div>
+  );
+};
+
+// Conditional export wrapped with `withAuthenticationRequired` if we are not under test in Cypress.
+let appAuth0 = window.Cypress ? AppAuth0 : withAuthenticationRequired(AppAuth0);
+export default appAuth0
 ```
 
 # Auth0 Rate Limiting Logins
