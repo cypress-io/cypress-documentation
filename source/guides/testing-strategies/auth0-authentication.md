@@ -394,15 +394,15 @@ if (process.env.REACT_APP_AUTH0) {
 
 Be aware of the rate limit statement in the Auth0 documentation:
 
-Note: [Auth0 Rate Limit](https://auth0.com/docs/connections/database/rate-limits) - "If a user attempts to login 20 times per minute as the same user from the same location, regardless of having the correct credentials, the rate limit will come into effect. When this happens, the user can make 10 attempts per minute."
+[Auth0 Rate Limit](https://auth0.com/docs/connections/database/rate-limits) - "If a user attempts to login 20 times per minute as the same user from the same location, regardless of having the correct credentials, the rate limit will come into effect. When this happens, the user can make 10 attempts per minute."
 
-This limit can be reached as the size of a test suite grows along with enabling [parallelized runs][cypressparallelization] to speed up test run duration.
+This limit can be reached as the size of a test suite grows along with enabling {% url "parallelized runs" https://on.cypress.io/parallelization %} to speed up test run duration.
 
 If you run into this rate limit, a programmatic approach can be added to the `loginByAuth0` command to clear a blocked IP prior to the test run.
 
-Next you'll need to obtain a [API token][auth0mgmtapiaccesstoken] to interact with the [Auth0 Management API][auth0mgmtapi]. This token is a JSON Web Token (JWT) and it contains specific granted permissions for the API.
+Next you'll need to obtain a {% url "API token" https://auth0.com/docs/api/management/v2/tokens %} to interact with the {% url "Auth0 Management API" https://auth0.com/docs/api/management/v2 %}. This token is a JSON Web Token (JWT) and it contains specific granted permissions for the API.
 
-Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` with your API token.
+Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) `.env` with your API token.
 
 ```jsx
 // .env
@@ -410,9 +410,12 @@ Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our [Cypress Re
 AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 ```
 
-With this token in place, we can add interaction with the [Auth0 Anomaly remove the blocked IP address endpoint][auth0mgmtremoveip] to our `loginByAuth0Api` command.  This will send a delete request to [Auth0 Management API][auth0mgmtapi] anomaly endpoint to unblock an IP that may become blocked during the test run.
+With this token in place, we can add interaction with the {% url "Auth0 Anomaly remove the blocked IP address endpoint" https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id %} to our `loginByAuth0Api` command.  This will send a delete request to {% url "Auth0 Management API" https://auth0.com/docs/api/management/v2 %} anomaly endpoint to unblock an IP that may become blocked during the test run.
 
-@TODO: explain icanhazip
+{% note info %}
+{% url "icanhazip.com"  %} is a free, hosted service to find a system's current external IP address.
+
+{% endnote %}
 
 ```jsx
 Cypress.Commands.add('loginByAuth0Api', (username, password) => {
@@ -432,14 +435,3 @@ Cypress.Commands.add('loginByAuth0Api', (username, password) => {
   // ... remaining loginByAuth0Api command
 })
 ```
-
-https://github.com/cypress-io/cypress-realworld-app: https://github.com/cypress-io/cypress-realworld-app
-[cypressrecipes]: https://github.com/cypress-io/cypress-example-recipes
-[cypresscommands]: https://on.cypress.io/api/commands
-[cypresstask]: https://on.cypress.io/api/task
-[cypressfixture]: https://on.cypress.io/api/fixture
-[cypressparallelization]: https://on.cypress.io/parallelization
-[auth0mgmtapi]: https://auth0.com/docs/api/management/v2
-[auth0mgmtremoveip]: https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id
-[auth0mgmtapiaccesstoken]: https://auth0.com/docs/api/management/v2/tokens
-[auth0tenantsettingsmigrations]: https://auth0.com/docs/dashboard/reference/settings-tenant#migrations
