@@ -4,7 +4,7 @@ title: Auth0 Authentication
 
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
-- Programmatically authenticate with  {% url "Auth0" https://auth0.com %} via a custom Cypress command
+- Programmatically authenticate with {% url "Auth0" https://auth0.com %} via a custom Cypress command
 - Adapting your  {% url "Auth0" https://auth0.com %} application for programmatic authentication during testing
 
 {% endnote %}
@@ -41,7 +41,7 @@ Refer to the {% url "Auth0 Tenant Settings documentation" https://auth0.com/docs
 
 # Cypress Setup for Testing Auth0
 
-Below is a command to programmatically login into [Auth0][auth0], using the [/oauth/token endpoint][auth0OauthTokenEndpoint] and set an item in localStorage with the `access_token` and `id_token` it returns.  These will be used in our application code to verify we are authenticated under test.
+Below is a command to programmatically login into {% url "Auth0" https://auth0.com %}, using the {% url "/oauth/token endpoint" https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint %} and set an item in localStorage with the `access_token` and `id_token` it returns.  These will be used in our application code to verify we are authenticated under test.
 
 ```jsx
 // cypress/support/commands.js
@@ -100,7 +100,7 @@ An update to our [AppAuth0.tsx component](https://github.com/cypress-io/cypress-
 
 In the code below, we conditionally apply a `useEffect` block based on being under test with Cypress (using `window.Cypress`).
 
-In addition, we will update the export to be wrapped with `withAuthenticationRequired` if we are not under test in Cypress.  This allows our application to work with the [Auth0][auth0] redirect login flow in development/production but not when under test in Cypress.
+In addition, we will update the export to be wrapped with `withAuthenticationRequired` if we are not under test in Cypress.  This allows our application to work with the {% url "Auth0" https://auth0.com %} redirect login flow in development/production but not when under test in Cypress.
 
 ```jsx
 // src/containers/AppAuth0.tsx
@@ -161,9 +161,7 @@ let appAuth0 = window.Cypress ? AppAuth0 : withAuthenticationRequired(AppAuth0);
 export default appAuth0
 ```
 
-Below is our test to login as a user via [Auth0][auth0], complete the onboarding process and logout.
-
-Note: The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts) is in the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+Below is our test to login as a user via {% url "Auth0" https://auth0.com %}, complete the onboarding process and logout.
 
 ```jsx
 import { isMobile } from '../../support/utils'
@@ -215,6 +213,10 @@ describe('Auth0', function () {
   })
 })
 ```
+{% note success Try it out %}
+The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts) is in the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+
+{% endnote %}
 
 # Adapting an Auth0 App for Testing
 
@@ -230,12 +232,12 @@ The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realwo
 The front end uses the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} for React Single Page Applications (SPA), which uses the {% url "auth0-spa-js SDK" https://github.com/auth0/auth0-spa-js %} underneath.  The back end uses {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWT's against {% url "Auth0" https://auth0.com %}.
 
 
-In addition, setup and configuration of [Auth0][auth0] and Cypress against and [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) and authenticates users with an email/username and password are provided.
+In addition, setup and configuration of {% url "Auth0" https://auth0.com %} and Cypress against and [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) and authenticates users with an email/username and password are provided.
 
 
 ## Real World App Application Configuration
 
-With our [Auth0][auth0] application and tenant setup, we need to add environment variables to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` or with the values from our [Auth0][auth0] application and for our test user.
+With our {% url "Auth0" https://auth0.com %} application and tenant setup, we need to add environment variables to our [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) `.env` or with the values from our {% url "Auth0" https://auth0.com %} application and for our test user.
 
 ```jsx
 // .env
@@ -275,7 +277,7 @@ const auth0JwtConfig = {
 }
 ```
 
-Next, we'll define an Express middleware function to be use in our routes to verify the [Auth0][auth0] JWT sent by the front end API requests as the `Bearer` token.
+Next, we'll define an Express middleware function to be use in our routes to verify the {% url "Auth0" https://auth0.com %} JWT sent by the front end API requests as the `Bearer` token.
 
 ```jsx
 // backend/helpers.ts
@@ -303,9 +305,9 @@ if (process.env.REACT_APP_AUTH0) {
 
 ## Adapting the front end
 
-We need to update our front end React app to allow for authentication with [Auth0][auth0]. As mentioned above, the [auth0-react][auth0react] SDK for React Single Page Applications (SPA) is used.
+We need to update our front end React app to allow for authentication with {% url "Auth0" https://auth0.com %}. As mentioned above, the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} for React Single Page Applications (SPA) is used.
 
-First, we create a `AppAuth0.tsx` container to render our application as it is authenticated with [Auth0][auth0].  The component is identical to the `App.tsx` component, but uses the `useAuth0` React Hook, removes the need for the Sign Up and Sign In routes and wraps the component with the `withAuthenticationRequired` higher order function (HOC).
+First, we create a `AppAuth0.tsx` container to render our application as it is authenticated with {% url "Auth0" https://auth0.com %}.  The component is identical to the `App.tsx` component, but uses the `useAuth0` React Hook, removes the need for the Sign Up and Sign In routes and wraps the component with the `withAuthenticationRequired` higher order function (HOC).
 
 A `useEffect` hook is added to get the access token for the authenticated user and send an `AUTH0` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).
 
@@ -348,9 +350,9 @@ const AppAuth0 = () => {
 export default withAuthenticationRequired(AppAuth0);
 ```
 
-Note: The full [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is in the [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app.
+Note: The full [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx) is in the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
-Next, we update our entry point (`index.tsx`) to wrap our application with the `<Auth0Provider>` from the [auth0-react][auth0react] SDK providing a custom `onRedirectCallback`.  We pass props for the Auth0 environment variables set in `.env` above, and render our `<AppAuth0>` component as the application.
+Next, we update our entry point (`index.tsx`) to wrap our application with the `<Auth0Provider>` from the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} SDK providing a custom `onRedirectCallback`.  We pass props for the Auth0 environment variables set in `.env` above, and render our `<AppAuth0>` component as the application.
 
 ```jsx
 // src/index.tsx
@@ -437,9 +439,7 @@ https://github.com/cypress-io/cypress-realworld-app: https://github.com/cypress-
 [cypresstask]: https://on.cypress.io/api/task
 [cypressfixture]: https://on.cypress.io/api/fixture
 [cypressparallelization]: https://on.cypress.io/parallelization
-[expressjwt]: https://github.com/auth0/express-jwt
 [auth0mgmtapi]: https://auth0.com/docs/api/management/v2
 [auth0mgmtremoveip]: https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id
 [auth0mgmtapiaccesstoken]: https://auth0.com/docs/api/management/v2/tokens
 [auth0tenantsettingsmigrations]: https://auth0.com/docs/dashboard/reference/settings-tenant#migrations
-[auth0OauthTokenEndpoint]: https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint
