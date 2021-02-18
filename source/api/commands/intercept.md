@@ -456,6 +456,29 @@ cy.intercept('POST', '/login', (req) => {
 })
 ```
 
+### Adding a header to an outgoing request
+
+You can add a header to an outgoing request, or modify an existing header
+
+```js
+cy.intercept('/req-headers', (req) => {
+  req.headers['x-custom-headers'] = 'added by cy.intercept'
+})
+```
+
+**Note:** the new header will NOT be shown in the browser's Network tab, as the request has already left the browser. You can still confirm the header was added by waiting on the intercept as shown below:
+
+```js
+cy.intercept('/req-headers', (req) => {
+  req.headers['x-custom-headers'] = 'added by cy.intercept'
+}).as('headers')
+
+// the application makes the call ...
+// confirm the custom header was added
+cy.wait('@headers').its('request.headers')
+  .should('have.property', 'x-custom-headers', 'added by cy.intercept')
+```
+
 ### Dynamically stubbing a response
 
 You can use the `req.reply()` function to dynamically control the response to a request.
@@ -662,6 +685,7 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
   * intercepting static resources like HTML and CSS
   * redirecting requests
   * replying with different responses
+* {% url "How cy.intercept works" https://slides.com/bahmutov/how-cy-intercept-works %} presentation
 * {% url "Cypress cy.intercept Problems" https://glebbahmutov.com/blog/cypress-intercept-problems/ %} with advanced `cy.intercept` tips to solve the common problems:
   * The intercept was registered too late
   * `cy.wait` uses the intercept
