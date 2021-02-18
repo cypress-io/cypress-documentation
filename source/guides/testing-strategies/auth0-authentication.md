@@ -31,13 +31,13 @@ Add your local development URL and port (e.g "http://localhost:3000") under the 
 
 In the bottom of {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %}, click {% url "Show Advanced Settings" https://auth0.com/docs/dashboard/reference/settings-application#advanced-settings %}, select "Grant Types" tab and check "Password" (unchecked by default).
 
-Next, click your Tenant icon (upper right avatar menu) to go to your [Tenant Settings][auth0tenantsettings].
+Next, click your Tenant icon (upper right avatar menu) to go to your {% url "Tenant Settings" https://manage.auth0.com/#/tenant %}.
 
-On the [General][auth0tenantgeneral] tab go to the [API Authorization Settings][auth0tenantapiauth]
+On the {% url "General" https://auth0.com/docs/dashboard/reference/settings-tenant#general %} tab go to the {% url "API Authorization Settings" https://auth0.com/docs/dashboard/reference/settings-tenant#api-authorization-settings %}
   - Set "Default Audience" to the Audience URL for the Application you are testing (e.g. https://your-api-id.auth0.com/api/v2/)
   - Set "Default Directory" to **"Username-Password-Authentication"**
 
-Refer to the [Auth0 Tenant Settings documentation][auth0tenantsettingsdoc] for additional details.
+Refer to the {% url "Auth0 Tenant Settings documentation" https://auth0.com/docs/dashboard/reference/settings-tenant %} for additional details.
 
 # Cypress Setup for Testing Auth0
 
@@ -441,10 +441,5 @@ https://github.com/cypress-io/cypress-realworld-app: https://github.com/cypress-
 [auth0mgmtapi]: https://auth0.com/docs/api/management/v2
 [auth0mgmtremoveip]: https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id
 [auth0mgmtapiaccesstoken]: https://auth0.com/docs/api/management/v2/tokens
-[auth0tenantsettings]: https://manage.auth0.com/#/tenant
-[auth0tenantsettingsdoc]: https://auth0.com/docs/dashboard/reference/settings-tenant
-[auth0tenantgeneral]: https://auth0.com/docs/dashboard/reference/settings-tenant#general
-[auth0tenantapiauth]: https://auth0.com/docs/dashboard/reference/settings-tenant#api-authorization-settings 
 [auth0tenantsettingsmigrations]: https://auth0.com/docs/dashboard/reference/settings-tenant#migrations
-[auth0appadvancedsettings]: 
 [auth0OauthTokenEndpoint]: https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint
