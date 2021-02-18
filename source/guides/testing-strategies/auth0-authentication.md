@@ -10,21 +10,14 @@ title: Auth0 Authentication
 {% endnote %}
 
 {% note success Why authenticate programmatically? %}
+
 Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
 
 {% endnote %}
 
-This guide demonstrates testing an application authenticated by [Auth0][auth0].
-
-The [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is used and provides configuration and runnable code for both the React SPA and the Express back end.
-
-The front end uses the [auth0-react SDK][auth0react] for React Single Page Applications (SPA), which uses the [auth0-spa-js SDK][auth0spajs] underneath.  The back end uses [express-jwt][expressjwt] to validate JWT's against [auth0][auth0].
-
-In addition, setup and configuration of [Auth0][auth0] and Cypress against and [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) and authenticates users with an email/username and password are provided.
+# Configure Auth0 Application for Testing with Cypress
 
 **Note: This guide is setup for testing against an [Auth0][auth0] Single Page Application using the [Classic Universal Login Experience][auth0classiclogin].  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.**
-
-# Configure Auth0 Application for Testing with Cypress
 
 On the Auth0 Dashboard, click the "Create Application" button, name your application and select "Single Page Application".
 
@@ -42,7 +35,7 @@ Next, click your Tenant icon (upper right avatar menu) to go to your [Tenant Set
 
 On the [General][auth0tenantgeneral] tab go to the [API Authorization Settings][auth0tenantapiauth]
   - Set "Default Audience" to the Audience URL for the Application you are testing (e.g. https://your-api-id.auth0.com/api/v2/)
-  - Set "Default Directory" to **“Username-Password-Authentication"**
+  - Set "Default Directory" to **"Username-Password-Authentication"**
 
 Refer to the [Auth0 Tenant Settings documentation][auth0tenantsettingsdoc] for additional details.
 
@@ -224,6 +217,22 @@ describe('Auth0', function () {
 ```
 
 # Adapting an Auth0 App for Testing
+
+{% note info Note %}
+The previous sections focused on the recommended Okta authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Okta.
+
+The following sections provides guidance on building or adapting an app to use Okta authentication.
+
+{% endnote %}
+
+The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is used and provides configuration and runnable code for both the React SPA and the Express back end.
+
+The front end uses the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} for React Single Page Applications (SPA), which uses the {% url "auth0-spa-js SDK" https://github.com/auth0/auth0-spa-js %} underneath.  The back end uses {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWT's against {% url "Auth0" https://auth0.com %}.
+
+
+In addition, setup and configuration of [Auth0][auth0] and Cypress against and [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) and authenticates users with an email/username and password are provided.
+
+
 ## Real World App Application Configuration
 
 With our [Auth0][auth0] application and tenant setup, we need to add environment variables to our [Cypress Real World App]https://github.com/cypress-io/cypress-realworld-app `.env` or with the values from our [Auth0][auth0] application and for our test user.
@@ -428,10 +437,7 @@ https://github.com/cypress-io/cypress-realworld-app: https://github.com/cypress-
 [cypresstask]: https://on.cypress.io/api/task
 [cypressfixture]: https://on.cypress.io/api/fixture
 [cypressparallelization]: https://on.cypress.io/parallelization
-[auth0]: https://auth0.com
-[auth0react]: https://github.com/auth0/auth0-react
 [expressjwt]: https://github.com/auth0/express-jwt
-[auth0spajs]: https://github.com/auth0/auth0-spa-js
 [auth0mgmtapi]: https://auth0.com/docs/api/management/v2
 [auth0mgmtremoveip]: https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id
 [auth0mgmtapiaccesstoken]: https://auth0.com/docs/api/management/v2/tokens
