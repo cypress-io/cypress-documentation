@@ -106,6 +106,7 @@ The {% url "Cypress Dashboard" dashboard %} offers the ability to {% url "parall
 The addition of the {% '`parallel` attribute' https://docs.gitlab.com/ee/ci/yaml/#parallel %} to the configuration of a job will allow us to run multiples instances of Cypress at same time as we will see later in this section.
 
 Before diving into an example of a parallelization setup, it is important to understand the two different types of jobs that we will declare:
+
 - **Install Job**: A job that installs and caches dependencies that will used by subsequent jobs later in the GitLab CI workflow.
 - **Worker Job**: A job that handles execution of Cypress tests and depends on the *install job*.
 
@@ -143,9 +144,10 @@ install:
 ```
 
 ## Worker Jobs
+
 Next, we add a `test` stage and define the worker job named `ui-chrome-tests` that will run Cypress tests with Chrome in parallel during the `test` stage.
 
-The addition of the {% '`parallel` attribute' https://docs.gitlab.com/ee/ci/yaml/#parallel %} to the configuration of a job will allow us to run multiples instances of Cypress at same time.
+The addition of the {% url "`parallel` attribute" https://docs.gitlab.com/ee/ci/yaml/#parallel %} to the configuration of a job will allow us to run multiples instances of Cypress at same time.
 
 ```yaml
 stages:
@@ -186,10 +188,11 @@ ui-chrome-tests:
 ```
 
 {% note bolt %}
-The above configuration using the `--parallel` and `--record` flags to {% url '`cypress run`' command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+The above configuration using the `--parallel` and `--record` flags to {% url "`cypress run`" command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 {% endnote %}
 
 # Using the Cypress Dashboard with GitLab CI/CD
+
 Finally, we tell the to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
 
 Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
