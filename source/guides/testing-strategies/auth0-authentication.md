@@ -49,21 +49,6 @@ Finally, create a user in the [Auth0 User Store](https://auth0.com/docs/connecti
 
 # Setting Auth0 app credentials in Cypress
 
-With our {% url "Auth0" https://auth0.com %} application and tenant setup, we need to add environment variables to our [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) `.env` or with the values from our {% url "Auth0" https://auth0.com %} application and for our test user.
-
-```jsx
-// .env
-AUTH_USERNAME = 'username@domain.com'
-AUTH_PASSWORD = 's3cret1234$'
-AUTH0_CLIENT_SECRET = 'your-auth0-client-secret'
-REACT_APP_AUTH_TOKEN_NAME = 'authAccessToken'
-REACT_APP_AUTH0_DOMAIN = 'your-auth0-domain.auth0.com'
-REACT_APP_AUTH0_CLIENTID = '1234567890'
-REACT_APP_AUTH0_AUDIENCE = 'https://your-auth0-domain.auth0.com/api/v2/'
-REACT_APP_AUTH0_SCOPE = 'openid email profile'
-```
-
-
 To have access to test user credentials within our tests we need to configure Cypress to use the {% url "Auth0" https://auth0.com %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file.
 
 ```jsx
@@ -87,7 +72,6 @@ export default (on, config) => {
   return config
 }
 ```
-
 
 # Custom Command for Auth0 Authentication
 
