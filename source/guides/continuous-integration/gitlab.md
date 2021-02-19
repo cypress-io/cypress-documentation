@@ -3,6 +3,7 @@ title: GitLab CI/CD
 ---
 
 {% note info %}
+
 # {% fa fa-graduation-cap %} What you'll learn
 
 - How to run Cypress tests with GitLab as part of CI/CD pipeline
@@ -10,7 +11,7 @@ title: GitLab CI/CD
 
 {% endnote %}
 
-With it's hosted {% url "CI/CD Service" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %}, {% url "GitLab" https://gitlab.com %} offers developers "a tool built into GitLab for software development through the {% url "continuous methodologies" https://docs.gitlab.com/ee/ci/introduction/index.html#introduction-to-cicd-methodologies %}".
+With its hosted {% url "CI/CD Service" https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/ %}, {% url "GitLab" https://gitlab.com %} offers developers "a tool built into GitLab for software development through the {% url "continuous methodologies" https://docs.gitlab.com/ee/ci/introduction/index.html#introduction-to-cicd-methodologies %}".
 
 Detailed documentation is available in the {% url "GitLab CI/CD Documentation" https://docs.gitlab.com/ee/ci/introduction/ %}.
 
