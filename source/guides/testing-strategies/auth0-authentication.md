@@ -3,47 +3,49 @@ title: Auth0 Authentication
 ---
 
 {% note info %}
+
 # {% fa fa-graduation-cap %} What you'll learn
+
 - Programmatically authenticate with {% url "Auth0" https://auth0.com %} via a custom Cypress command
 - Adapting your  {% url "Auth0" https://auth0.com %} application for programmatic authentication during testing
-
 {% endnote %}
 
 {% note success Why authenticate programmatically? %}
-
 Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
-
 {% endnote %}
 
 {% note warning %}
-This guide is setup for testing against an {% url "Auth0" https://auth0.com %}  Single Page Application using the {% url "Classic Universal Login Experience" https://auth0.com/docs/universal-login/classic %}.  This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated/end-to-end testing.
+This guide is setup for testing against an {% url "Auth0" https://auth0.com %}  Single Page Application using the {% url "Classic Universal Login Experience" https://auth0.com/docs/universal-login/classic %}. This configuration is recommended for a "Test Tenant" and/or "Test API" setup for automated end-to-end testing.
 
 {% endnote %}
+
 # Auth0 Application Setup
 
-On the [Auth0 Dashboard](https://manage.auth0.com/dashboard), click the "Create Application" button, name your application and select "Single Page Application".
+To get started with Auth0, an application needs to be setup within the [Auth0 Dashboard](https://manage.auth0.com/dashboard) via the following steps:
 
-Once created, visit the {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %} tab under your application.
+1. Visit the [Auth0 Dashboard](https://manage.auth0.com/dashboard) and click the "Create Application" button.
+2. Enter the desired name for your application.
+3. Select "Single Page Application"
 
-Add your local development URL and port (e.g "http://localhost:3000") under the following sections:
-  - Allowed Callback URLs
-  - Allowed Logout URLs
-  - Allowed Web Origins
-  - Allowed Origins (CORS)
+Once your application is created, visit the {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %} tab under your application, and add your local development URL and port (e.g `http://localhost:3000`) under the following sections:
+
+- Allowed Callback URLs
+- Allowed Logout URLs
+- Allowed Web Origins
+- Allowed Origins (CORS)
 
 In the bottom of {% url "Application Settings" https://auth0.com/docs/dashboard/reference/settings-application %}, click {% url "Show Advanced Settings" https://auth0.com/docs/dashboard/reference/settings-application#advanced-settings %}, select "Grant Types" tab and check "Password" (unchecked by default).
 
-Next, click your Tenant icon (upper right avatar menu) to go to your {% url "Tenant Settings" https://manage.auth0.com/#/tenant %}.
+Next, click your Tenant icon (upper right avatar menu) to go to your {% url "Tenant Settings" https://manage.auth0.com/#/tenant %}. On the {% url "General" https://auth0.com/docs/dashboard/reference/settings-tenant#general %} tab go to the {% url "API Authorization Settings" https://auth0.com/docs/dashboard/reference/settings-tenant#api-authorization-settings %}
 
-On the {% url "General" https://auth0.com/docs/dashboard/reference/settings-tenant#general %} tab go to the {% url "API Authorization Settings" https://auth0.com/docs/dashboard/reference/settings-tenant#api-authorization-settings %}
-  - Set "Default Audience" to the Audience URL for the Application you are testing (e.g. https://your-api-id.auth0.com/api/v2/)
-  - Set "Default Directory" to **"Username-Password-Authentication"**
+- Set "Default Audience" to the Audience URL for the Application you are testing (e.g. `https://your-api-id.auth0.com/api/v2/`)
+- Set "Default Directory" to **"Username-Password-Authentication"**
 
+{% note %}
 Refer to the {% url "Auth0 Tenant Settings documentation" https://auth0.com/docs/dashboard/reference/settings-tenant %} for additional details.
+{% endnote %}
 
-Finally, create a user in the [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) for testing with Cypress.
-
-
+Finally, create a user in the [Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store) for testing with Cypress. This testing-dedicated target user will be login to your application within your test specs. If required for your testing purposes, you can make as many users needed to test your specific application.  
 
 # Setting Auth0 app credentials in Cypress
 
@@ -196,6 +198,7 @@ describe('Auth0', function () {
   })
 })
 ```
+
 {% note success Try it out %}
 The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts) is in the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
@@ -213,7 +216,6 @@ The following sections provides guidance on building or adapting an app to use A
 The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is used and provides configuration and runnable code for both the React SPA and the Express back end.
 
 The front end uses the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} for React Single Page Applications (SPA), which uses the {% url "auth0-spa-js SDK" https://github.com/auth0/auth0-spa-js %} underneath.  The back end uses {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWT's against {% url "Auth0" https://auth0.com %}.
-
 
 ## Adapting the back end
 
