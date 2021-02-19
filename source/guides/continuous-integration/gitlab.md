@@ -103,7 +103,7 @@ test:
 
 The {% url "Cypress Dashboard" dashboard %} offers the ability to {% url "parallelize and group test runs" parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
-The addition of the {% '`parallel` attribute' https://docs.gitlab.com/ee/ci/yaml/#parallel %} to the configuration of a job will allow us to run multiples instances of Cypress at same time as we will see later in this section.
+The addition of the {% url '`parallel` attribute' https://docs.gitlab.com/ee/ci/yaml/#parallel %} to the configuration of a job will allow us to run multiples instances of Cypress at same time as we will see later in this section.
 
 Before diving into an example of a parallelization setup, it is important to understand the two different types of jobs that we will declare:
 
