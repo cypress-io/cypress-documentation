@@ -181,6 +181,43 @@ DEBUG=cypress:server:config ...
 
 This allows you to isolate the problem a little better
 
+## Log sources
+
+Cypress is built from multiple packages, each responsible for its own logging: server, reporter, driver, command line, etc. Each package writes debug logs under a different source. Here are a few common log sources and when you might want to enable them
+
+Set `DEBUG` to value | To enable debugging
+---|---
+`cypress:cli` | The top-level command line parsing problems
+`cypress:server:args` | Incorrect parsed command line arguments
+`cypress:server:specs` | Not finding the expected specs
+`cypress:server:project` | Opening the project
+`cypress:server:browsers` | Finding installed browsers
+`cypress:launcher` | Launching the found browser
+`cypress:server:video` | Video recording
+`cypress:network:*` | Adding network interceptors
+`cypress:net-stubbing*` | Network interception in the proxy layer
+`cypress:server:reporter` | Problems with test reporters
+`cypress:server:preprocessor` | Processing specs
+`cypress:server:plugins` | Running the plugin file and bundling specs
+`cypress:server:socket-e2e` | Watching spec files
+`cypress:server:task` | Invoking the `cy.task` command
+`cypress:webpack` | Bundling specs using webpack
+`cypress:server:fixture` | Loading fixture files
+
+You can combine several areas together using the comma character. For example, to debug specs not being found, use:
+
+```shell
+# see how CLI arguments were parsed
+# and how Cypress tried to locate spec files
+DEBUG=cypress:cli,cypress:server:specs npx cypress run --spec ...
+```
+
+You can also exclude a log source using `-` character. For example, to see all `cypress:server*` messages without noisy browser messages use:
+
+```shell
+DEBUG=cypress:server*,-cypress:server:browsers* npx cypress run
+```
+
 ## Debug logs in the browser
 
 If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's Developer Tools and set a `localStorage` property:
