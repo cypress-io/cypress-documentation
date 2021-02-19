@@ -269,6 +269,7 @@ cy.get('[type="email"]').then(($input) => {
 })
 ```
 
+For more examples, read the blog post {% url "HTML Form Validation in Cypress" https://glebbahmutov.com/blog/form-validation-in-cypress/ %}.
 
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 

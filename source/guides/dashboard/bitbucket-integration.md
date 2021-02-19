@@ -3,7 +3,7 @@ title: Bitbucket Integration
 ---
 
 {% note info %}
-Bitbucket integration is currently in private beta.
+Bitbucket integration is currently in beta.
 {% endnote %}
 
 The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate your Cypress tests with your Bitbucket workflow via {% urlHash 'status checks' Status-checks %} and {% urlHash 'pull request comments' Pull-Request-comments %}. A project first needs to be {% url "setup to record" projects %} to the Cypress Dashboard to use Bitbucket integration.
