@@ -8,7 +8,7 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 ## Test Runner
 
-*Last updated Nov 25, 2020*
+*Last updated Jan 19, 2021*
 
 Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------

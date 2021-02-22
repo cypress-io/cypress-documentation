@@ -433,6 +433,44 @@ if (Cypress.config('isInteractive')) {
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
+# Common problems
+
+### {% fa fa-angle-right %} `baseUrl` is not set
+
+Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following configuration is <i>incorrect</i> and WILL NOT WORK:
+
+```javascript
+// ⛔️ DOES NOT WORK
+{
+  "env": {
+    "baseUrl": "http://localhost:3030",
+    "FOO": "bar"
+  }
+}
+```
+
+Solution: place the `baseUrl` property at the top level, outside the `env` object.
+
+```javascript
+// ✅ THE CORRECT WAY
+{
+  "baseUrl": "http://localhost:3030",
+  "env": {
+    "FOO": "bar"
+  }
+}
+```
+
+You can also find a few tips on setting the `baseUrl` in this {% url 'short video' https://www.youtube.com/watch?v=f5UaXuAc52c %}.
+
+### {% fa fa-angle-right %} Test files not found when using `spec` parameter
+
+When using the `--spec <path or mask>` argument, make it relative to the project's folder. If the specs are still missing, run Cypress with {% url 'DEBUG logs' troubleshooting#Print-DEBUG-logs %} with the following setting to see how the Test Runner is looking for spec files:
+
+```shell
+DEBUG=cypress:cli,cypress:server:specs
+```
+
 {% history %}
 {% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.

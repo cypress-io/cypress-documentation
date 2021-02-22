@@ -28,6 +28,8 @@ In February 2018 we gave a "Best Practices" conference talk at AssertJS. This vi
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
+We have several {% url 'Logging in recipes' https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes %} in our examples.
+
 ## Selecting Elements
 
 {% note danger %}

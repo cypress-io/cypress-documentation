@@ -148,6 +148,30 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', { encoding: 'ascii', flag: 'a+'
 cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
 ```
 
+Note that appending assumes plain text file. If you want to merge a JSON object for example, you need to read it first, add new properties, then write the combined result back.
+
+```javascript
+const filename = '/path/to/file.json'
+
+cy.readFile(filename).then((obj) => {
+  obj.id = '1234'
+  // write the merged object
+  cy.writeFile(filename, obj)
+})
+```
+
+Similarly, if you need to push new items to an array
+
+```javascript
+const filename = '/path/to/list.json'
+
+cy.readFile(filename).then((list) => {
+  list.push({ item: 'example' })
+  // write the merged array
+  cy.writeFile(filename, list)
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

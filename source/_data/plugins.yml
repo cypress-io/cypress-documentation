@@ -439,7 +439,13 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
-
+      
+    - name: cypress-real-events
+      description: Fire native system events from Cypress like hover, swipe, etc
+      link: https://github.com/dmtrKovalenko/cypress-real-events
+      keywords: [commands]
+      badge: community
+      
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -735,4 +741,10 @@
       description: Zero config Mochawesome reporter for Cypress with screenshots.
       link: https://github.com/LironEr/cypress-mochawesome-reporter
       keywords: [reporter, mochawesome, screenshot]
+      badge: community
+
+    - name: cypress-msteams-reporter
+      description: A reporting tool which sends a message to Microsoft Teams with information about the latest cypress test execution results.
+      link: https://github.com/maritome/cypress-msteams-reporter
+      keywords: [reporter, ms-teams, allure-report]
       badge: community
