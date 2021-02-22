@@ -49,11 +49,15 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `iphone-5`    | 320   | 568    |
 | `iphone-6`    | 375   | 667    |
 | `iphone-6+`   | 414   | 736    |
+| `iphone-7`    | 375   | 667    |
+| `iphone-8`    | 375   | 667    |
 | `iphone-x`    | 375   | 812    |
 | `iphone-xr`   | 414   | 896    |
+| `iphone-se2`  | 375   | 667    |
 | `macbook-11`  | 1366  | 768    |
 | `macbook-13`  | 1280  | 800    |
 | `macbook-15`  | 1440  | 900    |
+| `macbook-16`  | 1536  | 960    |
 | `samsung-note9` | 414 | 846    |
 | `samsung-s10` | 360   | 760    |
 
@@ -271,6 +275,8 @@ When clicking on `viewport` within the command log, the console outputs the foll
 {% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
 
 {% history %}
+{% url "5.5.0" changelog#5-5-0 %} | Added support for `macbook-16` preset.
+{% url "5.4.0" changelog#5-4-0 %} | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.
 {% url "3.8.0" changelog#3-8-0 %} | Removed max viewport size and lowered min viewport size to `0`.
 {% url "3.5.0" changelog#3-5-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
 {% url "3.5.0" changelog#3-5-0 %} | Increased max viewport size to `4000`
@@ -279,5 +285,6 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 # See also
 
+- Read blog post {% url 'Use meaningful smoke tests' https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/ %} where we run the same test with different viewport resolutions
 - {% url 'Configuration' configuration %}
 - {% url '`Cypress.config()`' config %}

@@ -28,6 +28,8 @@ In February 2018 we gave a "Best Practices" conference talk at AssertJS. This vi
 
 {% fa fa-play-circle %} {% url https://www.youtube.com/watch?v=5XQOK0v_YRE %}
 
+We have several {% url 'Logging in recipes' https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes %} in our examples.
+
 ## Selecting Elements
 
 {% note danger %}
@@ -578,8 +580,7 @@ Waiting for the {% url `cy.get()` get %} below is unnecessary because {% url `cy
 Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
 
 ```javascript
-cy.server()
-cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
+cy.intercept('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
 cy.get('#fetch').click()
 cy.wait(4000)     // <--- this is unnecessary
 cy.get('table tr').should('have.length', 2)
@@ -588,8 +589,7 @@ cy.get('table tr').should('have.length', 2)
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
-cy.server()
-cy.route('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
+cy.intercept('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
 cy.get('#fetch').click()
 cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
@@ -629,7 +629,7 @@ Start your web server before running Cypress and kill it after it completes.
 
 Are you trying to run in CI?
 
-We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Boot-your-server %}.
+We have {% url 'examples showing you how to start and stop your web server' continuous-integration-introduction#Boot-your-server %}.
 
 ## Setting a global baseUrl
 

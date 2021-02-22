@@ -23,7 +23,9 @@ cy.visit(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.visit('http://localhost:3000')    // Yields the window of the remote page
+cy.visit('http://localhost:3000')
+cy.visit('/')           // visits the baseUrl
+cy.visit('index.html')  // visits the local file "index.html"
 cy.visit('./pages/hello.html')
 ```
 
@@ -35,8 +37,7 @@ The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
 
-You may also specify the relative path of an html file.  The path is relative to the root
-directory of the Cypress installation. Note that the `file://` prefix is not needed.
+If there is no `baseUrl` set, you may specify the relative path of an html file, and Cypress will serve this file automatically using built-in static server. The path is relative to the root directory of the project. Note that the `file://` prefix is not needed.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -63,6 +64,14 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 ## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.visit 'yields the `window` object after the page finishes loading' %}
+
+Let's confirm the `window.navigator.language` after visiting the site:
+
+```javascript
+cy.visit('/')                 // yields the window object
+  .its('navigator.language')  // yields window.navigator.language
+  .should('equal', 'en-US')   // asserts the expected value
+```
 
 # Examples
 
@@ -220,6 +229,32 @@ Having Cypress serve your files is useful in smaller projects and example apps, 
 cy.visit('app/index.html')
 ```
 
+### Visit local file when `baseUrl` is set
+
+If you have `baseUrl` set, but need to visit a local file in a single test or a group of tests, disable the `baseUrl` using {% url 'per-test configuration' configuration#Test-Configuration %}. Imagine our `cypress.json` file:
+
+```json
+{
+  "baseUrl": "https://example.cypress.io"
+}
+```
+
+The first test visits the `baseUrl`, while the second test visits the local file.
+
+```javascript
+it('visits base url', () => {
+  cy.visit('/')
+  cy.contains('h1', 'Kitchen Sink')
+})
+
+it('visits local file', { baseUrl: null }, () => {
+  cy.visit('index.html')
+  cy.contains('local file')
+})
+```
+
+**Tip:** because visiting every new domain requires the Test Runner window reload, we recommend putting the above tests in separate spec files.
+
 ## Prefixes
 
 ### Visit is automatically prefixed with `baseUrl`
@@ -252,7 +287,7 @@ Trying to change the `User-Agent`? You can set the `userAgent` as a {% url "conf
 
 ## Routing
 
-### Prevent XHR / Ajax requests before a remote page initially loads
+### Prevent requests before a remote page initially loads
 
 One common scenario Cypress supports is visiting a remote page and also preventing any Ajax requests from immediately going out.
 
@@ -261,24 +296,22 @@ You may think this works:
 ```javascript
 // this code may not work depending on implementation
 cy.visit('http://localhost:8000/#/app')
-cy.server()
-cy.route('/users/**', 'fx:users')
+cy.intercept('/users/**', { fixture: 'users' })
 ```
 
-But if your app makes a request upon being initialized, *the above code will not work*. `cy.visit()` will resolve once its `load` event fires.  The {% url `cy.server()` server %} and {% url `cy.route()` route %} commands are not processed until *after* `cy.visit()` resolves.
+But if your app makes a request upon being initialized, *the above code will not work*. `cy.visit()` will resolve once its `load` event fires.  The {% url `cy.intercept()` intercept %} command is not processed until *after* `cy.visit()` resolves.
 
-Many applications will have already begun routing, initialization, and requests by the time the `cy.visit()` in the above code resolves. Therefore creating a {% url `cy.server()` server %} will happen too late, and Cypress will not process the requests.
+Many applications will have already begun routing, initialization, and requests by the time the `cy.visit()` in the above code resolves. Therefore creating a {% url `cy.intercept()` intercept %} route will happen too late, and Cypress will not process the requests.
 
 Luckily Cypress supports this use case. Reverse the order of the commands:
 
 ```javascript
 // this code is probably what you want
-cy.server()
-cy.route('/users/**', {...})
+cy.intercept('/users/**', {...})
 cy.visit('http://localhost:8000/#/app')
 ```
 
-Cypress will automatically apply the server and routes to the very next `cy.visit()` and does so immediately before any of your application code runs.
+Cypress will automatically apply the routes to the very next `cy.visit()` and does so immediately before any of your application code runs.
 
 # Rules
 

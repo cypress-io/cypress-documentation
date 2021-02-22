@@ -95,7 +95,7 @@ If you want the other guarantees of waiting for an element to become actionable,
 ***Submit a form***
 
 ```javascript
-cy.route('POST', '/users', 'fixture:user').as('userSuccess')
+cy.intercept('POST', '/users', { fixture: 'user' }).as('userSuccess')
 cy.get('form').submit()
 ```
 

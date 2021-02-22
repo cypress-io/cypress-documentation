@@ -110,7 +110,7 @@ However, in most modern applications these days - when the `load` event occurs, 
 
 Unfortunately, it is not possible for you to use the DOM to do conditional testing. To do this would require you to know with 100% guarantee that your application has finished all asynchronous rendering and that there are no pending network requests, setTimeouts, intervals, postMessage, or async/await code.
 
-This is difficult to do (if not impossible) without making changes to your application. You could use a library like {% url "Zone.js" https://github.com/angular/zone.js/ %}, but even that does not capture every async possibility.
+This is difficult to do (if not impossible) without making changes to your application. You could use a library like {% url "Zone.js" https://github.com/angular/angular/tree/master/packages/zone.js %}, but even that does not capture every async possibility.
 
 In other words, you cannot do conditional testing safely if you want your tests to run 100% consistently.
 

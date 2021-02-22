@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration
+title: Introduction
 ---
 
 {% note info %}
@@ -124,7 +124,7 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ## Record tests
 
-Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration-introduction %}. The Dashboard provides you insight into what happened when your tests ran.
 
 ### Recording tests allow you to:
 
@@ -169,7 +169,7 @@ CI Provider | Example Project | Example Config
 {% url "AppVeyor" https://appveyor.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url "appveyor.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml %}
 {% url "Azure / VSTS CI / TeamFoundation" https://azure.microsoft.com/ %} | {% url "cypress-example-kitchensink" https://github.com/bahmutov/cypress-example-kitchensink %} | {% url "azure-ci.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml %}
 {% url "BitBucket" https://bitbucket.org/product/features/pipelines %} | {% url "cypress-example-kitchensink" https://bitbucket.org/cypress-io/cypress-example-kitchensink %} | {% url "bitbucket-pipelines.yml" https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml %}
-{% url "BuildKite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
+{% url "Buildkite" https://buildkite.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".buildkite/pipeline.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml %}
 {% url "CircleCI" https://circleci.com %} | {% url "cypress-example-kitchensink" https://github.com/cypress-io/cypress-example-kitchensink %} | {% url ".circleci/config.yml" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml %}
 {% url "CodeShip Basic" https://codeship.com/features/basic %} (has {% issue 328 "cy.exec() issue" %}) | |
 {% url "CodeShip Pro" https://codeship.com/features/pro %} | {% url "cypress-example-docker-codeship" https://github.com/cypress-io/cypress-example-docker-codeship %} |
@@ -216,7 +216,7 @@ Caching folders with npm modules saves a lot of time after the first build.
 <!-- textlint-enable -->
 
 {% note info %}
-#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}
 
 The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the Circle CI {% url "Cypress Orb" https://github.com/cypress-io/circleci-orb %}, Codecov Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems with full code-coverage reporting and {% url "Cypress Dashboard recording" https://dashboard.cypress.io/projects/7s5okt %}.
 
@@ -332,6 +332,10 @@ jobs:
 ```
 
 Find the complete CircleCI v2 example with caching and artifact upload in the {% url "cypress-example-docker-circle" https://github.com/cypress-io/cypress-example-docker-circle %} repo.
+
+### RAM Disk
+
+You can speed up Cypress test jobs by using CircleCI RAM disk, read {% url 'Start CircleCI Machines Faster by Using RAM Disk' https://glebbahmutov.com/blog/circle-ram-disk/ %} blog post.
 
 ## AWS Amplify
 
@@ -515,6 +519,20 @@ test:
         - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
 ```
 
+## GitHub Actions
+
+We recommend using our official {% url 'cypress-io/github-action' https://github.com/cypress-io/github-action %} to install, cache, and execute Cypress tests.
+
+<!-- textlint-disable -->
+{% video youtube gokM_zEmWLA %}
+<!-- textlint-enable -->
+
+Read our tutorials {% url 'Triple Tested Static Site Deployed to GitHub Pages Using GitHub Actions' https://glebbahmutov.com/blog/triple-tested/ %} and {% url 'Drastically Simplify Testing on CI with Cypress GitHub Action' https://www.cypress.io/blog/2019/11/20/drastically-simplify-your-testing-with-cypress-github-action/ %}.
+
+## Netlify
+
+We recommend using our official {% url netlify-plugin-cypress https://github.com/cypress-io/netlify-plugin-cypress %} to execute end-to-end tests before and after deployment to Netlify platform. Read our tutorials {% url 'Test Sites Deployed To Netlify Using netlify-plugin-cypress' https://glebbahmutov.com/blog/test-netlify/ %} and {% url 'Run Cypress Tests on Netlify Using a Single Line' https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/ %}.
+
 ## Docker
 
 We have {% url 'created' https://github.com/cypress-io/cypress-docker-images %} an official {% url 'cypress/base' 'https://hub.docker.com/r/cypress/base/' %} container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under {% url 'cypress/browsers' 'https://hub.docker.com/r/cypress/browsers/' %} name. A typical Dockerfile would look like this:
@@ -543,6 +561,47 @@ See our {% url 'examples' docker %} for additional information on our maintained
 
 # Advanced setup
 
+## Machine requirements
+
+Hardware requirements to run Cypress depend how much memory the browser, the application under test, and the server (if running it locally) need to run the tests without crashing.
+
+**Some signs that your machine may not have enough CPU or memory to run Cypress:**
+
+- The recorded video artifacts have random pauses or dropped frames.
+- {% url "Debug logs of the CPU and memory" troubleshooting#Log-memory-and-CPU-usage %} frequently show CPU percent above 100%.
+- The browser crashes.
+
+You can see the total available machine memory and the current free memory by running the {% url '`cypress info`' https://on.cypress.io/command-line#cypress-info %} command.
+
+```shell
+npx cypress info
+...
+Cypress Version: 6.3.0
+System Platform: linux (Debian - 10.5)
+System Memory: 73.8 GB free 25 GB
+```
+
+You can see the CPU parameters on the CI machines by executing the command below.
+
+```shell
+node -p 'os.cpus()'
+[
+  {
+    model: 'Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz',
+    speed: 3399,
+    times: { user: 760580, nice: 1010, sys: 158130, idle: 1638340, irq: 0 }
+  }
+  ...
+]
+```
+
+**Example projects and the machine configurations used to run them on CI:**
+
+- {% url 'Cypress Documentation' https://github.com/cypress-io/cypress-documentation %} and {% url 'Real World App' https://github.com/cypress-io/cypress-realworld-app %} projects run tests on the default CircleCI machine using the {% url 'Docker executor' https://circleci.com/docs/2.0/executor-types/ %} on the {% url 'default medium size machine' https://circleci.com/docs/2.0/configuration-reference/#resource_class %} with 2 vCPUs and 4GB of RAM. `cypress info` reports `System Memory: 73.8 GB free 25 GB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz`. Note that the free memory varies on CircleCI, typically we see values anywhere from 6GB to 30GB.
+- {% url 'Real World App' https://github.com/cypress-io/cypress-realworld-app %} also executes its tests using {% url "GitHub Actions" https://github.com/cypress-io/github-action %} with the {% url 'default hosted runner' https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners %} with 2 vCPUs and 7GB of RAM. `cypress info` reports `System Memory: 7.29 GB free 632 MB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz`.
+
+**Tip:** if there are problems with longer specs, try splitting them into shorter ones, following {% url 'this example' https://glebbahmutov.com/blog/split-spec/ %}.
+
 ## Dependencies
 
 If you are not using one of the above CI providers then make sure your system has these dependencies installed.
@@ -565,7 +624,9 @@ As of {% url "Cypress version 3.0" changelog#3-0-0 %}, Cypress downloads its bin
 
 - If you are using `yarn`, caching `~/.cache` will include both the `yarn` and Cypress caches. Consider using `yarn install --frozen-lockfile` as an {% url "`npm ci`" https://docs.npmjs.com/cli/ci %} equivalent.
 
-If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+- If you need to override the binary location for some reason, use {% url '`CYPRESS_CACHE_FOLDER`' installing-cypress#Binary-cache %} environment variable.
+
+- Make sure you are not restoring the previous cache using lax keys; then the Cypress binaries can "snowball", read {% url "Do Not Let Cypress Cache Snowball on CI" https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/ %}.
 
 **Tip:** you can find lots of CI examples with configured caching in our {% url cypress-example-kitchensink https://github.com/cypress-io/cypress-example-kitchensink#ci-status %} repository.
 
@@ -707,20 +768,6 @@ See {% url bahmutov/yarn-cypress-cache https://github.com/bahmutov/yarn-cypress-
 ## In Docker
 
 If you are running long runs on Docker, you need to set the `ipc` to `host` mode. {% issue 350 'This issue' %} describes exactly what to do.
-
-In a Docker container, the default size of the `/dev/shm` shared memory space is 64MB. This is not typically enough to run Chrome and can cause the browser to crash. You can fix this by passing the `--disable-dev-shm-usage` flag to Chrome with the following workaround:
-
-```javascript
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      launchOptions.args.push('--disable-dev-shm-usage')
-    }
-
-    return launchOptions
-  })
-}
-```
 
 ## Xvfb
 

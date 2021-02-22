@@ -32,15 +32,23 @@ sidebar:
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
+    cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration: Continuous Integration
+    continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
     users: Users
+    bitbucket-integration: Bitbucket Integration
+    github-actions: GitHub Actions
+    gitlab-ci: GitLab CI
     github-integration: GitHub Integration
+    gitlab-integration: GitLab Integration
     slack-integration: Slack Integration
     analytics: Analytics
+    flaky-test-management: Flaky Test Management
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
@@ -49,7 +57,6 @@ sidebar:
     guides: Guides
     command-line: Command Line
     test-retries: Test Retries
-    continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
@@ -57,6 +64,7 @@ sidebar:
     custom-commands: Custom Commands
     web-security: Web Security
     references: References
+    component-testing: Component Testing
     configuration: Configuration
     experiments: Experiments
     proxy-configuration: Proxy Configuration
@@ -78,6 +86,7 @@ sidebar:
     retry-ability: Retry-ability
     visual-testing: Visual Testing
     code-coverage: Code Coverage
+    component-testing-introduction: Introduction
   api:
     api: API
     table-of-contents: Table of Contents
@@ -114,6 +123,7 @@ sidebar:
     go: go
     hash: hash
     hover: hover
+    intercept: intercept
     invoke: invoke
     its: its
     last: last
@@ -136,7 +146,6 @@ sidebar:
     rightclick: rightclick
     root: root
     route: route
-    route2: route2
     screenshot: screenshot
     scrollintoview: scrollIntoView
     scrollto: scrollTo
@@ -195,6 +204,10 @@ sidebar:
     writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
     browser-launch-api: Browser Launching
+    before-run-api: Before Run
+    after-run-api: After Run
+    before-spec-api: Before Spec
+    after-spec-api: After Spec
     configuration-api: Configuration
     version: version
     arch: arch

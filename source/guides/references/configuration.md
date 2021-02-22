@@ -38,13 +38,14 @@ Option | Default | Description
 `execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a {% url `cy.exec()` exec %} command
 `taskTimeout` | `60000` | Time, in milliseconds, to wait for a task to finish executing during a {% url `cy.task()` task %} command
 `pageLoadTimeout` | `60000` | Time, in milliseconds, to wait for `page transition events` or {% url `cy.visit()` visit %}, {% url `cy.go()` go %}, {% url `cy.reload()` reload %} commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.
-`requestTimeout` | `5000` | Time, in milliseconds, to wait for an XHR request to go out in a {% url `cy.wait()` wait %} command
+`requestTimeout` | `5000` | Time, in milliseconds, to wait for a request to go out in a {% url `cy.wait()` wait %} command
 `responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a {% url `cy.request()` request %}, {% url `cy.wait()` wait %}, {% url `cy.fixture()` fixture %}, {% url `cy.getCookie()` getcookie %}, {% url `cy.getCookies()` getcookies %}, {% url `cy.setCookie()` setcookie %}, {% url `cy.clearCookie()` clearcookie %}, {% url `cy.clearCookies()` clearcookies %}, and {% url `cy.screenshot()` screenshot %} commands
 
 ## Folders / Files
 
 Option | Default | Description
 ----- | ---- | ----
+`downloadsFolder`    | `cypress/downloads`    | Path to folder where files downloaded during a test are saved
 `fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
 `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
 `ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using {% url "https://globster.xyz" https://globster.xyz %} to test what files would match.
@@ -61,7 +62,7 @@ Option | Default | Description
 ----- | ---- | ----
 `screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during `cypress run`.
 `screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from {% url `cy.screenshot()` screenshot %} command or after a test fails during `cypress run`
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 
 For more options regarding screenshots, view the {% url 'Cypress.Screenshot API' screenshot-api %}.
 
@@ -69,11 +70,18 @@ For more options regarding screenshots, view the {% url 'Cypress.Screenshot API'
 
 Option | Default | Description
 ----- | ---- | ----
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `screenshotsFolder` and `videosFolder` before tests run with `cypress run`.
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
 `videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction%} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+
+## Downloads
+
+Option | Default | Description
+----- | ---- | ----
+`downloadsFolder` | `cypress/downloads` | Path to folder where files downloaded during a test are saved
+`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
 
 ## Browser
 
@@ -81,7 +89,7 @@ Option | Default | Description
 ----- | ---- | ----
 `chromeWebSecurity`    | `true`    | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. {% url 'Read more about Web Security' web-security %}.
 `blockHosts` | `null` | A String or Array of hosts that you wish to block traffic for. {% urlHash 'Please read the notes for examples on using this.' blockHosts %}
-`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
+`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During {% url "`cypress run`" command-line#cypress-run %}, the default value is `1`. During {% url "`cypress open`" command-line#cypress-open %}, the default value is `null`. See full details {% urlHash "here" firefoxGcInterval %}.
 `modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. {% urlHash 'Please read the notes for more information on this setting.' modifyObstructiveCode %}
 `userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See {% url "User-Agent MDN Documentation" https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent %} for example user agent values.
 
@@ -92,12 +100,15 @@ Option | Default | Description
 `viewportHeight` | `660` | Default height in pixels for the application under tests' viewport (Override with {% url `cy.viewport()` viewport %} command)
 `viewportWidth` | `1000` | Default width in pixels for the application under tests' viewport. (Override with {% url `cy.viewport()` viewport %} command)
 
-## Animations
+## Actionability
 
 Option | Default | Description
 ----- | ---- | ----
 `animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
 `waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
+`scrollBehavior` | `top` | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling.
+
+For more information, see the docs on {% url 'actionability' interacting-with-elements#Actionability %}.
 
 ## Node version
 
@@ -108,12 +119,20 @@ Option | Default | Description
 The Node version printed in the Node.js Version panel is used in Cypress to:
 
 - Build files in the {% url "`integrationFolder`" configuration#Folders-Files %}.
-- Build files in the {% url "`supportFolder`" configuration#Folders-Files %}.
+- Build files in the {% url "`supportFile`" configuration#Folders-Files %}.
 - Execute code in the {% url "`pluginsFile`" configuration#Folders-Files %}.
 
-Cypress comes automatically bundled with a set Node version by default.
+Cypress comes automatically bundled with a set Node version by default. You can see the bundled version by running the {% url `cypress version` command-line#cypress-version %} command, for example:
 
-You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`.
+```shell
+npx cypress version
+Cypress package version: 6.2.1
+Cypress binary version: 6.2.1
+Electron version: 11.1.1
+Bundled Node version: 12.18.3
+```
+
+You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the {% url "`nodeVersion`" configuration#Node-version %} configuration to `system`. For example, you need to use the system Node if you want to load `node-sass` or `sqlite3` modules from your plugins file.
 
 {% imgTag /img/guides/test-runner-settings-nodejs-version.jpg "Node version in Settings in Test Runner" %}
 
@@ -164,7 +183,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 ## Environment Variables
 
-You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration-introduction %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
@@ -330,7 +349,11 @@ You can turn this option off if the application or site you're testing **does no
 
 ## firefoxGcInterval
 
-Firefox has a {% url "known bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing. You can see progress on this issue {% issue 6187 'here' %}.
+{% note warning %}
+The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since the garbage collection bug was fixed in Firefox 80. It is recommended to upgrade your version of Firefox to avoid this workaround.
+{% endnote %}
+
+Firefox versions 79 and earlier have a {% url "bug" https://bugzilla.mozilla.org/show_bug.cgi?id=1608501 %} where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing.
 
 Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
 
@@ -394,11 +417,62 @@ Run GC cleanup before every 3rd test during {% url "`cypress run`" command-line#
 }
 ```
 
+## isInteractive
+
+You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on {% url "`Cypress.config`" config %}.
+
+```javascript
+if (Cypress.config('isInteractive')) {
+  // interactive "cypress open" mode!
+} else {
+  // "cypress run" mode
+}
+```
+
 ## Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
 
+# Common problems
+
+### {% fa fa-angle-right %} `baseUrl` is not set
+
+Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following configuration is <i>incorrect</i> and WILL NOT WORK:
+
+```javascript
+// ⛔️ DOES NOT WORK
+{
+  "env": {
+    "baseUrl": "http://localhost:3030",
+    "FOO": "bar"
+  }
+}
+```
+
+Solution: place the `baseUrl` property at the top level, outside the `env` object.
+
+```javascript
+// ✅ THE CORRECT WAY
+{
+  "baseUrl": "http://localhost:3030",
+  "env": {
+    "FOO": "bar"
+  }
+}
+```
+
+You can also find a few tips on setting the `baseUrl` in this {% url 'short video' https://www.youtube.com/watch?v=f5UaXuAc52c %}.
+
+### {% fa fa-angle-right %} Test files not found when using `spec` parameter
+
+When using the `--spec <path or mask>` argument, make it relative to the project's folder. If the specs are still missing, run Cypress with {% url 'DEBUG logs' troubleshooting#Print-DEBUG-logs %} with the following setting to see how the Test Runner is looking for spec files:
+
+```shell
+DEBUG=cypress:cli,cypress:server:specs
+```
+
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
 {% url "5.0.0" changelog %} | Added `retries` configuration.
 {% url "5.0.0" changelog %} | Renamed `blacklistHosts` configuration to `blockHosts`.

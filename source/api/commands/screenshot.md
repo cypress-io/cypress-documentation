@@ -188,7 +188,7 @@ You can get details about any given screenshot and manipulate it after it has be
 
 ### Automatic screenshots on test failure
 
-When running through `cypress run` or in {% url 'Continuous Integration' continuous-integration %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within your {% url `screenshotOnRunFailure` configuration#Screenshots %} or {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
+When running through `cypress run` or in {% url 'Continuous Integration' continuous-integration-introduction %}, Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within your {% url `screenshotOnRunFailure` configuration#Screenshots %} or {% url 'Cypress.Screenshot.defaults()' screenshot-api %}.
 
 ## Viewing Screenshots
 

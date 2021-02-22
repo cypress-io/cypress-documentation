@@ -1,10 +1,6 @@
 import { MAIN_NAV } from '../support/defaults'
 
 describe('Main Nav', () => {
-  beforeEach(() => {
-    cy.server()
-  })
-
   context('Nav Bar', () => {
     beforeEach(() => {
       cy.visit('/')
@@ -43,10 +39,8 @@ describe('Main Nav', () => {
     beforeEach(() => {
       cy.visit('/')
 
-      cy.route({
-        method: 'POST',
-        url: /algolia/,
-        response: {
+      cy.intercept(/algolia/, {
+        body: {
           'results': [
             {
               'hits': [
@@ -64,8 +58,8 @@ describe('Main Nav', () => {
     it('posts to Algolia api with correct index on search', () => {
       cy.get('#search-input').type('g')
 
-      cy.wait('@postAlgolia').then((xhr) => {
-        expect(xhr.requestBody.requests[0].indexName).to.eq('cypress')
+      cy.wait('@postAlgolia').then(({ request, response }) => {
+        expect(JSON.parse(request.body).requests[0].indexName).to.eq('cypress')
       })
     })
 
@@ -90,6 +84,7 @@ describe('Main Nav', () => {
     })
   })
 
+  // NOTE: skip language selector
   context.skip('Language selector', () => {
     beforeEach(() => {
       cy.visit('/')

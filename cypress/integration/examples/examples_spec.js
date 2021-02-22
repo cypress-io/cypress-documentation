@@ -1,20 +1,7 @@
 /// <reference types="cypress" />
+import { getAssetCacheHash, addAssetCacheHash } from './utils'
 
 const YAML = require('yamljs')
-
-const getAssetCacheHash = ($img) => {
-  const src = $img.attr('src').split('.')
-
-  return src.length >= 3 ? src.slice(-2, -1).pop() : ''
-}
-
-const addAssetCacheHash = (assetSrc, hash) => {
-  let parsedSrc = assetSrc.split('.')
-
-  parsedSrc.splice(-1, 0, hash)
-
-  return parsedSrc.join('.')
-}
 
 describe('Examples', () => {
   describe('Test Utilities', () => {
@@ -157,96 +144,6 @@ describe('Examples', () => {
                 .should('have.attr', 'href', `https://www.youtube.com/watch?v=${webinar.youtubeId}`)
               }
             })
-          })
-        })
-      })
-    })
-  })
-
-  describe('Blogs', function () {
-    let blogs = []
-
-    before(() => {
-      cy.readFile('source/_data/blogs.yml')
-      .then(function (yamlString) {
-        blogs = YAML.parse(yamlString)
-      })
-    })
-
-    beforeEach(() => {
-      cy.visit('/examples/media/blogs-media.html')
-      cy.contains('.article-title', 'Blogs').should('be.visible')
-    })
-
-    it('lists small links', () => {
-      cy.get('.media-small').each((blogEl, i) => {
-        cy.wrap(blogs.small[i]).then((blog) => {
-          cy.wrap(blogEl)
-          .contains('a', blog.title)
-          .should('have.attr', 'href', blog.sourceUrl)
-        })
-      })
-    })
-
-    it('lists large blog urls', () => {
-      cy.get('.media-large .media h2 a').each((blogTitle, i) => {
-        expect(blogTitle).to.have.attr('href', blogs.large[i].url)
-        expect(blogTitle).to.contain(blogs.large[i].title)
-      })
-    })
-
-    it('displays large blog imgs', () => {
-      cy.get('.media-large .media img').each(($img, i) => {
-        const assetHash = getAssetCacheHash($img)
-        const imgSrc = assetHash.length
-          ? addAssetCacheHash(blogs.large[i].img, assetHash)
-          : blogs.large[i].img
-
-        expect($img).to.have.attr('src', imgSrc)
-        cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
-      })
-    })
-  })
-
-  describe('Talks', () => {
-    let talks = []
-
-    before(() => {
-      let talksYaml = 'source/_data/talks.yml'
-
-      cy.readFile(talksYaml).then(function (yamlString) {
-        talks = YAML.parse(yamlString)
-      })
-    })
-
-    beforeEach(() => {
-      cy.visit('examples/media/talks-media.html')
-      cy.contains('.article-title', 'Talks').should('be.visible')
-    })
-
-    it('lists talks', function () {
-      cy.get('.media-large .media').each((talkEl, i) => {
-        cy.wrap(talks.large[i]).then((talk) => {
-          cy.wrap(talkEl).within(() => {
-            if (talk.youtubeId) {
-              cy.root()
-              .find(`a[href='https://www.youtube.com/watch?v=${talk.youtubeId}']`)
-              .contains(talk.title)
-            } else if (talk.url) {
-              cy.root()
-              .find(`a[href='${talk.url}']`)
-              .contains(talk.title)
-
-              cy.root().find('img').then(($img) => {
-                const assetHash = getAssetCacheHash($img)
-                const imgSrc = assetHash.length
-                  ? addAssetCacheHash(talk.img, assetHash)
-                  : talk.img
-
-                expect($img).to.have.attr('src', imgSrc)
-                cy.request(Cypress.config('baseUrl') + imgSrc).its('status').should('equal', 200)
-              })
-            }
           })
         })
       })

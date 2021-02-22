@@ -2,6 +2,277 @@
 title: Migration Guide
 ---
 
+# Migrating `cy.route()` to `cy.intercept()`
+
+This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+
+Please also refer to the full documentation for {% url "`cy.intercept()`" intercept %}.
+
+## Match simple route
+
+In many use cases, you can replace `cy.route()` with {% url "`cy.intercept()`" intercept %} and remove the call to `cy.server()` (which is no longer necessary).
+
+{% badge danger Before %}
+
+```js
+// Set up XHR listeners using cy.route()
+cy.server()
+cy.route('/users').as('getUsers')
+cy.route('POST', '/project').as('createProject')
+cy.route('PATCH', '/projects/*').as('updateProject')
+```
+
+{% badge success After %}
+
+```js
+// Intercept HTTP requests
+cy.intercept('/users').as('getUsers')
+cy.intercept('POST', '/project').as('createProject')
+cy.intercept('PATCH', '/projects/*').as('updateProject')
+```
+
+## Match against `url` and `path`
+
+The `url` argument to {% url "`cy.intercept()`" intercept %} matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in `cy.intercept()`, you may need to update your code depending on the route you're trying to match.
+
+{% badge danger Before %}
+
+```js
+// Match XHRs with a path or url of /users
+cy.server()
+cy.route({
+  method: 'POST',
+  url: '/users'
+}).as('getUsers')
+```
+
+{% badge success After %}
+
+```js
+// Match HTTP requests with a path of /users
+cy.intercept({
+  method: 'POST',
+  path: '/users'
+}).as('getUsers')
+
+// OR
+// Match HTTP requests with an exact url of https://example.cypress.io/users
+cy.intercept({
+  method: 'POST',
+  url: 'https://example.cypress.io/users'
+}).as('getUsers')
+```
+
+## `cy.wait()` object
+
+The object returned by `cy.wait()` is different from intercepted HTTP requests using `cy.intercept()` than the object returned from an awaited `cy.route()` XHR.
+
+{% badge danger Before %}
+
+```js
+// Wait for XHR from cy.route()
+cy.route('POST', '/users').as('createUser')
+// ...
+cy.wait('@createUser')
+  .then(({ requestBody, responseBody, status }) => {
+    expect(status).to.eq(200)
+    expect(requestBody.firstName).to.eq('Jane')
+    expect(responseBody.firstName).to.eq('Jane')
+  })
+```
+
+{% badge success After %}
+
+```js
+// Wait for intercepted HTTP request
+cy.intercept('POST', '/users').as('createUser')
+// ...
+cy.wait('@createUser')
+  .then(({ request, response }) => {
+    expect(response.statusCode).to.eq(200)
+    expect(request.body.name).to.eq('Jane')
+    expect(response.body.name).to.eq('Jane')
+  })
+```
+
+## Fixtures
+
+You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for `cy.intercept()`.
+
+{% badge danger Before %}
+
+```js
+// Stub response with fixture data using cy.route()
+cy.route('GET', '/projects', 'fx:projects')
+```
+
+{% badge success After %}
+
+```js
+// Stub response with fixture data using cy.intercept()
+cy.intercept('GET', '/projects', {
+  fixture: 'projects'
+})
+```
+
+## Override route matchers
+
+Unlike `cy.route()`, `cy.intercept()` currently does _not_ allow you to override a previous response. For more information on this, see {% issue 9302 %} and {% url "this blog post" https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors %}. Overriding responses will be added in a future release.
+
+# Migrating to Cypress 6.0
+
+This guide details the changes and how to change your code to migrate to Cypress 6.0. {% url "See the full changelog for 6.0" changelog#6-0-0 %}.
+
+## Non-existent element assertions
+
+{% note info %}
+**Key takeway:** Use `.should('not.exist')` to assert that an element does not exist in the DOM (not `.should('not.be.visible')`, etc).
+{% endnote %}
+
+In previous versions of Cypress, there was a possibility for tests to falsely pass when asserting a negative state on non-existent elements.
+
+For example, in the tests below we want to test that the search dropdown is no longer visible when the search input is blurred because we hide the element in CSS styles. Except in this test, we've mistakenly misspelled one of our selectors.
+
+```js
+cy.get('input[type=search]').type('Cypress')
+cy.get('#dropdown').should('be.visible')
+cy.get('input[type=search]').blur()
+
+// below we misspelled "dropdown" in the selector 😞
+// the assertions falsely pass in Cypress < 6.0
+// and will correctly fail in Cypress 6.0 +
+cy.get('#dropdon').should('not.be.visible')
+cy.get('#dropdon').should('not.have.class', 'open')
+cy.get('#dropdon').should('not.contain', 'Cypress')
+```
+
+{% imgTag /img/guides/el-incorrectly-passes-existence-check.png "non-existent element before 6.0" "width-600" %}
+
+In 6.0, these assertions will now correctly fail, telling us that the `#dropdon` element doesn't exist in the DOM.
+
+{% imgTag /img/guides/el-correctly-fails-existence-check.png "non-existent element in 6.0" "width-600" %}
+
+### Assertions on non-existent elements
+
+This fix may cause some breaking changes in your tests if you are relying on assertions such as `not.be.visible` or `not.contains` to test that the DOM element did not *exist* in the DOM. This means you'll need to update your test code to be more specific about your assertions on non-existent elements.
+
+{% badge danger Before %} Assert that non existent element was not visible
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // assertions below pass in < 6.0, but properly fail in 6.0+
+  cy.get('.modal').should('not.be.visible')
+  cy.get('.modal').should('not.contain', 'Upgrade')
+})
+```
+
+{% badge success After %} Assert that non existent element does not exist
+
+```js
+it('test', () => {
+  // the .modal element is removed from the DOM on click
+  cy.get('.modal').find('.close').click()
+  // we should instead assert that the element doesn't exist
+  cy.get('.modal').should('not.exist')
+})
+```
+
+## Opacity visibility
+
+DOM elements with `opacity: 0` style are no longer considered to be visible. This includes elements with an ancestor that has `opacity: 0` since a child element can never have a computed opacity greater than that of an ancestor.
+
+Elements where the CSS property (or ancestors) is `opacity: 0` are still considered {% url "actionable" interacting-with-elements %} however and {% url "any action commands"  interacting-with-elements#Actionability %} used to interact with the element will perform the action. This matches browser's implementation on how they regard elements with `opacity: 0`.
+
+### Assert visibility of `opacity: 0` element
+
+{% badge danger Before %} Failed assertion that `opacity: 0` element is not visible.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  // In < 5.0 this assertion would fail
+  cy.get('.hidden').should('not.be.visible')
+})
+```
+
+{% badge success After %} Passed assertion that `opacity: 0` element is not visible.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  // In 6.0 this assertion will pass
+  cy.get('.hidden').should('not.be.visible')
+})
+```
+
+### Perform actions on `opacity: 0` element
+
+In all versions of Cypress, you can interact with elements that have `opacity: 0` style.
+
+```js
+it('test', () => {
+  // '.hidden' has 'opacity: 0' style.
+  cy.get('.hidden').click()       // ✅ clicks on element
+  cy.get('.hidden').type('hi')    // ✅ types into element
+  cy.get('.hidden').check()       // ✅ checks element
+  cy.get('.hidden').select('yes') // ✅ selects element
+})
+```
+
+## `cy.wait(alias)` type
+
+{% url "`cy.route()`" route %} is deprecated in 6.0.0. We encourage the use of {% url "`cy.intercept()`" intercept %} instead. Due to this deprecation, the type yielded by {% url "`cy.wait(alias)`" wait %} has changed.
+
+{% badge danger Before %} Before 6.0.0, {% url "`cy.wait(alias)`" wait %} would yield an object of type `WaitXHR`.
+
+{% badge success After %} In 6.0.0 and onwards, {% url "`cy.wait(alias)`" wait %} will yield an object of type `Interception`. This matches the new interception object type used for {% url "`cy.intercept()`" intercept %}.
+
+### Restore old behavior
+
+If you need to restore the type behavior prior to 6.0.0 for {% url "`cy.wait(alias)`" wait %}, you can declare a global override for {% url "`cy.wait()`" wait %} like so:
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject = any> {
+      wait(alias: string): Chainable<Cypress.WaitXHR>
+    }
+  }
+}
+```
+
+## `—disable-dev-shm-usage`
+
+We now pass `—disable-dev-shm-usage` to the Chrome browser flags by default. If you're passing this flag in your `plugins` file, you can now remove this code.
+
+{% badge danger Before %} Passing flag in plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
+    }
+
+    return launchOptions
+  })
+}
+```
+
+{% badge success After %} Remove flag from plugins file.
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {}
+```
+
+### Restore old behavior
+
+If you need to remove the flag in 6.0.0+, you can follow the workaround documented here: {% issue 9242 %}.
+
 # Migrating to Cypress 5.0
 
 This guide details the changes and how to change your code to migrate to Cypress 5.0. {% url "See the full changelog for 5.0" changelog#5-0-0 %}.
@@ -386,7 +657,7 @@ Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 
 Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
-Node.js 8 reached its end of life on Dev 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
+Node.js 8 reached its end of life on Dec 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
 # Migrating to Cypress 4.0
 

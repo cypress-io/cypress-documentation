@@ -14,6 +14,16 @@ If you're trying to assert on an element's text content:
 cy.get('div').should('have.text', 'foobarbaz')
 ```
 
+If the text contains a {% url "non-breaking space" https://en.wikipedia.org/wiki/Non-breaking_space %} entity `&nbsp;` then use the Unicode character `\u00a0` instead of `&nbsp;`.
+
+```html
+<div>Hello&nbsp;world</div>
+```
+
+```javascript
+cy.get('div').should('have.text', 'Hello\u00a0world')
+```
+
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
@@ -158,7 +168,7 @@ We recommend these great modules for this use case:
 
 **_How can I wait for my requests to be complete?_**
 
-The prescribed way to do this is to use {% url '`cy.server()`' server#Syntax %}, define your routes using {% url '`cy.route()`' route#Syntax %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
+The prescribed way to do this is to define your routes using {% url '`cy.intercept()`' intercept %}, create {% url '`aliases`' variables-and-aliases#Aliases %} for these routes prior to the visit, and _then_ you can explicitly tell Cypress which routes you want to wait on using {% url '`cy.wait()`' wait#Syntax %}. **There is no magical way to wait for all of your XHRs or Ajax requests.** Because of the asynchronous nature of these requests, Cypress cannot intuitively know to wait for them. You must define these routes and be able to unambiguously tell Cypress which requests you want to wait on.
 
 ## {% fa fa-angle-right %} Can I test the HTML `<head>` element?
 
@@ -210,18 +220,56 @@ describe('The Document Metadata', () => {
 
 You certainly can.
 
-```javascript
-it('check validation message on invalid input', () => {
-  cy.get('input:invalid').should('have.length', 0)
-  cy.get('[type="email"]').type('not_an_email')
-  cy.get('[type="submit"]').click()
-  cy.get('input:invalid').should('have.length', 1)
-  cy.get('[type="email"]').then(($input) => {
-    expect($input[0].validationMessage).to.eq('I expect an email!')
-  })
+**Test default validation error**
+
+```html
+<form>
+  <input type="text" id="name" name="name" required />
+  <button type="submit">Submit</button>
+</form>
+```
+
+```js
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('#name').then(($input) => {
+  expect($input[0].validationMessage).to.eq('Please fill out this field.')
 })
 ```
 
+**Test custom validation error**
+
+```html
+<body>
+<form>
+  <input type="email" id="email" name="email" />
+  <button type="submit">Submit</button>
+</form>
+<script>
+  const email = document.getElementById("email")
+
+  email.addEventListener("input", function (event) {
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("I expect an email!")
+    } else {
+      email.setCustomValidity("")
+    }
+  })
+</script>
+</body>
+```
+
+```javascript
+cy.get('input:invalid').should('have.length', 0)
+cy.get('[type="email"]').type('not_an_email')
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('[type="email"]').then(($input) => {
+  expect($input[0].validationMessage).to.eq('I expect an email!')
+})
+```
+
+For more examples, read the blog post {% url "HTML Form Validation in Cypress" https://glebbahmutov.com/blog/form-validation-in-cypress/ %}.
 
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
@@ -267,7 +315,57 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 - Debug the error instance itself
 - Prevent Cypress from failing the test
 
-This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
+This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page and the recipe {% url 'Handling errors' recipes#Fundamentals %}.
+
+## {% fa fa-angle-right %} Will Cypress fail the test when an application has unhandled rejected promise?
+
+By default no, Cypress does not listen to the unhandled promise rejection event in your application, and thus does not fail the test. You can set up your own listener though and fail the test, see our recipe {% url 'Handling errors' recipes#Fundamentals %}:
+
+```js
+// register listener during cy.visit
+it('fails on unhandled rejection', () => {
+  cy.visit('/', {
+    onBeforeLoad (win) {
+      win.addEventListener('unhandledrejection', (event) => {
+        const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+        // fail the test
+        throw new Error(msg)
+      })
+    },
+  })
+})
+
+// ALTERNATIVE: register listener for this test
+it('fails on unhandled rejection', () => {
+  cy.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+      // fail the test
+      throw new Error(msg)
+    })
+  })
+
+  cy.visit('/')
+})
+
+// ALTERNATIVE: register listener in every test
+before(() => {
+  Cypress.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+      // fail the test
+      throw new Error(msg)
+    })
+  })
+})
+
+it('fails on unhandled rejection', () => {
+  cy.visit('/')
+})
+```
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 
@@ -342,6 +440,12 @@ Videos recorded on Continuous Integration may have frozen or dropped frames if t
 
 If you are experiencing this issue, we recommend switching to a more powerful CI container or provider.
 
+## {% fa fa-angle-right %} What can I do if my tests crash or hang on CI?
+
+As some users have noted, a longer test has a higher chance of hanging or even crashing when running on CI. When a test runs for a long period of time, its commands and the application itself might allocate more memory than available, causing the crash. The exact risk of crashing depends on the application and the available hardware resources. While there is no single time limit that would solve this problem, in general we recommend splitting spec files to run in under one minute each. You can read the blog post {% url "Make Cypress Run Faster by Splitting Specs" https://glebbahmutov.com/blog/split-spec/ %} to learn how to split a spec file.
+
+You can further split individual long-running tests. For example, you can verify parts of the longer user feature in the separate tests as described in {% url "Split a very long Cypress test into shorter ones using App Actions" https://www.cypress.io/blog/2019/10/29/split-a-very-long-cypress-test-into-shorter-ones-using-app-actions/ %}.
+
 ## {% fa fa-angle-right %} How can I parallelize my runs?
 
 You can read more about parallelization {% url 'here' parallelization %}.
@@ -354,7 +458,14 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 
 ## {% fa fa-angle-right %} How do I test uploading a file?
 
-It is possible to upload files in your application but it's different based on how you've written your own upload code. You can read more about this {% issue 170 'here' %}
+It is possible to upload files in your application but it's different based on how you've written your own upload code. Many people had success by using the community plugin {% url cypress-file-upload https://github.com/abramenal/cypress-file-upload %}. This plugin adds a custom child command `.attachFile` that you call from the test.
+
+```javascript
+// attaches the file cypress/fixtures/data.json
+cy.get('[data-cy="file-input"]').attachFile('data.json')
+```
+
+You can read more about uploading files {% issue 170 'here' %}.
 
 ## {% fa fa-angle-right %} What is the projectId for?
 
@@ -384,13 +495,12 @@ For further detail see the {% url Identification projects#Identification %} sect
 Don't try to use your UI to check email. Instead opt to programmatically use 3rd party APIs or talk directly to your server. Read about this {% url 'best practice' best-practices#Visiting-external-sites %} here.
 {% endnote %}
 
-## {% fa fa-angle-right %} How do I wait for multiple XHR requests to the same url?
+## {% fa fa-angle-right %} How do I wait for multiple requests to the same url?
 
-You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.route()` route %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching XHR requests there are.
+You should set up an alias (using {% url `.as()` as %}) to a single {% url `cy.intercept()` intercept %} that matches all of the XHRs. You can then {% url `cy.wait()` wait %} on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.server()
-cy.route('users').as('getUsers')
+cy.intercept('users').as('getUsers')
 cy.wait('@getUsers')  // Wait for first GET to /users/
 cy.get('#list>li').should('have.length', 10)
 cy.get('#load-more-btn').click()
@@ -402,7 +512,7 @@ cy.get('#list>li').should('have.length', 20)
 
 You can use {% url `cy.request()` request %}, {% url `cy.exec()` exec %}, or {% url `cy.task()` task %} to talk to your back end to seed data.
 
-You could also stub XHR requests directly using {% url `cy.route()` route %} which avoids ever even needing to fuss with your database.
+You could also stub requests directly using {% url `cy.intercept()` intercept %} which avoids ever even needing to fuss with your database.
 
 ## {% fa fa-angle-right %} How do I test elements inside an iframe?
 
@@ -529,7 +639,9 @@ There are a lot of ways to test this, so it depends. You'll need to be aware of 
 
 If your server sends specific disposition headers which cause a browser to prompt for download, you can figure out what URL this request is made to, and use {% url "cy.request()" request %} to hit that directly. Then you can test that the server send the right response headers.
 
-If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, there's nothing else to test for.
+If it's an anchor that initiates the download, you could test that it has the right `href` property. As long as you can verify that clicking the button is going to make the right HTTP request, that might be enough to test for.
+
+Finally, if you want to really download the file and verify its contents, see our {% url "File download" https://github.com/cypress-io/cypress-example-recipes#testing-the-dom %} recipe.
 
 In the end, it's up to you to know your implementation and to test enough to cover everything.
 
@@ -571,7 +683,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration-introduction#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
@@ -660,3 +772,80 @@ Yes. You can leverage visual testing tools to test that charts and graphs are re
 
 - see {% url "Testing a chart with Cypress and Applitools" https://glebbahmutov.com/blog/testing-a-chart/ %}
 - see {% url "Testing how an application renders a drawing with Cypress and Percy.io" https://glebbahmutov.com/blog/testing-visually/ %}
+
+## {% fa fa-angle-right %} Why doesn't the `instanceof Event` work?
+
+It might be because of the 2 different windows in Cypress Test Runner. For more information, please check {% url "the note here" window#Cypress-uses-2-different-windows %}.
+
+## {% fa fa-angle-right %} Can I use Cucumber to write tests?
+
+Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then converts the scenarios and step definitions into "regular" JavaScript Cypress tests.
+
+- try using the {% url "Cucumber preprocessor" https://github.com/TheBrainFamily/cypress-cucumber-preprocessor %} and search our {% url "Plugins" plugins %} page for additional helper plugins
+- read {% url "Cypress Super-patterns: How to elevate the quality of your test suite" https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf %} for best practices when writing Cucumber tests
+- take a look at {% url "briebug/bba-cypress-quickstart" https://github.com/briebug/bba-cypress-quickstart %} example application
+
+## {% fa fa-angle-right %} Can I test Next.js sites using Cypress?
+
+Yes, absolutely. See an example in the {% url next-and-cypress-example https://github.com/bahmutov/next-and-cypress-example %} repository where we show how to instrument the application's source code to get {% url "code coverage" code-coverage %} from tests. You can learn how to set good Cypress tests for a Next.js application in this {% url tutorial https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress %}.
+
+## {% fa fa-angle-right %} Can I test Gatsby.js sites using Cypress?
+
+Yes, as you can read in the official {% url "Gatsby docs" https://www.gatsbyjs.com/docs/end-to-end-testing/ %}. You can also watch the "Cypress + Gatsby webinar" {% url recording https://www.youtube.com/watch?v=Tx6Lg9mwcCE %} and browse the webinar's {% url slides https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development %}.
+
+## {% fa fa-angle-right %} Can I test React applications using Cypress?
+
+Yes, absolutely. A good example of a fully tested React application is our {% url "Cypress RealWorld App" https://github.com/cypress-io/cypress-example-realworld %} and {% url "TodoMVC Redux App" https://github.com/cypress-io/cypress-example-todomvc-redux %}. You can even use React DevTools while testing your application, read {% url "The easiest way to connect Cypress and React DevTools" https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm %}. If you really need to select React components by their name, props, or state, check out {% url cypress-react-selector https://github.com/abhinaba-ghosh/cypress-react-selector %}.
+
+Finally, you might want to check out the {% url "React Component Testing" component-testing-introduction %} adaptor that allows you to test your React components right inside Cypress.
+
+## {% fa fa-angle-right %} Can I check the GraphQL network calls using Cypress?
+
+Yes, by using the newer API command {% url "cy.intercept()" intercept %} as described in the {% url "Smart GraphQL Stubbing in Cypress" https://glebbahmutov.com/blog/smart-graphql-stubbing/ %} post or by utilizing the {% url "cypress-graphql-mock" https://github.com/tgriesser/cypress-graphql-mock %} plugin.
+
+## {% fa fa-angle-right %} Can Cypress be used for model-based testing?
+
+Yes, for example see {% url "this webinar" https://www.youtube.com/watch?v=U30BKedA2CY %} hosted by Curiosity Software. In addition, since our {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} is implemented using XState model state library, we are looking for ways to make model-based testing simpler and more powerful. Read {% url "Access XState from Cypress Test" https://glebbahmutov.com/blog/cypress-and-xstate/ %} for our start.
+
+## {% fa fa-angle-right %} Can Cypress be used for performance testing?
+
+Cypress is not built for performance testing. Because Cypress instruments the page under test, proxies the network requests, and tightly controls the test steps, the Test Runner adds its own overhead. Thus, the performance numbers you get from Cypress tests are slower than "normal" use. Still, you can access the native `window.performance` object and grab the page time measurements, see the [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom) recipe. You can also [run Lighthouse audit straight from Cypress](https://www.mariedrake.com/post/web-performance-testing-with-google-lighthouse) via [cypress-audit](https://www.npmjs.com/package/cypress-audit) community plugin.
+
+## {% fa fa-angle-right %} Can Cypress test WASM code?
+
+Yes, read the blog post {% url "Cypress WASM Example" https://glebbahmutov.com/blog/cypress-wasm-example/ %}. We welcome more user feedback to make WASM testing simpler.
+
+## {% fa fa-angle-right %} Can I use Cypress to document my application?
+
+End-to-end tests are an excellent way to keep your application's documentation accurate and up-to-date. Read {% url "Cypress Book" https://glebbahmutov.com/blog/cypress-book/ %} blog post, and take a look at {% url "cypress-movie" https://github.com/bahmutov/cypress-movie %} project.
+
+## {% fa fa-angle-right %} Can I use Jest snapshots?
+
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url Plugins %} page.
+
+## {% fa fa-angle-right %} Can I use Testing Library?
+
+Absolutely! Feel free to add the {% url '@testing-library/cypress' https://testing-library.com/docs/cypress-testing-library/intro/ %} to your setup and use its methods like `findByRole`, `findByLabelText`, `findByText`, and others to find the DOM elements.
+
+The following example comes from the Testing Library's documentation
+
+```js
+cy.findByRole('button', { name: /Jackie Chan/i }).click()
+cy.findByRole('button', { name: /Button Text/i }).should('exist')
+cy.findByRole('button', { name: /Non-existing Button Text/i }).should(
+  'not.exist'
+)
+
+cy.findByLabelText(/Label text/i, { timeout: 7000 }).should('exist')
+
+// findAllByText _inside_ a form element
+cy.get('form')
+  .findByText('button', { name: /Button Text/i })
+  .should('exist')
+
+cy.findByRole('dialog').within(() => {
+  cy.findByRole('button', { name: /confirm/i })
+})
+```
+
+We have had a webinar with {% url 'Roman Sandler' https://twitter.com/RomanSndlr %} where he has given practical advice on writing effective tests using the Testing Library. You can find the recording and the slides {% url here https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/ %}.

@@ -49,7 +49,7 @@ Cypress prints several pieces of information when an error occurs during a Cypre
 
 # Instrument Panel
 
-For certain commands like {% url `cy.route()` route %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
+For certain commands like {% url `cy.intercept()` intercept %}, {% url `cy.stub()` stub %}, and {% url `cy.spy()` spy %}, an extra instrument panel is displayed above the test to give more information about the state of your tests.
 
 ## Routes
 
@@ -75,7 +75,7 @@ cy.visit('https://example.cypress.io')
 cy.title().should('include', 'Kitchen Sink')
 ```
 
-In the corresponding Application Preview below, you can see `https://example.cypress.io` is being displayed in the righthand side. Not only is the application visible, but it is fully interactable. You can open your developer tools to inspect elements as you would your normal application. The DOM is completely available for debugging.
+In the corresponding Application Preview below, you can see `https://example.cypress.io` is being displayed in the righthand side. Not only is the application visible, but it is fully interactable. You can open your developer tools to inspect elements as you would in your normal application. The DOM is completely available for debugging.
 
 {% imgTag /img/guides/application-under-test.png "Application Under Test" %}
 
@@ -90,6 +90,8 @@ The image below shows that our application is displaying at `1000px` width, `660
 *Note: The righthand side may also be used to display syntax errors in your test file that prevent the tests from running.*
 
 {% imgTag /img/guides/errors.png "Errors" %}
+
+*Note: Internally, the AUT renders within an iframe. This can sometimes cause unexpected behaviors {% url "explained here." window#Cypress-uses-2-different-windows %}*
 
 # Selector Playground
 

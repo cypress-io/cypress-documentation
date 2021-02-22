@@ -380,7 +380,7 @@ The above test retries getting the element and invoking the text of the element 
 
 When using {% url `cy.stub()` stub %} or {% url `cy.spy()` spy %} to test application's code, a good practice is to give it an alias and use the `cy.get('@alias').should('...')` assertion to retry.
 
-For example, when confirming that the button component invokes the `click` prop testing with the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %} plugin, the following test might or might not work:
+For example, when confirming that the button component invokes the `click` prop testing with the {% url "@cypress/react" https://github.com/cypress-io/cypress/tree/master/npm/react %} plugin, the following test might or might not work:
 
 ### {% fa fa-warning red %} Incorrectly checking if the stub was called
 
@@ -394,7 +394,7 @@ const Clicker = ({ click }) => (
 it('calls the click prop twice', () => {
   const onClick = cy.stub()
   // "mount" function comes from
-  // https://github.com/bahmutov/cypress-react-unit-test
+  // https://github.com/cypress-io/cypress/tree/master/npm/react
   mount(<Clicker click={onClick} />)
   cy.get('button')
     .click()
@@ -429,7 +429,7 @@ We recommend aliasing the stub using the {% url `.as` as %} command and using `c
 it('calls the click prop', () => {
   const onClick = cy.stub().as('clicker')
   // "mount" function comes from
-  // https://github.com/bahmutov/cypress-react-unit-test
+  // https://github.com/cypress-io/cypress/tree/master/npm/react
   mount(<Clicker click={onClick} />)
   cy.get('button')
     .click()

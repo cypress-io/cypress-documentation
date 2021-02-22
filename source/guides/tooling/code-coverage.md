@@ -298,6 +298,14 @@ Every source file but 1 is covered at 100%. We can have great confidence in our 
 
 If possible, we advise implementing {% url 'visual testing' visual-testing %} in addition to Cypress functional tests to avoid CSS and visual regressions.
 
+# Combining code coverage from parallel tests
+
+If you execute Cypress tests in {% url parallel parallelization %}, each machine ends up with a code coverage report that only shows a portion of the code exercised. Typically an external code coverage service would merge such partial reports for you. If you do want to merge the reports yourself:
+- on every machine running Cypress tests, copy the produced code coverage report into a common folder under a unique name to avoid overwriting it
+- after all E2E tests finish, combine the reports yourself using `nyc merge` command
+
+You can find an example of merging partial reports in our {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %}
+
 # E2E and unit code coverage
 
 Let's look at the one file that has a "missed" line. It is the `src/selectors/index.js` file shown below.
@@ -445,7 +453,9 @@ From now on, the front end code coverage collected during end-to-end tests will 
 
 {% imgTag /img/guides/code-coverage/full-coverage.png "Combined code coverage report from front and back end code" %}
 
-You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-conduit-app' https://coveralls.io/github/cypress-io/cypress-example-conduit-app %} dashboard.
+You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-conduit-app' https://coveralls.io/github/cypress-io/cypress-example-conduit-app %} dashboard. You can also find full stack code coverage in our {% url 'RealWorld App' https://github.com/cypress-io/cypress-realworld-app %}.
+
+Even if you only want to measure the back end code coverage Cypress can help. Read the blog post {% url 'Back end Code Coverage from Cypress API tests' https://glebbahmutov.com/blog/backend-coverage/ %} for the full tutorial.
 
 # Future work
 

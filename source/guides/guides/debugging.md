@@ -129,7 +129,7 @@ The center of the `<li>Users</li>` element is hidden from view in our applicatio
 
 Cypress utilizes source maps to enhance the error experience. Stack traces are translated so that your source files are shown instead of the generated file that is loaded by the browser. This also enables displaying code frames. Without inline source maps, you will not see code frames.
 
-By default, Cypress will include an inline source map in your spec file, so you will get the most out of the error experience. If you {% url "modify the preprocessor" preprocessors-api %}, ensure that inline source maps are enabled to get the same experience. With webpack and the {% url "webpack preprocessor" https://github.com/cypress-io/cypress-webpack-preprocessor %}, for example, set {% url "the `devtool` option" https://webpack.js.org/configuration/devtool/ %} to `inline-source-map`.
+By default, Cypress will include an inline source map in your spec file, so you will get the most out of the error experience. If you {% url "modify the preprocessor" preprocessors-api %}, ensure that inline source maps are enabled to get the same experience. With webpack and the {% url "webpack preprocessor" https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %}, for example, set {% url "the `devtool` option" https://webpack.js.org/configuration/devtool/ %} to `inline-source-map`.
 
 # Debugging flake
 
@@ -145,6 +145,8 @@ Flake can also occur when there are differences between your local and CI enviro
 - Remove time-sensitive variability in your tests. For example, ensure a network request has finished before looking for the DOM element that relies on the data from that network request. You can leverage {% url "aliasing" variables-and-aliases#Aliases %} for this.
 
 The Cypress Dashboard also offers {% url "Analytics" analytics %} that illustrate trends in your tests and can help identify the tests that fail most often. This could help narrow down what is causing the flake -- for example, seeing increased failures after a change to the test environment could indicate issues with the new environment.
+
+For more advice on dealing with flake read a {% url "series of our blog posts" https://cypress.io/blog/tag/flake/ %} and {% url "Identifying Code Smells in Cypress" https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html %} by {% url "Cypress Ambassador" https://www.cypress.io/ambassadors/ %} Josh Justice.
 
 # Log Cypress events
 

@@ -94,8 +94,16 @@ Listed in the {% url "Visual Testing plugins" plugins#visual-testing %} section.
 
 ## Applitools
 
+First joint webinar with Applitools
+
 <!-- textlint-disable -->
 {% video youtube qVRjhABuyG0 %}
+<!-- textlint-enable -->
+
+Second joint webinar with Applitools with a focus on {% url 'Component Testing' ../component-testing/introduction.html %}
+
+<!-- textlint-disable -->
+{% video youtube Bxh_ebMk1aM %}
 <!-- textlint-enable -->
 
 {% fa fa-external-link %} {% url "https://applitools.com" https://applitools.com/ %}
@@ -116,7 +124,7 @@ Resource |  Description
 {% fa fa-external-link %} {% url "https://percy.io" https://percy.io/ %}
 
 {% note info %}
-#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}  
+#### {% fa fa-graduation-cap %} Real World Example {% badge success New %}
 
 The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses the `cy.percySnapshot()` command provided by the {% url "Cypress Percy plugin" https://github.com/percy/percy-cypress %} to take visual snapshots throughout the user journey end-to-end tests
 
@@ -227,11 +235,10 @@ cy.mySnapshotCommand()
 {% fa fa-check-circle green %} **Best Practice:** Use {% url "`cy.fixture()`" fixture %} and network mocking to set the application state.
 {% endnote %}
 
-Below we stub network calls using {% url "`cy.route()`" route %} to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
+Below we stub network calls using {% url "`cy.intercept()`" intercept %} to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
 
 ```js
-cy.server()
-cy.route('/api/items', 'fixture:items').as('getItems')
+cy.intercept('/api/items', { fixture: 'items' }).as('getItems')
 // ... action
 cy.wait('@getUsers')
 cy.mySnapshotCommand()
@@ -262,3 +269,4 @@ If you are working on React components, read {% url "Visual testing for React co
 - {% url "Visual Testing Plugins" plugins#visual-testing %}
 - {% url "Writing a Plugin" writing-a-plugin %}
 - {% fa fa-github %} {% url 'Cypress Real World App (RWA)' https://github.com/cypress-io/cypress-realworld-app %} is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+- Read the blog post {% url "Debug a Flaky Visual Regression Test" https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/ %}

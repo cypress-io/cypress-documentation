@@ -59,18 +59,21 @@ Option | Type | Description
 `record` | *boolean* | Whether to record the test run
 `reporter` | *string* | Specify a {% url "Mocha reporter" reporters %}
 `reporterOptions` | *object* | Specify {% url "Mocha reporter" reporters %} options
-`spec` | *string* | Specify the specs to run
+`spec` | *string* | Specify the specs to run, see examples below
 `tag` | *string* | Identify a run with a tag or tags
 
-## Example
+## Examples
 
-Here is an example of programmatically running a spec file:
+### Run a single spec file
+
+Here is an example of programmatically running a spec file. Note that the file path is relative to the current working directory.
 
 ```js
 // e2e-run-tests.js
 const cypress = require('cypress')
 
 cypress.run({
+  // the path is relative to the current working directory
   spec: './cypress/integration/examples/actions.spec.js'
 })
 .then((results) => {
@@ -85,6 +88,32 @@ You can then run Cypress by running the following in your terminal or an npm scr
 
 ```shell
 node e2e-run-tests.js
+```
+
+### Run specs using wildcard
+
+You can pass a wildcard pattern to run all matching spec files
+
+```js
+const cypress = require('cypress')
+
+cypress.run({
+  // the wildcard path is relative to the current working directory
+  spec: './cypress/integration/**/api*.js'
+})
+```
+
+### Use modern syntax
+
+If your Node version allows you can use the modern `async / await` syntax to wait for the Promise returned by the `cypress.run` method.
+
+```js
+const cypress = require('cypress');
+
+(async () => {
+  const results = await cypress.run()
+  // use the results object
+}) ()
 ```
 
 ## Results
@@ -283,7 +312,7 @@ node ./wrapper cypress run --browser chrome --config ...
 
 **Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
 
-We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky recipes" https://github.com/cypress-io/cypress-example-recipes/blob/master/test-repeat.js %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-react-unit-test/blob/main/scripts/cypress-expect.js %}.
+We use CLI parsing and calling `cypress.run` to {% url "repeat tests to find flaky tests" https://github.com/bahmutov/cypress-repeat %} and to {% url "validate test numbers after a test run" https://github.com/bahmutov/cypress-expect %}. Read {% url "Wrap Cypress Using npm Module API" https://glebbahmutov.com/blog/wrap-cypress-using-npm/ %} for more examples.
 
 {% history %}
 {% url "5.0.0" changelog %} | Test results returned from `cypress.run()` changed.

@@ -36,12 +36,12 @@ Set defaults for all cookies, such as preserving a set of cookies to bypass bein
 
 ## Debug
 
-### Log out when cookie values are created, modified or deleted
+### Log when cookie values are created, modified or deleted
 
-By turning on debugging, Cypress will automatically log out to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
+By turning on debugging, Cypress will automatically generate logs to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
 
 ```javascript
-Cypress.Cookies.debug(true) // now Cypress will log out when it alters cookies
+Cypress.Cookies.debug(true) // now Cypress will log when it alters cookies
 
 cy.clearCookie('foo')
 cy.setCookie('foo', 'bar')
@@ -51,7 +51,7 @@ cy.setCookie('foo', 'bar')
 
 ### Turn off verbose debugging output
 
-By default Cypress will log out the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
+By default Cypress will log the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
 
 ```javascript
 Cypress.Cookies.debug(true, { verbose: false })
@@ -73,7 +73,7 @@ Cypress.Cookies.debug(false) // now debugging is turned off
 
 Cypress gives you an interface to automatically preserve cookies for multiple tests. Cypress automatically clears all cookies before each new test starts by default.
 
-By clearing cookies before each test you are guaranteed to always start from a clean slate. Starting from a clean state prevents coupling your tests to one another and prevents situations where mutating something in your application in one test affects another one downstream.
+By clearing cookies before each test you are guaranteed to always start from a clean state. Starting from a clean state prevents coupling your tests to one another and prevents situations where mutating something in your application in one test affects another one downstream.
 
 {% note info  %}
 The most common use case for preserving cookies is to prevent having to log in to your application before each individual test. This is a problem if the majority of each test is spent logging in a user.

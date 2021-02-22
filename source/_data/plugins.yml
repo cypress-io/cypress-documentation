@@ -32,7 +32,7 @@
 
     - name: Webpack
       description: Watches and bundles your spec files via webpack.
-      link: https://github.com/cypress-io/cypress-webpack-preprocessor
+      link: https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor
       keywords: [webpack]
       badge: official
 
@@ -203,13 +203,54 @@
     - name: cypress-browser-permissions
       description: Controls permissions for desktop notifications, geolocation, and other browser APIs
       link: https://github.com/kamranayub/cypress-browser-permissions
-      keyboards: [permissions, notifications, geolocation, camera, microphone]
+      keywords: [permissions, notifications, geolocation, camera, microphone]
       badge: community
-      
+
+    - name: cypress-repeat
+      description: Run Cypress multiple times in a row, great at finding test flake
+      link: https://github.com/bahmutov/cypress-repeat
+      keyboards: [cli, ci]
+      badge: community
+
     - name: cypress-expect
       description: Cypress CLI wrapper where you can specify the total number of expected tests
       link: https://github.com/bahmutov/cypress-expect
-      keyboards: [cli]
+      keywords: [cli]
+      badge: community
+
+    - name: cy-search
+      description: Search Cypress documentation from the terminal
+      link: https://github.com/bahmutov/cy-search
+      keywords: [cli]
+      badge: community
+
+    - name: cypress-tags
+      description: Use custom tags to slice up Cypress test runs
+      link: https://github.com/annaet/cypress-tags
+      keywords: [test, tag, browserify]
+
+    - name: '@swimlane/cy-mockapi'
+      description: Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.
+      link: https://github.com/swimlane/cy-mockapi
+      keywords: [mock, rest, api]
+      badge: community
+
+    - name: cypress-timings
+      description: A Cypress plugin for reporting individual command timings.
+      link: https://github.com/bahmutov/cypress-timings
+      keywords: [commands, performance]
+      badge: community
+
+    - name: cypress-fail-fast
+      description: Enables fail fast in Cypress, skipping the rest of tests on first failure.
+      link: https://github.com/javierbrea/cypress-fail-fast
+      keywords: [fail-fast, failure, skip, config]
+      badge: community
+      
+    - name: cypress-fail-on-console-error
+      description: Fail cypress test on console error.
+      link: https://github.com/nils-hoyer/cypress-fail-on-console-error
+      keywords: [console, error, fail]
       badge: community
 
 - name: Custom Commands
@@ -262,6 +303,12 @@
       keywords: [firebase, database, commands]
       badge: community
 
+    - name: cypress-graphql-mock-network
+      description: Custom commands to mock your GraphQL API at the network level. Using service-workers for complete isolation of the mock server.
+      link: https://github.com/warrenday/cypress-graphql-mock-network
+      keywords: [graphql, mocking, networking, commands]
+      badge: community
+
     - name: cypress-graphql-mock
       description: Adds commands for executing a mocked GraphQL server using only the client
       link: https://github.com/tgriesser/cypress-graphql-mock
@@ -291,6 +338,12 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
       badge: verified
+      
+    - name: cypress-plugin-stripe-elements
+      description: Simple commands that make it easy to target and fill in Stripe Elements input fields
+      link: https://github.com/dbalatero/cypress-plugin-stripe-elements
+      keywords: [stripe, commands, elements, inputs]
+      badge: community
 
     - name: cypress-xpath
       description: Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.
@@ -368,6 +421,11 @@
       description: cypress custom commands to locate react elements by component, props and state
       link: https://github.com/abhinaba-ghosh/cypress-react-selector
       keywords: [react, commands, locator]
+
+    - name: cypress-mailosaur
+      description: Test email and SMS messages using Mailosaur
+      link: https://github.com/mailosaur/cypress-mailosaur
+      keywords: [email, sms, commands]
       badge: community
 
     - name: cypress-layout-inspector
@@ -376,6 +434,18 @@
       keywords: [testing, ui, dom, assertions]
       badge: community
 
+    - name: '@swimlane/cy-dom-diff'
+      description: cy-dom-diff allows matching chunks of DOM against HTML; including dynamic content.
+      link: https://github.com/swimlane/cy-dom-diff
+      keywords: [dom, assertions]
+      badge: community
+      
+    - name: cypress-real-events
+      description: Fire native system events from Cypress like hover, swipe, etc
+      link: https://github.com/dmtrKovalenko/cypress-real-events
+      keywords: [commands]
+      badge: community
+      
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -530,9 +600,9 @@
       keywords: [component, hyperapp]
       badge: experimental
 
-    - name: cypress-react-unit-test
+    - name: "@cypress/react"
       description: Test React components using Cypress Test Runner
-      link: https://github.com/bahmutov/cypress-react-unit-test
+      link: https://github.com/cypress-io/cypress/tree/master/npm/react
       keywords: [component, react]
       badge: experimental
 
@@ -542,9 +612,9 @@
       keywords: [component, svelte]
       badge: experimental
 
-    - name: cypress-vue-unit-test
+    - name: "@cypress/vue"
       description: Test Vue.js components using Cypress Test Runner
-      link: https://github.com/bahmutov/cypress-vue-unit-test
+      link: https://github.com/cypress-io/cypress/tree/master/npm/vue
       keywords: [component, vue, vue.js]
       badge: experimental
 
@@ -599,6 +669,12 @@
       keywords: [screenshots, image-diff, visual regression]
       badge: community
 
+    - name: Cypress Image Diff
+      description: Visual regression testing plugin maintained by DIT - UK Gov.
+      link: https://github.com/uktrade/cypress-image-diff
+      keywords: [screenshots, visual regression, image-diff]
+      badge: community
+
 - name: Reporting
   plugins:
     - name: cypress-failed-log
@@ -613,10 +689,22 @@
       keywords: [logging]
       badge: community
 
+    - name: autoset-status-cypress-testrail-reporter
+      description: TestRail Reporter which auto-set status for specific TestRun for Cypress.
+      link: https://github.com/dkuznetsov21/autoset-status-cypress-testrail-reporter
+      keywords: [ testrail, reporter, autoset, status ]
+      badge: community
+
     - name: cypress-testrail-reporter
       description: Custom reporter for publishing Cypress results to a TestRail test run.
       link: https://github.com/Vivify-Ideas/cypress-testrail-reporter
       keywords: [testrail, reporter]
+      badge: community
+
+    - name: cypress-teamcity-reporter
+      description: Custom reporter for Teamcity which makes it possible to display test results in real-time and add them on the Tests tab of the Build Results page
+      link: https://github.com/prma85/cypress-teamcity-reporter
+      keywords: [teamcity, reporter]
       badge: community
 
     - name: mochawesome-merge
@@ -647,4 +735,16 @@
       description: Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.
       link: https://github.com/Shelex/cypress-allure-plugin
       keywords: [reporter, allure]
+      badge: community
+
+    - name: cypress-mochawesome-reporter
+      description: Zero config Mochawesome reporter for Cypress with screenshots.
+      link: https://github.com/LironEr/cypress-mochawesome-reporter
+      keywords: [reporter, mochawesome, screenshot]
+      badge: community
+
+    - name: cypress-msteams-reporter
+      description: A reporting tool which sends a message to Microsoft Teams with information about the latest cypress test execution results.
+      link: https://github.com/maritome/cypress-msteams-reporter
+      keywords: [reporter, ms-teams, allure-report]
       badge: community

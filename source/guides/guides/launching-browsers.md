@@ -19,9 +19,9 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - {% url "Edge Canary" https://www.microsoftedgeinsider.com/download %}
 - {% url "Edge Dev" https://www.microsoftedgeinsider.com/download %}
 - {% url "Electron" https://electron.atom.io/ %}
-- {% url "Firefox" https://www.mozilla.org/firefox/ %} (Beta support)
-- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %} (Beta support)
-- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %} (Beta support)
+- {% url "Firefox" https://www.mozilla.org/firefox/ %}
+- {% url "Firefox Developer Edition" https://www.mozilla.org/firefox/developer/ %}
+- {% url "Firefox Nightly" https://www.mozilla.org/firefox/nightly/ %}
 
 Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
 
@@ -83,11 +83,9 @@ Or Microsoft Edge Canary (Chromium-based):
 cypress run --browser edge:canary
 ```
 
-{% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}
+## Firefox Browsers
 
-## Firefox Browsers (beta)
-
-Firefox-family browsers have beta support.
+Firefox-family browsers are supported by Cypress.
 
 You can launch Firefox like this:
 
@@ -112,13 +110,17 @@ You can launch any supported browser by specifying a path to the binary:
 
 ```shell
 cypress run --browser /usr/bin/chromium
-# or
+```
+
+```shell
 cypress open --browser /usr/bin/chromium
 ```
 
 Cypress will automatically detect the type of browser supplied and launch it for you.
 
 {% url 'See the Command Line guide for more information about the `--browser` arguments' command-line#cypress-run-browser-lt-browser-name-or-path-gt %}
+
+{% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
 ## Customize available browsers
 
@@ -265,3 +267,7 @@ For this reason you may find downloading and using a browser's release channel v
 Additionally, in Chrome-based browsers, we've made the browser spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
 
 {% imgTag /img/guides/cypress-browser-chrome.png "Cypress Browser with darker chrome" %}
+
+# Troubleshooting
+
+{% url 'Having issues launching installed browsers? Read more about troubleshooting browser launching' troubleshooting#Launching-browsers %}

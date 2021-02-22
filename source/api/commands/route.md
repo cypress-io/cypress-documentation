@@ -4,9 +4,7 @@ title: route
 
 Use `cy.route()` to manage the behavior of network requests.
 
-{% note info %}
-**Note:** `cy.route()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}
-{% endnote %}
+{% partial xhr_stubbing_deprecated %}
 
 {% partial network_stubbing_warning %}
 
@@ -498,8 +496,13 @@ When clicking on `XHR Stub` within the Command Log, the console outputs the foll
 
 {% imgTag /img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png "Console Log XHR alias route" %}
 
+{% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Deprecated `cy.route()` command
+{% endhistory %}
+
 # See also
 
+- {% url "Migrating `cy.route()` to `cy.intercept()`" migration-guide#Migrating-cy-route-to-cy-intercept %}
 - {% url `.as()` as %}
 - {% url `cy.fixture()` fixture %}
 - {% url `cy.server()` server %}

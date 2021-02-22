@@ -3,6 +3,8 @@ title: Cypress.Server
 
 ---
 
+{% partial xhr_stubbing_deprecated %}
+
 Permanently change the default options for all {% url `cy.server()` server %} instances
 
 # Syntax

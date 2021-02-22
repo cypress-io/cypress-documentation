@@ -16,7 +16,7 @@ An object describing the browser being launched, with the following properties:
 
 Property | Type | Description
 --- | --- | ---
-`name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
+`name`| `string` | Machine-friendly name, like `chrome`, `electron`, `edge`, or `firefox`.
 `family` | `string` | Rendering engine being used. `chromium` or `firefox`.
 `channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
 `displayName` | `string` | Human-readable display name for the browser.
@@ -54,6 +54,8 @@ Here are args available for the currently supported browsers:
 * {% url 'Chromium-based browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
 * {% url 'Firefox' "https://developer.mozilla.org/docs/Mozilla/Command_Line_Options" %}
 
+#### Open devtools by default
+
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
@@ -65,17 +67,20 @@ module.exports = (on, config) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // auto open devtools
       launchOptions.args.push('--auto-open-devtools-for-tabs')
-
-      // whatever you return here becomes the launchOptions
-      return launchOptions
     }
 
     if (browser.family === 'firefox') {
       // auto open devtools
       launchOptions.args.push('-devtools')
-
-      return launchOptions
     }
+
+    if (browser.name === 'electron') {
+      // auto open devtools
+      launchOptions.preferences.devTools = true
+    }
+
+    // whatever you return here becomes the launchOptions
+    return launchOptions
   })
 }
 ```
@@ -143,13 +148,13 @@ You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH
 ### Linux/OSX
 
 ```shell
-export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 ### Windows
 
 ```shell
-set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.js" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js %}. There is no way to see all currently set switches after Electron's launch.
@@ -250,36 +255,30 @@ module.exports = (on, config) => {
 }
 ```
 
-## Change download directory
+## Support unique file download mime types
 
-Change the download directory of files downloaded during Cypress tests.
+Cypress supports a myriad of mime types when testing file downloads, but in case you have a unique one, you can add support for it.
 
 ```js
-// cypress/plugins/index.js
-const path = require('path')
-
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
-    const downloadDirectory = path.join(__dirname, '..', 'downloads')
-
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      options.preferences.default['download'] = { default_directory: downloadDirectory }
-
-      return options
-    }
-
+    // only Firefox requires all mime types to be listed
     if (browser.family === 'firefox') {
-      options.preferences['browser.download.dir'] = downloadDirectory
-      options.preferences['browser.download.folderList'] = 2
+      const existingMimeTypes = options.preferences['browser.helperApps.neverAsk.saveToDisk']
+      const myMimeType = 'my/mimetype'
 
-      // needed to prevent download prompt for text/csv files.
-      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
+      // prevents the browser download prompt
+      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = `${existingMimeTypes},${myMimeType}`
 
       return options
     }
   })
 }
 ```
+
+{% note info %}
+{% url 'Check out our example recipe showing how to download and validate CSV and Excel files.' recipes#Testing-the-DOM %}
+{% endnote %}
 
 {% history %}
 {% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`

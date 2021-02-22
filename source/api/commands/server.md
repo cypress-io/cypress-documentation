@@ -4,9 +4,7 @@ title: server
 
 Start a server to begin routing responses to {% url "`cy.route()`" route %} and to change the behavior of network requests.
 
-{% note info %}
-**Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
-{% endnote %}
+{% partial xhr_stubbing_deprecated %}
 
 {% partial network_stubbing_warning %}
 
@@ -270,6 +268,7 @@ The intention of {% url "`cy.request()`" request %} is to be used for checking e
 - `cy.server()` does *not* log in the Command Log
 
 {% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Deprecated `cy.server()` command
 {% url "5.0.0" changelog#5-0-0 %} | Renamed `whitelist` option to `ignore`
 {% url "0.13.6" changelog#0-13-6 %} | Added `onAbort` callback option
 {% url "0.5.10" changelog#0-5-10 %} | Added `delay` option

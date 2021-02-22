@@ -8,15 +8,17 @@ Our team is always planning and working on really "big" upcoming features. Prior
 
 ## Test Runner
 
-*Last updated Sep 14, 2020*
+*Last updated Jan 19, 2021*
 
 Status               | Feature                            |  Issue            | PR           | Released
 ---------------------| -----------------------------------|-------------------|--------------|------------
-*Work in progress*   | **Session API**                    |  {% issue 8301 %} |              |
-*Experimental*       | **Full network layer rewrite**     |  {% issue 687 %}  | {% PR 4176 %}| {% url "v5.1.0" changelog#5-1-0 %}
 *Experimental*       | **Component Testing**              |  {% issue 5922 %} | {% PR 5923 %}| {% url "v4.5.0" changelog#4-5-0 %}
-*Done*               | **Test retries**                   |  {% issue 1313 %} | {% PR 3968 %}| {% url "v5.0.0" changelog#5-0-0 %}
-*Done*               | **Shadow DOM Support**             |  {% issue 144 %}  | {% PR 7469 %}| {% url "v5.2.0" changelog#5-2-0 %}
+*Experimental*       | **Cypress Studio**              |  {% issue 73 %} | {% PR 9542 %}| {% url "v6.3.0" changelog#6-3-0 %}
+*Released*   | **File download support**                  |  {% issue 949 %}  | {% PR 14431 %} | {% url "v6.3.0" changelog#6-3-0 %}
+*Work in progress*   | **Session API**                    |  {% issue 8301 %} | {% PR 8765 %}|
+*Work in progress*   | **New plugin events**              |  {% issue 6665 %} |              |
+*Work in progress*   | **Visit multiple superdomains**    |  {% issue 944 %}  |              |
+*Upcoming*           | **Iframe Support**                 |  {% issue 136 %}  |              |
 
 ## Dashboard Service
 

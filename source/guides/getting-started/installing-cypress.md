@@ -58,8 +58,7 @@ Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/c
 {% video local /img/snippets/installing-cli.mp4 %}
 
 {% note info %}
-Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
-As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
+Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded. As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 {% endnote %}
 
 {% note success Best Practice %}
@@ -67,7 +66,7 @@ As of version `3.0`, the binary is downloaded to a global cache directory to be 
 The recommended approach is to install Cypress with `npm` because :
 
 - Cypress is versioned like any other dependency.
-- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration-introduction %}.
 {% endnote %}
 
 ## {% fa fa-terminal %} `yarn add`
@@ -98,7 +97,7 @@ Then you can manually unzip and double click. Cypress will run without needing t
 
 ## {% fa fa-refresh %} Continuous integration
 
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
+Please read our {% url 'Continuous Integration' continuous-integration-introduction %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration-introduction#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
 # Opening Cypress
 
@@ -245,7 +244,7 @@ environment:
   CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
 ```
 
-See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
+See also {% url 'Continuous Integration - Caching' continuous-integration-introduction#Caching %} section in the documentation.
 
 {% note warning %}
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
@@ -360,59 +359,14 @@ setx CYPRESS_CRASH_REPORTS 0
 
 ## Install pre-release version
 
-In very rare cases you might want to install the pre-release version of Cypress to verify a fix from the {% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %} branch, that has not been published yet.  
+If you would like to install a pre-release version of the Test Runner to test out functionality that has not yet been released, here is how:
 
-{% note info %}
-You can preview all issues addressed from a pre-release version {% url "here" https://github.com/cypress-io/cypress/issues?utf8=%E2%9C%93&q=label%3A%22stage%3A+pending+release%22+ %}.
-{% endnote %}
+1. Open up the list of commits to `develop` on the Cypress repo: {% url https://github.com/cypress-io/cypress/commits/develop %}
+2. Find the commit that you would like to install the pre-release version of. Click the comment icon (highlighted in red below):
+    {% imgTag /img/guides/install/develop-commit-comment-link.png "Example of a commit for which pre-releases are available. Comment link highlighted in red." %}
+3. You should see several comments from the `cypress-bot` user with instructions for installing Cypress pre-releases. Pick the one that corresponds to your operating system and CPU architecture, and follow the instructions there to install the pre-release.
 
-We build every commit in the {% url "`develop`" https://github.com/cypress-io/cypress/commits/develop %} branch for each platform and test it against downstream projects. For example, in the image below the last commit has the short SHA `e5106d9`.
+Notes on pre-releases:
 
-{% imgTag /img/guides/install/last-commit.png "Last commit on develop branch" %}
-
-The simplest way to find the pre-release version of the Test Runner matching this commit is to look at the commits made on our projects under test at {% url "cypress-test-example-repos" https://github.com/cypress-io/cypress-test-example-repos/commits/master %}. You will see individual commits for each built platform and architecture: `darwin` (Mac), `linux`, `win 32bit` and `win 64bit`. The built commit SHA `e5106d9` is in the subject line of the test commit:
-
-{% imgTag /img/guides/install/test-commits.png "Test commit per platform" %}
-
-These pre-release builds are platform-specific. Choose the platform that matches your platform; for example if you are on a Mac, click on the commit "Testing new darwin x64 ...". This commit has a custom message that shows a special temporary URL of the built binary for Mac OS and the matching npm `cypress` package.
-
-{% imgTag /img/guides/install/beta-binary.png "Beta binary information" %}
-
-To install this pre-release binary on Mac, you need to set the `CYPRESS_INSTALL_BINARY` environment variable to the shown `https://cdn.cypress.io/beta/binary/.../cypress.zip` value and run `npm install https://cdn.cypress.io/beta/npm/3.3.2/.../cypress.tgz`. The command in the terminal will be:
-
-```shell
-export CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/darwin-x64/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-126014/cypress.zip
-```
-
-```shell
-npm install https://cdn.cypress.io/beta/npm/3.3.2/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-126013/cypress.tgz
-```
-
-If my machine is Windows 64bit, I will click on the "Testing new win32 x64 ..." commit and run the command below.
-
-```shell
-set CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/win32-x64/appveyor-develop-e5106d95f51eec477b8e66609939979fb87aab56-25451270/cypress.zip
-```
-
-```shell
-npm install https://cdn.cypress.io/beta/npm/3.3.2/appveyor-develop-e5106d95f51eec477b8e66609939979fb87aab56-25451270/cypress.tgz
-```
-
-On Linux CI you should install the binary from the "Testing new linux x64 ..." commit.
-
-```shell
-export CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/3.3.2/linux-x64/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-125973/cypress.zip
-```
-
-```shell
-npm install https://cdn.cypress.io/beta/npm/3.3.2/circle-develop-e5106d95f51eec477b8e66609939979fb87aab56-125992/cypress.tgz
-```
-
-### Pre-release binary URL format
-
-The above `CYPRESS_INSTALL_BINARY` urls are temporary - they are purged after 30 days. The format of the url is as follows:
-
-```text
-https://cdn.cypress.io/beta/binary/&lt;version&gt;/&lt;platform&gt;-&lt;arch&gt;/
-&lt;ci name&gt;-&lt;branch name&gt;-&lt;full commit SHA&gt;-&lt;CI build number&gt;/cypress.zip
-```
+- Cypress pre-releases are only available for about a month after they are built. Do not rely on these being available past one month.
+- If you already have a pre-release or official release installed for a specific version of Cypress, you may need to do `cypress cache clear` before Cypress will install a pre-release. This also applies to installing an official release over a pre-release - if you have a pre-release of Cypress vX.Y.Z installed, the official release of Cypress vX.Y.Z will not install until you do `cypress cache clear`.
