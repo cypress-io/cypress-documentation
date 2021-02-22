@@ -1,5 +1,5 @@
 ---
-title: GitLab CI/CD
+title: GitLab CI
 ---
 
 {% note info %}

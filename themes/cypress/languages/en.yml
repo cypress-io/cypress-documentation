@@ -43,6 +43,7 @@ sidebar:
     users: Users
     bitbucket-integration: Bitbucket Integration
     github-actions: GitHub Actions
+    gitlab-ci: GitLab CI
     github-integration: GitHub Integration
     gitlab-integration: GitLab Integration
     slack-integration: Slack Integration
