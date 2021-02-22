@@ -32,13 +32,20 @@ sidebar:
     writing-and-organizing-tests: Writing and Organizing Tests
     conditional-testing: Conditional Testing
     test-runner: The Test Runner
+    cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration: Continuous Integration
+    continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
     users: Users
+    bitbucket-integration: Bitbucket Integration
+    github-actions: GitHub Actions
+    gitlab-ci: GitLab CI
     github-integration: GitHub Integration
+    gitlab-integration: GitLab Integration
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
@@ -50,7 +57,6 @@ sidebar:
     guides: Guides
     command-line: Command Line
     test-retries: Test Retries
-    continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
@@ -202,6 +208,10 @@ sidebar:
     writing-a-plugin: Writing a Plugin
     preprocessors-api: Preprocessors
     browser-launch-api: Browser Launching
+    before-run-api: Before Run
+    after-run-api: After Run
+    before-spec-api: Before Spec
+    after-spec-api: After Spec
     configuration-api: Configuration
     version: version
     arch: arch

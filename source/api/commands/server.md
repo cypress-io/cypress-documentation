@@ -268,6 +268,7 @@ The intention of {% url "`cy.request()`" request %} is to be used for checking e
 - `cy.server()` does *not* log in the Command Log
 
 {% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Deprecated `cy.server()` command
 {% url "5.0.0" changelog#5-0-0 %} | Renamed `whitelist` option to `ignore`
 {% url "0.13.6" changelog#0-13-6 %} | Added `onAbort` callback option
 {% url "0.5.10" changelog#0-5-10 %} | Added `delay` option

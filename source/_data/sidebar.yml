@@ -14,13 +14,16 @@ guides:
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
     test-runner: test-runner.html
+    cypress-studio: cypress-studio.html
   dashboard:
     dashboard-introduction: introduction.html
     projects: projects.html
     runs: runs.html
     organizations: organizations.html
     users: users.html
+    bitbucket-integration: bitbucket-integration.html
     github-integration: github-integration.html
+    gitlab-integration: gitlab-integration.html
     slack-integration: slack-integration.html
     analytics: analytics.html
     flaky-test-management: flaky-test-management.html
@@ -30,7 +33,6 @@ guides:
     debugging: debugging.html
     network-requests: network-requests.html
     test-retries: test-retries.html
-    continuous-integration: continuous-integration.html
     parallelization: parallelization.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
@@ -42,6 +44,10 @@ guides:
     auth0-authentication: auth0-authentication.html
     amazon-cognito-authentication: amazon-cognito-authentication.html
     okta-authentication: okta-authentication.html
+  continuous-integration:
+    continuous-integration-introduction: introduction.html
+    github-actions: github-actions.html
+    gitlab-ci: gitlab-ci.html
   component-testing:
     component-testing-introduction: introduction.html
   tooling:
@@ -185,6 +191,10 @@ api:
     writing-a-plugin: writing-a-plugin.html
     configuration-api: configuration-api.html
     preprocessors-api: preprocessors-api.html
+    before-run-api: before-run-api.html
+    after-run-api: after-run-api.html
+    before-spec-api: before-spec-api.html
+    after-spec-api: after-spec-api.html
     browser-launch-api: browser-launch-api.html
     after-screenshot-api: after-screenshot-api.html
 

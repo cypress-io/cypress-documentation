@@ -246,6 +246,12 @@
       link: https://github.com/javierbrea/cypress-fail-fast
       keywords: [fail-fast, failure, skip, config]
       badge: community
+      
+    - name: cypress-fail-on-console-error
+      description: Fail cypress test on console error.
+      link: https://github.com/nils-hoyer/cypress-fail-on-console-error
+      keywords: [console, error, fail]
+      badge: community
 
 - name: Custom Commands
   plugins:
@@ -332,6 +338,12 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
       badge: verified
+      
+    - name: cypress-plugin-stripe-elements
+      description: Simple commands that make it easy to target and fill in Stripe Elements input fields
+      link: https://github.com/dbalatero/cypress-plugin-stripe-elements
+      keywords: [stripe, commands, elements, inputs]
+      badge: community
 
     - name: cypress-xpath
       description: Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.
@@ -427,7 +439,13 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
-
+      
+    - name: cypress-real-events
+      description: Fire native system events from Cypress like hover, swipe, etc
+      link: https://github.com/dmtrKovalenko/cypress-real-events
+      keywords: [commands]
+      badge: community
+      
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -582,9 +600,9 @@
       keywords: [component, hyperapp]
       badge: experimental
 
-    - name: cypress-react-unit-test
+    - name: "@cypress/react"
       description: Test React components using Cypress Test Runner
-      link: https://github.com/bahmutov/cypress-react-unit-test
+      link: https://github.com/cypress-io/cypress/tree/master/npm/react
       keywords: [component, react]
       badge: experimental
 
@@ -594,9 +612,9 @@
       keywords: [component, svelte]
       badge: experimental
 
-    - name: cypress-vue-unit-test
+    - name: "@cypress/vue"
       description: Test Vue.js components using Cypress Test Runner
-      link: https://github.com/bahmutov/cypress-vue-unit-test
+      link: https://github.com/cypress-io/cypress/tree/master/npm/vue
       keywords: [component, vue, vue.js]
       badge: experimental
 
@@ -723,4 +741,10 @@
       description: Zero config Mochawesome reporter for Cypress with screenshots.
       link: https://github.com/LironEr/cypress-mochawesome-reporter
       keywords: [reporter, mochawesome, screenshot]
+      badge: community
+
+    - name: cypress-msteams-reporter
+      description: A reporting tool which sends a message to Microsoft Teams with information about the latest cypress test execution results.
+      link: https://github.com/maritome/cypress-msteams-reporter
+      keywords: [reporter, ms-teams, allure-report]
       badge: community

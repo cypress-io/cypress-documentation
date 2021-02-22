@@ -58,8 +58,7 @@ Make sure that you have already run {% url "`npm init`" https://docs.npmjs.com/c
 {% video local /img/snippets/installing-cli.mp4 %}
 
 {% note info %}
-Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded.
-As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
+Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded. As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 {% endnote %}
 
 {% note success Best Practice %}
@@ -67,7 +66,7 @@ As of version `3.0`, the binary is downloaded to a global cache directory to be 
 The recommended approach is to install Cypress with `npm` because :
 
 - Cypress is versioned like any other dependency.
-- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration %}.
+- It simplifies running Cypress in {% url 'Continuous Integration' continuous-integration-introduction %}.
 {% endnote %}
 
 ## {% fa fa-terminal %} `yarn add`
@@ -98,7 +97,7 @@ Then you can manually unzip and double click. Cypress will run without needing t
 
 ## {% fa fa-refresh %} Continuous integration
 
-Please read our {% url 'Continuous Integration' continuous-integration %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
+Please read our {% url 'Continuous Integration' continuous-integration-introduction %} docs for help installing Cypress in CI. When running in linux you'll need to install some {% url 'system dependencies' continuous-integration-introduction#Dependencies %} or you can use our {% url 'Docker images' docker %} which have everything you need prebuilt.
 
 # Opening Cypress
 
@@ -245,7 +244,7 @@ environment:
   CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
 ```
 
-See also {% url 'Continuous Integration - Caching' continuous-integration#Caching %} section in the documentation.
+See also {% url 'Continuous Integration - Caching' continuous-integration-introduction#Caching %} section in the documentation.
 
 {% note warning %}
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).

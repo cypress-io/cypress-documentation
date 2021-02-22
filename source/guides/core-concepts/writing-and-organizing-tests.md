@@ -66,12 +66,6 @@ You can modify the folder configuration in your configuration file. See {% url '
 Cypress will create a {% url `screenshotsFolder` configuration#Screenshots %} and a {% url `videosFolder` configuration#Videos %} to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your configuration file (`cypress.json` by default) or {% url `cypress.env.json` environment-variables#Option-2-cypress-env-json %}, these should also be ignored when you check into source control.
 {% endnote %}
 
-## Fixture Files
-
-Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in `cypress/fixtures` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory.
-
-You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
-
 ## Test files
 
 Test files are located in `cypress/integration` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory. Test files may be written as:
@@ -90,6 +84,53 @@ Check out our recipe using {% url 'ES2015 and CommonJS modules' recipes#Fundamen
 To see an example of every command used in Cypress, open the {% url "`example` folder" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples %} within your `cypress/integration` folder.
 
 To start writing tests for your app, create a new file like `app_spec.js` within your `cypress/integration` folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.
+
+## Fixture Files
+
+Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in `cypress/fixtures` by default, but can be {% url 'configured' configuration#Folders-Files %} to another directory.
+
+You would typically use them with the {% url `cy.fixture()` fixture %} command and most often when you're stubbing {% url 'Network Requests' network-requests %}.
+
+## Asset Files
+
+There are some folders that may be generated after a test run, containing assets that were generated during the test run.
+
+You may consider adding these folders to your `.gitignore` file to ignore checking these files into source control.
+
+### Download Files
+
+Any files downloaded while testing an application's file download feature will be stored in the {% url `downloadsFolder` configuration#Downloads %} which is set to `cypress/downloads` by default.
+
+```text
+/cypress
+  /downloads
+    - records.csv
+```
+
+### Screenshot Files
+
+If screenshots were taken via the {% url "`cy.screenshot()`" screenshot %} command or automatically when a test fails, the screenshots are stored in the {% url `screenshotsFolder` configuration#Screenshots %} which is set to `cypress/screenshots` by default.
+
+```text
+/cypress
+  /screenshots
+    /app_spec.js
+      - Navigates to main menu (failures).png
+```
+
+To learn more about screenshots and settings available, see {% url "Screenshots and Videos" screenshots-and-videos#Screenshots %}
+
+### Video Files
+
+Any videos recorded of the run are stored in the {% url `videosFolder` configuration#Videos %} which is set to `cypress/videos` by default.
+
+```text
+/cypress
+  /videos
+    - app_spec.js.mp4
+```
+
+To learn more about videos and settings available, see {% url "Screenshots and Videos" screenshots-and-videos#Screenshots %}
 
 ## Plugin files
 
@@ -157,6 +198,16 @@ But when you click on "Run all specs" button after {% url "`cypress open`" comma
 {% note info %}
 Having a single support file when running all specs together might execute `before` and `beforeEach` hooks in ways you may not anticipate. Read {% url "'Be careful when running all specs together'" https://glebbahmutov.com/blog/run-all-specs/ %} for examples.
 {% endnote %}
+
+## Troubleshooting
+
+If Cypress does not find the spec files for some reason, you can troubleshoot its logic by opening or running Cypress with {% url "debug logs" troubleshooting#Print-DEBUG-logs %} enabled:
+
+```shell
+DEBUG=cypress:server:specs npx cypress open
+# or
+DEBUG=cypress:server:specs npx cypress run
+```
 
 # Writing tests
 

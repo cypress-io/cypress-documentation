@@ -18,7 +18,7 @@ You can {% url "install Cypress" installing-cypress %} on Mac, Linux, and Window
 
 Cypress will never be able to run on a native mobile app, but we can test some functionality of mobile web browsers and test mobile applications that are developed in a browser, such as with {% url "the Ionic framework" https://ionicframework.com/ %}.
 
-Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application. You can also mimic certain behaviors like swiping using {% url "custom commands" custom-commands %}. 
+Currently you can control the viewport with the {% url `cy.viewport()` viewport %} command to test responsive, mobile views in a website or web application. You can also mimic certain behaviors like swiping using {% url "custom commands" custom-commands %}.
 
 You can read about testing mobile applications with Ionic and Cypress {% url "here" https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/ %} and see how we manage testing the mobile viewport in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 
@@ -66,7 +66,7 @@ You can read about our currently available browsers {% url "here" launching-brow
 
 ## {% fa fa-angle-right %} Will Cypress work in my CI provider?
 
-Cypress works in any {% url "CI provider" continuous-integration %}.
+Cypress works in any {% url "CI provider" continuous-integration-introduction %}.
 
 ## {% fa fa-angle-right %} Does Cypress require me to change any of my existing code?
 
@@ -122,6 +122,21 @@ You may also find the following resources helpful when writing end-to-end tests:
 
 Cypress does *not* utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure {% url "Cypress webpack preprocessor" https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %} or {% url "Cypress Browserify preprocessor" https://github.com/cypress-io/cypress-browserify-preprocessor %} to transpile your tests to JavaScript that Cypress can run.
 
+## {% fa fa-angle-right %} What resources do you recommend to learn JavaScript before writing Cypress tests?
+
+We hope that Cypress makes test writing simple and fun, even for people with a minimal knowledge of JavaScript. If you would like to develop your JS skills, we recommend the following free online resources:
+
+- Online tutorial {% url 'Learn Javascript' https://gitbookio.gitbooks.io/JavaScript %} with small exercises
+- Book {% url 'Eloquent JavaScript' https://eloquentjavascript.net/ %}
+- Book {% url 'Human JavaScript' http://read.humanjavascript.com/ %}
+- an entire collection of free JavaScript books at the {% url 'Free Frontend' https://freefrontend.com/javascript-books/ %} site
+- {% url 'The Modern JavaScript Tutorial' https://javascript.info/ %} teaches you both JavaScript and HTML programming, and is available in several translations
+
+You can also learn JavaScript by watching these videos:
+
+- {% url 'Learn JavaScript - Full Course for Beginners' https://www.youtube.com/watch?v=PkZNo7MFNFg %} from freeCodeCamp
+- {% url 'Learn JavaScript' https://www.codecademy.com/learn/introduction-to-javascript %} by CodeAcademy
+
 ## {% fa fa-angle-right %} So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
 
 Unit tests are not something we are really trying to solve right now. Most of the `cy` API commands are useless in unit tests. The biggest benefit of writing unit tests in Cypress is that they run in a browser, which has debugger support built in.
@@ -153,7 +168,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are able to run both locally and on a {% url "continuous integration" continuous-integration %} server.
+- Are able to run both locally and on a {% url "continuous integration" continuous-integration-introduction %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 
@@ -168,3 +183,15 @@ You can follow through these links:
 - {% url "GitHub (Releases & changelog)" https://github.com/cypress-io/cypress/releases %}
 - {% url "npm (Releases)" https://www.npmjs.com/package/cypress %}
 - {% url "Changelog at Cypress Docs" changelog %}
+
+## {% fa fa-angle-right %} How often are Cypress Test Runner versions released?
+
+We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time. You can see all issues merged into the default code branch but not yet released by looking at the issues with the label {% url 'stage: pending release' https://github.com/cypress-io/cypress/issues?q=label%3A%22stage%3A+pending+release%22+is%3Aclosed %}.
+
+We schedule major releases with breaking changes approximately every 3 months.
+
+If there is a significant bug outside of our release schedule then we release a patch as soon as possible.
+
+## {% fa fa-angle-right %} What information is captured or transmitted when using the Cypress Test Runner?
+
+The Cypress Test Runner runs locally so no data is sent to Cypress aside from exception data, which can be disabled using the instructions {% url "here" https://docs.cypress.io/guides/getting-started/installing-cypress.html#Opt-out-of-sending-exception-data-to-Cypress %}.

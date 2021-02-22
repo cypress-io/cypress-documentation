@@ -38,6 +38,10 @@ module.exports = (on, config) => {
 }
 ```
 
+The `task` plugin event handler can return a value or a promise. The command will fail if `undefined` is returned or if the promise is resolved with `undefined`. This helps catch typos or cases where the task event is not handled.
+
+If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
+
 ## Arguments
 
 **{% fa fa-angle-right %} event** ***(String)***
@@ -84,8 +88,6 @@ Option | Default | Description
 
 # Examples
 
-## Event
-
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can take actions necessary for your tests outside of the scope of Cypress. This is great for:
 
 - Seeding your test database.
@@ -93,11 +95,7 @@ Option | Default | Description
 - Performing parallel tasks, like making multiple http requests outside of Cypress.
 - Running an external process.
 
-In the `task` plugin event, the command will fail if `undefined` is returned. This helps catch typos or cases where the task event is not handled.
-
-If you do not need to return a value, explicitly return `null` to signal that the given event has been handled.
-
-### Read a file that might not exist
+## Read a file that might not exist
 
 Command {% url "`cy.readFile()`" readfile %} assumes the file exists. If you need to read a file that might not exist, use `cy.task`.
 
@@ -123,7 +121,35 @@ module.exports = (on, config) => {
 }
 ```
 
-### Seed a database
+## Return number of files in the folder
+
+```javascript
+// in test
+cy.task('countFiles', 'cypress/downloads').then((count) => { ... })
+```
+
+```javascript
+// in plugins/index.js
+const fs = require('fs')
+
+module.exports = (on, config) => {
+  on('task', {
+    countFiles (folderName) {
+      return new Promise((resolve, reject) => {
+        fs.readdir(folderName, (err, files) => {
+          if (err) {
+            return reject(err)
+          }
+
+          resolve(files.length)
+        })
+      })
+    }
+  })
+}
+```
+
+## Seed a database
 
 ```javascript
 // in test
@@ -155,7 +181,7 @@ module.exports = (on, config) => {
 }
 ```
 
-### Return a Promise from an asynchronous task
+## Return a Promise from an asynchronous task
 
 ```javascript
 // in test
@@ -176,7 +202,7 @@ module.exports = (on, config) => {
 }
 ```
 
-### Save a variable across non same-origin URL visits
+## Save a variable across non same-origin URL visits
 
 When visiting non same-origin URL, Cypress will {% url "change the hosted URL to the new URL" web-security %}, wiping the state of any local variables. We want to save a variable across visiting non same-origin URLs.
 
@@ -220,7 +246,7 @@ module.exports = (on, config) => {
 }
 ```
 
-## Options
+## Command options
 
 ### Change the timeout
 
@@ -304,6 +330,72 @@ describe('has data available from database', { taskTimeout: 90000 }, () => {
     cy.task('resetDatabase')
   })
 })
+```
+
+## Allows a single argument only
+
+The syntax `cy.task(name, arg, options)` only has place for a single argument to be passed from the test code to the plugins code. In the situations where you would like to pass multiple arguments, place them into an object to be destructured inside the task code. For example, if you would like to execute a database query and pass the database profile name you could do:
+
+```javascript
+// in test
+const dbName = 'stagingA'
+const query = 'SELECT * FROM users'
+
+cy.task('queryDatabase', { dbName, query })
+```
+
+```javascript
+// in plugins/index.js
+const mysql = require('mysql')
+// the connection strings for different databases could
+// come from a config file, or from environment variables
+const connections = {
+  stagingA: {
+    host: 'staging.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users'
+  },
+  stagingB: {
+    host: 'staging-b.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users'
+  }
+}
+
+// querying the database from Node
+function queryDB (connectionInfo, query) {
+  const connection = mysql.createConnection(connectionInfo)
+
+  connection.connect()
+
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) {
+        return reject(error)
+      }
+
+      connection.end()
+
+      return resolve(results)
+    })
+  })
+}
+module.exports = (on, config) => {
+  on('task', {
+    // destructure the argument into the individual fields
+    queryDatabase ({ dbName, query }) {
+      const connectionInfo = connections[dbName]
+
+      if (!connectionInfo) {
+        throw new Error(`Do not have DB connection under name ${dbName}`)
+      }
+
+      return queryDB(connectionInfo, query)
+    }
+  })
+}
 ```
 
 ## Argument should be serializable

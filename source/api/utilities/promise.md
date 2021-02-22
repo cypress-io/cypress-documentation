@@ -70,6 +70,31 @@ it('waits for promises to resolve', () => {
 })
 ```
 
+# Notes
+
+## Rejected test promises do not fail tests
+
+If the test code has an unhandled rejected promise, it does not automatically fail the test. If you do want to fail the test if there is an unhandled rejected promise in the test code you have to do one of two things:
+
+If you use `Cypress.Promise` in your test code, register a callback using Bluebird's API
+
+```javascript
+Cypress.Promise.onPossiblyUnhandledRejection((error, promise) => {
+  throw error
+})
+```
+
+If you use native built-in promises in your test code, register an event listener on the test `window` object:
+
+```javascript
+window.addEventListener('unhandledrejection', (event) => {
+  throw event.reason
+})
+```
+
+**Note:** because this is the test `window` object, such listeners are NOT reset before every test. You can register such listener once using `before` hook in the spec file.
+
 # See also
 
 - {% url 'Bundled Tools' bundled-tools %}
+- The recipe {% url 'Handling errors' recipes#Fundamentals %}
