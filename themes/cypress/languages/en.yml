@@ -35,6 +35,7 @@ sidebar:
     cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration: Continuous Integration
     continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
@@ -55,7 +56,6 @@ sidebar:
     guides: Guides
     command-line: Command Line
     test-retries: Test Retries
-    continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers

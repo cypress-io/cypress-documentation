@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration
+title: Introduction
 ---
 
 {% note info %}
