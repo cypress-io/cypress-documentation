@@ -290,9 +290,18 @@ steps:
 ```
 
 # Using the Cypress Dashboard with GitHub Actions
-Finally, we tell the Cypress GitHub Actions to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
 
-Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+In the GitHub Actions configuration we have defined in the previous section, we are leveraging three useful features of the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
+
+  1. {% url "Recording test results with the `record: true` option" https://on.cypress.io/how-do-i-record-runs %} to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
+    - In-depth and shareable {% url "test reports" runs %}.
+    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
+    - {% url "Integrating testing with the pull-request (PR) process" github-integration %} via {% url "commit status check guards" github-integration#Status-checks %} and convenient {% url "test report comments" github-integration#Pull-request-comments %}.
+    - {% url "Detecting flaky tests" flaky-test-management %} and surfacing them via {% url "Slack alerts" flaky-test-management#Slack %} or {% url "GitHub PR status checks" flaky-test-management#GitHub %}.
+
+  2. {% url "Parallelizing test runs" parallelization %} and optimizing their execution via {% url "intelligent load-balancing" parallelization#Balance-strategy %} of test specs across CI machines with the `parallel: true` option.
+
+  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `group: "UI - Chrome"` option to organize all of UI tests within the Chrome browser within a group labeled "UI - Chrome" within our {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
 
 # Cypress Real World Example with GitHub Actions
 
