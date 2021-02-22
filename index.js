@@ -10,10 +10,13 @@ const Hexo = require('hexo')
 const chalk = require('chalk')
 const minimist = require('minimist')
 const Contentful = require('contentful')
-const moment = require('moment')
+const dayjs = require('dayjs')
+const isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
 const yaml = require('js-yaml')
 const fs = require('fs')
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer')
+
+dayjs.extend(isSameOrAfter)
 
 // these are the args like --port
 const args = minimist(process.argv.slice(2))
@@ -112,7 +115,7 @@ function initHexo () {
     .getEntries({ content_type: 'docsTopBanner' })
     .then(({ items }) => {
       const data = items.reduce((filtered, { sys: { id }, fields }) => {
-        if (moment(fields.endDate).isSameOrAfter(moment())) {
+        if (dayjs(fields.endDate).isSameOrAfter(dayjs())) {
           filtered.push({ id, ...fields, text: documentToHtmlString(fields.text) })
         }
 

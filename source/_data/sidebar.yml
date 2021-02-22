@@ -14,12 +14,14 @@ guides:
     variables-and-aliases: variables-and-aliases.html
     conditional-testing: conditional-testing.html
     test-runner: test-runner.html
+    cypress-studio: cypress-studio.html
   dashboard:
     dashboard-introduction: introduction.html
     projects: projects.html
     runs: runs.html
     organizations: organizations.html
     users: users.html
+    bitbucket-integration: bitbucket-integration.html
     github-integration: github-integration.html
     gitlab-integration: gitlab-integration.html
     slack-integration: slack-integration.html
@@ -31,7 +33,6 @@ guides:
     debugging: debugging.html
     network-requests: network-requests.html
     test-retries: test-retries.html
-    continuous-integration: continuous-integration.html
     parallelization: parallelization.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
@@ -39,6 +40,10 @@ guides:
     launching-browsers: launching-browsers.html
     cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
+  continuous-integration:
+    continuous-integration-introduction: introduction.html
+    github-actions: github-actions.html
+    gitlab-ci: gitlab-ci.html
   component-testing:
     component-testing-introduction: introduction.html
   tooling:

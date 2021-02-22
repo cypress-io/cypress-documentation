@@ -8,7 +8,7 @@ This guide details how to change your test code to migrate from `cy.route()` to 
 
 Please also refer to the full documentation for {% url "`cy.intercept()`" intercept %}.
 
-## Simple route matching
+## Match simple route
 
 In many use cases, you can replace `cy.route()` with {% url "`cy.intercept()`" intercept %} and remove the call to `cy.server()` (which is no longer necessary).
 
@@ -29,6 +29,38 @@ cy.route('PATCH', '/projects/*').as('updateProject')
 cy.intercept('/users').as('getUsers')
 cy.intercept('POST', '/project').as('createProject')
 cy.intercept('PATCH', '/projects/*').as('updateProject')
+```
+
+## Match against `url` and `path`
+
+The `url` argument to {% url "`cy.intercept()`" intercept %} matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in `cy.intercept()`, you may need to update your code depending on the route you're trying to match.
+
+{% badge danger Before %}
+
+```js
+// Match XHRs with a path or url of /users
+cy.server()
+cy.route({
+  method: 'POST',
+  url: '/users'
+}).as('getUsers')
+```
+
+{% badge success After %}
+
+```js
+// Match HTTP requests with a path of /users
+cy.intercept({
+  method: 'POST',
+  path: '/users'
+}).as('getUsers')
+
+// OR
+// Match HTTP requests with an exact url of https://example.cypress.io/users
+cy.intercept({
+  method: 'POST',
+  url: 'https://example.cypress.io/users'
+}).as('getUsers')
 ```
 
 ## `cy.wait()` object
@@ -82,6 +114,10 @@ cy.intercept('GET', '/projects', {
   fixture: 'projects'
 })
 ```
+
+## Override route matchers
+
+Unlike `cy.route()`, `cy.intercept()` currently does _not_ allow you to override a previous response. For more information on this, see {% issue 9302 %} and {% url "this blog post" https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors %}. Overriding responses will be added in a future release.
 
 # Migrating to Cypress 6.0
 

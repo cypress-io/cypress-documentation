@@ -220,18 +220,56 @@ describe('The Document Metadata', () => {
 
 You certainly can.
 
-```javascript
-it('check validation message on invalid input', () => {
-  cy.get('input:invalid').should('have.length', 0)
-  cy.get('[type="email"]').type('not_an_email')
-  cy.get('[type="submit"]').click()
-  cy.get('input:invalid').should('have.length', 1)
-  cy.get('[type="email"]').then(($input) => {
-    expect($input[0].validationMessage).to.eq('I expect an email!')
-  })
+**Test default validation error**
+
+```html
+<form>
+  <input type="text" id="name" name="name" required />
+  <button type="submit">Submit</button>
+</form>
+```
+
+```js
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('#name').then(($input) => {
+  expect($input[0].validationMessage).to.eq('Please fill out this field.')
 })
 ```
 
+**Test custom validation error**
+
+```html
+<body>
+<form>
+  <input type="email" id="email" name="email" />
+  <button type="submit">Submit</button>
+</form>
+<script>
+  const email = document.getElementById("email")
+
+  email.addEventListener("input", function (event) {
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("I expect an email!")
+    } else {
+      email.setCustomValidity("")
+    }
+  })
+</script>
+</body>
+```
+
+```javascript
+cy.get('input:invalid').should('have.length', 0)
+cy.get('[type="email"]').type('not_an_email')
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('[type="email"]').then(($input) => {
+  expect($input[0].validationMessage).to.eq('I expect an email!')
+})
+```
+
+For more examples, read the blog post {% url "HTML Form Validation in Cypress" https://glebbahmutov.com/blog/form-validation-in-cypress/ %}.
 
 ## {% fa fa-angle-right %} Can I throttle network speeds using Cypress?
 
@@ -277,7 +315,57 @@ Cypress exposes an event for this (amongst many others) that you can listen for 
 - Debug the error instance itself
 - Prevent Cypress from failing the test
 
-This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page.
+This is documented in detail on the {% url "Catalog Of Events" catalog-of-events %} page and the recipe {% url 'Handling errors' recipes#Fundamentals %}.
+
+## {% fa fa-angle-right %} Will Cypress fail the test when an application has unhandled rejected promise?
+
+By default no, Cypress does not listen to the unhandled promise rejection event in your application, and thus does not fail the test. You can set up your own listener though and fail the test, see our recipe {% url 'Handling errors' recipes#Fundamentals %}:
+
+```js
+// register listener during cy.visit
+it('fails on unhandled rejection', () => {
+  cy.visit('/', {
+    onBeforeLoad (win) {
+      win.addEventListener('unhandledrejection', (event) => {
+        const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+        // fail the test
+        throw new Error(msg)
+      })
+    },
+  })
+})
+
+// ALTERNATIVE: register listener for this test
+it('fails on unhandled rejection', () => {
+  cy.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+      // fail the test
+      throw new Error(msg)
+    })
+  })
+
+  cy.visit('/')
+})
+
+// ALTERNATIVE: register listener in every test
+before(() => {
+  Cypress.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
+
+      // fail the test
+      throw new Error(msg)
+    })
+  })
+})
+
+it('fails on unhandled rejection', () => {
+  cy.visit('/')
+})
+```
 
 ## {% fa fa-angle-right %} Can I override environment variables or create configuration for different environments?
 
@@ -595,7 +683,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration-introduction#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 

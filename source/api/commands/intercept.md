@@ -22,6 +22,7 @@ Unlike {% url "`cy.route()`" route %}, `cy.intercept()`:
 * does not require calling {% url "`cy.server()`" server %} before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 * does not have method set to `GET` by default, but intercepts `*` methods.
 * uses plain substring match, or RegExp, or {% url minimatch %} to match URL.
+* Currently, cannot override previously-defined responses: see {% issue 9302 %} and {% url "Cypress intercept problems blog" https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors %} for more information. Overriding responses will be added in a future release.
 
 # Usage
 
@@ -426,7 +427,7 @@ Here are the available properties on `StaticResponse`:
   /**
    * Milliseconds to delay before the response is sent.
    */
-  delayMs?: number
+  delay?: number
   /**
    * Kilobits per second to send 'body'.
    */
@@ -453,6 +454,29 @@ cy.intercept('POST', '/login', (req) => {
   // set the request body to something different before it's sent to the destination
   req.body = 'username=janelane&password=secret123'
 })
+```
+
+### Adding a header to an outgoing request
+
+You can add a header to an outgoing request, or modify an existing header
+
+```js
+cy.intercept('/req-headers', (req) => {
+  req.headers['x-custom-headers'] = 'added by cy.intercept'
+})
+```
+
+**Note:** the new header will NOT be shown in the browser's Network tab, as the request has already left the browser. You can still confirm the header was added by waiting on the intercept as shown below:
+
+```js
+cy.intercept('/req-headers', (req) => {
+  req.headers['x-custom-headers'] = 'added by cy.intercept'
+}).as('headers')
+
+// the application makes the call ...
+// confirm the custom header was added
+cy.wait('@headers').its('request.headers')
+  .should('have.property', 'x-custom-headers', 'added by cy.intercept')
 ```
 
 ### Dynamically stubbing a response
@@ -622,9 +646,9 @@ The available functions on `res` are:
     */
   send(): void
   /**
-    * Wait for 'delayMs' milliseconds before sending the response to the client.
+    * Wait for 'delay' milliseconds before sending the response to the client.
     */
-  delay: (delayMs: number) => IncomingHttpResponse
+  delay: (delay: number) => IncomingHttpResponse
   /**
     * Serve the response at 'throttleKbps' kilobytes per second.
     */
@@ -633,11 +657,20 @@ The available functions on `res` are:
 ```
 
 {% history %}
+{% url "6.4.0" changelog#6-4-0 %} | Renamed `delayMs` property to `delay` (backwards-compatible).
 {% url "6.2.0" changelog#6-2-0 %} | Added `matchUrlAgainstPath` option to `RouteMatcher`.
 {% url "6.0.0" changelog#6-0-0 %} | Renamed `cy.route2()` to `cy.intercept()`.
 {% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` option and made it the default behavior.
 {% url "5.1.0" changelog#5-1-0 %} | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.
 {% endhistory %}
+
+# Notes
+
+## `cy.intercept()` cannot be debugged using {% url `cy.request()` request %}
+
+### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.intercept()`
+
+The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
 
 # See also
 
@@ -652,6 +685,7 @@ The available functions on `res` are:
   * intercepting static resources like HTML and CSS
   * redirecting requests
   * replying with different responses
+* {% url "How cy.intercept works" https://slides.com/bahmutov/how-cy-intercept-works %} presentation
 * {% url "Cypress cy.intercept Problems" https://glebbahmutov.com/blog/cypress-intercept-problems/ %} with advanced `cy.intercept` tips to solve the common problems:
   * The intercept was registered too late
   * `cy.wait` uses the intercept

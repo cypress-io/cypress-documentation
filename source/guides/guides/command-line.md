@@ -273,7 +273,7 @@ cypress run --record --key <record_key>
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`, you can omit the `--key` flag.
 
-You'd typically set this environment variable when running in {% url 'Continuous Integration' continuous-integration %}.
+You'd typically set this environment variable when running in {% url 'Continuous Integration' continuous-integration-introduction %}.
 
 ```shell
 export CYPRESS_RECORD_KEY=abc-key-123
@@ -303,7 +303,7 @@ cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=t
 
 ### `cypress run --spec <spec>`
 
-Run tests specifying a single test file to run instead of all tests.
+Run tests specifying a single test file to run instead of all tests. The spec path should be an absolute path or can relative to the current working directory.
 
 ```shell
 cypress run --spec "cypress/integration/examples/actions.spec.js"
@@ -319,6 +319,27 @@ Run tests specifying multiple test files to run.
 
 ```shell
 cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
+```
+
+Use in combination with `--project` parameter. Imagine the Cypress tests are in a subfolder `tests/e2e` of the current project:
+
+```
+app/
+  node_modules/
+  package.json
+  tests/
+    unit/
+    e2e/
+      cypress/
+        integration/
+          spec.js
+      cypress.json
+```
+
+If we are in the `app` folder, we can run the specs using the following command
+
+```shell
+cypress run --project tests/e2e --spec ./tests/e2e/cypress/integration/spec.js
 ```
 
 ### `cypress run --tag <tag>`

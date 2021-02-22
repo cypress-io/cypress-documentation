@@ -13,13 +13,18 @@ Recipe  | Description
 --- | ---
 {% url 'Node Modules' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__node-modules %} | Import your own Node modules
 {% url 'Environment variables' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__env-variables %} | Passing environment variables to tests
+{% url 'Handling errors' https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/fundamentals__errors %} | Handling thrown errors and unhandled promise rejections
 {% url 'Dynamic tests' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__dynamic-tests %} | Create tests dynamically from data
 {% url 'Fixtures' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__fixtures %} | Loading single or multiple fixtures
+{% url 'Adding Custom Commands' https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/fundamentals__add-custom-command %} | Write your own custom commands using JavaScript with correct types for IntelliSense to work
+{% url 'Adding Custom Commands (TS)' https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/fundamentals__add-custom-command-ts %} | Write your own custom commands using TypeScript
 {% url 'Adding Chai Assertions' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/extending-cypress__chai-assertions %} | Add new or custom chai assertions
 {% url 'Cypress module API' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__module-api %} | Run Cypress via its module API
+{% url 'Wrapping Cypress module API' https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/fundamentals__module-api-wrap %} | Writing a wrapper around "cypress run" command line parsing
 {% url 'Custom browsers' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__custom-browsers %} | Control which browsers the project can use, or even add a custom browser into the list
 {% url 'Use Chrome Remote Interface' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/fundamentals__chrome-remote-debugging %} | Use Chrome debugger protocol to trigger hover state and print media style
-{% url 'File download' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download %} | Download and validate files
+{% url 'Out-of-the-box TypeScript' https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/fundamentals__typescript %} | Write tests in TypeScript without setting up preprocessors
+{% url 'Per-test timeout' https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/fundamentals__timeout %} | Fail a test if it runs longer than the specified time limit
 
 ## Testing the DOM
 
@@ -36,6 +41,7 @@ Recipe  | Description
 {% url 'Evaluate performance metrics' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics %} | Utilize Cypress to monitor a website
 {% url 'Root style' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__root-style %} | Trigger input color change that modifies CSS variable
 {% url 'Select widgets' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__select2 %} | Working with `<select>` elements and [Select2](https://select2.org/) widgets
+{% url 'File download' https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download %} | Download and validate files
 
 ## Logging In
 

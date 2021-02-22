@@ -62,23 +62,23 @@ We currently support Vue and React and intend to support other frameworks in the
 We highly suggest using Vue CLI for a quick start. For manual installation, please check the README in the {% url "GitHub repository" https://github.com/cypress-io/cypress/tree/master/npm/vue %}.
 
 ```sh
-vue add cypress-experimental
+vue add @cypress/vue
 ```
 
 Cypress component testing with Vue currently supports Vue 2.x. Support for Vue 3 is in progress.
 
-Examples for testing different Vue applications (containing {% url "Vuex" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/counter-vuex %}, {% url "VueRouter" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/router-example %}, {% url "VueI18n" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component/advanced/i18n %}) exist in the component testing directory for {% url "@cypress/vue" https://github.com/bahmutov/cypress-vue-unit-test/tree/master/cypress/component %}.
+Examples for testing different Vue applications (containing {% url "Vuex" https://github.com/cypress-io/cypress/tree/master/npm/vue/cypress/component/counter-vuex %}, {% url "VueRouter" https://github.com/cypress-io/cypress/tree/master/npm/vue/cypress/component/router-example %}, {% url "VueI18n" https://github.com/cypress-io/cypress/tree/master/npm/vue/cypress/component/advanced/i18n %}) exist in the component testing directory for {% url "@cypress/vue" https://github.com/cypress-io/cypress/tree/master/npm/vue/cypress/component %}.
 
 ## React
 
 ```sh
-npm install --save-dev cypress cypress-react-unit-test
+npm install --save-dev cypress @cypress/react
 ```
 
 1. Include this plugin from your project's `cypress/support/index.js`
 
 ```js
-require('cypress-react-unit-test/support')
+require('@cypress/react/support')
 ```
 
 2. Tell Cypress how your React application is transpiled or bundled (using Webpack), so Cypress can load your components. For example, if you use `react-scripts` (even after ejecting) do:
@@ -86,10 +86,10 @@ require('cypress-react-unit-test/support')
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require('cypress-react-unit-test/plugins/react-scripts')(on, config)
-
+  require('@cypress/react/plugins/react-scripts')(on, config)
   // IMPORTANT to return the config object
   // with the any changed environment variables
+
   return config
 }
 ```

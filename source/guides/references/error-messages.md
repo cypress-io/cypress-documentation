@@ -426,13 +426,13 @@ If you get this error in a case where the element is definitely visible in the D
 
 ## {% fa fa-exclamation-triangle red %} You passed the `--record` flag but did not provide us your Record Key.
 
-You may receive this error when trying to run Cypress tests in {% url 'Continuous Integration' continuous-integration %}. This means that you did not pass a specific record key to: {% url '`cypress run --record`' command-line#cypress-run %}.
+You may receive this error when trying to run Cypress tests in {% url 'Continuous Integration' continuous-integration-introduction %}. This means that you did not pass a specific record key to: {% url '`cypress run --record`' command-line#cypress-run %}.
 
 Since no record key was passed, Cypress checks for any environment variable with the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
 You can get your project's record key by locating it in your settings tab in the Test Runner or in the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-tests %}.
+You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration-introduction#Record-tests %}.
 
 ## {% fa fa-exclamation-triangle red %} The `cypress ci` command has been deprecated
 
@@ -464,7 +464,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching %}, then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration-introduction#Caching %}, then bump the version of your CI cache to ensure a clean build.
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
@@ -488,7 +488,7 @@ You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} o
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#Examples %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration-introduction#Examples %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
 
 You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
 

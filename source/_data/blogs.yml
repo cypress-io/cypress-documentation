@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Running Cypress tests parallel in GitLab Pipeline"
+    url: https://medium.com/trendyol-tech/running-cypress-tests-parallel-in-gitlab-pipeline-56b1fa4cb286/
+    sourceName: Medium
+    sourceUrl: https://medium.com/
+    author: Yavuz Koca
+    date: September 2, 2020
+    img: /img/examples/running-cypress-tests-parallel-in-gitlab-pipeline.jpg
+
   - title: "Exploring Cypress and its Features"
     url: https://testersdock.com/cypress-tutorial/
     sourceName: Testersdock

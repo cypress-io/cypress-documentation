@@ -52,7 +52,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - {% urlHash "Set an environment variable within your plugins." Option-5-Plugins %}
 - {% urlHash "Set an environment variable within test configuration." Option-6-Test-Configuration %}
 
-Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration %}.
+Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in {% url 'CI' continuous-integration-introduction %}.
 
 When your tests are running, you can use the {% url `Cypress.env` env %} function to access the values of your environment variables.
 

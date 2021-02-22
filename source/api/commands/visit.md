@@ -23,7 +23,9 @@ cy.visit(options)
 **{% fa fa-check-circle green %} Correct Usage**
 
 ```javascript
-cy.visit('http://localhost:3000')    // Yields the window of the remote page
+cy.visit('http://localhost:3000')
+cy.visit('/')           // visits the baseUrl
+cy.visit('index.html')  // visits the local file "index.html"
 cy.visit('./pages/hello.html')
 ```
 
@@ -35,8 +37,7 @@ The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your {% url 'network options' configuration#Global %} if you've set one.
 
-You may also specify the relative path of an html file.  The path is relative to the root
-directory of the Cypress installation. Note that the `file://` prefix is not needed.
+If there is no `baseUrl` set, you may specify the relative path of an html file, and Cypress will serve this file automatically using built-in static server. The path is relative to the root directory of the project. Note that the `file://` prefix is not needed.
 
 **{% fa fa-angle-right %} options** ***(Object)***
 
@@ -63,6 +64,14 @@ You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` glob
 ## Yields {% helper_icon yields %}
 
 {% yields sets_subject cy.visit 'yields the `window` object after the page finishes loading' %}
+
+Let's confirm the `window.navigator.language` after visiting the site:
+
+```javascript
+cy.visit('/')                 // yields the window object
+  .its('navigator.language')  // yields window.navigator.language
+  .should('equal', 'en-US')   // asserts the expected value
+```
 
 # Examples
 
@@ -219,6 +228,32 @@ Having Cypress serve your files is useful in smaller projects and example apps, 
 ```javascript
 cy.visit('app/index.html')
 ```
+
+### Visit local file when `baseUrl` is set
+
+If you have `baseUrl` set, but need to visit a local file in a single test or a group of tests, disable the `baseUrl` using {% url 'per-test configuration' configuration#Test-Configuration %}. Imagine our `cypress.json` file:
+
+```json
+{
+  "baseUrl": "https://example.cypress.io"
+}
+```
+
+The first test visits the `baseUrl`, while the second test visits the local file.
+
+```javascript
+it('visits base url', () => {
+  cy.visit('/')
+  cy.contains('h1', 'Kitchen Sink')
+})
+
+it('visits local file', { baseUrl: null }, () => {
+  cy.visit('index.html')
+  cy.contains('local file')
+})
+```
+
+**Tip:** because visiting every new domain requires the Test Runner window reload, we recommend putting the above tests in separate spec files.
 
 ## Prefixes
 
