@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration
+title: Introduction
 ---
 
 {% note info %}
@@ -124,7 +124,7 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ## Record tests
 
-Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration %}. The Dashboard provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in the {% url 'Cypress Dashboard' dashboard-introduction %}, which is a service that gives you access to recorded tests - typically when running Cypress tests from your {% url 'CI provider' continuous-integration-introduction %}. The Dashboard provides you insight into what happened when your tests ran.
 
 ### Recording tests allow you to:
 

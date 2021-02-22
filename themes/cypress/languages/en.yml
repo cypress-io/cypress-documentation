@@ -35,11 +35,14 @@ sidebar:
     cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration: Continuous Integration
+    continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
     users: Users
     bitbucket-integration: Bitbucket Integration
+    github-actions: GitHub Actions
     github-integration: GitHub Integration
     gitlab-integration: GitLab Integration
     slack-integration: Slack Integration
@@ -53,7 +56,6 @@ sidebar:
     guides: Guides
     command-line: Command Line
     test-retries: Test Retries
-    continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
