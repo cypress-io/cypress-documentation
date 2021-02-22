@@ -5,11 +5,10 @@ title: Network Requests
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How Cypress enables you to stub out the back end with {% url `cy.route()` route %}
+- How Cypress enables you to stub out the back end with {% url `cy.intercept()` intercept %}
 - What tradeoffs we make when we stub our network requests
 - How Cypress visualizes network management in the Command Log
-- How to use Fixtures to reuse XHR responses
-- How to use Aliases to refer back to XHR requests and wait on them
+- How to use Aliases to refer back to requests and wait on them
 - How to write declarative tests that resist flake
 {% endnote %}
 
@@ -18,9 +17,7 @@ title: Network Requests
 {% endnote %}
 # Testing Strategies
 
-Cypress helps you test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
-
-{% partial network_stubbing_warning %}
+Cypress helps you test the entire lifecycle of HTTP requests within your application. Cypress provides you access to the objects with information about the request, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
 
 ***Common testing scenarios:***
 
@@ -37,7 +34,7 @@ Within Cypress, you have the ability to choose whether to stub responses or allo
 
 Let's investigate both strategies, why you would use one versus the other, and why you should regularly use both.
 
-## Don't Stub Responses
+## Use Server Responses
 
 Requests that are not stubbed actually reach your server. By *not* stubbing your responses, you are writing true *end-to-end* tests. This means you are driving your application the same way a real user would.
 
@@ -53,7 +50,7 @@ In other words, you can have confidence your server is sending the correct data 
 If you are writing a traditional server-side application where most of the responses are HTML you will likely have few stubbed responses. However, most modern applications that serve JSON can take advantage of stubbing.
 
 {% note success Benefits %}
-- Guaranteed to work in production
+- More likely to work in production
 - Test coverage around server endpoints
 - Great for traditional server-side HTML rendering
 {% endnote %}
@@ -97,50 +94,44 @@ You don't have to do any work on the server. Your application will have no idea 
 - Perfect for JSON APIs
 {% endnote %}
 
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} end-to-end tests predominately rely on server responses, and only stub network responses {% url "on a few occasions" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/notifications.spec.ts#L250-L264 %} to conveniently **create edge-case** or **hard-to-create application states**.
+
+This practice allows the project to achieve full {% url code-coverage code-coverage %} for the front end *and back end* of the app, but this has also required creating intricate database seeding or test data factory scripts that can generate appropriate data in compliance with the business-logic of the app.
+
+Check out any of the {% url "Real World App test suites" https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui %} to see Cypress network handling in action.
+
+{% endnote %}
+
 # Stubbing
 
 Cypress enables you to stub a response and control the `body`, `status`, `headers`, or even delay.
 
-***To begin stubbing responses you need to do two things.***
-
-1. Start a {% url `cy.server()` server %}
-2. Provide a {% url `cy.route()` route %}
-
-These two commands work together to control the behavior of your responses within the command's options. {% url `cy.server()` server %} enables stubbing, while {% url `cy.route()` route %} provides a routing table so Cypress understands which response should go with which request.
+{% url `cy.intercept()` intercept %} is used to control the behavior of HTTP requests. You can statically define the body, HTTP status code, headers, and other response characteristics.
 
 {% note info %}
-See {% url '`cy.server()` options' server#Options %} and {% url '`cy.route()` options' route#Options %} for instructions on how to stub responses.
+See {% url '`cy.intercept()`' intercept %} for more information and for examples on stubbing responses.
 {% endnote %}
-
-# Requests
-
-Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it's stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the moment the request is made and another snapshot at the moment the response returns.
-
-{% imgTag /img/guides/network-requests/snapshot-of-request-command.gif "Snapshot of request and response" %}
-
-By default, Cypress is configured to *ignore* requests that are used to fetch static content like `.js` or `.html` files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the {% url '`cy.server()` options' server#Options %}.
-
-Cypress automatically collects the request `headers` and the request `body` and will make this available to you.
 
 # Routing
 
 ```javascript
-cy.server()           // enable response stubbing
-cy.route({
-  method: 'GET',      // Route all GET requests
-  url: '/users/*',    // that have a URL that matches '/users/*'
-  response: []        // and force the response to be: []
-})
+cy.intercept(
+  {
+    method: 'GET',      // Route all GET requests
+    url: '/users/*',    // that have a URL that matches '/users/*'
+  },
+  [] // and force the response to be: []
+)
 ```
 
-When you start a {% url `cy.server()` server %} and define {% url `cy.route()` route %} commands, Cypress displays this under "Routes" in the Command Log.
+When you use {% url `cy.intercept()` intercept %} to define a route, Cypress displays this under "Routes" in the Command Log.
 
 {% imgTag /img/guides/server-routing-table.png "Routing Table" %}
 
-Once you start a server with {% url `cy.server()` server %}, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.
-
-- {% url `cy.server()` server %}
-- {% url `cy.route()` route %}
+When a new test runs, Cypress will restore the default behavior and remove all routes and stubs. For a complete reference of the API and options, refer to the documentation for {% url `cy.intercept()` intercept %}.
 
 # Fixtures
 
@@ -151,19 +142,8 @@ With Cypress, you can stub network requests and have it respond instantly with f
 When stubbing a response, you typically need to manage potentially large and complex JSON objects. Cypress allows you to integrate fixture syntax directly into responses.
 
 ```javascript
-cy.server()
-
 // we set the response to be the activites.json fixture
-cy.route('GET', 'activities/*', 'fixture:activities.json')
-```
-
-You can additionally reference {% url 'aliases' variables-and-aliases %} within responses. These aliases do not have to point to fixtures, but that is a common use case. Separating out a fixture enables you to work and mutate that object prior to handing it off to a response.
-
-```javascript
-cy.server()
-
-cy.fixture('activities.json').as('activitiesJSON')
-cy.route('GET', 'activities/*', '@activitiesJSON')
+cy.intercept('GET', 'activities/*', { fixture: 'activities.json' })
 ```
 
 ## Organizing
@@ -185,7 +165,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 To access the fixtures nested within the `images` folder, include the folder in your {% url `cy.fixture()` fixture %} command.
 
 ```javascript
-cy.fixture('images/dogs.png') //returns dogs.png as Base64
+cy.fixture('images/dogs.png') // yields dogs.png as Base64
 ```
 
 # Waiting
@@ -196,12 +176,11 @@ Whether or not you choose to stub responses, Cypress enables you to declarativel
 This following section utilizes a concept known as {% url 'Aliasing' variables-and-aliases %}. If you're new to Cypress you might want to check that out first.
 {% endnote %}
 
-Here is an example of aliasing routes and then subsequently waiting on them:
+Here is an example of aliasing requests and then subsequently waiting on them:
 
 ```javascript
-cy.server()
-cy.route('activities/*', 'fixture:activities').as('getActivities')
-cy.route('messages/*', 'fixture:messages').as('getMessages')
+cy.intercept('activities/*', { fixture: 'activities' }).as('getActivities')
+cy.intercept('messages/*', { fixture: 'messages' }).as('getMessages')
 
 // visit the dashboard, which should make requests that match
 // the two routes above
@@ -219,23 +198,22 @@ cy.get('h1').should('contain', 'Dashboard')
 If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
 
 ```javascript
-cy.server()
-cy.route({
+cy.intercept({
   method: 'POST',
   url: '/myApi',
 }).as('apiCheck')
 
 cy.visit('/')
-cy.wait('@apiCheck').then((xhr) => {
-  assert.isNotNull(xhr.response.body.data, '1st API call has data')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '1st API call has data')
 })
 
-cy.wait('@apiCheck').then((xhr) => {
-  assert.isNotNull(xhr.response.body.data, '2nd API call has data')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '2nd API call has data')
 })
 
-cy.wait('@apiCheck').then((xhr) => {
-  assert.isNotNull(xhr.response.body.data, '3rd API call has data')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '3rd API call has data')
 })
 ```
 
@@ -243,7 +221,7 @@ Waiting on an aliased route has big advantages:
 
 1. Tests are more robust with much less flake.
 2. Failure messages are much more precise.
-3. You can assert about the underlying XHR object.
+3. You can assert about the underlying request object.
 
 Let's investigate each benefit.
 
@@ -256,8 +234,7 @@ One advantage of declaratively waiting for responses is that it decreases test f
 What makes this example below so powerful is that Cypress will automatically wait for a request that matches the `getSearch` alias. Instead of forcing Cypress to test the *side effect* of a successful request (the display of the Book results), you can test the actual *cause* of the results.
 
 ```javascript
-cy.server()
-cy.route('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
+cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
@@ -273,6 +250,15 @@ cy.get('#results')
   .should('contain', 'Book 1')
   .and('contain', 'Book 2')
 ```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} has various tests for testing an auto-complete field within a large user journey test that properly await requests triggered upon auto-complete input changes. Check out the example:
+- {% fa fa-github %} {% url "Auto-complete test code" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50 %}
+- {% fa fa-video-camera %} {% url "Auto-complete test run video recording" https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video %} in Cypress Dashboard.
+
+{% endnote %}
 
 ## Failures
 
@@ -291,8 +277,7 @@ With Cypress, by adding a {% url `cy.wait()` wait %}, you can more easily pinpoi
 <!--
 To reproduce the following screenshot:
 it('test', () => {
-  cy.server()
-  cy.route('foo/bar').as('getSearch')
+  cy.intercept('foo/bar').as('getSearch')
   cy.wait('@getSearch')
 })
 -->
@@ -303,29 +288,28 @@ Now we know exactly why our test failed. It had nothing to do with the DOM. Inst
 
 ## Assertions
 
-Another benefit of using {% url `cy.wait()` wait %} on requests is that it allows you to access the actual `XHR` object. This is useful when you want to make assertions about this object.
+Another benefit of using {% url `cy.wait()` wait %} on requests is that it allows you to access the actual request object. This is useful when you want to make assertions about this object.
 
 In our example above we can assert about the request object to verify that it sent data as a query string in the URL. Although we're mocking the response, we can still verify that our application sends the correct request.
 
 ```javascript
-cy.server()
 // any request to "search/*" endpoint will automatically receive
 // an array with two book objects
-cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
+cy.intercept('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 
-// this yields us the XHR object which includes
-// fields for request, response, url, method, etc
+// this yields us the interception cycle object which includes
+// fields for the request and response
 cy.wait('@getSearch')
-  .its('url').should('include', '/search?query=Book')
+  .its('request.url').should('include', '/search?query=Book')
 
 cy.get('#results')
   .should('contain', 'Book 1')
   .and('contain', 'Book 2')
 ```
 
-***The XHR object that {% url `cy.wait()` wait %} yields you has everything you need to make assertions including:***
+***The interception object that {% url `cy.wait()` wait %} yields you has everything you need to make assertions including:***
 
 - URL
 - Method
@@ -338,31 +322,30 @@ cy.get('#results')
 **Examples**
 
 ```javascript
-cy.server()
 // spy on POST requests to /users endpoint
-cy.route('POST', '/users').as('new-user')
+cy.intercept('POST', '/users').as('new-user')
 // trigger network calls by manipulating web app's user interface, then
 cy.wait('@new-user')
-  .should('have.property', 'status', 201)
+  .should('have.property', 'response.statusCode', 201)
 
-// we can grab the completed XHR object again to run more assertions
+// we can grab the completed interception object again to run more assertions
 // using cy.get(<alias>)
-cy.get('@new-user') // yields the same XHR object
-  .its('requestBody') // alternative: its('request.body')
-  .should('deep.equal', {
+cy.get('@new-user') // yields the same interception object
+  .its('request.body')
+  .should('deep.equal', JSON.stringify({
     id: '101',
     firstName: 'Joe',
     lastName: 'Black'
-  })
+  }))
 
 // and we can place multiple assertions in a single "should" callback
 cy.get('@new-user')
-  .should((xhr) => {
-    expect(xhr.url).to.match(/\/users$/)
-    expect(xhr.method).to.equal('POST')
+  .should(({ request, response }) => {
+    expect(request.url).to.match(/\/users$/)
+    expect(request.method).to.equal('POST')
     // it is a good practice to add assertion messages
     // as the 2nd argument to expect()
-    expect(xhr.response.headers, 'response headers').to.include({
+    expect(response.headers, 'response headers').to.include({
       'cache-control': 'no-cache',
       expires: '-1',
       'content-type': 'application/json; charset=utf-8',
@@ -371,15 +354,17 @@ cy.get('@new-user')
   })
 ```
 
-**Tip:** you can inspect the full XHR object by logging it to the console
+**Tip:** you can inspect the full request cycle object by logging it to the console
 
 ```javascript
 cy.wait('@new-user').then(console.log)
 ```
 
-You can find more examples in our {% url "XHR Assertions" https://github.com/cypress-io/cypress-example-recipes#server-communication %} recipe.
-
 # See also
 
 - {% url "Network requests in Kitchen Sink example" https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js %}
 - {% url "See how to make a request with `cy.request()`" request %}
+- {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} test suites to see Cypress network handling in action.
+- Read {% url "Difference between cy.route and cy.route2" https://glebbahmutov.com/blog/cy-route-vs-route2/ %} blog post
+- Read the blog post {% url "Asserting Network Calls from Cypress Tests" https://www.cypress.io/blog/2019/12/23/asserting-network-calls-from-cypress-tests/ %}
+- If you want to test the application in offline mode, read {% url "Testing an Application in Offline Network Mode" https://www.cypress.io/blog/2020/11/12/testing-application-in-offline-network-mode/ %}

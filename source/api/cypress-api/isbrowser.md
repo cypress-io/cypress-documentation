@@ -7,19 +7,24 @@ title: Cypress.isBrowser
 # Syntax
 
 ```javascript
-Cypress.isBrowser(name)
+Cypress.isBrowser(matcher)
+Cypress.isBrowser(matchers)
 Cypress.isBrowser(filter)
 ```
 
 ## Arguments
 
-**{% fa fa-angle-right %} name**  ***(String)***
+**{% fa fa-angle-right %} matcher**  ***(String)***
 
-The name of the browser (case-insensitive).
+The name of the browser (case-insensitive) you want to check against. Name can be prepended with a `!` character to inverse the check.
 
-**{% fa fa-angle-right %} filter**  ***(Object)***
+**{% fa fa-angle-right %} matchers**  ***(Array)***
 
-Filter by the browser properties. You can inspect the current browser's properties by using the {% url "`Cypress.browser`" browser %}. Supported properties are:
+An array of the names of the browsers (case-insensitive) you want to check against. Name can be prepended with a `!` character to inverse the check.
+
+**{% fa fa-angle-right %} filter**  ***(Object or Array)***
+
+Filter one or multiple browsers by the browser properties. You can inspect the current browser's properties by using the {% url "`Cypress.browser`" browser %}. Supported properties are:
 
 Property | Type | Description
 --- | --- | ---
@@ -35,26 +40,60 @@ Property | Type | Description
 
 # Examples
 
-## Name
+## Matcher
 
-### Only run tests in Chrome
-
-```javascript
-// true when running in Chrome
-if (Cypress.isBrowser('chrome')) {
-  it('only runs in chrome', () => {
-    // test some (hypothetical) issue with chrome
-  })
-}
-```
-
-### Skip a test in Firefox
+### Only run command in Chrome
 
 ```javascript
-it('a test', function() {
+it('download extension link', () => {
   // true when running in Firefox
   if (Cypress.isBrowser('firefox')) {
-    this.skip()
+    cy.get('#dl-extension')
+      .should('contain', 'Download Firefox Extension')
+  }
+
+  // true when running in Chrome
+  if (Cypress.isBrowser('chrome')) {
+    cy.get('#dl-extension')
+      .should('contain', 'Download Chrome Extension')
+  }
+})
+```
+
+### Run command in all browsers except Chrome
+
+```javascript
+it('warns to view page in Chrome browser', () => {
+  // true when running in Firefox, etc...
+  if (Cypress.isBrowser('!chrome')) {
+    cy.get('.browser-warning')
+      .should('contain', 'For optimal viewing, use Chrome browser')
+  }
+})
+```
+
+## Matchers
+
+### Run commands in all specified browsers
+
+```javascript
+it('colors rainbow', () => {
+  // true when running in Electron or Chrome
+  if (Cypress.isBrowser(['electron', 'chrome'])) {
+    cy.get('.rainbox')
+    .should('have.css', 'conic-gradient(red, orange, yellow, green, blue)')
+  }
+})
+```
+
+### Run commands in all browsers except specified
+
+```javascript
+// true when running in browser other than chrome and electron
+it('does not run in Firefox and Chrome', () => {
+  if (Cypress.isBrowser(['!electron', '!chrome'])) {
+    cy.get('#h4')
+    .should('have.css', 'font-size-adjust', '0.5')
   }
 })
 ```
@@ -64,14 +103,12 @@ it('a test', function() {
 ### Only run commands in Chromium-based browser
 
 ```javascript
-it('has correct Chromium-based specific css property', () => {
+it('has CSS reflections', () => {
   // if in Chromium-based browser (Chrome, Electron, etc...)
   // check css property was properly applied
   if (Cypress.isBrowser({ family: 'chromium' })) {
-    cy
-    .get('.header')
-    .should('have.css', 'margin-right')
-    .and('eq', '0')
+    cy.get('.header')
+    .should('have.css', '-webkit-box-reflect', 'left')
   }
 })
 ```
@@ -79,15 +116,51 @@ it('has correct Chromium-based specific css property', () => {
 ### Only run on stable release in Chromium-based browser
 
 ```javascript
-// true when running in any stable release of a Chromium-based browser
-if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
-  it('will not run in Canary or Dev browsers', () => {
-    // test some (hypothetical) issue with chrome
-  })
-}
+it('test', () => {
+  // true when in any stable release of a Chromium-based browser
+  if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
+    // test some (hypothetical) scenario in chrome stable
+  }
+})
+```
+
+### Only run on specific release channels of browsers
+
+```javascript
+it('test', () => {
+  // true when running in Chrome Canary
+  // and dev releases of Firefox browser
+  if (Cypress.isBrowser([
+    { family: 'chromium', channel: 'canary' },
+    { family: 'firefox', channel: 'dev' }
+  ])) {
+    // test some (hypothetical) scenario
+  }
+})
+```
+
+## Notes
+
+### Test configuration: `browser`
+
+If you want to target a test or suite to run or be excluded when run in a specific browser, we suggest passing the `browser` within the {% url "test configuration" configuration#Test-Configuration %}.  The `browser` option accepts the same {% urlHash "arguments" Arguments %} as `Cypress.isBrowser()`.
+
+```js
+it('Download extension in Firefox', { browser: 'firefox' }, () => {
+  cy.get('#dl-extension')
+    .should('contain', 'Download Firefox Extension')
+})
+```
+
+```js
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
+})
 ```
 
 {% history %}
+{% url "4.8.0" changelog#4-8-0 %} | Expanded `matcher` and `matchers` arguments to assist in filtering browsers.
 {% url "4.0.0" changelog#4-0-0 %} | Added `isBrowser` command.
 {% endhistory %}
 
@@ -97,3 +170,4 @@ if (Cypress.isBrowser({ family: 'chromium', channel: 'stable' })) {
 - {% url "Cross Browser Testing" cross-browser-testing %}
 - {% url "`Cypress.browser`" browser %}
 - {% url "Launching Browsers" launching-browsers %}
+- {% url "Test Configuration" configuration#Test-Configuration %}

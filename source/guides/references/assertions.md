@@ -24,7 +24,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | deep | `expect(obj).to.deep.equal({ name: 'Jane' })` |
 | nested | `expect({a: {b: ['x', 'y']}}).to.have.nested.property('a.b[1]')`<br>`expect({a: {b: ['x', 'y']}}).to.nested.include({'a.b[1]': 'y'})` |
 | ordered | `expect([1, 2]).to.have.ordered.members([1, 2]).but.not.have.ordered.members([2, 1])`
-| any | `expect(arr).to.have.any.keys('name', 'age')` |
+| any | `expect(arr).to.have.any.keys('age')` |
 | all | `expect(arr).to.have.all.keys('name', 'age')` |
 | a(*type*) {% aliases an %}| `expect('test').to.be.a('string')` |
 | include(*value*) {% aliases contain includes contains %} | `expect([1,2,3]).to.include(2)` |
@@ -52,7 +52,7 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | lengthOf(*value*) | `expect('test').to.have.lengthOf(3)` |
 | match(*RegExp*) {% aliases matches %} | `expect('testing').to.match(/^test/)` |
 | string(*string*) | `expect('testing').to.have.string('test')` |
-| key(*key1*, *[key2]*, *[...]*) {% aliases keys %} | `expect({ pass: 1, fail: 2 }).to.have.key('pass')` |
+| keys(*key1*, *[key2]*, *[...]*) {% aliases key %} | `expect({ pass: 1, fail: 2 }).to.have.keys('pass', 'fail')` |
 | throw(*constructor*) {% aliases throws Throw %} | `expect(fn).to.throw(Error)` |
 | respondTo(*method*) {% aliases respondsTo %} | `expect(obj).to.respondTo('getName')` |
 | itself | `expect(Foo).itself.to.respondTo('bar')` |
@@ -252,9 +252,78 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 ```
 
 ```javascript
-// retry until .accordion css have display: none
+// retry while .accordion css has the "display: none" property
 cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
+
+# Negative assertions
+
+There are positive and negative assertions. Examples of positive assertions are:
+
+```javascript
+cy.get('.todo-item')
+  .should('have.length', 2)
+  .and('have.class', 'completed')
+```
+
+The negative assertions have the "not" chainer prefixed to the assertion. Examples of negative assertions are:
+
+```javascript
+cy.contains('first todo').should('not.have.class', 'completed')
+cy.get('#loading').should('not.be.visible')
+```
+
+### ⚠️ False passing tests 
+
+Negative assertions may pass for reasons you weren't expecting. Let's say we want to test that a Todo list app adds a new Todo item after typing the Todo and pressing enter.
+
+**Postitive assertions**
+
+When adding an element to the list and using a **positive assertion**, the test asserts a specific number of Todo items in our application.
+
+The test below may still falsely pass if the application behaves unexpectedly, like adding a blank Todo, instead of adding the new Todo with the text "Write tests".
+
+```javascript
+cy.get('li.todo').should('have.length', 2)
+cy.get('input#new-todo').type('Write tests{enter}')
+
+// using a positive assertion to check the exact number of items
+cy.get('li.todo').should('have.length', 3)
+```
+
+**Negative assertions**
+
+But when using a **negative assertion** in the test below, the test can falsely pass when the application behaves in multiple unexpected ways:
+
+- The app deletes the entire list of Todo items instead of inserting the 3rd Todo
+- The app deletes a Todo instead of adding a new Todo
+- The app adds a blank Todo
+- An infinite variety of possible application mistakes
+
+```javascript
+cy.get('li.todo').should('have.length', 2)
+cy.get('input#new-todo').type('Write tests{enter}')
+
+// using negative assertion to check it's not a number of items
+cy.get('li.todo').should('not.have.length', 2)
+```
+
+**Recommendation**
+
+We recommend using negative assertions to verify that a specific condition is no longer present after the application performs an action. For example, when a previously completed item is unchecked, we might verify that a CSS class is removed.
+
+```javascript
+// at first the item is marked completed
+cy.contains('li.todo', 'Write tests')
+  .should('have.class', 'completed')
+  .find('.toggle').click()
+
+// the CSS class has been removed
+cy.contains('li.todo', 'Write tests')
+  .should('not.have.class', 'completed')
+```
+
+For more examples, please read the blog post {% url 'Be Careful With Negative Assertions' https://glebbahmutov.com/blog/negative-assertions/ %}.
 
 # Should callback
 
@@ -274,6 +343,38 @@ cy.get('div')
     // className will be a string like "main-abc123 heading-xyz987"
     expect(className).to.match(/heading-/)
   })
+```
+
+# Multiple assertions
+
+You can attach multiple assertions to the same command.
+
+```html
+<a class="assertions-link active"
+  href="https://on.cypress.io"
+  target="_blank">Cypress Docs</a>
+```
+
+```js
+cy.get('.assertions-link')
+  .should('have.class', 'active')
+  .and('have.attr', 'href')
+  .and('include', 'cypress.io')
+```
+
+Note that all chained assertions will use the same reference to the original subject. For example, if you wanted to test a loading element that first appears and then disappears, the following WILL NOT WORK because the same element cannot be visible and invisible at the same time:
+
+```js
+// ⛔️ DOES NOT WORK
+cy.get('#loading').should('be.visible').and('not.be.visible')
+```
+
+Instead you should split the assertions and re-query the element:
+
+```js
+// ✅ THE CORRECT WAY
+cy.get('#loading').should('be.visible')
+cy.get('#loading').should('not.be.visible')
 ```
 
 # See also

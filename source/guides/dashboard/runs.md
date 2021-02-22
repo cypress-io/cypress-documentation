@@ -94,7 +94,7 @@ You can cancel a run currently in progress from the Dashboard. Runs can only be 
 - The run will display as **Canceled** in the associated GitHub pull request if {% url "GitHub Integration" github-integration %} is enabled.
 - Any tests recorded to completion will be available to view in the run details page.
 - Any tests recorded to completion will still count towards your monthly test recording limit.
-- If you have Analytics enabled, canceled runs will appear in the {% url "Runs over time" analytics#Runs-over-time %} chart.
+- If you have Analytics enabled, canceled runs will appear in the {% url "Runs over time" analytics#Run-status %} chart.
 - Any incomplete calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will be marked as canceled and not run.
 - Any existing calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will exit with an error like below.
   {% imgTag /img/dashboard/cancel-run-error.png "cancel-run-error" width-600 %}
@@ -121,3 +121,16 @@ Runs that have been canceled or are in an errored state can be archived from the
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
 - Click **{% fa fa-history %} Restore from archive**
   {% imgTag /img/dashboard/restore-from-archive.png "restore-from-archive" %}
+
+# Test Case History
+
+{% imgTag /img/dashboard/runs/dashboard-runs-details-sidebar-test-case-history.png "Screenshot of the Test Case History panel" %}
+
+When looking further into a test runs information, there is a new Test Case History panel. It matches test cases by spec and title and combines it with commit information to provide users insight to:
+
+1. See the history of a test over its lifespan
+1. View the diff of a single test case*
+1. Jump directly to the commit
+1. See the time span between each point in its history 
+
+\*_Note: This currently shows the diff of the transpiled code since we are not collecting source maps._

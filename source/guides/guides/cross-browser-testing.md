@@ -2,14 +2,10 @@
 title: Cross Browser Testing
 ---
 
-Cypress has the capability to run tests across multiple browsers. Currently, Cypress has support for {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron) and beta support for Firefox browsers.
+Cypress has the capability to run tests across multiple browsers. Currently, Cypress has support for {% url "Chrome-family browsers" launching-browsers#Chrome-Browsers %} (including Electron and Chromium-based Microsoft Edge), and Firefox.
 
 {% note warning 'Web Security' %}
 Tests that require the {% url "`chromeWebSecurity` configuration option to be disabled" web-security#Disabling-Web-Security %} may experience issues in non-Chromium based browsers.
-{% endnote %}
-
-{% note warning 'Firefox Garbage Collection' %}
-Cypress triggers Firefox's internal garbage collection (GC) to better manage the browser's memory consumption. {% url "Learn more here" configuration#firefoxGcInterval %}.
 {% endnote %}
 
 Excluding {% url "Electron" launching-browsers#Electron-Browser %}, any browser you want to run Cypress tests in needs to be installed on your local system or CI environment. A full list of detected browsers is displayed within the browser selection menu of the {% url "Test Runner" test-runner %}.
@@ -182,57 +178,33 @@ workflows:
 
 ## Running Specific Tests by Browser
 
-There may be instances where it can be useful to run or ignore one or more tests. For example, test run duration can be reduced by only running smoke-tests against Chrome and not Firefox. This type of granular selection of test execution depends on the type of tests and the level of confidence those specific tests provide to the overall project.
+There may be instances where it can be useful to run or ignore one or more tests when in specific browsers. For example, test run duration can be reduced by only running smoke-tests against Chrome and not Firefox. This type of granular selection of test execution depends on the type of tests and the level of confidence those specific tests provide to the overall project.
 
 {% note success 'Tip' %}
 When considering to ignore or only run a particular test within a given browser, assess the true need for the test to run on multiple browsers.
 {% endnote %}
 
-In the example below we've implemented two helper functions that utilize {% url "`Cypress.isBrowser()`" isbrowser %}, accepting a browser string (e.g. 'chrome', 'firefox') and a callback function of tests:
-
-- `runOn` can be used to *only* run a test or suite of tests for a given browser.
-- `ignoreOn` can be used to completely ignore the execution of a test or test suite for a given browser.
+You can specify a browser to run or exclude by passing a matcher to the suite or test within the {% url "test configuration" configuration#Test-Configuration %}. The `browser` option accepts the same arguments as {% url "`Cypress.isBrowser()`" isbrowser#Arguments %}.
 
 ```js
-const runOn = (browser, fn) => {
-  if (Cypress.isBrowser(browser)) {
-    fn()
-  }
-}
-
-const ignoreOn = (browser, fn) => {
-  if (!Cypress.isBrowser(browser)) {
-    fn()
-  }
-}
-
-// Run happy path tests if Cypress is run via Firefox
-runOn('firefox', () => {
-  describe('happy path suite', () => {
-    it('...')
-    it('...')
-    it('...')
-  })
+// Run the test if Cypress is run via Firefox
+it('Download extension in Firefox', { browser: 'firefox' }, () => {
+  cy.get('#dl-extension')
+    .should('contain', 'Download Firefox Extension')
 })
 
-// Ignore test if Cypress is running via Firefox
+// Run happy path tests if Cypress is run via Firefox
+describe('happy path suite', { browser: 'firefox' }, () => {
+  it('...')
+  it('...')
+  it('...')
+})
+
+// Ignore test if Cypress is running via Chrome
 // This test is not recorded to the Cypress Dashboard
-ignoreOn('firefox', () => {
-  it('a test', () => {
-    // ... test body
-  })
-}
-```
-
-It is important to note that *ignoring* tests is different from *skipping* tests. When a test is skipped, it is still displayed within test result reports, but when a test is ignored it will never be displayed within reports. If you need to skip a test by browser, but still include it in a custom report or record it to the Cypress Dashboard, you can utilize the following practice:
-
-```js
-// Skip the test, but still record it to the Cypress Dashboard
-it('a test', function() {
-  if (!Cypress.isBrowser('firefox')) {
-    this.skip()
-  }
-  // ... test body
+it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
+  cy.get('.browser-warning')
+    .should('contain', 'For optimal viewing, use Chrome browser')
 })
 ```
 
@@ -242,3 +214,4 @@ it('a test', function() {
 - {% url "`Cypress.browser`" browser %}
 - {% url "`Cypress.isBrowser`" isbrowser %}
 - {% url "Launching Browsers" launching-browsers %}
+- {% url "Test Configuration" configuration#Test-Configuration %}

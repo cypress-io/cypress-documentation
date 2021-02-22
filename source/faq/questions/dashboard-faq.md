@@ -8,7 +8,7 @@ containerClass: faq
 
 {% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration %}. The Dashboard provides you insight into what happened during your tests run.
+The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration-introduction %}. The Dashboard provides you insight into what happened during your tests run.
 
 You can read more {% url 'here' dashboard-introduction%}.
 
@@ -45,7 +45,7 @@ A {% url 'user' users %} is anyone with a login to our Dashboard Service that ha
 
 ## {% fa fa-angle-right %} How is this different than CI?
 
-Cypress is **complementary** to your {% url "CI provider" continuous-integration %}, and plays a completely different role.
+Cypress is **complementary** to your {% url "CI provider" continuous-integration-introduction %}, and plays a completely different role.
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
@@ -96,7 +96,7 @@ Thus, to better load balance the specs, you would want more spec files with appr
 
 ## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
-Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration#Examples %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
+Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration-introduction#Examples %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
@@ -122,18 +122,16 @@ However, it will make your Dashboard subject to the limitations of your new plan
 
 ## {% fa fa-angle-right %} What happens once I reach the test recording limit?
 
-On the free Seed plan (500 recordings), tests running with the `--record` flag will fail and exit when the test recording limit is reached. You can upgrade to a paid plan, wait until your usage resets at the next month, or remove the `--record` flag to continue running your tests.
-
-On a paid plan, tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded.
+Tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded or a new usage cycle begins. The usage cycle resets each month.
 
 In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
 
 1. Logging into the {% url "Dashboard" https://dashboard.cypress.io %}
 2. Select your organization
-3. Navigate to the Billing and Usage tab
-4. Review your organization’s usage
-5. Scroll down and select *Upgrade* under your plan of choice
+3. Navigate to the **Billing and Usage** tab
+4. Review your organization's usage
+5. Scroll down and select **Upgrade** under your plan of choice
 
-## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to whitelist on my VPN for the Dashboard to work properly?
+## {% fa fa-angle-right %} I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for the Dashboard to work properly?
 
-{% partial vpn_whitelist_list %}
+{% partial vpn_allowed_list %}

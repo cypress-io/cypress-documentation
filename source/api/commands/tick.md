@@ -71,6 +71,30 @@ cy.get('#header').should('have.text', 'Hello, World')
 {% url "Check out our example recipe testing spying, stubbing and time" recipes#Stubbing-and-spying %}
 {% endnote %}
 
+## Restore clock
+
+You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
+// more test code here
+
+// restore the clock
+cy.clock().then((clock) => {
+  clock.restore()
+})
+// more test code here
+```
+
+You could also restore by using {% url "`.invoke()`" invoke %}  to invoke the `restore` function.
+
+```js
+cy.clock().invoke('restore')
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}

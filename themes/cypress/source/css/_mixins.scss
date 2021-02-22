@@ -1,0 +1,16 @@
+// Responsive
+@mixin breakpoint($size) {
+  @media screen and (min-width: $size) {
+    @content;
+  }
+}
+
+// Typography
+@mixin article-title() {
+  font-family: $font-title;
+  font-weight: bold;
+  text-decoration: none;
+  color: $color-default;
+  line-height: 1.7em;
+  color: #282C34;
+}

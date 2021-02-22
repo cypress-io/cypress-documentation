@@ -195,8 +195,12 @@ To handle code coverage collected during each test, we created a {% url "`@cypre
 
 ## Install the plugin
 
+{% note info %}
+Please consult the {% url "`@cypress/code-coverage`" https://github.com/cypress-io/code-coverage %} documentation for up-to-date installation instructions.
+{% endnote %}
+
 ```shell
-npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
+npm install -D @cypress/code-coverage
 ```
 
 Then add the code below to your {% url "`supportFile`" configuration#Folders-Files %} and {% url "`pluginsFile`" configuration#Folders-Files %}.
@@ -210,7 +214,10 @@ import '@cypress/code-coverage/support'
 // cypress/plugins/index.js
 module.exports = (on, config) => {
   require('@cypress/code-coverage/task')(on, config)
+  // include any other plugin code...
 
+  // It's IMPORTANT to return the config object
+  // with any changed environment variables
   return config
 }
 ```
@@ -290,6 +297,14 @@ The produced HTML report shows 99% code coverage
 Every source file but 1 is covered at 100%. We can have great confidence in our application, and safely refactor the code knowing that we have a robust set of end-to-end tests.
 
 If possible, we advise implementing {% url 'visual testing' visual-testing %} in addition to Cypress functional tests to avoid CSS and visual regressions.
+
+# Combining code coverage from parallel tests
+
+If you execute Cypress tests in {% url parallel parallelization %}, each machine ends up with a code coverage report that only shows a portion of the code exercised. Typically an external code coverage service would merge such partial reports for you. If you do want to merge the reports yourself:
+- on every machine running Cypress tests, copy the produced code coverage report into a common folder under a unique name to avoid overwriting it
+- after all E2E tests finish, combine the reports yourself using `nyc merge` command
+
+You can find an example of merging partial reports in our {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %}
 
 # E2E and unit code coverage
 
@@ -371,7 +386,7 @@ Are our end-to-end tests that are so effective at covering the web application c
 **Long story short: yes.** You can collect the code coverage from the back end, and let the `@cypress/code-coverage` plugin merge it with the front end coverage, creating a single full stack report.
 
 {% note info %}
-The full source code for this section can be found in the {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} repository.
+The full source code for this section can be found in the {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %} repository.
 {% endnote %}
 
 You can run your Node server and instrument it using nyc on the fly. Instead of the "normal" server start command, you can run the command `npm run start:coverage` defined in the `package.json` like this:
@@ -434,11 +449,13 @@ In order for the `@cypress/code-coverage` plugin to know that it should request 
 }
 ```
 
-From now on, the front end code coverage collected during end-to-end tests will be merged with the code coverage from the instrumented back end code and saved in a single report. Here is an example report from the {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} example:
+From now on, the front end code coverage collected during end-to-end tests will be merged with the code coverage from the instrumented back end code and saved in a single report. Here is an example report from the {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %} example:
 
 {% imgTag /img/guides/code-coverage/full-coverage.png "Combined code coverage report from front and back end code" %}
 
-You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-realworld' https://coveralls.io/github/cypress-io/cypress-example-realworld %} dashboard.
+You can explore the above combined full stack coverage report at the {% url 'coveralls.io/github/cypress-io/cypress-example-conduit-app' https://coveralls.io/github/cypress-io/cypress-example-conduit-app %} dashboard. You can also find full stack code coverage in our {% url 'RealWorld App' https://github.com/cypress-io/cypress-realworld-app %}.
+
+Even if you only want to measure the back end code coverage Cypress can help. Read the blog post {% url 'Back end Code Coverage from Cypress API tests' https://glebbahmutov.com/blog/backend-coverage/ %} for the full tutorial.
 
 # Future work
 
@@ -446,12 +463,45 @@ We are currently exploring two additional features for code coverage during end-
 
 Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional {% url "API tests" https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/ %} that Cypress can perform can effectively cover a lot of back end code.
 
+# Videos
+
+There is a series of videos we have recorded showing code coverage in Cypress
+
+### How to instrument react-scripts web application for code coverage
+<!-- textlint-disable terminology -->
+{% video youtube edgeQZ8UpD0 %}
+
+### Get code coverage reports from Cypress tests
+
+{% video youtube y8StkffYra0 %}
+
+### Excluding code from code coverage reports
+
+{% video youtube DlceMpRpbAw %}
+
+### Check code coverage robustly using 3rd party tool
+
+{% video youtube dwU5gUG2 %}
+
+### Adding code coverage badge to your project
+
+{% video youtube bNVRxb-MKGo %}
+
+### Show code coverage in commit status check
+
+{% video youtube AAl4HmJ3YuM %}
+
+### Checking code coverage on pull request
+
+{% video youtube 9Eq_gIshK0o %}
+<!-- textlint-enable -->
+
 # Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
-
+- {% url 'cypress-io/cypress-realworld-app' https://github.com/cypress-io/cypress-realworld-app %} or RWA is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**. The RWA achieves full code coverage with end-to-end tests {% url "across multiple browsers" cross-browser-testing %} and {% url "device sizes" viewport %}.
 - {% url 'cypress-io/cypress-example-todomvc-redux' https://github.com/cypress-io/cypress-example-todomvc-redux %} is the example code used in this guide.
-- {% url 'cypress-io/cypress-example-realworld' https://github.com/cypress-io/cypress-example-realworld %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
+- {% url 'cypress-io/cypress-example-conduit-app' https://github.com/cypress-io/cypress-example-conduit-app %} shows how to collect the coverage information from both back and front end code and merge it into a single report.
 - {% url 'bahmutov/code-coverage-webpack-dev-server' https://github.com/bahmutov/code-coverage-webpack-dev-server %} shows how to collect code coverage from an application that uses webpack-dev-server.
 - {% url 'bahmutov/code-coverage-vue-example' https://github.com/bahmutov/code-coverage-vue-example %} collects code coverage for Vue.js single file components.
 - {% url 'lluia/cypress-typescript-coverage-example' https://github.com/lluia/cypress-typescript-coverage-example %} shows coverage for a React App that uses TypeScript.

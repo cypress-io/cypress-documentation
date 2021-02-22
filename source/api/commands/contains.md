@@ -55,6 +55,7 @@ Option | Default | Description
 `matchCase` | `true` | Check case sensitivity
 `log` | `true` | {% usage_options log %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .contains %}
+`includeShadowDom` | {% url '`includeShadowDom`<br /> config option value' configuration#Global %} | {% usage_options includeShadowDom %}
 
 ## Yields {% helper_icon yields %}
 
@@ -271,6 +272,19 @@ cy.get('pre').contains('Hello, World !') // fail
 cy.get('pre').contains('                 Hello,           World      !') // pass
 ```
 
+## Non-breaking space
+
+You can use a space character in `cy.contains()` to match text in the HTML that uses a non-breaking space entity `&nbsp;`.
+
+```html
+<span>Hello&nbsp;world</span>
+```
+
+```javascript
+// finds the span element
+cy.contains('Hello world')
+```
+
 ## Single Element
 
 ### Only the *first* matched element will be returned
@@ -406,6 +420,7 @@ When clicking on the `contains` command within the command log, the console outp
 {% imgTag /img/api/contains/see-elements-found-from-contains-in-console.png "console.log contains" %}
 
 {% history %}
+{% url "5.2.0" changelog#5-2-0 %} | Added `includeShadowDom` option.
 {% url "4.0.0" changelog#4-0-0 %} | Added support for option `matchCase`.
 {% endhistory %}
 

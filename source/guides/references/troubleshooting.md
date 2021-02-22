@@ -46,7 +46,7 @@ npm install cypress --save-dev
 Cypress attempts to {% url 'automatically find installed Chrome versions for you' launching-browsers %}. However, probing for browsers across different environments can be error-prone. If Cypress cannot find a browser but you know you have it installed, there are ways to ensure that Cypress can "see" it.
 
 {% note info Using the `--browser` command line argument %}
-You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path % } %}
+You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. {% url "See 'Launching Browsers' for more information" launching-browsers#Launching-by-a-path %}
 {% endnote %}
 
 You can see the full list of found browsers and their properties within the {% url "resolved configuration" configuration#Resolved-Configuration %} in the **Settings** tab of the Test Runner.
@@ -101,17 +101,24 @@ To make a browser installed at a different path be auto-detected, create a symbo
 
 {% url 'Read more about creating symbolic links on Windows' https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ %}
 
-# Chrome extension whitelisting
+Occasionally Cypress will have issues detecting the type of browser in Windows environments. To manually
+detect the browser type, append the browser type to the end of the path:
 
-Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company whitelist specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to whitelist the Cypress extension ID below:
+```shell
+cypress open --browser C:/User/Application/browser.exe:chrome
+```
+
+# Allow the Cypress Chrome extension
+
+Cypress utilizes a Chrome extension within the Test Runner in order to run properly. If you or your company block specific Chrome extensions, this may cause problems with running Cypress. You will want to ask your administrator to allow the Cypress extension ID below:
 
 ```sh
 caljajdfkjjjdehjdoimjkkakekklcck
 ```
 
-# URL whitelisting on VPNs
+# Allow Cypress URLs on VPNs
 
-{% partial vpn_whitelist_list %}
+{% partial vpn_allowed_list %}
 
 # Clear App Data
 
@@ -148,10 +155,14 @@ DEBUG=cypress:* cypress run
 
 **On Windows:**
 
+On Windows, you'll need to run the command in a command prompt terminal (not Powershell).
+
 ```shell
 set DEBUG=cypress:*
 cypress run
 ```
+
+If you have issues with the logs not printing, it may be a permissions issue with setting the environment variable in your terminal. You may need to run your terminal in administrative mode or review your permission settings.
 
 Read more {% url 'about the CLI options here' command-line#Debugging-commands %} and {% url "Good Logging" https://glebbahmutov.com/blog/good-logging/ %} blog post.
 
@@ -170,6 +181,43 @@ DEBUG=cypress:server:config ...
 
 This allows you to isolate the problem a little better
 
+## Log sources
+
+Cypress is built from multiple packages, each responsible for its own logging: server, reporter, driver, command line, etc. Each package writes debug logs under a different source. Here are a few common log sources and when you might want to enable them
+
+Set `DEBUG` to value | To enable debugging
+---|---
+`cypress:cli` | The top-level command line parsing problems
+`cypress:server:args` | Incorrect parsed command line arguments
+`cypress:server:specs` | Not finding the expected specs
+`cypress:server:project` | Opening the project
+`cypress:server:browsers` | Finding installed browsers
+`cypress:launcher` | Launching the found browser
+`cypress:server:video` | Video recording
+`cypress:network:*` | Adding network interceptors
+`cypress:net-stubbing*` | Network interception in the proxy layer
+`cypress:server:reporter` | Problems with test reporters
+`cypress:server:preprocessor` | Processing specs
+`cypress:server:plugins` | Running the plugin file and bundling specs
+`cypress:server:socket-e2e` | Watching spec files
+`cypress:server:task` | Invoking the `cy.task` command
+`cypress:webpack` | Bundling specs using webpack
+`cypress:server:fixture` | Loading fixture files
+
+You can combine several areas together using the comma character. For example, to debug specs not being found, use:
+
+```shell
+# see how CLI arguments were parsed
+# and how Cypress tried to locate spec files
+DEBUG=cypress:cli,cypress:server:specs npx cypress run --spec ...
+```
+
+You can also exclude a log source using `-` character. For example, to see all `cypress:server*` messages without noisy browser messages use:
+
+```shell
+DEBUG=cypress:server*,-cypress:server:browsers* npx cypress run
+```
+
 ## Debug logs in the browser
 
 If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's Developer Tools and set a `localStorage` property:
@@ -181,7 +229,7 @@ localStorage.debug = 'cypress*'
 delete localStorage.debug
 ```
 
-Reload the browser and see debug messages within the Developer Tools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
+Reload the browser and turn on 'Verbose' logs to see debug messages within the Developer Tools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
 
 {% imgTag /img/api/debug/debug-driver.jpg "Debug logs in browser" %}
 
@@ -209,6 +257,16 @@ In the resulting output, processes are grouped by their name.
 By default, process information is collected and summarized is printed once every 10 seconds. You can override this interval by setting the `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval in milliseconds.
 
 You can also obtain more detailed per-process information by enabling the verbose `cypress-verbose:server:util:process_profiler` debug stream.
+
+# Disable the Command Log
+
+In some cases the {% url "Command Log" test-runner#Command-Log %}, responsible for displaying test commands, assertions, and statuses in the Test Runner, may cause performance issues resulting in slower tests or the browser crashing.
+
+In order to isolate these issues, you can hide the Command Log by passing the environment variable below during `cypress open` or `cypress run`.
+
+```shell
+CYPRESS_NO_COMMAND_LOG=1 cypress run
+```
 
 # Additional information
 
@@ -251,7 +309,7 @@ Second, try a smoke test that verifies that the application has all its required
 101
 ```
 
-If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://electronjs.org/docs/api/environment-variables %}:
+If there is a missing dependency, the application should print an error message. You can see the Electron verbose log messages by setting an {% url "environment variable ELECTRON_ENABLE_LOGGING" https://www.electronjs.org/docs/api/command-line-switches %}:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101

@@ -14,7 +14,7 @@ title: Stubs, Spies, and Clocks
 
 # Capabilities
 
-Cypress comes built in with the ability to stub and spy with {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your application's time with {% url `cy.clock()` clock %} - which lets you manipulate `Date`, `setTimeout`, `setInterval`, amongst others.
+Cypress comes built in with the ability to stub and spy with {% url `cy.stub()` stub %}, {% url `cy.spy()` spy %} or modify your application's time with {% url `cy.clock()` clock %} - which lets you manipulate `Date`, `setTimeout`, `clearTimeout`, `setInterval`, or `clearInterval`.
 
 These commands are useful when writing both **unit tests** and **integration tests**.
 
@@ -104,6 +104,8 @@ With {% url "`cy.clock()`" clock %} you can control:
 
 ### Common Scenarios
 
+#### Control `setInterval`
+
 - You're polling something in your application with `setInterval` and want to control that.
 - You have **throttled** or **debounced** functions which you want to control.
 
@@ -112,11 +114,35 @@ Once you've enabled {% url `cy.clock()` clock %} you can control time by **ticki
 ```javascript
 cy.clock()
 cy.visit('http://localhost:3333')
-cy.get('#search').type('foobarbaz')
+cy.get('#search').type('Acme Company')
 cy.tick(1000)
 ```
 
 You can call {% url `cy.clock()` clock %} **prior** to visiting your application and we will automatically bind it to the application on the next {% url `cy.visit()` visit %}. We bind **before** any timers from your application can be invoked. This works identically to {% url `cy.server()` server %} and {% url `cy.route()` route %}.
+
+#### Restore the clock
+
+You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+
+```javascript
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
+// more test code here
+
+// restore the clock
+cy.clock().then((clock) => {
+  clock.restore()
+})
+// more test code here
+```
+
+You could also restore by using {% url "`.invoke()`" invoke %} to invoke the `restore` function.
+
+```js
+cy.clock().invoke('restore')
+```
 
 ## Assertions
 
@@ -192,7 +218,7 @@ We also integrated all of these APIs directly into the Command Log, so you can v
 - A `spy` is called
 - A `clock` is ticked
 
-When you use aliasing with the {% url `.as()` as %} command, we also correlate those aliases with the calls. This works identically to aliasing a {% url `cy.route()` route %}.
+When you use aliasing with the {% url `.as()` as %} command, we also correlate those aliases with the calls. This works identically to aliasing {% url `cy.intercept()` intercept %}.
 
 When stubs are created by calling the method `.withArgs(...)` we also visually link these together.
 

@@ -58,10 +58,17 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 
 Option | Default | Description
 --- | --- | ---
-`log` | `true` | {% usage_options log %}
+`altKey` | `false` | {% usage_options altKey %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
+`ctrlKey` | `false` | {% usage_options ctrlKey %}
 `force` | `false` | {% usage_options force rightclick %}
+`log` | `true` | {% usage_options log %}
+`metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `false` | {% usage_options multiple rightclick %}
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
+`shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .rightclick %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -127,27 +134,30 @@ By default, Cypress will error if you're trying to right click multiple elements
 cy.get('.open-menu').rightclick({ multiple: true })
 ```
 
-## Right click with key combinations
+### Right click with key combinations
 
-The `.rightclick()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while right clicking, such as `ALT + rightclick`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.rightclick()` command may also be fired with key modifiers in order to simulate holding key combinations while right clicking, such as `ALT + rightclick`.
 
-The following modifiers can be combined with `.rightclick()`.
+{% note info %}
+You can also use key combinations during {% url "`.type()`" type %}. This offers options to hold down keys across multiple commands. See {% url "Key Combinations" type#Key-Combinations %} for more information.
+{% endnote %}
 
-Sequence | Notes
+The following key can be combined with `.rightclick()` through the `options`..
+
+Option | Notes
 --- | ---
-`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
-`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
-`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
-`{shift}` | Activates the `shiftKey` modifier.
+`altKey` | {% usage_options altKey %}
+`ctrlKey` | {% usage_options ctrlKey %}
+`metaKey` | {% usage_options metaKey %}
+`shiftKey` | {% usage_options shiftKey %}
 
-### Command right click
+#### Command right click
 
 ```js
 // execute a CMD + right click on the .menu-item
-// { release: false } is necessary so that
-// CMD will not be released after the type command
-cy.get('body').type('{cmd}', { release: false })
-cy.get('.menu-item').rightclick()
+cy.get('.menu-item').rightclick({
+  metaKey: true
+})
 ```
 
 # Notes
@@ -189,6 +199,7 @@ When clicking on `rightclick` within the command log, the console outputs the fo
 {% imgTag /img/api/rightclick/rightclick-console-log-with-mouse-events.png "console.log for right click" %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "3.5.0" changelog#3-5-0 %} | `.rightclick()` command added
 {% endhistory %}
 

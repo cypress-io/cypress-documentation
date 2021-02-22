@@ -34,16 +34,48 @@ Check out our {% url 'Configuration API docs' configuration-api %} which describ
 
 ## Preprocessors
 
-The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using `babel` and then uses `browserify` to package it for the browser.
+The event `file:preprocessor` is used to customize how your test code is transpiled and sent to the browser. By default, Cypress handles ES2015+, TypeScript, and CoffeeScript, using webpack to package it for the browser.
 
 You can use the `file:preprocessor` event to do things like:
 
 - Add the latest ES* support.
 - Write your test code in ClojureScript.
-- Customize the `babel` settings to add your own plugins.
-- Swap out `browserify` for `webpack` or anything else.
+- Customize the Babel settings to add your own plugins.
+- Customize the options for compiling TypeScript.
+- Swap out webpack for Browserify or anything else.
 
 Check out our {% url 'File Preprocessor API docs' preprocessors-api %} which describe how to use this event.
+
+## Run Lifecycle
+
+The events {% url `before:run` before-run-api %} and {% url `after:run` after-run-api %} occur before and after a run, respectively.
+
+You can use {% url `before:run` before-run-api %} to do things like:
+
+- Set up reporting on a run
+- Start a timer for the run to time how long it takes
+
+You can use {% url `after:run` after-run-api %} to do things like:
+
+- Finish up reporting on a run set up in `before:run`
+- Stop the timer for the run set up in `before:run`
+
+## Spec Lifecycle
+
+The events {% url `before:spec` before-spec-api %} and {% url `after:spec` after-spec-api %} run before and after a single spec is run, respectively.
+
+You can use {% url `before:spec` before-spec-api %} to do things like:
+
+- Set up reporting on a spec running
+- Start a timer for the spec to time how long it takes
+
+You can use {% url `after:spec` after-spec-api %} to do things like:
+
+- Finish up reporting set up in `before:spec`
+- Stop the timer for the spec set up in `before:spec`
+- Delete the video recorded for the spec. This prevents it from taking time and computing resources for compressing and uploading the video. You can do this conditionally based on the results of the spec, such as if it passes (so videos for failing tests are preserved for debugging purposes).
+
+Check out the {% url 'Before Spec API doc' before-spec-api %} and {% url 'After Spec API doc' after-spec-api %} which describe how to use these events.
 
 ## Browser Launching
 
@@ -80,11 +112,41 @@ You can use the `task` event to do things like:
 - Performing parallel tasks (like making multiple http requests outside of Cypress)
 - Running an external process (like spinning up a Webdriver instance of another browser like Safari or puppeteer)
 
+#### {% fa fa-graduation-cap %} Real World Example
+
+The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses {% url tasks task %} to re-seed its database, and to filter/find test data for various testing scenarios.
+
+```ts
+// cypress/plugins/index.ts
+
+  on("task", {
+    async "db:seed"() {
+      // seed database with test data
+      const { data } = await axios.post(`${testDataApiEndpoint}/seed`);
+      return data;
+    },
+
+    // fetch test data from a database (MySQL, PostgreSQL, etc...)
+    "filter:database"(queryPayload) {
+      return queryDatabase(queryPayload, (data, attrs) => _.filter(data.results, attrs));
+    },
+    "find:database"(queryPayload) {
+      return queryDatabase(queryPayload, (data, attrs) => _.find(data.results, attrs));
+    },
+  });
+  // ..
+};
+```
+
+> *{% fa fa-github %} Source: {% url "cypress/plugins/index.ts" https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts %}*
+
+Check out the {% url "Real World App test suites" https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui %} to see these tasks in action.
+
 # List of plugins
 
-Cypress maintains an official list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
+Cypress maintains a curated list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
 
-{% url 'Our official list of Cypress plugins.' plugins %}
+{% url 'Our curated list of Cypress plugins.' plugins %}
 
 # Installing plugins
 

@@ -24,7 +24,7 @@ Event | Details
 --- | ---
 **Name:** | `uncaught:exception`
 **Yields:** | the error **(Object)**, Mocha runnable **(Object)**
-**Description:** | Fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you.
+**Description:** | Fires when an uncaught exception occurs in your application. Cypress will fail the test when this fires. Return `false` from this event and Cypress will not fail the test. Also useful for debugging purposes because the actual `error` instance is provided to you. See our recipe {% url 'Handling errors' recipes#Fundamentals %}.
 
 Event | Details
 --- | ---
@@ -60,7 +60,7 @@ Event | Details
 --- | ---
 **Name:** | `window:unload`
 **Yields:** | the actual unload event **(Object)**
-**Description:** | Fires when your application is has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
+**Description:** | Fires when your application has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable.
 
 Event | Details
 --- | ---
@@ -76,7 +76,7 @@ Event | Details
 --- | ---
 **Name:** | `fail`
 **Yields:** | the error **(Object)**, Mocha runnable **(Object)**
-**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes.
+**Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes. See our recipe {% url 'Handling errors' recipes#Fundamentals %}.
 
 Event | Details
 --- | ---
@@ -228,6 +228,8 @@ it('calls the "fail" callback when this test fails', () => {
   cy.get('element-that-does-not-exist')
 })
 ```
+
+Read {% url "Cypress Metaprogramming" https://glebbahmutov.com/blog/cy-metaprogramming/ %} for more examples.
 
 ## Page Navigation
 
@@ -427,6 +429,6 @@ If you'd like to see (the huge) stream of events that Cypress emits you can pop 
 localStorage.debug = 'cypress:*'
 ```
 
-After you refresh the page you'll see something that looks like this in your console:
+Reload the browser and turn on 'Verbose' logs to see debug messages within the Developer Tools console.
 
 {% imgTag /img/api/catalog-of-events/console-log-events-debug.png "console log events for debugging" %}

@@ -2,61 +2,34 @@
 title: Experiments
 ---
 
-# Configuration
-
-If you'd like to try out what we're working on, you can enable beta features for your project by setting configuration using the options below.
+If you'd like to try out what we're working on in the {% url "Test Runner" test-runner %}, you can enable beta features for your project by turning on the experimental features you'd like to try.
 
 {% note warning %}
-⚠️ The experimental features might change or ultimately be removed without making it into the core product. Our primary goal for experiments is to collect real-world feedback during the development.
+⚠️ The experimental features might change or ultimately be removed without making it into the core product. Our primary goal for experiments is to collect real-world feedback during their development.
 {% endnote %}
 
-When you open a Cypress project, clicking on the **Settings** tab and clicking into the **Experiments** panel will display the experimental features that are available and whether they are enabled for your project.
+# Configuration
+
+You can pass the {% url "configuration" configuration %} options below to enable or disable experiments. See our {% url "Configuration Guide" configuration %} on how to pass configuration to Cypress.
 
 Option | Default | Description
 ----- | ---- | ----
-`experimentalGetCookiesSameSite` | `false` | If `true`, Cypress will add `sameSite` values to the objects yielded from {% url "`cy.setCookie()`" setcookie %}, {% url "`cy.getCookie()`" getcookie %}, and {% url "`cy.getCookies()`" getcookies %}. This will become the default behavior in Cypress 5.0.
-`experimentalComponentTesting` | `false` | When set to `true`, Cypress allows you to execute component tests using framework-specific adaptors. By default  `cypress/component` is the path for component tests. You can change this setting by setting the `componentFolder` configuration option. For more details see the {% url "cypress-react-unit-test" https://github.com/bahmutov/cypress-react-unit-test %} and {% url "cypress-vue-unit-test" https://github.com/bahmutov/cypress-vue-unit-test %} repos.
-
-# Component Testing
-
-Component testing is a feature that is experimental. Here you'll find some guidance on how to do component testing.
-
-An example component test may look like the code below. This test would execute in the browser, similar to the full end-to-end test, except with no URL website being visited.
-
-```js
-import { mount } from 'cypress-react-unit-test'
-import Post from './Post.jsx'
-describe('Post skeletons', () => {
-  it('loads title after timeout', () => {
-    mount(<Post title={title} children={text} />)
-    // and then use regular Cypress commands
-    // at first, the title and the text are 💀
-    cy.get('h1 .react-loading-skeleton').should('have.length', 1)
-    cy.get('p .react-loading-skeleton').should('have.length', 5)
-  })
-})
-```
-
-{% imgTag /img/guides/references/component-test.gif "Example React component test" %}
-
-Feature | Other testing libraries * | Cypress component testing
---- | --- | ---
-Test runs in real browser | ❌ | ✅
-Mounts realistic components | ❌ | ✅
-Test speed | 🏎 | as fast as the app works in the browser
-Test can use additional plugins | maybe | use any {% url "Cypress plugin" plugins %}
-Test can interact with component | synthetic limited API | use any {% url "Cypress command" table-of-contents %}
-Test can be debugged | via terminal and Node debugger | use browser DevTools
-Built-in time traveling debugger | ❌ | Cypress time traveling debugger
-Re-run tests on file or test change | ✅ | ✅
-Test output on CI | terminal | terminal, screenshots, videos
-Tests can be run in parallel | ✅ | ✅ via {% url "parallelization" parallelization %}
-Spying and mocking | Jest mocks / 3rd party | Built-in via Sinon library
-Code coverage | ✅ / maybe | ✅
-
-\* Most common libraries: React Testing Library, Enzyme, Vue Testing Library, Vue Test Utils
+`experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See {% url "Component Testing" component-testing-introduction %} for more detail.
+`experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub. Note: `experimentalFetchPolyfill` has been deprecated in Cypress 6.0.0 and will be removed in a future release. Consider using {% url "`cy.intercept()`" intercept %} to intercept `fetch` requests instead.
+`experimentalRunEvents` | `false` | Allows listening to the {% url "`before:run`" before-run-api %}, {% url "`after:run`" after-run-api %}, {% url "`before:spec`" before-spec-api %}, and {% url "`after:spec`" after-spec-api %} events in the plugins file.
+`experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See {% issue 5273 %} for details.
+`experimentalStudio` | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. See {% url "Cypress Studio" cypress-studio %} for more details.
 
 {% history %}
+{% url "6.3.0" changelog#6-3-0 %} | Added support for `experimentalStudio`.
+{% url "6.0.0" changelog#6-0-0 %} | Removed `experimentalNetworkStubbing` and made it the default behavior when using {% url "`cy.intercept()`" intercept %}.
+{% url "6.0.0" changelog#6-0-0 %} | Deprecated `experimentalFetchPolyfill`.
+{% url "5.2.0" changelog#5-2-0 %} | Removed `experimentalShadowDomSupport` and made it the default behavior.
+{% url "5.1.0" changelog#5-1-0 %} | Added support for `experimentalNetworkStubbing`.
+{% url "5.0.0" changelog#5-0-0 %} | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
+{% url "4.9.0" changelog#4-9-0 %} | Added support for `experimentalFetchPolyfill`.
+{% url "4.8.0" changelog#4-8-0 %} | Added support for `experimentalShadowDomSupport`.
+{% url "4.6.0" changelog#4-6-0 %} | Added support for `experimentalSourceRewriting`.
 {% url "4.5.0" changelog#4-5-0 %} | Added support for `experimentalComponentTesting`.
 {% url "4.3.0" changelog#4-3-0 %} | Added support for `experimentalGetCookiesSameSite`.
 {% endhistory %}

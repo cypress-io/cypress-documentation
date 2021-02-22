@@ -11,7 +11,7 @@ GitHub Enterprise's On-premise platform is currently not supported. If you're in
 {% endnote %}
 
 {% note warning %}
-GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following {% url "these guidelines" continuous-integration#Git-information %}. If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
+GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following {% url "these guidelines" continuous-integration-introduction#Git-information %}. If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 {% endnote %}
 
 # Install the Cypress GitHub app
@@ -24,8 +24,8 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
   {% imgTag /img/dashboard/select-cypress-organization.png "Select an organization" width-600 %}
 3. Visit the selected organization's **Integrations** page via the side navigation.
-  {% imgTag /img/dashboard/github-integration/install-github-integration-with-cypress-from-org-settings.png "Install Cypress GitHub App from Integrations" %}
-4. Click the **Install the Cypress GitHub App** button.
+  {% imgTag /img/dashboard/navigate-to-organization-integrations.png "Install Cypress GitHub from Integrations" %}
+4. Click the **Install GitHub Integration** button.
 
 ## Install via project settings
 

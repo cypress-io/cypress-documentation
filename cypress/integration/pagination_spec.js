@@ -1,8 +1,9 @@
 import { skipOn } from '@cypress/skip-test'
+import { MAIN_NAV } from '../support/defaults'
 
 context('Pagination', () => {
-  it('does not display Prev link on first page', function () {
-    cy.wrap(this.MAIN_NAV).each(function (nav) {
+  MAIN_NAV.forEach((nav) => {
+    it(`does not display Prev link on first page of ${nav.name}`, function () {
       let path = `${nav.path}.html`
 
       if (nav.path === '/plugins/') {
@@ -14,8 +15,8 @@ context('Pagination', () => {
     })
   })
 
-  it('displays Next link', function () {
-    cy.wrap(this.MAIN_NAV).each(function (nav) {
+  MAIN_NAV.forEach((nav) => {
+    it(`displays Next link in ${nav.name}`, function () {
       if (nav.nextPage) {
         let path = `${nav.path}.html`
 
@@ -34,8 +35,8 @@ context('Pagination', () => {
 
   // Firefox seems to stumble sometimes on loading the second page in this test
   skipOn('firefox', () => {
-    it('clicking on Next and Prev link changes url', function () {
-      cy.wrap(this.MAIN_NAV).each(function (nav) {
+    MAIN_NAV.forEach((nav) => {
+      it(`clicking on Next and Prev link changes url in ${nav.name}`, function () {
         if (nav.nextPage && nav.firstPage) {
           let path = `${nav.path}.html`
 

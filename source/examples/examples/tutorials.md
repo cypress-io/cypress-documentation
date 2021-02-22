@@ -5,15 +5,25 @@ containerClass: examples
 
 # Best Practices
 
-In this tutorial, we'll focus on writing and organizing tests for a real application.
+This video by the creator of Cypress Brian Mann shows what we consider the best practices for writing tests for a realistic application.
 
-We'll demonstrate how to write your tests **in isolation** to prevent specs from being coupled together or having to share knowledge.
-
-First we'll test our "Login Page", refactor, and then create a {% url "Custom Command" custom-commands %}. From there we'll use {% url `cy.request()` request %} to programmatically log in. Finally, we'll discuss approaches for taking shortcuts by controlling your application's state directly.
+First we'll test our "Login Page", refactor, and then create a {% url "Custom Command" custom-commands %}. From there we'll use {% url `cy.request()` request %} to programmatically log in. Finally, we'll discuss approaches for taking shortcuts by controlling your application's state directly, and for writing your tests **in isolation** to prevent specs from being coupled together or having to share knowledge.
 
 | Tutorial | Length | Release date | Cypress version|
 | -- | -- | -- | -- |
 | {% url "Organizing Tests, Logging In, Controlling State" https://www.youtube.com/watch?v=5XQOK0v_YRE %} | {% fa fa-video-camera %} 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0 |
+
+# Video playlists
+
+Learn how to use Cypress to solve specific testing problems from the videos in the playlists below.
+
+- {% url "Official Cypress.io YouTube Channel" https://www.youtube.com/cypress_io %}
+- {% url "Cypress.io - end-to-end Testing Framework" https://www.youtube.com/playlist?list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0 %} by {% url "Bushra Alam" https://twitter.com/imBushraAlam %}
+- {% url "Cypress Tips & Tricks" https://www.youtube.com/playlist?list=PLP9o9QNnQuAYYRpJzDNWpeuOVTwxmIxcI %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
+- {% url "Cypress Component Testing for Svelte" https://www.youtube.com/playlist?list=PLP9o9QNnQuAa50lwW3cUql5sgdKIWkapp %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
+- {% url "Visually testing React component using open source tools" https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ %} by {% url "Gleb Bahmutov" https://twitter.com/bahmutov %}
+
+You can also find free Cypress video tutorials on the {% url "Courses" courses-media %} page.
 
 # Test a React Todo App
 

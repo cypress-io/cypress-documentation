@@ -20,7 +20,7 @@ When Cypress first loads, the internal Cypress web application is hosted on a ra
 After the first {% url `cy.visit()` visit %} command is issued in a test, Cypress changes its URL to match the origin of your remote application, thereby solving the first major hurdle of same-origin policy. Your application's code executes the same as it does outside of Cypress, and everything works as expected.
 
 {% note info How is HTTPS supported? %}
-Cypress does some pretty interesting things under the hood to make testing HTTPs sites work. Cypress enables you to control and stub at the network level. Therefore, Cypress must assign and manage browser certificates to be able to modify the traffic in real time.
+Cypress does some pretty interesting things under the hood to make testing HTTPS sites work. Cypress enables you to control and stub at the network level. Therefore, Cypress must assign and manage browser certificates to be able to modify the traffic in real time.
 
 You'll notice Chrome display a warning that the 'SSL certificate does not match'. This is normal and correct. Under the hood we act as our own CA authority and issue certificates dynamically in order to intercept requests otherwise impossible to access. We only do this for the superdomain currently under test, and bypass other traffic. That's why if you open a tab in Cypress to another host, the certificates match as expected.
 {% endnote %}

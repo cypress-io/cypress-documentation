@@ -14,33 +14,32 @@ We've created three preprocessors as examples for you to look at. These are full
 
 The code contains comments that explain how it utilizes the preprocessor API.
 
-* {% url 'Browserify Preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
-* {% url 'webpack Preprocessor' https://github.com/cypress-io/cypress-webpack-preprocessor %}
-* {% url 'Watch Preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
+* {% url 'webpack preprocessor' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor %}
+* {% url 'Browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
+* {% url 'Watch preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 
 # Defaults
 
-By default, Cypress comes packaged with the **Browserify Preprocessor** already installed.
+By default, Cypress comes packaged with the **webpack preprocessor** already installed.
 
-The Browserify Preprocessor handles:
+The webpack preprocessor handles:
 
+- ES2015 and JSX via Babel
+- TypeScript
 - CoffeeScript `1.x.x`
-- ES2015 via Babel
-- JSX and CJSX
 - Watching and caching files
 
-The exact default configuration options {% url 'can be found here' https://github.com/cypress-io/cypress-browserify-preprocessor#browserifyoptions %}.
-
 {% note info %}
-Are you looking to change the **default options** for Browserify?
+Are you looking to change the **default options** for webpack?
 {% endnote %}
 
-Changing the Browserify options lets you:
+If you already use webpack in your project, you can pass in your webpack config as {% url 'shown here' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor#options %}.
+
+If you don't use webpack in your project or would like to keep the majority of the default options, you can {% url 'modify the default options' https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor#modifying-default-options %}. Editing the options allows you to do things like:
 
 - Add your own Babel plugins
+- Modify options for TypeScript compilation
 - Add support for CoffeeScript `2.x.x`
-
-Please read this link in the {% url 'Browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor#modifying-default-options %} repo for instructions on modifying these.
 
 # Usage
 

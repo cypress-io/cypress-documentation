@@ -57,7 +57,7 @@ Each event documents its own argument signature. To understand how to use them, 
 
 This configuration contains all of the values that get passed into the browser for your project.
 
-{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee %}
+{% url 'For a comprehensive list of all configuration values look here.' https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.js %}
 
 Some plugins may utilize or require these values, so they can take certain actions based on the configuration.
 
@@ -68,6 +68,7 @@ The `config` object also includes the following extra values that are not part o
 
 * `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the {% url "`--config-file` flag" command-line#cypress-open-config-file-lt-config-file-gt %}.
 * `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+* `version`: The version number of Cypress. This can be used to handle breaking changes.
 {% endnote %}
 
 {% url "Please check out our API docs for modifying configuration here." configuration-api %}
@@ -78,10 +79,14 @@ The `config` object also includes the following extra values that are not part o
 
 Event | Description
 --- | ---
-{% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
-{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
-{% url `task` task %} | Occurs in conjunction with the `cy.task` command.
+{% url `after:run` after-run-api %} | Occurs after the run is finished.
 {% url `after:screenshot` after-screenshot-api %} | Occurs after a screenshot is taken.
+{% url `after:spec` after-spec-api %} | Occurs after a spec is finished running.
+{% url `before:browser:launch` browser-launch-api %} | Occurs immediately before launching a browser.
+{% url `before:run` before-run-api %} | Occurs before the run starts.
+{% url `before:spec` before-spec-api %} | Occurs when a spec is about to be run.
+{% url `file:preprocessor` preprocessors-api %} | Occurs when a spec or spec-related file needs to be transpiled for the browser.
+{% url `task` task %} | Occurs in conjunction with the `cy.task` command.
 
 # Execution context
 

@@ -51,9 +51,12 @@ Pass in an options object to change the default behavior of `.check()`.
 
 Option | Default | Description
 --- | --- | ---
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force check %}
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .check %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -85,16 +88,34 @@ cy.get('#saveUserName').check()
 
 ### Select the radio with the value of 'US'
 
+```html
+<form>
+  <input type="radio" id="ca-country" value="CA">
+  <label for="ca-country">Canada</label>
+  <input type="radio" id="us-country" value="US">
+  <label for="us-country">United States</label>
+</form>
+```
+
 ```javascript
 cy.get('[type="radio"]').check('US')
 ```
 
 ## Values
 
-### Check the checkboxes with the values 'ga' and 'ca'
+### Check the checkboxes with the values 'subscribe' and 'accept'
+
+```html
+<form>
+  <input type="checkbox" id="subscribe" value="subscribe">
+  <label for="subscribe">Subscribe to newsletter?</label>
+  <input type="checkbox" id="acceptTerms" value="accept">
+  <label for="acceptTerms">Accept terms and conditions.</label>
+</form>
+```
 
 ```javascript
-cy.get('[type="checkbox"]').check(['ga', 'ca'])
+cy.get('form input').check(['subscribe', 'accept'])
 ```
 
 ## Options

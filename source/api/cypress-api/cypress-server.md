@@ -3,6 +3,8 @@ title: Cypress.Server
 
 ---
 
+{% partial xhr_stubbing_deprecated %}
+
 Permanently change the default options for all {% url `cy.server()` server %} instances
 
 # Syntax
@@ -28,8 +30,8 @@ Pass in an options object to change the default behavior of `Cypress.Server`.
 Cypress.Server.defaults({
   delay: 500,
   force404: false,
-  whitelist: (xhr) => {
-    // handle custom logic for whitelisting
+  ignore: (xhr) => {
+    // handle custom logic for filtering XHR requests
   }
 })
 ```

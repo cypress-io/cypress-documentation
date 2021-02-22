@@ -54,10 +54,17 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 
 Option | Default | Description
 --- | --- | ---
+`altKey` | `false` | {% usage_options altKey %}
+`animationDistanceThreshold` | {% url `animationDistanceThreshold` configuration#Actionability %} | {% usage_options animationDistanceThreshold %}
+`ctrlKey` | `false` | {% usage_options ctrlKey %}
 `log` | `true` | {% usage_options log %}
 `force` | `false` | {% usage_options force dblclick %}
+`metaKey` | `false` | {% usage_options metaKey %}
 `multiple` | `true` | {% usage_options multiple dblclick %}
+`scrollBehavior` | {% url `scrollBehavior` configuration#Actionability %} | {% usage_options scrollBehavior %}
+`shiftKey` | `false` | {% usage_options shiftKey %}
 `timeout` | {% url `defaultCommandTimeout` configuration#Timeouts %} | {% usage_options timeout .dblclick %}
+`waitForAnimations` | {% url `waitForAnimations` configuration#Actionability %} | {% usage_options waitForAnimations %}
 
 ## Yields {% helper_icon yields %}
 
@@ -125,27 +132,30 @@ You can turn this off by passing `multiple: false` to `.dblclick()`.
 cy.get('button').dblclick({ multiple: false })
 ```
 
-## Double click with key combinations
+### Double click with key combinations
 
-The `.dblclick()` command may also be fired with key modifiers in combination with the {% url "`.type()`" type %} command in order to simulate character sequences while double clicking, such as `SHIFT + double click`. In order to keep the modifier key active, `{release: false}` should be passed to the options of the {% url "`.type()`" type %} command.
+The `.dblclick()` command may also be fired with key modifiers in order to simulate holding key combinations while double clicking, such as `SHIFT + double click`.
+
+{% note info %}
+You can also use key combinations during {% url "`.type()`" type %}. This offers options to hold down keys across multiple commands. See {% url "Key Combinations" type#Key-Combinations %} for more information.
+{% endnote %}
 
 The following modifiers can be combined with `.dblclick()`.
 
-Sequence | Notes
+Option | Notes
 --- | ---
-`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
-`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
-`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
-`{shift}` | Activates the `shiftKey` modifier.
+`altKey` | {% usage_options altKey %}
+`ctrlKey` | {% usage_options ctrlKey %}
+`metaKey` | {% usage_options metaKey %}
+`shiftKey` | {% usage_options shiftKey %}
 
-### Alt click
+#### Alt click
 
 ```js
-// execute a ALT + dblclick on the first <li>
-// { release: false } is necessary so that
-// ALT will not be released after the type command
-cy.get('body').type('{alt}', { release: false })
-cy.get('li:first').dblclick()
+// execute ALT + dblclick on the first <li>
+cy.get('li:first').dblclick({
+  altKey: true
+})
 ```
 
 # Notes
@@ -187,6 +197,7 @@ When clicking on `dblclick` within the command log, the console outputs the foll
 {% imgTag /img/api/dblclick/element-double-clicked-on.png "console.log dblclick" %}
 
 {% history %}
+{% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
 {% url "3.5.0" changelog#3-5-0 %} | Added support for options `force` and `multiple`.
 {% url "3.5.0" changelog#3-5-0 %} | Added support for `position`, `x`, and `y` arguments.
 {% url "3.5.0" changelog#3-5-0 %} | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`.

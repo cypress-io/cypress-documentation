@@ -47,9 +47,7 @@ Whenever Cypress cannot interact with an element, it could fail at any of the ab
 
 ## Visibility
 
-Cypress checks a lot of things to determine an element's visibility.
-
-The following calculations factor in CSS translations and transforms.
+Cypress checks a lot of things to determine an element's visibility. The following calculations factor in CSS translations and transforms.
 
 ### An element is considered hidden if:
 
@@ -57,9 +55,6 @@ The following calculations factor in CSS translations and transforms.
 - Its CSS property (or ancestors) is `visibility: hidden`.
 - Its CSS property (or ancestors) is `display: none`.
 - Its CSS property is `position: fixed` and it's offscreen or covered up.
-
-### Additionally an element is considered hidden if:
-
 - Any of its ancestors **hides overflow**\*
   - AND that ancestor has a `width` or `height` of `0`
   - AND an element between that ancestor and the element is `position: absolute`
@@ -70,7 +65,13 @@ The following calculations factor in CSS translations and transforms.
   - AND the element is `position: relative`
   - AND it is positioned outside that ancestor's bounds
 
-\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y : hidden`, `overflow: scroll`, or `overflow: auto`
+\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`, `overflow-y: hidden`, `overflow: scroll`, or `overflow: auto`
+
+{% note info "Opacity" %}
+Elements where the CSS property (or ancestors) is `opacity: 0` are considered hidden when {% url "asserting on the element's visibility directly" assertions#Visibility %}.
+
+However elements where the CSS property (or ancestors) is `opacity: 0` are considered actionable and any commands used to interact with the hidden element will perform the action.
+{% endnote %}
 
 ## Disability
 
@@ -92,11 +93,11 @@ Cypress will automatically determine if an element is animating and wait until i
 
 To calculate whether an element is animating we take a sample of the last positions it was at and calculate the element's slope. You might remember this from 8th grade algebra. 😉
 
-To calculate whether an element is animating we check the current and previous positions of the element itself. If the distance exceeds the {% url `animationDistanceThreshold` configuration#Animations %}, then we consider the element to be animating.
+To calculate whether an element is animating we check the current and previous positions of the element itself. If the distance exceeds the {% url `animationDistanceThreshold` configuration#Actionability %}, then we consider the element to be animating.
 
-When coming up with this value, we did a few experiments to find a speed that "feels" too fast for a user to interact with. You can always {% url "increase or decrease this threshold" configuration#Animations %}.
+When coming up with this value, we did a few experiments to find a speed that "feels" too fast for a user to interact with. You can always {% url "increase or decrease this threshold" configuration#Actionability %}.
 
-You can also turn off our checks for animations with the configuration option {% url `waitForAnimations` configuration#Animations %}.
+You can also turn off our checks for animations with the configuration option {% url `waitForAnimations` configuration#Actionability %}.
 
 ## Covering
 
@@ -129,11 +130,13 @@ Before interacting with an element, we will *always* scroll it into view (includ
 This scrolling logic only applies to {% urlHash "commands that are actionable above" Actionability %}. **We do not scroll elements** into view when using DOM commands such as {% url "`cy.get()`" get %} or {% url "`.find()`" find %}.
 {% endnote %}
 
-The scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of its scrollable container.
+By default, the scrolling algorithm works by scrolling the top, leftmost point of the element we issued the command on to the top, leftmost scrollable point of its scrollable container.
 
 After scrolling the element, if we determine that it is still being covered up, we will continue to scroll and "nudge" the page until it becomes visible. This most frequently happens when you have `position: fixed` or `position: sticky` navigation elements which are fixed to the top of the page.
 
 Our algorithm *should* always be able to scroll until the element is not covered.
+
+To change the position in the viewport to where we scroll an element, you can use the {% url `scrollBehavior` configuration#Actionability %} configuration option. This can be useful if the element is covered up when aligned to the top of the viewport, or if you just prefer the element to be centered during scrolling of action commands. Accepted values are `'center'`, `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling altogether.
 
 ## Coordinates
 
@@ -220,5 +223,5 @@ We will NOT perform these:
 In summary, `{ force: true }` skips the checks, and it will always fire the event at the desired element.
 
 {% note warning "force `.select()` disabled options" %}
-Passing `{ force: true }` to {% url "`.select()`" select %} will not override the actionability checks for selecting a disabled `<select>`, a disabled `<option>`, or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
+Passing `{ force: true }` to {% url "`.select()`" select %} will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See {% issue 107 "this issue" %} for more detail.
 {% endnote %}

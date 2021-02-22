@@ -12,6 +12,10 @@ title: Retry-ability
 
 A core feature of Cypress that assists with testing dynamic web applications is retry-ability. Like a good transmission in a car, it usually works without you noticing it. But understanding how it works will help you write faster tests with fewer run-time surprises.
 
+{% note info "Test Retries" %}
+If you are looking to retry tests a configured number of times when the test fails, check out our official guide on {% url "Test Retries" test-retries %}.
+{% endnote %}
+
 # Commands vs assertions
 
 There are two types of methods you can call in your Cypress tests: **commands** and **assertions**. For example, there are 6 commands and 2 assertions in the test below.
@@ -135,15 +139,19 @@ The `.click()` command will automatically wait until multiple built-in assertion
 
 # Timeouts
 
-By default each command that retries, does so for up to 4 seconds - the {% url `defaultCommandTimeout` configuration#Timeouts %} setting. You can change this timeout for _all commands_ using your configuration file, a CLI parameter, via an environment variable, or programmatically.
+By default each command that retries, does so for up to 4 seconds - the {% url `defaultCommandTimeout` configuration#Timeouts %} setting.
 
-For example, to set the default command timeout to 10 seconds via command line:
+## Increase time to retry
+
+You can change this timeout for _all commands_. See {% url 'Configuration: Overriding Options' configuration#Overriding-Options %} for examples of overriding this option.
+
+For example, to set the default command timeout to 10 seconds via the command line:
 
 ```shell
 cypress run --config defaultCommandTimeout=10000
 ```
 
-See {% url 'Configuration: Overriding Options' configuration#Overriding-Options %} for other examples of overriding this option. We do not recommend changing the command timeout globally. Instead, pass the inividual command's `{ timeout: ms }` option to retry for a different period of time. For example:
+ We do not recommend changing the command timeout globally. Instead, pass the individual command's `{ timeout: ms }` option to retry for a different period of time. For example:
 
 ```javascript
 // we've modified the timeout which affects default + added assertions
@@ -153,6 +161,16 @@ cy.get('.mobile-nav', { timeout: 10000 })
 ```
 
 Cypress will retry for up to 10 seconds to find a visible element of class `mobile-nav` with text containing "Home". For more examples, read the {% url 'Timeouts' introduction-to-cypress#Timeouts %} section in the "Introduction to Cypress" guide.
+
+## Disable retry
+
+Overriding the timeout to `0` will essentially disable retrying the command, since it will spend 0 milliseconds retrying.
+
+```javascript
+// check synchronously that the element does not exist (no retry)
+// for example just after a server-side render
+cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
+```
 
 # Only the last command is retried
 
@@ -358,8 +376,82 @@ The above test retries getting the element and invoking the text of the element 
 
 {% imgTag /img/guides/retry-ability/random-number-callback.gif "Random number using callback" %}
 
+## Use aliases
+
+When using {% url `cy.stub()` stub %} or {% url `cy.spy()` spy %} to test application's code, a good practice is to give it an alias and use the `cy.get('@alias').should('...')` assertion to retry.
+
+For example, when confirming that the button component invokes the `click` prop testing with the {% url "@cypress/react" https://github.com/cypress-io/cypress/tree/master/npm/react %} plugin, the following test might or might not work:
+
+### {% fa fa-warning red %} Incorrectly checking if the stub was called
+
+```js
+const Clicker = ({ click }) => (
+  <div>
+    <button onClick={click}>Click me</button>
+  </div>
+)
+
+it('calls the click prop twice', () => {
+  const onClick = cy.stub()
+  // "mount" function comes from
+  // https://github.com/cypress-io/cypress/tree/master/npm/react
+  mount(<Clicker click={onClick} />)
+  cy.get('button')
+    .click()
+    .click()
+    .then(() => {
+      // works in this case, but not recommended
+      // because .then() does not retry
+      expect(onClick).to.be.calledTwice
+    })
+})
+```
+
+The above example will fail if the component calls the `click` prop after a delay.
+
+```js
+const Clicker = ({ click }) => (
+  <div>
+    <button onClick={() => setTimeout(click, 500)}>Click me</button>
+  </div>
+)
+```
+
+{% imgTag /img/guides/retry-ability/delay-click.png "Expect fails the test without waiting for the delayed stub" width-600 %}
+
+The test finishes before the component calls the `click` prop twice, and without retrying the assertion `expect(onClick).to.be.calledTwice`.
+
+### {% fa fa-check-circle green %} Correctly waiting for the stub to be called
+
+We recommend aliasing the stub using the {% url `.as` as %} command and using `cy.get('@alias').should(...)` assertions.
+
+```js
+it('calls the click prop', () => {
+  const onClick = cy.stub().as('clicker')
+  // "mount" function comes from
+  // https://github.com/cypress-io/cypress/tree/master/npm/react
+  mount(<Clicker click={onClick} />)
+  cy.get('button')
+    .click()
+    .click()
+
+  // good practice 💡
+  // auto-retry the stub until it was called twice
+  cy.get('@clicker').should('have.been.calledTwice')
+})
+```
+
+{% imgTag /img/guides/retry-ability/click-twice.gif "Retrying the assertions using a stub alias" %}
+
+Watch the short video below to see this example in action
+
+<!-- textlint-disable -->
+{% video youtube AlltFcsIFvc %}
+<!-- textlint-enable -->
+
 # See also
 
 - You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
 - You can retry any function with attached assertions using this 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
 - See retry-ability examples in the {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.
+- To learn how to enable Cypress' test retries functionality, which retries tests that fail up to the configured number, check out our official guide on {% url "Test Retries" test-retries %}.

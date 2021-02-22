@@ -6,6 +6,8 @@ Because Cypress is built on top of Mocha, that means any reporter built for Moch
 
 * {% url "Mocha's built-in reporters" https://mochajs.org/#reporters %}
 
+By default, Cypress uses the `spec` reporter to output information to `STDOUT`.
+
 We've also added the two most common 3rd party reporters for Mocha. These are built into Cypress and you can use them without installing anything.
 
 * {% url "`teamcity`" https://github.com/cypress-io/mocha-teamcity-reporter %}
@@ -21,7 +23,7 @@ Once you've read through the documentation below, we invite you to experience th
 
 ## Installed locally
 
-Custom reporters can be loaded through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
+You can load {% url "custom Mocha reporters" https://mochajs.org/api/tutorial-custom-reporter.html %} through a relative or absolute path. These can be specified in your configuration file (`cypress.json` by default) or via the {% url "command line" command-line %}.
 
 For example, if you have the following directory structure:
 
@@ -134,9 +136,12 @@ The below examples were implemented in {% url https://github.com/cypress-io/cypr
 
 ### Spec to `STDOUT`, save JUnit XML files
 
-We want to output a "spec" report to `STDOUT`, while saving Mochawesome JSON reports and then combine them into a single report.
+We want to output a `spec` report to `STDOUT`, while saving a JUnit XML file for each spec file.
 
-We need to install additional dependencies.
+We need to install additional dependencies:  
+
+* {% url "`cypress-multi-reporters`" https://github.com/you54f/cypress-multi-reporters %}: enables multiple reporters
+* {% url "`mocha-junit-reporter`" https://github.com/michaelleeallen/mocha-junit-reporter %} the actual junit reporter, as we cannot use the `junit` reporter that comes with Cypress
 
 ```shell
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
@@ -215,7 +220,7 @@ We need to configure the reporter in your {% url "configuration file (`cypress.j
 
 ```shell
 cypress run --reporter mochawesome \
-  --reporter-options reportDir=reporter-config.json,overwrite=false,html=false,json=true
+  --reporter-options reportDir="cypress/results",overwrite=false,html=false,json=true
 ```
 
 Our run will generate files `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`. Then we can combine them using the {% url 'mochawesome-merge' https://github.com/antontelesh/mochawesome-merge %} utility.

@@ -93,6 +93,7 @@ Option | Description
 `--parallel` | {% urlHash "Run recorded specs in parallel across multiple machines" cypress-run-parallel %}
 `--port`,`-p`  | {% urlHash "Override default port" cypress-run-port-lt-port-gt %}
 `--project`, `-P` | {% urlHash "Path to a specific project" cypress-run-project-lt-project-path-gt %}
+`--quiet`, `-q` | If passed, Cypress output will not be printed to `stdout`. Only output from the configured {% url "Mocha reporter" reporters %} will print.
 `--record`  | {% urlHash "Whether to record the test run" cypress-run-record-key-lt-record-key-gt %}
 `--reporter`, `-r`  | {% urlHash "Specify a Mocha reporter" cypress-run-reporter-lt-reporter-gt %}
 `--reporter-options`, `-o`  | {% urlHash "Specify Mocha reporter options" cypress-run-reporter-lt-reporter-gt %}
@@ -136,6 +137,15 @@ Set {% url 'configuration' configuration %} values. Separate multiple values wit
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
+
+{% note info %}
+#### {% fa fa-graduation-cap %} Real World Example
+
+The Cypress {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses `--config` flag to easily specify {% url viewport configuration#Viewport %} sizes for responsive testing locally and in dedicated CI jobs. Examples:
+- {% fa fa-github %} {% url "npm scripts" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120 %} to run Cypress in mobile viewport.
+- {% fa fa-github %} {% url "Circle CI job configuration" https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100 %} for running test suites in mobile viewport.
+
+{% endnote %}
 
 ### `cypress run --config-file <config-file>`
 
@@ -263,7 +273,7 @@ cypress run --record --key <record_key>
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`, you can omit the `--key` flag.
 
-You'd typically set this environment variable when running in {% url 'Continuous Integration' continuous-integration %}.
+You'd typically set this environment variable when running in {% url 'Continuous Integration' continuous-integration-introduction %}.
 
 ```shell
 export CYPRESS_RECORD_KEY=abc-key-123
@@ -293,7 +303,7 @@ cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=t
 
 ### `cypress run --spec <spec>`
 
-Run tests specifying a single test file to run instead of all tests.
+Run tests specifying a single test file to run instead of all tests. The spec path should be an absolute path or can relative to the current working directory.
 
 ```shell
 cypress run --spec "cypress/integration/examples/actions.spec.js"
@@ -309,6 +319,27 @@ Run tests specifying multiple test files to run.
 
 ```shell
 cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
+```
+
+Use in combination with `--project` parameter. Imagine the Cypress tests are in a subfolder `tests/e2e` of the current project:
+
+```
+app/
+  node_modules/
+  package.json
+  tests/
+    unit/
+    e2e/
+      cypress/
+        integration/
+          spec.js
+      cypress.json
+```
+
+If we are in the `app` folder, we can run the specs using the following command
+
+```shell
+cypress run --project tests/e2e --spec ./tests/e2e/cypress/integration/spec.js
 ```
 
 ### `cypress run --tag <tag>`
@@ -328,6 +359,53 @@ cypress run --record --tag "production,nightly"
 The Dashboard will display any tags sent with the appropriate run.
 
 {% imgTag /img/dashboard/dashboard-run-with-tags.png "Cypress run in the Dashboard displaying flags" %}
+
+### Exit code
+
+When Cypress finishes running tests, it exits. If there are no failed tests, the exit code will be 0.
+
+```text
+# All tests pass
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✔  All specs passed!      00:16       17       17        0
+
+# print exit code on Mac or Linux
+$ echo $?
+0
+```
+
+If there are any test failures, then the exit code will match the number of tests that failed.
+
+```text
+# Spec with two failing tests
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✖  1 of 1 failed (100%)   00:22       17       14        2
+
+# print exit code on Mac or Linux
+$ echo $?
+2
+```
+
+If Cypress could not run for some reason (for example if no spec files were found) then the exit code will be 1.
+
+```text
+# No spec files found
+$ cypress run --spec not-found.js
+...
+Can't run because no spec files were found.
+
+We searched for any files matching this glob pattern:
+
+not-found.js
+
+# print exit code on Mac or Linux
+$ echo $?
+1
+```
 
 ## `cypress open`
 
@@ -365,7 +443,7 @@ cypress open --browser /usr/bin/chromium
 
 If found, the specified browser will be added to the list of available browsers in the Cypress Test Runner.
 
-Currently, only browsers in the Chrome family are supported (including the new Chromium-based Microsoft Edge and Brave).
+Currently, only browsers in the Chrome family (including the new Chromium-based Microsoft Edge and Brave) and Firefox are supported.
 
 {% url "Having trouble launching a browser? Check out our troubleshooting guide" troubleshooting#Launching-browsers %}
 
@@ -497,13 +575,29 @@ cypress verify
 
 ## `cypress version`
 
-Output both the versions of the installed Cypress binary application and the npm module.
-In most cases they will be the same, but they could be different if you have installed a different version of the npm package and for some reason could not install the matching binary.
+Prints the installed Cypress binary version, the Cypress package version, the version of Electron used to build Cypress, and the bundled Node version.
+
+In most cases the binary and the package versions will be the same, but they could be different if you have installed a different version of the package and for some reason failed to install the matching binary version.
 
 ```shell
 cypress version
-Cypress package version: 3.0.0
-Cypress binary version: 3.0.0
+Cypress package version: 6.0.0
+Cypress binary version: 6.0.0
+Electron version: 10.1.5
+Bundled Node version: 12.14.1
+```
+
+You can print each individual component's version number also.
+
+```shell
+cypress version --component package
+6.0.0
+cypress version --component binary
+6.0.0
+cypress version --component electron
+10.1.5
+cypress version --component node
+12.14.1
 ```
 
 ## `cypress cache [command]`
@@ -512,7 +606,7 @@ Commands for managing the global Cypress cache. The Cypress cache applies to all
 
 ### `cypress cache path`
 
-Print the `path` to the Cypress cache folder.
+Print the `path` to the Cypress cache folder. You can change the path where the Cypress cache is located by following {% url "these instructions" installing-cypress#Binary-cache %}.
 
 ```shell
 cypress cache path
@@ -534,6 +628,19 @@ cypress cache list
 └─────────┴──────────────┘
 ```
 
+You can calculate the size of every Cypress version folder by adding the `--size` argument to the command. Note that calculating the disk size can be slow.
+
+```shell
+cypress cache list --size
+┌─────────┬──────────────┬─────────┐
+│ version │ last used    │ size    │
+├─────────┼──────────────┼─────────┤
+│ 5.0.0   │ 3 months ago │ 425.3MB │
+├─────────┼──────────────┼─────────┤
+│ 5.3.0   │ 5 days ago   │ 436.3MB │
+└─────────┴──────────────┴─────────┘
+```
+
 ### `cypress cache clear`
 
 Clear the contents of the Cypress cache. This is useful when you want Cypress to clear out all installed versions of Cypress that may be cached on your machine. After running this command, you will need to run `cypress install` before running Cypress again.
@@ -542,8 +649,17 @@ Clear the contents of the Cypress cache. This is useful when you want Cypress to
 cypress cache clear
 ```
 
+### `cypress cache prune`
+
+Deletes all installed Cypress versions from the cache except for the currently-installed version.
+
+```shell
+cypress cache prune
+```
 
 # Debugging commands
+
+## Enable Debug Logs
 
 Cypress is built using the {% url 'debug' https://github.com/visionmedia/debug %} module. That means you can receive helpful debugging output by running Cypress with this turned on prior to running `cypress open` or `cypress run`.
 
@@ -584,3 +700,9 @@ DEBUG=cypress:launcher cypress run
 ```shell
 DEBUG=cypress:server:project cypress run
 ```
+
+{% history %}
+{% url "5.4.0" changelog %} | Added `prune` subcommand to `cypress cache`
+{% url "5.4.0" changelog %} | Added `--size` flag to `cypress cache list` subcommand
+{% url "4.9.0" changelog %} | Added `--quiet` flag to `cypress run`
+{% endhistory %}

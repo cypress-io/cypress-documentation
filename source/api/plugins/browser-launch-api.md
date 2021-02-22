@@ -2,7 +2,7 @@
 title: Browser Launch API
 ---
 
-Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options.
+Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from your {% url "`pluginsFile`" plugins-guide %}.
 
 # Syntax
 
@@ -16,7 +16,7 @@ An object describing the browser being launched, with the following properties:
 
 Property | Type | Description
 --- | --- | ---
-`name`| `string` | Machine-friendly name, like `chrome`, `electron`, or `firefox`.
+`name`| `string` | Machine-friendly name, like `chrome`, `electron`, `edge`, or `firefox`.
 `family` | `string` | Rendering engine being used. `chromium` or `firefox`.
 `channel` | `string` | Release channel of the browser, such as `stable`, `dev`, or `canary`.
 `displayName` | `string` | Human-readable display name for the browser.
@@ -54,7 +54,10 @@ Here are args available for the currently supported browsers:
 * {% url 'Chromium-based browsers' "https://peter.sh/experiments/chromium-command-line-switches/" %}
 * {% url 'Firefox' "https://developer.mozilla.org/docs/Mozilla/Command_Line_Options" %}
 
+#### Open devtools by default
+
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     // `args` is an array of all the arguments that will
@@ -64,17 +67,20 @@ module.exports = (on, config) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // auto open devtools
       launchOptions.args.push('--auto-open-devtools-for-tabs')
-
-      // whatever you return here becomes the launchOptions
-      return launchOptions
     }
 
     if (browser.family === 'firefox') {
       // auto open devtools
       launchOptions.args.push('-devtools')
-
-      return launchOptions
     }
+
+    if (browser.name === 'electron') {
+      // auto open devtools
+      launchOptions.preferences.devTools = true
+    }
+
+    // whatever you return here becomes the launchOptions
+    return launchOptions
   })
 }
 ```
@@ -82,11 +88,12 @@ module.exports = (on, config) => {
 ### Add browser extensions:
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
-    // supply the path to an unpacked WebExtension
+    // supply the absolute path to an unpacked extension's folder
     // NOTE: extensions cannot be loaded in headless Chrome
-    launchOptions.extensions.push('/path/to/webextension')
+    launchOptions.extensions.push('Users/jane/path/to/extension')
 
     return launchOptions
   })
@@ -102,6 +109,7 @@ Here are preferences available for the currently supported browsers:
 * Firefox: visit `about:config` URL within your Firefox browser to see all available preferences.
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
@@ -133,23 +141,23 @@ module.exports = (on, config) => {
 
 ## Modify Electron app switches
 
-Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://electronjs.org/docs/api/chrome-command-line-switches/history %}.
+Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see {% url "Electron documentation" https://www.electronjs.org/docs/api/command-line-switches %}.
 
 You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, you can set the environment variables before running Cypress like below:
 
 ### Linux/OSX
 
 ```shell
-export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
 ### Windows
 
 ```shell
-set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --ignore-certificate-errors
+set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
-Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.coffee" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.coffee %}. There is no way to see all currently set switches after Electron's launch.
+Cypress already sets some the Electron command line switches internally. See file {% url "packages/server/lib/environment.js" https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js %}. There is no way to see all currently set switches after Electron's launch.
 
 ## See all Chrome browser switches
 
@@ -159,18 +167,44 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 
 # Examples
 
-## Set screen size when running headless Chrome
+## Set screen size when running headless
 
-When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below.
+When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
+
+{% note warning %}
+This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the {% url "configuration" configuration %}. The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner.
+{% endnote %}
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
     if (browser.name === 'chrome' && browser.isHeadless) {
+      // fullPage screenshot size is 1400x1200 on non-retina screens
+      // and 2800x2400 on retina screens
       launchOptions.args.push('--window-size=1400,1200')
 
-      return launchOptions
+      // force screen to be non-retina (1400x1200 size)
+      launchOptions.args.push('--force-device-scale-factor=1')
+
+      // force screen to be retina (2800x2400 size)
+      // launchOptions.args.push('--force-device-scale-factor=2')
     }
+
+    if (browser.name === 'electron' && browser.isHeadless) {
+      // fullPage screenshot size is 1400x1200
+      launchOptions.preferences.width = 1400
+      launchOptions.preferences.height = 1200
+    }
+
+    if (browser.name === 'firefox' && browser.isHeadless) {
+      // menubars take up height on the screen
+      // so fullPage screenshot size is 1400x1126
+      launchOptions.args.push('--width=1400')
+      launchOptions.args.push('--height=1200')
+    }
+
+    return launchOptions
   })
 }
 ```
@@ -178,6 +212,7 @@ module.exports = (on, config) => {
 ## Start fullscreen
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
@@ -204,6 +239,7 @@ By default, Cypress passes the Chrome command line switch to enable a fake video
 You can however send your own video file for testing by passing a Chrome command line switch pointing to a video file.
 
 ```js
+// cypress/plugins/index.js
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
@@ -219,33 +255,48 @@ module.exports = (on, config) => {
 }
 ```
 
-## Change download directory
+## Support unique file download mime types
 
-Change the download directory of files downloaded during Cypress tests.
+Cypress supports a myriad of mime types when testing file downloads, but in case you have a unique one, you can add support for it.
 
 ```js
 module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
-    const downloadDirectory = path.join(__dirname, '..', 'downloads')
-
-    if (browser.family === 'chromium') {
-      options.preferences.default['download'] = { default_directory: downloadDirectory }
-
-      return options
-    }
-
+    // only Firefox requires all mime types to be listed
     if (browser.family === 'firefox') {
-      options.preferences['browser.download.dir'] = downloadDirectory
-      options.preferences['browser.download.folderList'] = 2
+      const existingMimeTypes = options.preferences['browser.helperApps.neverAsk.saveToDisk']
+      const myMimeType = 'my/mimetype'
 
-      // needed to prevent download prompt for text/csv files.
-      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
+      // prevents the browser download prompt
+      options.preferences['browser.helperApps.neverAsk.saveToDisk'] = `${existingMimeTypes},${myMimeType}`
 
       return options
     }
   })
 }
 ```
+
+{% note info %}
+{% url 'Check out our example recipe showing how to download and validate CSV and Excel files.' recipes#Testing-the-DOM %}
+{% endnote %}
+
+## Set a Firefox flag
+
+If we need to set a particular Firefox flag, like `browser.send_pings` we can do it via preferences
+
+```js
+module.exports = (on) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'firefox') {
+      launchOptions.preferences['browser.send_pings'] = true
+    }
+
+    return launchOptions
+  })
+}
+```
+
+The above example comes from the blog post {% url 'How to Test Anchor Ping' https://glebbahmutov.com/blog/anchor-ping/ %}.
 
 {% history %}
 {% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`

@@ -1,15 +1,13 @@
-describe('Main Nav', () => {
-  beforeEach(() => {
-    cy.server()
-  })
+import { MAIN_NAV } from '../support/defaults'
 
+describe('Main Nav', () => {
   context('Nav Bar', () => {
     beforeEach(() => {
       cy.visit('/')
     })
 
-    it('displays links to pages', function () {
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+    MAIN_NAV.forEach((nav) => {
+      it(`displays link to ${nav.name}`, function () {
         cy.contains('.main-nav-link', nav.name)
         .should('have.attr', 'href').and('include', nav.path)
       })
@@ -21,8 +19,8 @@ describe('Main Nav', () => {
       .and('eq', 'https://github.com/cypress-io/cypress')
     })
 
-    it('highlights main page links when navigated to', function () {
-      cy.wrap(this.MAIN_NAV).each((nav) => {
+    MAIN_NAV.forEach((nav) => {
+      it(`highlights main page links when navigated to ${nav.name}`, function () {
         let path = `${nav.path}.html`
 
         if (nav.path === '/plugins/') {
@@ -41,10 +39,8 @@ describe('Main Nav', () => {
     beforeEach(() => {
       cy.visit('/')
 
-      cy.route({
-        method: 'POST',
-        url: /algolia/,
-        response: {
+      cy.intercept(/algolia/, {
+        body: {
           'results': [
             {
               'hits': [
@@ -62,8 +58,8 @@ describe('Main Nav', () => {
     it('posts to Algolia api with correct index on search', () => {
       cy.get('#search-input').type('g')
 
-      cy.wait('@postAlgolia').then((xhr) => {
-        expect(xhr.requestBody.requests[0].indexName).to.eq('cypress')
+      cy.wait('@postAlgolia').then(({ request, response }) => {
+        expect(JSON.parse(request.body).requests[0].indexName).to.eq('cypress')
       })
     })
 
@@ -88,7 +84,8 @@ describe('Main Nav', () => {
     })
   })
 
-  context('Language selector', () => {
+  // NOTE: skip language selector
+  context.skip('Language selector', () => {
     beforeEach(() => {
       cy.visit('/')
     })

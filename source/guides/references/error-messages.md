@@ -52,9 +52,10 @@ It's still useful to load a setup file before your test code. If you are setting
 To include code before your test files, set the {% url `supportFile` configuration#Folders-Files %} path. By default, {% url `supportFile` configuration#Folders-Files %} is set to look for one of the following files:
 
 - `cypress/support/index.js`
+- `cypress/support/index.ts`
 - `cypress/support/index.coffee`
 
-Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+ (or CoffeeScript) and modules, so you can import/require other files as needed.
+Just like with your test files, the {% url `supportFile` configuration#Folders-Files %} can use ES2015+, {% url "TypeScript" typescript-support %} or CoffeeScript and modules, so you can import/require other files as needed.
 
 # Command Errors
 
@@ -94,6 +95,24 @@ If you are purposefully writing commands outside of a test, there is probably a 
 ## {% fa fa-exclamation-triangle red %} `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
 Getting this error means you've tried to interact with a "dead" DOM element - meaning it's been detached or completely removed from the DOM.
+
+<!--
+To reproduce the following screenshot:
+describe('detachment example', () => {
+  beforeEach(() => {
+    cy.get('body').then(($body) => {
+      const $outer = Cypress.$('<div />').appendTo($body)
+      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+    })
+  })
+  it('detaches from dom', () => {
+    cy.get('button')
+    .click()
+    .parent()
+    .should('have.text', 'Clicked')
+  })
+})
+-->
 
 <!--
 To reproduce the following screenshot:
@@ -168,6 +187,10 @@ When we say *guard*, this usually means:
 
 - Writing an assertion
 - Waiting on an XHR
+
+### More info
+
+Read the blog post {% url "Do Not Get Too Detached" https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/ %} for another example of this error, and how to solve it.
 
 ## {% fa fa-exclamation-triangle red %} `cy....()` failed because the element cannot be interacted with
 
@@ -403,13 +426,13 @@ If you get this error in a case where the element is definitely visible in the D
 
 ## {% fa fa-exclamation-triangle red %} You passed the `--record` flag but did not provide us your Record Key.
 
-You may receive this error when trying to run Cypress tests in {% url 'Continuous Integration' continuous-integration %}. This means that you did not pass a specific record key to: {% url '`cypress run --record`' command-line#cypress-run %}.
+You may receive this error when trying to run Cypress tests in {% url 'Continuous Integration' continuous-integration-introduction %}. This means that you did not pass a specific record key to: {% url '`cypress run --record`' command-line#cypress-run %}.
 
 Since no record key was passed, Cypress checks for any environment variable with the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
 You can get your project's record key by locating it in your settings tab in the Test Runner or in the {% url 'Dashboard Service' https://on.cypress.io/dashboard %}.
 
-You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration#Record-tests %}.
+You will want to then {% url 'add the key to your config file or as an environment variable' continuous-integration-introduction#Record-tests %}.
 
 ## {% fa fa-exclamation-triangle red %} The `cypress ci` command has been deprecated
 
@@ -441,7 +464,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration#Caching %}, then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on {% url "caching the cypress binary in CI" continuous-integration-introduction#Caching %}, then bump the version of your CI cache to ensure a clean build.
 
 ## {% fa fa-exclamation-triangle red %} Incorrect usage of `--ci-build-id` flag
 
@@ -465,7 +488,7 @@ You passed the {% url "`--group`" command-line#cypress-run-group-lt-name-gt %} o
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration#Examples %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
+The `ciBuildId` is automatically detected if you are running Cypress in most {% url "CI providers" continuous-integration-introduction#Examples %}. Please review the {% url "natively recognized environment variables" parallelization#CI-Build-ID-environment-variables-by-provider %} for your CI provider.
 
 You can avoid this check in the future by passing an ID to the {% url "`--ci-build-id`" command-line#cypress-run-ci-build-id-lt-id-gt %} flag manually.
 
@@ -582,7 +605,7 @@ This can happen for a number of reasons, including:
 - The browser is testing a memory-heavy application
 - Cypress is running within Docker (there is an easy fix for this: see {% issue 350 'this thread' %})
 - There are problems with the GPU / GPU drivers
-- There is a bug in the browser involving memory management<!-- TODO: link to Firefox bug here? https://github.com/cypress-io/cypress/issues/6187 -->
+- There is a bug in the browser involving memory management
 - There is a memory leak in Cypress
 
 If the browser running Cypress tests crashes, currently, Cypress will abort any remaining tests and print out this error.

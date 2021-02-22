@@ -4,7 +4,7 @@ title: Projects
 
 With Cypress, you have the ability to record your project's tests.
 
-You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration %}, but you can also record your tests when running locally.
+You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration-introduction %}, but you can also record your tests when running locally.
 
 # Setup
 
@@ -29,7 +29,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
-10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
+10. Within {% url 'Continuous Integration' continuous-integration-introduction %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
     cypress run --record --key &lt;record key&gt;
@@ -89,7 +89,7 @@ Anyone that has access to both the `projectId` and the record key of a project c
 
 If a record key is exposed you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new record key" Create-new-record-key %}. Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
 
-You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration#Environment-variables %}.
+You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration-introduction#Environment-variables %}.
 
 {% endnote %}
 
@@ -107,7 +107,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 You can also find your Record Key inside of the *Settings* tab in the Test Runner.
 
-{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.png "Record Key in Configuration Tab" %}
+{% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg "Record Key in Configuration Tab" %}
 
 # Record keys
 
@@ -150,6 +150,34 @@ You can integrate your project with GitHub and edit its settings from within the
 {% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
 
 See our {% url "GitHub Integration guide" github-integration %} to learn more.
+
+# Slack Integration
+
+You can integrate your project with Slack and edit its settings from within the project settings page.
+
+{% imgTag /img/dashboard/visit-project-settings.png "Visit project settings" %}
+
+See our {% url "Slack Integration guide" slack-integration %} to learn more.
+
+# README Badges
+
+README badges allow you to increase visibility of your project's test status and test count to other developers viewing your project's README file.
+
+## Create a README badge
+
+1. In your Cypress Dashboard account, select the project for which you’d like to create a README badge.
+1. On the Project Settings page, scroll down to the README Badges section and click “Configure Badge”.
+  {% imgTag /img/dashboard/badges/dashboard-badge-configure-button.png "README Badge configure button" %}
+  - **Note**: README badges are currently only available for public projects.
+1. A configuration modal will appear. The Project ID will be pre-filled with the ID associated with the project you selected. You can choose to designate a specific branch, or leave this field blank to always use the latest build in the project.
+1. Next, style your badge. Flat is the default styling and is most commonly used, but 5 style options are available.
+1. Select the badge type to change the amount and type of information that’s displayed. Simple status will show only whether tests are passing or failing. Detailed status will show the number of tests that were passed, failed, or skipped. Test count will show how many tests are included in your project.
+1. Once you’ve selected all your settings, check out the preview and make sure everything looks just the way you like it.
+1. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the Configure Badge modal, and embed it in your project’s README file for everyone to see!
+
+{% imgTag /img/dashboard/badges/dashboard-badge-configuration.png "README Badge configuration form" %}
+
+See also {% url "Highlight your project’s test status with Cypress README badges" https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/ %} announcement.
 
 # Access to Runs
 

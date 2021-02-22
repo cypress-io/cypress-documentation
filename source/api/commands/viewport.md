@@ -49,11 +49,15 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `iphone-5`    | 320   | 568    |
 | `iphone-6`    | 375   | 667    |
 | `iphone-6+`   | 414   | 736    |
+| `iphone-7`    | 375   | 667    |
+| `iphone-8`    | 375   | 667    |
 | `iphone-x`    | 375   | 812    |
 | `iphone-xr`   | 414   | 896    |
+| `iphone-se2`  | 375   | 667    |
 | `macbook-11`  | 1366  | 768    |
 | `macbook-13`  | 1280  | 800    |
 | `macbook-15`  | 1440  | 900    |
+| `macbook-16`  | 1536  | 960    |
 | `samsung-note9` | 414 | 846    |
 | `samsung-s10` | 360   | 760    |
 
@@ -203,6 +207,36 @@ Scaling the app should not affect any calculations or behavior of your applicati
 
 The upsides to this are that tests should consistently pass or fail regardless of a developers' screen size. Tests will also consistently run in `CI` because all of the viewports will be the same no matter what machine Cypress runs on.
 
+## Reset viewport via `Cypress.config()`
+
+You can change the size of the viewport height and width for the remainder of the tests by setting the new values for `viewportHeight` or `viewportWidth` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('viewportWidth', 800)
+Cypress.config('viewportWidth') // => 800
+```
+
+## Set viewport in the test configuration
+
+You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the height and width throughout the duration of the tests, then return it to the default `viewportHeight` and `viewportWidth` when complete.
+
+```js
+describe('page display on medium size screen', {
+  viewportHeight: 1000,
+  viewportWidth: 400
+}, () => {
+  it('does not display sidebar', () => {
+    cy.get('#sidebar').should('not.be.visible')
+  })
+
+  it('shows hamburger menu', () => {
+    cy.get('#header').find('i.menu').should('be.visible')
+  })
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
@@ -241,6 +275,8 @@ When clicking on `viewport` within the command log, the console outputs the foll
 {% imgTag /img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png "Console Log viewport" %}
 
 {% history %}
+{% url "5.5.0" changelog#5-5-0 %} | Added support for `macbook-16` preset.
+{% url "5.4.0" changelog#5-4-0 %} | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.
 {% url "3.8.0" changelog#3-8-0 %} | Removed max viewport size and lowered min viewport size to `0`.
 {% url "3.5.0" changelog#3-5-0 %} | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`
 {% url "3.5.0" changelog#3-5-0 %} | Increased max viewport size to `4000`
@@ -249,4 +285,6 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 # See also
 
-- {% url 'configuration' configuration %}
+- Read blog post {% url 'Use meaningful smoke tests' https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/ %} where we run the same test with different viewport resolutions
+- {% url 'Configuration' configuration %}
+- {% url '`Cypress.config()`' config %}

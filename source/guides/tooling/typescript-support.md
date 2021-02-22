@@ -6,10 +6,18 @@ Cypress ships with {% url "official type declarations" https://github.com/cypres
 
 ## Install TypeScript
 
-You'll need to have TypeScript installed within your project to have TypeScript support within Cypress.
+You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
 
-```bash
-npm install typescript
+### With npm
+
+```shell
+npm install --save-dev typescript
+```
+
+### With yarn
+
+```shell
+yarn add --dev typescript
 ```
 
 ## Set up your dev environment
@@ -23,8 +31,6 @@ We recommend the following configuration in a {% url "`tsconfig.json`" http://ww
 ```json
 {
   "compilerOptions": {
-    "strict": true,
-    "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["cypress"]
@@ -58,7 +64,7 @@ When adding {% url "custom commands" custom-commands %} to the `cy` object, you 
 For example if you add the command `cy.dataCy` into your {% url "`supportFile`" configuration#Folders-Files %} like this:
 
 ```javascript
-// cypress/support/index.js
+// cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
@@ -91,7 +97,7 @@ If your specs files are in TypeScript, you should include the TypeScript definit
 Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
 ```javascript
-// from your cypress/integration/spec.js
+// from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
@@ -116,7 +122,7 @@ If you extend Cypress assertions, you can extend the assertion types to make the
 You can utilize Cypress's type declarations in your {% url "plugins file" plugins-guide %} by annotating it like the following:
 
 ```javascript
-// cypress/plugins/index.js
+// cypress/plugins/index.ts
 
 /// <reference types="cypress" />
 
@@ -128,13 +134,8 @@ module.exports = (on, config) => {
 }
 ```
 
-## Additional information
-
-See the excellent advice on {% url "setting Cypress using TypeScript" https://basarat.gitbooks.io/typescript/docs/testing/cypress.html %} in the {% url "TypeScript Deep Dive" https://basarat.gitbooks.io/typescript/content/ %} e-book by {% url "Basarat Syed" https://twitter.com/basarat %}. Take a look at {% url "this video" https://www.youtube.com/watch?v=1Vr1cAN_CLA %} Basarat has recorded and the accompanying repo {% url basarat/cypress-ts https://github.com/basarat/cypress-ts %}.
-
-{% fa fa-github %} We have published a utility npm module, {% url "add-typescript-to-cypress" https://github.com/bahmutov/add-typescript-to-cypress %}, that sets TypeScript test transpilation for you with a single command.
-
 {% history %}
+{% url "5.0.0" changelog#5-0-0 %} | Raised minimum required TypeScript version from 2.9+ to 3.4+
 {% url "4.4.0" changelog#4-4-0 %} | Added support for TypeScript without needing your own transpilation through preprocessors.
 {% endhistory %}
 

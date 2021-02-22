@@ -89,12 +89,11 @@ cy.exec('npm run my-script').its('stdout').should('contain', 'Done running the s
 ### Write to a file to create a fixture from response body
 
 ```javascript
-cy.server()
-cy.route('POST', '/comments').as('postComment')
+cy.intercept('POST', '/comments').as('postComment')
 cy.get('.add-comment').click()
-cy.wait('@postComment').then((xhr) => {
-  cy.exec(`echo ${JSON.stringify(xhr.responseBody)} >cypress/fixtures/comment.json`)
-  cy.fixture('comment.json').should('deep.eq', xhr.responseBody)
+cy.wait('@postComment').then(({ response }) => {
+  cy.exec(`echo ${JSON.stringify(response.body)} >cypress/fixtures/comment.json`)
+  cy.fixture('comment.json').should('deep.eq', response.body)
 })
 ```
 
@@ -139,6 +138,35 @@ cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
 - Any process that needs to be manually interrupted to stop
 
 A command must exit within the `execTimeout` or Cypress will kill the command's process and fail the current test.
+
+## Reset timeout via `Cypress.config()`
+
+You can change the timeout of `cy.exec()` for the remainder of the tests by setting the new values for `execTimeout` within {% url "`Cypress.config()`" config %}.
+
+```js
+Cypress.config('execTimeout', 30000)
+Cypress.config('execTimeout') // => 30000
+```
+
+## Set timeout in the test configuration
+
+You can configure the `cy.exec()` timeout within a suite or test by passing the new configuration value within the {% url "test configuration" configuration#Test-Configuration %}.
+
+This will set the timeout throughout the duration of the tests, then return it to the default `execTimeout` when complete.
+
+```js
+describe('has data available from database', { execTimeout: 90000 }, () => {
+  before(() => {
+    cy.exec('rake db:seed')
+  })
+
+  // tests
+
+  after(() => {
+    cy.exec('rake db:reset')
+  })
+})
+```
 
 # Rules
 

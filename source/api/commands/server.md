@@ -4,9 +4,7 @@ title: server
 
 Start a server to begin routing responses to {% url "`cy.route()`" route %} and to change the behavior of network requests.
 
-{% note info %}
-**Note:** `cy.server()` assumes you are already familiar with core concepts such as {% url 'network requests' network-requests %}.
-{% endnote %}
+{% partial xhr_stubbing_deprecated %}
 
 {% partial network_stubbing_warning %}
 
@@ -57,7 +55,7 @@ Option | Default | Description
 `onAnyRequest` | `undefined` | callback function called when any request is sent
 `onAnyResponse` | `undefined` | callback function called when any response is returned
 `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs
-`whitelist` | function | Callback function that whitelists requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
+`ignore` | function | Callback function that filters requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files.
 
 ## Yields {% helper_icon yields %}
 
@@ -69,8 +67,8 @@ Option | Default | Description
 
 ### After starting a server:
 
-- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Don’t-Stub-Responses %}.
-- Any request that matches the `options.whitelist` function will **NOT** be logged or stubbed. In other words it is "whitelisted" and ignored.
+- Any request that does **NOT** match a {% url `cy.route()` route %} will {% url 'pass through to the server' network-requests#Use-Server-Responses %}.
+- Any request that matches the `options.ignore` function will **NOT** be logged or stubbed.
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
 
 ```javascript
@@ -179,21 +177,21 @@ cy.server({
 })
 ```
 
-### Change the default whitelisting
+### Change the default filtering
 
-`cy.server()` comes with a `whitelist` function that by default filters out any requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
+`cy.server()` comes with an `ignore` function that by default filters out any requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
 
-Any request that passes the `whitelist` will be ignored - it will not be logged nor will it be stubbed in any way (even if it matches a specific {% url `cy.route()` route %}).
+Any request that passes the `ignore` will be ignored - it will not be logged nor will it be stubbed in any way (even if it matches a specific {% url `cy.route()` route %}).
 
 The idea is that we never want to interfere with static assets that are fetched via Ajax.
 
-**The default whitelist function in Cypress is:**
+**The default filter function in Cypress is:**
 
 ```javascript
-const whitelist = (xhr) => {
+const ignore = (xhr) => {
   // this function receives the xhr object in question and
-  // will whitelist if it's a GET that appears to be a static resource
-  return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+  // will ignore if it's a GET that appears to be a static resource
+  return xhr.method === 'GET' && /\.(jsx?|coffee|html|less|s?css|svg)(\?.*)?$/.test(xhr.url)
 }
 ```
 
@@ -201,7 +199,7 @@ const whitelist = (xhr) => {
 
 ```javascript
 cy.server({
-  whitelist: (xhr) => {
+  ignore: (xhr) => {
     // specify your own function that should return
     // truthy if you want this xhr to be ignored,
     // not logged, and not stubbed.
@@ -270,6 +268,8 @@ The intention of {% url "`cy.request()`" request %} is to be used for checking e
 - `cy.server()` does *not* log in the Command Log
 
 {% history %}
+{% url "6.0.0" changelog#6-0-0 %} | Deprecated `cy.server()` command
+{% url "5.0.0" changelog#5-0-0 %} | Renamed `whitelist` option to `ignore`
 {% url "0.13.6" changelog#0-13-6 %} | Added `onAbort` callback option
 {% url "0.5.10" changelog#0-5-10 %} | Added `delay` option
 {% url "0.3.3" changelog#0-3-3 %} | Added `whitelist` option
