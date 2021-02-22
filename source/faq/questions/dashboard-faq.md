@@ -8,7 +8,7 @@ containerClass: faq
 
 {% imgTag /img/dashboard/dashboard-runs-list.png "Dashboard Screenshot" %}
 
-The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration %}. The Dashboard provides you insight into what happened during your tests run.
+The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration-introduction %}. The Dashboard provides you insight into what happened during your tests run.
 
 You can read more {% url 'here' dashboard-introduction%}.
 
@@ -45,7 +45,7 @@ A {% url 'user' users %} is anyone with a login to our Dashboard Service that ha
 
 ## {% fa fa-angle-right %} How is this different than CI?
 
-Cypress is **complementary** to your {% url "CI provider" continuous-integration %}, and plays a completely different role.
+Cypress is **complementary** to your {% url "CI provider" continuous-integration-introduction %}, and plays a completely different role.
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
@@ -96,7 +96,7 @@ Thus, to better load balance the specs, you would want more spec files with appr
 
 ## {% fa fa-angle-right %} My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
-Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration#Examples %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
+Even if your CI setup is very different from the {% url "CI examples we have" continuous-integration-introduction#Examples %} and {% url "run with our sample projects" https://github.com/cypress-io/cypress-example-kitchensink#ci-status %}, you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument {% url `--ci-build-id` command-line#cypress-run-ci-build-id-lt-id-gt %}when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
