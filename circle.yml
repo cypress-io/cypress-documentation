@@ -108,6 +108,16 @@ jobs:
       - attach_workspace:
           at: /mnt
       - run:
+          name: Show Cypress info ℹ️
+          command: npx cypress info
+      - run:
+          name: Show system info ℹ️
+          command: |
+            node -p 'os.cpus()'
+            node -e 'console.log("total memory %d GB", os.totalmem() / 1073741824)'
+            node -e 'console.log("free memory %d GB", os.freemem() / 1073741824)'
+      - run:
+          name: Start local server 🚜
           command: npm start
           background: true
       - run:

@@ -84,7 +84,8 @@
     "chalk": "3.0.0",
     "cheerio": "1.0.0-rc.3",
     "common-tags": "1.8.0",
-    "cypress": "6.3.0",
+    "cypress": "6.4.0",
+    "dayjs": "1.10.4",
     "dependency-check": "3.4.1",
     "deps-ok": "1.4.1",
     "eslint": "6.1.0",
@@ -145,7 +146,6 @@
     "lazy-ass": "1.6.0",
     "lodash": "4.17.19",
     "menuspy": "1.3.0",
-    "moment": "2.24.0",
     "roboto-fontface": "0.10.0",
     "scrollingelement": "1.5.2",
     "yall": "github:malchata/yall.js#1c782f1ab7a0becb1a88fd6f3b260e55d5e213a2"

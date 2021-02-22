@@ -148,7 +148,7 @@ describe('Cypress Studio Demo', () => {
 
 ## Adding a New Test
 
-You can add a new test to any existing `describe` or `context` block. Next, we can add a new test, by clicking "Add New Test" our defined `describe` block.
+You can add a new test to any existing `describe` or `context` block, by clicking "Add New Test" on our defined `describe` block.
 
 {% imgTag /img/guides/cypress-studio/add-test-1.png "Cypress Studio Add Test" "no-border" %}
 
