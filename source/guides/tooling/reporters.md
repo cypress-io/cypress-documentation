@@ -190,6 +190,20 @@ We recommend deleting all files from the `cypress/results` folder before running
 }
 ```
 
+In case you want to combine generated XML files into a single one, {% url junit-report-merger https://www.npmjs.com/package/junit-report-merger %} can be added. For example, to combine all files into `cypress/results/combined-report.xml` the `combine:reports` script can be added.
+
+```json
+{
+  "scripts": {
+    "delete:reports": "rm cypress/results/* || true",
+    "combine:reports": "jrm cypress/results/combined-report.xml \"cypress/results/*.xml\"",
+    "prereport": "npm run delete:reports",
+    "report": "cypress run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json",
+    "postreport": "npm run combine:reports"
+  }
+}
+```
+
 ### Spec to `STDOUT`, produce a combined Mochawesome JSON file
 
 This example is shown in the branch `spec-and-single-mochawesome-json` in {% url https://github.com/cypress-io/cypress-example-circleci-orb %}. We want to output a "spec" report to `STDOUT`, save an individual Mochawesome JSON file per test file, and then combine all JSON reports into a single report.
