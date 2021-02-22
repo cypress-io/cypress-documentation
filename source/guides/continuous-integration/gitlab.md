@@ -108,7 +108,7 @@ The addition of the {% url '`parallel` attribute' https://docs.gitlab.com/ee/ci/
 
 Before diving into an example of a parallelization setup, it is important to understand the two different types of jobs that we will declare:
 
-- **Install Job**: A job that installs and caches dependencies that will used by subsequent jobs later in the GitLab CI workflow.
+- **Install Job**: A job that installs and caches dependencies that will be used by subsequent jobs later in the GitLab CI workflow.
 - **Worker Job**: A job that handles execution of Cypress tests and depends on the *install job*.
 
 ## Install Job
@@ -189,14 +189,22 @@ ui-chrome-tests:
 ```
 
 {% note bolt %}
-The above configuration using the `--parallel` and `--record` flags to {% url "`cypress run`" command-line#cypress-run %} requires setting up recording to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+The above configuration using the `--parallel` and `--record` flags to {% url "`cypress run`" command-line#cypress-run %} requires setting up recording test results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
 {% endnote %}
 
 # Using the Cypress Dashboard with GitLab CI/CD
 
-Finally, we tell the to record results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} (using the `CYPRESS_RECORD_KEY` environment variable) in parallel.
+In the GitLab CI configuration we have defined in the previous section, we are leveraging three useful features of the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
 
-Jobs can be organized by groups and in this job we specify a `group: "UI - Chrome"` to consolidate all runs for these workers in a central location in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+  1. {% url "Recording test results with the `--record` flag" https://on.cypress.io/how-do-i-record-runs %} to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
+    - In-depth and shareable {% url "test reports" runs %}.
+    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
+    - {% url "Integrating testing with the merge-request process" gitlab-integration %} via {% url "commit status guards" gitlab-integration#Commit-statuses %} and convenient {% url "test report comments" gitlab-integration#Merge-Request-comments %}.
+    - {% url "Detecting flaky tests" flaky-test-management %} and surfacing them via {% url "Slack alerts" flaky-test-management#Slack %} or {% url "GitLab PR status checks" gitlab-integration %}.
+
+  2. {% url "Parallelizing test runs" parallelization %} and optimizing their execution via {% url "intelligent load-balancing" parallelization#Balance-strategy %} of test specs across CI machines with the `--parallel` flag.
+
+  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `--group "UI - Chrome"` flag to organize all of UI tests within the Chrome browser within a group labeled "UI - Chrome" within our {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
 
 # Cypress Real World Example with GitLab CI/CD
 
