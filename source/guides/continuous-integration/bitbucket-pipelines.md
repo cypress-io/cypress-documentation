@@ -44,7 +44,7 @@ To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" ht
 - Finally, our scripts will:
   - Install npm dependencies
   - Start the project web server (`npm start:ci`)
-  - Run the Cypress tests within our GitHub repository within Electron
+  - Run the Cypress tests within our GitHub/Bitbucket repository within Electron
 
 # Testing in Chrome and Firefox with Cypress Docker Images
 
