@@ -78,7 +78,7 @@ module.exports = (on, config) => {
 # See also
 
 - {% url "`cy.screenshot()`" screenshot %}
-- {% url 'Dashboard Service' dashboard-introduction%}
+- {% url 'Dashboard Service' dashboard-introduction %}
 - {% url "Plugins Guide" plugins-guide %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
 - {% url 'Visual Testing' visual-testing %}

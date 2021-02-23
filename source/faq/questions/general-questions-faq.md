@@ -6,7 +6,7 @@ containerClass: faq
 
 ## {% fa fa-angle-right %} Is Cypress free and open source?
 
-The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-introduction%} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
+The {% url "Test Runner" test-runner %} is a free, downloadable and open source (MIT license) application. This is always free to use. Our {% url "Dashboard Service" dashboard-introduction %} is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
