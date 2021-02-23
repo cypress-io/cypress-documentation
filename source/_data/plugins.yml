@@ -439,6 +439,12 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
+    
+    - name: cypress-maildev
+      description: A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.
+      link: https://github.com/Clebiez/cypress-maildev
+      keywords: [email, sms, commands]
+      badge: community
       
     - name: cypress-real-events
       description: Fire native system events from Cypress like hover, swipe, etc
@@ -509,7 +515,7 @@
 
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
-      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
+      link: https://github.com/shakacode/cypress-on-rails
       keywords: [ruby-rack, ruby-on-rails]
       badge: community
 
@@ -565,6 +571,12 @@
       description: Add commands and hooks to test Laravel applications
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
+      badge: community
+      
+    - name: cypress-splitio
+      description: Stores your split.io toggles as environment variables. Helps to decide which e2e tests you need to run.
+      link: https://gitlab.com/davidggevorgyan/cypress-splitio
+      keywords: [split.io, feature flags]
       badge: community
 
     - name: Bison
