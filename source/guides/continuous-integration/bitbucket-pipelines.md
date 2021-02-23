@@ -5,7 +5,8 @@ title: Bitbucket Pipelines
 {% note info %}
 # {% fa fa-graduation-cap %} What you'll learn
 
-- How to use Bitbucket Pipelines for Cypress Tests
+- How to run Cypress tests with Bitbucket Pipelines as part of CI/CD pipeline
+- How to parallelize Cypress test runs withins Bitbucket Pipelines
 
 {% endnote %}
 
@@ -16,19 +17,6 @@ Detailed documentation is available in the {% url "Bitbucket Pipelines Documenta
 # Basic Setup
 
 The example below shows a basic setup and job to use {% url "Bitbucket Pipelines" https://bitbucket.org/product/features/pipelines %} to run end-to-end tests with Cypress and Electron.
-
-{% note info %}
-Clone the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example and place the following config in `bitbucket-pipelines.yml` in the root of the project.
-{% endnote %}
-
-How this `bitbucket-pipelines.yml` works:
-
-- On push to this repository, this job will run a {% url "Bitbucket Pipelines" https://bitbucket.org/product/features/pipelines %} container.
-- Our code is cloned from the Bitbucket repository.
-- Our action runs as follows:
-  - Install dependencies (npm/yarn)
-  - Start the web server (`npm start:ci`)
-  - Run the tests against Electron
 
 ```yaml
 image: node:latest
@@ -44,6 +32,20 @@ pipelines:
           # run Cypress tests
           - npm run e2e
 ```
+
+{% note info Try it out %}
+To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above Bitbucket Pipelines configuration in `bitbucket-pipelines.yml`.
+{% endnote %}
+
+**How this `bitbucket-pipelines.yml` works:**
+
+- On *push* to this repository, this job will provision and start Bitbucket Pipelines-hosted Linux instance for running the pipelines defined in the `pipelines` section of the configuration.
+- The code is checked out from our GitHub/Bitbucket repository.
+- Finally, our scripts will:
+  - Install npm dependencies
+  - Start the project web server (`npm start:ci`)
+  - Run the Cypress tests within our GitHub repository within Electron
+
 # Chrome and Firefox with Cypress Docker Images
 
 Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
