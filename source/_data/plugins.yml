@@ -572,6 +572,12 @@
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
       badge: community
+      
+    - name: cypress-splitio
+      description: Stores your split.io toggles as environment variables. Helps to decide which e2e tests you need to run.
+      link: https://gitlab.com/davidggevorgyan/cypress-splitio
+      keywords: [split.io, feature flags]
+      badge: community
 
     - name: Bison
       description: A Full Stack Jamstack Template that uses Cypress and GitHub Actions for E2E testing.
