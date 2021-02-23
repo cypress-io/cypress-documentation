@@ -46,9 +46,9 @@ To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" ht
   - Start the project web server (`npm start:ci`)
   - Run the Cypress tests within our GitHub repository within Electron
 
-# Chrome and Firefox with Cypress Docker Images
+# Testing in Chrome and Firefox with Cypress Docker Images
 
-Cypress offers various {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. This allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
+The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. For example, this allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
 ```yaml
 image: cypress/browsers:node12.14.1-chrome85-ff81
@@ -106,19 +106,16 @@ definitions:
 
 The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to {% url 'parallelize and group test runs' parallelization %} along with additional insights and {% url "analytics" analytics %} for Cypress tests.
 
-{% note info %}
-The following configuration with `--parallel` and `--record` options to Cypress requires a subscription to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
-{% endnote %}
+Before diving into an example of a parallelization setup, it is important to understand the two different types of jobs that we will declare:
 
-Our command records results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} in parallel, using the `CYPRESS_RECORD_KEY` environment variable.
+- **Install Job**: A job that installs and caches dependencies that will be used by subsequent jobs later in the Bitbucket Pipelines workflow.
+- **Worker Job**: A job that handles execution of Cypress tests and depends on the *install job*.
 
-Jobs can be organized by groups by passing a `--group` attribute and value to `cypress run`.
+## Install Job
 
-Below we pass the `parallel` attribute with a numerical value for the number of workers.
+The separation of installation from test running is necessary when running parallel jobs. It allows for reuse of various build steps aided by caching.
 
-The results from each worker will be consolidated into the group name in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
-
-Here we break the pipeline up into reusable chunks of configuration using a {% url "YAML anchor" https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/ %}, `&e2e`.
+First, we break the pipeline up into reusable chunks of configuration using a {% url "YAML anchor" https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/ %}, `&e2e`.  This will be used by the worker jobs.
 
 ```yaml
 image: cypress/base:10
@@ -137,8 +134,11 @@ e2e: &e2e
     - cypress/screenshots/**
     - cypress/videos/**
 ```
+## Worker Jobs
 
-We can use the `e2e` {% url "YAML anchor" https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/ %} in our definition of the pipeline to execute parallel jobs using the `parallel` attribute.
+Next, the worker jobs under `pipelines` that will run Cypress tests with Chrome in parallel.
+
+We can use the `e2e` {% url "YAML anchor" https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/ %} in our definition of the pipeline to execute parallel jobs using the `parallel` attribute.  This will allow us to run multiples instances of Cypress at same time.
 
 ```yaml
 # job definition for running E2E tests in parallel
@@ -168,7 +168,7 @@ definitions:
     cypress: $HOME/.cache/Cypress
 ```
 
-The full `bitbucket-pipelines.yml` is below:
+The complete `bitbucket-pipelines.yml` is below:
 
 ```yaml
 image: cypress/base:10
@@ -211,12 +211,26 @@ definitions:
     cypress: $HOME/.cache/Cypress
 ```
 
-{% note info %}
-#### {% fa fa-graduation-cap %} Real World Example
+{% note bolt %}
+The above configuration using the `--parallel` and `--record` flags to {% url "`cypress run`" command-line#cypress-run %} requires setting up recording test results to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}.
+{% endnote %}
+
+# Using the Cypress Dashboard with Bitbucket Pipelines
+
+In the Bitbucket Pipelines configuration we have defined in the previous section, we are leveraging three useful features of the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
+
+  1. {% url "Recording test results with the `--record` flag" https://on.cypress.io/how-do-i-record-runs %} to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
+    - In-depth and shareable {% url "test reports" runs %}.
+    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
+    - {% url "Integrating testing with the merge-request process" bitbucket-integration %} via {% url "commit status guards" bitbucket-integration#Status-checks %} and convenient {% url "pull request comments" bitbucket-integration#Pull-Request-comments %}.
+    - {% url "Detecting flaky tests" flaky-test-management %} and surfacing them via {% url "Slack alerts" flaky-test-management#Slack %} or {% url "Bitbucket PR status checks" bitbucket-integration %}.
+
+  2. {% url "Parallelizing test runs" parallelization %} and optimizing their execution via {% url "intelligent load-balancing" parallelization#Balance-strategy %} of test specs across CI machines with the `--parallel` flag.
+
+  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `--group "UI - Chrome"` flag to organize all of UI tests within the Chrome browser within a group labeled "UI - Chrome" within our {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
+
+# Cypress Real World Example with Bitbucket Pipelines
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
 Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "bitbucket-pipelines.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml %} file.
-{% endnote %}
-
-# Debugging with the Cypress Dashboard
