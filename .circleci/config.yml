@@ -69,7 +69,7 @@ workflows:
           start: yarn start:ci
           record: true
           parallel: true
-          parallelism: 1
+          parallelism: 4
           ci-build-id: ${CIRCLE_SHA1:0:8}
           group: 'UI - Chrome'
           requires:
