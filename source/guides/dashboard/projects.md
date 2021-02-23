@@ -4,7 +4,7 @@ title: Projects
 
 With Cypress, you have the ability to record your project's tests.
 
-You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration %}, but you can also record your tests when running locally.
+You typically want to record when running tests in {% url 'Continuous Integration' continuous-integration-introduction %}, but you can also record your tests when running locally.
 
 # Setup
 
@@ -36,7 +36,7 @@ Alternatively, if you've already created a project in the Dashboard, you can lin
 8. Now you should see a view explaining how to record your first run with your record key.
 {% imgTag /img/dashboard/projects/setup-a-project-5.png "Record Instructions" "no-border" %}
 9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
-10. Within {% url 'Continuous Integration' continuous-integration %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
+10. Within {% url 'Continuous Integration' continuous-integration-introduction %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
     cypress run --record --key &lt;record key&gt;
@@ -96,7 +96,7 @@ Anyone that has access to both the `projectId` and the record key of a project c
 
 If a record key is exposed you should {% urlHash "delete it" Delete-record-key %} and {% urlHash "create a new record key" Create-new-record-key %}. Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
 
-You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration#Environment-variables %}.
+You can set your record key as an environment variable to help protect it. Learn more {% url "here" continuous-integration-introduction#Environment-variables %}.
 
 {% endnote %}
 

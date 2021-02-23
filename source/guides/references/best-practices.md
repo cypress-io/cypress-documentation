@@ -629,7 +629,7 @@ Start your web server before running Cypress and kill it after it completes.
 
 Are you trying to run in CI?
 
-We have {% url 'examples showing you how to start and stop your web server' continuous-integration#Boot-your-server %}.
+We have {% url 'examples showing you how to start and stop your web server' continuous-integration-introduction#Boot-your-server %}.
 
 ## Setting a global baseUrl
 
