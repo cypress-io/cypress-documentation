@@ -87,6 +87,10 @@ sidebar:
     visual-testing: Visual Testing
     code-coverage: Code Coverage
     component-testing-introduction: Introduction
+    testing-strategies: Testing Strategies
+    auth0-authentication: Auth0 Authentication
+    okta-authentication: Okta Authentication
+    amazon-cognito-authentication: Amazon Cognito Authentication
   api:
     api: API
     table-of-contents: Table of Contents
