@@ -515,7 +515,7 @@
 
     - name: cypress-on-rails
       description: Rubygem for using cypress.io with Ruby on Rails applications
-      link: https://github.com/grantspeelman/cypress-on-rails#cypressdev
+      link: https://github.com/shakacode/cypress-on-rails
       keywords: [ruby-rack, ruby-on-rails]
       badge: community
 
