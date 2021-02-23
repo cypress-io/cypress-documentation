@@ -3,15 +3,16 @@ title: Amazon Cognito Authentication
 ---
 
 {% note info %}
+
 # {% fa fa-graduation-cap %} What you'll learn
+
 - Programmatically authenticate with {% url "Amazon Cognito" https://aws.amazon.com/cognito %} via a custom Cypress command
 - Adapting your {% url "Amazon Cognito" https://aws.amazon.com/cognito %} application for programmatic authentication during testing
 
 {% endnote %}
 
 {% note success Why authenticate programmatically? %}
-Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
-
+Typically, logging in a user within your app by authenticating via a third-party provider requires visiting login pages hosted on a different domain. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API to login a user.
 {% endnote %}
 
 # What is Amazon Cognito?

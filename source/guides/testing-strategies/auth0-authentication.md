@@ -11,7 +11,7 @@ title: Auth0 Authentication
 {% endnote %}
 
 {% note success Why authenticate programmatically? %}
-Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
+Typically, logging in a user within your app by authenticating via a third-party provider requires visiting login pages hosted on a different domain. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API to login a user.
 {% endnote %}
 
 {% note warning %}
@@ -78,6 +78,7 @@ export default (on, config) => {
 Below is a command to programmatically login into {% url "Auth0" https://auth0.com %}, using the {% url "/oauth/token endpoint" https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint %} and set an item in localStorage and set an item in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
 
 The `loginByAuth0Api` command will execute the following steps:
+
 1. Use the {% url "/oauth/token endpoint" https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint %} to perform the programmatic login.
 2. Finally the `auth0Cypress` localStorage item is set with the `access token`, `id_token` and user profile.
 
@@ -393,9 +394,8 @@ AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 
 With this token in place, we can add interaction with the {% url "Auth0 Anomaly remove the blocked IP address endpoint" https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id %} to our `loginByAuth0Api` command.  This will send a delete request to {% url "Auth0 Management API" https://auth0.com/docs/api/management/v2 %} anomaly endpoint to unblock an IP that may become blocked during the test run.
 
-{% note info %}
+{% note info Tip %}
 {% url "icanhazip.com"  %} is a free, hosted service to find a system's current external IP address.
-
 {% endnote %}
 
 ```jsx

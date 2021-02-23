@@ -3,6 +3,7 @@ title: Okta Authentication
 ---
 
 {% note info %}
+
 # {% fa fa-graduation-cap %} What you'll learn
 
 - Programmatically authenticate with  {% url "Okta" https://okta.com %} via a custom Cypress command
@@ -14,8 +15,7 @@ The scope of this guide is to demonstrate authentication solely against the {% u
 {% endnote %}
 
 {% note success Why authenticate programmatically? %}
-Typically logging in a user by authenticating via a third-party provider requires visiting login pages hosted on different domain in your app. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API endpoints to login a user.
-
+Typically, logging in a user within your app by authenticating via a third-party provider requires visiting login pages hosted on a different domain. Since each Cypress test is limited to visiting domains of the same origin, we can subvert visiting and testing third-party login pages by programmatically interacting with the third-party authentication API to login a user.
 {% endnote %}
 
 # Okta Developer Console Setup
@@ -23,6 +23,7 @@ Typically logging in a user by authenticating via a third-party provider require
 If not already setup, you will need to {% url "create an Okta application" https://okta.com %} within the Okta Developer Console. Once the Okta application is created, the Okta Developer Console will provide a **Client ID**, which will used alongside your **Okta domain** to {% url "configure Okta SDKs" https://developer.okta.com/docs/guides/sign-into-spa/react/configure-the-sdk/ %} as shown in the subsequent sections of this guide.
 
 # Setting Okta app credentials in Cypress
+
 To have access to test user credentials within our tests we need to configure Cypress to use the {% url "Okta" https://okta.com %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file.
 
 ```jsx
@@ -49,6 +50,7 @@ export default (on, config) => {
 Next, we will write a command named `loginByOktaApi` to perform a programmatic login into {% url "Okta" https://okta.com %} and set an item in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
 
 The `loginByOktaApi` command will execute the following steps:
+
 1. Use the {% url "Okta Authentication API" https://developer.okta.com/docs/reference/api/authn/ %} to perform the programmatic login.
 2. Then uses an instance of `OktaAuth` client from the {% url "Okta Auth SDK" https://github.com/okta/okta-auth-js %} to gain the `id_token` once a session token is obtained.
 3. Finally the `oktaCypress` localStorage item is set with the `access token` and user profile.
